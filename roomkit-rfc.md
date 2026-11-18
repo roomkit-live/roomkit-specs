@@ -4544,97 +4544,97 @@ question, and `close()` stops it.
 
 ## 7. Permission Model
 
-<!-- rfc: {"id": "RK-7-001", "kind": "behavior", "applies": "§7 Permission Model; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-7-001", "kind": "behavior", "applies": "§7 Permission Model; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.", "level": "must"} -->
 The permission model consists of three orthogonal primitives. The framework
 provides the primitives; the integrator decides when and how to use them.
 <!-- /rfc -->
 
 ### 7.1 Access
 
-<!-- rfc: {"id": "RK-7.1-001", "kind": "behavior", "applies": "§7.1 Access; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-7.1-002", "kind": "behavior", "applies": "§7.1 Access (its header), the READ_WRITE row: what a binding's access controls, and READ_WRITE, which reads and writes. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Controls whether a channel can read events, write events, or both within a room.
 
 | Value | Can Read | Can Write | Description |
 |---|---|---|---|
 | READ_WRITE | Yes | Yes | Full participation |
-| READ_ONLY | Yes | No | Observe only (events via `on_event()`) |
-| WRITE_ONLY | No | Yes | Blind sender (unusual, but valid) |
-| NONE | No | No | Fully disconnected (binding exists but inactive) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-7.1-003", "kind": "behavior", "applies": "§7.1 Access, the READ_ONLY row: a channel that reads events through on_event() and writes none. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->READ_ONLY | Yes | No | Observe only (events via `on_event()`) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-7.1-004", "kind": "behavior", "applies": "§7.1 Access, the WRITE_ONLY row: a channel that writes and reads no event. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->WRITE_ONLY | No | Yes | Blind sender (unusual, but valid) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-7.1-005", "kind": "behavior", "applies": "§7.1 Access, the NONE row: a binding that stays in the room and neither reads nor writes. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->NONE | No | No | Fully disconnected (binding exists but inactive) |
 <!-- /rfc -->
 
 ### 7.2 Muting
 
-<!-- rfc: {"id": "RK-7.2-001", "kind": "behavior", "applies": "§7.2 Muting; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-7.2-003", "kind": "behavior", "applies": "§7.2 Muting: the muted flag of a binding, and a muted channel still reading events through on_event(). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A boolean flag on the binding. When `muted = true`:
 
-- The channel STILL receives events via `on_event()` (reading is preserved).
+- The channel STILL receives events via `on_event()` (reading is preserved).<!-- /rfc --><!-- rfc: {"id": "RK-7.2-004", "kind": "behavior", "applies": "§7.2 Muting, a binding with muted = true: its channel's response stored BLOCKED with source_muted, or source_read_only when its access does not write, after its hooks (§7.5 rule 2); a streamed one may be closed unread instead. The paths RK-7.5-010 leaves out are not refused. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - The channel's response events are not broadcast (writing is blocked):
   each re-enters and its commit pass stores it `BLOCKED` with
   `source_muted` (`source_read_only` when its access does not write either),
-  after its hooks (§7.5 rule 2); a streamed one MAY be closed unread instead.
+  after its hooks (§7.5 rule 2); a streamed one MAY be closed unread instead.<!-- /rfc --><!-- rfc: {"id": "RK-7.2-005", "kind": "behavior", "applies": "§7.2 Muting: a mute that lands while the channel's response streams, from the next row it commits (§7.5 rule 2). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
   A mute that lands while the response streams holds from the next row it
   commits: that row and the ones after are stored `BLOCKED`, and the
-  streaming target reads nothing more of the stream (§7.5 rule 2).
-- Side effects (tasks, observations) are STILL collected.
+  streaming target reads nothing more of the stream (§7.5 rule 2).<!-- /rfc --><!-- rfc: {"id": "RK-7.2-006", "kind": "behavior", "applies": "§7.2 Muting, a binding with muted = true: the tasks and observations of its channel still collected (§7.5 rule 3). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+- Side effects (tasks, observations) are STILL collected.<!-- /rfc --><!-- rfc: {"id": "RK-7.2-007", "kind": "behavior", "applies": "§7.2 Muting: mute() and unmute(), the integrator's calls that set and clear a binding's muted flag. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
-Muting is temporary. The integrator calls `mute()` and `unmute()` as needed.
+Muting is temporary. The integrator calls `mute()` and `unmute()` as needed.<!-- /rfc --><!-- rfc: {"id": "RK-7.2-008", "kind": "behavior", "applies": "§7.2 Muting: a binding's output_muted (§5.7), set by mute_output() and unmute_output(), against a mute. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 A binding's `output_muted` (§5.7) is no mute: the integrator sets it with
 `mute_output()` and `unmute_output()`, which fire no trigger and write no
 lifecycle record, and the channel still receives every event.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-7.2-002", "kind": "behavior", "applies": "§7.2 Muting; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-7.2-009", "kind": "behavior", "applies": "§7.2 A binding change that changes nothing: a detach or a binding update for a channel the room does not bind. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **A binding change that changes nothing.** Detaching or updating a channel
-the room does not bind fails, with nothing written. An update applies to the
+the room does not bind fails, with nothing written. <!-- /rfc --><!-- rfc: {"id": "RK-7.2-010", "kind": "behavior", "applies": "§7.2 A binding change that changes nothing: a binding update, applied to the binding as stored; one that changes nothing. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An update applies to the
 binding as stored, carrying over every field it does not name (§7.5 rule 6),
 and one that changes nothing writes nothing and fires nothing, so a retried
-call duplicates no hook and no record. `ON_CHANNEL_MUTED` and
+call duplicates no hook and no record. <!-- /rfc --><!-- rfc: {"id": "RK-7.2-011", "kind": "behavior", "applies": "§7.2 A binding change that changes nothing: when ON_CHANNEL_MUTED and ON_CHANNEL_UNMUTED fire on a binding change. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`ON_CHANNEL_MUTED` and
 `ON_CHANNEL_UNMUTED` fire when `muted` changes, and only then: muting a
-muted channel fires nothing. A change of access, visibility or metadata
-fires no trigger and emits no framework event. A binding changes whatever
+muted channel fires nothing. <!-- /rfc --><!-- rfc: {"id": "RK-7.2-012", "kind": "behavior", "applies": "§7.2 A binding change that changes nothing: a binding change of access, visibility or metadata. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A change of access, visibility or metadata
+fires no trigger and emits no framework event. <!-- /rfc --><!-- rfc: {"id": "RK-7.2-013", "kind": "behavior", "applies": "§7.2 A binding change that changes nothing: a binding change in a room of any status (§5.1). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A binding changes whatever
 the room's status, which governs what the timeline accepts (§5.1).
 <!-- /rfc -->
 
 ### 7.3 Visibility
 
-<!-- rfc: {"id": "RK-7.3-001", "kind": "behavior", "applies": "§7.3 Visibility; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-7.3-012", "kind": "behavior", "applies": "§7.3 Visibility (its header), the all row: a visibility set on the binding and carried by each event (§5.2), and all, which every channel of the room sees. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Controls which channels see events produced by the source channel. Set on the
 binding as a string value, and carried by each event (§5.2):
 
 | Value | Meaning |
 |---|---|
 | `"all"` | All channels in the room see the event |
-| `"none"` | No channels see the event (stored in timeline only) |
-| `"internal"` | No channels see the event, as with `"none"`; marks a record the framework wrote (§6.4) |
-| `"transport"` | Only transport channels see the event |
-| `"intelligence"` | Only intelligence channels see the event |
-| `"channel_a,channel_b"` | Comma-separated list of specific channel IDs |
-| `"channel_a"` | Single channel ID |
+| <!-- /rfc --><!-- rfc: {"id": "RK-7.3-013", "kind": "behavior", "applies": "§7.3 Visibility, the none row: an event no channel sees, stored in the timeline only. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`"none"` | No channels see the event (stored in timeline only) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-7.3-014", "kind": "behavior", "applies": "§7.3 Visibility, the internal row: an event no channel sees, which marks a record the framework wrote (§6.4). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`"internal"` | No channels see the event, as with `"none"`; marks a record the framework wrote (§6.4) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-7.3-015", "kind": "behavior", "applies": "§7.3 Visibility, the transport row: an event only the room's transport channels see. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`"transport"` | Only transport channels see the event |
+| <!-- /rfc --><!-- rfc: {"id": "RK-7.3-016", "kind": "behavior", "applies": "§7.3 Visibility, the intelligence row: an event only the room's intelligence channels see. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`"intelligence"` | Only intelligence channels see the event |
+| <!-- /rfc --><!-- rfc: {"id": "RK-7.3-017", "kind": "behavior", "applies": "§7.3 Visibility, the list row: an event only the channels a comma-separated list names see. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`"channel_a,channel_b"` | Comma-separated list of specific channel IDs |
+| <!-- /rfc --><!-- rfc: {"id": "RK-7.3-018", "kind": "behavior", "applies": "§7.3 Visibility, the single id row: an event only the channel the id names sees. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`"channel_a"` | Single channel ID |
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-7.3-005", "kind": "behavior", "applies": "\u00a77.3 Visibility grammar; keywords are all, none, internal, transport and intelligence. The internal value is framework-only under \u00a77.3 Who writes internal; public doors include attach, binding update, inbound visibility/response_visibility and direct injection visibility/response_visibility. Enclosing capability conditions and \u00a726 levels still apply."} -->
+<!-- rfc: {"id": "RK-7.3-005", "kind": "behavior", "applies": "\u00a77.3 Visibility grammar; keywords are all, none, internal, transport and intelligence. The internal value is framework-only under \u00a77.3 Who writes internal; public doors include attach, binding update, inbound visibility/response_visibility and direct injection visibility/response_visibility. Enclosing capability conditions and \u00a726 levels still apply.", "level": "must"} -->
 **Grammar.** A visibility is one of the five keywords `all`, `none`,
 `internal`, `transport` and `intelligence`, or a list of one or more channel
 ids separated by commas. A keyword is written exactly as above, in lowercase
-(`"All"` is a channel id, not the keyword). <!-- /rfc --><!-- rfc: {"id": "RK-7.3-006", "kind": "behavior", "applies": "\u00a77.3 Visibility grammar; keywords are all, none, internal, transport and intelligence. The internal value is framework-only under \u00a77.3 Who writes internal; public doors include attach, binding update, inbound visibility/response_visibility and direct injection visibility/response_visibility. Enclosing capability conditions and \u00a726 levels still apply."} -->The keywords are reserved: a
+(`"All"` is a channel id, not the keyword). <!-- /rfc --><!-- rfc: {"id": "RK-7.3-006", "kind": "behavior", "applies": "\u00a77.3 Visibility grammar; keywords are all, none, internal, transport and intelligence. The internal value is framework-only under \u00a77.3 Who writes internal; public doors include attach, binding update, inbound visibility/response_visibility and direct injection visibility/response_visibility. Enclosing capability conditions and \u00a726 levels still apply.", "level": "must"} -->The keywords are reserved: a
 channel whose id is one of them MUST be refused when it is registered, and so
 MUST a channel whose id contains a comma or starts or ends with whitespace, so
-that every channel id can be written in a list. <!-- /rfc --><!-- rfc: {"id": "RK-7.3-007", "kind": "behavior", "applies": "\u00a77.3 Visibility grammar; keywords are all, none, internal, transport and intelligence. The internal value is framework-only under \u00a77.3 Who writes internal; public doors include attach, binding update, inbound visibility/response_visibility and direct injection visibility/response_visibility. Enclosing capability conditions and \u00a726 levels still apply."} -->Whitespace around the whole
-value and around each id is ignored (`" sms , ws "` is `"sms,ws"`). <!-- /rfc --><!-- rfc: {"id": "RK-7.3-008", "kind": "behavior", "applies": "\u00a77.3 Visibility grammar; keywords are all, none, internal, transport and intelligence. The internal value is framework-only under \u00a77.3 Who writes internal; public doors include attach, binding update, inbound visibility/response_visibility and direct injection visibility/response_visibility. Enclosing capability conditions and \u00a726 levels still apply."} -->An empty
+that every channel id can be written in a list. <!-- /rfc --><!-- rfc: {"id": "RK-7.3-007", "kind": "behavior", "applies": "\u00a77.3 Visibility grammar; keywords are all, none, internal, transport and intelligence. The internal value is framework-only under \u00a77.3 Who writes internal; public doors include attach, binding update, inbound visibility/response_visibility and direct injection visibility/response_visibility. Enclosing capability conditions and \u00a726 levels still apply.", "level": "must"} -->Whitespace around the whole
+value and around each id is ignored (`" sms , ws "` is `"sms,ws"`). <!-- /rfc --><!-- rfc: {"id": "RK-7.3-008", "kind": "behavior", "applies": "\u00a77.3 Visibility grammar; keywords are all, none, internal, transport and intelligence. The internal value is framework-only under \u00a77.3 Who writes internal; public doors include attach, binding update, inbound visibility/response_visibility and direct injection visibility/response_visibility. Enclosing capability conditions and \u00a726 levels still apply.", "level": "must"} -->An empty
 value and an empty item (`""`, `"sms,,ws"`, `"sms,"`) MUST be refused, a
 `response_visibility` at the doors included (an inbound message, §5.12, a
-direct injection, §10.5). <!-- /rfc --><!-- rfc: {"id": "RK-7.3-009", "kind": "behavior", "applies": "\u00a77.3 Visibility grammar; keywords are all, none, internal, transport and intelligence. The internal value is framework-only under \u00a77.3 Who writes internal; public doors include attach, binding update, inbound visibility/response_visibility and direct injection visibility/response_visibility. Enclosing capability conditions and \u00a726 levels still apply."} -->An empty value that reaches an event any other way
+direct injection, §10.5). <!-- /rfc --><!-- rfc: {"id": "RK-7.3-009", "kind": "behavior", "applies": "\u00a77.3 Visibility grammar; keywords are all, none, internal, transport and intelligence. The internal value is framework-only under \u00a77.3 Who writes internal; public doors include attach, binding update, inbound visibility/response_visibility and direct injection visibility/response_visibility. Enclosing capability conditions and \u00a726 levels still apply.", "level": "must"} -->An empty value that reaches an event any other way
 (a hook's modify, a custom store) reads as `none`, so that it restricts rather
-than opens. <!-- /rfc --><!-- rfc: {"id": "RK-7.3-010", "kind": "behavior", "applies": "\u00a77.3 Visibility grammar; keywords are all, none, internal, transport and intelligence. The internal value is framework-only under \u00a77.3 Who writes internal; public doors include attach, binding update, inbound visibility/response_visibility and direct injection visibility/response_visibility. Enclosing capability conditions and \u00a726 levels still apply."} -->An id listed twice counts once, and a list is written back with
-each id once, sorted by code point. <!-- /rfc --><!-- rfc: {"id": "RK-7.3-011", "kind": "behavior", "applies": "\u00a77.3 Visibility grammar; keywords are all, none, internal, transport and intelligence. The internal value is framework-only under \u00a77.3 Who writes internal; public doors include attach, binding update, inbound visibility/response_visibility and direct injection visibility/response_visibility. Enclosing capability conditions and \u00a726 levels still apply."} -->An id that names no channel bound to the
+than opens. <!-- /rfc --><!-- rfc: {"id": "RK-7.3-010", "kind": "behavior", "applies": "\u00a77.3 Visibility grammar; keywords are all, none, internal, transport and intelligence. The internal value is framework-only under \u00a77.3 Who writes internal; public doors include attach, binding update, inbound visibility/response_visibility and direct injection visibility/response_visibility. Enclosing capability conditions and \u00a726 levels still apply.", "level": "must"} -->An id listed twice counts once, and a list is written back with
+each id once, sorted by code point. <!-- /rfc --><!-- rfc: {"id": "RK-7.3-011", "kind": "behavior", "applies": "\u00a77.3 Visibility grammar; keywords are all, none, internal, transport and intelligence. The internal value is framework-only under \u00a77.3 Who writes internal; public doors include attach, binding update, inbound visibility/response_visibility and direct injection visibility/response_visibility. Enclosing capability conditions and \u00a726 levels still apply.", "level": "must"} -->An id that names no channel bound to the
 room is allowed and matches nothing.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-7.3-003", "kind": "behavior", "applies": "§7.3 Visibility; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-7.3-019", "kind": "behavior", "applies": "§7.3 Who writes internal: the framework alone writes internal, on the records it writes itself (§6.4). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Who writes `internal`.** Only the framework writes `internal`, on the
 records it writes itself (an interruption record, §6.4): a value that marks
-the framework's record is not the integrator's to give. An implementation
+the framework's record is not the integrator's to give. <!-- /rfc --><!-- rfc: {"id": "RK-7.3-020", "kind": "behavior", "applies": "§7.3 Who writes internal: internal given at a public door (attach, binding update, inbound message, direct injection), by a hook's modify (§9.4) or by a channel's response (§8.5). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An implementation
 MUST refuse it, before anything is read or written, on an attach and a
 binding update, on an inbound message, as its `visibility` and as its
 `response_visibility` alike (§5.12), and on a direct injection, its
@@ -4644,43 +4644,43 @@ framework record), has the event's visibility put back from the original,
 and one that writes it as a response visibility has it read as `none`
 (§9.4); a channel's response that carries it is committed with `none`, and
 one a channel gives its response as a response visibility reads as `none`
-(§8.5). A record committed outside the pipeline (§10.5) is stored as its
-caller gives it, and reaches no channel. An event the integrator wants stored
+(§8.5). <!-- /rfc --><!-- rfc: {"id": "RK-7.3-021", "kind": "behavior", "applies": "§7.3 Who writes internal: a record committed outside the pipeline (§10.5), whatever visibility its caller gives it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A record committed outside the pipeline (§10.5) is stored as its
+caller gives it, and reaches no channel. <!-- /rfc --><!-- rfc: {"id": "RK-7.3-022", "kind": "non_testable", "applies": "§7.3 Who writes internal: the visibility an integrator gives an event to be stored and shown to no channel; the integrator's choice, which no implementation can keep for it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An event the integrator wants stored
 and shown to no channel takes `none`.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-7.3-004", "kind": "behavior", "applies": "§7.3 Visibility; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-7.3-023", "kind": "behavior", "applies": "§7.3 An event's visibility: the visibility an event carries, all unless the caller sets one, beside its source binding's. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **An event's visibility.** An event carries a visibility of its own (an
 inbound message's `visibility`, §5.12, `"all"` unless the caller sets one),
-and its source binding has one. A channel sees an event whose source is
-bound to the room only when both include it. The framework MUST compute the
+and its source binding has one. <!-- /rfc --><!-- rfc: {"id": "RK-7.3-024", "kind": "behavior", "applies": "§7.3 An event's visibility: which channels see an event whose source the room binds. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A channel sees an event whose source is
+bound to the room only when both include it. <!-- /rfc --><!-- rfc: {"id": "RK-7.3-025", "kind": "behavior", "applies": "§7.3 An event's visibility: the visibility computed when an event commits, DELIVERED or BLOCKED, and stored as its visibility; the exceptions are RK-7.3-026 to 029. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The framework MUST compute the
 visibility that includes exactly those channels when it commits the event,
 DELIVERED (§10.1 step 12) or `BLOCKED` in its place (steps 10 and 11, §8.3),
 and store it as the event's `visibility`: delivery (§10.2) and every history
 rebuilt for a channel (§7.5 rule 8) read that field alone, so a binding
-changed or removed later changes no past event. An accepted EDIT or DELETE
-is narrowed once more, to its target's visibility (§10.3). A record stored
+changed or removed later changes no past event. <!-- /rfc --><!-- rfc: {"id": "RK-7.3-026", "kind": "behavior", "applies": "§7.3 An event's visibility: an accepted EDIT or DELETE, narrowed to its target's visibility (§10.3). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An accepted EDIT or DELETE
+is narrowed once more, to its target's visibility (§10.3). <!-- /rfc --><!-- rfc: {"id": "RK-7.3-027", "kind": "behavior", "applies": "§7.3 An event's visibility: a record stored BLOCKED, by a hook's block, a source refusal, the chain-depth limit or the reentry budget (§8.3). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A record stored
 `BLOCKED` takes the visibility its event would have been delivered with, so
 that a reader shown it later (a host's view of the room) sees no more of it
 than it would have seen of the event: a hook's block and a source refusal,
 of an inbound message, a direct injection or a response; the record of an
 agent not asked at the chain-depth limit, and a response stored past the
-reentry budget (§8.3). An event whose source has no binding keeps its own.
+reentry budget (§8.3). <!-- /rfc --><!-- rfc: {"id": "RK-7.3-028", "kind": "behavior", "applies": "§7.3 An event's visibility: an event whose source the room does not bind. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An event whose source has no binding keeps its own.<!-- /rfc --><!-- rfc: {"id": "RK-7.3-029", "kind": "behavior", "applies": "§7.3 An event's visibility: an event a hook injects (§9.4), blocked or stored past the budget. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 An event a hook injects is no channel's and keeps its own (§9.4), blocked or
-stored past the budget. The intersection of two visibilities is:
+stored past the budget. <!-- /rfc --><!-- rfc: {"id": "RK-7.3-030", "kind": "behavior", "applies": "§7.3 An event's visibility, the intersection of two visibilities: all with any value. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The intersection of two visibilities is:
 
-- `all` with any value: that value;
+- `all` with any value: that value;<!-- /rfc --><!-- rfc: {"id": "RK-7.3-031", "kind": "behavior", "applies": "§7.3 An event's visibility, the intersection of two visibilities: internal with any value. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - `internal` with any value: `internal`, which keeps the mark of a record
-  the framework wrote;
-- `none` with any value other than `internal`: `none`;
+  the framework wrote;<!-- /rfc --><!-- rfc: {"id": "RK-7.3-032", "kind": "behavior", "applies": "§7.3 An event's visibility, the intersection of two visibilities: none with any value but internal. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+- `none` with any value other than `internal`: `none`;<!-- /rfc --><!-- rfc: {"id": "RK-7.3-033", "kind": "behavior", "applies": "§7.3 An event's visibility, the intersection of two visibilities: two categories. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - a category with itself: that category; `transport` with `intelligence`:
-  `none`;
-- two lists: the ids both name;
+  `none`;<!-- /rfc --><!-- rfc: {"id": "RK-7.3-034", "kind": "behavior", "applies": "§7.3 An event's visibility, the intersection of two visibilities: two lists of channel ids. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+- two lists: the ids both name;<!-- /rfc --><!-- rfc: {"id": "RK-7.3-035", "kind": "behavior", "applies": "§7.3 An event's visibility, the intersection of two visibilities: a category with a list, read from the room's bindings at commit. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - a category with a list: the listed channels of that category, read from
   the room's bindings at commit; a listed id that no binding of the room
-  holds is dropped.
+  holds is dropped.<!-- /rfc --><!-- rfc: {"id": "RK-7.3-036", "kind": "behavior", "applies": "§7.3 An event's visibility: an intersection of two visibilities that leaves no channel id. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
-An intersection that leaves no id is `none`.
+An intersection that leaves no id is `none`.<!-- /rfc --><!-- rfc: {"id": "RK-7.3-037", "kind": "behavior", "applies": "§7.3 An event's visibility: an event a channel was not allowed to see at delivery, in the history the framework rebuilds for that channel (§7.5 rule 8); a channel's own accepted events stay in its context (RK-7.5-032). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 "See" is not "be delivered to". `"none"` reads *stored in timeline only*, and it
 means it: an event a channel was not allowed to see at delivery MUST NOT reach
@@ -4690,7 +4690,7 @@ in §7.5 states that half.
 
 ### 7.4 Named Patterns
 
-<!-- rfc: {"id": "RK-7.4-001", "kind": "behavior", "applies": "§7.4 Named Patterns; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-7.4-001", "kind": "behavior", "applies": "§7.4 Named Patterns; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.", "level": "must"} -->
 These are vocabulary for common configurations, NOT framework concepts. The
 framework only knows access, muted, and visibility.
 
@@ -4705,88 +4705,88 @@ framework only knows access, muted, and visibility.
 
 ### 7.5 Permission Rules
 
-<!-- rfc: {"id": "RK-7.5-001", "kind": "behavior", "applies": "§7.5 Permission Rules; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-7.5-002", "kind": "behavior", "applies": "§7.5 Permission Rules, rule 1 (Reading): which channels receive an event through on_event(); a channel's own events are skipped (rule 5, RK-7.5-021). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Implementations MUST enforce these rules:
 
 1. **Reading:** A channel receives events via `on_event()` if and only if its
    binding has `access` ∈ {READ_WRITE, READ_ONLY} AND the event's visibility
-   includes this channel.
+   includes this channel.<!-- /rfc --><!-- rfc: {"id": "RK-7.5-003", "kind": "behavior", "applies": "§7.5 Permission Rules, rule 2 (Writing): whether a channel's response events are broadcast; the paths rule 2 does not cover are RK-7.5-010, 017 and 018. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 2. **Writing:** A channel's response events are broadcast if and only if its
-   binding has `access` ∈ {READ_WRITE, WRITE_ONLY} AND `muted = false`.
+   binding has `access` ∈ {READ_WRITE, WRITE_ONLY} AND `muted = false`.<!-- /rfc --><!-- rfc: {"id": "RK-7.5-004", "kind": "behavior", "applies": "§7.5 Permission Rules, rule 2: an inbound or directly injected event whose source binding cannot write. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
    Likewise, an inbound or directly-injected event whose source binding cannot
    write (`access` ∉ {READ_WRITE, WRITE_ONLY} OR `muted = true`) MUST be stored
-   with status `BLOCKED` rather than `DELIVERED`, and MUST NOT be broadcast.
+   with status `BLOCKED` rather than `DELIVERED`, and MUST NOT be broadcast.<!-- /rfc --><!-- rfc: {"id": "RK-7.5-005", "kind": "behavior", "applies": "§7.5 Permission Rules, rule 2: the blocked_by of an event whose source binding cannot write, read-only or muted. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
    Its `blocked_by` is `source_read_only` when the access does not write,
    `NONE` included and whether the binding is muted or not, since the access
    is the lasting cause; it is `source_muted` when the source could write but
-   is muted. An event whose source has no binding in the room, such as a
+   is muted. <!-- /rfc --><!-- rfc: {"id": "RK-7.5-006", "kind": "behavior", "applies": "§7.5 Permission Rules, rule 2: an event whose source has no binding in the room, a detached channel's included; a direct injection naming one raises instead (RK-7.5-007), and the paths RK-7.5-010, 017 and 018 leave out are not refused. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An event whose source has no binding in the room, such as a
    channel the integrator detached (rule 7), MUST be stored `BLOCKED` with
    `blocked_by` = `source_unbound` and MUST NOT be broadcast either; the
    channel of an inbound message still parses it (§10.1 step 4), with a
-   context that holds no event of the room. A direct injection that names
-   such a channel raises instead, with nothing written (§10.5). A response
+   context that holds no event of the room. <!-- /rfc --><!-- rfc: {"id": "RK-7.5-007", "kind": "behavior", "applies": "§7.5 Permission Rules, rule 2: a direct injection (§10.5) whose source has no binding in the room. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A direct injection that names
+   such a channel raises instead, with nothing written (§10.5). <!-- /rfc --><!-- rfc: {"id": "RK-7.5-008", "kind": "behavior", "applies": "§7.5 Permission Rules, rule 2: a response, checked after its BEFORE_BROADCAST hooks on each path that commits one, but the paths RK-7.5-010 leaves out. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A response
    re-enters like any other event (§10.1 step 14) and meets this check after its
    `BEFORE_BROADCAST` hooks (step 11 after step 9), on each path that commits
-   a response: a buffered response, a streamed row, a regenerated answer. The
+   a response: a buffered response, a streamed row, a regenerated answer. <!-- /rfc --><!-- rfc: {"id": "RK-7.5-009", "kind": "behavior", "applies": "§7.5 Permission Rules, rule 2: the source binding the check reads, as the event's hooks left it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The
    check reads the source's binding as the hooks left it, so a hook that
-   mutes the source of the event it reads blocks that event. The greeting,
+   mutes the source of the event it reads blocks that event. <!-- /rfc --><!-- rfc: {"id": "RK-7.5-010", "kind": "behavior", "applies": "§7.5 Permission Rules, rule 2: the paths it does not cover (the greeting, a delegation's trace in a child room no transport is shared into, a record committed outside the pipeline) and a child room with a shared transport, which it covers. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The greeting,
    and the trace a delegation writes into a child room no transport is
    shared into (§23.3), and a record an integrator commits outside the
    pipeline (§10.5), are committed by paths of their own and are not
    covered here; a child room with a shared transport commits its agent's
-   response as a room does, and is covered. A muted or
+   response as a room does, and is covered. <!-- /rfc --><!-- rfc: {"id": "RK-7.5-011", "kind": "behavior", "applies": "§7.5 Permission Rules, rule 2: the response of a muted or read-only source, stored BLOCKED with what its hooks decided (rule 3); the paths RK-7.5-010 leaves out are not refused. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A muted or
    read-only source's response is therefore stored `BLOCKED` with what its
    hooks decided collected (rule 3), and a hook that blocks it names the
-   block. A streamed response from a source that cannot write is piped live
+   block. <!-- /rfc --><!-- rfc: {"id": "RK-7.5-012", "kind": "behavior", "applies": "§7.5 Permission Rules, rule 2: a streamed response from a source that cannot write, read-only or muted; the paths RK-7.5-010 leaves out are not refused. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A streamed response from a source that cannot write is piped live
    to no channel: a read-only source's stream is read to its end and each row
    stored `BLOCKED`; a muted source's MAY be closed unread, the reply never
-   generated. Each row of a streamed response reads the room's bindings at
+   generated. <!-- /rfc --><!-- rfc: {"id": "RK-7.5-013", "kind": "behavior", "applies": "§7.5 Permission Rules, rule 2: the bindings each row of a streamed response is checked and planned with, a binding changed while it streams included. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Each row of a streamed response reads the room's bindings at
    its commit, under the room lock, and is checked and planned with them: a
    binding changed while the response streams (its source muted, made
    read-only or detached; a transport made write-only or detached) holds from
-   the next row. Once the room no longer lets the streaming target read the
+   the next row. <!-- /rfc --><!-- rfc: {"id": "RK-7.5-014", "kind": "behavior", "applies": "§7.5 Permission Rules, rule 2: the streaming target once the room no longer lets it read the response. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Once the room no longer lets the streaming target read the
    response (its source can no longer write, the room refuses the row,
    §5.1, the target is no longer one the answer reaches, §12.2 step
    11s, or a message's hooks narrowed its visibility away from the target,
    §7.3), the target is handed nothing more of
    the stream, neither text nor rows, and the rows after are delivered as
-   their plans say. A tool-call row whose hooks narrowed it away from the
-   target is not handed to the target, and the stream goes on. A source
+   their plans say. <!-- /rfc --><!-- rfc: {"id": "RK-7.5-015", "kind": "behavior", "applies": "§7.5 Permission Rules, rule 2: a streamed tool-call row whose hooks narrowed it away from the streaming target. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A tool-call row whose hooks narrowed it away from the
+   target is not handed to the target, and the stream goes on. <!-- /rfc --><!-- rfc: {"id": "RK-7.5-016", "kind": "behavior", "applies": "§7.5 Permission Rules, rule 2: a source both read-only and muted, and its streamed response. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A source
    both read-only and muted is refused as read-only, so
-   its stream is read to its end. An event a hook injects takes no source
-   check: it is the hook's, not a channel's (§9.4). Nor does an event the
+   its stream is read to its end. <!-- /rfc --><!-- rfc: {"id": "RK-7.5-017", "kind": "behavior", "applies": "§7.5 Permission Rules, rule 2: an event a hook injects (§9.4). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An event a hook injects takes no source
+   check: it is the hook's, not a channel's (§9.4). <!-- /rfc --><!-- rfc: {"id": "RK-7.5-018", "kind": "behavior", "applies": "§7.5 Permission Rules, rule 2: an event the framework itself writes through the pipeline, such as a delegation's task description (§23.3). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Nor does an event the
    framework itself writes through the pipeline, such as a delegation's task
-   description (§23.3): it is the framework's, not a channel's.
+   description (§23.3): it is the framework's, not a channel's.<!-- /rfc --><!-- rfc: {"id": "RK-7.5-019", "kind": "behavior", "applies": "§7.5 Permission Rules, rule 3 (Side effects): the tasks and observations of an event, whatever access or mute status, rule 2's refusals included. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 3. **Side effects:** Tasks and observations are ALWAYS collected regardless of
-   access or mute status — including for events blocked by rule 2.
+   access or mute status — including for events blocked by rule 2.<!-- /rfc --><!-- rfc: {"id": "RK-7.5-020", "kind": "behavior", "applies": "§7.5 Permission Rules, rule 4 (Visibility filtering): the channels an event is delivered to. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 4. **Visibility filtering:** When broadcasting an event, the framework MUST
    deliver only to channels that both the event's own visibility and its
    source binding's include: the intersection the event carries from its
-   commit (§7.3).
-5. **Self-skip:** A channel MUST NOT receive its own events via `on_event()`.
+   commit (§7.3).<!-- /rfc --><!-- rfc: {"id": "RK-7.5-021", "kind": "behavior", "applies": "§7.5 Permission Rules, rule 5 (Self-skip): a channel's own events. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+5. **Self-skip:** A channel MUST NOT receive its own events via `on_event()`.<!-- /rfc --><!-- rfc: {"id": "RK-7.5-022", "kind": "behavior", "applies": "§7.5 Permission Rules, rule 6: a binding the framework creates from an existing one (sharing a channel into a delegated room, copying a template, re-attaching a detached channel). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 6. **A binding is never widened implicitly.** Wherever the framework creates a
    binding from an existing one — sharing a channel into a delegated room
    (§23.3), copying a template, re-attaching a channel it detached earlier — the
    new binding MUST NOT grant more than the one it derives from. Carrying over
    a binding's category and metadata while letting `access`, `visibility` and
    `muted` fall back to defaults silently promotes a read-only observer into a
-   full participant, in a room the integrator never configured. Widening a
+   full participant, in a room the integrator never configured. <!-- /rfc --><!-- rfc: {"id": "RK-7.5-023", "kind": "behavior", "applies": "§7.5 Permission Rules, rule 6: what widens a binding. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Widening a
    binding is an explicit act: it MUST come from an integrator call that says
-   so, never from a default filling a gap.
+   so, never from a default filling a gap.<!-- /rfc --><!-- rfc: {"id": "RK-7.5-024", "kind": "behavior", "applies": "§7.5 Permission Rules, rule 7: attaching a channel automatically when a message arrives for a room it is not bound to; what such an attach must not do is RK-7.5-025. Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->
 7. **Attaching a channel is a decision, not a repair.** An implementation MAY
    attach a channel automatically when a message arrives for a room the
-   channel is not yet bound to. It MUST NOT do so when the channel was
+   channel is not yet bound to. <!-- /rfc --><!-- rfc: {"id": "RK-7.5-025", "kind": "behavior", "applies": "§7.5 Permission Rules, rule 7, where an implementation attaches a channel automatically (RK-7.5-024): a channel detached from the room earlier, and a binding that already exists. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->It MUST NOT do so when the channel was
    previously detached from that room, and MUST NOT use such an attach to
    replace a binding that already exists — detaching is how an integrator
    revokes a channel's access, and an automatic re-attach at default
-   permissions undoes exactly that.
+   permissions undoes exactly that.<!-- /rfc --><!-- rfc: {"id": "RK-7.5-026", "kind": "behavior", "applies": "§7.5 Permission Rules, rule 8: everything rebuilt from the timeline for a channel (memory history, model prompt, per-channel replay), against the visibility withheld at delivery; a channel's own accepted events stay in its context (RK-7.5-032), and host code reads the history whole (RK-7.5-034). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 8. **Reconstructed context obeys the same rule as delivery.** Rule 1 governs
    `on_event()`; this one governs everything the implementation rebuilds from
    the timeline *for* a channel — the history handed to a memory provider, the
    turns assembled into a model prompt, any per-channel replay of what was said.
    A channel MUST NOT obtain there an event visibility withheld from it at
    delivery. Withholding an event at broadcast and returning it one turn later
-   as context is not a partial enforcement of visibility; it is none.
+   as context is not a partial enforcement of visibility; it is none.<!-- /rfc --><!-- rfc: {"id": "RK-7.5-027", "kind": "behavior", "applies": "§7.5 Permission Rules, rule 8: an event stored BLOCKED, in the context rebuilt for any channel, its own source's included. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
    The same holds for an event delivered to nobody. An event stored `BLOCKED`
    — refused by a hook (§10.1 step 10), written by a source that could not
@@ -4795,24 +4795,24 @@ Implementations MUST enforce these rules:
    MUST NOT reach any channel's reconstructed context, its own source's
    included: the room
    refused that turn, and a model that reads its own refused answer as
-   history continues from a turn nobody received. The record stays in the
+   history continues from a turn nobody received. <!-- /rfc --><!-- rfc: {"id": "RK-7.5-028", "kind": "behavior", "applies": "§7.5 Permission Rules, rule 8: a BLOCKED record in the timeline reads (§14.1) and in the history rebuilt for hooks. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The record stays in the
    timeline for host code and audit (the point on host code below applies to
    it unchanged), behind an explicit request: a timeline read serves the rows
    the room received by default and the `BLOCKED` rows only when asked
    (§14.1), a read by id is unconditional, and the history rebuilt for hooks
-   stays whole.
+   stays whole.<!-- /rfc --><!-- rfc: {"id": "RK-7.5-029", "kind": "behavior", "applies": "§7.5 Permission Rules, rule 8: an event deleted by an accepted DELETE (§10.3), in the history rebuilt for a channel and for hooks. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
    An event deleted by an accepted DELETE stays in the history rebuilt for a
    channel, with its content withheld: an empty text in place of what was
    said, and nothing of the provider's original payload; its stored record,
-   and the history rebuilt for hooks, keep the content (§10.3).
+   and the history rebuilt for hooks, keep the content (§10.3).<!-- /rfc --><!-- rfc: {"id": "RK-7.5-030", "kind": "behavior", "applies": "§7.5 Permission Rules, rule 8: where the per-reader filter is applied, against a context shared by every channel of a broadcast. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
    The filter is per reader, so it MUST be applied where the reader is known —
    a single `RoomContext` shared by every channel of a broadcast cannot be
-   filtered once for all of them. An implementation MUST apply it before the
+   filtered once for all of them. <!-- /rfc --><!-- rfc: {"id": "RK-7.5-031", "kind": "behavior", "applies": "§7.5 Permission Rules, rule 8: the filter applied before a component that can transform the history (a summarizing memory provider), and a per-reader view host code can ask for. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An implementation MUST apply it before the
    history reaches a component that can transform it (a summarizing or
    compacting memory provider re-emits hidden content as a summary otherwise),
-   and SHOULD expose the per-reader view so host code can ask for it.
+   and SHOULD expose the per-reader view so host code can ask for it.<!-- /rfc --><!-- rfc: {"id": "RK-7.5-032", "kind": "behavior", "applies": "§7.5 Permission Rules, rule 8, the first point it does not cover: a channel's own accepted events in its rebuilt context; its refused ones stay out (RK-7.5-027). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
    Three points the rule does NOT cover:
 
@@ -4822,21 +4822,21 @@ Implementations MUST enforce these rules:
      prompt would erase the assistant pattern of §7.4
      (`visibility="ws_advisor"`) from the inside. Its own *refused* turns are
      the exception stated above: an answer nobody received, a muted channel's
-     included, is not history the channel may continue from. A channel with
+     included, is not history the channel may continue from. <!-- /rfc --><!-- rfc: {"id": "RK-7.5-033", "kind": "behavior", "applies": "§7.5 Permission Rules, rule 8: a channel with no binding in the room, handed none of its events (rule 2). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A channel with
      no binding in the room is handed none of its events, its own included
-     (rule 2).
+     (rule 2).<!-- /rfc --><!-- rfc: {"id": "RK-7.5-034", "kind": "behavior", "applies": "§7.5 Permission Rules, rule 8, the second point it does not cover: the history read by host code (hooks, scorers, framework machinery). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
    - **Host code reads the timeline whole.** Hooks, scorers and framework
      machinery run in the integrator's process and hold the store already;
      filtering their `recent_events` would forbid nothing and would break
      legitimate readers. Visibility is a rule between the room and its
-     channels.
+     channels.<!-- /rfc --><!-- rfc: {"id": "RK-7.5-035", "kind": "behavior", "applies": "§7.5 Permission Rules, rule 8, the third point: the visibility a rebuilt history reads, the one stored at the event's commit or by a later write of it (§11.7.6). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
    - **Visibility is stamped at commit.** The event's own `visibility` field
      is the whole answer: the intersection stored at its commit (§7.3), or
      what a later write of the event set (a held message's release,
      §11.7.6), never the source's binding as it stands when the history is
      read. Widening or
      narrowing a binding changes what the source's later events reach, not
-     what its past ones reached. The same holds when the source binding no
+     what its past ones reached. <!-- /rfc --><!-- rfc: {"id": "RK-7.5-036", "kind": "behavior", "applies": "§7.5 Permission Rules, rule 8: an event whose source binding no longer exists, in the history rebuilt for a channel. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The same holds when the source binding no
      longer exists: an implementation MUST NOT treat an unresolvable source
      as a reason to hide ordinary history, which would empty a room's context
      the moment a transport detaches.

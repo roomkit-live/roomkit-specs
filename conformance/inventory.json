@@ -267,39 +267,39 @@
     },
     {
       "section": "7",
-      "sha256": "a93c19a4df402a7413cf3d04e9e8b9ec3a79e495cb1ad5fa3cfe45e870befb32",
+      "sha256": "0d419084c31643804e9bf175e071a5d78ccf08c11006a6573425faea4c179e1d",
       "classification": "normative",
-      "review": "Source inventory: Permission Model. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Permission Model, reviewed for one obligation per unit (RMK-1783). Its two sentences name the three primitives and who decides their use; RK-7-001 keeps its id, text and applies, and carries its level."
     },
     {
       "section": "7.1",
-      "sha256": "cb755a8b704567372a7ab655ac31e9055459e98aafc9976fab6d1c3fa91686ff",
+      "sha256": "f956d06c61e073d4807e6b27527edceedc12a8c4dcadc83f703c59305dfdf993",
       "classification": "normative",
-      "review": "Source inventory: Access. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Access, split one table row per unit (RMK-1783), with the markers inside its cells so that it renders as before; the sentence that says what access controls and the header go with the READ_WRITE row. Every unit carries its level."
     },
     {
       "section": "7.2",
-      "sha256": "b53ff30be562d22a786cab1544398097b9f9a3f8e5047184a9587f7647056f1b",
+      "sha256": "24be8da28fd15ca63603b19eab86ffc471073982e20ac6548e9ce238d2ad2a25",
       "classification": "normative",
-      "review": "Source inventory: Muting. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Muting, split to one obligation per unit (RMK-1783). Each list item and sentence on a muted binding is a unit: reading kept, a response stored BLOCKED with, in the same sentence, the streamed one a muted source may close unread, a mute that lands while a response streams, side effects kept, mute() and unmute(), and output_muted. A binding change that changes nothing is one unit a sentence. Every unit carries its level."
     },
     {
       "section": "7.3",
-      "sha256": "291a2096a37da5c880c7163623993b4bc97f15c0bb8a7c00d49429676819f4f9",
+      "sha256": "07a24a1103d4fbe5870ecd6dfa8a90ebc3eabac012e3fefb5dfd2b5e559a45db",
       "classification": "normative",
-      "review": "The grammar source block is split into seven independently reviewable clauses, preserving every original character after removing annotations. The value table, framework-only internal behavior and event intersection remain separate broad units."
+      "review": "Source inventory: Visibility, split to one obligation per unit (RMK-1783). The value table is split one row per unit, with the markers inside its cells; the sentence that introduces it and the header go with the all row. The seven grammar clauses keep their ids (RK-7.3-005 to 011). Who writes internal and an event's visibility are one unit a sentence, each item of the intersection list a unit, and the closing paragraph on what seeing an event means one unit (RK-7.3-037); the sentence that refuses internal at every door and puts it back after a hook or a response stays whole (RK-7.3-020). The sentence that tells the integrator which value an event shown to no channel takes stands alone and is non_testable (RK-7.3-022). Every unit carries its level."
     },
     {
       "section": "7.4",
-      "sha256": "010b44646ebe36ea7de8d3e9b760d5f37704264cf679f36bd45f95a47a7455e4",
+      "sha256": "731703c4129c1e69dfcc5a67792e33583f165e373643f1b1f5474437cce502de",
       "classification": "normative",
-      "review": "Source inventory: Named Patterns. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Named Patterns. Its sentences and table name configurations of the three primitives, not framework concepts, and stay one unit (RK-7.4-001), which carries its level."
     },
     {
       "section": "7.5",
-      "sha256": "30bcd3410070f02d30084cd0004f654a0c8db1a5f8e40ba36701dbd303105858",
+      "sha256": "53e8598514326c1772650307e921eabdae23b0d90392bd0d215bac6f3b303704",
       "classification": "normative",
-      "review": "Source inventory: Permission Rules. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Permission Rules, split to one obligation per unit (RMK-1783). Rules 1, 3, 4 and 5 are a unit each. Rule 2 is one unit a sentence, the paths it does not cover included (RK-7.5-010, 017, 018). Rule 6 is the rule on a binding derived from another, with its rationale, and the rule on what widens a binding. Rule 7 is the MAY that lets an implementation attach a channel automatically (may) and what such an attach must not do. Rule 8 is one unit a sentence or paragraph; each of its three points is a unit, with two sentences apart: a channel with no binding (RK-7.5-033) and a source binding that no longer exists (RK-7.5-036). A sentence whose obligations a semicolon or a comma joins stays whole (for example RK-7.5-012, RK-7.5-028, RK-7.5-031). Every unit carries its level."
     },
     {
       "section": "8",
