@@ -11264,6 +11264,30 @@
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "incomplete"
             }
           ]
         },
@@ -12210,6 +12234,30 @@
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "incomplete"
             }
           ]
         }
@@ -13154,6 +13202,30 @@
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "incomplete"
             }
           ]
         },
@@ -14076,6 +14148,30 @@
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "incomplete"
             }
           ]
         }
@@ -15019,6 +15115,30 @@
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "incomplete"
             }
           ]
         },
@@ -15949,6 +16069,30 @@
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "incomplete"
             }
           ]
         }
@@ -17124,6 +17268,30 @@
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "incomplete"
             }
           ]
         }
@@ -17605,6 +17773,30 @@
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         },
@@ -17735,6 +17927,30 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -17975,6 +18191,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         },
@@ -18202,6 +18442,30 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -18436,6 +18700,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         },
@@ -18663,6 +18951,30 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -19136,6 +19448,30 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         },
@@ -19382,6 +19718,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         },
@@ -19508,6 +19868,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         },
@@ -19600,6 +19984,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         },
@@ -19684,6 +20092,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         },
@@ -19760,6 +20192,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -19917,6 +20373,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         },
@@ -20057,6 +20537,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         },
@@ -20188,6 +20692,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         },
@@ -20281,6 +20809,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         },
@@ -20300,6 +20852,30 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -20425,6 +21001,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         },
@@ -20484,6 +21084,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         },
@@ -20527,6 +21151,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -20554,6 +21202,30 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         },
@@ -20573,6 +21245,30 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -20600,6 +21296,30 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -20681,6 +21401,30 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "incomplete"
             }
           ]
         },
@@ -20799,6 +21543,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "incomplete"
             }
           ]
         }
@@ -21354,6 +22122,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -21843,6 +22635,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -22336,6 +23152,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -22823,6 +23663,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -23302,6 +24166,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "incomplete"
             }
           ]
         }
@@ -23781,6 +24669,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -24268,6 +25180,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -24747,6 +25683,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -25234,6 +26194,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -25723,6 +26707,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "incomplete"
             }
           ]
         }
@@ -26213,6 +27221,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "incomplete"
             }
           ]
         }
@@ -26710,6 +27742,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         },
@@ -27176,6 +28232,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "incomplete"
             }
           ]
         }
@@ -28135,6 +29215,30 @@
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "incomplete"
             }
           ]
         }
@@ -28596,6 +29700,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "incomplete"
             }
           ]
         },
@@ -28671,6 +29799,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -29096,6 +30248,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "incomplete"
             }
           ]
         },
@@ -29179,6 +30355,30 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "incomplete"
             }
           ]
         }
@@ -29203,7 +30403,32 @@
             "Other ephemeral event types and channel kinds retain their own coverage.",
             "These two scenarios do not measure the preview length limit or an interrupted call."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -29292,6 +30517,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -29309,7 +30558,32 @@
           "missing": [
             "This scenario does not cover answer-text publications, reasoning, hook modifications or other channels."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -29823,6 +31097,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "incomplete"
             }
           ]
         }
@@ -30042,6 +31340,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -30997,6 +32319,30 @@
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "incomplete"
             }
           ]
         }
@@ -31518,6 +32864,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -31574,6 +32944,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -32071,6 +33465,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -32568,6 +33986,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -33071,6 +34513,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "incomplete"
             }
           ]
         }
@@ -33106,6 +34572,30 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "incomplete"
             }
           ]
         }
@@ -33188,6 +34678,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         },
@@ -33231,6 +34745,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         },
@@ -33260,6 +34798,30 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         },
@@ -33282,6 +34844,30 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "incomplete"
             }
           ]
         }
@@ -33348,6 +34934,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         },
@@ -33391,6 +35001,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         },
@@ -33871,6 +35505,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "incomplete"
             }
           ]
         }
@@ -34350,6 +36008,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "incomplete"
             }
           ]
         }
@@ -35367,6 +37049,30 @@
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "incomplete"
             }
           ]
         }
@@ -35838,6 +37544,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "incomplete"
             }
           ]
         }
@@ -36319,6 +38049,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "incomplete"
             }
           ]
         }
@@ -37336,6 +39090,30 @@
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "incomplete"
             }
           ]
         },
@@ -37715,6 +39493,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "incomplete"
             }
           ]
         }
@@ -38620,6 +40422,30 @@
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "incomplete"
             }
           ]
         }
@@ -38666,6 +40492,30 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -39551,6 +41401,30 @@
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "incomplete"
             }
           ]
         }
@@ -40024,6 +41898,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "incomplete"
             }
           ]
         },
@@ -41002,6 +42900,30 @@
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "incomplete"
             }
           ]
         }
@@ -41883,6 +43805,30 @@
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -42398,6 +44344,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "incomplete"
             }
           ]
         }
@@ -43335,6 +45305,30 @@
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "incomplete"
             }
           ]
         }
@@ -44248,6 +46242,30 @@
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "incomplete"
             }
           ]
         }
@@ -45193,6 +47211,30 @@
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "incomplete"
             }
           ]
         }
@@ -46130,6 +48172,30 @@
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "incomplete"
             }
           ]
         }
@@ -47043,6 +49109,30 @@
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "incomplete"
             }
           ]
         }
@@ -47956,6 +50046,30 @@
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "incomplete"
             }
           ]
         }
@@ -48869,6 +50983,30 @@
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "incomplete"
             }
           ]
         }
@@ -49304,6 +51442,30 @@
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "incomplete"
             }
           ]
         }
@@ -49681,6 +51843,30 @@
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "incomplete"
             }
           ]
         },
@@ -49972,6 +52158,30 @@
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -50386,6 +52596,30 @@
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         },
@@ -50837,6 +53071,30 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -51093,6 +53351,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "incomplete"
             }
           ]
         }
@@ -51292,6 +53574,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -51497,6 +53803,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -51691,6 +54021,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "incomplete"
             }
           ]
         },
@@ -52061,6 +54415,30 @@
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "incomplete"
             }
           ]
         }
@@ -52178,6 +54556,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -54532,6 +56934,30 @@
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "incomplete"
             }
           ]
         },
@@ -55287,6 +57713,30 @@
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "incomplete"
             }
           ]
         },
@@ -56026,6 +58476,30 @@
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "incomplete"
             }
           ]
         },
@@ -56292,6 +58766,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "incomplete"
             }
           ]
         }
@@ -57549,6 +60047,30 @@
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "incomplete"
             }
           ]
         }
@@ -57946,6 +60468,30 @@
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "incomplete"
             }
           ]
         }
@@ -58383,6 +60929,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "incomplete"
             }
           ]
         }
@@ -59324,6 +61894,30 @@
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "incomplete"
             }
           ]
         }
@@ -59977,6 +62571,30 @@
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "incomplete"
             }
           ]
         }
@@ -60960,6 +63578,30 @@
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "incomplete"
             }
           ]
         },
@@ -61866,6 +64508,30 @@
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "incomplete"
             }
           ]
         }
@@ -62353,6 +65019,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -62527,6 +65217,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -63101,6 +65815,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -63573,6 +66311,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "incomplete"
             }
           ]
         }
@@ -64050,6 +66812,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         },
@@ -64685,6 +67471,30 @@
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "incomplete"
             }
           ]
         }
@@ -65276,6 +68086,30 @@
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "incomplete"
             }
           ]
         },
@@ -65655,6 +68489,30 @@
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "incomplete"
             }
           ]
         },
@@ -66114,6 +68972,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "incomplete"
             }
           ]
         },
@@ -66406,6 +69288,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         },
@@ -66649,6 +69555,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "incomplete"
             }
           ]
         },
@@ -66876,6 +69806,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -67159,6 +70113,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -67215,6 +70193,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -67694,6 +70696,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "incomplete"
             }
           ]
         }
@@ -67728,6 +70754,30 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "incomplete"
             }
           ]
         }
@@ -67747,7 +70797,32 @@
             "The Python filter callback raising an exception is not certified by Rust server-listing cleanup.",
             "Server-aware tool policy and listing size, duplicate-name and warning bounds are outside this host-access link."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            }
+          ]
         },
         {
           "id": "phase4-mcp-tool-dictionaries",
@@ -67767,6 +70842,30 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "incomplete"
             }
           ]
         }
@@ -67793,6 +70892,30 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "incomplete"
             }
           ]
         }
@@ -68164,6 +71287,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         },
@@ -68192,6 +71339,30 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         },
@@ -68760,6 +71931,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         },
@@ -69218,6 +72413,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -69564,6 +72783,30 @@
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         },
@@ -69903,6 +73146,30 @@
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         },
@@ -70280,6 +73547,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         },
@@ -70626,6 +73917,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -71097,6 +74412,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -71152,6 +74491,30 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         },
@@ -71162,7 +74525,32 @@
           "missing": [
             "Served MCP registration and execution tool patterns remain under RMK-1709. This link claims only local in-memory registration, not complete registry coverage or direct-file API parity."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            }
+          ]
         },
         {
           "id": "phase4-standalone-skill-requirements",
@@ -71206,6 +74594,30 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -71564,6 +74976,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         },
@@ -71648,6 +75084,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         },
@@ -71723,6 +75183,30 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -73049,6 +76533,33 @@
       "corpus_commit": "c20267e7ebe8007ba41853c5537d54d1334713bc",
       "backend": "memory",
       "runtime": "asyncio"
+    },
+    {
+      "id": "rust-b085289-memory-current-thread",
+      "implementation": "rust",
+      "implementation_commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+      "rfc_commit": "2f35a764a425fe69453e22bdba378482673c7e34",
+      "corpus_commit": "50f6b54077922295c254f46fef5b18c740816187",
+      "backend": "memory",
+      "runtime": "current_thread"
+    },
+    {
+      "id": "rust-b085289-memory-multi-thread-4",
+      "implementation": "rust",
+      "implementation_commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+      "rfc_commit": "2f35a764a425fe69453e22bdba378482673c7e34",
+      "corpus_commit": "50f6b54077922295c254f46fef5b18c740816187",
+      "backend": "memory",
+      "runtime": "multi_thread_4"
+    },
+    {
+      "id": "rust-b085289-sqlite-current-thread",
+      "implementation": "rust",
+      "implementation_commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+      "rfc_commit": "2f35a764a425fe69453e22bdba378482673c7e34",
+      "corpus_commit": "50f6b54077922295c254f46fef5b18c740816187",
+      "backend": "sqlite",
+      "runtime": "current_thread"
     }
   ]
 }

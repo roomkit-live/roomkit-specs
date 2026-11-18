@@ -500,3 +500,23 @@ cancellation tests remain separate source evidence. This receipt gives no
 credit to Rust execution, external-tool-handler integration, media/realtime
 execution, SQL stores or distributed turns, and does not complete either broad
 RFC source unit. All 141 preceding execution receipts remain unchanged.
+
+## roomkit-rs memory and SQLite passes (2026-11-17)
+
+`rust-b085289-memory-current-thread.xml`,
+`rust-b085289-memory-multi-thread-4.xml` and
+`rust-b085289-sqlite-current-thread.xml` retain the three passes of roomkit-rs
+`b085289744732833d9fa94bd3921e85b0b0d8cba`, a clean commit of its main whose CI
+passed, run on Linux with Rust 1.99.1:
+
+```sh
+ROOMKIT_CONFORMANCE_JUNIT=target/conformance cargo test -p roomkit --test conformance
+ROOMKIT_CONFORMANCE_JUNIT=target/conformance cargo test -p roomkit-sqlite --test conformance
+```
+
+The copied corpus is `50f6b54077922295c254f46fef5b18c740816187`; the RFC is
+`2f35a764a425fe69453e22bdba378482673c7e34`. Each pass holds the 3083 scenarios
+of the copy: 3032 passed and 51 skipped, the scenarios that need a turn
+executor apart (RFC §10.6.7), and none failed. They are the first Rust
+receipts. They give no credit to PostgreSQL, to roomkit-rs's later commits,
+or to specialized tests. The 142 earlier execution receipts are unchanged.
