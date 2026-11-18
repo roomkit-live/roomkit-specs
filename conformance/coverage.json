@@ -1,7 +1,7 @@
 {
   "version": 1,
   "rfc_sha256": "f8cfc0af6cbfb097a0f5450f937716f95932d6d44cac938d9456d34f48ca6ab2",
-  "corpus_sha256": "d8bb3d20af2d8beabf057331ba4cc8828e692acbcd9a8762f467b2a334294fed",
+  "corpus_sha256": "b24a2907772e95b6799e6cc01066b1f9ff7e5765297c146512b745a3908b9873",
   "python_commit": "b50c50a782668fc1681e21bcec52a3d83bc0d8c0",
   "scenario_count": 3083,
   "sections": [
@@ -4418,6 +4418,7 @@
         "delivery/an-awaited-call-cancelled-during-identity-waits-for-no-turn",
         "delivery/an-awaited-call-cancelled-during-routing-waits-for-no-turn",
         "delivery/the-next-event-s-turn-runs-while-the-turn-before-it-is-held",
+        "discussion/listen-only-on-a-turn-given-but-not-started-cuts-it",
         "inbound/a-failed-delivery-is-reported",
         "inbound/a-failed-turn-fires-on-error",
         "inbound/a-message-reaches-the-other-transports",
