@@ -7570,7 +7570,7 @@ again), would double the history.
 
 ### 10.2 Broadcast Pipeline
 
-<!-- rfc: {"id": "RK-10.2-001", "kind": "behavior", "applies": "§10.2 Broadcast Pipeline; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-10.2-001", "kind": "behavior", "applies": "§10.2 Broadcast Pipeline; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.", "level": "must"} -->
 The broadcast pipeline routes an event to all eligible channels in a room.
 
 ```
@@ -7578,23 +7578,23 @@ broadcast(event, source_binding | null, context) → BroadcastResult
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-10.2-002", "kind": "behavior", "applies": "§10.2 Broadcast Pipeline; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-10.2-009", "kind": "behavior", "applies": "§10.2: the planning of a delivery set, its steps 1 and 2, at the room lock boundary (§10.1 steps 12–14). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Planning vs execution — delivery lanes.** Broadcast splits at the room
 lock boundary (§10.1 steps 12–14). *Planning* — resolving the delivery set
 (steps 1–2 below) — MUST run under the room lock, against binding state
-consistent with the committed timeline. *Execution* — the per-target work of
+consistent with the committed timeline. <!-- /rfc --><!-- rfc: {"id": "RK-10.2-010", "kind": "behavior", "applies": "§10.2: the execution of a delivery set, its step 3, in the room's delivery lane. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->*Execution* — the per-target work of
 step 3 — is NOT required to hold the room lock; it MUST instead preserve
 **per-room order**: events execute their delivery sets in index order, one
 event's set completing before the next event's begins (a *delivery lane*
 per room). Executing under the room lock trivially satisfies this ordering
 and remains conformant — the lane model exists so that a slow provider or a
 long AI generation does not extend the room's critical section (§13.5),
-which is what serializes multi-process deployments. Response events
+which is what serializes multi-process deployments. <!-- /rfc --><!-- rfc: {"id": "RK-10.2-011", "kind": "behavior", "applies": "§10.2: the response events a delivery set collects, and their commit passes (§10.1 step 14). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Response events
 re-enter the pipeline as their own commit passes (§10.1 step 14) rather
 than being drained inside the trigger's lock tenure.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-10.2-003", "kind": "behavior", "applies": "§10.2 Broadcast Pipeline; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-10.2-003", "kind": "behavior", "applies": "§10.2 Broadcast Pipeline; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.", "level": "must"} -->
 **Step-by-step:**
 
 ```
@@ -7666,15 +7666,15 @@ than being drained inside the trigger's lock tenure.
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-10.2-004", "kind": "behavior", "applies": "§10.2 Broadcast Pipeline; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-10.2-012", "kind": "behavior", "applies": "§10.2: the context each target of a delivery set is handed. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **A delivery's context.** Each target is handed the room's latest events as
 read before the event's commit, then the committed event as its newest, at
 the index the store gave it: a channel declaring a window of 3 is handed 4
-events. A streamed row's is read at its own commit, not at its stream's start.
+events. <!-- /rfc --><!-- rfc: {"id": "RK-10.2-013", "kind": "behavior", "applies": "§10.2: the context of a streamed row's delivery. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A streamed row's is read at its own commit, not at its stream's start.<!-- /rfc --><!-- rfc: {"id": "RK-10.2-014", "kind": "behavior", "applies": "§10.2: an instruction (§10.1.1) and the contexts of delivery sets. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 An instruction, never committed, joins none.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-10.2-005", "kind": "behavior", "applies": "§10.2 Broadcast Pipeline; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-10.2-005", "kind": "behavior", "applies": "§10.2 Broadcast Pipeline; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.", "level": "must"} -->
 **What a delivery set reports.** Once its targets answered, the set of the
 inbound event reports `broadcast_partial_failure` first when any target
 failed, then `delivery_succeeded` for each delivery that succeeded, then
@@ -7683,17 +7683,17 @@ that succeeded or failed; `event_processed` follows its `AFTER_BROADCAST`
 hooks.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-10.2-006", "kind": "behavior", "applies": "§10.2 Broadcast Pipeline; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-10.2-015", "kind": "behavior", "applies": "§10.2: the bindings of a channel once it is unregistered. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **An unregistered channel.** Unregistering a channel leaves its bindings in
-their rooms. A message on it is refused as one on an unknown channel (§10.1
+their rooms. <!-- /rfc --><!-- rfc: {"id": "RK-10.2-016", "kind": "behavior", "applies": "§10.2: a message on, and a delivery set reaching, a channel no longer registered (§10.1 step 1, step 3). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A message on it is refused as one on an unknown channel (§10.1
 step 1), and a delivery set does not call it (step 3): a transport is
 skipped, since in a deployment of several processes its connections may be
 held by another, and an intelligence channel the event solicits is reported
-`delivery_failed` with the error `channel_not_registered`, not retryable. A
+`delivery_failed` with the error `channel_not_registered`, not retryable. <!-- /rfc --><!-- rfc: {"id": "RK-10.2-017", "kind": "behavior", "applies": "§10.2: a channel registered again under an unregistered channel's id. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
 channel registered again under the id serves the bindings.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-10.2-007", "kind": "behavior", "applies": "§10.2 Broadcast Pipeline; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-10.2-007", "kind": "behavior", "applies": "§10.2 Broadcast Pipeline; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.", "level": "must"} -->
 **BroadcastResult:**
 
 ```
@@ -7710,15 +7710,15 @@ BroadcastResult
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-10.2-008", "kind": "behavior", "applies": "§10.2 Broadcast Pipeline; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-10.2-018", "kind": "behavior", "applies": "§10.2 step 3c: the channels a delivery set solicits, transport and intelligence (§19.3). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Solicitation.** Step 3c asks a channel to act. For transport channels that
 is unconditional; for intelligence channels the set is narrowed by the
-event's address and by the room's agent-response policy (§19.3). Narrowing
+event's address and by the room's agent-response policy (§19.3). <!-- /rfc --><!-- rfc: {"id": "RK-10.2-019", "kind": "behavior", "applies": "§10.2 step 3c: solicitation and visibility (§7.3). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Narrowing
 solicitation MUST NOT narrow *visibility*: the two filters are independent,
 and an event hidden from a channel by §7.3 is hidden whether or not it was
-addressed to it. An unsolicited intelligence channel is not called at step 3c
+addressed to it. <!-- /rfc --><!-- rfc: {"id": "RK-10.2-020", "kind": "behavior", "applies": "§10.2 step 3c: an intelligence channel a delivery set does not solicit (§19.3.2). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An unsolicited intelligence channel is not called at step 3c
 at all — not asked, and not told — and rebuilds what it missed from the
-timeline when it is next solicited (§19.3.2). In a room a discussion holds
+timeline when it is next solicited (§19.3.2). <!-- /rfc --><!-- rfc: {"id": "RK-10.2-021", "kind": "behavior", "applies": "§10.2 step 3c: a room a discussion holds (§19.7.5). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->In a room a discussion holds
 (Section 19.7.5), no agent is solicited at step 3c: the discussion reads the
 event's names from the text it commits with, once its `BEFORE_BROADCAST`
 hooks have run, queues the agents the event asks for, and gives each its
@@ -7727,15 +7727,15 @@ turn later, a rerun planned for that agent alone.
 
 ### 10.3 Edit and Delete Processing
 
-<!-- rfc: {"id": "RK-10.3-001", "kind": "behavior", "applies": "§10.3 Edit and Delete Processing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-10.3-009", "kind": "behavior", "applies": "§10.3: an EDIT or DELETE event, before it is broadcast. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 When an event has type EDIT or DELETE, the framework MUST perform additional
-validation and state updates before broadcasting. The validation is §10.1
+validation and state updates before broadcasting. <!-- /rfc --><!-- rfc: {"id": "RK-10.3-010", "kind": "behavior", "applies": "§10.3: the passes that commit an event, where the validation of a change runs (§10.1 step 8a, §10.1 step 14, §9.4, §10.5). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The validation is §10.1
 step 8a, and it runs on every pass that commits an event: an inbound
 message's, a response's (§10.1 step 14), that of an event a hook injects
 (§9.4) and a direct injection's (§10.5).
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-10.3-002", "kind": "behavior", "applies": "§10.3 Edit and Delete Processing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-10.3-011", "kind": "behavior", "applies": "§10.3 Validation, rule 1: what makes an event a change, and a change held elsewhere in an event. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Validation:**
 
 1. An event is an edit when its type is EDIT and its content an
@@ -7744,98 +7744,104 @@ message's, a response's (§10.1 step 14), that of an event a hook injects
    can be checked, and are refused with `target_event_not_found`; so is a
    change held anywhere else, at any depth (an edit's new content, a
    composite's part), which the commit would write on its target, or a
-   channel apply natively, without this check.
+   channel apply natively, without this check.<!-- /rfc --><!-- rfc: {"id": "RK-10.3-012", "kind": "behavior", "applies": "§10.3 Validation, rule 2: the target a change names. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 2. The framework MUST verify that `target_event_id` references, read under
    the room lock, an event of the same room that is not `BLOCKED`, not
    deleted (`metadata.deleted`) and not itself an edit or a delete;
-   otherwise `target_event_not_found`. An edited event may be edited again.
+   otherwise `target_event_not_found`. An edited event may be edited again.<!-- /rfc --><!-- rfc: {"id": "RK-10.3-013", "kind": "behavior", "applies": "§10.3 Validation, rule 2: a delete of an event already deleted, and its retry (§13.4). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
    A delete of an event already deleted is refused: a client that retries a
    delete gives it an idempotency key, and the retry is answered as the
-   first (§13.4).
+   first (§13.4).<!-- /rfc --><!-- rfc: {"id": "RK-10.3-014", "kind": "behavior", "applies": "§10.3 Validation, rule 3: who the author of an event is. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 3. An event's author is, for an event that travelled OUTBOUND (a channel's
    own output, an agent's response), the channel itself, whatever
    participant it names: a channel never speaks as a participant. Otherwise
    it is the participant its sender id names on its channel (Section 5.5);
-   else the sender id on its channel; else nobody. Authorship does not
+   else the sender id on its channel; else nobody. <!-- /rfc --><!-- rfc: {"id": "RK-10.3-015", "kind": "behavior", "applies": "§10.3 Validation, rule 3: an author whose participant left or was banned. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Authorship does not
    depend on the participant's status: a participant who left, or was
-   banned, is still the author of their messages.
+   banned, is still the author of their messages.<!-- /rfc --><!-- rfc: {"id": "RK-10.3-016", "kind": "behavior", "applies": "§10.3 Validation, rule 4: a change made with the sender's authority. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 4. For `DeleteContent` with `delete_type = SENDER`, or `EditContent` with
    `edit_source = "sender"` or null, which is the sender's, the framework
    MUST verify that the sender is the original author of the target event:
    a change whose event or target has no author is refused with
    `identity_required_for_edit`, and two authors that differ with
    `not_original_author`. An agent edits its own responses, and no one
-   else's.
+   else's.<!-- /rfc --><!-- rfc: {"id": "RK-10.3-017", "kind": "behavior", "applies": "§10.3 Validation, rule 5: an ADMIN delete. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 5. For `DeleteContent` with `delete_type = ADMIN`, the framework MUST verify
    that the sender has administrative authority as the participant it is on
    its channel (Section 5.5): an OWNER or an AGENT, neither LEFT nor BANNED.
    Otherwise `not_authorized`: an id that names an owner on another channel
    grants none, and a channel's own output holds no participant's
-   authority, whatever participant it names. A sender who names no one is
-   refused with `identity_required_for_edit`.
+   authority, whatever participant it names. <!-- /rfc --><!-- rfc: {"id": "RK-10.3-018", "kind": "behavior", "applies": "§10.3 Validation, rule 5: an ADMIN delete whose sender names no participant. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A sender who names no one is
+   refused with `identity_required_for_edit`.<!-- /rfc --><!-- rfc: {"id": "RK-10.3-019", "kind": "behavior", "applies": "§10.3 Validation, rule 6: a change claiming the system's authority. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 6. For `DeleteContent` with `delete_type = SYSTEM`, or `EditContent` with
    `edit_source = "system"`, which claim the system's authority, the framework
    MUST verify that the event comes from a hook, since no channel is of the
-   type SYSTEM (§6.2); otherwise `not_authorized`. `edit_source` is
+   type SYSTEM (§6.2); otherwise `not_authorized`. <!-- /rfc --><!-- rfc: {"id": "RK-10.3-020", "kind": "behavior", "applies": "§10.3 Validation, rule 6: an `edit_source` other than sender, system or null. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`edit_source` is
    `"sender"`, `"system"` or null: an implementation that accepts another
-   value checks it as the sender's (rule 4), never as the system's. An EDIT or a DELETE a hook injects (§9.4) is the
+   value checks it as the sender's (rule 4), never as the system's. <!-- /rfc --><!-- rfc: {"id": "RK-10.3-021", "kind": "behavior", "applies": "§10.3 Validation, rule 6: an EDIT or DELETE a hook injects (§9.4). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An EDIT or a DELETE a hook injects (§9.4) is the
    hook's, whatever source it names, and makes a SYSTEM change only (a SYSTEM
    delete, an edit whose `edit_source` is `system`): any other, one that claims
    the sender's or an administrator's authority included, is refused
-   `not_authorized`, so a hook never edits or deletes in a participant's name.
+   `not_authorized`, so a hook never edits or deletes in a participant's name.<!-- /rfc --><!-- rfc: {"id": "RK-10.3-022", "kind": "behavior", "applies": "§10.3 Validation, rule 7: a change that fails validation. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 7. If validation fails, the framework MUST reject the event: nothing of it
-   is stored, and no hook runs on it. A refused inbound message returns a
+   is stored, and no hook runs on it. <!-- /rfc --><!-- rfc: {"id": "RK-10.3-023", "kind": "behavior", "applies": "§10.3 Validation, rule 7: how a refused change is reported, by its origin (§10.1 step 8a, §10.5). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A refused inbound message returns a
    blocked result with the reason (§10.1 step 8a), a direct injection
    raises (§10.5), and a refused response or injected event is logged at
    warning level.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-10.3-024", "kind": "behavior", "applies": "§10.3: a hook's modify of a change (§9.4), and what the validation checked. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A hook's modify keeps what the validation checked (§9.4): the target, the
-`edit_source` and the `delete_type`, and the kind of content. The hook's new
+`edit_source` and the `delete_type`, and the kind of content. <!-- /rfc --><!-- rfc: {"id": "RK-10.3-025", "kind": "behavior", "applies": "§10.3: a hook's modify of a change: the new content of an edit, the reason of a delete. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The hook's new
 content of an edit and its reason of a delete stand, unless that new content
-holds a change, which leaves the original's. A replacement of an edit by
+holds a change, which leaves the original's. <!-- /rfc --><!-- rfc: {"id": "RK-10.3-026", "kind": "behavior", "applies": "§10.3: a hook's modify replacing an edit by content of another kind. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A replacement of an edit by
 content of another kind is taken as the edit's new content, so a hook that
 redacts an event as text redacts an edit too; one that is or holds a change,
-in a composite included, leaves the original's. A replacement of a delete by
+in a composite included, leaves the original's. <!-- /rfc --><!-- rfc: {"id": "RK-10.3-027", "kind": "behavior", "applies": "§10.3: a hook's modify replacing a delete by content of another kind. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A replacement of a delete by
 content of another kind leaves the original's.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-10.3-003", "kind": "behavior", "applies": "§10.3 Edit and Delete Processing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-10.3-028", "kind": "behavior", "applies": "§10.3 State updates: a BEFORE_BROADCAST hook that blocks a change. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **State updates** (applied only after BEFORE_BROADCAST hooks allow the event —
 a hook that blocks the EDIT/DELETE MUST leave the target event unmutated):
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-10.3-029", "kind": "behavior", "applies": "§10.3 State updates, item 1: the target of an accepted EDIT. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 1. On successful EDIT: the commit writes the target with
    `EditContent.new_content` as the hooks left it and `metadata.edited =
-   true`, the target's other metadata kept. The EDIT event itself MUST be
-   stored in the timeline.
+   true`, the target's other metadata kept. <!-- /rfc --><!-- rfc: {"id": "RK-10.3-030", "kind": "behavior", "applies": "§10.3 State updates, item 1: an accepted EDIT event. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The EDIT event itself MUST be
+   stored in the timeline.<!-- /rfc --><!-- rfc: {"id": "RK-10.3-031", "kind": "behavior", "applies": "§10.3 State updates, item 2: the target of an accepted DELETE. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 2. On successful DELETE: the commit writes `metadata.deleted = true` on the
-   target, its other metadata kept. The DELETE event itself MUST be stored
-   in the timeline.
+   target, its other metadata kept. <!-- /rfc --><!-- rfc: {"id": "RK-10.3-032", "kind": "behavior", "applies": "§10.3 State updates, item 2: an accepted DELETE event. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The DELETE event itself MUST be stored
+   in the timeline.<!-- /rfc --><!-- rfc: {"id": "RK-10.3-033", "kind": "behavior", "applies": "§10.3 State updates, item 3: the commit of a change, its target's update and the room's counters (§14.3). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 3. The change, its target's update and the room's counters MUST be one
    transaction (§14.3): a commit that fails leaves neither the change nor
-   the target's update, and one whose target is gone by then fails whole.
+   the target's update, and one whose target is gone by then fails whole.<!-- /rfc --><!-- rfc: {"id": "RK-10.3-034", "kind": "behavior", "applies": "§10.3 State updates, item 3: the delivery results of a change's target (§14.3). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
    The target's update keeps the `delivery_results` the store holds, which
-   only the record of its deliveries writes (§14.3).
+   only the record of its deliveries writes (§14.3).<!-- /rfc --><!-- rfc: {"id": "RK-10.3-035", "kind": "behavior", "applies": "§10.3 State updates, item 4: the visibility of an accepted change (§7.3). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 4. An accepted change is committed with its own visibility, narrowed by its
    source binding's (§7.3), narrowed again to its target's: a correction of
-   a message an advisor alone saw never reaches the customer. An injected
-   change reaches those of its targets that could see the target.
+   a message an advisor alone saw never reaches the customer. <!-- /rfc --><!-- rfc: {"id": "RK-10.3-036", "kind": "behavior", "applies": "§10.3 State updates, item 4: the targets an injected change reaches. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An injected
+   change reaches those of its targets that could see the target.<!-- /rfc --><!-- rfc: {"id": "RK-10.3-037", "kind": "behavior", "applies": "§10.3 State updates, item 5: the target as a change's delivery set reads it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 5. The change's delivery set reads the target as the commit left it.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-10.3-038", "kind": "behavior", "applies": "§10.3 State updates: a change the persistence policy keeps out (§14.3, §14.1). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A change the kit's persistence policy keeps out (§14.3) is the exception to
 the change's own row and to the one transaction of items 1 to 3: no row of
 it is stored, and its target is written alone, as items 1 and 2 say
 (`write_change_target`, §14.1), the room's counters unmoved.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-10.3-004", "kind": "behavior", "applies": "§10.3 Edit and Delete Processing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-10.3-039", "kind": "behavior", "applies": "§10.3: the histories a channel is handed that hold a soft-deleted event (§7.5 rule 8). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **What a channel is handed of a deleted event.** A soft-deleted event's
 content is withheld from every history a channel is handed (§7.5 rule 8):
 the context a channel parses a message with, and the one each target of a
-broadcast is told and delivered with. The event is there with an empty text
+broadcast is told and delivered with. <!-- /rfc --><!-- rfc: {"id": "RK-10.3-040", "kind": "behavior", "applies": "§10.3: a soft-deleted event in a channel's history: its text and raw payload. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The event is there with an empty text
 in place of what was said, and without the provider's original payload
-(`source.raw_payload`), which holds the text. An edit of a deleted event has
+(`source.raw_payload`), which holds the text. <!-- /rfc --><!-- rfc: {"id": "RK-10.3-041", "kind": "behavior", "applies": "§10.3: an edit of a soft-deleted event in a channel's history. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An edit of a deleted event has
 its new content and its raw payload withheld alike, since it holds a version
-of the deleted text. The event keeps its id, index, type, its source with
+of the deleted text. <!-- /rfc --><!-- rfc: {"id": "RK-10.3-042", "kind": "behavior", "applies": "§10.3: what a soft-deleted event keeps in a channel's history, and its empty text. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The event keeps its id, index, type, its source with
 the provider's message id, its thread, its metadata with `metadata.deleted`,
 and its `channel_data`: the delete that follows names an event the reader
 holds, a transcript keeps the event's place, the reader tells a deleted
@@ -7843,18 +7849,18 @@ event from one that said nothing, and a channel that deletes natively still
 finds the provider's references. An empty text rather than a placeholder: a
 placeholder's words would be the framework's, in one language, read by a
 model as the sender's line (§6.4), while the mark already says what
-happened. The stored record keeps its content, and so do the contexts hooks
+happened. <!-- /rfc --><!-- rfc: {"id": "RK-10.3-043", "kind": "behavior", "applies": "§10.3: a soft-deleted event in the store and in the contexts hooks receive. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The stored record keeps its content, and so do the contexts hooks
 receive: the store and the hooks are the host's, which owns the record, and
 a hard delete (below) is how a host removes it.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-10.3-005", "kind": "behavior", "applies": "§10.3 Edit and Delete Processing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-10.3-044", "kind": "behavior", "applies": "§10.3 Mutation triggers: an accepted EDIT or DELETE, and the trigger it fires. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Mutation triggers:** After a successful EDIT the framework MUST fire
 `ON_EVENT_UPDATED` with the mutated target event; after a successful DELETE it
-MUST fire `ON_EVENT_DELETED`, each with the target as the commit left it.
+MUST fire `ON_EVENT_DELETED`, each with the target as the commit left it.<!-- /rfc --><!-- rfc: {"id": "RK-10.3-045", "kind": "behavior", "applies": "§10.3 Mutation triggers: when they fire (§10.1). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Firings follow the async-hook locking rule of §10.1: they come once the room
-lock is released, before the change's `AFTER_BROADCAST` hooks. A blocked or
-refused EDIT/DELETE MUST NOT fire either trigger. Whatever the change's
+lock is released, before the change's `AFTER_BROADCAST` hooks. <!-- /rfc --><!-- rfc: {"id": "RK-10.3-046", "kind": "behavior", "applies": "§10.3 Mutation triggers: a blocked or refused change. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A blocked or
+refused EDIT/DELETE MUST NOT fire either trigger. <!-- /rfc --><!-- rfc: {"id": "RK-10.3-047", "kind": "behavior", "applies": "§10.3 Mutation triggers: the context they are handed, whatever the change's origin and whether or not any channel receives it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Whatever the change's
 origin (an inbound message, a response, an event a hook injects, a direct
 injection) and whether or not any channel receives it:
 
@@ -7862,7 +7868,7 @@ injection) and whether or not any channel receives it:
   (`event_count`, `latest_index`) as the change's commit left them: the
   target as rewritten, every event committed ahead of the change during its
   hooks, and the change itself in the history, the newest event, at its
-  committed index and as its hooks left it.
+  committed index and as its hooks left it.<!-- /rfc --><!-- rfc: {"id": "RK-10.3-048", "kind": "behavior", "applies": "§10.3 Mutation triggers: their payload and their hooks' filters (§9.1), whatever the change's origin and whether or not any channel receives it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - The trigger's payload is the target, not the change, and its hooks'
   filters (§9.1) MUST apply to that payload: `channel_types`, `channel_ids`
   and `directions` read the target's source, and a filter on event types,
@@ -7876,14 +7882,14 @@ These triggers let observers (e.g. maintainers of denormalized projections
 over the timeline) see every stored-state change regardless of origin.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-10.3-006", "kind": "behavior", "applies": "§10.3 Edit and Delete Processing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-10.3-049", "kind": "behavior", "applies": "§10.3 Direct mutation: the host's direct `update_event()` and `delete_event()`. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 **Direct mutation (host-owned):** The framework SHOULD also expose direct APIs
 — `update_event(room_id, event_id, content|source|metadata)` and
 `delete_event(room_id, event_id, cascade_replies)`, each naming the caller's
 `organization_id` or none — for host applications that own authorization on
-their own surfaces. Direct `update_event()` replaces the provided fields
+their own surfaces. <!-- /rfc --><!-- rfc: {"id": "RK-10.3-050", "kind": "behavior", "applies": "§10.3 Direct mutation: a direct `update_event()`, where an implementation offers it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Direct `update_event()` replaces the provided fields
 wholesale and adds no `edited` marker; the record of the event's author stays
-the one fixed at its commit (§10.1 step 12). Direct `delete_event()` is a HARD
+the one fixed at its commit (§10.1 step 12). <!-- /rfc --><!-- rfc: {"id": "RK-10.3-051", "kind": "behavior", "applies": "§10.3 Direct mutation: what a direct `delete_event()` removes, where an implementation offers it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Direct `delete_event()` is a HARD
 delete, which MUST remove:
 
 ```
@@ -7904,33 +7910,37 @@ delete_event(room_id, event_id, cascade_replies = true) → list<string>
     and a change of an event that no longer exists changes nothing. A
     change of a change is not removed with them
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-10.3-052", "kind": "behavior", "applies": "§10.3 Direct mutation: a direct `delete_event()` reaching an event that is both a reply of the target and one of the changes. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 An event that is both a reply of the target and one of those changes is
 removed once, among the replies, or among the changes when `cascade_replies`
 is false.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-10.3-053", "kind": "behavior", "applies": "§10.3 Direct mutation: the ids a direct `delete_event()` returns. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 It MUST return the ids it removed, in this order: the target's, then its
-replies' in index order, then the changes' in index order. Both calls MUST
+replies' in index order, then the changes' in index order. <!-- /rfc --><!-- rfc: {"id": "RK-10.3-054", "kind": "behavior", "applies": "§10.3 Direct mutation: a direct update or delete against inbound processing (§5.1). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Both calls MUST
 serialise against inbound processing via the room lock, whatever the room's
 status, its due timers applied first (§5.1): a change to what the room
-stored is no new event. Both MUST fire the corresponding mutation trigger
+stored is no new event. <!-- /rfc --><!-- rfc: {"id": "RK-10.3-055", "kind": "behavior", "applies": "§10.3 Direct mutation: the mutation triggers a direct update or delete fires. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Both MUST fire the corresponding mutation trigger
 once the room lock is released, with the room's context read then:
 `ON_EVENT_UPDATED` once, with the event as it now stands, and
 `ON_EVENT_DELETED` once per event removed, in the order of the ids returned,
 each with the event as it was stored, so that a projection over the timeline
-sees every row that went. A failure of that read does not fail the call: the
+sees every row that went. <!-- /rfc --><!-- rfc: {"id": "RK-10.3-056", "kind": "behavior", "applies": "§10.3 Direct mutation: a direct update or delete whose read of the room's context fails (§13.6). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A failure of that read does not fail the call: the
 change is stored and stands (§13.6), the implementation logs the failure,
-and the triggers fire with the context the call held under the lock. A room
+and the triggers fire with the context the call held under the lock. <!-- /rfc --><!-- rfc: {"id": "RK-10.3-057", "kind": "behavior", "applies": "§10.3 Direct mutation: a direct update or delete naming a room or a target the store does not hold. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A room
 or a target the store does not hold, another room's event included, MUST be
 a no-op that fires nothing: `update_event()` returns null and
-`delete_event()` no id. So is a room of another organization than the one
+`delete_event()` no id. <!-- /rfc --><!-- rfc: {"id": "RK-10.3-058", "kind": "behavior", "applies": "§10.3 Direct mutation: a direct update or delete and the organization it names (§17.2). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->So is a room of another organization than the one
 the call names, or of none when it names one, with nothing written in it,
 its due timers included (§17.2); a call that names no organization reads the
-room unscoped. An update that changes nothing writes nothing and fires
+room unscoped. <!-- /rfc --><!-- rfc: {"id": "RK-10.3-059", "kind": "behavior", "applies": "§10.3 Direct mutation: a direct `update_event()` that changes nothing. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An update that changes nothing writes nothing and fires
 nothing, and returns the event as stored.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-10.3-007", "kind": "behavior", "applies": "§10.3 Edit and Delete Processing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-10.3-060", "kind": "behavior", "applies": "§10.3: a direct update or delete, or a regeneration (§13.6), made from the body of an ASYNC hook a cascade fires (§10.1 step 16, §8.3). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **A direct change from the room's work.** A direct `update_event()` that
 changes something, a direct `delete_event()` of an event the room holds, and
 a regeneration of the last answer (Section 13.6) are no pass, and have no
@@ -7938,46 +7948,46 @@ budget of their own to bound a hook that repeats them. Made from the body of
 an ASYNC hook a cascade fires once an event's delivery set has run (§10.1
 step 16, the mutation triggers above), each MUST draw one of that cascade's
 hook calls (§8.3) before it writes, the regeneration as it starts; past them,
-it MUST raise a reentry-loop-cap error and write nothing. Made from other
+it MUST raise a reentry-loop-cap error and write nothing. <!-- /rfc --><!-- rfc: {"id": "RK-10.3-061", "kind": "behavior", "applies": "§10.3: a direct update or delete, or a regeneration, made from other work of the room. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Made from other
 work of the room, a delivery, a turn, a locked section or an admission, it
-draws nothing. Its own triggers run on the budget of the room's work it is
+draws nothing. <!-- /rfc --><!-- rfc: {"id": "RK-10.3-062", "kind": "behavior", "applies": "§10.3: the budget the triggers of a direct update or delete, or of a regeneration, run on (§8.3, §19.7.5 rule 11). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Its own triggers run on the budget of the room's work it is
 made in, the cascade's whose frame it runs in, or on a budget of its own
 when it comes from outside the room's work: the mutation triggers' hook
 bodies draw their calls on it, and, in a room no discussion holds, a
 regeneration's cascade its passes and its hooks' calls; a regenerated turn a
-discussion gives has a budget of its own (Section 19.7.5 rule 11). A
+discussion gives has a budget of its own (Section 19.7.5 rule 11). <!-- /rfc --><!-- rfc: {"id": "RK-10.3-063", "kind": "behavior", "applies": "§10.3: the depth of a regeneration made within a turn or a hook's body (§8.3). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
 regeneration made within a turn or a hook's body is at least as deep as a
 call made there (§8.3): its re-broadcast, and in a discussion the turn it
 queues, stand at that depth, so its answer is one deeper. A hook that updates
 its event on every update, or deletes on every deletion, therefore stops at
 the cap, and one that deletes and regenerates after every answer at the depth
-limit. A change the implementation itself makes for the room's work, such as
+limit. <!-- /rfc --><!-- rfc: {"id": "RK-10.3-064", "kind": "behavior", "applies": "§10.3: a change the implementation makes itself for the room's work (§11.7.6). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A change the implementation itself makes for the room's work, such as
 restoring held messages (§11.7.6), runs its triggers on that work's budget
 alike.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-10.3-008", "kind": "behavior", "applies": "§10.3 Edit and Delete Processing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-10.3-065", "kind": "behavior", "applies": "§10.3 Broadcast behavior, item 1: a target channel that supports the change natively. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Broadcast behavior:**
 
 During broadcast, for each target channel:
 
 1. If the target channel's `capabilities.supports_edit` is true (for EDIT events)
    or `capabilities.supports_delete` is true (for DELETE events), the framework
-   MUST deliver the event natively.
+   MUST deliver the event natively.<!-- /rfc --><!-- rfc: {"id": "RK-10.3-066", "kind": "behavior", "applies": "§10.3 Broadcast behavior, item 2: a target channel that does not support the change (§6.6). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 2. If the target channel does NOT support the operation, the framework MUST
-   apply transcoding fallback (see Section 6.6).
+   apply transcoding fallback (see Section 6.6).<!-- /rfc --><!-- rfc: {"id": "RK-10.3-067", "kind": "behavior", "applies": "§10.3 Broadcast behavior, item 3: an intelligence channel handed a change. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 3. An intelligence channel is handed the change as any target, and MUST
    open no turn on it: a change is no message a turn may answer, its fallback
-   text (`[Message deleted]`, or `Correction: …`) no request. No speak policy
+   text (`[Message deleted]`, or `Correction: …`) no request. <!-- /rfc --><!-- rfc: {"id": "RK-10.3-068", "kind": "behavior", "applies": "§10.3 Broadcast behavior, item 3: a change, the speak policy and a running turn of the channel (§6.4). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->No speak policy
    is asked about it (Section 6.4), and a turn of the channel that runs
    meanwhile is not handed it as a message (Section 6.4, "A message for the
    running turn"): a channel that takes the room's turns one at a time keeps
-   its place in line, for no turn. A strategy that takes an
+   its place in line, for no turn. <!-- /rfc --><!-- rfc: {"id": "RK-10.3-069", "kind": "behavior", "applies": "§10.3 Broadcast behavior, item 3: a strategy that takes an agent's turns (§19.7), and a change. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A strategy that takes an
    agent's turns (Section 19.7) asks none on it either: it is no task for a
-   producer, reviewer or worker. The agent answers the next message, in the
+   producer, reviewer or worker. <!-- /rfc --><!-- rfc: {"id": "RK-10.3-070", "kind": "behavior", "applies": "§10.3 Broadcast behavior, item 3: an agent's next turn after a change (§7.5 rule 8). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The agent answers the next message, in the
    room the change left: the target as edited, or the message deleted
    withheld (§7.5 rule 8). A host that reacts to a change does so with
-   `ON_EVENT_UPDATED` or `ON_EVENT_DELETED` (above).
+   `ON_EVENT_UPDATED` or `ON_EVENT_DELETED` (above).<!-- /rfc --><!-- rfc: {"id": "RK-10.3-071", "kind": "behavior", "applies": "§10.3 Broadcast behavior, item 4: a transport that hosts a model (§12.4, §8.3), handed a change or another event that opens no turn. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 4. A transport that hosts a model (a realtime voice channel, a conference
    with a realtime model plugged in, Section 12.4) is an agent too (Section
    8.3): it MUST inject the change into the model's session silently, as an
@@ -8259,7 +8269,7 @@ room declares that room's binding `group`.
 
 ### 10.5 Direct Event Injection
 
-<!-- rfc: {"id": "RK-10.5-001", "kind": "behavior", "applies": "§10.5 Direct Event Injection; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-10.5-004", "kind": "behavior", "applies": "§10.5: a direct injection, `send_event`. Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->
 Integrators MAY inject events into a room directly, without an inbound channel
 message (e.g., from a REST API or MCP tool call):
 
@@ -8267,22 +8277,24 @@ message (e.g., from a REST API or MCP tool call):
 send_event(room_id, channel_id, content, event_type, ...,
            response_visibility | null, organization_id | null) → RoomEvent
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-10.5-005", "kind": "behavior", "applies": "§10.5: the pipeline a directly injected event traverses (§10.1). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The injected event traverses the SAME pipeline as an inbound message (Section
 10.1): index assignment, BEFORE_BROADCAST hooks, the source write-permission
 gate, EDIT/DELETE handling, persistence and broadcast planning under the room
 lock, then its delivery lane, reentry passes, and AFTER_BROADCAST hooks. A
 blocking hook therefore yields a `BLOCKED` event and suppresses delivery,
-exactly as for an inbound message. That includes the off-lock check (§9.5.1,
+exactly as for an inbound message. <!-- /rfc --><!-- rfc: {"id": "RK-10.5-006", "kind": "behavior", "applies": "§10.5: a directly injected event and the off-lock check (§9.5.1 step 5a). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->That includes the off-lock check (§9.5.1,
 step 5a): an injected event matched by a `needs_lock = false` hook takes an
 admission ticket like an inbound one — unless its caller stands in the room's
 admission order (under the room lock, or in an off-lock hook's body, a
 handler its check's report awaits, or a message's parse), in which case it
 takes none and commits ahead of the event being processed (§9.5.1,
-Reentrance). Made under the room lock, it draws on the reentry budget of the
+Reentrance). <!-- /rfc --><!-- rfc: {"id": "RK-10.5-007", "kind": "behavior", "applies": "§10.5: the reentry budget of an injection made under the room lock or in the admission order (§8.3, §9.5.1). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Made under the room lock, it draws on the reentry budget of the
 cascade that holds it (§8.3), or on a budget of its own under a lock the host
 holds outside any pass (§9.5.1); made in the admission order, on that of the
-event the work is for. Made from the room's work outside the lock (a turn, a
+event the work is for. <!-- /rfc --><!-- rfc: {"id": "RK-10.5-008", "kind": "behavior", "applies": "§10.5: the budget and depth of an injection made from the room's work outside the lock (§8.3, §9.5.1). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Made from the room's work outside the lock (a turn, a
 delivery, an ASYNC hook's body, §10.1 step 16), it is a new arrival: while
 that work runs, one into its own room draws on the budget of the cascade that
 delivers, or that fired the hook, as does any call of that
@@ -8290,10 +8302,12 @@ work that creates a room (§9.5.1), and one into another room that exists
 already on a budget of its own, and one into any room is at least as deep as
 the response of the deepest turn it runs within, or as the answer that issued
 a tool call outside a turn (§8.3); once the work is over, it is a new arrival
-with a budget and a depth of its own (§9.5.1). Past its budget it is stored
+with a budget and a depth of its own (§9.5.1). <!-- /rfc --><!-- rfc: {"id": "RK-10.5-009", "kind": "behavior", "applies": "§10.5: an injection past its reentry budget (§13.4). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Past its budget it is stored
 `BLOCKED` with `reentry_loop_cap`, unless its key makes it a replay, which
 draws nothing and returns the event its key committed (§13.4).
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-10.5-010", "kind": "behavior", "applies": "§10.5: an injection's channel, and its admission before anything is read (§10.1 steps 1 to 4, §10.1.1, §7.3, §5.2). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 An injection takes §10.1's steps 1 to 4 its own way. The channel it names
 MUST be registered, a channel the room still binds included (a binding
 outlives an unregistration), and the event is admitted as a message is before
@@ -8301,18 +8315,20 @@ anything is read: an instruction's refusals (§10.1.1), `standalone` on
 another type,
 the visibility `internal`, as its visibility or its response visibility
 (§7.3); and a key in the publication namespace, which a message would merely
-lose, is refused (§5.2). None of step 2 runs. The room is read scoped to
+lose, is refused (§5.2). <!-- /rfc --><!-- rfc: {"id": "RK-10.5-011", "kind": "behavior", "applies": "§10.5: the room an injection names (§10.1 step 2, §17.2). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->None of step 2 runs. The room is read scoped to
 `organization_id` (§17.2), unscoped when the call names none: a room that
-does not exist, or another organization's, raises. A channel the room does
+does not exist, or another organization's, raises. <!-- /rfc --><!-- rfc: {"id": "RK-10.5-012", "kind": "behavior", "applies": "§10.5: an injection naming a channel the room does not bind (§7.5 rule 2). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A channel the room does
 not bind is not attached, and the call raises with nothing written: the host
 named the channel itself, so it is a caller's error with nothing to audit,
-unlike a stranger's message (§7.5 rule 2). There is no parse. Its
+unlike a stranger's message (§7.5 rule 2). <!-- /rfc --><!-- rfc: {"id": "RK-10.5-013", "kind": "behavior", "applies": "§10.5: an injection and the channel's parse (§10.1 step 3). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->There is no parse. <!-- /rfc --><!-- rfc: {"id": "RK-10.5-014", "kind": "behavior", "applies": "§10.5: an injection's response visibility (§8.5). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Its
 `response_visibility`, when it carries one, scopes its cascade as a message's
-does (§8.5). The event's source is the channel it names, `INBOUND` for a
+does (§8.5). <!-- /rfc --><!-- rfc: {"id": "RK-10.5-015", "kind": "behavior", "applies": "§10.5: the source of a directly injected event. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The event's source is the channel it names, `INBOUND` for a
 transport, whose event stands for a message coming in, and `OUTBOUND` for an
 intelligence channel, whose event is its own words going out, as its
 responses are.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-10.5-016", "kind": "behavior", "applies": "§10.5: an injection refused before its commit point (§5.1, §10.1 step 8a, §10.1.1, §13.6). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Its result is the committed event, so every refusal before the commit point
 that leaves no committed record is raised, never returned as an event that
 was not written: a room whose status refuses new events (§5.1) raises a
@@ -8321,41 +8337,45 @@ instruction (§10.1.1) raise with their reason, and `process_timeout`
 (§13.6), which bounds its wait for the off-lock check and the room lock as it
 bounds its pre-commit phase, raises a process-timeout error once it has
 emitted the `process_timeout` framework event. Nothing of the event is
-written. A record stored `BLOCKED`, by a hook, by a source that cannot write
+written. <!-- /rfc --><!-- rfc: {"id": "RK-10.5-017", "kind": "behavior", "applies": "§10.5: what an injection returns once its event is decided (§8.3, §13.4, §10.1.1 step 5, §14.3). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A record stored `BLOCKED`, by a hook, by a source that cannot write
 or past the reentry budget (§8.3), is the committed event and is returned; a
 replay returns the event its key committed (§13.4); an instruction, never
 committed, returns uncommitted, as its pass decided it (§10.1.1 step 5), and
 so does an event the persistence policy keeps out (§14.3).
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-10.5-002", "kind": "behavior", "applies": "§10.5 Direct Event Injection; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-10.5-018", "kind": "behavior", "applies": "§10.5 The host's own voice: the host channel, a transport of type HOST (§6.2, §4.2). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **The host's own voice.** The host, the application that embeds RoomKit,
 writes to the people of a room in its own name: a notice, a workflow's
 question, a reminder. It speaks through a host channel, a transport of type
 `HOST` (§6.2) whose direction is `INBOUND` (§4.2): it brings the host's words
-into rooms, receives no external payload, and is never delivered to. Its
+into rooms, receives no external payload, and is never delivered to. <!-- /rfc --><!-- rfc: {"id": "RK-10.5-019", "kind": "behavior", "applies": "§10.5 The host's own voice: a host channel's event, its broadcast and the agents it solicits (§7.3, §19.3). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Its
 event is `INBOUND`, as every transport's is: the room reads it as a party's
 message, broadcasts it to its other transports under the usual visibility
-(§7.3), and it solicits intelligence channels as a message does (§19.3). The
+(§7.3), and it solicits intelligence channels as a message does (§19.3). <!-- /rfc --><!-- rfc: {"id": "RK-10.5-020", "kind": "behavior", "applies": "§10.5 The host's own voice: an intelligence channel as the host's voice (§19.3.1, §19.7.5). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The
 host's words MUST NOT come from an intelligence channel, which would make them
 an agent's output: an unaddressed one would solicit no agent under
 `ADDRESSED_ONLY` (§19.3.1), and a room holding a discussion refuses to bind an
-intelligence channel that is not one of its agents. Nor do they come from a
+intelligence channel that is not one of its agents. <!-- /rfc --><!-- rfc: {"id": "RK-10.5-021", "kind": "behavior", "applies": "§10.5 The host's own voice: a SYSTEM source as the host's voice (§10.1 step 12, §10.3). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Nor do they come from a
 `SYSTEM` source, which marks what the framework writes itself: it carries no
 author record (§10.1 step 12) and may make the changes reserved to the system
 (§10.3).
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-10.5-022", "kind": "behavior", "applies": "§10.5 The host's own voice: an attach of a host channel. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A host channel MUST be bound as a transport: an attach that binds one as an
 intelligence channel, by the category it names or the one the channel
-declares, MUST be refused before anything is written. A message handed to the
+declares, MUST be refused before anything is written. <!-- /rfc --><!-- rfc: {"id": "RK-10.5-023", "kind": "behavior", "applies": "§10.5 The host's own voice: a message handed to the inbound pipeline on a host channel (§10.1 step 1). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A message handed to the
 inbound pipeline on a host channel MUST be refused before anything is read
-(§10.1 step 1): the host speaks through this section's calls only. Never
+(§10.1 step 1): the host speaks through this section's calls only. <!-- /rfc --><!-- rfc: {"id": "RK-10.5-024", "kind": "behavior", "applies": "§10.5 The host's own voice: what a turn may answer with in a room a host channel is bound to (§6.7). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Never
 delivered to, a host channel is no transport an answer reaches: what a turn
 may answer with (`target_capabilities`, `target_media_types`, §6.7) is what
 the room's transports that send carry, and the host channel narrows none of
-it. Its declaration lists every media type, since `content` may be any; each
+it. <!-- /rfc --><!-- rfc: {"id": "RK-10.5-025", "kind": "behavior", "applies": "§10.5 The host's own voice: a host channel's declared media types, and transcoding (§6.6). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Its declaration lists every media type, since `content` may be any; each
 transport the event reaches gets it transcoded for what it carries (§6.6).
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-10.5-026", "kind": "behavior", "applies": "§10.5 The host's own voice: `post()`. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 An implementation SHOULD offer the host's voice as one call:
 
 ```
@@ -8363,57 +8383,63 @@ post(room_id, content, participant_id | null, addressed_to = [],
      metadata | null, channel_id | null, organization_id | null,
      idempotency_key | null, chain_depth = 0) → RoomEvent
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-10.5-027", "kind": "behavior", "applies": "§10.5 `post()`, where an implementation offers it: the channel it posts from. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 `post()` injects `content` as `send_event` does (this section), from
 `channel_id` when the call names one, which MUST be a registered channel of
 type `HOST`, else from the kit's own host channel, registered on first use
-under the id `host`. A `channel_id` that names a channel of another type, or
+under the id `host`. <!-- /rfc --><!-- rfc: {"id": "RK-10.5-028", "kind": "behavior", "applies": "§10.5 `post()`, where an implementation offers it: the arguments it refuses. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A `channel_id` that names a channel of another type, or
 none registered, and, when the call names none, the id `host` held by a
 channel of another type, MUST be refused before anything is written, as must
 an argument `send_event` refuses before anything is read and a negative
 `chain_depth`.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-10.5-029", "kind": "behavior", "applies": "§10.5 `post()`, where an implementation offers it: the host channel attached to a room that never bound it (§5.2, §5.1). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A room that never bound the host channel gets it attached first, an ordinary
 attachment with its `CHANNEL_ATTACHED` record (§5.2), decided in one section
 under the room lock, where binding and status changes run: the room is read
 scoped to `organization_id`, its due timers applied (§5.1), then its binding
-of the channel. A binding made by then, set up by the integrator before the
+of the channel. <!-- /rfc --><!-- rfc: {"id": "RK-10.5-030", "kind": "behavior", "applies": "§10.5 `post()`, where an implementation offers it: a binding of the host channel made before or during the first post. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A binding made by then, set up by the integrator before the
 post or concurrently with it, is kept as it is, never replaced, so concurrent
-first posts attach the channel once. A room whose status refuses new events
-MUST raise a room-closed error. A room the host channel was detached from
+first posts attach the channel once. <!-- /rfc --><!-- rfc: {"id": "RK-10.5-031", "kind": "behavior", "applies": "§10.5 `post()`, where an implementation offers it: a room whose status refuses new events (§5.1). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A room whose status refuses new events
+MUST raise a room-closed error. <!-- /rfc --><!-- rfc: {"id": "RK-10.5-032", "kind": "behavior", "applies": "§10.5 `post()`, where an implementation offers it: a room the host channel was detached from (§7.5 rule 7). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A room the host channel was detached from
 MUST raise as a channel the room does not bind does: the post does not undo
 the revocation (§7.5 rule 7), which only an explicit attach grants again.
-Nothing is written either way. As step 2's attach (§10.1, §13.6), the first
+Nothing is written either way. <!-- /rfc --><!-- rfc: {"id": "RK-10.5-033", "kind": "behavior", "applies": "§10.5 `post()`, where an implementation offers it: the first post's wait for the room lock (§10.1, §13.6). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->As step 2's attach (§10.1, §13.6), the first
 post's wait for the room lock runs within the call's `process_timeout`, one
 deadline from the call's start to its commit, and the section it opens runs
-to its end whatever becomes of the caller. Made from the room's own work
+to its end whatever becomes of the caller. <!-- /rfc --><!-- rfc: {"id": "RK-10.5-034", "kind": "behavior", "applies": "§10.5 `post()`, where an implementation offers it: a post made from the room's own work (§9.5.1, §8.3). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Made from the room's own work
 (§9.5.1), the post draws its pass before the attach, after the room's scoped
 read and the check of a revocation: past the budget, its event is stored
 `BLOCKED` with `reentry_loop_cap` and the channel is not attached, no
 `CHANNEL_ATTACHED` record written nor hook run.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-10.5-035", "kind": "behavior", "applies": "§10.5 `post()`, where an implementation offers it: its `addressed_to` (§19.3). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 `addressed_to` defaults to `[]`: the host's message solicits no intelligence
-channel unless it names one (§19.3). `participant_id` names who speaks: it
+channel unless it names one (§19.3). <!-- /rfc --><!-- rfc: {"id": "RK-10.5-036", "kind": "behavior", "applies": "§10.5 `post()`, where an implementation offers it: its `participant_id` (§5.5, §17.2). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`participant_id` names who speaks: it
 MUST name a participant reached through the host channel the post comes from
 (its `connected_via` names it), by their id or by their identity's, as a
 turn's sender is read (§5.5), since an id names its participant on no other
 channel; else the post is refused before anything is written, the first
 post's attach included, the room read scoped to `organization_id` first so
-that another organization's room is not found whoever the id names (§17.2).
+that another organization's room is not found whoever the id names (§17.2).<!-- /rfc --><!-- rfc: {"id": "RK-10.5-037", "kind": "behavior", "applies": "§10.5 `post()`, where an implementation offers it: the speaker a reader is shown (§10.1 step 12). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A reader is shown the speaker's name (§10.1 step 12). An integrator makes a
-member one by adding them on the host channel. `send_event` takes any id
-(§5.5). `metadata` carries where the message comes from: a workflow, its
-step, a job. `chain_depth` is `send_event`'s, the chain the post continues
+member one by adding them on the host channel. <!-- /rfc --><!-- rfc: {"id": "RK-10.5-038", "kind": "behavior", "applies": "§10.5: the participant id `send_event` takes (§5.5). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`send_event` takes any id
+(§5.5). <!-- /rfc --><!-- rfc: {"id": "RK-10.5-039", "kind": "behavior", "applies": "§10.5 `post()`, where an implementation offers it: its `metadata`. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`metadata` carries where the message comes from: a workflow, its
+step, a job. <!-- /rfc --><!-- rfc: {"id": "RK-10.5-040", "kind": "behavior", "applies": "§10.5 `post()`, where an implementation offers it: its `chain_depth` (§8.3, §9.5.1). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`chain_depth` is `send_event`'s, the chain the post continues
 (§8.3), 0 opening one: work that follows an agent's answer once the answer's
 work is over, which begins fresh (§9.5.1), names the answer's depth plus one,
-so that its round trips with the agent end at `max_chain_depth`.
+so that its round trips with the agent end at `max_chain_depth`.<!-- /rfc --><!-- rfc: {"id": "RK-10.5-041", "kind": "behavior", "applies": "§10.5 `post()`, where an implementation offers it: its `idempotency_key` (§13.4). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 `idempotency_key` is `send_event`'s (§13.4): a key the host channel holds in
 the room makes the post a replay, which sends nothing again and returns the
 event the key committed, read before the reentry budget when the room's own
 work posts; a blank key is no key.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-10.5-003", "kind": "behavior", "applies": "§10.5 Direct Event Injection; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-10.5-042", "kind": "behavior", "applies": "§10.5: a record committed outside the pipeline, `commit_event`. Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->
 **A record outside the pipeline.** An integrator MAY commit an event that no
 member is meant to receive (a trace, a display snapshot, a copy a branched
 conversation starts from) without the pipeline:
@@ -8421,23 +8447,25 @@ conversation starts from) without the pipeline:
 ```
 commit_event(room_id, event, organization_id) → RoomEvent
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-10.5-043", "kind": "behavior", "applies": "§10.5 `commit_event`: a record naming another room, or with a key in the publication namespace (§5.2). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The record names the room it is committed to: one whose `room_id` is another
 room's MUST be refused before anything is read or written, so the room checked
 is the room written, and so MUST one whose key is in the publication namespace
-(§5.2), which would stand in for a publication. The room is read scoped to
+(§5.2), which would stand in for a publication. <!-- /rfc --><!-- rfc: {"id": "RK-10.5-044", "kind": "behavior", "applies": "§10.5 `commit_event`: the room it reads (§17.2). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The room is read scoped to
 `organization_id` (§17.2): a missing room, or another organization's, is not
-found. A room whose status refuses new events (§5.1) MUST refuse the record
+found. <!-- /rfc --><!-- rfc: {"id": "RK-10.5-045", "kind": "behavior", "applies": "§10.5 `commit_event`: a room whose status refuses new events (§5.1). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A room whose status refuses new events (§5.1) MUST refuse the record
 before anything is written, and emits no framework event: a record reaches no
-one, and no subscriber waits for it. A record committed outside the pipeline
-is never a replay (§14.3). The record is committed under the room
+one, and no subscriber waits for it. <!-- /rfc --><!-- rfc: {"id": "RK-10.5-046", "kind": "behavior", "applies": "§10.5 `commit_event`: a record and replays (§14.3). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A record committed outside the pipeline
+is never a replay (§14.3). <!-- /rfc --><!-- rfc: {"id": "RK-10.5-047", "kind": "behavior", "applies": "§10.5 `commit_event`: the record's index and the room's delivery lane (§13.5). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The record is committed under the room
 lock with the next index, which the room's delivery lane MUST pass at its turn
 with nothing to run, as a record stored `BLOCKED` (§13.5): no delivery set, no
 hook, and no broadcast follow it, and the next event of the room waits on its
-index no longer than on the events before it. It counts in `event_count` and
+index no longer than on the events before it. <!-- /rfc --><!-- rfc: {"id": "RK-10.5-048", "kind": "behavior", "applies": "§10.5 `commit_event`: the room's counters and activity (§5.1). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->It counts in `event_count` and
 `latest_index`, and is no activity: `last_activity_at` does not move, and a
 PAUSED room stays paused (§5.1), since a trace nobody receives does not keep a
-room alive. It is stored as the caller gives it (its status, its visibility,
+room alive. <!-- /rfc --><!-- rfc: {"id": "RK-10.5-049", "kind": "behavior", "applies": "§10.5 `commit_event`: the record as stored (§10.1 steps 8 and 12, §7.5 rule 2). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->It is stored as the caller gives it (its status, its visibility,
 its `delivery_results` and the rest), whatever the persistence policy, but
 for its thread parent, rooted as every committed event's is (§10.1 step 8),
 and its author record, which the room fixes, any `metadata.author` given

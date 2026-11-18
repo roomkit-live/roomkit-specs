@@ -405,15 +405,15 @@
     },
     {
       "section": "10.2",
-      "sha256": "4b5aeaa597e0321a8d8d13ff22547c1a23b55e7c4fc9a69cd1ac759c117718b4",
+      "sha256": "1643986d6f72e91cdf9ad4174fa6fc6b420a31bd1ad81a4378ff05849a77065a",
       "classification": "normative",
-      "review": "Source inventory: Broadcast Pipeline. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Broadcast Pipeline, split to one obligation per unit where a sentence boundary allows (RMK-1777). Each unit keeps its conditions, exceptions and rationale. The step-by-step block and the BroadcastResult interface are fenced and stay whole (RK-10.2-003, RK-10.2-007), as does the one sentence saying what a delivery set reports (RK-10.2-005). Every unit carries its level."
     },
     {
       "section": "10.3",
-      "sha256": "24791d7989af77ba3cf9aeebdfe4b492fe85a09ce29dfaf16bcdc348b50c4cb3",
+      "sha256": "ab8274e138144e2a17da122bb6b3b078cf70d2d779e26cd9ca73083b9e7782a9",
       "classification": "normative",
-      "review": "Source inventory: Edit and Delete Processing. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Edit and Delete Processing, split to one obligation per unit (RMK-1777): a validation rule, a state update or a broadcast item per unit, or one sentence of it. Each unit keeps its conditions, exceptions and rationale; the delete_event block stays with the sentence that introduces it. The direct mutation calls are should (RK-10.3-049); what they do once offered is must. Every unit carries its level."
     },
     {
       "section": "10.4",
@@ -423,9 +423,9 @@
     },
     {
       "section": "10.5",
-      "sha256": "77948843986d36a5110b68c62d72eb667215282b0659b621a125cb606e3ea3dc",
+      "sha256": "c544c3d746a6228e4ca4fb82c05045f34bd68de8d6ce6c818c83515230d5d567",
       "classification": "normative",
-      "review": "Source inventory: Direct Event Injection. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Direct Event Injection, split to one obligation per unit (RMK-1777). Each unit keeps its conditions, exceptions and rationale; each call's signature block stays with the sentence that introduces it. send_event and commit_event are may for the integrator (RK-10.5-004, RK-10.5-042) and post() should (RK-10.5-026); what each does once offered is must. Every unit carries its level."
     },
     {
       "section": "10.6",
