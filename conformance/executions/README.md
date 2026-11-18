@@ -520,3 +520,29 @@ of the copy: 3032 passed and 51 skipped, the scenarios that need a turn
 executor apart (RFC §10.6.7), and none failed. They are the first Rust
 receipts. They give no credit to PostgreSQL, to roomkit-rs's later commits,
 or to specialized tests. The 142 earlier execution receipts are unchanged.
+
+## §10.4 rule links: Python and roomkit-rs passes (2026-11-18)
+
+`python-rule-links-98a547a.xml` retains the memory and SQLite cases of one run
+of clean, published Python `98a547aab38e5bf1686d9fe0cf6bc5a011568924`, on Linux
+with Python 3.14.9, pytest 9.1.1, pytest-asyncio 1.4.0 and pytest-xdist 3.8.0
+(four workers), the memory and SQLite stores and in-process turns. The receipt
+records the pytest invocation, omitting the CPU-affinity wrapper used for the
+local run. All 3083 memory cases and all 630 SQLite cases passed.
+
+`rust-f91889a-memory-current-thread.xml`,
+`rust-f91889a-memory-multi-thread-4.xml` and
+`rust-f91889a-sqlite-current-thread.xml` retain the three passes of roomkit-rs
+`f91889a6056921e0984316dc29d585f613bc001d`, a clean commit of its main, run
+with Rust 1.99.1 by the two commands of the section above. Each holds the 3083
+scenarios of the copy: 3032 passed, 51 skipped (RFC §10.6.7), none failed.
+
+Both copies are corpus `e0d8ce7c805d151e47f941503781e6fe48fde26b`, where the
+scenarios testing RFC §10.4 cite its units (RMK-1775); the RFC is
+`607b5456ea01a23df950c088c6faea9f8c042d57`. The evidence's `python_commit` moved
+to the Python commit first; two specialized tests changed since the previous
+one, and their links were reread before their hashes were pinned again: the
+room-timer test injects one more callback, and the composition test opts in to
+tool-call text, its assertions unchanged. These receipts give no credit to
+PostgreSQL, the Redis turn mode or specialized tests. The 145 earlier execution
+receipts are unchanged.
