@@ -5,6 +5,11 @@
     "RK-10.2-007": "BroadcastResult is what the pipeline's own broadcast() returns: no public call hands it out, so a scenario reads its members only through the units that produce them (deliveries, reentry events, tasks, observations, per-channel errors).",
     "RK-10.6.1-016": "Holds of the suite as a whole, not of one scenario: every scenario of an intelligence channel runs through the in-memory backend, and their receipts are the evidence.",
     "RK-10.6.3-009": "A turn link's sequence numbers lie below the public API a scenario drives: no step can reorder, duplicate or drop a link message, which a backend's own tests do.",
-    "RK-10.6.8-049": "Whether a side imports a module or runs its code to resolve a name is not observable through the public API: a scenario sees only the class an error comes back as (RK-10.6.8-047)."
+    "RK-10.6.8-049": "Whether a side imports a module or runs its code to resolve a name is not observable through the public API: a scenario sees only the class an error comes back as (RK-10.6.8-047).",
+    "RK-9.2-005": "This paragraph names which triggers an implementation must fire: those Section 26.1 lists for Level 0 and those each feature's section names. A scenario tests a trigger's firing through its row of the table and those sections' units, never through this pointer.",
+    "RK-9.2-055": "ON_REALTIME_TOOL_CALL is Superseded: no implementation fires it, and the speech-to-speech tool call it named fires ON_TOOL_CALL (RK-9.2-073, Section 9.3), so no runner has a firing to observe.",
+    "RK-9.2-062": "ON_CONSUMPTION is Planned: no implementation emits it yet, so no runner can observe it fire; its scenario comes with the capability (Section 8.5).",
+    "RK-9.2-084": "ON_VIDEO_TRACK_ADDED is Planned: no implementation emits it yet, so no runner can observe it fire; its scenario comes with the capability.",
+    "RK-9.2-085": "ON_VIDEO_TRACK_REMOVED is Planned: no implementation emits it yet, so no runner can observe it fire; its scenario comes with the capability."
   }
 }
