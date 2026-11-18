@@ -236,9 +236,9 @@ intermittent issue has been fixed.
 
 ## Recording receipts
 
-`conformance/record.py` writes every receipt from a pytest JUnit report; none
-is edited by hand. It records at the `python_commit` of `evidence.json` only:
-whoever moves that commit moves it first, then records. It reads the corpus the
+`conformance/record.py` writes every receipt from a JUnit report; none is
+edited by hand. It records a Python report at the `python_commit` of
+`evidence.json` only: whoever moves that commit moves it first, then records. It reads the corpus the
 implementation copied (`tests/conformance/SPECS_COMMIT` at that commit) and the
 last commit of `roomkit-rfc.md`, which must match the checkout's RFC.
 
@@ -302,12 +302,18 @@ uv run --no-project --python 3.13 --with jsonschema==4.26.0 \
 ```
 
 A roomkit-rs run is recorded with `record.py rust`, at the commit the
-roomkit-rs checkout is on: each `--junit` file, one pass of the runner, becomes
+roomkit-rs checkout is on, a commit of roomkit-rs's main (CI reads only its
+history): each `--junit` file, one pass of the runner, becomes
 `rust-<commit>-<backend>-<runtime>.xml` and the receipt of the same name, with
-`_` written `-`. The import is refused when the checkout has uncommitted
-changes to tracked files, when a file holds no pass or several, when the pass
-left out a scenario of the copy (`ROOMKIT_CONFORMANCE_FILTER` runs are not
-recorded), and for the reasons above. The memory runner's two passes come from
+`_` written `-`. The runner writes the commit it ran at and whether tracked
+files differed from it; the import is refused unless that is the checkout's
+commit, clean, so a file an earlier run left is never recorded at a later
+commit. It is also refused when the checkout has uncommitted changes to
+tracked files, when a file holds no pass or several, when the pass left out a
+scenario of the copy (`ROOMKIT_CONFORMANCE_FILTER` runs are not recorded), and
+for the reasons above. The checker refuses a Rust receipt with a
+`scenario_filter`, or whose id or file is not named after its commit, backend
+and runtime. The memory runner's two passes come from
 one command:
 
 ```sh

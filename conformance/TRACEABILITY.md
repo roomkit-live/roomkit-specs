@@ -254,9 +254,11 @@ runtime, `current_thread` (one thread) or `multi_thread_4` (four workers, run
 on memory only). The runner writes one case per scenario, named by its id,
 under the class `conformance.<backend>.<runtime>`, so the report names its
 pass and the command is not read. A receipt holds the whole pass, every
-scenario of the copy with the scenarios the runner sets apart as skipped, and
-its corpus is the copy in roomkit-rs `conformance/`. From a clean roomkit-rs
-commit on main:
+scenario of the copy with the scenarios the runner sets apart as skipped. The
+copy is roomkit-rs `conformance/scenarios`, synced from the corpus at its
+`conformance/SPECS_COMMIT`. The report also names the commit the run was at,
+which must be the checkout's, clean, when it is recorded. From a clean
+roomkit-rs commit on main:
 
 ```sh
 ROOMKIT_CONFORMANCE_JUNIT=target/conformance cargo test -p roomkit --test conformance

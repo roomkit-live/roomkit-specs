@@ -8,7 +8,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from traceability.evidence import execution_status, validate
-from traceability.receipts import cargo, junit, rust_junit
+from traceability.receipts import cargo, junit, rust_id, rust_junit
 from traceability.references import check_assertion, pointer, python_symbol
 from traceability.source import digest
 
@@ -253,7 +253,16 @@ class EvidenceTests(unittest.TestCase):
                 self.assertIn("unsupported pytest execution profile", junit(self.run, xml)[0])
 
     def rust_run(self, backend: str, runtime: str) -> dict:
-        self.run.update(implementation="rust", backend=backend, runtime=runtime)
+        commit = "c" * 40
+        name = rust_id(commit, backend, runtime)
+        self.run.update(
+            id=name,
+            implementation="rust",
+            implementation_commit=commit,
+            backend=backend,
+            runtime=runtime,
+            artifact={"path": f"conformance/executions/{name}.xml", "format": "cargo_junit"},
+        )
         self.run["command"] = ["cargo", "test", "-p", "roomkit", "--test", "conformance"]
         return self.run
 
@@ -293,6 +302,19 @@ class EvidenceTests(unittest.TestCase):
                 self.assertIn("unsupported Rust execution profile", rust_junit(run, xml)[0])
         self.rust_run("memory", "current_thread")["implementation"] = "python"
         self.assertIn("unsupported Rust execution profile", rust_junit(self.run, xml)[0])
+
+    def test_rust_junit_refuses_a_filtered_or_misnamed_receipt(self) -> None:
+        xml = b'<testsuite><testcase classname="conformance.memory.current_thread" name="a"/></testsuite>'
+        run = self.rust_run("memory", "current_thread")
+        self.assertEqual(rust_junit(run, xml), [])
+        for change in [
+            {"scenario_filter": "a"},
+            {"id": "rust-ccccccc-sqlite-multi-thread-4"},
+            {"implementation_commit": "d" * 40},
+            {"artifact": {"path": "conformance/executions/other.xml", "format": "cargo_junit"}},
+        ]:
+            with self.subTest(change=change):
+                self.assertTrue(rust_junit({**run, **change}, xml))
 
     def test_a_rust_receipt_is_never_read_as_a_pytest_one(self) -> None:
         xml = b'<testsuite><testcase classname="tests.conformance.test_conformance" name="test_scenario[a]"/></testsuite>'

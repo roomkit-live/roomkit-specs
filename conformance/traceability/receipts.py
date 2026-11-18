@@ -118,6 +118,11 @@ def rust_class(backend: str, runtime: str) -> str:
     return f"conformance.{backend}.{runtime}"
 
 
+def rust_id(commit: str, backend: str, runtime: str) -> str:
+    """The id of the Rust receipt of a pass at *commit*, and its retained file's name."""
+    return f"rust-{commit[:7]}-{backend}-{runtime.replace('_', '-')}"
+
+
 def rust_outcomes(raw: bytes, backend: str, runtime: str) -> dict[str, str]:
     """Each scenario's outcome in the Rust runner's pass on *backend* and *runtime*,
     read from that pass's cases only. Raises ValueError on a duplicate case."""
@@ -188,6 +193,11 @@ def rust_junit(run: dict[str, Any], raw: bytes) -> list[str]:
     profile = (run["backend"], run["runtime"])
     if run["implementation"] != "rust" or profile not in RUST_PROFILES:
         return [f"{run['id']}: unsupported Rust execution profile"]
+    if "scenario_filter" in run:
+        return [f"{run['id']}: a Rust receipt holds its whole pass, never a scenario_filter"]
+    name = rust_id(run["implementation_commit"], *profile)
+    if run["id"] != name or Path(run["artifact"]["path"]).name != f"{name}.xml":
+        return [f"{run['id']}: a Rust receipt and its file are named {name}"]
     try:
         cases = rust_outcomes(raw, *profile)
     except ValueError as error:

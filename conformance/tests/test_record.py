@@ -34,6 +34,7 @@ RUST_CLASS = "conformance.memory.multi_thread_4"
 RUST_REPORT = f"""<?xml version="1.0" encoding="utf-8"?>
 <testsuites name="cargo tests">
 <testsuite name="{RUST_CLASS}" tests="2" failures="0" errors="0" skipped="1">
+<properties><property name="commit" value="COMMIT"/><property name="clean" value="true"/></properties>
 <testcase classname="{RUST_CLASS}" name="a"/>
 <testcase classname="{RUST_CLASS}" name="b"><skipped message="§10.6.7: an executor apart needs a public turn backend"/></testcase>
 </testsuite>
@@ -366,6 +367,7 @@ class RustRecordingTests(unittest.TestCase):
         return git("rev-parse", "HEAD")
 
     def record(self, report: bytes = RUST_REPORT):
+        report = report.replace(b"COMMIT", self.rust_commit.encode())
         return prepare_rust(self.specs, self.rust, report, self.command)
 
     def test_a_rust_pass_becomes_a_receipt_check_py_accepts(self) -> None:
@@ -396,12 +398,18 @@ class RustRecordingTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "uncommitted changes"):
             self.record()
 
+    def test_a_rust_report_of_another_commit_or_a_dirty_run_is_refused(self) -> None:
+        with self.assertRaisesRegex(ValueError, "the command just wrote"):
+            self.record(RUST_REPORT.replace(b"COMMIT", b"0" * 40))
+        with self.assertRaisesRegex(ValueError, "uncommitted changes"):
+            self.record(RUST_REPORT.replace(b'value="true"', b'value="false"'))
+
     def test_a_rust_report_holds_exactly_one_pass(self) -> None:
         other = RUST_REPORT.replace(
             b'<testcase classname="conformance.memory.multi_thread_4" name="b">',
             b'<testcase classname="conformance.sqlite.current_thread" name="b">',
         )
-        for report in [other, POSTGRES_REPORT]:
+        for report in [other, RUST_REPORT.replace(RUST_CLASS.encode(), b"tests.other")]:
             with self.subTest(report=report[:40]), self.assertRaisesRegex(ValueError, "one pass"):
                 self.record(report)
 

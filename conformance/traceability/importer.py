@@ -28,6 +28,7 @@ from .receipts import (
     junit,
     outcomes,
     rust_class,
+    rust_id,
     rust_junit,
     rust_outcomes,
 )
@@ -290,17 +291,31 @@ def rust_pass(raw: bytes) -> tuple[str, str]:
     return passes[0]
 
 
+def ran_at(raw: bytes, commit: str) -> None:
+    """Refuse a Rust report unless its run was at *commit*, with no change to a
+    tracked file: a file an earlier run left is never recorded at a later commit."""
+    found = {item.get("name"): item.get("value") for item in ET.fromstring(raw).iter("property")}
+    if found.get("commit") != commit:
+        raise ValueError(
+            f"the report's run was at {found.get('commit')}, the checkout is at {commit}: "
+            "record the files the command just wrote"
+        )
+    if found.get("clean") != "true":
+        raise ValueError("the report's run had uncommitted changes to tracked files")
+
+
 def prepare_rust(specs: Path, rust_repo: Path, raw: bytes, command: list[str]) -> Recording:
     """Clean *raw*, one pass of the Rust runner, and build its receipt at the
     roomkit-rs checkout's commit, checked as `check.py` checks it. Nothing is
     written."""
     commit = rust_commit(rust_repo)
+    ran_at(raw, commit)
     template = revisions(specs, rust_repo, commit, "rust")
     backend, runtime = rust_pass(raw)
     content = clean(raw, {rust_class(backend, runtime)}, "cargo")
     if found := leftovers(content):
         raise ValueError(f"the cleaned report still carries {found}")
-    name = f"rust-{commit[:7]}-{backend}-{runtime.replace('_', '-')}"
+    name = rust_id(commit, backend, runtime)
     artifact = specs / "conformance" / "executions" / f"{name}.xml"
     if artifact.exists() and artifact.read_bytes() != content:
         raise ValueError(f"{artifact.name} exists with other content")
