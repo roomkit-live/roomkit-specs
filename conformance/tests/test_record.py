@@ -403,6 +403,8 @@ class RustRecordingTests(unittest.TestCase):
             self.record(RUST_REPORT.replace(b"COMMIT", b"0" * 40))
         with self.assertRaisesRegex(ValueError, "uncommitted changes"):
             self.record(RUST_REPORT.replace(b'value="true"', b'value="false"'))
+        with self.assertRaisesRegex(ValueError, "names no commit"):
+            self.record(POSTGRES_REPORT)
 
     def test_a_rust_report_holds_exactly_one_pass(self) -> None:
         other = RUST_REPORT.replace(

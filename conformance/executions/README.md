@@ -238,9 +238,10 @@ intermittent issue has been fixed.
 
 `conformance/record.py` writes every receipt from a JUnit report; none is
 edited by hand. It records a Python report at the `python_commit` of
-`evidence.json` only: whoever moves that commit moves it first, then records. It reads the corpus the
-implementation copied (`tests/conformance/SPECS_COMMIT` at that commit) and the
-last commit of `roomkit-rfc.md`, which must match the checkout's RFC.
+`evidence.json` only: whoever moves that commit moves it first, then records.
+It reads the corpus the implementation copied (`tests/conformance/SPECS_COMMIT`
+in roomkit, `conformance/SPECS_COMMIT` in roomkit-rs, at the recorded commit)
+and the last commit of `roomkit-rfc.md`, which must match the checkout's RFC.
 
 The retained report keeps only the testcases of the runner module of the
 recorded backends (`tests.conformance.test_conformance`, or
@@ -305,7 +306,7 @@ A roomkit-rs run is recorded with `record.py rust`, at the commit the
 roomkit-rs checkout is on, a commit of roomkit-rs's main (CI reads only its
 history): each `--junit` file, one pass of the runner, becomes
 `rust-<commit>-<backend>-<runtime>.xml` and the receipt of the same name, with
-`_` written `-`. The runner writes the commit it ran at and whether tracked
+the commit's first seven characters and `_` written `-`. The runner writes the commit it ran at and whether tracked
 files differed from it; the import is refused unless that is the checkout's
 commit, clean, so a file an earlier run left is never recorded at a later
 commit. It is also refused when the checkout has uncommitted changes to

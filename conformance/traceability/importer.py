@@ -295,7 +295,9 @@ def ran_at(raw: bytes, commit: str) -> None:
     """Refuse a Rust report unless its run was at *commit*, with no change to a
     tracked file: a file an earlier run left is never recorded at a later commit."""
     found = {item.get("name"): item.get("value") for item in ET.fromstring(raw).iter("property")}
-    if found.get("commit") != commit:
+    if "commit" not in found:
+        raise ValueError("the report names no commit: it is no report of roomkit-rs's runner")
+    if found["commit"] != commit:
         raise ValueError(
             f"the report's run was at {found.get('commit')}, the checkout is at {commit}: "
             "record the files the command just wrote"
