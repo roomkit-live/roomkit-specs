@@ -10,7 +10,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from check import CELLS
+from check import CELLS, mark
 from test_source import marked
 from traceability import links, process
 from traceability.references import check_assertion
@@ -237,6 +237,15 @@ class ProcessRuleTests(unittest.TestCase):
         )
 
 
+class AnnotationTests(unittest.TestCase):
+    def test_an_annotation_escapes_its_message(self) -> None:
+        self.assertEqual(
+            mark("warning", "50% read\r\nthen", github=True),
+            "::warning title=Process rule::50%25 read%0D%0Athen",
+        )
+        self.assertEqual(mark("error", "50% read", github=False), "error: 50% read")
+
+
 class CommandTests(unittest.TestCase):
     """check.py as a scenario author runs it, on a copy of the checker."""
 
@@ -385,11 +394,14 @@ class CommandTests(unittest.TestCase):
     def test_ci_reports_each_changed_unit_by_its_level(self) -> None:
         """Errors and warnings of the process rule are GitHub annotations, and
         only its errors fail the run. Section 10 has a level on every unit,
-        section 11 on none."""
+        section 11.1 on none, section 11.2 on every unit."""
         route = marked("Route it.", "RK-10.4-001", level="must")
         log = marked("Log it.", "RK-10.4-002", level="may")
         keep = marked("Keep it.", "RK-10.4-003", level="must")
-        name = "### 11.1 Identity\n" + marked("Name it.", "RK-11.1-001")
+        identity = "### 11.1 Identity\n"
+        named = marked("Name it.", "RK-11.1-001")
+        aliases = "### 11.2 Aliases\n" + marked("Alias it.", "RK-11.2-001", level="must")
+        name = identity + named + aliases
         self.rfc.write_text("### 10.4 Routing\n" + route + log + keep + name)
         self.assertEqual(self.check("--pin", "routing/a").returncode, 0)
         base = self.commit()
@@ -475,8 +487,33 @@ class CommandTests(unittest.TestCase):
                 [f"{error}RK-10.4-002 (changed since {since}): {unlevelled}"],
             ),
             (
+                "a non_testable unit added with no level in a levelled section",
+                added(kind="non_testable"),
+                None,
+                1,
+                [f"{error}RK-10.4-004 (added since {since}): {unlevelled}"],
+            ),
+            (
+                "a unit with no level moved into a levelled section",
+                route + log + keep + named + identity + aliases,
+                None,
+                1,
+                [f"{error}RK-11.1-001 (moved since {since}): {unlevelled}"],
+            ),
+            (
+                "a unit added with no level in a levelled subsection",
+                route + log + keep + name + marked("Alias it again.", "RK-11.2-002"),
+                None,
+                1,
+                [
+                    f"{error}RK-11.2-002 (added since {since}): no level, in §11.2 "
+                    "where every unit has one"
+                ],
+            ),
+            (
                 "a unit added with no level in a section with none",
-                route + log + keep + name + marked("Spell it.", "RK-11.1-002"),
+                route + log + keep + identity + named + marked("Spell it.", "RK-11.1-002")
+                + aliases,
                 None,
                 0,
                 [f"unreviewed: RK-11.1-002 (added since {since}): no level yet"],

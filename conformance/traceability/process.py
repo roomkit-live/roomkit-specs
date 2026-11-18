@@ -57,25 +57,29 @@ def process_rule(
     """Errors, warnings and unreviewed units among the units changed since the
     base: a must unit needs a citing scenario or a reason in untested.json, a
     should unit without either warns, a may unit passes, a unit with no level
-    is unreviewed, or an error in a section every unit of which had a level
-    at the base. A non_testable unit is exempt: its kind is its reason."""
+    is unreviewed. A non_testable unit needs neither: its kind is its reason.
+    In a section every unit of which had a level at the base, a unit with no
+    level is an error, whether added, moved in or with its level dropped."""
     cited = citations(scenarios)
     levelled = levelled_sections(base)
+    changed = {item["id"]: how for item, how in changed_units(registry, base)}
     errors, warnings, unreviewed = [], [], []
     since = base_ref[:12]
-    for item, how in changed_units(registry, base):
-        unit, level = item["id"], item.get("level")
+    for item in registry["requirements"]:
+        unit, level, how = item["id"], item.get("level"), changed.get(item["id"])
         if level is None:
             around = [part for part in enclosing(item["section"]) if part in levelled]
-            if around:
+            if around:  # how is None: unchanged, the unit has moved in
                 errors.append(
-                    f"{unit} ({how} since {since}): no level, in §{around[0]} "
-                    "where every unit has one"
+                    f"{unit} ({how or 'moved'} since {since}): no level, in "
+                    f"§{around[0]} where every unit has one"
                 )
-            else:
+            elif how is not None:
                 unreviewed.append(f"{unit} ({how} since {since}): no level yet")
             continue
-        if item["kind"] == "non_testable" or unit in cited or unit in untested:
+        if how is None or item["kind"] == "non_testable":
+            continue
+        if unit in cited or unit in untested:
             continue
         if level == "must":
             errors.append(

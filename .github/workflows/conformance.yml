@@ -53,8 +53,9 @@ jobs:
       - name: Historical scenario checks
         run: uv run --no-project --python ${{ matrix.python }} --with jsonschema==4.26.0 python conformance/check.py --strict
       # --changed-units runs the process rule (TRACEABILITY.md) on the units
-      # added or changed since the same base: its errors fail the job, its
-      # warnings are annotations.
+      # added or changed since the same base: its errors fail the job, and
+      # they and its warnings are annotations. Both jobs write them: the
+      # matrix fails fast, so the first job to fail cancels the other.
       - name: Current RFC, process rule, evidence provenance and generated artifacts
         env:
           TRACEABILITY_BASE: ${{ github.event.pull_request.base.sha || github.event.before }}

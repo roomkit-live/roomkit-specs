@@ -1493,10 +1493,10 @@ or a skip to a passing result.
     `must` unit added or changed since needs a citing scenario or a reason in
     `untested.json` (`{"RK-10.4-999": "Needs a carrier's number lookup."}`
     under `units`); a `should` one warns, a unit with no level is listed as
-    unreviewed, or is an error in a section every unit of which has a level.
-    CI runs it on every push and pull request, against the push's or the pull
-    request's base, and fails on its errors; run it before pushing with
-    `--base-ref "$(git merge-base origin/main HEAD)"`.
+    unreviewed, or is an error in a section every unit of which had a level at
+    the base. CI runs it on every push and pull request to main, against the
+    push's or the pull request's base, and fails on its errors; run it before
+    pushing with `--base-ref "$(git merge-base origin/main HEAD)"`.
 - Give every member you assert in a template, and a reason to every block.
 - Hold on every runtime: a runner on one thread and one on several
   (roomkit-rs runs the suite on both) give the same outcomes. Two things
