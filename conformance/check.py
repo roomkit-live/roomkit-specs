@@ -10,6 +10,11 @@ For each scenario under conformance/scenarios/:
   9", "§10.2 step 3c", "§7.5 rule 2", "§9.5.1 Reentrance", "§10.3
   Validation rule 4", "Appendix B.2".
 
+- each entry of its `requirements` names a unit of the current RFC
+  (roomkit-rfc.md, or --rfc) that is neither retired nor non_testable, and
+  conformance/links.lock.json pins the citation to the unit's current text
+  (TRACEABILITY.md, "Citing units").
+
 It then lists what no scenario asserts yet: the rows of the §26.1 trigger
 and framework-event table (a row is credited only by the scenarios that cite
 the places it names, each of them by one), and the cells of the reentrancy
@@ -18,7 +23,9 @@ table (README, "Reentrancy cells").
     python3 conformance/check.py            # check; exit 1 on an error
     python3 conformance/check.py --fix      # rewrite the layout first
     python3 conformance/check.py --rfc roomkit-rfc.md   # against a file
-    python3 conformance/check.py --strict   # coverage gaps are errors too
+    python3 conformance/check.py --strict   # coverage gaps and lock drift are errors too
+    python3 conformance/check.py --pin RK-10.4-003 routing/x   # re-pin after reading
+    python3 conformance/check.py --changed-units --base-ref <sha>   # the process rule
 
 It needs `jsonschema` (pip install jsonschema).
 """
@@ -55,18 +62,22 @@ def layout(scenario: Any) -> str:
     return json.dumps(scenario, indent=2, ensure_ascii=False) + "\n"
 
 
+def git_show(commit: str, path: str) -> str:
+    """A file of this repository at a commit."""
+    return subprocess.run(
+        ["git", "-C", str(ROOT), "show", f"{commit}:{path}"],
+        check=True,
+        capture_output=True,
+        text=True,
+    ).stdout
+
+
 def rfc_text(path: str | None) -> tuple[str, str]:
     """The RFC's text and what it was read from: a file, or the pinned commit."""
     if path is not None:
         return Path(path).read_text(encoding="utf-8"), path
     commit = (HERE / "RFC_COMMIT").read_text(encoding="utf-8").strip()
-    text = subprocess.run(
-        ["git", "-C", str(ROOT), "show", f"{commit}:roomkit-rfc.md"],
-        check=True,
-        capture_output=True,
-        text=True,
-    ).stdout
-    return text, f"roomkit-rfc.md at {commit[:12]}"
+    return git_show(commit, "roomkit-rfc.md"), f"roomkit-rfc.md at {commit[:12]}"
 
 
 def sections(text: str) -> dict[str, list[str]]:
@@ -269,7 +280,9 @@ def main() -> int:
         "--rfc", help="check against this file instead of the pinned commit"
     )
     parser.add_argument(
-        "--strict", action="store_true", help="coverage gaps are errors"
+        "--strict",
+        action="store_true",
+        help="coverage gaps and lock drift are errors",
     )
     parser.add_argument(
         "--traceability",
@@ -292,11 +305,30 @@ def main() -> int:
         help="Rust git repository used to resolve execution provenance",
     )
     parser.add_argument(
-        "--base-ref", help="full specs commit used to check requirement ID retirement"
+        "--base-ref",
+        help="full specs commit used to check requirement ID retirement and, with "
+        "--changed-units, the units changed since",
+    )
+    parser.add_argument(
+        "--pin",
+        nargs="+",
+        metavar="NAME",
+        help="record the citations of these units or scenarios as read against the "
+        "current RFC text in links.lock.json, and drop their pins with no citation",
+    )
+    parser.add_argument(
+        "--changed-units",
+        action="store_true",
+        help="the process rule: each unit added or changed since --base-ref needs, "
+        "by its level, a citing scenario or a reason in untested.json",
     )
     args = parser.parse_args()
     if args.update_traceability and not args.traceability:
         parser.error("--update-traceability requires --traceability")
+    if args.changed_units and not (
+        args.base_ref and re.fullmatch(r"[0-9a-f]{40}", args.base_ref)
+    ):
+        parser.error("--changed-units requires --base-ref with a full 40-character sha")
     try:
         from jsonschema import Draft202012Validator
     except ImportError:
@@ -328,6 +360,10 @@ def main() -> int:
             why = resolve(reference, parts)
             if why is not None:
                 errors.append(f"{name}: rule {reference!r}: {why}")
+    by_id = {scenario.get("id", ""): scenario for scenario in scenarios}
+    current = Path(rfc) if rfc is not None else ROOT / "roomkit-rfc.md"
+    citation_errors, drift, notes = citation_checks(args, by_id, current)
+    errors += citation_errors
     cells: set[str] = set()
     for scenario in scenarios:
         cells |= set(scenario.get("reentrancy", []))
@@ -350,13 +386,58 @@ def main() -> int:
             base_ref=args.base_ref,
         )
     print(f"{len(scenarios)} scenarios, rules resolved against {source}")
+    for line in notes:
+        print(line)
     for line in errors:
         print(f"error: {line}")
+    for line in drift:
+        print(f"lock: {line}")
     for line in gaps:
         print(f"gap: {line}")
-    if errors or (args.strict and gaps):
+    if errors or (args.strict and (gaps or drift)):
         return 1
     return 0
+
+
+def citation_checks(
+    args: argparse.Namespace, scenarios: dict[str, dict[str, Any]], rfc: Path
+) -> tuple[list[str], list[str], list[str]]:
+    """The scenarios' `requirements` against the current RFC: errors, lock
+    drift (an error under --strict), and the notes --pin and --changed-units
+    print. --pin rewrites the lock only when nothing else is wrong."""
+    from traceability import links, process, source
+
+    try:
+        registry = source.extract(rfc.read_text(encoding="utf-8"))
+        retired = json.loads((HERE / "evidence.json").read_text())["retired"]
+        untested = links.read_untested(HERE)
+        lock = links.read_lock(HERE)
+    except (OSError, ValueError, KeyError) as error:
+        return [f"requirements: {error}"], [], []
+    errors = links.check_citations(scenarios, registry, retired)
+    errors += links.check_untested(untested, registry, retired)
+    notes = []
+    if args.pin and errors:
+        errors.append("--pin: nothing pinned while a citation is wrong")
+    elif args.pin:
+        lock, pin_errors = links.pin(args.pin, scenarios, registry, lock)
+        errors += pin_errors
+        if not pin_errors:
+            (HERE / links.LOCK).write_text(links.lock_layout(lock), encoding="utf-8")
+            notes.append(f"{links.LOCK}: pinned {' '.join(args.pin)}")
+    drift = links.lock_problems(scenarios, registry, lock, untested)
+    if args.changed_units:
+        try:
+            base = source.extract(git_show(args.base_ref, "roomkit-rfc.md"))
+        except (subprocess.CalledProcessError, ValueError) as error:
+            return errors + [f"--base-ref {args.base_ref}: {error}"], drift, notes
+        failed, warned, unreviewed = process.process_rule(
+            registry, base, scenarios, untested, args.base_ref
+        )
+        errors += failed
+        notes += [f"warning: {line}" for line in warned]
+        notes += [f"unreviewed: {line}" for line in unreviewed]
+    return errors, drift, notes
 
 
 if __name__ == "__main__":

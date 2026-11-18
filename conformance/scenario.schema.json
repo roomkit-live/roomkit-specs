@@ -34,6 +34,16 @@
         "pattern": "^(\u00a7[0-9]+(\\.[0-9]+)*|Appendix [A-Z](\\.[0-9]+)*)( .+)?$"
       }
     },
+    "requirements": {
+      "description": "The RFC units the scenario tests, by their stable IDs in requirements.json: \"RK-10.4-003\". The checker refuses an unknown, retired or non_testable unit, and links.lock.json pins each citation to the unit's text (TRACEABILITY.md, \"Citing units\"). Runners ignore it.",
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^RK-(?:[0-9]+|[A-Z])(?:\\.[0-9]+)*-[0-9]{3,}$"
+      }
+    },
     "reentrancy": {
       "description": "The cells of the reentrancy table (README, \"Reentrancy cells\") the scenario exercises.",
       "type": "array",

@@ -73,3 +73,25 @@ class SchemaTests(unittest.TestCase):
                 )
                 patch["room_id"] = room_id
                 self.assertEqual(validator.is_valid(scenario), isinstance(room_id, str))
+
+    def test_requirements_cite_unique_unit_ids(self) -> None:
+        schema = json.loads((ROOT / "scenario.schema.json").read_text())
+        validator = Draft202012Validator(schema)
+        fixture = (
+            ROOT
+            / "scenarios/orchestration"
+            / "a-conversation-state-is-saved-only-in-a-room-the-store-holds.json"
+        )
+        for requirements, valid in (
+            (["RK-10.4-003"], True),
+            (["RK-10.4-003", "RK-A.2-001"], True),
+            ([], False),
+            (["RK-10.4-003", "RK-10.4-003"], False),
+            (["§10.4"], False),
+            (["RK-10.4-3"], False),
+            ("RK-10.4-003", False),
+        ):
+            with self.subTest(requirements=requirements):
+                scenario = json.loads(fixture.read_text())
+                scenario["requirements"] = requirements
+                self.assertEqual(validator.is_valid(scenario), valid)
