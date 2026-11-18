@@ -1654,6 +1654,14 @@ are preserved. Only names supplied by the scenario are selected, excluding
 client-generated headers. This records the actual endpoint path and query,
 including initialized notifications, rather than inferring them from MCP calls.
 
+### Direct text prompts
+
+`agent.direct_prompt` takes `room_id`, `channel_id` and an `event` template
+with its source. It wires the live scripted AI channel through the kit's turn
+executor, calls its public `on_event` with that room's current binding and
+context, and consumes its response. The result is the channel's `responded`
+flag. Room subscribers observe publications through the usual expectations.
+
 ### Host tool definitions
 
 `agent.extra_tools` takes `channel_id` and reads the public host definitions,

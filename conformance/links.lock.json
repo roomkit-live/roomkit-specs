@@ -2730,6 +2730,9 @@
       "host-declared/record-error-valueerror-streaming": "e579b68c2e3be272db905ee87ba32ef1e8511d802307cd24dd21cf66ebbc8645",
       "inbound/an-agent-s-provider-refusal-keeps-its-retryability": "e579b68c2e3be272db905ee87ba32ef1e8511d802307cd24dd21cf66ebbc8645"
     },
+    "RK-8.4-002": {
+      "streaming/a-directly-wired-prompt-rechecks-its-room-audience": "a176d7d55e4901a7f53ebb798ee91394f035660ee6bce5b9b66a8d019bf0dc85"
+    },
     "RK-9.1-002": {
       "hooks/a-hook-past-its-timeout": "06642e7e09ce86eba1ee80f0954b40e3d34b295ede40bcf650f7cc92f2a94c70",
       "hooks/an-async-hook-past-its-timeout": "06642e7e09ce86eba1ee80f0954b40e3d34b295ede40bcf650f7cc92f2a94c70",

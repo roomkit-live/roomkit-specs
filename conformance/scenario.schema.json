@@ -1936,6 +1936,7 @@
             "acp.cancel",
             "acp.close",
             "mcp_session",
+            "agent.direct_prompt",
             "agent.extra_tools",
             "agent.replace_extra_tool",
             "skill_registry_session",
@@ -4789,6 +4790,33 @@
               },
               "is_typing": {
                 "type": "boolean"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "agent.direct_prompt"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "room_id",
+              "channel_id",
+              "event"
+            ],
+            "properties": {
+              "room_id": {
+                "type": "string"
+              },
+              "channel_id": {
+                "type": "string"
+              },
+              "event": {
+                "type": "object"
               }
             }
           }
