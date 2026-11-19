@@ -6215,8 +6215,7 @@
       "reentrancy/a-turn-s-framework-event-handler-sends-while-it-runs": "c9e31c45bfe7408000f0189405703ab2f05ba0b60016902f443082d0f7e8eeb0"
     },
     "RK-9.5.1-056": {
-      "delivery/a-delivery-s-call-into-another-room-waits-for-that-room-s-lane": "9f54cf13ac47a370690c449e9e7aa4fc4bd4c5596c2c767924e89cefd3fc1a5f",
-      "reentrancy/a-routed-call-past-the-budget-opens-no-room": "9f54cf13ac47a370690c449e9e7aa4fc4bd4c5596c2c767924e89cefd3fc1a5f"
+      "delivery/a-delivery-s-call-into-another-room-waits-for-that-room-s-lane": "9f54cf13ac47a370690c449e9e7aa4fc4bd4c5596c2c767924e89cefd3fc1a5f"
     },
     "RK-9.5.1-058": {
       "reentrancy/replays-draw-nothing-on-a-hook-s-budget": "df39e6830c21c29e4e972c646139a1911fe87deb044e445bb7b482a4193428e7"
