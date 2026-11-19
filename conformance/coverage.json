@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "d4af4ed8139b7564771e9a6aee92877c823b5b95aca9c29effd24c4de8ba1884",
-  "corpus_sha256": "2692063f560d748b4652765562ced48f210cc3281dcad01260c8eaa81a5abfa5",
+  "corpus_sha256": "535b6d7221d74e5b60038f4e51ccb5ce9e9d7f2f0bc53615bd6982cfd94aa32c",
   "python_commit": "05127770f2c6ed6070c92afc825cc8ea747ff440",
-  "scenario_count": 3176,
+  "scenario_count": 3187,
   "sections": [
     {
       "section": "0",
@@ -287,6 +287,7 @@
         "discussion/a-discussion-written-through-the-kit-is-dropped",
         "discussion/discussion-regeneration-preserves-refusal-order-in-a-loaded-room",
         "edits/a-hard-delete-leaves-the-index-it-took",
+        "executors/a-turn-apart-s-answer-reaches-its-room-through-the-owner-alone",
         "greeting/a-greeting-meets-the-room-s-due-timers",
         "greeting/no-room-to-greet",
         "hooks/a-room-hook-added-before-its-room-fires-for-it",
@@ -1367,7 +1368,9 @@
         "eviction/a-room-the-agent-joins-again-keeps-no-stored-result",
         "eviction/a-stored-result-of-parts-read-as-text-is-never-noted-as-a-repeat",
         "eviction/an-evicted-answer-given-a-third-time-is-noted",
+        "executors/a-plan-a-build-let-go-held-reads-empty-at-its-next-build",
         "executors/a-provider-the-factory-hands-every-build-outlives-a-build-let-go",
+        "executors/a-thought-a-build-let-go-past-the-bound-held-starts-anew",
         "executors/a-turn-apart-publishes-its-thinking-and-tool-calls-to-the-room",
         "executors/a-turn-cut-on-its-executor-names-it-in-its-record",
         "executors/a-turn-s-record-names-the-executor-that-ran-it-apart",
@@ -4927,6 +4930,7 @@
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
+        "executors/a-turn-apart-s-answer-reaches-its-room-through-the-owner-alone",
         "executors/an-executor-closed-during-a-turn-ends-it"
       ]
     },
@@ -4941,6 +4945,8 @@
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "executors/a-delegation-to-a-declared-worker-runs-on-its-executor",
+        "executors/a-supervisor-s-passes-are-turns-of-its-agent-on-the-executor-hosting-it",
+        "executors/one-build-serving-two-rooms-takes-a-strategy-s-tools-in-its-room-alone",
         "orchestration/an-auto-delegating-supervisor-s-two-passes-carry-a-correlation-id-each",
         "rooms/a-response-whose-room-a-step-closes-during-its-turn-is-refused",
         "rooms/an-agent-s-answer-whose-room-a-step-closes-during-its-generation-is-refused",
@@ -4981,16 +4987,25 @@
         "channel-call/a-verb-the-channel-lacks-fails",
         "channel-call/an-empty-state-is-forgotten",
         "eviction/a-room-the-agent-joins-again-keeps-no-stored-result",
+        "executors/a-channel-call-leaves-the-room-s-state-as-a-turn-does",
+        "executors/a-declared-agent-s-delegate-task-is-kept-by-the-owner-for-each-build",
         "executors/a-declared-agent-s-turn-runs-on-the-executor-hosting-it",
+        "executors/a-declared-worker-s-result-tool-rides-its-child-room-s-requests-alone",
         "executors/a-detach-forgets-what-the-room-kept-for-a-channel",
+        "executors/a-plan-a-build-let-go-held-reads-empty-at-its-next-build",
         "executors/a-room-s-turns-stay-on-the-executor-holding-its-state",
+        "executors/a-thought-a-build-let-go-past-the-bound-held-starts-anew",
         "executors/a-turn-apart-emits-its-framework-events",
         "executors/a-turn-apart-publishes-its-thinking-and-tool-calls-to-the-room",
         "executors/an-agent-its-executor-builds-nothing-for-fails-no-executor",
         "executors/an-executor-drops-the-state-a-turn-elsewhere-made-stale",
         "executors/an-executor-past-its-bound-closes-the-agent-it-used-least-recently",
         "executors/one-build-serving-two-rooms-reads-each-turn-s-room-alone",
-        "executors/what-the-room-keeps-for-a-channel-reaches-the-next-executor"
+        "executors/one-build-serving-two-rooms-takes-a-strategy-s-tools-in-its-room-alone",
+        "executors/what-the-room-keeps-for-a-channel-reaches-the-next-executor",
+        "greeting/a-declared-agent-greets-the-room-a-first-message-creates",
+        "greeting/send-greeting-speaks-for-a-declared-agent",
+        "rooms/a-declared-agent-binds-as-an-intelligence-channel-only"
       ]
     },
     {
@@ -5069,6 +5084,7 @@
         "channel-release/a-closed-kit-refuses-release-before-checking-registration",
         "channel-release/a-closed-local-executor-can-release-a-live-channel",
         "channel-release/a-live-channel-keeps-its-rooms-after-release",
+        "executors/a-channel-call-leaves-the-room-s-state-as-a-turn-does",
         "executors/a-channel-call-no-executor-takes-fails-no-executor",
         "executors/a-channel-call-runs-on-the-executor-holding-the-room",
         "executors/a-provider-the-factory-hands-every-build-outlives-a-build-let-go",
@@ -5171,6 +5187,7 @@
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
+        "executors/a-declared-agent-s-delegate-task-is-kept-by-the-owner-for-each-build",
         "executors/a-later-turn-on-another-executor-replays-the-instruction-it-read",
         "executors/a-turn-apart-asks-a-person-through-the-room-owner",
         "executors/a-turn-apart-calls-a-tool-the-room-owner-serves",
@@ -7433,6 +7450,7 @@
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "greeting/a-channel-unregistered-greets-no-more",
+        "greeting/a-declared-agent-greets-the-room-a-first-message-creates",
         "greeting/a-delivery-greeting-on-every-delivery-stops-at-the-budget",
         "greeting/a-greeting-from-a-delivery-follows-in-the-lane",
         "greeting/a-greeting-from-a-locked-hook-commits-ahead",
@@ -7453,6 +7471,7 @@
         "greeting/another-agent-that-reads-a-greeting-holds-no-first-message",
         "greeting/no-room-to-greet",
         "greeting/send-greeting-finds-the-agent-it-names-or-the-first-bound",
+        "greeting/send-greeting-speaks-for-a-declared-agent",
         "greeting/send-greeting-stores-the-agent-s-greeting-and-delivers-it",
         "greeting/two-agents-greet-before-the-message",
         "inbound/a-greeting-s-failed-set-is-not-recorded",
@@ -7792,6 +7811,8 @@
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
+        "executors/a-supervisor-s-passes-are-turns-of-its-agent-on-the-executor-hosting-it",
+        "executors/one-build-serving-two-rooms-takes-a-strategy-s-tools-in-its-room-alone",
         "orchestration/a-background-worker-busy-in-one-room-is-free-in-another",
         "orchestration/a-background-worker-past-its-task-timeout-is-cut-and-told-as-not-completed",
         "orchestration/a-background-worker-tool-answers-at-once-and-hands-the-outcome-back",
@@ -8952,6 +8973,7 @@
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "delivery/a-task-delegated-from-a-delivery-is-not-its-turn-work",
+        "executors/a-declared-worker-s-result-tool-rides-its-child-room-s-requests-alone",
         "executors/a-delegation-to-a-declared-worker-runs-on-its-executor",
         "host/a-task-cut-short-hands-its-failure-to-wait-task",
         "host/a-turn-s-host-delegates-and-waits-for-its-task",
@@ -9114,6 +9136,7 @@
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
+        "executors/a-declared-agent-s-delegate-task-is-kept-by-the-owner-for-each-build",
         "executors/a-turn-apart-calls-a-tool-the-room-owner-serves",
         "host/a-turn-s-host-delegates-and-waits-for-its-task",
         "orchestration/a-supervisor-given-task-status-is-pointed-at-it-by-its-dispatched-team",
