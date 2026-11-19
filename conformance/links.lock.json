@@ -2952,11 +2952,23 @@
     "RK-10.6.6-005": {
       "kit-executor/named-hooks-refuse-invalid-registrations": "ffab49e9c4a3a6d650e187e193fc70e2c0e6b2ec1044bf6d0018334dad806ecf"
     },
+    "RK-10.6.6-006": {
+      "executors/a-turn-apart-fires-the-owner-s-triggers-on-the-room-owner": "ead571cfdb6174af1173b6918ea47e77d983f31dd2040204e3313b0915474e29",
+      "executors/a-turn-apart-s-delegation-and-segments-fire-their-hooks-on-the-room-owner": "ead571cfdb6174af1173b6918ea47e77d983f31dd2040204e3313b0915474e29",
+      "executors/a-turn-apart-s-error-message-reaches-on-error-and-never-a-model": "ead571cfdb6174af1173b6918ea47e77d983f31dd2040204e3313b0915474e29"
+    },
     "RK-10.6.6-007": {
       "executors/a-hook-on-an-executor-reads-the-room-when-it-fires": "b2a6a960c41e4d15b6f6ac63c8151fb3617312e68c59637a390e29cb62430f66"
     },
     "RK-10.6.6-008": {
       "turn-record/an-async-observer-of-a-call-writes-the-turn-s-record": "7348a48d126dcbfbf862f8b42d7d44704956e4a3f14928a1aa738dd38040e323"
+    },
+    "RK-10.6.6-009": {
+      "kit-executor/a-channel-declared-while-a-kit-turn-hook-could-fire-for-it-is-refused": "e37b4f8de4e52beec022f430a0a926345f0b6f9d3339dd4ce4ba5d72d74614c5",
+      "kit-executor/a-kit-turn-hook-a-declared-channel-could-fire-is-refused": "e37b4f8de4e52beec022f430a0a926345f0b6f9d3339dd4ce4ba5d72d74614c5"
+    },
+    "RK-10.6.6-010": {
+      "kit-executor/a-kit-turn-hook-a-declared-channel-could-fire-is-refused": "e5e602511d3f889371cd2faaad3d385b761580d22799c018416dcd8d1413a163"
     },
     "RK-10.6.6-014": {
       "tools/a-room-s-tool-hook-gates-that-room-s-calls": "76c1aaf5430ab74a46b9e0aca22351987caf8aa0369e9eec46a4c65f747c5358"
@@ -3093,9 +3105,20 @@
     "RK-10.6.7-034": {
       "local-presence/automatic-publications-follow-local-changes": "e7b553242f7460a29b9ca01dfbeb9eb20031bfff5996caffd276a6d5c336484c"
     },
+    "RK-10.6.8-006": {
+      "executors/a-slow-turn-apart-that-keeps-beating-is-never-failed": "f41e0a36f56b7d1d0f09f688bc68415394b32f9417dcbab29d28f99edb3b56d6",
+      "executors/a-turn-apart-silent-while-its-tool-runs-past-the-heartbeat-timeout-is-kept": "f41e0a36f56b7d1d0f09f688bc68415394b32f9417dcbab29d28f99edb3b56d6"
+    },
     "RK-10.6.8-007": {
       "executors/an-executor-killed-mid-answer-loses-its-turn-and-what-was-shown-stays": "2bdc189cfa3961221b0aa5200198a95d544a11effc6ca27aced655f8dc8e767b",
       "executors/an-executor-that-never-answers-loses-the-turn-and-no-other-gets-it": "2bdc189cfa3961221b0aa5200198a95d544a11effc6ca27aced655f8dc8e767b"
+    },
+    "RK-10.6.8-012": {
+      "executors/an-executor-restarted-under-its-id-does-not-keep-the-killed-one-s-turn": "c379642986ba6af0cae2871ada53a56199e6f8c07a63efef2b92ad75f8000ead"
+    },
+    "RK-10.6.8-013": {
+      "executors/a-slow-turn-apart-that-keeps-beating-is-never-failed": "86aa09f227d433a23010fe838559547c00c114e50c7b45758be521ee2d816769",
+      "executors/a-turn-apart-silent-while-its-tool-runs-past-the-heartbeat-timeout-is-kept": "86aa09f227d433a23010fe838559547c00c114e50c7b45758be521ee2d816769"
     },
     "RK-10.6.8-014": {
       "executor-close/a-later-close-cuts-a-previously-spared-turn": "261d39653472f86ea3b41c79e4527d570c9a3a8ae1d699bc14abab113b197e75",
@@ -3106,6 +3129,9 @@
       "executors/an-executor-closed-during-a-turn-ends-it": "261d39653472f86ea3b41c79e4527d570c9a3a8ae1d699bc14abab113b197e75",
       "executors/an-executor-killed-mid-answer-loses-its-turn-and-what-was-shown-stays": "261d39653472f86ea3b41c79e4527d570c9a3a8ae1d699bc14abab113b197e75",
       "executors/an-executor-that-never-answers-loses-the-turn-and-no-other-gets-it": "261d39653472f86ea3b41c79e4527d570c9a3a8ae1d699bc14abab113b197e75"
+    },
+    "RK-10.6.8-015": {
+      "executors/the-owner-cancels-the-calls-of-a-turn-it-loses": "170fe058614c211ff6a03a7642effc8dcf64eaf16e10df988946aa85bc398e47"
     },
     "RK-10.6.8-016": {
       "executors/a-turn-no-executor-declares-fails-and-the-room-goes-on": "ca845cc092e4e24ce635d65c6369dd96745686500a41a066aafa2c68268ac510",
@@ -3181,6 +3207,9 @@
     "RK-10.6.8-031": {
       "executor-close/an-external-close-cuts-work-kept-after-owner-cancellation": "b9ee046fc688cbfc651c1a7e30c506767bdc70077fa5a02d1f6511137b85084c"
     },
+    "RK-10.6.8-032": {
+      "executors/a-provider-the-factory-hands-every-build-outlives-its-executor-s-close": "488baa797a43816e86899af68d9f4f4518d2f2c27fed891dfef392c02f66c8fb"
+    },
     "RK-10.6.8-033": {
       "executor-close/closing-cuts-a-held-generation": "4769c7bad960d95d56e6b6aa6f4c92d5e06ed1b1f28239d4dd66f8d25258708c",
       "executor-close/closing-from-a-turn-spares-it": "4769c7bad960d95d56e6b6aa6f4c92d5e06ed1b1f28239d4dd66f8d25258708c",
@@ -3200,6 +3229,9 @@
     "RK-10.6.8-037": {
       "acp/steer-idle-reaches-no-agent": "db46930c8d114abef184422937d69a3db1947c61ae24c1518115c88d1aee7fa9",
       "steering/a-steer-reaches-the-room-it-names-alone": "db46930c8d114abef184422937d69a3db1947c61ae24c1518115c88d1aee7fa9"
+    },
+    "RK-10.6.8-038": {
+      "steering/a-cancel-for-a-channel-without-steering-cuts-its-turn": "51061a374d7d917e9f1a7592ea5e130a202496915821e3c7eb4b87796ca6a7e0"
     },
     "RK-10.6.8-039": {
       "acp/mcp-cancel-during-callback": "54e9b48959d00a7bc9a8b828e7e14acb3e49793287b2c0d0134c2ed8dd072239",
@@ -3241,6 +3273,12 @@
       "host-declared/record-error-valueerror-non-streaming": "e579b68c2e3be272db905ee87ba32ef1e8511d802307cd24dd21cf66ebbc8645",
       "host-declared/record-error-valueerror-streaming": "e579b68c2e3be272db905ee87ba32ef1e8511d802307cd24dd21cf66ebbc8645",
       "inbound/an-agent-s-provider-refusal-keeps-its-retryability": "e579b68c2e3be272db905ee87ba32ef1e8511d802307cd24dd21cf66ebbc8645"
+    },
+    "RK-10.6.8-050": {
+      "executors/a-turn-apart-s-error-message-reaches-on-error-and-never-a-model": "80025d01ed9bad872bc061c8632f8f5301cdd8c7435dcb58bebddc93b696b228"
+    },
+    "RK-10.6.9-009": {
+      "executors/a-room-s-attach-and-detach-are-applied-on-the-executor-before-they-return": "c3d781930779e9e12585462005f14490e270227e68b9e944b881ab0b4acff073"
     },
     "RK-5-001": {
       "permissions/reserved-channel-ids-are-refused": "c094c4292b80e298a0a8b1d7ca12bbef2df681c42d9366621b73e01f8938495c"
