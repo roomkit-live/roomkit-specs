@@ -2501,6 +2501,9 @@
       "speaking/strategy-bypasses-policy-and-thinker-two-passes-non-streaming": "2c2934d112db6d794ec8d9ffda45aa25e78365fbe7083bd81fea5ec9dbfc3cb3",
       "speaking/strategy-bypasses-policy-and-thinker-two-passes-streaming": "2c2934d112db6d794ec8d9ffda45aa25e78365fbe7083bd81fea5ec9dbfc3cb3"
     },
+    "RK-10.6.3-012": {
+      "executors/a-turn-apart-reads-its-room-s-organization": "903d20eb8144c45a1f10f091e7a75b9cc05698bde76b46f9436830e9bff76137"
+    },
     "RK-10.6.3-013": {
       "executors/attach-and-detach-reach-every-executor-declaring-the-channel": "b26285a2daed8d5d1ae41821a70ebd3c77081cbe1e9162050c4455cfc3a2df0c"
     },
@@ -2536,6 +2539,9 @@
       "executors/a-released-channel-is-built-anew-for-the-next-turn": "c80b284d8c0138e13aa5a996afc3656160dceec38ca53af7932881adfc773512",
       "executors/a-turn-running-on-a-released-channel-ends-on-it": "c80b284d8c0138e13aa5a996afc3656160dceec38ca53af7932881adfc773512"
     },
+    "RK-10.6.3-019": {
+      "executors/a-release-builds-nothing-on-an-executor-holding-no-build": "62b644c6a7654f1b80129b0049726fb848238fae73a8ed748155377f80c26e91"
+    },
     "RK-10.6.3-020": {
       "channel-release/a-closed-local-executor-can-release-a-live-channel": "b3de4664e49c5422c3366937c8d6cacee0a6d1bd425733eb2384b55aec64b66e",
       "channel-release/a-live-channel-keeps-its-rooms-after-release": "b3de4664e49c5422c3366937c8d6cacee0a6d1bd425733eb2384b55aec64b66e"
@@ -2543,6 +2549,16 @@
     "RK-10.6.3-021": {
       "channel-release/a-closed-local-executor-can-release-a-live-channel": "f3107342ad1c3018cfc4802530fec3b552c58a857245cdbc67846483cb466bf6",
       "executors/releasing-an-unknown-channel-fails": "f3107342ad1c3018cfc4802530fec3b552c58a857245cdbc67846483cb466bf6"
+    },
+    "RK-10.6.3-022": {
+      "executors/a-committed-event-goes-to-one-executor-that-would-take-the-room-s-turns": "a7bc8c03262d53e6724ea9cdbf49a86b1eb3e1badb733aab9c8c8d96e2d205d7",
+      "executors/a-committed-event-goes-to-the-executor-holding-the-room-s-state": "a7bc8c03262d53e6724ea9cdbf49a86b1eb3e1badb733aab9c8c8d96e2d205d7"
+    },
+    "RK-10.6.3-024": {
+      "executors/a-committed-event-reaches-the-memory-before-its-agent-s-next-turn": "3b61c07ec550e9d4ac0b717c026251445406a8594ec28862317ff36418c0ff2a"
+    },
+    "RK-10.6.3-025": {
+      "executors/a-committed-event-no-executor-takes-is-dropped": "1ae1045b40135678da8e390838a480434ce078aa7dff37c7f7747fe138e20a1d"
     },
     "RK-10.6.3-026": {
       "channel-call/a-call-is-scoped-to-the-room-s-organization": "05a2907d8fef3dd0068352a22ebc6badd904fd9603e765f09e3d7b98a7127f8e",
@@ -2574,6 +2590,12 @@
     "RK-10.6.3-035": {
       "executors/a-publication-from-an-executor-no-longer-holding-the-room-is-dropped": "8c07337e7499c82a831c9846cc3d3d2f32e0c7f9d90a70a3fd1567d019a3f72d"
     },
+    "RK-10.6.3-036": {
+      "executors/work-an-earlier-turn-began-writes-nothing-once-a-later-turn-was-sent": "dd74aaf48909d4326e2b3c5ffe1187f9f8826e43eb3a7a8cc8328bb54bb9c6ef"
+    },
+    "RK-10.6.3-037": {
+      "executors/work-an-earlier-turn-began-publishes-while-its-executor-holds-the-room": "1ab289d4ff29ea931d7f285c61e2a27765648fb45c27690573dc1f520935f00b"
+    },
     "RK-10.6.3-038": {
       "executors/work-a-turn-apart-began-publishes-to-its-room-after-it": "7a1b9135ed65a3bd4f8d0b13bb7b370e7647c307cceddb515fbb4b2670467e99"
     },
@@ -2589,17 +2611,22 @@
       "locks/the-streamed-answer-of-a-set-of-a-deleted-room-stays-out-of-the-room-created-again": "8db1b7af6e3fa63c5bccfd3673b47f44eaea766db33e4f67ef77488a8513373f",
       "permissions/a-muted-agent-s-stream-is-closed-unread": "8db1b7af6e3fa63c5bccfd3673b47f44eaea766db33e4f67ef77488a8513373f",
       "permissions/a-muted-supervisor-s-second-pass-is-closed-unread": "8db1b7af6e3fa63c5bccfd3673b47f44eaea766db33e4f67ef77488a8513373f",
+      "streaming/a-reader-that-stops-at-a-delta-before-a-call-leaves-the-call-unrun": "8db1b7af6e3fa63c5bccfd3673b47f44eaea766db33e4f67ef77488a8513373f",
       "streaming/chained-stream-past-the-cap": "8db1b7af6e3fa63c5bccfd3673b47f44eaea766db33e4f67ef77488a8513373f",
       "streaming/reader-stops": "8db1b7af6e3fa63c5bccfd3673b47f44eaea766db33e4f67ef77488a8513373f"
     },
     "RK-10.6.4-005": {
-      "streaming/a-cancel-while-a-reader-shows-a-generation-closes-its-calls": "48b119338fff56d46cc57cd1f17f5b983186aaf1ddfd37a42e07a4c7e8faf50e"
+      "streaming/a-cancel-while-a-reader-shows-a-generation-closes-its-calls": "48b119338fff56d46cc57cd1f17f5b983186aaf1ddfd37a42e07a4c7e8faf50e",
+      "streaming/a-reader-that-stops-at-a-delta-before-a-call-leaves-the-call-unrun": "48b119338fff56d46cc57cd1f17f5b983186aaf1ddfd37a42e07a4c7e8faf50e"
     },
     "RK-10.6.4-007": {
       "streaming/a-message-steered-at-an-answer-a-reader-still-shows-is-too-late": "7265357431a62a589519922f5375ce9881786bdb578bc59cf077f6ec987b7133"
     },
     "RK-10.6.4-009": {
       "streaming/reader-stops": "94372f40618fdc9d9f2de538d499dcd23876c1246072e9d62fdc92ec4a8a28ad"
+    },
+    "RK-10.6.4-010": {
+      "streaming/a-reader-that-stops-ends-the-turn-while-its-agent-holds-its-next-piece": "33cc9c9126d2e683acf0b0cd68d83a4d0471c3bc1f1a53de6718d1d1260960e9"
     },
     "RK-10.6.4-011": {
       "streaming/a-stream-cut-from-outside-ends-its-reader-s-stream-with-the-cut-row": "b68ffc981394d264e725d006a5b22ca3b38285f116ef295d5282982e0e0a7885",
