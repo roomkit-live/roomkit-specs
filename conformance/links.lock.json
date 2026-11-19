@@ -175,6 +175,9 @@
     "RK-10.1-021": {
       "routing/a-message-a-delivery-sent-leaves-its-new-room-for-one-that-exists": "b9ee2be20e9bd109fa0a6e82a9535715893a30715348a6a9d2b731d7c7a06835"
     },
+    "RK-10.1-022": {
+      "reentrancy/routed-calls-from-a-room-s-deliveries-draw-on-its-cascade-s-budget": "b1b42d72f829c7680b2f9ab2a6d0edcd8ff025daaec81d7cd056e77774b3ef0d"
+    },
     "RK-10.1-023": {
       "routing/a-message-a-delivery-sent-leaves-its-new-room-for-one-that-exists": "7bb0b50930d57da1e5ab022276f39729353a284def3abda121fac82899ffb689"
     },
@@ -270,6 +273,9 @@
     },
     "RK-10.1-031": {
       "delivery/a-message-keyed-like-a-publication-stands-in-for-none": "de95801370c4a16f2f05c70e159b802f51ce34ba3205a97246f7cb500839d464"
+    },
+    "RK-10.1-032": {
+      "inbound/a-parsed-event-takes-the-framework-s-id": "64c739579e8db38ec19f927a01cc5aa47f3bbd638707e466d1c2ba6de1277aa0"
     },
     "RK-10.1-033": {
       "identity/a-channel-that-names-its-senders-is-not-asked-about": "5e5cf6ad2be943895f41c86f211d66e54b87cbb5479edd309c192c5a8cb08a80",
@@ -509,6 +515,9 @@
     "RK-10.1-071": {
       "rooms/a-delivered-message-resumes-a-paused-room": "6c867f8d51e9e272344c93add3a88d3ea51d4f0f1a76ff036487f358e8641756"
     },
+    "RK-10.1-072": {
+      "resilience/a-committed-event-stays-delivered-past-process-timeout": "632d67f667d3d91949368c5718f72dc1efeef0e0d83c0f0ec876778a41b79a81"
+    },
     "RK-10.1-074": {
       "streaming/a-streamed-row-s-hook-effects-stand-whatever-it-decides-allow": "749de4a64639a63fdfdb35f4809e37d0a17bae6a338515c2f84b9c13bfbb60da",
       "streaming/a-streamed-row-s-hook-effects-stand-whatever-it-decides-modify": "749de4a64639a63fdfdb35f4809e37d0a17bae6a338515c2f84b9c13bfbb60da"
@@ -516,10 +525,16 @@
     "RK-10.1-076": {
       "hooks/a-detach-a-locked-hook-makes-unrecorded-leaves-the-channel-out-of-the-delivery": "9b654dfa8543083041dfdd4db678b663135a35591ca11e9905c3fb69a612b0a6"
     },
+    "RK-10.1-077": {
+      "delivery/a-held-delivery-leaves-the-room-lock-to-the-next-message": "a096922fca96abfc2083a0f12b149c10c7a6bcdf105c1fab015abe2c62e7d160"
+    },
     "RK-10.1-078": {
       "locks/a-failed-release-keeps-a-refusal": "6cbfaee9d4d91a53d6d0b2bc3caf2facc5f2addd1321b3369d787b0837dded66",
       "locks/a-failed-release-keeps-the-committed-event-and-is-its-error": "6cbfaee9d4d91a53d6d0b2bc3caf2facc5f2addd1321b3369d787b0837dded66",
       "locks/the-section-after-a-failed-release-takes-the-lock-again": "6cbfaee9d4d91a53d6d0b2bc3caf2facc5f2addd1321b3369d787b0837dded66"
+    },
+    "RK-10.1-079": {
+      "hooks/a-before-broadcast-observer-reads-its-event-as-stored": "7a8c3d938a3031113bfc978c1f52a028a2c62d0ffe87705bebcc3697db8edec4"
     },
     "RK-10.1-080": {
       "hooks/a-block-stops-the-chain": "9790a7ef2ea7c250843e9682ebc2f643ea98d52e679dccc26cb74273385ae588"
@@ -1065,6 +1080,9 @@
       "turn-record/an-adopted-deferred-call-s-wait-reads-its-stream-s-record": "c4ed73643e28ee691ba849b82c142e7aebb73416c553669358e477e0f12c7153",
       "turn-record/an-off-lock-hook-s-adopted-call-s-wait-reads-its-stream-s-record": "c4ed73643e28ee691ba849b82c142e7aebb73416c553669358e477e0f12c7153"
     },
+    "RK-10.1-132": {
+      "inbound/a-call-that-ran-no-response-turn-returns-empty-response-metadata": "45a0a5bc0677d5b10d80a4d96ea45df0eb64a315d3ce6e9a6f686ba6293600d2"
+    },
     "RK-10.1-134": {
       "inbound/a-sender-s-runtime-record-is-dropped": "d0b0fe1096685edafef17f1d3884b9a786016bd94986986af33d4338a21bb0ec",
       "orchestration/a-sender-s-internal-mark-is-dropped": "d0b0fe1096685edafef17f1d3884b9a786016bd94986986af33d4338a21bb0ec",
@@ -1073,6 +1091,10 @@
     },
     "RK-10.1-136": {
       "orchestration/a-sender-s-internal-mark-is-dropped": "ed0e8e327c2c2e7b655ce35c3c4ab2b8ae48c50ee3b3df3e554cef38eb6734bb"
+    },
+    "RK-10.1-138": {
+      "inbound/every-path-that-commits-an-event-roots-its-parent": "c626cafeac5c6c7b4e108552bdf9e1ce5d234e93366f92e6af1f27cfacc76874",
+      "streaming/a-streamed-row-is-rooted-at-its-own-commit": "c626cafeac5c6c7b4e108552bdf9e1ce5d234e93366f92e6af1f27cfacc76874"
     },
     "RK-10.1-139": {
       "appendix-b/b2-block-and-inject": "b98129eaed2ae382a2087e83a292a537cfab40f2b1a3b148087fa0c81c49c513",
@@ -2224,6 +2246,7 @@
     },
     "RK-10.5-049": {
       "idempotency/a-muted-sources-record-is-stored-as-given-but-for-its-author": "3f7e64eb0d4215dd684eda9a658a30d9b03c74cc1d8f8fff79ce81e330f0da09",
+      "inbound/every-path-that-commits-an-event-roots-its-parent": "3f7e64eb0d4215dd684eda9a658a30d9b03c74cc1d8f8fff79ce81e330f0da09",
       "injection/a-record-outside-the-pipeline": "3f7e64eb0d4215dd684eda9a658a30d9b03c74cc1d8f8fff79ce81e330f0da09"
     },
     "RK-10.6-002": {
@@ -4626,6 +4649,7 @@
       "verification/a-hook-s-rewrite-goes-on-with-its-pass": "de572e157468489fc350159833b8e67e6ec8294b80532b6949904f482ba97df3"
     },
     "RK-9.2-008": {
+      "hooks/a-before-broadcast-observer-reads-its-event-as-stored": "00d219eee31a73666194e18c4cbcb991efb9b3e86d6264e5637cab056d5ec020",
       "hooks/an-observer-s-call-into-its-room-waits-for-its-delivery": "00d219eee31a73666194e18c4cbcb991efb9b3e86d6264e5637cab056d5ec020"
     },
     "RK-9.2-009": {
