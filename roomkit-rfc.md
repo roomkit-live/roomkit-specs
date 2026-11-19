@@ -815,9 +815,7 @@ underlying provider or backend — for example, `"SIP"` for a SIP voice backend,
 `"SIPRealtimeTransport"` for a SIP realtime transport, `"AcmeSMS"` for an SMS
 provider. <!-- /rfc --><!-- rfc: {"id": "RK-5.2-013", "kind": "behavior", "applies": "§5.2 RoomEvent, a channel's provider_name property. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->The channel SHOULD expose a `provider_name` property that returns the
 appropriate name. <!-- /rfc --><!-- rfc: {"id": "RK-5.2-014", "kind": "behavior", "applies": "§5.2 RoomEvent, EventSource.provider on a system-generated event (channel_id \"system\") and on the rows of an intelligence channel's turn. Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->System-generated events (`channel_id="system"`) MAY leave
-`provider` as null, and so MAY the rows of an intelligence channel's turn (its
-answer, its streamed segments, its tool-call rows): its answer's metadata names
-the provider it ran on (`ai_provider`, §6.4).
+`provider` as null, and so MAY every row of an intelligence channel's turn.
 <!-- /rfc -->
 
 <!-- rfc: {"id": "RK-5.2-007", "kind": "behavior", "applies": "§5.2 RoomEvent; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.", "level": "must"} -->

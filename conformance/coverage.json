@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "rfc_sha256": "f82e8985a9707a40f4154b9294da0067c1bd9dedf1bd1729f770d3068f106729",
-  "corpus_sha256": "721f73fcb631a7be5199dca1926613058a468f8c446ca407335f18f030ce7503",
+  "rfc_sha256": "d4af4ed8139b7564771e9a6aee92877c823b5b95aca9c29effd24c4de8ba1884",
+  "corpus_sha256": "d803acaf0a176f2e6404fd32a7d385fe3d2d9218e69557825d301e905fc30642",
   "python_commit": "05127770f2c6ed6070c92afc825cc8ea747ff440",
   "scenario_count": 3087,
   "sections": [
@@ -4691,6 +4691,7 @@
         "routing/two-messages-with-no-address-on-one-missing-room-hold-a-room-each",
         "routing/two-rooms-the-host-opened-each-take-their-own-correspondent",
         "routing/what-names-the-sender-s-identity-is-their-own",
+        "store/a-read-leaves-the-message-delivered",
         "tenancy/routing-stays-within-the-organization"
       ]
     },

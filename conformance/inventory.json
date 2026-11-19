@@ -135,7 +135,7 @@
     },
     {
       "section": "5.2",
-      "sha256": "5b9ebd4346e60e226b2adfcb454f493a37963e305663e7e8fb94373b6a1e4409",
+      "sha256": "88f4fc9b03cd37f1efc22c13a67f72be1951013dc8925615da384c67f4413c85",
       "classification": "normative",
       "review": "Source inventory: RoomEvent, split to one obligation per unit (RMK-1782). The RoomEvent and EventSource blocks, the EventType and EventStatus tables and the reserved metadata.instruction key are single obligations and keep their ids. The EventDirection table stays with the sentence that excludes any other direction; the preservation of raw_payload, the provider field's MUST, SHOULDs and MAY, and the reserved idempotency namespace are split by sentence, the refusal by send_event() and commit_event() conditioned on an implementation offering them. Every unit carries its level."
     },

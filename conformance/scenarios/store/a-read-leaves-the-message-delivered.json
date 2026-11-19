@@ -4,12 +4,13 @@
   "title": "A message a channel marks read, then marks all read, and that its provider reports read, stays DELIVERED: a read moves the channel's marker, not the event's status",
   "rules": [
     "§5.2",
+    "§10.4 A delivery status follows its message",
     "§14.1"
   ],
   "requirements": [
     "RK-5.2-003"
   ],
-  "notes": "A read moves the reading channel's marker (§14.1), and a provider's read status reaches ON_DELIVERY_STATUS: neither changes the event's status. Both markers stand at the message's index, after the two attach records.",
+  "notes": "A read moves the reading channel's marker (§14.1), and a provider's read status reaches ON_DELIVERY_STATUS: neither changes the event's status. Both markers stand at the message, whose index counts any lifecycle record before it.",
   "setup": {
     "channels": [
       {
@@ -94,8 +95,12 @@
       "room_id": "room-1",
       "expect": {
         "result": {
-          "sms": 2,
-          "ws": 2
+          "sms": {
+            "$as": "read"
+          },
+          "ws": {
+            "$as": "read"
+          }
         }
       }
     }
