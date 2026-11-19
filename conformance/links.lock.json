@@ -5986,6 +5986,23 @@
     "RK-9.5.1-004": {
       "delivery/a-keyed-delivery-takes-no-ticket-behind-an-off-lock-check": "097ea529e50074a0b94fb5068c02ab7bfde903920a544d440d0b29275fef2889"
     },
+    "RK-9.5.1-005": {
+      "hooks/a-message-an-off-lock-hook-blocks-keeps-its-ticket-place": "cd5d2b920febac0f7c88f9c62992a99df558ee4b9fe010ce98c04d1324361434"
+    },
+    "RK-9.5.1-006": {
+      "hooks/a-message-an-off-lock-hook-blocks-keeps-its-ticket-place": "a6625ebaebc35a94571a38ab4a32ccc8b7d937159de122d5f5f0d10a33c276c0",
+      "hooks/a-wait-for-an-admission-ticket-counts-against-process-timeout": "a6625ebaebc35a94571a38ab4a32ccc8b7d937159de122d5f5f0d10a33c276c0",
+      "hooks/an-admission-ticket-is-released-on-every-path": "a6625ebaebc35a94571a38ab4a32ccc8b7d937159de122d5f5f0d10a33c276c0"
+    },
+    "RK-9.5.1-007": {
+      "hooks/an-admission-ticket-is-released-before-the-message-s-delivery": "23ff6fae69a5a85742f811c0b9fb46349ea42f93d6205c7f075663c1273065bd"
+    },
+    "RK-9.5.1-008": {
+      "hooks/a-wait-for-an-admission-ticket-counts-against-process-timeout": "18c418042bc8e895e427b2a57efd62e31c705f76bf3358df461a51fd5e37c34c"
+    },
+    "RK-9.5.1-009": {
+      "hooks/a-wait-for-an-admission-ticket-ends-with-the-earlier-holder-s-hook-timeouts": "0371f8e737e144815e31697f7ddf69b53753cab9d546625b3cf66b8519fb9a75"
+    },
     "RK-9.5.1-010": {
       "hooks/an-off-lock-hook-blocks-before-the-lock": "f8e76279a2325a6338456cfe2a2360df56703b67e611e58d44d46e79dde67972"
     },
@@ -6031,6 +6048,9 @@
       "delivery/an-adopted-call-waited-in-its-parse-reads-its-turn": "05af4c6c597b6ac1a361ffd54e368e5dd0d7aa2eb188b09dcc7b4be8ef2439d4",
       "reentrancy/a-locked-hook-s-injection-commits-ahead": "05af4c6c597b6ac1a361ffd54e368e5dd0d7aa2eb188b09dcc7b4be8ef2439d4",
       "reentrancy/an-off-lock-hook-s-injection-commits-ahead": "05af4c6c597b6ac1a361ffd54e368e5dd0d7aa2eb188b09dcc7b4be8ef2439d4"
+    },
+    "RK-9.5.1-023": {
+      "reentrancy/an-off-lock-hook-s-injection-takes-no-place-in-the-ticket-order": "edd2ee40f766748bd8b89ab01279bec1979c041099ed867d988b34345c3c0282"
     },
     "RK-9.5.1-024": {
       "delivery/an-adopted-call-past-the-budget-before-its-commit-ends-at-its-adopter-s-deadline": "3a431b06827a7066c2af357e282c3d79636a134f0de61e507073ddbb4f3ac87d",
@@ -6194,6 +6214,9 @@
     "RK-9.5.1-055": {
       "reentrancy/a-turn-s-framework-event-handler-sends-while-it-runs": "c9e31c45bfe7408000f0189405703ab2f05ba0b60016902f443082d0f7e8eeb0"
     },
+    "RK-9.5.1-056": {
+      "delivery/a-delivery-s-call-into-another-room-waits-for-that-room-s-lane": "9f54cf13ac47a370690c449e9e7aa4fc4bd4c5596c2c767924e89cefd3fc1a5f"
+    },
     "RK-9.5.1-058": {
       "reentrancy/replays-draw-nothing-on-a-hook-s-budget": "df39e6830c21c29e4e972c646139a1911fe87deb044e445bb7b482a4193428e7"
     },
@@ -6215,6 +6238,14 @@
       "reentrancy/a-named-call-past-the-budget-refuses-the-late-channel": "963325ba5045515fef470c0f1ec633fe64eea1b2ab3e235a9f055b64ec9fbb6f",
       "reentrancy/a-named-refusal-at-the-cap-precedes-an-empty-rate-bucket": "963325ba5045515fef470c0f1ec633fe64eea1b2ab3e235a9f055b64ec9fbb6f",
       "reentrancy/a-named-refusal-at-the-cap-spends-no-inbound-rate-token": "963325ba5045515fef470c0f1ec633fe64eea1b2ab3e235a9f055b64ec9fbb6f"
+    },
+    "RK-9.5.1-062": {
+      "reentrancy/a-call-past-the-budget-naming-a-room-the-store-lacks-creates-nothing": "3a622ab092adeb9ca95898f8865dd2758cfa7be6456ed847976a35b6718632dc"
+    },
+    "RK-9.5.1-063": {
+      "reentrancy/a-routed-call-past-the-budget-in-its-room-keeps-what-routed-it": "3f6d6d8dae0e67228ce658570f987dfa95375fddb8a450e6cc0fd3ede55a2922",
+      "reentrancy/a-routed-call-past-the-budget-into-another-room-is-not-refused": "3f6d6d8dae0e67228ce658570f987dfa95375fddb8a450e6cc0fd3ede55a2922",
+      "reentrancy/a-routed-call-past-the-budget-opens-no-room": "3f6d6d8dae0e67228ce658570f987dfa95375fddb8a450e6cc0fd3ede55a2922"
     },
     "RK-9.5.1-064": {
       "reentrancy/a-message-a-locked-hook-routes-back-fails": "341aa6331df66de5bc9dae864189ee9480896a2007bb890a22ad906e66337f69",
