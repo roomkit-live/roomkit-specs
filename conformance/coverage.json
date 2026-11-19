@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "d4af4ed8139b7564771e9a6aee92877c823b5b95aca9c29effd24c4de8ba1884",
-  "corpus_sha256": "d803acaf0a176f2e6404fd32a7d385fe3d2d9218e69557825d301e905fc30642",
+  "corpus_sha256": "4bcc63f5792e8e4baffeee1b31a9214ff00c53ff4486e6dd8fc168de127fb4ca",
   "python_commit": "05127770f2c6ed6070c92afc825cc8ea747ff440",
-  "scenario_count": 3087,
+  "scenario_count": 3100,
   "sections": [
     {
       "section": "0",
@@ -338,6 +338,7 @@
         "rooms/a-blocked-record-does-not-resume-or-refresh-a-paused-room",
         "rooms/a-closed-room-refuses-chain-depth-replacement-records",
         "rooms/a-closed-room-refuses-response-cap-replacement-records",
+        "rooms/a-delivered-message-moves-the-room-s-last-activity",
         "rooms/a-delivered-message-resumes-a-paused-room",
         "rooms/a-direct-record-does-not-resume-or-refresh-a-paused-room",
         "rooms/a-due-close-refuses-the-next-message",
@@ -419,10 +420,12 @@
         "delivery/a-message-keyed-like-a-publication-stands-in-for-none",
         "delivery/the-doors-refuse-the-publication-namespace",
         "inbound/a-field-the-parse-set-stands",
+        "inbound/a-parse-fills-every-member-of-the-event-source",
         "inbound/a-parse-naming-another-channel-is-sourced-from-its-own",
         "inbound/a-parse-writing-responds-to-answers-nothing",
         "inbound/a-thread-parent-is-rooted",
-        "store/a-read-leaves-the-message-delivered"
+        "store/a-read-leaves-the-message-delivered",
+        "store/every-stored-event-type-is-read-back-by-its-value"
       ]
     },
     {
@@ -435,7 +438,15 @@
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
+        "edits/an-edit-s-new-content-counts-its-levels-in-the-edit-s-place",
+        "inbound/a-composite-of-five-levels-is-taken-and-one-of-six-refused",
+        "injection/a-direct-call-holding-six-composite-levels-raises-before-any-read",
+        "injection/a-system-content-is-stored-and-delivered-as-given",
+        "routing/a-message-holding-six-composite-levels-opens-no-room",
+        "store/a-text-keeps-its-language",
         "store/a-video-without-a-mime-type-reads-video-mp4",
+        "store/an-audio-without-a-mime-type-reads-audio-ogg",
+        "store/every-content-type-is-read-back-as-it-was-stored",
         "tool-structured/a-blocked-call-publishes-no-handler-copy",
         "tool-structured/a-cancelled-call-publishes-no-handler-copy",
         "tool-structured/a-failed-closed-hook-withholds-the-copy",
@@ -450,7 +461,8 @@
         "tool-structured/an-absent-copy-remains-null",
         "tool-structured/an-empty-copy-remains-an-empty-object",
         "tool-structured/an-unserved-handler-publishes-no-copy",
-        "tool-structured/parallel-calls-keep-their-own-structured-copies"
+        "tool-structured/parallel-calls-keep-their-own-structured-copies",
+        "transcoding/a-template-reaches-a-text-channel-as-its-body"
       ]
     },
     {
@@ -462,7 +474,9 @@
         "unmapped": 3
       },
       "unannotated_keyword_lines": [],
-      "candidate_scenarios": []
+      "candidate_scenarios": [
+        "inbound/channel-data-no-typed-structure-names-is-kept-as-a-map"
+      ]
     },
     {
       "section": "5.5",
@@ -2174,10 +2188,12 @@
         "author-images/a-describer-that-says-nothing-leaves-the-event-out",
         "author-images/a-model-that-does-not-see-reads-a-mention",
         "author-images/an-image-goes-after-its-caption",
+        "injection/a-system-content-is-stored-and-delivered-as-given",
         "transcoding/a-composite-flattens-to-one-text",
         "transcoding/a-location-reads-in-decimal",
         "transcoding/a-long-text-is-cut-with-a-marker",
         "transcoding/a-media-reaches-a-text-channel-as-its-label",
+        "transcoding/a-template-reaches-a-text-channel-as-its-body",
         "transcoding/rich-text-reaches-a-text-channel-as-its-plain-text"
       ]
     },
@@ -4046,6 +4062,7 @@
         "inbound/a-kit-s-inbound-rate-limit-refuses-a-channel-s-excess-messages",
         "inbound/a-kit-s-inbound-rate-limit-refuses-a-proactive-delivery-past-its-bucket",
         "inbound/a-message-reaches-the-other-transports",
+        "inbound/a-parse-fills-every-member-of-the-event-source",
         "inbound/a-parse-naming-another-channel-is-sourced-from-its-own",
         "inbound/a-parse-naming-another-room-is-stored-in-the-routed-one",
         "inbound/a-parse-writing-responds-to-answers-nothing",
@@ -4069,6 +4086,7 @@
         "inbound/an-answer-a-hook-modifies-after-its-agent-is-detached-is-stored-unbound",
         "inbound/an-author-s-name-and-rank-are-recorded",
         "inbound/an-unregistered-channel-fails",
+        "inbound/channel-data-no-typed-structure-names-is-kept-as-a-map",
         "inbound/on-error-holds-no-room-lock",
         "inbound/two-overlapping-calls-each-return-their-own-answer",
         "injection/an-injection-from-an-unregistered-channel-raises",
@@ -4132,6 +4150,7 @@
         "regenerate/a-regeneration-repeats-nothing-of-its-trigger-s-first-pass",
         "rooms/a-closed-room-refuses-chain-depth-replacement-records",
         "rooms/a-closed-room-refuses-response-cap-replacement-records",
+        "rooms/a-delivered-message-moves-the-room-s-last-activity",
         "rooms/a-delivered-message-resumes-a-paused-room",
         "rooms/a-due-close-refuses-the-next-message",
         "rooms/a-hook-that-closes-the-room-refuses-its-event",
@@ -4452,6 +4471,7 @@
         "permissions/the-agent-whispers-to-the-advisor",
         "reentrancy/a-turn-s-framework-event-handler-sends-while-it-runs",
         "resilience/concurrent-messages-take-their-own-index",
+        "store/a-text-keeps-its-language",
         "store/the-persistence-policy-stores-the-types-it-names-but-those-it-excludes",
         "streaming/a-row-s-delivery-reads-the-room-at-its-commit",
         "streaming/a-stream-reaches-an-outbound-only-transport-and-no-inbound-only-one",
@@ -4462,6 +4482,7 @@
         "tasks/a-delegated-reply-that-fails-is-reported-once-on-either-path",
         "tasks/a-delegated-turn-s-returned-error-is-reported-in-its-child-room",
         "transcoding/a-long-text-is-cut-with-a-marker",
+        "transcoding/a-template-reaches-a-text-channel-as-its-body",
         "transcoding/rich-text-reaches-a-text-channel-as-its-plain-text"
       ]
     },
@@ -4487,6 +4508,7 @@
         "edits/a-hard-delete-leaves-the-index-it-took",
         "edits/an-edit-by-another-sender-is-refused",
         "edits/an-edit-of-a-missing-target-is-refused",
+        "edits/an-edit-s-new-content-counts-its-levels-in-the-edit-s-place",
         "edits/an-edit-the-persistence-policy-keeps-out-still-rewrites-its-target",
         "edits/an-injected-change-s-refusal-raises",
         "edits/direct-update-and-hard-delete",
@@ -4494,6 +4516,7 @@
         "inbound/a-channel-s-echo-of-its-own-output-speaks-as-no-participant",
         "inbound/a-deletion-opens-no-agent-turn",
         "inbound/an-edit-opens-no-agent-turn",
+        "injection/a-direct-call-holding-six-composite-levels-raises-before-any-read",
         "memory/a-summary-ends-once-a-turn-it-covers-is-deleted",
         "memory/a-summary-ends-once-a-turn-it-covers-is-edited",
         "memory/a-summary-ends-once-its-sender-deletes-a-turn-it-covers",
@@ -4602,6 +4625,7 @@
         "routing/a-member-is-found-past-a-newer-binding-of-another-number",
         "routing/a-member-known-by-no-address-does-not-hide-the-recipient",
         "routing/a-member-on-a-binding-naming-another-is-routed-elsewhere",
+        "routing/a-message-holding-six-composite-levels-opens-no-room",
         "routing/a-message-is-routed-by-the-channel-s-conversation",
         "routing/a-message-of-the-framework-s-name-naming-its-room-enters-a-free-room",
         "routing/a-message-past-its-deadline-in-its-room-s-hooks-is-not-routed-again",
@@ -4711,10 +4735,12 @@
         "idempotency/a-muted-sources-record-is-stored-as-given-but-for-its-author",
         "idempotency/a-record-behind-a-delivery-passes-the-lane-at-its-turn",
         "inbound/a-sent-event-s-failed-set-is-recorded",
+        "injection/a-direct-call-holding-six-composite-levels-raises-before-any-read",
         "injection/a-post-s-refusals",
         "injection/a-post-speaks-through-the-host-channel",
         "injection/a-record-outside-the-pipeline",
         "injection/a-sent-event-keeps-its-answer-scope",
+        "injection/a-system-content-is-stored-and-delivered-as-given",
         "injection/an-agent-s-injection-goes-out",
         "injection/an-injection-from-a-bound-unregistered-channel-raises",
         "injection/an-injection-from-an-unregistered-channel-raises",
@@ -6722,6 +6748,8 @@
         "store/an-added-event-keeps-its-index-and-the-room-s-next-is-past-it",
         "store/an-empty-room-read-gets-no-marker-and-its-markers-go-with-it",
         "store/an-update-of-a-task-the-store-lacks-is-refused",
+        "store/every-content-type-is-read-back-as-it-was-stored",
+        "store/every-stored-event-type-is-read-back-by-its-value",
         "store/reattached-binding-moves-behind-existing-streaming-targets",
         "store/the-kit-marks-and-reads-a-room-s-markers-for-its-organization",
         "store/the-latest-room-follows-the-bindings-and-rooms-the-store-holds",
