@@ -135,13 +135,13 @@
     },
     {
       "section": "5.2",
-      "sha256": "7ed8b7d80d7a7f3f6c6b558481ec1e1dba0514d450c4d0ae0ef315c81e4e1f44",
+      "sha256": "5b9ebd4346e60e226b2adfcb454f493a37963e305663e7e8fb94373b6a1e4409",
       "classification": "normative",
       "review": "Source inventory: RoomEvent, split to one obligation per unit (RMK-1782). The RoomEvent and EventSource blocks, the EventType and EventStatus tables and the reserved metadata.instruction key are single obligations and keep their ids. The EventDirection table stays with the sentence that excludes any other direction; the preservation of raw_payload, the provider field's MUST, SHOULDs and MAY, and the reserved idempotency namespace are split by sentence, the refusal by send_event() and commit_event() conditioned on an implementation offering them. Every unit carries its level."
     },
     {
       "section": "5.3",
-      "sha256": "5bd851f64381490476a4cb4124b56a1ee52e312824a117243ebffeef9c8a13b2",
+      "sha256": "2b773a9d60eb1fef02a4164343a7d33be3b2ca919c064ae85c7db7ae432b2ec0",
       "classification": "normative",
       "review": "Source inventory: Event Content, split to one obligation per unit (RMK-1782). Each content type's block is one unit and keeps its id. The union's opening paragraph splits into one content per event with every type supported, and the type discriminator. CompositeContent splits into its block, the nesting limit with how levels count, an edit's new content, where a sixth level is refused, and the boundaries that refuse it, one sentence kept whole. Every unit carries its level."
     },
@@ -459,7 +459,7 @@
     },
     {
       "section": "10.6.5",
-      "sha256": "433e7919ea7a7cbb2f4c787addb17b7579dc571aca576116383c6dd8fdf890f1",
+      "sha256": "ae2afaf7b1d0e5af40166e2e4d6f05807512440f395822efc8e91b533954fcc8",
       "classification": "normative",
       "review": "Source inventory: What a turn asks of the owner, split to one obligation per unit (RMK-1780): owner-served tools, TurnHost, what a turn reads of its room, the turn's record on the owner, the in-memory backend's execution context and human input. The TurnHost block stays with the sentence that introduces it (RK-10.6.5-026). Host-declared verbs are should (RK-10.6.5-028); what they do once offered is must. A host keeping its other kit from an executor's turns binds the host alone and is non_testable (RK-10.6.5-042). Every unit carries its level."
     },

@@ -2553,6 +2553,12 @@
       "host/a-turn-s-host-delegates-and-waits-for-its-task": "eb0ee042b12a589b8d6568ddc5b65432cce59725a5da1b4a0df21677c468792b",
       "host/a-turn-s-host-waits-for-its-task-at-most-its-timeout": "eb0ee042b12a589b8d6568ddc5b65432cce59725a5da1b4a0df21677c468792b"
     },
+    "RK-10.6.5-037": {
+      "executors/a-hook-on-an-executor-reads-the-room-when-it-fires": "eb89ab87d05a7e9246a27909a4d91a124f6fd74cd254f32ebf955206df52be07",
+      "executors/a-later-turn-on-another-executor-replays-the-instruction-it-read": "eb89ab87d05a7e9246a27909a4d91a124f6fd74cd254f32ebf955206df52be07",
+      "executors/a-skill-activated-on-one-executor-rides-the-next-turn-on-another": "eb89ab87d05a7e9246a27909a4d91a124f6fd74cd254f32ebf955206df52be07",
+      "executors/another-executor-replays-the-tool-calls-of-the-first": "eb89ab87d05a7e9246a27909a4d91a124f6fd74cd254f32ebf955206df52be07"
+    },
     "RK-10.6.5-038": {
       "executors/a-later-turn-on-another-executor-replays-the-instruction-it-read": "1a064f931834d969638ee680b5e37f6e869c2957024d3ff9426f53590b16ace7",
       "executors/a-skill-activated-on-one-executor-rides-the-next-turn-on-another": "1a064f931834d969638ee680b5e37f6e869c2957024d3ff9426f53590b16ace7",
@@ -3381,6 +3387,9 @@
     "RK-5.2-001": {
       "inbound/a-thread-parent-is-rooted": "11db879e2589f6da3d026ac3862fbb808b18edc81a759c7e7b373af88f2cb0bf"
     },
+    "RK-5.2-003": {
+      "store/a-read-leaves-the-message-delivered": "dd407fa5a66426fc980b3b05d3928b18e622e5cdcdf396b5d82329478364351e"
+    },
     "RK-5.2-007": {
       "instructions/an-instruction-directs-one-turn-and-is-not-stored": "a1c90ec64658dfdddbd37ca576ec2570440a0d4c8d0e105be94f7682f7ac9c52"
     },
@@ -3430,6 +3439,9 @@
     },
     "RK-5.3-005": {
       "transcoding/a-location-reads-in-decimal": "70660942d81450f59a9d145f607d253bf042d89610f47ad145ec885cc34722be"
+    },
+    "RK-5.3-007": {
+      "store/a-video-without-a-mime-type-reads-video-mp4": "588ede18ab20b8e9ce7e5cc1a95e6eb8c8623183d20008bf8706c08a6b3c2783"
     },
     "RK-5.3-011": {
       "appendix-b/b6-edit-with-fallback": "8b7c7fcb2e27f170bbacb78449322a87d7ad47be2f5edea4d9b5bb65ff4cf7b7",

@@ -767,7 +767,7 @@ RoomEvent
 |---|---|
 | PENDING | Event created, not yet processed |
 | DELIVERED | Event stored and broadcast; an allowed instruction, never stored, reads DELIVERED (§10.1.1) |
-| READ | Event read by recipient (from read receipt) |
+| READ | Never set by the framework: a read moves the reading channel's marker (§14.1), and a read receipt travels as an ephemeral event (§8.4) |
 | FAILED | Delivery failed after all retries |
 | BLOCKED | Event refused: by a sync hook, a source that cannot write or has no binding in the room (§7.5 rule 2), the chain-depth limit or the reentry budget (§8.3) |
 <!-- /rfc -->
@@ -807,14 +807,17 @@ Implementations MUST preserve `raw_payload` unmodified. This is the audit trail
 and the source of truth for provider-specific data.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-5.2-011", "kind": "behavior", "applies": "§5.2 RoomEvent, EventSource.provider on an event a channel builds; a system-generated event may leave it null (RK-5.2-014). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+<!-- rfc: {"id": "RK-5.2-011", "kind": "behavior", "applies": "§5.2 RoomEvent, EventSource.provider on an event a channel builds for what its provider or backend received; a system-generated event and the rows of an intelligence channel's turn may leave it null (RK-5.2-014). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **EventSource.provider population:** Every channel MUST populate the `provider`
-field when constructing an EventSource. <!-- /rfc --><!-- rfc: {"id": "RK-5.2-012", "kind": "behavior", "applies": "§5.2 RoomEvent, the value of EventSource.provider. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->The value SHOULD be the name of the
+field when it builds an EventSource for what its provider or backend received
+(a transport's parse, a voice backend's transcript). <!-- /rfc --><!-- rfc: {"id": "RK-5.2-012", "kind": "behavior", "applies": "§5.2 RoomEvent, the value of EventSource.provider. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->The value SHOULD be the name of the
 underlying provider or backend — for example, `"SIP"` for a SIP voice backend,
 `"SIPRealtimeTransport"` for a SIP realtime transport, `"AcmeSMS"` for an SMS
 provider. <!-- /rfc --><!-- rfc: {"id": "RK-5.2-013", "kind": "behavior", "applies": "§5.2 RoomEvent, a channel's provider_name property. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->The channel SHOULD expose a `provider_name` property that returns the
-appropriate name. <!-- /rfc --><!-- rfc: {"id": "RK-5.2-014", "kind": "behavior", "applies": "§5.2 RoomEvent, EventSource.provider on a system-generated event (channel_id \"system\"). Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->System-generated events (`channel_id="system"`) MAY leave
-`provider` as null.
+appropriate name. <!-- /rfc --><!-- rfc: {"id": "RK-5.2-014", "kind": "behavior", "applies": "§5.2 RoomEvent, EventSource.provider on a system-generated event (channel_id \"system\") and on the rows of an intelligence channel's turn. Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->System-generated events (`channel_id="system"`) MAY leave
+`provider` as null, and so MAY the rows of an intelligence channel's turn (its
+answer, its streamed segments, its tool-call rows): its answer's metadata names
+the provider it ran on (`ai_provider`, §6.4).
 <!-- /rfc -->
 
 <!-- rfc: {"id": "RK-5.2-007", "kind": "behavior", "applies": "§5.2 RoomEvent; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.", "level": "must"} -->
@@ -917,7 +920,7 @@ AudioContent
 VideoContent
 ├── url: string                             # Video URL (or data: URI)
 ├── duration_seconds: float | null          # Duration
-├── mime_type: string                       # Video MIME type
+├── mime_type: string = "video/mp4"         # Video MIME type
 └── thumbnail_url: string | null            # Preview image URL
 ```
 <!-- /rfc -->
@@ -9570,8 +9573,8 @@ MUST NOT write a key of the implementation's own namespace (§5.1: a detach's
 revocation, §7.5; what the room keeps for a channel, §10.6.2).
 
 <!-- /rfc -->
-<!-- rfc: {"id": "RK-10.6.5-037", "kind": "behavior", "applies": "§10.6.5 What a turn reads of its room: every executor. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
-An executor holds no store. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.5-038", "kind": "behavior", "applies": "§10.6.5 What a turn reads of its room: what a request carries for its turn to read: its context, and channel_rows for a channel run on an executor other than the owner's own. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->What a turn reads of its room comes with the
+<!-- rfc: {"id": "RK-10.6.5-037", "kind": "behavior", "applies": "§10.6.5 What a turn reads of its room: an executor other than the owner's own. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+An executor other than the owner's own needs no store. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.5-038", "kind": "behavior", "applies": "§10.6.5 What a turn reads of its room: what a request carries for its turn to read: its context, and channel_rows for a channel run on an executor other than the owner's own. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->What a turn reads of its room comes with the
 request: its context, and, for a channel run on an executor other than the
 owner's own, `channel_rows`, which the owner reads for the turn: the channel's
 own tool-call rows and the instructions it read, each once, those its history

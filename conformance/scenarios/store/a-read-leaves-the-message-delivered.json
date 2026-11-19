@@ -6,6 +6,9 @@
     "§5.2",
     "§14.1"
   ],
+  "requirements": [
+    "RK-5.2-003"
+  ],
   "notes": "A read moves the reading channel's marker (§14.1), and a provider's read status reaches ON_DELIVERY_STATUS: neither changes the event's status. Both markers stand at the message's index, after the two attach records.",
   "setup": {
     "channels": [

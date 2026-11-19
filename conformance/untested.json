@@ -40,6 +40,7 @@
     "RK-10.6.9-006": "The lock manager several owner processes share is a deployment prerequisite, and that an executor takes no room lock is its internal structure: a scenario sees the owner's lock rules, which the units of Section 13.5 state.",
     "RK-5.14-002": "Whether a ProtocolTrace can be changed once built is a property of the language object that holds it: no step of a scenario holds a trace object, and no call writes one.",
     "RK-5.14-004": "This paragraph points to Section 15.6, whose units state how traces are emitted, routed and buffered before a room exists. A scenario tests those units, never this pointer.",
+    "RK-5.2-011": "A real channel's parse runs in no scenario: a scripted transport builds the runner's own source, and no step drives a provider's or a backend's input into an implementation's channel.",
     "RK-5.5-040": "The warning is a log line, and no step of a scenario reads the implementation's log; a scenario sees only that the reach does not fail (RK-5.5-039).",
     "RK-5.7-021": "The warning is a log line, and no step of a scenario reads the implementation's log; a scenario sees only how routing reads the value (RK-5.7-020).",
     "RK-5.9-001": "Channel.info is no record a step of a scenario reads, so no scenario can show the three levels kept apart; a scenario reads a binding's metadata through the units of Section 5.7, and a message's channel metadata as a custom router is given it (RK-10.4-009).",

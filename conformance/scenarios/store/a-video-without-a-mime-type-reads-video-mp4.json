@@ -5,6 +5,9 @@
   "rules": [
     "§5.3"
   ],
+  "requirements": [
+    "RK-5.3-007"
+  ],
   "notes": "VideoContent's mime_type defaults to video/mp4, as AudioContent's defaults to audio/ogg (§5.3).",
   "setup": {
     "channels": [
