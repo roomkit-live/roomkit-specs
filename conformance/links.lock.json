@@ -3430,6 +3430,7 @@
     },
     "RK-5.13-005": {
       "delivery/a-set-a-keyed-delivery-s-hook-sends-records-its-failure-after-the-section": "124f33499ab3fcb91d331ee1ef1793af47298aeb933f1f852cc38b69eb77e5ec",
+      "delivery/a-turn-the-close-cuts-leaves-no-outcome-and-the-set-s-failure-is-recorded": "124f33499ab3fcb91d331ee1ef1793af47298aeb933f1f852cc38b69eb77e5ec",
       "inbound/a-failed-set-is-recorded-on-its-event": "124f33499ab3fcb91d331ee1ef1793af47298aeb933f1f852cc38b69eb77e5ec",
       "inbound/a-refusal-with-the-close-s-code-in-an-open-kit-is-recorded": "124f33499ab3fcb91d331ee1ef1793af47298aeb933f1f852cc38b69eb77e5ec",
       "inbound/a-sent-event-s-failed-set-is-recorded": "124f33499ab3fcb91d331ee1ef1793af47298aeb933f1f852cc38b69eb77e5ec",
@@ -3443,6 +3444,9 @@
       "inbound/a-hook-s-injected-event-s-failed-set-is-not-recorded": "590d8cde0011412216f2c623bff91bf24f3ef9182a5c30a1a59f82d5d519b9c2",
       "inbound/a-response-s-failed-set-is-not-recorded": "590d8cde0011412216f2c623bff91bf24f3ef9182a5c30a1a59f82d5d519b9c2",
       "inbound/a-turn-whose-stream-fails-reads-on-its-streaming-target": "590d8cde0011412216f2c623bff91bf24f3ef9182a5c30a1a59f82d5d519b9c2"
+    },
+    "RK-5.13-007": {
+      "delivery/a-turn-the-close-cuts-leaves-no-outcome-and-the-set-s-failure-is-recorded": "91fb7de9a8c46afb5c61114bf6f878232648218acc7c09aa20b788e4759d9e2e"
     },
     "RK-5.2-001": {
       "inbound/a-thread-parent-is-rooted": "11db879e2589f6da3d026ac3862fbb808b18edc81a759c7e7b373af88f2cb0bf"
@@ -3583,6 +3587,9 @@
     "RK-5.4-004": {
       "inbound/channel-data-no-typed-structure-names-is-kept-as-a-map": "ea6d276ccbff40e2edc4b3d5affb3ffc6a7aa2df59bd28918293049ee970dddc"
     },
+    "RK-5.5-001": {
+      "members/a-participant-record-is-read-back-whole": "bdcd3015ee29a44509578a0a399a825a810c9b2621371c018cc92d1fe27566d9"
+    },
     "RK-5.5-003": {
       "members/add-member-joins-once-and-records-a-new-channel": "cb712a8234b951da4704fc62e33c59004b8a564241e550e1e3a15412629eabba",
       "members/remove-member-leaves-or-bans-and-a-join-reactivates": "cb712a8234b951da4704fc62e33c59004b8a564241e550e1e3a15412629eabba"
@@ -3619,6 +3626,12 @@
       "verification/check-verifications-ends-what-expired-while-nothing-ran": "d17a43652540d8ec7656b9fb9c9b63e7f0a3f4df19cae8f18404cf86821389c5",
       "verification/revoking-a-pending-identity-kills-its-link": "d17a43652540d8ec7656b9fb9c9b63e7f0a3f4df19cae8f18404cf86821389c5",
       "verification/the-last-wrong-secret-fails-the-request": "d17a43652540d8ec7656b9fb9c9b63e7f0a3f4df19cae8f18404cf86821389c5"
+    },
+    "RK-5.5-011": {
+      "members/add-member-records-each-role-as-given": "3c2854191c104c441d7ff7611eaa7be0908b2616d0f97820f25046f00c85411d"
+    },
+    "RK-5.5-012": {
+      "memory/an-agent-participant-is-named-among-the-people-taking-part": "0616260a42cb1b6e764d5453057c69ec521084704e0734935ec29ab1e5d283fc"
     },
     "RK-5.5-013": {
       "memory/the-people-taking-part-are-named-in-the-turn-s-notes": "cc5ab58b460dff0bf3dbdd9aa0cf27fcc64cfb38513ad95fe6261c5496fef1f9"
@@ -3657,6 +3670,7 @@
       "members/a-renamed-member-s-record-escapes-what-does-not-print": "1b6135d20fd74fb09f83c9c04203083d8c88f1626ede6d00511a38a5ea531cb8"
     },
     "RK-5.5-023": {
+      "members/a-participant-record-is-read-back-whole": "ef8bc02abb4d337fcde664f868b948433f329a9d0dd03a2a7aaf95196a501e55",
       "members/a-resolved-pending-sender-keeps-their-room": "ef8bc02abb4d337fcde664f868b948433f329a9d0dd03a2a7aaf95196a501e55",
       "members/resolve-participant-identifies-a-pending-record": "ef8bc02abb4d337fcde664f868b948433f329a9d0dd03a2a7aaf95196a501e55"
     },
@@ -3743,6 +3757,9 @@
       "binding-update/unmute-output-unchanged": "e917a4b4e26e5e4bc03fcc3f9f2d2cb4b3eff7add3b3746bbff1f91cabf3f5b0",
       "permissions/an-output-mute-fires-nothing": "e917a4b4e26e5e4bc03fcc3f9f2d2cb4b3eff7add3b3746bbff1f91cabf3f5b0"
     },
+    "RK-5.7-004": {
+      "rooms/an-attach-naming-no-category-takes-the-channel-s-own": "b922542bf94b07708212d36108f828b4b93599bed2b2e461ceab271c14341935"
+    },
     "RK-5.7-005": {
       "routing/a-first-message-leaves-a-room-the-second-was-recorded-on": "233d34f5618a50172815718f7557c68fe17d59d43da5dfda0428c0af4c1fc0b9",
       "routing/a-hook-s-binding-naming-no-one-records-the-sender-of-the-room-it-is-in": "233d34f5618a50172815718f7557c68fe17d59d43da5dfda0428c0af4c1fc0b9",
@@ -3799,7 +3816,11 @@
     "RK-5.7-011": {
       "routing/a-user-s-private-chat-and-a-group-are-two-conversations": "8e5483d78618a336cf9919c544bbd2b168717de04510e8d8997b4afac19aed29"
     },
+    "RK-5.7-012": {
+      "routing/a-message-routed-on-a-webhook-writes-nothing-as-its-recipient": "ad4bf6cb4f3b918899b036fbb6962e756e7812ad840b5024c5185b931b7b4587"
+    },
     "RK-5.7-014": {
+      "routing/a-message-routed-on-a-webhook-writes-nothing-as-its-recipient": "65f580851c66bf0915f297a0b24c52aa1f285577fb4ce204e914e22a5ce89a82",
       "routing/a-webhook-s-recipient-names-no-correspondent": "65f580851c66bf0915f297a0b24c52aa1f285577fb4ce204e914e22a5ce89a82"
     },
     "RK-5.7-015": {
@@ -3839,6 +3860,14 @@
     },
     "RK-5.7-017": {
       "routing/an-attach-keeps-a-value-that-is-not-a-recipient-whatever-the-channel-answers": "e87f0642050485c6d677ba4be020325019e3841f821027d6145782c399c9840d"
+    },
+    "RK-5.7-018": {
+      "routing/a-binding-its-channel-reads-elsewhere-is-found-at-step-three-as-the-one-room": "6ee0179c35f45590221d7b3c002b16e2f0f7d3bc881a73ca26708babdc8a5c30",
+      "routing/a-binding-its-channel-reads-elsewhere-is-found-through-the-correspondent-its-attach-names": "6ee0179c35f45590221d7b3c002b16e2f0f7d3bc881a73ca26708babdc8a5c30",
+      "routing/step-one-reads-the-declared-key-as-stored-not-where-the-channel-reads": "6ee0179c35f45590221d7b3c002b16e2f0f7d3bc881a73ca26708babdc8a5c30"
+    },
+    "RK-5.7-019": {
+      "broadcast/a-delivery-is-refused-alike-for-no-recipient-and-a-value-that-is-not-one": "2177c8a69a26be4cf783c5cc4b8d9507bc5667857cbad76b4abee1009eb8af6e"
     },
     "RK-5.7-020": {
       "delivery/the-one-room-delivering-to-no-one-takes-the-status": "d32f221c08d7a181c5658d431bb7670143ae5619b4e77ddae0a115a15555238c",
@@ -3934,6 +3963,12 @@
     },
     "RK-5.8-006": {
       "transcoding/rich-text-reaches-a-text-channel-as-its-plain-text": "6b4682e49c88133ad043ecb8369ba368e23d7e36c46921e359738e3770e1ddae"
+    },
+    "RK-5.8-007": {
+      "transcoding/a-file-a-media-channel-does-not-take-reaches-it-as-its-text": "be094239a9d21a4581b24528a099f727d75fa28eda47d0eaa38d9190254f90d4"
+    },
+    "RK-5.8-008": {
+      "transcoding/a-media-channel-with-no-limit-takes-every-file-as-it-is": "a20617c49a3fb67861c6166e5cfbed214ce47935438b4b311e656fda5eba1435"
     },
     "RK-7.1-002": {
       "permissions/all-source-access-and-mute-combinations": "09e15544fea0657bef56fbca15075385d6cd074a82f5f472f02ac5c31fb5fe92",
@@ -4040,6 +4075,9 @@
       "binding-update/update-binding-metadata-unchanged": "ba29e91ec2819ec840d11a1636b8d23c63933a97d0746e7acd3ed8343ac251da",
       "permissions/binding-changes-and-their-triggers": "ba29e91ec2819ec840d11a1636b8d23c63933a97d0746e7acd3ed8343ac251da"
     },
+    "RK-7.2-013": {
+      "binding-update/a-binding-changes-in-a-room-of-any-status": "76c1e76b2c1345aba43ff644057ce3fdfbe64e18b7a23b5fe50e453f258b2284"
+    },
     "RK-7.3-005": {
       "permissions/invalid-visibility-is-refused-at-every-door": "708f0dbfdc5f1f1f8d52f6e8e806779f9538cebd4d4e34f3426d816df57371ac",
       "permissions/visibility-is-canonical-at-every-door": "708f0dbfdc5f1f1f8d52f6e8e806779f9538cebd4d4e34f3426d816df57371ac"
@@ -4071,6 +4109,9 @@
     "RK-7.3-013": {
       "permissions/a-source-bound-for-no-one-reaches-no-target": "0b7ba7ab506e39a91caa541623d6a454bb30fbd6f341aa6f9883b9c009345cde",
       "permissions/visibility-intersections-on-inbound-and-injection": "0b7ba7ab506e39a91caa541623d6a454bb30fbd6f341aa6f9883b9c009345cde"
+    },
+    "RK-7.3-014": {
+      "permissions/an-event-from-an-internal-binding-is-internal-and-reaches-no-channel": "664450814964c507114b793f32ca95ef6d48a9ae17d5da4b0b96a33eedfd4090"
     },
     "RK-7.3-015": {
       "permissions/a-source-bound-for-no-one-reaches-no-target": "150a2dfe2c4cb2c681f7af7127fe5b7850dfde1896ef447951a691e5f9971874",
@@ -4166,6 +4207,9 @@
     "RK-7.3-030": {
       "permissions/an-answer-intersects-its-own-visibility-with-the-trigger-s-scope": "270e1e082a146a3e54778a70559e9ecc0209c89323c8d51be7150ec0700b5a21",
       "permissions/visibility-intersections-on-inbound-and-injection": "270e1e082a146a3e54778a70559e9ecc0209c89323c8d51be7150ec0700b5a21"
+    },
+    "RK-7.3-031": {
+      "permissions/an-event-from-an-internal-binding-is-internal-and-reaches-no-channel": "803ab212b809484cb232e4adb097e5d5f79de329dc9d0804eaf22c4f640d6869"
     },
     "RK-7.3-032": {
       "permissions/visibility-intersections-on-inbound-and-injection": "94361e36d36068671f62d8162956ca763330e0e5c6b08cb9419dac8e4625419f"
@@ -4421,6 +4465,9 @@
     },
     "RK-7.5-033": {
       "tasks/delegate-task-hands-over-what-its-calling-agent-may-read": "116bc830402445aed571e19225cafcc7f09c68e75bc7a77079512f5b09b0efb0"
+    },
+    "RK-7.5-034": {
+      "hooks/a-hook-reads-the-events-no-channel-or-one-channel-sees": "4c7f3f55b53075cd700dfb1da9a455ceaebf5186316d30d88e083352da9b0199"
     },
     "RK-7.5-035": {
       "permissions/binding-changes-do-not-rewrite-history-visibility": "c8549e5ea7e8564205febbbd575bea8fe0601bb629a09f5bf7e30b08a4e5a730"
