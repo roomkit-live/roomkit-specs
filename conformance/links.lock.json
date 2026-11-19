@@ -3326,6 +3326,9 @@
       "rooms/a-due-close-refuses-the-next-message": "6ebd629d0dd27723a6a8465c499ea2ae06f5a0dd9b9bb016d72fa8ec34dfa7be",
       "rooms/timers-whose-records-the-persistence-policy-keeps-out-still-pause-and-close": "6ebd629d0dd27723a6a8465c499ea2ae06f5a0dd9b9bb016d72fa8ec34dfa7be"
     },
+    "RK-5.1-045": {
+      "rooms/a-delivered-message-moves-the-room-s-last-activity": "185f71dcc65209a8d91ee15621b2263c19dd09ae0db3a2bce1cc4f95ef608527"
+    },
     "RK-5.10-001": {
       "tasks/the-kit-lists-a-room-s-tasks-by-status": "42f180d0a49402a8a8d6460ae215d65348b8f17ce90a3f77d7c187b872a2d26c"
     },
@@ -3387,8 +3390,14 @@
     "RK-5.2-001": {
       "inbound/a-thread-parent-is-rooted": "11db879e2589f6da3d026ac3862fbb808b18edc81a759c7e7b373af88f2cb0bf"
     },
+    "RK-5.2-002": {
+      "store/every-stored-event-type-is-read-back-by-its-value": "0243a306d72eb931447e1ac8a5d0d6fdc7dd688d637e5c9059623da9b4bc47b7"
+    },
     "RK-5.2-003": {
       "store/a-read-leaves-the-message-delivered": "dd407fa5a66426fc980b3b05d3928b18e622e5cdcdf396b5d82329478364351e"
+    },
+    "RK-5.2-004": {
+      "inbound/a-parse-fills-every-member-of-the-event-source": "c03762677157bd00f187ca3149f5643855da5a63677ece3ec603d4a9e37d1958"
     },
     "RK-5.2-007": {
       "instructions/an-instruction-directs-one-turn-and-is-not-stored": "a1c90ec64658dfdddbd37ca576ec2570440a0d4c8d0e105be94f7682f7ac9c52"
@@ -3430,6 +3439,9 @@
       "hooks/an-injection-clears-its-supplied-idempotency-key": "fddfbb662c5bbf1e85f1eb817de023245d554d0adea49541fc318180b90704bd",
       "tasks/a-delegated-turn-s-trace-is-stored-as-its-responses": "fddfbb662c5bbf1e85f1eb817de023245d554d0adea49541fc318180b90704bd"
     },
+    "RK-5.3-002": {
+      "store/a-text-keeps-its-language": "4d106ed6e7663bf1c7329c545ee421fb5cbb078e48dd82eb305f5eb360e0b8a7"
+    },
     "RK-5.3-003": {
       "hooks/an-injection-is-transcoded-for-its-target": "9e544af64069bdc6126e404883da7d14251ad232a89af641df98e6e61a8f10b6",
       "transcoding/rich-text-reaches-a-text-channel-as-its-plain-text": "9e544af64069bdc6126e404883da7d14251ad232a89af641df98e6e61a8f10b6"
@@ -3440,8 +3452,17 @@
     "RK-5.3-005": {
       "transcoding/a-location-reads-in-decimal": "70660942d81450f59a9d145f607d253bf042d89610f47ad145ec885cc34722be"
     },
+    "RK-5.3-006": {
+      "store/an-audio-without-a-mime-type-reads-audio-ogg": "fb397c0f5296bcd646095e4be8278afe9f16b7af019070b4ac0d78e3187f177e"
+    },
     "RK-5.3-007": {
       "store/a-video-without-a-mime-type-reads-video-mp4": "588ede18ab20b8e9ce7e5cc1a95e6eb8c8623183d20008bf8706c08a6b3c2783"
+    },
+    "RK-5.3-009": {
+      "injection/a-system-content-is-stored-and-delivered-as-given": "05df8fd69a828a072d2d548c01260eaf1181e9e3fdc093fa8322990485dceb59"
+    },
+    "RK-5.3-010": {
+      "transcoding/a-template-reaches-a-text-channel-as-its-body": "3e60e41eb74a1b0f63187cf107ef4f663f5fabf8f223e95fdf506db070eb235c"
     },
     "RK-5.3-011": {
       "appendix-b/b6-edit-with-fallback": "8b7c7fcb2e27f170bbacb78449322a87d7ad47be2f5edea4d9b5bb65ff4cf7b7",
@@ -3479,8 +3500,31 @@
       "tool-structured/an-unserved-handler-publishes-no-copy": "28173a326a28e050a8fd980f2630b45f1a76dc5cd6a832946691f1ead877e77e",
       "tool-structured/parallel-calls-keep-their-own-structured-copies": "28173a326a28e050a8fd980f2630b45f1a76dc5cd6a832946691f1ead877e77e"
     },
+    "RK-5.3-015": {
+      "store/every-content-type-is-read-back-as-it-was-stored": "2d4b188c789abbae3431fcc2de2bfe8da125e2ba514ed328f6a126c8450bf091"
+    },
+    "RK-5.3-016": {
+      "store/every-content-type-is-read-back-as-it-was-stored": "5b2877699e33efe8517605e47ba4a419dde14719c7d2861c1f881ce6fe43c527"
+    },
     "RK-5.3-017": {
       "transcoding/a-composite-flattens-to-one-text": "37fe641c0307719a5dd4c5c3962416c38ba834dbbe802e2af44785687b62fd56"
+    },
+    "RK-5.3-018": {
+      "inbound/a-composite-of-five-levels-is-taken-and-one-of-six-refused": "f507d998f21e21b14669e33b8127bdd1f0e457ca4f847e48a0cb4eb1391d7a5f"
+    },
+    "RK-5.3-019": {
+      "edits/an-edit-s-new-content-counts-its-levels-in-the-edit-s-place": "68b79cb65300215c95132da71cf48523e36c905c6d792049bc4fa79872a888a7"
+    },
+    "RK-5.3-020": {
+      "inbound/a-composite-of-five-levels-is-taken-and-one-of-six-refused": "3c5548d5a0f8c8d5ad8e8e199a9c931edd66c3fec6bdb8ffbca9fc7c562dd633",
+      "routing/a-message-holding-six-composite-levels-opens-no-room": "3c5548d5a0f8c8d5ad8e8e199a9c931edd66c3fec6bdb8ffbca9fc7c562dd633"
+    },
+    "RK-5.3-021": {
+      "injection/a-direct-call-holding-six-composite-levels-raises-before-any-read": "e60f5358415b80130089fd9256c8c6da4d43b5ec184c6bbc038642e4f50336c3",
+      "routing/a-message-holding-six-composite-levels-opens-no-room": "e60f5358415b80130089fd9256c8c6da4d43b5ec184c6bbc038642e4f50336c3"
+    },
+    "RK-5.4-004": {
+      "inbound/channel-data-no-typed-structure-names-is-kept-as-a-map": "ea6d276ccbff40e2edc4b3d5affb3ffc6a7aa2df59bd28918293049ee970dddc"
     },
     "RK-5.5-003": {
       "members/add-member-joins-once-and-records-a-new-channel": "cb712a8234b951da4704fc62e33c59004b8a564241e550e1e3a15412629eabba",
