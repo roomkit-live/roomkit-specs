@@ -13,10 +13,10 @@
     "RK-9.5.1-006",
     "RK-9.5.1-008"
   ],
-  "notes": "The first message's check holds at a gate no step opens: its process_timeout (1 s) refuses it and releases its ticket. The second started just after it, so its own deadline falls just after the first one's; its locked hook then holds 500 ms at a gate no step opens before it allows. Counted from the call's start, the second's deadline passes during that hook, and it is refused. Counted from its turn, it would have 1 s left: its hook would time out and it would commit. The third message shows the first one's ticket released at its process_timeout. Python: tests/test_off_lock_check.py::TestTicketRelease::test_released_when_process_timeout_expires.",
+  "notes": "The first message's check holds at a gate no step opens: its process_timeout (2 s) refuses it and releases its ticket. The second started just after it, so its own deadline falls just after the first one's; its locked hook then holds 1 s at a gate no step opens before it allows. Counted from the call's start, the second's deadline passes during that hook, and it is refused. Counted from its turn, it would have 2 s left: its hook would time out and it would commit. The third message shows the first one's ticket released at its process_timeout. Python: tests/test_off_lock_check.py::TestTicketRelease::test_released_when_process_timeout_expires.",
   "setup": {
     "kit": {
-      "process_timeout_ms": 1000
+      "process_timeout_ms": 2000
     },
     "channels": [
       {
@@ -61,7 +61,7 @@
       {
         "name": "guard",
         "trigger": "before_broadcast",
-        "timeout_ms": 500,
+        "timeout_ms": 1000,
         "reactions": [
           {
             "when": {

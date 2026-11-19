@@ -10,9 +10,10 @@
     "§10.4"
   ],
   "requirements": [
+    "RK-9.5.1-056",
     "RK-9.5.1-063"
   ],
-  "notes": "The router answers no room: each message the loop channel's delivery sends opens one, which an ON_ROOM_CREATED hook binds to the loop channel, so the chain goes on there on the budget of room-1's cascade. Each call waits for the delivery of its message, which makes the next call: the refused call ends first. Python: tests/test_reentrance.py::TestACallFromADelivery::test_a_transport_opening_a_room_on_every_delivery_stops_at_the_cap[no-room].",
+  "notes": "The router answers no room: each message the loop channel's delivery sends opens one, which an ON_ROOM_CREATED hook binds to the loop channel, so the chain goes on there on the budget of room-1's cascade. Each call, into another room than the one whose delivery makes it, waits for the delivery of its message there, which makes the next call: the refused call ends first. Python: tests/test_reentrance.py::TestACallFromADelivery::test_a_transport_opening_a_room_on_every_delivery_stops_at_the_cap[no-room].",
   "setup": {
     "kit": {
       "max_chain_depth": 1,

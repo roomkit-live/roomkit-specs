@@ -12,6 +12,10 @@
   "requirements": [
     "RK-9.5.1-063"
   ],
+  "reentrancy": [
+    "inject@cascade",
+    "routed@outside"
+  ],
   "notes": "The loop channel's delivery spends room-1's budget with messages naming it: one more naming it is refused. The next, from sms2, the router routes to room-2, which binds sms2 to its sender: it commits there.",
   "setup": {
     "kit": {

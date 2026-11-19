@@ -10,6 +10,9 @@
   "requirements": [
     "RK-9.5.1-056"
   ],
+  "reentrancy": [
+    "inject@outside"
+  ],
   "notes": "room-b's lane is held by the delivery of held to wsb. room-a's delivery of ping to wsa sends pong into room-b: it commits there (an ASYNC observer of BEFORE_BROADCAST, which starts once the pass is over, holds at a gate to show it), and its delivery waits behind held's. Released, the call returns with pong's delivery to wsb. Two rooms whose deliveries call into each other are not here: an implementation need not detect that cycle.",
   "setup": {
     "channels": [

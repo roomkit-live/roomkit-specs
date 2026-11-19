@@ -11,6 +11,9 @@
   "requirements": [
     "RK-9.5.1-062"
   ],
+  "reentrancy": [
+    "inject@cascade"
+  ],
   "notes": "The variant of reentrancy/a-named-call-past-the-budget-refuses-the-ghost-channel whose last call names room-new, which no one created. Python: tests/test_reentrance.py::TestACallFromADelivery::test_a_transport_opening_a_room_on_every_delivery_stops_at_the_cap[a-named-room-the-store-lacks].",
   "setup": {
     "kit": {

@@ -13,6 +13,7 @@
     "RK-9.5.1-063"
   ],
   "reentrancy": [
+    "inject@cascade",
     "routed@cascade"
   ],
   "notes": "The loop channel's delivery spends room-1's budget with messages naming it, then sends two the router routes to room-1: one from sms2, which room-1 does not bind, and one from sms3, which room-1 binds naming no one and has heard nothing on. Step 2 attaches sms2 naming the first sender, and records the second sender on sms3's binding, then refuses each message: nothing of either is stored, the attach and the record are kept.",

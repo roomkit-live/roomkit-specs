@@ -5990,7 +5990,6 @@
       "hooks/a-message-an-off-lock-hook-blocks-keeps-its-ticket-place": "cd5d2b920febac0f7c88f9c62992a99df558ee4b9fe010ce98c04d1324361434"
     },
     "RK-9.5.1-006": {
-      "hooks/a-message-an-off-lock-hook-blocks-keeps-its-ticket-place": "a6625ebaebc35a94571a38ab4a32ccc8b7d937159de122d5f5f0d10a33c276c0",
       "hooks/a-wait-for-an-admission-ticket-counts-against-process-timeout": "a6625ebaebc35a94571a38ab4a32ccc8b7d937159de122d5f5f0d10a33c276c0",
       "hooks/an-admission-ticket-is-released-on-every-path": "a6625ebaebc35a94571a38ab4a32ccc8b7d937159de122d5f5f0d10a33c276c0"
     },
@@ -6050,6 +6049,7 @@
       "reentrancy/an-off-lock-hook-s-injection-commits-ahead": "05af4c6c597b6ac1a361ffd54e368e5dd0d7aa2eb188b09dcc7b4be8ef2439d4"
     },
     "RK-9.5.1-023": {
+      "reentrancy/a-parse-s-injection-takes-no-place-in-the-ticket-order": "edd2ee40f766748bd8b89ab01279bec1979c041099ed867d988b34345c3c0282",
       "reentrancy/an-off-lock-hook-s-injection-takes-no-place-in-the-ticket-order": "edd2ee40f766748bd8b89ab01279bec1979c041099ed867d988b34345c3c0282"
     },
     "RK-9.5.1-024": {
@@ -6215,7 +6215,8 @@
       "reentrancy/a-turn-s-framework-event-handler-sends-while-it-runs": "c9e31c45bfe7408000f0189405703ab2f05ba0b60016902f443082d0f7e8eeb0"
     },
     "RK-9.5.1-056": {
-      "delivery/a-delivery-s-call-into-another-room-waits-for-that-room-s-lane": "9f54cf13ac47a370690c449e9e7aa4fc4bd4c5596c2c767924e89cefd3fc1a5f"
+      "delivery/a-delivery-s-call-into-another-room-waits-for-that-room-s-lane": "9f54cf13ac47a370690c449e9e7aa4fc4bd4c5596c2c767924e89cefd3fc1a5f",
+      "reentrancy/a-routed-call-past-the-budget-opens-no-room": "9f54cf13ac47a370690c449e9e7aa4fc4bd4c5596c2c767924e89cefd3fc1a5f"
     },
     "RK-9.5.1-058": {
       "reentrancy/replays-draw-nothing-on-a-hook-s-budget": "df39e6830c21c29e4e972c646139a1911fe87deb044e445bb7b482a4193428e7"

@@ -12,7 +12,7 @@
   "requirements": [
     "RK-9.5.1-009"
   ],
-  "notes": "The first message's off-lock hook and then its locked hook each hold at a gate no step opens and time out (200 ms, fail-open): the first commits, and the second, whose check ended long before, commits after it. That no setting of its own bounds the wait is shown only for a setting shorter than these timeouts.",
+  "notes": "The first message comes on the slow channel, whose off-lock and locked hooks each hold at a gate no step opens and time out (200 ms, fail-open): the first commits, and the second, whose check ended long before, commits after it. The check hook gives both messages a ticket. That no setting of its own bounds the wait is shown only for a setting shorter than these timeouts.",
   "setup": {
     "channels": [
       {
@@ -23,6 +23,11 @@
       {
         "id": "ws",
         "type": "websocket",
+        "category": "transport"
+      },
+      {
+        "id": "slow",
+        "type": "sms",
         "category": "transport"
       }
     ],
@@ -35,21 +40,29 @@
           },
           {
             "channel_id": "ws"
+          },
+          {
+            "channel_id": "slow"
           }
         ]
       }
     ],
     "hooks": [
       {
+        "name": "check",
+        "trigger": "before_broadcast",
+        "needs_lock": false
+      },
+      {
         "name": "scan",
         "trigger": "before_broadcast",
         "needs_lock": false,
         "timeout_ms": 200,
+        "channel_ids": [
+          "slow"
+        ],
         "reactions": [
           {
-            "when": {
-              "text": "first"
-            },
             "gate": "never"
           }
         ]
@@ -58,11 +71,11 @@
         "name": "guard",
         "trigger": "before_broadcast",
         "timeout_ms": 200,
+        "channel_ids": [
+          "slow"
+        ],
         "reactions": [
           {
-            "when": {
-              "text": "first"
-            },
             "gate": "never again"
           }
         ]
@@ -74,7 +87,7 @@
       "call": "process_inbound",
       "room_id": "room-1",
       "message": {
-        "channel_id": "sms",
+        "channel_id": "slow",
         "sender_id": "+15551234567",
         "content": {
           "type": "text",
@@ -162,7 +175,7 @@
       }
     },
     "hooks": {
-      "scan": [
+      "check": [
         {
           "event": {
             "content": {
@@ -180,6 +193,16 @@
           }
         }
       ],
+      "scan": [
+        {
+          "event": {
+            "content": {
+              "type": "text",
+              "body": "first"
+            }
+          }
+        }
+      ],
       "guard": [
         {
           "event": {
@@ -188,66 +211,6 @@
               "body": "first"
             }
           }
-        },
-        {
-          "event": {
-            "content": {
-              "type": "text",
-              "body": "second"
-            }
-          }
-        }
-      ]
-    },
-    "framework_events": {
-      "room-1": [
-        {
-          "$unordered": [
-            {
-              "event": "hook_timeout",
-              "hook_name": "scan",
-              "trigger": "before_broadcast",
-              "timeout": 0.2
-            },
-            {
-              "event": "hook_error",
-              "hook": "scan",
-              "event_id": "room-1#0"
-            }
-          ]
-        },
-        {
-          "$unordered": [
-            {
-              "event": "hook_timeout",
-              "hook_name": "guard",
-              "trigger": "before_broadcast",
-              "timeout": 0.2
-            },
-            {
-              "event": "hook_error",
-              "hook": "guard",
-              "event_id": "room-1#0"
-            }
-          ]
-        },
-        {
-          "$unordered": [
-            {
-              "event": "delivery_succeeded",
-              "channel_id": "ws"
-            },
-            {
-              "event": "event_processed"
-            },
-            {
-              "event": "delivery_succeeded",
-              "channel_id": "ws"
-            },
-            {
-              "event": "event_processed"
-            }
-          ]
         }
       ]
     }

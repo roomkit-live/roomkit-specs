@@ -1,19 +1,17 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "hooks/a-message-an-off-lock-hook-blocks-keeps-its-ticket-place",
-  "title": "A message an off-lock hook blocks still waits for its turn: its BLOCKED record commits ahead of a later message whose check ended first",
+  "title": "A message an off-lock hook blocks still waits for its turn: blocked first, its BLOCKED record commits after an earlier message whose check ended last",
   "rules": [
     "§9.5.1",
     "§9.5.1 Order",
-    "§9.5.1 Release",
     "§10.1 step 5a",
     "§10.1 step 10"
   ],
   "requirements": [
-    "RK-9.5.1-005",
-    "RK-9.5.1-006"
+    "RK-9.5.1-005"
   ],
-  "notes": "The variant of hooks/off-lock-tickets-keep-arrival-order where the first message's check, ended last, blocks it. Python: tests/test_off_lock_check.py::TestOrderAndOverlap::test_blocked_first_message_releases_the_next.",
+  "notes": "The variant of hooks/off-lock-tickets-keep-arrival-order where the second message's check, ended first, blocks it: its record waits for the first message's ticket, so it takes the next index. A blocked first message releasing the next is the blocked path of hooks/an-admission-ticket-is-released-on-every-path. Python: tests/test_off_lock_check.py::TestOrderAndOverlap::test_blocked_first_message_releases_the_next.",
   "setup": {
     "channels": [
       {
@@ -50,17 +48,17 @@
             "when": {
               "text": "first"
             },
-            "gate": "first",
-            "result": {
-              "action": "block",
-              "reason": "pii"
-            }
+            "gate": "first"
           },
           {
             "when": {
               "text": "second"
             },
-            "gate": "second"
+            "gate": "second",
+            "result": {
+              "action": "block",
+              "reason": "pii"
+            }
           }
         ]
       }
@@ -111,11 +109,9 @@
       "await": "first",
       "expect": {
         "result": {
-          "blocked": true,
+          "blocked": false,
           "event": {
-            "index": 0,
-            "status": "blocked",
-            "blocked_by": "scan"
+            "index": 0
           }
         }
       }
@@ -124,9 +120,11 @@
       "await": "second",
       "expect": {
         "result": {
-          "blocked": false,
+          "blocked": true,
           "event": {
-            "index": 1
+            "index": 1,
+            "status": "blocked",
+            "blocked_by": "scan"
           }
         }
       }
@@ -140,15 +138,15 @@
             "type": "text",
             "body": "first"
           },
-          "status": "blocked",
-          "blocked_by": "scan"
+          "status": "delivered"
         },
         {
           "content": {
             "type": "text",
             "body": "second"
           },
-          "status": "delivered"
+          "status": "blocked",
+          "blocked_by": "scan"
         }
       ]
     },
@@ -158,7 +156,7 @@
           {
             "content": {
               "type": "text",
-              "body": "second"
+              "body": "first"
             }
           }
         ]
