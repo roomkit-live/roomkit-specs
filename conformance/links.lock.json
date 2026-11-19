@@ -1375,18 +1375,38 @@
       "hooks/a-hook-edit-requires-system-authority-sender": "23e5bd721d85cf1afa42b2a3518e6b81cdc8c8834c7e167ba832037767814ea5",
       "hooks/a-hook-edit-requires-system-authority-system": "23e5bd721d85cf1afa42b2a3518e6b81cdc8c8834c7e167ba832037767814ea5"
     },
+    "RK-10.3-011": {
+      "edits/a-change-held-where-it-is-not-made-is-refused": "2d421ea99b5eab46ccf30e4a206c711a95d2cd4afa4417d3b2755428a4544afc"
+    },
     "RK-10.3-012": {
       "edits/an-edit-of-a-missing-target-is-refused": "90d3fd9bf0c4919d699edf21d6d65f85e519562b868d802d03cd51be33d2d415",
       "edits/the-side-effects-of-a-hook-on-an-edit-its-re-read-refuses-are-not-stored": "90d3fd9bf0c4919d699edf21d6d65f85e519562b868d802d03cd51be33d2d415"
     },
+    "RK-10.3-013": {
+      "edits/a-second-delete-is-refused-and-a-retried-one-is-answered-as-the-first": "133de563f5e30264b8c02bbdabc069e097db361056f4bfc79e5d83c066375675"
+    },
     "RK-10.3-014": {
       "inbound/a-channel-s-echo-of-its-own-output-speaks-as-no-participant": "2c0596a05e287b2f2f880150b5c0f4b26a38be5d48adff4df5ac116dc5c166ba"
+    },
+    "RK-10.3-015": {
+      "edits/a-sender-who-left-or-was-banned-still-changes-their-messages": "9dda94545f0bdead8b68d753a92b7ffd482538fb986a6f172c3f1bc90b52bdad"
     },
     "RK-10.3-016": {
       "appendix-b/b6-edit-with-fallback": "4a1ef50b5d46865ffa2052c1057de42f2d91d1ca161da0aabdb2bf49d2ca0e1f",
       "appendix-b/b7-delete-with-fallback": "4a1ef50b5d46865ffa2052c1057de42f2d91d1ca161da0aabdb2bf49d2ca0e1f",
       "edits/an-edit-by-another-sender-is-refused": "4a1ef50b5d46865ffa2052c1057de42f2d91d1ca161da0aabdb2bf49d2ca0e1f",
       "inbound/a-channel-s-echo-of-its-own-output-speaks-as-no-participant": "4a1ef50b5d46865ffa2052c1057de42f2d91d1ca161da0aabdb2bf49d2ca0e1f"
+    },
+    "RK-10.3-017": {
+      "edits/an-admin-delete-is-an-active-owner-s-or-agent-s": "c49693ea7aebfab94fa7968bdef170a98619df72d0e9ebd1a235315aa3ab1ba6"
+    },
+    "RK-10.3-018": {
+      "edits/an-admin-delete-is-an-active-owner-s-or-agent-s": "065a33cc7df13c94fba82e119422e6659f27d941d72bec8397dc154c38fa9d88"
+    },
+    "RK-10.3-019": {
+      "edits/a-change-claiming-the-system-s-authority-from-a-channel-is-refused": "6c349c2aceec5147dfb31e87c91305c802bc653095d3ff4c54969516ea5bd036",
+      "hooks/a-hook-delete-requires-system-authority-system": "6c349c2aceec5147dfb31e87c91305c802bc653095d3ff4c54969516ea5bd036",
+      "hooks/a-hook-edit-requires-system-authority-system": "6c349c2aceec5147dfb31e87c91305c802bc653095d3ff4c54969516ea5bd036"
     },
     "RK-10.3-021": {
       "hooks/a-hook-delete-requires-system-authority-admin": "7b3b8963faa02532ae14d556668b48584b2dda240b15fe2a087f60dad22feb9b",
@@ -1403,8 +1423,25 @@
       "edits/the-side-effects-of-a-hook-on-an-edit-its-re-read-refuses-are-not-stored": "5cb52579d5b3eb195c3c53a1f664b4fa7cec233adf6a480374ad78d555a866a7"
     },
     "RK-10.3-023": {
+      "edits/a-change-claiming-the-system-s-authority-from-a-channel-is-refused": "e1f471f2bf632707b335496d91fa72d0166f57ca7a056db9ed446bdaa6f0173c",
       "edits/an-edit-by-another-sender-is-refused": "e1f471f2bf632707b335496d91fa72d0166f57ca7a056db9ed446bdaa6f0173c",
       "edits/an-injected-change-s-refusal-raises": "e1f471f2bf632707b335496d91fa72d0166f57ca7a056db9ed446bdaa6f0173c"
+    },
+    "RK-10.3-024": {
+      "hooks/a-change-never-hides-in-a-hook-s-replacement": "f920902d21e4e8579be1f5bfcc69065f35dcbd474d9cb71c4ee329b6b26c1090",
+      "hooks/a-modify-of-a-change-keeps-its-target-and-authority": "f920902d21e4e8579be1f5bfcc69065f35dcbd474d9cb71c4ee329b6b26c1090"
+    },
+    "RK-10.3-025": {
+      "hooks/a-change-never-hides-in-a-hook-s-replacement": "be48414f5287fd21be376e483b532f3379e1f471cb1a347fcf510a5f18de77f6",
+      "hooks/a-modify-of-a-change-keeps-its-target-and-authority": "be48414f5287fd21be376e483b532f3379e1f471cb1a347fcf510a5f18de77f6"
+    },
+    "RK-10.3-026": {
+      "hooks/a-change-never-hides-in-a-hook-s-replacement": "934803d14001a15b3ecf082ba071b8a45dc09231bcdc405ac7900016d7beff5e",
+      "hooks/a-text-replacement-redacts-an-edit-and-leaves-a-delete": "934803d14001a15b3ecf082ba071b8a45dc09231bcdc405ac7900016d7beff5e"
+    },
+    "RK-10.3-027": {
+      "hooks/a-change-never-hides-in-a-hook-s-replacement": "2d79a8dc7a6f92925716a036cea35992b4243e64d1e838442e68d83226b69073",
+      "hooks/a-text-replacement-redacts-an-edit-and-leaves-a-delete": "2d79a8dc7a6f92925716a036cea35992b4243e64d1e838442e68d83226b69073"
     },
     "RK-10.3-028": {
       "edits/a-blocked-edit-leaves-its-target": "dde2f421c880fbbbf02945d879c7204c6cad89c7241e5a3baca494685f079f40"
@@ -1476,8 +1513,12 @@
       "hooks/a-hook-delete-requires-system-authority-system": "fa0b516e226867604c53414cf90d5a378213f320d10ee4f1069be2f761809ce4",
       "hooks/a-hook-edit-requires-system-authority-system": "fa0b516e226867604c53414cf90d5a378213f320d10ee4f1069be2f761809ce4"
     },
+    "RK-10.3-045": {
+      "edits/a-change-s-mutation-trigger-fires-off-the-lock-before-after-broadcast": "c053e6aaf1931f1118565c28bf632b0cbd0d839d21eb1e5cec927e0712d17750"
+    },
     "RK-10.3-046": {
       "edits/a-blocked-edit-leaves-its-target": "d34821ec90d5a0ad62fed24a7ed91e8112b2a1886d0d472d863f911a4c2329e2",
+      "edits/a-change-claiming-the-system-s-authority-from-a-channel-is-refused": "d34821ec90d5a0ad62fed24a7ed91e8112b2a1886d0d472d863f911a4c2329e2",
       "edits/an-edit-by-another-sender-is-refused": "d34821ec90d5a0ad62fed24a7ed91e8112b2a1886d0d472d863f911a4c2329e2",
       "hooks/a-hook-delete-requires-system-authority-admin": "d34821ec90d5a0ad62fed24a7ed91e8112b2a1886d0d472d863f911a4c2329e2",
       "hooks/a-hook-delete-requires-system-authority-sender": "d34821ec90d5a0ad62fed24a7ed91e8112b2a1886d0d472d863f911a4c2329e2",
@@ -1504,7 +1545,11 @@
       "edits/direct-update-and-hard-delete": "207c14c56efcd67f416231963e4e54fa108f31dac321f0585a4e3bb533893f66",
       "verification/a-held-message-deleted-before-the-release-is-not-answered": "207c14c56efcd67f416231963e4e54fa108f31dac321f0585a4e3bb533893f66"
     },
+    "RK-10.3-052": {
+      "edits/a-hard-delete-removes-an-edit-that-replies-once": "ca6fa12fbf45de467d85914bcc8895228f609be6d07066a94c285bd569646ae2"
+    },
     "RK-10.3-053": {
+      "edits/a-hard-delete-removes-an-edit-that-replies-once": "df00b9e04a18b8412a03c4af013e7689af93ccf06df4fb1132d4ab35e7f78e1a",
       "edits/direct-update-and-hard-delete": "df00b9e04a18b8412a03c4af013e7689af93ccf06df4fb1132d4ab35e7f78e1a"
     },
     "RK-10.3-054": {
@@ -1514,6 +1559,7 @@
       "rooms/a-due-pause-is-applied-by-update": "d860883af82c5721abb772cd400d976581f42c3c7648ab586f35628b15571fe2"
     },
     "RK-10.3-055": {
+      "edits/a-hard-delete-removes-an-edit-that-replies-once": "3df0f0b09cebca30ba72e34791c21965a36f5edf64061898b47c3ff1e947cdf8",
       "edits/direct-update-and-hard-delete": "3df0f0b09cebca30ba72e34791c21965a36f5edf64061898b47c3ff1e947cdf8",
       "reentrancy/a-locked-hook-updates-an-earlier-event": "3df0f0b09cebca30ba72e34791c21965a36f5edf64061898b47c3ff1e947cdf8"
     },
@@ -1523,12 +1569,18 @@
     "RK-10.3-058": {
       "tenancy/another-organization-s-room-is-not-found": "1ed30c7ce310c27536ce28279a363948da759736ba6ac9807fd1a5a23582fd79"
     },
+    "RK-10.3-059": {
+      "edits/a-direct-update-that-changes-nothing-writes-and-fires-nothing": "547ba3e0db5b0dc75f1307d3a3fe0e6af9cd7bd0782c813ffc9684807aba0057"
+    },
     "RK-10.3-060": {
       "reentrancy/a-direct-delete-past-the-hook-budget-writes-nothing": "7c10ab7985ac4edce7174804687d4e32d70fae543a19c771ed8ade7d24f9ebc1",
       "reentrancy/a-direct-regenerate-past-the-hook-budget-writes-nothing": "7c10ab7985ac4edce7174804687d4e32d70fae543a19c771ed8ade7d24f9ebc1",
       "reentrancy/a-direct-update-past-the-hook-budget-writes-nothing": "7c10ab7985ac4edce7174804687d4e32d70fae543a19c771ed8ade7d24f9ebc1",
       "reentrancy/hook-bodies-that-update-stop-at-the-hook-calls": "7c10ab7985ac4edce7174804687d4e32d70fae543a19c771ed8ade7d24f9ebc1",
       "verification/a-hook-updating-a-released-message-again-stops-at-the-cap": "7c10ab7985ac4edce7174804687d4e32d70fae543a19c771ed8ade7d24f9ebc1"
+    },
+    "RK-10.3-061": {
+      "reentrancy/direct-updates-from-a-room-s-work-draw-no-hook-call": "781d8033c30f69a86f2dfb9708496c332751ae80c6f440397582d5ba3dcc5511"
     },
     "RK-10.3-062": {
       "verification/a-hook-updating-a-released-message-again-stops-at-the-cap": "a7f8f9b6ccf31b5fe8f6e64d3cbc85aa1b8adfbdea98916f9314b6a6ac4ed3cd"
@@ -1550,7 +1602,12 @@
     "RK-10.3-067": {
       "discussion/a-message-its-sender-deleted-before-its-decision-is-not-decided": "847f0a88bc709a7242501bb7aab4cba18e73c0cf70d41b651d10d865690bdad7",
       "inbound/a-deletion-opens-no-agent-turn": "847f0a88bc709a7242501bb7aab4cba18e73c0cf70d41b651d10d865690bdad7",
-      "inbound/an-edit-opens-no-agent-turn": "847f0a88bc709a7242501bb7aab4cba18e73c0cf70d41b651d10d865690bdad7"
+      "inbound/an-edit-opens-no-agent-turn": "847f0a88bc709a7242501bb7aab4cba18e73c0cf70d41b651d10d865690bdad7",
+      "inbound/an-edit-or-a-delete-asks-no-speak-policy": "847f0a88bc709a7242501bb7aab4cba18e73c0cf70d41b651d10d865690bdad7"
+    },
+    "RK-10.3-068": {
+      "inbound/an-edit-or-a-delete-asks-no-speak-policy": "c080ed9b0848d07d01047d30abd330a574f52ecedacc324f0b94e5a219d0805e",
+      "steering/an-edit-during-a-tool-round-is-not-handed-to-the-running-turn": "c080ed9b0848d07d01047d30abd330a574f52ecedacc324f0b94e5a219d0805e"
     },
     "RK-10.3-069": {
       "discussion/a-message-its-sender-deleted-before-its-decision-is-not-decided": "38b55e2b6aec72b27d20c7f5637f8e15c24c767ee61a0f7acb50bb5cd22fc117"
