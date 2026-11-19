@@ -577,3 +577,63 @@ declaration-only channel is neither hosted, declared nor taken, and what it
 proves for its link is unchanged. These receipts give no credit to PostgreSQL,
 the Redis turn mode or specialized tests. The 150 earlier execution receipts
 are unchanged.
+
+## Receipts after the A wave (2026-11-19)
+
+`python-rule-links-929f9dc.xml` retains the memory and SQLite cases of one run
+of clean, published Python `929f9dc7fa1cd70907b6ece5fea89f8ff7979f52`, on Linux
+with Python 3.14.9, pytest 9.1.1, pytest-asyncio 1.4.0 and pytest-xdist 3.8.0
+(four workers), the memory and SQLite stores and in-process turns. The receipt
+records the pytest invocation, omitting the suite-lock and CPU-affinity
+wrappers used for the local run. All 3231 memory cases and all 654 SQLite
+cases passed.
+
+`python-postgres-scenarios-929f9dc.xml` and `python-redis-turns-929f9dc.xml`
+retain the reports of roomkit CI run 44627271347 on the same commit, job
+Integration (PostgreSQL 16 and Redis 7 services, Python 3.12), recorded by
+`record.py ci` as "PostgreSQL and the Redis turn mode" describes. The
+PostgreSQL report holds 522 cases, all passed: 519 scenarios, 503
+`test_scenario` cases and 16 `test_shared_postgres_contract` scenarios, three
+of which also run a slow-preparation variant. The Redis turn-mode report holds
+the 3885 scenario cases of `tests.conformance.test_conformance`; the receipts
+record:
+
+- `python-redis-turns-929f9dc-memory-redis-turns`: 3231 scenarios, 3209
+  passed and 22 skipped;
+- `python-redis-turns-929f9dc-sqlite-redis-turns`: 654 scenarios, 643 passed
+  and 11 skipped.
+
+The 33 skipped cases are those marked `in_process`: 28 whose scripted agent's
+turn calls the kit it holds, and 5 whose ACP tool observer calls its captured
+kit. Across Redis such a turn reaches the room through its TurnHost
+(RK-10.6.5-020); the receipts say skipped, so those cases have no Redis pass.
+
+`rust-80c1a32-memory-current-thread.xml`,
+`rust-80c1a32-memory-multi-thread-4.xml`,
+`rust-80c1a32-sqlite-current-thread.xml` and
+`rust-80c1a32-postgres-current-thread.xml` retain the four passes of
+roomkit-rs `80c1a32a00e3d901afd8a6cc4619eac2571906f0`, a clean commit of its
+main, run with Rust 1.99.1 through the local wrapper of "Core rule links:
+Python and roomkit-rs passes (2026-11-18)". Memory and SQLite ran by the two
+commands of "roomkit-rs memory and SQLite passes (2026-11-17)"; PostgreSQL,
+the first Rust receipt on that store, ran against a local PostgreSQL 16
+server of its own, with trust authentication and no `REDIS_URL`:
+
+```sh
+ROOMKIT_CONFORMANCE_JUNIT=target/conformance \
+  POSTGRES_DSN='postgresql://postgres@127.0.0.1:55433/postgres?sslmode=disable' \
+  cargo test -p roomkit-postgres --test conformance
+```
+
+Each holds the 3231 scenarios of the copy: 3152 passed, 79 skipped, none
+failed. The 79 are the scenarios with `setup.executors`, which roomkit-rs
+runs only when `REDIS_URL` names a Redis server ("§10.6.7: this pass has no
+Redis turn executor").
+
+Both copies are corpus `5afdbf7d2c82d9a5775d2bd3811dabdf6826e667`, after the
+A wave of scenarios for the core's units; the RFC is
+`2bd49dcef27e996f81ec058932880f73f5a88ce1`. The evidence's `python_commit`
+moved to the Python commit first; no pinned test changed since `05127770f`.
+These receipts give no credit to specialized tests, to PostgreSQL with turns
+across Redis, or to roomkit-rs's turn executors on Redis. The 155 earlier
+execution receipts are unchanged.
