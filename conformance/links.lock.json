@@ -4559,6 +4559,9 @@
       "hooks/a-channel-types-filter-does-not-silence-on-ai-thinking": "6260d2079b26e2693cecb366bfbe0f5a9fbf52fcb9df8b41f3baa2ff1f0e62fe",
       "tools/a-tool-hook-filtered-to-another-agent-leaves-its-calls": "6260d2079b26e2693cecb366bfbe0f5a9fbf52fcb9df8b41f3baa2ff1f0e62fe"
     },
+    "RK-9.1-008": {
+      "kit-executor/a-kit-turn-hook-a-declared-channel-could-fire-is-refused": "1695e95a9f2049e529fa71c889ad753a18b6e3c38f79fdc5a869a9aa62a26915"
+    },
     "RK-9.1-009": {
       "kit-executor/named-hooks-are-opt-in-per-room": "4e3e03ec41b244b2fe5b2d72126ebddb377981c61d96b3f206ff01a773990c3e"
     },
@@ -5030,6 +5033,9 @@
     "RK-9.2-113": {
       "rooms/timers-pause-then-close-in-one-check": "6080da4e1f75b3e97adb7dcd809d23aae7a4200aa9634ab74f554266b5757578"
     },
+    "RK-9.2-114": {
+      "orchestration/a-room-a-first-message-opens-is-announced-with-its-strategy-s-agents-and-not-the-sender-s-channel": "d123ea6b9ce55bcd8fea7de6142e5c29cdaa9a54301f3fe140cca950322a9744"
+    },
     "RK-9.2-115": {
       "rooms/timers-pause-then-close-in-one-check": "420852d650bd69f87385946e273f0d25add64ad3b55754672a1904e6fb255c76"
     },
@@ -5170,6 +5176,11 @@
     "RK-9.3-036": {
       "appendix-b/b1-customer-and-ai": "91018dca98181cf94687981bf2c2691aecbfec26a802b9b41b978bbb7b385d8d",
       "rooms/creation-awaits-its-hooks": "91018dca98181cf94687981bf2c2691aecbfec26a802b9b41b978bbb7b385d8d"
+    },
+    "RK-9.3-039": {
+      "hooks/ai-response-comes-once-the-on-ai-response-hooks-have-ended": "f849b5096b5ef578118fbefa869c5c55a44e2570e7b9ddd6339af326e20b077d",
+      "hooks/event-processed-comes-once-the-after-broadcast-hooks-have-ended": "f849b5096b5ef578118fbefa869c5c55a44e2570e7b9ddd6339af326e20b077d",
+      "hooks/feedback-comes-once-the-on-feedback-hooks-have-ended": "f849b5096b5ef578118fbefa869c5c55a44e2570e7b9ddd6339af326e20b077d"
     },
     "RK-9.3-040": {
       "hooks/an-async-hook-past-its-timeout": "708d8b44b9918b3819d3fb39a5d91e43496c9d2cd0a7b09709f42ea4ecde716a",
@@ -5442,6 +5453,16 @@
     },
     "RK-9.3-062": {
       "tool-search/a-replaced-search-still-reveals-its-matches": "af3a5f0b4e4d9de5393305bba8cbc3a4a248fdf2d7be10c2fbc89ff167980b1a"
+    },
+    "RK-9.3-064": {
+      "tools/a-hook-that-clears-a-served-result-has-the-model-and-the-next-hook-read-null": "21b3a19bf40a2ef49657c4b82887b2b8e9268db24c65a76811461e784ce919d9"
+    },
+    "RK-9.3-065": {
+      "tools/a-hook-that-clears-a-served-result-has-the-model-and-the-next-hook-read-null": "96bb1451058a50196b63914f640ee7e2e55b3ef8b24229833774f9eb3576acf3",
+      "tools/an-observer-reads-a-replaced-result-as-the-model-reads-it": "96bb1451058a50196b63914f640ee7e2e55b3ef8b24229833774f9eb3576acf3"
+    },
+    "RK-9.3-066": {
+      "tools/observers-hear-a-served-call-a-hook-blocked-or-a-fail-closed-hook-withheld": "5683825f747002d37af9fc018c48d63ce5e0cc8dcc07aa5ab700b34852b686f7"
     },
     "RK-9.3-067": {
       "ai-external-handler/reused-call-ids-in-the-next-round-get-new-reports-non-streaming": "9293660f54680d17f7ee77bf4634f8f0c4d5c8eb91cc856483da19567582ca07",
@@ -5732,6 +5753,12 @@
       "skill-scripts/executor-error-streaming": "0aa9db433042290a1e751a9e82673e0c6cfb0a21f1fc8e0514e9ee0fa38e9318",
       "tasks/a-posted-result-says-its-task-failed-or-was-cancelled-never-its-error": "0aa9db433042290a1e751a9e82673e0c6cfb0a21f1fc8e0514e9ee0fa38e9318"
     },
+    "RK-9.3-087": {
+      "tool-structured/a-declined-call-whose-hook-raises-reads-as-any-unserved-call": "7b0efeeda7d9ace753a3a1b30680bc2291776662405b9242436136727d07330e"
+    },
+    "RK-9.3-088": {
+      "tools/a-result-override-on-a-refused-or-failed-call-is-ignored": "27348a02f1b1b591542e435f9ad1d07408be4ff54e5583565a43492bde73ae53"
+    },
     "RK-9.3-089": {
       "mcp/a-bare-name-no-server-admits-is-served-by-nothing": "92629e39c3f47631468d7e534778fa351428e83f3ac4fb2c447ac6db216b555b",
       "orchestration/an-audited-call-is-recorded-by-how-it-ended": "92629e39c3f47631468d7e534778fa351428e83f3ac4fb2c447ac6db216b555b",
@@ -5742,6 +5769,9 @@
     },
     "RK-9.3-091": {
       "tool-structured/an-unserved-handler-publishes-no-copy": "3ea2bfacda0abb0306a87143ef548d3b035f3589536038466583e1876bfd00f1"
+    },
+    "RK-9.3-092": {
+      "tools/a-hook-that-clears-a-served-result-has-the-model-and-the-next-hook-read-null": "677bf419ff0f40f0664095c1ffdef58cb17de3105669add73af23c5646624c1b"
     },
     "RK-9.3-104": {
       "inputs/a-hook-that-raises-leaves-the-request-answerable": "d80add29fb29b364077e6e9af2cc1952839693687f50a493b918037e7d4c959b",
@@ -5775,6 +5805,9 @@
       "inputs/a-blocked-request-is-a-refusal": "a88d1a092c254b82d4243e7e390df03729db9d6de8e02aa18b93d74c7ef5995b",
       "inputs/a-rejection-reaches-the-tool-as-a-refusal": "a88d1a092c254b82d4243e7e390df03729db9d6de8e02aa18b93d74c7ef5995b",
       "inputs/a-request-no-one-answers-in-time-fails": "a88d1a092c254b82d4243e7e390df03729db9d6de8e02aa18b93d74c7ef5995b"
+    },
+    "RK-9.3-113": {
+      "inputs/a-request-whose-call-is-cut-is-withdrawn": "8eb980719f47cebf1e18b1c33f176b83d5c134a2abb8d478ad70205751667762"
     },
     "RK-9.3-114": {
       "input-request/timed-out-stream": "e208e11a2eef56eb7bc9f861e1ea2daff394db3dc1c4ce14df0f71c7c949afae",
