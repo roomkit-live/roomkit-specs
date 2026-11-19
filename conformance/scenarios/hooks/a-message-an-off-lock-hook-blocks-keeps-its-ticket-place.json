@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "hooks/a-message-an-off-lock-hook-blocks-keeps-its-ticket-place",
-  "title": "A message an off-lock hook blocks still waits for its turn: blocked first, its BLOCKED record commits after an earlier message whose check ended last",
+  "title": "A message an off-lock hook blocks while an earlier message's check still runs waits for its turn: its BLOCKED record commits after that message",
   "rules": [
     "§9.5.1",
     "§9.5.1 Order",
@@ -11,7 +11,7 @@
   "requirements": [
     "RK-9.5.1-005"
   ],
-  "notes": "The variant of hooks/off-lock-tickets-keep-arrival-order where the second message's check, ended first, blocks it: its record waits for the first message's ticket, so it takes the next index. A blocked first message releasing the next is the blocked path of hooks/an-admission-ticket-is-released-on-every-path. Python: tests/test_off_lock_check.py::TestOrderAndOverlap::test_blocked_first_message_releases_the_next.",
+  "notes": "The variant of hooks/off-lock-tickets-keep-arrival-order where the second message's check, ended first, blocks it: its record waits for the first message's ticket, so it takes the next index. A blocked first message releasing the next is the blocked path of hooks/an-admission-ticket-is-released-on-every-path.",
   "setup": {
     "channels": [
       {
