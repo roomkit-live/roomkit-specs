@@ -23,6 +23,9 @@
     "RK-10.1-008": {
       "inbound/an-unregistered-channel-fails": "9983338d894cabc47b731ca037377b1b74434dd8191bc807da4f8a6a7a69cfee"
     },
+    "RK-10.1-009": {
+      "injection/a-message-on-the-host-channel-is-refused-before-anything-is-read": "5b066f5ea993cdee6299087917288d78cf53a7d38a7efeeec8194fdeee6e8de5"
+    },
     "RK-10.1-010": {
       "routing/a-custom-router-receives-the-chat-address": "26bb6a18486f28dc7b02c3beabd9f6bdaf675d52f34a197d6146fcda2938c172",
       "routing/a-custom-router-receives-the-scoped-identity-and-metadata": "26bb6a18486f28dc7b02c3beabd9f6bdaf675d52f34a197d6146fcda2938c172",
@@ -2094,6 +2097,9 @@
     "RK-10.5-012": {
       "permissions/an-injection-from-an-unbound-channel-raises": "5581677830e4692d040160f43b642589ce853c892d086e3d23a7e59c7b3126b9"
     },
+    "RK-10.5-013": {
+      "injection/an-injection-runs-no-parse": "de674aaa9f2200a7fe1fb4fdc9dcc48cca725e06a7475ebcf940388336696be9"
+    },
     "RK-10.5-014": {
       "injection/a-sent-event-keeps-its-answer-scope": "55358a83a4d574f66d0afe2916e4a3bec3a0c1f0c880a553a796a10d0cbf371a"
     },
@@ -2117,8 +2123,23 @@
       "injection/a-post-speaks-through-the-host-channel": "86feb5fb85140c240bff019592dd12703e69e7ffd9939f1e0b91b9c3753d2efe",
       "orchestration/a-host-s-words-are-a-person-s-message-to-a-pipeline-s-routing": "86feb5fb85140c240bff019592dd12703e69e7ffd9939f1e0b91b9c3753d2efe"
     },
+    "RK-10.5-020": {
+      "injection/the-host-s-voice-is-never-an-intelligence-channel": "23274dcca70cb487f5747606b21fa7ed6101a4bab794e258ca5b4dfd83750845"
+    },
     "RK-10.5-021": {
       "injection/a-post-speaks-through-the-host-channel": "91e930fbb37cadd9483ce61ae65b023edc2507d5ec0546d1ae9c1f040e6f0c1b"
+    },
+    "RK-10.5-022": {
+      "injection/the-host-s-voice-is-never-an-intelligence-channel": "e7e5adc7a7965eba7027560c99d5fe32bde7cb90fa2d6cd7342aa5657ff39660"
+    },
+    "RK-10.5-023": {
+      "injection/a-message-on-the-host-channel-is-refused-before-anything-is-read": "f00629f0150c19becb231db4e1200b9c5a7a3ffdc79646a994555f6cd74f5464"
+    },
+    "RK-10.5-024": {
+      "ai-context/a-host-channel-narrows-nothing-an-agent-may-answer-with": "197793bc743d0020844a405ac2b17c85f3490d65f7dca488d396402042fb0baf"
+    },
+    "RK-10.5-025": {
+      "transcoding/a-post-reaches-each-transport-transcoded-for-what-it-carries": "fb9aa3db5e75460b3fd61175620881175235daa6266788885531639aeb4677d3"
     },
     "RK-10.5-026": {
       "injection/a-post-speaks-through-the-host-channel": "6c2b72bb4477fe436db2eefb162ec2de489083e178acc7ebaa0178741680cdd7"
@@ -2134,12 +2155,43 @@
     "RK-10.5-029": {
       "injection/a-post-speaks-through-the-host-channel": "83c65fd540f7e1d4947d8c654d25454cfed98ecddd58c78e09e7ebdf92475098"
     },
+    "RK-10.5-030": {
+      "injection/a-host-binding-made-by-the-first-post-s-section-is-kept": "5f19b6620b387d51e729524b2ff349fe2a8425750e261e2a81a78006c604ebdf"
+    },
+    "RK-10.5-031": {
+      "rooms/a-closed-room-refuses-a-post": "10ede3c504f3b0cc26605278f41a63fdb7523584b49668776c32aeb28d140f5f"
+    },
+    "RK-10.5-032": {
+      "injection/a-post-after-the-host-channel-is-detached-is-refused": "2d27b50bdd9791067240d12ba165ebf96dd12f1b68b1330f3a47811ba3b23193"
+    },
+    "RK-10.5-033": {
+      "injection/a-first-post-waits-for-the-room-lock-within-process-timeout": "caee6db92d194d359e34957b459956721c538259b8ec15e6ab243101f77d0c93"
+    },
+    "RK-10.5-034": {
+      "chain/a-first-post-past-the-reentry-budget-binds-nothing": "c20994ad4d7d7ea434dfdb5604be5a0a88ff351341c1a4a7b86f7b6921b37335"
+    },
     "RK-10.5-035": {
       "injection/a-post-speaks-through-the-host-channel": "f5bc90c8168e39fa6220b919046b618750b4442f1e3066558e5d5f829844d99f",
       "orchestration/a-host-s-words-are-a-person-s-message-to-a-pipeline-s-routing": "f5bc90c8168e39fa6220b919046b618750b4442f1e3066558e5d5f829844d99f"
     },
     "RK-10.5-036": {
       "injection/a-post-s-refusals": "826587187bdef9d8539a999edc067038ffcdbde5b15102d4063b92f63395a822"
+    },
+    "RK-10.5-037": {
+      "injection/a-post-shows-its-speaker-s-name-to-an-agent": "c562302f9c0e2645a25838c063d87143136bd62db44b6fd118c28c2d51190a74"
+    },
+    "RK-10.5-038": {
+      "injection/an-injection-takes-any-participant-id": "052a5d370930ee619ee812f247f3b2c555e101d009fb3a12bc0ebf2df0dff217"
+    },
+    "RK-10.5-039": {
+      "injection/a-post-keeps-its-metadata": "8e5a44058e7756830575185bc3be28b568b5e2d40dc57cb0b8276f4f23369a33"
+    },
+    "RK-10.5-040": {
+      "chain/a-post-continues-the-chain-it-names": "105db1eb9ec8db3bd84137af23add30caf3d019f71037bdc125a8a81c3bf51f2"
+    },
+    "RK-10.5-041": {
+      "injection/a-post-replayed-with-its-key-sends-nothing-again": "a55b325b65a4ff555db9cc18bf5aeed8c0198ef7578768438f60ae622fde6eab",
+      "reentrancy/a-post-replayed-from-the-room-s-work-draws-no-pass": "a55b325b65a4ff555db9cc18bf5aeed8c0198ef7578768438f60ae622fde6eab"
     },
     "RK-10.5-042": {
       "injection/a-record-outside-the-pipeline": "529b063d87651f20e6a65819aa9f6a676d02af20bf3381766319c5ca50d34a0b",
@@ -3198,6 +3250,7 @@
       "regenerate/a-closed-room-refuses-a-regeneration-before-the-agent-runs": "a61211edb31063f535c918492bfcb9fecfde68023b47d34372be542c2b7e1735",
       "regenerate/a-closed-room-with-nothing-to-regenerate-refuses-it-too": "a61211edb31063f535c918492bfcb9fecfde68023b47d34372be542c2b7e1735",
       "regenerate/an-archived-room-refuses-a-regeneration": "a61211edb31063f535c918492bfcb9fecfde68023b47d34372be542c2b7e1735",
+      "rooms/a-closed-room-refuses-a-post": "a61211edb31063f535c918492bfcb9fecfde68023b47d34372be542c2b7e1735",
       "rooms/a-closed-room-refuses-chain-depth-replacement-records": "a61211edb31063f535c918492bfcb9fecfde68023b47d34372be542c2b7e1735",
       "rooms/a-closed-room-refuses-response-cap-replacement-records": "a61211edb31063f535c918492bfcb9fecfde68023b47d34372be542c2b7e1735",
       "rooms/a-due-close-refuses-the-next-message": "a61211edb31063f535c918492bfcb9fecfde68023b47d34372be542c2b7e1735",
