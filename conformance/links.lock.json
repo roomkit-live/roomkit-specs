@@ -1146,6 +1146,9 @@
       "instructions/standalone-is-the-typed-field-s-word-alone": "ec3b5ec73238d8d8e4273024b0cb7d0cbcf5c818c1ce7d373dda58964da32209",
       "tasks/a-background-delegation-relays-its-result-to-the-notified-agent": "ec3b5ec73238d8d8e4273024b0cb7d0cbcf5c818c1ce7d373dda58964da32209"
     },
+    "RK-10.1.1-014": {
+      "instructions/a-blocked-instruction-is-not-stored-and-its-hook-s-effects-stand": "7a8bc0e1fdd1faa7aae839d7e4032073841cd530dd3813d516fc2b79a0e423a4"
+    },
     "RK-10.1.1-015": {
       "locks/the-side-effects-a-hook-gives-an-instruction-the-discussion-takes-are-stored-at-its-decision": "7aaf9b7579a826f392003bcf033ad32db4e8a82f4c77df43fdb15ab097593df4"
     },
@@ -1163,11 +1166,16 @@
       "locks/an-instruction-s-set-waits-for-the-index-another-process-committed-before-it": "a30fbcd2cbb7ddf3f3933e4a69cb338ae61fce71eadb0d6b86d51e3713256ee0"
     },
     "RK-10.1.1-019": {
+      "instructions/a-blocked-instruction-is-not-stored-and-its-hook-s-effects-stand": "3621ac11f5d899e961ae0a250b6e5995f660d48c9e7bb0c0d48b5907dd58d3cb",
       "instructions/an-instruction-directs-one-turn-and-is-not-stored": "3621ac11f5d899e961ae0a250b6e5995f660d48c9e7bb0c0d48b5907dd58d3cb",
       "instructions/an-unaddressed-instruction-is-refused": "3621ac11f5d899e961ae0a250b6e5995f660d48c9e7bb0c0d48b5907dd58d3cb"
     },
     "RK-10.1.1-020": {
+      "instructions/a-blocked-instruction-is-not-stored-and-its-hook-s-effects-stand": "024e338e13184cdea56366231068fcce4b5e9265782f37c712a0af5b692a0da5",
       "instructions/an-instruction-directs-one-turn-and-is-not-stored": "024e338e13184cdea56366231068fcce4b5e9265782f37c712a0af5b692a0da5"
+    },
+    "RK-10.1.1-021": {
+      "instructions/an-instruction-whose-turn-fails-stays-the-result-s-event": "7cc1d670429ffe68fa7b066c1f7eac979a4f5b67964585d14e341b5c2bbbb8b3"
     },
     "RK-10.1.1-022": {
       "acp/an-instruction-is-prompted-under-the-runtime-s-mark": "64efbf291064dd0f4ebae31e70628c509f39d7048a1f2faae4f697f45820278b",
@@ -1186,6 +1194,14 @@
     },
     "RK-10.1.1-025": {
       "instructions/an-instruction-directs-one-turn-and-is-not-stored": "5c4a8d7d0b0ddac862a3458b218e180e8e3bcdaf67c08e6d4f345874c6fc3a51"
+    },
+    "RK-10.1.1-026": {
+      "instructions/a-hook-s-modify-of-an-instruction-s-answer-keeps-its-fingerprint": "974b8a79c4de72b7d23324591204618079cbc3e4c331e49909d5e1cbe012a8a4"
+    },
+    "RK-10.1.1-027": {
+      "instructions/an-agent-an-instruction-cannot-ask-at-the-depth-limit-records-no-fingerprint": "2a4ab8089c1a242d4acbb2170f02a1dadc84a7ea2cfcf2c08199b7f3d0fe925a",
+      "instructions/an-agent-not-asked-after-an-instruction-s-answer-records-no-fingerprint": "2a4ab8089c1a242d4acbb2170f02a1dadc84a7ea2cfcf2c08199b7f3d0fe925a",
+      "instructions/an-answer-to-an-instruction-s-answer-carries-no-fingerprint": "2a4ab8089c1a242d4acbb2170f02a1dadc84a7ea2cfcf2c08199b7f3d0fe925a"
     },
     "RK-10.1.1-028": {
       "acp/standalone-instruction-mark-and-record": "5e406f47b0d51244fc70b2a0e8724d9f14a896831906070fc1ab3b416ef559ae"
@@ -1209,6 +1225,12 @@
       "skills/a-standalone-activation-in-a-room-already-read-rides-its-next": "6c3d1a46d9080a5c5aad4cd6495820c35f0d6d5241739746d41a5537169f87a5",
       "skills/a-standalone-activation-of-an-active-skill-delivers-its-body": "6c3d1a46d9080a5c5aad4cd6495820c35f0d6d5241739746d41a5537169f87a5",
       "skills/a-standalone-turn-reads-the-room-s-stored-rows-first": "6c3d1a46d9080a5c5aad4cd6495820c35f0d6d5241739746d41a5537169f87a5"
+    },
+    "RK-10.1.1-032": {
+      "instructions/a-standalone-turn-keeps-the-agent-s-prompt-tools-and-skills": "ac9b52ded8bd977aa544a1abdbb63bf88b6da557eb02b2280f4fb195d3d5b82f"
+    },
+    "RK-10.1.1-033": {
+      "instructions/a-standalone-instruction-s-target-and-hooks-are-handed-the-room-s-context": "8885f0c0c91182ed0028dde03fe19422a74eab3a6fdf26866104f4919c735db7"
     },
     "RK-10.1.1-034": {
       "acp/standalone-cancel-active": "be4747e7bda4e598c53bf5959ee3c11215b72551916cace3c7f395ad911c2ae3",
@@ -1277,6 +1299,10 @@
       "instructions/a-later-turn-replays-an-instruction-where-its-turn-read-it": "20f485e2516dee300f893ed8f5e555d99b7a3b242da4952346ac82aff35d0d9a",
       "instructions/an-instruction-that-opened-the-room-opens-its-later-history": "20f485e2516dee300f893ed8f5e555d99b7a3b242da4952346ac82aff35d0d9a",
       "instructions/another-agent-s-history-never-reads-an-instruction-kept": "20f485e2516dee300f893ed8f5e555d99b7a3b242da4952346ac82aff35d0d9a"
+    },
+    "RK-10.1.1-045": {
+      "instructions/a-memory-s-window-does-not-count-a-kept-instruction": "1ee84a4cf1bace745e26008d62e59bbd219a3c76dbfb4cd571a5bf8086d26723",
+      "instructions/a-summary-quotes-a-kept-instruction-as-the-application-s": "1ee84a4cf1bace745e26008d62e59bbd219a3c76dbfb4cd571a5bf8086d26723"
     },
     "RK-10.1.1-046": {
       "instructions/an-instruction-that-opened-the-room-opens-its-later-history": "87f65aa8d05211eaa5a98c4d649c8f1050294bc9e8e7d880283f92ed576e656d"
@@ -1364,6 +1390,10 @@
     "RK-10.2-013": {
       "streaming/a-row-s-delivery-reads-the-room-at-its-commit": "3ae2c2f2f5b0b826a2b3dd28ccd57c543876d5a45d830dd4b5044bb897381098"
     },
+    "RK-10.2-014": {
+      "broadcast/an-instruction-joins-no-delivery-set-s-context": "7164d54f7b12afe50f9dffc4ec02fc10dc8e3e4bf866074c1f9e582296951c45",
+      "instructions/a-standalone-instruction-s-target-and-hooks-are-handed-the-room-s-context": "7164d54f7b12afe50f9dffc4ec02fc10dc8e3e4bf866074c1f9e582296951c45"
+    },
     "RK-10.2-015": {
       "inbound/an-unregistered-target-is-skipped-or-reported": "cd30c6ba12c5e1b721e7bed699ad89c9cbf70259688d3efec55c5fbb887ab92d",
       "injection/an-injection-from-a-bound-unregistered-channel-raises": "cd30c6ba12c5e1b721e7bed699ad89c9cbf70259688d3efec55c5fbb887ab92d"
@@ -1371,14 +1401,22 @@
     "RK-10.2-016": {
       "inbound/an-unregistered-target-is-skipped-or-reported": "b34ff1234649b96a1a38735ede7fd418497c515f56586064729fb60fc7e60861"
     },
+    "RK-10.2-017": {
+      "broadcast/a-channel-registered-again-serves-the-bindings-it-kept": "bc087046864ea2f20ab26b3376e78ca72e097572bcb2e7a0764f37732acaf7f8"
+    },
     "RK-10.2-018": {
+      "addressing/an-address-does-not-show-an-event-its-visibility-hides": "5c4f4e59072f4cd28b3e79e92d02c725c7a16563ec19006d58aad0372b20528a",
       "addressing/an-address-names-the-agents-asked": "5c4f4e59072f4cd28b3e79e92d02c725c7a16563ec19006d58aad0372b20528a",
       "addressing/an-empty-address-asks-nobody": "5c4f4e59072f4cd28b3e79e92d02c725c7a16563ec19006d58aad0372b20528a",
       "addressing/an-unbound-name-asks-nobody": "5c4f4e59072f4cd28b3e79e92d02c725c7a16563ec19006d58aad0372b20528a",
       "broadcast/one-event-reaches-twelve-transports": "5c4f4e59072f4cd28b3e79e92d02c725c7a16563ec19006d58aad0372b20528a",
       "orchestration/a-host-s-words-are-a-person-s-message-to-a-pipeline-s-routing": "5c4f4e59072f4cd28b3e79e92d02c725c7a16563ec19006d58aad0372b20528a"
     },
+    "RK-10.2-019": {
+      "addressing/an-address-does-not-show-an-event-its-visibility-hides": "4894ba5b8b78e2e98d7e26c979b14995c4c48f922f259bfba1256bd2fa3a80b1"
+    },
     "RK-10.2-020": {
+      "addressing/an-address-does-not-show-an-event-its-visibility-hides": "a0e09ee21ee775dbbb29c5210022e39dafb4a727915f94dccede777bcf141083",
       "addressing/an-address-names-the-agents-asked": "a0e09ee21ee775dbbb29c5210022e39dafb4a727915f94dccede777bcf141083",
       "addressing/an-empty-address-asks-nobody": "a0e09ee21ee775dbbb29c5210022e39dafb4a727915f94dccede777bcf141083",
       "addressing/an-unbound-name-asks-nobody": "a0e09ee21ee775dbbb29c5210022e39dafb4a727915f94dccede777bcf141083"
