@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "d4af4ed8139b7564771e9a6aee92877c823b5b95aca9c29effd24c4de8ba1884",
-  "corpus_sha256": "0f2593efcd5b9c16d9ac322b9288bb5d7303f9b686decb2ff3ba1af5739fb625",
+  "corpus_sha256": "cc471dedb14a97528ce0eea883f9c757be40d936e7c35845ab88cddd685e6eab",
   "python_commit": "05127770f2c6ed6070c92afc825cc8ea747ff440",
-  "scenario_count": 3221,
+  "scenario_count": 3231,
   "sections": [
     {
       "section": "0",
@@ -1371,6 +1371,7 @@
         "eviction/an-evicted-answer-given-a-third-time-is-noted",
         "executors/a-plan-a-build-let-go-held-reads-empty-at-its-next-build",
         "executors/a-provider-the-factory-hands-every-build-outlives-a-build-let-go",
+        "executors/a-provider-the-factory-hands-every-build-outlives-its-executor-s-close",
         "executors/a-thought-a-build-let-go-past-the-bound-held-starts-anew",
         "executors/a-turn-apart-publishes-its-thinking-and-tool-calls-to-the-room",
         "executors/a-turn-cut-on-its-executor-names-it-in-its-record",
@@ -2978,6 +2979,7 @@
         "hooks/room-hook-registration-refusals",
         "hooks/room-hooks-join-the-kit-s-in-priority-order",
         "hooks/sync-hooks-run-in-priority-order",
+        "kit-executor/a-channel-declared-while-a-kit-turn-hook-could-fire-for-it-is-refused",
         "kit-executor/a-definition-is-replaced-per-trigger",
         "kit-executor/a-kit-turn-hook-a-declared-channel-could-fire-is-refused",
         "kit-executor/a-running-turn-keeps-its-names",
@@ -3028,6 +3030,9 @@
         "delivery/a-status-reaches-the-room-of-its-recipient",
         "delivery/observers-start-in-firing-order-while-earlier-bodies-wait",
         "edits/direct-update-and-hard-delete",
+        "executors/a-room-s-attach-and-detach-are-applied-on-the-executor-before-they-return",
+        "executors/a-turn-apart-fires-the-owner-s-triggers-on-the-room-owner",
+        "executors/a-turn-apart-s-error-message-reaches-on-error-and-never-a-model",
         "hooks/a-before-broadcast-observer-reads-its-event-as-stored",
         "hooks/a-block-stops-the-chain",
         "hooks/a-hook-s-task-is-created",
@@ -3426,6 +3431,7 @@
         "delivery/observers-start-in-firing-order-while-earlier-bodies-wait",
         "eviction/a-hook-s-refusal-and-its-override-past-the-threshold-are-stored",
         "executors/a-turn-apart-asks-a-person-through-the-room-owner",
+        "executors/a-turn-apart-s-error-message-reaches-on-error-and-never-a-model",
         "greeting/a-session-started-hook-holds-no-message",
         "greeting/a-session-started-waits-for-the-hooks-it-awaits",
         "hooks/a-block-stops-the-chain",
@@ -3849,6 +3855,7 @@
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
+        "executors/a-turn-apart-s-delegation-and-segments-fire-their-hooks-on-the-room-owner",
         "streaming/a-streaming-target-a-row-s-hook-narrows-away-reads-no-more",
         "streaming/a-streaming-target-a-row-the-store-keeps-out-narrows-away-reads-no-more",
         "streaming/a-streaming-target-a-tool-call-row-s-hook-narrows-away-reads-on",
@@ -5044,6 +5051,7 @@
         "greeting/a-declared-agent-greets-the-room-a-first-message-creates",
         "greeting/send-greeting-speaks-for-a-declared-agent",
         "host/a-turn-s-host-leaves-the-implementation-s-own-room-keys-unwritten",
+        "kit-executor/a-channel-declared-while-a-kit-turn-hook-could-fire-for-it-is-refused",
         "rooms/a-declared-agent-binds-as-an-intelligence-channel-only"
       ]
     },
@@ -5131,9 +5139,11 @@
         "executors/a-committed-event-no-executor-takes-is-dropped",
         "executors/a-committed-event-reaches-the-memory-before-its-agent-s-next-turn",
         "executors/a-provider-the-factory-hands-every-build-outlives-a-build-let-go",
+        "executors/a-provider-the-factory-hands-every-build-outlives-its-executor-s-close",
         "executors/a-publication-from-an-executor-no-longer-holding-the-room-is-dropped",
         "executors/a-release-builds-nothing-on-an-executor-holding-no-build",
         "executors/a-released-channel-is-built-anew-for-the-next-turn",
+        "executors/a-room-s-attach-and-detach-are-applied-on-the-executor-before-they-return",
         "executors/a-skill-activated-on-one-executor-rides-the-next-turn-on-another",
         "executors/a-turn-apart-calls-the-host-verbs-during-and-after-it",
         "executors/a-turn-apart-emits-its-framework-events",
@@ -5348,9 +5358,13 @@
         "executors/a-committed-event-goes-to-one-executor-that-would-take-the-room-s-turns",
         "executors/a-hook-on-an-executor-reads-the-room-when-it-fires",
         "executors/a-room-hook-no-executor-defines-takes-its-agent-offline-in-that-room",
+        "executors/a-turn-apart-fires-the-owner-s-triggers-on-the-room-owner",
+        "executors/a-turn-apart-s-delegation-and-segments-fire-their-hooks-on-the-room-owner",
+        "executors/a-turn-apart-s-error-message-reaches-on-error-and-never-a-model",
         "executors/an-executor-lacking-a-room-s-hook-does-not-cover-its-agent-there",
         "executors/an-executor-lacking-a-room-s-hook-does-not-take-its-turn",
         "hooks/a-deleted-room-s-hooks-and-enabled-names-end-with-it",
+        "kit-executor/a-channel-declared-while-a-kit-turn-hook-could-fire-for-it-is-refused",
         "kit-executor/a-definition-is-replaced-per-trigger",
         "kit-executor/a-kit-turn-hook-a-declared-channel-could-fire-is-refused",
         "kit-executor/a-running-turn-keeps-its-names",
@@ -5447,17 +5461,23 @@
         "executor-close/closing-from-a-turn-spares-it",
         "executor-close/closing-from-another-delivery-cuts-its-waiter",
         "executor-close/closing-refuses-new-turns-and-keeps-transports",
+        "executors/a-provider-the-factory-hands-every-build-outlives-its-executor-s-close",
         "executors/a-room-s-agent-presence-names-the-executors-covering-each-agent",
+        "executors/a-slow-turn-apart-that-keeps-beating-is-never-failed",
+        "executors/a-turn-apart-s-error-message-reaches-on-error-and-never-a-model",
+        "executors/a-turn-apart-silent-while-its-tool-runs-past-the-heartbeat-timeout-is-kept",
         "executors/a-turn-no-executor-declares-fails-and-the-room-goes-on",
         "executors/after-a-lost-executor-the-room-s-next-turn-runs-elsewhere",
         "executors/an-executor-closed-during-a-turn-ends-it",
         "executors/an-executor-killed-mid-answer-loses-its-turn-and-what-was-shown-stays",
+        "executors/an-executor-restarted-under-its-id-does-not-keep-the-killed-one-s-turn",
         "executors/an-executor-that-never-answers-loses-the-turn-and-no-other-gets-it",
         "executors/the-kit-lists-the-executors-served-and-what-each-declares",
         "executors/the-owner-cancels-the-calls-of-a-turn-it-loses",
         "host/a-task-cut-short-hands-its-failure-to-wait-task",
         "inbound/a-failed-turn-fires-on-error",
         "inbound/an-agent-s-provider-refusal-keeps-its-retryability",
+        "steering/a-cancel-for-a-channel-without-steering-cuts-its-turn",
         "steering/a-steer-reaches-the-room-it-names-alone",
         "tasks/a-failed-task-s-exception-keeps-its-attributes"
       ]
@@ -5471,7 +5491,9 @@
         "unmapped": 8
       },
       "unannotated_keyword_lines": [],
-      "candidate_scenarios": []
+      "candidate_scenarios": [
+        "executors/a-room-s-attach-and-detach-are-applied-on-the-executor-before-they-return"
+      ]
     },
     {
       "section": "11",
@@ -6906,6 +6928,7 @@
         "delivery/an-awaited-adopted-call-ends-with-its-hook-s-timeout",
         "delivery/the-key-of-a-call-refused-at-its-deadline-names-no-delivery",
         "discussion/discussion-regeneration-preserves-refusal-order-in-a-loaded-room",
+        "executors/a-slow-turn-apart-that-keeps-beating-is-never-failed",
         "greeting/a-greeting-read-past-process-timeout-expires-its-message",
         "greeting/a-session-hook-past-process-timeout-expires-its-message",
         "hooks/a-wait-for-an-admission-ticket-counts-against-process-timeout",
@@ -8678,6 +8701,7 @@
         "reasoning/a-steered-answer-keeps-its-reasoning",
         "reasoning/a-steered-answer-s-reasoning-reaches-no-chat-request",
         "reasoning/an-answer-of-reasoning-alone-goes-back-empty-on-chat",
+        "steering/a-cancel-for-a-channel-without-steering-cuts-its-turn",
         "steering/a-message-delivered-after-a-cut-gets-a-turn-of-its-own",
         "steering/a-message-during-a-tool-round-is-read-by-the-running-turn",
         "steering/a-message-during-the-answer-is-answered-by-the-same-turn",
@@ -8864,6 +8888,7 @@
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
+        "executors/a-turn-apart-silent-while-its-tool-runs-past-the-heartbeat-timeout-is-kept",
         "inputs/a-bound-named-for-a-person-s-tool-still-cuts-its-call",
         "orchestration/a-delegation-its-call-bound-cuts-posts-the-worker-cancelled",
         "orchestration/an-audited-call-is-recorded-by-how-it-ended",
@@ -9222,6 +9247,7 @@
       "candidate_scenarios": [
         "executors/a-declared-agent-s-delegate-task-is-kept-by-the-owner-for-each-build",
         "executors/a-turn-apart-calls-a-tool-the-room-owner-serves",
+        "executors/a-turn-apart-s-delegation-and-segments-fire-their-hooks-on-the-room-owner",
         "executors/an-executor-refuses-a-turn-whose-channel-declares-an-owner-s-tool",
         "host/a-turn-s-host-delegates-and-waits-for-its-task",
         "orchestration/a-supervisor-given-task-status-is-pointed-at-it-by-its-dispatched-team",
