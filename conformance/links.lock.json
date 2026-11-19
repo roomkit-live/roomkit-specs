@@ -2263,6 +2263,9 @@
       "executors/a-declared-agent-s-turn-runs-on-the-executor-hosting-it": "2cc3db7b619a32175e1df4d1fd3894fb831e79f3d02cfa983dbb2e39c4f23442",
       "executors/an-executor-builds-an-agent-at-its-first-turn-not-when-a-room-attaches-it": "2cc3db7b619a32175e1df4d1fd3894fb831e79f3d02cfa983dbb2e39c4f23442"
     },
+    "RK-10.6-006": {
+      "executors/a-turn-apart-s-answer-reaches-its-room-through-the-owner-alone": "c2bcd855ad1bbdb38b52ff82690c18142cc5e46e50559fe3ff5be15d6fc1b210"
+    },
     "RK-10.6-007": {
       "executor-close/closing-refuses-new-turns-and-keeps-transports": "af2ea91ee5c199b811d7c9fd32a1917ad3d4d6980dd76095835e3f33f3cc96f0"
     },
@@ -2276,12 +2279,19 @@
     "RK-10.6.1-005": {
       "executors/a-declared-agent-s-turn-runs-on-the-executor-hosting-it": "526d610e530b81a199c9cd61905b760f129169bd0de25a7302852fc513831bab"
     },
+    "RK-10.6.1-006": {
+      "executors/a-supervisor-s-passes-are-turns-of-its-agent-on-the-executor-hosting-it": "1f8581230df6898883c44d1646de8d220814b49c5958f7568e7bb5a730949e90"
+    },
     "RK-10.6.1-007": {
+      "executors/a-supervisor-s-passes-are-turns-of-its-agent-on-the-executor-hosting-it": "e91340870e1792cbe32f10baf8113b751def8bffe576a60dc9c5b5d887678f80",
       "orchestration/an-auto-delegating-supervisor-s-two-passes-carry-a-correlation-id-each": "e91340870e1792cbe32f10baf8113b751def8bffe576a60dc9c5b5d887678f80",
       "speaking/strategy-bypasses-policy-and-thinker-one-pass-non-streaming": "e91340870e1792cbe32f10baf8113b751def8bffe576a60dc9c5b5d887678f80",
       "speaking/strategy-bypasses-policy-and-thinker-one-pass-streaming": "e91340870e1792cbe32f10baf8113b751def8bffe576a60dc9c5b5d887678f80",
       "speaking/strategy-bypasses-policy-and-thinker-two-passes-non-streaming": "e91340870e1792cbe32f10baf8113b751def8bffe576a60dc9c5b5d887678f80",
       "speaking/strategy-bypasses-policy-and-thinker-two-passes-streaming": "e91340870e1792cbe32f10baf8113b751def8bffe576a60dc9c5b5d887678f80"
+    },
+    "RK-10.6.1-008": {
+      "executors/one-build-serving-two-rooms-takes-a-strategy-s-tools-in-its-room-alone": "2914444c7721e74fdca1326c7e61917cd85c1e2e4c5710459b1bbcc17b0ac2d8"
     },
     "RK-10.6.1-009": {
       "executors/a-delegation-to-a-declared-worker-runs-on-its-executor": "ab23a5702179265d904051c035b41b312c66c22e168d83f9c9719e572b3d0c07"
@@ -2297,8 +2307,21 @@
       "executors/a-declared-agent-s-turn-runs-on-the-executor-hosting-it": "d58dc801a72998975123c17eaa2d52809a1819b26bd6cc8363aec679ed0ae981",
       "executors/a-delegation-to-a-declared-worker-runs-on-its-executor": "d58dc801a72998975123c17eaa2d52809a1819b26bd6cc8363aec679ed0ae981"
     },
+    "RK-10.6.2-009": {
+      "rooms/a-declared-agent-binds-as-an-intelligence-channel-only": "4c8ad0c9c2be5d56c5e164a27955593ccd9efb7d123badb750047836df0bbd0f"
+    },
     "RK-10.6.2-010": {
       "executors/a-declared-agent-s-turn-runs-on-the-executor-hosting-it": "562293958b0726917a1557e5315aa0618737bc84e35d1596c7a7a07c27eec1f9"
+    },
+    "RK-10.6.2-011": {
+      "greeting/a-declared-agent-greets-the-room-a-first-message-creates": "3dc062021a2de9e565259c657b39cc49ec12bb212b0956a75ac24049af72bbe9",
+      "greeting/send-greeting-speaks-for-a-declared-agent": "3dc062021a2de9e565259c657b39cc49ec12bb212b0956a75ac24049af72bbe9"
+    },
+    "RK-10.6.2-012": {
+      "executors/a-declared-agent-s-delegate-task-is-kept-by-the-owner-for-each-build": "48ccd7a429ecfb54eb91e769d3c907e314ff7ef00801bba817f02a6294b09c8c",
+      "executors/a-declared-worker-s-result-tool-rides-its-child-room-s-requests-alone": "48ccd7a429ecfb54eb91e769d3c907e314ff7ef00801bba817f02a6294b09c8c",
+      "executors/a-supervisor-s-passes-are-turns-of-its-agent-on-the-executor-hosting-it": "48ccd7a429ecfb54eb91e769d3c907e314ff7ef00801bba817f02a6294b09c8c",
+      "executors/one-build-serving-two-rooms-takes-a-strategy-s-tools-in-its-room-alone": "48ccd7a429ecfb54eb91e769d3c907e314ff7ef00801bba817f02a6294b09c8c"
     },
     "RK-10.6.2-013": {
       "executors/an-agent-its-executor-builds-nothing-for-fails-no-executor": "c89f5e43a642680772568b416efeedd749a496a7bfa6b770bfe214b6c5810f35",
@@ -2314,6 +2337,9 @@
     },
     "RK-10.6.2-016": {
       "executors/an-executor-past-its-bound-closes-the-agent-it-used-least-recently": "41f37df33b5bff23396a5dc8d17667e50267601a1029706652834f7fb5bef1a8"
+    },
+    "RK-10.6.2-017": {
+      "executors/a-thought-a-build-let-go-past-the-bound-held-starts-anew": "1c57e243fb9c1285861d60b7bbb2f6d08e884d8ef9463fc372e7ee5a269e4e5f"
     },
     "RK-10.6.2-018": {
       "executors/a-live-agent-s-turn-stays-on-the-kit-s-executor": "dd80367ab4726c7817fca02ac5e90c01d653736ff77ba2d973d359c204eb872f"
@@ -2337,6 +2363,10 @@
     "RK-10.6.2-027": {
       "tool-search/a-tool-the-store-says-was-used-stays-declared": "475601329727df81b165dd7ad242eb3cd5f464fc6b90402e30c5bcfb72575614"
     },
+    "RK-10.6.2-028": {
+      "executors/a-plan-a-build-let-go-held-reads-empty-at-its-next-build": "9920e10cbf620d7e069aa0378ac8021196c966db1eacbe4defce0c310ab4d793",
+      "executors/a-thought-a-build-let-go-past-the-bound-held-starts-anew": "9920e10cbf620d7e069aa0378ac8021196c966db1eacbe4defce0c310ab4d793"
+    },
     "RK-10.6.2-029": {
       "executors/one-build-serving-two-rooms-reads-each-turn-s-room-alone": "9bf2ea4db3744f854839067cc83f16d22aa7b55bb41ed38a59ebdea6111fc7bb"
     },
@@ -2354,7 +2384,11 @@
     "RK-10.6.2-032": {
       "executors/an-executor-drops-the-state-a-turn-elsewhere-made-stale": "b1baba430f73a8a42b4df2c8c7190134b312af22752677ca66faa7fba70fbf75"
     },
+    "RK-10.6.2-035": {
+      "executors/a-channel-call-leaves-the-room-s-state-as-a-turn-does": "f48620c9f9a1d095d2c88558c805450f26913c67d45d6c2b52e3188fc0dd1dee"
+    },
     "RK-10.6.2-036": {
+      "executors/a-channel-call-leaves-the-room-s-state-as-a-turn-does": "0ec57f2c44f9145a22721ee7d619fb8a8789d394eda7d9041562b4ca33f95f05",
       "executors/an-executor-drops-the-state-a-turn-elsewhere-made-stale": "0ec57f2c44f9145a22721ee7d619fb8a8789d394eda7d9041562b4ca33f95f05",
       "tenancy/a-deleted-room-s-agent-session-does-not-go-on-in-the-room-created-again": "0ec57f2c44f9145a22721ee7d619fb8a8789d394eda7d9041562b4ca33f95f05"
     },
