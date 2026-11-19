@@ -5048,6 +5048,7 @@
         "acp_connection_closed",
         "kind_not_stored",
         "turn_link",
+        "needs_turn",
         "idempotency_key_taken"
       ]
     },

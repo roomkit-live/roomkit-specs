@@ -2668,6 +2668,9 @@
     "RK-10.6.5-008": {
       "executors/a-turn-apart-calls-a-tool-the-room-owner-serves": "3aad05b8e87f7957d0d4950765fdaf8822dc58b05842db07581188292f6a0714"
     },
+    "RK-10.6.5-009": {
+      "tasks/delegate-task-reaches-its-handler-as-its-gate-left-it-at-its-turn-s-depth": "5dadaeb41a6b9e07ce7327ad8be132dc60d1042dc9b594b99223244b70d61149"
+    },
     "RK-10.6.5-010": {
       "executors/a-turn-apart-calls-a-tool-the-room-owner-serves": "ff1ba3b553cf96586ef16bee1dd9d56452aa36d7760a3b263e87b04fecfb2b08"
     },
@@ -2675,8 +2678,21 @@
       "host-declared/cancelling-one-call-non-streaming": "802035d345adb3008339b5e57634ac49bc480f91dab75668df0b2dba24e34c77",
       "host-declared/cancelling-one-call-streaming": "802035d345adb3008339b5e57634ac49bc480f91dab75668df0b2dba24e34c77"
     },
+    "RK-10.6.5-013": {
+      "executors/the-owner-cancels-the-calls-of-a-turn-it-loses": "a7790d9f5d014264fb4c094dcef5942fbed5aae5a5a30943227adbe4efba2ca2"
+    },
     "RK-10.6.5-014": {
       "executors/a-turn-apart-calls-a-tool-the-room-owner-serves": "21a9d5bdda957829a3fd609ba04ef5a415b02b6ee5c92c459b02e28823603135"
+    },
+    "RK-10.6.5-015": {
+      "executors/an-executor-refuses-a-turn-whose-channel-declares-an-owner-s-tool": "5e1640637aae68b72567e5690088139a105e7364fc25e9bc810b013e81fbd1f9"
+    },
+    "RK-10.6.5-016": {
+      "executors/an-executor-refuses-a-turn-whose-channel-declares-an-owner-s-tool": "e7e14a7b7aaea0631be3053aa4a9457099d647b844b00d9433e1624518eabace",
+      "tasks/delegate-task-is-not-set-up-over-a-live-agent-s-own-tool": "e7e14a7b7aaea0631be3053aa4a9457099d647b844b00d9433e1624518eabace"
+    },
+    "RK-10.6.5-017": {
+      "tasks/an-agent-that-takes-no-owner-tools-gets-none-and-hands-back-its-text": "cdf7eca60326da035a59e44a23ba0f74fa97d37f9c051c612e8be59b65b6df66"
     },
     "RK-10.6.5-020": {
       "executors/a-turn-apart-calls-the-host-verbs-during-and-after-it": "b73f240f1292394b6f1526ef0058c3d676e487de292f415a9c3ff45bae944641"
@@ -2687,6 +2703,9 @@
     "RK-10.6.5-022": {
       "executors/a-turn-apart-calls-the-host-verbs-during-and-after-it": "970e2455e306ecd9cb2edb44c244af0479dd1130b29d783490cdef24ed4e5c5a",
       "host/work-a-turn-began-acts-for-its-room-and-organization-after-it": "970e2455e306ecd9cb2edb44c244af0479dd1130b29d783490cdef24ed4e5c5a"
+    },
+    "RK-10.6.5-023": {
+      "host/work-a-turn-began-is-refused-the-verbs-that-need-its-turn": "f59be233acf9b0d7a7accd62249f3a5f4d628fbf3bfd22d1817fab14b16f2146"
     },
     "RK-10.6.5-024": {
       "executors/work-a-turn-apart-began-publishes-to-its-room-after-it": "6c3042084526c8e2664ad24d2e00b46d7e3c37244241f9f47cdca0b1937272f4"
@@ -2779,10 +2798,19 @@
       "host/a-turn-s-host-acts-for-its-room-alone": "54afb84d80f4fb4f0b922783b7661c1be00c436ead0c58d9ed79276b18793d6d",
       "host/a-turn-s-host-writes-its-room-s-metadata-status-and-observations": "54afb84d80f4fb4f0b922783b7661c1be00c436ead0c58d9ed79276b18793d6d"
     },
+    "RK-10.6.5-034": {
+      "executors/a-chain-of-turns-apart-sending-through-their-host-stops-at-the-depth-limit": "2b709c9ff8e11ff85b796fc0756ddfbfcfa4806944b95a130437404829976bd7",
+      "host/a-chain-of-turns-sending-through-their-host-stops-at-the-depth-limit": "2b709c9ff8e11ff85b796fc0756ddfbfcfa4806944b95a130437404829976bd7",
+      "host/work-a-turn-began-sends-at-the-depth-of-its-own-event": "2b709c9ff8e11ff85b796fc0756ddfbfcfa4806944b95a130437404829976bd7",
+      "tasks/a-delegation-cycle-ends-at-max-chain-depth": "2b709c9ff8e11ff85b796fc0756ddfbfcfa4806944b95a130437404829976bd7"
+    },
     "RK-10.6.5-035": {
       "host/a-task-cut-short-hands-its-failure-to-wait-task": "eb0ee042b12a589b8d6568ddc5b65432cce59725a5da1b4a0df21677c468792b",
       "host/a-turn-s-host-delegates-and-waits-for-its-task": "eb0ee042b12a589b8d6568ddc5b65432cce59725a5da1b4a0df21677c468792b",
       "host/a-turn-s-host-waits-for-its-task-at-most-its-timeout": "eb0ee042b12a589b8d6568ddc5b65432cce59725a5da1b4a0df21677c468792b"
+    },
+    "RK-10.6.5-036": {
+      "host/a-turn-s-host-leaves-the-implementation-s-own-room-keys-unwritten": "69b36cd2e1df799f8a0c92ae6c3cd2b76e5372bd482759cb46c7fad5722817d7"
     },
     "RK-10.6.5-037": {
       "executors/a-hook-on-an-executor-reads-the-room-when-it-fires": "eb89ab87d05a7e9246a27909a4d91a124f6fd74cd254f32ebf955206df52be07",
@@ -2859,6 +2887,13 @@
     },
     "RK-10.6.5-054": {
       "reentrancy/a-turn-s-injection-is-a-new-arrival": "769796ba52a141e6b429adcd5408c96fa7b6cb2e37827518360553423a369661"
+    },
+    "RK-10.6.5-056": {
+      "executor-close/a-turn-closing-the-kit-sees-its-close-return": "0c80991ed2bc6b44c3e5cf294b72e8ee5b164f9e36a9367abd01457563623ba2",
+      "reentrancy/a-turn-s-injection-is-a-new-arrival": "0c80991ed2bc6b44c3e5cf294b72e8ee5b164f9e36a9367abd01457563623ba2"
+    },
+    "RK-10.6.5-057": {
+      "executors/a-chain-of-turns-apart-sending-through-their-host-stops-at-the-depth-limit": "70851bad05ffb8d29f130e823178f92c2bf6fbe1e7fd5a761fdd35654b9c79d6"
     },
     "RK-10.6.5-058": {
       "executors/a-turn-apart-asks-a-person-through-the-room-owner": "7ac4f0ef7b11b56eafdfccae5a2959ddb6de4ae5fdfa0bdcc61d5524f644194a",
@@ -3458,6 +3493,7 @@
       "rooms/closed-room-refuses-a-message": "204d81c101ce47aaeb3d6e829622528bfc0664ef1205e7e0fe762ea4b271c5ae"
     },
     "RK-5.1-025": {
+      "host/a-turn-s-host-leaves-the-implementation-s-own-room-keys-unwritten": "6d9a99ad00e597255c274138b4749b403d9b0ce9582a6724dc2583862cc60239",
       "inbound/an-agent-s-output-updates-the-room": "6d9a99ad00e597255c274138b4749b403d9b0ce9582a6724dc2583862cc60239",
       "rooms/a-metadata-update-merges-the-caller-s-keys": "6d9a99ad00e597255c274138b4749b403d9b0ce9582a6724dc2583862cc60239",
       "tasks/a-delegated-turn-writes-no-framework-key-of-its-room": "6d9a99ad00e597255c274138b4749b403d9b0ce9582a6724dc2583862cc60239"
