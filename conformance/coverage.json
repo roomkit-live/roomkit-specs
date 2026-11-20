@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "d4af4ed8139b7564771e9a6aee92877c823b5b95aca9c29effd24c4de8ba1884",
-  "corpus_sha256": "cc471dedb14a97528ce0eea883f9c757be40d936e7c35845ab88cddd685e6eab",
+  "corpus_sha256": "3efad0c66f32d3753aeb44ab92c04c01dd43c999141e5e2bbeb2db1a3c6049fe",
   "python_commit": "929f9dc7fa1cd70907b6ece5fea89f8ff7979f52",
-  "scenario_count": 3231,
+  "scenario_count": 3238,
   "sections": [
     {
       "section": "0",
@@ -556,7 +556,8 @@
         "routing/an-advisor-s-resolution-does-not-open-the-room-of-another-correspondent",
         "routing/an-advisor-s-resolution-does-not-open-the-room-of-the-key-s-recipient",
         "routing/an-advisor-s-resolution-names-the-identity-on-the-binding-delivering-to-the-participant",
-        "routing/an-advisor-s-resolution-on-an-unregistered-channel-does-not-open-the-room-of-the-key-s-recipient"
+        "routing/an-advisor-s-resolution-on-an-unregistered-channel-does-not-open-the-room-of-the-key-s-recipient",
+        "store/a-participant-id-the-room-has-is-refused-and-an-update-rewrites-a-record"
       ]
     },
     {
@@ -568,7 +569,14 @@
         "unmapped": 7
       },
       "unannotated_keyword_lines": [],
-      "candidate_scenarios": []
+      "candidate_scenarios": [
+        "store/an-address-belongs-to-one-identity-of-an-organization-per-channel-type",
+        "store/an-identity-is-read-back-with-each-of-its-fields",
+        "store/an-unlink-changes-whom-a-later-message-resolves-to-not-the-conversation",
+        "store/identity-resolution-reads-the-organization-it-names-and-none-reads-none",
+        "store/link-address-links-to-an-identity-of-the-organization-it-names",
+        "store/unlink-address-removes-an-address-the-identity-holds-in-its-organization"
+      ]
     },
     {
       "section": "5.7",
@@ -4899,6 +4907,7 @@
         "routing/two-rooms-the-host-opened-each-take-their-own-correspondent",
         "routing/what-names-the-sender-s-identity-is-their-own",
         "store/a-read-leaves-the-message-delivered",
+        "store/an-unlink-changes-whom-a-later-message-resolves-to-not-the-conversation",
         "tenancy/routing-stays-within-the-organization"
       ]
     },
@@ -7014,6 +7023,7 @@
         "store/a-binding-exists-as-get-binding-finds-it",
         "store/a-change-s-target-written-alone-marks-its-edits-once-deleted",
         "store/a-delivery-record-alone-writes-an-event-s-results",
+        "store/a-participant-id-the-room-has-is-refused-and-an-update-rewrites-a-record",
         "store/a-read-leaves-the-message-delivered",
         "store/a-read-marker-is-the-highest-index-read-and-never-moves-back",
         "store/a-room-by-channel-is-the-oldest-bound-of-the-status-asked",
@@ -7024,10 +7034,15 @@
         "store/a-verification-is-read-by-its-identity-within-its-organization",
         "store/a-verification-request-is-read-by-its-id-and-rewritten-whole",
         "store/an-added-event-keeps-its-index-and-the-room-s-next-is-past-it",
+        "store/an-address-belongs-to-one-identity-of-an-organization-per-channel-type",
         "store/an-empty-room-read-gets-no-marker-and-its-markers-go-with-it",
+        "store/an-identity-is-read-back-with-each-of-its-fields",
+        "store/an-unlink-changes-whom-a-later-message-resolves-to-not-the-conversation",
         "store/an-update-of-a-task-the-store-lacks-is-refused",
         "store/every-content-type-is-read-back-as-it-was-stored",
         "store/every-stored-event-type-is-read-back-by-its-value",
+        "store/identity-resolution-reads-the-organization-it-names-and-none-reads-none",
+        "store/link-address-links-to-an-identity-of-the-organization-it-names",
         "store/reattached-binding-moves-behind-existing-streaming-targets",
         "store/the-kit-marks-and-reads-a-room-s-markers-for-its-organization",
         "store/the-latest-room-follows-the-bindings-and-rooms-the-store-holds",
@@ -7036,6 +7051,7 @@
         "store/the-timeline-is-what-the-room-received-every-type-in-index-order",
         "store/the-verifications-in-force-are-the-verified-with-an-expiry",
         "store/timeline-predicates-precede-the-page-cut",
+        "store/unlink-address-removes-an-address-the-identity-holds-in-its-organization",
         "store/updated-bindings-keep-the-first-streaming-target",
         "tasks/the-kit-lists-a-room-s-tasks-by-status",
         "verification/the-store-lists-the-verifications-in-force"
@@ -7096,6 +7112,7 @@
         "store/a-delivery-record-alone-writes-an-event-s-results",
         "store/a-held-key-refuses-every-write-without-changing-the-target-or-sequence",
         "store/a-key-is-looked-up-in-its-scope-by-lowest-index",
+        "store/a-participant-id-the-room-has-is-refused-and-an-update-rewrites-a-record",
         "store/an-added-event-keeps-its-index-and-the-room-s-next-is-past-it",
         "store/an-update-of-a-task-the-store-lacks-is-refused",
         "store/concurrent-commits-take-each-rooms-own-sequence",
@@ -7418,7 +7435,10 @@
         "routing/the-newest-binding-room-is-selected-deterministically",
         "routing/the-newest-participant-room-is-selected-deterministically",
         "steering/a-steer-reaches-the-room-it-names-alone",
+        "store/identity-resolution-reads-the-organization-it-names-and-none-reads-none",
+        "store/link-address-links-to-an-identity-of-the-organization-it-names",
         "store/the-kit-marks-and-reads-a-room-s-markers-for-its-organization",
+        "store/unlink-address-removes-an-address-the-identity-holds-in-its-organization",
         "tasks/a-child-room-belongs-to-its-parent-room-s-organization",
         "tasks/a-delegation-is-refused-before-anything-is-made",
         "tasks/an-inline-delegation-runs-its-agent-in-a-child-room",
