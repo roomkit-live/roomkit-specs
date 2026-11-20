@@ -4339,6 +4339,14 @@
     "RK-5.8-008": {
       "transcoding/a-media-channel-with-no-limit-takes-every-file-as-it-is": "a20617c49a3fb67861c6166e5cfbed214ce47935438b4b311e656fda5eba1435"
     },
+    "RK-6.4-025": {
+      "memory/a-name-that-reads-like-an-earlier-sender-s-is-labelled-with-the-name-it-is-not": "722c34cd01562ffee5fc407c819e97868c65e097311443ca1a6c2c2216ff9182",
+      "memory/a-ranked-label-cuts-the-name-it-disclaims-to-24-characters": "722c34cd01562ffee5fc407c819e97868c65e097311443ca1a6c2c2216ff9182"
+    },
+    "RK-6.4-036": {
+      "steering/another-person-s-message-is-served-under-its-own-role-s-tools": "204a938780af24ece53eb912dcda133b935268516c738406013b2f224c6bcff8",
+      "steering/another-person-s-message-waits-a-turn-of-its-own": "204a938780af24ece53eb912dcda133b935268516c738406013b2f224c6bcff8"
+    },
     "RK-7.1-002": {
       "permissions/all-source-access-and-mute-combinations": "09e15544fea0657bef56fbca15075385d6cd074a82f5f472f02ac5c31fb5fe92",
       "permissions/all-target-access-and-mute-combinations": "09e15544fea0657bef56fbca15075385d6cd074a82f5f472f02ac5c31fb5fe92",
