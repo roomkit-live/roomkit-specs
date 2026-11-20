@@ -135,3 +135,37 @@ class SchemaTests(unittest.TestCase):
                 scenario = json.loads(fixture.read_text())
                 scenario["requirements"] = requirements
                 self.assertEqual(validator.is_valid(scenario), valid)
+
+    def test_a_channel_on_its_type_s_addressing_takes_no_scripted_addresses(self) -> None:
+        schema = json.loads((ROOT / "scenario.schema.json").read_text())
+        validator = Draft202012Validator(schema)
+        fixture = ROOT / "scenarios/routing/a-number-written-with-plus-or-00-is-international.json"
+        for extra, valid in (
+            ({}, True),
+            ({"addressing": {"country_code": "+33"}}, True),
+            ({"recipient_key": "phone_number"}, False),
+            ({"addresses": {}}, False),
+            ({"model": {"rounds": []}}, False),
+            ({"addressing": {"country_code": 33}}, False),
+            ({"addressing": {"recipient_key": "phone_number"}}, False),
+        ):
+            with self.subTest(extra=extra):
+                scenario = json.loads(fixture.read_text())
+                scenario["setup"]["channels"][0].update(extra)
+                self.assertEqual(validator.is_valid(scenario), valid)
+
+    def test_addressing_of_normalize_names_a_type_and_an_address(self) -> None:
+        schema = json.loads((ROOT / "scenario.schema.json").read_text())
+        validator = Draft202012Validator(schema)
+        fixture = ROOT / "scenarios/rooms/a-country-code-that-is-none-is-refused.json"
+        for drop, valid in ((None, True), ("channel_type", False), ("address", False)):
+            with self.subTest(drop=drop):
+                scenario = json.loads(fixture.read_text())
+                step = next(
+                    step
+                    for step in scenario["steps"]
+                    if step.get("call") == "addressing_of.normalize"
+                )
+                if drop is not None:
+                    del step[drop]
+                self.assertEqual(validator.is_valid(scenario), valid)

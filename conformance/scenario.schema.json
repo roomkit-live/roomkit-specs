@@ -429,6 +429,34 @@
         "type"
       ],
       "additionalProperties": false,
+      "dependentSchemas": {
+        "addressing": {
+          "not": {
+            "anyOf": [
+              {
+                "required": [
+                  "recipient_key"
+                ]
+              },
+              {
+                "required": [
+                  "addresses"
+                ]
+              },
+              {
+                "required": [
+                  "model"
+                ]
+              },
+              {
+                "required": [
+                  "acp"
+                ]
+              }
+            ]
+          }
+        }
+      },
       "properties": {
         "id": {
           "type": "string"
@@ -600,6 +628,16 @@
             },
             "recipient_at": {
               "description": "The binding metadata key `recipient_address` reads in place of `recipient_key`: a channel whose own method differs from what it declares. `recipient_metadata` and `reply_metadata` still write under `recipient_key`.",
+              "type": "string"
+            }
+          }
+        },
+        "addressing": {
+          "description": "The channel's address methods are the implementation's own for a transport channel of its type (\u00a75.7, \u00a710.4), in place of the defaults: they write an address in the type's form, read a message's chat under the type's chat key, and name and read the recipient under the type's recipient key, the defaults of \u00a75.7's table. `country_code` is the country code the channel declares, written with or without its `+`; a code the implementation refuses refuses the channel's registration (`invalid_argument`).",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "country_code": {
               "type": "string"
             }
           }
@@ -1897,6 +1935,7 @@
             "handoff.set_language",
             "handoff.send_greeting",
             "default_router.route",
+            "addressing_of.normalize",
             "conversation_pipeline",
             "install_pipeline",
             "discussion",
@@ -4096,6 +4135,34 @@
                   "string",
                   "null"
                 ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "addressing_of.normalize"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "channel_type",
+              "address"
+            ],
+            "properties": {
+              "channel_type": {
+                "description": "A ChannelType, serialized (\u00a76.2): the type whose default addressing writes the address.",
+                "type": "string"
+              },
+              "address": {
+                "type": "string"
+              },
+              "country_code": {
+                "description": "The country code the address is written with, with or without its `+`; none when absent.",
+                "type": "string"
               }
             }
           }
