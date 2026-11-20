@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "d4af4ed8139b7564771e9a6aee92877c823b5b95aca9c29effd24c4de8ba1884",
-  "corpus_sha256": "78246e0464666d1db03d8b72905fc220da47c808aaff935c0b4a410eae968dd2",
+  "corpus_sha256": "440f5f24020b46d1b4b2dacf69cbd9463f56ac9d4e727982076d980253912c96",
   "python_commit": "929f9dc7fa1cd70907b6ece5fea89f8ff7979f52",
-  "scenario_count": 3321,
+  "scenario_count": 3327,
   "sections": [
     {
       "section": "0",
@@ -492,6 +492,7 @@
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
+        "conference/a-call-reports-presence-without-changing-room-membership",
         "edits/a-sender-who-left-or-was-banned-still-changes-their-messages",
         "edits/an-admin-delete-is-an-active-owner-s-or-agent-s",
         "identity/a-member-the-host-left-pending-keeps-their-record",
@@ -3058,6 +3059,11 @@
         "appendix-b/b6-edit-with-fallback",
         "appendix-b/b7-delete-with-fallback",
         "chain/the-hook-calls-stop-a-before-broadcast-observer-loop",
+        "conference/a-call-reports-presence-without-changing-room-membership",
+        "conference/a-camera-toggle-reaches-the-mute-and-unmute-observers",
+        "conference/a-quality-report-identifies-the-affected-participant",
+        "conference/a-screen-track-announces-the-start-and-end-of-sharing",
+        "conference/a-speaker-change-identifies-the-dominant-participant",
         "delivery/a-before-deliver-refusal-is-reported-to-the-caller-and-after-deliver",
         "delivery/a-status-is-handled-while-its-hooks-run",
         "delivery/a-status-reaches-the-room-of-its-recipient",
@@ -3480,6 +3486,7 @@
         "ai-external-handler/withdrawn-local-tool-never-reaches-the-handler-non-streaming",
         "ai-external-handler/withdrawn-local-tool-never-reaches-the-handler-streaming",
         "appendix-b/b1-customer-and-ai",
+        "conference/a-conference-model-receives-the-gated-tool-result",
         "delivery/a-status-is-handled-while-its-hooks-run",
         "delivery/an-awaited-adopted-call-ends-with-its-hook-s-timeout",
         "delivery/before-deliver-blocks-rewrites-and-fails-open",
@@ -6707,6 +6714,11 @@
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
+        "conference/a-call-reports-presence-without-changing-room-membership",
+        "conference/a-camera-toggle-reaches-the-mute-and-unmute-observers",
+        "conference/a-quality-report-identifies-the-affected-participant",
+        "conference/a-screen-track-announces-the-start-and-end-of-sharing",
+        "conference/a-speaker-change-identifies-the-dominant-participant",
         "delivery/a-call-the-close-finds-under-way-returns-kit-closed-while-its-adopted-call-s-stream-is-read",
         "delivery/a-closing-kit-refuses-new-operations-and-ignores-cancellation",
         "delivery/a-deferred-event-s-wait-after-the-close-reads-its-own-end",
@@ -6811,7 +6823,9 @@
         "unmapped": 11
       },
       "unannotated_keyword_lines": [],
-      "candidate_scenarios": []
+      "candidate_scenarios": [
+        "conference/a-conference-model-receives-the-gated-tool-result"
+      ]
     },
     {
       "section": "12.11",
