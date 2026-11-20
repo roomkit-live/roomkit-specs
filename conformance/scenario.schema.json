@@ -107,6 +107,39 @@
         "change@outside"
       ]
     },
+    "realtime_session": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "reasoning_error": {
+          "type": "string"
+        },
+        "tools": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "result"
+            ],
+            "properties": {
+              "gate": {
+                "type": "string"
+              },
+              "result": {
+                "type": "string"
+              },
+              "reconnect": {
+                "enum": [
+                  "handler",
+                  "child"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
     "voice_session": {
       "type": "object",
       "additionalProperties": false,
@@ -579,7 +612,16 @@
           }
         }
       },
+      "allOf": [
+        {
+          "if": {"required": ["realtime"]},
+          "then": {"properties": {"type": {"const": "realtime_voice"}}}
+        }
+      ],
       "properties": {
+        "realtime": {
+          "$ref": "#/$defs/realtime_session"
+        },
         "id": {
           "type": "string"
         },
@@ -2071,6 +2113,14 @@
             "voice.barge_in",
             "voice.settle",
             "voice.read",
+            "realtime.start",
+            "realtime.end",
+            "realtime.read",
+            "realtime.inject",
+            "realtime.tool_call",
+            "realtime.cancel",
+            "realtime.delegate",
+            "realtime.error",
             "parse_voice_session",
             "emit_protocol_trace",
             "process_inbound",
@@ -2570,6 +2620,215 @@
             ],
             "properties": {
               "channel_id": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "realtime.start"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "channel_id",
+              "room_id",
+              "participant_id"
+            ],
+            "properties": {
+              "channel_id": {
+                "type": "string"
+              },
+              "room_id": {
+                "type": "string"
+              },
+              "participant_id": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "realtime.end"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "channel_id"
+            ],
+            "properties": {
+              "channel_id": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "realtime.read"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "channel_id"
+            ],
+            "properties": {
+              "channel_id": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "realtime.inject"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "channel_id",
+              "text",
+              "role"
+            ],
+            "properties": {
+              "channel_id": {
+                "type": "string"
+              },
+              "text": {
+                "type": "string"
+              },
+              "role": {
+                "enum": [
+                  "system",
+                  "user",
+                  "assistant"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "realtime.tool_call"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "channel_id",
+              "call_id",
+              "name"
+            ],
+            "properties": {
+              "channel_id": {
+                "type": "string"
+              },
+              "call_id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "arguments": {
+                "$ref": "#/$defs/record"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "realtime.cancel"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "channel_id",
+              "call_ids"
+            ],
+            "properties": {
+              "channel_id": {
+                "type": "string"
+              },
+              "call_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "realtime.delegate"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "channel_id",
+              "delegation_id",
+              "target"
+            ],
+            "properties": {
+              "channel_id": {
+                "type": "string"
+              },
+              "delegation_id": {
+                "type": "string"
+              },
+              "target": {
+                "enum": [
+                  "hosted",
+                  "integrator"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "realtime.error"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "channel_id",
+              "code",
+              "message"
+            ],
+            "properties": {
+              "channel_id": {
+                "type": "string"
+              },
+              "code": {
+                "type": "string"
+              },
+              "message": {
                 "type": "string"
               }
             }
@@ -4727,6 +4986,7 @@
                   "type": "string"
                 }
               },
+              "voice_channel_id": {"type": "string"},
               "hook_priority": {
                 "type": "integer"
               }

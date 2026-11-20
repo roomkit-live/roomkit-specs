@@ -1290,6 +1290,9 @@
     "RK-10.1.1-040": {
       "instructions/an-injected-instruction-s-refusals-raise": "dd2f15a4a7c0a1715d9a8996585d005321d7364dbf8f6f764fe0f5cec12b4fb7"
     },
+    "RK-10.1.1-041": {
+      "realtime/a-session-takes-its-instruction-directly": "ec1c26104bb1616ad0c771952c4c735d285dda11b5a39b6e52cf09e8d8cf522a"
+    },
     "RK-10.1.1-042": {
       "discussion/an-instruction-to-several-agents-gives-each-its-turn": "1b381aabd29b86078580144e795836c28a6d226783994f9ed127cf44285819a0"
     },
@@ -1689,6 +1692,9 @@
     "RK-10.3-070": {
       "inbound/a-deletion-opens-no-agent-turn": "f7c26186e1b92625c0ae4a4e4565378add2d32bc6a3b941f491a12ecd292009f",
       "inbound/an-edit-opens-no-agent-turn": "f7c26186e1b92625c0ae4a4e4565378add2d32bc6a3b941f491a12ecd292009f"
+    },
+    "RK-10.3-071": {
+      "realtime/a-correction-enters-the-session-silently": "7b42b00f0d5c8feccf0c96bb12fd222de9ad871f074607e9c23c950eef6cd808"
     },
     "RK-10.4-008": {
       "routing/a-routed-sender-is-recorded": "e467c87d8712a8a0ce0e882d7962c967b58a9d2f8d3da56b8300696ad1c99b1c",
@@ -3003,6 +3009,9 @@
     },
     "RK-10.6.6-010": {
       "kit-executor/a-kit-turn-hook-a-declared-channel-could-fire-is-refused": "e5e602511d3f889371cd2faaad3d385b761580d22799c018416dcd8d1413a163"
+    },
+    "RK-10.6.6-013": {
+      "realtime/a-late-cancellation-leaves-the-served-call-alone": "8be1110bb89cca05e453cccd140ab62cee5a8381f74fca6369f994ec482ddb98"
     },
     "RK-10.6.6-014": {
       "tools/a-room-s-tool-hook-gates-that-room-s-calls": "76c1aaf5430ab74a46b9e0aca22351987caf8aa0369e9eec46a4c65f747c5358"
@@ -5134,6 +5143,12 @@
     "RK-9.2-052": {
       "greeting/a-session-started-hook-holds-no-message": "4673cd7f5ff88746f707bbd3a9f509bbe9dd8810968fab50933924172084c32f"
     },
+    "RK-9.2-056": {
+      "realtime/a-session-takes-its-instruction-directly": "b02bbf898117f3cbae985d5c7ab2dc0e1f551a102c48dbb70894ac106849bc30"
+    },
+    "RK-9.2-057": {
+      "realtime/a-hosted-delegation-reaches-its-room": "deaea9603e31416f70dd03e8e38b4d9970a000c304dceece85e1f824319fa22a"
+    },
     "RK-9.2-058": {
       "media/an-emitted-protocol-trace-reaches-its-room-observer": "e0f22d898e0d0b52fe3e7acb6ec0ef4d63567fbb9e341c2b047004baf5188a77"
     },
@@ -5351,6 +5366,12 @@
       "streaming/stream-fails-mid-answer": "d5e5152184f3c1ef1f3352d4b241d55aa54f7f8f9d9971d52e20a48d380045cc",
       "tasks/a-delegated-turn-s-failure-is-reported-in-its-child-room": "d5e5152184f3c1ef1f3352d4b241d55aa54f7f8f9d9971d52e20a48d380045cc",
       "tasks/a-shared-room-s-failed-streams-are-each-their-agent-s": "d5e5152184f3c1ef1f3352d4b241d55aa54f7f8f9d9971d52e20a48d380045cc"
+    },
+    "RK-9.2-104": {
+      "realtime/a-provider-error-reaches-the-room": "62bff3444c37d22cdedb25db3d8d7d5fdcc671ec7bafe3ccfc1fef337de09a65"
+    },
+    "RK-9.2-105": {
+      "realtime/a-reasoning-error-reaches-the-room": "145a27b5dac816cc32b829b0b29dabb189f6491a7e7946167cf49b1deab106fb"
     },
     "RK-9.2-106": {
       "inbound/a-failed-turn-fires-on-error": "16c84519858f39c3c5acc51bbaa0c2c07ad077ab13b5df346df7d641e8790002",
@@ -5753,6 +5774,9 @@
       "provider-served/stop-at-end-failure-whole": "5a3ca6a8c8a12d8b199d1cc2995dcb3fb3ecaa5d5875c9655e7c3442316a48a4",
       "provider-served/stop-at-end-success-stream": "5a3ca6a8c8a12d8b199d1cc2995dcb3fb3ecaa5d5875c9655e7c3442316a48a4",
       "provider-served/stop-at-end-success-whole": "5a3ca6a8c8a12d8b199d1cc2995dcb3fb3ecaa5d5875c9655e7c3442316a48a4"
+    },
+    "RK-9.3-053": {
+      "realtime/an-ended-session-reports-a-late-call-once": "b096aee192ab96e13d3287010f9d68992e8fa58814305e59330bb007d6bba3e9"
     },
     "RK-9.3-054": {
       "tools/a-call-cut-after-its-report-keeps-its-end-row-cancelled-non-streaming": "8761e62950c2a83d78fecf19a3d79bf14e29705e673438290eff3b9695fb02a4",
@@ -6174,6 +6198,30 @@
       "tools/a-failed-call-whose-observers-context-fails-is-reported-once": "14d2cf8ba92c92822c29dcf3234b1582ec5bc96e348a07bbfc01b70525506c7d",
       "tools/a-refused-call-whose-observers-context-fails-is-reported-once": "14d2cf8ba92c92822c29dcf3234b1582ec5bc96e348a07bbfc01b70525506c7d"
     },
+    "RK-9.3-096": {
+      "realtime/an-abandoned-call-interrupts-its-handler": "699b809cd09a6071cc03f0f83526f16474b437a00536f48faf200d20c159e4e3"
+    },
+    "RK-9.3-097": {
+      "realtime/an-abandoned-call-interrupts-its-handler": "bdfd95933796acf87101a3adfb2283827e2ddc8c1c81ae8bf965002d3d8e3dc4"
+    },
+    "RK-9.3-098": {
+      "realtime/an-abandoned-call-interrupts-its-handler": "e387edeae9cc4b091f9964c651c3b524c4e875482997d4df235cfe59d8435a24"
+    },
+    "RK-9.3-099": {
+      "realtime/a-late-cancellation-leaves-the-served-call-alone": "6eff7c3b264302e87b4a30c2f49057f0fb62198deb0949c206de3098e8ce7dab"
+    },
+    "RK-9.3-100": {
+      "realtime/a-handler-reconnects-through-its-child": "891e73d56d9f0b0b5e358bdae705b76d3294a9f4bbb2eb4d82011766cf0d0261"
+    },
+    "RK-9.3-101": {
+      "realtime/a-handler-reconnects-through-its-child": "94376e368f23b7b4d7fa8156d7c0b2a46dad4b115755eb451d6c852adfc86daf"
+    },
+    "RK-9.3-102": {
+      "realtime/a-handler-reconnects-through-its-child": "acd4d98ed1eb4b69241b371066fba077f2d4cb1165cdc5ac6b938e12daaa2727"
+    },
+    "RK-9.3-103": {
+      "realtime/a-handler-reconnects-through-its-child": "3ceecc96b5944c918bd53f8eb1a5ee2f9aa18854bc5ea878be18fcd232049ae0"
+    },
     "RK-9.3-104": {
       "inputs/a-hook-that-raises-leaves-the-request-answerable": "d80add29fb29b364077e6e9af2cc1952839693687f50a493b918037e7d4c959b",
       "inputs/a-request-is-answerable-while-its-notification-runs": "d80add29fb29b364077e6e9af2cc1952839693687f50a493b918037e7d4c959b"
@@ -6219,6 +6267,9 @@
     "RK-9.3-115": {
       "tool-search/a-person-s-tool-does-not-count-toward-the-catalogue": "9feb1fe62d88f12237fcd170b79beea715171f8f86ccfa7af8d639c31fa042e2",
       "tool-search/a-person-s-tool-stays-declared-while-the-catalogue-is-hidden": "9feb1fe62d88f12237fcd170b79beea715171f8f86ccfa7af8d639c31fa042e2"
+    },
+    "RK-9.3-117": {
+      "realtime/a-realtime-pipeline-refuses-the-agents-human-input": "13d4a32af5978dbf9d4c579011247fd9104ee7914d909259a3ece3eb73ba92ba"
     },
     "RK-9.4-003": {
       "hooks/an-injected-event-stored-only-reads-none": "49807d7953f071be215dbef2793922c5aa57f20c4103b69273a7d6e3f5ca2822"
@@ -6352,6 +6403,9 @@
     "RK-9.4-034": {
       "hooks/an-injected-event-asks-no-agent": "6e841228b771852e31e0a9711d79bf3508327491992a6a756cf4749647511b76",
       "hooks/an-injection-is-in-its-agent-target-s-next-context": "6e841228b771852e31e0a9711d79bf3508327491992a6a756cf4749647511b76"
+    },
+    "RK-9.4-035": {
+      "realtime/a-hook-injection-enters-the-session-silently": "28be0cc3ea17ae8ac0a9a51e346d80417c6a8e23232cc086861e49c121c71ef4"
     },
     "RK-9.4-036": {
       "discussion/a-hook-s-injected-instruction-gives-no-turn": "c01272fc121d7e3da653bce743bcaeb4bcd88f7134a69f77e8455378944e9bf8",

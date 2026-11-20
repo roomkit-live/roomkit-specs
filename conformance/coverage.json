@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "d4af4ed8139b7564771e9a6aee92877c823b5b95aca9c29effd24c4de8ba1884",
-  "corpus_sha256": "ff7c7ad78e4f9a5d7b6c47a74120bab5d121ecad40606351a0a25205dcdfdb51",
+  "corpus_sha256": "78246e0464666d1db03d8b72905fc220da47c808aaff935c0b4a410eae968dd2",
   "python_commit": "929f9dc7fa1cd70907b6ece5fea89f8ff7979f52",
-  "scenario_count": 3310,
+  "scenario_count": 3321,
   "sections": [
     {
       "section": "0",
@@ -3121,6 +3121,10 @@
         "planning/unknown-top-level-argument-is-refused-before-the-planner-streaming",
         "planning/with-planning-disabled-the-host-keeps-its-name-non-streaming",
         "planning/with-planning-disabled-the-host-keeps-its-name-streaming",
+        "realtime/a-hosted-delegation-reaches-its-room",
+        "realtime/a-provider-error-reaches-the-room",
+        "realtime/a-reasoning-error-reaches-the-room",
+        "realtime/a-session-takes-its-instruction-directly",
         "reasoning/a-generation-hook-reads-a-message-s-parts",
         "reentrancy/an-ai-response-handler-posting-after-a-slower-on-ai-response-hook-stops-at-the-depth-limit",
         "reentrancy/an-on-ai-response-hook-posting-after-each-answer-stops-at-the-depth-limit",
@@ -3618,6 +3622,11 @@
         "provider-served/success-whole",
         "provider-served/without-handler-stream",
         "provider-served/without-handler-whole",
+        "realtime/a-handler-reconnects-through-its-child",
+        "realtime/a-late-cancellation-leaves-the-served-call-alone",
+        "realtime/a-realtime-pipeline-refuses-the-agents-human-input",
+        "realtime/an-abandoned-call-interrupts-its-handler",
+        "realtime/an-ended-session-reports-a-late-call-once",
         "reentrancy/a-locked-hook-s-section-waits-past-the-hook-s-timeout-for-its-task-s-call",
         "response-schema/a-generation-hook-s-schema-constrains-the-turn",
         "response-schema/a-generation-hook-that-clears-the-schema-frees-the-turn",
@@ -3891,6 +3900,7 @@
         "permissions/an-allowed-hook-injection-keeps-its-target-scope",
         "permissions/an-empty-answer-scope-a-hook-writes-sends-the-answers-nowhere",
         "permissions/refused-messages-never-return-in-model-history",
+        "realtime/a-hook-injection-enters-the-session-silently",
         "reentrancy/a-call-under-a-lock-the-host-holds-commits-what-its-hooks-inject-once-the-host-released-it",
         "reentrancy/each-call-under-a-lock-the-host-holds-draws-on-a-budget-of-its-own",
         "rooms/a-hook-that-closes-the-room-refuses-its-event",
@@ -4645,6 +4655,7 @@
         "locks/a-set-waiting-on-another-process-s-index-takes-its-turn-once-its-room-is-deleted",
         "locks/an-instruction-s-set-waits-for-the-index-another-process-committed-before-it",
         "locks/the-side-effects-a-hook-gives-an-instruction-the-discussion-takes-are-stored-at-its-decision",
+        "realtime/a-session-takes-its-instruction-directly",
         "skill-gating/room-activation-persists-but-a-standalone-turn-starts-closed-non-streaming",
         "skill-gating/room-activation-persists-but-a-standalone-turn-starts-closed-streaming",
         "skill-prerequisites/a-standalone-prerequisite-check-uses-only-its-own-activations-non-streaming",
@@ -4790,6 +4801,7 @@
         "memory/a-summary-ends-once-a-turn-it-covers-is-edited",
         "memory/a-summary-ends-once-its-sender-deletes-a-turn-it-covers",
         "permissions/model-history-withholds-deleted-text-and-keeps-live-edits",
+        "realtime/a-correction-enters-the-session-silently",
         "reentrancy/a-direct-delete-past-the-hook-budget-writes-nothing",
         "reentrancy/a-direct-regenerate-past-the-hook-budget-writes-nothing",
         "reentrancy/a-direct-update-past-the-hook-budget-writes-nothing",
@@ -5496,7 +5508,8 @@
         "kit-executor/an-undefined-name-refuses-the-turn",
         "kit-executor/named-hooks-are-opt-in-per-room",
         "kit-executor/named-hooks-refuse-invalid-registrations",
-        "kit-executor/uninstalling-a-strategy-removes-only-its-activation"
+        "kit-executor/uninstalling-a-strategy-removes-only-its-activation",
+        "realtime/a-late-cancellation-leaves-the-served-call-alone"
       ]
     },
     {
