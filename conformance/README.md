@@ -261,6 +261,13 @@ room callbacks of the setup are not compared.
     answering (the Python harness declares that exception for reconstruction);
   - with `declared`, the kit holds it by its declaration alone, and the
     executors of `executors` that host it build it (below);
+  - with `holds_end`, a gate, on an intelligence channel or a scripted
+    agent: each of its turns that its owner cuts, sending the turn's
+    executor a `close` or a `cancel` (§10.6.8), owes its `end` until a step
+    opens that gate. The executor applies the cut as it does any; the run's
+    turn backend hands the owner the turn's `end` only once the gate is
+    open, a turn never cut its `end` at once. `expect.turn_ends` reads what
+    became of each turn so held;
   - an `ai` channel with a `model` is a **scripted agent** instead (below).
 - `rooms`: each is created (`id`, `organization_id`, `metadata`, `timers`),
   `store_metadata` then written through the store (`patch_room_metadata`), the
@@ -1410,6 +1417,7 @@ stores a simulated plan nor derives its tool result from these observations.
 | `acp_wire` | Per ACP channel, the requests and notifications its scripted ACP agent received, in order, each `{method, params}` (Scripted ACP agents) |
 | `acp_permissions` | Per ACP channel, actual replies to awaited permission requests, each `{session_id, tool_call_id, result}` or `error` (Scripted ACP agents) |
 | `executors` | Per executor of the setup, what it did, in order: `{call, channel_id, build}`, and `room_id` for a call about a room: `built` (a copy of the channel made, `build` counting them per executor and channel), `on_event` (with its `tools`: the names of the scripted agent's own tools, its `tools`, whose handler that turn ran on the executor, in the order called: a host's tool runs where its turn does, §10.6.5), `on_room_attached`, `on_room_detached`, `channel_call` (with its `verb`) and `close`. A detach from a room this build never saw let go of nothing and is not listed |
+| `turn_ends` | Per channel with `holds_end`, each of its turns its owner cut, in the order cut: `room_id`, `cut`, the first of `close` and `cancel` the owner sent the turn's executor, and `read`, whether the owner read the turn's `end` once the gate opened: false when it had let go of the turn first, dropping its later frames (§10.6.8) |
 | `lifecycle` | Per room, the lifecycle records (§5.1) in index order, when the implementation writes them: an implementation that writes none passes. It says which changes write one, and which write none (a change that changes nothing, §7.2) |
 | `participants` | Per room, the participants the store holds (§5.5), in the store's order |
 | `ai_routes` | Per scripted agent with a `router`, each request its router was asked, in order (§6.4): `reason` (`turn` at a turn's start, `retry` once a generation's retries are spent), `text` (what the turn answers, as text: the text of the event it answers), `previous` (for a retry, the model whose retries are spent, named as `models` names it; null at a turn's start) and `failed` (for a retry, the last refusal as `{status, message}`; null at a turn's start) |
@@ -1524,6 +1532,7 @@ refuses its value, a `ChannelId`).
 | `participant_exists` | A participant added under an id its room has, the record it holds kept (§5.5, §14.3) | `ParticipantExistsError` | `StoreError::ParticipantExists` |
 | `reentrant` | A message routed back into the room whose lock or admission order its caller holds (§9.5.1 A message routed back) | `ReentrantCallError` | `KitError::Reentrant` |
 | `waits_for_itself` | A completion handle's cancel from the room's lane or under its lock, where its cleanup would wait for its caller (§10.1 step 18) | `RuntimeError` from `DeliveryHandle.cancel` | `RoomKitError::Runtime` from `DeliveryHandle::cancel` |
+| `cleanup_incomplete` | A delivery's cleanup not known to be done, as its completion handle reports it: a `cancel` whose `timeout_ms` passed before the cut turns were over, or a `cancel` or a `wait` on a call one of whose turns is over without its executor's `end` (§10.1 Explicit delivery cancellation, §10.6.8) | `TimeoutError` from `DeliveryHandle.cancel` or `DeliveryHandle.wait` | `RoomKitError::Timeout` from `DeliveryHandle::cancel` or `DeliveryHandle::wait` |
 | `reentry_loop_cap` | A direct change past its cascade's hook calls (§8.3, §10.3) | `ReentryLoopCapError` | `MutationError::ReentryLoopCap` |
 | `idempotency_key_taken` | A direct record or store write tries another event under a key its source channel holds in the room (§13.4, §14.3) | `IdempotencyKeyTakenError` | `RoomKitError::IdempotencyKeyTaken`, `StoreError::IdempotencyKeyTaken` |
 | `event_not_found` | A write naming an event its room does not hold: a change's target, `update_event` (§14.3) | `EventNotFoundError` | `StoreError::EventNotFound` |

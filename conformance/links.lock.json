@@ -765,6 +765,9 @@
       "streaming/a-generation-that-reported-nothing-leaves-a-cut-record-incomplete": "76c29b84ca7d23998e53d45b600c53ad8613cbe7f84232c6156686f4faef3aac",
       "turn-record/a-turn-cut-from-outside-gives-its-caller-what-it-wrote": "76c29b84ca7d23998e53d45b600c53ad8613cbe7f84232c6156686f4faef3aac"
     },
+    "RK-10.1-103": {
+      "delivery/a-cancel-joins-the-close-of-a-stream-nobody-read": "ebf6b714571b65246d42414a8deb09185b7f7d0240c74577709c83ab02f05969"
+    },
     "RK-10.1-105": {
       "delivery/a-cascade-cancel-leaves-another-room-s-running-turn-alone": "2ac0af60cd1af9d9cbb7a97e73eb23f317ab25d3f97dc2acc837ec306134a441",
       "delivery/a-handle-s-cancel-cuts-its-running-turn": "2ac0af60cd1af9d9cbb7a97e73eb23f317ab25d3f97dc2acc837ec306134a441",
@@ -1007,6 +1010,12 @@
       "delivery/a-scoped-cancel-reaches-an-adopted-call-before-its-commit": "591d68497aa1f1b8a3f61b7837e0880bfd1f933b578a38efdb8d3c3c0abf3a90",
       "delivery/a-scoped-cancel-reaches-only-its-organization-s-delivery": "591d68497aa1f1b8a3f61b7837e0880bfd1f933b578a38efdb8d3c3c0abf3a90",
       "delivery/another-organization-s-cancel-before-the-room-is-read-reaches-nothing": "591d68497aa1f1b8a3f61b7837e0880bfd1f933b578a38efdb8d3c3c0abf3a90"
+    },
+    "RK-10.1-118": {
+      "delivery/a-cancel-past-its-bound-reports-the-cleanup-incomplete-and-lets-it-run": "f2f6f14ac58198a46d250268882f9d8b9a020801701b6cd64070c42d3fa32dec"
+    },
+    "RK-10.1-119": {
+      "delivery/a-cancel-past-its-bound-reports-the-cleanup-incomplete-and-lets-it-run": "5f7d4f844894a3e72b3ccaa37bab1a28e3da8dfd88463d2a61a0ac7b69dc890f"
     },
     "RK-10.1-120": {
       "delivery/a-handle-s-cancel-under-the-room-lock-is-refused": "434450b74c9c28e87b76db4ddabc85c0e8da735efe851a5b7ee5f78b6a8028e5"
@@ -3245,6 +3254,9 @@
       "streaming/a-generation-cut-from-outside-counts-the-input-it-told": "f0b91a726528ea72e243f1d9c642586c226900a4b28179369d5a323a9962584f",
       "streaming/a-generation-in-flight-at-a-cut-is-not-counted": "f0b91a726528ea72e243f1d9c642586c226900a4b28179369d5a323a9962584f",
       "streaming/a-generation-that-reported-nothing-leaves-a-cut-record-incomplete": "f0b91a726528ea72e243f1d9c642586c226900a4b28179369d5a323a9962584f"
+    },
+    "RK-10.6.8-023": {
+      "delivery/a-turn-whose-end-misses-its-cancel-bound-leaves-its-cleanup-incomplete": "fe40845876e7ca9aeef83ae760713c3f92929693462788be49e6fa27030f88dd"
     },
     "RK-10.6.8-028": {
       "channel-call/a-verb-closing-its-executor-keeps-its-calling-turn": "1dc8d8941d6f7b11a96561f57059813f363f58a752cca42a880b4f2522232003",

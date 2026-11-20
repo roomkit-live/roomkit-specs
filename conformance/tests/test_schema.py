@@ -391,3 +391,28 @@ class SchemaTests(unittest.TestCase):
         self.assertTrue(validator.is_valid(scenario))
         del scenario["steps"][0]["detections"][0]["frame_sequence"]
         self.assertFalse(validator.is_valid(scenario))
+
+    def test_a_turn_s_end_is_held_at_a_named_gate(self) -> None:
+        schema = json.loads((ROOT / "scenario.schema.json").read_text())
+        validator = Draft202012Validator(schema)
+        fixture = (
+            ROOT
+            / "scenarios/delivery"
+            / "a-cancel-past-its-bound-reports-the-cleanup-incomplete-and-lets-it-run.json"
+        )
+        for gate, valid in (("end-owed", True), (1, False), (True, False), ({}, False)):
+            with self.subTest(gate=gate):
+                scenario = json.loads(fixture.read_text())
+                scenario["setup"]["channels"][2]["holds_end"] = gate
+                self.assertEqual(validator.is_valid(scenario), valid)
+        for ends, valid in (({"agent": []}, True), ({"agent": "cut"}, False), ([], False)):
+            with self.subTest(ends=ends):
+                scenario = json.loads(fixture.read_text())
+                scenario["expect"]["turn_ends"] = ends
+                self.assertEqual(validator.is_valid(scenario), valid)
+        for name, valid in (("cleanup_incomplete", True), ("cleanup_unfinished", False)):
+            with self.subTest(name=name):
+                scenario = json.loads(fixture.read_text())
+                step = next(s for s in scenario["steps"] if s.get("call") == "delivery.cancel")
+                step["expect"] = {"error": name}
+                self.assertEqual(validator.is_valid(scenario), valid)

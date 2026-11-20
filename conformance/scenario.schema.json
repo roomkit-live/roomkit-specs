@@ -1205,6 +1205,10 @@
           "description": "The kit holds the channel by its declaration alone, and the executors of `setup.executors` that host it build it (\u00a710.6.2).",
           "type": "boolean"
         },
+        "holds_end": {
+          "description": "A gate: each turn of this intelligence channel or scripted agent that its owner cuts, sending its executor a `close` or a `cancel` (\u00a710.6.8), owes its `end` until a step opens the gate; the executor applies the cut as it does any, and the run's turn backend hands the owner the turn's `end` only once the gate is open. `expect.turn_ends` reads each turn so held.",
+          "type": "string"
+        },
         "verbs": {
           "description": "A scripted channel's per-room verbs (\u00a710.6.3), by name: `keeps` merges the call's arguments into what this build keeps for the room and answers it, `reads` answers it, `result` is answered as written. A gate holds before changes; forgets clears the state after keeps; fail raises the scripted failure after changes, before answering.",
           "type": "object",
@@ -6693,7 +6697,8 @@
         "needs_turn",
         "input_released",
         "idempotency_key_taken",
-        "store_failed"
+        "store_failed",
+        "cleanup_incomplete"
       ]
     },
     "expect": {
@@ -7008,6 +7013,16 @@
         },
         "executors": {
           "description": "Per executor of the setup, what it did, in order (README, Expectations).",
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "array",
+              "object"
+            ]
+          }
+        },
+        "turn_ends": {
+          "description": "Per channel with `holds_end`, each of its turns its owner cut, in the order cut: `room_id`, `cut` (the first of `close` and `cancel` the owner sent the turn's executor) and `read`, whether the owner read the turn's `end` once the gate opened, false when it had let go of the turn first (§10.6.8).",
           "type": "object",
           "additionalProperties": {
             "type": [
