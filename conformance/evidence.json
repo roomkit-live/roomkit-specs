@@ -12656,7 +12656,7 @@
     {
       "id": "core-shutdown-admission",
       "requirement": "RK-12.10.4-005",
-      "clause_sha256": "e0ebe6886b41f4597c93caa760fca8804d7c1a7a362302e3a8052badc7542032",
+      "clause_sha256": "443dc9c61356466d98f46229110f951ff34fab24f36ec3931113dd8ce14983bd",
       "scope": "Public operation admission and delivery-key cancellation during and after the kit close; an already-entered nested scope read under a locked hook keeps its parent grace.",
       "coverage": "partial",
       "review": "Python source assertions and shared scenario were read independently with the Rust changes. The shared scenario passed on Python memory, SQLite and isolated PostgreSQL. Native tests additionally cover scope reads, commit boundaries, timer hooks, injected passes and completed answers; these are not additional JSON scenario executions. This link does not close the entire shutdown contract.",
@@ -12870,7 +12870,7 @@
     {
       "id": "core-shutdown-boundaries",
       "requirement": "RK-12.10.4-005",
-      "clause_sha256": "e0ebe6886b41f4597c93caa760fca8804d7c1a7a362302e3a8052badc7542032",
+      "clause_sha256": "443dc9c61356466d98f46229110f951ff34fab24f36ec3931113dd8ce14983bd",
       "scope": "Open-store reads, late status and observer admission; native cursor placement and unfinished call results. Local core shutdown only.",
       "coverage": "partial",
       "review": "Independent source review checked the scenarios and native witnesses against Python. The observer proof requires its refused action to have completed. After-close memory reads are native; the shared reads end while the store is open. Native references are source evidence, not scenario execution receipts. Synthetic Tokio abandonment tests prove only the tracker bound and diagnostic, not external code ignoring cancellation.",
@@ -12964,7 +12964,7 @@
     {
       "id": "core-shutdown-answers",
       "requirement": "RK-12.10.4-005",
-      "clause_sha256": "e0ebe6886b41f4597c93caa760fca8804d7c1a7a362302e3a8052badc7542032",
+      "clause_sha256": "443dc9c61356466d98f46229110f951ff34fab24f36ec3931113dd8ce14983bd",
       "scope": "Answers placed during delivery aftermath: an answer observer closes, or its sender closes while the answer is explicitly retained. Local core shutdown only.",
       "coverage": "partial",
       "review": "Independent review checked both shared answer paths and the native temporal witness. A scenario without a retained-placement witness was removed: another worker may already deliver before close. Native references are source evidence, not scenario execution receipts. Rust additionally checks delegated terminal callbacks, regeneration cancellation and slow cursor observers with native tests; those results are not credited as shared scenario executions.",
@@ -14373,7 +14373,7 @@
     {
       "id": "discussion-regeneration-close-boundaries",
       "requirement": "RK-12.10.4-005",
-      "clause_sha256": "e0ebe6886b41f4597c93caa760fca8804d7c1a7a362302e3a8052badc7542032",
+      "clause_sha256": "443dc9c61356466d98f46229110f951ff34fab24f36ec3931113dd8ce14983bd",
       "scope": "Regeneration refusal after kit close and its cut before committed selection.",
       "coverage": "partial",
       "review": "The shared closed-kit case has no installed Discussion and tests the public door against a released SQLite store. Native tests distinguish the cancellable initial read from work after selection. They do not establish every shutdown path.",

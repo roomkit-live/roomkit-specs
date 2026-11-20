@@ -15933,8 +15933,9 @@ The framework's close runs in this order, from the moment `close()` starts:
    that is the close's own, never logged as an error. A call that awaits a
    close it started on a task of its own is cut with its turn, and the close
    runs on.
-4. **The rest of the running work MUST get one grace**, 5 seconds from the
-   close's start: a hook, a store write past a call's decision (§13.6), a
+4. **The rest of the running work MUST get one grace**, the framework's
+   `close_grace` (5 seconds by default) from the close's start: a hook, a
+   store write past a call's decision (§13.6), a
    room change, a transport send, a call still running its hooks before its
    commit, the framework's own steps that wait on integrator code (a
    source's stop, a delegation's completion callback, §23.3), and the
