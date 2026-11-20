@@ -4,13 +4,14 @@
   "title": "A failed delivery set whose record the store fails to write changes nothing the call reports, and its aftermath runs",
   "rules": [
     "§5.13",
+    "§10.1 step 16",
     "§10.1 step 18",
     "§14.3"
   ],
   "requirements": [
     "RK-5.13-008"
   ],
-  "notes": "The variant of inbound/a-failed-set-is-recorded-on-its-event whose store fails the set's record (store_fault on record_delivery_results): the call reports the same delivery results, its AFTER_BROADCAST hook runs, and the event holds no record. The log line is not observed. Python: core/mixins/lane_execution.py _record_failed_deliveries.",
+  "notes": "The variant of inbound/a-failed-set-is-recorded-on-its-event whose store fails the set's record (store_fault on record_delivery_results): the call reports the same delivery results and the event holds no record. Its AFTER_BROADCAST hook still runs once the set is over (§10.1 step 16): the record's failure ends nothing of the set's aftermath. The log line is not observed. Python: core/mixins/lane_execution.py _record_failed_deliveries.",
   "setup": {
     "kit": {
       "store_faults": true

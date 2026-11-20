@@ -9,7 +9,7 @@
     "RK-9.3-094",
     "RK-9.3-095"
   ],
-  "notes": "The room's read the hooks' context starts with (load_room_context) fails once the handler served the call: the SYNC hook that would rewrite the result does not run, nor does the observer, the model reads the handler's result, and the tool_call framework event still reports the call once (the handler's one run). Python: tests/test_tool_call_verdict_reading.py::test_a_text_call_keeps_its_result_when_the_hook_context_fails.",
+  "notes": "The room's read the hooks' context starts with (load_room_context) fails once the handler served the call: the SYNC hook that would rewrite the result does not run, nor does the observer, the model reads the handler's result, and the tool_call framework event still reports the call once (the handler's one run). Python: tests/test_tool_call_verdict_reading.py::test_a_text_call_keeps_its_result_when_the_hook_context_fails. Partial: the AI channel's loop alone (a speech-to-speech session's or a conference's call is not observed), and a served call alone for RK-9.3-095 (its refused and failed calls have scenarios of their own).",
   "setup": {
     "kit": {
       "store_faults": true
