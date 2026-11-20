@@ -10,7 +10,7 @@
   "requirements": [
     "RK-9.5.1-015"
   ],
-  "notes": "The router routes every message to room-1. Alice's SMS reaches the sms binding, which names no one: step 2 records her on it, her address as its recipient. Her WhatsApp message reaches a room that does not bind wa: step 2 attaches wa naming her. The off-lock hook's context holds each write. Her third message's parse sends an event into the room, which commits ahead of it (index 2) once step 3 built the context: the hook's context, built before the lock, does not hold it.",
+  "notes": "The router routes every message to room-1. Alice's SMS reaches the sms binding, which names no one: step 2 records her on it, her address as its recipient. Her WhatsApp message reaches a room that does not bind wa: step 2 attaches wa naming her. The off-lock hook's context holds each write. Her third message's parse sends an event into the room, which commits ahead of it (index 2) once step 3 built the context: the hook's context, built before the lock, does not hold it. The channels declare a window of 5 events, which holds the room's whole history here.",
   "setup": {
     "kit": {
       "router": {
@@ -23,6 +23,7 @@
         "type": "sms",
         "category": "transport",
         "addressing": {},
+        "recent_events_window": 5,
         "parse": [
           {
             "when": {
@@ -47,7 +48,8 @@
         "id": "wa",
         "type": "whatsapp",
         "category": "transport",
-        "addressing": {}
+        "addressing": {},
+        "recent_events_window": 5
       }
     ],
     "rooms": [
