@@ -154,7 +154,9 @@ room callbacks of the setup are not compared.
   backend (§22.2) the kit is built and started with, its `retry_delay_ms`,
   `max_retry_delay_ms`, `max_queue_size` and `max_dead_letter_size`: a
   runner's idle wait then waits for its queue, its items waiting out a
-  retry and those its worker holds; and `verification_policy`, the kit's
+  retry and those its worker holds; and `turn_timeouts`, the bounds of the
+  kit's turns (§10.6.8), with or without `executors`, as `executors` below
+  says; and `verification_policy`, the kit's
   identity verification policy (§11.7) the kit is built with: `ttl_ms`,
   `request_ttl_ms`, `code_request_ttl_ms`, `max_attempts`, `code_length`,
   `release_on_verify`, `release_max_messages`, `release_max_age_ms` and
@@ -266,8 +268,10 @@ room callbacks of the setup are not compared.
     executor a `close` or a `cancel` (§10.6.8), owes its `end` until a step
     opens that gate. The executor applies the cut as it does any; the run's
     turn backend hands the owner the turn's `end` only once the gate is
-    open, a turn never cut its `end` at once. `expect.turn_ends` reads what
-    became of each turn so held;
+    open, and a turn never cut has its `end` handed at once. Its executor,
+    having ended the turn, beats no more meanwhile: an owner whose
+    `heartbeat_timeout` passes first loses the turn (`executor_lost`).
+    `expect.turn_ends` reads what became of each turn so held;
   - an `ai` channel with a `model` is a **scripted agent** instead (below).
 - `rooms`: each is created (`id`, `organization_id`, `metadata`, `timers`),
   `store_metadata` then written through the store (`patch_room_metadata`), the
