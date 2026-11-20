@@ -3427,6 +3427,16 @@
     "RK-21.1-004": {
       "tools/every-argument-that-does-not-fit-is-named": "0fdb54986121a7f92e06d9891f6980dc27e90fb9104af4924e50038212397853"
     },
+    "RK-21.4-001": {
+      "tools/a-message-under-the-framework-s-name-in-a-room-the-host-names-reads-system-as-its-actor": "f10a3324b9ffa3510d84ad0ef19d38db3aa0a678a18c973cf3d59603f6bc3f97",
+      "tools/a-participant-is-the-actor-of-the-turn-their-message-opens": "f10a3324b9ffa3510d84ad0ef19d38db3aa0a678a18c973cf3d59603f6bc3f97",
+      "tools/a-participant-s-id-on-a-channel-that-does-not-reach-them-names-no-actor": "f10a3324b9ffa3510d84ad0ef19d38db3aa0a678a18c973cf3d59603f6bc3f97",
+      "tools/a-sender-with-no-record-is-the-actor-by-the-id-they-wrote-under": "f10a3324b9ffa3510d84ad0ef19d38db3aa0a678a18c973cf3d59603f6bc3f97",
+      "tools/a-turn-another-agent-s-message-opens-reads-no-actor-and-that-agent-as-who-asked": "f10a3324b9ffa3510d84ad0ef19d38db3aa0a678a18c973cf3d59603f6bc3f97",
+      "tools/a-turn-the-host-opens-with-deliver-reads-system-as-its-actor": "f10a3324b9ffa3510d84ad0ef19d38db3aa0a678a18c973cf3d59603f6bc3f97",
+      "tools/a-turn-the-host-opens-with-post-reads-no-actor": "f10a3324b9ffa3510d84ad0ef19d38db3aa0a678a18c973cf3d59603f6bc3f97",
+      "tools/a-turn-the-host-opens-with-send-event-reads-no-actor": "f10a3324b9ffa3510d84ad0ef19d38db3aa0a678a18c973cf3d59603f6bc3f97"
+    },
     "RK-5-001": {
       "permissions/reserved-channel-ids-are-refused": "c094c4292b80e298a0a8b1d7ca12bbef2df681c42d9366621b73e01f8938495c"
     },
@@ -4441,6 +4451,7 @@
       "transcoding/a-media-channel-with-no-limit-takes-every-file-as-it-is": "a20617c49a3fb67861c6166e5cfbed214ce47935438b4b311e656fda5eba1435"
     },
     "RK-6.4-025": {
+      "discussion/a-turn-s-notes-quote-a-ranked-label-whole": "ba0dd64da1c842ee9ec857f7dc2f1aa4f3c1772cf3c79ee1847d661b0a1744b9",
       "memory/a-name-that-reads-like-an-earlier-sender-s-is-labelled-with-the-name-it-is-not": "ba0dd64da1c842ee9ec857f7dc2f1aa4f3c1772cf3c79ee1847d661b0a1744b9",
       "memory/a-ranked-label-cuts-the-name-it-disclaims-to-24-characters": "ba0dd64da1c842ee9ec857f7dc2f1aa4f3c1772cf3c79ee1847d661b0a1744b9"
     },

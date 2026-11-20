@@ -641,6 +641,9 @@ scripted.
   `returns_requester: true` is another answer: the handler calls
   `current_tool_requester()` and returns it as JSON, a string or null, its
   characters unescaped (§19.7, §21.4).
+  `returns_actor: true` is another answer: the handler calls
+  `current_tool_actor_id()` and returns it as JSON, a string or null, its
+  characters unescaped (§21.4).
   `posts_progress`: each call first posts this text as its task's progress
   with `post_task_progress(kit, detail)` (§23.3), before a `gate` holds it,
   then answers as its other member says; a call outside a task's child room

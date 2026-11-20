@@ -8154,6 +8154,10 @@
           "description": "The handler calls current_tool_requester() and returns it as JSON, a string or null (\u00a719.7, \u00a721.4).",
           "const": true
         },
+        "returns_actor": {
+          "description": "The handler calls current_tool_actor_id() and returns it as JSON, a string or null (\u00a721.4).",
+          "const": true
+        },
         "returns_parts": {
           "description": "The tool answers these content parts in order, each `{text}` or `{image, mime_type}` (\u00a721.4): a text and the images a model that sees reads in the round (\u00a76.4).",
           "type": "array",
@@ -8240,6 +8244,11 @@
         {
           "required": [
             "returns_requester"
+          ]
+        },
+        {
+          "required": [
+            "returns_actor"
           ]
         },
         {
