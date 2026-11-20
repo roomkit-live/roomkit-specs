@@ -1761,6 +1761,28 @@
               "minLength": 1
             }
           }
+        },
+        {
+          "type": "object",
+          "required": [
+            "under_lock",
+            "do"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "under_lock": {
+              "description": "The room whose lock the host takes from the kit's lock_manager, outside any pass (\u00a713.5), or a reference to it ($r1).",
+              "type": "string"
+            },
+            "do": {
+              "description": "The calls made under the lock, in order, each waited for and checked by its expect; the lock is released after the last.",
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "$ref": "#/$defs/under_lock_call"
+              }
+            }
+          }
         }
       ]
     },
@@ -5566,6 +5588,27 @@
         }
       }
     },
+    "under_lock_call": {
+      "description": "A call of an under_lock step: made under the room lock the host holds, and waited for, so never in the background.",
+      "allOf": [
+        {
+          "$ref": "#/$defs/call"
+        }
+      ],
+      "properties": {
+        "as": {
+          "$ref": "#/$defs/label"
+        },
+        "expect": {
+          "$ref": "#/$defs/outcome"
+        }
+      },
+      "not": {
+        "required": [
+          "background"
+        ]
+      }
+    },
     "concurrent_call": {
       "description": "A call of a concurrent step: started with the others, and waited for with them, so never in the background.",
       "allOf": [
@@ -6264,7 +6307,7 @@
       }
     },
     "mcp_tool": {
-      "description": "A tool the server lists, as it writes it, answering every call with `returns`, a text.",
+      "description": "A tool the server lists, as it writes it, answering every call with `returns`, a text; with `is_error`, a result that says isError.",
       "type": "object",
       "required": [
         "name",
@@ -6284,6 +6327,10 @@
         },
         "returns": {
           "type": "string"
+        },
+        "is_error": {
+          "description": "Whether the result says isError (\u00a79.3): the tool ran and failed, its text `returns`; false by default.",
+          "type": "boolean"
         }
       }
     },
@@ -6421,11 +6468,12 @@
           "type": "string"
         },
         "report_claim_probe": {
-          "description": "A handler reads and invokes the public turn_report_claim callback: matching checks lookup and once-only claims; reused_id invokes its first retained callback in each round; previous_turn retains the first callback without invoking it and invokes it in later turns. The result is a JSON array of actual callback results, not simulated report state.",
+          "description": "A handler reads and invokes the public turn_report_claim callback: matching checks lookup and once-only claims; reused_id invokes its first retained callback in each round; previous_turn retains the first callback without invoking it and invokes it in later turns; claim_then_gate claims the call's report, then holds at the tool's gate, which it needs, and returns the claim's result once the gate opens. The result is a JSON array of actual callback results, not simulated report state.",
           "enum": [
             "matching",
             "reused_id",
-            "previous_turn"
+            "previous_turn",
+            "claim_then_gate"
           ]
         },
         "host_calls": {
@@ -6493,7 +6541,22 @@
             "host_calls"
           ]
         }
-      ]
+      ],
+      "if": {
+        "required": [
+          "report_claim_probe"
+        ],
+        "properties": {
+          "report_claim_probe": {
+            "const": "claim_then_gate"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "gate"
+        ]
+      }
     },
     "room_hook": {
       "description": "A hook registered for one room (\u00a79.1): what a registration for a room declares, a hook's name, trigger, execution, priority, fail_closed and needs_lock, with no filter and the default timeout.",

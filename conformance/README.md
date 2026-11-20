@@ -583,6 +583,10 @@ scripted.
   `previous_turn` retains the first callback without invoking it, returns
   `[null]` first, then invokes only that retained callback on later calls.
   The handler owns this state; callback results are returned as a JSON array.
+  `claim_then_gate` claims the call's report, then holds the call at its
+  `gate`, which it needs, and returns `[<the claim's result>]` once a step
+  opens the gate: a cut in that window cuts a call whose report was made
+  before its end row (§9.3).
   Scenarios separately assert model results and actual ASYNC observer reports.
   `changes_state: true` declares it on its definition as a tool that
   changes state (Python's `AITool(changes_state=True)`, §6.4).
@@ -593,7 +597,9 @@ scripted.
   absent; `gate_discovery`, false for a handler that forwards every name
   (default true); `tools`, what the server lists, each `name`,
   `description` and `input_schema` as the server writes them (`{"type":
-  "object"}` when absent), answering every call with `returns`, a text.
+  "object"}` when absent), answering every call with `returns`, a text;
+  with `is_error: true`, a result that says `isError` (§9.3), its text
+  `returns` (false by default).
   `declare` says how the agent declares them: `bare`, the provider's own
   definitions (the default); `aliases`, each under `mcp__<label>__<tool>`
   with the provider's description and parameters; `none`, not at all. The
@@ -968,6 +974,7 @@ and declares the descriptors in `session/new`.
 | `{"idle": true}` | Waits until the kit runs nothing in the background; with `processes`, until none of the kits does, each discussion's driver roused first, so that it reads what another process stored |
 | `{"wait_for_lock": room, "waiters": n}` | Waits until `n` calls (1 by default) wait for the room's lock (a runner fails after 5 s): calls started in the background are then known to overlap. `room` may be a reference, a room the run created (`$r1`) |
 | `{"lock_releases": "fail"}`, `{"lock_releases": "succeed"}` | Sets the releases of the kit's `lock_manager` failing or succeeding, from the next one on |
+| `{"under_lock": room, "do": [calls]}` | Takes the room's lock from the kit's `lock_manager` as a host does outside any pass (§13.5), makes the calls under it in order, each waited for and checked by its `expect`, then releases the lock. `room` may be a reference, a room the run created (`$r1`) |
 | `{"acp_disconnect": channel_id}` | Closes the named scripted ACP transport's pipe and drains its agent tasks. The transport then reports `is_alive=false`; the real channel decides whether and how to reconnect. Session and reply counters continue across connections. This is a fixture fault, not a framework API call. |
 
 A call that has not returned after 10 s fails the scenario.

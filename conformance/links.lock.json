@@ -5630,6 +5630,10 @@
       "provider-served/stop-at-end-success-stream": "5a3ca6a8c8a12d8b199d1cc2995dcb3fb3ecaa5d5875c9655e7c3442316a48a4",
       "provider-served/stop-at-end-success-whole": "5a3ca6a8c8a12d8b199d1cc2995dcb3fb3ecaa5d5875c9655e7c3442316a48a4"
     },
+    "RK-9.3-054": {
+      "tools/a-call-cut-after-its-report-keeps-its-end-row-cancelled-non-streaming": "8761e62950c2a83d78fecf19a3d79bf14e29705e673438290eff3b9695fb02a4",
+      "tools/a-call-cut-after-its-report-keeps-its-end-row-cancelled-streaming": "8761e62950c2a83d78fecf19a3d79bf14e29705e673438290eff3b9695fb02a4"
+    },
     "RK-9.3-055": {
       "acp/handler-report-chain-original": "6f0b530d5bf52b356dc131f7237a1f02d5801d5bd7873b2ebcd6ff97bcf43b2b",
       "acp/tools-failed-report-chain": "6f0b530d5bf52b356dc131f7237a1f02d5801d5bd7873b2ebcd6ff97bcf43b2b",
@@ -5998,6 +6002,10 @@
       "orchestration/an-audited-call-is-recorded-by-how-it-ended": "83d14d36cfe67215dc57bb589d3957447399a23267f3d319f3bde645d6c25222",
       "tools/failure-reads-its-class": "83d14d36cfe67215dc57bb589d3957447399a23267f3d319f3bde645d6c25222"
     },
+    "RK-9.3-085": {
+      "mcp/an-is-error-result-is-a-failure-never-a-refusal-non-streaming": "c13d1cd3419aed2d890e68ad6c960f6dd747d1bbbd07abe83522616d2ec1736c",
+      "mcp/an-is-error-result-is-a-failure-never-a-refusal-streaming": "c13d1cd3419aed2d890e68ad6c960f6dd747d1bbbd07abe83522616d2ec1736c"
+    },
     "RK-9.3-086": {
       "orchestration/a-supervisor-s-background-team-that-fails-hands-back-its-failure": "0aa9db433042290a1e751a9e82673e0c6cfb0a21f1fc8e0514e9ee0fa38e9318",
       "orchestration/a-team-whose-worker-raises-answers-at-once": "0aa9db433042290a1e751a9e82673e0c6cfb0a21f1fc8e0514e9ee0fa38e9318",
@@ -6314,6 +6322,10 @@
       "hooks/an-injection-from-a-direct-injection-waits-for-the-outer-pass": "3a431b06827a7066c2af357e282c3d79636a134f0de61e507073ddbb4f3ac87d",
       "hooks/recursive-send-event-from-a-locked-hook-stops-at-the-cap": "3a431b06827a7066c2af357e282c3d79636a134f0de61e507073ddbb4f3ac87d",
       "hooks/recursive-send-event-from-an-off-lock-hook-stops-at-the-cap": "3a431b06827a7066c2af357e282c3d79636a134f0de61e507073ddbb4f3ac87d"
+    },
+    "RK-9.5.1-025": {
+      "reentrancy/a-call-under-a-lock-the-host-holds-commits-what-its-hooks-inject-once-the-host-released-it": "10a59a2aad8f525ab9c6a9f706583122c64361a2c60e6fad05f4bbb85e3a6e58",
+      "reentrancy/each-call-under-a-lock-the-host-holds-draws-on-a-budget-of-its-own": "10a59a2aad8f525ab9c6a9f706583122c64361a2c60e6fad05f4bbb85e3a6e58"
     },
     "RK-9.5.1-026": {
       "delivery/a-reentrant-call-s-key-names-its-delivery-until-it-runs": "f64ff24b4ed94d43b70718ecfe9e2ab19d267fb7b0e9d5a0469e9259c7bbe5b3"

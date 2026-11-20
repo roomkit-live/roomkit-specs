@@ -170,3 +170,63 @@ class SchemaTests(unittest.TestCase):
                 if drop is not None:
                     del step[drop]
                 self.assertEqual(validator.is_valid(scenario), valid)
+
+    def test_an_mcp_tool_says_is_error_with_a_boolean(self) -> None:
+        schema = json.loads((ROOT / "scenario.schema.json").read_text())
+        validator = Draft202012Validator(schema)
+        fixture = (
+            ROOT / "scenarios/mcp/an-is-error-result-is-a-failure-never-a-refusal-non-streaming.json"
+        )
+        for is_error, valid in ((True, True), (False, True), (None, True), ("yes", False)):
+            with self.subTest(is_error=is_error):
+                scenario = json.loads(fixture.read_text())
+                tool = scenario["setup"]["channels"][1]["mcp_servers"][0]["tools"][0]
+                tool.pop("is_error")
+                if is_error is not None:
+                    tool["is_error"] = is_error
+                self.assertEqual(validator.is_valid(scenario), valid)
+
+    def test_a_report_claimed_before_its_gate_needs_the_gate(self) -> None:
+        schema = json.loads((ROOT / "scenario.schema.json").read_text())
+        validator = Draft202012Validator(schema)
+        fixture = (
+            ROOT
+            / "scenarios/tools"
+            / "a-call-cut-after-its-report-keeps-its-end-row-cancelled-non-streaming.json"
+        )
+        for mode, gate, valid in (
+            ("claim_then_gate", "claimed", True),
+            ("claim_then_gate", None, False),
+            ("matching", None, True),
+            ("claimed_first", "claimed", False),
+        ):
+            with self.subTest(mode=mode, gate=gate):
+                scenario = json.loads(fixture.read_text())
+                tool = scenario["setup"]["channels"][1]["tools"][0]
+                tool["report_claim_probe"] = mode
+                tool.pop("gate")
+                if gate is not None:
+                    tool["gate"] = gate
+                self.assertEqual(validator.is_valid(scenario), valid)
+
+    def test_an_under_lock_step_names_its_room_and_waits_for_each_call(self) -> None:
+        schema = json.loads((ROOT / "scenario.schema.json").read_text())
+        validator = Draft202012Validator(schema)
+        fixture = (
+            ROOT
+            / "scenarios/reentrancy"
+            / "each-call-under-a-lock-the-host-holds-draws-on-a-budget-of-its-own.json"
+        )
+        call = {"call": "get_room", "room_id": "room-1"}
+        for step, valid in (
+            ({"under_lock": "room-1", "do": [call]}, True),
+            ({"under_lock": "room-1", "do": []}, False),
+            ({"under_lock": "room-1"}, False),
+            ({"do": [call]}, False),
+            ({"under_lock": "room-1", "do": [{**call, "background": True, "as": "x"}]}, False),
+            ({"under_lock": "room-1", "do": [call], "waiters": 1}, False),
+        ):
+            with self.subTest(step=step):
+                scenario = json.loads(fixture.read_text())
+                scenario["steps"][0] = step
+                self.assertEqual(validator.is_valid(scenario), valid)
