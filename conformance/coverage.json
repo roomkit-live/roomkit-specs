@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "b478e3906a2eb96ab79ced216bf7a85d01283de877ae8d2c233337fb66828af9",
-  "corpus_sha256": "e022069bb267acdc436f596d2715f7a69cca1e6cda2aaeb18a30d7386023b19c",
+  "corpus_sha256": "a20dce8d37df3a6e3816c76751b83c773dc41844c2bb21c7615702c1cf488f3b",
   "python_commit": "929f9dc7fa1cd70907b6ece5fea89f8ff7979f52",
-  "scenario_count": 3355,
+  "scenario_count": 3363,
   "sections": [
     {
       "section": "0",
@@ -5322,6 +5322,7 @@
         "executors/an-executor-builds-an-agent-at-its-first-turn-not-when-a-room-attaches-it",
         "executors/another-executor-replays-the-tool-calls-of-the-first",
         "executors/attach-and-detach-reach-every-executor-declaring-the-channel",
+        "executors/owners-receive-post-turn-work-only-where-the-turn-was-submitted",
         "executors/releasing-an-unknown-channel-fails",
         "executors/what-the-room-keeps-for-a-channel-reaches-the-next-executor",
         "executors/work-a-turn-apart-began-publishes-to-its-room-after-it",
@@ -5601,6 +5602,12 @@
         "executors/an-executor-takes-the-turns-of-the-organizations-it-serves-alone",
         "executors/an-executor-that-never-answers-loses-the-turn-and-no-other-gets-it",
         "executors/executors-declaring-prefixes-take-only-the-agents-under-them",
+        "executors/owners-publish-a-coverage-change-once-across-a-restart",
+        "executors/owners-release-an-unpublished-claim-on-close",
+        "executors/owners-retry-a-failed-presence-claim",
+        "executors/owners-use-a-predicate-worker-only-on-its-process",
+        "executors/owners-use-an-undeclared-worker-only-on-its-process",
+        "executors/owners-without-an-executor-catalogue-publish-only-live-agents",
         "executors/the-kit-lists-the-executors-served-and-what-each-declares",
         "local-presence/agents-are-sorted-and-filtered",
         "local-presence/automatic-publications-follow-local-changes",
@@ -5658,6 +5665,7 @@
         "executors/an-executor-killed-mid-answer-loses-its-turn-and-what-was-shown-stays",
         "executors/an-executor-restarted-under-its-id-does-not-keep-the-killed-one-s-turn",
         "executors/an-executor-that-never-answers-loses-the-turn-and-no-other-gets-it",
+        "executors/owners-steer-only-the-turns-they-submitted",
         "executors/the-kit-lists-the-executors-served-and-what-each-declares",
         "executors/the-owner-cancels-the-calls-of-a-turn-it-loses",
         "host/a-task-cut-short-hands-its-failure-to-wait-task",
@@ -5679,7 +5687,8 @@
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "executors/a-built-channel-parents-its-generation-to-the-owner-broadcast",
-        "executors/a-room-s-attach-and-detach-are-applied-on-the-executor-before-they-return"
+        "executors/a-room-s-attach-and-detach-are-applied-on-the-executor-before-they-return",
+        "executors/owners-receive-post-turn-work-only-where-the-turn-was-submitted"
       ]
     },
     {
