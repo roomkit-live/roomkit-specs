@@ -1,0 +1,107 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "delivery/a-turn-still-open-once-the-close-s-grace-is-over-is-given-up",
+  "title": "A turn still open once the kit's close grace is over is given up: its call reads kit_closed, the close waits for no end, and the end that comes later is dropped",
+  "rules": [
+    "§10.6.8 Cancellation",
+    "§12.10.4",
+    "§10.6"
+  ],
+  "requirements": [
+    "RK-10.6.8-025",
+    "RK-10.6-009"
+  ],
+  "notes": "The kit's close gives its running work 200 ms (close_grace_ms). The agent's turn holds at turn-runs, its call awaited in the background; the close cuts the turn at once (a cancel, kit_closed), and the turn's end is held at end-held, which no step opens before the close returns: the cancel's own bound, the default 5 s, is still running once the grace and its unwind are over, so the turn is still open when the kit's turn backend closes. The close returns without that end (the owner waits for nothing more), the call reads its cut, kit_closed, never a turn link failure, and the end that comes once the gate opens is not read (turn_ends read: false). Not observed: the reason the turn's reader fails with (backend_closed), which no reader a scenario drives receives through the kit (Python: tests/test_turns_cleanup.py::test_a_turn_given_up_as_its_owner_closes_fails_backend_closed); for RK-10.6-009, the interface's shape and the executor side of close().",
+  "setup": {
+    "kit": {
+      "close_grace_ms": 200
+    },
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms"
+      },
+      {
+        "id": "agent",
+        "type": "ai",
+        "holds_end": "end-held",
+        "model": {
+          "rounds": [
+            {
+              "gate": "turn-runs",
+              "text": "never read"
+            }
+          ]
+        }
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          },
+          {
+            "channel_id": "agent"
+          }
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "Hello"
+        }
+      },
+      "background": true,
+      "as": "m1"
+    },
+    {
+      "wait_for": "turn-runs"
+    },
+    {
+      "call": "close"
+    },
+    {
+      "await": "m1",
+      "expect": {
+        "result": {
+          "blocked": false,
+          "cancellation_reason": "kit_closed"
+        }
+      }
+    },
+    {
+      "open": "end-held"
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": [
+        {
+          "content": {
+            "body": "Hello"
+          },
+          "index": 0
+        }
+      ]
+    },
+    "turn_ends": {
+      "agent": [
+        {
+          "room_id": "room-1",
+          "cut": "cancel",
+          "read": false
+        }
+      ]
+    }
+  }
+}

@@ -406,6 +406,20 @@ class SchemaTests(unittest.TestCase):
         del scenario["steps"][0]["detections"][0]["frame_sequence"]
         self.assertFalse(validator.is_valid(scenario))
 
+    def test_the_kit_s_close_grace_is_a_positive_whole_number_of_ms(self) -> None:
+        schema = json.loads((ROOT / "scenario.schema.json").read_text())
+        validator = Draft202012Validator(schema)
+        fixture = (
+            ROOT
+            / "scenarios/delivery"
+            / "a-turn-still-open-once-the-close-s-grace-is-over-is-given-up.json"
+        )
+        for grace, valid in ((200, True), (1, True), (0, False), (1.5, False), ("200", False)):
+            with self.subTest(grace=grace):
+                scenario = json.loads(fixture.read_text())
+                scenario["setup"]["kit"]["close_grace_ms"] = grace
+                self.assertEqual(validator.is_valid(scenario), valid)
+
     def test_a_turn_s_end_is_held_at_a_named_gate(self) -> None:
         schema = json.loads((ROOT / "scenario.schema.json").read_text())
         validator = Draft202012Validator(schema)

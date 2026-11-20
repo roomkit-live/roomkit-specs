@@ -256,6 +256,11 @@
               "type": "integer",
               "minimum": 1
             },
+            "close_grace_ms": {
+              "description": "The one grace the kit's close gives its running work from its start before it cuts it (\u00a712.10.4, the kit's close_grace); the implementation's default (5 s) when absent.",
+              "type": "integer",
+              "minimum": 1
+            },
             "router": {
               "description": "A scripted router (\u00a710.4), the kit's in place of the default: it answers every routed message with `room_id`, whoever sent it, an answer the kit holds to \u00a710.1 step 2's rules; with a `gate`, it holds each routing there first. A null answer requests a new room. Calls are recorded before the gate under router_calls.",
               "type": "object",

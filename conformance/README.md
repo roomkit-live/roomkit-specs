@@ -143,7 +143,10 @@ Made before anything is recorded: framework events, hook calls, deliveries and
 room callbacks of the setup are not compared.
 
 - `kit`: `max_chain_depth` (default 5), `process_timeout_ms` (the
-  implementation's default when absent), and `router`, a scripted router in
+  implementation's default when absent), `close_grace_ms`, the one grace the
+  kit's close gives its running work from its start before it cuts it
+  (§12.10.4, the kit's `close_grace`; the implementation's default, 5 s, when
+  absent), and `router`, a scripted router in
   place of the default one, answering every routed message with its
   `room_id`, an answer the kit holds to §10.1 step 2's rules, held first at
   its `gate` when it names one; calls are recorded before that gate under

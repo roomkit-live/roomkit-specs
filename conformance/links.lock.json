@@ -1020,6 +1020,9 @@
     "RK-10.1-120": {
       "delivery/a-handle-s-cancel-under-the-room-lock-is-refused": "434450b74c9c28e87b76db4ddabc85c0e8da735efe851a5b7ee5f78b6a8028e5"
     },
+    "RK-10.1-121": {
+      "delivery/a-delivery-whose-turn-the-closing-owner-gave-up-counts-its-cleanup-done": "d528639ceb3261320907a3c7b00997e20517d598857045897e010980f9f206fb"
+    },
     "RK-10.1-122": {
       "delivery/a-closing-kit-refuses-new-operations-and-ignores-cancellation": "7b0b300750850733735d4d049b935850cb3b0c5102c317a1678389d3ec126be8",
       "delivery/an-answer-from-after-broadcast-gets-grace-when-its-observer-closes-the-kit": "7b0b300750850733735d4d049b935850cb3b0c5102c317a1678389d3ec126be8",
@@ -2348,6 +2351,9 @@
     "RK-10.6-007": {
       "executor-close/closing-refuses-new-turns-and-keeps-transports": "af2ea91ee5c199b811d7c9fd32a1917ad3d4d6980dd76095835e3f33f3cc96f0"
     },
+    "RK-10.6-009": {
+      "delivery/a-turn-still-open-once-the-close-s-grace-is-over-is-given-up": "56231943275c2a8dd25f167af8a2801aeb697bde64beed12f0100d3b6e5005c0"
+    },
     "RK-10.6.1-003": {
       "executors/a-delegation-to-a-declared-worker-runs-on-its-executor": "934f95bff30bfcf73bae01caa3e7fc0031dcb0abc454c1c67f3adad3539b2ab1"
     },
@@ -3277,6 +3283,15 @@
     },
     "RK-10.6.8-023": {
       "delivery/a-turn-whose-end-misses-its-cancel-bound-leaves-its-cleanup-incomplete": "fe40845876e7ca9aeef83ae760713c3f92929693462788be49e6fa27030f88dd"
+    },
+    "RK-10.6.8-025": {
+      "delivery/a-turn-still-open-once-the-close-s-grace-is-over-is-given-up": "d471ada6b4660719bb073ba183fa3770a204cdb00a262d12cb322b7d43d734a6"
+    },
+    "RK-10.6.8-026": {
+      "delivery/a-delivery-whose-turn-the-closing-owner-gave-up-counts-its-cleanup-done": "4f6655177e2dced2ed1e4037afee8aeae3961c74f881d4309b98cb838102a94c"
+    },
+    "RK-10.6.8-027": {
+      "delivery/a-turn-whose-end-is-owed-as-the-kit-closes-stays-incomplete": "e3e40e529648dca70b3a1b6a9bab2403991e5ebc1eec41b966820e21db9db7ea"
     },
     "RK-10.6.8-028": {
       "channel-call/a-verb-closing-its-executor-keeps-its-calling-turn": "1dc8d8941d6f7b11a96561f57059813f363f58a752cca42a880b4f2522232003",
