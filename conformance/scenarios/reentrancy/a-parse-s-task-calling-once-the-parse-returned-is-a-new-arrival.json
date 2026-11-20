@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "reentrancy/a-parse-s-task-calling-once-the-parse-returned-is-a-new-arrival",
-  "title": "A task a channel's parse started, calling once the parse returned, stands in no admission order: it waits for the lock the message's section holds and commits after the message",
+  "title": "A task a channel's parse started, calling once the parse returned, stands in no admission order: it takes a ticket of its own and commits after the message",
   "rules": [
     "§9.5.1 Reentrance",
     "§9.5.1 Order",

@@ -12,7 +12,7 @@
   "reentrancy": [
     "inject@admitted"
   ],
-  "notes": "The parse starts the task and holds at its gate; the task's call runs and returns while the parse is still held, then the parse returns.",
+  "notes": "The parse starts the task and holds at its gate. The task's call, adopted, takes the room's lock and holds under it at an off-lock hook's gate, which an adopted call runs under the lock; the parse then returns, and the message waits for that lock. A call that was a new arrival would hold only a ticket behind none, and no one would wait for the lock.",
   "setup": {
     "channels": [
       {
@@ -37,8 +37,7 @@
                   },
                   "as": "notice"
                 }
-              ],
-              "after_do_gate": "task_done"
+              ]
             },
             "gate": "parse_held"
           }
@@ -59,6 +58,21 @@
           },
           {
             "channel_id": "ws"
+          }
+        ]
+      }
+    ],
+    "hooks": [
+      {
+        "name": "check",
+        "trigger": "before_broadcast",
+        "needs_lock": false,
+        "reactions": [
+          {
+            "when": {
+              "text": "heads up"
+            },
+            "gate": "task_checked"
           }
         ]
       }
@@ -83,19 +97,19 @@
       "wait_for": "parse_held"
     },
     {
-      "wait_for": "task_go"
-    },
-    {
       "open": "task_go"
     },
     {
-      "wait_for": "task_done"
-    },
-    {
-      "open": "task_done"
+      "wait_for": "task_checked"
     },
     {
       "open": "parse_held"
+    },
+    {
+      "wait_for_lock": "room-1"
+    },
+    {
+      "open": "task_checked"
     },
     {
       "await": "hello",
