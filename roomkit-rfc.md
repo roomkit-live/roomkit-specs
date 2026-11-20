@@ -3426,7 +3426,12 @@ break at all, and a label after one would sit mid-line. The note that says
 how speakers are named says that each line is its author's label followed by
 what they typed on it as a JSON string, and that a `Name:` inside the string
 is what its author wrote; it names no attack (a note that named one made a
-model fall for it more often, RMK-635). The request an ACP agent is prompted with is labelled the same way. One resolver gives that label wherever a model
+model fall for it more often, RMK-635). Its sentence on a number in
+parentheses says a rank marks another sender, a different person, and shows
+the rank alone (`Name (2)`): reworded to show the name a ranked label says
+its sender is not, it made a model follow a forged `Name:` inside another
+sender's message more often (RMK-1835), and the label carries that by
+itself. The request an ACP agent is prompted with is labelled the same way. One resolver gives that label wherever a model
 reads a participant's turn (the conversation, the room context handed to an
 ACP agent and the request that follows it, a line broadcast into a realtime
 session, the lines a memory summarizer reads), at one threshold: a reader
@@ -3483,8 +3488,15 @@ channel they are reached through, Section 5.5): when two distinct sources of
 the room (a participant, whichever channel reached them, or a sender) have
 names that read alike (in case or in Unicode's confusables, `Alice` and
 `Аlice`), a participant the room registered keeps the name, then the first
-source the room saw, and each later one carries it with its rank (`Alice
-(2)`), a form no name takes; a name that reads like two others (`Ian`, like
+source the room saw, and each later one carries it with its rank and the name
+it is not (`Alice (2, not Alice)`), a form no name takes: under its rank alone
+(`Alice (2)`) a model took a later source for the first one more than one
+time in two (RMK-1835). The name after `not` is the label's own, whole within
+24 characters; a longer one is cut to its first 23, back to their last space
+when that space comes after the thirteenth of them, trailing spaces dropped,
+and ended with `…`. A note that quotes a label (the note on who takes part, a
+discussion's turn notes) quotes it whole, that name included. A name that
+reads like two others (`Ian`, like
 `Lan` and `ian`) ranks after both and renumbers neither. A name that reads
 like a label a model reads as one of its own turns or a summarizer as the
 agent's or a one-to-one user's (`You`, `you (in a separate session)`,
@@ -3776,11 +3788,24 @@ them takes them as serialized, and registering a live channel that says it
 steers them but does not serialize them MUST fail, its steering otherwise
 dead. A message that comes while the channel's turn runs in the room, when no
 other turn of the channel waits in the
-room, is committed and delivered as any message (Section 10.1), and the room's
+room and the message is from the author of the message that turn answers, is
+committed and delivered as any message (Section 10.1), and the room's
 owner steers it into that turn (Section 21.3) as an `InjectMessage` of the text
 its content reads as (Section 6.6), under its speaker's label when the turn's
 history labels the room's speakers, as above: the turn
-reads it at its next stop, and no turn of its own starts. A turn cut before that
+reads it at its next stop, and no turn of its own starts. The author is the
+room source that wrote the message (a participant, a sender on its channel, or
+a channel: Section 10.1, step 12) under the name it is signed with, so one
+sender id that carries several people is not one author, and neither are two
+senders who sign one name. A turn runs in its
+author's name: its tools and its tool hooks read them as its actor (Section
+21.4), and its channel's tool policy is resolved for their role (Section
+21.1). A message from anyone else MUST NOT be handed to that turn, where
+their request would be served under that name and that role (RMK-1840): it
+waits a turn of its own, after the running one, as above.
+The owner reads the author on the request of the one turn the channel runs in
+the room, and steers that turn by its id; when the channel runs no turn or
+several there, the message waits a turn of its own. A turn cut before that
 stop never reads it: the message stays in the room, and the room's next turn
 reads it. Whether the turn can take the message is decided at its delivery, not
 at its commit, and a turn being cut takes it until its loop has ended. When the
@@ -19875,8 +19900,8 @@ When several people speak in the room (the conversation's threshold, Section
 6.4; a one-to-one conversation left as it is), the user's task such an input
 holds as a `<task>` block is headed by who asked for it, by the label the
 conversation gives the turn that led to it: `Alice asked:` before a
-participant's own words, `Requested by Alice (2), in the delegating agent's
-words:` before a task the delegating agent wrote. The heading names the
+participant's own words, `Requested by Alice (2, not Alice), in the delegating
+agent's words:` before a task the delegating agent wrote. The heading names the
 asker of the task the block holds and nothing else: the runtime's own
 prompts and the input a worker acts on as its own carry no asker.
 A revision a strategy asks for (a supervised step's rework, a Loop
@@ -20335,8 +20360,8 @@ SpeakQueue (one per room, readable by the host)
    a cut name could be another person's whole one. What is recorded is the
    person as the transcript labels them, and only when one person answers to
    the name: a name two people answer to (`Alice Martin`, `AliceMartin`)
-   records no one, and a look-alike's ranked label (`Alice (2)`, Section 6.4)
-   is addressed by no name. Where a person's name and an agent's handle read
+   records no one, and a look-alike's ranked label (`Alice (2, not Alice)`,
+   Section 6.4) is addressed by no name. Where a person's name and an agent's handle read
    alike, the name is the agent's. This is the mechanism Section 19.3.1 leaves
    open: an agent MAY address another agent.
 5. **A turn queues each agent once.** Each event a turn commits carries its

@@ -237,7 +237,7 @@
     },
     {
       "section": "6.4",
-      "sha256": "966ff08ab94f220b30f9dbd6b0549bcaefab3c13c96e8d96fd565460eac9dab8",
+      "sha256": "e68310a705f725a5f1311f8d08ca79e4d2502b880c9dbf36440c40746289623f",
       "classification": "normative",
       "review": "Source inventory: Intelligence Channels. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage. Reviewed the added deferred-input association and protected-context clause against shared hook scenarios and native mutation/tool tests; existing source units are unchanged."
     },
@@ -1257,7 +1257,7 @@
     },
     {
       "section": "19.7",
-      "sha256": "fd0a3551826783147a5b81f35a7d45cb547c367860d6a22f1cba80d1bc60ca25",
+      "sha256": "12c8bc79ad533f3b436566fd7d28425073106515d78c0583dc54865d686ea27e",
       "classification": "normative",
       "review": "Source inventory: Orchestration Strategies. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage. Reviewed the initial snapshot failure recovery clarification against the Python source test and native Rust regression; no complete implementation coverage is claimed."
     },
@@ -1287,7 +1287,7 @@
     },
     {
       "section": "19.7.5",
-      "sha256": "989b9a64cca5c6af848ff8bb1965739f41159d5cee43879c8f285229db94fa4a",
+      "sha256": "701513b4aad2e7ab9bdba2acc2f86bdee8475951f29bd98854dcdbd8f7a4f642",
       "classification": "normative",
       "review": "Source inventory: Discussion. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
     },
