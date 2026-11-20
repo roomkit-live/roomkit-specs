@@ -378,9 +378,15 @@ room callbacks of the setup are not compared.
   most (no bound when absent), the
   `hooks` it registers and the `room_hooks` it defines on triggers a turn
   fires (§10.6.6), `started` (default true; false: served only by an
-  `executor.start` step) and `answers` (default true; false: it takes each
+  `executor.start` step), `answers` (default true; false: it takes each
   turn it is given and never answers it, `gate` naming a gate it reaches as it
-  takes one, for a `wait_for` step). The channels it runs are the ones
+  takes one, for a `wait_for` step) and `own_process` (default false; true: it
+  runs as in a process of its own, on a thread and an event loop of its own,
+  over a node of its own of a distributed turn backend, so that the work of
+  its turns stalls nothing beside it, §10.6.8; a step other than
+  `executor.start` and `executor.close` does not name it, and a runner that
+  cannot run it so skips the scenario: roomkit outside its Redis turn mode,
+  roomkit-rs outside its Redis executor pass). The channels it runs are the ones
   the setup marks `declared`: each executor builds its own copy, and a
   scripted agent answers from the one model of its channel id, whichever
   executor runs its turn. `kit.turn_timeouts` gives the bounds of a turn
@@ -438,6 +444,7 @@ left, the call does what it does by default. A reaction:
 | `when` | Holds when every member equals the call's: `room_id`, `text` (a text content's body), `type` (the event type), `source_channel_id`, `chain_depth` |
 | `gate` | Holds the call at this gate until a step opens it |
 | `delay_ms` | Waits this many milliseconds after the gate and before the actions, to separate the start of nested call deadlines; absent or zero, no delay |
+| `holds_cpu_ms` | Keeps the thread running the call busy for this many milliseconds, after its gate and `delay_ms` and before its actions, yielding nothing to its event loop meanwhile, as work busy with its CPU does (§10.6.8) |
 | `do` | Kit calls the hook or the channel makes while it runs, in its execution context, in order: an **action** is a call (below) with an optional `as` and `expect`. Its error is caught, kept and checked, never raised into the kit |
 | `after_do_gate` | Holds after all `do` actions returned, before `after_turn` work and the reaction's result or failure; lets steps observe completed work without a delay |
 | `spawn` | Once `writes_record` is written and before its `gate`: starts a task, which the call does not wait for, that holds at the spawn's `gate`, waits its `delay_ms`, makes its `do` actions in order and holds at its `after_do_gate`, each as a reaction's. The task is started in the call's execution context, as the implementation's own spawn keeps it (roomkit: `asyncio.create_task`; roomkit-rs: `tokio::spawn` of `keep_context`), so that it acts for the call while the call runs and outlives it (§9.5.1 Reentrance). A runner waits for the task when it waits for the kit to go idle |
@@ -986,6 +993,11 @@ tests receipt ordering independently of the permission policy's decision.
 before either the successful reply or its error. It can keep a turn active
 until an observer has completed a public call.
 
+`prompts[].after_reply` is the agent's own activity once it answered the
+prompt, in the prompt's session and outside any prompt (§6.4, §10.6.6): held
+first at its `gate` when it names one, it sends its `updates`, then makes its
+`permission_steps`, each as a prompt's.
+
 `prompts[].permission_steps` supplies ordered `{request, updates?}` entries.
 The `request` contains raw ACP `toolCall` and `options`; `sessionId` comes
 from the prompt. The agent waits for the actual permission reply, then sends
@@ -1165,6 +1177,7 @@ run's own kit when absent.
 | `executor.start` | `executor`, an id of `setup.executors`: serves it on the kit's turn backend (§10.6.7) | null |
 | `executor.close` | `executor`: it takes no more turns and ends those it runs (§10.6, §10.6.8) | null |
 | `executor.kill` | `executor`: to the room it stops as a killed process stops, sending nothing more and hearing nothing more, its turns left to the owner's liveness checks (§10.6.8) | null |
+| `owner.kill` | none: the run's kit, the owner of its turns, stops to their executors as a killed process stops: on each turn's link it sends nothing more, releases nothing and reads nothing more, its turns left to the executors' liveness checks (§10.6.8); what the kit does of them afterwards reaches no executor, and no scenario observes it | null |
 | `executor.pause`, `executor.resume` | `executor`: it stops declaring its channels, or declares them again, keeping what it holds (§10.6.7) | null |
 | `telemetry.spans` | `site` (`owner` or `executor/<id>`), `kind` (`framework.broadcast`, `llm.generate`, `hook.sync` or `llm.tool_call`), optional exact `attributes` to select matching spans | completed spans at that site, each with `name`, `span_id` and `parent_id` |
 | `executor.calls` | `executor`: what it did so far, as `expect.executors` reads it; a turn's reaction may make it, to read that at a point of the turn | the list |
@@ -1304,8 +1317,9 @@ A call `status.<operation>` is the operation of the kit's status bus (§19.8);
 `status.post` is its `post_async`, which returns once the bus's subscribers
 ran. A call `host.<verb>` is a verb of the turn's host (§10.6.5), made by an
 action of a scripted intelligence channel's turn (`on_event`), during the
-turn (`do`) or after it (`after_turn`): a runner refuses one made anywhere
-else, where no turn's host is.
+turn (`do`) or after it (`after_turn`), or of a hook an executor fires while
+the turn runs (§10.6.6): a runner refuses one made anywhere else, where no
+turn's host is. `current_turn_host` reads whether one is.
 
 | Call | Arguments | Result |
 |---|---|---|
@@ -1324,6 +1338,7 @@ else, where no turn's host is.
 | `host.wait_task` | `task_id`, `timeout_ms` (the RFC's `timeout`, in milliseconds; none by default) | `{result, exception}` once the task ended: its DelegatedTaskResult and its failure's error record; null for a task the room's hosts did not delegate, or once `timeout_ms` passed first; refused after the turn, `needs_turn` (§10.6.5) |
 | `host.room_context` | none | the current room context as JSON, including fresh room/bindings/participants and history read even when the channel window is zero; refused after the turn (§10.6.5, §10.6.6) |
 | `host.room_tasks` | none | the turn's room's tasks, as `task_status` reads them (§23.4); refused after the turn, `needs_turn` (§10.6.5) |
+| `current_turn_host` | none: an action, wherever it runs | whether a turn's host is bound there, as `current_turn_host()` reads it (§10.6.5, §21.4) |
 | `declare_host_verb` | `name`, `handler` (below), `between_turns` (default false) | null; registers the callback on the kit through its public method (§10.6.5) |
 | `host.call` | `verb`, optional `arguments` (an object or null), optional `record_keys` | the actual call's `{result, error}`; an error has its recorded `kind` and exact `message`. With `record_keys`, also reads those keys from the caller's record after the reply, or null outside the turn |
 | `delegate` | `room_id`, `agent_id`, `task`, `wait` (default false), `context`, `share_channels`, `notify`, `post_status` (default true), `brief`, `conversation` (default 0), `hand_back` (default `relay`), `require_structured_result` (default false) and `max_result_retries` (default 3), an inline run's result tool, `submit_result`, served in the child room alone (§23.3) | the task: `id`, `child_room_id`, `parent_room_id`, `agent_id`, `task`, `brief`, `description`, `hand_back`, `status` and `result`, its DelegatedTaskResult once it ended (`task_id`, `child_room_id`, `parent_room_id`, `agent_id`, `status`, `output`, `error`, `duration_ms`, `metadata`); its `as` label names the task's id |
@@ -1468,6 +1483,7 @@ stores a simulated plan nor derives its tool result from these observations.
 | `acp_permissions` | Per ACP channel, actual replies to awaited permission requests, each `{session_id, tool_call_id, result}` or `error` (Scripted ACP agents) |
 | `executors` | Per executor of the setup, what it did, in order: `{call, channel_id, build}`, and `room_id` for a call about a room: `built` (a copy of the channel made, `build` counting them per executor and channel), `on_event` (with its `tools`: the names of the scripted agent's own tools, its `tools`, whose handler that turn ran on the executor, in the order called: a host's tool runs where its turn does, §10.6.5), `on_room_attached`, `on_room_detached`, `channel_call` (with its `verb`) and `close`. A detach from a room this build never saw let go of nothing and is not listed |
 | `turn_ends` | Per channel with `holds_end`, each of its turns its owner cut, in the order cut: `room_id`, `cut`, the first of `close` and `cancel` the owner sent the turn's executor, and `read`, whether the owner read the turn's `end` once the gate opened: false when it had let go of the turn first, dropping its later frames (§10.6.8) |
+| `killed_owner_frames` | The type of each frame the turns' executors sent the run's kit once an `owner.kill` step killed it, each once, sorted: what reached its turns' links, which it never read (§10.6.8) |
 | `lifecycle` | Per room, the lifecycle records (§5.1) in index order, when the implementation writes them: an implementation that writes none passes. It says which changes write one, and which write none (a change that changes nothing, §7.2) |
 | `participants` | Per room, the participants the store holds (§5.5), in the store's order |
 | `ai_routes` | Per scripted agent with a `router`, each request its router was asked, in order (§6.4): `reason` (`turn` at a turn's start, `retry` once a generation's retries are spent), `text` (what the turn answers, as text: the text of the event it answers), `previous` (for a retry, the model whose retries are spent, named as `models` names it; null at a turn's start) and `failed` (for a retry, the last refusal as `{status, message}`; null at a turn's start) |

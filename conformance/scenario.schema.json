@@ -1781,6 +1781,11 @@
           "type": "integer",
           "minimum": 0
         },
+        "holds_cpu_ms": {
+          "description": "Keep the thread running the call busy for this many milliseconds, after its gate and `delay_ms` and before its actions, yielding nothing to its event loop meanwhile, as work busy with its CPU does (\u00a710.6.8).",
+          "type": "integer",
+          "minimum": 1
+        },
         "after_do_gate": {
           "description": "Hold after all do actions have completed, before after_turn work or the reaction result/failure.",
           "type": "string"
@@ -2416,6 +2421,7 @@
             "executor.start",
             "executor.close",
             "executor.kill",
+            "owner.kill",
             "executor.pause",
             "executor.resume",
             "executor.calls",
@@ -2445,7 +2451,8 @@
             "declare_host_verb",
             "host.call",
             "telemetry.spans",
-            "turn_backend.fault"
+            "turn_backend.fault",
+            "current_turn_host"
           ]
         },
         "organization_id": {
@@ -7220,6 +7227,16 @@
             ]
           }
         },
+        "killed_owner_frames": {
+          "description": "The type of each frame the turns' executors sent the run's kit once an `owner.kill` step killed it, each once, sorted: what reached its turns' links, which it never read (\u00a710.6.8).",
+          "type": [
+            "array",
+            "object"
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
         "router_calls": {
           "description": "The scripted inbound router calls in order, before its gate: channel_id, channel_type, participant_id, channel_data, organization_id and identity_id (null when absent).",
           "type": [
@@ -10479,6 +10496,28 @@
         "before_reply_gate": {
           "description": "Hold after all updates and awaited permissions, before either the prompt result or its error.",
           "type": "string"
+        },
+        "after_reply": {
+          "description": "Once the prompt is answered, the agent's own activity in the prompt's session, outside any prompt: held at its `gate` first when it names one, then its `updates`, then its `permission_steps`, each as a prompt's (\u00a76.4, \u00a710.6.6).",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "gate": {
+              "type": "string"
+            },
+            "updates": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/record"
+              }
+            },
+            "permission_steps": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/acp_permission_step"
+              }
+            }
+          }
         }
       }
     },
@@ -10660,6 +10699,10 @@
             "type": "string"
           },
           "uniqueItems": true
+        },
+        "own_process": {
+          "description": "True: it runs as in a process of its own, on a thread and an event loop of its own, over a node of its own of a distributed turn backend, so that the work of its turns stalls nothing beside it (\u00a710.6.8). A runner that cannot run it so skips the scenario. Default false.",
+          "type": "boolean"
         }
       },
       "not": {

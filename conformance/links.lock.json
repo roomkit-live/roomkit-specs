@@ -3089,8 +3089,14 @@
     "RK-10.6.6-022": {
       "executors/a-hook-on-an-executor-reads-the-room-when-it-fires": "de84d7d8bd33e93829b436780d5dc34fa0cc1ef3365bb988dfbcdc09b6235ada"
     },
+    "RK-10.6.6-023": {
+      "executors/a-hook-on-an-executor-fired-by-an-acp-agent-between-prompts-reads-the-last-turn-s-context-and-changes-nothing": "c549c65a2e73033565175d0db4422f35886a3c2331f03f753060639b45c4832b"
+    },
     "RK-10.6.6-024": {
       "executors/a-hook-on-an-executor-whose-context-the-owner-fails-to-build-does-not-run": "942665e32dc3c8ecdd74a1d7b1fa143bc7a993b62e371f8dba70d398ee5f411c"
+    },
+    "RK-10.6.6-025": {
+      "executors/a-hook-on-an-executor-fired-by-an-acp-agent-between-prompts-reads-the-last-turn-s-context-and-changes-nothing": "0996d752ea44cb385f50516156b5a95b81eb8cca28f12c763d559650144f1e76"
     },
     "RK-10.6.7-003": {
       "executors/the-kit-lists-the-executors-served-and-what-each-declares": "f384428024b7d234010ae7eeb962d366c465783b5a962fa80de2f4a6ae737380"
@@ -3220,6 +3226,12 @@
     "RK-10.6.8-007": {
       "executors/an-executor-killed-mid-answer-loses-its-turn-and-what-was-shown-stays": "2bdc189cfa3961221b0aa5200198a95d544a11effc6ca27aced655f8dc8e767b",
       "executors/an-executor-that-never-answers-loses-the-turn-and-no-other-gets-it": "2bdc189cfa3961221b0aa5200198a95d544a11effc6ca27aced655f8dc8e767b"
+    },
+    "RK-10.6.8-008": {
+      "executors/a-turn-whose-owner-was-killed-is-cut-owner-lost-on-its-executor": "b868f8fce2ca9331df6f998500f79686e5e97a7f992a6992be9204d521a3222a"
+    },
+    "RK-10.6.8-010": {
+      "executors/a-turn-busy-with-its-cpu-on-an-executor-in-a-process-of-its-own-still-beats": "7c596b8c86f360525d85ddc9865280529558cacc225b8b089e5973bff6dd6194"
     },
     "RK-10.6.8-012": {
       "executors/an-executor-restarted-under-its-id-does-not-keep-the-killed-one-s-turn": "c379642986ba6af0cae2871ada53a56199e6f8c07a63efef2b92ad75f8000ead"

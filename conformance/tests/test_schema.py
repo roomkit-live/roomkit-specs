@@ -466,3 +466,56 @@ class SchemaTests(unittest.TestCase):
                 step = next(s for s in scenario["steps"] if s.get("call") == "delivery.cancel")
                 step["expect"] = {"error": name}
                 self.assertEqual(validator.is_valid(scenario), valid)
+
+    def test_an_owner_is_killed_and_a_turn_holds_its_cpu_apart(self) -> None:
+        validator = Draft202012Validator(json.loads((ROOT / "scenario.schema.json").read_text()))
+        killed = ROOT / (
+            "scenarios/executors/a-turn-whose-owner-was-killed-is-cut-owner-lost-on-its-executor.json"
+        )
+        for call, valid in (("owner.kill", True), ("owner.stop", False)):
+            with self.subTest(call=call):
+                scenario = json.loads(killed.read_text())
+                step = next(s for s in scenario["steps"] if s.get("call") == "owner.kill")
+                step["call"] = call
+                self.assertEqual(validator.is_valid(scenario), valid)
+        for frames, valid in ((["heartbeat"], True), ([1], False), ("heartbeat", False)):
+            with self.subTest(frames=frames):
+                scenario = json.loads(killed.read_text())
+                scenario["expect"]["killed_owner_frames"] = frames
+                self.assertEqual(validator.is_valid(scenario), valid)
+        busy = ROOT / (
+            "scenarios/executors"
+            "/a-turn-busy-with-its-cpu-on-an-executor-in-a-process-of-its-own-still-beats.json"
+        )
+        for held, valid in ((1500, True), (0, False), ("1500", False)):
+            with self.subTest(held=held):
+                scenario = json.loads(busy.read_text())
+                scenario["setup"]["channels"][1]["on_event"][0]["holds_cpu_ms"] = held
+                self.assertEqual(validator.is_valid(scenario), valid)
+        for apart, valid in ((True, True), ("yes", False)):
+            with self.subTest(apart=apart):
+                scenario = json.loads(busy.read_text())
+                scenario["setup"]["executors"][0]["own_process"] = apart
+                self.assertEqual(validator.is_valid(scenario), valid)
+
+    def test_an_acp_agent_acts_after_its_reply(self) -> None:
+        validator = Draft202012Validator(json.loads((ROOT / "scenario.schema.json").read_text()))
+        fixture = ROOT / (
+            "scenarios/executors/a-hook-on-an-executor-fired-by-an-acp-agent-between-prompts"
+            "-reads-the-last-turn-s-context-and-changes-nothing.json"
+        )
+        for after, valid in (
+            ({"gate": "later", "updates": []}, True),
+            ({"gate": "later", "prompt": "again"}, False),
+            ({"permission_steps": {}}, False),
+        ):
+            with self.subTest(after=after):
+                scenario = json.loads(fixture.read_text())
+                scenario["setup"]["channels"][1]["acp"]["agent"]["prompts"][0]["after_reply"] = after
+                self.assertEqual(validator.is_valid(scenario), valid)
+        for call, valid in (("current_turn_host", True), ("current_turn_hosts", False)):
+            with self.subTest(call=call):
+                scenario = json.loads(fixture.read_text())
+                hook = scenario["setup"]["executors"][0]["hooks"][0]
+                hook["reactions"][1]["do"][0]["call"] = call
+                self.assertEqual(validator.is_valid(scenario), valid)
