@@ -452,6 +452,16 @@
                 "required": [
                   "acp"
                 ]
+              },
+              {
+                "required": [
+                  "type"
+                ],
+                "properties": {
+                  "type": {
+                    "const": "host"
+                  }
+                }
               }
             ]
           }

@@ -4020,6 +4020,9 @@
     "RK-5.6-007": {
       "store/an-unlink-changes-whom-a-later-message-resolves-to-not-the-conversation": "2238da59ee7b4b4c5289d2ac740f88367d18b9f32d6d2624da1769e2b0dc3f8a"
     },
+    "RK-5.6-008": {
+      "routing/a-sender-resolves-to-the-address-linked-in-the-channel-s-form": "a25dfcf6a9081e15c7a62fef7f7e304874334782e94f87cecbaee58cde3b5d31"
+    },
     "RK-5.7-003": {
       "binding-update/mute-output-changed": "e917a4b4e26e5e4bc03fcc3f9f2d2cb4b3eff7add3b3746bbff1f91cabf3f5b0",
       "binding-update/mute-output-unchanged": "e917a4b4e26e5e4bc03fcc3f9f2d2cb4b3eff7add3b3746bbff1f91cabf3f5b0",

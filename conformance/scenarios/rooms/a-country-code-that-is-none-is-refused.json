@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "rooms/a-country-code-that-is-none-is-refused",
-  "title": "A country code that is not one to three digits, the first not 0, is refused as the channel is configured and as a number is written with it; one written with its + is a code",
+  "title": "A country code that is not one to three digits, the first not 0, is refused as the channel is configured and as a number is written with it; a code of one to three digits is one, written with its + or not",
   "rules": [
     "§5.7"
   ],
@@ -154,6 +154,41 @@
       }
     },
     {
+      "call": "register_channel",
+      "channel": {
+        "id": "ie",
+        "type": "sms",
+        "addressing": {
+          "country_code": "353"
+        }
+      },
+      "expect": {
+        "result": null
+      }
+    },
+    {
+      "call": "process_inbound",
+      "message": {
+        "channel_id": "ie",
+        "sender_id": "087 123 4567",
+        "content": {
+          "type": "text",
+          "body": "hello"
+        }
+      },
+      "expect": {
+        "result": {
+          "blocked": false,
+          "event": {
+            "room_id": "$r2",
+            "source": {
+              "participant_id": "+353871234567"
+            }
+          }
+        }
+      }
+    },
+    {
       "call": "addressing_of.normalize",
       "channel_type": "sms",
       "address": "0612345678",
@@ -196,6 +231,15 @@
       "country_code": "+33",
       "expect": {
         "result": "+33612345678"
+      }
+    },
+    {
+      "call": "addressing_of.normalize",
+      "channel_type": "sms",
+      "address": "087 123 4567",
+      "country_code": "+353",
+      "expect": {
+        "result": "+353871234567"
       }
     }
   ]

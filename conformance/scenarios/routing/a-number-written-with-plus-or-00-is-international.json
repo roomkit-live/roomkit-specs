@@ -9,7 +9,7 @@
   "requirements": [
     "RK-5.7-030"
   ],
-  "notes": "The SMS channel takes its type's addressing, with no country code: the international form needs none.",
+  "notes": "The SMS channel takes its type's addressing, with no country code: the international form needs none. However few its digits, a number written with + or 00 is + and its digits: a short code is digits written without either (§5.7).",
   "setup": {
     "channels": [
       {
@@ -107,6 +107,50 @@
           }
         }
       }
+    },
+    {
+      "call": "process_inbound",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+12 34 56",
+        "content": {
+          "type": "text",
+          "body": "five"
+        }
+      },
+      "expect": {
+        "result": {
+          "blocked": false,
+          "event": {
+            "room_id": "$r3",
+            "source": {
+              "participant_id": "+123456"
+            }
+          }
+        }
+      }
+    },
+    {
+      "call": "process_inbound",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "001234",
+        "content": {
+          "type": "text",
+          "body": "six"
+        }
+      },
+      "expect": {
+        "result": {
+          "blocked": false,
+          "event": {
+            "room_id": "$r4",
+            "source": {
+              "participant_id": "+1234"
+            }
+          }
+        }
+      }
     }
   ],
   "expect": {
@@ -125,6 +169,16 @@
           "metadata": {
             "phone_number": "+442079460958"
           }
+        }
+      },
+      "$r3": {
+        "sms": {
+          "participant_id": "+123456"
+        }
+      },
+      "$r4": {
+        "sms": {
+          "participant_id": "+1234"
         }
       }
     }

@@ -237,7 +237,8 @@ room callbacks of the setup are not compared.
     it names one, is the country code the channel declares, written with or
     without its `+`, and a code the implementation refuses refuses the
     channel's registration (`invalid_argument`). A channel with
-    `addressing` takes neither `recipient_key` nor `addresses`;
+    `addressing` takes neither `recipient_key` nor `addresses`, and is
+    neither a host channel, a scripted agent nor an ACP channel;
   - with `sender_is_participant`, it names its own senders: its inbound
     `sender_id` is a room's `Participant.id`, which no resolver is asked
     about (§11.6);

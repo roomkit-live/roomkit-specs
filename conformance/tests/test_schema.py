@@ -146,6 +146,7 @@ class SchemaTests(unittest.TestCase):
             ({"recipient_key": "phone_number"}, False),
             ({"addresses": {}}, False),
             ({"model": {"rounds": []}}, False),
+            ({"type": "host"}, False),
             ({"addressing": {"country_code": 33}}, False),
             ({"addressing": {"recipient_key": "phone_number"}}, False),
         ):
