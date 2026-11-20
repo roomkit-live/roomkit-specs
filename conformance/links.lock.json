@@ -5080,11 +5080,65 @@
       "tasks/a-delegated-turn-s-returned-error-is-reported-in-its-child-room": "9ac69c63cfaa941b30557f2187ffd49df5b6fb05a055aa351675818816dd5f2a",
       "tasks/a-shared-room-s-failed-streams-are-each-their-agent-s": "9ac69c63cfaa941b30557f2187ffd49df5b6fb05a055aa351675818816dd5f2a"
     },
+    "RK-9.2-035": {
+      "voice/speech-edges-bracket-an-utterance": "e91f863025a3f39e10640a4bf88847783ac08f4b630a30836737679ee7560c8b"
+    },
+    "RK-9.2-036": {
+      "voice/speech-edges-bracket-an-utterance": "c6018e2eb20a12dc1bddb25d0a453dcbf25eafd7fe8a60d686de504334160036"
+    },
+    "RK-9.2-037": {
+      "voice/the-transcription-hook-replaces-the-routed-words": "c946d5c15341955a2b3b2f71e33b4d54b9bccbc7db22050a39d79ae949b955db"
+    },
+    "RK-9.2-038": {
+      "voice/a-streamed-reply-checks-each-sentence-before-synthesis": "55cab736122015f8a38eb17b856279ddb31c16f91669f471593210f582f6aa25"
+    },
+    "RK-9.2-039": {
+      "voice/synthesis-reports-the-text-after-it-is-spoken": "d5dd8d19c44d3982de51aabe1f9baec59f78cf7691cf01d2bfae824bdf5cfee4"
+    },
+    "RK-9.2-040": {
+      "voice/a-transport-barge-in-cancels-active-playback": "88a395bf21315b2f61391c07bd72f468eec322dfdfcf8bc686ca77eacc9dcc89"
+    },
+    "RK-9.2-041": {
+      "voice/a-transport-barge-in-cancels-active-playback": "94537b58f6403c459498f4ee638ccd3e1fcf0a60b9ee969eb2efe0075f0fae06"
+    },
+    "RK-9.2-042": {
+      "voice/streamed-recognition-reports-a-partial": "6e2f200aec9bc19fe3e020123eb91a86e0b34e1e9bc9ecd6154a5a4dc727a044"
+    },
+    "RK-9.2-043": {
+      "voice/vad-reports-a-silence": "fa7a97f77d7f654f61ad49961b59dfd2dc084215fad922cdbad818a5f7c63ca5"
+    },
+    "RK-9.2-044": {
+      "voice/vad-reports-its-measured-level": "b3faa62337a200117276a7b6bb9526bc5eb9dd0b93b21c693a11243ca3bbd593"
+    },
+    "RK-9.2-045": {
+      "voice/input-frames-report-an-audio-level": "d4bf10d0c80ee896dd93eb1a213f46fdd4ee237b2b95d0ab1d707ef64974b7ee"
+    },
+    "RK-9.2-046": {
+      "voice/outbound-speech-reports-an-audio-level": "4a4706043604722393a905a31995a40fbcf1571e44e8803d80140e4b0f64ee09"
+    },
+    "RK-9.2-047": {
+      "voice/diarization-reports-a-new-speaker": "b09f2e518a6c97b3e557a92cb74bc5a9233b018d7f784f1437546fa83153e687"
+    },
+    "RK-9.2-048": {
+      "voice/a-detected-tone-reaches-the-dtmf-hook": "16d104aeb85b162865553d23ab666d2b16639e73b9eed169ecefde3c0b0e9613"
+    },
+    "RK-9.2-049": {
+      "voice/a-turn-waits-for-its-last-fragment": "484c28c2e6303f1e3f41c48a68f264f0dba62f0179fc2d3cc9587f43205d270b"
+    },
+    "RK-9.2-050": {
+      "voice/a-turn-waits-for-its-last-fragment": "dd98912840b2293d8a44390f0ebd2c61bf121aaf03e8b6ec77ace7f138663010"
+    },
+    "RK-9.2-051": {
+      "voice/a-backchannel-leaves-the-reply-playing": "55ed7afe10ee0747eb2981d452338bbf5cdef7818a2dac3bc0c73929bcb7e46d"
+    },
     "RK-9.2-052": {
       "greeting/a-session-started-hook-holds-no-message": "4673cd7f5ff88746f707bbd3a9f509bbe9dd8810968fab50933924172084c32f"
     },
     "RK-9.2-058": {
       "media/an-emitted-protocol-trace-reaches-its-room-observer": "e0f22d898e0d0b52fe3e7acb6ec0ef4d63567fbb9e341c2b047004baf5188a77"
+    },
+    "RK-9.2-059": {
+      "voice/a-bridge-forwards-only-the-frame-the-hook-admits": "85beb1c71e13bb25e2822f2d91c14c13476ae36948d26fffbd49672520aa8acc"
     },
     "RK-9.2-060": {
       "delivery/a-before-deliver-refusal-is-reported-to-the-caller-and-after-deliver": "42a34f435c75635cadb8c4c548d3e0649633f88a27b4389421bd397c8e1946b6",
@@ -5404,6 +5458,10 @@
       "tools/a-tool-call-hook-past-its-timeout-is-reported": "12d5c721be891007c8bbd43071bffe45bd53044d7a325b0720248989568cd2eb",
       "tools/before-tool-use-fails-closed": "12d5c721be891007c8bbd43071bffe45bd53044d7a325b0720248989568cd2eb"
     },
+    "RK-9.3-021": {
+      "voice/a-failed-transcription-hook-withholds-the-utterance": "2cecbd2084464bb00e179d00779553103deebfc1d67e4a7b2f3051d5949c1d39",
+      "voice/a-streamed-reply-checks-each-sentence-before-synthesis": "2cecbd2084464bb00e179d00779553103deebfc1d67e4a7b2f3051d5949c1d39"
+    },
     "RK-9.3-022": {
       "acp/handler-hook-failure-completed": "48a0b8dd678fe6505baa9c232cd93f5f29c0c97c38c4fa4cf667f42b8daceec2",
       "acp/handler-hook-failure-open": "48a0b8dd678fe6505baa9c232cd93f5f29c0c97c38c4fa4cf667f42b8daceec2",
@@ -5495,6 +5553,9 @@
     "RK-9.3-036": {
       "appendix-b/b1-customer-and-ai": "91018dca98181cf94687981bf2c2691aecbfec26a802b9b41b978bbb7b385d8d",
       "rooms/creation-awaits-its-hooks": "91018dca98181cf94687981bf2c2691aecbfec26a802b9b41b978bbb7b385d8d"
+    },
+    "RK-9.3-038": {
+      "voice/partial-speech-is-observed-before-its-final": "d40275389c1197fb2bf64670f7ccea8dd727c30cb0b357a1656bec0b6ab2d844"
     },
     "RK-9.3-039": {
       "hooks/ai-response-comes-once-the-on-ai-response-hooks-have-ended": "f849b5096b5ef578118fbefa869c5c55a44e2570e7b9ddd6339af326e20b077d",

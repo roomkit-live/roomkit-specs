@@ -1004,6 +1004,13 @@ run's own kit when absent.
 
 | Call | Arguments | Result |
 |---|---|---|
+| `voice.open` | `room_id`, `channel_id`, `participants` and the optional provider inputs below | registers and attaches a voice channel, then joins the named participants to that room |
+| `voice.feed` | `channel_id`, `participant_id`, `frames` (base64 PCM16 mono at 16 kHz) | the transport delivers these inbound frames in order |
+| `voice.say` | `channel_id`, `participant_id`, `text` | speak to the participant, awaiting playback |
+| `voice.stream` | `channel_id`, `chunks` (strings) | deliver a streamed reply to the channel |
+| `voice.barge_in` | `channel_id`, `participant_id` | the transport signals an interruption |
+| `voice.settle` | `channel_id` | wait for outstanding voice work after the utterance, playback or bridge frame |
+| `voice.read` | `channel_id` | `synthesized` (the sentences the TTS provider received) and `audio` (per participant, the base64 chunks received by their transport) |
 | `parse_voice_session` | `session` (a voice session with `id`, `room_id`, `channel_id`, `participant_id` and optional `metadata`), `channel_id`, optional `metadata` | the InboundMessage made by the voice adapter (§5.12), including its session |
 | `emit_protocol_trace` | `trace`, a §5.14 record for a registered channel; its optional `raw` is text, null, or `{"base64": "..."}` for bytes | emits through the channel; the kit supplies the timestamp and dispatches the trace to its room's hooks (§9.2) |
 | `process_inbound` | `message` (an InboundMessage; its optional `session` uses the same form as `parse_voice_session`), `room_id` | an InboundResult: `event`, `blocked`, `duplicate`, `reason`, `error` (its message), `response_metadata`, `response_events`, `unavailable_targets`, `delivery_results`, `cancellation_reason` |
@@ -1092,6 +1099,33 @@ run's own kit when absent.
 | `delegate_handler` | `handler`, the name the later calls give it; `notify`, `default_share_channels`, `cache` (true: a CompletedTaskCache of the implementation's default time to live), `serialize_per_room`, `max_conversation`, `max_result_chars`, `wait_in_task_rooms`, each the implementation's default when absent: the implementation's DelegateHandler, serving no agent yet (§23.4) | null |
 | `setup_delegation` | `agent_id`, `handler`, `targets` (each an id and its description or null: the tool `build_delegate_tool` builds; absent: the generic one): serves `delegate_task` on the agent (§23.4) | null |
 | `delegate.handle` | `handler`, `room_id`, `calling_agent_id`, `arguments`, the tool call's: the handler's `handle` (§23.4) | what the tool answers: `status`, `task_id`, `child_room_id`, `agent_id`; a repeat answered from the cache, `result` and `from_cache` too; a call run inline (`wait_in_task_rooms`), `status` the status its task ended with, and `result`; its `as` label names the task's id |
+
+### Scripted voice sessions
+
+A voice scenario declares `"requires_features": ["voice"]`. The transport feeds
+real channel input. The optional inputs on `voice.open` script its providers:
+
+- `vad` supplies one decision per inbound frame. Each is null or has a `type`
+  of `speech_start`, `speech_end`, `silence` or `audio_level`, with optional
+  `duration_ms`, `confidence` and `level_db`. Speech edges carry a nonempty
+  pre-roll or utterance buffer.
+- `speakers` supplies diarization results (`speaker_id`, `confidence`,
+  `is_new_speaker`). `tones` supplies detected digits (`digit`, `duration_ms`).
+- `transcripts` supplies final STT text by utterance. With `partials`, the
+  recognizer streams these partial words on the first audio of the segment and
+  returns its final at the end of the segment.
+- `turns` supplies completeness decisions, one boolean per utterance.
+  `backchannels` selects semantic interruption with the listed boolean
+  classifications of incoming words during playback.
+- `bridge` forwards permitted frames to the other participants when true.
+  `playback_gate` holds the playback at the transport until a step opens it,
+  so speech or a barge-in can arrive while the reply is playing.
+
+Voice hook observations under `expect.hooks` expose `voice.participant_id`
+from the session and the payload's scalar fields, such as the transcript's
+`text` or a detected tone's `digit`. The TTS hooks carry only `voice.text`.
+A synchronous transcription hook can replace the words with a `modify`
+result whose `event.text` holds the replacement.
 
 ### Calls on the store
 

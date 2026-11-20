@@ -2064,6 +2064,13 @@
       "properties": {
         "call": {
           "enum": [
+            "voice.open",
+            "voice.feed",
+            "voice.say",
+            "voice.stream",
+            "voice.barge_in",
+            "voice.settle",
+            "voice.read",
             "parse_voice_session",
             "emit_protocol_trace",
             "process_inbound",
@@ -2272,6 +2279,302 @@
         }
       },
       "allOf": [
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "voice.open"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "channel_id",
+              "room_id",
+              "participants"
+            ],
+            "properties": {
+              "channel_id": {
+                "type": "string"
+              },
+              "room_id": {
+                "type": "string"
+              },
+              "participants": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "minItems": 1,
+                "uniqueItems": true
+              },
+              "transcripts": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "minItems": 1
+              },
+              "partials": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "minItems": 1
+              },
+              "speakers": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "speaker_id": {
+                      "type": "string"
+                    },
+                    "confidence": {
+                      "type": "number"
+                    },
+                    "is_new_speaker": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "speaker_id",
+                    "confidence",
+                    "is_new_speaker"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "turns": {
+                "type": "array",
+                "items": {
+                  "type": "boolean"
+                }
+              },
+              "tones": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "digit": {
+                      "type": "string"
+                    },
+                    "duration_ms": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "digit",
+                    "duration_ms"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "backchannels": {
+                "type": "array",
+                "items": {
+                  "type": "boolean"
+                }
+              },
+              "bridge": {
+                "type": "boolean"
+              },
+              "playback_gate": {
+                "type": "string"
+              },
+              "vad": {
+                "type": "array",
+                "items": {
+                  "oneOf": [
+                    {
+                      "type": "null"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "enum": [
+                            "speech_start",
+                            "speech_end",
+                            "audio_level",
+                            "silence"
+                          ]
+                        },
+                        "duration_ms": {
+                          "type": "number"
+                        },
+                        "confidence": {
+                          "type": "number"
+                        },
+                        "level_db": {
+                          "type": "number"
+                        }
+                      },
+                      "required": [
+                        "type"
+                      ],
+                      "additionalProperties": false
+                    }
+                  ]
+                }
+              }
+            },
+            "dependentRequired": {
+              "partials": [
+                "transcripts"
+              ],
+              "backchannels": [
+                "partials"
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "voice.feed"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "channel_id",
+              "participant_id",
+              "frames"
+            ],
+            "properties": {
+              "channel_id": {
+                "type": "string"
+              },
+              "participant_id": {
+                "type": "string"
+              },
+              "frames": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "minItems": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "voice.say"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "channel_id",
+              "participant_id",
+              "text"
+            ],
+            "properties": {
+              "channel_id": {
+                "type": "string"
+              },
+              "participant_id": {
+                "type": "string"
+              },
+              "text": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "voice.stream"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "channel_id",
+              "chunks"
+            ],
+            "properties": {
+              "channel_id": {
+                "type": "string"
+              },
+              "chunks": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "minItems": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "voice.barge_in"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "channel_id",
+              "participant_id"
+            ],
+            "properties": {
+              "channel_id": {
+                "type": "string"
+              },
+              "participant_id": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "voice.settle"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "channel_id"
+            ],
+            "properties": {
+              "channel_id": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "voice.read"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "channel_id"
+            ],
+            "properties": {
+              "channel_id": {
+                "type": "string"
+              }
+            }
+          }
+        },
         {
           "if": {
             "properties": {
