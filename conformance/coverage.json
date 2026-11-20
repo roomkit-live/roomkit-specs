@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "2885721f5bbf992ebc687ad8bb8f8efaded187e3b63976d1df05b4fb674f46d9",
-  "corpus_sha256": "219e8ef905228ceafc41e5b9e1fe9f9c0cb9e8ee0d0e2b18466b3ab967bb5876",
+  "corpus_sha256": "8c650688dae0fa1ebb0ce2ef853e0f44d6b5cfb95deac7c29e8694ab8ef9e1f0",
   "python_commit": "929f9dc7fa1cd70907b6ece5fea89f8ff7979f52",
-  "scenario_count": 3385,
+  "scenario_count": 3388,
   "sections": [
     {
       "section": "0",
@@ -1398,6 +1398,7 @@
         "eviction/a-stored-result-of-parts-read-as-text-is-never-noted-as-a-repeat",
         "eviction/an-evicted-answer-given-a-third-time-is-noted",
         "executors/a-built-channel-reads-its-own-attachment-and-resolves-its-bytes",
+        "executors/a-hook-on-an-executor-fired-by-an-acp-agent-between-prompts-reads-the-last-turn-s-context-and-changes-nothing",
         "executors/a-plan-a-build-let-go-held-reads-empty-at-its-next-build",
         "executors/a-provider-the-factory-hands-every-build-outlives-a-build-let-go",
         "executors/a-provider-the-factory-hands-every-build-outlives-its-executor-s-close",
@@ -5428,6 +5429,7 @@
         "executor-close/a-turn-closing-the-kit-sees-its-close-return",
         "executors/a-chain-of-turns-apart-sending-through-their-host-stops-at-the-depth-limit",
         "executors/a-declared-agent-s-delegate-task-is-kept-by-the-owner-for-each-build",
+        "executors/a-hook-on-an-executor-fired-by-an-acp-agent-between-prompts-reads-the-last-turn-s-context-and-changes-nothing",
         "executors/a-later-turn-on-another-executor-replays-the-instruction-it-read",
         "executors/a-turn-apart-asks-a-person-through-the-room-owner",
         "executors/a-turn-apart-calls-a-tool-the-room-owner-serves",
@@ -5540,6 +5542,7 @@
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "executors/a-committed-event-goes-to-one-executor-that-would-take-the-room-s-turns",
+        "executors/a-hook-on-an-executor-fired-by-an-acp-agent-between-prompts-reads-the-last-turn-s-context-and-changes-nothing",
         "executors/a-hook-on-an-executor-reads-the-room-when-it-fires",
         "executors/a-hook-on-an-executor-whose-context-the-owner-fails-to-build-does-not-run",
         "executors/a-room-hook-no-executor-defines-takes-its-agent-offline-in-that-room",
@@ -5673,8 +5676,10 @@
         "executors/a-slow-turn-apart-that-keeps-beating-is-never-failed",
         "executors/a-turn-apart-s-error-message-reaches-on-error-and-never-a-model",
         "executors/a-turn-apart-silent-while-its-tool-runs-past-the-heartbeat-timeout-is-kept",
+        "executors/a-turn-busy-with-its-cpu-on-an-executor-in-a-process-of-its-own-still-beats",
         "executors/a-turn-handed-to-an-executor-that-never-answered-stays-the-previous-one",
         "executors/a-turn-no-executor-declares-fails-and-the-room-goes-on",
+        "executors/a-turn-whose-owner-was-killed-is-cut-owner-lost-on-its-executor",
         "executors/after-a-lost-executor-the-room-s-next-turn-runs-elsewhere",
         "executors/an-executor-closed-during-a-turn-ends-it",
         "executors/an-executor-killed-mid-answer-loses-its-turn-and-what-was-shown-stays",
