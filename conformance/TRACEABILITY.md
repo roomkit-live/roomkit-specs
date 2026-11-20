@@ -318,6 +318,30 @@ python conformance/record.py rust --rust-repo ../roomkit-rs \
   -- env ROOMKIT_CONFORMANCE_JUNIT=target/conformance cargo test -p roomkit --test conformance
 ```
 
+roomkit-rs runs the scenarios with `setup.executors` only across its Redis
+turn executor, when `REDIS_URL` names a Redis server; the passes above skip
+them. A pass that runs them is a backend of its own, `memory+redis-executors`,
+`sqlite+redis-executors` or `postgres+redis-executors`, on its store's
+runtimes. From roomkit-rs `773311efae440c2b2b88a37674cfc34396b1b014` on, its
+class names it (`conformance.memory+redis-executors.current_thread`): a plain
+report is never recorded under that backend, nor such a report under the plain
+one. An earlier runner gave that pass the plain class (see the
+[executions README](executions/README.md), "Recording receipts"). Only the
+scenarios with executors cross Redis in that pass;
+every other scenario runs in process, as in the plain pass. Python's
+`+redis-turns`, whose every turn crosses Redis, is another mode, hence another
+name. The receipt and its file write `+` as `-`:
+`rust-<commit>-memory-redis-executors-current-thread`.
+
+```sh
+REDIS_URL=redis://127.0.0.1:6379 ROOMKIT_CONFORMANCE_JUNIT=target/conformance \
+  cargo test -p roomkit --features redis --test conformance
+python conformance/record.py rust --rust-repo ../roomkit-rs \
+  --junit ../roomkit-rs/target/conformance/memory+redis-executors-current_thread.xml \
+  -- env REDIS_URL=redis://127.0.0.1:6379 ROOMKIT_CONFORMANCE_JUNIT=target/conformance \
+     cargo test -p roomkit --features redis --test conformance
+```
+
 Rust's aggregate cargo summary (format `cargo`) stays refused: memory and
 SQLite emit the same summary, and equal scenario counts do not identify the
 executed IDs. Other backends and specialized test executions remain

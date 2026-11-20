@@ -31,12 +31,20 @@ PROFILES = {
 # roomkit-rs's passes, each a backend and a tokio runtime: one thread
 # (`current_thread`) or four workers (`multi_thread_4`). Its runner writes one
 # JUnit case per scenario, named by the scenario's id, under the class
-# `conformance.<backend>.<runtime>`, so the report itself names the pass.
+# `conformance.<backend>.<runtime>`, so the report itself names the pass. A
+# plain pass skips the scenarios with `setup.executors`; with `REDIS_URL` set,
+# the runner runs them across its Redis turn executor and names the backend
+# `<store>+redis-executors`. Every other scenario runs in process in both: unlike
+# Python's `+redis-turns`, the other scenarios' turns never cross Redis.
 RUST_PROFILES = {
     ("memory", "current_thread"),
     ("memory", "multi_thread_4"),
     ("sqlite", "current_thread"),
     ("postgres", "current_thread"),
+    ("memory+redis-executors", "current_thread"),
+    ("memory+redis-executors", "multi_thread_4"),
+    ("sqlite+redis-executors", "current_thread"),
+    ("postgres+redis-executors", "current_thread"),
 }
 
 TURN_BACKEND = "ROOMKIT_TEST_TURN_BACKEND"
@@ -119,8 +127,9 @@ def rust_class(backend: str, runtime: str) -> str:
 
 
 def rust_id(commit: str, backend: str, runtime: str) -> str:
-    """The id of the Rust receipt of a pass at *commit*, and its retained file's name."""
-    return f"rust-{commit[:7]}-{backend}-{runtime.replace('_', '-')}"
+    """The id of the Rust receipt of a pass at *commit*, and its retained file's name,
+    with `+` and `_` written `-`."""
+    return f"rust-{commit[:7]}-{backend.replace('+', '-')}-{runtime.replace('_', '-')}"
 
 
 def rust_outcomes(raw: bytes, backend: str, runtime: str) -> dict[str, str]:

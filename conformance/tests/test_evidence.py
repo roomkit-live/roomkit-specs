@@ -290,12 +290,50 @@ class EvidenceTests(unittest.TestCase):
                 self.assertIn("JUnit says not_run", rust_junit(run, xml)[0])
         self.assertEqual(rust_junit(self.rust_run("memory", "current_thread"), xml), [])
 
+    def test_rust_junit_never_reads_a_plain_pass_for_the_redis_executor_one(self) -> None:
+        case = '<testsuite><testcase classname="conformance.{}.{}" name="a"/></testsuite>'
+        for store, runtime in [
+            ("memory", "current_thread"),
+            ("memory", "multi_thread_4"),
+            ("sqlite", "current_thread"),
+            ("postgres", "current_thread"),
+        ]:
+            plain = case.format(store, runtime).encode()
+            redis = case.format(f"{store}+redis-executors", runtime).encode()
+            for backend, own, other in [
+                (store, plain, redis),
+                (f"{store}+redis-executors", redis, plain),
+            ]:
+                with self.subTest(backend=backend, runtime=runtime):
+                    run = self.rust_run(backend, runtime)
+                    self.assertEqual(rust_junit(run, own), [])
+                    self.assertIn("JUnit says not_run", rust_junit(run, other)[0])
+
+    def test_rust_id_writes_the_redis_executor_pass_apart(self) -> None:
+        commit = "c" * 40
+        self.assertEqual(
+            rust_id(commit, "memory+redis-executors", "multi_thread_4"),
+            "rust-ccccccc-memory-redis-executors-multi-thread-4",
+        )
+        self.assertEqual(rust_id(commit, "memory", "multi_thread_4"), "rust-ccccccc-memory-multi-thread-4")
+        run = self.rust_run("sqlite+redis-executors", "current_thread")
+        xml = b'<testsuite><testcase classname="conformance.sqlite+redis-executors.current_thread" name="a"/></testsuite>'
+        self.assertEqual(rust_junit(run, xml), [])
+        for misnamed in [
+            "rust-ccccccc-sqlite+redis-executors-current-thread",
+            "rust-ccccccc-sqlite-current-thread",
+        ]:
+            with self.subTest(misnamed=misnamed):
+                self.assertIn("are named", rust_junit({**run, "id": misnamed}, xml)[0])
+
     def test_rust_junit_refuses_a_pass_no_runner_profile_names(self) -> None:
         xml = b'<testsuite><testcase classname="conformance.sqlite.multi_thread_4" name="a"/></testsuite>'
         for backend, runtime in [
             ("sqlite", "multi_thread_4"),
             ("memory", "asyncio"),
             ("memory+redis-turns", "current_thread"),
+            ("sqlite+redis-executors", "multi_thread_4"),
+            ("redis-executors", "current_thread"),
         ]:
             with self.subTest(backend=backend, runtime=runtime):
                 run = self.rust_run(backend, runtime)

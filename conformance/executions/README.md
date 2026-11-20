@@ -306,7 +306,7 @@ A roomkit-rs run is recorded with `record.py rust`, at the commit the
 roomkit-rs checkout is on, a commit of roomkit-rs's main (CI reads only its
 history): each `--junit` file, one pass of the runner, becomes
 `rust-<commit>-<backend>-<runtime>.xml` and the receipt of the same name, with
-the commit's first seven characters and `_` written `-`. The runner writes the commit it ran at and whether tracked
+the commit's first seven characters and `+` and `_` written `-`. The runner writes the commit it ran at and whether tracked
 files differed from it; the import is refused unless that is the checkout's
 commit, clean, so a file an earlier run left is never recorded at a later
 commit. It is also refused when the checkout has uncommitted changes to
@@ -324,6 +324,30 @@ uv run --no-project --python 3.13 --with jsonschema==4.26.0 \
   --junit ../roomkit-rs/target/conformance/memory-multi_thread_4.xml \
   -- env ROOMKIT_CONFORMANCE_JUNIT=target/conformance \
      cargo test -p roomkit --test conformance
+```
+
+The scenarios with `setup.executors` run only in roomkit-rs's Redis executor
+pass: with `REDIS_URL` naming a Redis server, a runner built with the `redis`
+feature (the SQLite and PostgreSQL runners always are) runs them across its
+Redis turn executor, every other scenario in process. That pass writes the
+backend `<store>+redis-executors` in its file's name and its class
+(`memory+redis-executors-current_thread.xml`, class
+`conformance.memory+redis-executors.current_thread`), and becomes the receipt
+`rust-<commit>-memory-redis-executors-current-thread`. A plain receipt never
+reads that pass's cases, nor the reverse, and `record.py` refuses a report
+holding both. The runner names the pass so from roomkit-rs
+`773311efae440c2b2b88a37674cfc34396b1b014` on. An earlier commit's runner
+gives that pass the plain pass's name and class, which the importer cannot
+tell apart: record no file an earlier commit wrote with `REDIS_URL` set. The
+memory runner's two Redis executor passes:
+
+```sh
+uv run --no-project --python 3.13 --with jsonschema==4.26.0 \
+  python conformance/record.py rust --rust-repo ../roomkit-rs \
+  --junit ../roomkit-rs/target/conformance/memory+redis-executors-current_thread.xml \
+  --junit ../roomkit-rs/target/conformance/memory+redis-executors-multi_thread_4.xml \
+  -- env REDIS_URL=redis://127.0.0.1:6379 ROOMKIT_CONFORMANCE_JUNIT=target/conformance \
+     cargo test -p roomkit --features redis --test conformance
 ```
 
 ## PostgreSQL and the Redis turn mode
@@ -359,7 +383,7 @@ They select the same scenarios as `python-acp-permissions-6dc6edb-memory` and
 `-sqlite`. The 21 skips are the cases marked `in_process`: 20 whose scripted
 agent's turn calls the kit it holds, and `acp/tools-observer-reentry-bound`,
 whose tool observer calls its captured kit. Across Redis such a turn reaches the
-room through its TurnHost (RK-10.6.5-003); the receipts say skipped, so those
+room through its TurnHost (RK-10.6.5-020); the receipts say skipped, so those
 scenarios have no Redis pass. CI's own Redis pass at roomkit
 `781f0c9d5fd01682e4f90285d942ba74fae2e0e7` (run 43379749129), whose tree
 differs only by `ci.yml`, gives the same counts for these cases.

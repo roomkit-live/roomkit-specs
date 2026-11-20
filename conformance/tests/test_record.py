@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 import subprocess
 import sys
@@ -393,6 +394,49 @@ class RustRecordingTests(unittest.TestCase):
         self.assertEqual(provenance(document, self.specs, {"rust": self.rust}), [])
         self.assertIn("--rust-repo required", provenance(document, self.specs, {})[0])
 
+    def test_a_redis_executor_pass_becomes_a_receipt_of_its_own(self) -> None:
+        redis_class = "conformance.memory+redis-executors.multi_thread_4"
+        redis = RUST_REPORT.replace(RUST_CLASS.encode(), redis_class.encode()).replace(
+            b"<skipped", b"<failure"
+        )
+        write(self.specs, [self.record(redis), self.record()])
+        document = json.loads((self.specs / "conformance" / "evidence.json").read_text())
+        apart, plain = document["executions"]
+        self.assertEqual(
+            (apart["id"], apart["backend"], apart["runtime"]),
+            (
+                f"rust-{self.rust_commit[:7]}-memory-redis-executors-multi-thread-4",
+                "memory+redis-executors",
+                "multi_thread_4",
+            ),
+        )
+        self.assertEqual(
+            (plain["id"], plain["backend"]),
+            (f"rust-{self.rust_commit[:7]}-memory-multi-thread-4", "memory"),
+        )
+        self.assertEqual(
+            [(r["scenario"], r["outcome"]) for r in apart["results"]],
+            [("a", "passed"), ("b", "failed")],
+        )
+        self.assertEqual(Path(apart["artifact"]["path"]).name, f"{apart['id']}.xml")
+        schema = json.loads((self.specs / "conformance" / "evidence.schema.json").read_text())
+        self.assertEqual(list(Draft202012Validator(schema).iter_errors(document)), [])
+        for run in (apart, plain):
+            with self.subTest(run=run["id"]):
+                self.assertEqual(validate_artifact(run, self.specs), [])
+        self.assertEqual(provenance(document, self.specs, {"rust": self.rust}), [])
+        # Each receipt reads its own pass only: the other pass's report, retained
+        # under its name, holds none of its cases.
+        reports = {run["id"]: (self.specs / run["artifact"]["path"]).read_bytes() for run in (apart, plain)}
+        for run, other in [(apart, plain), (plain, apart)]:
+            report = reports[other["id"]]
+            (self.specs / run["artifact"]["path"]).write_bytes(report)
+            artifact = {**run["artifact"], "sha256": hashlib.sha256(report).hexdigest()}
+            with self.subTest(run=run["id"]):
+                errors = validate_artifact({**run, "artifact": artifact}, self.specs)
+                self.assertEqual(len(errors), 2, errors)
+                self.assertTrue(all("JUnit says not_run" in error for error in errors), errors)
+
     def test_a_rust_run_of_uncommitted_changes_is_refused(self) -> None:
         (self.rust / "conformance" / "SPECS_COMMIT").write_text("edited\n")
         with self.assertRaisesRegex(ValueError, "uncommitted changes"):
@@ -411,7 +455,13 @@ class RustRecordingTests(unittest.TestCase):
             b'<testcase classname="conformance.memory.multi_thread_4" name="b">',
             b'<testcase classname="conformance.sqlite.current_thread" name="b">',
         )
-        for report in [other, RUST_REPORT.replace(RUST_CLASS.encode(), b"tests.other")]:
+        # The whole plain pass and a Redis executor case beside it.
+        both = RUST_REPORT.replace(
+            b"</testsuite>",
+            b'<testcase classname="conformance.memory+redis-executors.multi_thread_4" name="b"/>\n'
+            b"</testsuite>",
+        )
+        for report in [other, both, RUST_REPORT.replace(RUST_CLASS.encode(), b"tests.other")]:
             with self.subTest(report=report[:40]), self.assertRaisesRegex(ValueError, "one pass"):
                 self.record(report)
 
