@@ -598,8 +598,8 @@ scripted.
   (default true); `tools`, what the server lists, each `name`,
   `description` and `input_schema` as the server writes them (`{"type":
   "object"}` when absent), answering every call with `returns`, a text;
-  with `is_error: true`, a result that says `isError` (§9.3), its text
-  `returns` (false by default).
+  with `is_error: true` (false by default), a result that says `isError`
+  (§9.3), its text `returns`.
   `declare` says how the agent declares them: `bare`, the provider's own
   definitions (the default); `aliases`, each under `mcp__<label>__<tool>`
   with the provider's description and parameters; `none`, not at all. The
@@ -1481,7 +1481,8 @@ hook whose timeout falls after its turn.
 A known failure is a scenario whose observable result breaks the RFC. Its
 runner names the scenario and broken rule at an implementation revision
 (roomkit's `KNOWN_FAILURES` in `tests/conformance/test_conformance.py`,
-roomkit-rs's lists in `crates/roomkit/tests/conformance/main.rs`; its shared
+roomkit-rs's lists in `crates/roomkit/tests/conformance/main.rs` and each
+store's `main.rs`, which may name a list `scenarios.rs` shares; its shared
 loop, `scenarios.rs`, reports the `executors/` area without running it, having
 no executor beside the kit). Strict
 expected failures fail the suite when they start passing; timing exceptions
