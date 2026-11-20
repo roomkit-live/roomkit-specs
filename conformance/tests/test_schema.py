@@ -230,3 +230,94 @@ class SchemaTests(unittest.TestCase):
                 scenario = json.loads(fixture.read_text())
                 scenario["steps"][0] = step
                 self.assertEqual(validator.is_valid(scenario), valid)
+
+    def test_a_hook_is_named_or_labelled_and_left_unnamed(self) -> None:
+        schema = json.loads((ROOT / "scenario.schema.json").read_text())
+        validator = Draft202012Validator(schema)
+        fixture = (
+            ROOT
+            / "scenarios/hooks"
+            / "two-hooks-registered-without-a-name-take-names-unique-among-the-kit-s.json"
+        )
+        for members, valid in (
+            ({"as": "first"}, True),
+            ({"name": "first"}, True),
+            ({"name": "first", "as": "first"}, False),
+            ({}, False),
+            ({"as": "First-hook"}, False),
+        ):
+            with self.subTest(members=members):
+                scenario = json.loads(fixture.read_text())
+                hook = scenario["setup"]["hooks"][0]
+                del hook["as"]
+                hook.update(members)
+                self.assertEqual(validator.is_valid(scenario), valid)
+                room = json.loads(
+                    (
+                        ROOT
+                        / "scenarios/hooks"
+                        / "two-room-hooks-registered-without-a-name-take-names-unique-among-the-room-s.json"
+                    ).read_text()
+                )
+                added = room["steps"][0]["hook"]
+                del added["as"]
+                added.update(members)
+                self.assertEqual(validator.is_valid(room), valid)
+
+    def test_a_spawned_task_takes_a_gate_a_delay_actions_and_an_after_gate(self) -> None:
+        schema = json.loads((ROOT / "scenario.schema.json").read_text())
+        validator = Draft202012Validator(schema)
+        fixture = (
+            ROOT
+            / "scenarios/reentrancy"
+            / "a-locked-hook-s-task-calling-while-its-body-runs-commits-ahead-of-the-event.json"
+        )
+        for extra, valid in (
+            ({}, True),
+            ({"delay_ms": 0}, True),
+            ({"delay_ms": -1}, False),
+            ({"fail": "boom"}, False),
+            ({"after_turn": []}, False),
+            ({"do": [{"call": "no_such_call"}]}, False),
+        ):
+            with self.subTest(extra=extra):
+                scenario = json.loads(fixture.read_text())
+                scenario["setup"]["hooks"][0]["reactions"][0]["spawn"].update(extra)
+                self.assertEqual(validator.is_valid(scenario), valid)
+
+    def test_an_on_tool_call_hook_returns_a_bare_missing_payload_alone(self) -> None:
+        schema = json.loads((ROOT / "scenario.schema.json").read_text())
+        validator = Draft202012Validator(schema)
+        fixture = (
+            ROOT
+            / "scenarios/tools/a-modify-with-no-tool-call-event-keeps-the-previous-hook-s-rewrite.json"
+        )
+        for invalid, extra, valid in (
+            ({"kind": "missing_payload"}, {}, True),
+            ({"kind": "no_result"}, {}, False),
+            ({"kind": "missing_payload", "tasks": []}, {}, False),
+            ({"kind": "missing_payload"}, {"execution": "async"}, False),
+            ({"kind": "missing_payload"}, {"trigger": "before_tool_use"}, False),
+        ):
+            with self.subTest(invalid=invalid, extra=extra):
+                scenario = json.loads(fixture.read_text())
+                hook = next(h for h in scenario["setup"]["hooks"] if h["name"] == "broken")
+                hook["reactions"][0]["invalid_result"] = invalid
+                hook.update(extra)
+                self.assertEqual(validator.is_valid(scenario), valid)
+
+    def test_a_hook_below_the_kit_names_its_room_and_its_hook(self) -> None:
+        schema = json.loads((ROOT / "scenario.schema.json").read_text())
+        validator = Draft202012Validator(schema)
+        fixture = (
+            ROOT
+            / "scenarios/hooks/a-hook-registered-below-the-kit-ends-with-the-room-s-creation.json"
+        )
+        for call in ("hook_engine.add_room_hook", "kit_executor.add_owner_room_hook"):
+            for drop, valid in ((None, True), ("room_id", False), ("hook", False)):
+                with self.subTest(call=call, drop=drop):
+                    scenario = json.loads(fixture.read_text())
+                    step = next(s for s in scenario["steps"] if s.get("call") == call)
+                    if drop is not None:
+                        del step[drop]
+                    self.assertEqual(validator.is_valid(scenario), valid)

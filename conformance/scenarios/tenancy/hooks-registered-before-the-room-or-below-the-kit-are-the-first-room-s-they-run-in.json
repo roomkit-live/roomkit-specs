@@ -1,0 +1,168 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "tenancy/hooks-registered-before-the-room-or-below-the-kit-are-the-first-room-s-they-run-in",
+  "title": "A room hook registered while no room held the id, through the kit or below it, is the first room's it is read with: once that room is deleted, it does not run in the room another process creates under the id",
+  "rules": [
+    "§9.1",
+    "§17.2"
+  ],
+  "requirements": [
+    "RK-9.1-015"
+  ],
+  "notes": "Before any room holds the id, the run's kit holds one hook for it and its hook engine another. Another process creates the room for acme; a message through the run's kit runs both, whose room is now acme's. The store deletes the room, the other process creates it again for globex, and a message through the run's kit runs neither. Python: tests/test_room_org_scoping.py::TestScopedRoomHooks::test_a_hook_given_to_the_engine_ends_with_the_first_room_it_ran_in.",
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      },
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport"
+      }
+    ],
+    "processes": [
+      {
+        "id": "p2"
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "add_room_hook",
+      "room_id": "shared-id",
+      "hook": {
+        "name": "held",
+        "trigger": "after_broadcast",
+        "execution": "async"
+      }
+    },
+    {
+      "call": "hook_engine.add_room_hook",
+      "room_id": "shared-id",
+      "hook": {
+        "name": "below",
+        "trigger": "after_broadcast",
+        "execution": "async"
+      }
+    },
+    {
+      "call": "create_room",
+      "kit": "p2",
+      "room": {
+        "id": "shared-id",
+        "organization_id": "acme"
+      }
+    },
+    {
+      "call": "attach_channel",
+      "kit": "p2",
+      "room_id": "shared-id",
+      "channel_id": "sms",
+      "organization_id": "acme"
+    },
+    {
+      "call": "attach_channel",
+      "kit": "p2",
+      "room_id": "shared-id",
+      "channel_id": "ws",
+      "organization_id": "acme"
+    },
+    {
+      "call": "process_inbound",
+      "room_id": "shared-id",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15550000001",
+        "content": {
+          "type": "text",
+          "body": "acme note"
+        }
+      },
+      "expect": {
+        "result": {
+          "blocked": false
+        }
+      }
+    },
+    {
+      "idle": true
+    },
+    {
+      "call": "store.delete_room",
+      "room_id": "shared-id"
+    },
+    {
+      "call": "create_room",
+      "kit": "p2",
+      "room": {
+        "id": "shared-id",
+        "organization_id": "globex"
+      }
+    },
+    {
+      "call": "attach_channel",
+      "kit": "p2",
+      "room_id": "shared-id",
+      "channel_id": "sms",
+      "organization_id": "globex"
+    },
+    {
+      "call": "attach_channel",
+      "kit": "p2",
+      "room_id": "shared-id",
+      "channel_id": "ws",
+      "organization_id": "globex"
+    },
+    {
+      "call": "process_inbound",
+      "room_id": "shared-id",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "globex secret"
+        }
+      },
+      "expect": {
+        "result": {
+          "blocked": false
+        }
+      }
+    },
+    {
+      "idle": true
+    }
+  ],
+  "expect": {
+    "hooks": {
+      "held": [
+        {
+          "trigger": "after_broadcast",
+          "room_id": "shared-id",
+          "event": {
+            "content": {
+              "type": "text",
+              "body": "acme note"
+            }
+          }
+        }
+      ],
+      "below": [
+        {
+          "trigger": "after_broadcast",
+          "room_id": "shared-id",
+          "event": {
+            "content": {
+              "type": "text",
+              "body": "acme note"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

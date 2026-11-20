@@ -272,7 +272,11 @@ room callbacks of the setup are not compared.
   `phases`, `channel_types`, `intents`, `source_channel_ids`, each a list,
   absent for no condition), `default_agent_id` and `supervisor_id`, the
   hook its router gives. It records no call and has no reactions. A room's
-  hook (`add_room_hook`) may have one too.
+  hook (`add_room_hook`) may have one too. A hook with `as` in place of
+  `name` is registered with no name, the name the implementation gives it
+  its own (§9.1): `as` is the label its calls are recorded under, in
+  `hooks` and `hook_order`, never a name it is registered with. A room's
+  hook may have one too.
 - `identities`: each stored in the kit's store before the rooms are made,
   an Identity (§5.6) in the serialized form: what `resolve_participant`
   reads.
@@ -387,6 +391,7 @@ left, the call does what it does by default. A reaction:
 | `delay_ms` | Waits this many milliseconds after the gate and before the actions, to separate the start of nested call deadlines; absent or zero, no delay |
 | `do` | Kit calls the hook or the channel makes while it runs, in its execution context, in order: an **action** is a call (below) with an optional `as` and `expect`. Its error is caught, kept and checked, never raised into the kit |
 | `after_do_gate` | Holds after all `do` actions returned, before `after_turn` work and the reaction's result or failure; lets steps observe completed work without a delay |
+| `spawn` | First of all, before its `gate`: starts a task, which the call does not wait for, that holds at the spawn's `gate`, waits its `delay_ms`, makes its `do` actions in order and holds at its `after_do_gate`, each as a reaction's. The task is started in the call's execution context, as the implementation's own spawn keeps it (roomkit: `asyncio.create_task`; roomkit-rs: `tokio::spawn` of `keep_context`), so that it acts for the call while the call runs and outlives it (§9.5.1 Reentrance). A runner waits for the task when it waits for the kit to go idle |
 | `after_turn` | In an `on_event` reaction: actions the turn leaves to work it began, a task in the turn's execution context that makes them in order once the turn ended (§10.6.5): a `host.<verb>` then crosses as a `room_call`. A runner waits for that work when it waits for the kit to go idle |
 | `fail` | Then raises, with this message |
 | `refuse` | In a `deliver` or `on_event` reaction: then fails with the provider's explicit refusal (§5.13), its `error`, the `code` and `retryable` it declares, and the `provider_message_id` it names |
@@ -397,7 +402,7 @@ left, the call does what it does by default. A reaction:
 | `stop_after_rows` | In a `deliver_stream` reaction: the channel stops reading the stream once it was handed this many of its rows, a call's start or end |
 | `parsed` | In a `parse` reaction: a patch on the event the channel builds, what it reads off its own wire: its members replace the event's, those of its `source` the source's; its strings name what the run made (References) |
 | `result` | A hook's HookResult (§9.4). A modify's `event` is a patch on the payload: its members replace the payload's. Its injected events, tasks and observations are templates; event aliases in a room-event hook result resolve after its actions, before the result is returned |
-| `invalid_result` | A deliberate unusable return on a SYNC `before_broadcast` hook: `{ "kind": "no_result" }` returns null; `{ "kind": "missing_payload", ... }` returns an unchecked MODIFY with no event, optionally carrying `tasks`, `observations`, and `injected_events` templates. Mutually exclusive with `result` and `fail`. A runner validates the fixture before invoking the hook; a malformed fixture is a runner failure, never a simulated hook exception |
+| `invalid_result` | A deliberate unusable return on a SYNC `before_broadcast` hook: `{ "kind": "no_result" }` returns null; `{ "kind": "missing_payload", ... }` returns an unchecked MODIFY with no event, optionally carrying `tasks`, `observations`, and `injected_events` templates. On a SYNC `on_tool_call` hook, only `{ "kind": "missing_payload" }`, carrying nothing: an unchecked MODIFY with no tool-call event (§9.3). Mutually exclusive with `result` and `fail`. A runner validates the fixture before invoking the hook; a malformed fixture is a runner failure, never a simulated hook exception |
 
 An invalid return exercises the hook chain, not the model constructor. A
 `missing_payload` is constructed unchecked (Python `model_copy`, Rust struct
@@ -1026,8 +1031,10 @@ run's own kit when absent.
 | `mark_read` | `room_id`, `channel_id`, `event_id` | null |
 | `mark_all_read` | `room_id`, `channel_id` | null |
 | `list_read_markers` | `room_id` | each channel's marker, an index |
-| `add_room_hook` | `room_id`, `hook`: a hook as in the setup, for that room alone, with no filter and the default timeout (`name`, `trigger`, `execution`, `priority`, `fail_closed`, `needs_lock`, `reactions`); optional `kit`, a process whose hook it is, which runs only there | unspecified |
+| `add_room_hook` | `room_id`, `hook`: a hook as in the setup, for that room alone, with no filter and the default timeout (`name` or `as`, `trigger`, `execution`, `priority`, `fail_closed`, `needs_lock`, `reactions`); optional `kit`, a process whose hook it is, which runs only there | unspecified |
 | `remove_room_hook` | `room_id`, `name` | whether the room held a hook of that name |
+| `hook_engine.add_room_hook` | `room_id`, `hook` (as `add_room_hook`'s): registered on the kit's hook engine (`hook_engine.add_room_hook`), below the kit, which reads no room (§9.1, §17.2) | unspecified |
+| `kit_executor.add_owner_room_hook` | `room_id`, `hook` (as `add_room_hook`'s, on a trigger a turn fires): given straight to the kit's own executor for the room (`turn_executor.hooks.add_owner_room_hook`), below the kit, which reads no room (§9.1, §10.6.6) | unspecified |
 | `subscribe_room` | `room_id`, `subscriber` (a label), optional `kit`: the kit's `subscribe_room` (§8.4), a callback recording each ephemeral event it reads under `expect.subscribers`, by the subscriber's name | unspecified |
 | `publish_typing` | `room_id`, `user_id`, `is_typing` (default true), optional `kit`: the kit's `publish_typing` (§8.4) | null |
 | `cancel_delivery` | `key`, the `delivery_key` of the messages whose delivery it cancels, and `reason` (§10.1 Explicit delivery cancellation) | how many deliveries it cancelled |

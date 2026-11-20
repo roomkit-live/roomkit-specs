@@ -1217,13 +1217,28 @@
     "hook": {
       "type": "object",
       "required": [
-        "name",
         "trigger"
+      ],
+      "oneOf": [
+        {
+          "required": [
+            "name"
+          ]
+        },
+        {
+          "required": [
+            "as"
+          ]
+        }
       ],
       "additionalProperties": false,
       "properties": {
         "name": {
           "type": "string"
+        },
+        "as": {
+          "description": "In place of `name`: the hook is registered with no name, the name the implementation gives it its own (\u00a79.1); its calls are recorded under this label.",
+          "$ref": "#/$defs/label"
         },
         "trigger": {
           "description": "A HookTrigger, serialized: before_broadcast, after_broadcast, on_room_created...",
@@ -1309,7 +1324,10 @@
                 "properties": {
                   "trigger": {
                     "not": {
-                      "const": "before_broadcast"
+                      "enum": [
+                        "before_broadcast",
+                        "on_tool_call"
+                      ]
                     }
                   }
                 }
@@ -1339,6 +1357,34 @@
                     "required": [
                       "invalid_result"
                     ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "trigger"
+            ],
+            "properties": {
+              "trigger": {
+                "const": "on_tool_call"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "reactions": {
+                "items": {
+                  "properties": {
+                    "invalid_result": {
+                      "description": "On a SYNC on_tool_call hook: a MODIFY with no tool-call event alone (\u00a79.3), carrying nothing.",
+                      "const": {
+                        "kind": "missing_payload"
+                      }
+                    }
                   }
                 }
               }
@@ -1520,6 +1566,29 @@
         "after_do_gate": {
           "description": "Hold after all do actions have completed, before after_turn work or the reaction result/failure.",
           "type": "string"
+        },
+        "spawn": {
+          "description": "First of all, before the reaction's gate: a task the call starts in its execution context and does not wait for (\u00a79.5.1 Reentrance), which holds at its `gate`, waits its `delay_ms`, makes its `do` actions in order and holds at its `after_do_gate`, each as a reaction's.",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "gate": {
+              "type": "string"
+            },
+            "delay_ms": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "do": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/action"
+              }
+            },
+            "after_do_gate": {
+              "type": "string"
+            }
+          }
         }
       },
       "allOf": [
@@ -1857,6 +1926,8 @@
             "register_hook",
             "add_room_hook",
             "remove_room_hook",
+            "hook_engine.add_room_hook",
+            "kit_executor.add_owner_room_hook",
             "subscribe_room",
             "publish_typing",
             "store.create_room",
@@ -2291,6 +2362,52 @@
             "properties": {
               "call": {
                 "const": "add_room_hook"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "room_id",
+              "hook"
+            ],
+            "properties": {
+              "room_id": {
+                "type": "string"
+              },
+              "hook": {
+                "$ref": "#/$defs/room_hook"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "hook_engine.add_room_hook"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "room_id",
+              "hook"
+            ],
+            "properties": {
+              "room_id": {
+                "type": "string"
+              },
+              "hook": {
+                "$ref": "#/$defs/room_hook"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "kit_executor.add_owner_room_hook"
               }
             }
           },
@@ -6562,13 +6679,28 @@
       "description": "A hook registered for one room (\u00a79.1): what a registration for a room declares, a hook's name, trigger, execution, priority, fail_closed and needs_lock, with no filter and the default timeout.",
       "type": "object",
       "required": [
-        "name",
         "trigger"
+      ],
+      "oneOf": [
+        {
+          "required": [
+            "name"
+          ]
+        },
+        {
+          "required": [
+            "as"
+          ]
+        }
       ],
       "additionalProperties": false,
       "properties": {
         "name": {
           "type": "string"
+        },
+        "as": {
+          "description": "In place of `name`: the hook is registered with no name, the name the implementation gives it its own (\u00a79.1); its calls are recorded under this label.",
+          "$ref": "#/$defs/label"
         },
         "trigger": {
           "description": "A HookTrigger, serialized: before_broadcast, after_broadcast, on_room_created...",
@@ -6629,7 +6761,10 @@
                 "properties": {
                   "trigger": {
                     "not": {
-                      "const": "before_broadcast"
+                      "enum": [
+                        "before_broadcast",
+                        "on_tool_call"
+                      ]
                     }
                   }
                 }
@@ -6659,6 +6794,34 @@
                     "required": [
                       "invalid_result"
                     ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "trigger"
+            ],
+            "properties": {
+              "trigger": {
+                "const": "on_tool_call"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "reactions": {
+                "items": {
+                  "properties": {
+                    "invalid_result": {
+                      "description": "On a SYNC on_tool_call hook: a MODIFY with no tool-call event alone (\u00a79.3), carrying nothing.",
+                      "const": {
+                        "kind": "missing_payload"
+                      }
+                    }
                   }
                 }
               }

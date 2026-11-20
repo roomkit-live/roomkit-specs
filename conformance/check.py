@@ -254,8 +254,9 @@ def row_gaps(
 def asserted(scenario: dict[str, Any]) -> tuple[set[str], set[str]]:
     """The triggers whose firing a scenario asserts, and the framework events."""
     expect = scenario.get("expect", {})
+    # A hook left unnamed is recorded under its `as` label.
     hooks = {
-        hook["name"]: hook["trigger"]
+        hook.get("name", hook.get("as")): hook["trigger"]
         for hook in scenario.get("setup", {}).get("hooks", [])
     }
     triggers = set()
