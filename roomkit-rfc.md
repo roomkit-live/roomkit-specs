@@ -21167,9 +21167,10 @@ must be of type <type>`; and on a schema that closes itself
 (`additionalProperties: false`) with `properties`, an argument it does not
 declare reads `unknown argument '<arg>' (this tool accepts: <names>)`, the
 declared names sorted and joined by `, ` (`none` when it declares none), so
-the model can correct the call; an open schema passes it. The check reads
-the arguments as repaired and names every one that does not fit in one text,
-its reasons joined by `; `: the required names the call lacks, each once, in
+the model can correct the call; an open schema passes it. The check names
+in one text every argument that does not fit among those it reads, the
+model's once repaired and a BEFORE_TOOL_USE hook's as it left them, its
+reasons joined by `; `: the required names the call lacks, each once, in
 the order `required` lists them, then the
 arguments a closed schema does not declare, then each argument of another
 type, both in the call's order. Several names the call lacks read as one

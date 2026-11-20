@@ -1329,7 +1329,7 @@
     },
     {
       "section": "21.1",
-      "sha256": "74b9d3bd3373eedd6117c3ce29adf0725fe03b67ff95d82ed9bdc43c785260cd",
+      "sha256": "9258c1adf18671a9a3d791149d7d20c2b4c9df08f5e2d5d39d1b2ddecafcfa8e",
       "classification": "normative",
       "review": "Source inventory: ToolPolicy. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage. The RoleOverride table now explicitly uses non-null empty-default lists, matching the approved Python/Rust construction witnesses; the independent review covers this narrow correction and preserves the remaining source inventory without granting turn-role coverage. RK-21.1-004 now says that the arguments' check names every argument that does not fit in one text and in which order, as both implementations do (RMK-1848, tools/every-argument-that-does-not-fit-is-named); the review covers this sentence and preserves the remaining source inventory."
     },

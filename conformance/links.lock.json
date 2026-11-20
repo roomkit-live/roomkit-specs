@@ -3392,7 +3392,7 @@
       "executors/a-room-s-attach-and-detach-are-applied-on-the-executor-before-they-return": "c3d781930779e9e12585462005f14490e270227e68b9e944b881ab0b4acff073"
     },
     "RK-21.1-004": {
-      "tools/every-argument-that-does-not-fit-is-named": "97b8d24fc851ab3eca5fa0b6c434b66ad1864abc525711d3a66c88768be0b1d7"
+      "tools/every-argument-that-does-not-fit-is-named": "0fdb54986121a7f92e06d9891f6980dc27e90fb9104af4924e50038212397853"
     },
     "RK-5-001": {
       "permissions/reserved-channel-ids-are-refused": "c094c4292b80e298a0a8b1d7ca12bbef2df681c42d9366621b73e01f8938495c"
