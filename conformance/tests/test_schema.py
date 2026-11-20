@@ -74,6 +74,38 @@ class SchemaTests(unittest.TestCase):
                 patch["room_id"] = room_id
                 self.assertEqual(validator.is_valid(scenario), isinstance(room_id, str))
 
+    def test_identity_store_calls_require_their_arguments(self) -> None:
+        schema = json.loads((ROOT / "scenario.schema.json").read_text())
+        validator = Draft202012Validator(schema)
+        fixture = (
+            ROOT
+            / "scenarios/store"
+            / "an-address-belongs-to-one-identity-of-an-organization-per-channel-type.json"
+        )
+        self.assertTrue(validator.is_valid(json.loads(fixture.read_text())))
+        for call, required in (
+            ("store.create_identity", ("identity",)),
+            ("store.get_identity", ("identity_id",)),
+            ("store.resolve_identity", ("channel_type", "address")),
+            ("store.link_address", ("identity_id", "channel_type", "address")),
+            ("store.unlink_address", ("identity_id", "channel_type", "address")),
+        ):
+            for argument in required:
+                with self.subTest(call=call, argument=argument):
+                    scenario = json.loads(fixture.read_text())
+                    step = next(s for s in scenario["steps"] if s.get("call") == call)
+                    del step[argument]
+                    self.assertFalse(validator.is_valid(scenario))
+        for error, valid in (
+            ("address_linked", True),
+            ("participant_exists", True),
+            ("address_taken", False),
+        ):
+            with self.subTest(error=error):
+                scenario = json.loads(fixture.read_text())
+                scenario["steps"][0]["expect"] = {"error": error}
+                self.assertEqual(validator.is_valid(scenario), valid)
+
     def test_requirements_cite_unique_unit_ids(self) -> None:
         schema = json.loads((ROOT / "scenario.schema.json").read_text())
         validator = Draft202012Validator(schema)

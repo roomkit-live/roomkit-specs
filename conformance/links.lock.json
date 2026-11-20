@@ -3944,6 +3944,9 @@
       "members/add-member-joins-once-and-records-a-new-channel": "a6ddbd04d4a87a96b32c27f311a7e7446c663844eeabd997ffee14efde595990",
       "members/ensure-participant-creates-a-record-or-records-the-channel": "a6ddbd04d4a87a96b32c27f311a7e7446c663844eeabd997ffee14efde595990"
     },
+    "RK-5.5-029": {
+      "store/a-participant-id-the-room-has-is-refused-and-an-update-rewrites-a-record": "4fbfc2543b56b1483cb348a1cc4b3752f84e3fe5373bd0957284bc35ac8b40ca"
+    },
     "RK-5.5-030": {
       "identity/a-sender-the-room-identified-is-not-asked-about": "3dec22938fe4d1f8a87ea4a4ef30366785e4567b3c1696fb3e44d6e3426f0432",
       "inbound/an-author-s-name-and-rank-are-recorded": "3dec22938fe4d1f8a87ea4a4ef30366785e4567b3c1696fb3e44d6e3426f0432",
@@ -3998,6 +4001,24 @@
     },
     "RK-5.5-042": {
       "members/ensure-participant-creates-a-record-or-records-the-channel": "add3595d34713819d057fa7f21ff3da4307031c2b463938abe73d884839bef74"
+    },
+    "RK-5.6-002": {
+      "store/an-identity-is-read-back-with-each-of-its-fields": "549fc5f5bf42f309f407517f9dd412d67b07a20e3c31c4e19b4bf56996130688"
+    },
+    "RK-5.6-003": {
+      "store/an-address-belongs-to-one-identity-of-an-organization-per-channel-type": "9d9b5dec8a34c739cce2206598861181a99796c69742c79666f2b2452871e23d"
+    },
+    "RK-5.6-004": {
+      "store/identity-resolution-reads-the-organization-it-names-and-none-reads-none": "7e9dae9d5c45ba5b935f67033c7b0caf7f3c474052321eadd1b9173807de5797"
+    },
+    "RK-5.6-005": {
+      "store/link-address-links-to-an-identity-of-the-organization-it-names": "2132ad3efb60a602adf22f5551d171449cfe4b6d51ea3d827059c0971c4580ad"
+    },
+    "RK-5.6-006": {
+      "store/unlink-address-removes-an-address-the-identity-holds-in-its-organization": "73277f2770f7afda99e0800fba23d2fa0c7bb45d0f2a71ee1bc46ca42d2bae87"
+    },
+    "RK-5.6-007": {
+      "store/an-unlink-changes-whom-a-later-message-resolves-to-not-the-conversation": "2238da59ee7b4b4c5289d2ac740f88367d18b9f32d6d2624da1769e2b0dc3f8a"
     },
     "RK-5.7-003": {
       "binding-update/mute-output-changed": "e917a4b4e26e5e4bc03fcc3f9f2d2cb4b3eff7add3b3746bbff1f91cabf3f5b0",

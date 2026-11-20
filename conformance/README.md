@@ -1077,7 +1077,11 @@ store it ships that needs no server.
 | `store.delete_room` | `room_id` | whether the store held it |
 | `store.add_binding`, `store.update_binding` | `binding` | the binding |
 | `store.remove_binding` | `room_id`, `channel_id` | whether the room bound it |
-| `store.add_participant` | `participant` | the participant |
+| `store.add_participant`, `store.update_participant` | `participant` | the participant |
+| `store.create_identity` | `identity` | the identity |
+| `store.get_identity` | `identity_id` | the identity, or null |
+| `store.resolve_identity` | `channel_type`, `address`, `organization_id` (null for none) | the identity of that organization the address belongs to on that channel type, or null |
+| `store.link_address`, `store.unlink_address` | `identity_id`, `channel_type`, `address`, `organization_id` (null for none) | null |
 | `store.commit_event` | `room_id`, `event`, `target`, `activity` (default true) | the event |
 | `store.room_exists` | `room_id` | a boolean |
 | `store.binding_exists` | `room_id`, `channel_id` | a boolean |
@@ -1111,8 +1115,9 @@ store it ships that needs no server.
 | `store.get_verification_request` | `request_id` | the request, or null |
 
 A task's template is completed with an `id`, its room and a `created_at`. A
-verification and a verification request (§11.7.1, §11.7.2) are taken as
-written, with their records' defaults. An
+verification and a verification request (§11.7.1, §11.7.2), and an
+identity (§5.6), as `setup.identities` takes it, are taken as written, with
+their records' defaults. An
 index a store call returns is the store's: the scenarios of `store/` write
 no lifecycle record, so it reads as normalized.
 
@@ -1382,6 +1387,8 @@ refuses its value, a `ChannelId`).
 | `process_timeout` | `process_timeout` passed before the commit (§13.6) | `ProcessTimeoutError` | `Refused { reason: "process_timeout" }` |
 | `participant_not_found` | A post's speaker is no participant the host channel reaches (§10.5); a member call names no participant of the room (§5.5) | `ParticipantNotFoundError` | `InboundError::ParticipantNotFound`, `RoomKitError::ParticipantNotFound` |
 | `identity_not_found` | No such identity, or another organization's (§5.6, §17.2) | `IdentityNotFoundError` | `RoomKitError::IdentityNotFound` |
+| `address_linked` | An address another identity of the organization holds on the channel type, at an identity's creation or a link (§5.6) | `AddressLinkedError` | `RoomKitError::AddressLinked`, `StoreError::AddressLinked` |
+| `participant_exists` | A participant added under an id its room has, the record it holds kept (§5.5, §14.3) | `ParticipantExistsError` | `StoreError::ParticipantExists` |
 | `reentrant` | A message routed back into the room whose lock or admission order its caller holds (§9.5.1 A message routed back) | `ReentrantCallError` | `KitError::Reentrant` |
 | `waits_for_itself` | A completion handle's cancel from the room's lane or under its lock, where its cleanup would wait for its caller (§10.1 step 18) | `RuntimeError` from `DeliveryHandle.cancel` | `RoomKitError::Runtime` from `DeliveryHandle::cancel` |
 | `reentry_loop_cap` | A direct change past its cascade's hook calls (§8.3, §10.3) | `ReentryLoopCapError` | `MutationError::ReentryLoopCap` |
