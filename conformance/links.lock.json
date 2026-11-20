@@ -4810,6 +4810,9 @@
       "hooks/a-room-hook-added-before-its-room-fires-for-it": "cfa2caf3fbdea5a2cdac1c56c2451d8ee1b6f8cebc35907fb5c38d88c073949b",
       "tenancy/another-organization-s-room-hooks-stand": "cfa2caf3fbdea5a2cdac1c56c2451d8ee1b6f8cebc35907fb5c38d88c073949b"
     },
+    "RK-9.1-006": {
+      "hooks/a-hook-registered-below-the-kit-ends-with-the-room-s-creation": "286ab8c0198fe8d4124778dacd94a5b12b645a7e017139e27372583df5712ffd"
+    },
     "RK-9.1-007": {
       "hooks/a-channel-types-filter-does-not-silence-on-ai-thinking": "6260d2079b26e2693cecb366bfbe0f5a9fbf52fcb9df8b41f3baa2ff1f0e62fe",
       "tools/a-tool-hook-filtered-to-another-agent-leaves-its-calls": "6260d2079b26e2693cecb366bfbe0f5a9fbf52fcb9df8b41f3baa2ff1f0e62fe"
@@ -4841,6 +4844,10 @@
     "RK-9.1-014": {
       "tenancy/a-deleted-room-s-turn-runs-none-of-the-hooks-of-the-room-created-again": "1d645fe127762321c2e95b25ac5d89b02bc068c4cae6f21c52eba073ba585ade"
     },
+    "RK-9.1-015": {
+      "tenancy/a-hook-registered-below-the-kit-is-the-first-room-s-it-runs-in": "6207520714d013584c77f9f00ce230b085f74a80ba85e4c13a514f9fd4eea9cb",
+      "tenancy/a-room-hook-held-before-its-room-is-the-first-room-s-it-runs-in": "6207520714d013584c77f9f00ce230b085f74a80ba85e4c13a514f9fd4eea9cb"
+    },
     "RK-9.1-016": {
       "hooks/a-removed-room-hook-runs-no-more": "ecf0fc10322893629a81f748d458f22566561cbeaad8a563adaa3ef32eae72f1",
       "hooks/registration-refusals": "ecf0fc10322893629a81f748d458f22566561cbeaad8a563adaa3ef32eae72f1",
@@ -4851,6 +4858,10 @@
       "kit-executor/a-definition-is-replaced-per-trigger": "19842baf8132a2a3885563265c11ddc6390307f78a95056dbdced18e19edd3d6",
       "kit-executor/a-running-turn-reads-current-definitions": "19842baf8132a2a3885563265c11ddc6390307f78a95056dbdced18e19edd3d6",
       "kit-executor/named-hooks-refuse-invalid-registrations": "19842baf8132a2a3885563265c11ddc6390307f78a95056dbdced18e19edd3d6"
+    },
+    "RK-9.1-018": {
+      "hooks/two-hooks-registered-without-a-name-take-names-unique-among-the-kit-s": "c4ea3787fe225f40518b2e1854c266f256e1d74b8c28a13ed133c077c60871a3",
+      "hooks/two-room-hooks-registered-without-a-name-take-names-unique-among-the-room-s": "c4ea3787fe225f40518b2e1854c266f256e1d74b8c28a13ed133c077c60871a3"
     },
     "RK-9.1-019": {
       "hooks/registration-refusals": "fad325573514bdef7458de7879abcd18e688bad1b0947552f775025954c6a44e",
@@ -5714,6 +5725,9 @@
     "RK-9.3-062": {
       "tool-search/a-replaced-search-still-reveals-its-matches": "af3a5f0b4e4d9de5393305bba8cbc3a4a248fdf2d7be10c2fbc89ff167980b1a"
     },
+    "RK-9.3-063": {
+      "tools/a-modify-with-no-tool-call-event-keeps-the-previous-hook-s-rewrite": "8a6f589ecf02d85895964510f5b3293dc24c0011d1d273c68209e196cf4343c7"
+    },
     "RK-9.3-064": {
       "tools/a-hook-that-clears-a-served-result-has-the-model-and-the-next-hook-read-null": "21b3a19bf40a2ef49657c4b82887b2b8e9268db24c65a76811461e784ce919d9"
     },
@@ -6293,6 +6307,16 @@
       "reentrancy/an-off-lock-hook-s-injection-commits-ahead": "56f87c4c9d34b61df524a698466027dd1f58711972d8188ee7183106e415ba4c",
       "rooms/a-channel-sends-into-the-room-it-is-told-of": "56f87c4c9d34b61df524a698466027dd1f58711972d8188ee7183106e415ba4c"
     },
+    "RK-9.5.1-019": {
+      "reentrancy/a-parse-s-task-calling-once-the-parse-returned-is-a-new-arrival": "79c8e62a0ba84db78c75995649937ace6bc4f44b1485b082aa563a10bbb3b330",
+      "reentrancy/a-parse-s-task-calling-while-the-parse-runs-commits-ahead-of-the-message": "79c8e62a0ba84db78c75995649937ace6bc4f44b1485b082aa563a10bbb3b330",
+      "reentrancy/an-off-lock-hook-s-task-calling-once-its-body-returned-is-a-new-arrival": "79c8e62a0ba84db78c75995649937ace6bc4f44b1485b082aa563a10bbb3b330",
+      "reentrancy/an-off-lock-hook-s-task-calling-while-its-body-runs-commits-ahead-of-the-event": "79c8e62a0ba84db78c75995649937ace6bc4f44b1485b082aa563a10bbb3b330"
+    },
+    "RK-9.5.1-020": {
+      "reentrancy/a-locked-hook-s-task-calling-once-its-body-returned-is-a-new-arrival": "7cd37739725baadb014160c3e842076645c38a5047b10641c9d6d8b947f5da83",
+      "reentrancy/a-locked-hook-s-task-calling-while-its-body-runs-commits-ahead-of-the-event": "7cd37739725baadb014160c3e842076645c38a5047b10641c9d6d8b947f5da83"
+    },
     "RK-9.5.1-021": {
       "delivery/a-keyed-delivery-s-parse-sends-into-its-room-within-its-section": "d3e43fadde9032840f18ee52ce6996eefad169b1705b0dd5bc9f2d7909b2e483",
       "delivery/an-adopted-call-waited-in-its-parse-reads-its-turn": "d3e43fadde9032840f18ee52ce6996eefad169b1705b0dd5bc9f2d7909b2e483",
@@ -6410,6 +6434,14 @@
       "delivery/an-adopted-call-past-the-budget-before-its-commit-ends-at-its-adopter-s-deadline": "1f9c85e12e59252c537e970fb1154e866859d33461024fc6c993e7b1228eddc7",
       "delivery/an-awaited-adopted-call-before-its-commit-ends-at-its-adopter-s-deadline": "1f9c85e12e59252c537e970fb1154e866859d33461024fc6c993e7b1228eddc7",
       "delivery/an-awaited-adopted-call-ends-with-its-hook-s-timeout": "1f9c85e12e59252c537e970fb1154e866859d33461024fc6c993e7b1228eddc7"
+    },
+    "RK-9.5.1-039": {
+      "reentrancy/a-call-an-off-lock-hook-s-task-makes-outlives-the-event-refused-at-its-deadline": "985cfd94fe0b19d122ef8112006c32de55a5ea9969c5d2024b1927341f52b556"
+    },
+    "RK-9.5.1-040": {
+      "reentrancy/a-locked-hook-s-section-waits-past-the-hook-s-timeout-for-its-task-s-call": "cee5ef21661720ab4ed67bfa9993a9f535657d50e51341ea2b88bc38ae11279f",
+      "reentrancy/a-locked-hook-s-task-calling-once-its-body-returned-is-a-new-arrival": "cee5ef21661720ab4ed67bfa9993a9f535657d50e51341ea2b88bc38ae11279f",
+      "reentrancy/a-locked-hook-s-task-calling-while-its-body-runs-commits-ahead-of-the-event": "cee5ef21661720ab4ed67bfa9993a9f535657d50e51341ea2b88bc38ae11279f"
     },
     "RK-9.5.1-041": {
       "delivery/a-nested-call-before-its-commit-ends-at-its-caller-s-deadline": "37440f09e5a742fd7b7a9414898e2c17941755bdc36252923750c62b92d3df19"
