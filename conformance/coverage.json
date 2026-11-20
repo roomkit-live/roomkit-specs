@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "e4b918132f941c3264ce2aef78ac1a54d14e03102f4c41f3ab221e0c15bae53c",
-  "corpus_sha256": "90cf773fcd7e2ec1bbc045d57aab1ac7704d8ed53ebb139190fecf3c63ea9c1a",
+  "corpus_sha256": "fa4debdb805a8c0c960ad240f6b57e3e4a279fe7c515c4fabc55df504e6d3d01",
   "python_commit": "929f9dc7fa1cd70907b6ece5fea89f8ff7979f52",
-  "scenario_count": 3367,
+  "scenario_count": 3371,
   "sections": [
     {
       "section": "0",
@@ -5203,6 +5203,7 @@
         "executors/a-declared-agent-s-turn-runs-on-the-executor-hosting-it",
         "executors/a-declared-worker-s-result-tool-rides-its-child-room-s-requests-alone",
         "executors/a-detach-forgets-what-the-room-kept-for-a-channel",
+        "executors/a-failed-state-discard-is-retried-before-the-next-turn",
         "executors/a-plan-a-build-let-go-held-reads-empty-at-its-next-build",
         "executors/a-room-s-turns-stay-on-the-executor-holding-its-state",
         "executors/a-thought-a-build-let-go-past-the-bound-held-starts-anew",
@@ -5536,6 +5537,8 @@
         "executors/a-hook-on-an-executor-reads-the-room-when-it-fires",
         "executors/a-hook-on-an-executor-whose-context-the-owner-fails-to-build-does-not-run",
         "executors/a-room-hook-no-executor-defines-takes-its-agent-offline-in-that-room",
+        "executors/a-scorer-on-the-host-records-its-turn-at-the-room-owner",
+        "executors/a-scorer-on-the-kit-records-its-turn-at-the-room-owner",
         "executors/a-turn-apart-fires-the-owner-s-triggers-on-the-room-owner",
         "executors/a-turn-apart-s-delegation-and-segments-fire-their-hooks-on-the-room-owner",
         "executors/a-turn-apart-s-error-message-reaches-on-error-and-never-a-model",
@@ -5611,6 +5614,7 @@
         "executors/owners-use-an-undeclared-worker-only-on-its-process",
         "executors/owners-without-an-executor-catalogue-publish-only-live-agents",
         "executors/the-kit-lists-the-executors-served-and-what-each-declares",
+        "executors/the-kit-s-own-executor-serves-every-organization",
         "local-presence/agents-are-sorted-and-filtered",
         "local-presence/automatic-publications-follow-local-changes",
         "local-presence/room-hooks-and-executor-close",
