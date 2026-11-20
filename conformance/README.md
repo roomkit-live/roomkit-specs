@@ -1385,7 +1385,7 @@ refuses its value, a `ChannelId`).
 | `transition_refused` | A transition from a status it does not leave from (§5.1) | `TransitionRefusedError` | `LifecycleError::TransitionRefused` |
 | `change_refused` | An edit or a delete step 8a refuses, with its `reason` (§10.1 step 8a, §10.5) | `ChangeRefusedError` | `Refused` with one of step 8a's reasons |
 | `process_timeout` | `process_timeout` passed before the commit (§13.6) | `ProcessTimeoutError` | `Refused { reason: "process_timeout" }` |
-| `participant_not_found` | A post's speaker is no participant the host channel reaches (§10.5); a member call names no participant of the room (§5.5) | `ParticipantNotFoundError` | `InboundError::ParticipantNotFound`, `RoomKitError::ParticipantNotFound` |
+| `participant_not_found` | A post's speaker is no participant the host channel reaches (§10.5); a member call names no participant of the room (§5.5); `update_participant` of a record the room does not hold (§14.3) | `ParticipantNotFoundError` | `InboundError::ParticipantNotFound`, `RoomKitError::ParticipantNotFound`, `StoreError::ParticipantNotFound` |
 | `identity_not_found` | No such identity, or another organization's (§5.6, §17.2) | `IdentityNotFoundError` | `RoomKitError::IdentityNotFound` |
 | `address_linked` | An address another identity of the organization holds on the channel type, at an identity's creation or a link (§5.6) | `AddressLinkedError` | `RoomKitError::AddressLinked`, `StoreError::AddressLinked` |
 | `participant_exists` | A participant added under an id its room has, the record it holds kept (§5.5, §14.3) | `ParticipantExistsError` | `StoreError::ParticipantExists` |

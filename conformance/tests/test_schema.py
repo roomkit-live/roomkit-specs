@@ -82,8 +82,15 @@ class SchemaTests(unittest.TestCase):
             / "scenarios/store"
             / "an-address-belongs-to-one-identity-of-an-organization-per-channel-type.json"
         )
-        self.assertTrue(validator.is_valid(json.loads(fixture.read_text())))
+        participants = (
+            ROOT
+            / "scenarios/store"
+            / "a-participant-id-the-room-has-is-refused-and-an-update-rewrites-a-record.json"
+        )
+        for path in (fixture, participants):
+            self.assertTrue(validator.is_valid(json.loads(path.read_text())))
         for call, required in (
+            ("store.update_participant", ("participant",)),
             ("store.create_identity", ("identity",)),
             ("store.get_identity", ("identity_id",)),
             ("store.resolve_identity", ("channel_type", "address")),
@@ -92,7 +99,8 @@ class SchemaTests(unittest.TestCase):
         ):
             for argument in required:
                 with self.subTest(call=call, argument=argument):
-                    scenario = json.loads(fixture.read_text())
+                    source = participants if call == "store.update_participant" else fixture
+                    scenario = json.loads(source.read_text())
                     step = next(s for s in scenario["steps"] if s.get("call") == call)
                     del step[argument]
                     self.assertFalse(validator.is_valid(scenario))
