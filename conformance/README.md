@@ -270,7 +270,9 @@ room callbacks of the setup are not compared.
     turn backend hands the owner the turn's `end` only once the gate is
     open, and a turn never cut has its `end` handed at once. Its executor,
     having ended the turn, beats no more meanwhile: an owner whose
-    `heartbeat_timeout` passes first loses the turn (`executor_lost`).
+    `heartbeat_timeout` passes first loses the turn (`executor_lost`). A
+    runner holds the end at the transport the kit is built with: roomkit-rs's
+    Redis executor pass, whose transport is its own, refuses the member.
     `expect.turn_ends` reads what became of each turn so held;
   - an `ai` channel with a `model` is a **scripted agent** instead (below).
 - `rooms`: each is created (`id`, `organization_id`, `metadata`, `timers`),
