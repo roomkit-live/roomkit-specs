@@ -383,13 +383,14 @@ room callbacks of the setup are not compared.
   takes one, for a `wait_for` step) and `own_process` (default false; true: it
   runs as in a process of its own, on a thread and an event loop of its own,
   over a node of its own of a distributed turn backend, so that the work of
-  its turns stalls nothing beside it, §10.6.8; the channels it hosts are
-  scripted channels whose reactions hold no gate and make no action other
-  than a `host.<verb>`, what the run's gates and records share staying on
-  the run's own loop; `executor.kill`, `executor.pause`, `executor.resume`
-  and `channel.publish` do not name it; a runner that cannot run it so
-  skips the scenario: roomkit outside its Redis turn mode, roomkit-rs
-  outside its Redis executor pass). The channels it runs are the ones
+  its turns stalls nothing beside it, §10.6.8; it registers no hook and
+  answers its turns, and the channels it hosts are scripted channels
+  holding only their turn (`on_event`), whose reactions hold no gate and
+  make no action other than a `host.<verb>`, what the run's gates and
+  records share staying on the run's own loop; `executor.kill`,
+  `executor.pause`, `executor.resume` and `channel.publish` do not name it;
+  a runner that cannot run it so skips the scenario: roomkit outside its
+  Redis turn mode, roomkit-rs outside its Redis executor pass). The channels it runs are the ones
   the setup marks `declared`: each executor builds its own copy, and a
   scripted agent answers from the one model of its channel id, whichever
   executor runs its turn. `kit.turn_timeouts` gives the bounds of a turn
@@ -1180,7 +1181,7 @@ run's own kit when absent.
 | `executor.start` | `executor`, an id of `setup.executors`: serves it on the kit's turn backend (§10.6.7) | null |
 | `executor.close` | `executor`: it takes no more turns and ends those it runs (§10.6, §10.6.8) | null |
 | `executor.kill` | `executor`: to the room it stops as a killed process stops, sending nothing more and hearing nothing more, its turns left to the owner's liveness checks (§10.6.8) | null |
-| `owner.kill` | none: the run's kit, the owner of its turns, falls silent on each turn's link as a killed process does: it sends nothing more there, releases nothing and reads nothing more, its turns left to the executors' liveness checks (§10.6.8); the rest of the kit runs on, its node of a distributed backend included, and no scenario observes what it does of those turns | null |
+| `owner.kill` | none: the run's kit, the owner of its turns, falls silent on each turn's link as a killed process does: it sends nothing more there, releases nothing and reads nothing more, its turns left to the executors' liveness checks (§10.6.8); the rest of the kit runs on, its node of a distributed backend included, and no scenario observes what it does of those turns; a kit with `turn_backend_faults` or `executor_catalogue: false` takes none | null |
 | `executor.pause`, `executor.resume` | `executor`: it stops declaring its channels, or declares them again, keeping what it holds (§10.6.7) | null |
 | `telemetry.spans` | `site` (`owner` or `executor/<id>`), `kind` (`framework.broadcast`, `llm.generate`, `hook.sync` or `llm.tool_call`), optional exact `attributes` to select matching spans | completed spans at that site, each with `name`, `span_id` and `parent_id` |
 | `executor.calls` | `executor`: what it did so far, as `expect.executors` reads it; a turn's reaction may make it, to read that at a point of the turn | the list |

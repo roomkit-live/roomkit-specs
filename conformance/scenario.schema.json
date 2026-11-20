@@ -10701,7 +10701,7 @@
           "uniqueItems": true
         },
         "own_process": {
-          "description": "True: it runs as in a process of its own, on a thread and an event loop of its own, over a node of its own of a distributed turn backend, so that the work of its turns stalls nothing beside it (\u00a710.6.8). Its channels are scripted channels whose reactions hold no gate and make no action other than a `host.<verb>`. A runner that cannot run it so skips the scenario. Default false.",
+          "description": "True: it runs as in a process of its own, on a thread and an event loop of its own, over a node of its own of a distributed turn backend, so that the work of its turns stalls nothing beside it (\u00a710.6.8). It registers no hook and answers its turns; its channels are scripted channels holding only their turn (`on_event`), whose reactions hold no gate and make no action other than a `host.<verb>`. A runner that cannot run it so skips the scenario. Default false.",
           "type": "boolean"
         }
       },
