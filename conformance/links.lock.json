@@ -2425,6 +2425,13 @@
     "RK-10.6.2-032": {
       "executors/an-executor-drops-the-state-a-turn-elsewhere-made-stale": "b1baba430f73a8a42b4df2c8c7190134b312af22752677ca66faa7fba70fbf75"
     },
+    "RK-10.6.2-033": {
+      "executors/a-turn-sent-while-the-previous-one-runs-names-it": "68ffc249e3f331fa8ff131a810e3f87e0135328d383e86572d3e3d5176c24ac0"
+    },
+    "RK-10.6.2-034": {
+      "executors/a-turn-handed-to-an-executor-that-never-answered-stays-the-previous-one": "34758ced848b80c0eda2d56d8834f11dcb82d184fc8907835e3382c6965c8081",
+      "executors/a-turn-no-executor-took-is-never-the-previous-one": "34758ced848b80c0eda2d56d8834f11dcb82d184fc8907835e3382c6965c8081"
+    },
     "RK-10.6.2-035": {
       "executors/a-channel-call-leaves-the-room-s-state-as-a-turn-does": "f48620c9f9a1d095d2c88558c805450f26913c67d45d6c2b52e3188fc0dd1dee"
     },
@@ -2556,6 +2563,9 @@
     "RK-10.6.3-022": {
       "executors/a-committed-event-goes-to-one-executor-that-would-take-the-room-s-turns": "a7bc8c03262d53e6724ea9cdbf49a86b1eb3e1badb733aab9c8c8d96e2d205d7",
       "executors/a-committed-event-goes-to-the-executor-holding-the-room-s-state": "a7bc8c03262d53e6724ea9cdbf49a86b1eb3e1badb733aab9c8c8d96e2d205d7"
+    },
+    "RK-10.6.3-023": {
+      "executors/a-committed-event-leaves-the-room-s-previous-turn-as-it-is": "6cbb41734d866ba8721872818b271a537474a1624746ba28298c91390a084535"
     },
     "RK-10.6.3-024": {
       "executors/a-committed-event-reaches-the-memory-before-its-agent-s-next-turn": "3b61c07ec550e9d4ac0b717c026251445406a8594ec28862317ff36418c0ff2a"
@@ -2696,6 +2706,12 @@
     },
     "RK-10.6.5-017": {
       "tasks/an-agent-that-takes-no-owner-tools-gets-none-and-hands-back-its-text": "cdf7eca60326da035a59e44a23ba0f74fa97d37f9c051c612e8be59b65b6df66"
+    },
+    "RK-10.6.5-018": {
+      "executors/a-turn-apart-s-plan-and-person-s-tools-run-on-its-executor": "52fb624f807f1a79e3a3289622df1c8e80bab8b2449457c1369aed94c06b8ce8"
+    },
+    "RK-10.6.5-019": {
+      "executors/a-turn-apart-runs-the-host-s-tool-on-its-executor": "570b88c20b5dbfe471fc2b4a69556dc74ba97fd24c19fbcaa3e386c4669e5e25"
     },
     "RK-10.6.5-020": {
       "executors/a-turn-apart-calls-the-host-verbs-during-and-after-it": "b73f240f1292394b6f1526ef0058c3d676e487de292f415a9c3ff45bae944641"
@@ -2951,6 +2967,13 @@
       "input-request/timed-out-whole": "17e1478cb917e50159086a141b4e7166817ac8413f92beb25b1ca3755635fb2d",
       "inputs/a-blocked-request-is-a-refusal": "17e1478cb917e50159086a141b4e7166817ac8413f92beb25b1ca3755635fb2d",
       "inputs/a-request-no-one-answers-in-time-fails": "17e1478cb917e50159086a141b4e7166817ac8413f92beb25b1ca3755635fb2d"
+    },
+    "RK-10.6.5-064": {
+      "inputs/a-detached-request-outlives-its-turn-answerable-where-it-was-opened": "42fd43757f9e155b00d092865d8538f3c479459a7da370b8e21e84114b997d78",
+      "inputs/a-request-still-open-when-its-turn-ends-is-withdrawn": "42fd43757f9e155b00d092865d8538f3c479459a7da370b8e21e84114b997d78"
+    },
+    "RK-10.6.5-065": {
+      "inputs/a-request-opened-after-its-turn-ended-is-the-handler-s-alone": "d22972bf058bc01bbc86bbe8925ed20f0d1ef0d97e6af69335c9c7085ee6ca05"
     },
     "RK-10.6.6-005": {
       "kit-executor/named-hooks-refuse-invalid-registrations": "ffab49e9c4a3a6d650e187e193fc70e2c0e6b2ec1044bf6d0018334dad806ecf"

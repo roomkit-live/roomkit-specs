@@ -2124,6 +2124,10 @@
             "await_input_request",
             "answer_input",
             "reject_input",
+            "human_input.create",
+            "human_input.create_detached",
+            "human_input.resolve",
+            "human_input.wait",
             "request_verification",
             "complete_verification",
             "record_failed_attempt",
@@ -3760,6 +3764,94 @@
               },
               "reason": {
                 "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "enum": [
+                  "human_input.create",
+                  "human_input.create_detached"
+                ]
+              }
+            }
+          },
+          "then": {
+            "description": "Opens a request on the human-input handler the runner holds for channel_id (§9.3, §10.6.5); its result is the request's id.",
+            "required": [
+              "channel_id",
+              "room_id",
+              "tool_name"
+            ],
+            "properties": {
+              "channel_id": {
+                "type": "string"
+              },
+              "room_id": {
+                "type": "string"
+              },
+              "tool_name": {
+                "type": "string"
+              },
+              "arguments": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "human_input.resolve"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "channel_id",
+              "request_id",
+              "value"
+            ],
+            "properties": {
+              "channel_id": {
+                "type": "string"
+              },
+              "request_id": {
+                "type": "string"
+              },
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "human_input.wait"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "channel_id",
+              "request_id"
+            ],
+            "properties": {
+              "channel_id": {
+                "type": "string"
+              },
+              "request_id": {
+                "type": "string"
+              },
+              "timeout_ms": {
+                "type": "integer",
+                "minimum": 0
               }
             }
           }
@@ -5436,6 +5528,7 @@
         "kind_not_stored",
         "turn_link",
         "needs_turn",
+        "input_released",
         "idempotency_key_taken"
       ]
     },
