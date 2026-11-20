@@ -48,7 +48,8 @@
           "recording",
           "message_session",
           "protocol_trace",
-          "executor_media"
+          "executor_media",
+          "scoring"
         ]
       }
     },
@@ -489,6 +490,10 @@
             "store_faults": {
               "description": "The kit built over the run's store wrapped so that store_fault steps make its operations fail or hold; every operation the store's own otherwise.",
               "const": true
+            },
+            "scoring": {
+              "type": "boolean",
+              "description": "Attach the implementation's turn scoring hook to this site, with a scorer that gives the default dimension a score of 1.0."
             },
             "telemetry": {
               "type": "boolean",
@@ -10536,6 +10541,10 @@
         "gate": {
           "description": "With `answers` false: the gate reached as it takes a turn, for a `wait_for` step.",
           "type": "string"
+        },
+        "scoring": {
+          "type": "boolean",
+          "description": "Attach the implementation's turn scoring hook to this site, with a scorer that gives the default dimension a score of 1.0."
         },
         "telemetry": {
           "type": "boolean",

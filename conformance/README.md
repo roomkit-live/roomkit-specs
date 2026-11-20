@@ -131,8 +131,10 @@ alone does not make it plain.
 
 A scenario can list the features it needs in `requires_features`. The defined
 names are `message_session`, `protocol_trace`, `voice`, `realtime`,
-`conference`, `video`, `recording` and `executor_media`. The last feature requires
-a standalone executor that accepts both host media readers (§10.6.2). Each runner declares the features it
+`conference`, `video`, `recording`, `executor_media` and `scoring`.
+`executor_media` requires a standalone executor that accepts both host media
+readers (§10.6.2). `scoring` requires a turn scoring hook that can attach to a
+kit or a standalone executor (§10.6.6). Each runner declares the features it
 provides. Before setup, it reports the scenario skipped if any are missing,
 naming the missing features in its test result. With the member absent, the
 scenario runs without a feature prerequisite.
@@ -389,6 +391,9 @@ room callbacks of the setup are not compared.
   Each executor can take `media_resolver` and `attached_media` using the
   same shapes as the kit. The readers belong to the site that configured them.
   The kit and each executor can set `telemetry: true` to record spans locally.
+  At either site, `scoring: true` attaches the implementation's scoring hook
+  with a scorer that gives each response a score of 1.0 on the `default`
+  dimension. The observation reaches the room owner through the turn host.
   Their `error_classes` lists name the synthetic application classes they
   rebuild. A per-room verb's `raises_class` raises a fresh instance.
   `DetailError` renders its message from an opaque local field.

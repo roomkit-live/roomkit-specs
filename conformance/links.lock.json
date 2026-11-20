@@ -2490,6 +2490,9 @@
     "RK-10.6.2-037": {
       "executors/an-executor-drops-the-state-a-turn-elsewhere-made-stale": "f26e283982a080a8370b79c4abe1f3b4baf48603c073ea07c079987de0f841d0"
     },
+    "RK-10.6.2-038": {
+      "executors/a-failed-state-discard-is-retried-before-the-next-turn": "16b5d2ec5e5d267b6b26e8602a4706d9edd902486313a13149971d586ab038ab"
+    },
     "RK-10.6.2-039": {
       "channel-call/a-concurrent-call-restores-empty-state-on-failure": "6473fe3f419ab1967f1c1d04685d504d6dc101e8124de4ca75b13fd819b9a1f4",
       "channel-call/a-concurrent-call-restores-empty-state-on-success": "6473fe3f419ab1967f1c1d04685d504d6dc101e8124de4ca75b13fd819b9a1f4",
@@ -3043,6 +3046,10 @@
     "RK-10.6.6-010": {
       "kit-executor/a-kit-turn-hook-a-declared-channel-could-fire-is-refused": "e5e602511d3f889371cd2faaad3d385b761580d22799c018416dcd8d1413a163"
     },
+    "RK-10.6.6-012": {
+      "executors/a-scorer-on-the-host-records-its-turn-at-the-room-owner": "6c2d58f94a16cd39c267e7f55dbc4bb2a8b0905be3294b001f9bafc209c64872",
+      "executors/a-scorer-on-the-kit-records-its-turn-at-the-room-owner": "6c2d58f94a16cd39c267e7f55dbc4bb2a8b0905be3294b001f9bafc209c64872"
+    },
     "RK-10.6.6-013": {
       "realtime/a-late-cancellation-leaves-the-served-call-alone": "8be1110bb89cca05e453cccd140ab62cee5a8381f74fca6369f994ec482ddb98"
     },
@@ -3113,6 +3120,9 @@
     },
     "RK-10.6.7-012": {
       "executors/an-executor-takes-the-turns-of-the-organizations-it-serves-alone": "7b57c8baa9d68d35dee030b6419fc1abc772b3be158b3aaf4e396f362711783d"
+    },
+    "RK-10.6.7-014": {
+      "executors/the-kit-s-own-executor-serves-every-organization": "4cfe581ad6207377c5cff1b37f3863899ac97d28e657dc2fa7618fb26e6a0363"
     },
     "RK-10.6.7-016": {
       "executors/an-executor-takes-the-turns-of-the-organizations-it-serves-alone": "b5cbb60aac53bb9def08c97a81e80e2124a513c44f167f6e3744f9bbba5b163b"

@@ -126,6 +126,7 @@ class SchemaTests(unittest.TestCase):
         self.assertTrue(validator.is_valid(scenario))
         for required, valid in (
             (["message_session", "protocol_trace"], True),
+            (["scoring"], True),
             (["unknown"], False),
             (["voice", "voice"], False),
             ([], False),
