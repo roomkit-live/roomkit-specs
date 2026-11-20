@@ -21530,7 +21530,7 @@ least:
 |---|---|
 | `current_tool_room_id()` | The id of the room the turn belongs to |
 | `current_tool_room()` | The `Room` of the turn itself: the object the store loaded when the turn began, the same one the turn's `RoomContext.room` holds for its hooks, memory provider and config provider; on a realtime tool call, which runs no turn, the room as loaded for that call |
-| `current_tool_actor_id()` | The participant id of the event that woke the channel this round; empty when the turn has no author (a system injection, a webhook, a scheduled run), and when the sender's id is a participant's the room reached through other channels only (Section 5.5), whom it would otherwise name |
+| `current_tool_actor_id()` | The participant id of the event that woke the channel this round: the id identity resolution gave its sender when it gave one (Section 11), else the id the message came under, which is `system`, the framework's own sender (Section 10.4), for a message the framework writes under that sender (a `deliver()`) as for one under that name in a room its host names; empty when the event names no participant (one the host commits itself without naming one, another agent's answer, a task's brief to its worker), and when the sender's id is a participant's the room reached through other channels only (Section 5.5), whom it would otherwise name. An empty actor does not single out the host, since a sender's message can read so too: a gate compares the value with the id it expects |
 | `current_tool_allowed_names()` | Every tool name the turn resolved, and every tool a round declared beyond it (the re-read of a stored result), nothing withdrawn, that its tool policy admits for its actor, so a call is validated against the live toolset rather than an attach-time snapshot: a tool the policy denies is left out on every door, since the gate refuses it before any handler, while a tool a skill keeps closed stays in; on a realtime door, every tool the session declares (its catalogue, what orchestration set up, the channel's own) that its policy admits, and none when the session declares no catalogue: it names no list, and its gate, policy included, still judges each call |
 | `current_tool_requester()` | Who asked: the label the conversation gives the author of the event the turn answers when it labels its speakers (Section 6.4: several speak, or two people or more take part), the label a task the turn delegates is headed with (§19.7); empty in a one-to-one conversation, for an instruction or a turn with no author, and outside a turn. It names a speaker; it authenticates no one |
 | `current_tool_call()` | The per-call record: the call's id, its channel, and the structured-result reverse channel |
@@ -21550,7 +21550,8 @@ context.
 Two rules bind the values that name the turn (the room and its id, the actor,
 the toolset); the response-metadata record and the per-call record are the
 turn's write channels, described in §6.7 and above. **They name the turn; they
-do not authenticate it.** The actor is a room `Participant.id` that reads back
+do not authenticate it.** The actor is the id the waking event carries, a room
+`Participant.id` where the room holds one for it, and reads back
 the same whether the sender is identified, pending or unknown, and the room's
 organization is a fact of the room, not a grant: a handler that reaches a
 person's or a tenant's data resolves the participant (§11) and applies the

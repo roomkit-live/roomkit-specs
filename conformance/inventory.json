@@ -1347,7 +1347,7 @@
     },
     {
       "section": "21.4",
-      "sha256": "fc2b70d173be3b5891a956f7f5314112856d408cae2443114ba5f9db1585194d",
+      "sha256": "e1c798c576590b29b06ef0b2c50d86bd30200c003bcc6d9a8b312d94846ec67e",
       "classification": "normative",
       "review": "Source inventory: Tool Call Context. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
     },

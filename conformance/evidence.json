@@ -13096,7 +13096,7 @@
       "missing": [
         "Other context accessors, realtime calls, handler result shapes and arbitrary custom handlers are outside this mapping."
       ],
-      "clause_sha256": "f10a3324b9ffa3510d84ad0ef19d38db3aa0a678a18c973cf3d59603f6bc3f97",
+      "clause_sha256": "f0673543e013cdd3057779e8da7c70ad70d63f7a61c305f6d31af888a3e86026",
       "coverage": "partial",
       "review": "Read against the Python background/task-context implementation and its source tests; four new scenarios passed Python memory and Redis and reproduced the Rust defects before the correction. These are bounded shared scenarios, not complete coverage of the composite clause.",
       "tests": []
@@ -21984,7 +21984,7 @@
     {
       "id": "phase4-local-allowed-tool-catalogue",
       "requirement": "RK-21.4-001",
-      "clause_sha256": "f10a3324b9ffa3510d84ad0ef19d38db3aa0a678a18c973cf3d59603f6bc3f97",
+      "clause_sha256": "f0673543e013cdd3057779e8da7c70ad70d63f7a61c305f6d31af888a3e86026",
       "scope": "Local AI handlers read the resolved catalogue, policy denial and owned-tool exemptions, hidden Tool Search tools, hook additions/withdrawals, per-room configuration and first-round reread declarations, in both provider modes. The two skill-gated cases now pass the Rust local runner (RMK-1709); Rust aggregate output is not an execution receipt.",
       "coverage": "partial",
       "review": "Compared with current_tool_allowed_names, _stamp_toolset, _adopt_hook_toolset and the source tests listed in the lot 54 checklist. Each assertion reads an actual public context accessor from a handler; neither runner derives the answer from scripted definitions. The earlier Rust skill-gated setup failures are fixed by the reviewed local skill-gating port; historical receipts are preserved unchanged.",
@@ -25710,7 +25710,7 @@
     {
       "id": "phase4-extract-tools-handlers",
       "requirement": "RK-21.4-001",
-      "clause_sha256": "f10a3324b9ffa3510d84ad0ef19d38db3aa0a678a18c973cf3d59603f6bc3f97",
+      "clause_sha256": "f0673543e013cdd3057779e8da7c70ad70d63f7a61c305f6d31af888a3e86026",
       "scope": "Extraction selects zero, one or composed handlers; existing composition and a standalone mixed channel preserve first-match dispatch and ordinary results.",
       "coverage": "partial",
       "review": "Independent source and full code reviews accepted the public helper, existing composition counterparts and the standalone channel witness. Native Rust counterparts and final gate logs are retained separately; this link is source mapping only.",
