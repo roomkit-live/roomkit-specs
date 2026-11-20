@@ -1536,6 +1536,10 @@
       "hooks/an-injected-change-keeps-the-target-s-readers": "f232a0c5e4f50f278e257d8af690780059c2cb1668c08fbdee4be75a887db461",
       "permissions/model-history-withholds-deleted-text-and-keeps-live-edits": "f232a0c5e4f50f278e257d8af690780059c2cb1668c08fbdee4be75a887db461"
     },
+    "RK-10.3-033": {
+      "edits/an-edit-whose-commit-fails-leaves-neither-the-edit-nor-its-target-s-update": "dc5d2cdd432fc2fb41dcf1d85227b1050be0c67b048362a7cbfe12a3865e9e8e",
+      "edits/an-edit-whose-target-is-gone-at-its-commit-fails-whole": "dc5d2cdd432fc2fb41dcf1d85227b1050be0c67b048362a7cbfe12a3865e9e8e"
+    },
     "RK-10.3-034": {
       "store/a-delivery-record-alone-writes-an-event-s-results": "7cae28840ed63367f542c76996b175f52f4c175785870544dfdd22f890a7a290"
     },
@@ -1628,6 +1632,10 @@
       "edits/a-hard-delete-removes-an-edit-that-replies-once": "3df0f0b09cebca30ba72e34791c21965a36f5edf64061898b47c3ff1e947cdf8",
       "edits/direct-update-and-hard-delete": "3df0f0b09cebca30ba72e34791c21965a36f5edf64061898b47c3ff1e947cdf8",
       "reentrancy/a-locked-hook-updates-an-earlier-event": "3df0f0b09cebca30ba72e34791c21965a36f5edf64061898b47c3ff1e947cdf8"
+    },
+    "RK-10.3-056": {
+      "edits/a-direct-delete-whose-room-read-fails-after-its-lock-fires-with-the-room-it-held": "a2824aa249f2a3d1753c448381a0928f2772070ac8e874b30fa266ab47a0b0fc",
+      "edits/a-direct-update-whose-room-read-fails-after-its-lock-fires-with-the-room-it-held": "a2824aa249f2a3d1753c448381a0928f2772070ac8e874b30fa266ab47a0b0fc"
     },
     "RK-10.3-057": {
       "edits/direct-update-and-hard-delete": "ae77c099b62131fbcc8bd0cd8f323c82367731248ae6cd2cddca74b5ba3a2f7a"
@@ -3027,6 +3035,9 @@
     "RK-10.6.6-022": {
       "executors/a-hook-on-an-executor-reads-the-room-when-it-fires": "de84d7d8bd33e93829b436780d5dc34fa0cc1ef3365bb988dfbcdc09b6235ada"
     },
+    "RK-10.6.6-024": {
+      "executors/a-hook-on-an-executor-whose-context-the-owner-fails-to-build-does-not-run": "942665e32dc3c8ecdd74a1d7b1fa143bc7a993b62e371f8dba70d398ee5f411c"
+    },
     "RK-10.6.7-003": {
       "executors/the-kit-lists-the-executors-served-and-what-each-declares": "f384428024b7d234010ae7eeb962d366c465783b5a962fa80de2f4a6ae737380"
     },
@@ -3728,6 +3739,9 @@
     },
     "RK-5.13-007": {
       "delivery/a-turn-the-close-cuts-leaves-no-outcome-and-the-set-s-failure-is-recorded": "91fb7de9a8c46afb5c61114bf6f878232648218acc7c09aa20b788e4759d9e2e"
+    },
+    "RK-5.13-008": {
+      "inbound/a-set-s-record-the-store-fails-to-write-changes-nothing-the-call-reports": "599a8b727fa1e7f33cc3e51eaccf5b9298915fa05d2c762d4adcfddfcd7021c1"
     },
     "RK-5.14-006": {
       "media/an-emitted-protocol-trace-reaches-its-room-observer": "59a627cca90e295801d9534ad90dcdd5aa35a193fc4efb7f66b3eab69034b94f"
@@ -6089,6 +6103,16 @@
     "RK-9.3-092": {
       "tools/a-hook-that-clears-a-served-result-has-the-model-and-the-next-hook-read-null": "677bf419ff0f40f0664095c1ffdef58cb17de3105669add73af23c5646624c1b"
     },
+    "RK-9.3-094": {
+      "tools/a-call-whose-hooks-context-fails-keeps-its-handler-s-result-non-streaming": "bc682f4afeadee70eef6e4f6fbb0b0b54fdd13b8112b7b64f378ef986426be5d",
+      "tools/a-call-whose-hooks-context-fails-keeps-its-handler-s-result-streaming": "bc682f4afeadee70eef6e4f6fbb0b0b54fdd13b8112b7b64f378ef986426be5d"
+    },
+    "RK-9.3-095": {
+      "tools/a-call-whose-hooks-context-fails-keeps-its-handler-s-result-non-streaming": "14d2cf8ba92c92822c29dcf3234b1582ec5bc96e348a07bbfc01b70525506c7d",
+      "tools/a-call-whose-hooks-context-fails-keeps-its-handler-s-result-streaming": "14d2cf8ba92c92822c29dcf3234b1582ec5bc96e348a07bbfc01b70525506c7d",
+      "tools/a-failed-call-whose-observers-context-fails-is-reported-once": "14d2cf8ba92c92822c29dcf3234b1582ec5bc96e348a07bbfc01b70525506c7d",
+      "tools/a-refused-call-whose-observers-context-fails-is-reported-once": "14d2cf8ba92c92822c29dcf3234b1582ec5bc96e348a07bbfc01b70525506c7d"
+    },
     "RK-9.3-104": {
       "inputs/a-hook-that-raises-leaves-the-request-answerable": "d80add29fb29b364077e6e9af2cc1952839693687f50a493b918037e7d4c959b",
       "inputs/a-request-is-answerable-while-its-notification-runs": "d80add29fb29b364077e6e9af2cc1952839693687f50a493b918037e7d4c959b"
@@ -6525,6 +6549,9 @@
     },
     "RK-9.5.1-049": {
       "routing/a-message-a-delivery-sent-leaves-its-new-room-for-one-that-exists": "fe38bed6277be5c23718367632f0b5496f29ee4b8e474dea6fb114163af1c28d"
+    },
+    "RK-9.5.1-050": {
+      "reentrancy/a-call-whose-room-another-call-creates-first-stays-charged": "7a131dbf5e8b100262fed7409e36db84cc2bf7b1be8add6d3359c9e2a4684443"
     },
     "RK-9.5.1-051": {
       "routing/a-message-a-delivery-sent-leaves-its-new-room-for-one-that-exists": "95e122fb7d13efd268e5125b409b8691903f10b8f127dd4fb86cabc0314d296a"

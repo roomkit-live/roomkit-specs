@@ -252,6 +252,35 @@ class SchemaTests(unittest.TestCase):
                 scenario["steps"][0] = step
                 self.assertEqual(validator.is_valid(scenario), valid)
 
+    def test_a_store_fault_names_store_operations_and_fails_or_holds(self) -> None:
+        schema = json.loads((ROOT / "scenario.schema.json").read_text())
+        validator = Draft202012Validator(schema)
+        fixture = (
+            ROOT
+            / "scenarios/inbound"
+            / "a-set-s-record-the-store-fails-to-write-changes-nothing-the-call-reports.json"
+        )
+        for step, valid in (
+            ({"store_fault": "commit_event", "fail": "down"}, True),
+            ({"store_fault": "commit_event", "gate": "g"}, True),
+            ({"store_fault": "commit_event", "gate": "g", "fail": "down"}, True),
+            ({"store_fault": ["room_exists", "load_room_context"], "gate": "g"}, True),
+            ({"store_fault": "get_room", "room_id": "$r1", "gate": "g"}, True),
+            ({"store_fault": "commit_event"}, False),
+            ({"store_fault": "commit_event", "fail": ""}, False),
+            ({"store_fault": "find_room_ids_by_channel", "gate": "g"}, False),
+            ({"store_fault": ["room_exists"], "gate": "g"}, False),
+            ({"store_fault": ["get_room", "get_room"], "gate": "g"}, False),
+            ({"store_fault": "commit_event", "fail": "down", "times": 2}, False),
+        ):
+            with self.subTest(step=step):
+                scenario = json.loads(fixture.read_text())
+                scenario["steps"][0] = step
+                self.assertEqual(validator.is_valid(scenario), valid)
+        scenario = json.loads(fixture.read_text())
+        scenario["setup"]["kit"]["store_faults"] = False
+        self.assertFalse(validator.is_valid(scenario))
+
     def test_a_hook_is_named_or_labelled_and_left_unnamed(self) -> None:
         schema = json.loads((ROOT / "scenario.schema.json").read_text())
         validator = Draft202012Validator(schema)

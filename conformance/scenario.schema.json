@@ -446,6 +446,10 @@
                   "minimum": 1
                 }
               }
+            },
+            "store_faults": {
+              "description": "The kit built over the run's store wrapped so that store_fault steps make its operations fail or hold; every operation the store's own otherwise.",
+              "const": true
             }
           }
         },
@@ -1924,6 +1928,56 @@
               ]
             }
           }
+        },
+        {
+          "type": "object",
+          "required": [
+            "store_fault"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "store_fault": {
+              "description": "The operation of the store's interface (\u00a714.1) whose first call after the step takes the fault, on the kit's store (setup.kit.store_faults); a list for a read implementations may make with different operations, whichever comes first.",
+              "oneOf": [
+                {
+                  "$ref": "#/$defs/store_operation"
+                },
+                {
+                  "type": "array",
+                  "minItems": 2,
+                  "uniqueItems": true,
+                  "items": {
+                    "$ref": "#/$defs/store_operation"
+                  }
+                }
+              ]
+            },
+            "room_id": {
+              "description": "Only a call on this room, or a reference to it ($r1).",
+              "type": "string"
+            },
+            "fail": {
+              "description": "The call fails with this message, the operation not run.",
+              "type": "string",
+              "minLength": 1
+            },
+            "gate": {
+              "description": "The call holds at this gate once the operation answered, or, with fail, in its place.",
+              "type": "string"
+            }
+          },
+          "anyOf": [
+            {
+              "required": [
+                "fail"
+              ]
+            },
+            {
+              "required": [
+                "gate"
+              ]
+            }
+          ]
         },
         {
           "type": "object",
@@ -5498,6 +5552,76 @@
         ]
       }
     },
+    "store_operation": {
+      "description": "An operation of the store's interface (\u00a714.1), by its name there.",
+      "enum": [
+        "create_room",
+        "get_room",
+        "room_exists",
+        "update_room",
+        "patch_room_metadata",
+        "delete_room",
+        "list_rooms",
+        "find_rooms",
+        "find_latest_room",
+        "find_room_id_by_channel",
+        "update_room_if",
+        "load_room_context",
+        "get_conversation",
+        "get_timeline",
+        "get_delivered_index",
+        "advance_delivered_index",
+        "get_private_state",
+        "set_private_state",
+        "find_room_id_by_binding",
+        "find_room_id_by_participant",
+        "commit_event",
+        "add_event",
+        "add_event_auto_index",
+        "get_event",
+        "list_events",
+        "get_thread_summaries",
+        "get_event_count",
+        "update_event",
+        "record_delivery_results",
+        "write_change_target",
+        "delete_event",
+        "get_event_by_idempotency_key",
+        "check_idempotency",
+        "add_binding",
+        "get_binding",
+        "binding_exists",
+        "update_binding",
+        "remove_binding",
+        "list_bindings",
+        "add_participant",
+        "get_participant",
+        "update_participant",
+        "delete_participant",
+        "list_participants",
+        "create_identity",
+        "get_identity",
+        "resolve_identity",
+        "link_address",
+        "unlink_address",
+        "get_verification",
+        "put_verification",
+        "list_verifications_in_force",
+        "create_verification_request",
+        "get_verification_request",
+        "update_verification_request",
+        "mark_read",
+        "mark_all_read",
+        "get_unread_count",
+        "list_read_markers",
+        "add_task",
+        "get_task",
+        "list_tasks",
+        "update_task",
+        "add_observation",
+        "list_observations"
+      ]
+    },
     "error_name": {
       "description": "What a call fails with, by its meaning in the RFC (README, \"Errors\").",
       "enum": [
@@ -5529,7 +5653,8 @@
         "turn_link",
         "needs_turn",
         "input_released",
-        "idempotency_key_taken"
+        "idempotency_key_taken",
+        "store_failed"
       ]
     },
     "expect": {

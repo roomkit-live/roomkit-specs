@@ -183,7 +183,10 @@ room callbacks of the setup are not compared.
   or written; and `persistence_policy`, the kit's persistence policy
   (`persist_types`, `exclude_types`, each a list of event types): what the
   kit's commits store, every type when absent, `exclude_types` winning over
-  `persist_types`.
+  `persist_types`; and `store_faults: true`, the kit built over the run's
+  store wrapped so that `store_fault` steps make its operations fail or
+  hold, every operation the store's own otherwise; a runner runs such a
+  scenario on each store it ships.
 - `channels`: each is registered. A channel of type `host` is the
   implementation's host channel (§10.5); any other is a **scripted channel**:
   - `id`, `type` (a ChannelType: `sms`, `websocket`, `whatsapp`, `email`,
@@ -987,6 +990,7 @@ and declares the descriptors in `session/new`.
 | `{"wait_for_lock": room, "waiters": n}` | Waits until `n` calls (1 by default) wait for the room's lock (a runner fails after 5 s): calls started in the background are then known to overlap. `room` may be a reference, a room the run created (`$r1`) |
 | `{"lock_releases": "fail"}`, `{"lock_releases": "succeed"}` | Sets the releases of the kit's `lock_manager` failing or succeeding, from the next one on |
 | `{"under_lock": room, "do": [calls]}` | Takes the room's lock from the kit's `lock_manager` as a host does outside any pass (§13.5), makes the calls under it in order, each waited for and checked by its `expect`, then releases the lock. `room` may be a reference, a room the run created (`$r1`) |
+| `{"store_fault": operation, "fail": message}`, `{"store_fault": operation, "gate": gate}` | Arms a fault on the kit's store (`setup.kit.store_faults`), which the first call of `operation` made after the step takes, on `room_id` when the step names one (a room the run created as `$r1`): `operation` is an operation of the store's interface (§14.1), or a list of them, for a read that implementations may make with different operations (`room_exists`, `load_room_context`), whichever comes first. With `fail`, the operation does not run and the call fails with that message, as the store's own failure; with `gate`, the call holds at the gate once the operation answered, then answers it, or with `fail` too, holds in the operation's place, then fails. A fault no call took fails the scenario |
 | `{"acp_disconnect": channel_id}` | Closes the named scripted ACP transport's pipe and drains its agent tasks. The transport then reports `is_alive=false`; the real channel decides whether and how to reconnect. Session and reply counters continue across connections. This is a fixture fault, not a framework API call. |
 
 A call that has not returned after 10 s fails the scenario.
@@ -1443,6 +1447,7 @@ refuses its value, a `ChannelId`).
 | `acp_connection_closed` | The ACP pipe closes while a request is waiting (§6.4) | `ConnectionError`, including its remote wrapper | `AcpError::ConnectionClosed`, relayed as `ConnectionError` |
 | `acp_setup_refused` | A new ACP session cannot apply its required configuration and is never prompted (§6.4) | ACP setup `RuntimeError` | ACP `AcpError::SetupRefused`, relayed as `RuntimeError` |
 | `already_set_up` | A handoff's tool set up again where it is declared, or an install over an agent whose handoff is set up already (§19.6); `delegate_task` set up again on an agent (§23.4) | `RuntimeError`, `setup_handoff() already called`, `setup_delegation() already called` | `RoomKitError::Runtime` |
+| `store_failed` | A store operation that failed, as a store fault (`store_fault`) makes it fail, the store's own failure, which the call is handed (§14.1) | the store fault's error, raised as it is | `RoomKitError::Store` |
 
 ## Reentrancy cells
 
@@ -1503,7 +1508,8 @@ A known failure is a scenario whose observable result breaks the RFC. Its
 runner names the scenario and broken rule at an implementation revision
 (roomkit's `KNOWN_FAILURES` in `tests/conformance/test_conformance.py`,
 roomkit-rs's lists in `crates/roomkit/tests/conformance/main.rs` and each
-store's `main.rs`, which may name a list `scenarios.rs` shares; its shared
+store's `main.rs`, which may name a list `scenarios.rs` shares, beside the
+list its shared loop reads on every store; its shared
 loop, `scenarios.rs`, reports the `executors/` area without running it, having
 no executor beside the kit). Strict
 expected failures fail the suite when they start passing; timing exceptions
