@@ -1018,6 +1018,13 @@ run's own kit when absent.
 
 | Call | Arguments | Result |
 |---|---|---|
+| `conference.open` | `channel_id`, `room_id`, optional `tools` | attaches a conference backed by a scripted SFU to the room. With a map of tool names to handler-result strings, its realtime model connects when a text broadcast arrives. |
+| `conference.join`, `conference.leave` | `channel_id`, `participant_id` | the SFU reports a participant arriving or departing |
+| `conference.publish` | `channel_id`, `participant_id`, `track_id`, `kind` | the participant publishes an `audio`, `video` or `screen_share` track |
+| `conference.unpublish`, `conference.mute`, `conference.unmute` | `channel_id`, `track_id` | the SFU reports withdrawal or a change in mute state for that track |
+| `conference.active_speaker` | `channel_id`, `participant_id` | the SFU announces its dominant speaker |
+| `conference.connection_quality` | `channel_id`, `participant_id`, `quality` | the SFU reports the participant’s connection quality |
+| `conference.tool_call` | `channel_id`, `call_id`, `name`, optional `arguments` | the connected conference model issues a tool call and waits for the corresponding result. The step returns the provider’s received text, decoded when it is JSON. Requires both `conference` and `realtime`. |
 | `voice.open` | `room_id`, `channel_id`, `participants` and the optional provider inputs below | registers and attaches a voice channel, then joins the named participants to that room |
 | `voice.feed` | `channel_id`, `participant_id`, `frames` (base64 PCM16 mono at 16 kHz) | the transport delivers these inbound frames in order |
 | `voice.say` | `channel_id`, `participant_id`, `text` | speak to the participant, awaiting playback |

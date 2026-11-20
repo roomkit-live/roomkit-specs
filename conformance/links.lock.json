@@ -4057,6 +4057,9 @@
     "RK-5.5-039": {
       "members/ensure-participant-creates-a-record-or-records-the-channel": "bf9cd49ac4a35f26b10d7394c237a2fc6da6aafab277707b24d60666b7b8e9b9"
     },
+    "RK-5.5-041": {
+      "conference/a-call-reports-presence-without-changing-room-membership": "8dc9a994ca9d9b2576895894e2108dfa6bb4b158ec6e08fec0fe87d8a6aee371"
+    },
     "RK-5.5-042": {
       "members/ensure-participant-creates-a-record-or-records-the-channel": "add3595d34713819d057fa7f21ff3da4307031c2b463938abe73d884839bef74"
     },
@@ -5295,6 +5298,36 @@
       "tasks/a-task-whose-end-is-being-told-reads-ended-at-once": "216170a67ca1a967cf232bc0da6708dd111a88144512dcb8644146421ced4fb2",
       "tasks/an-inline-delegation-runs-its-agent-in-a-child-room": "216170a67ca1a967cf232bc0da6708dd111a88144512dcb8644146421ced4fb2"
     },
+    "RK-9.2-087": {
+      "conference/a-screen-track-announces-the-start-and-end-of-sharing": "7c89ce9477237cc4676d1dee8e3b246ecb49f887c44e148ef9769009980f3d8f"
+    },
+    "RK-9.2-088": {
+      "conference/a-screen-track-announces-the-start-and-end-of-sharing": "4cbd75f3d38721c9ba4f1c45a00020eab1fff47b9a9d5440366d8038f5497503"
+    },
+    "RK-9.2-090": {
+      "conference/a-call-reports-presence-without-changing-room-membership": "0333ce26f6cf81a831dc00d9c3ddee2fdee5f26f87492a253abe15b0d20f9fdf"
+    },
+    "RK-9.2-091": {
+      "conference/a-call-reports-presence-without-changing-room-membership": "af1597f5649896394755317df76ddc13efe3091a5119bafdc1df21ff097aac5b"
+    },
+    "RK-9.2-092": {
+      "conference/a-screen-track-announces-the-start-and-end-of-sharing": "deef3dfe75a8834f068bc47e4c73a830c85d999d98a9434705a7623a5d14be59"
+    },
+    "RK-9.2-093": {
+      "conference/a-screen-track-announces-the-start-and-end-of-sharing": "a8043de511a1dc1fb46564c01e8a82297990dfaed74a5956ce8f704d4c92c756"
+    },
+    "RK-9.2-094": {
+      "conference/a-camera-toggle-reaches-the-mute-and-unmute-observers": "7a372acff991fcf4a7496c59814e1d939f8df7bb0a10b2e8a55be79e81e9fb49"
+    },
+    "RK-9.2-095": {
+      "conference/a-camera-toggle-reaches-the-mute-and-unmute-observers": "ce18becaff4d6097d11d1c10cd124fd468497f9e11e4abc13fb68ff1757fa865"
+    },
+    "RK-9.2-096": {
+      "conference/a-speaker-change-identifies-the-dominant-participant": "0ea0a18c3f3abd32c5a08edce5d62e491022f6b53ca2a02ed24f5d1faa5d4ec4"
+    },
+    "RK-9.2-097": {
+      "conference/a-quality-report-identifies-the-affected-participant": "9223485b2dea67c6841763be2a66b9fe2ee85ad8d03b7248b3d33e80b64b0070"
+    },
     "RK-9.2-098": {
       "planning/a-before-tool-rewrite-is-the-plan-that-is-stored-non-streaming": "0005bc208b4e7eb71b8d06ef912fe739a1ee6130a5c1e354b3b24e1104b83ef1",
       "planning/a-before-tool-rewrite-is-the-plan-that-is-stored-streaming": "0005bc208b4e7eb71b8d06ef912fe739a1ee6130a5c1e354b3b24e1104b83ef1",
@@ -6187,6 +6220,9 @@
     },
     "RK-9.3-092": {
       "tools/a-hook-that-clears-a-served-result-has-the-model-and-the-next-hook-read-null": "677bf419ff0f40f0664095c1ffdef58cb17de3105669add73af23c5646624c1b"
+    },
+    "RK-9.3-093": {
+      "conference/a-conference-model-receives-the-gated-tool-result": "e27f1fb46428da28ac000dba8bf11be94a9da5b4cc6400d26067d38e977b619f"
     },
     "RK-9.3-094": {
       "tools/a-call-whose-hooks-context-fails-keeps-its-handler-s-result-non-streaming": "bc682f4afeadee70eef6e4f6fbb0b0b54fdd13b8112b7b64f378ef986426be5d",

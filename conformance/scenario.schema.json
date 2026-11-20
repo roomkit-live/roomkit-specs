@@ -2106,6 +2106,16 @@
       "properties": {
         "call": {
           "enum": [
+            "conference.open",
+            "conference.join",
+            "conference.leave",
+            "conference.active_speaker",
+            "conference.publish",
+            "conference.unpublish",
+            "conference.mute",
+            "conference.unmute",
+            "conference.connection_quality",
+            "conference.tool_call",
             "voice.open",
             "voice.feed",
             "voice.say",
@@ -2329,6 +2339,181 @@
         }
       },
       "allOf": [
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "conference.open"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "channel_id",
+              "room_id"
+            ],
+            "properties": {
+              "channel_id": {
+                "type": "string"
+              },
+              "room_id": {
+                "type": "string"
+              },
+              "tools": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "enum": [
+                  "conference.join",
+                  "conference.leave",
+                  "conference.active_speaker"
+                ]
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "channel_id",
+              "participant_id"
+            ],
+            "properties": {
+              "channel_id": {
+                "type": "string"
+              },
+              "participant_id": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "conference.publish"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "channel_id",
+              "participant_id",
+              "track_id",
+              "kind"
+            ],
+            "properties": {
+              "channel_id": {
+                "type": "string"
+              },
+              "participant_id": {
+                "type": "string"
+              },
+              "track_id": {
+                "type": "string"
+              },
+              "kind": {
+                "enum": [
+                  "audio",
+                  "video",
+                  "screen_share"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "enum": [
+                  "conference.unpublish",
+                  "conference.mute",
+                  "conference.unmute"
+                ]
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "channel_id",
+              "track_id"
+            ],
+            "properties": {
+              "channel_id": {
+                "type": "string"
+              },
+              "track_id": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "conference.connection_quality"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "channel_id",
+              "participant_id",
+              "quality"
+            ],
+            "properties": {
+              "channel_id": {
+                "type": "string"
+              },
+              "participant_id": {
+                "type": "string"
+              },
+              "quality": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "conference.tool_call"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "channel_id",
+              "call_id",
+              "name"
+            ],
+            "properties": {
+              "channel_id": {
+                "type": "string"
+              },
+              "call_id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "arguments": {
+                "type": "object"
+              }
+            }
+          }
+        },
         {
           "if": {
             "properties": {
