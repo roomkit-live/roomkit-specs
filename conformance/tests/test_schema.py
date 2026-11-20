@@ -231,6 +231,27 @@ class SchemaTests(unittest.TestCase):
                     tool["gate"] = gate
                 self.assertEqual(validator.is_valid(scenario), valid)
 
+    def test_caller_and_reader_controls_require_their_labels_and_gates(self) -> None:
+        schema = json.loads((ROOT / "scenario.schema.json").read_text())
+        validator = Draft202012Validator(schema)
+        fixture = ROOT / "scenarios/streaming/a-gated-reader-leaves-while-its-pulled-call-runs.json"
+        for step in (
+            {"cancel": True},
+            {"close_while_pending": "turn"},
+            {"wait_for": "end", "pending": False},
+            {"wait_for": "end", "after": ["tool"]},
+        ):
+            with self.subTest(step=step):
+                scenario = json.loads(fixture.read_text())
+                scenario["steps"][0] = step
+                self.assertFalse(validator.is_valid(scenario))
+        for missing in ("running", "closed"):
+            with self.subTest(missing=missing):
+                scenario = json.loads(fixture.read_text())
+                reaction = scenario["setup"]["channels"][0]["deliver_stream"][0]
+                del reaction["close_while_reading"][missing]
+                self.assertFalse(validator.is_valid(scenario))
+
     def test_an_under_lock_step_names_its_room_and_waits_for_each_call(self) -> None:
         schema = json.loads((ROOT / "scenario.schema.json").read_text())
         validator = Draft202012Validator(schema)

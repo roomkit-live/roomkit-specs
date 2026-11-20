@@ -1717,6 +1717,23 @@
           "description": "In a `deliver_stream` reaction: the channel stops reading the stream once it was handed the text delta or the piece of reasoning this string equals (\u00a712.2 step 13s).",
           "type": "string"
         },
+        "close_while_reading": {
+          "description": "After a tool start row, pull the next item. Once the tool reaches running, abandon the pending read, close the stream and signal closed.",
+          "type": "object",
+          "required": [
+            "running",
+            "closed"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "running": {
+              "type": "string"
+            },
+            "closed": {
+              "type": "string"
+            }
+          }
+        },
         "stop_after_rows": {
           "description": "In a `deliver_stream` reaction: the channel stops reading the stream once it was handed this many of its rows, a call's start or end (\u00a712.2 step 13s).",
           "type": "integer",
@@ -1935,6 +1952,34 @@
         {
           "type": "object",
           "required": [
+            "cancel"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "cancel": {
+              "$ref": "#/$defs/label"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "close_while_pending",
+            "as"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "close_while_pending": {
+              "$ref": "#/$defs/label"
+            },
+            "as": {
+              "$ref": "#/$defs/label"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
             "concurrent"
           ],
           "additionalProperties": false,
@@ -1957,6 +2002,12 @@
           "properties": {
             "wait_for": {
               "type": "string"
+            },
+            "after": {
+              "type": "string"
+            },
+            "pending": {
+              "$ref": "#/$defs/label"
             }
           }
         },

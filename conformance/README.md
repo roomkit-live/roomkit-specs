@@ -448,6 +448,7 @@ left, the call does what it does by default. A reaction:
 | `output` | `tasks`, `observations` and `metadata_updates` of the channel's output; `provider_result`, the provider receipt (`success`, optional `provider_message_id`, `error`, `metadata`) returned in its `ChannelOutput` and preserved in the delivery result (§5.13), or null; a refusal uses `refuse`; in an `on_event` reaction, `response_metadata`, the record its turn writes (§6.4), and `error`: the error the channel met while producing it, with that message, which goes on with its responses and surfaces as a raised one's (ON_ERROR) |
 | `writes_record` | In a hook's reaction: first of all, before its `gate`, writes these keys on the turn's record (§6.7), on `before_ai_generation` through its context's `response_metadata`, on another trigger through `current_response_metadata()` when it answers one |
 | `stop_after` | In a `deliver_stream` reaction: the channel stops reading the stream once it was handed the text delta or the piece of reasoning this string equals |
+| `close_while_reading` | In a `deliver_stream` reaction, `{"running": gate, "closed": signal}` pulls the next item after a tool start row. Once the tool reaches `gate`, the target abandons the pending read, closes the stream and signals `signal`. |
 | `stop_after_rows` | In a `deliver_stream` reaction: the channel stops reading the stream once it was handed this many of its rows, a call's start or end |
 | `parsed` | In a `parse` reaction: a patch on the event the channel builds, what it reads off its own wire: its members replace the event's, those of its `source` the source's; its strings name what the run made (References) |
 | `result` | A hook's HookResult (§9.4). A modify's `event` is a patch on the payload: its members replace the payload's. Its injected events, tasks and observations are templates; event aliases in a room-event hook result resolve after its actions, before the result is returned |
@@ -1036,8 +1037,10 @@ and declares the descriptors in `session/new`.
 | a call | Makes the call and waits for it; `expect` checks its outcome |
 | a call with `"background": true` and `as` | Starts the call and goes on once the call has run to its first wait: what the next step does or wakes comes after that part of the call |
 | `{"await": label}` | Waits for the background call; `expect` checks its outcome |
+| `{"cancel": label}` | Consumes the label and cancels the pending background call’s caller. Its implementation decides when the cancellation returns. Later steps can release work the call already started. |
+| `{"close_while_pending": label, "as": closing}` | Requires that the labelled background call is pending and starts the kit’s ordinary close in the background. Await `closing` for its outcome. |
 | `{"concurrent": [calls]}` | Starts the calls together and waits for all |
-| `{"wait_for": gate}` | Waits until a call is held at the gate (a runner fails after 5 s) |
+| `{"wait_for": gate}` | Waits until the gate is reached (fails after 5 s). Optional `after` requires that the named gate was first reached strictly earlier. Optional `pending` checks that the labelled background call is still pending when the step observes the gate |
 | `{"open": gate}` | Opens the gate: every call held there, and every later one, goes on |
 | `{"idle": true}` | Waits until the kit runs nothing in the background; with `processes`, until none of the kits does, each discussion's driver roused first, so that it reads what another process stored |
 | `{"wait_for_lock": room, "waiters": n}` | Waits until `n` calls (1 by default) wait for the room's lock (a runner fails after 5 s): calls started in the background are then known to overlap. `room` may be a reference, a room the run created (`$r1`) |
@@ -1606,8 +1609,9 @@ A call into room R depends on where its caller's execution context stands in R
 | `commit`: `commit_event`, a lifecycle change | takes the lock again at once | waits for the lock | waits for the lock | waits for the lock |
 | `change`: `update_event`, `delete_event` | takes the lock again at once, drawing nothing | waits for the lock, drawing nothing | from an ASYNC hook's body, draws one of the cascade's hook calls, `reentry_loop_cap` past them | its own budget |
 
-Timing races (a caller that stops waiting, cancellation, concurrent sections
-at one instant) stay in each implementation's own tests.
+Shared scenarios use gates to cancel a caller before or after its decision and while
+a nested call holds its room’s lock. Each implementation also tests concurrent
+sections that begin at the same instant.
 
 ## Coverage
 

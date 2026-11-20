@@ -779,6 +779,10 @@
     "RK-10.1-107": {
       "delivery/a-task-delegated-from-a-delivery-is-not-its-turn-work": "0984a447e98d59e841357e88f4ad84b29d0219f82fce09bf72816e60c6c05b90"
     },
+    "RK-10.1-109": {
+      "delivery/a-gated-caller-leaves-after-its-decision": "4bd7bcd9773a4fbd99a82e3954b2112abe457b824234c9c24607675df14c6282",
+      "delivery/a-gated-caller-leaves-before-its-decision": "4bd7bcd9773a4fbd99a82e3954b2112abe457b824234c9c24607675df14c6282"
+    },
     "RK-10.1-110": {
       "delivery/a-cancel-after-completion-keeps-the-completed-outcome": "8d747523dcd36aae7e8390abff65a76a03bc2199f25f1a692003cc55f776c040",
       "delivery/a-cascade-cancel-leaves-another-room-s-running-turn-alone": "8d747523dcd36aae7e8390abff65a76a03bc2199f25f1a692003cc55f776c040",
@@ -2689,6 +2693,7 @@
       "streaming/reader-stops": "94372f40618fdc9d9f2de538d499dcd23876c1246072e9d62fdc92ec4a8a28ad"
     },
     "RK-10.6.4-010": {
+      "streaming/a-gated-reader-leaves-while-its-pulled-call-runs": "33cc9c9126d2e683acf0b0cd68d83a4d0471c3bc1f1a53de6718d1d1260960e9",
       "streaming/a-reader-that-stops-ends-the-turn-while-its-agent-holds-its-next-piece": "33cc9c9126d2e683acf0b0cd68d83a4d0471c3bc1f1a53de6718d1d1260960e9"
     },
     "RK-10.6.4-011": {
@@ -3290,6 +3295,9 @@
     },
     "RK-10.6.8-023": {
       "delivery/a-turn-whose-end-misses-its-cancel-bound-leaves-its-cleanup-incomplete": "fe40845876e7ca9aeef83ae760713c3f92929693462788be49e6fa27030f88dd"
+    },
+    "RK-10.6.8-024": {
+      "streaming/a-gated-reader-leaves-while-its-pulled-call-runs": "05be4f2f968aae42846f3ffdb6b2c25f248f19b5d6ae577be6508d5725cf8d0d"
     },
     "RK-10.6.8-025": {
       "delivery/a-turn-still-open-once-the-close-s-grace-is-over-is-given-up": "d471ada6b4660719bb073ba183fa3770a204cdb00a262d12cb322b7d43d734a6"
@@ -6790,6 +6798,10 @@
     },
     "RK-9.5.1-042": {
       "delivery/a-call-adopted-after-the-decision-ends-at-its-own-deadline": "60b6999e81a1cd26c8a541d3be711cc9e5a2a57248eca6cb44060efeeceff9a9"
+    },
+    "RK-9.5.1-043": {
+      "reentrancy/a-gated-caller-leaves-its-nested-call-to-the-event-deadline": "30c867d04115049096ede46ac5a82a783f280db7ceabb1804a814b2c112f8675",
+      "reentrancy/a-gated-caller-leaves-while-a-nested-call-holds-the-lock": "30c867d04115049096ede46ac5a82a783f280db7ceabb1804a814b2c112f8675"
     },
     "RK-9.5.1-044": {
       "hooks/an-observer-s-call-into-its-room-waits-for-its-delivery": "237349f6c3dae70afd77924ce49409fd3a26d5ba5ceb1d9630b594107f95c11a",
