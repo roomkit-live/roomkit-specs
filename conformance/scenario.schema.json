@@ -1782,7 +1782,7 @@
           "minimum": 0
         },
         "holds_cpu_ms": {
-          "description": "Keep the thread running the call busy for this many milliseconds, after its gate and `delay_ms` and before its actions, yielding nothing to its event loop meanwhile, as work busy with its CPU does (\u00a710.6.8).",
+          "description": "Keep the thread running the call busy for this many milliseconds, once its actions returned and before its `after_do_gate`, yielding nothing to its event loop meanwhile, as work busy with its CPU does (\u00a710.6.8).",
           "type": "integer",
           "minimum": 1
         },
@@ -10701,7 +10701,7 @@
           "uniqueItems": true
         },
         "own_process": {
-          "description": "True: it runs as in a process of its own, on a thread and an event loop of its own, over a node of its own of a distributed turn backend, so that the work of its turns stalls nothing beside it (\u00a710.6.8). A runner that cannot run it so skips the scenario. Default false.",
+          "description": "True: it runs as in a process of its own, on a thread and an event loop of its own, over a node of its own of a distributed turn backend, so that the work of its turns stalls nothing beside it (\u00a710.6.8). Its channels are scripted channels whose reactions hold no gate and make no action other than a `host.<verb>`. A runner that cannot run it so skips the scenario. Default false.",
           "type": "boolean"
         }
       },

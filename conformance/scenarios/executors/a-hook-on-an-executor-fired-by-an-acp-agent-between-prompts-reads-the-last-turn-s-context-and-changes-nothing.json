@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "executors/a-hook-on-an-executor-fired-by-an-acp-agent-between-prompts-reads-the-last-turn-s-context-and-changes-nothing",
-  "title": "A hook on an executor that an ACP agent's own activity fires between two prompts receives the context of the last turn the executor ran in the room, finds no turn's host and changes nothing; fired during the turn, it changes the room through the turn's host",
+  "title": "A hook on an executor that an ACP agent's own activity fires between two prompts receives the context of the last turn the executor ran in the room, finds no turn's host and changes nothing; fired during a turn, it changes the room through the turn's host",
   "rules": [
     "§10.6.6",
     "§10.6.5",
@@ -11,7 +11,7 @@
     "RK-10.6.6-023",
     "RK-10.6.6-025"
   ],
-  "notes": "Python: turns/_wiring_env.py WiringEnv.context (the last contexts kept per room) and channels/_acp_events.py _for_session (what the agent sends outside any prompt runs in a context of its own). The agent asks permission for a call during the prompt: the channel's external tool handler fires BEFORE_TOOL_USE on the executor inside the turn, where a turn's host is bound, and the event the hook sends through it reaches the room. Once the prompt is answered, the room's metadata changes, then the agent, on its own, asks permission for a second call in the same session: the hook fires outside any turn, with the context the turn had (the metadata before the change), finds no turn's host, and the room holds nothing more. Left uncovered of RK-10.6.6-023: no context where the executor ran no turn, after every channel whose turns it ran there was detached, and for a room created again under its id.",
+  "notes": "Python: turns/_wiring_env.py WiringEnv.context (the last contexts kept per room) and channels/_acp_events.py _for_session (what the agent sends outside any prompt runs in a context of its own). In the first turn the agent asks permission for a call: the channel's external tool handler fires BEFORE_TOOL_USE on the executor inside the turn, where a turn's host is bound, and the event the hook sends through it reaches the room. The room's metadata changes, a second turn runs, the metadata changes again, then the agent, on its own once it answered the second prompt, asks permission for another call in the same session: the hook fires outside any turn, with the context the second turn had (the metadata between the two changes), finds no turn's host, and the room holds nothing more. Left uncovered of RK-10.6.6-023: no context where the executor ran no turn, after every channel whose turns it ran there was detached, and for a room created again under its id.",
   "setup": {
     "executors": [
       {
@@ -105,6 +105,17 @@
                       }
                     ]
                   }
+                ]
+              },
+              {
+                "updates": [
+                  {
+                    "sessionUpdate": "agent_message_chunk",
+                    "content": {
+                      "type": "text",
+                      "text": "Again."
+                    }
+                  }
                 ],
                 "after_reply": {
                   "gate": "later",
@@ -186,6 +197,34 @@
       }
     },
     {
+      "call": "process_inbound",
+      "room_id": "r1",
+      "message": {
+        "channel_id": "ws",
+        "sender_id": "u1",
+        "content": {
+          "type": "text",
+          "body": "Read it again."
+        }
+      },
+      "expect": {
+        "result": {
+          "blocked": false,
+          "error": null
+        }
+      }
+    },
+    {
+      "idle": true
+    },
+    {
+      "call": "update_room_metadata",
+      "room_id": "r1",
+      "metadata": {
+        "phase": "third"
+      }
+    },
+    {
       "open": "later"
     },
     {
@@ -215,7 +254,7 @@
           "room_id": "r1",
           "context_room": {
             "metadata": {
-              "phase": "first"
+              "phase": "second"
             }
           }
         }
@@ -269,6 +308,23 @@
             "content": {
               "type": "tool_call",
               "tool_id": "call-1"
+            }
+          },
+          {
+            "type": "message",
+            "content": {
+              "type": "text",
+              "body": "Read it again."
+            }
+          },
+          {
+            "type": "message",
+            "source": {
+              "channel_id": "claude"
+            },
+            "content": {
+              "type": "text",
+              "body": "Again."
             }
           }
         ]

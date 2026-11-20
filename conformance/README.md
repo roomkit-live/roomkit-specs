@@ -383,10 +383,13 @@ room callbacks of the setup are not compared.
   takes one, for a `wait_for` step) and `own_process` (default false; true: it
   runs as in a process of its own, on a thread and an event loop of its own,
   over a node of its own of a distributed turn backend, so that the work of
-  its turns stalls nothing beside it, §10.6.8; a step other than
-  `executor.start` and `executor.close` does not name it, and a runner that
-  cannot run it so skips the scenario: roomkit outside its Redis turn mode,
-  roomkit-rs outside its Redis executor pass). The channels it runs are the ones
+  its turns stalls nothing beside it, §10.6.8; the channels it hosts are
+  scripted channels whose reactions hold no gate and make no action other
+  than a `host.<verb>`, what the run's gates and records share staying on
+  the run's own loop; `executor.kill`, `executor.pause`, `executor.resume`
+  and `channel.publish` do not name it; a runner that cannot run it so
+  skips the scenario: roomkit outside its Redis turn mode, roomkit-rs
+  outside its Redis executor pass). The channels it runs are the ones
   the setup marks `declared`: each executor builds its own copy, and a
   scripted agent answers from the one model of its channel id, whichever
   executor runs its turn. `kit.turn_timeouts` gives the bounds of a turn
@@ -444,7 +447,7 @@ left, the call does what it does by default. A reaction:
 | `when` | Holds when every member equals the call's: `room_id`, `text` (a text content's body), `type` (the event type), `source_channel_id`, `chain_depth` |
 | `gate` | Holds the call at this gate until a step opens it |
 | `delay_ms` | Waits this many milliseconds after the gate and before the actions, to separate the start of nested call deadlines; absent or zero, no delay |
-| `holds_cpu_ms` | Keeps the thread running the call busy for this many milliseconds, after its gate and `delay_ms` and before its actions, yielding nothing to its event loop meanwhile, as work busy with its CPU does (§10.6.8) |
+| `holds_cpu_ms` | Keeps the thread running the call busy for this many milliseconds, once its actions returned and before its `after_do_gate`, yielding nothing to its event loop meanwhile, as work busy with its CPU does (§10.6.8) |
 | `do` | Kit calls the hook or the channel makes while it runs, in its execution context, in order: an **action** is a call (below) with an optional `as` and `expect`. Its error is caught, kept and checked, never raised into the kit |
 | `after_do_gate` | Holds after all `do` actions returned, before `after_turn` work and the reaction's result or failure; lets steps observe completed work without a delay |
 | `spawn` | Once `writes_record` is written and before its `gate`: starts a task, which the call does not wait for, that holds at the spawn's `gate`, waits its `delay_ms`, makes its `do` actions in order and holds at its `after_do_gate`, each as a reaction's. The task is started in the call's execution context, as the implementation's own spawn keeps it (roomkit: `asyncio.create_task`; roomkit-rs: `tokio::spawn` of `keep_context`), so that it acts for the call while the call runs and outlives it (§9.5.1 Reentrance). A runner waits for the task when it waits for the kit to go idle |
@@ -1177,7 +1180,7 @@ run's own kit when absent.
 | `executor.start` | `executor`, an id of `setup.executors`: serves it on the kit's turn backend (§10.6.7) | null |
 | `executor.close` | `executor`: it takes no more turns and ends those it runs (§10.6, §10.6.8) | null |
 | `executor.kill` | `executor`: to the room it stops as a killed process stops, sending nothing more and hearing nothing more, its turns left to the owner's liveness checks (§10.6.8) | null |
-| `owner.kill` | none: the run's kit, the owner of its turns, stops to their executors as a killed process stops: on each turn's link it sends nothing more, releases nothing and reads nothing more, its turns left to the executors' liveness checks (§10.6.8); what the kit does of them afterwards reaches no executor, and no scenario observes it | null |
+| `owner.kill` | none: the run's kit, the owner of its turns, falls silent on each turn's link as a killed process does: it sends nothing more there, releases nothing and reads nothing more, its turns left to the executors' liveness checks (§10.6.8); the rest of the kit runs on, its node of a distributed backend included, and no scenario observes what it does of those turns | null |
 | `executor.pause`, `executor.resume` | `executor`: it stops declaring its channels, or declares them again, keeping what it holds (§10.6.7) | null |
 | `telemetry.spans` | `site` (`owner` or `executor/<id>`), `kind` (`framework.broadcast`, `llm.generate`, `hook.sync` or `llm.tool_call`), optional exact `attributes` to select matching spans | completed spans at that site, each with `name`, `span_id` and `parent_id` |
 | `executor.calls` | `executor`: what it did so far, as `expect.executors` reads it; a turn's reaction may make it, to read that at a point of the turn | the list |
