@@ -131,7 +131,8 @@ alone does not make it plain.
 
 A scenario can list the features it needs in `requires_features`. The defined
 names are `message_session`, `protocol_trace`, `voice`, `realtime`,
-`conference`, `video` and `recording`. Each runner declares the features it
+`conference`, `video`, `recording` and `executor_media`. The last feature requires
+a standalone executor that accepts both host media readers (§10.6.2). Each runner declares the features it
 provides. Before setup, it reports the scenario skipped if any are missing,
 naming the missing features in its test result. With the member absent, the
 scenario runs without a feature prerequisite.
@@ -382,6 +383,14 @@ room callbacks of the setup are not compared.
   `cancel_ms`, the implementation's default for each absent. Which of several
   executors declaring a channel takes a room's first turn is the backend's
   to choose (§10.6.7): a scenario that needs one starts the other afterwards.
+  Each executor can take `media_resolver` and `attached_media` using the
+  same shapes as the kit. The readers belong to the site that configured them.
+  The kit and each executor can set `telemetry: true` to record spans locally.
+  Their `error_classes` lists name the synthetic application classes they
+  rebuild. A per-room verb's `raises_class` raises a fresh instance.
+  `DetailError` renders its message from an opaque local field.
+  `HostProviderError` extends the provider error and carries a provider name
+  and status code (§10.6.8).
 - `event_handlers`: **framework-event handlers** (§8.2), each registered on
   the kit after the hooks, in order, for the events of its `event` type (a
   framework event's name: `before_tool_use`, `tool_call`, `ai_response`...).
@@ -1132,11 +1141,12 @@ run's own kit when absent.
 | `executor.close` | `executor`: it takes no more turns and ends those it runs (§10.6, §10.6.8) | null |
 | `executor.kill` | `executor`: to the room it stops as a killed process stops, sending nothing more and hearing nothing more, its turns left to the owner's liveness checks (§10.6.8) | null |
 | `executor.pause`, `executor.resume` | `executor`: it stops declaring its channels, or declares them again, keeping what it holds (§10.6.7) | null |
+| `telemetry.spans` | `site` (`owner` or `executor/<id>`), `kind` (`framework.broadcast`, `llm.generate`, `hook.sync` or `llm.tool_call`), optional exact `attributes` to select matching spans | completed spans at that site, each with `name`, `span_id` and `parent_id` |
 | `executor.calls` | `executor`: what it did so far, as `expect.executors` reads it; a turn's reaction may make it, to read that at a point of the turn | the list |
 | `channel.publish` | `executor`, `channel_id`, `room_id`, `kind` (an ephemeral event's type), `data`, `gate`: in a reaction's `after_turn`, work the turn began publishes on the channel's realtime, once held at `gate` when it names one; the call returns once the room owner took it, or refused it (§10.6.3) | null |
 | `acp.close` | `channel_id`: close the local ACP channel directly, leaving the kit alive so its shutdown cannot hide a pending channel preparation | null |
 | `acp.cancel` | `channel_id`, `room_id`: call the local ACP channel's public `cancel(room_id)` directly, without a kit steering directive | whether a preparing turn or existing session was reached |
-| `channel_call` | `channel_id`, `room_id`, `verb`, `arguments`: the channel's per-room verb, on the executor holding the room's state (§10.6.3) | the verb's result |
+| `channel_call` | `channel_id`, `room_id`, `verb`, `arguments`: the channel's per-room verb, on the executor holding the room's state (§10.6.3) | the verb's result. With `capture_error`, saves the received exception under that label and returns its structured observation |
 | `release_channel` | `channel_id`: every executor holding a build of it lets it go, closed once the turns running on it end, and builds it anew for the next one (§10.6.3) | null |
 | `kit_executor.executor_id` | none | the kit's own public executor id; a `$as` matcher can bind it for exact presence assertions |
 | `executors` | none: the executors served on the kit's turn backend, its own executor aside (§10.6.7) | the list, in any order, each `{executor_id, hosts, organizations, room_hooks, online}`: `hosts` the ids and prefixes it declares, sorted (null for a predicate or every id), `organizations` the ones it serves, sorted (null: the rooms without an organization alone), `room_hooks` sorted; a closed executor is not listed |
@@ -1305,6 +1315,15 @@ else, where no turn's host is.
 | `human_input.resolve` | `channel_id`, `request_id`, `value` | whether that handler took the answer: false for a request no longer open there (§9.3) |
 | `human_input.wait` | `channel_id`, `request_id`, `timeout_ms` (the handler's `timeout`, in milliseconds; its default when absent) | the answer once the request settled on that handler; `input_released` for one given up before an answer (§9.3, §10.6.5) |
 | `cancel_task` | `task_id` | whether a background task the kit's task runner held was running and is now cancelled (§23.3); false for any other, or one of a room of another organization than the call's `organization_id` (§17.2) |
+
+A declared handler with `raises_captured` throws the exception a previous
+`channel_call` saved. `host.call` with `inspect_error: true` exposes the same
+structured observation as `channel_call` with `capture_error`. It records
+the fixture class name, displayed message, whether the received exception is
+generic, the class it reads as, the ordered base names, and the attributes.
+Rust checks the native class or base by downcast. A partially rebuilt
+instance whose local field is absent identifies its class. The enclosing
+remote error supplies its original display message.
 
 A declared host `handler` answers with `returns` (a JSON value),
 `returns_arguments: true`, `returns_context: true`, or raises `raises: {kind,

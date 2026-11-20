@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "b478e3906a2eb96ab79ced216bf7a85d01283de877ae8d2c233337fb66828af9",
-  "corpus_sha256": "4c96bdc2941f93b01653b2bedb27de8e546c4ea81610bbe23c301698a35bb094",
+  "corpus_sha256": "e022069bb267acdc436f596d2715f7a69cca1e6cda2aaeb18a30d7386023b19c",
   "python_commit": "929f9dc7fa1cd70907b6ece5fea89f8ff7979f52",
-  "scenario_count": 3349,
+  "scenario_count": 3355,
   "sections": [
     {
       "section": "0",
@@ -1396,6 +1396,7 @@
         "eviction/a-room-the-agent-joins-again-keeps-no-stored-result",
         "eviction/a-stored-result-of-parts-read-as-text-is-never-noted-as-a-repeat",
         "eviction/an-evicted-answer-given-a-third-time-is-noted",
+        "executors/a-built-channel-reads-its-own-attachment-and-resolves-its-bytes",
         "executors/a-plan-a-build-let-go-held-reads-empty-at-its-next-build",
         "executors/a-provider-the-factory-hands-every-build-outlives-a-build-let-go",
         "executors/a-provider-the-factory-hands-every-build-outlives-its-executor-s-close",
@@ -5191,6 +5192,8 @@
         "channel-call/a-verb-the-channel-lacks-fails",
         "channel-call/an-empty-state-is-forgotten",
         "eviction/a-room-the-agent-joins-again-keeps-no-stored-result",
+        "executors/a-built-channel-reads-its-own-attachment-and-resolves-its-bytes",
+        "executors/a-built-channel-reads-the-owner-s-task-in-the-model-input",
         "executors/a-channel-call-leaves-the-room-s-state-as-a-turn-does",
         "executors/a-committed-event-goes-to-the-executor-holding-the-room-s-state",
         "executors/a-committed-event-leaves-the-room-s-previous-turn-as-it-is",
@@ -5640,6 +5643,9 @@
         "executor-close/closing-from-a-turn-spares-it",
         "executor-close/closing-from-another-delivery-cuts-its-waiter",
         "executor-close/closing-refuses-new-turns-and-keeps-transports",
+        "executors/a-built-channel-keeps-the-message-of-a-declared-error-with-a-local-field",
+        "executors/a-built-channel-receives-the-original-error-again-from-the-owner",
+        "executors/a-built-channel-reports-an-undeclared-failure-as-its-provider-base",
         "executors/a-provider-the-factory-hands-every-build-outlives-its-executor-s-close",
         "executors/a-room-s-agent-presence-names-the-executors-covering-each-agent",
         "executors/a-slow-turn-apart-that-keeps-beating-is-never-failed",
@@ -5672,6 +5678,7 @@
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
+        "executors/a-built-channel-parents-its-generation-to-the-owner-broadcast",
         "executors/a-room-s-attach-and-detach-are-applied-on-the-executor-before-they-return"
       ]
     },
@@ -9471,6 +9478,7 @@
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
+        "executors/a-built-channel-reads-the-owner-s-task-in-the-model-input",
         "executors/a-declared-agent-s-delegate-task-is-kept-by-the-owner-for-each-build",
         "executors/a-turn-apart-calls-a-tool-the-room-owner-serves",
         "executors/a-turn-apart-s-delegation-and-segments-fire-their-hooks-on-the-room-owner",

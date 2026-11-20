@@ -47,7 +47,8 @@
           "video",
           "recording",
           "message_session",
-          "protocol_trace"
+          "protocol_trace",
+          "executor_media"
         ]
       }
     },
@@ -483,6 +484,20 @@
             "store_faults": {
               "description": "The kit built over the run's store wrapped so that store_fault steps make its operations fail or hold; every operation the store's own otherwise.",
               "const": true
+            },
+            "telemetry": {
+              "type": "boolean",
+              "description": "Install a recording telemetry provider at this site."
+            },
+            "error_classes": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "enum": [
+                  "DetailError",
+                  "HostProviderError"
+                ]
+              }
             }
           }
         },
@@ -1237,6 +1252,12 @@
                 "items": {
                   "$ref": "#/$defs/action"
                 }
+              },
+              "raises_class": {
+                "enum": [
+                  "DetailError",
+                  "HostProviderError"
+                ]
               }
             }
           }
@@ -2337,7 +2358,8 @@
             "agent.replace_extra_tool",
             "skill_registry_session",
             "declare_host_verb",
-            "host.call"
+            "host.call",
+            "telemetry.spans"
           ]
         },
         "organization_id": {
@@ -6048,6 +6070,9 @@
               },
               "arguments": {
                 "type": "object"
+              },
+              "capture_error": {
+                "$ref": "#/$defs/label"
               }
             }
           }
@@ -6553,6 +6578,41 @@
                 "items": {
                   "type": "string"
                 }
+              },
+              "inspect_error": {
+                "type": "boolean"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "telemetry.spans"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "site",
+              "kind"
+            ],
+            "properties": {
+              "site": {
+                "type": "string",
+                "pattern": "^(owner|executor/.+)$"
+              },
+              "attributes": {
+                "type": "object"
+              },
+              "kind": {
+                "enum": [
+                  "framework.broadcast",
+                  "llm.generate",
+                  "hook.sync",
+                  "llm.tool_call"
+                ]
               }
             }
           }
@@ -10404,6 +10464,49 @@
         "gate": {
           "description": "With `answers` false: the gate reached as it takes a turn, for a `wait_for` step.",
           "type": "string"
+        },
+        "telemetry": {
+          "type": "boolean",
+          "description": "Install a recording telemetry provider at this site."
+        },
+        "error_classes": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "DetailError",
+              "HostProviderError"
+            ]
+          }
+        },
+        "media_resolver": {
+          "description": "The kit's media resolver (\u00a76.4), serving every AI channel registered on it: the bytes of each reference `media` names, in base64; none for another reference.",
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "media"
+          ],
+          "properties": {
+            "media": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "attached_media": {
+          "description": "The kit's attached-media reader (\u00a76.4), serving every AI channel registered on it: the media an event carries outside its content are the media contents, in the serialized form, its metadata lists under `key`.",
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "key"
+          ],
+          "properties": {
+            "key": {
+              "type": "string"
+            }
+          }
         }
       }
     },
@@ -11855,6 +11958,9 @@
               "type": "string"
             }
           }
+        },
+        "raises_captured": {
+          "$ref": "#/$defs/label"
         }
       },
       "oneOf": [
@@ -11876,6 +11982,11 @@
         {
           "required": [
             "raises"
+          ]
+        },
+        {
+          "required": [
+            "raises_captured"
           ]
         }
       ]

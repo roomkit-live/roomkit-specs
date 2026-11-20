@@ -2432,6 +2432,12 @@
     "RK-10.6.2-021": {
       "executors/a-turn-apart-emits-its-framework-events": "cf62850f0766ca2faad407ea0920befe47e740ec124afe112ac59974446004b5"
     },
+    "RK-10.6.2-022": {
+      "executors/a-built-channel-reads-the-owner-s-task-in-the-model-input": "2cd85e40fc5ce307b49dec0ba203ea6186de0e0e96a5f5ecf1a4d3a0b94c3ca0"
+    },
+    "RK-10.6.2-023": {
+      "executors/a-built-channel-reads-its-own-attachment-and-resolves-its-bytes": "29e199a3d78b3688c6971479dc7a3a3f8e20df2ec47923145468d7edfd974483"
+    },
     "RK-10.6.2-024": {
       "executors/a-hook-on-an-executor-reads-the-room-when-it-fires": "24de17eb3922cedd550543f75f9b3c7e359e6a57ed50580fb3cfceaad509cff1"
     },
@@ -3347,8 +3353,20 @@
       "host-declared/record-error-valueerror-streaming": "e579b68c2e3be272db905ee87ba32ef1e8511d802307cd24dd21cf66ebbc8645",
       "inbound/an-agent-s-provider-refusal-keeps-its-retryability": "e579b68c2e3be272db905ee87ba32ef1e8511d802307cd24dd21cf66ebbc8645"
     },
+    "RK-10.6.8-046": {
+      "executors/a-built-channel-keeps-the-message-of-a-declared-error-with-a-local-field": "090b4111138382fa256ba4718fb8099ae42d141419cf9884160a267ea40ca388"
+    },
+    "RK-10.6.8-047": {
+      "executors/a-built-channel-reports-an-undeclared-failure-as-its-provider-base": "2344760938db41f2c0758028e1e314ba168534eb9a05c12f23aa69a7edf1dbff"
+    },
+    "RK-10.6.8-048": {
+      "executors/a-built-channel-receives-the-original-error-again-from-the-owner": "55165d9a0da347a74b23db10b06eb7f34e60e7537c52a5b5f0fa06db74195052"
+    },
     "RK-10.6.8-050": {
       "executors/a-turn-apart-s-error-message-reaches-on-error-and-never-a-model": "80025d01ed9bad872bc061c8632f8f5301cdd8c7435dcb58bebddc93b696b228"
+    },
+    "RK-10.6.9-001": {
+      "executors/a-built-channel-parents-its-generation-to-the-owner-broadcast": "9e374191e666f0ddc44d20e09aaa7f2d40bf1f7545042445c5ed6070b260a3f3"
     },
     "RK-10.6.9-009": {
       "executors/a-room-s-attach-and-detach-are-applied-on-the-executor-before-they-return": "c3d781930779e9e12585462005f14490e270227e68b9e944b881ab0b4acff073"
