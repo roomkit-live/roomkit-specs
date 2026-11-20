@@ -114,6 +114,27 @@ class SchemaTests(unittest.TestCase):
                 scenario["steps"][0]["expect"] = {"error": error}
                 self.assertEqual(validator.is_valid(scenario), valid)
 
+    def test_feature_requirements_are_known_nonempty_unique_names(self) -> None:
+        schema = json.loads((ROOT / "scenario.schema.json").read_text())
+        validator = Draft202012Validator(schema)
+        scenario = {
+            "id": "media/example",
+            "title": "Example",
+            "rules": ["§9.2"],
+            "steps": [{"idle": True}],
+        }
+        self.assertTrue(validator.is_valid(scenario))
+        for required, valid in (
+            (["message_session", "protocol_trace"], True),
+            (["unknown"], False),
+            (["voice", "voice"], False),
+            ([], False),
+            ("video", False),
+        ):
+            with self.subTest(required=required):
+                candidate = {**scenario, "requires_features": required}
+                self.assertEqual(validator.is_valid(candidate), valid)
+
     def test_requirements_cite_unique_unit_ids(self) -> None:
         schema = json.loads((ROOT / "scenario.schema.json").read_text())
         validator = Draft202012Validator(schema)

@@ -129,6 +129,13 @@ it recorded against `expect` and each step's `expect`. Any mismatch fails the
 scenario. `notes` says in prose what the scenario relies on when the RFC's text
 alone does not make it plain.
 
+A scenario can list the features it needs in `requires_features`. The defined
+names are `message_session`, `protocol_trace`, `voice`, `realtime`,
+`conference`, `video` and `recording`. Each runner declares the features it
+provides. Before setup, it reports the scenario skipped if any are missing,
+naming the missing features in its test result. With the member absent, the
+scenario runs without a feature prerequisite.
+
 ### Setup
 
 Made before anything is recorded: framework events, hook calls, deliveries and
@@ -993,7 +1000,9 @@ run's own kit when absent.
 
 | Call | Arguments | Result |
 |---|---|---|
-| `process_inbound` | `message` (an InboundMessage), `room_id` | an InboundResult: `event`, `blocked`, `duplicate`, `reason`, `error` (its message), `response_metadata`, `response_events`, `unavailable_targets`, `delivery_results`, `cancellation_reason` |
+| `parse_voice_session` | `session` (a voice session with `id`, `room_id`, `channel_id`, `participant_id` and optional `metadata`), `channel_id`, optional `metadata` | the InboundMessage made by the voice adapter (§5.12), including its session |
+| `emit_protocol_trace` | `trace`, a §5.14 record for a registered channel; its optional `raw` is text, null, or `{"base64": "..."}` for bytes | emits through the channel; the kit supplies the timestamp and dispatches the trace to its room's hooks (§9.2) |
+| `process_inbound` | `message` (an InboundMessage; its optional `session` uses the same form as `parse_voice_session`), `room_id` | an InboundResult: `event`, `blocked`, `duplicate`, `reason`, `error` (its message), `response_metadata`, `response_events`, `unavailable_targets`, `delivery_results`, `cancellation_reason` |
 | `process_inbound` with `defer_delivery: true` | as above | the InboundResult at the commit (§10.1 step 18); its completion handle is named by the call's `as` label |
 | `delivery.cancel` | `of`, the label of a deferred `process_inbound`; `reason` (default `caller_cancelled`), `timeout_ms` (default 5000) | the handle's InboundResult once the turns it cut are over (§10.1 Explicit delivery cancellation); a handle done returns its result unchanged |
 | `delivery.wait` | `of`, as above | the handle's InboundResult once its delivery is over (§10.1 step 18) |
@@ -1275,9 +1284,9 @@ stores a simulated plan nor derives its tool result from these observations.
 | `timeline` | Per room, the whole timeline in index order, `BLOCKED` records included, lifecycle records left out |
 | `rooms`, `bindings` | Per room, the room record; per room and channel, the binding, `null` for none |
 | `framework_events` | Per room (`*` for the events of no room), every framework event of the §26.1 table and `process_timeout`, and of the Level 2 features the suite exercises, `status_posted` (§19.8) and `feedback` (§15.9), identity resolution's `identity_resolved` and `identity_timeout` (§8.2), a human-input request's `user_input_required` (§9.3), and identity verification's `verification_requested`, `verification_completed` and `verification_ended` (§8.2, §11.7), and a delivery lane's `delivery_skipped` (§8.2, §13.5), in emission order |
-| `hooks` | Per scripted hook, its calls in order: `trigger`, `room_id`, `event` (the payload, when an event), `context_room` (the room supplied to an event or session hook, captured on entry), `recent_events` (the ids of the events of the context supplied to an event hook, lifecycle records left out, as `contexts` reads them), `tool_call` (the payload, when a tool call: `name`, `tool_call_id`, `arguments` as the call runs or was stopped with, and, on `on_tool_call`, `result` as the model reads it, `is_error`, `refused`, `cancelled`, `error_detail` and `structured_content`), `delivery_status` (the payload, when a delivery status, §10.4), `status_entry` (the payload, when a status entry: `on_status_posted`), `dispatch_decision` (the payload, on `on_dispatch_decision`: `room_id`, `event`, `candidates`, `decision` as `{agents, reason, judgments}`, `duration_ms`), `observation` (the payload, when an observation: `on_feedback`), `request` (the payload, when a human-input request: `pending_id`, `tool_name`, `arguments`, `room_id`, `tool_call_id`, `channel_id`, `channel_type`, `actor_id`), `identity_result` (what an identity hook is handed, §11.2), `generation` (the payload, on `before_ai_generation`: `channel_id`, `provider_name`, `purpose`, `trigger` the event the turn answers, and its context's `system_prompt`, `messages` as `models` reads them, the names of its `tools`, and `room`, `target_capabilities` and `target_media_types` as `models` reads them), `tool_round` (on `after_tool_round`: `channel_id`, `round_index`, its `calls`, each `{tool_call_id, name, arguments, metadata, partial, garbled}`, its `results` and provider-served `answered` results as `models` reads them, and the names of the turn's `tools`), `response` (on `on_ai_response`: `channel_id`, `response_content`, `segments`, `tool_calls_count`, `round_count`, `loop_end_reason`, `usage`, `usage_complete`, `usage_metadata` (the response provenance, copied unchanged), `streaming`, `thinking`, and `declared_tools`, by name: `position`, `description`, `parameters`, `origin`) |
+| `hooks` | Per scripted hook, its calls in order: `trigger`, `room_id`, `trace` (the §5.14 record for `on_protocol_trace`, including its UTC timestamp and binary data in base64), `event` (the payload, when an event), `context_room` (the room supplied to an event or session hook, captured on entry), `recent_events` (the ids of the events of the context supplied to an event hook, lifecycle records left out, as `contexts` reads them), `tool_call` (the payload, when a tool call: `name`, `tool_call_id`, `arguments` as the call runs or was stopped with, and, on `on_tool_call`, `result` as the model reads it, `is_error`, `refused`, `cancelled`, `error_detail` and `structured_content`), `delivery_status` (the payload, when a delivery status, §10.4), `status_entry` (the payload, when a status entry: `on_status_posted`), `dispatch_decision` (the payload, on `on_dispatch_decision`: `room_id`, `event`, `candidates`, `decision` as `{agents, reason, judgments}`, `duration_ms`), `observation` (the payload, when an observation: `on_feedback`), `request` (the payload, when a human-input request: `pending_id`, `tool_name`, `arguments`, `room_id`, `tool_call_id`, `channel_id`, `channel_type`, `actor_id`), `identity_result` (what an identity hook is handed, §11.2), `generation` (the payload, on `before_ai_generation`: `channel_id`, `provider_name`, `purpose`, `trigger` the event the turn answers, and its context's `system_prompt`, `messages` as `models` reads them, the names of its `tools`, and `room`, `target_capabilities` and `target_media_types` as `models` reads them), `tool_round` (on `after_tool_round`: `channel_id`, `round_index`, its `calls`, each `{tool_call_id, name, arguments, metadata, partial, garbled}`, its `results` and provider-served `answered` results as `models` reads them, and the names of the turn's `tools`), `response` (on `on_ai_response`: `channel_id`, `response_content`, `segments`, `tool_calls_count`, `round_count`, `loop_end_reason`, `usage`, `usage_complete`, `usage_metadata` (the response provenance, copied unchanged), `streaming`, `thinking`, and `declared_tools`, by name: `position`, `description`, `parameters`, `origin`) |
 | `hook_order` | The order in which the hooks it lists were called, a scripted channel's room callbacks among them (`<id>.on_room_attached`, `<id>.on_room_detached`) |
-| `room_callbacks` | Per room and scripted channel, its room callbacks (§6.1) in order: `{"call": "on_room_attached", "binding": ...}`, the binding it was handed, or `{"call": "on_room_detached"}` |
+| `room_callbacks` | Per room and scripted channel, its room callbacks (§6.1) in order: `{"call": "on_room_attached", "binding": ...}`, the binding it was handed, `{"call": "on_room_detached"}`, or `{"call": "connect_session", "session": ..., "binding": ...}` for an inbound session |
 | `deliveries` | Per room and channel, the events a scripted channel's `deliver()` received, as delivered, in order |
 | `contexts` | Per room and scripted channel, the context each of its `deliver()` calls and, for an intelligence channel, each of its turns (`on_event()`) was handed, in order: `call` (`deliver` or `on_event`) and `recent_events`, the ids of its events read as Normalization reads them, lifecycle records left out |
 | `text_events` | Per room, a minted one's as `$r1`, the `text_delta` ephemeral events the room's realtime is handed, in order: each `{text, round, channel_id}` (§6.4) |
@@ -1348,8 +1357,8 @@ the RFC leaves to each implementation:
   wherever their id appears, an object's key included.
   Any other event id (an instruction, a refused event, an event a hard delete
   removed) is `$e1`, `$e2`... in the order the step outcomes, then the
-  framework events, show it first. A participant's or an identity's `id`
-  is the scenario's own, kept as written.
+  framework events, show it first. Participant, identity and voice session IDs supplied by the
+  scenario are kept as written.
 - **Human-input requests** are `$p1`, `$p2`... wherever their id appears, in
   the order the run first showed them.
 - **Instants** (an RFC 3339 string) are `@1`, `@2`... by their order among the

@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "d4af4ed8139b7564771e9a6aee92877c823b5b95aca9c29effd24c4de8ba1884",
-  "corpus_sha256": "995e5d4816480f20c1e8ce6df1f7cf00be16b9b2de9f05e71ba1ce3c5bd70fdf",
+  "corpus_sha256": "c2edeca75aeffe898504faaca80a5f2091ddd1a44eef40b47f73a255125e8f19",
   "python_commit": "929f9dc7fa1cd70907b6ece5fea89f8ff7979f52",
-  "scenario_count": 3270,
+  "scenario_count": 3273,
   "sections": [
     {
       "section": "0",
@@ -798,6 +798,8 @@
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "injection/a-sent-event-keeps-its-answer-scope",
+        "media/a-voice-session-parses-into-a-system-message",
+        "media/an-inbound-session-connects-after-the-hook-allows-it",
         "permissions/a-cascade-keeps-the-answer-scope-its-parent-narrowed",
         "permissions/a-hook-only-narrows-the-answer-scope",
         "permissions/a-response-s-hook-cannot-widen-it-past-its-answer-scope",
@@ -846,7 +848,9 @@
         "unmapped": 5
       },
       "unannotated_keyword_lines": [],
-      "candidate_scenarios": []
+      "candidate_scenarios": [
+        "media/an-emitted-protocol-trace-reaches-its-room-observer"
+      ]
     },
     {
       "section": "6",
@@ -3073,6 +3077,7 @@
         "inbound/a-transport-s-failure-fires-no-on-error",
         "inbound/a-turn-refused-before-its-stream-names-its-error-type-to-on-error",
         "inbound/on-error-holds-no-room-lock",
+        "media/an-emitted-protocol-trace-reaches-its-room-observer",
         "observations/feedback-is-an-observation-the-hooks-observe",
         "orchestration/a-room-a-first-message-opens-is-announced-with-its-strategy-s-agents-and-not-the-sender-s-channel",
         "orchestration/an-auto-delegating-supervisor-s-two-passes-carry-a-correlation-id-each",
@@ -4298,6 +4303,7 @@
         "locks/the-side-effects-of-an-injected-event-s-set-of-a-deleted-room-stay-out-of-the-room-created-again",
         "locks/the-streamed-answer-of-a-set-of-a-deleted-room-is-not-read",
         "locks/the-streamed-answer-of-a-set-of-a-deleted-room-stays-out-of-the-room-created-again",
+        "media/an-inbound-session-connects-after-the-hook-allows-it",
         "orchestration/a-room-a-first-message-opens-is-announced-with-its-strategy-s-agents-and-not-the-sender-s-channel",
         "orchestration/a-sender-s-internal-mark-is-dropped",
         "orchestration/a-session-auditor-records-the-sessions-and-the-tool-calls",

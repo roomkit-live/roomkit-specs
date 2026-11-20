@@ -522,6 +522,9 @@
       "streaming/a-streamed-row-s-hook-effects-stand-whatever-it-decides-allow": "749de4a64639a63fdfdb35f4809e37d0a17bae6a338515c2f84b9c13bfbb60da",
       "streaming/a-streamed-row-s-hook-effects-stand-whatever-it-decides-modify": "749de4a64639a63fdfdb35f4809e37d0a17bae6a338515c2f84b9c13bfbb60da"
     },
+    "RK-10.1-075": {
+      "media/an-inbound-session-connects-after-the-hook-allows-it": "f31b6b939656056e573033a812878dc7234beb0c40289b3d78e4780249fcf10f"
+    },
     "RK-10.1-076": {
       "hooks/a-detach-a-locked-hook-makes-unrecorded-leaves-the-channel-out-of-the-delivery": "9b654dfa8543083041dfdd4db678b663135a35591ca11e9905c3fb69a612b0a6"
     },
@@ -3664,6 +3667,12 @@
     "RK-5.12-005": {
       "inbound/a-field-the-parse-set-stands": "e968b5cba38366773fe51557f6804448bd6b035fbc20ba4ccbc1ea3525cdccdd"
     },
+    "RK-5.12-006": {
+      "media/an-inbound-session-connects-after-the-hook-allows-it": "8bf18062bef6e45f3bb109275142178961879c52407abab9bd7fc5b426a80a59"
+    },
+    "RK-5.12-008": {
+      "media/a-voice-session-parses-into-a-system-message": "e079e171442fecf7649dbb09db6f74ad7f0d3651ed28c1daec95363cbcad8822"
+    },
     "RK-5.13-002": {
       "delivery/a-retried-delivery-keeps-its-successful-provider-receipt": "306ebbc15874c9aca6cebbf39785c78367adebbec7858ab44fa5c4b321d19a50",
       "delivery/a-successful-provider-receipt-reaches-the-caller": "306ebbc15874c9aca6cebbf39785c78367adebbec7858ab44fa5c4b321d19a50"
@@ -3696,6 +3705,9 @@
     },
     "RK-5.13-007": {
       "delivery/a-turn-the-close-cuts-leaves-no-outcome-and-the-set-s-failure-is-recorded": "91fb7de9a8c46afb5c61114bf6f878232648218acc7c09aa20b788e4759d9e2e"
+    },
+    "RK-5.14-006": {
+      "media/an-emitted-protocol-trace-reaches-its-room-observer": "59a627cca90e295801d9534ad90dcdd5aa35a193fc4efb7f66b3eab69034b94f"
     },
     "RK-5.2-001": {
       "inbound/a-thread-parent-is-rooted": "11db879e2589f6da3d026ac3862fbb808b18edc81a759c7e7b373af88f2cb0bf"
@@ -5033,6 +5045,9 @@
     },
     "RK-9.2-052": {
       "greeting/a-session-started-hook-holds-no-message": "4673cd7f5ff88746f707bbd3a9f509bbe9dd8810968fab50933924172084c32f"
+    },
+    "RK-9.2-058": {
+      "media/an-emitted-protocol-trace-reaches-its-room-observer": "e0f22d898e0d0b52fe3e7acb6ec0ef4d63567fbb9e341c2b047004baf5188a77"
     },
     "RK-9.2-060": {
       "delivery/a-before-deliver-refusal-is-reported-to-the-caller-and-after-deliver": "42a34f435c75635cadb8c4c548d3e0649633f88a27b4389421bd397c8e1946b6",

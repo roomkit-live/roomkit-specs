@@ -34,6 +34,23 @@
         "pattern": "^(\u00a7[0-9]+(\\.[0-9]+)*|Appendix [A-Z](\\.[0-9]+)*)( .+)?$"
       }
     },
+    "requires_features": {
+      "description": "The features the scenario needs. A runner missing any of them skips it and reports the missing names before reading its setup or steps.",
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "voice",
+          "realtime",
+          "conference",
+          "video",
+          "recording",
+          "message_session",
+          "protocol_trace"
+        ]
+      }
+    },
     "requirements": {
       "description": "The RFC units the scenario tests, by their stable IDs in requirements.json: \"RK-10.4-022\". The checker refuses an unknown, retired or non_testable unit, and links.lock.json pins each citation to the unit's text (TRACEABILITY.md, \"Citing units\"). Runners ignore it.",
       "type": "array",
@@ -89,6 +106,97 @@
         "change@cascade",
         "change@outside"
       ]
+    },
+    "voice_session": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "room_id",
+        "participant_id",
+        "channel_id"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "room_id": {
+          "type": "string"
+        },
+        "participant_id": {
+          "type": "string"
+        },
+        "channel_id": {
+          "type": "string"
+        },
+        "metadata": {
+          "$ref": "#/$defs/record"
+        }
+      }
+    },
+    "protocol_trace": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "channel_id",
+        "direction",
+        "protocol",
+        "summary"
+      ],
+      "properties": {
+        "channel_id": {
+          "type": "string"
+        },
+        "direction": {
+          "enum": [
+            "inbound",
+            "outbound"
+          ]
+        },
+        "protocol": {
+          "type": "string"
+        },
+        "summary": {
+          "type": "string"
+        },
+        "raw": {
+          "oneOf": [
+            {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "base64"
+              ],
+              "properties": {
+                "base64": {
+                  "type": "string"
+                }
+              }
+            }
+          ]
+        },
+        "metadata": {
+          "$ref": "#/$defs/record"
+        },
+        "room_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "session_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
     },
     "record": {
       "description": "A record in the RFC's serialized form; a reader takes an absent member as its default (\u00a71.4).",
@@ -1902,6 +2010,8 @@
       "properties": {
         "call": {
           "enum": [
+            "parse_voice_session",
+            "emit_protocol_trace",
             "process_inbound",
             "send_event",
             "post",
@@ -2108,6 +2218,51 @@
           "if": {
             "properties": {
               "call": {
+                "const": "parse_voice_session"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "session",
+              "channel_id"
+            ],
+            "properties": {
+              "session": {
+                "$ref": "#/$defs/voice_session"
+              },
+              "channel_id": {
+                "type": "string"
+              },
+              "metadata": {
+                "$ref": "#/$defs/record"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "emit_protocol_trace"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "trace"
+            ],
+            "properties": {
+              "trace": {
+                "$ref": "#/$defs/protocol_trace"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
                 "const": "process_inbound"
               }
             }
@@ -2118,7 +2273,15 @@
             ],
             "properties": {
               "message": {
-                "$ref": "#/$defs/record"
+                "$ref": "#/$defs/record",
+                "properties": {
+                  "session": {
+                    "oneOf": [
+                      { "$ref": "#/$defs/voice_session" },
+                      { "type": "null" }
+                    ]
+                  }
+                }
               },
               "room_id": {
                 "type": [
