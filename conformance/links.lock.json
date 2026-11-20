@@ -5146,6 +5146,12 @@
     "RK-9.2-052": {
       "greeting/a-session-started-hook-holds-no-message": "4673cd7f5ff88746f707bbd3a9f509bbe9dd8810968fab50933924172084c32f"
     },
+    "RK-9.2-053": {
+      "recording/a-recorder-joins-the-live-feed-after-consent": "d1aaf02d8e8d48c0511cdc595373be6748c5368a950b046e75c3cefeea7b1cf8"
+    },
+    "RK-9.2-054": {
+      "recording/a-stopped-recorder-announces-its-file": "58739bb0ce2fdc157357862651d67f69e9dd5421416f66cbe78b4db64131dc25"
+    },
     "RK-9.2-056": {
       "realtime/a-session-takes-its-instruction-directly": "b02bbf898117f3cbae985d5c7ab2dc0e1f551a102c48dbb70894ac106849bc30"
     },
@@ -5298,11 +5304,26 @@
       "tasks/a-task-whose-end-is-being-told-reads-ended-at-once": "216170a67ca1a967cf232bc0da6708dd111a88144512dcb8644146421ced4fb2",
       "tasks/an-inline-delegation-runs-its-agent-in-a-child-room": "216170a67ca1a967cf232bc0da6708dd111a88144512dcb8644146421ced4fb2"
     },
+    "RK-9.2-081": {
+      "video/the-bridge-obeys-the-frame-hook": "0b933f54fd6b19f80c63dab4a251b44f5655d4b29c9076f29533f5fd846526e3"
+    },
+    "RK-9.2-082": {
+      "video/a-video-session-announces-its-start-and-end": "6f54f68402d415090dad0c9f9b17228b678fb4e68cadffeaf1bba9e7c3804150"
+    },
+    "RK-9.2-083": {
+      "video/a-video-session-announces-its-start-and-end": "5a3d2af03641dd8db67fe9173c6e57e791b807bcb4deab0641bf773dff86cd83"
+    },
+    "RK-9.2-086": {
+      "video/a-vision-hook-controls-the-result-that-is-published": "ffc5fda141c14e201195d951e296ce552dec7540b7d6fe0c1bfc3291177ce585"
+    },
     "RK-9.2-087": {
       "conference/a-screen-track-announces-the-start-and-end-of-sharing": "7c89ce9477237cc4676d1dee8e3b246ecb49f887c44e148ef9769009980f3d8f"
     },
     "RK-9.2-088": {
       "conference/a-screen-track-announces-the-start-and-end-of-sharing": "4cbd75f3d38721c9ba4f1c45a00020eab1fff47b9a9d5440366d8038f5497503"
+    },
+    "RK-9.2-089": {
+      "video/a-frame-filter-reports-its-detection": "a677358a6a72f3752c539e55101a33689b09b0cec4af75f4715e3d6c0136b201"
     },
     "RK-9.2-090": {
       "conference/a-call-reports-presence-without-changing-room-membership": "0333ce26f6cf81a831dc00d9c3ddee2fdee5f26f87492a253abe15b0d20f9fdf"
@@ -5607,6 +5628,9 @@
     "RK-9.3-036": {
       "appendix-b/b1-customer-and-ai": "91018dca98181cf94687981bf2c2691aecbfec26a802b9b41b978bbb7b385d8d",
       "rooms/creation-awaits-its-hooks": "91018dca98181cf94687981bf2c2691aecbfec26a802b9b41b978bbb7b385d8d"
+    },
+    "RK-9.3-037": {
+      "recording/a-recorder-joins-the-live-feed-after-consent": "637fb7d0f28377c20de14f89516967837d0247c6e075d084ef3d7f7c327a3f7a"
     },
     "RK-9.3-038": {
       "voice/partial-speech-is-observed-before-its-final": "d40275389c1197fb2bf64670f7ccea8dd727c30cb0b357a1656bec0b6ab2d844"

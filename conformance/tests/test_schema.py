@@ -383,3 +383,11 @@ class SchemaTests(unittest.TestCase):
                     hook = {label: "audit", "trigger": "on_tool_call"}
                     scenario["setup"]["executors"][0][member] = [hook]
                     self.assertEqual(validator.is_valid(scenario), valid)
+
+    def test_a_scripted_video_detection_names_its_frame(self) -> None:
+        validator = Draft202012Validator(json.loads((ROOT / "scenario.schema.json").read_text()))
+        fixture = ROOT / "scenarios/video/a-frame-filter-reports-its-detection.json"
+        scenario = json.loads(fixture.read_text())
+        self.assertTrue(validator.is_valid(scenario))
+        del scenario["steps"][0]["detections"][0]["frame_sequence"]
+        self.assertFalse(validator.is_valid(scenario))

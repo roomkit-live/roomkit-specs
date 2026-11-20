@@ -2116,6 +2116,15 @@
             "conference.unmute",
             "conference.connection_quality",
             "conference.tool_call",
+            "video.open",
+            "video.frame",
+            "video.disconnect",
+            "video.read",
+            "recording.start",
+            "recording.track",
+            "recording.feed",
+            "recording.read",
+            "recording.stop",
             "voice.open",
             "voice.feed",
             "voice.say",
@@ -2510,6 +2519,288 @@
               },
               "arguments": {
                 "type": "object"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "video.open"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "room_id",
+              "channel_id",
+              "participants"
+            ],
+            "properties": {
+              "room_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "channel_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "participants": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "minItems": 1,
+                "uniqueItems": true
+              },
+              "bridge": {
+                "type": "boolean"
+              },
+              "vision": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "minItems": 1
+              },
+              "detections": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "kind",
+                    "frame_sequence"
+                  ],
+                  "properties": {
+                    "kind": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "frame_sequence": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "labels": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "confidence": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1
+                    },
+                    "metadata": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "video.frame"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "channel_id",
+              "participant_id",
+              "sequence",
+              "data"
+            ],
+            "properties": {
+              "channel_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "participant_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sequence": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "data": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9+/]{4}$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "video.disconnect"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "channel_id",
+              "participant_id"
+            ],
+            "properties": {
+              "channel_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "participant_id": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "video.read"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "channel_id"
+            ],
+            "properties": {
+              "channel_id": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "recording.start"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "room_id",
+              "recorder"
+            ],
+            "properties": {
+              "room_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "recorder": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "recording.track"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "room_id",
+              "track_id"
+            ],
+            "properties": {
+              "room_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "track_id": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "recording.feed"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "room_id",
+              "track_id",
+              "data"
+            ],
+            "properties": {
+              "room_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "track_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "data": {
+                "type": "string",
+                "contentEncoding": "base64"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "recording.read"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "recorder"
+            ],
+            "properties": {
+              "recorder": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "recording.stop"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "room_id"
+            ],
+            "properties": {
+              "room_id": {
+                "type": "string",
+                "minLength": 1
               }
             }
           }

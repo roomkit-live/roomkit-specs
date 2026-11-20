@@ -1025,6 +1025,15 @@ run's own kit when absent.
 | `conference.active_speaker` | `channel_id`, `participant_id` | the SFU announces its dominant speaker |
 | `conference.connection_quality` | `channel_id`, `participant_id`, `quality` | the SFU reports the participant’s connection quality |
 | `conference.tool_call` | `channel_id`, `call_id`, `name`, optional `arguments` | the connected conference model issues a tool call and waits for the corresponding result. The step returns the provider’s received text, decoded when it is JSON. Requires both `conference` and `realtime`. |
+| `video.open` | `room_id`, `channel_id`, `participants`, optional `bridge`, `vision`, `detections` | attach the video channel and join the participants to it |
+| `video.frame` | `channel_id`, `participant_id`, `sequence`, `data` | the transport delivers one self-contained 1×1 RGB24 frame (three bytes in base64) |
+| `video.disconnect` | `channel_id`, `participant_id` | the transport signals the end of this session |
+| `video.read` | `channel_id` | `forwarded`, the base64 frames received by each peer, and `vision`, the analyses published by the channel |
+| `recording.start` | `room_id`, `recorder` | start a named recorder on an existing room |
+| `recording.track` | `room_id`, `track_id` | add a live PCM16 audio track to the room's recordings |
+| `recording.feed` | `room_id`, `track_id`, `data` | send a base64 chunk through that track's feed |
+| `recording.read` | `recorder` | the base64 chunks this recorder actually received, in order |
+| `recording.stop` | `room_id` | stop the room's recordings, returning their `recording_id` and `url` |
 | `voice.open` | `room_id`, `channel_id`, `participants` and the optional provider inputs below | registers and attaches a voice channel, then joins the named participants to that room |
 | `voice.feed` | `channel_id`, `participant_id`, `frames` (base64 PCM16 mono at 16 kHz) | the transport delivers these inbound frames in order |
 | `voice.say` | `channel_id`, `participant_id`, `text` | speak to the participant, awaiting playback |
@@ -1128,6 +1137,25 @@ run's own kit when absent.
 | `delegate_handler` | `handler`, the name the later calls give it; `notify`, `default_share_channels`, `cache` (true: a CompletedTaskCache of the implementation's default time to live), `serialize_per_room`, `max_conversation`, `max_result_chars`, `wait_in_task_rooms`, each the implementation's default when absent: the implementation's DelegateHandler, serving no agent yet (§23.4) | null |
 | `setup_delegation` | `agent_id`, `handler`, `targets` (each an id and its description or null: the tool `build_delegate_tool` builds; absent: the generic one): serves `delegate_task` on the agent (§23.4) | null |
 | `delegate.handle` | `handler`, `room_id`, `calling_agent_id`, `arguments`, the tool call's: the handler's `handle` (§23.4) | what the tool answers: `status`, `task_id`, `child_room_id`, `agent_id`; a repeat answered from the cache, `result` and `from_cache` too; a call run inline (`wait_in_task_rooms`), `status` the status its task ended with, and `result`; its `as` label names the task's id |
+
+### Video sessions and room recording
+
+A video scenario requires `video`. The optional `vision` array on `video.open`
+supplies the vision provider's descriptions in order, one per frame. An optional
+`detections` array scripts the filter: each event names its `frame_sequence`
+and `kind`, with optional `labels`, `confidence` and `metadata`. The video
+steps await the work the channel scheduled for the input before returning.
+Under `expect.hooks`, `video` names the `participant_id` and carries the
+bridge frame's `sequence`, the filter's detection fields or the provider's
+`description` and `labels`. A bridge hook can replace the frame bytes in
+`event.frame.data` (base64). A vision hook can patch the analysis fields.
+`video.read.vision` reports the number of faces in each published result.
+
+A room recording scenario requires `recording`. The recorder uses its given
+name as its handle's id and returns `mock://<name>` as its result URL. A
+track declared while the room records can keep feeding media when a second
+recorder starts. Under `expect.hooks`, `recording` carries `recording_id`
+and `room_id`, plus `urls` when the recording stops.
 
 ### Scripted voice sessions
 
