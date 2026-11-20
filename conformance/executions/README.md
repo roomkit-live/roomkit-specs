@@ -661,3 +661,37 @@ moved to the Python commit first; no pinned test changed since `05127770f`.
 These receipts give no credit to specialized tests, to PostgreSQL with turns
 across Redis, or to roomkit-rs's turn executors on Redis. The 155 earlier
 execution receipts are unchanged.
+
+## roomkit-rs Redis executor passes (2026-11-19)
+
+`rust-773311e-memory-redis-executors-current-thread.xml`,
+`rust-773311e-memory-redis-executors-multi-thread-4.xml`,
+`rust-773311e-sqlite-redis-executors-current-thread.xml` and
+`rust-773311e-postgres-redis-executors-current-thread.xml` retain the Redis
+executor passes of roomkit-rs `773311efae440c2b2b88a37674cfc34396b1b014`, a
+clean commit of its main and the first whose runner names that pass, run with
+Rust 1.99.1 through the local wrapper of "Core rule links: Python and
+roomkit-rs passes (2026-11-18)", against a local Redis 7.4 server of their own
+(the `REDIS_URL` of each command), and, for PostgreSQL, a local PostgreSQL 16
+server with trust authentication:
+
+```sh
+REDIS_URL=redis://127.0.0.1:56381 ROOMKIT_CONFORMANCE_JUNIT=target/conformance \
+  cargo test -p roomkit --features redis --test conformance
+REDIS_URL=redis://127.0.0.1:56381 ROOMKIT_CONFORMANCE_JUNIT=target/conformance \
+  cargo test -p roomkit-sqlite --test conformance
+REDIS_URL=redis://127.0.0.1:56381 ROOMKIT_CONFORMANCE_JUNIT=target/conformance \
+  POSTGRES_DSN='postgresql://postgres@127.0.0.1:55434/postgres?sslmode=disable' \
+  cargo test -p roomkit-postgres --test conformance
+```
+
+Each holds the 3231 scenarios of the copy, all passed. The 79 with
+`setup.executors`, which the plain passes of "Receipts after the A wave
+(2026-11-19)" skip, ran with the room's owner and its executors reaching
+each other across that Redis, all in the test's process; every other scenario
+ran in process, as in the plain passes. The copy is corpus
+`5afdbf7d2c82d9a5775d2bd3811dabdf6826e667`, the plain passes' own; the RFC is
+`2bd49dcef27e996f81ec058932880f73f5a88ce1`. These receipts give no credit to
+the other scenarios' turns across Redis (Python's Redis turn mode), to an
+executor in another process or a process death, or to specialized tests. The
+164 earlier execution receipts are unchanged.
