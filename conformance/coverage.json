@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "b478e3906a2eb96ab79ced216bf7a85d01283de877ae8d2c233337fb66828af9",
-  "corpus_sha256": "50e56b41c784012a050b4d8bc85c807375bf3dba1232b800aa0e872e25fa9d54",
+  "corpus_sha256": "4c96bdc2941f93b01653b2bedb27de8e546c4ea81610bbe23c301698a35bb094",
   "python_commit": "929f9dc7fa1cd70907b6ece5fea89f8ff7979f52",
-  "scenario_count": 3346,
+  "scenario_count": 3349,
   "sections": [
     {
       "section": "0",
@@ -4153,6 +4153,8 @@
         "delivery/a-call-cancelled-at-the-room-lock-waits-for-no-turn",
         "delivery/a-cancel-after-completion-keeps-the-completed-outcome",
         "delivery/a-cancel-for-an-organization-reaches-only-its-rooms",
+        "delivery/a-cancel-joins-the-close-of-a-stream-nobody-read",
+        "delivery/a-cancel-past-its-bound-reports-the-cleanup-incomplete-and-lets-it-run",
         "delivery/a-cancel-under-the-room-lock-returns-at-once",
         "delivery/a-cancelled-call-refused-past-its-timeout-reports-the-refusal",
         "delivery/a-cancelled-call-returns-while-a-transport-still-delivers",
@@ -4191,6 +4193,7 @@
         "delivery/a-source-detached-before-the-commit-refuses-the-delivery",
         "delivery/a-task-delegated-from-a-delivery-is-not-its-turn-work",
         "delivery/a-turn-the-close-cuts-leaves-no-outcome-and-the-set-s-failure-is-recorded",
+        "delivery/a-turn-whose-end-misses-its-cancel-bound-leaves-its-cleanup-incomplete",
         "delivery/a-webhook-is-a-message-a-status-or-nothing",
         "delivery/an-adopted-call-cut-while-its-answer-s-chained-turn-runs-reads-its-own-end",
         "delivery/an-adopted-call-its-hook-cancels-at-once-runs-no-turn",
@@ -5381,6 +5384,7 @@
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
+        "delivery/a-cancel-joins-the-close-of-a-stream-nobody-read",
         "permissions/a-muted-agent-s-stream-is-closed-unread",
         "permissions/a-muted-supervisor-s-second-pass-is-closed-unread",
         "reentrancy/a-turn-s-framework-event-handler-sends-while-it-runs",
@@ -5622,8 +5626,11 @@
         "acp/steer-isolates-running-rooms",
         "acp/steer-running-prompt-keeps-its-outcome",
         "channel-call/a-verb-closing-its-executor-keeps-its-calling-turn",
+        "delivery/a-cancel-joins-the-close-of-a-stream-nobody-read",
+        "delivery/a-cancel-past-its-bound-reports-the-cleanup-incomplete-and-lets-it-run",
         "delivery/a-key-cuts-an-agent-s-running-generation",
         "delivery/a-key-cuts-the-running-turn-of-its-delivery",
+        "delivery/a-turn-whose-end-misses-its-cancel-bound-leaves-its-cleanup-incomplete",
         "executor-close/a-later-close-cuts-a-previously-spared-turn",
         "executor-close/a-self-closed-turn-finishes-after-owner-cancellation",
         "executor-close/an-external-close-cuts-work-kept-after-owner-cancellation",
