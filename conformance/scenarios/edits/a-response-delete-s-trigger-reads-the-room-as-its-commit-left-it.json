@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "edits/a-response-delete-s-trigger-reads-the-room-as-its-commit-left-it",
-  "title": "An agent's response deleting its own message fires ON_EVENT_DELETED with the room as the delete's commit left it: the target marked deleted, its content kept, the delete last at its index, and the counters",
+  "title": "An agent's response deleting its own message fires ON_EVENT_DELETED with the room as the delete's commit left it: the target marked deleted, its content kept, the event its hook committed ahead, the delete last as its hook left it, and the counters",
   "rules": [
     "§10.3 Mutation triggers",
     "§10.3",
@@ -10,7 +10,7 @@
   "requirements": [
     "RK-10.3-047"
   ],
-  "notes": "The agent's earlier message is committed as a record with an id of the scenario's (commit_event stores it as given), which the agent's response names: a response template's strings are not references. Alice's go makes the agent answer with the delete of its message. A hook's context keeps a deleted event's content (§10.3, What a channel is handed of a deleted event).",
+  "notes": "The agent's earlier message is committed as a record with an id of the scenario's (commit_event stores it as given), which the agent's response names: a response template's strings are not references. Alice's go makes the agent answer with the delete of its message. The delete's BEFORE_BROADCAST hook sends an event into the room, which commits ahead of it (index 2), then gives the delete a reason. A hook's context keeps a deleted event's content (§10.3, What a channel is handed of a deleted event).",
   "setup": {
     "channels": [
       {
@@ -57,6 +57,40 @@
       }
     ],
     "hooks": [
+      {
+        "name": "redact",
+        "trigger": "before_broadcast",
+        "reactions": [
+          {
+            "when": {
+              "type": "delete"
+            },
+            "do": [
+              {
+                "call": "send_event",
+                "room_id": "$room",
+                "channel_id": "src",
+                "content": {
+                  "type": "text",
+                  "body": "Nested"
+                },
+                "as": "nested"
+              }
+            ],
+            "result": {
+              "action": "modify",
+              "event": {
+                "content": {
+                  "type": "delete",
+                  "target_event_id": "draft-1",
+                  "delete_type": "sender",
+                  "reason": "REDACTED"
+                }
+              }
+            }
+          }
+        ]
+      },
       {
         "name": "deleted",
         "trigger": "on_event_deleted",
@@ -129,9 +163,21 @@
           }
         },
         {
+          "content": {
+            "type": "text",
+            "body": "Nested"
+          }
+        },
+        {
           "type": "delete",
           "source": {
             "channel_id": "agent"
+          },
+          "content": {
+            "type": "delete",
+            "target_event_id": "room-1#0",
+            "delete_type": "sender",
+            "reason": "REDACTED"
           }
         }
       ]
@@ -149,7 +195,8 @@
           "recent_events": [
             "room-1#0",
             "room-1#1",
-            "room-1#2"
+            "room-1#2",
+            "room-1#3"
           ],
           "context_events": [
             {
@@ -172,11 +219,20 @@
             {
               "id": "room-1#2",
               "index": 2,
+              "content": {
+                "type": "text",
+                "body": "Nested"
+              }
+            },
+            {
+              "id": "room-1#3",
+              "index": 3,
               "type": "delete",
               "content": {
                 "type": "delete",
                 "target_event_id": "room-1#0",
-                "delete_type": "sender"
+                "delete_type": "sender",
+                "reason": "REDACTED"
               },
               "source": {
                 "channel_id": "agent"
@@ -185,8 +241,8 @@
           ],
           "context_room": {
             "id": "room-1",
-            "event_count": 3,
-            "latest_index": 2
+            "event_count": 4,
+            "latest_index": 3
           }
         }
       ]

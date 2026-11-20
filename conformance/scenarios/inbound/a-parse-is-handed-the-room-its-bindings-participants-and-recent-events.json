@@ -9,7 +9,7 @@
   "requirements": [
     "RK-10.1-026"
   ],
-  "notes": "Bob's earlier message is delivered to sms before alice's is parsed (the idle step). The parse's context holds the room with its metadata and its counters (one event), both bindings, the participant the room records, and the earlier event with its content. The order of the bindings is left open.",
+  "notes": "Bob's two earlier messages are delivered to sms before alice's is parsed (the idle step). The parse's context holds the room with its metadata and its counters (two events), both bindings, the two participants the room records, and the earlier events with their content. The order of the bindings and of the participants is left open.",
   "setup": {
     "channels": [
       {
@@ -45,6 +45,11 @@
             "id": "alice",
             "channel_id": "sms",
             "role": "owner"
+          },
+          {
+            "id": "bob",
+            "channel_id": "ws",
+            "role": "member"
           }
         ]
       }
@@ -72,6 +77,26 @@
       }
     },
     {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "ws",
+        "sender_id": "bob",
+        "content": {
+          "type": "text",
+          "body": "Second"
+        }
+      },
+      "expect": {
+        "result": {
+          "blocked": false,
+          "event": {
+            "index": 1
+          }
+        }
+      }
+    },
+    {
       "idle": true
     },
     {
@@ -89,7 +114,7 @@
         "result": {
           "blocked": false,
           "event": {
-            "index": 1
+            "index": 2
           }
         }
       }
@@ -103,6 +128,9 @@
             "call": "deliver"
           },
           {
+            "call": "deliver"
+          },
+          {
             "call": "parse",
             "room": {
               "id": "room-1",
@@ -110,8 +138,8 @@
               "metadata": {
                 "topic": "orders"
               },
-              "event_count": 1,
-              "latest_index": 0
+              "event_count": 2,
+              "latest_index": 1
             },
             "bindings": {
               "$unordered": [
@@ -127,16 +155,25 @@
                 }
               ]
             },
-            "participants": [
-              {
-                "id": "alice",
-                "room_id": "room-1",
-                "channel_id": "sms",
-                "role": "owner"
-              }
-            ],
+            "participants": {
+              "$unordered": [
+                {
+                  "id": "alice",
+                  "room_id": "room-1",
+                  "channel_id": "sms",
+                  "role": "owner"
+                },
+                {
+                  "id": "bob",
+                  "room_id": "room-1",
+                  "channel_id": "ws",
+                  "role": "member"
+                }
+              ]
+            },
             "recent_events": [
-              "room-1#0"
+              "room-1#0",
+              "room-1#1"
             ],
             "events": [
               {
@@ -145,6 +182,18 @@
                 "content": {
                   "type": "text",
                   "body": "Earlier"
+                },
+                "source": {
+                  "channel_id": "ws",
+                  "participant_id": "bob"
+                }
+              },
+              {
+                "id": "room-1#1",
+                "index": 1,
+                "content": {
+                  "type": "text",
+                  "body": "Second"
                 },
                 "source": {
                   "channel_id": "ws",

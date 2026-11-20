@@ -6558,6 +6558,7 @@
       "hooks/a-failing-off-lock-hook-is-reported-before-the-lock": "2c30cd5e44a18cf308faa5cc868ad8406a8f740996529c8ec28deace5cc70ea7"
     },
     "RK-9.5.1-015": {
+      "reentrancy/an-off-lock-hook-reads-the-attach-of-the-room-routing-opened": "db1f465667d742d34ae0b1fcd6cc4430566b4d2ea4db4ed72c1e84ae683a0eff",
       "reentrancy/an-off-lock-hook-reads-the-record-and-the-attach-routing-wrote": "db1f465667d742d34ae0b1fcd6cc4430566b4d2ea4db4ed72c1e84ae683a0eff"
     },
     "RK-9.5.1-017": {
