@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "e4b918132f941c3264ce2aef78ac1a54d14e03102f4c41f3ab221e0c15bae53c",
-  "corpus_sha256": "fa4debdb805a8c0c960ad240f6b57e3e4a279fe7c515c4fabc55df504e6d3d01",
+  "corpus_sha256": "5d328ad1dad93b11f8ec21595f5f2d414183c10e0e1cf2344ede7b9e55b10252",
   "python_commit": "929f9dc7fa1cd70907b6ece5fea89f8ff7979f52",
-  "scenario_count": 3371,
+  "scenario_count": 3376,
   "sections": [
     {
       "section": "0",
@@ -4068,6 +4068,8 @@
         "reentrancy/a-direct-delete-past-the-hook-budget-writes-nothing",
         "reentrancy/a-direct-regenerate-past-the-hook-budget-writes-nothing",
         "reentrancy/a-direct-update-past-the-hook-budget-writes-nothing",
+        "reentrancy/a-gated-caller-leaves-its-nested-call-to-the-event-deadline",
+        "reentrancy/a-gated-caller-leaves-while-a-nested-call-holds-the-lock",
         "reentrancy/a-hook-queuing-another-answer-stops-at-the-depth-limit",
         "reentrancy/a-hook-regenerating-every-answer-stops-at-the-depth-limit",
         "reentrancy/a-locked-hook-s-injection-commits-ahead",
@@ -4170,6 +4172,8 @@
         "delivery/a-delivery-cancelled-during-routing-still-delivers",
         "delivery/a-delivery-s-call-into-another-room-waits-for-that-room-s-lane",
         "delivery/a-delivery-whose-turn-the-closing-owner-gave-up-counts-its-cleanup-done",
+        "delivery/a-gated-caller-leaves-after-its-decision",
+        "delivery/a-gated-caller-leaves-before-its-decision",
         "delivery/a-handle-cancel-returns-while-a-transport-still-delivers",
         "delivery/a-handle-s-cancel-cuts-its-running-turn",
         "delivery/a-handle-s-cancel-under-the-room-lock-is-refused",
@@ -5396,6 +5400,7 @@
         "permissions/a-muted-supervisor-s-second-pass-is-closed-unread",
         "reentrancy/a-turn-s-framework-event-handler-sends-while-it-runs",
         "streaming/a-cancel-while-a-reader-shows-a-generation-closes-its-calls",
+        "streaming/a-gated-reader-leaves-while-its-pulled-call-runs",
         "streaming/a-message-steered-at-an-answer-a-reader-still-shows-is-too-late",
         "streaming/a-model-s-reasoning-reaches-a-streaming-channel-before-its-text",
         "streaming/a-reader-that-stops-at-a-delta-before-a-call-leaves-the-call-unrun",
@@ -5682,6 +5687,7 @@
         "inbound/an-agent-s-provider-refusal-keeps-its-retryability",
         "steering/a-cancel-for-a-channel-without-steering-cuts-its-turn",
         "steering/a-steer-reaches-the-room-it-names-alone",
+        "streaming/a-gated-reader-leaves-while-its-pulled-call-runs",
         "tasks/a-failed-task-s-exception-keeps-its-attributes"
       ]
     },
