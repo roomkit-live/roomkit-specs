@@ -2351,9 +2351,6 @@
     "RK-10.6-007": {
       "executor-close/closing-refuses-new-turns-and-keeps-transports": "af2ea91ee5c199b811d7c9fd32a1917ad3d4d6980dd76095835e3f33f3cc96f0"
     },
-    "RK-10.6-009": {
-      "delivery/a-turn-still-open-once-the-close-s-grace-is-over-is-given-up": "56231943275c2a8dd25f167af8a2801aeb697bde64beed12f0100d3b6e5005c0"
-    },
     "RK-10.6.1-003": {
       "executors/a-delegation-to-a-declared-worker-runs-on-its-executor": "934f95bff30bfcf73bae01caa3e7fc0031dcb0abc454c1c67f3adad3539b2ab1"
     },
