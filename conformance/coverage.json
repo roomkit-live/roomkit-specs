@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "d4af4ed8139b7564771e9a6aee92877c823b5b95aca9c29effd24c4de8ba1884",
-  "corpus_sha256": "440f5f24020b46d1b4b2dacf69cbd9463f56ac9d4e727982076d980253912c96",
+  "corpus_sha256": "7f833b9dfd82aa91b59a2efdb2eecb77cc1c143a385e39c1146e5459a5341710",
   "python_commit": "929f9dc7fa1cd70907b6ece5fea89f8ff7979f52",
-  "scenario_count": 3327,
+  "scenario_count": 3333,
   "sections": [
     {
       "section": "0",
@@ -3132,6 +3132,8 @@
         "realtime/a-reasoning-error-reaches-the-room",
         "realtime/a-session-takes-its-instruction-directly",
         "reasoning/a-generation-hook-reads-a-message-s-parts",
+        "recording/a-recorder-joins-the-live-feed-after-consent",
+        "recording/a-stopped-recorder-announces-its-file",
         "reentrancy/an-ai-response-handler-posting-after-a-slower-on-ai-response-hook-stops-at-the-depth-limit",
         "reentrancy/an-on-ai-response-hook-posting-after-each-answer-stops-at-the-depth-limit",
         "regenerate/a-regenerated-turn-that-fails-is-the-call-s-error",
@@ -3288,6 +3290,10 @@
         "verification/an-unanswered-request-leaves-the-verification-in-force",
         "verification/check-verifications-ends-what-expired-while-nothing-ran",
         "verification/the-last-wrong-secret-fails-the-request",
+        "video/a-frame-filter-reports-its-detection",
+        "video/a-video-session-announces-its-start-and-end",
+        "video/a-vision-hook-controls-the-result-that-is-published",
+        "video/the-bridge-obeys-the-frame-hook",
         "voice/a-backchannel-leaves-the-reply-playing",
         "voice/a-bridge-forwards-only-the-frame-the-hook-admits",
         "voice/a-detected-tone-reaches-the-dtmf-hook",
@@ -3634,6 +3640,8 @@
         "realtime/a-realtime-pipeline-refuses-the-agents-human-input",
         "realtime/an-abandoned-call-interrupts-its-handler",
         "realtime/an-ended-session-reports-a-late-call-once",
+        "recording/a-recorder-joins-the-live-feed-after-consent",
+        "recording/a-stopped-recorder-announces-its-file",
         "reentrancy/a-locked-hook-s-section-waits-past-the-hook-s-timeout-for-its-task-s-call",
         "response-schema/a-generation-hook-s-schema-constrains-the-turn",
         "response-schema/a-generation-hook-that-clears-the-schema-frees-the-turn",
@@ -6527,7 +6535,12 @@
         "unmapped": 1
       },
       "unannotated_keyword_lines": [],
-      "candidate_scenarios": []
+      "candidate_scenarios": [
+        "video/a-frame-filter-reports-its-detection",
+        "video/a-video-session-announces-its-start-and-end",
+        "video/a-vision-hook-controls-the-result-that-is-published",
+        "video/the-bridge-obeys-the-frame-hook"
+      ]
     },
     {
       "section": "12.8.1",
@@ -6836,7 +6849,10 @@
         "unmapped": 7
       },
       "unannotated_keyword_lines": [],
-      "candidate_scenarios": []
+      "candidate_scenarios": [
+        "recording/a-recorder-joins-the-live-feed-after-consent",
+        "recording/a-stopped-recorder-announces-its-file"
+      ]
     },
     {
       "section": "12.12",
