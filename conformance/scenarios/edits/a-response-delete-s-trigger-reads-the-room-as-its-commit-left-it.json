@@ -1,0 +1,195 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "edits/a-response-delete-s-trigger-reads-the-room-as-its-commit-left-it",
+  "title": "An agent's response deleting its own message fires ON_EVENT_DELETED with the room as the delete's commit left it: the target marked deleted, its content kept, the delete last at its index, and the counters",
+  "rules": [
+    "§10.3 Mutation triggers",
+    "§10.3",
+    "§10.5"
+  ],
+  "requirements": [
+    "RK-10.3-047"
+  ],
+  "notes": "The agent's earlier message is committed as a record with an id of the scenario's (commit_event stores it as given), which the agent's response names: a response template's strings are not references. Alice's go makes the agent answer with the delete of its message. A hook's context keeps a deleted event's content (§10.3, What a channel is handed of a deleted event).",
+  "setup": {
+    "channels": [
+      {
+        "id": "src",
+        "type": "sms",
+        "category": "transport"
+      },
+      {
+        "id": "agent",
+        "type": "ai",
+        "category": "intelligence",
+        "on_event": [
+          {
+            "when": {
+              "text": "go"
+            },
+            "respond": [
+              {
+                "type": "delete",
+                "content": {
+                  "type": "delete",
+                  "target_event_id": "draft-1",
+                  "delete_type": "sender"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "src",
+            "participant_id": "+15551234567"
+          },
+          {
+            "channel_id": "agent",
+            "category": "intelligence"
+          }
+        ]
+      }
+    ],
+    "hooks": [
+      {
+        "name": "deleted",
+        "trigger": "on_event_deleted",
+        "execution": "async"
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "commit_event",
+      "room_id": "room-1",
+      "event": {
+        "id": "draft-1",
+        "content": {
+          "type": "text",
+          "body": "draft"
+        },
+        "source": {
+          "channel_id": "agent",
+          "channel_type": "ai",
+          "direction": "outbound"
+        }
+      },
+      "expect": {
+        "result": {
+          "index": 0
+        }
+      }
+    },
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "src",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "go"
+        }
+      },
+      "expect": {
+        "result": {
+          "blocked": false,
+          "event": {
+            "index": 1
+          }
+        }
+      }
+    },
+    {
+      "idle": true
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": [
+        {
+          "content": {
+            "type": "text",
+            "body": "draft"
+          },
+          "metadata": {
+            "deleted": true
+          }
+        },
+        {
+          "content": {
+            "type": "text",
+            "body": "go"
+          }
+        },
+        {
+          "type": "delete",
+          "source": {
+            "channel_id": "agent"
+          }
+        }
+      ]
+    },
+    "hooks": {
+      "deleted": [
+        {
+          "trigger": "on_event_deleted",
+          "event": {
+            "id": "room-1#0",
+            "metadata": {
+              "deleted": true
+            }
+          },
+          "recent_events": [
+            "room-1#0",
+            "room-1#1",
+            "room-1#2"
+          ],
+          "context_events": [
+            {
+              "id": "room-1#0",
+              "content": {
+                "type": "text",
+                "body": "draft"
+              },
+              "metadata": {
+                "deleted": true
+              }
+            },
+            {
+              "id": "room-1#1",
+              "content": {
+                "type": "text",
+                "body": "go"
+              }
+            },
+            {
+              "id": "room-1#2",
+              "index": 2,
+              "type": "delete",
+              "content": {
+                "type": "delete",
+                "target_event_id": "room-1#0",
+                "delete_type": "sender"
+              },
+              "source": {
+                "channel_id": "agent"
+              }
+            }
+          ],
+          "context_room": {
+            "id": "room-1",
+            "event_count": 3,
+            "latest_index": 2
+          }
+        }
+      ]
+    }
+  }
+}

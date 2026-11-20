@@ -253,6 +253,9 @@
       "routing/a-room-its-first-message-left-starts-no-session-for-it": "6cb455dbbda09e1d2a139791aca7c98bd107f07c398014592023e09961c1f1a0",
       "routing/a-sender-takes-no-paused-new-room": "6cb455dbbda09e1d2a139791aca7c98bd107f07c398014592023e09961c1f1a0"
     },
+    "RK-10.1-026": {
+      "inbound/a-parse-is-handed-the-room-its-bindings-participants-and-recent-events": "28c0e1c3bf9c3b34ff7fa4f1c14a02773f90d1bedf3ab99a88a717175ab919e9"
+    },
     "RK-10.1-027": {
       "inbound/a-field-the-parse-set-stands": "b4627f90fc79561a5640e82a924c6172184c0d3ab2cc42d7717dacb7529193d5"
     },
@@ -1095,6 +1098,9 @@
     "RK-10.1-136": {
       "orchestration/a-sender-s-internal-mark-is-dropped": "ed0e8e327c2c2e7b655ce35c3c4ab2b8ae48c50ee3b3df3e554cef38eb6734bb"
     },
+    "RK-10.1-137": {
+      "inbound/a-channel-with-no-binding-parses-its-message-with-a-context-holding-no-event": "0469175fe22fa8a108a35d14268cf27107356866cb60ec1075f375f683d1d12e"
+    },
     "RK-10.1-138": {
       "inbound/every-path-that-commits-an-event-roots-its-parent": "c626cafeac5c6c7b4e108552bdf9e1ce5d234e93366f92e6af1f27cfacc76874",
       "streaming/a-streamed-row-is-rooted-at-its-own-commit": "c626cafeac5c6c7b4e108552bdf9e1ce5d234e93366f92e6af1f27cfacc76874"
@@ -1552,6 +1558,9 @@
     "RK-10.3-036": {
       "hooks/an-injected-change-keeps-the-target-s-readers": "c8282392f6822dcdc797d3722a3ff81888a41747d0b95edb4238759349bc44f9"
     },
+    "RK-10.3-037": {
+      "edits/a-change-s-delivery-reads-its-target-as-the-commit-left-it": "8c382677c45946531c9c817df8a3064c19d94ab080ffa02bde18c5b2b184f330"
+    },
     "RK-10.3-038": {
       "edits/a-delete-the-persistence-policy-keeps-out-still-marks-its-target-and-edits": "027ca02b3906f6ce298235fd9579e04639e326b47e051a86979e68033f012c2d",
       "edits/an-edit-the-persistence-policy-keeps-out-still-rewrites-its-target": "027ca02b3906f6ce298235fd9579e04639e326b47e051a86979e68033f012c2d",
@@ -1597,6 +1606,12 @@
       "hooks/a-hook-delete-requires-system-authority-sender": "d34821ec90d5a0ad62fed24a7ed91e8112b2a1886d0d472d863f911a4c2329e2",
       "hooks/a-hook-edit-requires-system-authority-absent": "d34821ec90d5a0ad62fed24a7ed91e8112b2a1886d0d472d863f911a4c2329e2",
       "hooks/a-hook-edit-requires-system-authority-sender": "d34821ec90d5a0ad62fed24a7ed91e8112b2a1886d0d472d863f911a4c2329e2"
+    },
+    "RK-10.3-047": {
+      "edits/a-direct-edit-no-channel-receives-fires-its-trigger-with-the-room-as-its-commit-left-it": "706a1420e69f6bace5ddc37e9407a8ae4585dbaaf926e35b330c7acee4e0e4e7",
+      "edits/a-hook-s-injected-edit-s-trigger-reads-the-room-as-its-commit-left-it": "706a1420e69f6bace5ddc37e9407a8ae4585dbaaf926e35b330c7acee4e0e4e7",
+      "edits/a-response-delete-s-trigger-reads-the-room-as-its-commit-left-it": "706a1420e69f6bace5ddc37e9407a8ae4585dbaaf926e35b330c7acee4e0e4e7",
+      "edits/an-inbound-edit-s-trigger-reads-the-room-as-its-commit-left-it": "706a1420e69f6bace5ddc37e9407a8ae4585dbaaf926e35b330c7acee4e0e4e7"
     },
     "RK-10.3-048": {
       "appendix-b/b6-edit-with-fallback": "53e953ee93878467969cdff2d71a6f48e8c36d741c8ca6ae0b68f26988d1486f",
@@ -6541,6 +6556,9 @@
     },
     "RK-9.5.1-014": {
       "hooks/a-failing-off-lock-hook-is-reported-before-the-lock": "2c30cd5e44a18cf308faa5cc868ad8406a8f740996529c8ec28deace5cc70ea7"
+    },
+    "RK-9.5.1-015": {
+      "reentrancy/an-off-lock-hook-reads-the-record-and-the-attach-routing-wrote": "db1f465667d742d34ae0b1fcd6cc4430566b4d2ea4db4ed72c1e84ae683a0eff"
     },
     "RK-9.5.1-017": {
       "delivery/a-keyed-delivery-from-an-off-lock-hook-waits-for-the-lock-in-its-queue": "18cbf9bc879759067202bc9cc7df6b5d213275c7d52e08cdaff6c19351d078d9"

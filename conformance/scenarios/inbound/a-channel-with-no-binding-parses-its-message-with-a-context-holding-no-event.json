@@ -1,0 +1,117 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "inbound/a-channel-with-no-binding-parses-its-message-with-a-context-holding-no-event",
+  "title": "A channel detached from the room parses the message that names the room with a context that holds no event, the room's event in the store",
+  "rules": [
+    "§10.1 step 3",
+    "§10.1 step 4",
+    "§7.5 rule 7"
+  ],
+  "requirements": [
+    "RK-10.1-137"
+  ],
+  "notes": "sms is detached once bob's message was delivered to it; its next message names the room. The parse is handed the room, which counts one event, and no event; the gate then stores the message refused (source_unbound).",
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport",
+        "recent_events_window": 5
+      },
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport",
+        "recent_events_window": 5
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms",
+            "participant_id": "+15551234567"
+          },
+          {
+            "channel_id": "ws",
+            "participant_id": "bob"
+          }
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "ws",
+        "sender_id": "bob",
+        "content": {
+          "type": "text",
+          "body": "Earlier"
+        }
+      },
+      "expect": {
+        "result": {
+          "blocked": false,
+          "event": {
+            "index": 0
+          }
+        }
+      }
+    },
+    {
+      "idle": true
+    },
+    {
+      "call": "detach_channel",
+      "room_id": "room-1",
+      "channel_id": "sms"
+    },
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "After"
+        }
+      },
+      "expect": {
+        "result": {
+          "blocked": true,
+          "reason": "source_unbound"
+        }
+      }
+    }
+  ],
+  "expect": {
+    "contexts": {
+      "room-1": {
+        "sms": [
+          {
+            "call": "deliver",
+            "recent_events": [
+              "room-1#0"
+            ]
+          },
+          {
+            "call": "parse",
+            "room": {
+              "id": "room-1",
+              "event_count": 1,
+              "latest_index": 0
+            },
+            "recent_events": [],
+            "events": []
+          }
+        ]
+      }
+    }
+  }
+}
