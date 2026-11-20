@@ -321,3 +321,15 @@ class SchemaTests(unittest.TestCase):
                     if drop is not None:
                         del step[drop]
                     self.assertEqual(validator.is_valid(scenario), valid)
+
+    def test_an_executor_s_hook_is_named(self) -> None:
+        schema = json.loads((ROOT / "scenario.schema.json").read_text())
+        validator = Draft202012Validator(schema)
+        fixture = ROOT / "scenarios/executors/a-channel-call-runs-on-the-executor-holding-the-room.json"
+        for member in ("hooks", "room_hooks"):
+            for label, valid in (("name", True), ("as", False)):
+                with self.subTest(member=member, label=label):
+                    scenario = json.loads(fixture.read_text())
+                    hook = {label: "audit", "trigger": "on_tool_call"}
+                    scenario["setup"]["executors"][0][member] = [hook]
+                    self.assertEqual(validator.is_valid(scenario), valid)

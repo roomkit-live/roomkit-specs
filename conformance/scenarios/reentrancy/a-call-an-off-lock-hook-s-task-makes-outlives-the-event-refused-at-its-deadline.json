@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "reentrancy/a-call-an-off-lock-hook-s-task-makes-outlives-the-event-refused-at-its-deadline",
-  "title": "A call a task of an off-lock hook makes, adopted beside the check, outlives the event: the event is refused at its process_timeout while the call holds the room's lock, and the call commits within its own",
+  "title": "A call a task of an off-lock hook makes, adopted beside the check, outlives the event: the event is refused at its process_timeout while the call holds the room's lock it waits for, and the call commits within its own",
   "rules": [
     "§9.5.1 Reentrance",
     "§13.6"
@@ -12,10 +12,10 @@
   "reentrancy": [
     "inject@admitted"
   ],
-  "notes": "process_timeout is 1 s. The off-lock hook's body starts the task and never returns; 500 ms in, the task sends, and a locked hook holds that call at its gate, under the room's lock, past the event's deadline. Its own deadline runs from its start, 500 ms after the event's: opened once the event is refused, it commits. Python: tests/test_reentrance.py::TestAnAdoptedCallBeforeItsCommit::test_a_call_a_hook_s_task_makes_keeps_its_own_deadline.",
+  "notes": "process_timeout is 2 s. The off-lock hook's body starts the task and holds; 1 s in, the task sends, adopted beside the check, and a locked hook holds that call at its gate, under the room's lock. The body then returns and the event waits for that lock until its deadline. The call's own deadline runs from its start, a second after the event's: opened once the event is refused, it commits. A call that was a new arrival instead would wait for the event's ticket, reach its gate only once the event is refused, and leave no one waiting for the lock. Python: tests/test_reentrance.py::TestAnAdoptedCallBeforeItsCommit::test_a_call_a_hook_s_task_makes_keeps_its_own_deadline, test_a_lock_request_held_back_past_the_deadline_is_given_up_on.",
   "setup": {
     "kit": {
-      "process_timeout_ms": 1000
+      "process_timeout_ms": 2000
     },
     "channels": [
       {
@@ -54,7 +54,7 @@
               "text": "hello"
             },
             "spawn": {
-              "delay_ms": 500,
+              "delay_ms": 1000,
               "do": [
                 {
                   "call": "send_event",
@@ -68,7 +68,7 @@
                 }
               ]
             },
-            "gate": "never"
+            "gate": "body_held"
           }
         ]
       },
@@ -104,6 +104,12 @@
     },
     {
       "wait_for": "slow_held"
+    },
+    {
+      "open": "body_held"
+    },
+    {
+      "wait_for_lock": "room-1"
     },
     {
       "await": "hello",

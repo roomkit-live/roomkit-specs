@@ -4,6 +4,7 @@
   "title": "A task a channel's parse started, calling once the parse returned, stands in no admission order: it waits for the lock the message's section holds and commits after the message",
   "rules": [
     "§9.5.1 Reentrance",
+    "§9.5.1 Order",
     "§10.1 step 4"
   ],
   "requirements": [
@@ -12,7 +13,7 @@
   "reentrancy": [
     "inject@outside"
   ],
-  "notes": "The parse starts the task and returns; a locked hook holds the message's section at its gate when the task calls.",
+  "notes": "The parse starts the task and returns; an off-lock hook holds the message's check at its gate when the task calls. The task's message runs its own check, reaching that hook's other gate, and then waits for the message's earlier ticket.",
   "setup": {
     "channels": [
       {
@@ -65,12 +66,19 @@
       {
         "name": "next",
         "trigger": "before_broadcast",
+        "needs_lock": false,
         "reactions": [
           {
             "when": {
               "text": "hello"
             },
             "gate": "next_held"
+          },
+          {
+            "when": {
+              "text": "heads up"
+            },
+            "gate": "task_checked"
           }
         ]
       }
@@ -98,7 +106,10 @@
       "open": "task_go"
     },
     {
-      "wait_for_lock": "room-1"
+      "wait_for": "task_checked"
+    },
+    {
+      "open": "task_checked"
     },
     {
       "open": "next_held"

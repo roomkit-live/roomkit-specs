@@ -1568,7 +1568,7 @@
           "type": "string"
         },
         "spawn": {
-          "description": "First of all, before the reaction's gate: a task the call starts in its execution context and does not wait for (\u00a79.5.1 Reentrance), which holds at its `gate`, waits its `delay_ms`, makes its `do` actions in order and holds at its `after_do_gate`, each as a reaction's.",
+          "description": "Once `writes_record` is written and before the reaction's gate: a task the call starts in its execution context and does not wait for (\u00a79.5.1 Reentrance), which holds at its `gate`, waits its `delay_ms`, makes its `do` actions in order and holds at its `after_do_gate`, each as a reaction's.",
           "type": "object",
           "additionalProperties": false,
           "properties": {
@@ -8927,17 +8927,35 @@
           "minimum": 1
         },
         "hooks": {
-          "description": "The hooks it registers on triggers a turn fires (\u00a710.6.6), as in the setup's `hooks`.",
+          "description": "The hooks it registers on triggers a turn fires (\u00a710.6.6), as in the setup's `hooks`, each named: an executor defines its hooks by name.",
           "type": "array",
           "items": {
-            "$ref": "#/$defs/hook"
+            "allOf": [
+              {
+                "$ref": "#/$defs/hook"
+              },
+              {
+                "required": [
+                  "name"
+                ]
+              }
+            ]
           }
         },
         "room_hooks": {
-          "description": "The room hooks it defines on triggers a turn fires (\u00a710.6.6).",
+          "description": "The room hooks it defines on triggers a turn fires (\u00a710.6.6), each named: an executor defines its hooks by name.",
           "type": "array",
           "items": {
-            "$ref": "#/$defs/room_hook"
+            "allOf": [
+              {
+                "$ref": "#/$defs/room_hook"
+              },
+              {
+                "required": [
+                  "name"
+                ]
+              }
+            ]
           }
         },
         "started": {
