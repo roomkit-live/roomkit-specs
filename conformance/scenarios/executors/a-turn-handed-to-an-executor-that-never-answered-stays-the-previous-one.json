@@ -120,7 +120,7 @@
       }
     },
     {
-      "call": "executor.pause",
+      "call": "executor.close",
       "executor": "mute"
     },
     {
