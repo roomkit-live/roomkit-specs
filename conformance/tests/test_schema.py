@@ -372,6 +372,20 @@ class SchemaTests(unittest.TestCase):
                         del step[drop]
                     self.assertEqual(validator.is_valid(scenario), valid)
 
+    def test_predicate_workers_cannot_also_advertise_hosts(self) -> None:
+        schema = json.loads((ROOT / "scenario.schema.json").read_text())
+        validator = Draft202012Validator(schema)
+        fixture = ROOT / "scenarios/executors/owners-use-a-predicate-worker-only-on-its-process.json"
+        scenario = json.loads(fixture.read_text())
+        self.assertTrue(validator.is_valid(scenario))
+        worker = scenario["setup"]["executors"][0]
+        worker["hosts"] = ["coder"]
+        self.assertFalse(validator.is_valid(scenario))
+        del worker["host_predicate"]
+        self.assertTrue(validator.is_valid(scenario))
+        del worker["hosts"]
+        self.assertTrue(validator.is_valid(scenario))
+
     def test_an_executor_s_hook_is_named(self) -> None:
         schema = json.loads((ROOT / "scenario.schema.json").read_text())
         validator = Draft202012Validator(schema)

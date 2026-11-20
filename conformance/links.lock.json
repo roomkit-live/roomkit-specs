@@ -3094,6 +3094,10 @@
     "RK-10.6.7-006": {
       "executors/the-kit-lists-the-executors-served-and-what-each-declares": "67e7d4002cb3495b811a0b8a4c86f05da52df66d4e60182d095a00af154a9142"
     },
+    "RK-10.6.7-007": {
+      "executors/owners-use-a-predicate-worker-only-on-its-process": "799f1f7ee4960e11d2f49dee74a79dd5c75b8de67b7311d37967c476d3e7fe50",
+      "executors/owners-use-an-undeclared-worker-only-on-its-process": "799f1f7ee4960e11d2f49dee74a79dd5c75b8de67b7311d37967c476d3e7fe50"
+    },
     "RK-10.6.7-009": {
       "executors/an-executor-serving-every-organization-takes-every-room-s-turns": "c4a77075fc1a838d3df0e3f7bf11bc3d0817a0a123a554a545874b75fcacdcb1"
     },
@@ -3178,8 +3182,18 @@
       "executors/an-agent-is-offline-in-a-room-of-an-organization-its-executors-do-not-serve": "359e511ccf1e5ddb1761d7702569119bc43ae3de62d1295ee83bdca865f93a7e",
       "executors/an-agent-s-presence-is-published-in-its-rooms-on-attach-and-when-its-coverage-changes": "359e511ccf1e5ddb1761d7702569119bc43ae3de62d1295ee83bdca865f93a7e"
     },
+    "RK-10.6.7-032": {
+      "executors/owners-publish-a-coverage-change-once-across-a-restart": "e03d3b10df0f8fdcc347d3dda229fbe54988b33ff0dbd2a412f77a1e1ea5593b"
+    },
+    "RK-10.6.7-033": {
+      "executors/owners-release-an-unpublished-claim-on-close": "cbf89b723329763c0ba742b6011bc4f7c63b039ac3f69bf8caf57e427bc82ec7",
+      "executors/owners-retry-a-failed-presence-claim": "cbf89b723329763c0ba742b6011bc4f7c63b039ac3f69bf8caf57e427bc82ec7"
+    },
     "RK-10.6.7-034": {
       "local-presence/automatic-publications-follow-local-changes": "e7b553242f7460a29b9ca01dfbeb9eb20031bfff5996caffd276a6d5c336484c"
+    },
+    "RK-10.6.7-035": {
+      "executors/owners-without-an-executor-catalogue-publish-only-live-agents": "934cdd7f65ec8c65bc00f4bb361b3ef9464f7100689dc7906d292987747280dd"
     },
     "RK-10.6.8-006": {
       "executors/a-slow-turn-apart-that-keeps-beating-is-never-failed": "f41e0a36f56b7d1d0f09f688bc68415394b32f9417dcbab29d28f99edb3b56d6",
@@ -3325,6 +3339,9 @@
       "discussion/listen-only-cuts-the-turn-its-agent-is-taking": "a310d9ef8a557bc1a300b83c4204499f5f6b0f455de278b7883476dc015736c7",
       "discussion/uninstalling-cuts-the-turn-under-way": "a310d9ef8a557bc1a300b83c4204499f5f6b0f455de278b7883476dc015736c7"
     },
+    "RK-10.6.8-041": {
+      "executors/owners-steer-only-the-turns-they-submitted": "d5729aa5d20033cb432383a379058349f036f450cffb1b5c38461e6c04f94eec"
+    },
     "RK-10.6.8-042": {
       "host/a-task-cut-short-hands-its-failure-to-wait-task": "82628d731457259788979cf5a0a834f37bfefe23e9f62ef465aca1975d61c7a5",
       "inbound/an-agent-s-provider-refusal-keeps-its-retryability": "82628d731457259788979cf5a0a834f37bfefe23e9f62ef465aca1975d61c7a5",
@@ -3367,6 +3384,9 @@
     },
     "RK-10.6.9-001": {
       "executors/a-built-channel-parents-its-generation-to-the-owner-broadcast": "9e374191e666f0ddc44d20e09aaa7f2d40bf1f7545042445c5ed6070b260a3f3"
+    },
+    "RK-10.6.9-008": {
+      "executors/owners-receive-post-turn-work-only-where-the-turn-was-submitted": "455819e3541552f2dd733693cc45fe187988aef3287b7cf3a385ddb90741191b"
     },
     "RK-10.6.9-009": {
       "executors/a-room-s-attach-and-detach-are-applied-on-the-executor-before-they-return": "c3d781930779e9e12585462005f14490e270227e68b9e944b881ab0b4acff073"

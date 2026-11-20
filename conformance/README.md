@@ -391,6 +391,15 @@ room callbacks of the setup are not compared.
   `DetailError` renders its message from an opaque local field.
   `HostProviderError` extends the provider error and carries a provider name
   and status code (§10.6.8).
+  When a scenario combines `executors` and `processes`, every owner connects
+  independently to the same distributed turn backend. An executor's `kit`
+  selects the process serving it (`main` is reserved for the run's kit). An explicit
+  `hosts` list is advertised. With `host_predicate` the executor accepts the
+  exact ids in that list locally. Omitting both accepts every id locally.
+  `kit.shared_realtime` gives the owners independent connections to one
+  realtime bus. `kit.executor_catalogue: false` supplies a transport that
+  omits the optional catalogue. `kit.turn_backend_faults` enables the
+  scripted failures described alongside `turn_backend.fault`.
 - `event_handlers`: **framework-event handlers** (§8.2), each registered on
   the kit after the hooks, in order, for the events of its `event` type (a
   framework event's name: `before_tool_use`, `tool_call`, `ai_response`...).
@@ -1027,6 +1036,7 @@ and declares the descriptors in `session/new`.
 | `{"lock_releases": "fail"}`, `{"lock_releases": "succeed"}` | Sets the releases of the kit's `lock_manager` failing or succeeding, from the next one on |
 | `{"under_lock": room, "do": [calls]}` | Takes the room's lock from the kit's `lock_manager` as a host does outside any pass (§13.5), makes the calls under it in order, each waited for and checked by its `expect`, then releases the lock. `room` may be a reference, a room the run created (`$r1`) |
 | `{"store_fault": operation, "fail": message}`, `{"store_fault": operation, "gate": gate}` | Arms a fault on the kit's store (`setup.kit.store_faults`), which the first call of `operation` made after the step takes, on `room_id` when the step names one (a room the run created as `$r1`): `operation` is an operation of the store's interface (§14.1), or a list of them, for a read that implementations may make with different operations (`room_exists`, `load_room_context`), whichever comes first. With `fail`, the operation does not run and the call fails with that message, as the store's own failure; with `gate`, the call holds at the gate once the operation answered, then answers it, or with `fail` too, holds in the operation's place, then fails. A fault no call took fails the scenario |
+| `{"restart_process": id}` | Closes the named process if still running and opens a fresh kit under the same id with its configured channels, store and turn backend. Its old workers stop. A later `executor.start` can serve them again. |
 | `{"acp_disconnect": channel_id}` | Closes the named scripted ACP transport's pipe and drains its agent tasks. The transport then reports `is_alive=false`; the real channel decides whether and how to reconnect. Session and reply counters continue across connections. This is a fixture fault, not a framework API call. |
 
 A call that has not returned after 10 s fails the scenario.
@@ -1115,11 +1125,11 @@ run's own kit when absent.
 | `remove_room_hook` | `room_id`, `name` | whether the room held a hook of that name |
 | `hook_engine.add_room_hook` | `room_id`, `hook` (as `add_room_hook`'s): registered on the kit's hook engine (`hook_engine.add_room_hook`), below the kit, which reads no room (§9.1, §17.2) | unspecified |
 | `kit_executor.add_owner_room_hook` | `room_id`, `hook` (as `add_room_hook`'s, on a trigger a turn fires): given straight to the kit's own executor for the room (`turn_executor.hooks.add_owner_room_hook`), below the kit, which reads no room (§9.1, §10.6.6) | unspecified |
-| `subscribe_room` | `room_id`, `subscriber` (a label), optional `kit`: the kit's `subscribe_room` (§8.4), a callback recording each ephemeral event it reads under `expect.subscribers`, by the subscriber's name | unspecified |
+| `subscribe_room` | `room_id`, `subscriber` (a label), optional `kit`, `types` and `gate`: the kit's `subscribe_room` (§8.4), a callback recording each ephemeral event it reads under `expect.subscribers`, by the subscriber's name. With `types`, the callback records matching types only. It signals `gate` after each recorded event | unspecified |
 | `publish_typing` | `room_id`, `user_id`, `is_typing` (default true), optional `kit`: the kit's `publish_typing` (§8.4) | null |
 | `cancel_delivery` | `key`, the `delivery_key` of the messages whose delivery it cancels, and `reason` (§10.1 Explicit delivery cancellation) | how many deliveries it cancelled |
 | `close` | none | null once the kit's shutdown ended (§12.10.4) |
-| `steer` | `room_id`, the room whose turns it reaches, `channel_id`, the agent, and `directive` (a SteeringDirective in the serialized form: `{"type": "cancel", "reason"}`, ...) (§21.3) | how many of the agent's running loops in the room it reached |
+| `steer` | `room_id`, the room whose turns it reaches, `channel_id`, the agent, optional `kit` selecting the owner, and `directive` (a SteeringDirective in the serialized form: `{"type": "cancel", "reason"}`, ...) (§21.3) | how many of the agent's running loops in the room it reached |
 | `install_strategy` | `room_id`, `strategy` (a scripted strategy's id) (§19.7) | null |
 | `uninstall_strategy` | `room_id` (§19.7) | whether the room held a strategy |
 | `claim_room_strategy` | `room_id`, `strategy`: claims the room for the strategy, or refuses, installing nothing (§19.7) | null |
@@ -1137,6 +1147,7 @@ run's own kit when absent.
 | `talk_again` | `room_id`, `channel_ids`, `organization_id`: the kit's `talk_again` (§19.7.5 rule 12) | null; a room holding no discussion in the scope, `invalid_argument` |
 | `room_strategy_is_current` | `room_id`, `kind` (`Discussion`, `Pipeline`, `Swarm`, `Loop` or `Supervisor`, the implementation's strategy of that name), `organization_id`, `kit`: the kit's `room_strategy_is_current` (§19.7.5 rule 16) | whether the discussion this process installed is the one the room stores; a kind not stored with the room, `kind_not_stored`; a room outside the scope, `room_not_found` |
 | `close` | `kit`: closes the kit (§12.10.4), a process that stops; no later step calls it | null |
+| `turn_backend.fault` | `operation` (`claim_presence` or `publish_presence`) and `enabled`. While enabled, each attempt fails at the corresponding owner-side backend operation. An optional `gate` signals the first failed attempt. A fault that was never taken fails the scenario. | null |
 | `executor.start` | `executor`, an id of `setup.executors`: serves it on the kit's turn backend (§10.6.7) | null |
 | `executor.close` | `executor`: it takes no more turns and ends those it runs (§10.6, §10.6.8) | null |
 | `executor.kill` | `executor`: to the room it stops as a killed process stops, sending nothing more and hearing nothing more, its turns left to the owner's liveness checks (§10.6.8) | null |
@@ -1150,7 +1161,7 @@ run's own kit when absent.
 | `release_channel` | `channel_id`: every executor holding a build of it lets it go, closed once the turns running on it end, and builds it anew for the next one (§10.6.3) | null |
 | `kit_executor.executor_id` | none | the kit's own public executor id; a `$as` matcher can bind it for exact presence assertions |
 | `executors` | none: the executors served on the kit's turn backend, its own executor aside (§10.6.7) | the list, in any order, each `{executor_id, hosts, organizations, room_hooks, online}`: `hosts` the ids and prefixes it declares, sorted (null for a predicate or every id), `organizations` the ones it serves, sorted (null: the rooms without an organization alone), `room_hooks` sorted; a closed executor is not listed |
-| `agent_presence` | `room_id`: the room's intelligence channels, each online while an executor alive covers it in the room (declares it, serves the room's organization, and defines the room's enabled hooks), a channel the kit holds live while the kit runs (§10.6.7, §10.6.8) | the list sorted by `channel_id`, each `{channel_id, online, executors}`, `executors` the ids of the executors covering it, sorted |
+| `agent_presence` | `room_id`, optional `kit` and `wait_for_online`. The latter polls this owner’s public view for up to 5 s until the named agent is online, allowing distributed catalogue reads to converge. Returns the room's intelligence channels, each online while an executor alive covers it in the room (declares it, serves the room's organization, and defines the room's enabled hooks), a channel the kit holds live while the kit runs (§10.6.7, §10.6.8) | the list sorted by `channel_id`, each `{channel_id, online, executors}`, `executors` the ids of the executors covering it, sorted |
 | `enable_room_hook` | `room_id`, `name`: the room's turns run the room hook the executors define under `name`, and only an executor that defines it takes them (§10.6.6, §10.6.7) | null |
 | `install_pipeline` | `handler`, `stages`, `default_phase`, `supervisor_id`, `agents` (channel ids), `agent_aliases`, `hook_priority`, optional `voice_channel_id` for a realtime host: the ConversationPipeline's `install` on the kit, its handler named `handler` (§19.5) | null |
 | `setup_handoff` | `agent_id`, `handler`, `targets` (each an id and its description or null: the tool `build_handoff_tool` builds; absent: the generic one), `room_id` (absent: every room): serves the handoff tool on the agent (§19.6) | null |

@@ -498,6 +498,18 @@
                   "HostProviderError"
                 ]
               }
+            },
+            "shared_realtime": {
+              "type": "boolean",
+              "description": "Give each process a connection to the same observable room realtime bus."
+            },
+            "turn_backend_faults": {
+              "type": "boolean",
+              "description": "Enable scripted presence claim and publication failures."
+            },
+            "executor_catalogue": {
+              "type": "boolean",
+              "description": "Whether the turn backend implements the optional executor catalogue. Defaults to true."
             }
           }
         },
@@ -550,7 +562,7 @@
           }
         },
         "processes": {
-          "description": "Other processes serving the rooms (\u00a719.7.5 rule 16): each a kit of its own over the run's store and lock manager, holding the setup's channels as objects of its own, a scripted agent answering from the one model of its channel id. A call's `kit` names the one it runs on.",
+          "description": "Other processes serving the rooms (\u00a719.7.5 rule 16): each a kit of its own over the run's store and lock manager, also connected to its distributed turn backend when the setup includes executors, holding the setup's channels as objects of its own, a scripted agent answering from the one model of its channel id. A call's `kit` names the one it runs on.",
           "type": "array",
           "items": {
             "type": "object",
@@ -2081,6 +2093,18 @@
               }
             }
           }
+        },
+        {
+          "type": "object",
+          "required": [
+            "restart_process"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "restart_process": {
+              "$ref": "#/$defs/label"
+            }
+          }
         }
       ]
     },
@@ -2359,7 +2383,8 @@
             "skill_registry_session",
             "declare_host_verb",
             "host.call",
-            "telemetry.spans"
+            "telemetry.spans",
+            "turn_backend.fault"
           ]
         },
         "organization_id": {
@@ -2369,7 +2394,7 @@
           ]
         },
         "kit": {
-          "description": "The process of `setup.processes` the call runs on; the run's own kit when absent. Taken by `process_inbound`, `create_room`, `attach_channel`, `add_room_hook`, `subscribe_room`, `publish_typing`, `install_strategy`, `uninstall_strategy`, `claim_room_strategy`, `room_strategy`, `room_strategy_is_current`, `speak_queue`, `listen_only`, `talk_again` and `close`.",
+          "description": "The process of `setup.processes` the call runs on; the run's own kit when absent. Taken by `process_inbound`, `create_room`, `attach_channel`, `add_room_hook`, `subscribe_room`, `publish_typing`, `steer`, `agent_presence`, `install_strategy`, `uninstall_strategy`, `claim_room_strategy`, `room_strategy`, `room_strategy_is_current`, `speak_queue`, `listen_only`, `talk_again` and `close`.",
           "$ref": "#/$defs/label"
         }
       },
@@ -6109,6 +6134,10 @@
               "room_id"
             ],
             "properties": {
+              "wait_for_online": {
+                "type": "string",
+                "description": "Poll this owner's public presence view until the named agent is online (bounded by the scenario gate timeout)."
+              },
               "room_id": {
                 "type": "string"
               }
@@ -6363,6 +6392,16 @@
               "subscriber": {
                 "description": "The subscriber's name in `expect.subscribers`.",
                 "$ref": "#/$defs/label"
+              },
+              "types": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "uniqueItems": true
+              },
+              "gate": {
+                "$ref": "#/$defs/label"
               }
             }
           }
@@ -6613,6 +6652,35 @@
                   "hook.sync",
                   "llm.tool_call"
                 ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "turn_backend.fault"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "operation",
+              "enabled"
+            ],
+            "properties": {
+              "operation": {
+                "enum": [
+                  "claim_presence",
+                  "publish_presence"
+                ]
+              },
+              "enabled": {
+                "type": "boolean"
+              },
+              "gate": {
+                "$ref": "#/$defs/label"
               }
             }
           }
@@ -10386,8 +10454,7 @@
     "executor": {
       "type": "object",
       "required": [
-        "id",
-        "hosts"
+        "id"
       ],
       "additionalProperties": false,
       "properties": {
@@ -10507,7 +10574,25 @@
               "type": "string"
             }
           }
+        },
+        "kit": {
+          "description": "The process serving the worker, or main for the run's own process.",
+          "$ref": "#/$defs/label"
+        },
+        "host_predicate": {
+          "description": "A local predicate accepting exactly the listed channel ids.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
         }
+      },
+      "not": {
+        "required": [
+          "hosts",
+          "host_predicate"
+        ]
       }
     },
     "kit_executor_hook": {
