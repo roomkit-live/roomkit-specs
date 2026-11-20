@@ -4089,6 +4089,9 @@
     "RK-5.7-012": {
       "routing/a-message-routed-on-a-webhook-writes-nothing-as-its-recipient": "ad4bf6cb4f3b918899b036fbb6962e756e7812ad840b5024c5185b931b7b4587"
     },
+    "RK-5.7-013": {
+      "routing/each-channel-type-writes-its-addresses-in-its-own-form-under-its-own-keys": "356d2eef818c784dd6c5bcb27a3fa744658750a13cfb9f3fdfba529c3c33f354"
+    },
     "RK-5.7-014": {
       "routing/a-message-routed-on-a-webhook-writes-nothing-as-its-recipient": "65f580851c66bf0915f297a0b24c52aa1f285577fb4ce204e914e22a5ce89a82",
       "routing/a-webhook-s-recipient-names-no-correspondent": "65f580851c66bf0915f297a0b24c52aa1f285577fb4ce204e914e22a5ce89a82"
@@ -4154,19 +4157,51 @@
       "routing/the-lock-reads-a-value-that-is-not-a-recipient-whatever-the-channel-answers": "d32f221c08d7a181c5658d431bb7670143ae5619b4e77ddae0a115a15555238c"
     },
     "RK-5.7-022": {
+      "routing/a-chat-id-written-as-an-integer-is-recorded-as-a-string": "69366c7ca129b33a14aec6084113e421b74c8d52767eaf9d5fcd44bc1a7275b3",
       "routing/an-integer-under-the-key-of-a-channel-reading-no-recipient-names-its-conversation": "69366c7ca129b33a14aec6084113e421b74c8d52767eaf9d5fcd44bc1a7275b3"
+    },
+    "RK-5.7-023": {
+      "routing/a-chat-id-written-as-an-integer-is-recorded-as-a-string": "03ad3935d2000559c9459a95aca155682ef1357677ac0ce29397eaeabcbe928f"
     },
     "RK-5.7-024": {
       "routing/a-chat-message-is-its-chat-s-whatever-its-sender": "ad9d589403f66c9b3e7d4376787718c7fb581b52dad44408e744dffe747b470f",
       "routing/a-post-with-no-author-is-answered-in-its-chat": "ad9d589403f66c9b3e7d4376787718c7fb581b52dad44408e744dffe747b470f"
     },
+    "RK-5.7-025": {
+      "routing/a-chat-key-holding-no-chat-is-no-chat": "a16186e54fbbf0f6cc1132447c1bcd2d970afec8a471368361d3a567173f18d9"
+    },
     "RK-5.7-026": {
       "routing/a-user-s-private-chat-and-a-group-are-two-conversations": "0e8150f1a1798d7d4056c4cc52400bd9ebea0ad1229b393ed987d777db4b9d7d"
+    },
+    "RK-5.7-027": {
+      "routing/a-chat-message-without-its-chat-has-no-address": "2a2bba16d880819567e5b5cb14dffd8a0a79f093114177ae7a1fe6ef69951f2a"
     },
     "RK-5.7-028": {
       "delivery/a-status-recipient-is-read-as-step-one-reads-a-sender": "ab9c1e89554dd689dc9ee6bd14e218591116ddb077ac3510294f71f947e9fc8f",
       "members/a-member-call-acts-for-its-organization": "ab9c1e89554dd689dc9ee6bd14e218591116ddb077ac3510294f71f947e9fc8f",
       "routing/a-provider-s-spelling-of-a-number-reaches-the-room-of-its-channel-form": "ab9c1e89554dd689dc9ee6bd14e218591116ddb077ac3510294f71f947e9fc8f"
+    },
+    "RK-5.7-029": {
+      "routing/a-number-is-read-without-its-scheme-its-separators-or-its-trunk-mark": "029e81619ea794f2bdc4b4321cd0d469fd431e8458f4efd97d86087597d97649"
+    },
+    "RK-5.7-030": {
+      "routing/a-number-written-with-plus-or-00-is-international": "873c312f35d5a898a20cb656e524bb6a2f9770ed97965cae3511c3ac823d97c8"
+    },
+    "RK-5.7-031": {
+      "routing/a-national-number-takes-the-country-code-its-channel-declares": "bebbc8c71114bf1466f74cbba84c5e746bbac249d0792dea7b16a8de6f2d0f7e"
+    },
+    "RK-5.7-032": {
+      "routing/digits-without-a-country-code-are-kept-as-written": "81d85a7aad682f5a78464dec94ec581d047694ac081d36b03ad8d6f456127912"
+    },
+    "RK-5.7-033": {
+      "routing/a-number-of-more-than-15-digits-or-starting-with-0-is-kept-as-written": "20a528b98943f2ced96163b40dd75eedcb5cc35e00a1f4941cb9b2ef5b132c8e"
+    },
+    "RK-5.7-034": {
+      "rooms/a-country-code-that-is-none-is-refused": "29f4fdaedafb668750c6ee61a26485bfc433463a81a4435b4c461dfdfe4775b5",
+      "routing/a-national-number-takes-the-country-code-its-channel-declares": "29f4fdaedafb668750c6ee61a26485bfc433463a81a4435b4c461dfdfe4775b5"
+    },
+    "RK-5.7-035": {
+      "routing/an-email-address-is-read-lower-case-without-its-display-name": "c141e74ad4d3c73fe18183ee188306acaf197dd508f3c8007aa7ef0ff9dbd54f"
     },
     "RK-5.7-036": {
       "routing/a-group-binding-s-value-under-the-key-names-no-one": "b641c0163900e095298ae70842ee72c213956de577952a21330cf3091ffc7924",
