@@ -9,7 +9,7 @@
   "requirements": [
     "RK-10.6.5-019"
   ],
-  "notes": "The scripted tool's handler is the one the executor's factory gave its build of the channel; tools records the calls the turn ran it for on first. The kit holds coder by its declaration alone and serves no tool of it. Python: tests/test_turns_host.py.",
+  "notes": "The scripted tool's handler is the one the executor's factory gave its build of the channel; tools records the calls the turn ran it for on first. The kit holds coder by its declaration alone and serves no tool of it. Python: tests/test_turns_host.py test_a_host_tool_reads_the_turns_host_and_it_ends_with_the_turn.",
   "setup": {
     "channels": [
       {

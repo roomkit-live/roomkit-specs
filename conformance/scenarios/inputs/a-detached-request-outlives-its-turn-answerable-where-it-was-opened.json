@@ -9,7 +9,7 @@
   "requirements": [
     "RK-10.6.5-064"
   ],
-  "notes": "The turn opens a request no one waits on (create_detached) and reads it on the owner while it runs. Once the turn ended, the kit no longer shows nor takes it, and its handler, its creator's, still takes the answer and gives it to a reader. Python: tests/test_turns_inputs.py test_a_detached_request_a_turn_raised_outlives_the_turn.",
+  "notes": "The turn opens a request no one waits on (create_detached) and is held after it, while the owner shows the request. Once the turn ended, the kit no longer shows nor takes it, and its handler, its creator's, still takes the answer and gives it to a reader. Python: tests/test_turns_inputs.py test_a_detached_request_a_turn_raised_outlives_the_turn.",
   "setup": {
     "channels": [
       {
@@ -35,15 +35,9 @@
                 "expect": {
                   "result": "$p1"
                 }
-              },
-              {
-                "call": "await_input_request",
-                "request_id": "$p1",
-                "expect": {
-                  "result": true
-                }
               }
-            ]
+            ],
+            "after_do_gate": "turn-ends"
           }
         ]
       }
@@ -75,6 +69,24 @@
           "body": "Hi"
         }
       },
+      "background": true,
+      "as": "turn"
+    },
+    {
+      "wait_for": "turn-ends"
+    },
+    {
+      "call": "await_input_request",
+      "request_id": "$p1",
+      "expect": {
+        "result": true
+      }
+    },
+    {
+      "open": "turn-ends"
+    },
+    {
+      "await": "turn",
       "expect": {
         "result": {
           "blocked": false,

@@ -11,7 +11,7 @@
   "requirements": [
     "RK-10.6.5-018"
   ],
-  "notes": "ON_PLAN_UPDATED and ON_USER_INPUT_REQUIRED fire where the work they observe runs (§10.6.6): hooks defined on first alone record the plan the plan tool wrote and the request the human-input tool opened, and the request's answer, given there, reaches the model. Both tools are the implementation's: neither is a scripted tool of the agent (tools). Python: tests/test_turns_inputs.py test_the_owner_answers_a_turns_request; tests/test_turns_channel_control.py test_detaching_an_ai_channel_drops_everything_it_kept_for_the_room.",
+  "notes": "ON_PLAN_UPDATED and ON_USER_INPUT_REQUIRED fire where the work they observe runs (§10.6.6): hooks defined on first alone record the plan the plan tool wrote and the request the human-input tool opened, and the request's answer, given there, reaches the model. Both tools are the implementation's: neither is a scripted tool of the agent (tools). Python: tests/test_turns_inputs.py test_the_owner_answers_a_turns_request; tests/test_turns_wiring.py test_directly_wired_thinking_and_plan_updates_reach_the_executor.",
   "setup": {
     "channels": [
       {

@@ -9,13 +9,13 @@
   "requirements": [
     "RK-10.6.2-034"
   ],
-  "notes": "Observes the second case of RK-10.6.2-034: the second turn was handed to mute, which may have begun it, so it stays named after its accept bound failed it. The third turn, on first, names it, and first drops the state it held since the first turn (an on_room_detached before the third on_event, RK-10.6.2-036). A backend that took the mark back on the failure would leave the third naming the first, and first would drop nothing. The cancel of a handed turn is not observed. Python: tests/test_turns_channel_control.py test_a_turn_the_owner_stopped_submitting_once_taken_is_the_previous_one.",
+  "notes": "Observes the second case of RK-10.6.2-034: the second turn was handed to mute, which may have begun it, so it stays named after its accept bound failed it. The third turn, on first, names it, and first drops the state it held since the first turn (an on_room_detached before the third on_event, RK-10.6.2-036). A backend that took the mark back on the failure would leave the third naming the first, and first would drop nothing. Not observed: the cancel of a handed turn, and a transport whose process never answers the handing itself (mute's process answers it; only the turn's accept never comes). Python: tests/test_turns_channel_control.py test_a_turn_the_owner_stopped_submitting_once_taken_is_the_previous_one.",
   "setup": {
     "kit": {
       "turn_timeouts": {
         "heartbeat_interval_ms": 10,
         "heartbeat_timeout_ms": 1000,
-        "accept_ms": 150,
+        "accept_ms": 1000,
         "cancel_ms": 100
       }
     },
