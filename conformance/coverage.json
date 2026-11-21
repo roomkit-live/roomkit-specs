@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "02e16bcd13e8c4d461664e12badabfd8c24255b0a9c41e98f525246d372b5c65",
-  "corpus_sha256": "6dff15ecef7df49a51042a9993116d82e7c0b10ca17ec218eb281baa2ce1b56f",
+  "corpus_sha256": "a5463d9056798efd9bd57cda820f5833f6d6bc7d77b84653a1a36d384bc0ab1d",
   "python_commit": "ddb805bae34761ded35a5b89b0ba12aa8fa03b0e",
-  "scenario_count": 3393,
+  "scenario_count": 3395,
   "sections": [
     {
       "section": "0",
@@ -5577,7 +5577,8 @@
         "kit-executor/named-hooks-are-opt-in-per-room",
         "kit-executor/named-hooks-refuse-invalid-registrations",
         "kit-executor/uninstalling-a-strategy-removes-only-its-activation",
-        "realtime/a-late-cancellation-leaves-the-served-call-alone"
+        "realtime/a-late-cancellation-leaves-the-served-call-alone",
+        "tools/a-tool-call-hook-on-the-owner-reads-the-room-when-it-fires"
       ]
     },
     {
@@ -5691,6 +5692,7 @@
         "executors/a-turn-no-executor-declares-fails-and-the-room-goes-on",
         "executors/a-turn-whose-owner-was-killed-is-cut-owner-lost-on-its-executor",
         "executors/after-a-lost-executor-the-room-s-next-turn-runs-elsewhere",
+        "executors/an-executor-accepts-a-turn-before-its-first-cpu-bound-work",
         "executors/an-executor-closed-during-a-turn-ends-it",
         "executors/an-executor-killed-mid-answer-loses-its-turn-and-what-was-shown-stays",
         "executors/an-executor-restarted-under-its-id-does-not-keep-the-killed-one-s-turn",

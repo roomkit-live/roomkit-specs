@@ -3087,7 +3087,8 @@
       "kit-executor/named-hooks-refuse-invalid-registrations": "9844a32be32fae0e386bb85456f70e10c0fd321919ec5681577e0032f08b96b3"
     },
     "RK-10.6.6-022": {
-      "executors/a-hook-on-an-executor-reads-the-room-when-it-fires": "de84d7d8bd33e93829b436780d5dc34fa0cc1ef3365bb988dfbcdc09b6235ada"
+      "executors/a-hook-on-an-executor-reads-the-room-when-it-fires": "de84d7d8bd33e93829b436780d5dc34fa0cc1ef3365bb988dfbcdc09b6235ada",
+      "tools/a-tool-call-hook-on-the-owner-reads-the-room-when-it-fires": "de84d7d8bd33e93829b436780d5dc34fa0cc1ef3365bb988dfbcdc09b6235ada"
     },
     "RK-10.6.6-023": {
       "executors/a-hook-on-an-executor-fired-by-an-acp-agent-between-prompts-reads-the-last-turn-s-context-and-changes-nothing": "c549c65a2e73033565175d0db4422f35886a3c2331f03f753060639b45c4832b"
@@ -3231,7 +3232,8 @@
       "executors/a-turn-whose-owner-was-killed-is-cut-owner-lost-on-its-executor": "b868f8fce2ca9331df6f998500f79686e5e97a7f992a6992be9204d521a3222a"
     },
     "RK-10.6.8-010": {
-      "executors/a-turn-busy-with-its-cpu-on-an-executor-in-a-process-of-its-own-still-beats": "7c596b8c86f360525d85ddc9865280529558cacc225b8b089e5973bff6dd6194"
+      "executors/a-turn-busy-with-its-cpu-on-an-executor-in-a-process-of-its-own-still-beats": "7c596b8c86f360525d85ddc9865280529558cacc225b8b089e5973bff6dd6194",
+      "executors/an-executor-accepts-a-turn-before-its-first-cpu-bound-work": "7c596b8c86f360525d85ddc9865280529558cacc225b8b089e5973bff6dd6194"
     },
     "RK-10.6.8-012": {
       "executors/an-executor-restarted-under-its-id-does-not-keep-the-killed-one-s-turn": "c379642986ba6af0cae2871ada53a56199e6f8c07a63efef2b92ad75f8000ead"
@@ -3442,6 +3444,9 @@
     },
     "RK-12.10.4-005": {
       "delivery/a-delivery-whose-turn-the-closing-owner-gave-up-counts-its-cleanup-done": "443dc9c61356466d98f46229110f951ff34fab24f36ec3931113dd8ce14983bd"
+    },
+    "RK-13.5-003": {
+      "reentrancy/a-call-under-a-lock-the-host-holds-commits-what-its-hooks-inject-once-the-host-released-it": "e48f3414e74e10520ce4cee0a9f28e8e8087d2f2985bebdbac4ea1d8692c9297"
     },
     "RK-21.1-004": {
       "tools/every-argument-that-does-not-fit-is-named": "0fdb54986121a7f92e06d9891f6980dc27e90fb9104af4924e50038212397853"
