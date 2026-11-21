@@ -769,7 +769,7 @@
       "delivery/a-cancel-joins-the-close-of-a-stream-nobody-read": "ebf6b714571b65246d42414a8deb09185b7f7d0240c74577709c83ab02f05969"
     },
     "RK-10.1-104": {
-      "delivery/a-stream-its-set-hands-the-cut-cascade-is-closed-unread-and-not-joined": "e5e12d6e3be289f7142e76712a628d323d9fddbdfddf4f19bfbd0cc2ba8ee4e9"
+      "delivery/a-stream-its-set-hands-the-cut-cascade-is-closed-unread-and-not-joined": "c88ab99a412f759474a6d2b8b9a3f94fced137b3df90b119f3332904ec5ea7c1"
     },
     "RK-10.1-105": {
       "delivery/a-cascade-cancel-leaves-another-room-s-running-turn-alone": "2ac0af60cd1af9d9cbb7a97e73eb23f317ab25d3f97dc2acc837ec306134a441",
