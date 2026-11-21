@@ -4491,7 +4491,8 @@
     },
     "RK-6.4-039": {
       "acp/cancel-answers-pending-permission-cancelled": "2a1990fb984c2b1dcafd3f720d40e31ca232d338392c0ddf993f7bf7779270f6",
-      "acp/cancel-answers-unannounced-permission-cancelled": "2a1990fb984c2b1dcafd3f720d40e31ca232d338392c0ddf993f7bf7779270f6"
+      "acp/cancel-answers-unannounced-permission-cancelled": "2a1990fb984c2b1dcafd3f720d40e31ca232d338392c0ddf993f7bf7779270f6",
+      "acp/turn-end-reports-a-pending-permission-call-cancelled": "2a1990fb984c2b1dcafd3f720d40e31ca232d338392c0ddf993f7bf7779270f6"
     },
     "RK-7.1-002": {
       "permissions/all-source-access-and-mute-combinations": "09e15544fea0657bef56fbca15075385d6cd074a82f5f472f02ac5c31fb5fe92",
@@ -5911,6 +5912,7 @@
       "acp/handler-report-cancelled-raise-before": "1ef9a7f5f23ba37ea4c936e472375642b5f5ac7fd66ba4757c6cfa6831ad9baf",
       "acp/tools-abandoned-stream": "1ef9a7f5f23ba37ea4c936e472375642b5f5ac7fd66ba4757c6cfa6831ad9baf",
       "acp/tools-cancelled-closes-pending": "1ef9a7f5f23ba37ea4c936e472375642b5f5ac7fd66ba4757c6cfa6831ad9baf",
+      "acp/turn-end-reports-a-pending-permission-call-cancelled": "1ef9a7f5f23ba37ea4c936e472375642b5f5ac7fd66ba4757c6cfa6831ad9baf",
       "ai-external-handler/close-during-decision-drains-cancelled-report-non-streaming": "1ef9a7f5f23ba37ea4c936e472375642b5f5ac7fd66ba4757c6cfa6831ad9baf",
       "ai-external-handler/close-during-decision-drains-cancelled-report-streaming": "1ef9a7f5f23ba37ea4c936e472375642b5f5ac7fd66ba4757c6cfa6831ad9baf",
       "ai-external-handler/cut-at-start-never-asks-the-handler-non-streaming": "1ef9a7f5f23ba37ea4c936e472375642b5f5ac7fd66ba4757c6cfa6831ad9baf",
@@ -6175,6 +6177,7 @@
       "acp/tools-cancelled-closes-pending": "58df257a2971efccc871a5b774fd5c7c3f7c5d9fad0337162909d8576c158e03",
       "acp/tools-error-closes-pending": "58df257a2971efccc871a5b774fd5c7c3f7c5d9fad0337162909d8576c158e03",
       "acp/tools-refusal-after-text": "58df257a2971efccc871a5b774fd5c7c3f7c5d9fad0337162909d8576c158e03",
+      "acp/turn-end-reports-a-pending-permission-call-cancelled": "58df257a2971efccc871a5b774fd5c7c3f7c5d9fad0337162909d8576c158e03",
       "ai-external-handler/close-during-decision-drains-cancelled-report-non-streaming": "58df257a2971efccc871a5b774fd5c7c3f7c5d9fad0337162909d8576c158e03",
       "ai-external-handler/close-during-decision-drains-cancelled-report-streaming": "58df257a2971efccc871a5b774fd5c7c3f7c5d9fad0337162909d8576c158e03",
       "ai-external-handler/cut-at-start-never-asks-the-handler-non-streaming": "58df257a2971efccc871a5b774fd5c7c3f7c5d9fad0337162909d8576c158e03",

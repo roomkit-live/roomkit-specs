@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "05ae628a1360e96dcac764b0c8cbf4f65527137a171487eb2cc963be9e7db901",
-  "corpus_sha256": "424ae589dab9dbe375b71a93060f826035ac1657acc64a23b2cac3550418394d",
+  "corpus_sha256": "5473cbe982874c95b25a9937ef9c186b011e6dce466c840947040f93cfe6dc21",
   "python_commit": "1bb12d025296ee1c5f14b82267462fc4d13104a6",
-  "scenario_count": 3399,
+  "scenario_count": 3400,
   "sections": [
     {
       "section": "0",
@@ -1221,6 +1221,7 @@
         "acp/tools-terminal-start-duplicates",
         "acp/tools-unicode-preview",
         "acp/tools-update-without-start",
+        "acp/turn-end-reports-a-pending-permission-call-cancelled",
         "acp/turn-record-concurrent-rooms",
         "acp/usage-absent-measurements",
         "acp/usage-cache-counters",
@@ -3413,6 +3414,7 @@
         "acp/tools-terminal-start-duplicates",
         "acp/tools-unicode-preview",
         "acp/tools-update-without-start",
+        "acp/turn-end-reports-a-pending-permission-call-cancelled",
         "acp/turn-record-concurrent-rooms",
         "ai-external-handler/close-during-decision-drains-cancelled-report-non-streaming",
         "ai-external-handler/close-during-decision-drains-cancelled-report-streaming",
@@ -10621,6 +10623,7 @@
         "acp/tools-terminal-start-duplicates",
         "acp/tools-unicode-preview",
         "acp/tools-update-without-start",
+        "acp/turn-end-reports-a-pending-permission-call-cancelled",
         "acp/turn-record-concurrent-rooms",
         "acp/usage-absent-measurements",
         "acp/usage-cache-counters",
