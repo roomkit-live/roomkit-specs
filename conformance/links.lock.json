@@ -3433,6 +3433,13 @@
     "RK-10.6.9-009": {
       "executors/a-room-s-attach-and-detach-are-applied-on-the-executor-before-they-return": "c3d781930779e9e12585462005f14490e270227e68b9e944b881ab0b4acff073"
     },
+    "RK-11.6-001": {
+      "identity/a-caller-s-message-under-the-framework-s-name-is-still-resolved": "749a7257900aaaad050a93c39ed355b6c89a1bbd7ea358da86156ee777fb86ba",
+      "identity/an-instruction-the-host-delivers-is-not-challenged": "749a7257900aaaad050a93c39ed355b6c89a1bbd7ea358da86156ee777fb86ba",
+      "identity/the-framework-s-own-delivery-is-not-challenged": "749a7257900aaaad050a93c39ed355b6c89a1bbd7ea358da86156ee777fb86ba",
+      "identity/the-framework-s-own-delivery-is-not-resolved": "749a7257900aaaad050a93c39ed355b6c89a1bbd7ea358da86156ee777fb86ba",
+      "identity/the-framework-s-own-delivery-is-not-sent-under-a-record-of-its-name": "749a7257900aaaad050a93c39ed355b6c89a1bbd7ea358da86156ee777fb86ba"
+    },
     "RK-12.10.4-005": {
       "delivery/a-delivery-whose-turn-the-closing-owner-gave-up-counts-its-cleanup-done": "443dc9c61356466d98f46229110f951ff34fab24f36ec3931113dd8ce14983bd"
     },
