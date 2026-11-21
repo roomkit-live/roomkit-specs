@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "05ae628a1360e96dcac764b0c8cbf4f65527137a171487eb2cc963be9e7db901",
-  "corpus_sha256": "55041f8b2f106d00b2f6e15314fda63029e6dfdb25d9226be1b92ee47941ee89",
+  "corpus_sha256": "424ae589dab9dbe375b71a93060f826035ac1657acc64a23b2cac3550418394d",
   "python_commit": "1bb12d025296ee1c5f14b82267462fc4d13104a6",
-  "scenario_count": 3397,
+  "scenario_count": 3399,
   "sections": [
     {
       "section": "0",
@@ -962,6 +962,8 @@
         "acp/a-stop-reason-other-than-end-turn-is-named-on-the-turn",
         "acp/a-truncated-turn-preserves-max-tokens",
         "acp/an-instruction-is-prompted-under-the-runtime-s-mark",
+        "acp/cancel-answers-pending-permission-cancelled",
+        "acp/cancel-answers-unannounced-permission-cancelled",
         "acp/cancel-during-configuration",
         "acp/cancel-during-opening",
         "acp/cancel-during-rebuild-close",
@@ -3336,6 +3338,8 @@
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "acp/a-finished-handler-turn-reports-its-complete-answer",
+        "acp/cancel-answers-pending-permission-cancelled",
+        "acp/cancel-answers-unannounced-permission-cancelled",
         "acp/handler-allow-always-fallback",
         "acp/handler-allow-once-preferred",
         "acp/handler-approval-detail-completed-fallback",
@@ -10513,6 +10517,8 @@
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "acp/a-finished-handler-turn-reports-its-complete-answer",
+        "acp/cancel-answers-pending-permission-cancelled",
+        "acp/cancel-answers-unannounced-permission-cancelled",
         "acp/directories-empty-are-not-declared",
         "acp/directories-normalize-lexically",
         "acp/directories-omitted-are-not-declared",

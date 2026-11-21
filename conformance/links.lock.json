@@ -4489,6 +4489,10 @@
       "steering/another-person-s-message-is-served-under-its-own-role-s-tools": "e084eaa0968591e0fae3821556e92e9518b19ff59dbc4f20228991c4f57043ba",
       "steering/another-person-s-message-waits-a-turn-of-its-own": "e084eaa0968591e0fae3821556e92e9518b19ff59dbc4f20228991c4f57043ba"
     },
+    "RK-6.4-039": {
+      "acp/cancel-answers-pending-permission-cancelled": "2a1990fb984c2b1dcafd3f720d40e31ca232d338392c0ddf993f7bf7779270f6",
+      "acp/cancel-answers-unannounced-permission-cancelled": "2a1990fb984c2b1dcafd3f720d40e31ca232d338392c0ddf993f7bf7779270f6"
+    },
     "RK-7.1-002": {
       "permissions/all-source-access-and-mute-combinations": "09e15544fea0657bef56fbca15075385d6cd074a82f5f472f02ac5c31fb5fe92",
       "permissions/all-target-access-and-mute-combinations": "09e15544fea0657bef56fbca15075385d6cd074a82f5f472f02ac5c31fb5fe92",
@@ -5898,6 +5902,8 @@
       "provider-served/mixed-round-whole": "07daf4a7cea75ffec6c5b0f6d6cee0dcdbacfa14ed18cf66a8a2b09d137c9663"
     },
     "RK-9.3-048": {
+      "acp/cancel-answers-pending-permission-cancelled": "1ef9a7f5f23ba37ea4c936e472375642b5f5ac7fd66ba4757c6cfa6831ad9baf",
+      "acp/cancel-answers-unannounced-permission-cancelled": "1ef9a7f5f23ba37ea4c936e472375642b5f5ac7fd66ba4757c6cfa6831ad9baf",
       "acp/handler-approval-detail-open-fallback": "1ef9a7f5f23ba37ea4c936e472375642b5f5ac7fd66ba4757c6cfa6831ad9baf",
       "acp/handler-approval-never-announced": "1ef9a7f5f23ba37ea4c936e472375642b5f5ac7fd66ba4757c6cfa6831ad9baf",
       "acp/handler-approval-without-allow-option": "1ef9a7f5f23ba37ea4c936e472375642b5f5ac7fd66ba4757c6cfa6831ad9baf",
@@ -6133,6 +6139,8 @@
       "ai-external-handler/pending-result-streaming": "27d48d40ffec83a1a910d60f2b453d2cfde9720572faa348b44fe4dfafdeeb22"
     },
     "RK-9.3-072": {
+      "acp/cancel-answers-pending-permission-cancelled": "58df257a2971efccc871a5b774fd5c7c3f7c5d9fad0337162909d8576c158e03",
+      "acp/cancel-answers-unannounced-permission-cancelled": "58df257a2971efccc871a5b774fd5c7c3f7c5d9fad0337162909d8576c158e03",
       "acp/handler-approval-detail-open-fallback": "58df257a2971efccc871a5b774fd5c7c3f7c5d9fad0337162909d8576c158e03",
       "acp/handler-approval-never-announced": "58df257a2971efccc871a5b774fd5c7c3f7c5d9fad0337162909d8576c158e03",
       "acp/handler-approval-without-allow-option": "58df257a2971efccc871a5b774fd5c7c3f7c5d9fad0337162909d8576c158e03",
