@@ -3951,7 +3951,16 @@ filesystem or terminal operations. An ACP agent channel:
   configured;
 - MUST pass tool name, input, call identifier, ACP session identifier, and Room
   identifier to the configured external tool handler;
-- MUST select only a permission option offered by the ACP agent; and
+- MUST select only a permission option offered by the ACP agent;
+- when it cancels a session's prompt (`session/cancel`), MUST answer each
+  permission request of that session still pending with ACP's `cancelled`
+  outcome, after the notification, and MUST abandon the external tool
+  handler's decision on it, which never reaches the agent: unlike the cut of
+  §9.3, which leaves a decision still pending to the handler to withdraw.
+  A call whose permission the agent asked is closed with its turn whether or
+  not the agent announced it: one whose request is still pending when the
+  turn ends, or was answered `cancelled`, is reported once, cancelled
+  (§9.3); and
 - SHOULD expose tool and plan progress through the realtime backend without
   persisting transient progress updates.
 <!-- /rfc -->

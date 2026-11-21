@@ -18700,7 +18700,7 @@
     {
       "id": "acp-room-detachment",
       "requirement": "RK-6.4-039",
-      "clause_sha256": "2a1990fb984c2b1dcafd3f720d40e31ca232d338392c0ddf993f7bf7779270f6",
+      "clause_sha256": "b0ddaafdcbf219885a193a566dd5b6c9034b920016c024d394b68a78f28061bf",
       "coverage": "partial",
       "scope": "Room detachment returns without waiting for the agent, closes idle or running room sessions, prevents initial preparations from prompting, forgets host values and does not retain late host settings. A fresh attachment opens a new room session while unrelated rooms keep theirs.",
       "assertions": [
@@ -20435,7 +20435,7 @@
     {
       "id": "acp-default-permission-replies",
       "requirement": "RK-6.4-039",
-      "clause_sha256": "2a1990fb984c2b1dcafd3f720d40e31ca232d338392c0ddf993f7bf7779270f6",
+      "clause_sha256": "b0ddaafdcbf219885a193a566dd5b6c9034b920016c024d394b68a78f28061bf",
       "coverage": "partial",
       "scope": "ACP permissions with no external handler: actual reject option selection and cancellation fallback.",
       "assertions": [
@@ -20570,7 +20570,7 @@
     {
       "id": "acp-configured-permission-decisions",
       "requirement": "RK-6.4-039",
-      "clause_sha256": "2a1990fb984c2b1dcafd3f720d40e31ca232d338392c0ddf993f7bf7779270f6",
+      "clause_sha256": "b0ddaafdcbf219885a193a566dd5b6c9034b920016c024d394b68a78f28061bf",
       "coverage": "partial",
       "scope": "Configured handler callbacks and actual ACP permission choices, including unsupported overrides and repeated decisions.",
       "assertions": [
