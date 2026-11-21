@@ -23317,7 +23317,7 @@
     {
       "id": "phase4-direct-skill-file-helpers",
       "requirement": "RK-24.6-001",
-      "clause_sha256": "92023a269b217f58db01c5604d8ed13c0105243ab6b306dc97c5d18fbd7e50c8",
+      "clause_sha256": "0a62beeb062b9c1dd9eae41eb490627395a686113aca535007fe050fdf40f18a",
       "scope": "The six public Skill helpers: presence, listing, UTF-8 reference reading and script path resolution. Native Rust mirrors exercise actual files and links; no script executor or standalone safe_join_filename export is claimed.",
       "coverage": "partial",
       "review": "Compared public Python operations with native Rust tests, preserving direct unbounded reads, NFKC, containment after symlink resolution, child listing versus read checks, error categories and sorted native filenames. Python 3.12 and 3.14 reject symlink loops at different stages; the source test claims rejection, not one category across runtimes. Rust returns the path error used by Python 3.12. HITL 45d6fce8 approves typed errors/native filename forms; HITL 19458017 approves NFKC dependency. Review found stat failures hidden by Rust is_dir/is_file. Public metadata checks now retain permission errors, proved by real mode-zero directories and linked targets. Python 3.14 masks these failures; the source witnesses explicitly target the older supported behavior rather than claiming runtime uniformity.",
@@ -23549,7 +23549,7 @@
     {
       "id": "phase4-standalone-skill-paths",
       "requirement": "RK-24.6-001",
-      "clause_sha256": "92023a269b217f58db01c5604d8ed13c0105243ab6b306dc97c5d18fbd7e50c8",
+      "clause_sha256": "0a62beeb062b9c1dd9eae41eb490627395a686113aca535007fe050fdf40f18a",
       "scope": "Public safe_join_filename export: default/custom diagnostics, NFKC, missing paths, Windows drive spellings, directory confinement and dangling symlink escapes. Cyclic symlink handling is explicitly qualified by Python runtime.",
       "coverage": "partial",
       "review": "Python source tests passed before the Rust port. HITL 63fe8e98 approves the four public language forms; existing RequiresMatch/SkillPathError forms are reused. A native red/green witness reproduces Python whitespace stripped differently by the old Rust metadata reader. Source references remain separate from shared scenario execution. Full review found the standalone cycle differs from the file-reading helpers: Python 3.13+ can return it rather than refusing at a later file check. A direct versioned witness records this distinction. HITL ef1a3d62 explicitly retains the Python 3.12 cycle refusal in Rust.",
@@ -23598,7 +23598,7 @@
     {
       "id": "phase4-local-script-boundary",
       "requirement": "RK-24.6-001",
-      "clause_sha256": "92023a269b217f58db01c5604d8ed13c0105243ab6b306dc97c5d18fbd7e50c8",
+      "clause_sha256": "0a62beeb062b9c1dd9eae41eb490627395a686113aca535007fe050fdf40f18a",
       "scope": "Local host script invocation: arguments and results, undeclared execution without an executor, containment before host entry including an innocent-name symlink escape.",
       "coverage": "partial",
       "review": "Independent code/scenario review accepted the local ScriptExecutor port after reproducing and fixing discovery and activation-hint regressions. Python scenarios passed before Rust. Native symlink, helper failure and shutdown tests complement the shared corpus; source references are not execution receipts.",

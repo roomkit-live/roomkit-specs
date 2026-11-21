@@ -19178,6 +19178,9 @@ to decide it.
 - Resolution MUST be confined to the skill's own directory by resolving the
   path and checking containment, never by filtering the name alone
   (Section 24.6).
+- A file so checked MUST be read through the file its check opened, never by
+  its name again, and a skill's `SKILL.md` MUST resolve to a regular file
+  inside the skill's directory (Section 24.6).
 - The same containment MUST apply to script execution, including where
   execution policy is delegated to the integrator.
 - A skill an MCP server serves is text from outside (Section 6.4) whatever
@@ -22873,6 +22876,17 @@ name sits inside it. An implementation MUST resolve the candidate path, with
 links followed, and MUST verify that the result is still inside the skill
 directory, rejecting it otherwise. Containment is a property of where a path
 ends up, not of how it is spelled.
+
+The file an implementation reads MUST be the one whose path it checked. It
+opens the resolved path and verifies the open file before reading it: a
+regular file, which the path resolved again still names, inside the
+directory. Where the implementation reads the path the system gives an open
+file, that path MUST be inside the directory, and a file whose path cannot be
+read there is refused. It MUST NOT read the checked path again by its name,
+so that a file swapped for a link out of the directory between the check and
+the read is refused, not read. A skill's `SKILL.md` is held to the same rules:
+once its links are followed, it MUST be a regular file inside the skill's
+directory, read through the file its check opened.
 
 Names MUST be normalized before they are inspected, so that a character which is
 not the ASCII separator but normalizes onto it cannot pass a check performed on

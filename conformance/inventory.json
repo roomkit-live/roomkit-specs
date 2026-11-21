@@ -1191,7 +1191,7 @@
     },
     {
       "section": "17.8",
-      "sha256": "331228145952c84fac1c0311fab747b41e9301179c8c67e576a894b42db8ea3f",
+      "sha256": "c2ff64a0b254ee9c52f501e2c78c09fb4eaa83aa2e14a08f5a5e3c8f6cd2584f",
       "classification": "normative",
       "review": "Source inventory: Skill-Bundled Files. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
     },
@@ -1461,7 +1461,7 @@
     },
     {
       "section": "24.6",
-      "sha256": "fe57ac2c8cbee09b4e6a35cf1a07eb4192c33fdfc78887e929ac31189e1b1cbe",
+      "sha256": "a159dbe70015a3c5b42e1bb78b93f72e0db52b14ec3e292fbfb787edfc92540d",
       "classification": "normative",
       "review": "Source inventory: Access to Bundled Files. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
     },
