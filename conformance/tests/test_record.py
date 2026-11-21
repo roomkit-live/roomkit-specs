@@ -17,7 +17,8 @@ from traceability import layout
 from traceability.ci import CI_REPORTS, from_ci, workflow_drift
 from traceability.importer import clean, leftovers, portable, prepare, prepare_rust, write
 from traceability.provenance import provenance
-from traceability.receipts import validate_artifact
+from traceability.receipts import with_results
+from traceability.references import git_text
 from traceability.source import digest
 
 MODULE = "tests.conformance.test_conformance"
@@ -235,25 +236,60 @@ class RecordingTests(unittest.TestCase):
         self.assertEqual(
             list(memory),
             ["id", "implementation", "implementation_commit", "rfc_commit", "corpus_commit",
-             "rfc_sha256", "backend", "runtime", "command", "artifact", "results"],
+             "rfc_sha256", "backend", "runtime", "command", "artifact", "counts",
+             "results_sha256"],
         )
         self.assertEqual(memory["command"][-1], "--junitxml=redis-turns.xml")
-        self.assertEqual(
-            [(r["scenario"], r["outcome"]) for r in memory["results"]],
-            [("a", "passed"), ("b", "skipped")],
-        )
-        self.assertEqual([(r["scenario"], r["outcome"]) for r in sqlite["results"]], [("a", "failed")])
-        self.assertEqual(memory["results"][0]["sha256"], digest(self.scenarios["a"]))
+        a, b = (digest(self.scenarios[name]) for name in ("a", "b"))
+        expected = {
+            memory["id"]: [
+                {"scenario": "a", "sha256": a, "outcome": "passed"},
+                {"scenario": "b", "sha256": b, "outcome": "skipped"},
+            ],
+            sqlite["id"]: [{"scenario": "a", "sha256": a, "outcome": "failed"}],
+        }
+        self.assertEqual((memory["counts"], sqlite["counts"]), ({"passed": 1, "skipped": 1}, {"failed": 1}))
+        for run in (memory, sqlite):
+            self.assertEqual(run["results_sha256"], digest(expected[run["id"]]))
         self.assertEqual(leftovers(recording.artifact.read_bytes()), [])
-        for run in document["executions"]:
-            self.assertEqual(validate_artifact(run, self.specs), [])
-        self.assertEqual(provenance(document, self.specs, {"python": self.python}), [])
+        runs, errors = with_results(document["executions"], self.specs, read=git_text)
+        self.assertEqual(errors, [])
+        self.assertEqual({run["id"]: run["results"] for run in runs}, expected)
+        derived = {**document, "executions": runs}
+        self.assertEqual(provenance(derived, self.specs, {"python": self.python}), [])
         with self.assertRaisesRegex(ValueError, "already recorded"):
             write(self.specs, [recording])
+
+    def test_a_report_is_recorded_beside_receipts_that_hold_no_results(self) -> None:
+        self.evidence["executions"] = [
+            {
+                "id": "earlier", "implementation": "python", "implementation_commit": "e" * 40,
+                "rfc_commit": "e" * 40, "corpus_commit": "e" * 40, "rfc_sha256": "e" * 64,
+                "backend": "memory", "runtime": "asyncio", "command": ["pytest"],
+                "artifact": {"path": "conformance/executions/earlier.xml",
+                             "format": "pytest_junit", "sha256": "e" * 64},
+                "counts": {"passed": 1}, "results_sha256": "e" * 64,
+            }
+        ]
+        (self.specs / "conformance" / "evidence.json").write_text(layout(self.evidence))
+        write(self.specs, [self.record(["memory+redis-turns"])])
+        document = json.loads((self.specs / "conformance" / "evidence.json").read_text())
+        self.assertEqual(
+            [run["id"] for run in document["executions"]],
+            ["earlier", f"python-redis-turns-{self.python_commit[:7]}-memory-redis-turns"],
+        )
+        self.assertEqual(document["executions"][0], self.evidence["executions"][0])
 
     def test_a_redis_report_needs_the_command_that_selects_redis(self) -> None:
         with self.assertRaisesRegex(ValueError, "does not select"):
             self.record(["memory+redis-turns"], ["env", "ROOMKIT_TEST_TURN_BACKEND=memory", "pytest"])
+
+    def test_an_unreadable_report_is_refused(self) -> None:
+        for report in [b"<testsuites>", b"<?xml version='1.0' encoding='bogus'?><testsuites/>"]:
+            with self.subTest(report=report), self.assertRaisesRegex(
+                ValueError, "cannot read the JUnit report"
+            ):
+                prepare(self.specs, self.python, report, "python-core", ["memory"], ["pytest"])
 
     def test_a_backend_absent_from_the_report_is_refused(self) -> None:
         with self.assertRaisesRegex(ValueError, "no postgres scenario case"):
@@ -304,7 +340,7 @@ class RecordingTests(unittest.TestCase):
         postgres = recordings[0].receipts[0]
         self.assertEqual(postgres["command"][-2:], ["--junitxml=postgres-scenarios.xml",
                                                     "tests/conformance/test_postgres.py"])
-        self.assertEqual([r["scenario"] for r in postgres["results"]], ["a", "b"])
+        self.assertEqual(postgres["counts"], {"passed": 2})
         self.assertEqual(notes, [f"CI run 2 of {self.python_commit}"])
 
     def test_ci_refuses_a_failed_run_drift_and_an_empty_artifact(self) -> None:
@@ -382,17 +418,21 @@ class RustRecordingTests(unittest.TestCase):
             ("rust", self.rust_commit, "memory", "multi_thread_4"),
         )
         self.assertEqual(run["artifact"]["format"], "cargo_junit")
-        self.assertEqual(
-            [(r["scenario"], r["outcome"]) for r in run["results"]],
-            [("a", "passed"), ("b", "skipped")],
-        )
+        self.assertEqual(run["counts"], {"passed": 1, "skipped": 1})
+        self.assertNotIn("results", run)
         self.assertEqual(recording.artifact.name, f"{run['id']}.xml")
         self.assertEqual(leftovers(recording.artifact.read_bytes()), [])
         schema = json.loads((self.specs / "conformance" / "evidence.schema.json").read_text())
         self.assertEqual(list(Draft202012Validator(schema).iter_errors(document)), [])
-        self.assertEqual(validate_artifact(run, self.specs), [])
-        self.assertEqual(provenance(document, self.specs, {"rust": self.rust}), [])
-        self.assertIn("--rust-repo required", provenance(document, self.specs, {})[0])
+        runs, errors = with_results(document["executions"], self.specs, read=git_text)
+        self.assertEqual(errors, [])
+        self.assertEqual(
+            [(r["scenario"], r["outcome"]) for r in runs[0]["results"]],
+            [("a", "passed"), ("b", "skipped")],
+        )
+        derived = {**document, "executions": runs}
+        self.assertEqual(provenance(derived, self.specs, {"rust": self.rust}), [])
+        self.assertIn("--rust-repo required", provenance(derived, self.specs, {})[0])
 
     def test_a_redis_executor_pass_becomes_a_receipt_of_its_own(self) -> None:
         redis_class = "conformance.memory+redis-executors.multi_thread_4"
@@ -414,17 +454,14 @@ class RustRecordingTests(unittest.TestCase):
             (plain["id"], plain["backend"]),
             (f"rust-{self.rust_commit[:7]}-memory-multi-thread-4", "memory"),
         )
-        self.assertEqual(
-            [(r["scenario"], r["outcome"]) for r in apart["results"]],
-            [("a", "passed"), ("b", "failed")],
-        )
+        self.assertEqual(apart["counts"], {"failed": 1, "passed": 1})
         self.assertEqual(Path(apart["artifact"]["path"]).name, f"{apart['id']}.xml")
         schema = json.loads((self.specs / "conformance" / "evidence.schema.json").read_text())
         self.assertEqual(list(Draft202012Validator(schema).iter_errors(document)), [])
-        for run in (apart, plain):
-            with self.subTest(run=run["id"]):
-                self.assertEqual(validate_artifact(run, self.specs), [])
-        self.assertEqual(provenance(document, self.specs, {"rust": self.rust}), [])
+        runs, errors = with_results(document["executions"], self.specs, read=git_text)
+        self.assertEqual(errors, [])
+        derived = {**document, "executions": runs}
+        self.assertEqual(provenance(derived, self.specs, {"rust": self.rust}), [])
         # Each receipt reads its own pass only: the other pass's report, retained
         # under its name, holds none of its cases.
         reports = {run["id"]: (self.specs / run["artifact"]["path"]).read_bytes() for run in (apart, plain)}
@@ -433,9 +470,10 @@ class RustRecordingTests(unittest.TestCase):
             (self.specs / run["artifact"]["path"]).write_bytes(report)
             artifact = {**run["artifact"], "sha256": hashlib.sha256(report).hexdigest()}
             with self.subTest(run=run["id"]):
-                errors = validate_artifact({**run, "artifact": artifact}, self.specs)
-                self.assertEqual(len(errors), 2, errors)
-                self.assertTrue(all("JUnit says not_run" in error for error in errors), errors)
+                _, errors = with_results([{**run, "artifact": artifact}], self.specs, read=git_text)
+                self.assertEqual(
+                    errors, [f"{run['id']}: the report holds no {run['backend']} scenario case"]
+                )
 
     def test_a_rust_run_of_uncommitted_changes_is_refused(self) -> None:
         (self.rust / "conformance" / "SPECS_COMMIT").write_text("edited\n")
@@ -449,6 +487,13 @@ class RustRecordingTests(unittest.TestCase):
             self.record(RUST_REPORT.replace(b'value="true"', b'value="false"'))
         with self.assertRaisesRegex(ValueError, "names no commit"):
             self.record(POSTGRES_REPORT)
+
+    def test_an_unreadable_rust_report_is_refused(self) -> None:
+        for report in [b"<testsuites>", b"<?xml version='1.0' encoding='bogus'?><testsuites/>"]:
+            with self.subTest(report=report), self.assertRaisesRegex(
+                ValueError, "cannot read the JUnit report"
+            ):
+                self.record(report)
 
     def test_a_rust_report_holds_exactly_one_pass(self) -> None:
         other = RUST_REPORT.replace(

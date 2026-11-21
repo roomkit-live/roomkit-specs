@@ -42,7 +42,7 @@ ROOT = HERE.parent
 sys.path.insert(0, str(HERE))
 
 from traceability.ci import from_ci  # noqa: E402
-from traceability.importer import counts, prepare, prepare_rust, write  # noqa: E402
+from traceability.importer import prepare, prepare_rust, write  # noqa: E402
 
 
 def arguments() -> argparse.Namespace:
@@ -95,7 +95,7 @@ def main() -> int:
         for run in write(ROOT, recordings):
             print(
                 f"{run['id']}: {run['backend']} / {run['runtime']} at "
-                f"{run['implementation_commit'][:12]}, {counts(run)}"
+                f"{run['implementation_commit'][:12]}, {run['counts']}"
             )
     except subprocess.CalledProcessError as error:
         print(f"error: {' '.join(error.cmd)}: {error.stderr}", file=sys.stderr)

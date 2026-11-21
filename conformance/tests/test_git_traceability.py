@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import copy
+import hashlib
 import json
 import subprocess
 import sys
@@ -13,7 +14,7 @@ from unittest.mock import patch
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 import test_record
-from traceability import check, layout
+from traceability import check, layout, receipts
 from traceability._git import GitReader
 from traceability.references import git_text
 from traceability.source import digest, extract, text_digest
@@ -121,7 +122,9 @@ class BatchedTraceabilityTests(unittest.TestCase):
             lambda d: d["links"][0]["tests"][0].update(sha256="f" * 64),
             lambda d: d["executions"][0].update(corpus_commit="0" * 40),
             lambda d: d["executions"][0]["artifact"].update(sha256="f" * 64),
-            lambda d: d["executions"][0]["results"][0].update(sha256="f" * 64),
+            lambda d: d["executions"][0].update(results_sha256="f" * 64),
+            lambda d: d["executions"][0].update(counts={"passed": 2}),
+            lambda d: d["executions"][0].update(backend="redis"),
         ]
         for index, mutate in enumerate(mutations):
             with self.subTest(index=index):
@@ -147,6 +150,99 @@ class BatchedTraceabilityTests(unittest.TestCase):
         self.assertTrue(
             any("implementation's copy differs" in error for error in errors), errors
         )
+
+    def coverage_rows(self) -> list[tuple[str, str]]:
+        """The (execution, state) rows coverage.json gives the link."""
+        coverage = json.loads((self.directory / "coverage.json").read_text())
+        (link,) = coverage["requirements"][0]["links"]
+        return [(row["execution"], row["state"]) for row in link["executions"]]
+
+    def test_a_receipt_holds_no_results_the_checker_derives_them(self) -> None:
+        memory, sqlite = self.document["executions"]
+        for run in (memory, sqlite):
+            self.assertNotIn("results", run)
+        self.assertEqual(
+            (memory["counts"], sqlite["counts"]), ({"passed": 1, "skipped": 1}, {"failed": 1})
+        )
+        self.assertEqual(self.compare(), [])
+        # The link asserts scenario `a`, which the report holds as passed on memory
+        # and failed on SQLite; its specialized test leaves the pass incomplete.
+        self.assertEqual(
+            self.coverage_rows(), [(memory["id"], "incomplete"), (sqlite["id"], "not_passed")]
+        )
+
+    def test_the_guard_refuses_a_reader_that_reads_an_old_report_otherwise(self) -> None:
+        memory = self.document["executions"][0]["id"]
+
+        def skips_read_as_passes(case) -> str:
+            return "failed" if case.find("failure") is not None else "passed"
+
+        with patch("traceability.receipts.case_outcome", skips_read_as_passes):
+            errors = self.compare()
+        self.assertEqual(
+            errors,
+            [
+                f"{memory}: its report now reads {{'passed': 2}}, "
+                "the receipt recorded {'passed': 1, 'skipped': 1}",
+                f"{memory}: the results its report and corpus derive differ from its "
+                "results_sha256",
+            ],
+        )
+
+    def test_the_guard_refuses_swapped_outcomes_that_keep_the_counts(self) -> None:
+        memory = self.document["executions"][0]["id"]
+        read = receipts.outcomes
+
+        def swapped(raw: bytes, backend: str) -> dict[str, str]:
+            found = read(raw, backend)
+            if {"a", "b"} <= found.keys():
+                found["a"], found["b"] = found["b"], found["a"]
+            return found
+
+        with patch("traceability.receipts.outcomes", swapped):
+            errors = self.compare()
+        self.assertEqual(
+            errors,
+            [
+                f"{memory}: the results its report and corpus derive differ from its "
+                "results_sha256"
+            ],
+        )
+
+    def test_a_missing_or_unreadable_report_is_an_error_not_a_traceback(self) -> None:
+        names = [run["id"] for run in self.document["executions"]]
+        report = self.root / self.document["executions"][0]["artifact"]["path"]
+        content = report.read_bytes()
+        report.unlink()
+        errors = self.compare()
+        self.assertEqual(len(errors), 2, errors)
+        for name, error in zip(names, errors, strict=True):
+            self.assertRegex(error, f"^{name}: cannot read execution artifact: .*No such file")
+        report.write_bytes(content[: len(content) // 2])
+        for run in self.document["executions"]:
+            run["artifact"]["sha256"] = hashlib.sha256(report.read_bytes()).hexdigest()
+        self.write_document(self.document)
+        errors = self.compare()
+        self.assertEqual(len(errors), 2, errors)
+        for name, error in zip(names, errors, strict=True):
+            self.assertRegex(error, f"^{name}: cannot read the JUnit report: ")
+
+    def test_the_report_leaves_out_a_superseded_receipt_s_rows(self) -> None:
+        self.assertEqual(self.compare(), [])
+        self.assertEqual(len(self.coverage_rows()), 2)
+        # Scenario `a` changed since the run: both receipts are superseded.
+        self.cases[0]["expect"]["v"] = 3
+        self.document["links"][0]["assertions"][0].update(
+            sha256=digest(self.cases[0]["expect"]),
+            scenario_sha256=digest(self.cases[0]),
+        )
+        self.write_document(self.document)
+        self.assertEqual(self.compare(), [])
+        self.assertEqual(self.coverage_rows(), [])
+        markdown = (self.directory / "coverage.md").read_text()
+        self.assertNotIn("stale", markdown)
+        for run in self.document["executions"]:
+            self.assertIn(f"- `{run['id']}`:", markdown)
 
     def test_schema_failure_starts_no_git_and_writes_no_reports(self) -> None:
         self.document["extra"] = True

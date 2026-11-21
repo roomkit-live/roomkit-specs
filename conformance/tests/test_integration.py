@@ -132,9 +132,8 @@ class IntegrationTests(unittest.TestCase):
                     "sha256": "b" * 64,
                     "format": "pytest_junit",
                 },
-                "results": [
-                    {"scenario": "missing", "sha256": "c" * 64, "outcome": "passed"}
-                ],
+                "counts": {"passed": 1},
+                "results_sha256": "c" * 64,
             }
         ]
         self.write("evidence.json", self.document)

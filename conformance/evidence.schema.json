@@ -204,35 +204,24 @@
             ],
             "additionalProperties": false
           },
-          "results": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "scenario": {
-                  "type": "string",
-                  "minLength": 1
-                },
-                "sha256": {
-                  "type": "string",
-                  "pattern": "^[0-9a-f]{64}$"
-                },
-                "outcome": {
-                  "enum": [
-                    "passed",
-                    "failed",
-                    "skipped",
-                    "not_run"
-                  ]
-                }
-              },
-              "required": [
-                "scenario",
-                "sha256",
-                "outcome"
-              ],
-              "additionalProperties": false
+          "counts": {
+            "type": "object",
+            "minProperties": 1,
+            "propertyNames": {
+              "enum": [
+                "passed",
+                "failed",
+                "skipped"
+              ]
+            },
+            "additionalProperties": {
+              "type": "integer",
+              "minimum": 1
             }
+          },
+          "results_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
           },
           "scenario_filter": {
             "type": "string"
@@ -249,7 +238,8 @@
           "runtime",
           "command",
           "artifact",
-          "results"
+          "counts",
+          "results_sha256"
         ],
         "additionalProperties": false
       }

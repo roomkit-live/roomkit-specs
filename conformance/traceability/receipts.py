@@ -1,12 +1,25 @@
-"""Match execution receipts to saved runner output, without running commands."""
+"""Derive execution receipts' results from saved runner output, without running
+commands.
+
+A receipt stores no results: they are read from its retained JUnit report and
+the corpus at its `corpus_commit`, by `derive`, for the checker and the importer
+alike. The receipt keeps their outcome counts and `results_sha256`, and the
+guard refuses a reader that reads an old report otherwise.
+"""
 
 from __future__ import annotations
 
 import hashlib
+import json
 import re
 import xml.etree.ElementTree as ET
+from collections import Counter
+from collections.abc import Callable
 from pathlib import Path
 from typing import Any, NamedTuple
+
+from .references import GitText
+from .source import digest, scenario_digest
 
 
 class Profile(NamedTuple):
@@ -61,23 +74,91 @@ _SHARED_POSTGRES_CASE = re.compile(r"test_shared_postgres_contract\[([^\[\]]+)-(
 _SEVERITY = ("failed", "skipped", "passed")
 
 
-def validate_artifact(run: dict[str, Any], root: Path) -> list[str]:
-    """An execution must retain the output supporting each recorded outcome."""
+def with_results(
+    runs: list[dict[str, Any]], root: Path, *, read: GitText
+) -> tuple[list[dict[str, Any]], list[str]]:
+    """Each receipt with the results derived from its retained report and the
+    corpus at its corpus commit, and the errors: a receipt whose results cannot
+    be derived is left out, and the guard checks every other one."""
+    found, errors = [], []
+    for run in runs:
+        try:
+            results = derive(run, retained(run, root), corpus(root, run["corpus_commit"], read))
+        except ValueError as error:
+            errors.append(f"{run['id']}: {error}")
+            continue
+        errors += guard(run, results)
+        found.append({**run, "results": results})
+    return found, errors
+
+
+def corpus(root: Path, commit: str, read: GitText) -> Callable[[str], Any]:
+    """A scenario of the specs corpus at *commit*, by id."""
+
+    def scenario(name: str) -> Any:
+        return json.loads(read(root, commit, f"conformance/scenarios/{name}.json"))
+
+    return scenario
+
+
+def retained(run: dict[str, Any], root: Path) -> bytes:
+    """The receipt's retained report, under conformance/executions, with the
+    fingerprint the receipt records. Raises ValueError otherwise."""
     reference = run["artifact"]
     path = (root / reference["path"]).resolve()
     if not path.is_relative_to((root / "conformance" / "executions").resolve()):
-        return [f"{run['id']}: execution artifact must be under conformance/executions"]
+        raise ValueError("execution artifact must be under conformance/executions")
     try:
         raw = path.read_bytes()
-        if hashlib.sha256(raw).hexdigest() != reference["sha256"]:
-            return [f"{run['id']}: execution artifact fingerprint differs"]
-        if reference["format"] == "pytest_junit":
-            return junit(run, raw)
-        if reference["format"] == "cargo_junit":
-            return rust_junit(run, raw)
-        return cargo(run, raw.decode())
-    except (OSError, UnicodeError, ET.ParseError, ValueError) as error:
-        return [f"{run['id']}: cannot read execution artifact: {error}"]
+    except OSError as error:
+        raise ValueError(f"cannot read execution artifact: {error}") from error
+    if hashlib.sha256(raw).hexdigest() != reference["sha256"]:
+        raise ValueError("execution artifact fingerprint differs")
+    return raw
+
+
+def derive(
+    run: dict[str, Any], raw: bytes, scenario: Callable[[str], Any]
+) -> list[dict[str, str]]:
+    """The receipt's results, by scenario: each scenario case of its pass in its
+    report *raw*, with its outcome, and the hash of *scenario*(id), the scenario
+    at the receipt's corpus commit. Raises ValueError when the receipt's profile
+    or its report supports no result."""
+    cases = READERS.get(run["artifact"]["format"], cargo)(run, raw)
+    if not cases:
+        raise ValueError(f"the report holds no {run['backend']} scenario case")
+    return [
+        {"scenario": name, "sha256": scenario_digest(scenario(name)), "outcome": cases[name]}
+        for name in sorted(cases)
+    ]
+
+
+def counts(results: list[dict[str, str]]) -> dict[str, int]:
+    """How many results have each outcome, as a receipt records them."""
+    return dict(sorted(Counter(result["outcome"] for result in results).items()))
+
+
+def results_sha256(results: list[dict[str, str]]) -> str:
+    """The fingerprint of a receipt's results, as `derive` returns them."""
+    return digest(results)
+
+
+def guard(run: dict[str, Any], results: list[dict[str, str]]) -> list[str]:
+    """The receipt's recorded counts and fingerprint are those of the results its
+    report and corpus derive today: a reader that reads an old report otherwise,
+    even with the same counts, is refused."""
+    errors = []
+    if run["counts"] != counts(results):
+        errors.append(
+            f"{run['id']}: its report now reads {counts(results)}, "
+            f"the receipt recorded {run['counts']}"
+        )
+    if run["results_sha256"] != results_sha256(results):
+        errors.append(
+            f"{run['id']}: the results its report and corpus derive differ from its "
+            "results_sha256"
+        )
+    return errors
 
 
 def scenario_case(name: str) -> tuple[str, str] | None:
@@ -98,13 +179,23 @@ def case_outcome(case: ET.Element) -> str:
     return "passed"
 
 
+def junit_root(raw: bytes) -> ET.Element:
+    """The root element of a JUnit report. Raises ValueError when the report is
+    no XML the parser can read (malformed, or in an unknown or multi-byte
+    encoding)."""
+    try:
+        return ET.fromstring(raw)
+    except (ET.ParseError, LookupError, ValueError) as error:
+        raise ValueError(f"cannot read the JUnit report: {error}") from error
+
+
 def outcomes(raw: bytes, backend: str) -> dict[str, str]:
     """Each scenario's outcome on *backend* in a JUnit report, read from the cases of
     the backend's module and store only. Raises ValueError on a duplicate case."""
     profile = PROFILES[backend]
     names: set[str] = set()
     found: dict[str, str] = {}
-    for case in ET.fromstring(raw).iter("testcase"):
+    for case in junit_root(raw).iter("testcase"):
         if case.get("classname") != profile.module:
             continue
         name = case.get("name", "")
@@ -136,7 +227,7 @@ def rust_outcomes(raw: bytes, backend: str, runtime: str) -> dict[str, str]:
     """Each scenario's outcome in the Rust runner's pass on *backend* and *runtime*,
     read from that pass's cases only. Raises ValueError on a duplicate case."""
     found: dict[str, str] = {}
-    for case in ET.fromstring(raw).iter("testcase"):
+    for case in junit_root(raw).iter("testcase"):
         if case.get("classname") != rust_class(backend, runtime):
             continue
         name = case.get("name", "")
@@ -174,64 +265,48 @@ def turn_backend(command: list[str]) -> str | None:
     return value
 
 
-def junit(run: dict[str, Any], raw: bytes) -> list[str]:
-    """Resolve the Python runner's exact case/backend, including skips and errors."""
+def junit(run: dict[str, Any], raw: bytes) -> dict[str, str]:
+    """Each scenario's outcome in the Python runner's report, on the receipt's
+    exact case/backend, including skips and errors. Raises ValueError when the
+    receipt's profile or command cannot be read so."""
     profile = PROFILES.get(run["backend"])
     if run["implementation"] != "python" or profile is None or run["runtime"] != "asyncio":
-        return [f"{run['id']}: unsupported pytest execution profile"]
-    try:
-        turns = turn_backend(run["command"])
-    except ValueError as error:
-        return [f"{run['id']}: {error}"]
+        raise ValueError("unsupported pytest execution profile")
+    turns = turn_backend(run["command"])
     if (turns == "redis") != profile.redis_turns:
         selects = "does not select" if profile.redis_turns else "selects"
-        return [
-            f"{run['id']}: its command {selects} the kit's turns across Redis "
+        raise ValueError(
+            f"its command {selects} the kit's turns across Redis "
             f"({TURN_BACKEND}=redis), unlike its backend {run['backend']}"
-        ]
-    try:
-        cases = outcomes(raw, run["backend"])
-    except ValueError as error:
-        return [f"{run['id']}: {error}"]
-    return compare(run, cases)
+        )
+    return outcomes(raw, run["backend"])
 
 
-def rust_junit(run: dict[str, Any], raw: bytes) -> list[str]:
-    """Resolve the Rust runner's pass: its cases' class names the backend and the
-    runtime, so the command is not read."""
+def rust_junit(run: dict[str, Any], raw: bytes) -> dict[str, str]:
+    """Each scenario's outcome in the Rust runner's pass: its cases' class names
+    the backend and the runtime, so the command is not read. Raises ValueError
+    when the receipt is not that pass's."""
     profile = (run["backend"], run["runtime"])
     if run["implementation"] != "rust" or profile not in RUST_PROFILES:
-        return [f"{run['id']}: unsupported Rust execution profile"]
+        raise ValueError("unsupported Rust execution profile")
     if "scenario_filter" in run:
-        return [f"{run['id']}: a Rust receipt holds its whole pass, never a scenario_filter"]
+        raise ValueError("a Rust receipt holds its whole pass, never a scenario_filter")
     name = rust_id(run["implementation_commit"], *profile)
     if run["id"] != name or Path(run["artifact"]["path"]).name != f"{name}.xml":
-        return [f"{run['id']}: a Rust receipt and its file are named {name}"]
-    try:
-        cases = rust_outcomes(raw, *profile)
-    except ValueError as error:
-        return [f"{run['id']}: {error}"]
-    return compare(run, cases)
+        raise ValueError(f"a Rust receipt and its file are named {name}")
+    return rust_outcomes(raw, *profile)
 
 
-def compare(run: dict[str, Any], cases: dict[str, str]) -> list[str]:
-    """Each outcome the receipt records is the one its saved report holds."""
-    errors = []
-    for result in run["results"]:
-        name = result["scenario"]
-        actual = cases.get(name, "not_run")
-        if actual != result["outcome"]:
-            errors.append(
-                f"{run['id']}: {name}: receipt says {result['outcome']}, JUnit says {actual}"
-            )
-    return errors
-
-
-def cargo(run: dict[str, Any], text: str) -> list[str]:
+def cargo(run: dict[str, Any], raw: bytes) -> dict[str, str]:
     """Aggregate cargo summaries cannot identify the executed backend and IDs."""
-    return [
-        (
-            f"{run['id']}: cargo receipts are unsupported: aggregate output does not "
-            "prove the backend and scenario selection; retain the run outside the coverage registry"
-        )
-    ]
+    raise ValueError(
+        "cargo receipts are unsupported: aggregate output does not prove the backend "
+        "and scenario selection; retain the run outside the coverage registry"
+    )
+
+
+# The reader of each artifact format; any other format is `cargo`'s.
+READERS: dict[str, Callable[[dict[str, Any], bytes], dict[str, str]]] = {
+    "pytest_junit": junit,
+    "cargo_junit": rust_junit,
+}

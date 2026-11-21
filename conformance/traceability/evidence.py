@@ -61,25 +61,21 @@ def validate(
 
 
 def validate_executions(document: dict[str, Any]) -> list[str]:
-    """A receipt records results; it cannot silently upgrade a skip to a pass."""
+    """Each receipt has its own id and the command that ran. Its results are
+    derived from its retained report (receipts.derive), which refuses a report
+    with no case of the receipt's pass."""
     errors = []
     ids = set()
     for run in document["executions"]:
         if run["id"] in ids:
             errors.append(f"duplicate execution {run['id']}")
         ids.add(run["id"])
-        if not run["command"] or not run["results"]:
-            errors.append(f"{run['id']}: empty execution command or result set")
-        seen = set()
-        for result in run["results"]:
-            name = result["scenario"]
-            if name in seen:
-                errors.append(f"{run['id']}: duplicate result {name}")
-            seen.add(name)
-            # A historical receipt is retained even when its scenario changed or
-            # was renamed since: provenance() reads each result at the receipt's
-            # corpus_commit, and execution_status marks it stale rather than
-            # applying it to new data. Only a link names a current scenario.
+        if not run["command"]:
+            errors.append(f"{run['id']}: empty execution command")
+        # A historical receipt is retained even when its scenario changed or was
+        # renamed since: its results are read at its corpus_commit, and
+        # execution_status leaves it out of the report rather than applying it
+        # to new data. Only a link names a current scenario.
     return errors
 
 
@@ -90,7 +86,9 @@ def execution_status(
     rfc_sha256: str,
     python_commit: str,
 ) -> list[dict[str, Any]]:
-    """Keep per-revision/backend results separate; never union partial runs."""
+    """Keep per-revision/backend results separate; never union partial runs. A
+    superseded receipt (another RFC, scenario text or Python commit) gets no row:
+    it stays in evidence.json, verified, but the report shows current runs only."""
     wanted = {assertion["scenario"] for assertion in link["assertions"]}
     reported = []
     for run in runs:
@@ -99,23 +97,13 @@ def execution_status(
             for item in run["results"]
             if item["scenario"] in wanted
         }
-        if not selected:
+        if not selected or superseded(run, selected, scenarios, rfc_sha256, python_commit):
             continue
         state = "recorded_pass"
         if wanted != selected.keys() or link["tests"]:
             state = "incomplete"
         if any(item["outcome"] != "passed" for item in selected.values()):
             state = "not_passed"
-        if run["rfc_sha256"] != rfc_sha256 or any(
-            item["sha256"] != scenario_digest(scenarios[name])
-            for name, item in selected.items()
-        ):
-            state = "stale"
-        if (
-            run["implementation"] == "python"
-            and run["implementation_commit"] != python_commit
-        ):
-            state = "stale"
         reported.append(
             {
                 "execution": run["id"],
@@ -127,6 +115,25 @@ def execution_status(
             }
         )
     return reported
+
+
+def superseded(
+    run: dict[str, Any],
+    selected: dict[str, dict[str, str]],
+    scenarios: dict[str, Any],
+    rfc_sha256: str,
+    python_commit: str,
+) -> bool:
+    """Whether the receipt ran another RFC, another text of a *selected* scenario,
+    or a Python commit other than the evidence's."""
+    return (
+        run["rfc_sha256"] != rfc_sha256
+        or any(
+            item["sha256"] != scenario_digest(scenarios[name])
+            for name, item in selected.items()
+        )
+        or (run["implementation"] == "python" and run["implementation_commit"] != python_commit)
+    )
 
 
 def requirement_status(

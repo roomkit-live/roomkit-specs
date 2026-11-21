@@ -1,4 +1,7 @@
-"""Check receipt revisions and the actual corpus copied into each implementation."""
+"""Check receipt revisions and the actual corpus copied into each implementation.
+
+The receipts come with the results `receipts.with_results` derived from their
+retained reports and the corpus at their corpus commits."""
 
 from __future__ import annotations
 
@@ -7,7 +10,6 @@ import subprocess
 from pathlib import Path
 from typing import Any
 
-from .receipts import validate_artifact
 from .references import GitText, git_text
 from .source import extract, scenario_digest
 
@@ -70,20 +72,12 @@ def provenance(
     """Receipts point to real source versions, not merely SHA-shaped strings."""
     errors = []
     for run in document["executions"]:
-        errors += validate_artifact(run, root)
         try:
             rfc = extract(read(root, run["rfc_commit"], "roomkit-rfc.md"))
             if rfc["rfc_sha256"] != run["rfc_sha256"]:
                 errors.append(
                     f"{run['id']}: RFC receipt fingerprint does not match its commit"
                 )
-            for result in run["results"]:
-                path = f"conformance/scenarios/{result['scenario']}.json"
-                scenario = json.loads(read(root, run["corpus_commit"], path))
-                if scenario_digest(scenario) != result["sha256"]:
-                    errors.append(
-                        f"{run['id']}: {result['scenario']}: corpus provenance mismatch"
-                    )
             implementation = run["implementation"]
             repository = repositories.get(implementation)
             if repository is None:

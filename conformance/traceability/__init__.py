@@ -8,7 +8,7 @@ from typing import Any
 
 from jsonschema import Draft202012Validator
 
-from . import evidence, links, report, rules, source
+from . import evidence, links, receipts, report, rules, source
 from ._git import GitReader
 from .provenance import provenance
 
@@ -74,9 +74,16 @@ def check(
             return errors
         by_id = {scenario["id"]: scenario for scenario in scenarios}
         with GitReader() as reader:
+            # Receipts store no results: each one's are derived from its retained
+            # report and the corpus at its corpus commit, and its guard checked.
+            runs, derive_errors = receipts.with_results(
+                document["executions"], root, read=reader.read
+            )
+            errors += derive_errors
             errors += evidence.validate(
                 document, registry, by_id, python_repo, read=reader.read
             )
+            document = {**document, "executions": runs}
             errors += provenance(
                 document,
                 root,
