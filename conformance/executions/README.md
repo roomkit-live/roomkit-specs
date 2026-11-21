@@ -695,3 +695,86 @@ ran in process, as in the plain passes. The copy is corpus
 the other scenarios' turns across Redis (Python's Redis turn mode), to an
 executor in another process or a process death, or to specialized tests. The
 164 earlier execution receipts are unchanged.
+
+## Receipts after the B series (2026-11-21)
+
+`python-rule-links-ddb805b.xml` retains the memory and SQLite cases of one run
+of clean, published Python `ddb805bae34761ded35a5b89b0ba12aa8fa03b0e`, on Linux
+with Python 3.14.9, pytest 9.1.1, pytest-asyncio 1.4.0 and pytest-xdist 3.8.0
+(four workers), the memory and SQLite stores and in-process turns. The receipt
+records the pytest invocation, omitting the suite-lock and CPU-affinity
+wrappers used for the local run. Of the 3393 memory cases, 3386 passed and 7
+were skipped; of the 758 SQLite cases, 752 passed and 6 were skipped. The
+skipped cases need Redis: six scenarios of independent turn owners, on both
+stores ("independent turn owners require REDIS_URL"), and, on memory, the
+CPU-busy turn on an executor in a process of its own ("needs the Redis turn
+mode"). The Redis turn-mode receipts below run them.
+
+`python-postgres-scenarios-ddb805b.xml` and `python-redis-turns-ddb805b.xml`
+retain the reports of roomkit CI run 44848055034 on the same commit, job
+Integration (PostgreSQL 16 and Redis 7 services, Python 3.12), recorded by
+`record.py ci` as "PostgreSQL and the Redis turn mode" describes. The
+PostgreSQL report holds 582 cases, all passed: 579 scenarios, 563
+`test_scenario` cases and 16 `test_shared_postgres_contract` scenarios, three
+of which also run a slow-preparation variant. The Redis turn-mode report holds
+the 4151 scenario cases of `tests.conformance.test_conformance`; the receipts
+record:
+
+- `python-redis-turns-ddb805b-memory-redis-turns`: 3393 scenarios, 3371
+  passed and 22 skipped;
+- `python-redis-turns-ddb805b-sqlite-redis-turns`: 758 scenarios, 747 passed
+  and 11 skipped.
+
+The 33 skipped cases are those marked `in_process`, as in "Receipts after the
+A wave (2026-11-19)": 28 whose scripted agent's turn calls the kit it holds,
+and 5 whose ACP tool observer calls its captured kit.
+
+`rust-cf4ec2e-memory-current-thread.xml`,
+`rust-cf4ec2e-memory-multi-thread-4.xml`,
+`rust-cf4ec2e-sqlite-current-thread.xml` and
+`rust-cf4ec2e-postgres-current-thread.xml` retain the four plain passes of
+roomkit-rs `cf4ec2e28682bfc6e6705c4b102cf500af1e3f96`, a clean commit of its
+main, run with Rust 1.99.1 through the local wrapper of "Core rule links:
+Python and roomkit-rs passes (2026-11-18)", by the commands of "Receipts after
+the A wave (2026-11-19)", PostgreSQL against a local PostgreSQL 16 server of
+their own (the `POSTGRES_DSN` of its command), with no `REDIS_URL`. Each holds
+the 3393 scenarios of the copy: 3237 passed, 150 skipped and 6 failed. The
+150 are the 46 below and the 104 other scenarios with `setup.executors`.
+
+`rust-cf4ec2e-memory-redis-executors-current-thread.xml`,
+`rust-cf4ec2e-memory-redis-executors-multi-thread-4.xml`,
+`rust-cf4ec2e-sqlite-redis-executors-current-thread.xml` and
+`rust-cf4ec2e-postgres-redis-executors-current-thread.xml` retain the Redis
+executor passes of the same commit, by the commands of "roomkit-rs Redis
+executor passes (2026-11-19)", against a local Redis 7.4 server of their own
+(the `REDIS_URL` of each command) and, for PostgreSQL, the same PostgreSQL
+server. Each holds the 3393 scenarios: 3341 passed, 46 skipped and 6 failed.
+The 104 scenarios with `setup.executors` that the plain passes skip ("§10.6.7:
+this pass has no Redis turn executor") ran with the room's owner and its
+executors reaching each other across that Redis, all in the test's process;
+every other scenario ran in process, as in the plain passes.
+
+In every Rust receipt:
+
+- 46 scenarios are skipped because they name a feature in `requires_features`
+  that roomkit-rs's runner does not provide ("missing scenario features:
+  voice" and so on): voice 17, realtime 11, conference 5, video 4,
+  message_session 2, recording 2, scoring 2, conference with realtime 1,
+  executor_media 1 and protocol_trace 1;
+- 6 scenarios fail as the known failures the runner lists, which the suite
+  expects to fail ("known failure: RMK-…" in each case's message): the two
+  `reentrancy/` scenarios of a call under a lock the host holds (RMK-1828,
+  §9.5.1 Reentrance), and four `tools/` scenarios whose hooks' or observers'
+  context read fails (RMK-1837, §9.3 and §10.6.6).
+
+Both copies are corpus `e627773ff7af777bc2be422a77232dc3b7bdafc7`, after the
+B series of runner steps for the core's units; the RFC is
+`f281e675f4c7b2f06134c92bca9cfe8e55215b61`. The evidence's `python_commit`
+moved to the Python commit first. Two specialized tests changed since
+`929f9dc7f`, and their links were reread before their hashes were pinned
+again: each now gives the kit its close grace through the kit's public
+`close_grace` option instead of patching the module's default, and what it
+proves for its link is unchanged. These receipts give no credit to
+specialized tests, to an executor in another process or a process death in
+roomkit-rs, or to a scenario a runner skips or lists as a known failure. The
+168 earlier execution receipts are unchanged.
