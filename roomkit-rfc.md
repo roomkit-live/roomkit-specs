@@ -7055,8 +7055,8 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
 <!-- rfc: {"id": "RK-10.1-033", "kind": "behavior", "applies": "§10.1 step 5, with an identity resolver configured and a sender with an address left to resolve (§11.6): the resolver's call. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 5. IDENTITY RESOLUTION (if resolver configured and the sender has an address
-   left to resolve — §11.6 skips a channel that names its own senders, and a
-   sender the room has already identified)
+   left to resolve — §11.6 skips a channel that names its own senders, a
+   sender the room has already identified, and the framework's own message)
    ├── Call resolver.resolve(message, context) with timeout
 ```
 <!-- /rfc -->
@@ -10239,7 +10239,7 @@ If identity resolution exceeds the configured timeout, the implementation MUST:
 
 <!-- rfc: {"id": "RK-11.6-001", "kind": "behavior", "applies": "§11.6 Senders With Nothing To Resolve; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 A resolver maps an **address** — a number, an email, a handle — to an Identity.
-Two senders carry no such question, and an implementation MUST NOT run
+Three senders carry no such question, and an implementation MUST NOT run
 resolution for them:
 
 1. **The channel names its own senders.** A channel MAY declare that its
@@ -10253,6 +10253,17 @@ resolution for them:
    (Section 11.2) included, the question has been answered and the answer is
    on the roster. The same id on a channel the
    participant was never reached through answers nothing, and is resolved.
+3. **The framework wrote the message itself.** A message the framework writes
+   into a room (a `deliver()`, an orchestration cue: Section 10.4) names no
+   correspondent. There is no address to resolve, and the kit's identity
+   hooks would challenge the host's own delivery like a stranger's message
+   and block it. It stays under the sender `system`, whatever record of the
+   room that name would find: case 2 does not apply to it. An implementation
+   knows such a message by where it comes from, never by the sender `system`
+   it carries, which any caller can write: a message a caller sends under
+   that name, in a room it names, is resolved like any other, an instruction
+   included (Section 10.1.1). An application whose kit runs identity hooks
+   sends its own instructions with `deliver()`.
 
 Case 1 is not the conference alone. The test is where the `sender_id` comes
 from. A channel that reads it off the wire carries whatever the remote network
@@ -10281,7 +10292,7 @@ channel set it, but in case 2 for an event the sender's own record (Section
 11.2) names, which is sent under that record's id as their events were while
 it was pending; and no
 participant record is created or modified: the sender is either already a
-participant or deliberately unattributed.
+participant, deliberately unattributed, or the framework itself.
 <!-- /rfc -->
 
 ### 11.7 Identity Verification

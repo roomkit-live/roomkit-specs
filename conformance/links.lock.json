@@ -281,10 +281,10 @@
       "inbound/a-parsed-event-takes-the-framework-s-id": "64c739579e8db38ec19f927a01cc5aa47f3bbd638707e466d1c2ba6de1277aa0"
     },
     "RK-10.1-033": {
-      "identity/a-channel-that-names-its-senders-is-not-asked-about": "5e5cf6ad2be943895f41c86f211d66e54b87cbb5479edd309c192c5a8cb08a80",
-      "identity/a-resolver-past-its-timeout-reads-unknown": "5e5cf6ad2be943895f41c86f211d66e54b87cbb5479edd309c192c5a8cb08a80",
-      "identity/a-sender-s-own-record-names-them-on-its-channel": "5e5cf6ad2be943895f41c86f211d66e54b87cbb5479edd309c192c5a8cb08a80",
-      "identity/a-sender-the-room-identified-is-not-asked-about": "5e5cf6ad2be943895f41c86f211d66e54b87cbb5479edd309c192c5a8cb08a80"
+      "identity/a-channel-that-names-its-senders-is-not-asked-about": "f541c2ee51c7024c236e37a1d7e9f8baa28fe66de1c573862fb3baefbd5edd01",
+      "identity/a-resolver-past-its-timeout-reads-unknown": "f541c2ee51c7024c236e37a1d7e9f8baa28fe66de1c573862fb3baefbd5edd01",
+      "identity/a-sender-s-own-record-names-them-on-its-channel": "f541c2ee51c7024c236e37a1d7e9f8baa28fe66de1c573862fb3baefbd5edd01",
+      "identity/a-sender-the-room-identified-is-not-asked-about": "f541c2ee51c7024c236e37a1d7e9f8baa28fe66de1c573862fb3baefbd5edd01"
     },
     "RK-10.1-034": {
       "identity/an-identified-sender-completes-its-record": "d3e877893e87f3f5b0eb846b5b410fb26b4d9a11ecca255f69a9364d60616a2c",
@@ -3434,11 +3434,11 @@
       "executors/a-room-s-attach-and-detach-are-applied-on-the-executor-before-they-return": "c3d781930779e9e12585462005f14490e270227e68b9e944b881ab0b4acff073"
     },
     "RK-11.6-001": {
-      "identity/a-caller-s-message-under-the-framework-s-name-is-still-resolved": "749a7257900aaaad050a93c39ed355b6c89a1bbd7ea358da86156ee777fb86ba",
-      "identity/an-instruction-the-host-delivers-is-not-challenged": "749a7257900aaaad050a93c39ed355b6c89a1bbd7ea358da86156ee777fb86ba",
-      "identity/the-framework-s-own-delivery-is-not-challenged": "749a7257900aaaad050a93c39ed355b6c89a1bbd7ea358da86156ee777fb86ba",
-      "identity/the-framework-s-own-delivery-is-not-resolved": "749a7257900aaaad050a93c39ed355b6c89a1bbd7ea358da86156ee777fb86ba",
-      "identity/the-framework-s-own-delivery-is-not-sent-under-a-record-of-its-name": "749a7257900aaaad050a93c39ed355b6c89a1bbd7ea358da86156ee777fb86ba"
+      "identity/a-caller-s-message-under-the-framework-s-name-is-still-resolved": "ca3d4cd8f8b9f18d61e80d35a5691ac4f7eb2ad5937de7b04abc1235e56b3be1",
+      "identity/an-instruction-the-host-delivers-is-not-challenged": "ca3d4cd8f8b9f18d61e80d35a5691ac4f7eb2ad5937de7b04abc1235e56b3be1",
+      "identity/the-framework-s-own-delivery-is-not-challenged": "ca3d4cd8f8b9f18d61e80d35a5691ac4f7eb2ad5937de7b04abc1235e56b3be1",
+      "identity/the-framework-s-own-delivery-is-not-resolved": "ca3d4cd8f8b9f18d61e80d35a5691ac4f7eb2ad5937de7b04abc1235e56b3be1",
+      "identity/the-framework-s-own-delivery-is-not-sent-under-a-record-of-its-name": "ca3d4cd8f8b9f18d61e80d35a5691ac4f7eb2ad5937de7b04abc1235e56b3be1"
     },
     "RK-12.10.4-005": {
       "delivery/a-delivery-whose-turn-the-closing-owner-gave-up-counts-its-cleanup-done": "443dc9c61356466d98f46229110f951ff34fab24f36ec3931113dd8ce14983bd"
