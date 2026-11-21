@@ -1436,6 +1436,7 @@
       "broadcast/a-channel-registered-again-serves-the-bindings-it-kept": "bc087046864ea2f20ab26b3376e78ca72e097572bcb2e7a0764f37732acaf7f8"
     },
     "RK-10.2-018": {
+      "addressing/a-sender-s-interruption-marker-asks-its-agents": "5c4f4e59072f4cd28b3e79e92d02c725c7a16563ec19006d58aad0372b20528a",
       "addressing/an-address-does-not-show-an-event-its-visibility-hides": "5c4f4e59072f4cd28b3e79e92d02c725c7a16563ec19006d58aad0372b20528a",
       "addressing/an-address-names-the-agents-asked": "5c4f4e59072f4cd28b3e79e92d02c725c7a16563ec19006d58aad0372b20528a",
       "addressing/an-empty-address-asks-nobody": "5c4f4e59072f4cd28b3e79e92d02c725c7a16563ec19006d58aad0372b20528a",
@@ -3453,6 +3454,9 @@
     },
     "RK-13.5-003": {
       "reentrancy/a-call-under-a-lock-the-host-holds-commits-what-its-hooks-inject-once-the-host-released-it": "e48f3414e74e10520ce4cee0a9f28e8e8087d2f2985bebdbac4ea1d8692c9297"
+    },
+    "RK-19.3-003": {
+      "addressing/a-sender-s-interruption-marker-asks-its-agents": "f00fd331d39ac225dcb95edf93dfb355996afbe0bb1072ded5ea8de6d2314726"
     },
     "RK-21.1-004": {
       "tools/every-argument-that-does-not-fit-is-named": "0fdb54986121a7f92e06d9891f6980dc27e90fb9104af4924e50038212397853"
