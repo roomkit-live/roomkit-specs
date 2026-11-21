@@ -16,8 +16,10 @@ also selects cases outside the hooks directory whose names contain "hooks".
 The JUnit artifact preserves every selected testcase's class, name and outcome.
 Volatile suite metadata (host, timestamp, durations and local paths) is omitted.
 All 55 cases passed; none was skipped, failed or errored. The receipt in
-`evidence.json` records their hashes and all three source commits. Its validator
-checks the implementation's actual scenario copy as well as the specs source.
+`evidence.json` records all three source commits; the checker reads the
+outcomes from this report and their hashes from the corpus at its corpus
+commit. Its validator checks the implementation's actual scenario copy as well
+as the specs source.
 
 This is evidence of that selected run at those versions. It does not establish
 complete coverage of a source unit, other stores, Redis turns, Python's later
@@ -251,11 +253,14 @@ directories of local paths cut out of the message. Hosts, timestamps,
 durations, file and line attributes, properties, captured output and
 tracebacks are dropped, and the suite counts are recomputed from the cases kept.
 The command's `--junitxml` path becomes its file name. Each backend becomes one
-receipt, `<name>-<commit>-<backend>` with `+` written `-`, holding every
+receipt, `<name>-<commit>-<backend>` with `+` written `-`. Its results, every
 scenario case of that backend in the report with its outcome and the scenario's
-hash at the copied corpus; a scenario with several cases in the report takes
-the worst of them. The import is refused when a backend has no case in the
-report; when a Redis turn-mode receipt's command does not set
+hash at the copied corpus (a scenario with several cases in the report takes
+the worst of them), are not stored: the checker reads them from the retained
+report and the corpus. The receipt records their `counts` by outcome and
+`results_sha256`, their fingerprint, and the check fails when the report and
+the corpus no longer give those results. The import is refused when a backend
+has no case in the report; when a Redis turn-mode receipt's command does not set
 `ROOMKIT_TEST_TURN_BACKEND=redis`, another one's does, or the command names the
 variable where its turn mode cannot be read (a wrapper such as `flock` or
 `sh -c` around it: record the command without its wrapper); when the command

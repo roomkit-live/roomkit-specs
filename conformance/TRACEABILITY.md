@@ -280,7 +280,12 @@ the line protocol and non-blob objects retain the individual `git show` reader.
 ## Execution receipts
 
 Every receipt names implementation, RFC and corpus commits, backend, runtime,
-command, selected scenario IDs and their hashes. Keep runner output under
+command and its retained report. The checker reads the selected scenario IDs
+and their outcomes from that report, and each scenario's hash from the corpus
+at the receipt's corpus commit. The receipt records the counts of those
+outcomes and `results_sha256`, the fingerprint of those results (IDs, hashes
+and outcomes): the check fails when its report and the corpus no longer give
+them, as after a change to the report's reader. Keep runner output under
 `conformance/executions/` and fingerprint it. Commands are recorded, never run
 by the checker. A receipt is a reviewed record of a run, not a signed attestation
 that the working tree was clean; the author must run the exact clean commits.
@@ -354,6 +359,9 @@ never become passes. Separate partial runs are never combined into one complete
 execution. An absent receipt means **not recorded**, not failed or verified.
 The hooks pilot and static access/mute matrices have partial mappings and
 Python memory receipts. The specialized wrong-payload test remains source-only.
-Historical runs are not silently relabeled as current results.
+Historical runs are not silently relabeled as current results: `coverage.json`
+and `coverage.md` give a link no row for a receipt run against another RFC,
+another text of the link's scenarios or another Python commit than the current
+ones. Such a receipt stays in `evidence.json` and is still verified.
 A receipt may name a scenario renamed or removed since its run: its results
 are read at its corpus commit, and only a link has to name a current scenario.

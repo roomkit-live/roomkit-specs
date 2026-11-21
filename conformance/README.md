@@ -19,7 +19,7 @@ a passing scenario suite alone certifies no conformance level.
 | `scenario.schema.json` | The JSON Schema every scenario validates against |
 | `check.py` | The checker (below) |
 | `requirements.json`, `coverage.json`, `coverage.md` | Generated inventory and evidence report |
-| `evidence.json`, `inventory.json` | Reviewed links, execution receipts and source inventory reviews |
+| `evidence.json`, `inventory.json` | Reviewed links, execution receipts and source inventory reviews; a receipt's results are read from its report under `executions/` |
 | `links.lock.json`, `untested.json` | Each scenario citation pinned to its unit's text; the reason a unit has no scenario |
 | `rules/` | Generated per-rule report: each unit, its citing scenarios and their latest results |
 | `TRACEABILITY.md` | Update and review procedure |
