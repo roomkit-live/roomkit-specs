@@ -27,7 +27,7 @@ proof: a scenario can cite a unit without covering all of it.
 | [§7 Permission Model](section-7.md) | 85 | 84 | 0 | 1 | 0 | 83 | 339 | 0 |
 | [§8 Event System](section-8.md) | 20 | 0 | 0 | 0 | 20 | 1 | 1 | 0 |
 | [§9 Hook System](section-9.md) | 350 | 343 | 3 | 4 | 0 | 333 | 1336 | 0 |
-| [§10 Processing Pipelines](section-10.md) | 646 | 626 | 7 | 13 | 0 | 586 | 2262 | 0 |
+| [§10 Processing Pipelines](section-10.md) | 646 | 626 | 7 | 13 | 0 | 587 | 2263 | 0 |
 | [§11 Identity Resolution](section-11.md) | 15 | 0 | 0 | 0 | 15 | 1 | 5 | 0 |
 | [§12 Voice and Realtime Media](section-12.md) | 284 | 0 | 0 | 0 | 284 | 1 | 1 | 0 |
 | [§13 Resilience and Error Handling](section-13.md) | 13 | 0 | 0 | 0 | 13 | 1 | 1 | 0 |

@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "02e16bcd13e8c4d461664e12badabfd8c24255b0a9c41e98f525246d372b5c65",
-  "corpus_sha256": "a5463d9056798efd9bd57cda820f5833f6d6bc7d77b84653a1a36d384bc0ab1d",
+  "corpus_sha256": "24ab492d940f59aadf433f0970421f457fbc87952ddbd10eeb875158a5c95fbf",
   "python_commit": "ddb805bae34761ded35a5b89b0ba12aa8fa03b0e",
-  "scenario_count": 3395,
+  "scenario_count": 3396,
   "sections": [
     {
       "section": "0",
@@ -1406,6 +1406,7 @@
         "executors/a-turn-apart-publishes-its-thinking-and-tool-calls-to-the-room",
         "executors/a-turn-apart-s-plan-and-person-s-tools-run-on-its-executor",
         "executors/a-turn-cut-on-its-executor-names-it-in-its-record",
+        "executors/a-turn-on-another-executor-reads-none-of-the-rows-a-delete-removed",
         "executors/a-turn-s-record-names-the-executor-that-ran-it-apart",
         "executors/another-executor-replays-the-tool-calls-of-the-first",
         "inbound/a-binding-s-cost-budget-on-an-unpriced-model-fails-the-turn",
@@ -2575,6 +2576,7 @@
         "delivery/an-agent-that-cannot-read-is-unavailable",
         "discussion/an-agent-the-room-never-delivers-to-is-not-queued",
         "discussion/the-recent-conversation-withholds-what-a-delete-removed",
+        "executors/a-turn-on-another-executor-reads-none-of-the-rows-a-delete-removed",
         "greeting/a-greeting-runs-no-before-broadcast-hook",
         "greeting/a-greeting-takes-no-source-check",
         "hooks/a-blocked-event-s-task-is-created",
@@ -4840,6 +4842,7 @@
         "edits/an-injected-change-s-refusal-raises",
         "edits/direct-update-and-hard-delete",
         "edits/the-side-effects-of-a-hook-on-an-edit-its-re-read-refuses-are-not-stored",
+        "executors/a-turn-on-another-executor-reads-none-of-the-rows-a-delete-removed",
         "hooks/a-change-never-hides-in-a-hook-s-replacement",
         "hooks/a-modify-of-a-change-keeps-its-target-and-authority",
         "hooks/a-text-replacement-redacts-an-edit-and-leaves-a-delete",
@@ -5446,6 +5449,7 @@
         "executors/a-turn-apart-calls-the-host-verbs-during-and-after-it",
         "executors/a-turn-apart-runs-the-host-s-tool-on-its-executor",
         "executors/a-turn-apart-s-plan-and-person-s-tools-run-on-its-executor",
+        "executors/a-turn-on-another-executor-reads-none-of-the-rows-a-delete-removed",
         "executors/an-executor-refuses-a-turn-whose-channel-declares-an-owner-s-tool",
         "executors/one-build-serving-two-rooms-reads-each-turn-s-room-alone",
         "executors/the-owner-cancels-the-calls-of-a-turn-it-loses",
