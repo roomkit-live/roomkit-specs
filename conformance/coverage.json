@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "rfc_sha256": "44ab18fb6dfbe007d8016f94051d25b22a3bc3bc6541899070afe1e14f5964e9",
+  "rfc_sha256": "b6c6d10ba798d107df4d954b463e62dbf4f5e76c7f7a2662b76686b3e6019990",
   "corpus_sha256": "b752a9016a65e9f50264ec1b32683b11b8cf62888753c1ae2c043deb125f93b8",
   "python_commit": "1bb12d025296ee1c5f14b82267462fc4d13104a6",
   "scenario_count": 3402,
@@ -2736,12 +2736,15 @@
       "section": "8.1",
       "title": "Room Events",
       "review": "normative",
-      "requirements": 3,
+      "requirements": 11,
       "mapping": {
         "mapped_partial": 1,
-        "unmapped": 2
+        "unmapped": 10
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "step": 3,
+        "writable": 1
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "edits/a-hard-delete-leaves-the-index-it-took",
@@ -2774,11 +2777,14 @@
       "section": "8.2",
       "title": "Framework Events",
       "review": "normative",
-      "requirements": 1,
+      "requirements": 63,
       "mapping": {
-        "unmapped": 1
+        "unmapped": 63
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "phase6": 15,
+        "step": 10
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "appendix-b/b2-block-and-inject",
@@ -2880,12 +2886,15 @@
       "section": "8.3",
       "title": "Event Chain Depth",
       "review": "normative",
-      "requirements": 7,
+      "requirements": 46,
       "mapping": {
-        "mapped_partial": 2,
-        "unmapped": 5
+        "mapped_partial": 3,
+        "unmapped": 43
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "phase6": 7,
+        "writable": 8
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "acp/handler-before-tool-use-observer-after-turn-independent",
@@ -2972,11 +2981,15 @@
       "section": "8.4",
       "title": "Realtime / Ephemeral Events",
       "review": "normative",
-      "requirements": 3,
+      "requirements": 35,
       "mapping": {
-        "mapped_partial": 3
+        "mapped_partial": 4,
+        "unmapped": 31
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "step": 3,
+        "writable": 2
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "acp/notifications-binding-scope",
@@ -3026,12 +3039,15 @@
       "section": "8.5",
       "title": "Responses: What They Answer, and Whether They Were Consumed",
       "review": "normative",
-      "requirements": 6,
+      "requirements": 22,
       "mapping": {
         "mapped_partial": 1,
-        "unmapped": 5
+        "unmapped": 21
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "phase6": 1,
+        "writable": 5
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "discussion/an-agent-s-answer-typed-instruction-gives-no-turn",
@@ -13849,7 +13865,13 @@
       "links": []
     },
     {
-      "id": "RK-8.1-002",
+      "id": "RK-8.1-004",
+      "section": "8.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.1-005",
       "section": "8.1",
       "mapping": "mapped_partial",
       "links": [
@@ -13865,34 +13887,772 @@
       ]
     },
     {
-      "id": "RK-8.1-003",
+      "id": "RK-8.1-006",
       "section": "8.1",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-8.2-001",
+      "id": "RK-8.1-007",
+      "section": "8.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.1-008",
+      "section": "8.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1912",
+        "note": "Needs a persistent store shared by two connections or processes."
+      }
+    },
+    {
+      "id": "RK-8.1-009",
+      "section": "8.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1912",
+        "note": "Needs an error name for a duplicate (room_id, index) in the runners' table."
+      }
+    },
+    {
+      "id": "RK-8.1-011",
+      "section": "8.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.1-012",
+      "section": "8.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1912",
+        "note": "Hooks read the inbound id it is committed with, and a reused id gets a fresh one."
+      }
+    },
+    {
+      "id": "RK-8.1-013",
+      "section": "8.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1912",
+        "note": "Needs a transport provider's parse."
+      }
+    },
+    {
+      "id": "RK-8.1-014",
+      "section": "8.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.2-002",
       "section": "8.2",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-8.3-001",
+      "id": "RK-8.2-003",
+      "section": "8.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.2-004",
+      "section": "8.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.2-005",
+      "section": "8.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.2-006",
+      "section": "8.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.2-007",
+      "section": "8.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.2-008",
+      "section": "8.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.2-009",
+      "section": "8.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.2-010",
+      "section": "8.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.2-011",
+      "section": "8.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.2-012",
+      "section": "8.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1912",
+        "note": "Needs WebSocket connection registry steps; roomkit-rs lacks the helpers."
+      }
+    },
+    {
+      "id": "RK-8.2-013",
+      "section": "8.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1912",
+        "note": "Needs WebSocket connection registry steps; roomkit-rs lacks the helpers."
+      }
+    },
+    {
+      "id": "RK-8.2-014",
+      "section": "8.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1912",
+        "note": "Needs a scripted source provider; roomkit-rs lacks sources."
+      }
+    },
+    {
+      "id": "RK-8.2-015",
+      "section": "8.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1912",
+        "note": "Needs a scripted source provider; roomkit-rs lacks sources."
+      }
+    },
+    {
+      "id": "RK-8.2-016",
+      "section": "8.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1912",
+        "note": "Needs a scripted source provider; roomkit-rs lacks sources."
+      }
+    },
+    {
+      "id": "RK-8.2-017",
+      "section": "8.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1912",
+        "note": "Needs a scripted source provider; roomkit-rs lacks sources."
+      }
+    },
+    {
+      "id": "RK-8.2-018",
+      "section": "8.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1912",
+        "note": "Needs a scripted source provider; roomkit-rs lacks sources."
+      }
+    },
+    {
+      "id": "RK-8.2-019",
+      "section": "8.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1912",
+        "note": "Needs a scripted source provider; roomkit-rs lacks sources."
+      }
+    },
+    {
+      "id": "RK-8.2-020",
+      "section": "8.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.2-021",
+      "section": "8.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.2-022",
+      "section": "8.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.2-023",
+      "section": "8.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.2-024",
+      "section": "8.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.2-025",
+      "section": "8.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.2-026",
+      "section": "8.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.2-027",
+      "section": "8.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.2-028",
+      "section": "8.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.2-029",
+      "section": "8.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.2-030",
+      "section": "8.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.2-031",
+      "section": "8.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.2-032",
+      "section": "8.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.2-033",
+      "section": "8.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.2-034",
+      "section": "8.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.2-035",
+      "section": "8.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.2-036",
+      "section": "8.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.2-037",
+      "section": "8.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.2-038",
+      "section": "8.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.2-039",
+      "section": "8.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.2-040",
+      "section": "8.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.2-041",
+      "section": "8.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.2-042",
+      "section": "8.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.2-043",
+      "section": "8.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1912",
+        "note": "Needs a circuit breaker on a scripted transport."
+      }
+    },
+    {
+      "id": "RK-8.2-044",
+      "section": "8.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1912",
+        "note": "Needs a circuit breaker on a scripted transport."
+      }
+    },
+    {
+      "id": "RK-8.2-045",
+      "section": "8.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1912"
+      }
+    },
+    {
+      "id": "RK-8.2-046",
+      "section": "8.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1912"
+      }
+    },
+    {
+      "id": "RK-8.2-047",
+      "section": "8.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1912"
+      }
+    },
+    {
+      "id": "RK-8.2-048",
+      "section": "8.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1912"
+      }
+    },
+    {
+      "id": "RK-8.2-049",
+      "section": "8.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1912"
+      }
+    },
+    {
+      "id": "RK-8.2-050",
+      "section": "8.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1912"
+      }
+    },
+    {
+      "id": "RK-8.2-051",
+      "section": "8.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1912"
+      }
+    },
+    {
+      "id": "RK-8.2-052",
+      "section": "8.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1912"
+      }
+    },
+    {
+      "id": "RK-8.2-053",
+      "section": "8.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1912"
+      }
+    },
+    {
+      "id": "RK-8.2-054",
+      "section": "8.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1912"
+      }
+    },
+    {
+      "id": "RK-8.2-055",
+      "section": "8.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1912"
+      }
+    },
+    {
+      "id": "RK-8.2-056",
+      "section": "8.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1912"
+      }
+    },
+    {
+      "id": "RK-8.2-057",
+      "section": "8.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1912"
+      }
+    },
+    {
+      "id": "RK-8.2-058",
+      "section": "8.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1912"
+      }
+    },
+    {
+      "id": "RK-8.2-059",
+      "section": "8.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1912"
+      }
+    },
+    {
+      "id": "RK-8.2-060",
+      "section": "8.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.2-061",
+      "section": "8.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.2-062",
+      "section": "8.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.2-063",
+      "section": "8.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.2-064",
+      "section": "8.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.3-008",
       "section": "8.3",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-8.3-002",
+      "id": "RK-8.3-009",
       "section": "8.3",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-8.3-003",
+      "id": "RK-8.3-010",
       "section": "8.3",
       "mapping": "unmapped",
       "links": []
+    },
+    {
+      "id": "RK-8.3-011",
+      "section": "8.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.3-012",
+      "section": "8.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1912"
+      }
+    },
+    {
+      "id": "RK-8.3-013",
+      "section": "8.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.3-014",
+      "section": "8.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.3-015",
+      "section": "8.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1912",
+        "note": "An ASYNC body's direct change fires triggers whose hooks send under the same floor."
+      }
+    },
+    {
+      "id": "RK-8.3-016",
+      "section": "8.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1912",
+        "note": "A task a post-delivery hook body spawns calls at its own depth once the body is over."
+      }
+    },
+    {
+      "id": "RK-8.3-017",
+      "section": "8.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.3-018",
+      "section": "8.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1912",
+        "note": "A task a hook body spawns has the floor while the body runs, its own depth after."
+      }
+    },
+    {
+      "id": "RK-8.3-019",
+      "section": "8.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1912",
+        "note": "A hook a turn executor fires carries its floor with the host verb it makes."
+      }
+    },
+    {
+      "id": "RK-8.3-020",
+      "section": "8.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.3-021",
+      "section": "8.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1912",
+        "note": "A task a framework event handler spawns calls at its own depth once the handler returned."
+      }
+    },
+    {
+      "id": "RK-8.3-022",
+      "section": "8.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.3-023",
+      "section": "8.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.3-024",
+      "section": "8.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.3-025",
+      "section": "8.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.3-026",
+      "section": "8.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.3-027",
+      "section": "8.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.3-028",
+      "section": "8.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.3-029",
+      "section": "8.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.3-030",
+      "section": "8.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1912",
+        "note": "A non-intelligence channel's responses at the limit are stored BLOCKED."
+      }
+    },
+    {
+      "id": "RK-8.3-031",
+      "section": "8.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1912"
+      }
+    },
+    {
+      "id": "RK-8.3-032",
+      "section": "8.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1912"
+      }
+    },
+    {
+      "id": "RK-8.3-033",
+      "section": "8.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1912"
+      }
+    },
+    {
+      "id": "RK-8.3-034",
+      "section": "8.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1912"
+      }
     },
     {
       "id": "RK-8.3-004",
@@ -13901,7 +14661,7 @@
       "links": []
     },
     {
-      "id": "RK-8.3-005",
+      "id": "RK-8.3-035",
       "section": "8.3",
       "mapping": "mapped_partial",
       "links": [
@@ -13927,7 +14687,43 @@
       ]
     },
     {
-      "id": "RK-8.3-006",
+      "id": "RK-8.3-036",
+      "section": "8.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.3-037",
+      "section": "8.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.3-038",
+      "section": "8.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.3-039",
+      "section": "8.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.3-040",
+      "section": "8.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.3-041",
+      "section": "8.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.3-042",
       "section": "8.3",
       "mapping": "mapped_partial",
       "links": [
@@ -13939,7 +14735,31 @@
             "Streaming segments and notices above the hook cap are separate Python variants, not proven by this buffered case. Optional voice and orchestration paths and mutation-hook recursion remain outside this link."
           ],
           "executions": []
-        },
+        }
+      ]
+    },
+    {
+      "id": "RK-8.3-043",
+      "section": "8.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.3-044",
+      "section": "8.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1912",
+        "note": "Work a hook body spawns has its own depth and, once the delivery is over, its own budget."
+      }
+    },
+    {
+      "id": "RK-8.3-045",
+      "section": "8.3",
+      "mapping": "mapped_partial",
+      "links": [
         {
           "id": "phase4-acp-observer-live-delivery-budget",
           "scope": "In-process ACP per-tool observers: live delivery draws a pass; a post after delivery ends starts independent work at depth zero.",
@@ -13953,13 +14773,208 @@
       ]
     },
     {
-      "id": "RK-8.3-007",
+      "id": "RK-8.3-046",
+      "section": "8.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1912"
+      }
+    },
+    {
+      "id": "RK-8.3-047",
+      "section": "8.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1912"
+      }
+    },
+    {
+      "id": "RK-8.3-048",
       "section": "8.3",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-8.4-001",
+      "id": "RK-8.3-049",
+      "section": "8.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.3-050",
+      "section": "8.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.3-051",
+      "section": "8.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1912",
+        "note": "A channel whose responses are blocked at the limit still has its side effects collected."
+      }
+    },
+    {
+      "id": "RK-8.3-052",
+      "section": "8.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.4-004",
+      "section": "8.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.4-005",
+      "section": "8.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.4-006",
+      "section": "8.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.4-007",
+      "section": "8.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.4-008",
+      "section": "8.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.4-009",
+      "section": "8.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.4-010",
+      "section": "8.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1912",
+        "note": "Needs the in-memory realtime backend's options (its queue bound)."
+      }
+    },
+    {
+      "id": "RK-8.4-011",
+      "section": "8.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.4-012",
+      "section": "8.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.4-013",
+      "section": "8.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.4-014",
+      "section": "8.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1912",
+        "note": "A subscription made while no room held the id reads the room created under it."
+      }
+    },
+    {
+      "id": "RK-8.4-015",
+      "section": "8.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1912",
+        "note": "Needs a step that publishes on the backend directly, with no creation mark."
+      }
+    },
+    {
+      "id": "RK-8.4-016",
+      "section": "8.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.4-017",
+      "section": "8.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.4-018",
+      "section": "8.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.4-019",
+      "section": "8.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.4-020",
+      "section": "8.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.4-021",
+      "section": "8.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1912",
+        "note": "Needs a slow or stuck realtime backend."
+      }
+    },
+    {
+      "id": "RK-8.4-022",
+      "section": "8.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.4-023",
+      "section": "8.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.4-024",
+      "section": "8.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.4-025",
       "section": "8.4",
       "mapping": "mapped_partial",
       "links": [
@@ -13976,7 +14991,55 @@
       ]
     },
     {
-      "id": "RK-8.4-002",
+      "id": "RK-8.4-026",
+      "section": "8.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.4-027",
+      "section": "8.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.4-028",
+      "section": "8.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.4-029",
+      "section": "8.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.4-030",
+      "section": "8.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.4-031",
+      "section": "8.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.4-032",
+      "section": "8.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.4-033",
+      "section": "8.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.4-034",
       "section": "8.4",
       "mapping": "mapped_partial",
       "links": [
@@ -13990,7 +15053,14 @@
             "Direct channel calls and a revocation during model generation are outside these two ACP scenarios."
           ],
           "executions": []
-        },
+        }
+      ]
+    },
+    {
+      "id": "RK-8.4-035",
+      "section": "8.4",
+      "mapping": "mapped_partial",
+      "links": [
         {
           "id": "direct-ai-prompt-tool-audience",
           "scope": "Tool start and end publications from a directly wired scripted AI channel, for an unrestricted trigger, a private trigger and a binding narrowed after admission.",
@@ -14003,7 +15073,18 @@
       ]
     },
     {
-      "id": "RK-8.4-003",
+      "id": "RK-8.4-036",
+      "section": "8.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1912",
+        "note": "A turn whose ephemerals are withheld still emits its framework events."
+      }
+    },
+    {
+      "id": "RK-8.4-037",
       "section": "8.4",
       "mapping": "mapped_partial",
       "links": [
@@ -14019,25 +15100,132 @@
       ]
     },
     {
-      "id": "RK-8.5-001",
+      "id": "RK-8.4-038",
+      "section": "8.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.5-007",
       "section": "8.5",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-8.5-002",
+      "id": "RK-8.5-008",
       "section": "8.5",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-8.5-003",
+      "id": "RK-8.5-009",
       "section": "8.5",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-8.5-004",
+      "id": "RK-8.5-010",
+      "section": "8.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.5-011",
+      "section": "8.5",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1912",
+        "note": "A buffered answer whose channel named responds_to keeps it."
+      }
+    },
+    {
+      "id": "RK-8.5-012",
+      "section": "8.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.5-013",
+      "section": "8.5",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1912"
+      }
+    },
+    {
+      "id": "RK-8.5-014",
+      "section": "8.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.5-015",
+      "section": "8.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.5-016",
+      "section": "8.5",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1912",
+        "note": "A response that claims another source gets the responder's."
+      }
+    },
+    {
+      "id": "RK-8.5-017",
+      "section": "8.5",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1912",
+        "note": "A response under its own source keeps the fields its channel wrote."
+      }
+    },
+    {
+      "id": "RK-8.5-018",
+      "section": "8.5",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1912",
+        "note": "A verified sender's message is answered with verification cleared."
+      }
+    },
+    {
+      "id": "RK-8.5-019",
+      "section": "8.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.5-020",
+      "section": "8.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.5-021",
+      "section": "8.5",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1912",
+        "note": "Work that leaves a scoped cascade is not scoped."
+      }
+    },
+    {
+      "id": "RK-8.5-022",
       "section": "8.5",
       "mapping": "mapped_partial",
       "links": [
@@ -14053,13 +15241,37 @@
       ]
     },
     {
-      "id": "RK-8.5-005",
+      "id": "RK-8.5-023",
       "section": "8.5",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-8.5-006",
+      "id": "RK-8.5-024",
+      "section": "8.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.5-025",
+      "section": "8.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.5-026",
+      "section": "8.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.5-027",
+      "section": "8.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-8.5-028",
       "section": "8.5",
       "mapping": "unmapped",
       "links": []
