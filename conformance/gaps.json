@@ -511,6 +511,191 @@
       "card": "RMK-1979",
       "note": "Needs an auditor file that holds lines before the run, so that a scenario sees them kept."
     },
+    "RK-17.2-005": {
+      "class": "phase6",
+      "card": "RMK-1986",
+      "note": "A media door (a join, a realtime session start, a conference mint_access()) refusing another organization's room before any session, credential or recording."
+    },
+    "RK-17.2-006": {
+      "class": "phase6",
+      "card": "RMK-1986",
+      "note": "A media door called without an organization."
+    },
+    "RK-17.2-017": {
+      "class": "step",
+      "card": "RMK-1986",
+      "note": "No step registers, subscribes or unregisters a connection of a transport whose registry reads no room; roomkit-rs has none, so it needs a requires_features name."
+    },
+    "RK-17.2-018": {
+      "class": "step",
+      "card": "RMK-1986",
+      "note": "No step registers, subscribes or unregisters a connection of a transport whose registry reads no room; roomkit-rs has none, so it needs a requires_features name."
+    },
+    "RK-17.2-019": {
+      "class": "step",
+      "card": "RMK-1986",
+      "note": "No step registers, subscribes or unregisters a connection of a transport whose registry reads no room; roomkit-rs has none, so it needs a requires_features name."
+    },
+    "RK-17.2-020": {
+      "class": "step",
+      "card": "RMK-1986",
+      "note": "No step registers, subscribes or unregisters a connection of a transport whose registry reads no room; roomkit-rs has none, so it needs a requires_features name."
+    },
+    "RK-17.2-021": {
+      "class": "step",
+      "card": "RMK-1986",
+      "note": "No step registers, subscribes or unregisters a connection of a transport whose registry reads no room; roomkit-rs has none, so it needs a requires_features name."
+    },
+    "RK-17.2-022": {
+      "class": "step",
+      "card": "RMK-1986",
+      "note": "No step registers, subscribes or unregisters a connection of a transport whose registry reads no room; roomkit-rs has none, so it needs a requires_features name."
+    },
+    "RK-17.2-023": {
+      "class": "step",
+      "card": "RMK-1986",
+      "note": "No step registers, subscribes or unregisters a connection of a transport whose registry reads no room; roomkit-rs has none, so it needs a requires_features name."
+    },
+    "RK-17.2-025": {
+      "class": "step",
+      "card": "RMK-1986",
+      "note": "No step steers through a channel's own steer() or a turn client's, with or without an organization."
+    },
+    "RK-17.2-027": {
+      "class": "step",
+      "card": "RMK-1986",
+      "note": "No step calls a strategy's install() directly, below the kit's install_strategy()."
+    },
+    "RK-17.2-028": {
+      "class": "phase6",
+      "card": "RMK-1986",
+      "note": "The deprecated connect_voice(), connect_video() and bind_voice_session(), which name no organization."
+    },
+    "RK-17.6-010": {
+      "class": "phase6",
+      "card": "RMK-1986",
+      "note": "Configurable consent modes; suspect RMK-1985: Python offers none."
+    },
+    "RK-17.6-011": {
+      "class": "phase6",
+      "card": "RMK-1986",
+      "note": "A recording encrypted at rest."
+    },
+    "RK-17.6-012": {
+      "class": "phase6",
+      "card": "RMK-1986",
+      "note": "Configurable encryption of stored recordings."
+    },
+    "RK-17.6-013": {
+      "class": "phase6",
+      "card": "RMK-1986",
+      "note": "The encryption settings every recording configuration carries."
+    },
+    "RK-17.6-014": {
+      "class": "phase6",
+      "card": "RMK-1986",
+      "note": "A recorder that fails closed when neither encryption setting is set, a recording of video alone included."
+    },
+    "RK-17.6-017": {
+      "class": "phase6",
+      "card": "RMK-1986",
+      "note": "Voice session metadata under the room's retention and redaction policies."
+    },
+    "RK-17.6-018": {
+      "class": "phase6",
+      "card": "RMK-1986",
+      "note": "TTS context audio kept in memory only."
+    },
+    "RK-17.6-019": {
+      "class": "phase6",
+      "card": "RMK-1986",
+      "note": "TTS context audio within max_turns and max_audio_seconds, dropped with its session."
+    },
+    "RK-17.6-020": {
+      "class": "phase6",
+      "card": "RMK-1986",
+      "note": "TTS context audio kept only when include_audio is set."
+    },
+    "RK-17.6-021": {
+      "class": "phase6",
+      "card": "RMK-1986",
+      "note": "The TTS context's text read from the stored transcript."
+    },
+    "RK-17.6-022": {
+      "class": "phase6",
+      "card": "RMK-1986",
+      "note": "A user turn whose transcript a hook modified keeps no context audio."
+    },
+    "RK-17.6-023": {
+      "class": "phase6",
+      "card": "RMK-1986",
+      "note": "Under DTMF redaction, a user turn with detected DTMF keeps no context audio."
+    },
+    "RK-17.6-025": {
+      "class": "phase6",
+      "card": "RMK-1986",
+      "note": "A custom voice's recordings handed to the synthesizer for the call and kept nowhere."
+    },
+    "RK-17.6-026": {
+      "class": "phase6",
+      "card": "RMK-1986",
+      "note": "A custom voice's evidence kept as metadata."
+    },
+    "RK-17.6-027": {
+      "class": "phase6",
+      "card": "RMK-1986",
+      "note": "No custom voice created without the consent of the person it belongs to."
+    },
+    "RK-17.6-030": {
+      "class": "phase6",
+      "card": "RMK-1986",
+      "note": "A provenance mark passed on as the synthesizer produced it."
+    },
+    "RK-17.6-032": {
+      "class": "phase6",
+      "card": "RMK-1986",
+      "note": "Configurable DTMF redaction in stored events and logs."
+    },
+    "RK-17.6-033": {
+      "class": "phase6",
+      "card": "RMK-1986",
+      "note": "Under DTMF redaction, no raw digit in raw_payload, transcripts or log output."
+    },
+    "RK-17.7-003": {
+      "class": "phase6",
+      "card": "RMK-1986",
+      "note": "Conference tokens minted per participant, hidden observers subscribe-only."
+    },
+    "RK-17.7-004": {
+      "class": "phase6",
+      "card": "RMK-1986",
+      "note": "ConferenceGrants' permissive defaults."
+    },
+    "RK-17.7-005": {
+      "class": "phase6",
+      "card": "RMK-1986",
+      "note": "Short-lived conference tokens; their absence from logs needs a log reader no step has."
+    },
+    "RK-17.7-007": {
+      "class": "phase6",
+      "card": "RMK-1986",
+      "note": "The bot's presence, identity and hidden status as in force on the session."
+    },
+    "RK-17.7-008": {
+      "class": "phase6",
+      "card": "RMK-1986",
+      "note": "Whether STT, vision or recording is active on a conference, observable at any time."
+    },
+    "RK-17.8-002": {
+      "class": "step",
+      "card": "RMK-1986",
+      "note": "No fixture puts a skill's directory on disk, so no path that resolves outside it can be staged; the in-memory traversal scenarios refuse a name only."
+    },
+    "RK-17.8-003": {
+      "class": "step",
+      "card": "RMK-1986",
+      "note": "No fixture puts a skill's directory on disk: neither a file swapped after its check nor a SKILL.md that resolves outside its skill can be staged."
+    },
     "RK-19.1-004": {
       "class": "phase6",
       "card": "RMK-1925",
