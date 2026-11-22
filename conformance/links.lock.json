@@ -2902,7 +2902,8 @@
       "executors/another-executor-replays-the-tool-calls-of-the-first": "1a064f931834d969638ee680b5e37f6e869c2957024d3ff9426f53590b16ace7"
     },
     "RK-10.6.5-039": {
-      "executors/a-turn-on-another-executor-reads-none-of-the-rows-a-delete-removed": "96bfc6c7bbce4dd3ef889b5ab40bead8bdaf934bfe660fab39a6ea7609bfbfeb"
+      "executors/a-turn-on-another-executor-reads-none-of-the-rows-a-delete-removed": "96bfc6c7bbce4dd3ef889b5ab40bead8bdaf934bfe660fab39a6ea7609bfbfeb",
+      "executors/a-turn-on-another-executor-whose-rows-the-store-fails-to-read-runs-without-them": "96bfc6c7bbce4dd3ef889b5ab40bead8bdaf934bfe660fab39a6ea7609bfbfeb"
     },
     "RK-10.6.5-040": {
       "executors/a-turn-apart-calls-the-host-verbs-during-and-after-it": "937cc7d08bd8dbd04f0efdc2686ad5eaa16a6b02a12e4f5ff7eb29410bba660e",
