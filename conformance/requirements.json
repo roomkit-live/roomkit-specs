@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "rfc_sha256": "20cebe6aee60819ed74d10dafebc645979c0fb26af51ecf023c017cba14a5dcf",
+  "rfc_sha256": "83cc834a50a44efa43dc058d67bdd759874cf140946505d06b5e3f5424d59b78",
   "sections": [
     {
       "section": "0",
@@ -674,7 +674,7 @@
       "section": "11.1",
       "title": "Identity Resolver Interface",
       "line": 10398,
-      "sha256": "d7c1d6db18a7f0f91c5ffd47ec708af501e21b5d31685fa67d6743e038948180",
+      "sha256": "f8561290e025ccf96421ba4c13b01e4a5760ce4667abe8852aa0d4944f0800c1",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
     },
@@ -24443,8 +24443,8 @@
       "level": "must",
       "section": "11.1",
       "line": 10407,
-      "text": "**IdentityResult:**\n\n```\nIdentityResult\n├── status: IdentificationStatus            # IDENTIFIED, AMBIGUOUS, UNKNOWN, PENDING, CHALLENGE_SENT, REJECTED\n├── identity: Identity | null               # Resolved identity (if IDENTIFIED)\n├── candidates: list<Identity>              # Candidate identities (if AMBIGUOUS or PENDING)\n├── address: string | null                  # The address resolved; the sender's if unset\n├── channel_type: string | null             # Its channel type; the message's channel's if unset\n├── challenge_type: string | null           # For CHALLENGE_SENT: its kind; not read\n└── message: string | null                  # For CHALLENGE_SENT and REJECTED: the block's reason, unless empty\n```",
-      "sha256": "543fd64838fdbbd60afbc0656d22f77b4bdfd2ae1cc912c97ee2230dd486f0ce"
+      "text": "**IdentityResult:**\n\n```\nIdentityResult\n├── status: IdentificationStatus            # IDENTIFIED, AMBIGUOUS, UNKNOWN, PENDING, CHALLENGE_SENT, REJECTED\n├── identity: Identity | null               # Resolved identity (if IDENTIFIED)\n├── candidates: list<Identity>              # Candidate identities, which a pending record keeps (§11.2)\n├── address: string | null                  # The address resolved; the sender's if unset\n├── channel_type: string | null             # Its channel type; the message's channel's if unset\n├── challenge_type: string | null           # For CHALLENGE_SENT: its kind; not read\n└── message: string | null                  # For CHALLENGE_SENT and REJECTED: the block's reason, unless empty\n```",
+      "sha256": "7ff303d8a124ed621c6aa6d67b87d6d8c6f1f73ad9ab4032cde2fc94b14e33ef"
     },
     {
       "id": "RK-11.2-002",
