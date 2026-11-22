@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "rfc_sha256": "0bd421ad64bb787915a15aff36be0a1d6620812c6909ecb8b9ff04a2df6ab3eb",
+  "rfc_sha256": "cb57d584afe8b26ba4f78c1b88406113575eb9917aa864426b6119cc182c10e1",
   "sections": [
     {
       "section": "0",
@@ -1993,62 +1993,62 @@
       "section": "25.1",
       "title": "A Surface of Its Own",
       "line": 23502,
-      "sha256": "059cf8528b58ce948214babe836b97c801ec9c708f7b8c214f467793d220ff42",
+      "sha256": "7ccd66b0bf88f10d2708c3eab93d2cbf6a9a3a71164f1595884fd4cd19f8f818",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
     },
     {
       "section": "25.2",
       "title": "ImageProvider",
-      "line": 23524,
-      "sha256": "622c47d992e4c00ee6fab38fa43735cedb7655fc43720e543523df0ed05db19e",
+      "line": 23526,
+      "sha256": "1cd6d2f5dbdeeff70ef908c9c24eb3f76592d8fc3e0b7d9f48f3447587046279",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
     },
     {
       "section": "25.3",
       "title": "ImageResult",
-      "line": 23577,
-      "sha256": "02aee398e0608064fe5c19758def4d47d75a3fc3c4470f54a100e6c8f4ef34d6",
+      "line": 23609,
+      "sha256": "bd150a14ee8e29b38c026811d8128723464d19a05a97f413ca5bb6e045872ddc",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
     },
     {
       "section": "25.4",
       "title": "Editing",
-      "line": 23617,
-      "sha256": "f07107e57a6167de051408300b60bf473f0b5cd6947e5d312ca1c50263d23e3c",
+      "line": 23667,
+      "sha256": "c1684c7c7d7bb2bec251b056f704f3076ef98b6f2af0dc86e8d3a73a5fc0681e",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
     },
     {
       "section": "25.5",
       "title": "Usage Accounting",
-      "line": 23641,
-      "sha256": "03dfb8c3717cf14379abcc9c4a596f84ce9e819a3d4627ad75f9a16f512dbc09",
+      "line": 23695,
+      "sha256": "3806e17a272b1ff9ae11a99c3c59f882f626ff88c387294df99e5023b067890f",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
     },
     {
       "section": "25.6",
       "title": "Model Catalogue",
-      "line": 23678,
-      "sha256": "48bedc8f68d85bb1effaa70d6d92fd4a2bf64708f21a730d119992b2a6fc7cb3",
+      "line": 23738,
+      "sha256": "a21ea4394330d7d64124c020e632928c33012a9da2fcd40ebb0e3d50b56a4582",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
     },
     {
       "section": "25.7",
       "title": "Non-Goals",
-      "line": 23699,
-      "sha256": "549e76e67b81172a9303bdfcde6f76e67ca29eca01820f422f0f2e761f25ef88",
+      "line": 23763,
+      "sha256": "367fe579d57319ee5638bdf16a2581f45512827f9ab1b195e0d73685bcb66bc5",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
     },
     {
       "section": "26",
       "title": "Conformance Levels",
-      "line": 23715,
+      "line": 23779,
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
@@ -2056,7 +2056,7 @@
     {
       "section": "26.1",
       "title": "Level 0: Core (REQUIRED)",
-      "line": 23717,
+      "line": 23781,
       "sha256": "745b52e3c9e784a33d40e98f1beab9fa0f9577c3e20f00818dff5641d8c09bd1",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
@@ -2064,7 +2064,7 @@
     {
       "section": "26.2",
       "title": "Level 1: Transport (RECOMMENDED)",
-      "line": 23791,
+      "line": 23855,
       "sha256": "93199b6294873a9fae8ac00798b9ad15a504c07cb2697b4fee0eb4ec04c0b2e2",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
@@ -2072,7 +2072,7 @@
     {
       "section": "26.3",
       "title": "Level 2: Rich (OPTIONAL)",
-      "line": 23813,
+      "line": 23877,
       "sha256": "80ded89e25d2a27d75c8c6e5190f45f74900fb693078bd386a6b748c4daf0676",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
@@ -2080,7 +2080,7 @@
     {
       "section": "26.4",
       "title": "Level 3: Real-Time Media (OPTIONAL)",
-      "line": 23852,
+      "line": 23916,
       "sha256": "860fcfa2668bf40904800ef8a2f8cd1561c818b98ae6c7135eee74c2bfc43ec9",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
@@ -2088,7 +2088,7 @@
     {
       "section": "A",
       "title": "Channel Reference",
-      "line": 23941,
+      "line": 24005,
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
@@ -2096,7 +2096,7 @@
     {
       "section": "A.1",
       "title": "SMS Channel",
-      "line": 23943,
+      "line": 24007,
       "sha256": "744135b2368b2e5802e621949f785885930d9b8007e6bfcec17efbe7afccb93c",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
@@ -2104,7 +2104,7 @@
     {
       "section": "A.2",
       "title": "Email Channel",
-      "line": 23968,
+      "line": 24032,
       "sha256": "8a316a3a3cb97b22a3abda8d9f7d1050dbd720838c54653acad1106cf3da8d40",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
@@ -2112,7 +2112,7 @@
     {
       "section": "A.3",
       "title": "WhatsApp Channel",
-      "line": 23993,
+      "line": 24057,
       "sha256": "9986ae10ed5803e75db93681b9f6b17942a622d862719a4eaadf6770771cc160",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
@@ -2120,7 +2120,7 @@
     {
       "section": "A.4",
       "title": "WhatsApp Personal Channel",
-      "line": 24021,
+      "line": 24085,
       "sha256": "1c6769eb5477d4688eb33cdf43442414227990fc4e4364718a19435c0a261ddf",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
@@ -2128,7 +2128,7 @@
     {
       "section": "A.5",
       "title": "Messenger Channel",
-      "line": 24057,
+      "line": 24121,
       "sha256": "41f9a531a29a673bb99337552d061aad5d1bb6a5bc589abb0b1f4bc7648fbe0b",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
@@ -2136,7 +2136,7 @@
     {
       "section": "A.6",
       "title": "Teams Channel",
-      "line": 24082,
+      "line": 24146,
       "sha256": "d65dd58f4dc58835afa7bcbfcadfba64f1cb7ec8b8ebb4c2cc1a848fbe1870b0",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
@@ -2144,7 +2144,7 @@
     {
       "section": "A.7",
       "title": "RCS Channel",
-      "line": 24110,
+      "line": 24174,
       "sha256": "2dad52443d2656a56da79dedb059d800f52f55b8dac0f0460321cb20237e8e56",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
@@ -2152,7 +2152,7 @@
     {
       "section": "A.8",
       "title": "WebSocket Channel",
-      "line": 24140,
+      "line": 24204,
       "sha256": "8036e06f736a1233caee573a6027c2338a745bb5bad3352aafdcae5bd56625ed",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
@@ -2160,7 +2160,7 @@
     {
       "section": "A.9",
       "title": "AI Channel",
-      "line": 24191,
+      "line": 24255,
       "sha256": "019272d78f974a25d68ebdef947d4e29948d4b3bd312e9edae8956149a91fcab",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
@@ -2168,7 +2168,7 @@
     {
       "section": "A.9.1",
       "title": "ACP Agent Channel",
-      "line": 24315,
+      "line": 24379,
       "sha256": "86f29f0c65291c19cb24171815b907b5fed5c393ea5ee78d1d4c0ee895b063d1",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
@@ -2176,7 +2176,7 @@
     {
       "section": "A.10",
       "title": "Voice Channel",
-      "line": 24387,
+      "line": 24451,
       "sha256": "f522e7d32102b7bc775fd534cfca2063974197e184628e0be33fac7d4763850e",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
@@ -2184,7 +2184,7 @@
     {
       "section": "A.11",
       "title": "Realtime Voice Channel",
-      "line": 24430,
+      "line": 24494,
       "sha256": "98b2d5636c5031f06a40a273a220478f81d1dc51ad8314ed3085c401e758d67c",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
@@ -2192,7 +2192,7 @@
     {
       "section": "A.12",
       "title": "Video Channel",
-      "line": 24465,
+      "line": 24529,
       "sha256": "182fa8438546c4f3f6f6ec5030890e934d5cca64a2e6889d56afb4c609314c01",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
@@ -2200,7 +2200,7 @@
     {
       "section": "A.13",
       "title": "Telegram Channel",
-      "line": 24503,
+      "line": 24567,
       "sha256": "397ccde910f9d0c4e150dda7e11b659a958627b3d92200c7535baa69112e7cd5",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
@@ -2208,7 +2208,7 @@
     {
       "section": "A.14",
       "title": "CLI Channel",
-      "line": 24533,
+      "line": 24597,
       "sha256": "c72f431a09fb1c8679ac3dc199d74a9a40c9d01567d6402b1ea0fcbdeefd874a",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
@@ -2216,7 +2216,7 @@
     {
       "section": "A.14.1",
       "title": "Host Channel",
-      "line": 24551,
+      "line": 24615,
       "sha256": "cd360d20c864ff1686a5329eeb8243a7bd1f40c2481422aa1eeed95435222a34",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
@@ -2224,7 +2224,7 @@
     {
       "section": "A.15",
       "title": "Conference Channel",
-      "line": 24569,
+      "line": 24633,
       "sha256": "e9efbf41060d29fbae9230308390f0a3b28307169267a9952540c8df43bd81de",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
@@ -2232,92 +2232,22 @@
     {
       "section": "B",
       "title": "Complete Event Flow Examples",
-      "line": 24618,
+      "line": 24682,
       "sha256": "960b4e386cbdc5a3b262f44af32a4aa737bf50fb310b85ec193865b5d092893d",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": [
-        24620,
-        24621,
-        24622
+        24684,
+        24685,
+        24686
       ]
     },
     {
       "section": "B.1",
       "title": "Customer (SMS) + AI — Basic Conversation",
-      "line": 24624,
+      "line": 24688,
       "sha256": "02ecdfd46777ce12b34f1960cb1ce3a918c028ca09ddf82b2faa2a5d6663c409",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": [
-        24626,
-        24627,
-        24628,
-        24629,
-        24630,
-        24631,
-        24632,
-        24633,
-        24634,
-        24635,
-        24636,
-        24637,
-        24638,
-        24639,
-        24640,
-        24641,
-        24642,
-        24643,
-        24644,
-        24645,
-        24646,
-        24647,
-        24648,
-        24649,
-        24650,
-        24651,
-        24652,
-        24653,
-        24654,
-        24655,
-        24656,
-        24657,
-        24658,
-        24659,
-        24660,
-        24661,
-        24662,
-        24663,
-        24664,
-        24665,
-        24666,
-        24667,
-        24668,
-        24669,
-        24670,
-        24671,
-        24672
-      ]
-    },
-    {
-      "section": "B.2",
-      "title": "Sensitivity Scanning — Block and Inject",
-      "line": 24674,
-      "sha256": "a2bc38a8165812aaed634fd9835fd45f5f058c416e1c71a12fa5f7eef234870b",
-      "unannotated_keyword_lines": [],
-      "unannotated_content_lines": [
-        24676,
-        24677,
-        24678,
-        24679,
-        24680,
-        24681,
-        24682,
-        24683,
-        24684,
-        24685,
-        24686,
-        24687,
-        24688,
-        24689,
         24690,
         24691,
         24692,
@@ -2345,16 +2275,10 @@
         24714,
         24715,
         24716,
-        24717
-      ]
-    },
-    {
-      "section": "B.3",
-      "title": "Ambiguous Identity — Shared Family Phone",
-      "line": 24719,
-      "sha256": "0d59e7eb1f548fe986df21c6c9ddc1a9f39b4f732c770bcce8f7a967b05a23b5",
-      "unannotated_keyword_lines": [],
-      "unannotated_content_lines": [
+        24717,
+        24718,
+        24719,
+        24720,
         24721,
         24722,
         24723,
@@ -2370,10 +2294,16 @@
         24733,
         24734,
         24735,
-        24736,
-        24737,
-        24738,
-        24739,
+        24736
+      ]
+    },
+    {
+      "section": "B.2",
+      "title": "Sensitivity Scanning — Block and Inject",
+      "line": 24738,
+      "sha256": "a2bc38a8165812aaed634fd9835fd45f5f058c416e1c71a12fa5f7eef234870b",
+      "unannotated_keyword_lines": [],
+      "unannotated_content_lines": [
         24740,
         24741,
         24742,
@@ -2394,20 +2324,15 @@
         24757,
         24758,
         24759,
-        24760
-      ]
-    },
-    {
-      "section": "B.4",
-      "title": "AI ↔ AI Multi-Agent with Chain Depth",
-      "line": 24762,
-      "sha256": "3551b6c238cd6e3ff199387d186e07ca38081929ee8bf69e96573a0e35fd0779",
-      "unannotated_keyword_lines": [],
-      "unannotated_content_lines": [
+        24760,
+        24761,
+        24762,
+        24763,
         24764,
         24765,
         24766,
         24767,
+        24768,
         24769,
         24770,
         24771,
@@ -2420,10 +2345,16 @@
         24778,
         24779,
         24780,
-        24781,
-        24782,
-        24783,
-        24784,
+        24781
+      ]
+    },
+    {
+      "section": "B.3",
+      "title": "Ambiguous Identity — Shared Family Phone",
+      "line": 24783,
+      "sha256": "0d59e7eb1f548fe986df21c6c9ddc1a9f39b4f732c770bcce8f7a967b05a23b5",
+      "unannotated_keyword_lines": [],
+      "unannotated_content_lines": [
         24785,
         24786,
         24787,
@@ -2443,56 +2374,57 @@
         24801,
         24802,
         24803,
+        24804,
         24805,
         24806,
-        24807
-      ]
-    },
-    {
-      "section": "B.5",
-      "title": "Dynamic Channel Management — Advisor Joins",
-      "line": 24809,
-      "sha256": "3b58db7e25ebb1a9686e376d182c1b216afc1de4e34e47ec373313f20534a2eb",
-      "unannotated_keyword_lines": [],
-      "unannotated_content_lines": [
+        24807,
+        24808,
+        24809,
+        24810,
         24811,
         24812,
+        24813,
         24814,
         24815,
         24816,
         24817,
+        24818,
         24819,
         24820,
+        24821,
         24822,
         24823,
-        24824,
-        24825,
-        24827,
+        24824
+      ]
+    },
+    {
+      "section": "B.4",
+      "title": "AI ↔ AI Multi-Agent with Chain Depth",
+      "line": 24826,
+      "sha256": "3551b6c238cd6e3ff199387d186e07ca38081929ee8bf69e96573a0e35fd0779",
+      "unannotated_keyword_lines": [],
+      "unannotated_content_lines": [
         24828,
         24829,
         24830,
         24831,
-        24832,
+        24833,
         24834,
         24835,
+        24836,
         24837,
         24838,
         24839,
         24840,
+        24841,
         24842,
         24843,
         24844,
         24845,
-        24846
-      ]
-    },
-    {
-      "section": "B.6",
-      "title": "Message Edit — Cross-Channel with Fallback",
-      "line": 24848,
-      "sha256": "c285aa712a940319cfc73f788b0246ba8e1c3c4810204d8b4585f1d7399be864",
-      "unannotated_keyword_lines": [],
-      "unannotated_content_lines": [
+        24846,
+        24847,
+        24848,
+        24849,
         24850,
         24851,
         24852,
@@ -2511,58 +2443,56 @@
         24865,
         24866,
         24867,
-        24868,
         24869,
         24870,
-        24871,
-        24872,
-        24873,
-        24874,
+        24871
+      ]
+    },
+    {
+      "section": "B.5",
+      "title": "Dynamic Channel Management — Advisor Joins",
+      "line": 24873,
+      "sha256": "3b58db7e25ebb1a9686e376d182c1b216afc1de4e34e47ec373313f20534a2eb",
+      "unannotated_keyword_lines": [],
+      "unannotated_content_lines": [
         24875,
         24876,
-        24877,
         24878,
         24879,
         24880,
         24881,
-        24882,
         24883,
         24884,
-        24885,
         24886,
         24887,
         24888,
         24889,
-        24890,
         24891,
         24892,
         24893,
         24894,
         24895,
         24896,
-        24897,
         24898,
         24899,
-        24900
-      ]
-    },
-    {
-      "section": "B.7",
-      "title": "Message Delete — Cross-Channel with Fallback",
-      "line": 24902,
-      "sha256": "0bf21f50cc9bcb67459dfc304dbcf9c61f768420d7a3e9216f54537a1f5fbc88",
-      "unannotated_keyword_lines": [],
-      "unannotated_content_lines": [
+        24901,
+        24902,
+        24903,
         24904,
-        24905,
         24906,
         24907,
         24908,
         24909,
-        24910,
-        24911,
-        24912,
-        24913,
+        24910
+      ]
+    },
+    {
+      "section": "B.6",
+      "title": "Message Edit — Cross-Channel with Fallback",
+      "line": 24912,
+      "sha256": "c285aa712a940319cfc73f788b0246ba8e1c3c4810204d8b4585f1d7399be864",
+      "unannotated_keyword_lines": [],
+      "unannotated_content_lines": [
         24914,
         24915,
         24916,
@@ -2603,26 +2533,26 @@
         24951,
         24952,
         24953,
-        24954
-      ]
-    },
-    {
-      "section": "B.8",
-      "title": "SIP Call → Unified process_inbound with Protocol Traces",
-      "line": 24956,
-      "sha256": "0062d2b2955038a52fb827fe4ed92fb1f30128890d0b10c76f055e65f031d0d9",
-      "unannotated_keyword_lines": [],
-      "unannotated_content_lines": [
+        24954,
+        24955,
+        24956,
+        24957,
         24958,
         24959,
         24960,
         24961,
         24962,
         24963,
-        24964,
-        24965,
-        24966,
-        24967,
+        24964
+      ]
+    },
+    {
+      "section": "B.7",
+      "title": "Message Delete — Cross-Channel with Fallback",
+      "line": 24966,
+      "sha256": "0bf21f50cc9bcb67459dfc304dbcf9c61f768420d7a3e9216f54537a1f5fbc88",
+      "unannotated_keyword_lines": [],
+      "unannotated_content_lines": [
         24968,
         24969,
         24970,
@@ -2673,10 +2603,16 @@
         25015,
         25016,
         25017,
-        25018,
-        25019,
-        25020,
-        25021,
+        25018
+      ]
+    },
+    {
+      "section": "B.8",
+      "title": "SIP Call → Unified process_inbound with Protocol Traces",
+      "line": 25020,
+      "sha256": "0062d2b2955038a52fb827fe4ed92fb1f30128890d0b10c76f055e65f031d0d9",
+      "unannotated_keyword_lines": [],
+      "unannotated_content_lines": [
         25022,
         25023,
         25024,
@@ -2695,16 +2631,10 @@
         25037,
         25038,
         25039,
-        25040
-      ]
-    },
-    {
-      "section": "B.9",
-      "title": "Multi-Agent Pipeline — Triage → Specialist → Resolution",
-      "line": 25042,
-      "sha256": "c701ba4a3f44cad2dc4cb3cde35f84865d7d9a25f5bc8d92bb07a3f8b35389d8",
-      "unannotated_keyword_lines": [],
-      "unannotated_content_lines": [
+        25040,
+        25041,
+        25042,
+        25043,
         25044,
         25045,
         25046,
@@ -2765,10 +2695,16 @@
         25101,
         25102,
         25103,
-        25104,
-        25105,
-        25106,
-        25107,
+        25104
+      ]
+    },
+    {
+      "section": "B.9",
+      "title": "Multi-Agent Pipeline — Triage → Specialist → Resolution",
+      "line": 25106,
+      "sha256": "c701ba4a3f44cad2dc4cb3cde35f84865d7d9a25f5bc8d92bb07a3f8b35389d8",
+      "unannotated_keyword_lines": [],
+      "unannotated_content_lines": [
         25108,
         25109,
         25110,
@@ -2783,7 +2719,71 @@
         25119,
         25120,
         25121,
-        25125
+        25122,
+        25123,
+        25124,
+        25125,
+        25126,
+        25127,
+        25128,
+        25129,
+        25130,
+        25131,
+        25132,
+        25133,
+        25134,
+        25135,
+        25136,
+        25137,
+        25138,
+        25139,
+        25140,
+        25141,
+        25142,
+        25143,
+        25144,
+        25145,
+        25146,
+        25147,
+        25148,
+        25149,
+        25150,
+        25151,
+        25152,
+        25153,
+        25154,
+        25155,
+        25156,
+        25157,
+        25158,
+        25159,
+        25160,
+        25161,
+        25162,
+        25163,
+        25164,
+        25165,
+        25166,
+        25167,
+        25168,
+        25169,
+        25170,
+        25171,
+        25172,
+        25173,
+        25174,
+        25175,
+        25176,
+        25177,
+        25178,
+        25179,
+        25180,
+        25181,
+        25182,
+        25183,
+        25184,
+        25185,
+        25189
       ]
     }
   ],
@@ -35088,74 +35088,821 @@
       "sha256": "069a856f1aba558960d287143be79a998a4ed3ac5953922b785b795a58eed9a1"
     },
     {
-      "id": "RK-25.1-001",
-      "kind": "behavior",
-      "applies": "§25.1 A Surface of Its Own; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
+      "id": "RK-25.1-002",
+      "kind": "structural",
+      "applies": "Image generation has a provider interface distinct from the conversational AI provider.",
+      "level": "must",
       "section": "25.1",
       "line": 23504,
-      "text": "An implementation MUST expose image generation through a provider interface\ndistinct from the AI provider interface, and MUST NOT require that the two be\nserved by the same vendor, credential, or object. An agent conversing through\none provider MUST be able to draw through another, exactly as it transcribes\nthrough a third.\n\nThis is a normative requirement rather than an implementation preference. Image\ngeneration reached as a mode of the conversational response inherits that\nresponse's provider: the capability then exists only for the subset of\nconversations already held by a model that draws, and acquiring it means\nmigrating the conversation. The decoupled form is what makes the capability\navailable to every conversation, and it is the property this section protects.\n\nAn implementation MUST NOT widen the conversational response type to carry\ngenerated images. `AIResponse.content` is read by every consumer of the\nframework; turning it into a union imposes a migration on all of them for a\ncapability that two providers offer.",
-      "sha256": "7052cb560b3b8fef1a2a861a2bffe20331950f548a6a22f701fbb868788a4a8f"
+      "text": "An implementation MUST expose image generation through a provider interface\ndistinct from the AI provider interface,",
+      "sha256": "9c2ff70028a98997af585b62137b8a49bdc4791150f146d5fdb9dc7c5df52dfd"
     },
     {
-      "id": "RK-25.2-001",
+      "id": "RK-25.1-003",
       "kind": "behavior",
-      "applies": "§25.2 ImageProvider; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
+      "applies": "The two providers can use independent vendors, credentials and objects.",
+      "level": "must",
+      "section": "25.1",
+      "line": 23506,
+      "text": "and MUST NOT require that the two be\nserved by the same vendor, credential, or object.",
+      "sha256": "60410f3576af99b948df66279a2513f40a7f7ed616758cd82606ea15bbc58ca4"
+    },
+    {
+      "id": "RK-25.1-004",
+      "kind": "behavior",
+      "applies": "An agent using one conversational provider can generate images through another.",
+      "level": "must",
+      "section": "25.1",
+      "line": 23507,
+      "text": "An agent conversing through\none provider MUST be able to draw through another, exactly as it transcribes\nthrough a third.\n\nThis is a normative requirement rather than an implementation preference. Image\ngeneration reached as a mode of the conversational response inherits that\nresponse's provider: the capability then exists only for the subset of\nconversations already held by a model that draws, and acquiring it means\nmigrating the conversation. The decoupled form is what makes the capability\navailable to every conversation, and it is the property this section protects.",
+      "sha256": "c1f74d85d76ca2bc39cada95d280d108978c69cfdb55a040d1c99bd49848da91"
+    },
+    {
+      "id": "RK-25.1-005",
+      "kind": "structural",
+      "applies": "The conversational response type retains its content contract when image generation is available.",
+      "level": "must",
+      "section": "25.1",
+      "line": 23519,
+      "text": "An implementation MUST NOT widen the conversational response type to carry\ngenerated images. `AIResponse.content` is read by every consumer of the\nframework; turning it into a union imposes a migration on all of them for a\ncapability that two providers offer.",
+      "sha256": "406c48f45f2c318979f38b21755067841d86c49e868df4135782dbc9c4dcc3b3"
+    },
+    {
+      "id": "RK-25.2-002",
+      "kind": "structural",
+      "applies": "ImageProvider exposes its provider identifier.",
+      "level": "must",
       "section": "25.2",
-      "line": 23526,
-      "text": "```\nImageProvider\n├── name → string                             # Provider identifier\n├── model_name → string                       # Active model id\n├── supports_editing → bool                   # Whether reference_images is honoured\n├── available_models() → list<ModelInfo>      # Offline catalogue (Section 25.6)\n├── generate(prompt, size, n, reference_images) → list<ImageResult>\n└── close()                                   # Release resources\n```\n\n`generate` MUST return exactly `n` results or raise. Returning fewer without\nerror leaves the caller to discover the shortfall by indexing, which it will do\nin production and not in testing.\n\n`size` is a `\"WIDTHxHEIGHT\"` string, or null for the provider's default. A\nprovider whose API expresses geometry differently — an aspect ratio and a\nresolution tier, say — MUST translate, and MUST NOT require the caller to know\nwhich form its vendor speaks. A provider that cannot honour a requested size\nMUST raise rather than silently substitute another: an image of the wrong\ngeometry is a failure the caller can neither see nor correct.\n\n`n` greater than one MUST produce `n` distinct results. A provider whose API\nhas no batch parameter satisfies this with concurrent calls: the alternative —\nhonouring `n` on some providers and refusing it on others — leaves a parameter\nin the interface that a caller cannot use without first knowing which provider\nis behind it, which is the coupling this section exists to remove.\n\nImplementations MAY accept an optional typed `options` argument for controls\nsuch as quality, output format, background, compression, aspect ratio and\nresolution tier. An explicit aspect ratio and tier are native geometry, not a\npromise of exact pixels. An implementation MUST reject incompatible or\nunsupported options before making a billable request. Omitted options inherit\nprovider defaults; explicit values override them. Existing calls without\noptions MUST remain valid. A mask MAY accompany references when supported.\n\nAn error after a request has started MUST preserve every available result and\nusage report. A partial generation still raises, carrying successful results\nand the outcomes of individual vendor calls. An implementation MUST NOT mark\nan ambiguous network failure as unbilled or automatically retry a paid\ngeneration. A failed status is marked retryable only where the vendor did not\nrun the generation (408, 409, 429, 503); a 500, 502 or 504 may follow one it\nran and billed, and is final: the host decides. A transport failure is\nretryable only when the request never left (the connection could not be\nmade); a timeout or a connection lost once the request went out is ambiguous,\nand final. An image the vendor delivered in a form the provider cannot return\nwas generated and billed: that failure is final too. Independent concurrent calls SHOULD settle so their outcomes can\nbe collected. Cancellation MUST remain cancellation, with already received\noutcomes accessible through an optional asynchronous progress callback.",
-      "sha256": "7b95b16db48404a69a2c1e4576e0bcb1c4dbf1b1b1f40491a4cf045dd277df6a"
+      "line": 23528,
+      "text": "```\nImageProvider\n├── name → string                             # Provider identifier\n```",
+      "sha256": "e9e1e581676e011cbb77aec47c2f749650dd9a5cfb9e527b6af34042ab6ddc18"
     },
     {
-      "id": "RK-25.3-001",
+      "id": "RK-25.2-032",
+      "kind": "structural",
+      "applies": "ImageProvider exposes its active model identifier.",
+      "level": "must",
+      "section": "25.2",
+      "line": 23534,
+      "text": "```\n├── model_name → string                       # Active model id\n```",
+      "sha256": "5ea226279bdddf79a02ac229c153c1f1047e13eecd360600e4a123fabc066281"
+    },
+    {
+      "id": "RK-25.2-003",
+      "kind": "structural",
+      "applies": "ImageProvider exposes whether it honours reference images for edits.",
+      "level": "must",
+      "section": "25.2",
+      "line": 23539,
+      "text": "```\n├── supports_editing → bool                   # Whether reference_images is honoured\n```",
+      "sha256": "699e7f240bf9991f07bdf5f39c7cc65a39943037ececae2b23b36b44e31c3b69"
+    },
+    {
+      "id": "RK-25.2-004",
+      "kind": "structural",
+      "applies": "ImageProvider exposes an offline list of model information.",
+      "level": "must",
+      "section": "25.2",
+      "line": 23544,
+      "text": "```\n├── available_models() → list<ModelInfo>      # Offline catalogue (Section 25.6)\n```",
+      "sha256": "82ebca7b64361b14188db13f5e55cb33b34607074262071b4ded073b94cf066b"
+    },
+    {
+      "id": "RK-25.2-005",
+      "kind": "structural",
+      "applies": "ImageProvider exposes generation with prompt, size, count and references, returning image results.",
+      "level": "must",
+      "section": "25.2",
+      "line": 23549,
+      "text": "```\n├── generate(prompt, size, n, reference_images) → list<ImageResult>\n```",
+      "sha256": "5170208d64cae287aa80a1ea66e4a03c6c424f06f0562b83b098be065031f463"
+    },
+    {
+      "id": "RK-25.2-006",
+      "kind": "structural",
+      "applies": "ImageProvider exposes close to release its resources.",
+      "level": "must",
+      "section": "25.2",
+      "line": 23554,
+      "text": "```\n└── close()                                   # Release resources\n```",
+      "sha256": "744c29aeed5bc10544e58478784f9f9ae743af5e664436cc65fcff6fc1bf85d6"
+    },
+    {
+      "id": "RK-25.2-007",
       "kind": "behavior",
-      "applies": "§25.3 ImageResult; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
+      "applies": "Generation returns exactly the requested number of results or raises.",
+      "level": "must",
+      "section": "25.2",
+      "line": 23560,
+      "text": "`generate` MUST return exactly `n` results or raise. Returning fewer without\nerror leaves the caller to discover the shortfall by indexing, which it will do\nin production and not in testing.",
+      "sha256": "e4765fc1b43f64612173f2faf4deb572df9efb47b691daa87ab6f3d34e915c0c"
+    },
+    {
+      "id": "RK-25.2-008",
+      "kind": "behavior",
+      "applies": "A width-by-height string requests an exact pixel size and null selects the provider default.",
+      "level": "must",
+      "section": "25.2",
+      "line": 23566,
+      "text": "`size` is a `\"WIDTHxHEIGHT\"` string, or null for the provider's default.",
+      "sha256": "8c16dd0f6cfd5694e7a3ea33f5b26fd47363db5c25cce3351e5c812e33be64ad"
+    },
+    {
+      "id": "RK-25.2-009",
+      "kind": "behavior",
+      "applies": "The provider translates portable pixel sizes to its native geometry and hides native geometry conventions from the caller.",
+      "level": "must",
+      "section": "25.2",
+      "line": 23567,
+      "text": "A\nprovider whose API expresses geometry differently — an aspect ratio and a\nresolution tier, say — MUST translate, and MUST NOT require the caller to know\nwhich form its vendor speaks.",
+      "sha256": "ed7501e94114942eafe8dca7d7ff82a115addeefbca1285e78810527a556f103"
+    },
+    {
+      "id": "RK-25.2-010",
+      "kind": "behavior",
+      "applies": "The provider raises when it cannot honour the requested size.",
+      "level": "must",
+      "section": "25.2",
+      "line": 23570,
+      "text": "A provider that cannot honour a requested size\nMUST raise rather than silently substitute another: an image of the wrong\ngeometry is a failure the caller can neither see nor correct.",
+      "sha256": "6adaa490a3bbf45fe20e58bd1efd16c7caa188c4dcdaa5745f833636fdd36161"
+    },
+    {
+      "id": "RK-25.2-011",
+      "kind": "behavior",
+      "applies": "A request for more than one image produces distinct results.",
+      "level": "must",
+      "section": "25.2",
+      "line": 23575,
+      "text": "`n` greater than one MUST produce `n` distinct results.",
+      "sha256": "82876cc9be933b4894c6ff244ddbd6b00b81ef7aadfca1f159bb89c42414d881"
+    },
+    {
+      "id": "RK-25.2-012",
+      "kind": "behavior",
+      "applies": "A provider without a native batch parameter handles the requested count with concurrent calls.",
+      "level": "must",
+      "section": "25.2",
+      "line": 23576,
+      "text": "A provider whose API\nhas no batch parameter satisfies this with concurrent calls: the alternative —\nhonouring `n` on some providers and refusing it on others — leaves a parameter\nin the interface that a caller cannot use without first knowing which provider\nis behind it, which is the coupling this section exists to remove.",
+      "sha256": "98cd22b851dbf24e7af5a9f23d18c9c87ee39842038834e45ab2ebd547b3671a"
+    },
+    {
+      "id": "RK-25.2-013",
+      "kind": "structural",
+      "applies": "An implementation may offer typed generation options.",
+      "level": "may",
+      "section": "25.2",
+      "line": 23583,
+      "text": "Implementations MAY accept an optional typed `options` argument for controls\nsuch as quality, output format, background, compression, aspect ratio and\nresolution tier.",
+      "sha256": "37b523f1b8f19c98e322da2c5322fdb4b20b93d5fefdbd646cfe69836a37b0f0"
+    },
+    {
+      "id": "RK-25.2-014",
+      "kind": "behavior",
+      "applies": "Where typed options offer native aspect ratio and resolution tier, those options describe native geometry without promising exact pixels.",
+      "level": "must",
+      "section": "25.2",
+      "line": 23586,
+      "text": "An explicit aspect ratio and tier are native geometry, not a\npromise of exact pixels.",
+      "sha256": "c57f5c95e152f3624cf9b0f7cd1bee21915096e50be5c1179c669427e12d49d7"
+    },
+    {
+      "id": "RK-25.2-015",
+      "kind": "behavior",
+      "applies": "Where generation options are offered, incompatible and unsupported options are rejected before a billable request.",
+      "level": "must",
+      "section": "25.2",
+      "line": 23587,
+      "text": "An implementation MUST reject incompatible or\nunsupported options before making a billable request.",
+      "sha256": "e86ed41ce82a06947a195e1ec0d4538accedfe85bd7f3c945379aed47c5d515f"
+    },
+    {
+      "id": "RK-25.2-016",
+      "kind": "behavior",
+      "applies": "Where generation options are offered, omitted values inherit provider defaults.",
+      "level": "must",
+      "section": "25.2",
+      "line": 23588,
+      "text": "Omitted options inherit\nprovider defaults;",
+      "sha256": "ff57a05cba21da0a5224a3baa5cd71fd098aa84539c47c294da965109cf53a5b"
+    },
+    {
+      "id": "RK-25.2-017",
+      "kind": "behavior",
+      "applies": "Where generation options are offered, explicit settings override provider defaults.",
+      "level": "must",
+      "section": "25.2",
+      "line": 23589,
+      "text": "explicit values override them.",
+      "sha256": "d591d2e2a60bceaa6340c314bb29c5d1c794f9f4f10dc784ea1ff57543624df2"
+    },
+    {
+      "id": "RK-25.2-018",
+      "kind": "behavior",
+      "applies": "Where generation options are offered, existing calls omitting them remain valid.",
+      "level": "must",
+      "section": "25.2",
+      "line": 23589,
+      "text": "Existing calls without\noptions MUST remain valid.",
+      "sha256": "b0ab3637282140f5c2374348ef3ee7c7e754531b71a7227c93f47b6338079fd5"
+    },
+    {
+      "id": "RK-25.2-019",
+      "kind": "behavior",
+      "applies": "Where masking is supported the caller can supply a mask along with references.",
+      "level": "must",
+      "section": "25.2",
+      "line": 23590,
+      "text": "A mask MAY accompany references when supported.",
+      "sha256": "adbc2fc3e2e8500160b3b29f574446682cee976a4448b6d17fc349136f15833c"
+    },
+    {
+      "id": "RK-25.2-020",
+      "kind": "behavior",
+      "applies": "A failure after a request starts preserves every available result and usage report.",
+      "level": "must",
+      "section": "25.2",
+      "line": 23593,
+      "text": "An error after a request has started MUST preserve every available result and\nusage report.",
+      "sha256": "b6ed04c2c2ff75bb4b4db691d39ecab6fa6ed52dbcbabfdcc16601aa32cdc22f"
+    },
+    {
+      "id": "RK-25.2-021",
+      "kind": "behavior",
+      "applies": "Incomplete generation raises with its successful results and the outcomes of individual vendor calls.",
+      "level": "must",
+      "section": "25.2",
+      "line": 23595,
+      "text": "A partial generation still raises, carrying successful results\nand the outcomes of individual vendor calls.",
+      "sha256": "22f4caee2fc2116428d6e0d57d05856bf288b1072149e09e26f1e1091c6475fb"
+    },
+    {
+      "id": "RK-25.2-022",
+      "kind": "behavior",
+      "applies": "The billing status for an ambiguous network failure is not marked unbilled.",
+      "level": "must",
+      "section": "25.2",
+      "line": 23596,
+      "text": "An implementation MUST NOT mark\nan ambiguous network failure as unbilled",
+      "sha256": "33daa820f1addd911fd61fea8a9646526f8dc9af1fa2652a760513f566de44ec"
+    },
+    {
+      "id": "RK-25.2-023",
+      "kind": "behavior",
+      "applies": "An implementation does not automatically retry a paid generation.",
+      "level": "must",
+      "section": "25.2",
+      "line": 23597,
+      "text": "or automatically retry a paid\ngeneration.",
+      "sha256": "7a65adf8a4d5874f969df269ab64b70440aa1e89bbb1e9075a16e4cc8a8ad933"
+    },
+    {
+      "id": "RK-25.2-024",
+      "kind": "behavior",
+      "applies": "Only a status indicating the generation did not run is retryable, including 408, 409, 429 and 503.",
+      "level": "must",
+      "section": "25.2",
+      "line": 23598,
+      "text": "A failed status is marked retryable only where the vendor did not\nrun the generation (408, 409, 429, 503);",
+      "sha256": "4f89e9dfe209541fc1117a48f7da3903e23cf61ff06f2b6cc86af052d025be76"
+    },
+    {
+      "id": "RK-25.2-025",
+      "kind": "behavior",
+      "applies": "HTTP 500, 502 and 504 are final generation outcomes and leave a further request to the host.",
+      "level": "must",
+      "section": "25.2",
+      "line": 23599,
+      "text": "a 500, 502 or 504 may follow one it\nran and billed, and is final: the host decides.",
+      "sha256": "3c6f9fea9b53575c14edec324d1d197c36b2c1016d39d6e630c50abbdcebf137"
+    },
+    {
+      "id": "RK-25.2-026",
+      "kind": "behavior",
+      "applies": "A transport failure is retryable only when the request never left because the connection could not be made.",
+      "level": "must",
+      "section": "25.2",
+      "line": 23600,
+      "text": "A transport failure is\nretryable only when the request never left (the connection could not be\nmade);",
+      "sha256": "1d3f6984020e847c8951e977166e191b645e994668cf13b0a44bda9c8cdf9e58"
+    },
+    {
+      "id": "RK-25.2-027",
+      "kind": "behavior",
+      "applies": "A timeout or connection lost after sending leaves a final ambiguous outcome.",
+      "level": "must",
+      "section": "25.2",
+      "line": 23602,
+      "text": "a timeout or a connection lost once the request went out is ambiguous,\nand final.",
+      "sha256": "98f0179d40a3c26ee5735ec7b7a5fec6ca1b6b14e37e08589a5ecd8830f995d6"
+    },
+    {
+      "id": "RK-25.2-028",
+      "kind": "behavior",
+      "applies": "An image delivered in a form the provider cannot return has a final billed failure.",
+      "level": "must",
+      "section": "25.2",
+      "line": 23603,
+      "text": "An image the vendor delivered in a form the provider cannot return\nwas generated and billed: that failure is final too.",
+      "sha256": "570b7cccc7dc459bb819083fd80dbd2a4236c9c9475f88b518ae092f67697679"
+    },
+    {
+      "id": "RK-25.2-029",
+      "kind": "behavior",
+      "applies": "Independent concurrent generation calls should settle so that their outcomes can be collected.",
+      "level": "should",
+      "section": "25.2",
+      "line": 23604,
+      "text": "Independent concurrent calls SHOULD settle so their outcomes can\nbe collected.",
+      "sha256": "72de6ca142c72cbbcab9a21aff6508919c575af0c32a9157c011474400508412"
+    },
+    {
+      "id": "RK-25.2-030",
+      "kind": "behavior",
+      "applies": "Cancelling generation propagates cancellation as cancellation.",
+      "level": "must",
+      "section": "25.2",
+      "line": 23605,
+      "text": "Cancellation MUST remain cancellation,",
+      "sha256": "988f07dc449ad5fb969ab2d19ea482c15283148b00059b83ff07ec2ca167575d"
+    },
+    {
+      "id": "RK-25.2-031",
+      "kind": "behavior",
+      "applies": "Generation makes already received outcomes accessible through an optional asynchronous progress callback when cancelled.",
+      "level": "must",
+      "section": "25.2",
+      "line": 23605,
+      "text": "with already received\noutcomes accessible through an optional asynchronous progress callback.",
+      "sha256": "96494f79d95a4293364611dd91090b290da9ab0acf026a01193459074babc4c0"
+    },
+    {
+      "id": "RK-25.3-002",
+      "kind": "structural",
+      "applies": "ImageResult exposes encoded image data and its media type.",
+      "level": "must",
       "section": "25.3",
-      "line": 23579,
-      "text": "```\nImageResult\n├── data: string                              # data:<mime_type>;base64,<payload>\n├── mime_type: string                         # Media type of the payload\n├── revised_prompt: string | null             # Prompt as the model rewrote it, if reported\n└── usage: map<string, any>                   # Token counters (Section 25.5)\n```\n\n`data` MUST be a data URI, always, and its media type MUST equal `mime_type`.\nThe alternative — a field documented as \"a data URI or bare base64\" — forces\nevery consumer to sniff the value before it can use it, and one consumer will\nsniff it wrong. The invariant also makes the result directly usable: a data URI\nis what image message content and image message parts already accept, so a\ngenerated image enters a room, or returns as a reference for a subsequent\nedit, without conversion.\n\nA provider whose API returns a fetchable URL rather than bytes MUST retrieve\nthe bytes and encode them. Such URLs expire, and a result that decays into a\ndead link some time after it was returned is not a result.\n\n`revised_prompt` is null where the vendor reports none. An implementation MUST\nNOT substitute the original prompt for it: the field exists to show the caller\nwhat the model actually drew from, and echoing the input back conceals exactly\nthe divergence it exists to reveal.\n\nResults MAY carry a vendor request or interaction identifier, the vendor's\noriginal usage report, effective parameters, actual dimensions where reported,\nand grounding attribution. Usage shared by a batch MUST be represented once,\nwith its scope explicit; it MUST NOT be divided into invented per-image\nmeasurements. Original metadata MUST omit inline image payloads and secrets.\n\nA progress callback MAY receive individual call outcomes or preview images.\nPreviews MUST be distinguished from final results. Callback delivery does not\nimply vendor cancellation or a refund, and failure to deliver an outcome MUST\nNOT trigger another generation.",
-      "sha256": "188d411f9dad0ec5708d1d6225570eb80ced86895108e020b198ef5003d12756"
+      "line": 23611,
+      "text": "```\nImageResult\n├── data: string                              # data:<mime_type>;base64,<payload>\n├── mime_type: string                         # Media type of the payload\n```",
+      "sha256": "7661cbd0369cb94048b75c34a0374856889a04cc3291391c0a4638ab41755ec5"
     },
     {
-      "id": "RK-25.4-001",
+      "id": "RK-25.3-019",
+      "kind": "structural",
+      "applies": "ImageResult exposes an optional revised prompt.",
+      "level": "must",
+      "section": "25.3",
+      "line": 23618,
+      "text": "```\n├── revised_prompt: string | null             # Prompt as the model rewrote it, if reported\n```",
+      "sha256": "42711feac248dccd4cc66414c19b589314b68b852a77c13f5d5dfdd0dac039d3"
+    },
+    {
+      "id": "RK-25.3-020",
+      "kind": "structural",
+      "applies": "ImageResult exposes a usage map for generation counters.",
+      "level": "must",
+      "section": "25.3",
+      "line": 23623,
+      "text": "```\n└── usage: map<string, any>                   # Token counters (Section 25.5)\n```",
+      "sha256": "4f219afd4bb31abec940266964919466f308554f8f5340784be0ee17dc78e825"
+    },
+    {
+      "id": "RK-25.3-003",
       "kind": "behavior",
-      "applies": "§25.4 Editing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
+      "applies": "Generated image data is always a data URI.",
+      "level": "must",
+      "section": "25.3",
+      "line": 23629,
+      "text": "`data` MUST be a data URI, always,",
+      "sha256": "727fc3cdee664e49ce46ad0038d4ef7948499ec631c64a8069419b6b6e7c7e1f"
+    },
+    {
+      "id": "RK-25.3-004",
+      "kind": "behavior",
+      "applies": "The generated data URI media type equals the result's mime_type.",
+      "level": "must",
+      "section": "25.3",
+      "line": 23630,
+      "text": "and its media type MUST equal `mime_type`.\nThe alternative — a field documented as \"a data URI or bare base64\" — forces\nevery consumer to sniff the value before it can use it, and one consumer will\nsniff it wrong.",
+      "sha256": "9518166c6eade2526e3f654f1f89f6fe10a51bf3a0286ea4348c0b49aa31231d"
+    },
+    {
+      "id": "RK-25.3-005",
+      "kind": "behavior",
+      "applies": "Ordinary image message content and image message parts accept a data URI, so generated image data can enter a room without conversion.",
+      "level": "must",
+      "section": "25.3",
+      "line": 23633,
+      "text": "The invariant also makes the result directly usable: a data URI\nis what image message content and image message parts already accept, so a\ngenerated image enters a room,",
+      "sha256": "4dc314b3d5c3cd79269599634829e3a475024c3e601b44f0f3cac18689239f36"
+    },
+    {
+      "id": "RK-25.3-006",
+      "kind": "behavior",
+      "applies": "A generated data URI can be used directly as an image reference in a subsequent edit.",
+      "level": "must",
+      "section": "25.3",
+      "line": 23635,
+      "text": "or returns as a reference for a subsequent\nedit, without conversion.",
+      "sha256": "02eab7e946e54048d3ad81cd23d43f47bf58cb528841c5b63558bd5e45dbd7fe"
+    },
+    {
+      "id": "RK-25.3-007",
+      "kind": "behavior",
+      "applies": "The provider fetches any returned URL and encodes the image bytes in the result.",
+      "level": "must",
+      "section": "25.3",
+      "line": 23639,
+      "text": "A provider whose API returns a fetchable URL rather than bytes MUST retrieve\nthe bytes and encode them. Such URLs expire, and a result that decays into a\ndead link some time after it was returned is not a result.",
+      "sha256": "b95d7273ce680c684532aea40282210ee26f527b1a08b32e9f00bbace8f85870"
+    },
+    {
+      "id": "RK-25.3-008",
+      "kind": "behavior",
+      "applies": "An unreported revised prompt is null.",
+      "level": "must",
+      "section": "25.3",
+      "line": 23645,
+      "text": "`revised_prompt` is null where the vendor reports none.",
+      "sha256": "6eb648327e8abf5bf556270217f1bbddbba71cc89f7334d85fa3e99b784a86d5"
+    },
+    {
+      "id": "RK-25.3-009",
+      "kind": "behavior",
+      "applies": "The provider does not substitute the original prompt for an unreported revised prompt.",
+      "level": "must",
+      "section": "25.3",
+      "line": 23646,
+      "text": "An implementation MUST\nNOT substitute the original prompt for it: the field exists to show the caller\nwhat the model actually drew from, and echoing the input back conceals exactly\nthe divergence it exists to reveal.",
+      "sha256": "e2223f60e5facb11c7523f9949cfb606aff78c5adb9a9a5155121f18f967af58"
+    },
+    {
+      "id": "RK-25.3-010",
+      "kind": "structural",
+      "applies": "A result may expose original vendor identifiers and usage, effective parameters, actual dimensions and grounding attribution.",
+      "level": "may",
+      "section": "25.3",
+      "line": 23652,
+      "text": "Results MAY carry a vendor request or interaction identifier, the vendor's\noriginal usage report, effective parameters, actual dimensions where reported,\nand grounding attribution.",
+      "sha256": "9a2101b5a70d809351c80d31eacb8d18b4a928a7e24526814d8e2743cd1b85ce"
+    },
+    {
+      "id": "RK-25.3-011",
+      "kind": "behavior",
+      "applies": "Shared batch usage appears once with explicit scope.",
+      "level": "must",
+      "section": "25.3",
+      "line": 23655,
+      "text": "Usage shared by a batch MUST be represented once,\nwith its scope explicit;",
+      "sha256": "f3628c33703bc25dab34deb3632cebcd0f0d3308c51b79f8dc4fbc4ce7cd54c4"
+    },
+    {
+      "id": "RK-25.3-012",
+      "kind": "behavior",
+      "applies": "Shared batch usage is not divided into invented per-image measurements.",
+      "level": "must",
+      "section": "25.3",
+      "line": 23656,
+      "text": "it MUST NOT be divided into invented per-image\nmeasurements.",
+      "sha256": "0257395ea58ac54b74572e14e1a3f52e691390509b1418104170fda32bf4e345"
+    },
+    {
+      "id": "RK-25.3-013",
+      "kind": "behavior",
+      "applies": "Original image metadata excludes inline image payloads.",
+      "level": "must",
+      "section": "25.3",
+      "line": 23657,
+      "text": "Original metadata MUST omit inline image payloads",
+      "sha256": "672f8242917b7cc56146de098f2619258beb25def4062da5891555885379e302"
+    },
+    {
+      "id": "RK-25.3-014",
+      "kind": "behavior",
+      "applies": "Original image metadata excludes secrets.",
+      "level": "must",
+      "section": "25.3",
+      "line": 23657,
+      "text": "and secrets.",
+      "sha256": "4259720964cfb77f8eb3f9d1b04fe442b8f0b6eacb43ed353a52079f0ffcbb8a"
+    },
+    {
+      "id": "RK-25.3-015",
+      "kind": "behavior",
+      "applies": "A generation progress callback may receive individual call outcomes or preview images.",
+      "level": "may",
+      "section": "25.3",
+      "line": 23660,
+      "text": "A progress callback MAY receive individual call outcomes or preview images.",
+      "sha256": "fad156e0269c68e0d61786c76ea630def76ff29850b99122c9a470e8bf17009a"
+    },
+    {
+      "id": "RK-25.3-016",
+      "kind": "behavior",
+      "applies": "A provider offering image previews identifies them separately from final results.",
+      "level": "must",
+      "section": "25.3",
+      "line": 23661,
+      "text": "Previews MUST be distinguished from final results.",
+      "sha256": "50c176a6eb88843fb16ff8de8067729465130b9cb5cf0f96ba1f2cae6e0a7442"
+    },
+    {
+      "id": "RK-25.3-017",
+      "kind": "behavior",
+      "applies": "Delivering image progress does not establish vendor cancellation or a refund.",
+      "level": "must",
+      "section": "25.3",
+      "line": 23662,
+      "text": "Callback delivery does not\nimply vendor cancellation or a refund,",
+      "sha256": "f5e90a0f30aa6d2373b366ecc113c3b87b6eff941b692edeac6a733982a3dd39"
+    },
+    {
+      "id": "RK-25.3-018",
+      "kind": "behavior",
+      "applies": "Failure to deliver a progress outcome does not trigger another generation.",
+      "level": "must",
+      "section": "25.3",
+      "line": 23663,
+      "text": "and failure to deliver an outcome MUST\nNOT trigger another generation.",
+      "sha256": "a2fd2835cde64fef4b604a13b57f7d477ac5406e23d0ddd97b60d7968cad7d77"
+    },
+    {
+      "id": "RK-25.4-002",
+      "kind": "structural",
+      "applies": "A caller edits through reference_images on generate rather than a separate public edit method.",
+      "level": "must",
       "section": "25.4",
-      "line": 23619,
-      "text": "Editing — an image and a prompt in, an image out — is expressed through\n`reference_images` on `generate`, not through a second method.\n\nThe distinction is the vendor's, not the caller's: one API takes reference\nimages as ordinary content on the same endpoint, another routes them to a\nseparate one. A provider MUST absorb that difference. A provider that cannot\nedit MUST report `supports_editing` as false and MUST raise when\n`reference_images` is non-empty, rather than generating from the prompt alone —\na caller that asked for an edit and silently received a fresh image has no\nsignal that the reference was dropped.\n\nA provider MAY support continuity through a previous interaction identifier.\nThe caller remains responsible for authorizing access to that interaction.\nA stateful provider MUST expose an explicit storage choice so applications can\ndisable remote history retention. Omitting this choice MAY preserve the\nprovider default; applications MUST NOT assume that omitted means stateless.\nGrounding with external search MAY be requested only on compatible models;\navailable citations and search-suggestion metadata MUST be retained for the\ncaller to display according to the provider's requirements.",
-      "sha256": "4ee10a0dc9f390e01d437feea24468bd7540eec48c814666ec9ad8eca4fed53c"
+      "line": 23669,
+      "text": "Editing — an image and a prompt in, an image out — is expressed through\n`reference_images` on `generate`, not through a second method.",
+      "sha256": "4bd1bb9eda11f538baad7ba72552869078282046621abfe9d41b019f17938378"
     },
     {
-      "id": "RK-25.5-001",
+      "id": "RK-25.4-003",
       "kind": "behavior",
-      "applies": "§25.5 Usage Accounting; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
+      "applies": "The provider hides its vendor's distinction between editing with references and prompt-only generation endpoints.",
+      "level": "must",
+      "section": "25.4",
+      "line": 23674,
+      "text": "The distinction is the vendor's, not the caller's: one API takes reference\nimages as ordinary content on the same endpoint, another routes them to a\nseparate one. A provider MUST absorb that difference.",
+      "sha256": "0dd9583b5bf4e68a51a5317d38d411d073220dfa70b7667e0e63ac9be836fc3e"
+    },
+    {
+      "id": "RK-25.4-004",
+      "kind": "behavior",
+      "applies": "Providers that cannot edit report supports_editing as false.",
+      "level": "must",
+      "section": "25.4",
+      "line": 23677,
+      "text": "A provider that cannot\nedit MUST report `supports_editing` as false",
+      "sha256": "1faced1761ad73764f309f37f6786742641ff3dee18ffbb4939126ba5063423d"
+    },
+    {
+      "id": "RK-25.4-005",
+      "kind": "behavior",
+      "applies": "Providers that cannot edit reject nonempty references instead of ignoring them.",
+      "level": "must",
+      "section": "25.4",
+      "line": 23678,
+      "text": "and MUST raise when\n`reference_images` is non-empty, rather than generating from the prompt alone —\na caller that asked for an edit and silently received a fresh image has no\nsignal that the reference was dropped.",
+      "sha256": "af9c6bfaab3c1e04264bfb4ba2535a8f25536a1a04ad65f63479888c813dabe1"
+    },
+    {
+      "id": "RK-25.4-006",
+      "kind": "behavior",
+      "applies": "A provider may expose continuity through an earlier interaction identifier.",
+      "level": "may",
+      "section": "25.4",
+      "line": 23684,
+      "text": "A provider MAY support continuity through a previous interaction identifier.",
+      "sha256": "a6e23b1b67b5c02ce96751d58c5d43130f7ff213da0c02e2236bde6a821b6e51"
+    },
+    {
+      "id": "RK-25.4-007",
+      "kind": "non_testable",
+      "applies": "The caller authorizes access to an earlier interaction used for continuity.",
+      "level": "must",
+      "section": "25.4",
+      "line": 23685,
+      "text": "The caller remains responsible for authorizing access to that interaction.",
+      "sha256": "10e75eed96f5dde6cb810b446440176e8b79aaa6757c41f8d6b640e83a941296"
+    },
+    {
+      "id": "RK-25.4-008",
+      "kind": "behavior",
+      "applies": "A stateful provider exposes an explicit choice that lets the caller disable remote history storage.",
+      "level": "must",
+      "section": "25.4",
+      "line": 23686,
+      "text": "A stateful provider MUST expose an explicit storage choice so applications can\ndisable remote history retention.",
+      "sha256": "9558736e7f28205daa6736a2b75fbba528b3873a1dfa3b01f9c3971bdb719f0d"
+    },
+    {
+      "id": "RK-25.4-009",
+      "kind": "behavior",
+      "applies": "A stateful provider may retain its default storage behaviour when the caller omits the choice.",
+      "level": "may",
+      "section": "25.4",
+      "line": 23688,
+      "text": "Omitting this choice MAY preserve the\nprovider default;",
+      "sha256": "27ce0b3a7c0d30695fe623426a4548b53b30a218287a3398bfc7600d0df76c18"
+    },
+    {
+      "id": "RK-25.4-010",
+      "kind": "non_testable",
+      "applies": "Applications cannot assume that omitting the storage choice makes generation stateless.",
+      "level": "must",
+      "section": "25.4",
+      "line": 23689,
+      "text": "applications MUST NOT assume that omitted means stateless.",
+      "sha256": "7bc366244d2486bb1c250d8415bce8a9401742430e446e9ac1229dfd5d76b62f"
+    },
+    {
+      "id": "RK-25.4-011",
+      "kind": "behavior",
+      "applies": "An implementation honours requests for external-search grounding only on models that support it.",
+      "level": "must",
+      "section": "25.4",
+      "line": 23689,
+      "text": "Grounding with external search MAY be requested only on compatible models;",
+      "sha256": "1176f5f73d2ab1f1c482d8308d25e54c3106f2f6acf046d08d21017c14393225"
+    },
+    {
+      "id": "RK-25.4-012",
+      "kind": "behavior",
+      "applies": "Where external-search grounding is supported, available citations and search-suggestion metadata are retained for the caller to display under provider requirements.",
+      "level": "must",
+      "section": "25.4",
+      "line": 23690,
+      "text": "available citations and search-suggestion metadata MUST be retained for the\ncaller to display according to the provider's requirements.",
+      "sha256": "a2d283a57873b0099b16d466f5c90ce067225b743f527d5e0b6f8d754d68cbcb"
+    },
+    {
+      "id": "RK-25.5-002",
+      "kind": "behavior",
+      "applies": "A generation reports the text and image consumption its vendor meters separately.",
+      "level": "must",
       "section": "25.5",
-      "line": 23643,
-      "text": "A generation reports what it consumed. An image and the text around it are\nmetered separately by the vendors that meter them at all, so the counters stay\napart rather than collapsing into one number:\n\n```\nusage\n├── input_tokens: int                         # Text input tokens\n├── input_image_tokens: int                   # Reference-image input tokens\n├── output_tokens: int                        # Text output tokens, where the model emits any\n└── output_image_tokens: int                  # Generated-image tokens\n```\n\nThe counters MUST be disjoint: a token appears under exactly one of them.\nWhere a vendor reports image tokens as a subset of a total, an implementation\nMUST subtract them before reporting the text counter, so a consumer summing\nthe counters counts each token once. Without that guarantee the counters cannot\nbe combined at all, and the breakdown is worth less than the single total it\nreplaced.\n\nCounters a vendor does not report are absent, not zero: a reported zero and an\nunreported quantity are different claims, and only one of them is safe to add\nup.\n\nUsage is a report, not a price. What a generation costs depends on how its\nvendor meters it — per token in some lineups, a flat amount per image in\nothers, varying by resolution or quality — and on commercial terms no\nspecification can observe. An implementation MAY carry a price list and MAY\nderive a cost from these counters; neither the shape of such a list nor the\narithmetic over it is specified here, beyond what a turn's cost budget counts\n(Section 6.4). What is specified is that the counters\nmean what they say, so that whatever does price them has something unambiguous\nto price.",
-      "sha256": "8af916100040befaec153080614c46d75ab75d6aad9455e297cf0e8254fa13d2"
+      "line": 23697,
+      "text": "A generation reports what it consumed. An image and the text around it are\nmetered separately by the vendors that meter them at all, so the counters stay\napart rather than collapsing into one number:",
+      "sha256": "e8cb66300d5dcd98abf48eadf56092478ac42cd336bcb6cbb3b26d050409841e"
     },
     {
-      "id": "RK-25.6-001",
+      "id": "RK-25.5-003",
+      "kind": "structural",
+      "applies": "The image generation usage model has separate integer input and output fields for text and image tokens.",
+      "level": "must",
+      "section": "25.5",
+      "line": 23703,
+      "text": "```\nusage\n├── input_tokens: int                         # Text input tokens\n├── input_image_tokens: int                   # Reference-image input tokens\n├── output_tokens: int                        # Text output tokens, where the model emits any\n└── output_image_tokens: int                  # Generated-image tokens\n```",
+      "sha256": "b913961f6ab788c71d52c3cb042a972ee7c23cc126820da916dd106a3a708a76"
+    },
+    {
+      "id": "RK-25.5-004",
       "kind": "behavior",
-      "applies": "§25.6 Model Catalogue; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
+      "applies": "A reported generation token belongs to exactly one counter.",
+      "level": "must",
+      "section": "25.5",
+      "line": 23713,
+      "text": "The counters MUST be disjoint: a token appears under exactly one of them.",
+      "sha256": "f1d5db7d14eeb189274c8de2e589ccba5038478d0202dd16868e6c73b8b1ce25"
+    },
+    {
+      "id": "RK-25.5-005",
+      "kind": "behavior",
+      "applies": "When image tokens are included in a total, subtract them to report the text count.",
+      "level": "must",
+      "section": "25.5",
+      "line": 23714,
+      "text": "Where a vendor reports image tokens as a subset of a total, an implementation\nMUST subtract them before reporting the text counter, so a consumer summing\nthe counters counts each token once. Without that guarantee the counters cannot\nbe combined at all, and the breakdown is worth less than the single total it\nreplaced.",
+      "sha256": "b00d313465ae8823795ab79e380994a5e018e21d69839be4adec0b06cf46289a"
+    },
+    {
+      "id": "RK-25.5-006",
+      "kind": "behavior",
+      "applies": "Unreported token counters are absent, preserving the distinction from a reported zero.",
+      "level": "must",
+      "section": "25.5",
+      "line": 23722,
+      "text": "Counters a vendor does not report are absent, not zero: a reported zero and an\nunreported quantity are different claims, and only one of them is safe to add\nup.\n\nUsage is a report, not a price. What a generation costs depends on how its\nvendor meters it — per token in some lineups, a flat amount per image in\nothers, varying by resolution or quality — and on commercial terms no\nspecification can observe.",
+      "sha256": "6dc56f1ccc2d6c13e5845dfc7dca24cc6ff68c9d6dc5c893e7d081c6bddfaada"
+    },
+    {
+      "id": "RK-25.5-007",
+      "kind": "behavior",
+      "applies": "An implementation may expose a price list for image generation.",
+      "level": "may",
+      "section": "25.5",
+      "line": 23730,
+      "text": "An implementation MAY carry a price list",
+      "sha256": "a1d4fde57d3725ff413130a00ded9e41919d92af8ffb5871767353df337a74d6"
+    },
+    {
+      "id": "RK-25.5-008",
+      "kind": "behavior",
+      "applies": "An implementation may derive a cost from image-generation counters, subject to the turn-budget rule in section 6.4.",
+      "level": "may",
+      "section": "25.5",
+      "line": 23730,
+      "text": "and MAY\nderive a cost from these counters; neither the shape of such a list nor the\narithmetic over it is specified here, beyond what a turn's cost budget counts\n(Section 6.4). What is specified is that the counters\nmean what they say, so that whatever does price them has something unambiguous\nto price.",
+      "sha256": "6cac629cfaa34ae4025f36fd1d0cc9ea3f224733163e21540db1d5281bdf67c6"
+    },
+    {
+      "id": "RK-25.6-002",
+      "kind": "behavior",
+      "applies": "The offline image and conversation catalogues have disjoint sets of model identifiers.",
+      "level": "must",
       "section": "25.6",
-      "line": 23680,
-      "text": "An image catalogue is a set disjoint from the conversational one: a model that\ndraws is not a model that converses, and neither list contains an id belonging\nto the other.\n\nAn implementation MUST NOT merge the two into the response of a single\nenumeration. Merging saves no maintenance — the entries are written once\neither way — while obliging every consumer of the conversational catalogue,\nincluding those populating a model field for a conversational agent, to filter\na class of models it can never use. Entries SHOULD nevertheless carry a\ncapability tag identifying them as image-generating, so a consumer that\ndeliberately combines the lists can still tell them apart.\n\nCatalogue entries MAY carry structured image capabilities, including accepted\ncontrols and values, geometry constraints, reference limits, continuity,\nmasking, search, and retirement dates. Unknown capabilities MUST remain unknown\nrather than being inferred from another model in the same vendor's lineup.",
-      "sha256": "7cffe39849d372eb2131e15865e05600603d2f4b63098e331e28bfea81201f67"
+      "line": 23740,
+      "text": "An image catalogue is a set disjoint from the conversational one: a model that\ndraws is not a model that converses, and neither list contains an id belonging\nto the other.",
+      "sha256": "f8a2fa135f2516fa7969218f93a9d68be0dc574e96bfd921cf6f9fd54ab0c0d6"
     },
     {
-      "id": "RK-25.7-001",
+      "id": "RK-25.6-003",
       "kind": "behavior",
-      "applies": "§25.7 Non-Goals; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
+      "applies": "A single catalogue enumeration does not merge image and conversational models.",
+      "level": "must",
+      "section": "25.6",
+      "line": 23746,
+      "text": "An implementation MUST NOT merge the two into the response of a single\nenumeration. Merging saves no maintenance — the entries are written once\neither way — while obliging every consumer of the conversational catalogue,\nincluding those populating a model field for a conversational agent, to filter\na class of models it can never use.",
+      "sha256": "a7c8d49ae1ca4b9a62ee189db6122a3bc142ee4cee67479eed2daa00695d63c5"
+    },
+    {
+      "id": "RK-25.6-004",
+      "kind": "behavior",
+      "applies": "Image catalogue entries should include a capability tag identifying image generation.",
+      "level": "should",
+      "section": "25.6",
+      "line": 23751,
+      "text": "Entries SHOULD nevertheless carry a\ncapability tag identifying them as image-generating, so a consumer that\ndeliberately combines the lists can still tell them apart.",
+      "sha256": "f3f28be0ea48fa6eaa8cad95668db89fd383e9fde60502eab483ff5690f9b061"
+    },
+    {
+      "id": "RK-25.6-005",
+      "kind": "structural",
+      "applies": "An image catalogue entry may expose structured capabilities for its model.",
+      "level": "may",
+      "section": "25.6",
+      "line": 23756,
+      "text": "Catalogue entries MAY carry structured image capabilities, including accepted\ncontrols and values, geometry constraints, reference limits, continuity,\nmasking, search, and retirement dates.",
+      "sha256": "4034292be085f5c8d88f1491987d04e3b54d9aa03d0229dfa4f79c8880d2be68"
+    },
+    {
+      "id": "RK-25.6-006",
+      "kind": "behavior",
+      "applies": "Unknown image-model capabilities stay unknown rather than being inferred from another model.",
+      "level": "must",
+      "section": "25.6",
+      "line": 23759,
+      "text": "Unknown capabilities MUST remain unknown\nrather than being inferred from another model in the same vendor's lineup.",
+      "sha256": "58e541d7dea1d1ac38b3d124316ea45cc0ab3f2e007f7b9bc0667d8d9a2e8fda"
+    },
+    {
+      "id": "RK-25.7-002",
+      "kind": "behavior",
+      "applies": "Image generation is not a stage of the inbound or broadcast pipeline.",
+      "level": "must",
       "section": "25.7",
-      "line": 23701,
-      "text": "Image generation is not a pipeline stage and defines no hook triggers. It is\ninvoked by a caller — a tool handler, an application — and its result enters a\nroom as ordinary message content, which the inbound and broadcast pipelines\n(Section 10) already govern. Introducing a parallel path for images would\nduplicate ordering, permission, and visibility rules that Section 7 and\nSection 10 state once.\n\nVideo generation, image *understanding* (already covered by multimodal message\nparts) and avatar synthesis (Section 12) are outside this section.",
-      "sha256": "52395efcf702310d7184ed4b6013677f78aabd26ed7bec62b95de49e19e146fb"
+      "line": 23765,
+      "text": "Image generation is not a pipeline stage",
+      "sha256": "617e3eaae627c36e8fb15ac592dd765456f24d784bc830ccefa66f058c19d917"
+    },
+    {
+      "id": "RK-25.7-003",
+      "kind": "behavior",
+      "applies": "Image generation introduces no hook trigger.",
+      "level": "must",
+      "section": "25.7",
+      "line": 23766,
+      "text": "and defines no hook triggers.",
+      "sha256": "139f7a76131868399182428501ba0b1abbb2c3349c228e0fbb273160d10e4a7c"
+    },
+    {
+      "id": "RK-25.7-004",
+      "kind": "behavior",
+      "applies": "A caller such as a tool handler or application invokes the generation service.",
+      "level": "must",
+      "section": "25.7",
+      "line": 23766,
+      "text": "It is\ninvoked by a caller — a tool handler, an application —",
+      "sha256": "80416021bdf13d556f18d498ec66d7cab700db3037dc5ee9977205b060313ecc"
+    },
+    {
+      "id": "RK-25.7-005",
+      "kind": "behavior",
+      "applies": "Generated image content enters a room as ordinary message content subject to the existing inbound and broadcast rules.",
+      "level": "must",
+      "section": "25.7",
+      "line": 23767,
+      "text": "and its result enters a\nroom as ordinary message content, which the inbound and broadcast pipelines\n(Section 10) already govern. Introducing a parallel path for images would\nduplicate ordering, permission, and visibility rules that Section 7 and\nSection 10 state once.\n\nVideo generation, image *understanding* (already covered by multimodal message\nparts) and avatar synthesis (Section 12) are outside this section.",
+      "sha256": "fd247e20ac3a4424b704342d06a887bca34c84e9e1b3e976da18ba4b4fc3ecb7"
     },
     {
       "id": "RK-26.1-001",
       "kind": "behavior",
       "applies": "§26.1 Level 0: Core (REQUIRED); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "26.1",
-      "line": 23719,
+      "line": 23783,
       "text": "A conforming implementation MUST support:\n\n- Room model with lifecycle (ACTIVE, PAUSED, CLOSED, ARCHIVED), including\n  refusing new events at every entry point once the status says so (Section 5.1)\n- Room timers (auto-pause, auto-close, resume on activity; Section 5.1)\n- RoomEvent with all EventType values and all EventContent types\n- Sequential event indexing\n- Channel interface (handle_inbound, deliver, on_event, capabilities)\n- ChannelBinding with access, mute, and visibility\n- Permission enforcement (Section 7.5)\n- Hook engine with SYNC and ASYNC execution\n- BEFORE_BROADCAST and AFTER_BROADCAST hooks with HookResult\n- InjectedEvent delivery, whatever the hook's action\n- Event chain depth tracking and limiting\n- Inbound processing pipeline (Section 10.1); its identity steps belong to\n  higher levels, identity resolution (step 5) to Level 1 and identity\n  verification (step 5b) to Level 2, and an implementation skips the step of\n  a feature it does not provide\n- Broadcast pipeline (Section 10.2)\n- Reentry passes (response events re-enter the pipeline as commit passes)\n- Inbound room routing (pluggable)\n- Room-level locking\n- ConversationStore interface with in-memory implementation\n- Content transcoding (at least text fallback)\n- The hook triggers and the framework events (Section 8.2) of the steps and\n  operations below\n- Structured logging\n- Idempotency checking\n- Event addressing: `RoomEvent.addressed_to`, honoured when set (Section 19.3)\n- Turn backend with its in-memory implementation and the kit's own executor:\n  every turn through its serialized messages (Section 10.6)",
       "sha256": "a32a54f0625f26c6530f21ce8bdad0469c686191f2d4260d137d1a9301f7450f"
     },
@@ -35164,7 +35911,7 @@
       "kind": "behavior",
       "applies": "§26.1 Level 0: Core (REQUIRED); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "26.1",
-      "line": 23753,
+      "line": 23817,
       "text": "**Triggers and framework events.** A Level 0 implementation MUST fire each\nhook trigger, and emit each framework event, that the table below names for a\nstep or an operation, whenever that step or operation runs. The table is\nLevel 0's conformance list; the Status column of Section 9.2 tells what one\nimplementation emits, not what conformance requires. A feature of a higher level, or one no level\nlists, owes the triggers and the framework events its own section names, and\nonly an implementation that provides it owes them: identity resolution\n(Level 1) owes ON_IDENTITY_AMBIGUOUS and ON_IDENTITY_UNKNOWN at §10.1 step 5,\nidentity verification (Level 2) ON_VERIFICATION_REQUIRED at step 5b and the\nother triggers of Section 11.7, and an AI channel (Level 1) the triggers of\nits turn (Section 6.4). Section 8.2 says which level or feature owes each\nframework event.\n\n| Step or operation | Hook triggers | Framework events |\n|---|---|---|\n| A room created, by the integrator or at §10.1 step 2 | ON_ROOM_CREATED | room_created |\n| §10.1 step 2: a room created for a channel other than VOICE and REALTIME_VOICE | ON_SESSION_STARTED | session_started |\n| A channel attached to a room, by the integrator or at §10.1 step 2 | ON_CHANNEL_ATTACHED | room_channel_attached |\n| A channel detached from a room | ON_CHANNEL_DETACHED | room_channel_detached |\n| A channel muted or unmuted in a room (§7.2) | ON_CHANNEL_MUTED, ON_CHANNEL_UNMUTED | — |\n| A channel registered with the framework, or unregistered | — | channel_registered, channel_unregistered |\n| A room transitioned to PAUSED (§5.1) | ON_ROOM_PAUSED | room_paused, when its inactivity timer paused it |\n| A room transitioned to CLOSED | ON_ROOM_CLOSED | room_closed |\n| A room transitioned to ARCHIVED | — | room_archived |\n| An event the room's status refuses (§5.1, §10.1 steps 6 and 9a) | — | room_refused_event |\n| §10.1 steps 5a and 9 | BEFORE_BROADCAST | hook_error |\n| §10.1 steps 10 and 11 | — | event_blocked |\n| §10.1 steps 10, 11 and 15: a task stored | ON_TASK_CREATED | — |\n| §10.2 step 3c: a record the chain depth limit stores (§8.3) | — | chain_depth_exceeded |\n| §10.2 step 3c: a turn that failed or returned an error (§6.1, §10.6.8) | ON_ERROR | — |\n| §10.2 steps 3c and 3d: a target's `on_event()` or `deliver()`; a solicited intelligence channel no longer registered (§10.2 step 3) | — | delivery_succeeded, delivery_failed, broadcast_partial_failure |\n| §10.1 step 16 | AFTER_BROADCAST | — |\n| §10.1 step 17 | — | event_processed |\n| §10.3: an EDIT or a DELETE committed; a direct `update_event()` or `delete_event()` | ON_EVENT_UPDATED, ON_EVENT_DELETED | — |\n| A hook that exceeds its timeout (§9.1) | — | hook_timeout |",
       "sha256": "24622d21bf8a3e9669c001640615db9595572a943f4cf07a7289e5b7c449272e"
     },
@@ -35173,7 +35920,7 @@
       "kind": "behavior",
       "applies": "§26.2 Level 1: Transport (RECOMMENDED); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "26.2",
-      "line": 23793,
+      "line": 23857,
       "text": "A Level 1 implementation SHOULD additionally support:\n\n- At least one SMS provider\n- At least one Email provider\n- WebSocket channel\n- HTTP/Webhook channel\n- AI channel with at least one AI provider\n- Agent class (AIChannel subclass with identity metadata)\n- Provider abstraction (swappable per channel type)\n- Identity resolution pipeline (Section 10.1 step 5, Sections 11.1–11.6)\n- Identity hooks (ON_IDENTITY_AMBIGUOUS, ON_IDENTITY_UNKNOWN)\n- Participant model with identification status\n- Memory system with at least SlidingWindowMemory (Section 20)\n- Circuit breaker\n- Retry policy\n- Rate limiting\n- Telemetry provider abstraction (Section 15.7)",
       "sha256": "ba9e5ad432adf3ad2b39533e3c9110350aa0690960a42a55308c124e9c1a174d"
     },
@@ -35182,7 +35929,7 @@
       "kind": "behavior",
       "applies": "§26.3 Level 2: Rich (OPTIONAL); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "26.3",
-      "line": 23815,
+      "line": 23879,
       "text": "A Level 2 implementation MAY additionally support:\n\n- Transport channels to messaging platforms, with their rich content: rich\n  text, media, buttons, reactions, edits and deletes as each platform carries\n  them (e.g., WhatsApp Business or Personal, Messenger, Teams, Telegram)\n- RCS channel with SMS fallback\n- Template content support\n- Source providers (persistent connections)\n- REST API (Section 16.1)\n- MCP Server (Section 16.2)\n- ACP agent channel (Section 6.4)\n- Realtime/ephemeral events backend\n- Per-room hooks\n- Multi-agent orchestration (Section 19):\n  - ConversationRouter with routing rules, addresses taking precedence\n    (Section 19.4, step 0)\n  - Both agent-response policies, selectable per room (Section 19.3.1)\n  - ConversationPipeline with stages\n  - HandoffHandler with tool-based handoff protocol\n  - At least Pipeline and Swarm strategies; Discussion MAY be provided\n    (Section 19.7.5)\n- Tool access control with ToolPolicy (Section 21)\n- Task delegation with child rooms (Section 23)\n- Delivery strategies: Immediate, WaitForIdle, Queued (Section 22)\n- Skills framework with SkillRegistry (Section 24)\n- Image generation through an ImageProvider decoupled from the AI provider\n  (Section 25)\n- Response schemas: an AI provider constraining its answer to a portable\n  JSON Schema (Section 6.7)\n- Identity verification: requests, labels, holding and release, the three\n  verification triggers (Section 10.1 step 5b, Section 11.7)\n- AI steering directives (Section 21.3)\n- Advanced memory providers: Summarizing, Retrieval (Section 20)\n- A turn backend whose executors run in other processes (Section 10.6)",
       "sha256": "74e8bf90c0d85a2fa7072e20b130f97d725a0c2134d7d6c8a90a7b43f0c45ca3"
     },
@@ -35191,7 +35938,7 @@
       "kind": "behavior",
       "applies": "§26.4 Level 3: Real-Time Media (OPTIONAL); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "26.4",
-      "line": 23854,
+      "line": 23918,
       "text": "A Level 3 implementation MAY additionally support audio and/or video real-time media:\n\n#### Audio (Voice)\n\n- Audio Processing Pipeline with:\n  - AudioFrame and AudioFormat data models\n  - AudioPipelineConfig with pipeline format contract\n  - ResamplerConfig (RECOMMENDED)\n  - VADProvider interface with at least one implementation (e.g., Silero) — REQUIRED for VoiceChannel, OPTIONAL for RealtimeVoiceChannel\n  - DenoiserProvider interface (OPTIONAL, e.g., sherpa-onnx)\n  - AECProvider interface (OPTIONAL, RECOMMENDED for non-WebRTC transports)\n  - AGCProvider interface (OPTIONAL, built-in implementation REQUIRED)\n  - DTMFDetector interface (OPTIONAL, RECOMMENDED for SIP/PSTN)\n  - DiarizationProvider interface (OPTIONAL)\n  - TurnDetector interface (OPTIONAL)\n  - BackchannelDetector interface (OPTIONAL)\n  - AudioRecorder interface (OPTIONAL, RECOMMENDED for regulated industries)\n  - AudioPostProcessor interface (OPTIONAL)\n  - InterruptionConfig\n- Voice channel (STT/TTS pipeline)\n- VoiceBackend interface with at least one implementation\n- AudioCaptureSource interface (OPTIONAL, REQUIRED for capture that outlives a session — Section 12.12)\n- Packet loss concealment for lossy transports (OPTIONAL, RECOMMENDED for RTP backends — Section 12.2.1)\n- TTS conversation context — TTSContextLevel, TTSContext, `release_context` (OPTIONAL — Section 12.2.2)\n- STTProvider interface with at least one implementation\n- TTSProvider interface with at least one implementation\n- Voice catalog — `VoiceInfo`, `available_voices`, `list_voices` (OPTIONAL — Section 12.2)\n- Dialogue synthesis — `synthesize_dialogue`, `DialogueTurn` (OPTIONAL — Section 12.2)\n- VoiceLibrary interface — custom voices, designed or replicated with consent (OPTIONAL — Section 12.2.4)\n- Voice hooks (ON_SPEECH_START through ON_RECORDING_STOPPED)\n- Barge-in and interruption handling (InterruptionStrategy)\n- Audio bridging — AudioBridge (OPTIONAL — Section 12.7)\n- Realtime Voice channel (speech-to-speech)\n- RealtimeVoiceProvider interface\n- Full-duplex providers and reasoning delegation (OPTIONAL — Section 12.4.1)\n- RealtimeAudioTransport interface\n- Realtime voice hooks (ON_TOOL_CALL, ON_REALTIME_TEXT_INJECTED, ON_PROTOCOL_TRACE)\n- Protocol trace infrastructure (ProtocolTrace, emit_trace, on_trace, pre-room buffering)\n\n#### Video\n\n- Video data models:\n  - VideoFrame — inbound frame container (encoded NAL units or raw pixels)\n  - VideoChunk — outbound encoded frame container\n  - VideoSession — active video connection state\n  - VideoCapability flags (SIMULCAST, SVC, SCREEN_SHARE, RECORDING, BANDWIDTH_ESTIMATION)\n- VideoBackend interface — transport abstraction (connect, disconnect, send_video, callbacks)\n- VideoChannel — session-based channel orchestrator:\n  - Session lifecycle with dual-signal ready mechanism (matching VoiceChannel pattern)\n  - Hook triggers: ON_VIDEO_SESSION_STARTED, ON_VIDEO_SESSION_ENDED, ON_VISION_RESULT, ON_VIDEO_DETECTION, BEFORE_BRIDGE_VIDEO (ON_VIDEO_TRACK_ADDED and ON_VIDEO_TRACK_REMOVED are Planned, Section 9.2)\n  - Optional VisionProvider integration with configurable analysis interval\n  - Vision results emitted as framework events (video_vision_result)\n- VisionProvider interface — frame analysis abstraction:\n  - analyze_frame(frame, prompt, response_schema) → VisionResult (description, labels, confidence, faces, OCR text)\n  - analyze_stream(frames, interval_ms, assumed_fps) for streaming analysis (Section 12.8.7)\n- VideoRecorder interface (OPTIONAL — Section 12.8.10)\n- AI integration: vision results reach the AI channels' turns as a `<vision>` block (Section 12.8.7); `setup_video_vision()` is deprecated and wires nothing\n- Video and voice channels operate independently in the same room, enabling combined audio+video sessions where the AI can both hear (via STT) and see (via VisionProvider)\n\n#### Room media recording\n\n- MediaRecorder interface (OPTIONAL — Section 12.11); REQUIRED for an\n  implementation that records conferences in framework mode (Section 12.10.8)\n\n#### Conference (SFU)\n\n- Conference data models (ConferenceTrack, TrackKind, ConferenceParticipant,\n  ConferenceGrants, ConferenceAccess, BotSession, ConferenceCapability)\n- ConferenceBackend interface with MockConferenceBackend (Section 12.10.3)\n- ConferenceChannel with per-track STT lanes and bot TTS publication\n  (Section 12.10.4)\n- Conference hooks (ON_CONFERENCE_PARTICIPANT_JOINED/LEFT,\n  ON_CONFERENCE_TRACK_PUBLISHED/UNPUBLISHED, ON_CONFERENCE_TRACK_MUTED/UNMUTED,\n  ON_ACTIVE_SPEAKER_CHANGED, ON_CONNECTION_QUALITY_CHANGED, and\n  ON_SCREEN_SHARE_STARTED/STOPPED for screen-share tracks)\n- Explicit track subscription, participant identity correlation, and bot\n  self-exclusion (Sections 12.10.2–12.10.4)\n- Multi-party interruption policy (ConferenceInterruptionConfig)\n- Participant lifecycle integration (conference events create/update\n  Participant records)\n- Optional: vision on tracks (Planned), egress recording delegation, SIP gateway\n  interop, bot video publication (avatar), speech-to-speech composition",
       "sha256": "a2502397c43666145f5ffc1ee0f2a97c8a92e9fe9f0adc228f5381a03c92f193"
     },
@@ -35200,7 +35947,7 @@
       "kind": "structural",
       "applies": "§A.1 SMS Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "A.1",
-      "line": 23945,
+      "line": 24009,
       "text": "```\nSMSChannel\n├── type: SMS\n├── category: TRANSPORT\n├── direction: BIDIRECTIONAL\n├── media_types: [TEXT, MEDIA]\n├── capabilities:\n│   ├── max_length: int (the platform's limit, in the implementation's documentation)\n│   ├── supports_read_receipts: true\n│   ├── supports_media: true\n│   ├── supported_media_types: [\"image/jpeg\", \"image/png\", \"image/gif\"]\n│   ├── supports_edit: false\n│   └── supports_delete: false\n├── provider_interface: SMSProvider\n│   ├── send(event, to, from) → ProviderResult\n│   ├── parse_webhook(payload) → InboundMessage\n│   └── verify_signature(payload, signature, timestamp) → bool\n└── binding_metadata:\n    └── phone_number: string (recipient)\n```",
       "sha256": "3b3a11b05e98f4dd18dc65b8de0f62bb0915de5d5a85f10b87eb3f78456e9629"
     },
@@ -35209,7 +35956,7 @@
       "kind": "structural",
       "applies": "§A.2 Email Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "A.2",
-      "line": 23970,
+      "line": 24034,
       "text": "```\nEmailChannel\n├── type: EMAIL\n├── category: TRANSPORT\n├── direction: BIDIRECTIONAL\n├── media_types: [TEXT, RICH, MEDIA]\n├── capabilities:\n│   ├── max_length: null (unlimited)\n│   ├── supports_threading: true\n│   ├── supports_rich_text: true\n│   ├── supports_media: true\n│   ├── supports_edit: false\n│   └── supports_delete: false\n├── provider_interface: EmailProvider\n│   ├── send(event, to, from, subject) → ProviderResult\n│   └── parse_inbound(payload) → InboundMessage\n└── binding_metadata:\n    ├── email_address: string (recipient)\n    └── subject: string | null\n```",
       "sha256": "b212c3aa9165e682dc408e751bfcc956d5350e209be0d09a70c39ce8744e9d33"
     },
@@ -35218,7 +35965,7 @@
       "kind": "structural",
       "applies": "§A.3 WhatsApp Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "A.3",
-      "line": 23995,
+      "line": 24059,
       "text": "```\nWhatsAppChannel\n├── type: WHATSAPP\n├── category: TRANSPORT\n├── direction: BIDIRECTIONAL\n├── media_types: [TEXT, RICH, MEDIA, LOCATION, TEMPLATE]\n├── capabilities:\n│   ├── max_length: int (the platform's limit, in the implementation's documentation)\n│   ├── supports_reactions: true\n│   ├── supports_templates: true\n│   ├── supports_buttons: true (max 3)\n│   ├── supports_quick_replies: true\n│   ├── supports_read_receipts: true\n│   ├── supports_media: true\n│   ├── supports_edit: true\n│   └── supports_delete: true\n├── provider_interface: WhatsAppProvider\n│   ├── send(event, to) → ProviderResult\n│   ├── send_template(template, to) → ProviderResult\n│   └── send_reaction(chat, message_id, emoji) → ProviderResult\n└── binding_metadata:\n    └── phone_number: string (recipient)\n```",
       "sha256": "639a642ffdf7fda4fafc44a9ba41f96f6ee02d48f649d5319c04a58579f5c10d"
     },
@@ -35227,7 +35974,7 @@
       "kind": "structural",
       "applies": "§A.4 WhatsApp Personal Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "A.4",
-      "line": 24023,
+      "line": 24087,
       "text": "```\nWhatsAppPersonalChannel\n├── type: WHATSAPP_PERSONAL\n├── category: TRANSPORT\n├── direction: BIDIRECTIONAL\n├── media_types: [TEXT, RICH, MEDIA, AUDIO, VIDEO, LOCATION]\n├── capabilities:\n│   ├── max_length: int (the platform's limit, in the implementation's documentation)\n│   ├── supports_reactions: true\n│   ├── supports_typing: true\n│   ├── supports_read_receipts: true\n│   ├── supports_audio: true\n│   ├── supports_video: true\n│   ├── supports_media: true\n│   ├── supports_edit: true\n│   └── supports_delete: true\n├── source: WhatsAppPersonalSourceProvider\n│   └── Persistent WhatsApp Web multidevice connection\n├── provider_interface: WhatsAppPersonalProvider\n│   ├── send_message(jid, text) → ProviderResult\n│   ├── send_image(jid, data, caption) → ProviderResult\n│   ├── send_audio(jid, data, ptt) → ProviderResult\n│   ├── send_video(jid, data, caption) → ProviderResult\n│   ├── send_document(jid, data, filename) → ProviderResult\n│   ├── send_location(jid, lat, lon, name, address) → ProviderResult\n│   └── send_reaction(chat, sender, message_id, emoji) → ProviderResult\n├── binding_metadata:\n│   └── phone_number: string (recipient)\n└── chat_key: group_jid (a group message's group; a private message is its\n    sender's, §5.7)\n```",
       "sha256": "21508b52e7d7798479f896bb2ea87e8c8faaa25bf260c963d52caeae5efe5540"
     },
@@ -35236,7 +35983,7 @@
       "kind": "structural",
       "applies": "§A.5 Messenger Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "A.5",
-      "line": 24059,
+      "line": 24123,
       "text": "```\nMessengerChannel\n├── type: MESSENGER\n├── category: TRANSPORT\n├── direction: BIDIRECTIONAL\n├── media_types: [TEXT, RICH, MEDIA, TEMPLATE]\n├── capabilities:\n│   ├── max_length: int (the platform's limit, in the implementation's documentation)\n│   ├── supports_buttons: true (max 3)\n│   ├── supports_quick_replies: true\n│   ├── supports_read_receipts: true\n│   ├── supports_media: true\n│   ├── supports_edit: false\n│   └── supports_delete: true\n├── provider_interface: MessengerProvider\n│   ├── send(event, recipient_id) → ProviderResult\n│   └── parse_webhook(payload) → InboundMessage\n└── binding_metadata:\n    └── facebook_user_id: string (recipient)\n```",
       "sha256": "ed326b83e638da3f7f8b54d0981ff1280afbdf589e61e67acd0455fa86625adf"
     },
@@ -35245,7 +35992,7 @@
       "kind": "structural",
       "applies": "§A.6 Teams Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "A.6",
-      "line": 24084,
+      "line": 24148,
       "text": "```\nTeamsChannel\n├── type: TEAMS\n├── category: TRANSPORT\n├── direction: BIDIRECTIONAL\n├── media_types: [TEXT, RICH]\n├── capabilities:\n│   ├── max_length: int (the platform's limit, in the implementation's documentation)\n│   ├── supports_threading: true\n│   ├── supports_reactions: true\n│   ├── supports_read_receipts: true\n│   ├── supports_rich_text: true\n│   ├── supports_edit: true\n│   └── supports_delete: true\n├── provider_interface: TeamsProvider\n│   ├── send(event, conversation_reference) → ProviderResult\n│   ├── parse_webhook(activity) → InboundMessage\n│   └── save_conversation_reference(activity) → void\n├── requires: ConversationReferenceStore\n├── binding_metadata:\n│   └── teams_conversation_id: string (recipient: the chat, §5.7)\n└── chat_key: conversation_id\n```",
       "sha256": "9b7debd876291bf46d024fa3e9358b4d579983ebd649dfbd6392eb7a5b86c147"
     },
@@ -35254,7 +36001,7 @@
       "kind": "structural",
       "applies": "§A.7 RCS Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "A.7",
-      "line": 24112,
+      "line": 24176,
       "text": "```\nRCSChannel\n├── type: RCS\n├── category: TRANSPORT\n├── direction: BIDIRECTIONAL\n├── media_types: [TEXT, RICH, MEDIA]\n├── capabilities:\n│   ├── max_length: int (the platform's limit, in the implementation's documentation)\n│   ├── supports_buttons: true\n│   ├── supports_cards: true\n│   ├── supports_quick_replies: true\n│   ├── supports_read_receipts: true\n│   ├── supports_typing: true\n│   ├── supports_media: true\n│   ├── supports_edit: false\n│   └── supports_delete: false\n├── provider_interface: RCSProvider\n│   ├── send(event, to) → RCSDeliveryResult\n│   ├── check_capability(phone) → bool\n│   └── RCSDeliveryResult includes: channel_used, fallback flag\n├── binding_metadata:\n│   └── phone_number: string (recipient)\n└── configuration:\n    └── fallback: bool (auto-fallback to SMS when RCS unavailable)\n```",
       "sha256": "1ded2da928235d132a1150e2dee6e8a2ca42ac48fac6afbdabbe174c67452934"
     },
@@ -35263,7 +36010,7 @@
       "kind": "structural",
       "applies": "§A.8 WebSocket Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "A.8",
-      "line": 24142,
+      "line": 24206,
       "text": "```\nWebSocketChannel\n├── type: WEBSOCKET\n├── category: TRANSPORT\n├── direction: BIDIRECTIONAL\n├── media_types: [TEXT, RICH, MEDIA, AUDIO, VIDEO, LOCATION]\n├── capabilities:\n│   ├── max_length: null (unlimited)\n│   ├── supports_typing: true\n│   ├── supports_read_receipts: true\n│   ├── supports_reactions: true\n│   ├── supports_buttons: true\n│   ├── supports_cards: true\n│   ├── supports_quick_replies: true\n│   ├── supports_audio: true\n│   ├── supports_video: true\n│   ├── supports_media: true\n│   ├── supports_edit: true\n│   └── supports_delete: true\n├── connection_registry: map<connection_id, send_function>\n│   ├── register_connection(id, send_fn, room_id,\n│   │       stream_send_fn: function | null,\n│   │       organization_id: string | null) → void\n│   │       # Subscribes the connection to room_id; with stream_send_fn\n│   │       # it also receives streamed responses as they are produced.\n│   │       # With organization_id the connection is that organization's:\n│   │       # refused for an id held for another organization or for none\n│   │       # (§17.2)\n│   ├── subscribe(id, room_id, organization_id: string | null) → void\n│   │       # Also deliver room_id's events; scoped: only the\n│   │       # organization's connection\n│   ├── unsubscribe(id, room_id, organization_id: string | null) → void\n│   │       # Stop delivering room_id's events; scoped as subscribe\n│   └── unregister_connection(id, organization_id: string | null) → void\n│           # Also drops its subscriptions; scoped: refused for a\n│           # connection not registered for the organization, nothing changed\n└── delivery: sends to the connections subscribed to the event's room,\n    none registered for another organization than the room's (§17.2);\n    a stream sends only to the registrations present when it started,\n    checked as each send starts; a connection without stream_send_fn\n    reads each row the stream hands, once, and nothing more; the end a\n    connection with stream_send_fn reads carries no text a handed row\n    does not carry; a stream cut from outside ends with the row\n    deliver_cut is handed (§12.2 step 13s), which the connections with\n    stream_send_fn read in its end, and the others once\n```",
       "sha256": "de86a5534be2dfbc4203876f841b6ea55836551dff3a4fa978d167ec3e42e14c"
     },
@@ -35272,7 +36019,7 @@
       "kind": "structural",
       "applies": "§A.9 AI Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "A.9",
-      "line": 24193,
+      "line": 24257,
       "text": "```\nAIChannel\n├── type: AI\n├── category: INTELLIGENCE\n├── direction: BIDIRECTIONAL\n├── media_types: [TEXT, RICH, MEDIA]\n├── capabilities:\n│   ├── supports_rich_text: true (provider-dependent)\n│   ├── supports_edit: false\n│   └── supports_delete: false\n├── configuration:\n│   ├── provider: AIProvider | null         # Serves every turn; one of provider and router\n│   ├── router: AIRouter | null             # Picks each turn's provider (Section 6.4)\n│   ├── system_prompt: string | null\n│   ├── temperature: float | null\n│   ├── max_tokens: int | null\n│   ├── max_context_events: int | null\n│   ├── thinking_budget: int | null         # Token budget for extended thinking/reasoning\n│   ├── enable_thinking: bool | null        # Reasoning switch, after thinking_budget (Section 6.7)\n│   ├── reasoning_effort: string | null     # How much the model reasons (Section 6.7)\n│   ├── response_schema: map | null         # Each turn answers in this JSON Schema (Section 6.7)\n│   ├── max_tool_rounds: int (default 50)   # Maximum tool call iterations per generation\n│   ├── max_empty_retries: int (default 1)  # Tries an empty round and the continuation share\n│   ├── continuation: policy | null         # Goes on an answer that did not act (Section 6.4)\n│   ├── turn_budget_tokens: int | null      # Billed tokens a turn may spend (Section 6.4)\n│   ├── turn_budget_usd: float | null       # What a turn may cost at the catalogue price\n│   ├── tool_loop_timeout_seconds: float | null (default 300)  # Timeout for entire tool loop\n│   ├── retry_policy: RetryPolicy | null    # Tries a generation again (Section 6.4)\n│   ├── evict_threshold_tokens: int (default 5000)  # Token threshold for context eviction\n│   ├── memory: MemoryProvider | null       # Pluggable context construction (Section 20)\n│   ├── describe_empty_event: callable | null # What an event with no content reads as\n│   ├── max_author_images: int | null (default 4)  # Newest author images a turn sends (Section 6.4)\n│   ├── publish_thinking_text: bool (default false)  # Reasoning text on the realtime channel (Section 8.4)\n│   ├── publish_tool_call_text: bool (default false)  # Tool calls' arguments and results on it (Section 8.4)\n│   ├── tool_policy: ToolPolicy | null      # Tool access control (Section 21)\n│   └── skills: SkillRegistry | null        # Available skills (Section 24)\n├── per_room_overrides (via binding metadata):\n│   ├── system_prompt\n│   ├── temperature\n│   ├── max_tokens\n│   ├── thinking_budget\n│   ├── enable_thinking\n│   ├── reasoning_effort\n│   ├── response_schema\n│   ├── turn_budget_tokens\n│   ├── turn_budget_usd\n│   └── tools\n├── ai_message_parts:\n│   │   # AIMessage content parts (AIContentPart, Section 6.7), in the\n│   │   # conversation a turn is built from and its tool loop extends:\n│   ├── AITextPart                          # Text content\n│   ├── AIImagePart                         # Image content\n│   ├── AIThinkingPart                      # Chain-of-thought reasoning (preserved in history)\n│   ├── AIToolCallPart                      # Function call with name and arguments\n│   └── AIToolResultPart                    # Tool execution result\n└── behavior:\n    ├── on_event() builds conversation history + target capabilities\n    ├── Reads provider.generate_structured_stream(context) (generate() wrapped when it does not stream)\n    ├── Runs one tool loop: generate → call tools → feed results → re-generate (up to max_tool_rounds)\n    ├── Skips events from self (loop prevention)\n    └── Returns ChannelOutput with a response stream, which the framework\n        delivers with deliver_stream() and stores segment by segment\n```",
       "sha256": "179d97d4c48d62b47000222c171537c7e5900c22d3e0d4962306197b96d5a720"
     },
@@ -35281,7 +36028,7 @@
       "kind": "behavior",
       "applies": "§A.9 AI Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "A.9",
-      "line": 24259,
+      "line": 24323,
       "text": "**Per-turn settings.** Each per-turn setting (`system_prompt`, `temperature`,\n`max_tokens`, `thinking_budget`, `enable_thinking`, `reasoning_effort`,\n`response_schema`, `turn_budget_tokens`, `turn_budget_usd`) resolves from the\nbinding metadata, then the channel's per-turn configuration, then the channel\ndefault. A level that does not set it, its key absent or `null`, defers to the\nnext: `null` never clears a setting, at either level, so an integrator that\nserializes an empty form field as `null` keeps the next level's value. A\nsetting is lifted for one room only by an explicit value that states off\n(`thinking_budget: 0`, `enable_thinking: false`, `reasoning_effort: \"none\"`,\n`system_prompt: \"\"`). The reasoning switch is read across two keys (Section\n6.7): an `enable_thinking: false` set at a level turns reasoning off whatever\n`thinking_budget` a less specific level set, while a budget set at the same or\na more specific level still states the switch. A setting with no value that\nstates off (`temperature`, `max_tokens`, `response_schema`, and the turn\nbudgets of Section 6.4) cannot be lifted for a room once a less specific level\nsets it, only replaced. The binding's `tools` is a toolset of its own, and a\n`null` there declares none, like an absent key. The per-turn configuration's\n`tools`, when it gives them, replace the binding's for that turn. Either\ntoolset is declared before the tools the channel was built with, and none of\nits tools under the name of one of those, of a tool the channel provides or of\none the room's setup serves it (Section 21.1) is declared: that tool stands. A\nbinding's value is read as its setting's type reads one of another kind: a\nnumber written as a text, a whole float or a whole number's text for an integer, a boolean for a number\n(`\"0.3\"` reads 0.3, `64.0` and `\"100\"` read 64 and 100). One that does not read\nso (a `temperature` of `\"hot\"`, a `max_tokens` of `1.5`, a `system_prompt` that\nis no text) fails the turn before its model is asked, its error naming every\nsetting refused, and so does a `turn_budget_tokens` that is not a positive\ninteger or a `turn_budget_usd` that is not a positive number, the budgets read\nstrictly (a text or a boolean refused): a binding written wrong shows at its\nfirst turn, never replaced by the next level's value.\n\nThe per-turn configuration may also give the turn a skill registry of its own\n(Section 24.3). It is not a binding setting: it replaces the channel's registry\nfor that turn alone, and a turn that gives none reads the channel's.\nIt may give the turn a tool handler of its own the same way: it serves the\nhost's tools for that turn in place of the channel's handler, the tools the\nchannel was built with that serve themselves included, and a turn that gives\nnone, the next one included, reads the channel's.\nIt may give the bounds of the turn's tool calls the same way (Section 21.6):\nabove the channel's own bounds per tool name, for that turn alone.",
       "sha256": "b48616192c45cfbab4ea9b916f76433b11c126942b09201d1cf4f3fcc7be3420"
     },
@@ -35290,7 +36037,7 @@
       "kind": "behavior",
       "applies": "§A.9 AI Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "A.9",
-      "line": 24302,
+      "line": 24366,
       "text": "**Constrained turn.** A turn's `response_schema` resolves like the other\nper-turn settings. When it is set, the channel MUST NOT\ndeliver or store any of the answer's text before the provider's check has\npassed (Section 6.7): a streamed answer is held until the done event, and a\nfailed check fails the turn with its `ResponseSchemaError`, leaving nothing in\nthe room. A turn whose tool loop stops before a final answer, on its round cap,\nits deadline or its spending budget, because it was stopped, or because the provider interrupted it\nafter a round, has no document to deliver and fails with `truncated`. The turn's tools include those the channel adds itself\n(skills, sandbox, planning, orchestration), so a schema on a channel that adds\nany needs a provider whose `supports_response_schema_with_tools` is true.",
       "sha256": "4f6ac0f79eed8fcf26aba15adc91d9654ec3de4635cd73842a9a5596b2ae3e72"
     },
@@ -35299,7 +36046,7 @@
       "kind": "behavior",
       "applies": "§A.9.1 ACP Agent Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "A.9.1",
-      "line": 24317,
+      "line": 24381,
       "text": "```\nACPChannel\n├── type: AI\n├── category: INTELLIGENCE\n├── direction: BIDIRECTIONAL\n├── media_types: [TEXT, RICH]\n├── protocol side: ACP client (external coding agent is the ACP server)\n├── transport:\n│   ├── stable default: stdio\n│   ├── command: argument vector (never shell-expanded)\n│   └── protocol_version: stable ACP version\n├── sessions:\n│   ├── one ACP connection per channel instance\n│   ├── one ACP session per Room\n│   ├── a standalone turn: its own session, declared as the turn's (§10.1.1)\n│   ├── setup on every open: mcp_servers for the Room, session_config, then the\n│   │   values the host set on the Room; a refused value fails the open\n│   └── prompts serialized per session\n├── configuration:\n│   ├── command: list<string>\n│   ├── cwd: absolute path\n│   ├── additional_directories: list<absolute path>\n│   ├── environment: map<string, string> | null\n│   ├── authentication_method: string | null\n│   ├── mcp_servers: list<ACP MCPServer> | (room_id) → list<ACP MCPServer>\n│   ├── session_config: map<string, string | bool> | null  # set on every session opened\n│   ├── publish_tool_call_text: bool (default false)  # room tool notifications (§8.4)\n│   ├── external_tool_handler: ExternalToolHandler | null\n│   ├── name, role, description: string | null  # its identity, as an Agent's (§6.4)\n│   └── instructions: string | null             # sent once per session (§6.4)\n├── update_mapping:\n│   ├── agent_message_chunk → text stream delta\n│   ├── agent_thought_chunk → thinking stream marker + ephemeral event\n│   ├── tool_call_start/progress → tool-call markers + ephemeral events\n│   └── agent_plan_update → ephemeral custom event\n├── end_of_turn:\n│   ├── completed turn → ON_AI_RESPONSE (text, tool count, duration, usage)\n│   ├── errored or abandoned turn → no trigger\n│   └── usage: agent's token counters relayed unaltered, plus context and cost\n└── safety:\n    ├── filesystem/terminal client capabilities disabled by default\n    ├── permission requests denied by default\n    ├── cancellation forwarded to ACP session\n    └── close releases sessions and process transport\n```\n\nACP response observations MAY include optional `usage_metadata` alongside the\nexisting numeric `usage` map. This metadata identifies the native session,\nmeasurement source and scope, separately from the host room/channel/request.\nA session cost MUST remain a cumulative observation, not a prompt cost; context\noccupancy/capacity MUST NOT be treated as consumed-token counters. Missing\nmeasurements MUST remain absent and reported zero MUST remain zero.\n\nTransport-provided report/session/result identities and timestamps MUST be\npreserved across recovery and replay when available. A recovered terminal\nsnapshot MUST NOT be combined with live observations from another session.\nAn observation without a source prompt identity MUST NOT be assigned one from\nthe currently active prompt. Locally assigned receipt identities MUST be\nidentified as local and MUST NOT imply durable continuity across resets.\nA model observed at prompt start or report receipt MUST NOT be claimed as the\nmodel responsible for a whole cumulative session cost.\n\nThe end-of-turn trigger remains unchanged: a consumed prompt response can\nreport a non-success stop reason; an exception or abandoned stream is not a\nresponse. Intermediate usage observations MAY remain observable as ephemeral\nevents in those cases, but do not establish successful completion or durable\naccounting. No tariff, credit policy or inferred cost delta is specified here.",
       "sha256": "676d50af70b75f6e4feccf615b6d21631c9b987f7574049cc81858bcc0704c9e"
     },
@@ -35308,7 +36055,7 @@
       "kind": "structural",
       "applies": "§A.10 Voice Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "A.10",
-      "line": 24389,
+      "line": 24453,
       "text": "```\nVoiceChannel\n├── type: VOICE\n├── category: TRANSPORT\n├── direction: BIDIRECTIONAL\n├── media_types: [AUDIO]\n├── requires:\n│   ├── stt: STTProvider\n│   ├── tts: TTSProvider\n│   ├── backend: VoiceBackend\n│   └── audio_pipeline: AudioPipelineConfig\n├── configuration:\n│   ├── streaming: bool (default true)\n│   ├── interruption: InterruptionConfig | null   # Section 12.6 — the current surface\n│   ├── enable_barge_in: bool (default true)      # legacy; superseded by interruption\n│   └── barge_in_threshold_ms: int (default 200)  # legacy; maps to allow_during_first_ms\n│                                                 # (IMMEDIATE strategy; used only when\n│                                                 # no InterruptionConfig is given)\n├── streaming_delivery:\n│   ├── supports_streaming_delivery: bool\n│   │   # True when TTS supports streaming input AND backend is configured\n│   └── deliver_stream(text_stream, event, binding, context) → ChannelOutput\n│       # Pipes text stream → sentence_splitter → synthesize_stream_input → outbound → transport\n│       # Fires AFTER_TTS hook after stream completes\n├── session_management:\n│   ├── bind_session(session, room_id, binding)\n│   └── unbind_session(session)\n└── delivery:\n    ├── Standard path:\n    │   ├── AudioContent → [postprocessors] → [recorder] → [resampler] → transport → [AEC ref †]\n    │   ├── TextContent → TTS → AudioChunk stream → outbound pipeline → transport → [AEC ref †]\n    │   └── Other (system, tool-call, a composite keeping a part that is\n    │       neither text nor audio) → not spoken, no delivery error\n    ├── Streaming AI → TTS path (framework-native):\n    │   └── Framework pipes AIChannel.response_stream → deliver_stream()\n    │       → sentence_splitter → synthesize_stream_input() → outbound pipeline → transport\n    └── † AEC ref fed at transport level (local hw) or pipeline level (network) — see 12.3.4\n```",
       "sha256": "46cff283fc9a68c7d3b5879699f2d876425cb02b2a7319cb6e55c7ce51a1bfcb"
     },
@@ -35317,7 +36064,7 @@
       "kind": "structural",
       "applies": "§A.11 Realtime Voice Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "A.11",
-      "line": 24432,
+      "line": 24496,
       "text": "```\nRealtimeVoiceChannel\n├── type: REALTIME_VOICE\n├── category: TRANSPORT\n├── direction: BIDIRECTIONAL\n├── media_types: [AUDIO]\n├── requires:\n│   ├── provider: RealtimeVoiceProvider\n│   ├── transport: RealtimeAudioTransport\n│   ├── reasoning_backend: ReasoningBackend | null  # OPTIONAL: serves integrator-side reasoning delegation (Section 12.4.1)\n│   └── audio_pipeline: AudioPipelineConfig | null  # OPTIONAL in speech-to-speech mode\n├── configuration:\n│   ├── system_prompt: string | null\n│   ├── voice: string | null\n│   ├── tools: list<ToolDefinition>\n│   ├── temperature: float | null\n│   ├── input_sample_rate: int\n│   ├── output_sample_rate: int\n│   ├── reasoning_timeout_s: float              # Bound on one delegation's run (Section 12.4.1)\n│   └── emit_transcription_events: bool\n├── session_management:\n│   ├── start_session(room_id, participant_id, connection, metadata, organization_id)\n│   └── end_session(session)\n├── tool_handling:\n│   ├── async handler function (priority)\n│   └── ON_TOOL_CALL hook (fallback)\n└── delegation_handling:                            # Section 12.4.1\n    ├── hosted backend → its function calls go through tool_handling\n    └── integrator backend → reasoning_backend, outputs returned via submit_delegation_output\n```",
       "sha256": "30d9461bf837340c5139ba7f410ed29b2d1446dfd7a6434764f96810793fa87a"
     },
@@ -35326,7 +36073,7 @@
       "kind": "structural",
       "applies": "§A.12 Video Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "A.12",
-      "line": 24467,
+      "line": 24531,
       "text": "```\nVideoChannel\n├── channel_type: VIDEO\n├── category: TRANSPORT\n├── direction: BIDIRECTIONAL\n├── media_types: [VIDEO]\n├── requires:\n│   ├── backend: VideoBackend\n│   ├── vision: VisionProvider | null     # OPTIONAL\n│   └── vision_interval_ms: int           # default 2000\n├── session_lifecycle:\n│   ├── connect_video(room_id, participant_id, channel_id)\n│   ├── bind_session(session, room_id, binding)\n│   ├── unbind_session(session)\n│   └── disconnect_video(session)\n├── hooks:\n│   ├── ON_VIDEO_SESSION_STARTED — SessionStartedEvent\n│   ├── ON_VIDEO_SESSION_ENDED — SessionStartedEvent (same type as STARTED)\n│   ├── ON_VISION_RESULT, ON_VIDEO_DETECTION\n│   └── BEFORE_BRIDGE_VIDEO (Section 12.8.11)\n├── framework_events:\n│   ├── video_session_started\n│   ├── video_session_ended\n│   └── video_vision_result (description, labels, confidence, text, faces)\n├── ai_integration:\n│   └── vision results reach the AI turns as a `<vision>` block\n│       (Section 12.8.7); setup_video_vision() is deprecated, wires nothing\n└── backends:\n    ├── LocalVideoBackend — local camera capture (dev/testing)\n    ├── ScreenCaptureBackend — screen capture (screen sharing, monitoring)\n    ├── MockVideoBackend — Unit testing with call tracking\n    └── optional (MAY): WebRTC, RTP, SIP video, WebSocket backends\n```",
       "sha256": "94393d34776b61a72437606e0cc67a70d6d8e0bd359e615a7e69f0e53572dd2a"
     },
@@ -35335,7 +36082,7 @@
       "kind": "structural",
       "applies": "§A.13 Telegram Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "A.13",
-      "line": 24505,
+      "line": 24569,
       "text": "```\nTelegramChannel\n├── type: TELEGRAM\n├── category: TRANSPORT\n├── direction: BIDIRECTIONAL\n├── media_types: [TEXT, RICH, MEDIA, AUDIO, VIDEO, LOCATION]\n├── capabilities:\n│   ├── max_length: int (the platform's limit, in the implementation's documentation)\n│   ├── supports_rich_text: true (HTML subset)\n│   ├── supports_buttons: true (inline keyboards)\n│   ├── supports_edit: true\n│   ├── supports_delete: true\n│   └── supports_typing: true\n├── provider: TelegramBotProvider\n│   ├── bot_token: string (secret)\n│   ├── webhook_url: string | null\n│   ├── parse_webhook(request) → InboundMessage\n│   ├── verify_signature(request) → bool\n│   └── send(chat_id, content, options) → DeliveryResult\n├── binding_metadata:\n│   └── telegram_chat_id: string | int (recipient: the chat, §5.7; the\n│       framework writes a string)\n├── chat_key: chat_id\n└── delivery: sends via Telegram Bot API (sendMessage, sendPhoto, etc.)\n```",
       "sha256": "5d72c6286f4db9b4ce11e82470769be5199eb4cdece979726322d0b461c6f7a6"
     },
@@ -35344,7 +36091,7 @@
       "kind": "structural",
       "applies": "§A.14 CLI Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "A.14",
-      "line": 24535,
+      "line": 24599,
       "text": "```\nCLIChannel\n├── type: CLI\n├── category: TRANSPORT\n├── direction: BIDIRECTIONAL\n├── media_types: [TEXT]\n├── capabilities:\n│   ├── max_length: null (unlimited)\n│   └── supports_rich_text: false\n└── purpose: Development and testing via terminal stdin/stdout\n```",
       "sha256": "a83107d5ea04e53ba84baf42d43a935d9a5ae085adc64811ddaf98d79ccf00ce"
     },
@@ -35353,7 +36100,7 @@
       "kind": "structural",
       "applies": "§A.14.1 Host Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "A.14.1",
-      "line": 24553,
+      "line": 24617,
       "text": "```\nHostChannel\n├── type: HOST\n├── category: TRANSPORT\n├── direction: INBOUND             # brings the host's words in; never delivered to\n├── media_types: every type        # post() injects any content, transcoded per transport (§6.6)\n├── narrows: nothing               # an answer carries what the transports that send carry (§10.5)\n├── receives: nothing              # no external payload: post() and send_event inject\n└── purpose: The host application writing to a room's people in its own\n             name, through post() (§10.5)\n```",
       "sha256": "86a5251172162d72e5c41374140e5d909dc924a5fe1e3ea4f6e27d9d2476ffe4"
     },
@@ -35362,7 +36109,7 @@
       "kind": "structural",
       "applies": "§A.15 Conference Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "A.15",
-      "line": 24571,
+      "line": 24635,
       "text": "```\nConferenceChannel\n├── channel_type: CONFERENCE\n├── category: TRANSPORT\n├── direction: BIDIRECTIONAL\n├── media_types: [AUDIO]\n├── requires:\n│   ├── backend: ConferenceBackend\n│   ├── stt: STTProvider | null           # Per-track transcription\n│   ├── tts: TTSProvider | null           # AI voice via bot track\n│   ├── realtime: ConferenceRealtimeConfig | null  # OPTIONAL — speech-to-speech; excludes tts\n│   ├── pipeline: AudioPipelineConfig | null       # Lane stages; null = default VAD and format contract\n│   ├── vision: VisionProvider | null     # Planned — video/screen tracks\n│   ├── interruption: ConferenceInterruptionConfig\n│   ├── recording: ConferenceRecordingConfig | null\n│   ├── recorder: MediaRecorder | null    # Required with recording, refused without it\n│   ├── bot_identity: string              # Bot's display identity\n│   ├── bot_grants: ConferenceGrants | null  # Explicit grants for join_as_bot(); null = derived\n│   ├── default_grants: ConferenceGrants  # Grants minted for participants\n│   ├── e2ee: bool                        # default false — requires E2EE cap\n│   ├── close_room_on_detach: bool        # default false\n│   └── speak_text_events: bool           # default false\n├── lifecycle:\n│   ├── attach → ensure_room() [+ lazy join_as_bot(…, bot_grants)]\n│   ├── on_participant_joined → Participant record + hook (bot excluded)\n│   ├── on_track_published → subscribe_track() if consumed → pipeline lane\n│   ├── on_track_unpublished → lane teardown + unsubscribe_track()\n│   └── detach → leave() [+ close_room() if close_room_on_detach]\n├── hooks:\n│   ├── ON_CONFERENCE_PARTICIPANT_JOINED / LEFT\n│   ├── ON_CONFERENCE_TRACK_PUBLISHED / UNPUBLISHED\n│   ├── ON_CONFERENCE_TRACK_MUTED / UNMUTED\n│   ├── ON_ACTIVE_SPEAKER_CHANGED\n│   ├── ON_CONNECTION_QUALITY_CHANGED\n│   ├── ON_SCREEN_SHARE_STARTED / STOPPED\n│   └── ON_TRANSCRIPTION — per track, participant-attributed\n├── framework_events:\n│   ├── conference_started / conference_ended\n│   ├── conference_participant_joined / conference_participant_left\n│   └── conference_bot_grants_changed\n└── backends:\n    ├── MockConferenceBackend — unit testing with scripted event sequences\n    └── SFU providers (e.g., LiveKit)\n```",
       "sha256": "2a4d5d7e50f19a3379104cb23487a7fc6c072e3470cc6f4b278cfe1f0750f10d"
     }

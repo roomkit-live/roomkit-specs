@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "rfc_sha256": "0bd421ad64bb787915a15aff36be0a1d6620812c6909ecb8b9ff04a2df6ab3eb",
+  "rfc_sha256": "cb57d584afe8b26ba4f78c1b88406113575eb9917aa864426b6119cc182c10e1",
   "corpus_sha256": "3342c73755ecd7755711678240e455b6ae4ce67a9fd3640b72a4ec28f4141540",
   "python_commit": "1bb12d025296ee1c5f14b82267462fc4d13104a6",
   "scenario_count": 3403,
@@ -10479,11 +10479,13 @@
       "section": "25.1",
       "title": "A Surface of Its Own",
       "review": "normative",
-      "requirements": 1,
+      "requirements": 4,
       "mapping": {
-        "unmapped": 1
+        "unmapped": 4
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "step": 4
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -10491,11 +10493,13 @@
       "section": "25.2",
       "title": "ImageProvider",
       "review": "normative",
-      "requirements": 1,
+      "requirements": 31,
       "mapping": {
-        "unmapped": 1
+        "unmapped": 31
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "step": 30
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -10503,11 +10507,13 @@
       "section": "25.3",
       "title": "ImageResult",
       "review": "normative",
-      "requirements": 1,
+      "requirements": 19,
       "mapping": {
-        "unmapped": 1
+        "unmapped": 19
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "step": 16
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -10515,11 +10521,13 @@
       "section": "25.4",
       "title": "Editing",
       "review": "normative",
-      "requirements": 1,
+      "requirements": 11,
       "mapping": {
-        "unmapped": 1
+        "unmapped": 11
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "step": 7
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -10527,11 +10535,13 @@
       "section": "25.5",
       "title": "Usage Accounting",
       "review": "normative",
-      "requirements": 1,
+      "requirements": 7,
       "mapping": {
-        "unmapped": 1
+        "unmapped": 7
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "step": 5
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -10539,11 +10549,13 @@
       "section": "25.6",
       "title": "Model Catalogue",
       "review": "normative",
-      "requirements": 1,
+      "requirements": 5,
       "mapping": {
-        "unmapped": 1
+        "unmapped": 5
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "step": 4
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -10551,11 +10563,13 @@
       "section": "25.7",
       "title": "Non-Goals",
       "review": "normative",
-      "requirements": 1,
+      "requirements": 4,
       "mapping": {
-        "unmapped": 1
+        "unmapped": 4
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "step": 4
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -34846,46 +34860,840 @@
       "links": []
     },
     {
-      "id": "RK-25.1-001",
+      "id": "RK-25.1-002",
       "section": "25.1",
       "mapping": "unmapped",
-      "links": []
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1934",
+        "note": "Inspect the image and chat provider contracts on an implementation that provides both, using a provider descriptor or independent adapter fixture. Rust currently has no image provider."
+      }
     },
     {
-      "id": "RK-25.2-001",
+      "id": "RK-25.1-003",
+      "section": "25.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1934",
+        "note": "Configure a conversational provider and a separately instrumented image provider with distinct vendor identifiers, credentials and instances, and observe independent calls."
+      }
+    },
+    {
+      "id": "RK-25.1-004",
+      "section": "25.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1934",
+        "note": "Run a conversational agent whose tool or host invokes a different image provider and check which provider actually serves each request."
+      }
+    },
+    {
+      "id": "RK-25.1-005",
+      "section": "25.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1934",
+        "note": "Inspect the declared public AIResponse.content type in each implementation and assert it is exclusively text. Native declarations specify str in Python and String in Rust. Existing response examples returning text cannot distinguish an additional allowed image type; the Python public API snapshot records parameter names without type annotations. No image generation call is necessary."
+      }
+    },
+    {
+      "id": "RK-25.2-002",
+      "section": "25.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1934",
+        "note": "Read the image provider's public name independently of the selected model."
+      }
+    },
+    {
+      "id": "RK-25.2-032",
+      "section": "25.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1934",
+        "note": "Select an image model and read the active model identifier from its provider."
+      }
+    },
+    {
+      "id": "RK-25.2-003",
+      "section": "25.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1934",
+        "note": "Read the provider's editing capability on configurations that do and do not accept references."
+      }
+    },
+    {
+      "id": "RK-25.2-004",
+      "section": "25.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1934",
+        "note": "List an image provider's model information without making a network request."
+      }
+    },
+    {
+      "id": "RK-25.2-005",
+      "section": "25.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1934",
+        "note": "Call the public generation operation with a prompt, size, requested count and references and inspect its image results."
+      }
+    },
+    {
+      "id": "RK-25.2-006",
+      "section": "25.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1934",
+        "note": "Close a constructed image provider and observe release of its instrumented resources."
+      }
+    },
+    {
+      "id": "RK-25.2-007",
+      "section": "25.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1934",
+        "note": "Drive an actual image provider against a scripted image endpoint, request a count and compare complete and short responses."
+      }
+    },
+    {
+      "id": "RK-25.2-008",
+      "section": "25.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1934",
+        "note": "Generate with a portable width-by-height value and with null, and compare the resulting requests and resolutions."
+      }
+    },
+    {
+      "id": "RK-25.2-009",
+      "section": "25.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1934",
+        "note": "Use a scripted native-geometry endpoint behind the provider and compare its request with the public pixel-size input."
+      }
+    },
+    {
+      "id": "RK-25.2-010",
+      "section": "25.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1934",
+        "note": "Request an exact size the selected provider cannot supply and inspect its error."
+      }
+    },
+    {
+      "id": "RK-25.2-011",
+      "section": "25.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1934",
+        "note": "Supply separately identifiable image results from a scripted endpoint and assert the requested batch returns distinct results."
+      }
+    },
+    {
+      "id": "RK-25.2-012",
+      "section": "25.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1934",
+        "note": "Gate individual image requests on a non-batching endpoint and observe multiple submissions before completing any one of them."
+      }
+    },
+    {
+      "id": "RK-25.2-013",
       "section": "25.2",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-25.3-001",
+      "id": "RK-25.2-014",
+      "section": "25.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1934",
+        "note": "Exercise native aspect ratio and tier separately from exact pixel size and inspect their actual encoding and effective settings."
+      }
+    },
+    {
+      "id": "RK-25.2-015",
+      "section": "25.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1934",
+        "note": "Feed an unsupported or incompatible option to a real provider and check its local failure and the endpoint's zero request count."
+      }
+    },
+    {
+      "id": "RK-25.2-016",
+      "section": "25.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1934",
+        "note": "Set a provider-level default, omit the corresponding request option and inspect its effective selection."
+      }
+    },
+    {
+      "id": "RK-25.2-017",
+      "section": "25.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1934",
+        "note": "Set conflicting provider and call-level option values and check which reaches the image request."
+      }
+    },
+    {
+      "id": "RK-25.2-018",
+      "section": "25.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1934",
+        "note": "Call an options-capable image provider using the original argument list and inspect its results."
+      }
+    },
+    {
+      "id": "RK-25.2-019",
+      "section": "25.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1934",
+        "note": "Invoke an editing provider with a mask and references and inspect the submitted materials."
+      }
+    },
+    {
+      "id": "RK-25.2-020",
+      "section": "25.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1934",
+        "note": "Return both available images and usage across failed image requests and read the preserved data from the error."
+      }
+    },
+    {
+      "id": "RK-25.2-021",
+      "section": "25.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1934",
+        "note": "Combine successful and failed vendor calls in one image request and inspect its raised partial outcome."
+      }
+    },
+    {
+      "id": "RK-25.2-022",
+      "section": "25.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1934",
+        "note": "Have a scripted endpoint lose a response after receiving the paid request and examine the public billing state."
+      }
+    },
+    {
+      "id": "RK-25.2-023",
+      "section": "25.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1934",
+        "note": "Drive the actual provider and SDK against a local endpoint that fails after receiving the request, then count attempted generations. Python tests/test_providers/test_openai_transport.py::test_a_generation_that_may_have_run_is_never_sent_again covers the landed retry change offline."
+      }
+    },
+    {
+      "id": "RK-25.2-024",
+      "section": "25.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1934",
+        "note": "Return each of HTTP 408, 409, 429 and 503 from a scripted image endpoint and observe the retryable status of the reported outcome."
+      }
+    },
+    {
+      "id": "RK-25.2-025",
+      "section": "25.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1934",
+        "note": "Return HTTP 500, 502 and 504 from a scripted image endpoint and inspect each final outcome."
+      }
+    },
+    {
+      "id": "RK-25.2-026",
+      "section": "25.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1934",
+        "note": "Inject failures before a connection can send an image request and read the provider's resulting retry classification."
+      }
+    },
+    {
+      "id": "RK-25.2-027",
+      "section": "25.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1934",
+        "note": "Inject a timeout and a dropped connection after the request reached an image endpoint, then read the final status."
+      }
+    },
+    {
+      "id": "RK-25.2-028",
+      "section": "25.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1934",
+        "note": "Return a generated image in an unusable form and inspect the final billed failure."
+      }
+    },
+    {
+      "id": "RK-25.2-029",
+      "section": "25.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1934",
+        "note": "Gate sibling image calls independently, fail one, and observe whether the remaining outcomes are collected."
+      }
+    },
+    {
+      "id": "RK-25.2-030",
+      "section": "25.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1934",
+        "note": "Cancel an in-flight image-provider call and inspect the caller's cancellation result."
+      }
+    },
+    {
+      "id": "RK-25.2-031",
+      "section": "25.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1934",
+        "note": "Observe the asynchronous progress callback across a completed image call and a sibling cancelled while still running."
+      }
+    },
+    {
+      "id": "RK-25.3-002",
+      "section": "25.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1934",
+        "note": "Read an ImageResult's encoded data and media type through a shared result or provider fixture."
+      }
+    },
+    {
+      "id": "RK-25.3-019",
+      "section": "25.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1934",
+        "note": "Read the optional revised prompt from a constructed or returned ImageResult."
+      }
+    },
+    {
+      "id": "RK-25.3-020",
+      "section": "25.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1934",
+        "note": "Read the image-generation usage map on a returned ImageResult."
+      }
+    },
+    {
+      "id": "RK-25.3-003",
+      "section": "25.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1934",
+        "note": "Obtain an ImageResult from the provider and validate its data URI. Supplying an existing URI to a chat input exercises its consumer only."
+      }
+    },
+    {
+      "id": "RK-25.3-004",
+      "section": "25.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1934",
+        "note": "Compare the MIME header of a result issued by the image provider with that result's mime_type field."
+      }
+    },
+    {
+      "id": "RK-25.3-005",
       "section": "25.3",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-25.4-001",
+      "id": "RK-25.3-006",
+      "section": "25.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1934",
+        "note": "Pass the URI from an actual image-generation result to a second generate call as an edit reference without conversion."
+      }
+    },
+    {
+      "id": "RK-25.3-007",
+      "section": "25.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1934",
+        "note": "Script a vendor response with a fetchable local URL, observe the fetch, and read the embedded encoded bytes in the eventual result."
+      }
+    },
+    {
+      "id": "RK-25.3-008",
+      "section": "25.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1934",
+        "note": "Omit the revised prompt from a scripted vendor result and read the corresponding null field."
+      }
+    },
+    {
+      "id": "RK-25.3-009",
+      "section": "25.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1934",
+        "note": "Use a distinctive input prompt, omit its revision from the vendor result, and check that the returned revision is not the input."
+      }
+    },
+    {
+      "id": "RK-25.3-010",
+      "section": "25.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-25.3-011",
+      "section": "25.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1934",
+        "note": "Script one usage report for a multi-image batch and inspect the single report and its scope."
+      }
+    },
+    {
+      "id": "RK-25.3-012",
+      "section": "25.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1934",
+        "note": "Compare the measured batch usage with individual image results and assert that no per-image measurements are fabricated."
+      }
+    },
+    {
+      "id": "RK-25.3-013",
+      "section": "25.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1934",
+        "note": "Include an inline image in original vendor metadata and verify that the retained original metadata omits the payload."
+      }
+    },
+    {
+      "id": "RK-25.3-014",
+      "section": "25.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1934",
+        "note": "Seed vendor metadata with a harmless secret sentinel and check its omission from retained original metadata."
+      }
+    },
+    {
+      "id": "RK-25.3-015",
+      "section": "25.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-25.3-016",
+      "section": "25.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1934",
+        "note": "Return a preview followed by a final image and compare their explicitly distinguishable representations."
+      }
+    },
+    {
+      "id": "RK-25.3-017",
+      "section": "25.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1934",
+        "note": "Observe progress while the simulated vendor still tracks the call and its billing state, and compare those states after notification."
+      }
+    },
+    {
+      "id": "RK-25.3-018",
+      "section": "25.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1934",
+        "note": "Fail the progress callback and inspect the scripted endpoint's generation count."
+      }
+    },
+    {
+      "id": "RK-25.4-002",
+      "section": "25.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1934",
+        "note": "Use the same generate entry point for prompt-only and reference-image calls and read the edited result."
+      }
+    },
+    {
+      "id": "RK-25.4-003",
+      "section": "25.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1934",
+        "note": "Exercise providers with one endpoint and with separate edit endpoints through the same public operation and compare the submitted image references."
+      }
+    },
+    {
+      "id": "RK-25.4-004",
+      "section": "25.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1934",
+        "note": "Select a nonediting image provider and read its advertised supports_editing value."
+      }
+    },
+    {
+      "id": "RK-25.4-005",
+      "section": "25.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1934",
+        "note": "Supply nonempty reference images to a provider that cannot edit and inspect its error and lack of prompt-only output."
+      }
+    },
+    {
+      "id": "RK-25.4-006",
       "section": "25.4",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-25.5-001",
+      "id": "RK-25.4-007",
+      "section": "25.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-25.4-008",
+      "section": "25.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1934",
+        "note": "Configure an explicit storage choice on a stateful image provider and observe that disabling remote history is honoured."
+      }
+    },
+    {
+      "id": "RK-25.4-009",
+      "section": "25.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-25.4-010",
+      "section": "25.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-25.4-011",
+      "section": "25.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1934",
+        "note": "Exercise external-search grounding on compatible and incompatible image models and inspect admission and the request."
+      }
+    },
+    {
+      "id": "RK-25.4-012",
+      "section": "25.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1934",
+        "note": "Return citations and search-suggestion metadata from a grounded image model and read both through the provider."
+      }
+    },
+    {
+      "id": "RK-25.5-002",
+      "section": "25.5",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1934",
+        "note": "Generate an image using a scripted vendor report with separate text and image measurements and inspect the public usage report."
+      }
+    },
+    {
+      "id": "RK-25.5-003",
+      "section": "25.5",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1934",
+        "note": "Inspect the four integer text and image input and output counters on generation usage. Conversational usage fixtures provide preassembled counts."
+      }
+    },
+    {
+      "id": "RK-25.5-004",
+      "section": "25.5",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1934",
+        "note": "Feed a known vendor accounting breakdown and verify that no generation token appears in multiple reported categories."
+      }
+    },
+    {
+      "id": "RK-25.5-005",
+      "section": "25.5",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1934",
+        "note": "Script a vendor total containing an image subtotal and compare the normalized text counter with their difference."
+      }
+    },
+    {
+      "id": "RK-25.5-006",
+      "section": "25.5",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1934",
+        "note": "Compare a vendor report omitting one counter with a report explicitly setting that same counter to zero."
+      }
+    },
+    {
+      "id": "RK-25.5-007",
       "section": "25.5",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-25.6-001",
+      "id": "RK-25.5-008",
+      "section": "25.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-25.6-002",
+      "section": "25.6",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1934",
+        "note": "Enumerate both actual catalogues on a provider offering image generation and compare their full model-ID sets."
+      }
+    },
+    {
+      "id": "RK-25.6-003",
+      "section": "25.6",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1934",
+        "note": "Request each actual catalogue separately and inspect the enumerations for mixed entries."
+      }
+    },
+    {
+      "id": "RK-25.6-004",
+      "section": "25.6",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1934",
+        "note": "Inspect the published capability tags of image catalogue entries."
+      }
+    },
+    {
+      "id": "RK-25.6-005",
       "section": "25.6",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-25.7-001",
+      "id": "RK-25.6-006",
+      "section": "25.6",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1934",
+        "note": "Read a model entry with an unspecified image capability alongside an entry with a known value and verify the former stays unknown."
+      }
+    },
+    {
+      "id": "RK-25.7-002",
       "section": "25.7",
       "mapping": "unmapped",
-      "links": []
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1934",
+        "note": "Observe an ordinary inbound and broadcast pass while an enabled image provider records whether it was invoked as a stage."
+      }
+    },
+    {
+      "id": "RK-25.7-003",
+      "section": "25.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1934",
+        "note": "Expose the implementation's complete public hook trigger vocabulary and compare it with the ordinary hooks. Scoped observed hook lists cannot establish the absence of a trigger."
+      }
+    },
+    {
+      "id": "RK-25.7-004",
+      "section": "25.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1934",
+        "note": "Invoke the actual image provider from a tool handler or application and assert its recorded generation request."
+      }
+    },
+    {
+      "id": "RK-25.7-005",
+      "section": "25.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1934",
+        "note": "Feed actual generated output through the public room integration path and observe inbound processing, delivery and visibility. Starting with a manually supplied image already on the ordinary route cannot detect a separate generation route."
+      }
     },
     {
       "id": "RK-26.1-001",
