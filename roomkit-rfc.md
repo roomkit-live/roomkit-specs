@@ -22691,7 +22691,8 @@ or failure to persist the final outcome MUST preserve this conservative boundary
 
 <!-- /rfc -->
 <!-- rfc: {"id": "RK-22.1-105", "kind": "non_testable", "applies": "Realtime voice injection: what the three injection results mean; how a realtime provider establishes one is the provider's own, outside this specification.", "level": "may"} -->A realtime provider's injection result is `sent` (its send operation
-completed), `not_sent` (no submission happened or is pending) or `unknown`
+completed), `not_sent` (nothing was submitted and no submission is
+pending) or `unknown`
 (acceptance cannot be established); how a provider establishes which is its
 own. <!-- /rfc --><!-- rfc: {"id": "RK-22.1-088", "kind": "behavior", "applies": "Realtime voice injection: permitting automatic retry after a provider call.", "level": "must"} -->Only an explicit retryable `not_sent` result permits
 automatic retry after invoking a provider. <!-- /rfc --><!-- rfc: {"id": "RK-22.1-089", "kind": "behavior", "applies": "Realtime voice injection: interpreting a provider that gives no result.", "level": "must"} -->Returning no result MUST NOT be

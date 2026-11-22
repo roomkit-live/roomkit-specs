@@ -1371,7 +1371,7 @@
     },
     {
       "section": "22.1",
-      "sha256": "c7e7d2752318c652648743ba5d23097c76e289246ad79ed92900046d9b325d3a",
+      "sha256": "7598662fc6d7a6caecd26d003bc462a79bcb3a06c29f6a4a6d944fc3a1d68d65",
       "classification": "normative",
       "review": "The strategy and its context are separated from each outcome, addressing and transport rule, publication reason, instruction and session rule, lock and retention requirement. The realtime reservation, uncertainty, retry and multi-session rules have their own levels and capability conditions. Vendor cleanup (RMK-1991, decision D2): RK-22.1-087, what a realtime provider reports, is retired for the provider packages; RK-22.1-105, non_testable, level may, keeps the meaning of the three results the remaining units and §12.4's interface read."
     },
