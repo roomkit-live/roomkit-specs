@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "da2de27e35ef4a316c80c7110d16bbcb16036b6a9e083bc80405fb1fc956c125",
-  "corpus_sha256": "3342c73755ecd7755711678240e455b6ae4ce67a9fd3640b72a4ec28f4141540",
+  "corpus_sha256": "fe3f32851bfbe553577fab9c006efc23114dc85a64fd67b416397adb5899d1e0",
   "python_commit": "1bb12d025296ee1c5f14b82267462fc4d13104a6",
-  "scenario_count": 3403,
+  "scenario_count": 3400,
   "sections": [
     {
       "section": "0",
@@ -1649,7 +1649,6 @@
         "provider-served/without-handler-whole",
         "providers/a-kit-s-close-leaves-open-the-provider-its-agent-was-handed",
         "reasoning/a-block-cut-before-its-signature-is-not-replayed",
-        "reasoning/a-block-without-a-signature-is-not-replayed",
         "reasoning/a-compaction-keeps-the-rounds-reasoning",
         "reasoning/a-cut-block-is-still-the-turn-s-reasoning",
         "reasoning/a-cut-call-goes-back-with-the-round",
@@ -1660,6 +1659,8 @@
         "reasoning/a-later-turn-reads-no-reasoning",
         "reasoning/a-named-thinking-field-carries-a-round-s-reasoning",
         "reasoning/a-plain-round-s-call-keeps-its-metadata",
+        "reasoning/a-required-reasoning-field-carries-a-placeholder-where-empty-reads-as-missing",
+        "reasoning/a-required-reasoning-field-goes-empty-on-a-round-without-reasoning",
         "reasoning/a-response-read-whole-keeps-its-signature-and-its-call-s-metadata",
         "reasoning/a-response-read-whole-replays-its-blocks-first",
         "reasoning/a-round-replays-its-blocks-where-they-came",
@@ -1670,11 +1671,7 @@
         "reasoning/a-steered-answer-keeps-its-reasoning",
         "reasoning/a-steered-answer-s-reasoning-reaches-no-chat-request",
         "reasoning/an-answer-of-reasoning-alone-goes-back-empty-on-chat",
-        "reasoning/deepseek-s-dialect-sends-a-round-s-reasoning-in-its-field",
-        "reasoning/kimi-s-dialect-sends-a-round-s-reasoning-in-its-field",
-        "reasoning/minimax-s-dialect-sends-a-round-s-reasoning-in-its-field",
         "reasoning/reasoning-without-blocks-goes-first-as-one",
-        "reasoning/signed-blocks-and-tool-results-replay-in-order",
         "reasoning/text-between-blocks-stays-where-it-came",
         "reasoning/the-cap-on-a-round-s-calls-keeps-what-came-past-them",
         "reasoning/the-rounds-keep-their-place-past-a-nudge-and-a-hook",
@@ -2345,8 +2342,8 @@
       },
       "decided_gaps": {
         "phase6": 1,
-        "step": 48,
-        "writable": 12
+        "step": 49,
+        "writable": 11
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -18220,9 +18217,9 @@
       "mapping": "unmapped",
       "links": [],
       "gap": {
-        "class": "writable",
+        "class": "step",
         "card": "RMK-1955",
-        "note": "model.chat_dialect anthropic records the vendor's messages: a refused or failed call's tool_result carries is_error, a served one does not; another vendor's format needs the provider wire fixture."
+        "note": "Needs a provider wire fixture: only a vendor's own format carries an error flag on a tool result, and the core's chat rendering has none."
       }
     },
     {
