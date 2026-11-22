@@ -1,6 +1,231 @@
 {
   "version": 1,
   "units": {
+    "RK-19.1-004": {
+      "class": "phase6",
+      "card": "RMK-1925",
+      "note": "Exercise a voice-configured agent's TTS voice."
+    },
+    "RK-19.1-008": {
+      "class": "phase6",
+      "card": "RMK-1925",
+      "note": "A configuration-only speech-to-speech agent and its read-only flag need media coverage."
+    },
+    "RK-19.1-009": {
+      "class": "step",
+      "card": "RMK-1925",
+      "note": "Expose the public identity builder with a caller-specified language; turn prompt inspection exercises its output only indirectly."
+    },
+    "RK-19.1-011": {
+      "class": "writable",
+      "card": "RMK-1925",
+      "note": "Set a room's language through its handoff handler, then assert the new language in that agent's next system prompt."
+    },
+    "RK-19.1-012": {
+      "class": "phase6",
+      "card": "RMK-1925",
+      "note": "Inspect the identity block on an installed realtime pipeline session."
+    },
+    "RK-19.1-014": {
+      "class": "phase6",
+      "card": "RMK-1925",
+      "note": "Exercise a configuration-only speech-to-speech agent with no model and observe no generation."
+    },
+    "RK-19.1-039": {
+      "class": "writable",
+      "card": "RMK-1925",
+      "note": "Exercise the reference 10,000-room bound and oldest-tenth eviction on subsequent starts."
+    },
+    "RK-19.1-041": {
+      "class": "phase6",
+      "card": "RMK-1925",
+      "note": "Observe the conventional voice session greeting gate and waiting deliveries."
+    },
+    "RK-19.1-042": {
+      "class": "phase6",
+      "card": "RMK-1925",
+      "note": "Inspect the realtime provider's own-turn injection for the greeting."
+    },
+    "RK-19.3-012": {
+      "class": "writable",
+      "card": "RMK-1925",
+      "note": "Deliver an injected event visible to an agent that is skipped, then assert its content in that agent's later model history."
+    },
+    "RK-19.3-017": {
+      "class": "phase6",
+      "card": "RMK-1925",
+      "note": "Select a realtime transport session and verify it does not select an intelligence recipient."
+    },
+    "RK-19.3.1-007": {
+      "class": "writable",
+      "card": "RMK-1925",
+      "note": "Issue an explicitly addressed event from a bound intelligence channel under each response policy and assert that only its named peer answers. An installed discussion supersedes the room policy."
+    },
+    "RK-19.4-012": {
+      "class": "writable",
+      "card": "RMK-1925",
+      "note": "Route otherwise identical events from two named source channels and assert the selected rule."
+    },
+    "RK-19.4-013": {
+      "class": "step",
+      "card": "RMK-1925",
+      "note": "Add a configurable predicate receiving event, context and conversation state, and assert its effect on routing."
+    },
+    "RK-19.4-019": {
+      "class": "writable",
+      "card": "RMK-1925",
+      "note": "Observe the supervisor on unaddressed agent output with ADDRESSED_ONLY explicitly selected."
+    },
+    "RK-19.5-021": {
+      "class": "phase6",
+      "card": "RMK-1925",
+      "note": "Exercise this realtime behavior in a shared feature scenario: a session in pipeline mode takes the active agent's configuration and handoff switches it to the next agent."
+    },
+    "RK-19.5-022": {
+      "class": "phase6",
+      "card": "RMK-1925",
+      "note": "Exercise this realtime behavior in a shared feature scenario: session start reads the room's agent and handoff changes only that room's sessions, leaving other rooms and channel defaults intact."
+    },
+    "RK-19.5-023": {
+      "class": "phase6",
+      "card": "RMK-1925",
+      "note": "Exercise this realtime behavior in a shared feature scenario: without a prompt or identity, the active agent inherits the channel prompt at session start or handoff."
+    },
+    "RK-19.5-024": {
+      "class": "phase6",
+      "card": "RMK-1925",
+      "note": "Exercise this realtime behavior in a shared feature scenario: a room language change preserves the session prompt when the agent supplies none."
+    },
+    "RK-19.5-025": {
+      "class": "phase6",
+      "card": "RMK-1925",
+      "note": "Exercise this realtime behavior in a shared feature scenario: a pipeline session includes the channel tools, the active agent's tools and handoff."
+    },
+    "RK-19.5-026": {
+      "class": "phase6",
+      "card": "RMK-1925",
+      "note": "Exercise this realtime behavior in a shared feature scenario: late channel tool changes are read at session start or handoff."
+    },
+    "RK-19.5-027": {
+      "class": "phase6",
+      "card": "RMK-1925",
+      "note": "Exercise this realtime behavior in a shared feature scenario: an agent tool uses its agent handler or falls back to the channel handler."
+    },
+    "RK-19.5-028": {
+      "class": "phase6",
+      "card": "RMK-1925",
+      "note": "Exercise this realtime behavior in a shared feature scenario: a conflicting tool retains the channel's definition and handler, is warned at install, and never reverts to the agent's copy."
+    },
+    "RK-19.5-029": {
+      "class": "phase6",
+      "card": "RMK-1925",
+      "note": "Exercise this realtime behavior in a shared feature scenario: channel reservations include host, human-input, search and skill tools even when hidden, without refusing the agent's other tools."
+    },
+    "RK-19.5-030": {
+      "class": "phase6",
+      "card": "RMK-1925",
+      "note": "Exercise this realtime behavior in a shared feature scenario: both participant-resolved policies govern declaration, discovery, handler catalogue and execution of a session tool."
+    },
+    "RK-19.5-031": {
+      "class": "phase6",
+      "card": "RMK-1925",
+      "note": "Exercise this realtime behavior in a shared feature scenario: handoff applies the new agent policy per participant across the room before declaring its tools."
+    },
+    "RK-19.5-032": {
+      "class": "phase6",
+      "card": "RMK-1925",
+      "note": "Exercise this realtime behavior in a shared feature scenario: the serving room agent's policy governs calls despite stale session declarations."
+    },
+    "RK-19.5-033": {
+      "class": "phase6",
+      "card": "RMK-1925",
+      "note": "Verify the session's actual channel-provided capabilities. The existing refusal observes installation, not a live session."
+    },
+    "RK-19.5-035": {
+      "class": "phase6",
+      "card": "RMK-1925",
+      "note": "Exercise this realtime behavior in a shared feature scenario: a reasoning backend rejects the same unsupported agent capabilities and agent tools; its MCP instructions reach its own model."
+    },
+    "RK-19.5-036": {
+      "class": "phase6",
+      "card": "RMK-1925",
+      "note": "Exercise this realtime behavior in a shared feature scenario: installation refuses declaration-only agents and intelligence channels without an Agent's prompt."
+    },
+    "RK-19.6-011": {
+      "class": "step",
+      "card": "RMK-1925",
+      "note": "Add a public HandoffRequest construction or inspection step to assert the urgent=false default; the stock model tool does not expose urgent."
+    },
+    "RK-19.6-026": {
+      "class": "writable",
+      "card": "RMK-1925",
+      "note": "Inspect the target's next model request for the framed conversation summary attributed to the sanitized previous agent ID; stored state alone is not that request."
+    },
+    "RK-19.6-042": {
+      "class": "phase6",
+      "card": "RMK-1925",
+      "note": "Exercise this realtime behavior in a shared feature scenario: session handoffs use the room's active agent as caller; the human hold rule is not yet required there."
+    },
+    "RK-19.6-043": {
+      "class": "phase6",
+      "card": "RMK-1925",
+      "note": "Exercise this realtime behavior in a shared feature scenario: handoff changes room sessions to the target agent's prompt and a language change uses the active agent's prompt."
+    },
+    "RK-19.6-044": {
+      "class": "phase6",
+      "card": "RMK-1925",
+      "note": "Exercise this realtime behavior in a shared feature scenario: a handler with a registered realtime event channel rejects declaration-only agents and intelligence channels without an Agent."
+    },
+    "RK-19.6-045": {
+      "class": "phase6",
+      "card": "RMK-1925",
+      "note": "Exercise this realtime behavior in a shared feature scenario: a language change refuses such an active agent before writing the room language."
+    },
+    "RK-19.6-046": {
+      "class": "step",
+      "card": "RMK-1925",
+      "note": "Supply an agent held by declaration to the non-realtime handler and assert its acceptance; the direct handler fixture must support supplying that agent."
+    },
+    "RK-19.6-048": {
+      "class": "step",
+      "card": "RMK-1925",
+      "note": "Invoke the installed tool outside the bound async tool context; the available handoff.handle step supplies an explicit room and bypasses the tool."
+    },
+    "RK-19.6-052": {
+      "class": "phase6",
+      "card": "RMK-1925",
+      "note": "Exercise this realtime behavior in a shared feature scenario: the addressed realtime channel delivers the handler's greeting to each of its sessions."
+    },
+    "RK-19.8-003": {
+      "class": "step",
+      "card": "RMK-1925",
+      "note": "Expose the nonwaiting post and a held bus subscriber to compare return boundaries with post_async. A gated asynchronous hook body is not a bus subscriber."
+    },
+    "RK-19.8-004": {
+      "class": "step",
+      "card": "RMK-1925",
+      "note": "Add a StatusBus subscription callback that records each posted entry. ON_STATUS_POSTED hook registration only observes the framework bridge."
+    },
+    "RK-19.8-005": {
+      "class": "step",
+      "card": "RMK-1925",
+      "note": "Expose a removable bus subscriber and observe that later posted entries no longer reach it."
+    },
+    "RK-19.8-008": {
+      "class": "step",
+      "card": "RMK-1925",
+      "note": "Expose StatusBus.has_completed and exercise the fiftieth completed-entry boundary for an optional agent."
+    },
+    "RK-19.8-009": {
+      "class": "step",
+      "card": "RMK-1925",
+      "note": "Expose the bus's close operation independently of framework close, with a subscriber or resource that observes its effect."
+    },
+    "RK-19.8-018": {
+      "class": "writable",
+      "card": "RMK-1925",
+      "note": "Close the framework while a task is active and assert its terminal status hook fires before the store is sealed; a post after close is a different boundary."
+    },
     "RK-20.1-008": {
       "class": "writable",
       "card": "RMK-1917",

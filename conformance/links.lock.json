@@ -3455,8 +3455,840 @@
     "RK-13.5-003": {
       "reentrancy/a-call-under-a-lock-the-host-holds-commits-what-its-hooks-inject-once-the-host-released-it": "e48f3414e74e10520ce4cee0a9f28e8e8087d2f2985bebdbac4ea1d8692c9297"
     },
-    "RK-19.3-003": {
-      "addressing/a-sender-s-interruption-marker-asks-its-agents": "f00fd331d39ac225dcb95edf93dfb355996afbe0bb1072ded5ea8de6d2314726"
+    "RK-19.1-003": {
+      "orchestration/an-agent-s-turn-prompt-ends-with-its-identity": "08c0adf0888830c833b83db7a45546853257829a2e4d660b13f82b4889dc112b"
+    },
+    "RK-19.1-005": {
+      "greeting/an-agent-greets-only-when-it-may": "a57c6fcdf1dfed1eb12d0575604d85191c4e78a4717e236ef26cb28fd54ee19b",
+      "greeting/an-agent-greets-the-room-a-first-message-creates": "a57c6fcdf1dfed1eb12d0575604d85191c4e78a4717e236ef26cb28fd54ee19b",
+      "greeting/send-greeting-finds-the-agent-it-names-or-the-first-bound": "a57c6fcdf1dfed1eb12d0575604d85191c4e78a4717e236ef26cb28fd54ee19b",
+      "orchestration/an-agent-s-turn-prompt-ends-with-its-identity": "a57c6fcdf1dfed1eb12d0575604d85191c4e78a4717e236ef26cb28fd54ee19b"
+    },
+    "RK-19.1-006": {
+      "greeting/a-declared-agent-greets-the-room-a-first-message-creates": "add32a5a821c4ad3166c72996c3c9db912fee3d92ce54c90873c542638f23833",
+      "greeting/an-agent-greets-a-room-once": "add32a5a821c4ad3166c72996c3c9db912fee3d92ce54c90873c542638f23833",
+      "greeting/an-agent-greets-the-room-a-first-message-creates": "add32a5a821c4ad3166c72996c3c9db912fee3d92ce54c90873c542638f23833",
+      "greeting/two-agents-greet-before-the-message": "add32a5a821c4ad3166c72996c3c9db912fee3d92ce54c90873c542638f23833"
+    },
+    "RK-19.1-007": {
+      "orchestration/an-agent-s-turn-prompt-ends-with-its-identity": "c13a9923c81acd6192323776b6ab35c8b8c2ac8927a1b9915c507a10fdda0010",
+      "tool-search/the-preamble-comes-before-an-agent-s-identity": "c13a9923c81acd6192323776b6ab35c8b8c2ac8927a1b9915c507a10fdda0010"
+    },
+    "RK-19.1-010": {
+      "orchestration/an-agent-s-turn-prompt-ends-with-its-identity": "6f04949f26034b3dfe44312bf5fd74048da8156b0cfe3a678f909eed09c2e491",
+      "tool-search/the-preamble-comes-before-an-agent-s-identity": "6f04949f26034b3dfe44312bf5fd74048da8156b0cfe3a678f909eed09c2e491"
+    },
+    "RK-19.1-013": {
+      "orchestration/an-agent-s-turn-prompt-ends-with-its-identity": "da29e6d678ab216290f0f506f25c3df1090316c3b42a8c061c1af7144cc8178a"
+    },
+    "RK-19.1-015": {
+      "greeting/two-agents-greet-before-the-message": "eaa4201f5551cdc4cfd837aa86c5511c10712708ac40dfc458ce609de180f626",
+      "orchestration/an-install-attaches-its-agents-as-intelligence-channels": "eaa4201f5551cdc4cfd837aa86c5511c10712708ac40dfc458ce609de180f626"
+    },
+    "RK-19.1-016": {
+      "orchestration/a-router-asks-its-default-agent-alone": "010075d1d89994c81efd32e50c49f038864da8716d0a408fdf3a9b7bdc6b81c9",
+      "orchestration/a-router-with-nothing-to-route-asks-every-agent": "010075d1d89994c81efd32e50c49f038864da8716d0a408fdf3a9b7bdc6b81c9",
+      "orchestration/a-supervisor-watches-an-addressed-message": "010075d1d89994c81efd32e50c49f038864da8716d0a408fdf3a9b7bdc6b81c9",
+      "orchestration/an-addressed-message-is-left-to-its-address": "010075d1d89994c81efd32e50c49f038864da8716d0a408fdf3a9b7bdc6b81c9"
+    },
+    "RK-19.1-017": {
+      "greeting/no-room-to-greet": "a0707e1198c3c9441d2381a73b3344d62c9f5a91d87497b59191b810c55956ca",
+      "greeting/send-greeting-finds-the-agent-it-names-or-the-first-bound": "a0707e1198c3c9441d2381a73b3344d62c9f5a91d87497b59191b810c55956ca"
+    },
+    "RK-19.1-018": {
+      "greeting/send-greeting-finds-the-agent-it-names-or-the-first-bound": "e189fe33f2255d517dff3ec6452af9182dcdaf7069b13f2b04df0035155b8550",
+      "greeting/send-greeting-speaks-for-a-declared-agent": "e189fe33f2255d517dff3ec6452af9182dcdaf7069b13f2b04df0035155b8550",
+      "greeting/send-greeting-stores-the-agent-s-greeting-and-delivers-it": "e189fe33f2255d517dff3ec6452af9182dcdaf7069b13f2b04df0035155b8550"
+    },
+    "RK-19.1-019": {
+      "greeting/send-greeting-finds-the-agent-it-names-or-the-first-bound": "cea406cd9c1bde3337433917dcb31efed92c95da4d8cd32046890b0520f61536",
+      "greeting/send-greeting-stores-the-agent-s-greeting-and-delivers-it": "cea406cd9c1bde3337433917dcb31efed92c95da4d8cd32046890b0520f61536"
+    },
+    "RK-19.1-020": {
+      "greeting/no-room-to-greet": "171442bf1c481f2985a6e91dd431e8d125b5dbdab5a737a6b71142d0d406597c"
+    },
+    "RK-19.1-021": {
+      "greeting/a-channel-unregistered-greets-no-more": "d2fc814e00e5e0ccc97df5e93fe89f6d42baa047d7b9d44c922711414895d6b0",
+      "greeting/a-declared-agent-greets-the-room-a-first-message-creates": "d2fc814e00e5e0ccc97df5e93fe89f6d42baa047d7b9d44c922711414895d6b0",
+      "greeting/a-delivery-greeting-on-every-delivery-stops-at-the-budget": "d2fc814e00e5e0ccc97df5e93fe89f6d42baa047d7b9d44c922711414895d6b0",
+      "greeting/a-greeting-from-a-delivery-follows-in-the-lane": "d2fc814e00e5e0ccc97df5e93fe89f6d42baa047d7b9d44c922711414895d6b0",
+      "greeting/a-greeting-from-a-locked-hook-commits-ahead": "d2fc814e00e5e0ccc97df5e93fe89f6d42baa047d7b9d44c922711414895d6b0",
+      "greeting/a-greeting-read-past-process-timeout-expires-its-message": "d2fc814e00e5e0ccc97df5e93fe89f6d42baa047d7b9d44c922711414895d6b0",
+      "greeting/a-greeting-runs-no-before-broadcast-hook": "d2fc814e00e5e0ccc97df5e93fe89f6d42baa047d7b9d44c922711414895d6b0",
+      "greeting/a-greeting-stays-within-its-agent-s-visibility": "d2fc814e00e5e0ccc97df5e93fe89f6d42baa047d7b9d44c922711414895d6b0",
+      "greeting/a-greeting-takes-no-source-check": "d2fc814e00e5e0ccc97df5e93fe89f6d42baa047d7b9d44c922711414895d6b0",
+      "greeting/a-hook-greeting-on-its-own-greeting-stops-at-its-hook-calls": "d2fc814e00e5e0ccc97df5e93fe89f6d42baa047d7b9d44c922711414895d6b0",
+      "greeting/a-hook-s-body-greeting-on-every-answer-stops-at-the-depth-limit": "d2fc814e00e5e0ccc97df5e93fe89f6d42baa047d7b9d44c922711414895d6b0",
+      "greeting/a-stream-answering-a-greeting-is-chained": "d2fc814e00e5e0ccc97df5e93fe89f6d42baa047d7b9d44c922711414895d6b0",
+      "greeting/an-agent-greets-the-room-a-first-message-creates": "d2fc814e00e5e0ccc97df5e93fe89f6d42baa047d7b9d44c922711414895d6b0",
+      "greeting/an-agent-not-bound-greets-with-no-delivery": "d2fc814e00e5e0ccc97df5e93fe89f6d42baa047d7b9d44c922711414895d6b0",
+      "greeting/another-agent-answers-a-greeting": "d2fc814e00e5e0ccc97df5e93fe89f6d42baa047d7b9d44c922711414895d6b0",
+      "greeting/another-agent-that-reads-a-greeting-holds-no-first-message": "d2fc814e00e5e0ccc97df5e93fe89f6d42baa047d7b9d44c922711414895d6b0",
+      "greeting/no-room-to-greet": "d2fc814e00e5e0ccc97df5e93fe89f6d42baa047d7b9d44c922711414895d6b0",
+      "greeting/send-greeting-finds-the-agent-it-names-or-the-first-bound": "d2fc814e00e5e0ccc97df5e93fe89f6d42baa047d7b9d44c922711414895d6b0",
+      "greeting/send-greeting-speaks-for-a-declared-agent": "d2fc814e00e5e0ccc97df5e93fe89f6d42baa047d7b9d44c922711414895d6b0",
+      "greeting/send-greeting-stores-the-agent-s-greeting-and-delivers-it": "d2fc814e00e5e0ccc97df5e93fe89f6d42baa047d7b9d44c922711414895d6b0",
+      "greeting/two-agents-greet-before-the-message": "d2fc814e00e5e0ccc97df5e93fe89f6d42baa047d7b9d44c922711414895d6b0",
+      "orchestration/a-handoff-greeting-is-the-active-agent-s-line": "d2fc814e00e5e0ccc97df5e93fe89f6d42baa047d7b9d44c922711414895d6b0",
+      "orchestration/a-handoff-greeting-takes-the-handler-s-event-channel": "d2fc814e00e5e0ccc97df5e93fe89f6d42baa047d7b9d44c922711414895d6b0"
+    },
+    "RK-19.1-022": {
+      "greeting/a-greeting-from-a-locked-hook-commits-ahead": "e2d8cbe8bf7133d8bcbd3ef451ed1b488f312b33b709d2244107f251cd933d22",
+      "greeting/a-greeting-meets-the-room-s-due-timers": "e2d8cbe8bf7133d8bcbd3ef451ed1b488f312b33b709d2244107f251cd933d22"
+    },
+    "RK-19.1-023": {
+      "greeting/a-greeting-meets-the-room-s-due-timers": "a6fadbf6dea7f9cf192ee4399ed241951e2c9118b91123a2c9e204c401f79cfe",
+      "greeting/no-room-to-greet": "a6fadbf6dea7f9cf192ee4399ed241951e2c9118b91123a2c9e204c401f79cfe"
+    },
+    "RK-19.1-024": {
+      "greeting/a-greeting-runs-no-before-broadcast-hook": "ddb984f2f894fde2ca717ee18710a60a43ad600e76098de2462373253ba18d6c",
+      "greeting/a-greeting-takes-no-source-check": "ddb984f2f894fde2ca717ee18710a60a43ad600e76098de2462373253ba18d6c"
+    },
+    "RK-19.1-025": {
+      "greeting/a-greeting-stays-within-its-agent-s-visibility": "16f820740f8286620110e274a1b0bb1d1de6a729bbea242efbfb4104bd608c1f"
+    },
+    "RK-19.1-026": {
+      "delivery/a-greeting-keeps-its-cursor-behind-its-held-delivery": "d825e3701236b6a87aa3a1238f3f83347ad1d94d344be82c551bdfc99eea0fcf",
+      "delivery/a-later-event-runs-after-a-held-greeting": "d825e3701236b6a87aa3a1238f3f83347ad1d94d344be82c551bdfc99eea0fcf",
+      "greeting/a-greeting-from-a-delivery-follows-in-the-lane": "d825e3701236b6a87aa3a1238f3f83347ad1d94d344be82c551bdfc99eea0fcf",
+      "greeting/a-greeting-from-a-locked-hook-commits-ahead": "d825e3701236b6a87aa3a1238f3f83347ad1d94d344be82c551bdfc99eea0fcf",
+      "greeting/a-greeting-runs-no-before-broadcast-hook": "d825e3701236b6a87aa3a1238f3f83347ad1d94d344be82c551bdfc99eea0fcf",
+      "greeting/a-greeting-takes-no-source-check": "d825e3701236b6a87aa3a1238f3f83347ad1d94d344be82c551bdfc99eea0fcf",
+      "greeting/a-stream-answering-a-greeting-is-chained": "d825e3701236b6a87aa3a1238f3f83347ad1d94d344be82c551bdfc99eea0fcf",
+      "greeting/another-agent-answers-a-greeting": "d825e3701236b6a87aa3a1238f3f83347ad1d94d344be82c551bdfc99eea0fcf",
+      "greeting/another-agent-that-reads-a-greeting-holds-no-first-message": "d825e3701236b6a87aa3a1238f3f83347ad1d94d344be82c551bdfc99eea0fcf"
+    },
+    "RK-19.1-027": {
+      "greeting/a-greeting-takes-no-source-check": "9ba8a0cef0b49807ee91820b6d40697304014b80eeaad7cc23b5c6493a15056b"
+    },
+    "RK-19.1-028": {
+      "greeting/an-agent-not-bound-greets-with-no-delivery": "aa5488e0b4ef89c74b62b43f89e04792e7443f7c2931b2f6e44e151c6a0b2f90"
+    },
+    "RK-19.1-029": {
+      "inbound/a-greeting-s-failed-set-is-not-recorded": "7da384417d0d411e8146d1ae9a54eb1f7b35cd04120bb8b7ae35880cea5cef81"
+    },
+    "RK-19.1-030": {
+      "greeting/a-stream-answering-a-greeting-is-chained": "6a029ffa279a9fe924056edb60ea690a9f64281700c4c806c4eadfa15220f673"
+    },
+    "RK-19.1-031": {
+      "greeting/a-greeting-from-a-delivery-follows-in-the-lane": "1a17e6e44623fc4a944fdd5185994afa6c743f8dad279112cf60c2b64702e008",
+      "greeting/a-greeting-from-a-locked-hook-commits-ahead": "1a17e6e44623fc4a944fdd5185994afa6c743f8dad279112cf60c2b64702e008",
+      "greeting/another-agent-that-reads-a-greeting-holds-no-first-message": "1a17e6e44623fc4a944fdd5185994afa6c743f8dad279112cf60c2b64702e008"
+    },
+    "RK-19.1-032": {
+      "greeting/a-delivery-greeting-on-every-delivery-stops-at-the-budget": "433b1dab0f3843c4a2789b23d4e68a1127549423b19b8bbb591d6919f6cd87b6",
+      "greeting/a-hook-greeting-on-every-answer-under-the-lock-stops-at-the-budget": "433b1dab0f3843c4a2789b23d4e68a1127549423b19b8bbb591d6919f6cd87b6",
+      "greeting/a-hook-greeting-on-its-own-greeting-stops-at-its-hook-calls": "433b1dab0f3843c4a2789b23d4e68a1127549423b19b8bbb591d6919f6cd87b6",
+      "greeting/a-hook-s-body-greeting-on-every-answer-stops-at-the-depth-limit": "433b1dab0f3843c4a2789b23d4e68a1127549423b19b8bbb591d6919f6cd87b6"
+    },
+    "RK-19.1-033": {
+      "greeting/a-delivery-greeting-on-every-delivery-stops-at-the-budget": "51a596b0678c8249632b3e66736069db39098376c68b1833eb718d430f65d707",
+      "greeting/a-hook-greeting-on-its-own-greeting-stops-at-its-hook-calls": "51a596b0678c8249632b3e66736069db39098376c68b1833eb718d430f65d707"
+    },
+    "RK-19.1-034": {
+      "greeting/a-delivery-greeting-on-every-delivery-stops-at-the-budget": "e60b6ffd02f3374a893ecfbeb88060e43060183b04cc1ca5dcdb605031fe6cac",
+      "greeting/a-hook-greeting-on-every-answer-under-the-lock-stops-at-the-budget": "e60b6ffd02f3374a893ecfbeb88060e43060183b04cc1ca5dcdb605031fe6cac",
+      "greeting/a-hook-greeting-on-its-own-greeting-stops-at-its-hook-calls": "e60b6ffd02f3374a893ecfbeb88060e43060183b04cc1ca5dcdb605031fe6cac",
+      "greeting/a-hook-s-body-greeting-on-every-answer-stops-at-the-depth-limit": "e60b6ffd02f3374a893ecfbeb88060e43060183b04cc1ca5dcdb605031fe6cac"
+    },
+    "RK-19.1-035": {
+      "greeting/a-channel-unregistered-greets-no-more": "ba7ef657b275e280aa49d25cf02085ec9f378d1364b69e49db00191ba6ed10e1",
+      "greeting/a-declared-agent-greets-the-room-a-first-message-creates": "ba7ef657b275e280aa49d25cf02085ec9f378d1364b69e49db00191ba6ed10e1",
+      "greeting/a-session-started-hook-holds-no-message": "ba7ef657b275e280aa49d25cf02085ec9f378d1364b69e49db00191ba6ed10e1",
+      "greeting/an-agent-greets-a-room-once": "ba7ef657b275e280aa49d25cf02085ec9f378d1364b69e49db00191ba6ed10e1",
+      "greeting/an-agent-greets-only-when-it-may": "ba7ef657b275e280aa49d25cf02085ec9f378d1364b69e49db00191ba6ed10e1",
+      "greeting/an-agent-greets-the-room-a-first-message-creates": "ba7ef657b275e280aa49d25cf02085ec9f378d1364b69e49db00191ba6ed10e1",
+      "greeting/another-agent-that-reads-a-greeting-holds-no-first-message": "ba7ef657b275e280aa49d25cf02085ec9f378d1364b69e49db00191ba6ed10e1",
+      "greeting/two-agents-greet-before-the-message": "ba7ef657b275e280aa49d25cf02085ec9f378d1364b69e49db00191ba6ed10e1"
+    },
+    "RK-19.1-036": {
+      "greeting/a-channel-unregistered-greets-no-more": "69d113aa06fd65171cd7dd6be27514aedb2caae9f89deccbec8ce3bcbbf4e9ae"
+    },
+    "RK-19.1-037": {
+      "greeting/an-agent-greets-a-room-once": "7baf57443de0c43c98ebf3f14ee6eca8440ac914a7cd3d2bb70a6f02bc42654f",
+      "greeting/an-agent-greets-only-when-it-may": "7baf57443de0c43c98ebf3f14ee6eca8440ac914a7cd3d2bb70a6f02bc42654f"
+    },
+    "RK-19.1-040": {
+      "greeting/a-greeting-read-past-process-timeout-expires-its-message": "2268d49f17bb7cc4a91b562e92a705dc13eea1c7825885e72b34247e01b0c261",
+      "greeting/another-agent-that-reads-a-greeting-holds-no-first-message": "2268d49f17bb7cc4a91b562e92a705dc13eea1c7825885e72b34247e01b0c261"
+    },
+    "RK-19.2-002": {
+      "orchestration/a-conversation-state-written-through-the-kit-moves-no-agent": "b01c5f6be9012ab2fc74798109ad86f93598f1d3e901ce00bc4e3a86e72b978e",
+      "orchestration/a-handoff-hands-the-room-to-its-target": "b01c5f6be9012ab2fc74798109ad86f93598f1d3e901ce00bc4e3a86e72b978e",
+      "orchestration/a-handoff-s-language-is-the-room-s-state": "b01c5f6be9012ab2fc74798109ad86f93598f1d3e901ce00bc4e3a86e72b978e",
+      "orchestration/a-room-held-for-a-human-takes-no-handoff-to-an-agent": "b01c5f6be9012ab2fc74798109ad86f93598f1d3e901ce00bc4e3a86e72b978e",
+      "orchestration/a-saved-transition-is-the-room-s-conversation-state": "b01c5f6be9012ab2fc74798109ad86f93598f1d3e901ce00bc4e3a86e72b978e",
+      "orchestration/an-inbound-after-a-handoff-to-a-human-asks-no-agent": "b01c5f6be9012ab2fc74798109ad86f93598f1d3e901ce00bc4e3a86e72b978e"
+    },
+    "RK-19.2-003": {
+      "orchestration/a-conversation-state-written-through-the-kit-moves-no-agent": "b8a8c461792ad9953ef51bbee04e37726beaf37ee4ade5d77459432fa058b637",
+      "orchestration/a-handoff-hands-the-room-to-its-target": "b8a8c461792ad9953ef51bbee04e37726beaf37ee4ade5d77459432fa058b637",
+      "orchestration/a-pipeline-chains-its-agents-and-starts-at-the-first": "b8a8c461792ad9953ef51bbee04e37726beaf37ee4ade5d77459432fa058b637",
+      "orchestration/a-rule-routes-by-the-room-s-phase": "b8a8c461792ad9953ef51bbee04e37726beaf37ee4ade5d77459432fa058b637",
+      "orchestration/a-saved-transition-is-the-room-s-conversation-state": "b8a8c461792ad9953ef51bbee04e37726beaf37ee4ade5d77459432fa058b637",
+      "orchestration/an-inbound-after-a-handoff-to-a-human-asks-no-agent": "b8a8c461792ad9953ef51bbee04e37726beaf37ee4ade5d77459432fa058b637"
+    },
+    "RK-19.2-004": {
+      "orchestration/a-handoff-hands-the-room-to-its-target": "23e0c8c23ac33be3675ef2f05be991fa2a89dc29da807bfc98bd4cdb76730a67",
+      "orchestration/a-handoff-to-an-agent-the-room-does-not-hold-is-refused": "23e0c8c23ac33be3675ef2f05be991fa2a89dc29da807bfc98bd4cdb76730a67"
+    },
+    "RK-19.2-005": {
+      "orchestration/a-saved-transition-is-the-room-s-conversation-state": "b9a41172164dfda0dabd07ab1daccf412b602069c4e8bfa5dde1c22caceb9e3d",
+      "orchestration/an-inbound-after-a-handoff-to-a-human-asks-no-agent": "b9a41172164dfda0dabd07ab1daccf412b602069c4e8bfa5dde1c22caceb9e3d"
+    },
+    "RK-19.2-006": {
+      "orchestration/a-saved-transition-is-the-room-s-conversation-state": "1ea83e7678bc10bb348fb240a5468095b5cce79ebf65b7956a76296b3f194d08",
+      "orchestration/an-inbound-after-a-handoff-to-a-human-asks-no-agent": "1ea83e7678bc10bb348fb240a5468095b5cce79ebf65b7956a76296b3f194d08"
+    },
+    "RK-19.3-001": {
+      "addressing/an-address-does-not-show-an-event-its-visibility-hides": "cd7007c7971a4ea4f42ae078436f4816e8e2294851f84db5097743f1b70535e5",
+      "addressing/an-address-names-the-agents-asked": "cd7007c7971a4ea4f42ae078436f4816e8e2294851f84db5097743f1b70535e5",
+      "addressing/an-empty-address-asks-nobody": "cd7007c7971a4ea4f42ae078436f4816e8e2294851f84db5097743f1b70535e5",
+      "delivery/a-delivery-enters-the-room-as-the-framework-s-message": "cd7007c7971a4ea4f42ae078436f4816e8e2294851f84db5097743f1b70535e5",
+      "delivery/a-keyed-delivery-is-one-publication": "cd7007c7971a4ea4f42ae078436f4816e8e2294851f84db5097743f1b70535e5",
+      "delivery/a-queued-delivery-is-executed-by-the-worker": "cd7007c7971a4ea4f42ae078436f4816e8e2294851f84db5097743f1b70535e5",
+      "delivery/an-address-names-who-acts-and-stays-on-the-event": "cd7007c7971a4ea4f42ae078436f4816e8e2294851f84db5097743f1b70535e5",
+      "discussion/an-agent-naming-another-queues-it-once-its-turn-has-ended": "cd7007c7971a4ea4f42ae078436f4816e8e2294851f84db5097743f1b70535e5",
+      "discussion/an-agent-s-message-outside-its-turn-queues-the-agent-it-names": "cd7007c7971a4ea4f42ae078436f4816e8e2294851f84db5097743f1b70535e5",
+      "injection/a-post-speaks-through-the-host-channel": "cd7007c7971a4ea4f42ae078436f4816e8e2294851f84db5097743f1b70535e5",
+      "orchestration/an-addressed-message-is-left-to-its-address": "cd7007c7971a4ea4f42ae078436f4816e8e2294851f84db5097743f1b70535e5"
+    },
+    "RK-19.3-004": {
+      "addressing/an-address-does-not-show-an-event-its-visibility-hides": "fd84c014757426343f6cd4052dfdcabb77c41332fd08affbb018fef64ae8b2c9",
+      "addressing/an-address-names-the-agents-asked": "fd84c014757426343f6cd4052dfdcabb77c41332fd08affbb018fef64ae8b2c9",
+      "addressing/an-empty-address-asks-nobody": "fd84c014757426343f6cd4052dfdcabb77c41332fd08affbb018fef64ae8b2c9",
+      "addressing/an-unbound-name-asks-nobody": "fd84c014757426343f6cd4052dfdcabb77c41332fd08affbb018fef64ae8b2c9",
+      "addressing/set-agent-response-policy-stops-an-agent-s-answer-asking-the-others": "fd84c014757426343f6cd4052dfdcabb77c41332fd08affbb018fef64ae8b2c9",
+      "delivery/a-keyed-delivery-is-one-publication": "fd84c014757426343f6cd4052dfdcabb77c41332fd08affbb018fef64ae8b2c9",
+      "delivery/a-queued-delivery-is-executed-by-the-worker": "fd84c014757426343f6cd4052dfdcabb77c41332fd08affbb018fef64ae8b2c9",
+      "delivery/an-address-names-who-acts-and-stays-on-the-event": "fd84c014757426343f6cd4052dfdcabb77c41332fd08affbb018fef64ae8b2c9",
+      "discussion/an-agent-naming-another-queues-it-once-its-turn-has-ended": "fd84c014757426343f6cd4052dfdcabb77c41332fd08affbb018fef64ae8b2c9",
+      "discussion/an-agent-s-message-outside-its-turn-queues-the-agent-it-names": "fd84c014757426343f6cd4052dfdcabb77c41332fd08affbb018fef64ae8b2c9",
+      "orchestration/an-addressed-message-is-left-to-its-address": "fd84c014757426343f6cd4052dfdcabb77c41332fd08affbb018fef64ae8b2c9"
+    },
+    "RK-19.3-005": {
+      "addressing/an-address-does-not-show-an-event-its-visibility-hides": "e0ab824a5eca73e43144860c930e9c32a492660d019a78df0c978bd43ddace67",
+      "addressing/an-address-names-the-agents-asked": "e0ab824a5eca73e43144860c930e9c32a492660d019a78df0c978bd43ddace67",
+      "delivery/an-address-names-who-acts-and-stays-on-the-event": "e0ab824a5eca73e43144860c930e9c32a492660d019a78df0c978bd43ddace67",
+      "discussion/a-name-a-binding-hides-the-message-from-queues-nobody": "e0ab824a5eca73e43144860c930e9c32a492660d019a78df0c978bd43ddace67"
+    },
+    "RK-19.3-006": {
+      "addressing/an-address-does-not-show-an-event-its-visibility-hides": "9cedf8ba71506c648d4bee1fc94fd9399406602d62fc8b9fab1357c3dffa8591",
+      "addressing/an-address-names-the-agents-asked": "9cedf8ba71506c648d4bee1fc94fd9399406602d62fc8b9fab1357c3dffa8591",
+      "addressing/an-empty-address-asks-nobody": "9cedf8ba71506c648d4bee1fc94fd9399406602d62fc8b9fab1357c3dffa8591",
+      "addressing/an-unbound-name-asks-nobody": "9cedf8ba71506c648d4bee1fc94fd9399406602d62fc8b9fab1357c3dffa8591",
+      "delivery/an-address-names-who-acts-and-stays-on-the-event": "9cedf8ba71506c648d4bee1fc94fd9399406602d62fc8b9fab1357c3dffa8591",
+      "injection/a-post-speaks-through-the-host-channel": "9cedf8ba71506c648d4bee1fc94fd9399406602d62fc8b9fab1357c3dffa8591"
+    },
+    "RK-19.3-007": {
+      "addressing/an-address-does-not-show-an-event-its-visibility-hides": "790e3447225bf8aad62bfc9b7c45bbf40dc75f697d749fb96e12c850193aa748",
+      "addressing/an-address-names-the-agents-asked": "790e3447225bf8aad62bfc9b7c45bbf40dc75f697d749fb96e12c850193aa748",
+      "addressing/set-agent-response-policy-stops-an-agent-s-answer-asking-the-others": "790e3447225bf8aad62bfc9b7c45bbf40dc75f697d749fb96e12c850193aa748",
+      "delivery/a-keyed-delivery-is-one-publication": "790e3447225bf8aad62bfc9b7c45bbf40dc75f697d749fb96e12c850193aa748",
+      "delivery/a-queued-delivery-is-executed-by-the-worker": "790e3447225bf8aad62bfc9b7c45bbf40dc75f697d749fb96e12c850193aa748",
+      "delivery/a-replay-is-reported-as-the-original-publication": "790e3447225bf8aad62bfc9b7c45bbf40dc75f697d749fb96e12c850193aa748",
+      "delivery/an-address-names-who-acts-and-stays-on-the-event": "790e3447225bf8aad62bfc9b7c45bbf40dc75f697d749fb96e12c850193aa748",
+      "discussion/a-name-a-binding-hides-the-message-from-queues-nobody": "790e3447225bf8aad62bfc9b7c45bbf40dc75f697d749fb96e12c850193aa748",
+      "discussion/an-instruction-to-several-agents-gives-each-its-turn": "790e3447225bf8aad62bfc9b7c45bbf40dc75f697d749fb96e12c850193aa748",
+      "orchestration/an-addressed-message-is-left-to-its-address": "790e3447225bf8aad62bfc9b7c45bbf40dc75f697d749fb96e12c850193aa748",
+      "tasks/a-background-delegation-relays-its-result-to-the-notified-agent": "790e3447225bf8aad62bfc9b7c45bbf40dc75f697d749fb96e12c850193aa748"
+    },
+    "RK-19.3-008": {
+      "addressing/an-unbound-name-asks-nobody": "b8bb07ca166586ab5750281c080cbeb03537a197236f62b3b74a752153f612fc",
+      "delivery/an-address-names-who-acts-and-stays-on-the-event": "b8bb07ca166586ab5750281c080cbeb03537a197236f62b3b74a752153f612fc"
+    },
+    "RK-19.3-009": {
+      "addressing/an-empty-address-asks-nobody": "75b5bacbbffcff2680843bf4879c5ad55312ad41c6d1f1014d95563d1ea97e84",
+      "delivery/an-address-names-who-acts-and-stays-on-the-event": "75b5bacbbffcff2680843bf4879c5ad55312ad41c6d1f1014d95563d1ea97e84",
+      "discussion/discussion-regeneration-falls-back-to-empty-address": "75b5bacbbffcff2680843bf4879c5ad55312ad41c6d1f1014d95563d1ea97e84",
+      "injection/a-post-speaks-through-the-host-channel": "75b5bacbbffcff2680843bf4879c5ad55312ad41c6d1f1014d95563d1ea97e84"
+    },
+    "RK-19.3-010": {
+      "addressing/an-address-does-not-show-an-event-its-visibility-hides": "d9608fd1b3f2f5ed52adf9a04db323ef4f1b1c0fa6bb468b559cf57c93c0a59b",
+      "addressing/an-address-names-the-agents-asked": "d9608fd1b3f2f5ed52adf9a04db323ef4f1b1c0fa6bb468b559cf57c93c0a59b",
+      "addressing/an-empty-address-asks-nobody": "d9608fd1b3f2f5ed52adf9a04db323ef4f1b1c0fa6bb468b559cf57c93c0a59b",
+      "addressing/set-agent-response-policy-stops-an-agent-s-answer-asking-the-others": "d9608fd1b3f2f5ed52adf9a04db323ef4f1b1c0fa6bb468b559cf57c93c0a59b",
+      "delivery/a-keyed-delivery-is-one-publication": "d9608fd1b3f2f5ed52adf9a04db323ef4f1b1c0fa6bb468b559cf57c93c0a59b",
+      "delivery/a-queued-delivery-is-executed-by-the-worker": "d9608fd1b3f2f5ed52adf9a04db323ef4f1b1c0fa6bb468b559cf57c93c0a59b",
+      "delivery/a-replay-is-reported-as-the-original-publication": "d9608fd1b3f2f5ed52adf9a04db323ef4f1b1c0fa6bb468b559cf57c93c0a59b",
+      "delivery/an-address-names-who-acts-and-stays-on-the-event": "d9608fd1b3f2f5ed52adf9a04db323ef4f1b1c0fa6bb468b559cf57c93c0a59b",
+      "discussion/an-agent-naming-another-queues-it-once-its-turn-has-ended": "d9608fd1b3f2f5ed52adf9a04db323ef4f1b1c0fa6bb468b559cf57c93c0a59b",
+      "discussion/an-agent-s-message-outside-its-turn-queues-the-agent-it-names": "d9608fd1b3f2f5ed52adf9a04db323ef4f1b1c0fa6bb468b559cf57c93c0a59b",
+      "discussion/regeneration-after-removing-the-discussion-answer-keeps-its-addressee": "d9608fd1b3f2f5ed52adf9a04db323ef4f1b1c0fa6bb468b559cf57c93c0a59b"
+    },
+    "RK-19.3-011": {
+      "discussion/a-hook-s-injected-instruction-gives-no-turn": "5f3aae0f06c42c15d3a0eff2dd116cf0386dbdd0e8bebe2e39077424e700b081",
+      "hooks/an-injected-event-asks-no-agent": "5f3aae0f06c42c15d3a0eff2dd116cf0386dbdd0e8bebe2e39077424e700b081"
+    },
+    "RK-19.3-013": {
+      "orchestration/a-router-asks-its-default-agent-alone": "8fbb245f647be9c390d18754752795751815cfdcfe9ca636c644ea7bd73ab21d",
+      "orchestration/a-router-with-nothing-to-route-asks-every-agent": "8fbb245f647be9c390d18754752795751815cfdcfe9ca636c644ea7bd73ab21d",
+      "orchestration/a-supervisor-is-asked-beside-the-routed-agent": "8fbb245f647be9c390d18754752795751815cfdcfe9ca636c644ea7bd73ab21d",
+      "orchestration/rules-are-tried-lowest-priority-first": "8fbb245f647be9c390d18754752795751815cfdcfe9ca636c644ea7bd73ab21d"
+    },
+    "RK-19.3-014": {
+      "discussion/a-dispatched-message-stays-unaddressed": "18f35b32cbfabe4e964de9f2b3becc3ec82cb4c27d4d78486fbe387bf8864da5",
+      "discussion/an-unaddressed-message-asks-everyone-one-at-a-time": "18f35b32cbfabe4e964de9f2b3becc3ec82cb4c27d4d78486fbe387bf8864da5",
+      "discussion/discussion-regeneration-falls-back-to-everyone": "18f35b32cbfabe4e964de9f2b3becc3ec82cb4c27d4d78486fbe387bf8864da5",
+      "discussion/the-policy-picks-who-takes-an-unaddressed-message": "18f35b32cbfabe4e964de9f2b3becc3ec82cb4c27d4d78486fbe387bf8864da5",
+      "discussion/with-addressed-only-an-unaddressed-message-asks-no-agent": "18f35b32cbfabe4e964de9f2b3becc3ec82cb4c27d4d78486fbe387bf8864da5"
+    },
+    "RK-19.3-015": {
+      "discussion/a-custom-handle-queues-its-agent-and-its-id-names-nobody": "66f0732325ee96947273e48624a9ab46a155ce346c6e2bc3c5fcdf2178e46b82",
+      "discussion/a-name-a-binding-hides-the-message-from-queues-nobody": "66f0732325ee96947273e48624a9ab46a155ce346c6e2bc3c5fcdf2178e46b82",
+      "discussion/an-agent-naming-another-queues-it-once-its-turn-has-ended": "66f0732325ee96947273e48624a9ab46a155ce346c6e2bc3c5fcdf2178e46b82",
+      "discussion/an-agent-s-message-outside-its-turn-queues-the-agent-it-names": "66f0732325ee96947273e48624a9ab46a155ce346c6e2bc3c5fcdf2178e46b82",
+      "discussion/an-instruction-to-several-agents-gives-each-its-turn": "66f0732325ee96947273e48624a9ab46a155ce346c6e2bc3c5fcdf2178e46b82",
+      "discussion/regeneration-after-removing-the-discussion-answer-keeps-its-addressee": "66f0732325ee96947273e48624a9ab46a155ce346c6e2bc3c5fcdf2178e46b82",
+      "discussion/with-addressed-only-an-unaddressed-message-asks-no-agent": "66f0732325ee96947273e48624a9ab46a155ce346c6e2bc3c5fcdf2178e46b82"
+    },
+    "RK-19.3-016": {
+      "delivery/a-keyed-delivery-is-one-publication": "093077bdc89ec637488db21be5406b7264a02d0ac7f8db459ac4b9eb30a7a811",
+      "delivery/a-queued-delivery-is-executed-by-the-worker": "093077bdc89ec637488db21be5406b7264a02d0ac7f8db459ac4b9eb30a7a811",
+      "delivery/a-replay-is-reported-as-the-original-publication": "093077bdc89ec637488db21be5406b7264a02d0ac7f8db459ac4b9eb30a7a811",
+      "delivery/an-address-names-who-acts-and-stays-on-the-event": "093077bdc89ec637488db21be5406b7264a02d0ac7f8db459ac4b9eb30a7a811",
+      "tasks/a-background-delegation-relays-its-result-to-the-notified-agent": "093077bdc89ec637488db21be5406b7264a02d0ac7f8db459ac4b9eb30a7a811"
+    },
+    "RK-19.3.1-002": {
+      "addressing/an-address-names-the-agents-asked": "959bf458a2e00b023501755ded708923c42db1e550e4a207ad236a90b423272d",
+      "addressing/set-agent-response-policy-stops-an-agent-s-answer-asking-the-others": "959bf458a2e00b023501755ded708923c42db1e550e4a207ad236a90b423272d",
+      "appendix-b/b4-agent-chain": "959bf458a2e00b023501755ded708923c42db1e550e4a207ad236a90b423272d",
+      "instructions/an-agent-not-asked-after-an-instruction-s-answer-records-no-fingerprint": "959bf458a2e00b023501755ded708923c42db1e550e4a207ad236a90b423272d",
+      "instructions/an-answer-to-an-instruction-s-answer-carries-no-fingerprint": "959bf458a2e00b023501755ded708923c42db1e550e4a207ad236a90b423272d"
+    },
+    "RK-19.3.1-003": {
+      "addressing/set-agent-response-policy-stops-an-agent-s-answer-asking-the-others": "49c910d7f7f28e8b5c5ed7ae5057758e8736a489990581ad7712fc25a9459e60"
+    },
+    "RK-19.3.1-004": {
+      "addressing/an-address-names-the-agents-asked": "d1961f43c34a117e9ece874a46d80aa58ed69ae9583b2adba2fbab791c6819f5",
+      "addressing/set-agent-response-policy-stops-an-agent-s-answer-asking-the-others": "d1961f43c34a117e9ece874a46d80aa58ed69ae9583b2adba2fbab791c6819f5",
+      "appendix-b/b4-agent-chain": "d1961f43c34a117e9ece874a46d80aa58ed69ae9583b2adba2fbab791c6819f5",
+      "instructions/an-answer-to-an-instruction-s-answer-carries-no-fingerprint": "d1961f43c34a117e9ece874a46d80aa58ed69ae9583b2adba2fbab791c6819f5"
+    },
+    "RK-19.3.1-005": {
+      "addressing/set-agent-response-policy-stops-an-agent-s-answer-asking-the-others": "6cac1d0ac820f64eb52e8c66c7b418c58b524ca3b21428d172ddf290d9860133"
+    },
+    "RK-19.3.1-006": {
+      "addressing/an-address-names-the-agents-asked": "d71d9091ab5ada064a9584077c40413a871d6aa1010c65bede3b2797311c1e19",
+      "appendix-b/b4-agent-chain": "d71d9091ab5ada064a9584077c40413a871d6aa1010c65bede3b2797311c1e19"
+    },
+    "RK-19.3.1-008": {
+      "discussion/a-custom-handle-queues-its-agent-and-its-id-names-nobody": "9036cdb97c32182b613c5de772e03858dcc9122c963061baa5383f40d38abe88",
+      "discussion/an-agent-naming-another-queues-it-once-its-turn-has-ended": "9036cdb97c32182b613c5de772e03858dcc9122c963061baa5383f40d38abe88",
+      "discussion/an-agent-s-message-outside-its-turn-queues-the-agent-it-names": "9036cdb97c32182b613c5de772e03858dcc9122c963061baa5383f40d38abe88"
+    },
+    "RK-19.3.1-009": {
+      "addressing/set-agent-response-policy-stops-an-agent-s-answer-asking-the-others": "aea49849a7d46427d61e6d23883c6fee9c71927679f67c1676ca4cbf54343884"
+    },
+    "RK-19.3.1-010": {
+      "addressing/set-agent-response-policy-stops-an-agent-s-answer-asking-the-others": "a483d887dc929de8a0984d92a9a1f82235f42c95a8224730cf90cf80e7afd06b"
+    },
+    "RK-19.3.1-011": {
+      "addressing/set-agent-response-policy-stops-an-agent-s-answer-asking-the-others": "2fe19f460902ef447991ee122144c17fe61bf720546ce96df075db48b211c4bb"
+    },
+    "RK-19.3.1-012": {
+      "addressing/set-agent-response-policy-stops-an-agent-s-answer-asking-the-others": "80c362dc638a99446ca935d1ecbe7c242ae825d11f7495109e0de1b0bcc19825"
+    },
+    "RK-19.3.1-013": {
+      "addressing/set-agent-response-policy-stops-an-agent-s-answer-asking-the-others": "e71f212fd6edc9b775763ca1052069a670aa2ec8402fb497c00a988d12a0326f"
+    },
+    "RK-19.3.2-003": {
+      "addressing/an-address-does-not-show-an-event-its-visibility-hides": "69d8efa83f93494d37aaf5023dacb8089e3b9d3ff1c528cd74aa80971eee7a2b",
+      "addressing/an-address-names-the-agents-asked": "69d8efa83f93494d37aaf5023dacb8089e3b9d3ff1c528cd74aa80971eee7a2b",
+      "addressing/an-empty-address-asks-nobody": "69d8efa83f93494d37aaf5023dacb8089e3b9d3ff1c528cd74aa80971eee7a2b",
+      "addressing/an-unbound-name-asks-nobody": "69d8efa83f93494d37aaf5023dacb8089e3b9d3ff1c528cd74aa80971eee7a2b",
+      "delivery/an-address-names-who-acts-and-stays-on-the-event": "69d8efa83f93494d37aaf5023dacb8089e3b9d3ff1c528cd74aa80971eee7a2b",
+      "delivery/an-agent-that-cannot-read-is-unavailable": "69d8efa83f93494d37aaf5023dacb8089e3b9d3ff1c528cd74aa80971eee7a2b",
+      "orchestration/an-addressed-message-is-left-to-its-address": "69d8efa83f93494d37aaf5023dacb8089e3b9d3ff1c528cd74aa80971eee7a2b"
+    },
+    "RK-19.3.2-004": {
+      "acp/a-copy-of-the-room-context-lines-is-replaced-and-the-runtime-s-are-kept": "07a5f44f015defa07380d8c039161030c7daa785ec066358f7de5815095c56c1",
+      "acp/context-closed-session": "07a5f44f015defa07380d8c039161030c7daa785ec066358f7de5815095c56c1",
+      "acp/context-cold-start": "07a5f44f015defa07380d8c039161030c7daa785ec066358f7de5815095c56c1",
+      "acp/context-configured-bound": "07a5f44f015defa07380d8c039161030c7daa785ec066358f7de5815095c56c1",
+      "acp/context-failed-prompt": "07a5f44f015defa07380d8c039161030c7daa785ec066358f7de5815095c56c1",
+      "acp/context-hidden-tail-is-truncated": "07a5f44f015defa07380d8c039161030c7daa785ec066358f7de5815095c56c1",
+      "acp/context-host-actual-tail": "07a5f44f015defa07380d8c039161030c7daa785ec066358f7de5815095c56c1",
+      "acp/context-host-before-history": "07a5f44f015defa07380d8c039161030c7daa785ec066358f7de5815095c56c1",
+      "acp/context-host-error": "07a5f44f015defa07380d8c039161030c7daa785ec066358f7de5815095c56c1",
+      "acp/context-host-every-turn": "07a5f44f015defa07380d8c039161030c7daa785ec066358f7de5815095c56c1",
+      "acp/context-loaded-tail": "07a5f44f015defa07380d8c039161030c7daa785ec066358f7de5815095c56c1",
+      "acp/context-muted-turn": "07a5f44f015defa07380d8c039161030c7daa785ec066358f7de5815095c56c1",
+      "acp/context-only-the-gap": "07a5f44f015defa07380d8c039161030c7daa785ec066358f7de5815095c56c1",
+      "acp/context-own-reply": "07a5f44f015defa07380d8c039161030c7daa785ec066358f7de5815095c56c1",
+      "acp/context-people-named": "07a5f44f015defa07380d8c039161030c7daa785ec066358f7de5815095c56c1",
+      "acp/context-per-room-cursor": "07a5f44f015defa07380d8c039161030c7daa785ec066358f7de5815095c56c1",
+      "acp/context-rebuild-replays-history": "07a5f44f015defa07380d8c039161030c7daa785ec066358f7de5815095c56c1",
+      "acp/context-reconnected-session": "07a5f44f015defa07380d8c039161030c7daa785ec066358f7de5815095c56c1",
+      "acp/context-visibility": "07a5f44f015defa07380d8c039161030c7daa785ec066358f7de5815095c56c1",
+      "acp/input-empty-blank": "07a5f44f015defa07380d8c039161030c7daa785ec066358f7de5815095c56c1",
+      "acp/input-empty-empty": "07a5f44f015defa07380d8c039161030c7daa785ec066358f7de5815095c56c1",
+      "acp/input-whitespace-blank": "07a5f44f015defa07380d8c039161030c7daa785ec066358f7de5815095c56c1",
+      "acp/input-whitespace-empty": "07a5f44f015defa07380d8c039161030c7daa785ec066358f7de5815095c56c1",
+      "discussion/a-queued-turn-reads-the-room-when-it-starts": "07a5f44f015defa07380d8c039161030c7daa785ec066358f7de5815095c56c1",
+      "discussion/a-turn-replays-its-round-with-no-later-message": "07a5f44f015defa07380d8c039161030c7daa785ec066358f7de5815095c56c1"
+    },
+    "RK-19.3.2-005": {
+      "acp/context-all-history-hidden": "5cea78e9d9c95e1857c06b6dc8f8a690dd2dd2c199df99276d3ad04923614bc9",
+      "acp/context-hidden-tail-is-truncated": "5cea78e9d9c95e1857c06b6dc8f8a690dd2dd2c199df99276d3ad04923614bc9",
+      "acp/context-visibility": "5cea78e9d9c95e1857c06b6dc8f8a690dd2dd2c199df99276d3ad04923614bc9"
+    },
+    "RK-19.3.2-006": {
+      "acp/context-configured-bound": "050fc4b19b0f015b7de75809662e896f198bb795ed03261a3b9a4236f56cd1f3",
+      "acp/context-hidden-tail-is-truncated": "050fc4b19b0f015b7de75809662e896f198bb795ed03261a3b9a4236f56cd1f3",
+      "acp/context-host-actual-tail": "050fc4b19b0f015b7de75809662e896f198bb795ed03261a3b9a4236f56cd1f3",
+      "acp/context-loaded-tail": "050fc4b19b0f015b7de75809662e896f198bb795ed03261a3b9a4236f56cd1f3"
+    },
+    "RK-19.3.2-007": {
+      "acp/context-configured-bound": "c957c0d6355ce3f574394aaeafe69160332a0f0b1d3b144d7850f9c508ee9374",
+      "acp/context-hidden-tail-is-truncated": "c957c0d6355ce3f574394aaeafe69160332a0f0b1d3b144d7850f9c508ee9374",
+      "acp/context-loaded-tail": "c957c0d6355ce3f574394aaeafe69160332a0f0b1d3b144d7850f9c508ee9374"
+    },
+    "RK-19.4-005": {
+      "orchestration/a-conversation-pipeline-routes-each-phase-to-its-agent": "0919cb4925cfd1b717630ae80b886aef6e4330316f1458440412623729e33859",
+      "orchestration/a-conversation-pipeline-s-default-phase-supervisor-and-priority-reach-its-router": "0919cb4925cfd1b717630ae80b886aef6e4330316f1458440412623729e33859",
+      "orchestration/a-router-s-install-hooks-at-its-priority": "0919cb4925cfd1b717630ae80b886aef6e4330316f1458440412623729e33859"
+    },
+    "RK-19.4-006": {
+      "orchestration/a-kit-s-router-tries-rules-of-one-priority-in-their-order": "a6f346e47cbe4049f9b72d895584ce66c82a7aa700dd43eb1aecdac60560fe1b",
+      "orchestration/a-router-asks-its-default-agent-alone": "a6f346e47cbe4049f9b72d895584ce66c82a7aa700dd43eb1aecdac60560fe1b",
+      "orchestration/a-supervisor-is-asked-beside-the-routed-agent": "a6f346e47cbe4049f9b72d895584ce66c82a7aa700dd43eb1aecdac60560fe1b",
+      "orchestration/rules-are-tried-lowest-priority-first": "a6f346e47cbe4049f9b72d895584ce66c82a7aa700dd43eb1aecdac60560fe1b"
+    },
+    "RK-19.4-007": {
+      "orchestration/a-kit-s-router-tries-rules-of-one-priority-in-their-order": "926d30effd724b0cd9fb67a9f88a96152029e36efedb007ef70063699fcc591e",
+      "orchestration/a-rule-routes-by-the-room-s-phase": "926d30effd724b0cd9fb67a9f88a96152029e36efedb007ef70063699fcc591e",
+      "orchestration/a-sender-s-intent-reaches-the-router-s-rules": "926d30effd724b0cd9fb67a9f88a96152029e36efedb007ef70063699fcc591e",
+      "orchestration/rules-are-tried-lowest-priority-first": "926d30effd724b0cd9fb67a9f88a96152029e36efedb007ef70063699fcc591e"
+    },
+    "RK-19.4-008": {
+      "orchestration/a-kit-s-router-tries-rules-of-one-priority-in-their-order": "b7768ab0d76471c009881fbab981d817623b800a24bb3a87dd87655813c1a97a",
+      "orchestration/rules-are-tried-lowest-priority-first": "b7768ab0d76471c009881fbab981d817623b800a24bb3a87dd87655813c1a97a"
+    },
+    "RK-19.4-009": {
+      "orchestration/a-conversation-pipeline-reads-a-phase-in-two-stages": "ebf9da5956b2e8d3b241638bba9df691ec51c8e2102af6be6e05ad224664e632",
+      "orchestration/a-conversation-pipeline-routes-each-phase-to-its-agent": "ebf9da5956b2e8d3b241638bba9df691ec51c8e2102af6be6e05ad224664e632",
+      "orchestration/a-rule-routes-by-the-room-s-phase": "ebf9da5956b2e8d3b241638bba9df691ec51c8e2102af6be6e05ad224664e632"
+    },
+    "RK-19.4-010": {
+      "orchestration/rules-are-tried-lowest-priority-first": "3a855d777c7682d8a1a6f0753fca01aac7e3161798f9862520f6b6ec46365de0"
+    },
+    "RK-19.4-011": {
+      "orchestration/a-sender-s-intent-reaches-the-router-s-rules": "c46331433d38f7a5bf62aa5af994eb819dcd260a3c8aef04b6600a42f84d6bbf",
+      "orchestration/rules-are-tried-lowest-priority-first": "c46331433d38f7a5bf62aa5af994eb819dcd260a3c8aef04b6600a42f84d6bbf"
+    },
+    "RK-19.4-014": {
+      "orchestration/a-supervisor-watches-an-addressed-message": "e58af19ad03653968c56a53cfc538290a1dc6dd8f7ce8fa014d8156818fde9aa",
+      "orchestration/an-addressed-message-is-left-to-its-address": "e58af19ad03653968c56a53cfc538290a1dc6dd8f7ce8fa014d8156818fde9aa"
+    },
+    "RK-19.4-015": {
+      "orchestration/the-state-s-agent-keeps-the-conversation-while-it-is-bound": "68557555418d92173edead105424a0aa232655ed1fe57a50ec56938037283228"
+    },
+    "RK-19.4-016": {
+      "orchestration/a-kit-s-router-tries-rules-of-one-priority-in-their-order": "73605c798f8cdbcb8ebdd8416e09c12d52b7171716fe77d2bb338f4d3055a061",
+      "orchestration/rules-are-tried-lowest-priority-first": "73605c798f8cdbcb8ebdd8416e09c12d52b7171716fe77d2bb338f4d3055a061"
+    },
+    "RK-19.4-017": {
+      "orchestration/a-conversation-pipeline-reads-a-phase-in-two-stages": "81a072204bd145be7c875a2b6a91f09db30bd89c61d99dee3b441e64e161bf71",
+      "orchestration/a-conversation-pipeline-routes-each-phase-to-its-agent": "81a072204bd145be7c875a2b6a91f09db30bd89c61d99dee3b441e64e161bf71",
+      "orchestration/a-conversation-pipeline-s-default-phase-supervisor-and-priority-reach-its-router": "81a072204bd145be7c875a2b6a91f09db30bd89c61d99dee3b441e64e161bf71",
+      "orchestration/a-router-asks-its-default-agent-alone": "81a072204bd145be7c875a2b6a91f09db30bd89c61d99dee3b441e64e161bf71",
+      "orchestration/rules-are-tried-lowest-priority-first": "81a072204bd145be7c875a2b6a91f09db30bd89c61d99dee3b441e64e161bf71"
+    },
+    "RK-19.4-018": {
+      "orchestration/a-conversation-pipeline-s-default-phase-supervisor-and-priority-reach-its-router": "25e00547cbae318f5d6eb00b52d59a6b04b6a8adb449fc0c3af656ada09bc480",
+      "orchestration/a-pipeline-s-supervisor-is-asked-beside-each-stage": "25e00547cbae318f5d6eb00b52d59a6b04b6a8adb449fc0c3af656ada09bc480",
+      "orchestration/a-room-held-for-a-human-asks-no-supervisor-without-an-address": "25e00547cbae318f5d6eb00b52d59a6b04b6a8adb449fc0c3af656ada09bc480",
+      "orchestration/a-supervisor-is-asked-beside-the-routed-agent": "25e00547cbae318f5d6eb00b52d59a6b04b6a8adb449fc0c3af656ada09bc480",
+      "orchestration/a-supervisor-watches-an-addressed-message": "25e00547cbae318f5d6eb00b52d59a6b04b6a8adb449fc0c3af656ada09bc480"
+    },
+    "RK-19.4-020": {
+      "orchestration/a-room-held-for-a-human-asks-no-supervisor-without-an-address": "414a880ea2e1cc7a7cd60cd973957cd30172bcf4081424cc00bb29ee029964d7",
+      "orchestration/an-inbound-after-a-handoff-to-a-human-asks-no-agent": "414a880ea2e1cc7a7cd60cd973957cd30172bcf4081424cc00bb29ee029964d7"
+    },
+    "RK-19.4-021": {
+      "orchestration/a-room-held-for-a-human-asks-no-supervisor-without-an-address": "9962e984549c6b99943c672c92675905a8ddef3c8a815faeec3188c835a4e157"
+    },
+    "RK-19.4-022": {
+      "orchestration/a-conversation-pipeline-reads-a-phase-in-two-stages": "1270e4c56976a23d1be38d7abf78ac54021f70ce6a02b92bd07bd11f8c101e00",
+      "orchestration/a-conversation-pipeline-routes-each-phase-to-its-agent": "1270e4c56976a23d1be38d7abf78ac54021f70ce6a02b92bd07bd11f8c101e00",
+      "orchestration/a-conversation-pipeline-s-default-phase-supervisor-and-priority-reach-its-router": "1270e4c56976a23d1be38d7abf78ac54021f70ce6a02b92bd07bd11f8c101e00",
+      "orchestration/a-pipeline-chains-its-agents-and-starts-at-the-first": "1270e4c56976a23d1be38d7abf78ac54021f70ce6a02b92bd07bd11f8c101e00",
+      "orchestration/a-pipeline-s-supervisor-is-asked-beside-each-stage": "1270e4c56976a23d1be38d7abf78ac54021f70ce6a02b92bd07bd11f8c101e00",
+      "orchestration/a-room-held-for-a-human-asks-no-supervisor-without-an-address": "1270e4c56976a23d1be38d7abf78ac54021f70ce6a02b92bd07bd11f8c101e00",
+      "orchestration/a-router-asks-its-default-agent-alone": "1270e4c56976a23d1be38d7abf78ac54021f70ce6a02b92bd07bd11f8c101e00",
+      "orchestration/a-router-s-install-hooks-at-its-priority": "1270e4c56976a23d1be38d7abf78ac54021f70ce6a02b92bd07bd11f8c101e00",
+      "orchestration/a-router-with-nothing-to-route-asks-every-agent": "1270e4c56976a23d1be38d7abf78ac54021f70ce6a02b92bd07bd11f8c101e00",
+      "orchestration/a-sender-s-intent-reaches-the-router-s-rules": "1270e4c56976a23d1be38d7abf78ac54021f70ce6a02b92bd07bd11f8c101e00",
+      "orchestration/a-sender-s-routing-stamps-are-dropped": "1270e4c56976a23d1be38d7abf78ac54021f70ce6a02b92bd07bd11f8c101e00",
+      "orchestration/a-supervisor-is-asked-beside-the-routed-agent": "1270e4c56976a23d1be38d7abf78ac54021f70ce6a02b92bd07bd11f8c101e00",
+      "orchestration/a-supervisor-watches-an-addressed-message": "1270e4c56976a23d1be38d7abf78ac54021f70ce6a02b92bd07bd11f8c101e00",
+      "orchestration/an-addressed-message-is-left-to-its-address": "1270e4c56976a23d1be38d7abf78ac54021f70ce6a02b92bd07bd11f8c101e00",
+      "orchestration/an-inbound-after-a-handoff-to-a-human-asks-no-agent": "1270e4c56976a23d1be38d7abf78ac54021f70ce6a02b92bd07bd11f8c101e00",
+      "orchestration/the-state-s-agent-keeps-the-conversation-while-it-is-bound": "1270e4c56976a23d1be38d7abf78ac54021f70ce6a02b92bd07bd11f8c101e00"
+    },
+    "RK-19.4-023": {
+      "orchestration/a-sender-s-routing-stamps-are-dropped": "46ac84ce5a6cf9634834ef4e2736f0e8fb1303f54e6043c0d7cb73c03a648cc2"
+    },
+    "RK-19.4-024": {
+      "orchestration/a-sender-s-intent-reaches-the-router-s-rules": "0674387e1b1bb736ecdd357c582bdd459b039bdd65f4558f8bac54c7f4c4fd8b",
+      "orchestration/rules-are-tried-lowest-priority-first": "0674387e1b1bb736ecdd357c582bdd459b039bdd65f4558f8bac54c7f4c4fd8b"
+    },
+    "RK-19.5-005": {
+      "orchestration/a-conversation-pipeline-reads-a-phase-in-two-stages": "0e32fdfbc410564ef365dbef4bc41c4d145af335bf72c1e6b0fe3c8ebb4b98a9",
+      "orchestration/a-conversation-pipeline-reads-its-stages": "0e32fdfbc410564ef365dbef4bc41c4d145af335bf72c1e6b0fe3c8ebb4b98a9",
+      "orchestration/a-conversation-pipeline-routes-each-phase-to-its-agent": "0e32fdfbc410564ef365dbef4bc41c4d145af335bf72c1e6b0fe3c8ebb4b98a9",
+      "orchestration/a-conversation-pipeline-s-default-phase-supervisor-and-priority-reach-its-router": "0e32fdfbc410564ef365dbef4bc41c4d145af335bf72c1e6b0fe3c8ebb4b98a9"
+    },
+    "RK-19.5-006": {
+      "orchestration/a-conversation-pipeline-reads-its-stages": "cc223ca7821a1d94965ad9f995ee013b8ca5c1ed7195904f27ffe72c3ee0bbee",
+      "orchestration/a-conversation-pipeline-routes-each-phase-to-its-agent": "cc223ca7821a1d94965ad9f995ee013b8ca5c1ed7195904f27ffe72c3ee0bbee",
+      "orchestration/a-conversation-pipeline-s-default-phase-supervisor-and-priority-reach-its-router": "cc223ca7821a1d94965ad9f995ee013b8ca5c1ed7195904f27ffe72c3ee0bbee"
+    },
+    "RK-19.5-007": {
+      "orchestration/a-conversation-pipeline-gives-each-agent-the-targets-it-can-reach": "6034d1ce190c77fe6010061ff57b9ee8ae973a9deac66688ecccca7c0c9c01cf",
+      "orchestration/a-conversation-pipeline-reads-its-stages": "6034d1ce190c77fe6010061ff57b9ee8ae973a9deac66688ecccca7c0c9c01cf"
+    },
+    "RK-19.5-008": {
+      "orchestration/a-conversation-pipeline-reads-a-phase-in-two-stages": "e364e4510620740f438bc4e39e7d57ebf6595cd1bf0f061ebddb9dbca23b0389",
+      "orchestration/a-conversation-pipeline-routes-each-phase-to-its-agent": "e364e4510620740f438bc4e39e7d57ebf6595cd1bf0f061ebddb9dbca23b0389"
+    },
+    "RK-19.5-009": {
+      "orchestration/a-conversation-pipeline-reads-its-stages": "f212de0fbbfd3ef086b36e769b03e07aee4a376fcece48df07da5d985f0ffe3b"
+    },
+    "RK-19.5-010": {
+      "orchestration/a-conversation-pipeline-reads-a-phase-in-two-stages": "19a6c3906f344856766252129c112889cc3d3b1fcc80a0b008d2f07372fd23dc",
+      "orchestration/a-conversation-pipeline-routes-each-phase-to-its-agent": "19a6c3906f344856766252129c112889cc3d3b1fcc80a0b008d2f07372fd23dc",
+      "orchestration/a-conversation-pipeline-s-default-phase-supervisor-and-priority-reach-its-router": "19a6c3906f344856766252129c112889cc3d3b1fcc80a0b008d2f07372fd23dc"
+    },
+    "RK-19.5-011": {
+      "orchestration/a-conversation-pipeline-reads-its-stages": "7d634257cbb21f096d2c88bde66f54d787efcb498400cc143048b0e33e1eed69",
+      "orchestration/a-conversation-pipeline-s-handler-keeps-to-its-stages": "7d634257cbb21f096d2c88bde66f54d787efcb498400cc143048b0e33e1eed69"
+    },
+    "RK-19.5-012": {
+      "orchestration/a-conversation-pipeline-reads-its-stages": "681eb3e1005b4a76547ec510989c5c267708089de3931ec6ec777d5162a0f45b",
+      "orchestration/a-conversation-pipeline-s-agent-in-two-stages-takes-the-last": "681eb3e1005b4a76547ec510989c5c267708089de3931ec6ec777d5162a0f45b"
+    },
+    "RK-19.5-013": {
+      "orchestration/a-pipeline-refused-by-an-agent-s-kit-wide-handoff-sets-nothing-up": "c1b37f5befcedabc5125c4a91ca51c9d5cb9b9bcb7e02c89b528538196f6df97",
+      "orchestration/an-install-refused-by-a-handoff-already-set-up-leaves-nothing": "c1b37f5befcedabc5125c4a91ca51c9d5cb9b9bcb7e02c89b528538196f6df97"
+    },
+    "RK-19.5-014": {
+      "orchestration/a-pipeline-refused-by-an-agent-s-kit-wide-handoff-sets-nothing-up": "2539e7178b0f4db6a533e13d700c86a4aed8c14155824edd8e8faff9c94f0533",
+      "orchestration/an-install-refused-by-a-handoff-already-set-up-leaves-nothing": "2539e7178b0f4db6a533e13d700c86a4aed8c14155824edd8e8faff9c94f0533"
+    },
+    "RK-19.5-015": {
+      "orchestration/an-install-refused-by-a-handoff-already-set-up-leaves-nothing": "8de1a7a1c55fb6b729e834cb5bf92a37448335a291cb366a2de07a8e691ebe0e"
+    },
+    "RK-19.5-016": {
+      "orchestration/a-conversation-pipeline-routes-each-phase-to-its-agent": "a2db7500de25d1ad00fcc9456eef130ea396e7fe49d913cf0ee77a7ce4fcaa71",
+      "orchestration/a-conversation-pipeline-s-default-phase-supervisor-and-priority-reach-its-router": "a2db7500de25d1ad00fcc9456eef130ea396e7fe49d913cf0ee77a7ce4fcaa71"
+    },
+    "RK-19.5-017": {
+      "orchestration/a-conversation-pipeline-s-agent-in-two-stages-takes-the-last": "a8fdd262236f5acdfde35e40a5c78985a53d81893294846bf95f11f13c36583e",
+      "orchestration/a-conversation-pipeline-s-handler-keeps-to-its-stages": "a8fdd262236f5acdfde35e40a5c78985a53d81893294846bf95f11f13c36583e"
+    },
+    "RK-19.5-018": {
+      "orchestration/a-conversation-pipeline-gives-each-agent-the-targets-it-can-reach": "f791d7595293d68e0352317886410b3283f957d022b58a1a9c7216833b7df3da",
+      "orchestration/a-conversation-pipeline-reads-a-phase-in-two-stages": "f791d7595293d68e0352317886410b3283f957d022b58a1a9c7216833b7df3da"
+    },
+    "RK-19.5-019": {
+      "orchestration/a-conversation-pipeline-gives-each-agent-the-targets-it-can-reach": "421930096d43f89615457d3256b9568c9ef5ede29b9631ce588f06d5091d06a8",
+      "orchestration/a-conversation-pipeline-reads-a-phase-in-two-stages": "421930096d43f89615457d3256b9568c9ef5ede29b9631ce588f06d5091d06a8",
+      "orchestration/a-conversation-pipeline-s-agent-in-two-stages-takes-the-last": "421930096d43f89615457d3256b9568c9ef5ede29b9631ce588f06d5091d06a8"
+    },
+    "RK-19.5-034": {
+      "realtime/a-realtime-pipeline-refuses-the-agents-human-input": "5077156607989d82342ba1f28159e314367f7823d84153944bbc78db64b68f81"
+    },
+    "RK-19.5-037": {
+      "orchestration/a-conversation-pipeline-s-agent-in-two-stages-takes-the-last": "7dfa89c99847e8c4b81ae836fd3b2ec0a7060a302bb055e0df563ebf9d7b1978",
+      "orchestration/a-conversation-pipeline-s-handler-keeps-to-its-stages": "7dfa89c99847e8c4b81ae836fd3b2ec0a7060a302bb055e0df563ebf9d7b1978",
+      "orchestration/a-handoff-keeps-to-the-allowed-transitions": "7dfa89c99847e8c4b81ae836fd3b2ec0a7060a302bb055e0df563ebf9d7b1978",
+      "orchestration/a-pipeline-keeps-to-its-chain": "7dfa89c99847e8c4b81ae836fd3b2ec0a7060a302bb055e0df563ebf9d7b1978"
+    },
+    "RK-19.5-038": {
+      "orchestration/a-conversation-pipeline-s-agent-in-two-stages-takes-the-last": "d817aaf1b0a5f01ceada2ba81f9a53fba1dbf3819f27a45cf28d1d6f3e9dd0f0",
+      "orchestration/a-conversation-pipeline-s-handler-keeps-to-its-stages": "d817aaf1b0a5f01ceada2ba81f9a53fba1dbf3819f27a45cf28d1d6f3e9dd0f0",
+      "orchestration/a-handoff-keeps-to-the-allowed-transitions": "d817aaf1b0a5f01ceada2ba81f9a53fba1dbf3819f27a45cf28d1d6f3e9dd0f0",
+      "orchestration/a-pipeline-keeps-to-its-chain": "d817aaf1b0a5f01ceada2ba81f9a53fba1dbf3819f27a45cf28d1d6f3e9dd0f0"
+    },
+    "RK-19.6-003": {
+      "orchestration/a-conversation-pipeline-s-agent-in-two-stages-takes-the-last": "4ed0a150c04e5d371623a1aa2417b4bd665ce7498868f95c11127031f094e0d8",
+      "orchestration/a-conversation-pipeline-s-handler-keeps-to-its-stages": "4ed0a150c04e5d371623a1aa2417b4bd665ce7498868f95c11127031f094e0d8",
+      "orchestration/a-handoff-hands-the-room-to-its-target": "4ed0a150c04e5d371623a1aa2417b4bd665ce7498868f95c11127031f094e0d8",
+      "orchestration/a-handoff-keeps-to-the-allowed-transitions": "4ed0a150c04e5d371623a1aa2417b4bd665ce7498868f95c11127031f094e0d8",
+      "orchestration/a-handoff-picks-its-target-and-its-phase": "4ed0a150c04e5d371623a1aa2417b4bd665ce7498868f95c11127031f094e0d8",
+      "orchestration/a-handoff-reads-an-empty-phase-and-a-blank-reason-as-none": "4ed0a150c04e5d371623a1aa2417b4bd665ce7498868f95c11127031f094e0d8",
+      "orchestration/a-handoff-s-caller-holds-the-room-s-phase": "4ed0a150c04e5d371623a1aa2417b4bd665ce7498868f95c11127031f094e0d8",
+      "orchestration/a-handoff-to-a-room-s-transport-is-refused": "4ed0a150c04e5d371623a1aa2417b4bd665ce7498868f95c11127031f094e0d8",
+      "orchestration/a-handoff-to-an-agent-in-no-stage-is-refused": "4ed0a150c04e5d371623a1aa2417b4bd665ce7498868f95c11127031f094e0d8",
+      "orchestration/a-handoff-to-an-agent-the-room-does-not-hold-is-refused": "4ed0a150c04e5d371623a1aa2417b4bd665ce7498868f95c11127031f094e0d8",
+      "orchestration/a-room-held-for-a-human-takes-no-handoff-to-an-agent": "4ed0a150c04e5d371623a1aa2417b4bd665ce7498868f95c11127031f094e0d8"
+    },
+    "RK-19.6-009": {
+      "orchestration/a-handoff-hands-the-room-to-its-target": "8df330a53ed4073bf03ae818ccafe9ed6648fd6a01c6b600d6ff95483c9256c9",
+      "orchestration/a-handoff-picks-its-target-and-its-phase": "8df330a53ed4073bf03ae818ccafe9ed6648fd6a01c6b600d6ff95483c9256c9",
+      "orchestration/a-room-s-handoff-tool-names-its-targets-in-that-room-alone": "8df330a53ed4073bf03ae818ccafe9ed6648fd6a01c6b600d6ff95483c9256c9",
+      "orchestration/the-generic-handoff-tool-is-declared-in-every-room-the-agent-serves": "8df330a53ed4073bf03ae818ccafe9ed6648fd6a01c6b600d6ff95483c9256c9"
+    },
+    "RK-19.6-010": {
+      "orchestration/a-handoff-picks-its-target-and-its-phase": "375dd10f4c290025352014cd126fed9d5bf97e76fbe07836430ef966a033f87f",
+      "orchestration/a-room-s-handoff-tool-names-its-targets-in-that-room-alone": "375dd10f4c290025352014cd126fed9d5bf97e76fbe07836430ef966a033f87f",
+      "orchestration/the-generic-handoff-tool-is-declared-in-every-room-the-agent-serves": "375dd10f4c290025352014cd126fed9d5bf97e76fbe07836430ef966a033f87f"
+    },
+    "RK-19.6-012": {
+      "orchestration/a-handoff-hands-the-room-to-its-target": "71ce6deeef03cc890d77c60b8d5bd2b012be7685678910f61e1f62e4f498385d",
+      "orchestration/a-pipeline-chains-its-agents-and-starts-at-the-first": "71ce6deeef03cc890d77c60b8d5bd2b012be7685678910f61e1f62e4f498385d",
+      "orchestration/a-pipeline-keeps-to-its-chain": "71ce6deeef03cc890d77c60b8d5bd2b012be7685678910f61e1f62e4f498385d",
+      "orchestration/a-pipeline-s-agent-that-handed-off-cannot-hand-off-again": "71ce6deeef03cc890d77c60b8d5bd2b012be7685678910f61e1f62e4f498385d",
+      "orchestration/a-pipeline-s-handoff-leads-its-target-to-a-phase-it-holds": "71ce6deeef03cc890d77c60b8d5bd2b012be7685678910f61e1f62e4f498385d",
+      "orchestration/a-swarm-hands-the-room-from-agent-to-agent": "71ce6deeef03cc890d77c60b8d5bd2b012be7685678910f61e1f62e4f498385d"
+    },
+    "RK-19.6-013": {
+      "orchestration/a-handoff-picks-its-target-and-its-phase": "af2305f965863b443b8747eee99b638b1902c4075ed390e201073cbb048a3145",
+      "orchestration/a-handoff-to-a-room-s-transport-is-refused": "af2305f965863b443b8747eee99b638b1902c4075ed390e201073cbb048a3145",
+      "orchestration/a-handoff-to-an-agent-in-no-stage-is-refused": "af2305f965863b443b8747eee99b638b1902c4075ed390e201073cbb048a3145",
+      "orchestration/a-handoff-to-an-agent-the-room-does-not-hold-is-refused": "af2305f965863b443b8747eee99b638b1902c4075ed390e201073cbb048a3145",
+      "orchestration/a-room-held-for-a-human-takes-no-handoff-to-an-agent": "af2305f965863b443b8747eee99b638b1902c4075ed390e201073cbb048a3145"
+    },
+    "RK-19.6-014": {
+      "orchestration/a-conversation-pipeline-s-agent-in-two-stages-takes-the-last": "30959a9c5b9274741d0f0b7bf5a026ce2c37226137970548209617a803363b3d",
+      "orchestration/a-conversation-pipeline-s-handler-keeps-to-its-stages": "30959a9c5b9274741d0f0b7bf5a026ce2c37226137970548209617a803363b3d",
+      "orchestration/a-handoff-keeps-to-the-allowed-transitions": "30959a9c5b9274741d0f0b7bf5a026ce2c37226137970548209617a803363b3d",
+      "orchestration/a-handoff-to-an-agent-in-no-stage-is-refused": "30959a9c5b9274741d0f0b7bf5a026ce2c37226137970548209617a803363b3d",
+      "orchestration/a-pipeline-keeps-to-its-chain": "30959a9c5b9274741d0f0b7bf5a026ce2c37226137970548209617a803363b3d"
+    },
+    "RK-19.6-015": {
+      "orchestration/a-conversation-pipeline-s-agent-in-two-stages-takes-the-last": "40aa0ce16df0cc3197957b19e216c97659f4ce27278029796f32555cb1f30f7e",
+      "orchestration/a-handoff-s-caller-holds-the-room-s-phase": "40aa0ce16df0cc3197957b19e216c97659f4ce27278029796f32555cb1f30f7e",
+      "orchestration/a-handoff-to-an-agent-in-no-stage-is-refused": "40aa0ce16df0cc3197957b19e216c97659f4ce27278029796f32555cb1f30f7e",
+      "orchestration/a-pipeline-s-handoff-leads-its-target-to-a-phase-it-holds": "40aa0ce16df0cc3197957b19e216c97659f4ce27278029796f32555cb1f30f7e"
+    },
+    "RK-19.6-016": {
+      "orchestration/a-handoff-s-caller-holds-the-room-s-phase": "f90f3cceb5027fc3337f0ec2135958152c32afa56eb771d1a7a8bac31882ef0a",
+      "orchestration/a-handoff-to-an-agent-in-no-stage-is-refused": "f90f3cceb5027fc3337f0ec2135958152c32afa56eb771d1a7a8bac31882ef0a"
+    },
+    "RK-19.6-017": {
+      "orchestration/a-handoff-s-caller-holds-the-room-s-phase": "e2d367d5d193d6853d0817842a039f66a9df3de772695064f7596fa7a4fe52b0",
+      "orchestration/a-pipeline-s-agent-that-handed-off-cannot-hand-off-again": "e2d367d5d193d6853d0817842a039f66a9df3de772695064f7596fa7a4fe52b0"
+    },
+    "RK-19.6-018": {
+      "orchestration/a-handoff-s-caller-holds-the-room-s-phase": "4489f11d2c6a5f28176a23ce0855c6e1e57a2b54fcd5d23c9475a17d387e4dd1"
+    },
+    "RK-19.6-019": {
+      "orchestration/a-handoff-s-caller-holds-the-room-s-phase": "be1bf57e218844ee07138fef368e707b87b37b539e6b2f8758cf1c4dcf7dd522",
+      "orchestration/a-handoff-to-an-agent-in-no-stage-is-refused": "be1bf57e218844ee07138fef368e707b87b37b539e6b2f8758cf1c4dcf7dd522"
+    },
+    "RK-19.6-020": {
+      "orchestration/a-handoff-hands-the-room-to-its-target": "beedad3ca1dc4eae7743372c835e9916b44e5369ff1277042e73a88e2e7c1139",
+      "orchestration/a-handoff-picks-its-target-and-its-phase": "beedad3ca1dc4eae7743372c835e9916b44e5369ff1277042e73a88e2e7c1139",
+      "orchestration/a-handoff-s-language-is-the-room-s-state": "beedad3ca1dc4eae7743372c835e9916b44e5369ff1277042e73a88e2e7c1139",
+      "orchestration/a-handoff-to-an-agent-the-room-does-not-hold-is-refused": "beedad3ca1dc4eae7743372c835e9916b44e5369ff1277042e73a88e2e7c1139",
+      "orchestration/a-pipeline-chains-its-agents-and-starts-at-the-first": "beedad3ca1dc4eae7743372c835e9916b44e5369ff1277042e73a88e2e7c1139",
+      "orchestration/a-pipeline-keeps-to-its-chain": "beedad3ca1dc4eae7743372c835e9916b44e5369ff1277042e73a88e2e7c1139",
+      "orchestration/a-pipeline-s-agent-that-handed-off-cannot-hand-off-again": "beedad3ca1dc4eae7743372c835e9916b44e5369ff1277042e73a88e2e7c1139",
+      "orchestration/a-pipeline-s-handoff-leads-its-target-to-a-phase-it-holds": "beedad3ca1dc4eae7743372c835e9916b44e5369ff1277042e73a88e2e7c1139",
+      "orchestration/a-swarm-hands-the-room-from-agent-to-agent": "beedad3ca1dc4eae7743372c835e9916b44e5369ff1277042e73a88e2e7c1139",
+      "orchestration/an-inbound-after-a-handoff-to-a-human-asks-no-agent": "beedad3ca1dc4eae7743372c835e9916b44e5369ff1277042e73a88e2e7c1139"
+    },
+    "RK-19.6-021": {
+      "orchestration/a-handoff-hands-the-room-to-its-target": "720923eb97e66dd717410d4243078ca311aa7fce79d19bde0d6c6c77cf2f8bc1",
+      "orchestration/a-handoff-to-an-agent-the-room-does-not-hold-is-refused": "720923eb97e66dd717410d4243078ca311aa7fce79d19bde0d6c6c77cf2f8bc1",
+      "orchestration/a-room-held-for-a-human-asks-no-supervisor-without-an-address": "720923eb97e66dd717410d4243078ca311aa7fce79d19bde0d6c6c77cf2f8bc1"
+    },
+    "RK-19.6-022": {
+      "orchestration/a-handoff-hands-the-room-to-its-target": "e5667c7eee2f6c1f1a50fbdcbd71e0d7897a3509248e9b75bd1a00f12e3020fc",
+      "orchestration/a-handoff-to-an-agent-the-room-does-not-hold-is-refused": "e5667c7eee2f6c1f1a50fbdcbd71e0d7897a3509248e9b75bd1a00f12e3020fc"
+    },
+    "RK-19.6-023": {
+      "orchestration/a-conversation-pipeline-s-agent-in-two-stages-takes-the-last": "0eb3b9f418b111b0b04e0bf866f35ef6ff4f77c111fbeaf7f12a52304616e235",
+      "orchestration/a-conversation-pipeline-s-handler-keeps-to-its-stages": "0eb3b9f418b111b0b04e0bf866f35ef6ff4f77c111fbeaf7f12a52304616e235",
+      "orchestration/a-handoff-hands-the-room-to-its-target": "0eb3b9f418b111b0b04e0bf866f35ef6ff4f77c111fbeaf7f12a52304616e235",
+      "orchestration/a-handoff-keeps-to-the-allowed-transitions": "0eb3b9f418b111b0b04e0bf866f35ef6ff4f77c111fbeaf7f12a52304616e235",
+      "orchestration/a-handoff-picks-its-target-and-its-phase": "0eb3b9f418b111b0b04e0bf866f35ef6ff4f77c111fbeaf7f12a52304616e235",
+      "orchestration/a-handoff-reads-an-empty-phase-and-a-blank-reason-as-none": "0eb3b9f418b111b0b04e0bf866f35ef6ff4f77c111fbeaf7f12a52304616e235",
+      "orchestration/a-handoff-s-caller-holds-the-room-s-phase": "0eb3b9f418b111b0b04e0bf866f35ef6ff4f77c111fbeaf7f12a52304616e235",
+      "orchestration/a-handoff-to-a-room-s-transport-is-refused": "0eb3b9f418b111b0b04e0bf866f35ef6ff4f77c111fbeaf7f12a52304616e235",
+      "orchestration/a-handoff-to-an-agent-in-no-stage-is-refused": "0eb3b9f418b111b0b04e0bf866f35ef6ff4f77c111fbeaf7f12a52304616e235",
+      "orchestration/a-handoff-to-an-agent-the-room-does-not-hold-is-refused": "0eb3b9f418b111b0b04e0bf866f35ef6ff4f77c111fbeaf7f12a52304616e235",
+      "orchestration/a-pipeline-keeps-to-its-chain": "0eb3b9f418b111b0b04e0bf866f35ef6ff4f77c111fbeaf7f12a52304616e235",
+      "orchestration/a-pipeline-s-agent-that-handed-off-cannot-hand-off-again": "0eb3b9f418b111b0b04e0bf866f35ef6ff4f77c111fbeaf7f12a52304616e235",
+      "orchestration/a-pipeline-s-handoff-leads-its-target-to-a-phase-it-holds": "0eb3b9f418b111b0b04e0bf866f35ef6ff4f77c111fbeaf7f12a52304616e235",
+      "orchestration/a-room-held-for-a-human-asks-no-supervisor-without-an-address": "0eb3b9f418b111b0b04e0bf866f35ef6ff4f77c111fbeaf7f12a52304616e235",
+      "orchestration/a-room-held-for-a-human-takes-no-handoff-to-an-agent": "0eb3b9f418b111b0b04e0bf866f35ef6ff4f77c111fbeaf7f12a52304616e235"
+    },
+    "RK-19.6-024": {
+      "orchestration/a-handoff-to-an-agent-the-room-does-not-hold-is-refused": "f2b69d0f95eb8f5cf1fe69b8ac06ae4d395242a9d6d001f356fc89b841eff652",
+      "orchestration/a-pipeline-keeps-to-its-chain": "f2b69d0f95eb8f5cf1fe69b8ac06ae4d395242a9d6d001f356fc89b841eff652",
+      "orchestration/a-pipeline-s-agent-that-handed-off-cannot-hand-off-again": "f2b69d0f95eb8f5cf1fe69b8ac06ae4d395242a9d6d001f356fc89b841eff652",
+      "orchestration/a-pipeline-s-handoff-leads-its-target-to-a-phase-it-holds": "f2b69d0f95eb8f5cf1fe69b8ac06ae4d395242a9d6d001f356fc89b841eff652",
+      "orchestration/a-room-held-for-a-human-takes-no-handoff-to-an-agent": "f2b69d0f95eb8f5cf1fe69b8ac06ae4d395242a9d6d001f356fc89b841eff652",
+      "orchestration/an-inbound-after-a-handoff-to-a-human-asks-no-agent": "f2b69d0f95eb8f5cf1fe69b8ac06ae4d395242a9d6d001f356fc89b841eff652"
+    },
+    "RK-19.6-025": {
+      "orchestration/a-conversation-pipeline-s-agent-in-two-stages-takes-the-last": "0aab86ba052c42cf02ea889f700d939e8e0bad6d07d916bc8c2d25b07607c6ff",
+      "orchestration/a-conversation-pipeline-s-handler-keeps-to-its-stages": "0aab86ba052c42cf02ea889f700d939e8e0bad6d07d916bc8c2d25b07607c6ff",
+      "orchestration/a-handoff-keeps-to-the-allowed-transitions": "0aab86ba052c42cf02ea889f700d939e8e0bad6d07d916bc8c2d25b07607c6ff",
+      "orchestration/a-handoff-s-caller-holds-the-room-s-phase": "0aab86ba052c42cf02ea889f700d939e8e0bad6d07d916bc8c2d25b07607c6ff",
+      "orchestration/a-handoff-to-a-room-s-transport-is-refused": "0aab86ba052c42cf02ea889f700d939e8e0bad6d07d916bc8c2d25b07607c6ff",
+      "orchestration/a-handoff-to-an-agent-in-no-stage-is-refused": "0aab86ba052c42cf02ea889f700d939e8e0bad6d07d916bc8c2d25b07607c6ff",
+      "orchestration/a-handoff-to-an-agent-the-room-does-not-hold-is-refused": "0aab86ba052c42cf02ea889f700d939e8e0bad6d07d916bc8c2d25b07607c6ff",
+      "orchestration/a-pipeline-keeps-to-its-chain": "0aab86ba052c42cf02ea889f700d939e8e0bad6d07d916bc8c2d25b07607c6ff",
+      "orchestration/a-pipeline-s-agent-that-handed-off-cannot-hand-off-again": "0aab86ba052c42cf02ea889f700d939e8e0bad6d07d916bc8c2d25b07607c6ff",
+      "orchestration/a-pipeline-s-handoff-leads-its-target-to-a-phase-it-holds": "0aab86ba052c42cf02ea889f700d939e8e0bad6d07d916bc8c2d25b07607c6ff",
+      "orchestration/a-room-held-for-a-human-takes-no-handoff-to-an-agent": "0aab86ba052c42cf02ea889f700d939e8e0bad6d07d916bc8c2d25b07607c6ff",
+      "orchestration/an-inbound-after-a-handoff-to-a-human-asks-no-agent": "0aab86ba052c42cf02ea889f700d939e8e0bad6d07d916bc8c2d25b07607c6ff"
+    },
+    "RK-19.6-027": {
+      "orchestration/a-copied-handoff-record-is-replaced": "37990af19637dea67de858566b5a148d49c2dd15112c50b95f7ed54c7cc3e0dc",
+      "orchestration/a-handoff-hands-the-room-to-its-target": "37990af19637dea67de858566b5a148d49c2dd15112c50b95f7ed54c7cc3e0dc",
+      "orchestration/a-handoff-keeps-to-the-allowed-transitions": "37990af19637dea67de858566b5a148d49c2dd15112c50b95f7ed54c7cc3e0dc",
+      "orchestration/a-handoff-picks-its-target-and-its-phase": "37990af19637dea67de858566b5a148d49c2dd15112c50b95f7ed54c7cc3e0dc",
+      "orchestration/a-handoff-reads-an-empty-phase-and-a-blank-reason-as-none": "37990af19637dea67de858566b5a148d49c2dd15112c50b95f7ed54c7cc3e0dc",
+      "orchestration/a-handoff-s-record-reaches-the-room-s-transports": "37990af19637dea67de858566b5a148d49c2dd15112c50b95f7ed54c7cc3e0dc",
+      "orchestration/a-pipeline-chains-its-agents-and-starts-at-the-first": "37990af19637dea67de858566b5a148d49c2dd15112c50b95f7ed54c7cc3e0dc",
+      "orchestration/a-swarm-hands-the-room-from-agent-to-agent": "37990af19637dea67de858566b5a148d49c2dd15112c50b95f7ed54c7cc3e0dc"
+    },
+    "RK-19.6-028": {
+      "orchestration/a-handoff-hands-the-room-to-its-target": "e46208851742a8ebf6b68e9a8ab6e35cca904cfe42228fa1f3cd492c21ba78ab",
+      "orchestration/a-handoff-s-record-reaches-the-room-s-transports": "e46208851742a8ebf6b68e9a8ab6e35cca904cfe42228fa1f3cd492c21ba78ab",
+      "orchestration/a-handoff-to-an-agent-the-room-does-not-hold-is-refused": "e46208851742a8ebf6b68e9a8ab6e35cca904cfe42228fa1f3cd492c21ba78ab"
+    },
+    "RK-19.6-029": {
+      "orchestration/a-handoff-s-record-reaches-the-room-s-transports": "f092abf5e4b3570aa7ff3b01e8fbcb99127e673ffb0742b635b917d1d80922c6",
+      "orchestration/an-event-marked-orchestration-internal-asks-no-agent": "f092abf5e4b3570aa7ff3b01e8fbcb99127e673ffb0742b635b917d1d80922c6"
+    },
+    "RK-19.6-030": {
+      "orchestration/a-sender-s-internal-mark-is-dropped": "5d86368e2f1d3b03e8723e8ac1c453dc21772a0adb7df3da2ef17e4b1e50f02a"
+    },
+    "RK-19.6-031": {
+      "orchestration/a-handoff-hands-the-room-to-its-target": "a48fcca72e398f1122bee3104126a3271af643312ce5e4d95550d3894297009e",
+      "orchestration/a-room-s-handoff-tool-names-its-targets-in-that-room-alone": "a48fcca72e398f1122bee3104126a3271af643312ce5e4d95550d3894297009e",
+      "orchestration/the-generic-handoff-tool-is-declared-in-every-room-the-agent-serves": "a48fcca72e398f1122bee3104126a3271af643312ce5e4d95550d3894297009e"
+    },
+    "RK-19.6-032": {
+      "orchestration/a-room-s-handoff-tool-names-its-targets-in-that-room-alone": "847e9a69b27fc06bd663cc0149e22ab11d6176cbd402804e0991238f2cf98b5c",
+      "orchestration/the-generic-handoff-tool-is-declared-in-every-room-the-agent-serves": "847e9a69b27fc06bd663cc0149e22ab11d6176cbd402804e0991238f2cf98b5c"
+    },
+    "RK-19.6-033": {
+      "orchestration/a-room-s-handoff-tool-names-its-targets-in-that-room-alone": "11ffac961b7fc9ba42e2c9d85faa37815845ccff53aaf3025bc2614e03426153",
+      "orchestration/the-generic-handoff-tool-is-declared-in-every-room-the-agent-serves": "11ffac961b7fc9ba42e2c9d85faa37815845ccff53aaf3025bc2614e03426153"
+    },
+    "RK-19.6-034": {
+      "orchestration/an-install-refused-by-a-handoff-already-set-up-leaves-nothing": "9f35d2015b51f2633d46f232e3d993596aa1bb05788cd09e62ef8e13e6ddc4a3"
+    },
+    "RK-19.6-035": {
+      "orchestration/a-room-held-for-a-human-takes-no-handoff-to-an-agent": "691f429f63a7d89d05a14c00d975d3845d1bbb45e192cdb22d47edc858b0b307",
+      "orchestration/an-inbound-after-a-handoff-to-a-human-asks-no-agent": "691f429f63a7d89d05a14c00d975d3845d1bbb45e192cdb22d47edc858b0b307"
+    },
+    "RK-19.6-036": {
+      "orchestration/a-room-held-for-a-human-asks-no-supervisor-without-an-address": "bab4b8fee6d6a5b8bfc22f2458456aef8705a8498cc3bb1de261f9abefe36fe0",
+      "orchestration/an-inbound-after-a-handoff-to-a-human-asks-no-agent": "bab4b8fee6d6a5b8bfc22f2458456aef8705a8498cc3bb1de261f9abefe36fe0"
+    },
+    "RK-19.6-037": {
+      "orchestration/a-room-held-for-a-human-asks-no-supervisor-without-an-address": "31738dfdf45224c63d0aff2f612a213b9ae31d91a62a10fce574649d65ad9560",
+      "orchestration/an-inbound-after-a-handoff-to-a-human-asks-no-agent": "31738dfdf45224c63d0aff2f612a213b9ae31d91a62a10fce574649d65ad9560"
+    },
+    "RK-19.6-038": {
+      "orchestration/a-room-held-for-a-human-takes-no-handoff-to-an-agent": "6004d6f9df0cbfa210cf1605c683c054bbe2386adc076704e5559d34380a2319",
+      "orchestration/an-inbound-after-a-handoff-to-a-human-asks-no-agent": "6004d6f9df0cbfa210cf1605c683c054bbe2386adc076704e5559d34380a2319"
+    },
+    "RK-19.6-039": {
+      "orchestration/a-room-held-for-a-human-takes-no-handoff-to-an-agent": "b8d5039281fe369edfb144a94f8a8fd553ccf1d1e4b9dde0fd7084d4cffbc702"
+    },
+    "RK-19.6-040": {
+      "orchestration/an-inbound-after-a-handoff-to-a-human-asks-no-agent": "a2c4c3979c90baceda881ed9617e376aa88d26684e267f83108f9036dcb8095f"
+    },
+    "RK-19.6-041": {
+      "orchestration/a-room-held-for-a-human-asks-no-supervisor-without-an-address": "0a82d25ff11a84c4806b477fcf0e61fe9a0baecb198f54330ac83ef9c87a0a90"
+    },
+    "RK-19.6-047": {
+      "orchestration/a-pipeline-serves-each-room-its-own-install": "cc5ce277f3ab4a62a3a81dee53cb81445285a17dbd844c9bf7acecd5022d234e",
+      "orchestration/a-swarm-starts-at-its-entry-and-serves-each-room-its-own-install": "cc5ce277f3ab4a62a3a81dee53cb81445285a17dbd844c9bf7acecd5022d234e"
+    },
+    "RK-19.6-049": {
+      "orchestration/a-handoff-greeting-is-the-active-agent-s-line": "257b2fc4fd53f803548aa20deec032a8c9e09e96645fcc4abd01482a8637ae7d",
+      "orchestration/a-handoff-greeting-takes-the-handler-s-event-channel": "257b2fc4fd53f803548aa20deec032a8c9e09e96645fcc4abd01482a8637ae7d"
+    },
+    "RK-19.6-050": {
+      "orchestration/a-handoff-greeting-in-a-missing-room-is-not-found": "578e7f4f0e72915a490df11d0e1c40bb543dd3a1538e1a3152005d49d9b6a023"
+    },
+    "RK-19.6-051": {
+      "orchestration/a-handoff-greeting-with-nothing-to-say-stores-nothing": "510bb89a69ad30941107da60aebb68bb5854966f8c7fbe66fa63ecc0d2284533"
+    },
+    "RK-19.6-053": {
+      "orchestration/a-handoff-greeting-is-the-active-agent-s-line": "040e5d0b8cc604bcc6dd20e8795f5d64b53baabd150414f5b5a4ad02b43122cc",
+      "orchestration/a-handoff-greeting-takes-the-handler-s-event-channel": "040e5d0b8cc604bcc6dd20e8795f5d64b53baabd150414f5b5a4ad02b43122cc"
+    },
+    "RK-19.8-002": {
+      "status/a-status-reaches-the-hooks-of-the-room-it-names": "0f73469f09d2fc0ba6d38ea917e2d53b7468e37acf55513f3a6df5af52db1cf0"
+    },
+    "RK-19.8-006": {
+      "status/recent-reads-the-newest-entries-by-agent-and-status": "f9ca4605ee6dc1554c7e80814d0edbe9c4dd0cf2029530ae28b8046a197c282a"
+    },
+    "RK-19.8-007": {
+      "status/the-bus-reads-its-recent-entries-as-text": "294b12ba63709a994d5af79cf64fe4283cc02bda6516e5971a6c19196172183c"
+    },
+    "RK-19.8-010": {
+      "status/a-status-reaches-the-hooks-of-the-room-it-names": "032f4721254045516555ddadae38a4a8aceb6e6ad132bdc6d31f6aa23a1bf7b7"
+    },
+    "RK-19.8-011": {
+      "status/a-status-reaches-the-hooks-of-the-room-it-names": "21525ac4fe3c4259e59bd40cc8371f84d7524bc0e0ef5e1476505a5195a1cc7a",
+      "status/recent-reads-the-newest-entries-by-agent-and-status": "21525ac4fe3c4259e59bd40cc8371f84d7524bc0e0ef5e1476505a5195a1cc7a",
+      "status/the-bus-reads-its-recent-entries-as-text": "21525ac4fe3c4259e59bd40cc8371f84d7524bc0e0ef5e1476505a5195a1cc7a",
+      "tasks/a-delegation-whose-worker-fails-ends-failed": "21525ac4fe3c4259e59bd40cc8371f84d7524bc0e0ef5e1476505a5195a1cc7a",
+      "tasks/an-inline-delegation-runs-its-agent-in-a-child-room": "21525ac4fe3c4259e59bd40cc8371f84d7524bc0e0ef5e1476505a5195a1cc7a"
+    },
+    "RK-19.8-012": {
+      "host/a-turn-s-host-writes-its-room-s-metadata-status-and-observations": "3fd17f1ea14fc37e0b5485883fb4530d9239ab560330c4fb313a0c1d97aec196",
+      "status/a-status-reaches-the-hooks-of-the-room-it-names": "3fd17f1ea14fc37e0b5485883fb4530d9239ab560330c4fb313a0c1d97aec196",
+      "tasks/an-inline-delegation-runs-its-agent-in-a-child-room": "3fd17f1ea14fc37e0b5485883fb4530d9239ab560330c4fb313a0c1d97aec196"
+    },
+    "RK-19.8-013": {
+      "tasks/a-result-past-the-summary-is-kept-whole-for-task-status": "6a30d7c3ec2c37e4e79cc8d9acc4e05dc92ecc231006acc5abfa1e91808680cf"
+    },
+    "RK-19.8-014": {
+      "tasks/a-result-past-the-summary-is-kept-whole-for-task-status": "090e579e09546b761d1f455d0514f9b920cc1478ac3c1b4c418ce186a85dc581"
+    },
+    "RK-19.8-015": {
+      "host/a-turn-s-host-writes-its-room-s-metadata-status-and-observations": "74b8fffefae9be21b76d4b187efb0d425fdb97c5259900a33a5c13b9d698bbdd",
+      "status/a-status-hook-s-call-is-as-deep-as-the-poster": "74b8fffefae9be21b76d4b187efb0d425fdb97c5259900a33a5c13b9d698bbdd",
+      "status/a-status-posted-after-close-starts-no-room-hook": "74b8fffefae9be21b76d4b187efb0d425fdb97c5259900a33a5c13b9d698bbdd",
+      "status/a-status-reaches-the-hooks-of-the-room-it-names": "74b8fffefae9be21b76d4b187efb0d425fdb97c5259900a33a5c13b9d698bbdd",
+      "status/observers-start-in-firing-order-while-earlier-bodies-wait": "74b8fffefae9be21b76d4b187efb0d425fdb97c5259900a33a5c13b9d698bbdd"
+    },
+    "RK-19.8-016": {
+      "status/a-status-posted-after-close-starts-no-room-hook": "ca50b3feada75575608871da8dee13bb672204472040b7bcbb5fea394d261ead",
+      "status/a-status-reaches-the-hooks-of-the-room-it-names": "ca50b3feada75575608871da8dee13bb672204472040b7bcbb5fea394d261ead"
+    },
+    "RK-19.8-017": {
+      "status/a-status-hook-s-call-is-as-deep-as-the-poster": "3376caf3e9f4de7a87f316a7d0ac1a5fd84100e88361a4c90c1768d4df341b31"
+    },
+    "RK-19.8-019": {
+      "status/a-status-reaches-the-hooks-of-the-room-it-names": "6979a48ec77473075e2e200aead6f29d321641b852a07a9a954a25ead1012fd7"
+    },
+    "RK-19.8-020": {
+      "host/a-turn-s-host-writes-its-room-s-metadata-status-and-observations": "3a7b37bdfbada29182ce8c827dd8a2fe0b6c8e4840a5ee07e41b71320d4086b6",
+      "status/a-status-reaches-the-hooks-of-the-room-it-names": "3a7b37bdfbada29182ce8c827dd8a2fe0b6c8e4840a5ee07e41b71320d4086b6",
+      "tasks/a-failed-task-with-nothing-to-say-is-handed-back-as-failed": "3a7b37bdfbada29182ce8c827dd8a2fe0b6c8e4840a5ee07e41b71320d4086b6"
+    },
+    "RK-19.8-021": {
+      "tasks/a-delegated-turn-s-returned-error-is-reported-in-its-child-room": "207bbee49e676f5aa0dc60665ace930953d5abb42163cdfc0a8fac5e919c674a",
+      "tasks/a-delegation-whose-worker-fails-ends-failed": "207bbee49e676f5aa0dc60665ace930953d5abb42163cdfc0a8fac5e919c674a",
+      "tasks/a-failed-task-with-nothing-to-say-is-handed-back-as-failed": "207bbee49e676f5aa0dc60665ace930953d5abb42163cdfc0a8fac5e919c674a",
+      "tasks/a-own-task-status-tool-names-the-discussion-worker-by-handle": "207bbee49e676f5aa0dc60665ace930953d5abb42163cdfc0a8fac5e919c674a",
+      "tasks/a-owner-task-status-tool-names-the-discussion-worker-by-handle": "207bbee49e676f5aa0dc60665ace930953d5abb42163cdfc0a8fac5e919c674a",
+      "tasks/a-result-past-the-summary-is-kept-whole-for-task-status": "207bbee49e676f5aa0dc60665ace930953d5abb42163cdfc0a8fac5e919c674a",
+      "tasks/a-worker-s-progress-reaches-the-agent-s-next-turn": "207bbee49e676f5aa0dc60665ace930953d5abb42163cdfc0a8fac5e919c674a",
+      "tasks/an-inline-delegation-runs-its-agent-in-a-child-room": "207bbee49e676f5aa0dc60665ace930953d5abb42163cdfc0a8fac5e919c674a",
+      "tasks/the-kit-cancels-a-background-task-once": "207bbee49e676f5aa0dc60665ace930953d5abb42163cdfc0a8fac5e919c674a"
+    },
+    "RK-19.8-022": {
+      "orchestration/a-supervisor-given-task-status-is-pointed-at-it-by-its-dispatched-team": "f6bbbc3a878f2d16517ecbe4067d8e6c305ae351372585b67aa7a3b0ebfa8266",
+      "orchestration/a-supervisor-s-team-tool-in-the-background-answers-at-once-and-hands-the-results-back": "f6bbbc3a878f2d16517ecbe4067d8e6c305ae351372585b67aa7a3b0ebfa8266",
+      "tasks/a-own-task-status-tool-names-the-discussion-worker-by-handle": "f6bbbc3a878f2d16517ecbe4067d8e6c305ae351372585b67aa7a3b0ebfa8266",
+      "tasks/a-owner-task-status-tool-names-the-discussion-worker-by-handle": "f6bbbc3a878f2d16517ecbe4067d8e6c305ae351372585b67aa7a3b0ebfa8266",
+      "tasks/a-result-past-the-summary-is-kept-whole-for-task-status": "f6bbbc3a878f2d16517ecbe4067d8e6c305ae351372585b67aa7a3b0ebfa8266"
     },
     "RK-20-001": {
       "memory/a-budget-keeps-the-latest-events-that-fit": "a28ebaad0f5cdfd56ae3e529ba8ae7a32fda244cd6bf1eec56606b5fdbf9036a",
