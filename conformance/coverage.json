@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "rfc_sha256": "b6c6d10ba798d107df4d954b463e62dbf4f5e76c7f7a2662b76686b3e6019990",
+  "rfc_sha256": "d005ba5399f96d4ba642953a778948dfa7b118db930deced3bd0304ebc36bb3b",
   "corpus_sha256": "b752a9016a65e9f50264ec1b32683b11b8cf62888753c1ae2c043deb125f93b8",
   "python_commit": "1bb12d025296ee1c5f14b82267462fc4d13104a6",
   "scenario_count": 3402,
@@ -8773,11 +8773,14 @@
       "section": "20.1",
       "title": "MemoryProvider Interface",
       "review": "normative",
-      "requirements": 1,
+      "requirements": 8,
       "mapping": {
-        "mapped_partial": 1
+        "mapped_partial": 2,
+        "unmapped": 6
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "writable": 2
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "discussion/a-queued-turn-reads-the-room-when-it-starts",
@@ -8821,11 +8824,13 @@
       "section": "20.2",
       "title": "MemoryResult",
       "review": "normative",
-      "requirements": 1,
+      "requirements": 13,
       "mapping": {
-        "unmapped": 1
+        "unmapped": 13
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "writable": 2
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "executors/a-committed-event-reaches-the-memory-before-its-agent-s-next-turn",
@@ -8847,12 +8852,15 @@
       "section": "20.3",
       "title": "Built-in Implementations",
       "review": "normative",
-      "requirements": 7,
+      "requirements": 41,
       "mapping": {
         "mapped_partial": 1,
-        "unmapped": 6
+        "unmapped": 40
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "step": 2,
+        "writable": 6
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "instructions/a-memory-s-window-does-not-count-a-kept-instruction",
@@ -9491,11 +9499,15 @@
       "section": "22.1",
       "title": "DeliveryStrategy Interface",
       "review": "normative",
-      "requirements": 6,
+      "requirements": 99,
       "mapping": {
-        "unmapped": 6
+        "unmapped": 99
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "phase6": 32,
+        "step": 2,
+        "writable": 3
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "delivery/a-before-broadcast-refusal-is-reported-to-the-caller-and-after-deliver",
@@ -9548,11 +9560,15 @@
       "section": "22.2",
       "title": "Built-in Strategies",
       "review": "normative",
-      "requirements": 2,
+      "requirements": 31,
       "mapping": {
-        "unmapped": 2
+        "unmapped": 31
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "phase6": 8,
+        "step": 3,
+        "writable": 8
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "delivery/a-delivery-enters-the-room-as-the-framework-s-message",
@@ -9573,11 +9589,13 @@
       "section": "22.3",
       "title": "Delivery Hooks",
       "review": "normative",
-      "requirements": 1,
+      "requirements": 13,
       "mapping": {
-        "unmapped": 1
+        "unmapped": 13
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "writable": 1
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "delivery/a-before-broadcast-refusal-is-reported-to-the-caller-and-after-deliver",
@@ -25847,7 +25865,31 @@
       "links": []
     },
     {
-      "id": "RK-20.1-001",
+      "id": "RK-20.1-002",
+      "section": "20.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-20.1-003",
+      "section": "20.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-20.1-004",
+      "section": "20.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-20.1-005",
+      "section": "20.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-20.1-006",
       "section": "20.1",
       "mapping": "mapped_partial",
       "links": [
@@ -25870,7 +25912,14 @@
             "Arbitrary synthetic messages returned by a custom memory are not matched to event IDs or rewritten by this protection."
           ],
           "executions": []
-        },
+        }
+      ]
+    },
+    {
+      "id": "RK-20.1-007",
+      "section": "20.1",
+      "mapping": "mapped_partial",
+      "links": [
         {
           "id": "deferred-turn-memory-compaction",
           "scope": "MemoryProvider.compact receives the model's history before the answered event and the exact generation usage after each tool round of a deferred Discussion turn.",
@@ -25884,31 +25933,299 @@
       ]
     },
     {
-      "id": "RK-20.2-001",
+      "id": "RK-20.1-008",
+      "section": "20.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1917",
+        "note": "Use the default sliding-window memory with nonempty history before a tool round. Both implementations inherit the default compact on that provider. Compare exact history before and after the round; the injected scripted memory instead implements compact even with no answers configured."
+      }
+    },
+    {
+      "id": "RK-20.1-009",
+      "section": "20.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1917",
+        "note": "Wrap a scripted compaction in the existing budget, compacting or retrieval memory. Assert expect.compacted and the next request. Native coverage includes Python tests/test_memory_wrappers.py::test_compaction_reaches_inner and Rust crates/roomkit-ai/src/memory/mod.rs::a_decorator_hands_the_compaction_to_the_memory_it_wraps."
+      }
+    },
+    {
+      "id": "RK-20.2-002",
       "section": "20.2",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-20.3-001",
+      "id": "RK-20.2-003",
+      "section": "20.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-20.2-004",
+      "section": "20.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-20.2-005",
+      "section": "20.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-20.2-006",
+      "section": "20.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-20.2-007",
+      "section": "20.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-20.2-008",
+      "section": "20.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-20.2-009",
+      "section": "20.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-20.2-010",
+      "section": "20.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-20.2-011",
+      "section": "20.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-20.2-014",
+      "section": "20.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-20.2-012",
+      "section": "20.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1917",
+        "note": "Configure notes on the scripted inner memory and a wrapper that rebuilds its result, then assert the note on the model request."
+      }
+    },
+    {
+      "id": "RK-20.2-013",
+      "section": "20.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1917",
+        "note": "Give BudgetAwareMemory long inner notes and a window that fits an additional event only if those notes are omitted. Assert intact notes and the shortened history."
+      }
+    },
+    {
+      "id": "RK-20.3-008",
       "section": "20.3",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-20.3-002",
+      "id": "RK-20.3-009",
       "section": "20.3",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-20.3-003",
+      "id": "RK-20.3-010",
       "section": "20.3",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-20.3-004",
+      "id": "RK-20.3-011",
+      "section": "20.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-20.3-012",
+      "section": "20.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-20.3-013",
+      "section": "20.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-20.3-014",
+      "section": "20.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-20.3-015",
+      "section": "20.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-20.3-016",
+      "section": "20.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-20.3-017",
+      "section": "20.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-20.3-018",
+      "section": "20.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1917",
+        "note": "Use tier1_ratio, tier2_ratio and truncate_chars to put a long history between thresholds, then assert the shortened messages and the absence of a summarizer call."
+      }
+    },
+    {
+      "id": "RK-20.3-019",
+      "section": "20.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-20.3-020",
+      "section": "20.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-20.3-021",
+      "section": "20.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-20.3-022",
+      "section": "20.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-20.3-023",
+      "section": "20.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1917",
+        "note": "The built-in summarizing fixture exposes neither summary_cache_ttl_seconds nor a deterministic clock for its cache. Add a controllable expiry and compare whether the next summarizer request reuses its prior summary."
+      }
+    },
+    {
+      "id": "RK-20.3-047",
+      "section": "20.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1917",
+        "note": "Use existing distributed executor placement to start the same room on a fresh agent build after forming a summary, then inspect that its summarizer starts from the window."
+      }
+    },
+    {
+      "id": "RK-20.3-024",
+      "section": "20.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-20.3-025",
+      "section": "20.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-20.3-026",
+      "section": "20.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-20.3-027",
+      "section": "20.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-20.3-028",
+      "section": "20.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-20.3-029",
+      "section": "20.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-20.3-030",
+      "section": "20.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1917",
+        "note": "Configure a tool round whose usage exceeds tier one alone, with older long messages, then assert that neither the model request nor the summarizer record changes."
+      }
+    },
+    {
+      "id": "RK-20.3-031",
+      "section": "20.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-20.3-032",
+      "section": "20.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-20.3-033",
+      "section": "20.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-20.3-034",
       "section": "20.3",
       "mapping": "unmapped",
       "links": []
@@ -25920,13 +26237,25 @@
       "links": []
     },
     {
-      "id": "RK-20.3-006",
+      "id": "RK-20.3-035",
       "section": "20.3",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-20.3-007",
+      "id": "RK-20.3-036",
+      "section": "20.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-20.3-037",
+      "section": "20.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-20.3-038",
       "section": "20.3",
       "mapping": "mapped_partial",
       "links": [
@@ -25940,6 +26269,74 @@
           "executions": []
         }
       ]
+    },
+    {
+      "id": "RK-20.3-039",
+      "section": "20.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1917",
+        "note": "Size a budget around an older turn with a large replayed tool result or instruction. Assert that only its owning event pays the replay cost and both are kept or cut together."
+      }
+    },
+    {
+      "id": "RK-20.3-040",
+      "section": "20.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1917",
+        "note": "The current_turn_footprint() tuple is observable to a custom memory. Extend the scripted memory recorder for its measured input, reply budget, and indexed replay tuples. Native tests include Python tests/test_turn_footprint.py::test_the_footprint_is_the_turn_as_round_0_sends_it and Rust crates/roomkit-ai/tests/turn_footprint.rs::the_footprint_is_the_turn_as_its_first_round_sends_it."
+      }
+    },
+    {
+      "id": "RK-20.3-041",
+      "section": "20.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-20.3-042",
+      "section": "20.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-20.3-043",
+      "section": "20.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1917",
+        "note": "The budget_aware fixture accepts reserved_tokens. Set nonzero values below, at and above the measured input and distinguish max from addition by the retained history."
+      }
+    },
+    {
+      "id": "RK-20.3-044",
+      "section": "20.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-20.3-045",
+      "section": "20.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-20.3-046",
+      "section": "20.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1917",
+        "note": "Have BEFORE_AI_GENERATION append a large user message after a budgeted read; the retained pre-hook history and hook addition can be read in the model request."
+      }
     },
     {
       "id": "RK-21.1-001",
@@ -26149,49 +26546,1138 @@
       "links": []
     },
     {
-      "id": "RK-22.1-002",
+      "id": "RK-22.1-007",
       "section": "22.1",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-22.1-003",
+      "id": "RK-22.1-008",
       "section": "22.1",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-22.1-004",
+      "id": "RK-22.1-009",
       "section": "22.1",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-22.1-005",
+      "id": "RK-22.1-101",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1917",
+        "note": "Observe provider acceptance of a proactive voice injection and a sent delivery outcome."
+      }
+    },
+    {
+      "id": "RK-22.1-102",
       "section": "22.1",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-22.1-006",
+      "id": "RK-22.1-010",
       "section": "22.1",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-22.2-001",
+      "id": "RK-22.1-011",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.1-012",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1917",
+        "note": "A custom strategy that completes with no outcome needs a fixture."
+      }
+    },
+    {
+      "id": "RK-22.1-013",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.1-103",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1917",
+        "note": "Assert the IDs of sessions actually injected in a proactive real-time delivery, including more than one destination."
+      }
+    },
+    {
+      "id": "RK-22.1-104",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.1-014",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.1-015",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.1-016",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.1-017",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.1-018",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.1-019",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.1-020",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.1-021",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.1-022",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.1-023",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.1-024",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.1-025",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1917",
+        "note": "Supply an intelligence-channel transport alias and a different explicit intelligence target. The current alias scenario omits the address."
+      }
+    },
+    {
+      "id": "RK-22.1-026",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.1-027",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.1-028",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.1-029",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.1-030",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.1-031",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.1-032",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.1-033",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.1-034",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.1-035",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.1-036",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.1-037",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.1-038",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.1-039",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.1-040",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.1-041",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.1-042",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.1-043",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.1-044",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.1-045",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.1-046",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.1-047",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1917",
+        "note": "Exercise proactive instruction delivery and observe the provider system intent."
+      }
+    },
+    {
+      "id": "RK-22.1-048",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.1-049",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.1-050",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1917",
+        "note": "Observe the exact selected destination with multiple live sessions."
+      }
+    },
+    {
+      "id": "RK-22.1-051",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1917",
+        "note": "Use zero, one and several active provider sessions."
+      }
+    },
+    {
+      "id": "RK-22.1-052",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1917",
+        "note": "Replace a session while idle is awaited and observe which one receives the injection."
+      }
+    },
+    {
+      "id": "RK-22.1-053",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1917",
+        "note": "End the session or remove the realtime model during the wait; check refusal and no text publication."
+      }
+    },
+    {
+      "id": "RK-22.1-054",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1917",
+        "note": "Observe the unsuccessful outcome of the selected session."
+      }
+    },
+    {
+      "id": "RK-22.1-055",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.1-056",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1917",
+        "note": "Select an actual realtime-model channel as well as an intelligence address and verify that the turn uses text."
+      }
+    },
+    {
+      "id": "RK-22.1-057",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1917",
+        "note": "Supply addressed_to, a channel and session_id on the same delivery. The existing invalid-request scenario only supplies session_id without a channel."
+      }
+    },
+    {
+      "id": "RK-22.1-058",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.1-059",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.1-060",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.1-061",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.1-062",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.1-063",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.1-064",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.1-065",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1917",
+        "note": "Use process_timeout_ms, a second call holding the room lock, and a keyed publication; assert blocked/process_timeout and no event."
+      }
+    },
+    {
+      "id": "RK-22.1-066",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.1-067",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.1-068",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.1-069",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.1-070",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.1-071",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.1-072",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1917",
+        "note": "The shared restart_process fixture reopens a kit on its shared store, including the in-memory test store. A fixture distinguishing durable store reopen/restart from the loss of an ephemeral store could test the different lifetimes."
+      }
+    },
+    {
+      "id": "RK-22.1-073",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.1-074",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1917",
+        "note": "Observe the store reservation before the provider call, including a concurrent claim."
+      }
+    },
+    {
+      "id": "RK-22.1-075",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1917",
+        "note": "Reuse a key in different rooms, channels and sessions and inspect the independent outcomes."
+      }
+    },
+    {
+      "id": "RK-22.1-076",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1917",
+        "note": "Retry each recorded outcome and count provider submissions."
+      }
+    },
+    {
+      "id": "RK-22.1-077",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1917",
+        "note": "Change the effective text of a repeated injection and observe the conflict."
+      }
+    },
+    {
+      "id": "RK-22.1-078",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1917",
+        "note": "Exercise the stored claim, its unique token and final outcome."
+      }
+    },
+    {
+      "id": "RK-22.1-079",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1917",
+        "note": "Race two attempts and reject an expired owner completing another attempt."
+      }
+    },
+    {
+      "id": "RK-22.1-080",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1917",
+        "note": "Redeliver the acknowledged queue item and observe durable deduplication."
+      }
+    },
+    {
+      "id": "RK-22.1-081",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1917",
+        "note": "Contrast session-claim persistence across restart and deletion for durable and process-local stores."
+      }
+    },
+    {
+      "id": "RK-22.1-082",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1917",
+        "note": "Run the same keyed injection with no reservation support; assert the provider is untouched."
+      }
+    },
+    {
+      "id": "RK-22.1-083",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1917",
+        "note": "Exercise recovery of an uncertain injection; retries cannot resubmit it."
+      }
+    },
+    {
+      "id": "RK-22.1-084",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.1-085",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1917",
+        "note": "Hold an attempt past the wait, assert unknown and a single provider call."
+      }
+    },
+    {
+      "id": "RK-22.1-086",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1917",
+        "note": "Cancel or fail submission and fail final persistence; assert conservative unknown."
+      }
+    },
+    {
+      "id": "RK-22.1-087",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1917",
+        "note": "Read actual provider submission results for sent, not_sent and unknown."
+      }
+    },
+    {
+      "id": "RK-22.1-088",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1917",
+        "note": "Retry the provider after definitive non-submission only."
+      }
+    },
+    {
+      "id": "RK-22.1-089",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1917",
+        "note": "Have a provider give no result and observe uncertainty."
+      }
+    },
+    {
+      "id": "RK-22.1-090",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1917",
+        "note": "Observe refusal for both cases."
+      }
+    },
+    {
+      "id": "RK-22.1-091",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1917",
+        "note": "Queue input without establishing remote acceptance and observe uncertainty."
+      }
+    },
+    {
+      "id": "RK-22.1-092",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1917",
+        "note": "The API distinguishes transmitting from peer playback and turn completion."
+      }
+    },
+    {
+      "id": "RK-22.1-093",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1917",
+        "note": "Return mixed statuses including duplicates, failures and unknown for different sessions."
+      }
+    },
+    {
+      "id": "RK-22.1-094",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1917",
+        "note": "Retry multi-session work with some prior successful or unresolved reservations."
+      }
+    },
+    {
+      "id": "RK-22.1-095",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1917",
+        "note": "Attach or replace sessions between enqueue and execution; observe the selected sessions at execution."
+      }
+    },
+    {
+      "id": "RK-22.1-096",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.1-097",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.1-098",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1917",
+        "note": "An uncertain remote submission may go undelivered after retry suppression; examine provider and store separately."
+      }
+    },
+    {
+      "id": "RK-22.1-099",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1917",
+        "note": "Repeated unkeyed real-time delivery has no deduplication promise."
+      }
+    },
+    {
+      "id": "RK-22.1-100",
+      "section": "22.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.2-003",
       "section": "22.2",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-22.2-002",
+      "id": "RK-22.2-004",
       "section": "22.2",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-22.3-001",
+      "id": "RK-22.2-005",
+      "section": "22.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1917",
+        "note": "A scenario can select WaitForIdle but cannot inspect its constructor settings or advance a controlled playback clock to observe both defaults. Python tests/test_delivery_strategies.py::TestWaitForIdleStrategy::test_init_defaults and Rust crates/roomkit/tests/delivery_queue.rs::the_strategies_take_python_s_defaults verify the values."
+      }
+    },
+    {
+      "id": "RK-22.2-006",
+      "section": "22.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1917",
+        "note": "Exercise actual TTS playback followed by the configured buffer."
+      }
+    },
+    {
+      "id": "RK-22.2-007",
+      "section": "22.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1917",
+        "note": "Exercise pending answers, speech, tools and audio forwarding before real-time sessions become idle."
+      }
+    },
+    {
+      "id": "RK-22.2-008",
+      "section": "22.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.2-009",
+      "section": "22.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1917",
+        "note": "Exceed the media playback bound and observe delivery despite activity."
+      }
+    },
+    {
+      "id": "RK-22.2-010",
+      "section": "22.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1917",
+        "note": "A scenario can select Queued but cannot inspect its constructor settings or advance a controlled playback clock to observe both defaults. Python tests/test_delivery_strategies.py::TestQueuedStrategy::test_init_defaults and Rust crates/roomkit/tests/delivery_queue.rs::the_strategies_take_python_s_defaults verify the values."
+      }
+    },
+    {
+      "id": "RK-22.2-011",
+      "section": "22.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1917",
+        "note": "Use concurrent calls with the shared queued strategy. The current queued-strategy scenario only checks a lone item. Reading a custom separator or controlling the inactivity clock may need a fixture."
+      }
+    },
+    {
+      "id": "RK-22.2-012",
+      "section": "22.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1917",
+        "note": "Run a queued batch during ongoing media playback or model activity and past the timeout."
+      }
+    },
+    {
+      "id": "RK-22.2-013",
+      "section": "22.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.2-014",
+      "section": "22.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1917",
+        "note": "Observe both active speech and answer; in voice, inspect TTS activity."
+      }
+    },
+    {
+      "id": "RK-22.2-015",
+      "section": "22.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1917",
+        "note": "Observe actual TTS playback in the selected voice channel."
+      }
+    },
+    {
+      "id": "RK-22.2-016",
+      "section": "22.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1917",
+        "note": "Queue concurrent text requests that differ in room, transport or intelligence address and assert they are kept separate."
+      }
+    },
+    {
+      "id": "RK-22.2-029",
+      "section": "22.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1917",
+        "note": "Select different live sessions on the same real-time transport for two queued requests; assert individual injections."
+      }
+    },
+    {
+      "id": "RK-22.2-030",
+      "section": "22.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1917",
+        "note": "Queue otherwise identical requests with incompatible metadata or instruction/message intents; assert that neither is merged into the other."
+      }
+    },
+    {
+      "id": "RK-22.2-017",
+      "section": "22.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1917",
+        "note": "Submit two concurrent queued text deliveries with distinct keys, then inspect their keys, event IDs and outcomes."
+      }
+    },
+    {
+      "id": "RK-22.2-018",
+      "section": "22.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1917",
+        "note": "Block a first delivery and submit other queued calls before and during its execution; assert distinct returned outcomes."
+      }
+    },
+    {
+      "id": "RK-22.2-019",
+      "section": "22.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1917",
+        "note": "Make a hook holding a lock deliver while another caller drains the same shared queue; exercise same and different room cases."
+      }
+    },
+    {
+      "id": "RK-22.2-020",
+      "section": "22.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1917",
+        "note": "Have a locked hook call the shared queue while no drain is running; check it follows the ordinary drain path, including waiting callers."
+      }
+    },
+    {
+      "id": "RK-22.2-021",
+      "section": "22.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.2-031",
+      "section": "22.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1917",
+        "note": "Queue and retry an explicitly selected real-time session, then assert the worker injects only into that session."
+      }
+    },
+    {
+      "id": "RK-22.2-032",
+      "section": "22.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1917",
+        "note": "Queue an instruction for an addressed agent through a delivery backend, force a retry, and assert an instruction reaches the target rather than a participant message."
+      }
+    },
+    {
+      "id": "RK-22.2-022",
+      "section": "22.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.2-023",
+      "section": "22.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.2-024",
+      "section": "22.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.2-025",
+      "section": "22.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.2-026",
+      "section": "22.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.2-027",
+      "section": "22.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.2-028",
+      "section": "22.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.2-033",
+      "section": "22.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1917",
+        "note": "Hold the worker on an item, close the kit, and observe the held item on the same still-available delivery backend or through a new worker on it. The current scenario driver does not expose that backend after kit close."
+      }
+    },
+    {
+      "id": "RK-22.3-002",
+      "section": "22.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.3-003",
+      "section": "22.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.3-004",
+      "section": "22.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.3-005",
+      "section": "22.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.3-006",
+      "section": "22.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1917",
+        "note": "Raise from AFTER_DELIVER and compare the committed event and caller outcome to the successful case."
+      }
+    },
+    {
+      "id": "RK-22.3-007",
+      "section": "22.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.3-008",
+      "section": "22.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.3-014",
+      "section": "22.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.3-009",
+      "section": "22.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.3-010",
+      "section": "22.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.3-011",
+      "section": "22.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.3-012",
+      "section": "22.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-22.3-013",
       "section": "22.3",
       "mapping": "unmapped",
       "links": []
