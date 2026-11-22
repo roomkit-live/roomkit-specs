@@ -135,7 +135,18 @@ names are `message_session`, `protocol_trace`, `voice`, `realtime`,
 `conference`, `video`, `recording`, `executor_media` and `scoring`.
 `executor_media` requires a standalone executor that accepts both host media
 readers (§10.6.2). `scoring` requires a turn scoring hook that can attach to a
-kit or a standalone executor (§10.6.6). Each runner declares the features it
+kit or a standalone executor (§10.6.6). Four more names are reserved for the
+decided gaps that need them; no scenario uses them yet, so neither the schema
+nor a runner lists them:
+`transport_provider`, the implementation's own channel of a platform type
+(Appendix A) over a scripted provider that implements that type's provider
+interface; `source_provider`, a scripted source on the source interface
+(§6.5); `websocket_channel`, the implementation's WebSocket channel and its
+connection registry (§8.2); and `classifier_dispatch`, a step that asks a
+scripted classifier its questions (§6.8). The corpus never drives a vendor's
+provider, and no feature names one: what a provider reads and writes on its
+vendor's wire is proven by that provider's own tests, which `untested.json`
+names. Each runner declares the features it
 provides. Before setup, it reports the scenario skipped if any are missing,
 naming the missing features in its test result. With the member absent, the
 scenario runs without a feature prerequisite.
