@@ -220,6 +220,23 @@
     "RK-6.4-025",
     "RK-6.4-026",
     "RK-6.4-027",
+    "RK-6.4-028",
+    "RK-6.4-029",
+    "RK-6.4-030",
+    "RK-6.4-031",
+    "RK-6.4-032",
+    "RK-6.4-033",
+    "RK-6.4-034",
+    "RK-6.4-035",
+    "RK-6.4-036",
+    "RK-6.4-037",
+    "RK-6.4-038",
+    "RK-6.4-039",
+    "RK-6.4-040",
+    "RK-6.4-041",
+    "RK-6.4-042",
+    "RK-6.4-043",
+    "RK-6.4-044",
     "RK-6.4-048",
     "RK-7.1-001",
     "RK-7.2-001",
@@ -14992,8 +15009,8 @@
     },
     {
       "id": "deferred-hook-context-protection",
-      "requirement": "RK-6.4-043",
-      "clause_sha256": "ebb1a187f2b93aa24f0c06214258e4d7718918abbde0fcd21c5b11beb8c2260a",
+      "requirement": "RK-6.4-529",
+      "clause_sha256": "14268bbf6e4283519136596927c13dfa03dfb07a78130180b2c0abc30e1e855d",
       "scope": "Full-value association of deferred inputs after generation hooks; exact protected context and empty memory history when ambiguous, explicit overflow failure without replay, subsequent tool results shortened only when eligible, and unchanged ordinary-turn behavior.",
       "coverage": "partial",
       "review": "Read the approved association policy, exact model requests, memory histories, tool results, timeline and ON_ERROR assertion together with the implementations. Empty and duplicate contexts are covered. This link records shared assertions only.",
@@ -15097,8 +15114,8 @@
     },
     {
       "id": "deferred-hook-context-native-mutations",
-      "requirement": "RK-6.4-043",
-      "clause_sha256": "ebb1a187f2b93aa24f0c06214258e4d7718918abbde0fcd21c5b11beb8c2260a",
+      "requirement": "RK-6.4-532",
+      "clause_sha256": "9f86d89263e58d146f569ec66985263415e3d5c43485f0890f4def040d7ff1a5",
       "scope": "In-place mutation, replacement, mutation followed by copying and input removal preserve historical tool results and memory additions while shortening only earlier new results, in both generation modes.",
       "coverage": "partial",
       "review": "Read the parameterized native regression, observed red without the fix and green with it; source evidence here, execution retained separately.",
@@ -17408,8 +17425,8 @@
     },
     {
       "id": "acp-sequential-room-configuration",
-      "requirement": "RK-6.4-038",
-      "clause_sha256": "d49f0af3c9b50796bb2d585afc6a7858644d66184dc1ef4b866dc98634dad5fb",
+      "requirement": "RK-6.4-491",
+      "clause_sha256": "d353c22fbad66f64b1168df56ab4fc66248bbaeac011e21a5819172adef04d4e",
       "coverage": "partial",
       "scope": "Sequential room session setup, host setting precedence, stored configuration restoration, explicit close and setup refusal before prompting.",
       "assertions": [
@@ -17566,8 +17583,8 @@
     },
     {
       "id": "acp-room-opening-and-reconnection",
-      "requirement": "RK-6.4-038",
-      "clause_sha256": "d49f0af3c9b50796bb2d585afc6a7858644d66184dc1ef4b866dc98634dad5fb",
+      "requirement": "RK-6.4-493",
+      "clause_sha256": "74e0c43c82ad76cc4a0bf7183aaec97f39529b479caf7658c8fc8d76b0f6cefc",
       "coverage": "partial",
       "scope": "Public results and wire traces for shared room openings, independent rooms, settings during prompts, real transport loss and reapplication or refusal of host values.",
       "assertions": [
@@ -18073,8 +18090,8 @@
     },
     {
       "id": "acp-authorized-recovery-outcomes",
-      "requirement": "RK-6.4-037",
-      "clause_sha256": "04f354a2c17f6b5b1803ee21cbe446f041f0fad8751010f85a24d176a99aa20d",
+      "requirement": "RK-6.4-481",
+      "clause_sha256": "aa8c297a6fda19135d1ff86581e22ecc4a193d240c06405dcc05f35c389ff12b",
       "coverage": "partial",
       "scope": "Partial lifecycle and response outcomes around a host-native session invalidation: session identity, terminal errors, interruption markers and completion-hook absence. The Python reference additionally specifies bounded authorization and activity refusal; these shared assertions prepare the ACP area's later RFC amendment, without treating those recovery details as explicit clauses of the current RFC.",
       "assertions": [
@@ -18481,8 +18498,8 @@
     },
     {
       "id": "acp-rebuilt-session-required-settings",
-      "requirement": "RK-6.4-038",
-      "clause_sha256": "d49f0af3c9b50796bb2d585afc6a7858644d66184dc1ef4b866dc98634dad5fb",
+      "requirement": "RK-6.4-491",
+      "clause_sha256": "d353c22fbad66f64b1168df56ab4fc66248bbaeac011e21a5819172adef04d4e",
       "coverage": "partial",
       "scope": "On an authorized rebuilt room session, default settings and host overrides are reapplied before prompting. Refusal of required configuration requests closure of the replacement and fails the turn without prompting it.",
       "assertions": [
@@ -18573,8 +18590,8 @@
     },
     {
       "id": "acp-public-room-cancellation",
-      "requirement": "RK-6.4-037",
-      "clause_sha256": "04f354a2c17f6b5b1803ee21cbe446f041f0fad8751010f85a24d176a99aa20d",
+      "requirement": "RK-6.4-474",
+      "clause_sha256": "5489a4ff517c0218211951feed31dad183f342ef12df9e29af1c8495b603a1b0",
       "coverage": "partial",
       "scope": "Public room cancellation during initial opening, required configuration and authorized reconstruction ends without prompting and preserves interrupted metadata. An already prompting room receives session/cancel and retains the agent's returned outcome. Idle and absent-session boolean results follow the Python API reference; they are not asserted as new normative clauses.",
       "assertions": [
@@ -18850,8 +18867,8 @@
     },
     {
       "id": "acp-room-detachment",
-      "requirement": "RK-6.4-039",
-      "clause_sha256": "b0ddaafdcbf219885a193a566dd5b6c9034b920016c024d394b68a78f28061bf",
+      "requirement": "RK-6.4-498",
+      "clause_sha256": "bd470d3f7fab281c22ad9afc4f96cd753b9a0ef2b363a86bdbd462e738a841e4",
       "coverage": "partial",
       "scope": "Room detachment returns without waiting for the agent, closes idle or running room sessions, prevents initial preparations from prompting, forgets host values and does not retain late host settings. A fresh attachment opens a new room session while unrelated rooms keep theirs.",
       "assertions": [
@@ -19478,8 +19495,8 @@
     },
     {
       "id": "acp-room-mcp-servers",
-      "requirement": "RK-6.4-038",
-      "clause_sha256": "d49f0af3c9b50796bb2d585afc6a7858644d66184dc1ef4b866dc98634dad5fb",
+      "requirement": "RK-6.4-490",
+      "clause_sha256": "0f9625c0c7bb6d57a3473b1cbf9955e7df5fc13d5ae87b663757935040a6c9e9",
       "coverage": "partial",
       "scope": "Fixed and per-room synchronous/asynchronous MCP suppliers for room sessions. Complete ordered descriptors are declared at every opening; reuse avoids resolution, reconnect and authorized rebuild resolve again (including an empty list), and host-opened sessions are reused. Supplier errors and cancellation before session creation leave no fallback session or prompt; a held room supplier does not prevent another room from opening.",
       "assertions": [
@@ -19747,8 +19764,8 @@
     },
     {
       "id": "acp-close-pending-mcp-supplier",
-      "requirement": "RK-6.4-037",
-      "clause_sha256": "04f354a2c17f6b5b1803ee21cbe446f041f0fad8751010f85a24d176a99aa20d",
+      "requirement": "RK-6.4-473",
+      "clause_sha256": "808851c107ce6e264532a64c19586fa70c1c75c9e874d8ab9bfbaebcb95d30c7",
       "coverage": "partial",
       "scope": "Release of an active room preparation blocked in its initial MCP supplier when the ACP channel itself closes, before any session or prompt. The kit remains alive and the supplier gate is never released. No response completion is announced.",
       "assertions": [
@@ -19926,7 +19943,7 @@
     },
     {
       "id": "acp-active-turn-thought-lifecycle",
-      "requirement": "RK-6.4-037",
+      "requirement": "RK-6.4-471",
       "scope": "Thoughts route to the session's current room turn after another room opened the connection. Reused sessions start fresh windows; error and abandoned consumption close the window without a response report. Public cancel of an engaged prompt preserves a subsequently returned cancelled response and its report.",
       "assertions": [
         {
@@ -20040,7 +20057,7 @@
         "Updates and permission callbacks with no active turn remain outside this proof.",
         "Preparation cancellation, standalone sessions and the rest of RK-6.4-037 retain their separate contracts."
       ],
-      "clause_sha256": "04f354a2c17f6b5b1803ee21cbe446f041f0fad8751010f85a24d176a99aa20d",
+      "clause_sha256": "888039a37b0d78fb000f3da77772021ff3f0a32522de9352458a70ca01558e8e",
       "coverage": "partial",
       "tests": [],
       "review": "Independent full review reads the Python source tests, shared scenarios, RFC and Rust port together. A baseline Rust run fails on the missing marker, report thought and ephemeral events. Review found the preview case did not enable publication; it now enables the actual option and asserts its 1000-character Unicode preview, full 1001-character marker/report and length. Python passes before Rust. Rust passes on one and four workers."
@@ -20338,7 +20355,7 @@
     },
     {
       "id": "acp-active-tool-lifecycle-and-context",
-      "requirement": "RK-6.4-037",
+      "requirement": "RK-6.4-470",
       "scope": "Outstanding tools close on the tested terminal paths; sequential room prompts retain their room routing, and both report-hook modes see room metadata updated after prompt start.",
       "assertions": [
         {
@@ -20452,7 +20469,7 @@
         "Updates outside an active turn, standalone calls and permission callbacks remain separate.",
         "Shared turn-record access from ACP hooks is handled in a separate following lot; this corpus does not prove it."
       ],
-      "clause_sha256": "04f354a2c17f6b5b1803ee21cbe446f041f0fad8751010f85a24d176a99aa20d",
+      "clause_sha256": "85590fe16699b9c0af10baa14802097c1038423b233dff9830d2f11f68ec2cb5",
       "coverage": "partial",
       "tests": [],
       "review": "Full independent review read Python source tests, scenarios, RFC and Rust. Missing tool output first failed on Rust, then passed after the port. Review additionally reproduced unbounded binary rows/errors and a stale hook room context; fixes have separate red/green evidence. Final gate and receipt status is recorded separately, not inferred from this review statement."
@@ -20585,8 +20602,8 @@
     },
     {
       "id": "acp-default-permission-replies",
-      "requirement": "RK-6.4-039",
-      "clause_sha256": "b0ddaafdcbf219885a193a566dd5b6c9034b920016c024d394b68a78f28061bf",
+      "requirement": "RK-6.4-503",
+      "clause_sha256": "92177bcac92cd1dad967fc6e04271f75a8cce408fd7213b62b0ebfe28ea3f2ea",
       "coverage": "partial",
       "scope": "ACP permissions with no external handler: actual reject option selection and cancellation fallback.",
       "assertions": [
@@ -20720,8 +20737,8 @@
     },
     {
       "id": "acp-configured-permission-decisions",
-      "requirement": "RK-6.4-039",
-      "clause_sha256": "b0ddaafdcbf219885a193a566dd5b6c9034b920016c024d394b68a78f28061bf",
+      "requirement": "RK-6.4-505",
+      "clause_sha256": "73d40414f45e322c89d8578a3c029d6456799bf887da217a3c514c3c994cfcf5",
       "coverage": "partial",
       "scope": "Configured handler callbacks and actual ACP permission choices, including unsupported overrides and repeated decisions.",
       "assertions": [
@@ -21505,8 +21522,8 @@
     },
     {
       "id": "acp-standing-instruction-prompts",
-      "requirement": "RK-6.4-040",
-      "clause_sha256": "5de33734e9052fd1b53ffc21a7a2c10ebb57ec37f5fc3bc9a32b6393e6e65e50",
+      "requirement": "RK-6.4-510",
+      "clause_sha256": "e4f28e67da5d9638bdc34ed9a252cf5180fd4f09521f4535169fccb43dbb6ac1",
       "coverage": "partial",
       "scope": "The exact texts of sequential ACP prompt attempts with standing application instructions, including absent/blank defaults, RPC failure, separate rooms, explicit close, transport reconnect and authorized session rebuild.",
       "assertions": [
@@ -21741,8 +21758,8 @@
     },
     {
       "id": "acp-standalone-required-setup",
-      "requirement": "RK-6.4-038",
-      "clause_sha256": "d49f0af3c9b50796bb2d585afc6a7858644d66184dc1ef4b866dc98634dad5fb",
+      "requirement": "RK-6.4-491",
+      "clause_sha256": "d353c22fbad66f64b1168df56ab4fc66248bbaeac011e21a5819172adef04d4e",
       "coverage": "partial",
       "scope": "Required channel settings and locally retained host choices requested on temporary ACP sessions before prompting, including a scripted refusal and reconnection; the declared MCP server and additional directories.",
       "assertions": [
@@ -21784,8 +21801,8 @@
     },
     {
       "id": "acp-discussion-local-identity",
-      "requirement": "RK-6.4-040",
-      "clause_sha256": "5de33734e9052fd1b53ffc21a7a2c10ebb57ec37f5fc3bc9a32b6393e6e65e50",
+      "requirement": "RK-6.4-509",
+      "clause_sha256": "b498af28ba790cb3b5d38ab8020e9436e19b623256058cea0382f5e8135d3383",
       "coverage": "partial",
       "scope": "ACP local identity reaches Discussion addressing, dispatch candidates and peer notes.",
       "assertions": [
@@ -21820,8 +21837,8 @@
     },
     {
       "id": "acp-discussion-notes-and-hold",
-      "requirement": "RK-6.4-041",
-      "clause_sha256": "e0c2e4f278c462020638df15455f67fb3082c1ca9f1b18090c49d38185ceb366",
+      "requirement": "RK-6.4-512",
+      "clause_sha256": "85b922005b5354de72bbf51914a704eb698cd7a08f295a6592109f3ffed12f59",
       "coverage": "partial",
       "scope": "Scripted ACP Discussion turns carry runtime notes, expose the replacement marker for a copied header, reject an unissued mark, accept an empty addressed request and receive cancellation when held.",
       "assertions": [

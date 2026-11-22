@@ -11447,15 +11447,6 @@
       "ai-context/unlimited-targets-retain-first-target-formats-non-streaming": "48b66d6c276a25e8affacb32e1ecd290cb76d18843c3baea08b2f740cdf56a3f",
       "ai-context/unlimited-targets-retain-first-target-formats-streaming": "48b66d6c276a25e8affacb32e1ecd290cb76d18843c3baea08b2f740cdf56a3f"
     },
-    "RK-6.4-036": {
-      "steering/another-person-s-message-is-served-under-its-own-role-s-tools": "e084eaa0968591e0fae3821556e92e9518b19ff59dbc4f20228991c4f57043ba",
-      "steering/another-person-s-message-waits-a-turn-of-its-own": "e084eaa0968591e0fae3821556e92e9518b19ff59dbc4f20228991c4f57043ba"
-    },
-    "RK-6.4-039": {
-      "acp/cancel-answers-pending-permission-cancelled": "b0ddaafdcbf219885a193a566dd5b6c9034b920016c024d394b68a78f28061bf",
-      "acp/cancel-answers-unannounced-permission-cancelled": "b0ddaafdcbf219885a193a566dd5b6c9034b920016c024d394b68a78f28061bf",
-      "acp/turn-end-reports-a-pending-permission-call-cancelled": "b0ddaafdcbf219885a193a566dd5b6c9034b920016c024d394b68a78f28061bf"
-    },
     "RK-6.4-046": {
       "delivery/an-intelligence-channel-named-is-carried-by-the-room-s-transport": "cafa188ad6278bad556d0917138aa1f0d387af27eeee8c6badda7cfd838173e2"
     },
@@ -13275,6 +13266,22 @@
     },
     "RK-6.4-402": {
       "served-skills/text-activation-keeps-server-content-apart": "87fc00eed59a65554e2ac2468186aeab0ffe80d16cabe958a07224c40a641d7a"
+    },
+    "RK-6.4-459": {
+      "steering/another-person-s-message-is-served-under-its-own-role-s-tools": "089cfe8325e58a6f4456731cb36eff47f1654cc058f2b46e89883f8fd8a75400",
+      "steering/another-person-s-message-waits-a-turn-of-its-own": "089cfe8325e58a6f4456731cb36eff47f1654cc058f2b46e89883f8fd8a75400"
+    },
+    "RK-6.4-460": {
+      "steering/another-person-s-message-is-served-under-its-own-role-s-tools": "83c9f65803b9bc043cf097c9bb84453f8fec0001e93687b81268e510c3caf7d7",
+      "steering/another-person-s-message-waits-a-turn-of-its-own": "83c9f65803b9bc043cf097c9bb84453f8fec0001e93687b81268e510c3caf7d7"
+    },
+    "RK-6.4-506": {
+      "acp/cancel-answers-pending-permission-cancelled": "de8156502abc7639837c350841dcd17d70fef08426d4f11c8fc373d4f3d3d3c0",
+      "acp/cancel-answers-unannounced-permission-cancelled": "de8156502abc7639837c350841dcd17d70fef08426d4f11c8fc373d4f3d3d3c0"
+    },
+    "RK-6.4-507": {
+      "acp/cancel-answers-unannounced-permission-cancelled": "c0aafb9c50633bd2e9f078841098ffe68eb4610d033407ae495f86238a196b55",
+      "acp/turn-end-reports-a-pending-permission-call-cancelled": "c0aafb9c50633bd2e9f078841098ffe68eb4610d033407ae495f86238a196b55"
     },
     "RK-7.1-002": {
       "permissions/all-source-access-and-mute-combinations": "09e15544fea0657bef56fbca15075385d6cd074a82f5f472f02ac5c31fb5fe92",

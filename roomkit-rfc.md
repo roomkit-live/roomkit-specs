@@ -2143,14 +2143,14 @@ Both ephemeral events carry a call's `intent` beside its id when it has one
 (A call's intent, below).
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.4-044", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-6.4-535", "kind": "behavior", "applies": "§6.4 One end per started call: every call whose TOOL_CALL_START a channel published on the realtime bus gets one TOOL_CALL_END there, whatever the turn backend (Section 10.6.1), its reader stopping or its turn cut included. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **One end per started call:** Every call whose `TOOL_CALL_START` a channel
 published on the realtime bus MUST get one `TOOL_CALL_END` there, whatever
 the turn backend (§10.6.1), its reader stopping or its turn cut included: a
 channel that publishes a call's end once its reader took the call's end
-marker publishes it all the same when the stream is closed first. Each end
-reads as the stored `TOOL_CALL_END` does (above). A reader that stopped
-(§12.2 step 13s) took the ends it was handed, and each call ends as it did.
+marker publishes it all the same when the stream is closed first. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-536", "kind": "behavior", "applies": "§6.4 One end per started call: each ephemeral end reads as the stored TOOL_CALL_END does (its status). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Each end
+reads as the stored `TOOL_CALL_END` does (above). <!-- /rfc --><!-- rfc: {"id": "RK-6.4-537", "kind": "behavior", "applies": "§6.4 One end per started call: a reader that stopped (Section 12.2 step 13s) took the ends it was handed, and each call ends as it did. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A reader that stopped
+(§12.2 step 13s) took the ends it was handed, and each call ends as it did.<!-- /rfc --><!-- rfc: {"id": "RK-6.4-538", "kind": "behavior", "applies": "§6.4 One end per started call: how a cut turn's owner closes each call (Section 10.6.4), failed unless its end was read or rode its start, a call cut while it ran, while a handler decided it or as its round's first end was handed out, and an executor of another process. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A cut turn's owner closes each call as its end reached it (§10.6.4): as it
 ended when its reader read that end or the end rode its start, `failed`
 otherwise. A call is thus `failed` when the cut came while it ran or while
@@ -2158,9 +2158,9 @@ an external tool handler decided it (§9.3), and when the cut came as the
 first end of its round was handed out, an item the owner then drops (the
 round's other ends rode their starts before it): on an executor of another
 process the cut may arrive after the tool answered, and that end reads
-`failed` all the same. An `AIChannel`'s ephemeral end of such a call carries
+`failed` all the same. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-539", "kind": "behavior", "applies": "§6.4 One end per started call: an AIChannel's ephemeral end of a call so failed carries the result {\"error\": \"Tool call aborted\"} when the channel publishes its calls' text (Section 8.4). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An `AIChannel`'s ephemeral end of such a call carries
 the result `{"error": "Tool call aborted"}` when the channel publishes its
-calls' text (§8.4). A turn whose owner is lost
+calls' text (§8.4). <!-- /rfc --><!-- rfc: {"id": "RK-6.4-540", "kind": "behavior", "applies": "§6.4 One end per started call: a turn whose owner is lost (Section 10.6.8) publishes nothing more. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A turn whose owner is lost
 (§10.6.8) publishes nothing more: no owner is left to publish it.
 <!-- /rfc -->
 
@@ -3269,30 +3269,30 @@ fails is logged, and the turn goes on as it was. <!-- /rfc --><!-- rfc: {"id": "
 refusal: a call it precedes keeps its compacted replay.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.4-043", "kind": "behavior", "applies": "Compaction of a discussion turn whose answered input was changed by BEFORE_AI_GENERATION (§6.4, §19.7.5)."} -->
+<!-- rfc: {"id": "RK-6.4-528", "kind": "behavior", "applies": "§6.4 An answered input changed by a hook (a discussion turn whose deferred input BEFORE_AI_GENERATION changed, Section 19.7.5): the input's association with the messages the hook left, by its full pre-hook value. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **An answered input changed by a hook.** A discussion's deferred input is
 associated with the messages left by `BEFORE_AI_GENERATION` by its full
 pre-hook value: an equal message at its original position keeps that
 association; otherwise exactly one equal message identifies its new position.
 Object identity, a partial text match or the last user message cannot replace
-that association. When no such association remains, every message the hook
+that association. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-529", "kind": "behavior", "applies": "§6.4 An answered input changed by a hook: with no association left, every message the hook left is protected from summarization and shortening for the rest of the turn. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->When no such association remains, every message the hook
 left is protected from summarization and shortening for the rest of the turn,
-including its existing tool results. The channel MUST NOT reconstruct a
-removed or rewritten input. Between tool rounds the memory receives an empty
+including its existing tool results. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-530", "kind": "behavior", "applies": "§6.4 An answered input changed by a hook: the channel does not reconstruct a removed or rewritten input. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The channel MUST NOT reconstruct a
+removed or rewritten input. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-531", "kind": "behavior", "applies": "§6.4 An answered input changed by a hook, with no association left: between tool rounds the memory receives an empty history, and a history it returns is placed ahead of the protected context, protected too. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Between tool rounds the memory receives an empty
 history; a history it returns is placed ahead of the protected context under
-the same joining rules, and remains protected too. Only results produced after
+the same joining rules, and remains protected too. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-532", "kind": "behavior", "applies": "§6.4 An answered input changed by a hook, with no association left: only results produced after the hook may be shortened, under the memory and emergency compaction rules. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Only results produced after
 the hook may then be shortened: those before the last round for memory
 compaction, those in the older half for emergency compaction, under the same
-storage and call/result pairing rules. An emergency compaction that cannot
+storage and call/result pairing rules. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-533", "kind": "behavior", "applies": "§6.4 An answered input changed by a hook, with no association left: an emergency compaction that cannot free room fails the call explicitly, without replaying it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An emergency compaction that cannot
 free room this way fails the call explicitly, without replaying it on a
-reduced protected context. Ordinary turns that read their current input last
+reduced protected context. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-534", "kind": "behavior", "applies": "§6.4 An answered input changed by a hook: ordinary turns that read their current input last use the last user message as the hooks left it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Ordinary turns that read their current input last
 continue to use that last user message as the hooks left it.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.4-042", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-6.4-516", "kind": "behavior", "applies": "§6.4 A provider per turn: a channel is given one provider or a router (router, Appendix A.9), never both and never neither. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **A provider per turn.** A channel is given one provider, or a router
 (`router`, Appendix A.9) that picks the provider of each turn, never both and
-never neither. The channel asks its router at the turn's start, before it
+never neither. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-517", "kind": "behavior", "applies": "§6.4 A provider per turn, with a router: the router asked at the turn's start (reason turn) with what the turn answers as text, its event and room, and the context built for the provider it names (a voice delegation's turn included, Section 12.4.1). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The channel asks its router at the turn's start, before it
 builds the turn's context (`reason` `turn`), with what the turn answers as text
 (the text of the event it answers, each media read as its label; the text of
 its last user message for a turn that answers no room event, a voice
@@ -3300,29 +3300,29 @@ delegation, Section 12.4.1), that event and its room, and builds the context
 for the provider it names: whether that model sees images and its context
 window are that provider's, and, for the whole turn, whether the turn holds a
 tool unseen and the rate a cost budget prices it at (below); a tool's result is
-read as the provider that reads it can take it. A thinker's thought, whose
-context is built as for a turn (above), asks the router as a turn's start does.
-A router MUST name a provider for a turn: naming none fails the turn. Once a
+read as the provider that reads it can take it. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-518", "kind": "behavior", "applies": "§6.4 A provider per turn, with a router: a thinker's thought asks the router as a turn's start does. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A thinker's thought, whose
+context is built as for a turn (above), asks the router as a turn's start does.<!-- /rfc --><!-- rfc: {"id": "RK-6.4-519", "kind": "behavior", "applies": "§6.4 A provider per turn, with a router: a router that names no provider for a turn fails the turn. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+A router MUST name a provider for a turn: naming none fails the turn. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-520", "kind": "behavior", "applies": "§6.4 A provider per turn, with a router: the router asked again once a generation's retries are spent (reason retry, previous, failed), and the provider it names takes that generation. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Once a
 generation's retries are spent before it handed anything (below), the channel
 asks its router again (`reason` `retry`), with the same text and event, the
 provider whose retries are spent (`previous`) and its last error (`failed`);
-the provider it names, if any, takes that generation. Every later round of the
+the provider it names, if any, takes that generation. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-521", "kind": "behavior", "applies": "§6.4 A provider per turn: every later round runs on the provider that served the round before it, a provider that cannot hold a tool unseen receiving the turn's callable tools declared plainly. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Every later round of the
 turn MUST run on the provider that served the round before it, whose reasoning
 and calls the round replays (above) and whose prompt cache holds the turn so
 far; a provider the turn moved to that cannot hold a tool unseen receives at
-each of them the tools the turn made callable declared plainly (below).
+each of them the tools the turn made callable declared plainly (below).<!-- /rfc --><!-- rfc: {"id": "RK-6.4-522", "kind": "behavior", "applies": "§6.4 A provider per turn: BEFORE_AI_GENERATION names the provider the turn starts on (provider_name), and the turn's record the provider of its last generation. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 `BEFORE_AI_GENERATION` names the provider the turn starts on (`provider_name`),
-and the turn's record names the provider of its last generation (below). A loop
+and the turn's record names the provider of its last generation (below). <!-- /rfc --><!-- rfc: {"id": "RK-6.4-523", "kind": "behavior", "applies": "§6.4 A provider per turn: a loop run inside another channel's turn reads none of that turn's provider and asks its own channel. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A loop
 run inside another channel's turn reads none of that turn's provider: it is
-asked of its own channel. A router is plain code; the fallback router
+asked of its own channel. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-524", "kind": "behavior", "applies": "§6.4 A provider per turn, the fallback router (FallbackRouter): its primary at each turn's start, the other provider once a generation's provider spent its retries. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A router is plain code; the fallback router
 (`FallbackRouter`) names its primary provider at each turn's start and, once a
-generation's provider spent its retries, the other of its two providers. With a
+generation's provider spent its retries, the other of its two providers. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-525", "kind": "behavior", "applies": "§6.4 A provider per turn, with a router: the channel's provider is null and its provider_name is the router's name. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->With a
 router, the channel's `provider` is null and its `provider_name` is the
-router's name. A provider or a router handed to a channel stays its owner's,
+router's name. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-526", "kind": "behavior", "applies": "§6.4 A provider per turn: a provider or a router handed to a channel stays its owner's, and the channel's close leaves it open, as a router's close leaves its providers open. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A provider or a router handed to a channel stays its owner's,
 who may hand it to other channels, every build of an executor's factory
 among them (Section 10.6.3): the channel's close MUST leave it open, as a
 router's close leaves open the providers it was handed, and a memory's the
-provider it summarizes with (Section 20.3). Its owner closes it once nothing
+provider it summarizes with (Section 20.3). <!-- /rfc --><!-- rfc: {"id": "RK-6.4-527", "kind": "non_testable", "applies": "§6.4 A provider per turn: the owner of a provider or a router closes it once nothing uses it; only the integrator keeps it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Its owner closes it once nothing
 uses it, as a classifier's (Section 6.8).
 <!-- /rfc -->
 
@@ -3623,95 +3623,97 @@ streams a turn without tools through `generate_stream`. Every rule this
 section gives a turn therefore holds once, for every provider.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.4-028", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-6.4-403", "kind": "behavior", "applies": "§6.4 A round's results: how the next generation, and a later turn's history, read a round of calls (the assistant's message, then one tool message in call order, provider-served results first). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **A round's results.** The next generation reads a round of calls as two
 messages: the assistant's message making the calls, then one `tool` message
 holding every call's result in call order, those the provider served first;
-a later turn's history replays a round the same way. A provider whose wire
-takes a message per result writes one per result. A round counts toward the
+a later turn's history replays a round the same way. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-404", "kind": "behavior", "applies": "§6.4 A round's results: a provider whose wire takes a message per result. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A provider whose wire
+takes a message per result writes one per result. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-405", "kind": "behavior", "applies": "§6.4 A round's results: when a round counts toward the turn's rounds (round_count, the end marker's rounds), and a Cancel that came while its calls were announced. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A round counts toward the
 turn's rounds (`ON_AI_RESPONSE`'s `round_count`, the end marker's `rounds`)
 once its calls ran: a `Cancel` that came while they were announced runs none
 of them, and the turn ends `cancelled` without counting it.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.4-029", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-6.4-406", "kind": "behavior", "applies": "§6.4 A turn cut short (the provider failed after a round, or the turn was cancelled between rounds): it keeps what the room already has. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **A turn cut short.** A tool loop that ends before its answer (the provider
 failed after at least one round, or the turn was cancelled between rounds)
-keeps what the room already has. The text each round said before its calls was
+keeps what the room already has. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-407", "kind": "behavior", "applies": "§6.4 A turn cut short: a round's text already delivered, and an earlier turn's history, are not delivered again. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The text each round said before its calls was
 delivered as its own message and MUST NOT be delivered again, and nothing from
 an earlier turn of the room MUST be delivered either: the history the model was
-given is context, not this turn's output. A turn the provider interrupted after
+given is context, not this turn's output. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-408", "kind": "behavior", "applies": "§6.4 A turn cut short: a turn the provider interrupted after a round is an error (ON_ERROR, the caller learns the provider's error), its rounds and calls kept. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A turn the provider interrupted after
 a round is an error, surfaced as when the loop raises (ON_ERROR fires and the
 caller learns the provider's error), and its rounds are kept, the calls that
-ran included. No message is added to say so: the turn's record (below) says
+ran included. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-409", "kind": "behavior", "applies": "§6.4 A turn cut short: no message is added for the interruption, the provider's error never reaches the room, and a cancellation adds nothing a round already said. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->No message is added to say so: the turn's record (below) says
 how it ended, and the provider's error never reaches the room. A cancellation
 adds nothing a round already said.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.4-030", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-6.4-410", "kind": "behavior", "applies": "§6.4 A round that repeats the one before: the repeated opening of a round's text is not delivered again, and a round that is no more than that opening is delivered whole. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **A round that repeats the one before.** A model may open a round's text by
 repeating the text of the last round of calls that said something (`Let me
 look.` again after the call). The repeated opening is not delivered again: the
 round is delivered from where its text goes on, and whole when its text is no
-more than that opening, which may be the whole answer. The model reads its own
+more than that opening, which may be the whole answer. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-411", "kind": "behavior", "applies": "§6.4 A round that repeats the one before: the model reads its own text whole, and ON_AI_RESPONSE's segments say what the room saw. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The model reads its own
 text whole; the turn's record (`ON_AI_RESPONSE`'s segments) says what the room
 saw.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.4-412", "kind": "behavior", "applies": "§6.4 A turn the provider interrupted after a round has no answer: a task delegated to it, and a strategy that reads an agent's answer (Sections 19.7, 23.3). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A turn the provider interrupted after a round has no answer: a task delegated
 to it fails with the provider's error, and carries the turn's end (`error`)
 and narration as a cut turn does (Section 23.3 step 6), while what reads the
 task tells the error from a cut; a strategy that reads an agent's answer reads
-none from an output that carries an error, its rounds' text included. A turn
+none from an output that carries an error, its rounds' text included. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-413", "kind": "behavior", "applies": "§6.4 A turn constrained to a schema that the provider interrupts after a round: it fails truncated, and ON_AI_RESPONSE does not fire (Appendix A.9). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A turn
 constrained to a schema is the exception: interrupted after a round, it fails
 with `truncated`, and `ON_AI_RESPONSE` does not fire (Appendix A.9).
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.4-031", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-6.4-414", "kind": "behavior", "applies": "§6.4 A turn's budget, where an implementation offers one, set for the channel, a room or a turn: what a token budget and a cost budget count, and the level a null budget keeps. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **A turn's budget.** A channel MAY bound what a turn spends: a token budget over
 every token its provider bills for the turn (input, cache reads and writes,
 output, and the input and output image tokens; Sections 6.7 and 25.5), a cost
 budget at the model's catalogue price, each generation priced as one response,
 or both, set for the channel, a room or a turn; a room or a turn that leaves a
-budget `null` keeps the next level's (Appendix A.9, per-turn settings). A
+budget `null` keeps the next level's (Appendix A.9, per-turn settings). <!-- /rfc --><!-- rfc: {"id": "RK-6.4-415", "kind": "behavior", "applies": "§6.4 A turn's budget: a response's cost from its billed counters and the price's rates, and the long-context multipliers. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
 response's cost is each billed counter times the price's rate per million
 tokens for it, a counter the price gives no rate not charged; past the price's
 long-context threshold, over the response's input counters summed (its input,
 cache and input image tokens), the price's input and output multipliers scale
-that response's input and output cost. The turn's cost is the sum of its
-responses' costs, never the cost of their summed usage. The loop checks them at each round boundary, on the usage the provider
+that response's input and output cost. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-416", "kind": "behavior", "applies": "§6.4 A turn's budget: the turn's cost is the sum of its responses' costs. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The turn's cost is the sum of its
+responses' costs, never the cost of their summed usage. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-417", "kind": "behavior", "applies": "§6.4 A turn's budget: the check at each round boundary, and a turn that reached a budget or failed to answer past it ends budget_exceeded. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The loop checks them at each round boundary, on the usage the provider
 reported for the generations so far: a turn that has reached a budget ends
 there, `budget_exceeded`, running none of the calls its last generation asked
 for and asking for no further generation, a retry of an empty answer included; a
-final round that failed to answer past its budget ends `budget_exceeded` too. A
+final round that failed to answer past its budget ends `budget_exceeded` too. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-418", "kind": "behavior", "applies": "§6.4 A turn's budget: a budget that is not a positive number, or a cost budget with no known price, is a configuration error, and when it is reported. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
 budget that is not a positive number, or a cost budget for a model with no known
 price, is a configuration error, reported when the channel is built for a
 channel budget and by the turn that reads it otherwise; a channel with a router
-checks the price on the provider it names for each turn. Every generation of a
+checks the price on the provider it names for each turn. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-419", "kind": "behavior", "applies": "§6.4 A turn's budget: every generation of a turn is priced at the rate of the provider the turn started on, one a router hands over included. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Every generation of a
 turn is priced at the rate of the provider the turn started on, one a router
 hands to another provider included.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.4-032", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-6.4-420", "kind": "behavior", "applies": "§6.4 A turn that did not complete: ON_AI_RESPONSE reports a turn whose loop reached its end, cancelled between rounds or error for an interruption after a round. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **A turn that did not complete.** `ON_AI_RESPONSE` reports a turn whose loop
 reached its end, with the reason it ended for: `cancelled` for a cancellation
 between rounds, `error` for a turn the provider interrupted after a round (a
-turn constrained to a schema aside, Appendix A.9).
+turn constrained to a schema aside, Appendix A.9).<!-- /rfc --><!-- rfc: {"id": "RK-6.4-421", "kind": "behavior", "applies": "§6.4 A turn that did not complete: what the hook carries, and the provider's error surfacing through the response stream once the hook has fired. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The hook carries what its rounds used, then the provider's error surfaces as
 when the loop raises (ON_ERROR fires), through the turn's response stream once
-the hook has fired. A turn whose loop did not reach its end MUST NOT fire it:
+the hook has fired. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-422", "kind": "behavior", "applies": "§6.4 A turn that did not complete: a turn whose loop did not reach its end (it raised, or its response stream was closed) fires no ON_AI_RESPONSE. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A turn whose loop did not reach its end MUST NOT fire it:
 one that raised (the provider's interruption after a round aside), or one
 whose response stream was
 closed before the loop's end (a barge-in, a transport that stopped reading, a
 consumer that refused the answer, a task cancelled from outside). Its
 response never reached the end the hook reports, and a closed stream is never
-reported as `completed`; what its rounds delivered stays in the room. Its
+reported as `completed`; what its rounds delivered stays in the room. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-423", "kind": "behavior", "applies": "§6.4 A turn that did not complete, where telemetry is configured: the llm.generate span of a turn whose loop did not reach its end. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Its
 `llm.generate` span MUST end `cancelled` or `error`, never `ok`, and never
 stay open, and it carries what the rounds used, since no hook reports the
-turn. The span of a turn that reached its end `cancelled` (a steering
+turn. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-424", "kind": "behavior", "applies": "§6.4 A turn that did not complete, where telemetry is configured: the span of a turn that reached its end cancelled or error. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The span of a turn that reached its end `cancelled` (a steering
 `Cancel`) or `error` ends with that status too, never `ok`.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.4-033", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-6.4-425", "kind": "behavior", "applies": "§6.4 The turn's record: the keys a turn that reached its end records in its last MESSAGE's metadata. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **The turn's record.** A turn that reached its end records it on its last
 MESSAGE: `loop_end_reason` (the reason above), `ai_usage`
 (what its rounds used) and, when its channel says so, `ai_last_usage` (what
@@ -3720,132 +3722,132 @@ its last generation used, null when that generation failed),
 counters at its end: one cut before it never did), `ai_model` and
 `ai_provider` (what its last generation ran on, a
 provider a router handed a generation to when it served it) in the message's
-metadata. `ON_AI_RESPONSE` carries that completeness beside its usage
-(`usage_complete`). A turn that ran
+metadata. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-426", "kind": "behavior", "applies": "§6.4 The turn's record: ON_AI_RESPONSE carries usage_complete beside its usage. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`ON_AI_RESPONSE` carries that completeness beside its usage
+(`usage_complete`). <!-- /rfc --><!-- rfc: {"id": "RK-6.4-427", "kind": "behavior", "applies": "§6.4 The turn's record: executor_id for a turn that ran on an executor other than the room owner's own (Section 10.6), none on the owner's own. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A turn that ran
 on an executor other than the room owner's own (§10.6), whatever its end, also
 records `executor_id` there, the id that executor took the turn under; a turn on
-the owner's own executor records none. That message is the one of
+the owner's own executor records none. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-428", "kind": "behavior", "applies": "§6.4 The turn's record: the message that carries it, the turn's final text or the last message the turn wrote. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->That message is the one of
 the turn's final text or, when the turn has none (a cancellation between
-rounds, an interruption), the last message the turn wrote. A turn that wrote no
+rounds, an interruption), the last message the turn wrote. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-429", "kind": "behavior", "applies": "§6.4 The turn's record: a turn that wrote no message records it on its last row, the end of its last call. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A turn that wrote no
 message at all (a first turn cut while its call runs) records it on its last
-row, the end of its last call, with the same keys in that row's metadata. A
+row, the end of its last call, with the same keys in that row's metadata. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-430", "kind": "behavior", "applies": "§6.4 The turn's record: a response without tools records it, and a provider that streams text alone records no usage. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
 response without tools records it too; a provider that streams text alone
-reports no usage, and its record carries none. A turn learns its end after its
+reports no usage, and its record carries none. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-431", "kind": "behavior", "applies": "§6.4 The turn's record: the stored row updated, ON_EVENT_UPDATED over the row as the store holds it, no second delivery, and the row the caller reads. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A turn learns its end after its
 segments are written, so the implementation updates the stored row, and
 ON_EVENT_UPDATED fires as for a direct `update_event()` (§10.3), over the row as
 the store holds it then, an update since its commit standing; it does not
 deliver the row again, and the row its caller reads among its response events
-is that one. Writing that update is best effort: a failure is logged, and the
-turn's outcome stands. A host reads how any turn ended from its reply, and the
+is that one. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-432", "kind": "behavior", "applies": "§6.4 The turn's record: a failure to write the update is logged, and the turn's outcome stands. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Writing that update is best effort: a failure is logged, and the
+turn's outcome stands. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-433", "kind": "behavior", "applies": "§6.4 The turn's record: the LoopEndMarker the stream hands the channel rendering a streamed turn, as its last item, and its place among the rows and a failure. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A host reads how any turn ended from its reply, and the
 channel rendering a streamed turn reads it from its stream: once the loop
 reached its end, the stream hands that channel the loop's `LoopEndMarker` (its
 reason, its rounds, what they used) as its last item, after the row of the
 turn's last text and before the response's failure when it fails, whichever
-row carries the record. A channel the room stopped letting read the stream is
+row carries the record. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-434", "kind": "behavior", "applies": "§6.4 The turn's record: a channel the room stopped letting read the stream, and one that renders text alone. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A channel the room stopped letting read the stream is
 handed none; one that renders text alone skips it, as it skips a piece of
-reasoning.
+reasoning.<!-- /rfc --><!-- rfc: {"id": "RK-6.4-435", "kind": "behavior", "applies": "§6.4 The turn's record: what it says of its generations rides that row alone; the caller reads the end and usage under turns. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 What a turn's record says of its generations rides that row alone: its
 caller reads the end and the usage under `turns`, and no more of it.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.4-034", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-6.4-436", "kind": "behavior", "applies": "§6.4 What a generation used: the UsageMarker the loop yields after each generation that returned, in its order among the text and the rows. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **What a generation used.** After each generation that returned, the loop
 yields what it used, its model and its provider (`UsageMarker`), in its order
 among the text and the rows, as it does a piece of reasoning, so a streaming
-channel can show what a long turn uses as it goes (Section 6.1). It is never
-stored. A generation that reported no counters tells an empty usage. A
+channel can show what a long turn uses as it goes (Section 6.1). <!-- /rfc --><!-- rfc: {"id": "RK-6.4-437", "kind": "behavior", "applies": "§6.4 What a generation used: a UsageMarker is never stored. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->It is never
+stored. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-438", "kind": "behavior", "applies": "§6.4 What a generation used: a generation that reported no counters tells an empty usage. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A generation that reported no counters tells an empty usage. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-439", "kind": "behavior", "applies": "§6.4 What a generation used: a partial UsageMarker for usage told before a generation's end, replaced by the generation's own, and a reader that sums usage skips it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
 provider that tells what a generation used before its end (the input counters
 it tells as its stream starts, Section 6.7) has the loop yield it at once, as a
 `UsageMarker` marked `partial`, which the generation's own replaces: a reader
-that sums usage MUST skip a partial one. A generation whose end reports no
+that sums usage MUST skip a partial one. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-440", "kind": "behavior", "applies": "§6.4 What a generation used: a generation whose end reports no usage counts what it told before its end, once, into the turn's usage, budget and span, its record incomplete. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A generation whose end reports no
 usage (one a `Cancel` or a cut stopped, one that failed, one whose done event
 carries no counters) counts what it told before its end, once, into the turn's
-usage, its budget and its span, and its record reads incomplete. A turn its
+usage, its budget and its span, and its record reads incomplete. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-441", "kind": "behavior", "applies": "§6.4 What a generation used: the record of a turn its reader stopped, or cut from outside, once it began (Section 12.2 step 13s), its end cancelled. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A turn its
 reader stopped, or cut from outside, once
 it began (Section 12.2 step 13s) records what its generations told as a turn
 that reached its end does, its end `cancelled`: `ai_usage` sums what they told,
 a generation in flight counting what it told before its end, as the reader read
 it, absent when no counter was told, `ai_last_usage`, `ai_model` and
 `ai_provider` are what the last of them told, and `ai_usage_complete` is false
-when one told no counters or one is in flight. A generation counts as in flight from the end
+when one told no counters or one is in flight. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-442", "kind": "behavior", "applies": "§6.4 What a generation used: when a generation counts as in flight once the reader stopped, and a call that ends then asks no model again. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A generation counts as in flight from the end
 of the calls that followed the last one told, as the reader read it, or from a
 segment break, until it tells; a call that ends once the reader stopped asks no
-model again. A stream cut before anything told what it used records only its end,
+model again. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-443", "kind": "behavior", "applies": "§6.4 What a generation used: a stream cut before anything told what it used records only its end, with executor_id when it ran apart. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A stream cut before anything told what it used records only its end,
 with `executor_id` when it ran apart: an
 ACP agent's or a text-only channel's reports no usage at all, and a first
 generation in flight cannot be told from them.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.4-035", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-6.4-444", "kind": "behavior", "applies": "§6.4 A room's turns one after the other: the option an implementation may offer to take a room's turns one at a time (serialize_room_turns). Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->
 **A room's turns one after the other.** An AI channel MAY take a room's turns
 one at a time (`serialize_room_turns`, declared as `serializes_room_turns`,
-Section 10.6.2). Its turns in a room then run in the order they were asked,
+Section 10.6.2). <!-- /rfc --><!-- rfc: {"id": "RK-6.4-445", "kind": "behavior", "applies": "§6.4 A room's turns one after the other, with serialize_room_turns on: the order the owner keeps, and a turn starts only once the turn before it has written what it said. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Its turns in a room then run in the order they were asked,
 which the room's owner keeps: a turn takes its place when its delivery set
 executes (Section 10.2), in the room's delivery order, and MUST NOT start
 before the turn before it has written what it said, the text a cut turn keeps
-included, so that it reads that answer. A waiting turn MUST wait outside the
-room's delivery lane, through which the turn before it delivers its answer.
+included, so that it reads that answer. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-446", "kind": "behavior", "applies": "§6.4 A room's turns one after the other, with serialize_room_turns on: a waiting turn waits outside the room's delivery lane. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A waiting turn MUST wait outside the
+room's delivery lane, through which the turn before it delivers its answer.<!-- /rfc --><!-- rfc: {"id": "RK-6.4-447", "kind": "behavior", "applies": "§6.4 A room's turns one after the other, with serialize_room_turns on: the room a turn that waited reads, without a message committed after it was asked, with a change accepted meanwhile. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A turn that waited reads the room as it is when it starts, less the events
 committed after it was asked that the channel did not write: a message
 committed after it MUST NOT be in the history it is handed, since that message
 waits a turn of its own and a turn that read it unanswered could do its task
 too, and a change accepted meanwhile (an edit, a deletion, Section 10.3)
-applies. A waiting turn whose delivery is cancelled (Section 10.1, *Explicit
+applies. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-448", "kind": "behavior", "applies": "§6.4 A room's turns one after the other, with serialize_room_turns on: a waiting turn whose delivery is cancelled never starts, and a running turn cut lets the next start once it wrote what it keeps (the reference implementation's timing included). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A waiting turn whose delivery is cancelled (Section 10.1, *Explicit
 delivery cancellation*) never starts, and a running turn cut lets the next one
 start once it has written what it keeps: a streaming target working on past
 the cut holds its caller, not the room's line (Section 12.2 step 13s). The
 reference implementation stores what the turn keeps once the target's
 `finally` returned, so the line waits for that `finally`, and one that never
-returns is the target's defect there. A turn whose channel was detached from
-the room while it waited does not start. A muted channel takes no place: it
+returns is the target's defect there. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-449", "kind": "behavior", "applies": "§6.4 A room's turns one after the other, with serialize_room_turns on: a turn whose channel was detached while it waited does not start. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A turn whose channel was detached from
+the room while it waited does not start. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-450", "kind": "behavior", "applies": "§6.4 A room's turns one after the other, with serialize_room_turns on: a muted channel takes no place (Section 7.2). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A muted channel takes no place: it
 reacts to each event as it comes,
-its answer not delivered (Section 7.2). A message the running turn sends into
+its answer not delivered (Section 7.2). <!-- /rfc --><!-- rfc: {"id": "RK-6.4-451", "kind": "behavior", "applies": "§6.4 A room's turns one after the other, with serialize_room_turns on: a message the running turn sends into its own room that asks the same channel is answered after that turn, and the call does not wait for it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A message the running turn sends into
 its own room (a tool's call, Section 10.1) that asks the same channel is
 answered after that turn: the call, awaited or deferred, returns without
-waiting for that answer, since waiting would wait on the turn that made it. A
+waiting for that answer, since waiting would wait on the turn that made it. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-452", "kind": "behavior", "applies": "§6.4 A room's turns one after the other, with serialize_room_turns on: a strategy that takes the channel's turns (Section 19.7) orders its generations itself. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
 strategy that takes the channel's turns in the room (Section 19.7) orders its
-generations itself, and they do not wait. The order is the owner's process's:
+generations itself, and they do not wait. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-453", "kind": "behavior", "applies": "§6.4 A room's turns one after the other, with serialize_room_turns on: the order is the owner's process's; two processes each handed a delivery run side by side. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The order is the owner's process's:
 two processes each handed a delivery of the room run their turns side by side,
-as an ACP agent channel's prompts are serialized by its process. Without it,
+as an ACP agent channel's prompts are serialized by its process. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-454", "kind": "behavior", "applies": "§6.4 A room's turns, with serialize_room_turns off: the channel's turns in a room run side by side, each on the room as it stood when it was asked. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Without it,
 the channel's turns in a room run side by side, each on the room as it stood
 when it was asked.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.4-036", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-6.4-455", "kind": "behavior", "applies": "§6.4 A message for the running turn, where an implementation offers steering (steer_room_turns) and a channel steers its room turns: it hands the room's next message to the running turn and takes the room's turns one at a time. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **A message for the running turn.** An AI channel MAY hand a running turn the
 room's next message rather than give that message a turn of its own
 (`steer_room_turns`, declared as `steers_room_turns`, Section 10.6.2); it then
-takes the room's turns one at a time as above. So does any channel that steers
+takes the room's turns one at a time as above. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-456", "kind": "behavior", "applies": "§6.4 A message for the running turn: serializes_room_turns defaults to steers_room_turns, a declaration that steers is taken as serialized, and registering a live channel that steers without serializing fails. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->So does any channel that steers
 its room turns: a channel's `serializes_room_turns` defaults to its
 `steers_room_turns`, the owner holding a channel by a declaration that steers
 them takes them as serialized, and registering a live channel that says it
 steers them but does not serialize them MUST fail, its steering otherwise
-dead. A message that comes while the channel's turn runs in the room, when no
+dead. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-457", "kind": "behavior", "applies": "§6.4 A message for the running turn, with steering on: a message from the author of the message the running turn answers, no other turn waiting, is committed, delivered and steered into that turn as an InjectMessage, and no turn of its own starts. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A message that comes while the channel's turn runs in the room, when no
 other turn of the channel waits in the
 room and the message is from the author of the message that turn answers, is
 committed and delivered as any message (Section 10.1), and the room's
 owner steers it into that turn (Section 21.3) as an `InjectMessage` of the text
 its content reads as (Section 6.6), under its speaker's label when the turn's
 history labels the room's speakers, as above: the turn
-reads it at its next stop, and no turn of its own starts. The author is the
+reads it at its next stop, and no turn of its own starts. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-458", "kind": "behavior", "applies": "§6.4 A message for the running turn, with steering on: who the author is (the room source and the name it signs with). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The author is the
 room source that wrote the message (a participant, a sender on its channel, or
 a channel: Section 10.1, step 12) under the name it is signed with, so one
 sender id that carries several people is not one author, and neither are two
-senders who sign one name. A turn runs in its
+senders who sign one name. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-459", "kind": "behavior", "applies": "§6.4 A message for the running turn, with steering on: a turn runs in its author's name, its tools, tool hooks and tool policy reading them (Sections 21.1, 21.4). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A turn runs in its
 author's name: its tools and its tool hooks read them as its actor (Section
 21.4), and its channel's tool policy is resolved for their role (Section
-21.1). A message from anyone else MUST NOT be handed to that turn, where
+21.1). <!-- /rfc --><!-- rfc: {"id": "RK-6.4-460", "kind": "behavior", "applies": "§6.4 A message for the running turn, with steering on: a message from anyone else is not handed to that turn and waits a turn of its own. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A message from anyone else MUST NOT be handed to that turn, where
 their request would be served under that name and that role (RMK-1840): it
-waits a turn of its own, after the running one, as above.
+waits a turn of its own, after the running one, as above.<!-- /rfc --><!-- rfc: {"id": "RK-6.4-461", "kind": "behavior", "applies": "§6.4 A message for the running turn, with steering on: the owner reads the author on the request of the one turn the channel runs in the room, and a channel running no turn or several there. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The owner reads the author on the request of the one turn the channel runs in
 the room, and steers that turn by its id; when the channel runs no turn or
-several there, the message waits a turn of its own. A turn cut before that
+several there, the message waits a turn of its own. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-462", "kind": "behavior", "applies": "§6.4 A message for the running turn, with steering on: a turn cut before its next stop never reads the message, which the room's next turn reads. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A turn cut before that
 stop never reads it: the message stays in the room, and the room's next turn
-reads it. Whether the turn can take the message is decided at its delivery, not
-at its commit, and a turn being cut takes it until its loop has ended. When the
+reads it. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-463", "kind": "behavior", "applies": "§6.4 A message for the running turn, with steering on: whether the turn can take it is decided at delivery, and a turn being cut takes it until its loop has ended. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Whether the turn can take the message is decided at its delivery, not
+at its commit, and a turn being cut takes it until its loop has ended. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-464", "kind": "behavior", "applies": "§6.4 A message for the running turn, with steering on: a turn that cannot take it, or a message that reads as no text, leaves it waiting a turn of its own. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->When the
 turn cannot (its loop is not reachable yet, or reads its queue no more, as once
 a cut turn has ended) or the message reads as no text, the message waits a turn
-of its own, as above. An
+of its own, as above. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-465", "kind": "behavior", "applies": "§6.4 A message for the running turn, with steering on: an edit, a delete or an event that opens no turn is no message for the running turn, and a message after it waits a turn of its own too. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An
 edit or a delete (Section 10.3), and an event of a type that opens no turn
 (a notice, a reaction, a participant's arrival: above), is no message for
 the running turn: it waits its place as such a message does, and no turn
@@ -3853,7 +3855,7 @@ answers it; while it waits, a message that comes after it waits a turn of
 its own too.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.4-037", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-6.4-466", "kind": "structural", "applies": "§6.4 ACP agent channel (the integration's scope, RoomKit as the ACP client): its channel type, category and direction. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **ACP Agent Channel:**
 
 An ACP agent channel connects a Room to an external
@@ -3865,96 +3867,102 @@ integration surface and is outside this channel's contract.
 An ACP agent channel:
 
 1. MUST use `ChannelType.AI`, category `INTELLIGENCE`, and direction
-   `BIDIRECTIONAL`;
+   `BIDIRECTIONAL`;<!-- /rfc --><!-- rfc: {"id": "RK-6.4-467", "kind": "behavior", "applies": "§6.4 ACP agent channel, item 2: one connection per channel instance, a distinct session per Room opened once, callers at the same time sharing it, a host call from inside a turn not waiting for it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 2. MUST initialize one ACP connection per channel instance and create a distinct
    ACP session for each Room, opened once: callers that ask for it at the same
    time (a first prompt, a rebuild, a host setting a session value) find the
    session the first of them opened, and a host call made from inside a turn
-   MUST NOT wait for that turn to end to get it;
+   MUST NOT wait for that turn to end to get it;<!-- /rfc --><!-- rfc: {"id": "RK-6.4-468", "kind": "behavior", "applies": "§6.4 ACP agent channel, item 3: prompts serialized within a session, different Rooms' sessions concurrent. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 3. MUST serialize prompts within an ACP session while allowing different Room
-   sessions to operate concurrently;
+   sessions to operate concurrently;<!-- /rfc --><!-- rfc: {"id": "RK-6.4-469", "kind": "behavior", "applies": "§6.4 ACP agent channel, item 4: Room message content converted to ACP prompt content, agent message chunks mapped to the streaming output path. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 4. MUST convert Room message content into ACP prompt content and map ACP agent
-   message chunks back to the normal RoomKit streaming output path;
+   message chunks back to the normal RoomKit streaming output path;<!-- /rfc --><!-- rfc: {"id": "RK-6.4-470", "kind": "behavior", "applies": "§6.4 ACP agent channel, item 5: tool-call lifecycle updates mapped to tool-call stream markers, plan updates to realtime events. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 5. MUST map ACP tool-call lifecycle updates to RoomKit tool-call stream markers
-   and MUST map ACP plan updates to RoomKit realtime events. Each session
+   and MUST map ACP plan updates to RoomKit realtime events. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-471", "kind": "behavior", "applies": "§6.4 ACP agent channel, item 5: each session update and permission request handled under the Room turn prompting that session (Section 10.6.5), outside any turn when none prompts it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Each session
    update and permission request MUST be handled under the Room turn prompting
    that session (its publications, hooks and host, §10.6.5), whichever Room's
-   turn opened the connection, and outside any turn when none prompts it;
+   turn opened the connection, and outside any turn when none prompts it;<!-- /rfc --><!-- rfc: {"id": "RK-6.4-472", "kind": "behavior", "applies": "§6.4 ACP agent channel, item 6: events from the channel itself and persisted tool-call activity events prompt nothing. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 6. MUST skip events originating from itself and persisted tool-call activity
-   events, preventing duplicate prompts and agent loops;
+   events, preventing duplicate prompts and agent loops;<!-- /rfc --><!-- rfc: {"id": "RK-6.4-473", "kind": "behavior", "applies": "§6.4 ACP agent channel, item 7: cancellation of an active Room turn, and sessions and transport released when the channel closes. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 7. MUST support cancellation of an active Room turn and MUST release ACP
-   sessions and transport resources when the channel closes. A turn is active
+   sessions and transport resources when the channel closes. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-474", "kind": "behavior", "applies": "§6.4 ACP agent channel, item 7: a turn cancelled while it is active before prompting (the agent starting, its session opening, set up or rebuilt) ends without prompting, marked interrupted, a session opened for it alone closed. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A turn is active
    from the moment it holds its Room, while the agent is started and its
    session is opened, set up or rebuilt: cancelled then, it MUST end without
    prompting, its response metadata marked `interrupted`, and a session
-   opened for it alone (a standalone turn's) MUST be closed. A steering
-   `Cancel` for the turn (§10.6.8) is that cancellation;
+   opened for it alone (a standalone turn's) MUST be closed. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-475", "kind": "behavior", "applies": "§6.4 ACP agent channel, item 7: a steering Cancel for the turn (Section 10.6.8) is that cancellation. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A steering
+   `Cancel` for the turn (§10.6.8) is that cancellation;<!-- /rfc --><!-- rfc: {"id": "RK-6.4-476", "kind": "behavior", "applies": "§6.4 ACP agent channel, item 8: generated text and tool activity go through the standard persistence, visibility, chain-depth and re-broadcast behaviour. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 8. MUST NOT bypass the standard RoomKit persistence, visibility, chain-depth,
-   or re-broadcast behavior for generated text and tool activity; and
+   or re-broadcast behavior for generated text and tool activity; and<!-- /rfc --><!-- rfc: {"id": "RK-6.4-477", "kind": "behavior", "applies": "§6.4 ACP agent channel, item 9: ON_AI_RESPONSE on a completed Room turn, with its text, tool call count, duration and loop_end_reason (the agent's stop reason, completed for end_turn). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 9. MUST fire `ON_AI_RESPONSE` when a Room turn completes, carrying the text the
    turn produced, the number of tool calls it made, its duration, and how it
    ended as its `loop_end_reason`: the stop reason the agent returned,
-   `completed` for `end_turn`. A turn
+   `completed` for `end_turn`. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-478", "kind": "behavior", "applies": "§6.4 ACP agent channel, item 9: a turn that ended in an error, or whose response stream closed before its terminal update, fires no ON_AI_RESPONSE. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A turn
    that ended in an error, or whose response stream was closed before its
-   terminal update, MUST NOT fire it: no response was delivered to the Room.
+   terminal update, MUST NOT fire it: no response was delivered to the Room.<!-- /rfc --><!-- rfc: {"id": "RK-6.4-479", "kind": "behavior", "applies": "§6.4 ACP agent channel, item 9: token counters the agent reports are relayed unaltered. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
    Token counters the agent reports MUST be relayed unaltered. ACP annotates
    them as running session figures while agents are observed to report them per
    prompt; a client cannot distinguish the two from a single reading, and
-   reinterpreting them silently corrupts an accounting figure. An
+   reinterpreting them silently corrupts an accounting figure. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-480", "kind": "behavior", "applies": "§6.4 ACP agent channel, item 9: the option an implementation may offer to carry the session's context occupancy and running cost under distinct keys. Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->An
    implementation MAY carry the session's context occupancy and running cost
-   alongside them under distinct keys; and
+   alongside them under distinct keys; and<!-- /rfc --><!-- rfc: {"id": "RK-6.4-481", "kind": "behavior", "applies": "§6.4 ACP agent channel, item 10: an unclean prompt outcome on the response metadata (acp.stop_reason, acp.interrupted), and a clean end_turn with neither. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 10. MUST expose an unclean prompt outcome on the turn's response-metadata record:
     a returned ACP stop reason other than `end_turn` is written as
     `response_metadata["acp"]["stop_reason"]`, while a prompt that exits before
     returning a response is written as
     `response_metadata["acp"]["interrupted"] = true`. A clean `end_turn` writes
-    neither marker. The same final record MUST reach the caller through
+    neither marker. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-482", "kind": "behavior", "applies": "§6.4 ACP agent channel, item 10: the same final record reaches the caller through InboundResult.response_metadata, a turn with no final MESSAGE included. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The same final record MUST reach the caller through
     `InboundResult.response_metadata`, including when the turn produced no final
     MESSAGE event.
+<!-- /rfc -->
 
-The stable ACP protocol version MUST be the default. Experimental protocol
+<!-- rfc: {"id": "RK-6.4-483", "kind": "behavior", "applies": "§6.4 ACP agent channel: the stable protocol version is the default. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+The stable ACP protocol version MUST be the default. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-484", "kind": "behavior", "applies": "§6.4 ACP agent channel: experimental protocol versions only behind an explicit opt-in, never silently replacing the stable default. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Experimental protocol
 versions MAY be supported only behind explicit opt-in and MUST NOT silently
-replace the stable default. The channel MUST negotiate the protocol version
+replace the stable default. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-485", "kind": "behavior", "applies": "§6.4 ACP agent channel: the protocol version negotiated during initialization, and a clear failure when no version is compatible. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The channel MUST negotiate the protocol version
 during initialization and MUST fail clearly when no compatible version exists.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.4-486", "kind": "behavior", "applies": "§6.4 ACP agent channel, the stdio transport: the configured command launched as an argument vector, without a shell. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The reference transport is ACP over stdio. A stdio implementation MUST launch
-the configured command as an argument vector without a shell. Alternate ACP
+the configured command as an argument vector without a shell. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-487", "kind": "behavior", "applies": "§6.4 ACP agent channel, where an implementation offers an alternate ACP transport: it keeps the lifecycle and permission requirements. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Alternate ACP
 transports MAY be implemented when standardized, but MUST preserve the lifecycle
 and permission requirements above.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.4-488", "kind": "behavior", "applies": "§6.4 ACP agent channel: sessions are process-local by default, local to the turn executor that hosts the channel (Section 10.6.7). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ACP sessions are process-local by default: local to the turn executor that
 hosts the channel, to which the room's turns are placed while it holds the
-session (§10.6.7). An implementation MAY add persistent
+session (§10.6.7). <!-- /rfc --><!-- rfc: {"id": "RK-6.4-489", "kind": "behavior", "applies": "§6.4 ACP agent channel, where an implementation offers persistent session resumption: resumed session identifiers are scoped to the Room and the agent endpoint. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An implementation MAY add persistent
 session resumption, but MUST scope resumed session identifiers to the associated
 Room and agent endpoint.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.4-038", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-6.4-490", "kind": "behavior", "applies": "§6.4 ACP session setup: the channel's mcp_servers given to each session in session/new, a list or a function of the Room called at each opening. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Session setup.** What a session is opened with is the integrator's, per
 Room. The channel's `mcp_servers` (default none) are the MCP servers given to
 each session in `session/new`: a list, the same for every Room, or a function
 of the Room identifier, called each time the channel opens a session for that
 Room, so that a server can be told which Room it acts for (a stdio server's
-environment, a URL). The channel's `session_config` (default none) maps ACP
+environment, a URL). <!-- /rfc --><!-- rfc: {"id": "RK-6.4-491", "kind": "behavior", "applies": "§6.4 ACP session setup: each session_config value set on every session opened for a Room before it is prompted. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The channel's `session_config` (default none) maps ACP
 session configuration option identifiers to values (`mode`, `model`, an
 agent's own options). The channel MUST set each of them on every session it
 opens for a Room before the session is prompted: the Room's first session, one
 opened again after the previous one was invalidated or after a new connection
-to the agent, and a standalone turn's session (Section 10.1.1 step 7). A value
-the session already announces is not set again. A value the host sets on a
+to the agent, and a standalone turn's session (Section 10.1.1 step 7). <!-- /rfc --><!-- rfc: {"id": "RK-6.4-492", "kind": "behavior", "applies": "§6.4 ACP session setup: a value the session already announces is not set again. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A value
+the session already announces is not set again. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-493", "kind": "behavior", "applies": "§6.4 ACP session setup: a value the host sets on a Room's live session (set_config_option) is set again on the Room's next session, until the host closes the session or detaches the channel. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A value the host sets on a
 Room's session while it lives (`set_config_option`, a channel call through the
 kit, §10.6.3) belongs to the Room as well: the channel MUST set it again on
 the Room's next session, over `session_config`, until the host closes the
 Room's session through a channel call or detaches the channel, either of
-which forgets it. The owner stores it with the Room (§10.6.2), so the session
+which forgets it. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-494", "kind": "behavior", "applies": "§6.4 ACP session setup, across executors: the owner stores the host's value with the Room, so another executor's session is set to it too (Sections 10.6.2, 10.6.7). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The owner stores it with the Room (§10.6.2), so the session
 another executor opens once the executor that held the Room is lost is set
-to it too. Only a channel call writes it, so the Room's next session is set
+to it too. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-495", "kind": "behavior", "applies": "§6.4 ACP session setup: only a channel call writes a Room's value; a mode the agent switches to itself stays its live session's. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Only a channel call writes it, so the Room's next session is set
 only to values the host set through the kit; a mode the agent switches to
-itself is its live session's, not the Room's.
+itself is its live session's, not the Room's.<!-- /rfc --><!-- rfc: {"id": "RK-6.4-496", "kind": "behavior", "applies": "§6.4 ACP session setup: a value the host sets while the Room has no open session replaces the Room's earlier value on the session that call opens. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A value the host sets while the Room has no open session is set on the
 session that call opens in place of the Room's earlier value for that
 option, so a value the agent has come to refuse is replaced by setting
-another one.
+another one.<!-- /rfc --><!-- rfc: {"id": "RK-6.4-497", "kind": "behavior", "applies": "§6.4 ACP session setup: a value the agent refuses; the session is not prompted, it is released, and the turn or the opening call fails naming the option. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 An agent's mode decides what it asks the client before acting, and an agent
 that acts unasked never reaches the external tool handler: a session left on
 another value than the one set up is not degraded but ungated. So when the
@@ -3963,47 +3971,49 @@ it, and MUST fail the turn, or the call that was opening the session, with an
 error naming the option.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.4-039", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-6.4-498", "kind": "behavior", "applies": "§6.4 ACP detaching: the channel closes the Room's session and forgets the host's values, so a later attachment opens a new session. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Detaching.** Detaching the channel from a Room drops the Room's state
 (§10.6.3): the channel MUST close the Room's session and forget the values
 the host set on it, so a later attachment opens a new session, caught up on
-the Room (§19.3.2). A detach MUST NOT wait for the agent: the session is
+the Room (§19.3.2). <!-- /rfc --><!-- rfc: {"id": "RK-6.4-499", "kind": "behavior", "applies": "§6.4 ACP detaching: a detach does not wait for the agent; the session is closed once the Room's running turn has ended. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A detach MUST NOT wait for the agent: the session is
 closed off it, once the Room's turn still running has ended, a standalone
-turn's included. A turn that started before the detach and has not prompted
+turn's included. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-500", "kind": "behavior", "applies": "§6.4 ACP detaching: a turn that started before the detach and has not prompted ends without prompting, marked interrupted, and a session it opened is closed. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A turn that started before the detach and has not prompted
 yet MUST end without prompting, marked `interrupted`, and a session it
-opened for the detached Room MUST be closed. A host call running across the
+opened for the detached Room MUST be closed. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-501", "kind": "behavior", "applies": "§6.4 ACP detaching: a host call running across the detach closes a session it opened and keeps no value, and the owner stores no call result for the detached Room. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A host call running across the
 detach (a value being set while the session opens, or while a turn holds the
 Room) MUST close a session it opened and keep no value for the Room, and the
 owner stores no call result for a Room the channel is no longer attached to.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.4-502", "kind": "behavior", "applies": "§6.4 ACP permissions: filesystem and terminal capabilities advertised as unavailable unless the integrator supplies them. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ACP agents can request permission to execute tools and can request client-side
 filesystem or terminal operations. An ACP agent channel:
 
 - MUST advertise filesystem and terminal capabilities as unavailable unless the
-  integrator explicitly supplies conforming implementations;
+  integrator explicitly supplies conforming implementations;<!-- /rfc --><!-- rfc: {"id": "RK-6.4-503", "kind": "behavior", "applies": "§6.4 ACP permissions: a permission request is denied or cancelled when no external tool handler is configured. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - MUST deny or cancel permission requests when no external tool handler is
-  configured;
+  configured;<!-- /rfc --><!-- rfc: {"id": "RK-6.4-504", "kind": "behavior", "applies": "§6.4 ACP permissions: what the channel passes to the configured external tool handler. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - MUST pass tool name, input, call identifier, ACP session identifier, and Room
-  identifier to the configured external tool handler;
-- MUST select only a permission option offered by the ACP agent;
+  identifier to the configured external tool handler;<!-- /rfc --><!-- rfc: {"id": "RK-6.4-505", "kind": "behavior", "applies": "§6.4 ACP permissions: only a permission option the agent offered is selected. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+- MUST select only a permission option offered by the ACP agent;<!-- /rfc --><!-- rfc: {"id": "RK-6.4-506", "kind": "behavior", "applies": "§6.4 ACP permissions: on session/cancel, each pending permission request of the session answered cancelled after the notification, and the handler's decision abandoned. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - when it cancels a session's prompt (`session/cancel`), MUST answer each
   permission request of that session still pending with ACP's `cancelled`
   outcome, after the notification, and MUST abandon the external tool
   handler's decision on it, which never reaches the agent: unlike the cut of
-  §9.3, which leaves a decision still pending to the handler to withdraw.
+  §9.3, which leaves a decision still pending to the handler to withdraw.<!-- /rfc --><!-- rfc: {"id": "RK-6.4-507", "kind": "behavior", "applies": "§6.4 ACP permissions: a call whose permission the agent asked, pending at the turn's end or answered cancelled, is reported once, cancelled (Section 9.3). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
   A call whose permission the agent asked is closed with its turn whether or
   not the agent announced it: one whose request is still pending when the
   turn ends, or was answered `cancelled`, is reported once, cancelled
-  (§9.3); and
+  (§9.3); and<!-- /rfc --><!-- rfc: {"id": "RK-6.4-508", "kind": "behavior", "applies": "§6.4 ACP permissions and progress: tool and plan progress exposed through the realtime backend, transient progress not persisted. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 - SHOULD expose tool and plan progress through the realtime backend without
   persisting transient progress updates.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.4-040", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-6.4-509", "kind": "behavior", "applies": "§6.4 ACP identity, where an implementation offers one and the integrator gives it: a name, a role and a description that a discussion's notes, a dispatch policy and a host's view present the agent by (Section 19.7.5). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Identity and instructions.** An ACP agent channel MAY carry an identity as
 an Agent does (Section 19.1): a `name`, a `role` and a `description`, which a
 discussion's notes, a dispatch policy and a host's view present it by
-(Section 19.7.5). Its `instructions` (default null) are the integrator's
+(Section 19.7.5). <!-- /rfc --><!-- rfc: {"id": "RK-6.4-510", "kind": "behavior", "applies": "§6.4 ACP instructions: the integrator's standing instructions sent in the first prompt of each session opened for a Room, as the runtime's block, and not again while the session keeps them. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Its `instructions` (default null) are the integrator's
 standing direction for the agent (a persona, how the room works), since the
 agent's own system prompt is not RoomKit's to set. The channel sends them in
 the first prompt of each session it opens for a Room, a session opened again
@@ -4012,18 +4022,18 @@ catch-up and the request, never as a participant's words, and not again
 while the session keeps them.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.4-041", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-6.4-511", "kind": "behavior", "applies": "§6.4 ACP in a discussion: an ACP agent channel takes a discussion's turns as an AI channel does (Section 19.7.5). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **In a discussion.** An ACP agent channel takes a discussion's turns as an AI
-channel does (Section 19.7.5). The turn's notes (rule 14) ride its prompt as
+channel does (Section 19.7.5). <!-- /rfc --><!-- rfc: {"id": "RK-6.4-512", "kind": "behavior", "applies": "§6.4 ACP in a discussion: the turn's notes ride its prompt as the runtime's block, and every copy of the notes' header in the prompt's other text is replaced. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The turn's notes (rule 14) ride its prompt as
 the runtime's own block, under the notes' header, and every copy of that
 header in the prompt's other text (the catch-up, the request, a host's
 block) is replaced as Section 6.4 replaces it in a turn's input, so a
-participant cannot pass their words off as the runtime's notes. Its session
+participant cannot pass their words off as the runtime's notes. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-513", "kind": "behavior", "applies": "§6.4 ACP in a discussion: the turn sends what the agent has not read yet, up to its start, and the event it answers as its request. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Its session
 keeps its own history, so the turn sends what the agent has not read yet,
 up to the turn's start, and the event the turn answers as its request; the
-notes say which event that is and who asked for it. A hold that cuts its
+notes say which event that is and who asked for it. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-514", "kind": "behavior", "applies": "§6.4 ACP in a discussion: a hold that cuts the turn (rule 12) is a steering Cancel, its session's opening included, wherever the turn runs. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A hold that cuts its
 turn (rule 12) is a steering `Cancel` (§10.6.8), which cancels it (item 7),
-its session's opening included, wherever the turn runs. Its
+its session's opening included, wherever the turn runs. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-515", "kind": "behavior", "applies": "§6.4 ACP in a discussion: its answer streams like any agent's, so a silent one is held back and blocked (rule 13). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Its
 answer streams like any agent's, so a silent one is held back and blocked as
 rule 13 says.
 <!-- /rfc -->
