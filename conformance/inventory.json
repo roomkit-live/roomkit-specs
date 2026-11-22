@@ -1107,9 +1107,9 @@
     },
     {
       "section": "15.8.3",
-      "sha256": "e255caed695650f3b0330eb94d19f360c69fc14e6e469a19bcd19332317ae496",
+      "sha256": "65302de4165659d7bdce5faf1461a3592f2cbfe989c53feef93d3c40c24eefdc",
       "classification": "normative",
-      "review": "Source inventory: Audit Data Format, split to one obligation per unit (RMK-1971): the JSONL format with its example and append-only rule; parent directories created; write errors logged, never raised. All must. Every unit carries its level."
+      "review": "Source inventory: Audit Data Format, split to one obligation per unit (RMK-1971): the JSONL format with its example; append-only; parent directories created; write errors logged, never raised, one unit per sentence. All must. Every unit carries its level."
     },
     {
       "section": "15.9",

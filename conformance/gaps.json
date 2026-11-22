@@ -394,7 +394,7 @@
     "RK-15.4-003": {
       "class": "phase6",
       "card": "RMK-1979",
-      "note": "The RECOMMENDED voice metric names, which neither implementation emits as named; suspect RMK-1977."
+      "note": "The RECOMMENDED voice metric names: Python emits two of the seventeen as named and its other voice metrics under other names, roomkit-rs has no voice; suspect RMK-1977."
     },
     "RK-15.4-004": {
       "class": "phase6",
@@ -414,7 +414,7 @@
     "RK-15.6-007": {
       "class": "phase6",
       "card": "RMK-1979",
-      "note": "Traces a channel's transport protocol emits; in both implementations only voice transports (SIP) emit them."
+      "note": "Traces a channel's transport protocol emits: Python's SIP voice backends are the only emitters, roomkit-rs has no protocol trace, and neither has an SMTP transport."
     },
     "RK-15.6-010": {
       "class": "step",
@@ -459,7 +459,7 @@
     "RK-15.7-009": {
       "class": "step",
       "card": "RMK-1979",
-      "note": "Needs a span's attributes read, which telemetry.spans does not return (only name, span_id and parent_id)."
+      "note": "Needs the inbound and delivery spans, which carry the addresses and the provider error, and a span's error_message: telemetry.spans has neither kind and returns no attribute or error."
     },
     "RK-15.8.1-009": {
       "class": "writable",
@@ -505,6 +505,11 @@
       "class": "step",
       "card": "RMK-1979",
       "note": "Needs an auditor whose file write fails."
+    },
+    "RK-15.8.3-005": {
+      "class": "step",
+      "card": "RMK-1979",
+      "note": "Needs an auditor file that holds lines before the run, so that a scenario sees them kept."
     },
     "RK-19.1-004": {
       "class": "phase6",

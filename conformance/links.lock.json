@@ -4780,9 +4780,9 @@
       "orchestration/a-session-auditor-records-the-sessions-and-the-tool-calls": "ea4d4c4e13910adb0b8b0b907f71801d5e7518ea4759b9c093eaa8b4480f047c"
     },
     "RK-15.8.3-002": {
-      "orchestration/a-session-auditor-records-the-sessions-and-the-tool-calls": "b9cdd285ef5ef31a4fc1826215126a9a3c265044ed062f0c7f39537ba8089698",
-      "orchestration/an-audited-answer-reaches-the-model-unchanged": "b9cdd285ef5ef31a4fc1826215126a9a3c265044ed062f0c7f39537ba8089698",
-      "orchestration/an-audited-call-is-recorded-by-how-it-ended": "b9cdd285ef5ef31a4fc1826215126a9a3c265044ed062f0c7f39537ba8089698"
+      "orchestration/a-session-auditor-records-the-sessions-and-the-tool-calls": "e4b46af065d4d7bbba74781a17172755e0bf02c0df081f456d89b9c81ea4592c",
+      "orchestration/an-audited-answer-reaches-the-model-unchanged": "e4b46af065d4d7bbba74781a17172755e0bf02c0df081f456d89b9c81ea4592c",
+      "orchestration/an-audited-call-is-recorded-by-how-it-ended": "e4b46af065d4d7bbba74781a17172755e0bf02c0df081f456d89b9c81ea4592c"
     },
     "RK-15.9-002": {
       "hooks/feedback-comes-once-the-on-feedback-hooks-have-ended": "387ad7a6a7b44f47a5b468165307f4a4b372923d0c728538746a6249eae53eb6",

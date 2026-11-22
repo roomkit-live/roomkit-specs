@@ -19314,7 +19314,7 @@ file and maintains an in-memory chronological list.
 
 #### 15.8.3 Audit Data Format
 
-<!-- rfc: {"id": "RK-15.8.3-002", "kind": "behavior", "applies": "§15.8.3 Audit Data Format, where an implementation offers tool or session auditing: both auditors persist as JSONL, one independently parseable JSON object per line, appended only; with the example lines. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+<!-- rfc: {"id": "RK-15.8.3-002", "kind": "behavior", "applies": "§15.8.3 Audit Data Format, where an implementation offers tool or session auditing: both auditors persist as JSONL, one independently parseable JSON object per line; with the example lines. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Both auditors use JSONL (JSON Lines) for persistence — one JSON object per
 line, independently parseable:
 
@@ -19322,7 +19322,9 @@ line, independently parseable:
 {"ts":"...","agent_id":"exec","tool_name":"search","arguments":{"q":"roomkit"},"result":"...","status":"ok","duration_ms":1234.5,"metadata":{}}
 {"ts":"...","type":"speech","role":"user","content":"Open Chrome","duration_ms":null,"metadata":{}}
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-15.8.3-005", "kind": "behavior", "applies": "§15.8.3 Audit Data Format, where an implementation offers tool or session auditing: the JSONL files are append-only, an entry added after those already written. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 JSONL files are append-only.<!-- /rfc --> <!-- rfc: {"id": "RK-15.8.3-003", "kind": "behavior", "applies": "§15.8.3 Audit Data Format, where an implementation offers tool or session auditing: the auditor creates its file's parent directories. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Implementations MUST create parent directories
 automatically.<!-- /rfc --> <!-- rfc: {"id": "RK-15.8.3-004", "kind": "behavior", "applies": "§15.8.3 Audit Data Format, where an implementation offers tool or session auditing: a write error is logged and never propagated to the caller as an exception. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Write errors MUST be logged but MUST NOT propagate exceptions
 to the caller.
