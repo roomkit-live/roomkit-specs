@@ -15125,7 +15125,7 @@
     {
       "id": "tool-composition-native-interruption",
       "requirement": "RK-6.4-064",
-      "clause_sha256": "0c8b4cb72749e79788e3009cacda42b762905f48d604e5d242751f05f3081ee5",
+      "clause_sha256": "41c52a6cde5cd86f0d6b2a5e34d308ded2bea41be9b1b0c9f027c561427ebc51",
       "scope": "Public realtime observations when a composing turn is cancelled, exceeds its loop budget or its caller is abandoned.",
       "coverage": "partial",
       "review": "Read parameterized public-API tests in both implementations and the independent failing Drop-order proof. This link pins Python source evidence; native execution logs are retained separately and are not scenario receipts.",

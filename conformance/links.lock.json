@@ -4578,6 +4578,9 @@
       "executors/a-declared-agent-s-turn-runs-on-the-executor-hosting-it": "8e0e50e6ab3d8594ea28dda6b8af7424c61608907aa3645d074906128c35bc40",
       "executors/a-live-agent-s-turn-stays-on-the-kit-s-executor": "8e0e50e6ab3d8594ea28dda6b8af7424c61608907aa3645d074906128c35bc40"
     },
+    "RK-6.4-050": {
+      "greeting/another-agent-answers-a-greeting": "589067b74556c3da40ba1b90a7702957e5a85a0ccc51e2a44c229958c276c7ed"
+    },
     "RK-6.4-051": {
       "chain/a-notice-past-the-depth-limit-leaves-no-record": "d00f672fa0bc939517767aa200040026f326d9bf6c47b41e0c0a934370ccd7f1",
       "inbound/a-system-event-opens-no-agent-turn": "d00f672fa0bc939517767aa200040026f326d9bf6c47b41e0c0a934370ccd7f1"
@@ -4634,11 +4637,11 @@
       "tool-composition/round-cap-closes-unexecuted-composition": "51567d4e84f0e877c75720fb7e06443838d542bbca65786f833b354c520aea21"
     },
     "RK-6.4-064": {
-      "tool-composition/cancel-before-execution-keeps-the-terminal-frame": "0c8b4cb72749e79788e3009cacda42b762905f48d604e5d242751f05f3081ee5",
-      "tool-composition/fallback-failure-closes-composition": "0c8b4cb72749e79788e3009cacda42b762905f48d604e5d242751f05f3081ee5",
-      "tool-composition/fallback-starts-a-fresh-composition": "0c8b4cb72749e79788e3009cacda42b762905f48d604e5d242751f05f3081ee5",
-      "tool-composition/provider-failure-closes-composition": "0c8b4cb72749e79788e3009cacda42b762905f48d604e5d242751f05f3081ee5",
-      "tool-composition/retry-starts-a-fresh-composition": "0c8b4cb72749e79788e3009cacda42b762905f48d604e5d242751f05f3081ee5"
+      "tool-composition/cancel-before-execution-keeps-the-terminal-frame": "41c52a6cde5cd86f0d6b2a5e34d308ded2bea41be9b1b0c9f027c561427ebc51",
+      "tool-composition/fallback-failure-closes-composition": "41c52a6cde5cd86f0d6b2a5e34d308ded2bea41be9b1b0c9f027c561427ebc51",
+      "tool-composition/fallback-starts-a-fresh-composition": "41c52a6cde5cd86f0d6b2a5e34d308ded2bea41be9b1b0c9f027c561427ebc51",
+      "tool-composition/provider-failure-closes-composition": "41c52a6cde5cd86f0d6b2a5e34d308ded2bea41be9b1b0c9f027c561427ebc51",
+      "tool-composition/retry-starts-a-fresh-composition": "41c52a6cde5cd86f0d6b2a5e34d308ded2bea41be9b1b0c9f027c561427ebc51"
     },
     "RK-6.4-065": {
       "tool-composition/empty-opening-still-closes-composition": "07eb1316826e9de24c6cdc7af6d3af570922b48b33fc41327b95f902ec3016bb",
@@ -4870,9 +4873,7 @@
     },
     "RK-6.4-073": {
       "reasoning/a-block-cut-before-its-signature-is-not-replayed": "b51553809b03cc57fae78248b756c4d0013d6312fccd3592fbbf12ea0bb5304b",
-      "reasoning/a-block-without-a-signature-is-not-replayed": "b51553809b03cc57fae78248b756c4d0013d6312fccd3592fbbf12ea0bb5304b",
-      "reasoning/a-cut-block-is-still-the-turn-s-reasoning": "b51553809b03cc57fae78248b756c4d0013d6312fccd3592fbbf12ea0bb5304b",
-      "reasoning/a-fallback-s-chat-request-reads-no-signed-block": "b51553809b03cc57fae78248b756c4d0013d6312fccd3592fbbf12ea0bb5304b"
+      "reasoning/a-block-without-a-signature-is-not-replayed": "b51553809b03cc57fae78248b756c4d0013d6312fccd3592fbbf12ea0bb5304b"
     },
     "RK-6.4-075": {
       "reasoning/a-signature-joins-the-one-block-it-came-with": "c5a8181ff61a7f7011f0768f6883f5a35385bc451f1cc54f551519b7a12658b0",
@@ -4908,6 +4909,7 @@
       "reasoning/an-answer-of-reasoning-alone-goes-back-empty-on-chat": "a612f36fbc110b7a3dc80166ba854de4b597ebe14daeed9c031f7ab5f58234c2"
     },
     "RK-6.4-084": {
+      "reasoning/a-fallback-s-chat-request-reads-no-signed-block": "bd11d56bb584d024c8edbdc459a2cb991df6154fb2ddad615dcda39336eb6b22",
       "reasoning/a-round-s-reasoning-reaches-no-chat-request": "bd11d56bb584d024c8edbdc459a2cb991df6154fb2ddad615dcda39336eb6b22"
     },
     "RK-6.4-086": {
@@ -4915,17 +4917,10 @@
       "reasoning/a-later-turn-reads-no-reasoning": "ae8ecb6464f7534b986a79d8819a5881c01d7e81c5914099ad3bd56b5dc04bc0",
       "reasoning/a-named-thinking-field-carries-a-round-s-reasoning": "ae8ecb6464f7534b986a79d8819a5881c01d7e81c5914099ad3bd56b5dc04bc0"
     },
-    "RK-6.4-089": {
-      "reasoning/two-calls-under-one-id-each-go-back": "70eb146d7512f412b085314066da4ab644659dd42ab1dcef9aab123906272f00"
-    },
     "RK-6.4-094": {
       "ai-external-handler/partial-call-never-reaches-the-handler-non-streaming": "0c00341d0cf36653da65396670d9f22e5b2a8d622e0ff41f6d60265ec010d2e4",
       "ai-external-handler/partial-call-never-reaches-the-handler-streaming": "0c00341d0cf36653da65396670d9f22e5b2a8d622e0ff41f6d60265ec010d2e4",
       "reasoning/a-cut-call-goes-back-with-the-round": "0c00341d0cf36653da65396670d9f22e5b2a8d622e0ff41f6d60265ec010d2e4"
-    },
-    "RK-6.4-096": {
-      "ai-external-handler/partial-call-never-reaches-the-handler-non-streaming": "0eef6cf71d5b41e9bf55283fa4d01ff61e90229bd3ec269f3cd5789a92914f6d",
-      "ai-external-handler/partial-call-never-reaches-the-handler-streaming": "0eef6cf71d5b41e9bf55283fa4d01ff61e90229bd3ec269f3cd5789a92914f6d"
     },
     "RK-6.4-097": {
       "response-schema/a-malformed-call-under-a-schema-is-asked-again": "2f3522422b384f574723f12adcff44116234e5068827428b841f294879bcca11",
@@ -5055,8 +5050,12 @@
       "streaming/a-reader-that-stops-on-a-blank-delta-stores-no-text": "4d855653778534c90950c6e4dca938523da5ebfc2dd9cd1f983d2577cd5a6520"
     },
     "RK-6.4-129": {
+      "tools/continuation-empty-round-spends-the-shared-bound-non-streaming": "8eab3e353207ffa70b735d400879433624d84cf3f7f84d9a49a9c2bf6e3f8ed6",
+      "tools/continuation-empty-round-spends-the-shared-bound-streaming": "8eab3e353207ffa70b735d400879433624d84cf3f7f84d9a49a9c2bf6e3f8ed6",
       "tools/continuation-second-announcement-is-unfinished-non-streaming": "8eab3e353207ffa70b735d400879433624d84cf3f7f84d9a49a9c2bf6e3f8ed6",
       "tools/continuation-second-announcement-is-unfinished-streaming": "8eab3e353207ffa70b735d400879433624d84cf3f7f84d9a49a9c2bf6e3f8ed6",
+      "tools/continuation-shares-the-empty-retry-bound-non-streaming": "8eab3e353207ffa70b735d400879433624d84cf3f7f84d9a49a9c2bf6e3f8ed6",
+      "tools/continuation-shares-the-empty-retry-bound-streaming": "8eab3e353207ffa70b735d400879433624d84cf3f7f84d9a49a9c2bf6e3f8ed6",
       "tools/continuation-zero-retry-bound-non-streaming": "8eab3e353207ffa70b735d400879433624d84cf3f7f84d9a49a9c2bf6e3f8ed6",
       "tools/continuation-zero-retry-bound-streaming": "8eab3e353207ffa70b735d400879433624d84cf3f7f84d9a49a9c2bf6e3f8ed6"
     },
@@ -5237,10 +5236,6 @@
       "speaking/a-hook-gives-the-agent-the-floor-streaming": "b0086d9dbe77085922d2b55c25eba57340453fab8e6fbc6d796c9ff3dd59e9cd",
       "speaking/a-hook-turns-an-offer-into-silence-non-streaming": "b0086d9dbe77085922d2b55c25eba57340453fab8e6fbc6d796c9ff3dd59e9cd",
       "speaking/a-hook-turns-an-offer-into-silence-streaming": "b0086d9dbe77085922d2b55c25eba57340453fab8e6fbc6d796c9ff3dd59e9cd"
-    },
-    "RK-6.4-148": {
-      "speaking/a-hook-turns-an-offer-into-silence-non-streaming": "2b7ef71da6ac3ac0da232c481813c613d734c6b6d3d8fac3742c7769eb768577",
-      "speaking/a-hook-turns-an-offer-into-silence-streaming": "2b7ef71da6ac3ac0da232c481813c613d734c6b6d3d8fac3742c7769eb768577"
     },
     "RK-6.4-149": {
       "speaking/a-failed-closed-hook-silences-the-agent-non-streaming": "e1efbdc8c72c796620f50575ab96aba5006c5a1c788bbb753a299adece7bd5f6",
