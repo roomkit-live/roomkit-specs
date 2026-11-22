@@ -11373,21 +11373,21 @@
       "served-skills/verified-files-and-shared-cache": "c6d1b3eeb126b123a1a7b6253a2227edfb1a214ed7538a04553b69cb29a62813"
     },
     "RK-25.3-005": {
-      "author-images/a-call-streamed-before-a-refusal-refuses-no-image": "4dc314b3d5c3cd79269599634829e3a475024c3e601b44f0f3cac18689239f36",
-      "author-images/a-context-overflow-nothing-can-relieve-refuses-the-images": "4dc314b3d5c3cd79269599634829e3a475024c3e601b44f0f3cac18689239f36",
-      "author-images/a-context-overflow-the-compaction-relieves-refuses-no-image": "4dc314b3d5c3cd79269599634829e3a475024c3e601b44f0f3cac18689239f36",
-      "author-images/a-data-uri-goes-as-written": "4dc314b3d5c3cd79269599634829e3a475024c3e601b44f0f3cac18689239f36",
-      "author-images/a-reference-a-path-reader-could-follow-is-refused": "4dc314b3d5c3cd79269599634829e3a475024c3e601b44f0f3cac18689239f36",
-      "author-images/a-room-the-agent-joins-again-sends-a-refused-image-again": "4dc314b3d5c3cd79269599634829e3a475024c3e601b44f0f3cac18689239f36",
-      "author-images/a-schema-the-model-does-not-take-refuses-no-image": "4dc314b3d5c3cd79269599634829e3a475024c3e601b44f0f3cac18689239f36",
-      "author-images/a-scheme-a-reader-fetches-is-no-reference": "4dc314b3d5c3cd79269599634829e3a475024c3e601b44f0f3cac18689239f36",
-      "author-images/a-text-held-on-a-first-try-refuses-no-image-when-its-retry-is-refused": "4dc314b3d5c3cd79269599634829e3a475024c3e601b44f0f3cac18689239f36",
-      "author-images/a-text-held-under-a-schema-before-a-refusal-refuses-no-image": "4dc314b3d5c3cd79269599634829e3a475024c3e601b44f0f3cac18689239f36",
-      "author-images/an-agent-attached-over-its-attachment-sends-a-refused-image-again": "4dc314b3d5c3cd79269599634829e3a475024c3e601b44f0f3cac18689239f36",
-      "author-images/an-image-goes-after-its-caption": "4dc314b3d5c3cd79269599634829e3a475024c3e601b44f0f3cac18689239f36",
-      "author-images/an-image-the-provider-refused-reads-as-refused-after": "4dc314b3d5c3cd79269599634829e3a475024c3e601b44f0f3cac18689239f36",
-      "author-images/the-author-s-image-comes-before-the-replayed-tool-images": "4dc314b3d5c3cd79269599634829e3a475024c3e601b44f0f3cac18689239f36",
-      "reasoning/a-generation-hook-reads-a-message-s-parts": "4dc314b3d5c3cd79269599634829e3a475024c3e601b44f0f3cac18689239f36"
+      "author-images/a-call-streamed-before-a-refusal-refuses-no-image": "07d75a8f8eb1aeeda280d0ca8e88ce44897ee38777e0266c66e17d45e19951d9",
+      "author-images/a-context-overflow-nothing-can-relieve-refuses-the-images": "07d75a8f8eb1aeeda280d0ca8e88ce44897ee38777e0266c66e17d45e19951d9",
+      "author-images/a-context-overflow-the-compaction-relieves-refuses-no-image": "07d75a8f8eb1aeeda280d0ca8e88ce44897ee38777e0266c66e17d45e19951d9",
+      "author-images/a-data-uri-goes-as-written": "07d75a8f8eb1aeeda280d0ca8e88ce44897ee38777e0266c66e17d45e19951d9",
+      "author-images/a-reference-a-path-reader-could-follow-is-refused": "07d75a8f8eb1aeeda280d0ca8e88ce44897ee38777e0266c66e17d45e19951d9",
+      "author-images/a-room-the-agent-joins-again-sends-a-refused-image-again": "07d75a8f8eb1aeeda280d0ca8e88ce44897ee38777e0266c66e17d45e19951d9",
+      "author-images/a-schema-the-model-does-not-take-refuses-no-image": "07d75a8f8eb1aeeda280d0ca8e88ce44897ee38777e0266c66e17d45e19951d9",
+      "author-images/a-scheme-a-reader-fetches-is-no-reference": "07d75a8f8eb1aeeda280d0ca8e88ce44897ee38777e0266c66e17d45e19951d9",
+      "author-images/a-text-held-on-a-first-try-refuses-no-image-when-its-retry-is-refused": "07d75a8f8eb1aeeda280d0ca8e88ce44897ee38777e0266c66e17d45e19951d9",
+      "author-images/a-text-held-under-a-schema-before-a-refusal-refuses-no-image": "07d75a8f8eb1aeeda280d0ca8e88ce44897ee38777e0266c66e17d45e19951d9",
+      "author-images/an-agent-attached-over-its-attachment-sends-a-refused-image-again": "07d75a8f8eb1aeeda280d0ca8e88ce44897ee38777e0266c66e17d45e19951d9",
+      "author-images/an-image-goes-after-its-caption": "07d75a8f8eb1aeeda280d0ca8e88ce44897ee38777e0266c66e17d45e19951d9",
+      "author-images/an-image-the-provider-refused-reads-as-refused-after": "07d75a8f8eb1aeeda280d0ca8e88ce44897ee38777e0266c66e17d45e19951d9",
+      "author-images/the-author-s-image-comes-before-the-replayed-tool-images": "07d75a8f8eb1aeeda280d0ca8e88ce44897ee38777e0266c66e17d45e19951d9",
+      "reasoning/a-generation-hook-reads-a-message-s-parts": "07d75a8f8eb1aeeda280d0ca8e88ce44897ee38777e0266c66e17d45e19951d9"
     },
     "RK-26.1-004": {
       "appendix-b/b1-customer-and-ai": "e4538bf9c4cf051d19eca43c1040cd7ad4b1709f7592fb5bbcdb58e0b138c790",
@@ -12882,6 +12882,9 @@
     "RK-6.4-060": {
       "streaming/a-delegated-answer-publishes-no-text-unless-asked": "2f029dfb93a63249216f2ae7b5b10ed91a626ae8bafcad41b56080c8e445b108"
     },
+    "RK-6.4-061": {
+      "tool-composition/fragments-publish-counts-before-execution": "53b0b3d0fe4556722fc7751043efd245f8f0942c7787f5fa8c4698c98ceef09b"
+    },
     "RK-6.4-062": {
       "tool-composition/complete-calls-without-fragments-publish-no-composition": "2b647c88583113c061bc09837ed783da96c352778ba1ff69e8f44682851c12c5",
       "tool-composition/first-fragment-bypasses-the-window": "2b647c88583113c061bc09837ed783da96c352778ba1ff69e8f44682851c12c5",
@@ -13133,7 +13136,7 @@
       "reasoning/the-rounds-keep-their-place-past-a-nudge-and-a-hook": "f977ea5ac1a7cd6e4be434cd1ce32b324eee1f45761fdf1f24567076dc19d852"
     },
     "RK-6.4-073": {
-      "reasoning/a-block-cut-before-its-signature-is-not-replayed": "b51553809b03cc57fae78248b756c4d0013d6312fccd3592fbbf12ea0bb5304b"
+      "reasoning/a-block-cut-before-its-signature-is-not-replayed": "46ff51ca0846d5d0c8cc57b61b4bdc0e6fddf5d3a6ca22c4f52d1ff0100e1ec1"
     },
     "RK-6.4-075": {
       "reasoning/a-signature-joins-the-one-block-it-came-with": "c5a8181ff61a7f7011f0768f6883f5a35385bc451f1cc54f551519b7a12658b0",
@@ -13145,27 +13148,27 @@
       "reasoning/a-response-read-whole-replays-its-blocks-first": "8067f33b71c2eedb9b9e8319e8b82138b5adcc677806347b80fd5a55a65ac7dd"
     },
     "RK-6.4-077": {
-      "reasoning/a-named-thinking-field-carries-a-round-s-reasoning": "f36d47cbfa111bcbaaa5674d0362d21e175ba122de3aa5a7537dd0f4bd65a4a0",
-      "reasoning/a-required-reasoning-field-carries-a-placeholder-where-empty-reads-as-missing": "f36d47cbfa111bcbaaa5674d0362d21e175ba122de3aa5a7537dd0f4bd65a4a0",
-      "reasoning/a-required-reasoning-field-goes-empty-on-a-round-without-reasoning": "f36d47cbfa111bcbaaa5674d0362d21e175ba122de3aa5a7537dd0f4bd65a4a0"
+      "reasoning/a-named-thinking-field-carries-a-round-s-reasoning": "7c45d5f9e619271478cd5988215fb005e11a5edfa1f75af7acde7d818bf5de26",
+      "reasoning/a-required-reasoning-field-carries-a-placeholder-where-empty-reads-as-missing": "7c45d5f9e619271478cd5988215fb005e11a5edfa1f75af7acde7d818bf5de26",
+      "reasoning/a-required-reasoning-field-goes-empty-on-a-round-without-reasoning": "7c45d5f9e619271478cd5988215fb005e11a5edfa1f75af7acde7d818bf5de26"
     },
     "RK-6.4-078": {
-      "reasoning/a-required-reasoning-field-carries-a-placeholder-where-empty-reads-as-missing": "b7c69a850e7be3bfbfef0e1da26996a45af4704eaaef3b0b4eba8eaea4c783bb",
-      "reasoning/a-required-reasoning-field-goes-empty-on-a-round-without-reasoning": "b7c69a850e7be3bfbfef0e1da26996a45af4704eaaef3b0b4eba8eaea4c783bb"
+      "reasoning/a-required-reasoning-field-carries-a-placeholder-where-empty-reads-as-missing": "73ad5d2903de1d7e3b5211c96a1281326fb59a14b8dcdfdeb6bdc77f2ea62846",
+      "reasoning/a-required-reasoning-field-goes-empty-on-a-round-without-reasoning": "73ad5d2903de1d7e3b5211c96a1281326fb59a14b8dcdfdeb6bdc77f2ea62846"
     },
     "RK-6.4-079": {
-      "reasoning/a-named-thinking-field-carries-a-round-s-reasoning": "cdff2d8f3caa9ea64f58daa71f3e7a3c12d354fdb408444e4585451f51d95b85"
+      "reasoning/a-named-thinking-field-carries-a-round-s-reasoning": "b27c368af10dea9382879d764aeab9026e5187e4e8c4620abf29add386e295c1"
     },
     "RK-6.4-080": {
-      "reasoning/a-named-thinking-field-carries-a-round-s-reasoning": "b4c68019fd7605d52b1a9a181a968715be8267bc7651f4ef7339f3c7a5bc640c"
+      "reasoning/a-named-thinking-field-carries-a-round-s-reasoning": "bbb350fbf3f1671d18e1d371a099b3c07d6ae0302d2f8851ab9407a7874bf45e"
     },
     "RK-6.4-081": {
-      "reasoning/a-round-s-reasoning-reaches-no-chat-request": "48a1a9360a20058bc81384c518901e6624ce2e0a6e84e2a9f256c2fe941a3df0"
+      "reasoning/a-round-s-reasoning-reaches-no-chat-request": "c90dd08e1024135c1e919615c06b8be846541125b312fe61227233792c629e32"
     },
     "RK-6.4-082": {
-      "reasoning/a-fallback-s-chat-request-reads-no-signed-block": "e2855c875a45ba572058961141b062fed4c3b2b9eafd27e46fa66cad4053ee32",
-      "reasoning/a-round-s-reasoning-reaches-no-chat-request": "e2855c875a45ba572058961141b062fed4c3b2b9eafd27e46fa66cad4053ee32",
-      "reasoning/a-steered-answer-s-reasoning-reaches-no-chat-request": "e2855c875a45ba572058961141b062fed4c3b2b9eafd27e46fa66cad4053ee32"
+      "reasoning/a-fallback-s-chat-request-reads-no-signed-block": "f594119fc73e854d1414459f74eb1df2c5002e3411415e93977f6880e55e3be4",
+      "reasoning/a-round-s-reasoning-reaches-no-chat-request": "f594119fc73e854d1414459f74eb1df2c5002e3411415e93977f6880e55e3be4",
+      "reasoning/a-steered-answer-s-reasoning-reaches-no-chat-request": "f594119fc73e854d1414459f74eb1df2c5002e3411415e93977f6880e55e3be4"
     },
     "RK-6.4-083": {
       "reasoning/an-answer-of-reasoning-alone-goes-back-empty-on-chat": "a612f36fbc110b7a3dc80166ba854de4b597ebe14daeed9c031f7ab5f58234c2"
@@ -15848,6 +15851,12 @@
     "RK-6.7-080": {
       "response-schema/a-model-that-takes-no-schema-fails-the-turn-before-any-request": "dfc5189bbd89a7d4fdb57020bc423c87a3b020f2b96ccce963dbf0afecedfed8",
       "response-schema/tools-beside-a-schema-fail-where-the-model-cannot-take-both": "dfc5189bbd89a7d4fdb57020bc423c87a3b020f2b96ccce963dbf0afecedfed8"
+    },
+    "RK-6.7-081": {
+      "response-schema/a-refusal-under-a-schema-fails-the-turn-refused": "3906c61d257781b0ca2df1552430a60bc148456e92d248f1d42db88e12c01f37"
+    },
+    "RK-6.7-082": {
+      "response-schema/an-answer-cut-for-room-under-a-schema-fails-truncated": "b637c8589efa1e2d85c0868b8f1befaa02a4d07b396061d2c412b6501db20b49"
     },
     "RK-6.7-083": {
       "response-schema/an-answer-that-fails-its-check-is-never-stored-nor-sent": "f7c0bfbdc79d30cb52cf2493fe0e548a3bc6c535785473f7045a528e46205c4d"

@@ -237,9 +237,9 @@
     },
     {
       "section": "6.4",
-      "sha256": "44c25b64c2118370bfc29d27bc09292798ea62c960f883fbbb4890d27ae911ad",
+      "sha256": "546b6408bd674c7a2dfa223d778ab014f6615c835b4ce8c0e90f5406cd89e3ee",
       "classification": "normative",
-      "review": "Source inventory: Intelligence Channels. Units RK-6.4-001 to RK-6.4-014 are split to one obligation per unit (RMK-1907): RK-6.4-002, the AI channel's outline of one procedure, and RK-6.4-004 keep their ids; the others are retired for RK-6.4-045 to RK-6.4-217. Each unit keeps its conditions, exceptions, rationale and examples, and a sentence that holds several consequences of one rule stays whole. The SpeakPolicy, Thought and CutReply interface blocks each stay one structural unit; the classifier policy's composition list stays with the paragraph it ends. The anatomy table of an AI turn, which only names the contract that carries each step, is folded into RK-6.4-002, the outline of the same turn; its own unit, RK-6.4-048, is retired. Every unit of that range carries its level. Six units say what the classifier policy's questions and the thinker's instructions ask of a model (RK-6.4-154 to RK-6.4-156, RK-6.4-177 to RK-6.4-179): only a review of that wording or a live model shows them, so they are non_testable. RK-6.4-148, what an application takes in code of a speak decision, stands alone in its sentence and only the application keeps it: it is non_testable too. The realtime and voice parts stand as their own units naming the media feature (RK-6.4-095, RK-6.4-121, RK-6.4-205, RK-6.4-215); RK-6.4-094 and RK-6.4-120 name a realtime case inside a sentence that binds the text channel too, and stay text units. Units RK-6.4-015 to RK-6.4-027 are split to one obligation per unit (RMK-1932), at sentence and list-item boundaries, and retired for RK-6.4-218 to RK-6.4-402; a sentence that only explains, restates or gives an example of an obligation stays with the unit it explains. Every unit of that range carries its level. Three are should, as their text says: the declaration from round to round (RK-6.4-243), the system prompt from turn to turn (RK-6.4-276) and deferred loading (RK-6.4-385). Emergency compaction is may, an option an implementation offers (RK-6.4-327); what a compaction and deferred loading do once offered is must, with that condition in each unit's applicability. Two units state what only the application's own code keeps, its media resolver's answers (RK-6.4-310) and its attached-media reader's stable answers (RK-6.4-315); each stands alone in its sentence and is non_testable. The realtime and conference parts stand as their own units naming the media feature (RK-6.4-230, RK-6.4-237, RK-6.4-294, RK-6.4-368); a unit whose sentence names a realtime, vision or voice case while it binds the text channel too stays a text unit and says so in its applicability. Units RK-6.4-028 to RK-6.4-044 are split to one obligation per unit (RMK-1949), at sentence and list-item boundaries, and retired for RK-6.4-403 to RK-6.4-540; a sentence that only explains, restates or gives an example of an obligation stays with the unit it explains. Text that holds no obligation is folded into the neighbouring unit under the same heading: the ACP agent channel's label and scope paragraph into its item 1 (RK-6.4-466), the permission requests' lead-in into RK-6.4-502, the reference transport's sentence into RK-6.4-486, the reference implementation's timing note into RK-6.4-448, and each option's definition (session_config, instructions) into the unit that sets it. Every unit of that range carries its level. Two are may, options an implementation may offer: taking a room's turns one at a time (RK-6.4-444) and carrying an ACP session's context occupancy and running cost (RK-6.4-480); what an option does once offered is must, with that condition in each unit's applicability. Three units whose MAY permits an option also say what the option does once offered: a turn's budget (RK-6.4-414), steering a room's turns (RK-6.4-455) and an ACP identity (RK-6.4-509); they are must, and their applicability names the condition, where an implementation offers it. Exposing ACP tool and plan progress is should, as its text says (RK-6.4-508). The owner closing a provider or a router once nothing uses it is only the integrator's to keep and stands alone in its sentence: non_testable (RK-6.4-527). The ACP channel's type, category and direction is a structural unit (RK-6.4-466). A unit whose sentence names a voice delegation (RK-6.4-517) or the reader stop of Section 12.2 step 13s (RK-6.4-441, RK-6.4-448, RK-6.4-537) binds the text channel too and stays a text unit; no unit of that range is a media unit. §6.4 has no subsection, and every unit of the section now carries its level."
+      "review": "Source inventory: Intelligence Channels. Units RK-6.4-001 to RK-6.4-014 are split to one obligation per unit (RMK-1907): RK-6.4-002, the AI channel's outline of one procedure, and RK-6.4-004 keep their ids; the others are retired for RK-6.4-045 to RK-6.4-217. Each unit keeps its conditions, exceptions, rationale and examples, and a sentence that holds several consequences of one rule stays whole. The SpeakPolicy, Thought and CutReply interface blocks each stay one structural unit; the classifier policy's composition list stays with the paragraph it ends. The anatomy table of an AI turn, which only names the contract that carries each step, is folded into RK-6.4-002, the outline of the same turn; its own unit, RK-6.4-048, is retired. Every unit of that range carries its level. Six units say what the classifier policy's questions and the thinker's instructions ask of a model (RK-6.4-154 to RK-6.4-156, RK-6.4-177 to RK-6.4-179): only a review of that wording or a live model shows them, so they are non_testable. RK-6.4-148, what an application takes in code of a speak decision, stands alone in its sentence and only the application keeps it: it is non_testable too. The realtime and voice parts stand as their own units naming the media feature (RK-6.4-095, RK-6.4-121, RK-6.4-205, RK-6.4-215); RK-6.4-094 and RK-6.4-120 name a realtime case inside a sentence that binds the text channel too, and stay text units. Units RK-6.4-015 to RK-6.4-027 are split to one obligation per unit (RMK-1932), at sentence and list-item boundaries, and retired for RK-6.4-218 to RK-6.4-402; a sentence that only explains, restates or gives an example of an obligation stays with the unit it explains. Every unit of that range carries its level. Three are should, as their text says: the declaration from round to round (RK-6.4-243), the system prompt from turn to turn (RK-6.4-276) and deferred loading (RK-6.4-385). Emergency compaction is may, an option an implementation offers (RK-6.4-327); what a compaction and deferred loading do once offered is must, with that condition in each unit's applicability. Two units state what only the application's own code keeps, its media resolver's answers (RK-6.4-310) and its attached-media reader's stable answers (RK-6.4-315); each stands alone in its sentence and is non_testable. The realtime and conference parts stand as their own units naming the media feature (RK-6.4-230, RK-6.4-237, RK-6.4-294, RK-6.4-368); a unit whose sentence names a realtime, vision or voice case while it binds the text channel too stays a text unit and says so in its applicability. Units RK-6.4-028 to RK-6.4-044 are split to one obligation per unit (RMK-1949), at sentence and list-item boundaries, and retired for RK-6.4-403 to RK-6.4-540; a sentence that only explains, restates or gives an example of an obligation stays with the unit it explains. Text that holds no obligation is folded into the neighbouring unit under the same heading: the ACP agent channel's label and scope paragraph into its item 1 (RK-6.4-466), the permission requests' lead-in into RK-6.4-502, the reference transport's sentence into RK-6.4-486, the reference implementation's timing note into RK-6.4-448, and each option's definition (session_config, instructions) into the unit that sets it. Every unit of that range carries its level. Two are may, options an implementation may offer: taking a room's turns one at a time (RK-6.4-444) and carrying an ACP session's context occupancy and running cost (RK-6.4-480); what an option does once offered is must, with that condition in each unit's applicability. Three units whose MAY permits an option also say what the option does once offered: a turn's budget (RK-6.4-414), steering a room's turns (RK-6.4-455) and an ACP identity (RK-6.4-509); they are must, and their applicability names the condition, where an implementation offers it. Exposing ACP tool and plan progress is should, as its text says (RK-6.4-508). The owner closing a provider or a router once nothing uses it is only the integrator's to keep and stands alone in its sentence: non_testable (RK-6.4-527). The ACP channel's type, category and direction is a structural unit (RK-6.4-466). A unit whose sentence names a voice delegation (RK-6.4-517) or the reader stop of Section 12.2 step 13s (RK-6.4-441, RK-6.4-448, RK-6.4-537) binds the text channel too and stays a text unit; no unit of that range is a media unit. §6.4 has no subsection, and every unit of the section now carries its level. Vendor cleanup (RMK-1991, decisions D2 and D5): RK-6.4-077 to RK-6.4-082 and RK-6.4-085 are stated on a chat-messages dialect, the format defined once in RK-6.4-077 with an e.g. naming the API it comes from; RK-6.4-073 keeps the loop's half, a block cut before its signature, the rendering of a block without one going to the provider; RK-6.4-074, RK-6.4-354 and RK-6.4-404, a provider's rendering on its vendor's wire, are retired for the provider packages."
     },
     {
       "section": "6.5",
@@ -255,15 +255,15 @@
     },
     {
       "section": "6.7",
-      "sha256": "e0d87c48f81a8dd1f33d35ab625731d974a07e430b0b64427d60f0eeb1019a38",
+      "sha256": "30fb5e93ca21a54ed3f8865ef9f3c00ef79e3ca5e47c746895766b512819827e",
       "classification": "normative",
-      "review": "Source inventory: Provider Abstraction, split to one obligation per unit where the text allows (RMK-1950). The principle that channel type and provider are separate concepts is folded into the AIProvider unit. The interface block is cut by closing and reopening the code block: the provider's name and model_name, supports_vision, supports_streaming, supports_structured_streaming, the response-schema flags with context_window and generate(), then generate_stream(), generate_structured_stream(), available_models(), list_models() and close(), then AIMessage, the content parts (AIToolResultPart in two, its error flag apart from what is never rendered to providers, and AIThinkingPart apart), AIContext in three (the generation inputs, the room and targets, the metadata and record) and AIResponse. Each named paragraph gives a unit per sentence, a sentence that only introduces, explains or gives a reason being folded into its neighbour; each row of the portable-subset table and of the reasons table is a unit, the type row cut at its second sentence (the root an object). RK-6.7-004, 013, 014 and 016 hold one obligation each and keep their ids. Levels follow the text: must, save RK-6.7-033 (may), RK-6.7-034, 090 and 108 (should); RK-6.7-091 is non_testable, a consumer's alone."
+      "review": "Source inventory: Provider Abstraction, split to one obligation per unit where the text allows (RMK-1950). The principle that channel type and provider are separate concepts is folded into the AIProvider unit. The interface block is cut by closing and reopening the code block: the provider's name and model_name, supports_vision, supports_streaming, supports_structured_streaming, the response-schema flags with context_window and generate(), then generate_stream(), generate_structured_stream(), available_models(), list_models() and close(), then AIMessage, the content parts (AIToolResultPart in two, its error flag apart from what is never rendered to providers, and AIThinkingPart apart), AIContext in three (the generation inputs, the room and targets, the metadata and record) and AIResponse. Each named paragraph gives a unit per sentence, a sentence that only introduces, explains or gives a reason being folded into its neighbour; each row of the portable-subset table and of the reasons table is a unit, the type row cut at its second sentence (the root an object). RK-6.7-004, 013, 014 and 016 hold one obligation each and keep their ids. Levels follow the text: must, save RK-6.7-033 (may), RK-6.7-034, 090 and 108 (should); RK-6.7-091 is non_testable, a consumer's alone. Vendor cleanup (RMK-1991, decision D2): the adapter mechanics leave for the provider packages, and RK-6.7-004, 013, 014, 032, 034, 035, 040 to 047, 049, 052 to 057, 088, 090, 092, 093, 096 to 098 and 105 are retired; RK-6.7-115 (model listings), RK-6.7-116 (reasoning written in the text) and RK-6.7-117 (the tool-name rule a provider checks) are non_testable replacements, level may, that keep the paragraphs and their cross-references whole; the refusal row RK-6.7-081 keeps its generic half; the core's expectations of any provider (calls, usage counters, failure classes, close(), the response schema and the turn's reasoning settings) stay, proven by the provider packages' tests that untested.json names."
     },
     {
       "section": "6.8",
-      "sha256": "dcf580c1ef1e9acc4126411f6f24ac19997bd597667c8eba3e7591d6be985fc5",
+      "sha256": "c15d887c12c851756006a09ff566c016b9aa3ac16c329f941c7c2d4e5495a4f9",
       "classification": "normative",
-      "review": "Source inventory: Classifiers, split to one obligation per unit (RMK-1950): what a classifier is, with its optional support (RK-6.8-002, may); the interface with its questions, and the answers, cut by closing and reopening the code block; then a unit per sentence, each must where an implementation offers classifiers. The sentence naming a classifier's consumers is folded into the documentation unit RK-6.8-011, non_testable as only the documentation keeps it."
+      "review": "Source inventory: Classifiers, split to one obligation per unit (RMK-1950): what a classifier is, with its optional support (RK-6.8-002, may); the interface with its questions, and the answers, cut by closing and reopening the code block; then a unit per sentence, each must where an implementation offers classifiers. The sentence naming a classifier's consumers is folded into the documentation unit RK-6.8-011, non_testable as only the documentation keeps it. Vendor cleanup (RMK-1991, decision D2): RK-6.8-012 to RK-6.8-014, classifiers on a decision-model server, are retired for the provider packages."
     },
     {
       "section": "7",
@@ -633,9 +633,9 @@
     },
     {
       "section": "12.3.2",
-      "sha256": "51df5ab1a32bcc20817072fb785378fb4bd3986aa95320922f0e1b270967b475",
+      "sha256": "e5081df43fbc57ca2aa9cc0f3d9bead593b686cd69f763f70f6b9a816da4679d",
       "classification": "normative",
-      "review": "Source inventory: Denoiser Provider. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Denoiser Provider. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage. Vendor cleanup (RMK-1991, decision D6): the built-in denoiser counts whether it ships with the implementation or as a separate package built on the interface."
     },
     {
       "section": "12.3.3",
@@ -723,9 +723,9 @@
     },
     {
       "section": "12.4.1",
-      "sha256": "c15cab6f4b5d65ac976c657b36848ee8bffb647ab5d241dbf49d26ee246b2893",
+      "sha256": "b7df2e1533d1d1e96cbeb890a1a02007c5fde165b07a12ac271038c19ac91a0d",
       "classification": "normative",
-      "review": "Source inventory: Full-Duplex Providers and Reasoning Delegation. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Full-Duplex Providers and Reasoning Delegation. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage. Vendor cleanup (RMK-1991): the full-duplex provider's example names no model."
     },
     {
       "section": "12.4.2",
@@ -1047,9 +1047,9 @@
     },
     {
       "section": "15.1",
-      "sha256": "5d2bdf0bb7c48a195e7e4713fe29c73eb6f9ab2a06537b6f8a300092992dffdf",
+      "sha256": "d2b116eeb46279ad3dce1c367557ca3b371856d48609f0d933c697d569b86611",
       "classification": "normative",
-      "review": "Source inventory: Logging, split to one obligation per unit (RMK-1971): structured logging through named loggers (must, Level 0) and the RECOMMENDED logger hierarchy (should, structural), split at the sentence. Every unit carries its level."
+      "review": "Source inventory: Logging, split to one obligation per unit (RMK-1971): structured logging through named loggers (must, Level 0) and the RECOMMENDED logger hierarchy (should, structural), split at the sentence. Every unit carries its level. Vendor cleanup (RMK-1991, decision D7): the hierarchy's roomkit.providers loggers are the provider interfaces' and the shipped providers'; a provider package built apart logs under its own name."
     },
     {
       "section": "15.2",
@@ -1329,9 +1329,9 @@
     },
     {
       "section": "21.1",
-      "sha256": "5e4bba4939cfed26ad08b2c7f269646b618c9ef4ae3aaf12577cd3314280de61",
+      "sha256": "f500a5383391658ce0192c26056f47aaf09cbe3bd443fca2b96139ae99285546",
       "classification": "normative",
-      "review": "Tool policy is reviewed separately for the configuration, glob and role resolution, channel ownership, declaration and dispatch, refusal order and messages, collisions and search. Realtime and conference entry points are scoped explicitly."
+      "review": "Tool policy is reviewed separately for the configuration, glob and role resolution, channel ownership, declaration and dispatch, refusal order and messages, collisions and search. Realtime and conference entry points are scoped explicitly. Vendor cleanup (RMK-1991): the nameless native tool's example is a vendor's built-in search, with no vendor literal."
     },
     {
       "section": "21.2",
@@ -1371,9 +1371,9 @@
     },
     {
       "section": "22.1",
-      "sha256": "d7ada74d1bdfc285ee707b1fed0932b01fd3a14e24ed04b4db0ef15f66df5af4",
+      "sha256": "259c02a982a672095ca6a458c1e2c1985794d5b0af2ae5ebb742d85885073d30",
       "classification": "normative",
-      "review": "The strategy and its context are separated from each outcome, addressing and transport rule, publication reason, instruction and session rule, lock and retention requirement. The realtime reservation, uncertainty, retry and multi-session rules have their own levels and capability conditions."
+      "review": "The strategy and its context are separated from each outcome, addressing and transport rule, publication reason, instruction and session rule, lock and retention requirement. The realtime reservation, uncertainty, retry and multi-session rules have their own levels and capability conditions. Vendor cleanup (RMK-1991, decision D2): RK-22.1-087, what a realtime provider reports, is retired for the provider packages; §12.4's interface names the three results the remaining units read."
     },
     {
       "section": "22.2",
@@ -1485,33 +1485,33 @@
     },
     {
       "section": "25.2",
-      "sha256": "1cd6d2f5dbdeeff70ef908c9c24eb3f76592d8fc3e0b7d9f48f3447587046279",
+      "sha256": "def54bcf4f8e1fe673212a8dcf21f187a5450f6b90493bd2a554b14f3531caf0",
       "classification": "normative",
-      "review": "The public provider interface, size and count, options and defaults, preflight checks, billing, retry classifications, concurrent completion, cancellation and progress are individually scoped."
+      "review": "The public provider interface, size and count, options and defaults, preflight checks, billing, retry classifications, concurrent completion, cancellation and progress are individually scoped. Vendor cleanup (RMK-1991, decision D2, the maintainer's answer A): RK-25.2-007 and RK-25.2-008 stay as the image contract's shape, proven by the image providers' tests untested.json names; RK-25.2-009 to 012 and 014 to 031, how an adapter meets its vendor's geometry, batching, options, billing and retries, are retired."
     },
     {
       "section": "25.3",
-      "sha256": "bd150a14ee8e29b38c026811d8128723464d19a05a97f413ca5bb6e045872ddc",
+      "sha256": "0c6a173aaa91cd7c524ae78da36d73f90995b6f2ad3a1a4785968bc86eba1651",
       "classification": "normative",
-      "review": "The result model distinguishes the data URI and its type, transport and editing reuse, URL retrieval, revised prompts, metadata, shared accounting and progress delivery."
+      "review": "The result model distinguishes the data URI and its type, transport and editing reuse, URL retrieval, revised prompts, metadata, shared accounting and progress delivery. Vendor cleanup (RMK-1991, decision D2, answer A): RK-25.3-002 stays a gap and RK-25.3-003 and 004 stay as the contract's shape; RK-25.3-006 to 009, 011 to 014 and 016 to 018 are retired, and RK-25.3-005 closes the sentence the retired RK-25.3-006 ended."
     },
     {
       "section": "25.4",
-      "sha256": "c1684c7c7d7bb2bec251b056f704f3076ef98b6f2af0dc86e8d3a73a5fc0681e",
+      "sha256": "4c280168eaef254764e32ef854cffa6754b68cfce0107271a41420e0d694de2b",
       "classification": "normative",
-      "review": "The editing interface, unsupported editing, optional continuity, caller authorization, storage and grounded search have separate units."
+      "review": "The editing interface, unsupported editing, optional continuity, caller authorization, storage and grounded search have separate units. Vendor cleanup (RMK-1991, decision D2, answer A): RK-25.4-012 keeps the grounding metadata unchanged for the caller, how it is displayed being the caller's; RK-25.4-003 (a separate edit endpoint), the remote history units RK-25.4-008 to 010 and the grounding request RK-25.4-011 are retired."
     },
     {
       "section": "25.5",
-      "sha256": "3806e17a272b1ff9ae11a99c3c59f882f626ff88c387294df99e5023b067890f",
+      "sha256": "e885c2b095a31a8156153b7a1009454382782b020b748929d7305c53665b4d4b",
       "classification": "normative",
-      "review": "The usage model and accounting rules distinguish reported counters, normalization and absent values from optional pricing and calculated cost."
+      "review": "The usage model and accounting rules distinguish reported counters, normalization and absent values from optional pricing and calculated cost. Vendor cleanup (RMK-1991, decision D2, answer A): RK-25.5-004 and 006 stay; RK-25.5-002 and 005, the vendors' metering, are retired."
     },
     {
       "section": "25.6",
-      "sha256": "a21ea4394330d7d64124c020e632928c33012a9da2fcd40ebb0e3d50b56a4582",
+      "sha256": "415088528d8fe29753e1897ab4398cf71dabdeecd57e2dc79fccdde97986e1e5",
       "classification": "normative",
-      "review": "Catalogue membership, separate enumeration, recommended tags, optional model capabilities and preservation of unknown values are separately scoped."
+      "review": "Catalogue membership, separate enumeration, recommended tags, optional model capabilities and preservation of unknown values are separately scoped. Vendor cleanup (RMK-1991, decision D2, answer A): RK-25.6-002 to 004 and 006 are retired; RK-25.6-005 (may) stays."
     },
     {
       "section": "25.7",
@@ -1533,21 +1533,21 @@
     },
     {
       "section": "26.2",
-      "sha256": "93199b6294873a9fae8ac00798b9ad15a504c07cb2697b4fee0eb4ec04c0b2e2",
+      "sha256": "7fd636fe49222f0252f585d512fd4ec8b75ece5f14550270fd70839643871610",
       "classification": "normative",
-      "review": "Source inventory: Level 1: Transport (RECOMMENDED). Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Level 1: Transport (RECOMMENDED). Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage. Vendor cleanup (RMK-1991, decision D6): a provider counts for the level whether it ships with the implementation or as a separate package built on its provider interface."
     },
     {
       "section": "26.3",
-      "sha256": "80ded89e25d2a27d75c8c6e5190f45f74900fb693078bd386a6b748c4daf0676",
+      "sha256": "419a2e59bd7efcbb860497a2f1ff4cf8416d839b0dc058ad60baa68b1bbc7147",
       "classification": "normative",
-      "review": "Source inventory: Level 2: Rich (OPTIONAL). Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Level 2: Rich (OPTIONAL). Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage. Vendor cleanup (RMK-1991, decision D6): a provider counts for the level whether it ships with the implementation or as a separate package built on its provider interface."
     },
     {
       "section": "26.4",
-      "sha256": "860fcfa2668bf40904800ef8a2f8cd1561c818b98ae6c7135eee74c2bfc43ec9",
+      "sha256": "c9705952870b69e9bede6871174b87023f76f0630cb7e1da9dd44c15e7e83da0",
       "classification": "normative",
-      "review": "Source inventory: Level 3: Real-Time Media (OPTIONAL). Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Level 3: Real-Time Media (OPTIONAL). Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage. Vendor cleanup (RMK-1991, decision D6): a provider counts for the level whether it ships with the implementation or as a separate package built on its provider interface."
     },
     {
       "section": "A",
@@ -1635,9 +1635,9 @@
     },
     {
       "section": "A.13",
-      "sha256": "32c765a3e4eb0a1fea3e430327f4f92256782080065ed4f348b728fe18cf1640",
+      "sha256": "c906608d9bd77128ef24a84cde365f03d73dfc3374abb9070f12e654952a6a98",
       "classification": "normative",
-      "review": "Source inventory: Telegram Channel, split to one obligation per unit (RMK-1959) by closing and reopening the code block: the channel's type, category, direction and media types; its default capabilities; the bot provider; the recipient key telegram_chat_id, written as a string; the chat key chat_id; delivery through the platform's bot API (vendor named in the text). All must where an implementation offers the channel. Every unit carries its level."
+      "review": "Source inventory: Telegram Channel, split to one obligation per unit (RMK-1959) by closing and reopening the code block: the channel's type, category, direction and media types; its default capabilities; the bot provider; the recipient key telegram_chat_id, written as a string; the chat key chat_id; delivery through the platform's bot API. All must where an implementation offers the channel. Every unit carries its level. Vendor cleanup (RMK-1991): delivery names the platform's bot API, not its methods."
     },
     {
       "section": "A.14",

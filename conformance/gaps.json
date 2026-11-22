@@ -1986,11 +1986,6 @@
       "card": "RMK-1917",
       "note": "Cancel or fail submission and fail final persistence; assert conservative unknown."
     },
-    "RK-22.1-087": {
-      "class": "phase6",
-      "card": "RMK-1917",
-      "note": "Read actual provider submission results for sent, not_sent and unknown."
-    },
     "RK-22.1-088": {
       "class": "phase6",
       "card": "RMK-1917",
@@ -2716,126 +2711,6 @@
       "card": "RMK-1934",
       "note": "Close a constructed image provider and observe release of its instrumented resources."
     },
-    "RK-25.2-007": {
-      "class": "step",
-      "card": "RMK-1934",
-      "note": "Drive an actual image provider against a scripted image endpoint, request a count and compare complete and short responses."
-    },
-    "RK-25.2-008": {
-      "class": "step",
-      "card": "RMK-1934",
-      "note": "Generate with a portable width-by-height value and with null, and compare the resulting requests and resolutions."
-    },
-    "RK-25.2-009": {
-      "class": "step",
-      "card": "RMK-1934",
-      "note": "Use a scripted native-geometry endpoint behind the provider and compare its request with the public pixel-size input."
-    },
-    "RK-25.2-010": {
-      "class": "step",
-      "card": "RMK-1934",
-      "note": "Request an exact size the selected provider cannot supply and inspect its error."
-    },
-    "RK-25.2-011": {
-      "class": "step",
-      "card": "RMK-1934",
-      "note": "Supply separately identifiable image results from a scripted endpoint and assert the requested batch returns distinct results."
-    },
-    "RK-25.2-012": {
-      "class": "step",
-      "card": "RMK-1934",
-      "note": "Gate individual image requests on a non-batching endpoint and observe multiple submissions before completing any one of them."
-    },
-    "RK-25.2-014": {
-      "class": "step",
-      "card": "RMK-1934",
-      "note": "Exercise native aspect ratio and tier separately from exact pixel size and inspect their actual encoding and effective settings."
-    },
-    "RK-25.2-015": {
-      "class": "step",
-      "card": "RMK-1934",
-      "note": "Feed an unsupported or incompatible option to a real provider and check its local failure and the endpoint's zero request count."
-    },
-    "RK-25.2-016": {
-      "class": "step",
-      "card": "RMK-1934",
-      "note": "Set a provider-level default, omit the corresponding request option and inspect its effective selection."
-    },
-    "RK-25.2-017": {
-      "class": "step",
-      "card": "RMK-1934",
-      "note": "Set conflicting provider and call-level option values and check which reaches the image request."
-    },
-    "RK-25.2-018": {
-      "class": "step",
-      "card": "RMK-1934",
-      "note": "Call an options-capable image provider using the original argument list and inspect its results."
-    },
-    "RK-25.2-019": {
-      "class": "step",
-      "card": "RMK-1934",
-      "note": "Invoke an editing provider with a mask and references and inspect the submitted materials."
-    },
-    "RK-25.2-020": {
-      "class": "step",
-      "card": "RMK-1934",
-      "note": "Return both available images and usage across failed image requests and read the preserved data from the error."
-    },
-    "RK-25.2-021": {
-      "class": "step",
-      "card": "RMK-1934",
-      "note": "Combine successful and failed vendor calls in one image request and inspect its raised partial outcome."
-    },
-    "RK-25.2-022": {
-      "class": "step",
-      "card": "RMK-1934",
-      "note": "Have a scripted endpoint lose a response after receiving the paid request and examine the public billing state."
-    },
-    "RK-25.2-023": {
-      "class": "step",
-      "card": "RMK-1934",
-      "note": "Drive the actual provider and SDK against a local endpoint that fails after receiving the request, then count attempted generations. Python tests/test_providers/test_openai_transport.py::test_a_generation_that_may_have_run_is_never_sent_again covers the landed retry change offline."
-    },
-    "RK-25.2-024": {
-      "class": "step",
-      "card": "RMK-1934",
-      "note": "Return each of HTTP 408, 409, 429 and 503 from a scripted image endpoint and observe the retryable status of the reported outcome."
-    },
-    "RK-25.2-025": {
-      "class": "step",
-      "card": "RMK-1934",
-      "note": "Return HTTP 500, 502 and 504 from a scripted image endpoint and inspect each final outcome."
-    },
-    "RK-25.2-026": {
-      "class": "step",
-      "card": "RMK-1934",
-      "note": "Inject failures before a connection can send an image request and read the provider's resulting retry classification."
-    },
-    "RK-25.2-027": {
-      "class": "step",
-      "card": "RMK-1934",
-      "note": "Inject a timeout and a dropped connection after the request reached an image endpoint, then read the final status."
-    },
-    "RK-25.2-028": {
-      "class": "step",
-      "card": "RMK-1934",
-      "note": "Return a generated image in an unusable form and inspect the final billed failure."
-    },
-    "RK-25.2-029": {
-      "class": "step",
-      "card": "RMK-1934",
-      "note": "Gate sibling image calls independently, fail one, and observe whether the remaining outcomes are collected."
-    },
-    "RK-25.2-030": {
-      "class": "step",
-      "card": "RMK-1934",
-      "note": "Cancel an in-flight image-provider call and inspect the caller's cancellation result."
-    },
-    "RK-25.2-031": {
-      "class": "step",
-      "card": "RMK-1934",
-      "note": "Observe the asynchronous progress callback across a completed image call and a sibling cancelled while still running."
-    },
     "RK-25.2-032": {
       "class": "step",
       "card": "RMK-1934",
@@ -2845,71 +2720,6 @@
       "class": "step",
       "card": "RMK-1934",
       "note": "Read an ImageResult's encoded data and media type through a shared result or provider fixture."
-    },
-    "RK-25.3-003": {
-      "class": "step",
-      "card": "RMK-1934",
-      "note": "Obtain an ImageResult from the provider and validate its data URI. Supplying an existing URI to a chat input exercises its consumer only."
-    },
-    "RK-25.3-004": {
-      "class": "step",
-      "card": "RMK-1934",
-      "note": "Compare the MIME header of a result issued by the image provider with that result's mime_type field."
-    },
-    "RK-25.3-006": {
-      "class": "step",
-      "card": "RMK-1934",
-      "note": "Pass the URI from an actual image-generation result to a second generate call as an edit reference without conversion."
-    },
-    "RK-25.3-007": {
-      "class": "step",
-      "card": "RMK-1934",
-      "note": "Script a vendor response with a fetchable local URL, observe the fetch, and read the embedded encoded bytes in the eventual result."
-    },
-    "RK-25.3-008": {
-      "class": "step",
-      "card": "RMK-1934",
-      "note": "Omit the revised prompt from a scripted vendor result and read the corresponding null field."
-    },
-    "RK-25.3-009": {
-      "class": "step",
-      "card": "RMK-1934",
-      "note": "Use a distinctive input prompt, omit its revision from the vendor result, and check that the returned revision is not the input."
-    },
-    "RK-25.3-011": {
-      "class": "step",
-      "card": "RMK-1934",
-      "note": "Script one usage report for a multi-image batch and inspect the single report and its scope."
-    },
-    "RK-25.3-012": {
-      "class": "step",
-      "card": "RMK-1934",
-      "note": "Compare the measured batch usage with individual image results and assert that no per-image measurements are fabricated."
-    },
-    "RK-25.3-013": {
-      "class": "step",
-      "card": "RMK-1934",
-      "note": "Include an inline image in original vendor metadata and verify that the retained original metadata omits the payload."
-    },
-    "RK-25.3-014": {
-      "class": "step",
-      "card": "RMK-1934",
-      "note": "Seed vendor metadata with a harmless secret sentinel and check its omission from retained original metadata."
-    },
-    "RK-25.3-016": {
-      "class": "step",
-      "card": "RMK-1934",
-      "note": "Return a preview followed by a final image and compare their explicitly distinguishable representations."
-    },
-    "RK-25.3-017": {
-      "class": "step",
-      "card": "RMK-1934",
-      "note": "Observe progress while the simulated vendor still tracks the call and its billing state, and compare those states after notification."
-    },
-    "RK-25.3-018": {
-      "class": "step",
-      "card": "RMK-1934",
-      "note": "Fail the progress callback and inspect the scripted endpoint's generation count."
     },
     "RK-25.3-019": {
       "class": "step",
@@ -2926,80 +2736,10 @@
       "card": "RMK-1934",
       "note": "Use the same generate entry point for prompt-only and reference-image calls and read the edited result."
     },
-    "RK-25.4-003": {
-      "class": "step",
-      "card": "RMK-1934",
-      "note": "Exercise providers with one endpoint and with separate edit endpoints through the same public operation and compare the submitted image references."
-    },
-    "RK-25.4-004": {
-      "class": "step",
-      "card": "RMK-1934",
-      "note": "Select a nonediting image provider and read its advertised supports_editing value."
-    },
-    "RK-25.4-005": {
-      "class": "step",
-      "card": "RMK-1934",
-      "note": "Supply nonempty reference images to a provider that cannot edit and inspect its error and lack of prompt-only output."
-    },
-    "RK-25.4-008": {
-      "class": "step",
-      "card": "RMK-1934",
-      "note": "Configure an explicit storage choice on a stateful image provider and observe that disabling remote history is honoured."
-    },
-    "RK-25.4-011": {
-      "class": "step",
-      "card": "RMK-1934",
-      "note": "Exercise external-search grounding on compatible and incompatible image models and inspect admission and the request."
-    },
-    "RK-25.4-012": {
-      "class": "step",
-      "card": "RMK-1934",
-      "note": "Return citations and search-suggestion metadata from a grounded image model and read both through the provider."
-    },
-    "RK-25.5-002": {
-      "class": "step",
-      "card": "RMK-1934",
-      "note": "Generate an image using a scripted vendor report with separate text and image measurements and inspect the public usage report."
-    },
     "RK-25.5-003": {
       "class": "step",
       "card": "RMK-1934",
       "note": "Inspect the four integer text and image input and output counters on generation usage. Conversational usage fixtures provide preassembled counts."
-    },
-    "RK-25.5-004": {
-      "class": "step",
-      "card": "RMK-1934",
-      "note": "Feed a known vendor accounting breakdown and verify that no generation token appears in multiple reported categories."
-    },
-    "RK-25.5-005": {
-      "class": "step",
-      "card": "RMK-1934",
-      "note": "Script a vendor total containing an image subtotal and compare the normalized text counter with their difference."
-    },
-    "RK-25.5-006": {
-      "class": "step",
-      "card": "RMK-1934",
-      "note": "Compare a vendor report omitting one counter with a report explicitly setting that same counter to zero."
-    },
-    "RK-25.6-002": {
-      "class": "step",
-      "card": "RMK-1934",
-      "note": "Enumerate both actual catalogues on a provider offering image generation and compare their full model-ID sets."
-    },
-    "RK-25.6-003": {
-      "class": "step",
-      "card": "RMK-1934",
-      "note": "Request each actual catalogue separately and inspect the enumerations for mixed entries."
-    },
-    "RK-25.6-004": {
-      "class": "step",
-      "card": "RMK-1934",
-      "note": "Inspect the published capability tags of image catalogue entries."
-    },
-    "RK-25.6-006": {
-      "class": "step",
-      "card": "RMK-1934",
-      "note": "Read a model entry with an unspecified image capability alongside an entry with a known value and verify the former stays unknown."
     },
     "RK-25.7-002": {
       "class": "step",
@@ -3112,50 +2852,6 @@
     "RK-6.4-069": {
       "class": "writable",
       "card": "RMK-1911"
-    },
-    "RK-6.4-074": {
-      "class": "writable",
-      "card": "RMK-1911"
-    },
-    "RK-6.4-085": {
-      "class": "step",
-      "card": "RMK-1911",
-      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-    },
-    "RK-6.4-087": {
-      "class": "step",
-      "card": "RMK-1911",
-      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-    },
-    "RK-6.4-088": {
-      "class": "step",
-      "card": "RMK-1911",
-      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-    },
-    "RK-6.4-089": {
-      "class": "step",
-      "card": "RMK-1911",
-      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-    },
-    "RK-6.4-090": {
-      "class": "step",
-      "card": "RMK-1911",
-      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-    },
-    "RK-6.4-091": {
-      "class": "step",
-      "card": "RMK-1911",
-      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-    },
-    "RK-6.4-092": {
-      "class": "step",
-      "card": "RMK-1911",
-      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-    },
-    "RK-6.4-093": {
-      "class": "step",
-      "card": "RMK-1911",
-      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
     },
     "RK-6.4-095": {
       "class": "phase6",
@@ -3568,11 +3264,6 @@
       "card": "RMK-1940",
       "note": "A memory compaction between rounds, then an overflow, the call's compacted replay kept."
     },
-    "RK-6.4-354": {
-      "class": "step",
-      "card": "RMK-1940",
-      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-    },
     "RK-6.4-355": {
       "class": "writable",
       "card": "RMK-1940",
@@ -3657,11 +3348,6 @@
       "class": "writable",
       "card": "RMK-1940",
       "note": "A standalone instruction's turn in a room whose earlier turns read instructions, none replayed."
-    },
-    "RK-6.4-404": {
-      "class": "step",
-      "card": "RMK-1951",
-      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
     },
     "RK-6.4-407": {
       "class": "writable",
@@ -3848,21 +3534,6 @@
       "card": "RMK-1955",
       "note": "Needs a step that installs an integrator's transcoding strategy; neither implementation exposes one (suspect RMK-1952)."
     },
-    "RK-6.7-004": {
-      "class": "step",
-      "card": "RMK-1955",
-      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-    },
-    "RK-6.7-013": {
-      "class": "step",
-      "card": "RMK-1955",
-      "note": "Needs a provider wire fixture: only a vendor's own format carries an error flag on a tool result, and the core's chat rendering has none."
-    },
-    "RK-6.7-014": {
-      "class": "step",
-      "card": "RMK-1955",
-      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-    },
     "RK-6.7-016": {
       "class": "step",
       "card": "RMK-1955",
@@ -3882,136 +3553,6 @@
       "class": "step",
       "card": "RMK-1955",
       "note": "Needs a step that lists a provider's models."
-    },
-    "RK-6.7-023": {
-      "class": "step",
-      "card": "RMK-1955",
-      "note": "model.fails_once_closed observes a scripted model's close; a provider releasing its real connections needs the provider wire fixture."
-    },
-    "RK-6.7-032": {
-      "class": "step",
-      "card": "RMK-1955",
-      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-    },
-    "RK-6.7-034": {
-      "class": "step",
-      "card": "RMK-1955",
-      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-    },
-    "RK-6.7-035": {
-      "class": "step",
-      "card": "RMK-1955",
-      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-    },
-    "RK-6.7-036": {
-      "class": "step",
-      "card": "RMK-1955",
-      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-    },
-    "RK-6.7-037": {
-      "class": "step",
-      "card": "RMK-1955",
-      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-    },
-    "RK-6.7-038": {
-      "class": "step",
-      "card": "RMK-1955",
-      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-    },
-    "RK-6.7-039": {
-      "class": "step",
-      "card": "RMK-1955",
-      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-    },
-    "RK-6.7-040": {
-      "class": "step",
-      "card": "RMK-1955",
-      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-    },
-    "RK-6.7-041": {
-      "class": "step",
-      "card": "RMK-1955",
-      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-    },
-    "RK-6.7-042": {
-      "class": "step",
-      "card": "RMK-1955",
-      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-    },
-    "RK-6.7-043": {
-      "class": "step",
-      "card": "RMK-1955",
-      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-    },
-    "RK-6.7-044": {
-      "class": "step",
-      "card": "RMK-1955",
-      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-    },
-    "RK-6.7-045": {
-      "class": "step",
-      "card": "RMK-1955",
-      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-    },
-    "RK-6.7-046": {
-      "class": "step",
-      "card": "RMK-1955",
-      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-    },
-    "RK-6.7-047": {
-      "class": "step",
-      "card": "RMK-1955",
-      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-    },
-    "RK-6.7-048": {
-      "class": "step",
-      "card": "RMK-1955",
-      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-    },
-    "RK-6.7-049": {
-      "class": "step",
-      "card": "RMK-1955",
-      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-    },
-    "RK-6.7-050": {
-      "class": "step",
-      "card": "RMK-1955",
-      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-    },
-    "RK-6.7-052": {
-      "class": "step",
-      "card": "RMK-1955",
-      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-    },
-    "RK-6.7-053": {
-      "class": "step",
-      "card": "RMK-1955",
-      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-    },
-    "RK-6.7-054": {
-      "class": "step",
-      "card": "RMK-1955",
-      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-    },
-    "RK-6.7-055": {
-      "class": "step",
-      "card": "RMK-1955",
-      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-    },
-    "RK-6.7-056": {
-      "class": "step",
-      "card": "RMK-1955",
-      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-    },
-    "RK-6.7-057": {
-      "class": "step",
-      "card": "RMK-1955",
-      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-    },
-    "RK-6.7-065": {
-      "class": "step",
-      "card": "RMK-1955",
-      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
     },
     "RK-6.7-070": {
       "class": "writable",
@@ -4058,90 +3599,10 @@
       "card": "RMK-1955",
       "note": "A schema turn whose model takes no schema, under a retry policy, is not retried."
     },
-    "RK-6.7-081": {
-      "class": "writable",
-      "card": "RMK-1955",
-      "note": "Under model.response_schema a round whose finish_reason is refusal is refused; a vendor's refusal field and a prompt blocked before any answer stay with the provider wire fixture."
-    },
-    "RK-6.7-082": {
-      "class": "writable",
-      "card": "RMK-1955",
-      "note": "Under model.response_schema a round that ran out of room is truncated; a vendor's own stop reasons and a context window filling up stay with the provider wire fixture."
-    },
-    "RK-6.7-088": {
-      "class": "step",
-      "card": "RMK-1955",
-      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-    },
-    "RK-6.7-090": {
-      "class": "step",
-      "card": "RMK-1955",
-      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-    },
-    "RK-6.7-092": {
-      "class": "step",
-      "card": "RMK-1955",
-      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-    },
-    "RK-6.7-093": {
-      "class": "step",
-      "card": "RMK-1955",
-      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-    },
     "RK-6.7-094": {
       "class": "step",
       "card": "RMK-1955",
       "note": "A tool name is refused when the tool is defined, before any step: needs a step that defines a tool and reads the refusal."
-    },
-    "RK-6.7-096": {
-      "class": "step",
-      "card": "RMK-1955",
-      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-    },
-    "RK-6.7-097": {
-      "class": "phase6",
-      "card": "RMK-1955",
-      "note": "A realtime endpoint that hands the tools to another model checks that model's vendor's rule (media feature realtime)."
-    },
-    "RK-6.7-098": {
-      "class": "step",
-      "card": "RMK-1955",
-      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-    },
-    "RK-6.7-099": {
-      "class": "step",
-      "card": "RMK-1955",
-      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-    },
-    "RK-6.7-100": {
-      "class": "step",
-      "card": "RMK-1955",
-      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-    },
-    "RK-6.7-101": {
-      "class": "step",
-      "card": "RMK-1955",
-      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-    },
-    "RK-6.7-102": {
-      "class": "step",
-      "card": "RMK-1955",
-      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-    },
-    "RK-6.7-103": {
-      "class": "step",
-      "card": "RMK-1955",
-      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-    },
-    "RK-6.7-104": {
-      "class": "step",
-      "card": "RMK-1955",
-      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-    },
-    "RK-6.7-105": {
-      "class": "step",
-      "card": "RMK-1955",
-      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
     },
     "RK-6.7-107": {
       "class": "step",
@@ -4192,21 +3653,6 @@
       "class": "step",
       "card": "RMK-1955",
       "note": "Needs a step that asks a classifier its questions (a scripted or mock classifier) in both runners; feature name classifier_dispatch proposed."
-    },
-    "RK-6.8-012": {
-      "class": "step",
-      "card": "RMK-1955",
-      "note": "Needs a scripted decision-model server behind a classifier in both runners; roomkit-rs has no decision-model classifier, feature name classifier_dispatch proposed."
-    },
-    "RK-6.8-013": {
-      "class": "step",
-      "card": "RMK-1955",
-      "note": "Needs a scripted decision-model server behind a classifier in both runners; roomkit-rs has no decision-model classifier, feature name classifier_dispatch proposed."
-    },
-    "RK-6.8-014": {
-      "class": "step",
-      "card": "RMK-1955",
-      "note": "Needs a scripted decision-model server behind a classifier in both runners; roomkit-rs has no decision-model classifier, feature name classifier_dispatch proposed."
     },
     "RK-8.1-008": {
       "class": "step",

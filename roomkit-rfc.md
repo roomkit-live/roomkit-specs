@@ -2271,40 +2271,31 @@ or, for a block the vendor redacted, its opaque `redacted` data. <!-- /rfc --><!
 wants the blocks back as it sent them (it refuses a round whose blocks changed
 in number, and a block without its signature), so the tool loop replays a
 round's blocks one by one, in the order and at the place they came in relative
-to the round's calls and stretches of text. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-073", "kind": "behavior", "applies": "§6.4 Reasoning: a block cut before its signature, or without one. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A block the response cut before
-its signature is not replayed, nor is a block without one at all: that is
-another vendor's reasoning, a round a provider a router hands a generation
-to (below) receives from the provider before it, which the vendor refuses and
-the round does without. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-074", "kind": "behavior", "applies": "§6.4 Reasoning: a vendor that refuses, in the current turn, a call without its own signature, and an earlier turn's round. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A vendor that refuses, in the current turn, a call
-without its own signature receives such a round of
-that turn, none of whose calls carries one, as text: what it said, each call,
-then each result with the images it carries, the one form it takes for calls
-it did not make. An earlier turn's round, which it does not check, keeps its
-form. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-075", "kind": "behavior", "applies": "§6.4 Reasoning: a provider whose reasoning has no blocks. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A provider whose reasoning has no blocks hands
+to the round's calls and stretches of text. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-073", "kind": "behavior", "applies": "§6.4 Reasoning: a block the response cut before its signature. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A block the response cut before
+its signature is not replayed: its vendor refuses it, and the round does
+without it. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-075", "kind": "behavior", "applies": "§6.4 Reasoning: a provider whose reasoning has no blocks. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A provider whose reasoning has no blocks hands
 one block per round, replayed first. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-076", "kind": "behavior", "applies": "§6.4 Reasoning: a caller of generate() and a turn under a response schema, which cannot know where blocks came. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Two readers cannot know where blocks
 came, and replay them first, then the text, then the calls: a caller of
 `generate()`, since a response does not say where its blocks came, and a turn
 under a response schema, whose text is held until it is checked.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.4-077", "kind": "behavior", "applies": "§6.4 Reasoning: where a provider renders a replayed round's reasoning. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
-A provider MUST render a replayed round's reasoning where its vendor reads it,
-and nowhere else: in the field the vendor reads it in, on the rounds and the
-answers it reads it on. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-078", "kind": "behavior", "applies": "§6.4 Reasoning: a vendor that refuses a tool-calling round of the turn in progress without its reasoning field. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A vendor that refuses a round of the turn in progress
-that called tools without its reasoning field (save, for one, a round whose
-call ids it issued itself a moment ago) receives that field on every round
-that called tools, and an answer's reasoning in it too: a round with no
-reasoning, as every round of an earlier turn is, carries the field empty, or a
-single space where an empty one reads as missing (a gateway's code may read it
-so). <!-- /rfc --><!-- rfc: {"id": "RK-6.4-079", "kind": "behavior", "applies": "§6.4 Reasoning: a vendor that reads its reasoning back without refusing a round that lacks it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A vendor that reads its reasoning back without refusing a round that
-lacks it receives the field on a round or an answer that reasoned, and nothing
-on one that did not. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-080", "kind": "behavior", "applies": "§6.4 Reasoning: a provider for generic Chat Completions servers whose configuration names the field a server reads (thinking_field), the integrator's choice. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The configuration of a provider for generic Chat
-Completions servers MAY name the field a server reads (`thinking_field`), for a
-server whose documentation asks for its reasoning back: a round or an answer
-that reasoned then carries it there, and one that did not carries nothing. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-081", "kind": "behavior", "applies": "§6.4 Reasoning: a provider for generic Chat Completions servers whose configuration names no field. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A provider cannot tell whether a server takes the field, and strict
-servers refuse one they do not know, so nothing is sent unless it is named; a
-provider that already sends reasoning where its vendor reads it takes no such
-option. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-082", "kind": "behavior", "applies": "§6.4 Reasoning: a Chat Completions request to a server no provider or configuration renders reasoning for. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A Chat Completions request to any other server
+<!-- rfc: {"id": "RK-6.4-077", "kind": "behavior", "applies": "§6.4 Reasoning: where a chat-messages dialect renders a replayed round's reasoning (the chat-messages format and its dialects, defined here). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+A provider whose server takes the chat-messages format (a conversation sent as
+a list of role-tagged messages, e.g., OpenAI's Chat Completions) renders its
+request through a dialect of that format: the fields its server reads beyond
+it. A dialect MUST render a replayed round's reasoning in the field it names,
+and nowhere else, on the rounds and the answers below. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-078", "kind": "behavior", "applies": "§6.4 Reasoning: a dialect that requires its reasoning field on every round that called tools, and its placeholder. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A dialect that requires the field, for a server that refuses a round of the
+turn in progress that called tools without it, carries it on every round that
+called tools, and an answer's reasoning in it too: a round with no reasoning,
+as every round of an earlier turn is, carries the field empty, or the
+dialect's placeholder (a single space, say) where the server reads an empty
+one as missing. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-079", "kind": "behavior", "applies": "§6.4 Reasoning: a dialect that names its reasoning field without requiring it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A dialect that names the field without requiring it carries it on a round or
+an answer that reasoned, and nothing on one that did not. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-080", "kind": "behavior", "applies": "§6.4 Reasoning: a dialect that names the field a server reads (thinking_field), the integrator's choice. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Which field a server reads is the integrator's choice:
+a dialect MAY name it (`thinking_field`), for a server whose documentation asks
+for its reasoning back. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-081", "kind": "behavior", "applies": "§6.4 Reasoning: a dialect that names no field. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A dialect cannot tell whether a server takes the field, and strict
+servers refuse one they do not know, so a dialect sends no reasoning unless it
+names the field. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-082", "kind": "behavior", "applies": "§6.4 Reasoning: a chat-messages request under a dialect that names no field. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A chat-messages request under a dialect that names no field
 carries no reasoning, in no form: a `<think>` block in a message's text is read
 as words the model said, and a server's prompt cache does not survive it. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-083", "kind": "behavior", "applies": "§6.4 Reasoning: a round or an answer whose reasoning the request does not carry and that said nothing else. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
 round that only reasoned and called goes back with no text, and an answer that
@@ -2314,12 +2305,12 @@ stream), and the reasoning block that opens a model's output is still read out
 of its text (Section 6.7).
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.4-085", "kind": "behavior", "applies": "§6.4 Reasoning: the rendering the provider an integrator builds gives, behind a custom base URL too. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
-The vendor's rendering is the integrator's choice, made by the provider it
-builds, and it holds behind a custom base URL: a vendor's weights served by a
-generic server get their reasoning back through that vendor's provider, given
-that server's URL, or through a generic provider whose configuration names the
-field, and none through a generic provider that does not. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-086", "kind": "behavior", "applies": "§6.4 Reasoning: how long a round's reasoning goes back, whatever the provider. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Whatever the provider, the reasoning goes back for as long as its turn lasts,
+<!-- rfc: {"id": "RK-6.4-085", "kind": "behavior", "applies": "§6.4 Reasoning: the dialect the provider an integrator builds renders with, behind a custom base URL too. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+Which dialect a request is rendered with is the integrator's choice, made by
+the provider it builds, and it holds behind a custom base URL: a model served
+by a generic server gets its reasoning back through a provider whose dialect
+names the field that server reads, given that server's URL, and none through
+one whose dialect names none. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-086", "kind": "behavior", "applies": "§6.4 Reasoning: how long a round's reasoning goes back, whatever the provider. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Whatever the provider, the reasoning goes back for as long as its turn lasts,
 and a later turn reads none.
 <!-- /rfc -->
 
@@ -3500,9 +3491,7 @@ by the runtime:<!-- /rfc --><!-- rfc: {"id": "RK-6.4-352", "kind": "behavior", "
   same forms and spacing, its name ended by anything that does not continue
   it (the text's end included; `<tag-list>` and `<tag.v2>` are other tags),
   is neutralised as well, the rest of it kept as written, so no reader
-  tracking nesting reads the runtime's text after the block as data. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-354", "kind": "behavior", "applies": "§6.4 External text, block: a provider that rewrites a framed text replaces what it removes. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A provider that rewrites a framed text before sending
-  it (a character its API refuses) MUST replace what it removes, never
-  delete it, so that it joins nothing the frame kept apart. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-355", "kind": "behavior", "applies": "§6.4 External text, block: a text cut short never leaves part of a block open. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A text cut short
+  tracking nesting reads the runtime's text after the block as data. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-355", "kind": "behavior", "applies": "§6.4 External text, block: a text cut short never leaves part of a block open. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A text cut short
   never leaves part of such a block open (it names the block instead, as a
   compaction does);<!-- /rfc --><!-- rfc: {"id": "RK-6.4-356", "kind": "behavior", "applies": "§6.4 External text, quote: one line, bounded, between curly quotes, its double quote marks made single and its bidirectional controls dropped. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - or **a quote**, inline: on one line (each run of whitespace, line breaks
@@ -3723,8 +3712,7 @@ section gives a turn therefore holds once, for every provider.
 **A round's results.** The next generation reads a round of calls as two
 messages: the assistant's message making the calls, then one `tool` message
 holding every call's result in call order, those the provider served first;
-a later turn's history replays a round the same way. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-404", "kind": "behavior", "applies": "§6.4 A round's results: a provider whose wire takes a message per result. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A provider whose wire
-takes a message per result writes one per result. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-405", "kind": "behavior", "applies": "§6.4 A round's results: when a round counts toward the turn's rounds (round_count, the end marker's rounds), and a Cancel that came while its calls were announced. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A round counts toward the
+a later turn's history replays a round the same way. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-405", "kind": "behavior", "applies": "§6.4 A round's results: when a round counts toward the turn's rounds (round_count, the end marker's rounds), and a Cancel that came while its calls were announced. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A round counts toward the
 turn's rounds (`ON_AI_RESPONSE`'s `round_count`, the end marker's `rounds`)
 once its calls ran: a `Cancel` that came while they were announced runs none
 of them, and the turn ends `cancelled` without counting it.
@@ -4460,25 +4448,10 @@ AIResponse
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.7-032", "kind": "behavior", "applies": "§6.7 Model listings: a live listing backfills from the curated catalogue what the vendor's endpoint leaves blank, but not its capabilities, an empty list meaning unknown. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
-**Model listings.** A live listing backfills from the curated catalogue what
-the vendor's endpoint leaves blank (display name, context window, vision,
-price), but not its `capabilities`: a catalogue's tags MAY be internal routing
-flags, and an empty list means "unknown", never "none". <!-- /rfc --><!-- rfc: {"id": "RK-6.7-033", "kind": "behavior", "applies": "§6.7 Model listings: a provider whose endpoint reports no model type taking the tags from a catalogue that holds public tags only. Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->A provider whose
+<!-- rfc: {"id": "RK-6.7-115", "kind": "non_testable", "applies": "§6.7 Model listings: what a live listing reports of each model is the provider's own, outside this specification. Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->**Model listings.** What a live listing reports of each model, from its
+vendor's endpoint or its curated catalogue, is the provider's own. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-033", "kind": "behavior", "applies": "§6.7 Model listings: a provider whose endpoint reports no model type taking the tags from a catalogue that holds public tags only. Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->A provider whose
 endpoint reports no model type at all MAY take the tags from its catalogue
-when that catalogue holds public tags only. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-034", "kind": "behavior", "applies": "§6.7 Model listings: a conversational provider's listing that surfaces speech models tags them transcription or speech, from what the vendor reports, else from the model's name. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->A conversational
-provider's listing that surfaces speech models SHOULD tag them, as the image
-catalogue is tagged (Section 25.6): `transcription` for a speech-to-text model,
-`speech` for a text-to-speech one, from what the vendor reports or, failing
-that, from the model's name. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-035", "kind": "behavior", "applies": "§6.7 Model listings: a model that converses in audio is tagged neither transcription nor speech. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A model that converses in audio is neither.
-<!-- /rfc -->
-
-<!-- rfc: {"id": "RK-6.7-004", "kind": "behavior", "applies": "§6.7 The model that answered: metadata.model names the model the response names, the model asked for only when it names none, and a stream's done event names the same. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
-**The model that answered.** `metadata.model` names the model that answered,
-as the response names it (a dated snapshot, a router's pick), and the model
-asked for only when the response names none; a stream's done event names the
-same, so both modes report it alike.
-<!-- /rfc -->
+when that catalogue holds public tags only. <!-- /rfc -->
 
 <!-- rfc: {"id": "RK-6.7-036", "kind": "behavior", "applies": "§6.7 Usage counters: input_tokens, output_tokens and the cache counters are disjoint (Section 25.5). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Usage counters.** `input_tokens`, `output_tokens` and the cache counters are
@@ -4492,58 +4465,22 @@ provider reports it, is the thinking share of `output_tokens`: a detail, never
 added to the other counters nor priced a second time.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.7-040", "kind": "behavior", "applies": "§6.7 Reasoning written in the text, for a provider that reads the <think> convention (a server MAY write it, folded in): a block read as thinking only where it opens the generation, after nothing but spaces, tabs, line feeds and carriage returns, which stay the answer's text. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
-**Reasoning written in the text (normative).** A Chat Completions server MAY
-write a model's reasoning in the answer's text, between `<think>` and
-`</think>`, rather than in a field beside it. A provider that reads that
-convention reads a block as `thinking` only where it opens the generation: the
-text starts with `<think>`, after nothing but spaces (U+0020), tabs (U+0009),
-line feeds (U+000A) and carriage returns (U+000D), which stay the answer's
-text. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-041", "kind": "behavior", "applies": "§6.7 Reasoning written in the text: any other character before the tag makes the text the answer whole. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Any other character before the tag, another space or a byte order mark
-included, makes the text the answer whole. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-042", "kind": "behavior", "applies": "§6.7 Reasoning written in the text: the block ends at its first closing tag, everything after it the answer. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The block ends at its first
-`</think>`, and everything after it is the answer, a later `<think>` included.<!-- /rfc --><!-- rfc: {"id": "RK-6.7-043", "kind": "behavior", "applies": "§6.7 Reasoning written in the text: a text that does not open with the tag is an answer, stored, delivered and sent back as written, never cut at its tag. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
-`The parser reads the <think> tag. Everything after is lost.` is an answer,
-stored, delivered and sent back as written, never cut at its tag. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-044", "kind": "behavior", "applies": "§6.7 Reasoning written in the text: a block the response stopped before closing (the output cap) is reasoning to its end. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A block the
-response stopped before closing (the output cap) is reasoning to its end, never
-answer. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-045", "kind": "behavior", "applies": "§6.7 Reasoning written in the text: each round of a tool loop is a generation of its own, its block read as the first round's. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Every round of a tool loop is a generation of its own, its block read
-as the first round's is. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-046", "kind": "behavior", "applies": "§6.7 Reasoning written in the text: a tag cut across a stream's chunks reads as it does whole, and a response reads the same streamed or not. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A tag cut across a stream's chunks reads as it does
-whole, and a response reads the same streamed or not. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-047", "kind": "behavior", "applies": "§6.7 Reasoning written in the text: a reasoning field the server sends beside the text changes none of this, both being the response's reasoning. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A reasoning field the
-server sends beside the text changes none of this: both are the response's
-reasoning.
+<!-- rfc: {"id": "RK-6.7-116", "kind": "non_testable", "applies": "§6.7 Reasoning written in the text: how a provider that reads that convention reads it is the provider's own, outside this specification. Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->**Reasoning written in the text.** A server may write a model's reasoning in
+the answer's text, between tags (e.g., `<think>` and `</think>`), rather than
+in a field beside it; a provider that reads that convention hands such a block
+as the response's reasoning, as its own documentation states.
 <!-- /rfc -->
 
 <!-- rfc: {"id": "RK-6.7-048", "kind": "behavior", "applies": "§6.7 Reasoning settings, the turn's (folded in): where a provider's configuration carries one under the same name, the provider prefers the turn's value, false included. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Reasoning settings.** `thinking_budget`, `enable_thinking` and
 `reasoning_effort` are the turn's. Where a provider's configuration carries one
 of them under the same name, the provider MUST prefer the turn's value, `false`
-included. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-049", "kind": "behavior", "applies": "§6.7 Reasoning settings: a vendor setting of the provider's own yields to the turn on what the turn states and supplies what it leaves unstated. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A vendor setting of the provider's own (a named level, a switch of its
-own) yields to the turn on what the turn
-states and supplies what it leaves unstated. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-050", "kind": "behavior", "applies": "§6.7 Reasoning settings: whether the model reasons, stated by thinking_budget, else enable_thinking, a reasoning_effort of none stating off; how much, stated by reasoning_effort. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Whether the model reasons is
+included. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-050", "kind": "behavior", "applies": "§6.7 Reasoning settings: whether the model reasons, stated by thinking_budget, else enable_thinking, a reasoning_effort of none stating off; how much, stated by reasoning_effort. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Whether the model reasons is
 stated by `thinking_budget` (`0` off, above `0` on), else by `enable_thinking`,
 and a `reasoning_effort` of `none` states off; how much it reasons is stated by
 `reasoning_effort`. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-051", "kind": "behavior", "applies": "§6.7 Reasoning settings from several levels (Appendix A.9): an enable_thinking false at one level states off over a thinking_budget at a less specific one. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Where the turn's settings come from several levels
 (Appendix A.9, per-turn settings), an `enable_thinking: false` set at one level
-states off over a `thinking_budget` set at a less specific one. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-052", "kind": "behavior", "applies": "§6.7 Reasoning settings, a vendor setting that names levels: a level the model does not take sent as the nearest it takes, left out where the provider cannot know them; a model that cannot stop reasoning sent its lowest level for off. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Where such a vendor setting names levels, a level the model
-does not take is sent as the nearest one it takes, and left out where the
-provider cannot know the levels the model takes; and a model that cannot stop
-reasoning is sent its lowest level where the turn states off. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-053", "kind": "behavior", "applies": "§6.7 Reasoning settings: the provider knows the levels and whether the model can stop reasoning from its model catalogue, or the levels from its configuration, never from the model's name. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The provider
-knows both from what its model catalogue declares of the model, or the levels
-from one its configuration already sets, never from the model's name. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-054", "kind": "behavior", "applies": "§6.7 Reasoning settings applied on a turn that declares tools as on one that does not, save for the cases RK-6.7-055 to 057 give. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
-provider MUST apply them on a turn that declares tools as on one that does not, save for the
-cases below. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-055", "kind": "behavior", "applies": "§6.7 Reasoning settings, a vendor that restricts what a turn with tools accepts: the value accepted, read from the model catalogue, never guessed from the model's name. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Where the vendor restricts what a turn with tools accepts (a vendor
-may take function tools only with reasoning off on some models), the provider
-sends the value accepted, read from
-what its model catalogue declares of the model, never guessed from the model's
-name. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-056", "kind": "behavior", "applies": "§6.7 Reasoning settings on a turn with tools: the two cases where a provider MAY leave a setting out (a model it cannot know behind its endpoint, without a configuration statement; reasoning it cannot pass back between tool rounds), which it documents, and never otherwise. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A provider MAY leave a setting out of a turn with tools where it cannot
-know the model behind its endpoint (a `base_url`, a deployment name, a proxy's
-alias) and its configuration does not state that the server takes the setting
-there, or where turning reasoning on would require passing the model's reasoning
-back from one tool round to the next in a form it does not produce; it documents
-that it does, and MUST NOT leave it out otherwise. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-057", "kind": "behavior", "applies": "§6.7 Reasoning settings: a configuration statement covers only what the catalogue does not declare; a provider that knows its vendor's rule refuses the statement. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Such a statement covers only
-what the catalogue does not declare: a model the catalogue declares is sent the
-value the catalogue says it accepts, and a provider that knows its vendor's rule
-refuses the statement in its configuration rather than ignore it.
-<!-- /rfc -->
+states off over a `thinking_budget` set at a less specific one. <!-- /rfc -->
 
 <!-- rfc: {"id": "RK-6.7-058", "kind": "behavior", "applies": "§6.7 Response metadata, one record per turn: AIContext.response_metadata created with the turn and shared by identity by every extension point of that turn (a memory provider, a BEFORE_AI_GENERATION hook, a tool handler or a BEFORE_TOOL_USE hook through current_response_metadata(), each of which MAY write it). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Response metadata is one record per turn.** `AIContext.response_metadata` is a
@@ -4630,7 +4567,7 @@ these reasons:
 | Reason | When |
 |---|---|
 | `unsupported` | `supports_response_schema` is false, or the context also carries `tools` and `supports_response_schema_with_tools` is false. Raised before any request is sent. |
-| <!-- /rfc --><!-- rfc: {"id": "RK-6.7-081", "kind": "behavior", "applies": "§6.7 ResponseSchemaError reasons, the refusal row. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`refusal` | The model declined to answer: a refusal field, a refusal or safety stop reason, or the prompt itself blocked before any answer. |
+| <!-- /rfc --><!-- rfc: {"id": "RK-6.7-081", "kind": "behavior", "applies": "§6.7 ResponseSchemaError reasons, the refusal row. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`refusal` | The model declined to answer: a refusal its provider reports, such as a response that ended on the stop reason `refusal`. |
 | <!-- /rfc --><!-- rfc: {"id": "RK-6.7-082", "kind": "behavior", "applies": "§6.7 ResponseSchemaError reasons, the truncated row. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`truncated` | The answer was cut: the stop reason `length`, its output cap or the context window filling up mid-answer. |
 | <!-- /rfc --><!-- rfc: {"id": "RK-6.7-083", "kind": "behavior", "applies": "§6.7 ResponseSchemaError reasons, the invalid_json row. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`invalid_json` | The text is not a JSON document satisfying the schema: a server that accepted the constraint and did not apply it. |
 <!-- /rfc -->
@@ -4651,11 +4588,7 @@ satisfying the schema.
 where `supports_response_schema_with_tools` is true. The model then either calls
 tools or answers in the schema: a response that carries tool calls is a step of
 the tool loop and is not checked, and the check applies to the answer that
-carries none, the final one. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-088", "kind": "behavior", "applies": "§6.7 Tools in the same turn: a provider whose constraint is a decoding grammar leaves supports_response_schema_with_tools false. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A provider whose constraint is a decoding grammar
-(it forces the output into the schema token by token) MUST leave that capability
-false: the grammar stops the model from calling a tool, and it writes a
-schema-valid answer in its place, invented rather than looked up, which no check
-can tell from a true one. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-089", "kind": "behavior", "applies": "§6.7 Tools in the same turn: a response that ended on a call the provider would not hand over is a step of the tool loop, not checked, with no document, saying so by its finish reason. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A response that ended on a call the provider would
+carries none, the final one. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-089", "kind": "behavior", "applies": "§6.7 Tools in the same turn: a response that ended on a call the provider would not hand over is a step of the tool loop, not checked, with no document, saying so by its finish reason. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A response that ended on a call the provider would
 not hand over (a call it could not parse, or one to a tool the request did
 not enable) is a
 step of the tool loop as well, which tells the model and asks again (Section
@@ -4663,53 +4596,20 @@ step of the tool loop as well, which tells the model and asks again (Section
 reason, which a caller of `generate()` outside the loop reads.
 
 <!-- /rfc -->
-<!-- rfc: {"id": "RK-6.7-090", "kind": "behavior", "applies": "§6.7 Tools in the same turn: supports_response_schema a provider default the host can override in the provider's configuration. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
-Support depends on the model and, behind a custom base URL, on the
-server, so `supports_response_schema` is a provider default that an
-implementation SHOULD let the host override in the provider's configuration. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-091", "kind": "non_testable", "applies": "§6.7: a consumer that must run on any provider reads supports_response_schema and, where it is false, asks for JSON in the prompt; only the consumer keeps it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
+<!-- rfc: {"id": "RK-6.7-091", "kind": "non_testable", "applies": "§6.7: a consumer that must run on any provider reads supports_response_schema and, where it is false, asks for JSON in the prompt; only the consumer keeps it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
 consumer that must run on any provider reads the property, and where it is false
 asks for JSON in the prompt and parses the answer itself.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.7-092", "kind": "behavior", "applies": "§6.7 Declaring tools: a provider declares each tool of the context in its vendor's format. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
-**Declaring tools (normative).** A provider declares each tool of the context
-in its vendor's format. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-093", "kind": "behavior", "applies": "§6.7 Declaring tools: a tool without parameters declared as an object schema with no properties, never an empty map, and a schema whose root has no type declared an object's. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A tool without parameters (an absent or empty schema)
-is declared as an object schema with no properties, which every vendor
-accepts, never as an empty map, and a schema whose root has no type is
-declared an object's, for every vendor: some vendors refuse it
-untyped. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-094", "kind": "behavior", "applies": "§6.7 Declaring tools, tool names (checked in two places, folded in): a name no vendor accepts (empty, or with a character other than a letter, a digit, _, ., : or -) refused when the tool is defined. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Vendors accept different tool names, so the
+<!-- rfc: {"id": "RK-6.7-094", "kind": "behavior", "applies": "§6.7 Declaring tools, tool names (checked in two places, folded in): a name no vendor accepts (empty, or with a character other than a letter, a digit, _, ., : or -) refused when the tool is defined. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Vendors accept different tool names, so the
 names are checked in two places:
 
 - An implementation refuses, when a tool is defined, a name no vendor accepts:
   an empty one, or one with a character other than a letter, a digit, `_`,
   `.`, `:` or `-`. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-095", "kind": "behavior", "applies": "§6.7 Declaring tools: a loader of tools defined elsewhere (MCP) skips a tool under such a name with a warning and keeps the others. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A loader of tools defined elsewhere (MCP) skips such a tool
-  with a warning and keeps the others.<!-- /rfc --><!-- rfc: {"id": "RK-6.7-096", "kind": "behavior", "applies": "§6.7 Declaring tools: each provider checks its vendor's name rule when it declares tools (an AI provider a turn's; the sentence also names a realtime provider's session), raising before the request an error naming the tool and the rule. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
-- Each provider checks its own vendor's rule when it declares tools, an AI
-  provider a turn's, a realtime provider a session's (at connection and at
-  every reconfiguration), and for a name its vendor refuses it raises, before
-  the request, an error naming the tool and the rule, rather than letting the
-  vendor reject the request mid-turn, or a realtime endpoint accept the
-  declaration and fail the call later, opaquely. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-097", "kind": "behavior", "applies": "§6.7 Declaring tools, realtime (media feature realtime): a realtime endpoint that hands the tools to another model checks that model's vendor's rule. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Where a realtime endpoint
-  hands the tools to another model (a hosted reasoning backend, an agent's
-  think provider), the rule is that model's vendor's. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-098", "kind": "behavior", "applies": "§6.7 Declaring tools: a provider that cannot know its server's rule (behind a custom base URL, a vendor-compatible gateway included) checks none. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A provider that cannot
-  know its server's rule (any server behind a custom base URL, a
-  vendor-compatible gateway included) checks none: the server decides.
-<!-- /rfc -->
-
-<!-- rfc: {"id": "RK-6.7-013", "kind": "behavior", "applies": "§6.7 A tool result on the wire, rendered in the vendor's format: where that format has an error flag, a result whose call was refused, failed, blocked, served by nothing or cancelled carries it, the text the same either way. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
-**A tool result on the wire.** A provider renders each tool result as its
-vendor's format carries one. Where that format has an error flag on a result, a
-result whose call was
-refused, failed, blocked, served by nothing or cancelled carries it; the text
-the model reads is the same either way.
-<!-- /rfc -->
-
-<!-- rfc: {"id": "RK-6.7-014", "kind": "behavior", "applies": "§6.7 A request the model cannot serve: where the provider's model catalogue says the model refuses function tools on the endpoint, or the endpoint does not serve it, the request fails before it is sent with a non-retryable error naming the model; behind a base URL the server decides. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
-**A request the model cannot serve.** Where a provider knows, from its model
-catalogue, that the model refuses function tools on the endpoint it calls, or
-that the endpoint does not serve the model at all, the request fails before it
-is sent, with a non-retryable error naming the model. Behind a base URL the
-server decides.
+  with a warning and keeps the others.<!-- /rfc --><!-- rfc: {"id": "RK-6.7-117", "kind": "non_testable", "applies": "§6.7 Declaring tools, tool names: the vendor's rule a provider checks when it declares tools is the provider's own, outside this specification. Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->
+- Each provider checks its own vendor's rule when it declares tools: the rule,
+  and how the provider checks it, are its own.
 <!-- /rfc -->
 
 <!-- rfc: {"id": "RK-6.7-099", "kind": "behavior", "applies": "§6.7 A failed generation: a ProviderError whose retryable flag depends neither on the provider nor on the failure's form. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
@@ -4728,10 +4628,7 @@ success. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-103", "kind": "behavior", "applie
 provider whose SDK drops a status it does not classify cannot read it, and
 its failure is final; any other failure without a status is retryable only
 when its message names a retryable status, a rate limit or an overload, as
-whole words. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-105", "kind": "behavior", "applies": "§6.7 A failed generation, the one exception: a provider whose server reports with no status only a stream it aborted reads that failure as a lost connection. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->One exception is kept: a provider whose server reports with no status only a
-stream it aborted (its template failed to parse the model's own output) reads
-that failure, a generation defect that a new sample may not repeat, as a lost
-connection. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-106", "kind": "behavior", "applies": "§6.7 A failed generation: the failure's text leads with the provider's name and its status, unless its message already names the provider as a word or names none, keeping the provider's own text. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The failure's text, as a turn's error record, `ON_ERROR`
+whole words. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-106", "kind": "behavior", "applies": "§6.7 A failed generation: the failure's text leads with the provider's name and its status, unless its message already names the provider as a word or names none, keeping the provider's own text. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The failure's text, as a turn's error record, `ON_ERROR`
 and a log line read it, leads with the provider's name and the status it
 answered, `acme (402): Payment required`, `acme: connection reset`,
 unless its message already names the provider as a word, in any case, or it
@@ -4837,16 +4734,7 @@ decision models) are listed in its documentation, each with how far its
 probabilities can be trusted.
 
 <!-- /rfc -->
-<!-- rfc: {"id": "RK-6.8-012", "kind": "behavior", "applies": "§6.8 Classifiers, where an implementation offers one on a decision-model server: the model it was given sent with every call. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
-A classifier on a decision-model server, one it starts itself included, sends
-the model it was given with every call. <!-- /rfc --><!-- rfc: {"id": "RK-6.8-013", "kind": "behavior", "applies": "§6.8 Classifiers on a decision-model server: the score computed from the levels' probabilities when the server sends them. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A server does not always put the expected level in its `score`
-(one may put the likeliest level there), so such a classifier computes the
-score from the levels' probabilities when the server sends them, and a score
-means the same whichever server answered. <!-- /rfc --><!-- rfc: {"id": "RK-6.8-014", "kind": "behavior", "applies": "§6.8 Classifiers, where an implementation offers one that runs a decision model on the integrator's machine: downloaded and started at the first question, stopped by close(). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A classifier that runs a decision
-model on the integrator's machine downloads and starts it at the first
-question, and `close()` stops it.
 
-<!-- /rfc -->
 ---
 
 ## 7. Permission Model
@@ -12200,7 +12088,9 @@ DenoiserProvider (interface)
         # Release resources
 ```
 
-Implementations SHOULD provide at least one built-in denoiser (e.g., sherpa-onnx).
+Implementations SHOULD provide at least one denoiser, shipped with the
+implementation or as a separate package built on this interface (e.g.,
+sherpa-onnx).
 <!-- /rfc -->
 
 #### 12.3.3 Resampler
@@ -13943,7 +13833,7 @@ through the pipeline before being forwarded to the provider.
 
 <!-- rfc: {"id": "RK-12.4.1-001", "kind": "behavior", "applies": "§12.4.1 Full-Duplex Providers and Reasoning Delegation; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 Some speech-to-speech providers do not take turns. A **full-duplex provider**
-(e.g., OpenAI GPT-Live) listens and speaks at the same time: it decides on its
+listens and speaks at the same time: it decides on its
 own when to answer, when to fall silent because the user spoke over it, and
 when to answer only with a backchannel and let the user keep talking. Its wire carries audio and
 transcript deltas in both directions and little else — no response start or
@@ -18897,6 +18787,10 @@ roomkit
 ├── roomkit.identity
 └── roomkit.store
 ```
+
+The `roomkit.providers.*` loggers are those of the provider interfaces and of
+the providers an implementation ships; a provider package built apart from the
+implementation logs under its own name.
 <!-- /rfc -->
 
 ### 15.2 Log Levels
@@ -22029,7 +21923,7 @@ them allows them. <!-- /rfc --><!-- rfc: {"id": "RK-21.1-021", "kind": "behavior
 session) is exempt the same way: it stays declared and is among the names a
 handler reads (Section 21.4), and the policy applies to the tool it names, at
 the gate, once the call is unwrapped. <!-- /rfc --><!-- rfc: {"id": "RK-21.1-023", "kind": "behavior", "applies": "Nameless provider-native tools remain declared and outside tool search and policy matching.", "level": "must"} -->A provider's native tool, which has no
-name (`{"google_search": {}}`), stays declared: a policy names the tools it
+name (a vendor's built-in search, say), stays declared: a policy names the tools it
 governs, and Tool Search neither hides nor lists a tool it cannot name. <!-- /rfc --><!-- rfc: {"id": "RK-21.1-024", "kind": "behavior", "applies": "Applying policy and skill gates to both the called alias and the tool's underlying name.", "level": "must"} -->A
 call under an alias a handler serves as another tool (an MCP tool called
 `mcp__<server>__<tool>`, which the MCP handler runs as `<tool>`) is judged under
@@ -22798,10 +22692,7 @@ Cancellation during submission, an exception without proof of non-submission,
 or failure to persist the final outcome MUST preserve this conservative boundary.
 
 <!-- /rfc -->
-<!-- rfc: {"id": "RK-22.1-087", "kind": "behavior", "applies": "Realtime voice injection: providers report sent, not_sent or unknown according to submission certainty.", "level": "should"} -->
-Realtime providers SHOULD report `sent` (their send operation completed),
-`not_sent` (no submission or pending submission exists), or `unknown` (acceptance
-cannot be established). <!-- /rfc --><!-- rfc: {"id": "RK-22.1-088", "kind": "behavior", "applies": "Realtime voice injection: permitting automatic retry after a provider call.", "level": "must"} -->Only an explicit retryable `not_sent` result permits
+<!-- rfc: {"id": "RK-22.1-088", "kind": "behavior", "applies": "Realtime voice injection: permitting automatic retry after a provider call.", "level": "must"} -->Only an explicit retryable `not_sent` result permits
 automatic retry after invoking a provider. <!-- /rfc --><!-- rfc: {"id": "RK-22.1-089", "kind": "behavior", "applies": "Realtime voice injection: interpreting a provider that gives no result.", "level": "must"} -->Returning no result MUST NOT be
 interpreted as proof of acceptance. <!-- /rfc --><!-- rfc: {"id": "RK-22.1-090", "kind": "behavior", "applies": "Realtime voice injection: outcomes for unsupported injection and missing connections.", "level": "must"} -->Unsupported injection and missing connections
 MUST NOT return a successful result. <!-- /rfc --><!-- rfc: {"id": "RK-22.1-091", "kind": "behavior", "applies": "Realtime voice injection: uncertainty of a local queue without confirmed remote submission.", "level": "must"} -->Locally queued input whose remote submission
@@ -24282,47 +24173,13 @@ in production and not in testing.
 
 <!-- /rfc -->
 <!-- rfc: {"id": "RK-25.2-008", "kind": "behavior", "applies": "A width-by-height string requests an exact pixel size and null selects the provider default.", "level": "must"} -->
-`size` is a `"WIDTHxHEIGHT"` string, or null for the provider's default. <!-- /rfc --><!-- rfc: {"id": "RK-25.2-009", "kind": "behavior", "applies": "The provider translates portable pixel sizes to its native geometry and hides native geometry conventions from the caller.", "level": "must"} -->A
-provider whose API expresses geometry differently — an aspect ratio and a
-resolution tier, say — MUST translate, and MUST NOT require the caller to know
-which form its vendor speaks. <!-- /rfc --><!-- rfc: {"id": "RK-25.2-010", "kind": "behavior", "applies": "The provider raises when it cannot honour the requested size.", "level": "must"} -->A provider that cannot honour a requested size
-MUST raise rather than silently substitute another: an image of the wrong
-geometry is a failure the caller can neither see nor correct.
+`size` is a `"WIDTHxHEIGHT"` string, or null for the provider's default. <!-- /rfc -->
 
-<!-- /rfc -->
-<!-- rfc: {"id": "RK-25.2-011", "kind": "behavior", "applies": "A request for more than one image produces distinct results.", "level": "must"} -->
-`n` greater than one MUST produce `n` distinct results. <!-- /rfc --><!-- rfc: {"id": "RK-25.2-012", "kind": "behavior", "applies": "A provider without a native batch parameter handles the requested count with concurrent calls.", "level": "must"} -->A provider whose API
-has no batch parameter satisfies this with concurrent calls: the alternative —
-honouring `n` on some providers and refusing it on others — leaves a parameter
-in the interface that a caller cannot use without first knowing which provider
-is behind it, which is the coupling this section exists to remove.
-
-<!-- /rfc -->
 <!-- rfc: {"id": "RK-25.2-013", "kind": "structural", "applies": "An implementation may offer typed generation options.", "level": "may"} -->
 Implementations MAY accept an optional typed `options` argument for controls
 such as quality, output format, background, compression, aspect ratio and
-resolution tier. <!-- /rfc --><!-- rfc: {"id": "RK-25.2-014", "kind": "behavior", "applies": "Where typed options offer native aspect ratio and resolution tier, those options describe native geometry without promising exact pixels.", "level": "must"} -->An explicit aspect ratio and tier are native geometry, not a
-promise of exact pixels. <!-- /rfc --><!-- rfc: {"id": "RK-25.2-015", "kind": "behavior", "applies": "Where generation options are offered, incompatible and unsupported options are rejected before a billable request.", "level": "must"} -->An implementation MUST reject incompatible or
-unsupported options before making a billable request. <!-- /rfc --><!-- rfc: {"id": "RK-25.2-016", "kind": "behavior", "applies": "Where generation options are offered, omitted values inherit provider defaults.", "level": "must"} -->Omitted options inherit
-provider defaults; <!-- /rfc --><!-- rfc: {"id": "RK-25.2-017", "kind": "behavior", "applies": "Where generation options are offered, explicit settings override provider defaults.", "level": "must"} -->explicit values override them. <!-- /rfc --><!-- rfc: {"id": "RK-25.2-018", "kind": "behavior", "applies": "Where generation options are offered, existing calls omitting them remain valid.", "level": "must"} -->Existing calls without
-options MUST remain valid. <!-- /rfc --><!-- rfc: {"id": "RK-25.2-019", "kind": "behavior", "applies": "Where masking is supported the caller can supply a mask along with references.", "level": "must"} -->A mask MAY accompany references when supported.
+resolution tier. <!-- /rfc -->
 
-<!-- /rfc -->
-<!-- rfc: {"id": "RK-25.2-020", "kind": "behavior", "applies": "A failure after a request starts preserves every available result and usage report.", "level": "must"} -->
-An error after a request has started MUST preserve every available result and
-usage report. <!-- /rfc --><!-- rfc: {"id": "RK-25.2-021", "kind": "behavior", "applies": "Incomplete generation raises with its successful results and the outcomes of individual vendor calls.", "level": "must"} -->A partial generation still raises, carrying successful results
-and the outcomes of individual vendor calls. <!-- /rfc --><!-- rfc: {"id": "RK-25.2-022", "kind": "behavior", "applies": "The billing status for an ambiguous network failure is not marked unbilled.", "level": "must"} -->An implementation MUST NOT mark
-an ambiguous network failure as unbilled <!-- /rfc --><!-- rfc: {"id": "RK-25.2-023", "kind": "behavior", "applies": "An implementation does not automatically retry a paid generation.", "level": "must"} -->or automatically retry a paid
-generation. <!-- /rfc --><!-- rfc: {"id": "RK-25.2-024", "kind": "behavior", "applies": "Only a status indicating the generation did not run is retryable, including 408, 409, 429 and 503.", "level": "must"} -->A failed status is marked retryable only where the vendor did not
-run the generation (408, 409, 429, 503); <!-- /rfc --><!-- rfc: {"id": "RK-25.2-025", "kind": "behavior", "applies": "HTTP 500, 502 and 504 are final generation outcomes and leave a further request to the host.", "level": "must"} -->a 500, 502 or 504 may follow one it
-ran and billed, and is final: the host decides. <!-- /rfc --><!-- rfc: {"id": "RK-25.2-026", "kind": "behavior", "applies": "A transport failure is retryable only when the request never left because the connection could not be made.", "level": "must"} -->A transport failure is
-retryable only when the request never left (the connection could not be
-made); <!-- /rfc --><!-- rfc: {"id": "RK-25.2-027", "kind": "behavior", "applies": "A timeout or connection lost after sending leaves a final ambiguous outcome.", "level": "must"} -->a timeout or a connection lost once the request went out is ambiguous,
-and final. <!-- /rfc --><!-- rfc: {"id": "RK-25.2-028", "kind": "behavior", "applies": "An image delivered in a form the provider cannot return has a final billed failure.", "level": "must"} -->An image the vendor delivered in a form the provider cannot return
-was generated and billed: that failure is final too. <!-- /rfc --><!-- rfc: {"id": "RK-25.2-029", "kind": "behavior", "applies": "Independent concurrent generation calls should settle so that their outcomes can be collected.", "level": "should"} -->Independent concurrent calls SHOULD settle so their outcomes can
-be collected. <!-- /rfc --><!-- rfc: {"id": "RK-25.2-030", "kind": "behavior", "applies": "Cancelling generation propagates cancellation as cancellation.", "level": "must"} -->Cancellation MUST remain cancellation, <!-- /rfc --><!-- rfc: {"id": "RK-25.2-031", "kind": "behavior", "applies": "Generation makes already received outcomes accessible through an optional asynchronous progress callback when cancelled.", "level": "must"} -->with already received
-outcomes accessible through an optional asynchronous progress callback.
-<!-- /rfc -->
 
 ### 25.3 ImageResult
 
@@ -24350,37 +24207,15 @@ The alternative — a field documented as "a data URI or bare base64" — forces
 every consumer to sniff the value before it can use it, and one consumer will
 sniff it wrong. <!-- /rfc --><!-- rfc: {"id": "RK-25.3-005", "kind": "behavior", "applies": "Ordinary image message content and image message parts accept a data URI, so generated image data can enter a room without conversion.", "level": "must"} -->The invariant also makes the result directly usable: a data URI
 is what image message content and image message parts already accept, so a
-generated image enters a room, <!-- /rfc --><!-- rfc: {"id": "RK-25.3-006", "kind": "behavior", "applies": "A generated data URI can be used directly as an image reference in a subsequent edit.", "level": "must"} -->or returns as a reference for a subsequent
-edit, without conversion.
-
-<!-- /rfc -->
-<!-- rfc: {"id": "RK-25.3-007", "kind": "behavior", "applies": "The provider fetches any returned URL and encodes the image bytes in the result.", "level": "must"} -->
-A provider whose API returns a fetchable URL rather than bytes MUST retrieve
-the bytes and encode them. Such URLs expire, and a result that decays into a
-dead link some time after it was returned is not a result.
-
-<!-- /rfc -->
-<!-- rfc: {"id": "RK-25.3-008", "kind": "behavior", "applies": "An unreported revised prompt is null.", "level": "must"} -->
-`revised_prompt` is null where the vendor reports none. <!-- /rfc --><!-- rfc: {"id": "RK-25.3-009", "kind": "behavior", "applies": "The provider does not substitute the original prompt for an unreported revised prompt.", "level": "must"} -->An implementation MUST
-NOT substitute the original prompt for it: the field exists to show the caller
-what the model actually drew from, and echoing the input back conceals exactly
-the divergence it exists to reveal.
+generated image enters a room without conversion.
 
 <!-- /rfc -->
 <!-- rfc: {"id": "RK-25.3-010", "kind": "structural", "applies": "A result may expose original vendor identifiers and usage, effective parameters, actual dimensions and grounding attribution.", "level": "may"} -->
 Results MAY carry a vendor request or interaction identifier, the vendor's
 original usage report, effective parameters, actual dimensions where reported,
-and grounding attribution. <!-- /rfc --><!-- rfc: {"id": "RK-25.3-011", "kind": "behavior", "applies": "Shared batch usage appears once with explicit scope.", "level": "must"} -->Usage shared by a batch MUST be represented once,
-with its scope explicit; <!-- /rfc --><!-- rfc: {"id": "RK-25.3-012", "kind": "behavior", "applies": "Shared batch usage is not divided into invented per-image measurements.", "level": "must"} -->it MUST NOT be divided into invented per-image
-measurements. <!-- /rfc --><!-- rfc: {"id": "RK-25.3-013", "kind": "behavior", "applies": "Original image metadata excludes inline image payloads.", "level": "must"} -->Original metadata MUST omit inline image payloads <!-- /rfc --><!-- rfc: {"id": "RK-25.3-014", "kind": "behavior", "applies": "Original image metadata excludes secrets.", "level": "must"} -->and secrets.
-
-<!-- /rfc -->
+and grounding attribution. <!-- /rfc -->
 <!-- rfc: {"id": "RK-25.3-015", "kind": "behavior", "applies": "A generation progress callback may receive individual call outcomes or preview images.", "level": "may"} -->
-A progress callback MAY receive individual call outcomes or preview images.<!-- /rfc --><!-- rfc: {"id": "RK-25.3-016", "kind": "behavior", "applies": "A provider offering image previews identifies them separately from final results.", "level": "must"} -->
-Previews MUST be distinguished from final results. <!-- /rfc --><!-- rfc: {"id": "RK-25.3-017", "kind": "behavior", "applies": "Delivering image progress does not establish vendor cancellation or a refund.", "level": "must"} -->Callback delivery does not
-imply vendor cancellation or a refund, <!-- /rfc --><!-- rfc: {"id": "RK-25.3-018", "kind": "behavior", "applies": "Failure to deliver a progress outcome does not trigger another generation.", "level": "must"} -->and failure to deliver an outcome MUST
-NOT trigger another generation.
-<!-- /rfc -->
+A progress callback MAY receive individual call outcomes or preview images.<!-- /rfc -->
 
 ### 25.4 Editing
 
@@ -24389,10 +24224,7 @@ Editing — an image and a prompt in, an image out — is expressed through
 `reference_images` on `generate`, not through a second method.
 
 <!-- /rfc -->
-<!-- rfc: {"id": "RK-25.4-003", "kind": "behavior", "applies": "The provider hides its vendor's distinction between editing with references and prompt-only generation endpoints.", "level": "must"} -->
-The distinction is the vendor's, not the caller's: one API takes reference
-images as ordinary content on the same endpoint, another routes them to a
-separate one. A provider MUST absorb that difference. <!-- /rfc --><!-- rfc: {"id": "RK-25.4-004", "kind": "behavior", "applies": "Providers that cannot edit report supports_editing as false.", "level": "must"} -->A provider that cannot
+<!-- rfc: {"id": "RK-25.4-004", "kind": "behavior", "applies": "Providers that cannot edit report supports_editing as false.", "level": "must"} -->A provider that cannot
 edit MUST report `supports_editing` as false <!-- /rfc --><!-- rfc: {"id": "RK-25.4-005", "kind": "behavior", "applies": "Providers that cannot edit reject nonempty references instead of ignoring them.", "level": "must"} -->and MUST raise when
 `reference_images` is non-empty, rather than generating from the prompt alone —
 a caller that asked for an edit and silently received a fresh image has no
@@ -24401,23 +24233,15 @@ signal that the reference was dropped.
 <!-- /rfc -->
 <!-- rfc: {"id": "RK-25.4-006", "kind": "behavior", "applies": "A provider may expose continuity through an earlier interaction identifier.", "level": "may"} -->
 A provider MAY support continuity through a previous interaction identifier.<!-- /rfc --><!-- rfc: {"id": "RK-25.4-007", "kind": "non_testable", "applies": "The caller authorizes access to an earlier interaction used for continuity.", "level": "must"} -->
-The caller remains responsible for authorizing access to that interaction.<!-- /rfc --><!-- rfc: {"id": "RK-25.4-008", "kind": "behavior", "applies": "A stateful provider exposes an explicit choice that lets the caller disable remote history storage.", "level": "must"} -->
-A stateful provider MUST expose an explicit storage choice so applications can
-disable remote history retention. <!-- /rfc --><!-- rfc: {"id": "RK-25.4-009", "kind": "behavior", "applies": "A stateful provider may retain its default storage behaviour when the caller omits the choice.", "level": "may"} -->Omitting this choice MAY preserve the
-provider default; <!-- /rfc --><!-- rfc: {"id": "RK-25.4-010", "kind": "non_testable", "applies": "Applications cannot assume that omitting the storage choice makes generation stateless.", "level": "must"} -->applications MUST NOT assume that omitted means stateless.<!-- /rfc --><!-- rfc: {"id": "RK-25.4-011", "kind": "behavior", "applies": "An implementation honours requests for external-search grounding only on models that support it.", "level": "must"} -->
-Grounding with external search MAY be requested only on compatible models;<!-- /rfc --><!-- rfc: {"id": "RK-25.4-012", "kind": "behavior", "applies": "Where external-search grounding is supported, available citations and search-suggestion metadata are retained for the caller to display under provider requirements.", "level": "must"} -->
-available citations and search-suggestion metadata MUST be retained for the
-caller to display according to the provider's requirements.
+The caller remains responsible for authorizing access to that interaction.<!-- /rfc --><!-- rfc: {"id": "RK-25.4-012", "kind": "behavior", "applies": "A generation grounded with external search: its grounding metadata (citations, search suggestions), kept unchanged for the caller.", "level": "must"} -->
+
+The grounding metadata a generation grounded with external search returns
+(its citations, its search suggestions) MUST be kept unchanged for the caller.
 <!-- /rfc -->
 
 ### 25.5 Usage Accounting
 
-<!-- rfc: {"id": "RK-25.5-002", "kind": "behavior", "applies": "A generation reports the text and image consumption its vendor meters separately.", "level": "must"} -->
-A generation reports what it consumed. An image and the text around it are
-metered separately by the vendors that meter them at all, so the counters stay
-apart rather than collapsing into one number:
 
-<!-- /rfc -->
 <!-- rfc: {"id": "RK-25.5-003", "kind": "structural", "applies": "The image generation usage model has separate integer input and output fields for text and image tokens.", "level": "must"} -->
 ```
 usage
@@ -24429,14 +24253,7 @@ usage
 
 <!-- /rfc -->
 <!-- rfc: {"id": "RK-25.5-004", "kind": "behavior", "applies": "A reported generation token belongs to exactly one counter.", "level": "must"} -->
-The counters MUST be disjoint: a token appears under exactly one of them.<!-- /rfc --><!-- rfc: {"id": "RK-25.5-005", "kind": "behavior", "applies": "When image tokens are included in a total, subtract them to report the text count.", "level": "must"} -->
-Where a vendor reports image tokens as a subset of a total, an implementation
-MUST subtract them before reporting the text counter, so a consumer summing
-the counters counts each token once. Without that guarantee the counters cannot
-be combined at all, and the breakdown is worth less than the single total it
-replaced.
-
-<!-- /rfc -->
+The counters MUST be disjoint: a token appears under exactly one of them.<!-- /rfc -->
 <!-- rfc: {"id": "RK-25.5-006", "kind": "behavior", "applies": "Unreported token counters are absent, preserving the distinction from a reported zero.", "level": "must"} -->
 Counters a vendor does not report are absent, not zero: a reported zero and an
 unreported quantity are different claims, and only one of them is safe to add
@@ -24455,28 +24272,10 @@ to price.
 
 ### 25.6 Model Catalogue
 
-<!-- rfc: {"id": "RK-25.6-002", "kind": "behavior", "applies": "The offline image and conversation catalogues have disjoint sets of model identifiers.", "level": "must"} -->
-An image catalogue is a set disjoint from the conversational one: a model that
-draws is not a model that converses, and neither list contains an id belonging
-to the other.
-
-<!-- /rfc -->
-<!-- rfc: {"id": "RK-25.6-003", "kind": "behavior", "applies": "A single catalogue enumeration does not merge image and conversational models.", "level": "must"} -->
-An implementation MUST NOT merge the two into the response of a single
-enumeration. Merging saves no maintenance — the entries are written once
-either way — while obliging every consumer of the conversational catalogue,
-including those populating a model field for a conversational agent, to filter
-a class of models it can never use. <!-- /rfc --><!-- rfc: {"id": "RK-25.6-004", "kind": "behavior", "applies": "Image catalogue entries should include a capability tag identifying image generation.", "level": "should"} -->Entries SHOULD nevertheless carry a
-capability tag identifying them as image-generating, so a consumer that
-deliberately combines the lists can still tell them apart.
-
-<!-- /rfc -->
 <!-- rfc: {"id": "RK-25.6-005", "kind": "structural", "applies": "An image catalogue entry may expose structured capabilities for its model.", "level": "may"} -->
 Catalogue entries MAY carry structured image capabilities, including accepted
 controls and values, geometry constraints, reference limits, continuity,
-masking, search, and retirement dates. <!-- /rfc --><!-- rfc: {"id": "RK-25.6-006", "kind": "behavior", "applies": "Unknown image-model capabilities stay unknown rather than being inferred from another model.", "level": "must"} -->Unknown capabilities MUST remain unknown
-rather than being inferred from another model in the same vendor's lineup.
-<!-- /rfc -->
+masking, search, and retirement dates. <!-- /rfc -->
 
 ### 25.7 Non-Goals
 
@@ -24590,6 +24389,9 @@ A Level 1 implementation SHOULD additionally support:
 - Retry policy
 - Rate limiting
 - Telemetry provider abstraction (Section 15.7)
+
+A provider counts whether it ships with the implementation or as a separate
+package built on its provider interface.
 <!-- /rfc -->
 
 ### 26.3 Level 2: Rich (OPTIONAL)
@@ -24629,6 +24431,9 @@ A Level 2 implementation MAY additionally support:
 - AI steering directives (Section 21.3)
 - Advanced memory providers: Summarizing, Retrieval (Section 20)
 - A turn backend whose executors run in other processes (Section 10.6)
+
+A provider counts whether it ships with the implementation or as a separate
+package built on its provider interface.
 <!-- /rfc -->
 
 ### 26.4 Level 3: Real-Time Media (OPTIONAL)
@@ -24716,6 +24521,9 @@ A Level 3 implementation MAY additionally support audio and/or video real-time m
   Participant records)
 - Optional: vision on tracks (Planned), egress recording delegation, SIP gateway
   interop, bot video publication (avatar), speech-to-speech composition
+
+A provider counts whether it ships with the implementation or as a separate
+package built on its provider interface.
 
 <!-- /rfc -->
 ---
@@ -25812,7 +25620,7 @@ TelegramChannel
 <!-- /rfc -->
 <!-- rfc: {"id": "RK-A.13-007", "kind": "behavior", "applies": "§A.13 Telegram Channel, where an implementation offers one (Level 2, §26.3): delivery through the platform's bot API (its message and photo sends). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
-└── delivery: sends via Telegram Bot API (sendMessage, sendPhoto, etc.)
+└── delivery: through the platform's bot API (its message and photo sends)
 ```
 <!-- /rfc -->
 
