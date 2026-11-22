@@ -10179,14 +10179,14 @@ segments and their hooks, the delivery to streaming targets, the turn record
 
 ### 11.1 Identity Resolver Interface
 
-<!-- rfc: {"id": "RK-11.1-001", "kind": "structural", "applies": "§11.1 Identity Resolver Interface; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-11.1-001", "kind": "structural", "applies": "§11.1 IdentityResolver interface: its one call, with the inbound message and the room context, answering an IdentityResult. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 IdentityResolver (interface)
 └── resolve(message: InboundMessage, context: RoomContext) → IdentityResult
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-11.1-002", "kind": "behavior", "applies": "§11.1 Identity Resolver Interface; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-11.1-002", "kind": "structural", "applies": "§11.1 IdentityResult: the fields a resolver answers with. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **IdentityResult:**
 
 ```
@@ -10200,7 +10200,7 @@ IdentityResult
 
 ### 11.2 Resolution Pipeline
 
-<!-- rfc: {"id": "RK-11.2-001", "kind": "behavior", "applies": "§11.2 Resolution Pipeline; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-11.2-002", "kind": "behavior", "applies": "§11.2 Resolution pipeline, for an inbound message with an address left to resolve (§11.6): the resolver's call with the message and the room context, and the IdentityResult it returns. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 Inbound arrives (channel_type, sender_address)
       │
@@ -10210,45 +10210,99 @@ IdentityResolver.resolve(message, context)
       ▼
 Returns IdentityResult
       │
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-11.2-003", "kind": "behavior", "applies": "§11.2 Resolution pipeline: a resolver's IDENTIFIED result (one match). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
       ├── IDENTIFIED (1 match)
       │   └── Create participant with identity_id set
       │
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-11.2-004", "kind": "behavior", "applies": "§11.2 Resolution pipeline: a resolver's AMBIGUOUS result (several matches), which fires ON_IDENTITY_AMBIGUOUS. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
       ├── AMBIGUOUS (N matches)
       │   ├── Fire ON_IDENTITY_AMBIGUOUS hook
       │   └── Hook returns:
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-11.2-005", "kind": "behavior", "applies": "§11.2 ON_IDENTITY_AMBIGUOUS: a hook's resolved(identity). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
       │       ├── resolved(identity) → use that identity
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-11.2-006", "kind": "behavior", "applies": "§11.2 ON_IDENTITY_AMBIGUOUS: a hook's pending(), or a null from every hook. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
       │       ├── pending() or null → create pending participant
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-11.2-007", "kind": "behavior", "applies": "§11.2 ON_IDENTITY_AMBIGUOUS: a hook's challenge(inject). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
       │       ├── challenge(inject) → commit the challenge (§9.4), block processing
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-11.2-008", "kind": "behavior", "applies": "§11.2 ON_IDENTITY_AMBIGUOUS: a hook's reject(). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
       │       └── reject() → reject the message
       │
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-11.2-009", "kind": "behavior", "applies": "§11.2 Resolution pipeline: a resolver's UNKNOWN result (no match) or its REJECTED, which fires ON_IDENTITY_UNKNOWN. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
       └── UNKNOWN (0 matches), or the resolver's REJECTED
           ├── Fire ON_IDENTITY_UNKNOWN hook
           └── Hook returns:
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-11.2-010", "kind": "behavior", "applies": "§11.2 ON_IDENTITY_UNKNOWN: a hook's resolved(identity). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
               ├── resolved(identity) → use that identity
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-11.2-011", "kind": "behavior", "applies": "§11.2 ON_IDENTITY_UNKNOWN: a hook's pending(candidates). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
               ├── pending(candidates) → create pending participant
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-11.2-012", "kind": "behavior", "applies": "§11.2 ON_IDENTITY_UNKNOWN: a hook's challenge(inject). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
               ├── challenge(inject) → commit the challenge (§9.4), block processing
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-11.2-013", "kind": "behavior", "applies": "§11.2 ON_IDENTITY_UNKNOWN: a hook's reject(). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
               ├── reject() → reject the message
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-11.2-014", "kind": "behavior", "applies": "§11.2 ON_IDENTITY_UNKNOWN: a null from every hook, on a resolver's UNKNOWN and on its REJECTED. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
               └── null → UNKNOWN: process the message, its sender unresolved;
                          REJECTED: block it with the resolver's message,
                          else identity_rejected
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-11.2-015", "kind": "behavior", "applies": "§11.2 Identity hooks of ON_IDENTITY_AMBIGUOUS and ON_IDENTITY_UNKNOWN: what each is handed, and their order. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Identity hooks receive the event, the room context and the IdentityResult, and
-run in registration order. The first one that returns a result decides; one
-that raises is logged and the next one runs. A result whose status the trigger
-does not act on is read as null. A hook registered on these two triggers
+run in registration order. <!-- /rfc --><!-- rfc: {"id": "RK-11.2-016", "kind": "behavior", "applies": "§11.2 Identity hooks: the first result decides, and a hook that raises. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The first one that returns a result decides; one
+that raises is logged and the next one runs. <!-- /rfc --><!-- rfc: {"id": "RK-11.2-017", "kind": "behavior", "applies": "§11.2 Identity hooks: a result whose status the trigger does not act on. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A result whose status the trigger
+does not act on is read as null. <!-- /rfc --><!-- rfc: {"id": "RK-11.2-018", "kind": "behavior", "applies": "§11.2 ON_IDENTITY_AMBIGUOUS and ON_IDENTITY_UNKNOWN: a hook registered on them through HookRegistration (§9.1), an observer. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A hook registered on these two triggers
 through HookRegistration (Section 9.1) runs after them as an observer and
-cannot decide. The pending participant carries the resolver's candidates on
+cannot decide. <!-- /rfc --><!-- rfc: {"id": "RK-11.2-019", "kind": "behavior", "applies": "§11.2 A pending participant an identity trigger creates: its candidates on each trigger, and the display_name of a hook's pending(). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The pending participant carries the resolver's candidates on
 ON_IDENTITY_AMBIGUOUS, and on ON_IDENTITY_UNKNOWN the hook's, else the
 resolver's; on either trigger, a hook's `pending()` gives the record it
 creates its `display_name`.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-11.2-020", "kind": "behavior", "applies": "§11.2 A resolver's REJECTED: what the hooks of ON_IDENTITY_UNKNOWN read of it, what they may still decide, and the message when none decides. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A resolver's REJECTED is its refusal: the identity hooks of
 ON_IDENTITY_UNKNOWN read it as REJECTED, with its message, and may still
 name, pend, challenge or reject the sender, but when none of them decides,
 the message is blocked with the resolver's message, else `identity_rejected`,
 and nothing of it is stored.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-11.2-021", "kind": "behavior", "applies": "§11.2 A pending sender: the record their events are sent under, never one under the id the channel gave (the sentence after it gives the reason). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A pending sender is never given a record under the id the channel gave: the
 event is sent under the room's record of that id when one was reached through
 the channel (a member the host added), else under the sender's own record,
@@ -10257,7 +10311,7 @@ SHA-256 of the channel id, U+001F and the sender id, one per sender and
 channel. A sender who chooses their id (on a WebSocket, in an HTTP body) could
 otherwise take an identity's id: the pending record under it
 would be completed when that identity is resolved on another channel, and
-its impostor's next message would pass for an identified sender (§11.6). The
+its impostor's next message would pass for an identified sender (§11.6). <!-- /rfc --><!-- rfc: {"id": "RK-11.2-022", "kind": "behavior", "applies": "§11.2 A pending sender's own record: the sender's address names it on its channel, for an advisor's resolution and for routing. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The
 sender's address names that record on its channel (§5.5): an advisor's
 resolution of it spares the sender resolution (§11.6), and routing finds
 their room by it (§10.4 step 1).
@@ -10265,7 +10319,7 @@ their room by it (§10.4 step 1).
 
 ### 11.3 Identity Hook Result
 
-<!-- rfc: {"id": "RK-11.3-001", "kind": "behavior", "applies": "§11.3 Identity Hook Result; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-11.3-002", "kind": "structural", "applies": "§11.3 IdentityHookResult: the fields an identity hook answers with, and those the framework reads for each status. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 IdentityHookResult
 ├── status: IdentificationStatus            # The outcome (below)
@@ -10277,11 +10331,13 @@ IdentityHookResult
 ├── challenge_type: string | null           # Not read by the framework
 └── message: string | null                  # Set by challenge(); not read
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-11.3-003", "kind": "structural", "applies": "§11.3: the helpers that build an IdentityHookResult, the status each sets, and reject()'s default reason. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 `resolved(identity)`, `pending(display_name, candidates)`,
 `challenge(inject, message)` and `reject(reason)` set `status` to IDENTIFIED,
 PENDING, CHALLENGE_SENT and REJECTED; `reject` defaults its reason to
-"Unknown sender". A challenge blocks the message with the reason
+"Unknown sender". <!-- /rfc --><!-- rfc: {"id": "RK-11.3-004", "kind": "behavior", "applies": "§11.3: what a hook's CHALLENGE_SENT result blocks and commits, and a REJECTED result with no reason, on each identity trigger. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A challenge blocks the message with the reason
 `identity_challenge_sent`, and its `inject` is committed as an injected event
 (§9.4), in a cascade of its own; a REJECTED result with no reason blocks it
 with `identity_rejected` on ON_IDENTITY_AMBIGUOUS and `unknown_sender` on
@@ -10290,7 +10346,7 @@ ON_IDENTITY_UNKNOWN.
 
 ### 11.4 Channel Type Filtering
 
-<!-- rfc: {"id": "RK-11.4-001", "kind": "behavior", "applies": "§11.4 Channel Type Filtering; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-11.4-001", "kind": "behavior", "applies": "§11.4 Channel type filtering: the channel types identity resolution runs for, configurable (the second sentence gives the reason). Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 Implementations SHOULD support configuring which channel types trigger identity
 resolution. Not all channels carry meaningful identity information (e.g., an
 internal WebSocket may not need identity resolution).
@@ -10298,54 +10354,58 @@ internal WebSocket may not need identity resolution).
 
 ### 11.5 Timeout Handling
 
-<!-- rfc: {"id": "RK-11.5-001", "kind": "behavior", "applies": "§11.5 Timeout Handling; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-11.5-002", "kind": "behavior", "applies": "§11.5 A resolution past the configured identity timeout: its result, read as UNKNOWN. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 If identity resolution exceeds the configured timeout, the implementation MUST:
 
-1. Treat the result as UNKNOWN.
-2. Emit an `identity_timeout` framework event.
+1. Treat the result as UNKNOWN.<!-- /rfc --><!-- rfc: {"id": "RK-11.5-003", "kind": "behavior", "applies": "§11.5 A resolution past the configured identity timeout: the identity_timeout framework event. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+2. Emit an `identity_timeout` framework event.<!-- /rfc --><!-- rfc: {"id": "RK-11.5-004", "kind": "behavior", "applies": "§11.5 A resolution past the configured identity timeout: the inbound message, processed on. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 3. Continue processing the inbound message (do not block).
 <!-- /rfc -->
 
 ### 11.6 Senders With Nothing To Resolve
 
-<!-- rfc: {"id": "RK-11.6-001", "kind": "behavior", "applies": "§11.6 Senders With Nothing To Resolve; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-11.6-002", "kind": "behavior", "applies": "§11.6 Senders with nothing to resolve, the list's rule and case 1: a channel that declares its inbound sender_id a room Participant.id, whose senders are not resolved (the opening sentence says what a resolver maps). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A resolver maps an **address** — a number, an email, a handle — to an Identity.
 Three senders carry no such question, and an implementation MUST NOT run
 resolution for them:
 
 1. **The channel names its own senders.** A channel MAY declare that its
-   inbound `sender_id` is a room `Participant.id` rather than an address. A
+   inbound `sender_id` is a room `Participant.id` rather than an address. <!-- /rfc --><!-- rfc: {"id": "RK-11.6-003", "kind": "behavior", "applies": "§11.6 case 1, conference (media feature conference): a conference's utterances, under the identity their track was published under, not resolved (Section 12.10.2 rule 3). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
    conference is the case this exists for (Section 12.10.4): its utterances
    carry the identity a track was published under, and resolving that is the
-   "resolve on the opaque identity" Section 12.10.2 rule 3 rules out.
+   "resolve on the opaque identity" Section 12.10.2 rule 3 rules out.<!-- /rfc --><!-- rfc: {"id": "RK-11.6-004", "kind": "behavior", "applies": "§11.6 case 2, under the list's rule: an event whose participant_id names, on the event's channel, an IDENTIFIED participant of the room, the sender's own record (§11.2) included, which is not resolved. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 2. **The room has already identified the sender.** Where the event's
    `participant_id` names, on the event's channel (Section 5.5), a Participant
    of the room whose `identification` is IDENTIFIED, the sender's own record
    (Section 11.2) included, the question has been answered and the answer is
-   on the roster. The same id on a channel the
-   participant was never reached through answers nothing, and is resolved.
+   on the roster. <!-- /rfc --><!-- rfc: {"id": "RK-11.6-005", "kind": "behavior", "applies": "§11.6 case 2: an IDENTIFIED participant's id on a channel the participant was never reached through, which is resolved. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The same id on a channel the
+   participant was never reached through answers nothing, and is resolved.<!-- /rfc --><!-- rfc: {"id": "RK-11.6-006", "kind": "behavior", "applies": "§11.6 case 3, under the list's rule: a message the framework writes into a room (a deliver(), an orchestration cue), not resolved and met by no identity hook. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 3. **The framework wrote the message itself.** A message the framework writes
    into a room (a `deliver()`, an orchestration cue: Section 10.4) names no
    correspondent. There is no address to resolve, and the kit's identity
    hooks would challenge the host's own delivery like a stranger's message
-   and block it. It stays under the sender `system`, whatever record of the
-   room that name would find: case 2 does not apply to it. An implementation
+   and block it. <!-- /rfc --><!-- rfc: {"id": "RK-11.6-007", "kind": "behavior", "applies": "§11.6 case 3: the sender of the framework's own message, kept as system whatever record of the room that name would find. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->It stays under the sender `system`, whatever record of the
+   room that name would find: case 2 does not apply to it. <!-- /rfc --><!-- rfc: {"id": "RK-11.6-008", "kind": "behavior", "applies": "§11.6 case 3: how an implementation knows the framework's own message, and a caller's message under the sender system, which is resolved. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An implementation
    knows such a message by where it comes from, never by the sender `system`
    it carries, which any caller can write: a message a caller sends under
    that name, in a room it names, is resolved like any other, an instruction
-   included (Section 10.1.1). An application whose kit runs identity hooks
+   included (Section 10.1.1). <!-- /rfc --><!-- rfc: {"id": "RK-11.6-009", "kind": "non_testable", "applies": "§11.6 case 3: how an application whose kit runs identity hooks sends its own instructions; only the application keeps it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An application whose kit runs identity hooks
    sends its own instructions with `deliver()`.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-11.6-010", "kind": "behavior", "applies": "§11.6 case 1: a channel that reads its sender_id off the wire, which does not declare case 1. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Case 1 is not the conference alone. The test is where the `sender_id` comes
 from. A channel that reads it off the wire carries whatever the remote network
-put there, and is not this case. A channel the implementation itself names the
+put there, and is not this case. <!-- /rfc --><!-- rfc: {"id": "RK-11.6-011", "kind": "behavior", "applies": "§11.6 case 1: a channel the implementation itself names the sender of (an interactive terminal), which declares case 1. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A channel the implementation itself names the
 sender of — an interactive terminal, whose sender is a Participant the
 implementation chose rather than a party that reached it from outside — is the
-same case as the conference, and declares it for the same reason. A channel
+same case as the conference, and declares it for the same reason. <!-- /rfc --><!-- rfc: {"id": "RK-11.6-012", "kind": "behavior", "applies": "§11.6 case 1: a channel whose sender_id the integrator supplies, which does not declare case 1, its resolution left to configuration (§11.4). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A channel
 whose `sender_id` is supplied by the integrator is neither: it may carry an
 address or it may not, which is why Section 11.4 leaves that one to
 configuration rather than to the channel.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-11.6-013", "kind": "behavior", "applies": "§11.6 case 2: a PENDING or AMBIGUOUS participant, still resolved (the next paragraph says why skipping an identified one matters). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 `PENDING` and `AMBIGUOUS` participants are deliberately not in case 2: a
 participant the room *has* is not a participant the room has *identified*, a
 resolver may still be what settles it, and the identity hooks of Section 11.2
@@ -10357,7 +10417,9 @@ identified produces UNKNOWN — no resolver matches a framework identifier — s
 provides for (`reject`) then blocks every message from a participant the
 implementation itself identified. Skipping it is what keeps that pattern
 composable with channels that name their own participants.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-11.6-014", "kind": "behavior", "applies": "§11.6 A sender resolution skips: the event's participant_id, and no participant record created or modified. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 When resolution is skipped, the event's `participant_id` MUST be left as the
 channel set it, but in case 2 for an event the sender's own record (Section
 11.2) names, which is sent under that record's id as their events were while
@@ -10368,7 +10430,7 @@ participant, deliberately unattributed, or the framework itself.
 
 ### 11.7 Identity Verification
 
-<!-- rfc: {"id": "RK-11.7-001", "kind": "behavior", "applies": "§11.7 Identity Verification; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-11.7-001", "kind": "behavior", "applies": "§11.7 Identity verification, where an implementation supports it: the senders it applies to, IDENTIFIED ones only (the paragraph's other sentences say what verification is, and what §11.7.1 to §11.7.7 give the implementation and leave to the integrator). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Identification says whose an address is; **verification** says the person
 writing has proven it. A number that resolves to Alice says the phone is
 Alice's, not that Alice is typing. A service that answers account questions
@@ -10382,7 +10444,7 @@ sender only; an identification challenge (§11.2) is another matter.
 
 #### 11.7.1 State
 
-<!-- rfc: {"id": "RK-11.7.1-001", "kind": "behavior", "applies": "§11.7.1 State; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-11.7.1-002", "kind": "structural", "applies": "§11.7.1 Verification: its fields. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 Verification
 ├── identity_id: string
@@ -10397,16 +10459,18 @@ Verification
 └── completed_request_id: string | null    # The request that completed it: its end is
                                            # announced in that request's room
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-11.7.1-003", "kind": "behavior", "applies": "§11.7.1: a verification held by the identity, on every channel and in every room its addresses reach, and its verified_via. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A verification belongs to the **identity**: once verified, the person is
 verified on every channel and in every room their addresses reach, and
 `verified_via` tells where they proved it, for an integrator that requires a
-channel of its own. An identity with no record is UNVERIFIED.
+channel of its own. <!-- /rfc --><!-- rfc: {"id": "RK-11.7.1-004", "kind": "behavior", "applies": "§11.7.1: an identity with no verification record. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An identity with no record is UNVERIFIED.
 <!-- /rfc -->
 
 #### 11.7.2 Requests
 
-<!-- rfc: {"id": "RK-11.7.2-001", "kind": "behavior", "applies": "§11.7.2 Requests; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-11.7.2-002", "kind": "structural", "applies": "§11.7.2 VerificationRequest: its fields. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 VerificationRequest
 ├── id: string                             # Public reference
@@ -10421,88 +10485,98 @@ VerificationRequest
 ├── max_attempts: int                      # The policy's bound when it was opened
 └── status: OPEN | COMPLETED | FAILED | EXPIRED | CANCELLED
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-11.7.2-003", "kind": "behavior", "applies": "§11.7.2 request_verification: the request it opens, returned with its secret once, the secret's hash alone kept. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 `request_verification(identity_id, room_id, channel_id, method, window_start)`
 opens a request and returns it with its secret, once: the integrator puts the
 secret in its link or sends it as a code, and the implementation keeps only
-its hash. Its lifetime and attempts come from the configured policy. A
+its hash. <!-- /rfc --><!-- rfc: {"id": "RK-11.7.2-004", "kind": "behavior", "applies": "§11.7.2: a request's lifetime and attempts, from the configured policy. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Its lifetime and attempts come from the configured policy. <!-- /rfc --><!-- rfc: {"id": "RK-11.7.2-005", "kind": "behavior", "applies": "§11.7.2: a request's organization, its room's, and a caller acting for another organization. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
 request takes its room's organization, the scope whose messages it verifies;
 a caller acting for another organization is refused as for the room itself
-(§17.2). An identity that is not verified becomes PENDING; one already verified
-stays VERIFIED meanwhile (asking again does not end a verification in force).
-Opening a request cancels the identity's earlier open one. `complete_verification(request_id, secret,
+(§17.2). <!-- /rfc --><!-- rfc: {"id": "RK-11.7.2-006", "kind": "behavior", "applies": "§11.7.2: the identity's verification status once a request is opened, unverified or already verified. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An identity that is not verified becomes PENDING; one already verified
+stays VERIFIED meanwhile (asking again does not end a verification in force).<!-- /rfc --><!-- rfc: {"id": "RK-11.7.2-007", "kind": "behavior", "applies": "§11.7.2: the identity's earlier open request, when a request is opened. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+Opening a request cancels the identity's earlier open one. <!-- /rfc --><!-- rfc: {"id": "RK-11.7.2-008", "kind": "behavior", "applies": "§11.7.2 complete_verification: the secret compared in constant time, and a request that is not OPEN or has expired. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`complete_verification(request_id, secret,
 method)` is called by the integrator once its own check passed (the page's
 PIN, the login); it compares the secret in constant time and refuses a
-request that is not OPEN or has expired. A mismatch counts as an attempt, and
+request that is not OPEN or has expired. <!-- /rfc --><!-- rfc: {"id": "RK-11.7.2-009", "kind": "behavior", "applies": "§11.7.2: a wrong secret and a failure of the integrator's own check (record_failed_attempt), each an attempt on the request's bound. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A mismatch counts as an attempt, and
 so does a failure of the integrator's own check, which it reports with
 `record_failed_attempt(request_id)` (a wrong PIN on its page): the bound is
-the request's, so a PIN cannot be guessed through the integrator's page. At
+the request's, so a PIN cannot be guessed through the integrator's page. <!-- /rfc --><!-- rfc: {"id": "RK-11.7.2-010", "kind": "behavior", "applies": "§11.7.2: a request at the policy's bound on attempts, which fails, and the verification in force it ends. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->At
 the policy's bound the request FAILS, and a request that fails while the
 identity is VERIFIED ends that verification too: whoever could not prove it
-is not let on as the person (fail closed). A request that expires unanswered
-changes nothing. A completion makes the identity
+is not let on as the person (fail closed). <!-- /rfc --><!-- rfc: {"id": "RK-11.7.2-011", "kind": "behavior", "applies": "§11.7.2: a request that expires unanswered. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A request that expires unanswered
+changes nothing. <!-- /rfc --><!-- rfc: {"id": "RK-11.7.2-012", "kind": "behavior", "applies": "§11.7.2: a completion: the identity VERIFIED until now + ttl, verification_completed and ON_VERIFICATION_COMPLETED (ASYNC). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A completion makes the identity
 VERIFIED until `now + ttl`, emits `verification_completed` and fires
 ON_VERIFICATION_COMPLETED (ASYNC).
 <!-- /rfc -->
 
 #### 11.7.3 Labels and holding
 
-<!-- rfc: {"id": "RK-11.7.3-001", "kind": "behavior", "applies": "§11.7.3 Labels and holding; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-11.7.3-002", "kind": "behavior", "applies": "§11.7.3, where verification is configured: source.verification, stamped on every event of an identified sender (§10.1 step 5b). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The inbound pipeline stamps `source.verification` on every event of an
 identified sender (§10.1 step 5b), so a hook, a router, a user interface and
-a context builder read one fact. An identified sender is the identity the
+a context builder read one fact. <!-- /rfc --><!-- rfc: {"id": "RK-11.7.3-003", "kind": "behavior", "applies": "§11.7.3: the identified sender a label is for, and an identity's id arriving through a channel it was never resolved on. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An identified sender is the identity the
 pipeline resolved for the event, or the IDENTIFIED participant the event's id
 names on its channel (Section 5.5): an identity's id arriving through a
-channel it was never resolved on carries no verification. While the
+channel it was never resolved on carries no verification. <!-- /rfc --><!-- rfc: {"id": "RK-11.7.3-004", "kind": "behavior", "applies": "§11.7.3: ON_VERIFICATION_REQUIRED (SYNC), fired on every event of an identified sender who is not VERIFIED, its hooks deciding per message. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->While the
 identity is not VERIFIED, every such event fires ON_VERIFICATION_REQUIRED
-(SYNC), whose hooks decide per message:
+(SYNC), whose hooks decide per message:<!-- /rfc --><!-- rfc: {"id": "RK-11.7.3-005", "kind": "behavior", "applies": "§11.7.3 ON_VERIFICATION_REQUIRED, hold, the default when no hook passes: the event stored and delivered marked held, its scope narrowed to the transport channels it reached, read by no intelligence channel. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 - **hold** (the default when no hook passes it): the event is stored and
   delivered marked held, its scope narrowed to the transport channels it
   reached — those both its own visibility and its source binding's include
   (§7.3) — so the room's people and transports (an advisor's console) see
-  it and no intelligence channel reads it, in delivery or in context.
-  Holding never widens what a message reached. The mark is the event's
+  it and no intelligence channel reads it, in delivery or in context.<!-- /rfc --><!-- rfc: {"id": "RK-11.7.3-006", "kind": "behavior", "applies": "§11.7.3 hold: what a held message reached, never widened. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+  Holding never widens what a message reached. <!-- /rfc --><!-- rfc: {"id": "RK-11.7.3-007", "kind": "behavior", "applies": "§11.7.3 hold: the mark roomkit:verification_held and what it carries. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The mark is the event's
   metadata `roomkit:verification_held`: `{visibility, identity_id,
   organization_id}`, the scope it was committed with, which its release
-  restores, and whose message it is;
+  restores, and whose message it is;<!-- /rfc --><!-- rfc: {"id": "RK-11.7.3-008", "kind": "behavior", "applies": "§11.7.3 ON_VERIFICATION_REQUIRED, pass: the event going on as the hooks left it, labelled. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - **pass**: the event goes on as the hooks left it, labelled — where an
-  integrator lets a general question through. A hook passes a message
+  integrator lets a general question through. <!-- /rfc --><!-- rfc: {"id": "RK-11.7.3-009", "kind": "behavior", "applies": "§11.7.3 pass: a hook that passes a message explicitly, and a hook that merely allows it or fails (past its timeout among them), whose message is held. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A hook passes a message
   explicitly, its result's metadata `roomkit:verification` set to `pass`
   (`HookResult.allow_unverified()`); a hook that merely allows it (as one
   that only watches does) does not, nor does a hook that fails, one past
   its timeout among them: the trigger fails open (§9.3), and the message
-  is held;
+  is held;<!-- /rfc --><!-- rfc: {"id": "RK-11.7.3-010", "kind": "behavior", "applies": "§11.7.3 ON_VERIFICATION_REQUIRED, block: the message refused before anything of it is stored. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - **block**: the message is refused with the hook's reason,
   `verification_required` when it gives none, before anything of it is
   stored: no record, no delivery.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-11.7.3-011", "kind": "behavior", "applies": "§11.7.3 Where the policy holds: an edit or a deletion (§10.3) from an unverified sender. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Where the policy holds, an edit or a deletion (§10.3) from an unverified
 sender is refused `verification_required` unless a hook passes it, nothing
-of it stored: held, it would still change a message the agents read. The
+of it stored: held, it would still change a message the agents read. <!-- /rfc --><!-- rfc: {"id": "RK-11.7.3-012", "kind": "behavior", "applies": "§11.7.3: the ASYNC hooks of ON_VERIFICATION_REQUIRED, which observe the message the chain let through. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The
 trigger's ASYNC hooks observe the message the chain let through, never a
 blocked one.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-11.7.3-013", "kind": "behavior", "applies": "§11.7.3: labelling and holding where the integrator configured verification, and a configuration that labels without holding (the integrator's choice, which the implementation honours). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Labelling and holding apply where the integrator configured verification;
-a configuration MAY label without holding. Opening a request and telling
+a configuration MAY label without holding. <!-- /rfc --><!-- rfc: {"id": "RK-11.7.3-014", "kind": "non_testable", "applies": "§11.7.3: opening a request and telling the sender, the hook's, and the method, the integrator's; only the integrator keeps it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Opening a request and telling
 the sender (sending the link, the code) is the hook's: the method is the
-integrator's. The hook reads the sender's verification with
+integrator's. <!-- /rfc --><!-- rfc: {"id": "RK-11.7.3-015", "kind": "behavior", "applies": "§11.7.3 sender_verification(event, context): what it reads of the sender's verification, in the room's organization. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The hook reads the sender's verification with
 `sender_verification(event, context)`: whose it is, in the room's
-organization, and whether a request is open. It answers on the sender's
+organization, and whether a request is open. <!-- /rfc --><!-- rfc: {"id": "RK-11.7.3-016", "kind": "behavior", "applies": "§11.7.3 sender_verification on a sender's first message, before they are a participant of the room (the paragraph's last sentence is advice to a hook that opens requests). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->It answers on the sender's
 first message too, when the sender is not a participant of the room yet. A
 hook that opens a request only when none is open leaves a sender who writes
 again meanwhile in silence; reminding them means opening a new request, since
 a secret is never kept to be sent again.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-11.7.3-017", "kind": "behavior", "applies": "§11.7.3: the hold mark, the runtime's: one a sender's message carries, removed by the inbound pipeline, and the events ever released. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The mark of a held event is the runtime's: the inbound pipeline removes one
 that a sender's message carries, and only an event the pipeline held and
-labelled not VERIFIED is ever released (§11.7.6). A mark copied by any other
+labelled not VERIFIED is ever released (§11.7.6). <!-- /rfc --><!-- rfc: {"id": "RK-11.7.3-018", "kind": "behavior", "applies": "§11.7.3: a hold mark copied any other way than by the pipeline's hold. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A mark copied by any other
 way releases nothing.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-11.7.3-019", "kind": "behavior", "applies": "§11.7.3, speech-to-speech (media feature realtime): a speech-to-speech session (§12.4), in which nothing is labelled or held. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Labelling and holding act on messages. In a speech-to-speech session
 (§12.4) the model hears the person before any message exists, and their
 transcript is recorded afterwards: nothing there is labelled or held, and
-holding a transcript would not keep the words from the model. An integrator
+holding a transcript would not keep the words from the model. <!-- /rfc --><!-- rfc: {"id": "RK-11.7.3-020", "kind": "non_testable", "applies": "§11.7.3, speech-to-speech (media feature realtime): how an integrator that requires verification gates a session; only the integrator keeps it (the last sentence restates that the implementation holds nothing there). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An integrator
 that requires verification gates the session itself: it starts the session,
 or gives it the instructions and tools that reach an account, only once
 `verification_of` reads VERIFIED for the identity in the room's
@@ -10512,28 +10586,28 @@ session. The implementation does not claim to hold anything there.
 
 #### 11.7.4 Codes in the conversation
 
-<!-- rfc: {"id": "RK-11.7.4-001", "kind": "behavior", "applies": "§11.7.4 Codes in the conversation; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-11.7.4-002", "kind": "behavior", "applies": "§11.7.4 The code method: a message from the request's identity, in its room, whose whole text has the code's form, attempted and consumed (the opening sentence says what a code is). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 With the method `code`, the secret is a short code the person replies with in
 the conversation. A message from the request's identity, in its room, whose
 whole text has the code's form (the policy's code length of characters
 Unicode gives a digit value, the whitespace around them left out) is an
 attempt and is consumed (§10.1 step 5b): the call is refused `verification_code`, its text is never stored nor
 broadcast, no agent reads it, and the attempt is recorded by the framework
-events alone. A wrong code counts as an attempt and is consumed all the
-same. The attempt is a write: neither it nor what a completion runs (§11.7.6)
+events alone. <!-- /rfc --><!-- rfc: {"id": "RK-11.7.4-003", "kind": "behavior", "applies": "§11.7.4: a wrong code, an attempt consumed all the same. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A wrong code counts as an attempt and is consumed all the
+same. <!-- /rfc --><!-- rfc: {"id": "RK-11.7.4-004", "kind": "behavior", "applies": "§11.7.4: a code's attempt and what its completion runs (§11.7.6), free of the call's pre-commit deadline (§13.6), and a caller that stops waiting. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The attempt is a write: neither it nor what a completion runs (§11.7.6)
 carries the call's pre-commit deadline (§13.6), which bounds step 5b's read
 of the sender's verification and its hooks alone, and a caller that stops
-waiting cuts neither. Any other message is an ordinary one: digits with no
-code request open, or a code sent in another room. A code is short, so its
+waiting cuts neither. <!-- /rfc --><!-- rfc: {"id": "RK-11.7.4-005", "kind": "behavior", "applies": "§11.7.4: any other message, digits with no code request open or a code sent in another room, an ordinary one. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Any other message is an ordinary one: digits with no
+code request open, or a code sent in another room. <!-- /rfc --><!-- rfc: {"id": "RK-11.7.4-006", "kind": "behavior", "applies": "§11.7.4: a code request's time and attempts, bounded tightly. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A code is short, so its
 request's time and attempts MUST be bounded tightly.
 <!-- /rfc -->
 
 #### 11.7.5 The end of a verification
 
-<!-- rfc: {"id": "RK-11.7.5-001", "kind": "behavior", "applies": "§11.7.5 The end of a verification; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-11.7.5-002", "kind": "behavior", "applies": "§11.7.5: the ends of a verification, expired and revoked (revoke_verification), and the ends of a request. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A verification ends when its time runs out (EXPIRED) or when the integrator
 revokes it (`revoke_verification(identity_id, reason)`, REVOKED); a request
-ends when it fails, expires or is cancelled. Each end emits
+ends when it fails, expires or is cancelled. <!-- /rfc --><!-- rfc: {"id": "RK-11.7.5-003", "kind": "behavior", "applies": "§11.7.5: each end's verification_ended and ON_VERIFICATION_ENDED (ASYNC), with its reason and what ended, when it happens: a timer at expires_at, and check_verifications() when the implementation starts. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Each end emits
 `verification_ended` and fires ON_VERIFICATION_ENDED (ASYNC) with the reason
 and what ended (`ended`: `verification` when the verification in force ended —
 expired, revoked, or a request that failed while it held — `request` when a
@@ -10541,44 +10615,44 @@ request alone did, the identity's verification as it was), **when it
 happens**, not on the sender's next message: the implementation
 arms a timer at `expires_at`, and when it starts it ends the verifications
 whose time passed while nothing ran and re-arms the timers of the others,
-from the store (`check_verifications()`). A policy MAY open a new request at
+from the store (`check_verifications()`). <!-- /rfc --><!-- rfc: {"id": "RK-11.7.5-004", "kind": "behavior", "applies": "§11.7.5: after an end, a new request a policy opens at once (the integrator's choice, which the implementation honours), else ON_VERIFICATION_REQUIRED on the sender's next message. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A policy MAY open a new request at
 once; otherwise the sender's next message meets ON_VERIFICATION_REQUIRED.
 <!-- /rfc -->
 
 #### 11.7.6 Releasing held messages
 
-<!-- rfc: {"id": "RK-11.7.6-001", "kind": "behavior", "applies": "§11.7.6 Releasing held messages; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-11.7.6-002", "kind": "behavior", "applies": "§11.7.6: the messages a completed request releases to the room's intelligence channels, unless the policy says otherwise, within its bounds. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 When a request completes, the messages its sender wrote while it was open
 are released to the room's intelligence channels, unless the policy says
 otherwise: the held events of that room whose sender is the identity,
 received from `window_start` to the completion, never released before and
 not deleted since (a deleted message is no longer said, §10.3), within the
-policy's bounds of number and age, the latest by index when more qualify.
+policy's bounds of number and age, the latest by index when more qualify.<!-- /rfc --><!-- rfc: {"id": "RK-11.7.6-003", "kind": "behavior", "applies": "§11.7.6: only a message the pipeline itself held, released; a mark a sender's message carries releases nothing. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Only a message the pipeline itself held is released: its hold mark is the
 pipeline's own (§11.7.3), and a mark a sender's message carries releases
-nothing. Releasing an event restores the visibility it had before it was held
+nothing. <!-- /rfc --><!-- rfc: {"id": "RK-11.7.6-004", "kind": "behavior", "applies": "§11.7.6: a released event's visibility restored (update_event), the budget of its ON_EVENT_UPDATED hooks, and the answer the last released event alone solicits. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Releasing an event restores the visibility it had before it was held
 (`update_event`), its ON_EVENT_UPDATED hooks running on the budget of the
 work the release is made in (§9.5.1, §10.3), and the room's intelligence
 channels act on it as on any inbound message of its author: nothing is
 copied, and the last released event alone solicits an answer, the earlier
-ones being its context. The event is handed to the intelligence channels
+ones being its context. <!-- /rfc --><!-- rfc: {"id": "RK-11.7.6-005", "kind": "behavior", "applies": "§11.7.6: a released event handed to the intelligence channels alone, never again to a transport. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The event is handed to the intelligence channels
 alone, never again to a transport, and nothing of its first delivery runs
-again. A completion releases within its call: a code reply's (§11.7.4)
+again. <!-- /rfc --><!-- rfc: {"id": "RK-11.7.6-006", "kind": "behavior", "applies": "§11.7.6: a completion's release within its call, a code reply's before the reply returns, outside its pre-commit budget (§13.6). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A completion releases within its call: a code reply's (§11.7.4)
 before the reply's call returns, outside its pre-commit budget, so the reply
 returns `verification_code` once the answer is in, however long the answer
-took (§13.6). A reply made with `defer_delivery` is the exception: its call
+took (§13.6). <!-- /rfc --><!-- rfc: {"id": "RK-11.7.6-007", "kind": "behavior", "applies": "§11.7.6: a code reply made with defer_delivery, its attempt, release and answer the kit's own work. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A reply made with `defer_delivery` is the exception: its call
 returns once the reply is known for one, and the attempt, the release and
 the answer go on as the kit's own work, which its close ends as the rest of
 it (§12.10.4), a failure of theirs logged, with no handle; the held message's
-key still names the answer (§10.1, *Explicit delivery cancellation*). The
+key still names the answer (§10.1, *Explicit delivery cancellation*). <!-- /rfc --><!-- rfc: {"id": "RK-11.7.6-008", "kind": "behavior", "applies": "§11.7.6: the deferred work of a code reply, made apart from the call and never under a lock its caller holds. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The
 deferred work is made apart from the call, never under a lock its caller
 holds: a deferred reply sent from a hook's locked section has its released
-message answered after that hook's work is delivered. A completion made under
+message answered after that hook's work is delivered. <!-- /rfc --><!-- rfc: {"id": "RK-11.7.6-009", "kind": "behavior", "applies": "§11.7.6: a completion made under the room's lock, from a hook: the answer's place in the room's lane. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A completion made under
 the room's lock, from a hook, places the answer in the room's lane at the
 release, ahead of that work's own delivery, and the answer leaves its place
 once that work is over, on the room as that work left it: a hook that
 completes the request and lets its event through has the released message
-answered first, and one that then closes the room has no agent answer it. The
+answered first, and one that then closes the room has no agent answer it. <!-- /rfc --><!-- rfc: {"id": "RK-11.7.6-010", "kind": "behavior", "applies": "§11.7.6: the released event's answer, a regeneration (§13.6): process_timeout, a room closed or deleted while it waits in the lane, and a failed read of the room. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The
 answer is a regeneration of the released event (§13.6): `process_timeout`
 bounds its wait for the room's lock (`process_timeout` with
 `operation = regenerate`), and a room closed or deleted while it waited in the
@@ -10586,52 +10660,60 @@ lane refuses it before any agent runs (`room_refused_event`,
 `operation = regenerate`, its `status` null for a room deleted, §8.2); a read
 of the room that fails there runs no agent either, the failure recorded as the
 regeneration's error.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-11.7.6-011", "kind": "behavior", "applies": "§11.7.6: a held message whose delivery was cancelled (§10.1, Explicit delivery cancellation), released with no answer. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A held message whose delivery was cancelled (§10.1, *Explicit delivery
 cancellation*), before its commit, while it was delivered or while it waited
 for its release, is released all the same and solicits no answer: when it is
 the last released, no agent answers the release, and the earlier ones are
 not answered in its place, since their answer would read the cancelled
-message as context. The cancellation is recorded with the held event, so a
+message as context. <!-- /rfc --><!-- rfc: {"id": "RK-11.7.6-012", "kind": "behavior", "applies": "§11.7.6: a held message's cancellation, recorded with the event and honoured by a release in any process, and a cancellation by key. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The cancellation is recorded with the held event, so a
 release in any process honours it; a cancellation by key reaches the held
-messages of the process that received them. The key names the held message
+messages of the process that received them. <!-- /rfc --><!-- rfc: {"id": "RK-11.7.6-013", "kind": "behavior", "applies": "§11.7.6: how long a held message's key names it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The key names the held message
 from its call's decision on, a message the room's own work adopted (a hook's
 call into its room, §9.5.1) as any, so a release during the message's own
 delivery set names its answer too; a message nothing will release, blocked after it
 was held or held under a policy that releases nothing, is named no longer
-than its call. A completion handle (§10.1, step 18) follows the delivery set
+than its call. <!-- /rfc --><!-- rfc: {"id": "RK-11.7.6-014", "kind": "behavior", "applies": "§11.7.6: a completion handle (§10.1 step 18) and a held message. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A completion handle (§10.1, step 18) follows the delivery set
 alone: it cancels a held message while that set runs, and past it the key is
 what names the message.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-11.7.6-015", "kind": "behavior", "applies": "§11.7.6: a released message, read by an agent as its author's own turn. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A released message MUST reach an agent as its **author's own turn**, never as
 an instruction or anything else carrying the application's authority: a
 message an unverified sender wrote, quoted or not, gains none by its author
-proving who they are. Nothing outside the window is released: what was
+proving who they are. <!-- /rfc --><!-- rfc: {"id": "RK-11.7.6-016", "kind": "behavior", "applies": "§11.7.6: nothing outside the request's window released. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Nothing outside the window is released: what was
 written before the request — before a verification was revoked, during a
 request that failed — may not be the verified person's.
 <!-- /rfc -->
 
 #### 11.7.7 Security floor
 
-<!-- rfc: {"id": "RK-11.7.7-001", "kind": "behavior", "applies": "§11.7.7 Security floor; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-11.7.7-002", "kind": "behavior", "applies": "§11.7.7 Security floor: the entropy of a secret carried in a link, and a code request's short life and few attempts. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - A secret carried in a link has at least 128 bits of entropy; a code is
-  short, so its request is short-lived and allows few attempts.
+  short, so its request is short-lived and allows few attempts.<!-- /rfc --><!-- rfc: {"id": "RK-11.7.7-003", "kind": "behavior", "applies": "§11.7.7: a secret stored only as its hash, compared in constant time, used once and never logged. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - A secret is stored only as its hash, compared in constant time, used once,
-  and never logged.
+  and never logged.<!-- /rfc --><!-- rfc: {"id": "RK-11.7.7-004", "kind": "behavior", "applies": "§11.7.7: a completion after the request expired, failed, was cancelled or completed, and after the verification was revoked. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - A completion is refused after the request expired, failed, was cancelled
-  or completed, and after the verification was revoked.
-- Every transition emits its framework event (§8), the audit trail.
+  or completed, and after the verification was revoked.<!-- /rfc --><!-- rfc: {"id": "RK-11.7.7-005", "kind": "behavior", "applies": "§11.7.7: each verification transition's framework event (§8). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+- Every transition emits its framework event (§8), the audit trail.<!-- /rfc --><!-- rfc: {"id": "RK-11.7.7-006", "kind": "non_testable", "applies": "§11.7.7: a method with no check of its own, which should guard nothing that matters; only the integrator, whose method it is, keeps it (the item's first sentence says a link is a bearer secret). Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 - A link is a bearer secret: forwarded, it verifies whoever opens it and
   passes the method's own check. That check (a PIN, a login) is the
   method's; a method with none SHOULD NOT guard anything that matters.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-11.7.7-007", "kind": "behavior", "applies": "§11.7.7: a request's bound on attempts, held under the lock key verification:<organization>:<identity> (§13.5): two attempts at its last one. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A request's bound on attempts holds within the reach of the lock manager the
 implementation serializes an identity's transitions with (§13.5), under the
 key `verification:<organization>:<identity>`: two attempts at a request's
-last one count once. A deployment of several processes on one store shares
+last one count once. <!-- /rfc --><!-- rfc: {"id": "RK-11.7.7-008", "kind": "non_testable", "applies": "§11.7.7: a deployment of several processes on one store, which shares its lock manager; only the deployment keeps it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A deployment of several processes on one store shares
 its lock manager, as it must for its rooms.
+<!-- /rfc -->
 
-Verification state is scoped to the organization as identities are (§17.2).
+<!-- rfc: {"id": "RK-11.7.7-009", "kind": "behavior", "applies": "§11.7.7: verification state, scoped to the organization (§17.2). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+Verification state is scoped to the organization as identities are (§17.2).<!-- /rfc --><!-- rfc: {"id": "RK-11.7.7-010", "kind": "behavior", "applies": "§11.7.7: the verification a message is labelled by, its room's organization's. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A message is labelled by the verification of its **room's** organization:
 one proven to an organization never verifies the person in another
 organization's conversation, whatever the organization the resolver's

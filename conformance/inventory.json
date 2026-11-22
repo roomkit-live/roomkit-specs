@@ -495,87 +495,87 @@
     },
     {
       "section": "11.1",
-      "sha256": "8ab5bd7e6bc1cd1ffbe27e5526ed3da1b1beea0fa88f45261293fc6a776ac2fe",
+      "sha256": "8573cd2cf3547aea3891074115b9d0dd3cdb058cef7463f4c826c19bce91a1bf",
       "classification": "normative",
-      "review": "Source inventory: Identity Resolver Interface. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Identity Resolver Interface, reviewed for one obligation per unit (RMK-1935). RK-11.1-001 keeps the IdentityResolver interface and RK-11.1-002 the IdentityResult model, each one structural unit, as the core keeps a model's fields together. Every unit carries its level, must."
     },
     {
       "section": "11.2",
-      "sha256": "793ac2c4d71cb5c8b07b92779daeded9d0586bf55891c51f34f7d46a33d4bb4d",
+      "sha256": "008a958081a1b6d46e4e14717d11054f84c4c703a940bd8088d3096c13779aa2",
       "classification": "normative",
-      "review": "Source inventory: Resolution Pipeline. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Resolution Pipeline, split to one obligation per unit (RMK-1935). The flow is cut at its branches by closing and reopening the code block: the resolver's call (RK-11.2-002), each resolver result (IDENTIFIED, AMBIGUOUS, UNKNOWN or REJECTED) and each identity hook result per trigger, the null of ON_IDENTITY_UNKNOWN one unit for UNKNOWN and REJECTED as its one list item gives them. The paragraphs give a unit per sentence: what the hooks are handed and their order, the first result deciding, a result the trigger ignores, observers, the pending participant's candidates and name, a resolver's REJECTED, the pending sender's record (with the sentence that gives its reason) and the address that names it. Every unit carries its level, must."
     },
     {
       "section": "11.3",
-      "sha256": "93e72a656fd0ab9868722e41c19aa6c9dcb04bee56ed180daefe5457c1863566",
+      "sha256": "9c98afa17f973d3d07089f7ec44e003ddb4f79c09b5a0f7a2cb047cbab17a1a1",
       "classification": "normative",
-      "review": "Source inventory: Identity Hook Result. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Identity Hook Result, split to one obligation per unit (RMK-1935). RK-11.3-002 keeps the IdentityHookResult model; RK-11.3-003 the helpers that build it and reject()'s default reason; RK-11.3-004 what a challenge blocks and commits and a REJECTED result with no reason, one sentence. Every unit carries its level, must."
     },
     {
       "section": "11.4",
-      "sha256": "adada774a68a20bbf13692da732e588f145699ec0015fb549832515669d9565f",
+      "sha256": "b79e4938bba6f8eeef63a15461cabad26f3670108b564fee0d8fb7ee88187e9f",
       "classification": "normative",
-      "review": "Source inventory: Channel Type Filtering. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Channel Type Filtering, reviewed for one obligation per unit (RMK-1935). RK-11.4-001 is one SHOULD, its second sentence the reason; its level is should."
     },
     {
       "section": "11.5",
-      "sha256": "e5dd3ad7aa5195ce839c636a36478ad9706533594d9f86756de85071772bce3e",
+      "sha256": "54b74437e3fa422fa79b9c6cd96e5d626fb862b82414ad29343e91f8c17cee6b",
       "classification": "normative",
-      "review": "Source inventory: Timeout Handling. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Timeout Handling, split to one obligation per unit (RMK-1935). The MUST's list gives a unit per item (RK-11.5-002 to 004), its lead with the first. Every unit carries its level, must."
     },
     {
       "section": "11.6",
-      "sha256": "ab4f0b97d72dcb25a6eb900d4444bc24f266300fd346a793d3ee8f0470228034",
+      "sha256": "3070306291c30520fd7a3e90f6b27ff3e187e8d849bcd6f035fa81c99cd50b8a",
       "classification": "normative",
-      "review": "Source inventory: Senders With Nothing To Resolve. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Senders With Nothing To Resolve, split to one obligation per unit (RMK-1935). The list's rule goes with case 1 (RK-11.6-002); the conference sentence is a media unit of its own (RK-11.6-003); cases 2 and 3 give a unit per sentence, the last sentence of case 3 non_testable (only the application keeps it). The paragraph on case 1 gives a unit per channel it names; RK-11.6-013 keeps PENDING and AMBIGUOUS participants out of case 2, the next paragraph, which holds no obligation, folded into it; RK-11.6-014 the event a skipped resolution leaves. Every unit carries its level, must."
     },
     {
       "section": "11.7",
-      "sha256": "6aafe51a76af69061e12b4cbead742155122ed3e1b091e236bce510972282c8e",
+      "sha256": "c9e423acbf52cbcbb54fafa4d4a0ee6afa43da5f238c49c8d4c50bc29a06b7eb",
       "classification": "normative",
-      "review": "Source inventory: Identity Verification. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Identity Verification, reviewed for one obligation per unit (RMK-1935). RK-11.7-001 keeps one obligation, verification applying to an IDENTIFIED sender only; the paragraph's other sentences say what verification is and point to §11.7.1 to §11.7.7, and stay folded in it. Its level is must."
     },
     {
       "section": "11.7.1",
-      "sha256": "6b54ba0e3adb9c786124c7b61e725195caf38d93266b8620a3c5ecb162cc6a51",
+      "sha256": "6d2894636ddf1a7bac7bfce1e1961d7c68da10976160d4f5f6da24b33aa72408",
       "classification": "normative",
-      "review": "Source inventory: State. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: State, split to one obligation per unit (RMK-1935). RK-11.7.1-002 keeps the Verification model; the paragraph gives a unit per sentence. Every unit carries its level, must."
     },
     {
       "section": "11.7.2",
-      "sha256": "cbac2139caaaa985f644312d73e234e72b2092fa216f5362c9128e35003da2ea",
+      "sha256": "a396f97b5ad8cbd00c898c323ee696aecfd0af73e70bd133a736dc0cfdafe1cb",
       "classification": "normative",
-      "review": "Source inventory: Requests. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Requests, split to one obligation per unit (RMK-1935). RK-11.7.2-002 keeps the VerificationRequest model; the paragraph gives a unit per sentence, from request_verification to a completion (RK-11.7.2-003 to 012). Every unit carries its level, must."
     },
     {
       "section": "11.7.3",
-      "sha256": "44872cb1316036d6083c880ef35fc9233a230810e0591b7b287756be298f8e64",
+      "sha256": "060eec629d6965c47ab1fd9b3549fec2230237672f72896a5b6d37868db8727c",
       "classification": "normative",
-      "review": "Source inventory: Labels and holding. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Labels and holding, split to one obligation per unit (RMK-1935). A unit per sentence and per decision of ON_VERIFICATION_REQUIRED (hold, pass and block, each item split at its sentences), the advice that ends the sender_verification paragraph folded into RK-11.7.3-016. Two units are non_testable, only the integrator keeping them: who opens a request and tells the sender (RK-11.7.3-014), and how an integrator gates a speech-to-speech session (RK-11.7.3-020, whose paragraph's last sentence is folded into it). The speech-to-speech paragraph is media: RK-11.7.3-019 and 020. Every unit carries its level, must."
     },
     {
       "section": "11.7.4",
-      "sha256": "25adfa32110c3de76e21f4c54fdcdab25124e27fe5923afb25a69b957770d9b4",
+      "sha256": "8f77aa57f0e6a712e80ea584c9f4a5dda835a7cc9bf5f6297ee8b6bcbf9ee933",
       "classification": "normative",
-      "review": "Source inventory: Codes in the conversation. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Codes in the conversation, split to one obligation per unit (RMK-1935). A unit per sentence, the definition of a code folded into the consumed attempt (RK-11.7.4-002). Every unit carries its level, must."
     },
     {
       "section": "11.7.5",
-      "sha256": "374d1911fc1b714c05b3204f92460436aefd4ebdabf8e12eb388ae6e36c23363",
+      "sha256": "dcfaec205f1c9a0af9c3155ccdf13c0633b8324977aa100dbc051dfe8d558e1d",
       "classification": "normative",
-      "review": "Source inventory: The end of a verification. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: The end of a verification, split to one obligation per unit (RMK-1935). A unit per sentence: the ends, their event, hook and timers (one sentence), and a policy's new request. Every unit carries its level, must."
     },
     {
       "section": "11.7.6",
-      "sha256": "5b51ee8c29328f94082a2e9c944f8f1d72399b869576652c3c6f56b8e2e391ae",
+      "sha256": "e7415143f6a305266cc14dc10e2a56ffbdaaf75efabd448626ef21d6104ae9ce",
       "classification": "normative",
-      "review": "Source inventory: Releasing held messages. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Releasing held messages, split to one obligation per unit (RMK-1935). A unit per sentence of its three paragraphs: what a completion releases, how, within which call and lane, the answer as a regeneration, cancelled held messages and their key, and the author's own turn. Every unit carries its level, must."
     },
     {
       "section": "11.7.7",
-      "sha256": "c917c7821580c0c209e77ce47c2ce4a8aa6d4fcf7b5c95767d4979a8b1a27b4c",
+      "sha256": "a1beeef5c3d7c330883e369dafb65a0fe6f3a582f47c7bfde797c2c4aed9e013",
       "classification": "normative",
-      "review": "Source inventory: Security floor. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Security floor, split to one obligation per unit (RMK-1935). A unit per list item and per sentence of the two paragraphs. Two units are non_testable: a method with no check of its own (RK-11.7.7-006, should, the integrator's) and a deployment's shared lock manager (RK-11.7.7-008, must). The others carry must."
     },
     {
       "section": "12",
