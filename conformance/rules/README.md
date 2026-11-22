@@ -27,7 +27,7 @@ proof: a scenario can cite a unit without covering all of it.
 | [§7 Permission Model](section-7.md) | 85 | 84 | 0 | 1 | 0 | 83 | 339 | 0 |
 | [§8 Event System](section-8.md) | 20 | 0 | 0 | 0 | 20 | 1 | 1 | 0 |
 | [§9 Hook System](section-9.md) | 350 | 343 | 3 | 4 | 0 | 333 | 1342 | 0 |
-| [§10 Processing Pipelines](section-10.md) | 646 | 626 | 7 | 13 | 0 | 588 | 2264 | 0 |
+| [§10 Processing Pipelines](section-10.md) | 646 | 626 | 7 | 13 | 0 | 588 | 2265 | 0 |
 | [§11 Identity Resolution](section-11.md) | 15 | 0 | 0 | 0 | 15 | 1 | 5 | 0 |
 | [§12 Voice and Realtime Media](section-12.md) | 284 | 0 | 0 | 0 | 284 | 1 | 1 | 0 |
 | [§13 Resilience and Error Handling](section-13.md) | 13 | 0 | 0 | 0 | 13 | 1 | 1 | 0 |
@@ -36,11 +36,11 @@ proof: a scenario can cite a unit without covering all of it.
 | [§16 Integration Surfaces](section-16.md) | 14 | 0 | 0 | 0 | 14 | 0 | 0 | 0 |
 | [§17 Security Considerations](section-17.md) | 15 | 0 | 0 | 0 | 15 | 0 | 0 | 0 |
 | [§18 Design Principles](section-18.md) | 1 | 0 | 0 | 0 | 1 | 0 | 0 | 0 |
-| [§19 Multi-Agent Orchestration](section-19.md) | 40 | 0 | 0 | 0 | 40 | 0 | 0 | 0 |
+| [§19 Multi-Agent Orchestration](section-19.md) | 40 | 0 | 0 | 0 | 40 | 1 | 1 | 0 |
 | [§20 Memory System](section-20.md) | 10 | 0 | 0 | 0 | 10 | 0 | 0 | 0 |
 | [§21 Tool Access Control](section-21.md) | 15 | 0 | 0 | 0 | 15 | 2 | 9 | 0 |
 | [§22 Delivery Strategies](section-22.md) | 10 | 0 | 0 | 0 | 10 | 0 | 0 | 0 |
-| [§23 Task Delegation](section-23.md) | 9 | 0 | 0 | 0 | 9 | 0 | 0 | 0 |
+| [§23 Task Delegation](section-23.md) | 9 | 0 | 0 | 0 | 9 | 1 | 1 | 0 |
 | [§24 Skills Framework](section-24.md) | 16 | 0 | 0 | 0 | 16 | 0 | 0 | 0 |
 | [§25 Image Generation](section-25.md) | 8 | 0 | 0 | 0 | 8 | 0 | 0 | 0 |
 | [§26 Conformance Levels](section-26.md) | 5 | 0 | 0 | 0 | 5 | 0 | 0 | 0 |

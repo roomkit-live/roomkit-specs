@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "2c3e2e1678bbecfb1c48c232edede03e168c21cdd93411a8457a6d20cc736386",
-  "corpus_sha256": "5473cbe982874c95b25a9937ef9c186b011e6dce466c840947040f93cfe6dc21",
+  "corpus_sha256": "be9048cfa50615a3e97c74eef0ecc03e4420cdfd33d175dcf518804f2878524c",
   "python_commit": "1bb12d025296ee1c5f14b82267462fc4d13104a6",
-  "scenario_count": 3400,
+  "scenario_count": 3402,
   "sections": [
     {
       "section": "0",
@@ -4736,6 +4736,7 @@
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
+        "addressing/a-sender-s-interruption-marker-asks-its-agents",
         "addressing/an-address-does-not-show-an-event-its-visibility-hides",
         "appendix-b/b4-agent-chain",
         "broadcast/a-channel-registered-again-serves-the-bindings-it-kept",
@@ -7895,6 +7896,7 @@
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
+        "addressing/a-sender-s-interruption-marker-asks-its-agents",
         "addressing/an-address-does-not-show-an-event-its-visibility-hides",
         "addressing/an-address-names-the-agents-asked",
         "addressing/an-empty-address-asks-nobody",
@@ -9510,6 +9512,7 @@
         "tasks/a-submitted-result-normalizes-nested-summary-and-reason-values",
         "tasks/a-task-carries-its-worker-s-turn-record",
         "tasks/a-task-cut-before-its-worker-wrote-any-text-fails-with-no-output",
+        "tasks/a-task-s-context-never-says-how-its-turn-ended",
         "tasks/a-task-whose-shared-transport-stopped-reading-its-answer-fails-cancelled",
         "tasks/a-task-whose-shared-transport-stopped-reading-while-its-model-reasoned-fails-cancelled",
         "tasks/a-worker-owing-a-result-is-held-to-what-it-submitted-before-its-cut",
@@ -9571,6 +9574,7 @@
         "tasks/a-relayed-task-result-names-its-worker-by-the-discussion-handle",
         "tasks/a-result-past-the-summary-is-kept-whole-for-task-status",
         "tasks/a-strategy-s-unposted-task-is-never-a-room-s-to-cancel",
+        "tasks/a-task-s-context-never-says-how-its-turn-ended",
         "tasks/a-task-whose-end-is-being-told-reads-ended-at-once",
         "tasks/a-turn-s-notes-list-the-room-s-tasks-and-how-far-each-got",
         "tasks/a-worker-s-delegate-task-waits-for-its-task-on-the-handler-s-option",
