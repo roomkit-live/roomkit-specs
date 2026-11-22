@@ -5133,12 +5133,10 @@
       "rooms/a-delivered-message-resumes-a-paused-room": "5854bc5583365e5ed6ae8687ce26ade6cbdceff3af91eace60a4cd15ba0eaafa",
       "rooms/a-due-close-refuses-the-next-message": "5854bc5583365e5ed6ae8687ce26ade6cbdceff3af91eace60a4cd15ba0eaafa",
       "rooms/a-timer-check-does-not-change-another-due-room": "5854bc5583365e5ed6ae8687ce26ade6cbdceff3af91eace60a4cd15ba0eaafa",
-      "rooms/a-timer-check-scopes-before-applying-due-transitions": "5854bc5583365e5ed6ae8687ce26ade6cbdceff3af91eace60a4cd15ba0eaafa",
       "rooms/due-timers-run-before-explicit-transitions": "5854bc5583365e5ed6ae8687ce26ade6cbdceff3af91eace60a4cd15ba0eaafa",
       "rooms/pause-from-every-room-status": "5854bc5583365e5ed6ae8687ce26ade6cbdceff3af91eace60a4cd15ba0eaafa",
       "rooms/timers-pause-then-close-in-one-check": "5854bc5583365e5ed6ae8687ce26ade6cbdceff3af91eace60a4cd15ba0eaafa",
-      "rooms/timers-whose-records-the-persistence-policy-keeps-out-still-pause-and-close": "5854bc5583365e5ed6ae8687ce26ade6cbdceff3af91eace60a4cd15ba0eaafa",
-      "rooms/transitions-scope-before-due-timers": "5854bc5583365e5ed6ae8687ce26ade6cbdceff3af91eace60a4cd15ba0eaafa"
+      "rooms/timers-whose-records-the-persistence-policy-keeps-out-still-pause-and-close": "5854bc5583365e5ed6ae8687ce26ade6cbdceff3af91eace60a4cd15ba0eaafa"
     },
     "RK-8.2-005": {
       "greeting/a-greeting-meets-the-room-s-due-timers": "576006a3fcb3904b58f41ff424a524b9aea4c328ede4957bc4ebc3ad47db3bda",
@@ -5156,7 +5154,6 @@
       "rooms/a-response-the-room-refuses": "576006a3fcb3904b58f41ff424a524b9aea4c328ede4957bc4ebc3ad47db3bda",
       "rooms/a-response-whose-room-a-step-closes-during-its-turn-is-refused": "576006a3fcb3904b58f41ff424a524b9aea4c328ede4957bc4ebc3ad47db3bda",
       "rooms/a-timer-check-does-not-change-another-due-room": "576006a3fcb3904b58f41ff424a524b9aea4c328ede4957bc4ebc3ad47db3bda",
-      "rooms/a-timer-check-scopes-before-applying-due-transitions": "576006a3fcb3904b58f41ff424a524b9aea4c328ede4957bc4ebc3ad47db3bda",
       "rooms/archive-is-terminal": "576006a3fcb3904b58f41ff424a524b9aea4c328ede4957bc4ebc3ad47db3bda",
       "rooms/close-from-every-room-status": "576006a3fcb3904b58f41ff424a524b9aea4c328ede4957bc4ebc3ad47db3bda",
       "rooms/close-of-a-closed-room-does-nothing": "576006a3fcb3904b58f41ff424a524b9aea4c328ede4957bc4ebc3ad47db3bda",
@@ -5165,7 +5162,6 @@
       "rooms/replacement-records-after-room-deletion-report-a-null-status": "576006a3fcb3904b58f41ff424a524b9aea4c328ede4957bc4ebc3ad47db3bda",
       "rooms/timers-pause-then-close-in-one-check": "576006a3fcb3904b58f41ff424a524b9aea4c328ede4957bc4ebc3ad47db3bda",
       "rooms/timers-whose-records-the-persistence-policy-keeps-out-still-pause-and-close": "576006a3fcb3904b58f41ff424a524b9aea4c328ede4957bc4ebc3ad47db3bda",
-      "rooms/transitions-scope-before-due-timers": "576006a3fcb3904b58f41ff424a524b9aea4c328ede4957bc4ebc3ad47db3bda",
       "rooms/transitions-with-the-owning-organization": "576006a3fcb3904b58f41ff424a524b9aea4c328ede4957bc4ebc3ad47db3bda",
       "verification/a-release-from-a-hook-that-closes-the-room-is-answered-by-no-agent": "576006a3fcb3904b58f41ff424a524b9aea4c328ede4957bc4ebc3ad47db3bda",
       "verification/a-release-whose-pass-goes-on-before-a-later-hook-closes-the-room-is-answered-by-no-agent": "576006a3fcb3904b58f41ff424a524b9aea4c328ede4957bc4ebc3ad47db3bda"
@@ -5736,9 +5732,7 @@
       "tasks/delegate-task-reaches-its-handler-as-its-gate-left-it-at-its-turn-s-depth": "02d8a624dcc203582a5854004f21abd21300f70df286ac3eac05911ebe6ffaaf"
     },
     "RK-8.3-013": {
-      "acp/handler-before-tool-use-observer-after-turn-independent": "5c881a549c8d42890813824fc953c3ab0fd8d1041a0b0a814b568eccc56013b3",
-      "acp/handler-on-tool-call-observer-after-turn-independent": "5c881a549c8d42890813824fc953c3ab0fd8d1041a0b0a814b568eccc56013b3",
-      "host/work-a-turn-began-sends-at-the-depth-of-its-own-event": "5c881a549c8d42890813824fc953c3ab0fd8d1041a0b0a814b568eccc56013b3"
+      "host/work-a-turn-began-sends-at-the-depth-of-its-own-event": "4d03a3a0d8c9cc923ce31450ce36ea590706aadc55751530efb5f92bd5958e28"
     },
     "RK-8.3-014": {
       "chain/the-hook-calls-stop-a-before-broadcast-observer-loop": "f55a64bb14996bebb706a4fad808857beca590aa8182e89ce0e9018b0e3e5be5",
@@ -5876,16 +5870,13 @@
       "chain/the-reentry-budget-stops-a-delivery-loop": "d0bd22882199f118df9ac63021f7acd43e3d01f3d100ae091cceda0e1c534189",
       "greeting/a-delivery-greeting-on-every-delivery-stops-at-the-budget": "d0bd22882199f118df9ac63021f7acd43e3d01f3d100ae091cceda0e1c534189",
       "greeting/a-hook-greeting-on-every-answer-under-the-lock-stops-at-the-budget": "d0bd22882199f118df9ac63021f7acd43e3d01f3d100ae091cceda0e1c534189",
-      "hooks/a-delivery-s-send-event-into-another-room-has-its-own-budget": "d0bd22882199f118df9ac63021f7acd43e3d01f3d100ae091cceda0e1c534189",
       "hooks/injections-use-the-reentry-budget-without-increasing-chain-depth": "d0bd22882199f118df9ac63021f7acd43e3d01f3d100ae091cceda0e1c534189",
       "hooks/recursive-send-event-from-a-locked-hook-stops-at-the-cap": "d0bd22882199f118df9ac63021f7acd43e3d01f3d100ae091cceda0e1c534189",
       "hooks/recursive-send-event-from-an-off-lock-hook-stops-at-the-cap": "d0bd22882199f118df9ac63021f7acd43e3d01f3d100ae091cceda0e1c534189",
       "reentrancy/a-call-past-the-budget-naming-a-room-the-store-lacks-creates-nothing": "d0bd22882199f118df9ac63021f7acd43e3d01f3d100ae091cceda0e1c534189",
       "reentrancy/a-call-whose-room-another-call-creates-first-stays-charged": "d0bd22882199f118df9ac63021f7acd43e3d01f3d100ae091cceda0e1c534189",
-      "reentrancy/a-post-replayed-from-the-room-s-work-draws-no-pass": "d0bd22882199f118df9ac63021f7acd43e3d01f3d100ae091cceda0e1c534189",
       "reentrancy/a-rate-limited-named-call-still-spends-its-work-budget": "d0bd22882199f118df9ac63021f7acd43e3d01f3d100ae091cceda0e1c534189",
       "reentrancy/each-call-under-a-lock-the-host-holds-draws-on-a-budget-of-its-own": "d0bd22882199f118df9ac63021f7acd43e3d01f3d100ae091cceda0e1c534189",
-      "reentrancy/replays-draw-nothing-on-a-hook-s-budget": "d0bd22882199f118df9ac63021f7acd43e3d01f3d100ae091cceda0e1c534189",
       "reentrancy/routed-calls-from-a-room-s-deliveries-draw-on-its-cascade-s-budget": "d0bd22882199f118df9ac63021f7acd43e3d01f3d100ae091cceda0e1c534189"
     },
     "RK-8.3-036": {
@@ -5958,11 +5949,8 @@
       "verification/a-hook-updating-a-released-message-again-stops-at-the-cap": "83faeadaaece143ab89f4bb47e6bcf276d7448433f39e1301492006d5d6a6caa"
     },
     "RK-8.3-045": {
-      "acp/handler-before-tool-use-observer-after-turn-independent": "4fd5375cc8f7fd8e69c19a459f7f66a112a4c009ef995a7fd065679db951137b",
       "acp/handler-before-tool-use-observer-reentry-bound": "4fd5375cc8f7fd8e69c19a459f7f66a112a4c009ef995a7fd065679db951137b",
-      "acp/handler-on-tool-call-observer-after-turn-independent": "4fd5375cc8f7fd8e69c19a459f7f66a112a4c009ef995a7fd065679db951137b",
       "acp/handler-on-tool-call-observer-reentry-bound": "4fd5375cc8f7fd8e69c19a459f7f66a112a4c009ef995a7fd065679db951137b",
-      "acp/tools-observer-post-depth": "4fd5375cc8f7fd8e69c19a459f7f66a112a4c009ef995a7fd065679db951137b",
       "acp/tools-observer-reentry-bound": "4fd5375cc8f7fd8e69c19a459f7f66a112a4c009ef995a7fd065679db951137b"
     },
     "RK-8.3-048": {
@@ -6027,7 +6015,6 @@
       "tenancy/a-deleted-room-s-subscription-reads-nothing-of-the-room-created-again": "a7358ea709264048cac27ac4e08b67949da01768d04e8a6e2daf7baaa870ec90"
     },
     "RK-8.4-012": {
-      "executors/work-an-earlier-turn-began-publishes-while-its-executor-holds-the-room": "5341a835cf2afbd29384d0299d18fb209419afb9fb9d82509f8e489586f64d1d",
       "tenancy/a-deleted-room-s-turn-publishes-nothing-in-the-room-its-process-creates-again": "5341a835cf2afbd29384d0299d18fb209419afb9fb9d82509f8e489586f64d1d",
       "tenancy/a-deleted-room-s-turn-reaches-nothing-of-the-room-created-again": "5341a835cf2afbd29384d0299d18fb209419afb9fb9d82509f8e489586f64d1d"
     },
@@ -6324,7 +6311,6 @@
       "discussion/regeneration-after-removing-the-discussion-answer-keeps-its-addressee": "96a5304cc9ac53cc71f5b65b29af6250c46074b431b96afee14a6cef97a93c3e",
       "discussion/repeated-discussion-regenerations-before-the-turn-queue-it-once": "96a5304cc9ac53cc71f5b65b29af6250c46074b431b96afee14a6cef97a93c3e",
       "executors/a-supervisor-s-passes-are-turns-of-its-agent-on-the-executor-hosting-it": "96a5304cc9ac53cc71f5b65b29af6250c46074b431b96afee14a6cef97a93c3e",
-      "inbound/a-failed-turn-s-error-stays-in-its-trigger-s-thread": "96a5304cc9ac53cc71f5b65b29af6250c46074b431b96afee14a6cef97a93c3e",
       "inbound/two-overlapping-calls-each-return-their-own-answer": "96a5304cc9ac53cc71f5b65b29af6250c46074b431b96afee14a6cef97a93c3e",
       "instructions/an-agent-an-instruction-cannot-ask-at-the-depth-limit-records-no-fingerprint": "96a5304cc9ac53cc71f5b65b29af6250c46074b431b96afee14a6cef97a93c3e",
       "instructions/an-agent-not-asked-after-an-instruction-s-answer-records-no-fingerprint": "96a5304cc9ac53cc71f5b65b29af6250c46074b431b96afee14a6cef97a93c3e",
@@ -6335,7 +6321,6 @@
       "orchestration/a-loop-out-of-iterations-answers-its-last-output-not-approved": "96a5304cc9ac53cc71f5b65b29af6250c46074b431b96afee14a6cef97a93c3e",
       "orchestration/a-loop-reviewer-s-refusal-approves-nothing": "96a5304cc9ac53cc71f5b65b29af6250c46074b431b96afee14a6cef97a93c3e",
       "orchestration/a-loop-revises-its-output-until-its-reviewer-approves": "96a5304cc9ac53cc71f5b65b29af6250c46074b431b96afee14a6cef97a93c3e",
-      "orchestration/a-loop-s-parallel-review-that-raises-fails-at-once-and-cuts-the-other-reviews": "96a5304cc9ac53cc71f5b65b29af6250c46074b431b96afee14a6cef97a93c3e",
       "orchestration/a-loop-s-parallel-reviewers-review-the-same-output-at-once": "96a5304cc9ac53cc71f5b65b29af6250c46074b431b96afee14a6cef97a93c3e",
       "orchestration/a-loop-s-reviewers-review-in-turn-each-handed-the-feedback-before-it": "96a5304cc9ac53cc71f5b65b29af6250c46074b431b96afee14a6cef97a93c3e",
       "orchestration/a-loop-whose-producer-is-cut-after-an-output-answers-that-output-not-approved": "96a5304cc9ac53cc71f5b65b29af6250c46074b431b96afee14a6cef97a93c3e",
@@ -6362,7 +6347,6 @@
       "orchestration/an-auto-delegating-supervisor-that-does-not-refine-hands-its-team-the-message": "96a5304cc9ac53cc71f5b65b29af6250c46074b431b96afee14a6cef97a93c3e",
       "orchestration/an-auto-delegating-supervisor-turns-the-request-into-its-team-s-task-then-answers-from-their-results": "96a5304cc9ac53cc71f5b65b29af6250c46074b431b96afee14a6cef97a93c3e",
       "orchestration/an-auto-delegating-supervisor-whose-first-pass-fails-after-a-tool-round-reports-its-rows-correlation-id": "96a5304cc9ac53cc71f5b65b29af6250c46074b431b96afee14a6cef97a93c3e",
-      "orchestration/an-auto-delegating-supervisor-whose-first-pass-fails-runs-no-team-and-reports-the-failure-once": "96a5304cc9ac53cc71f5b65b29af6250c46074b431b96afee14a6cef97a93c3e",
       "orchestration/an-auto-delegating-supervisor-whose-first-pass-is-cut-short-answers-its-fallback-and-runs-no-team": "96a5304cc9ac53cc71f5b65b29af6250c46074b431b96afee14a6cef97a93c3e",
       "orchestration/an-auto-delegating-supervisor-whose-second-pass-fails-reports-that-pass-s-correlation-id": "96a5304cc9ac53cc71f5b65b29af6250c46074b431b96afee14a6cef97a93c3e",
       "orchestration/an-auto-delegating-supervisor-whose-worker-raises-after-a-streamed-first-pass-fails-its-generation": "96a5304cc9ac53cc71f5b65b29af6250c46074b431b96afee14a6cef97a93c3e",
@@ -6385,8 +6369,6 @@
       "tasks/a-delegated-agent-s-failed-stream-fails-its-task-once-every-stream-is-kept": "96a5304cc9ac53cc71f5b65b29af6250c46074b431b96afee14a6cef97a93c3e",
       "tasks/a-delegated-agent-s-streamed-answer-is-kept-as-one-message": "96a5304cc9ac53cc71f5b65b29af6250c46074b431b96afee14a6cef97a93c3e",
       "tasks/a-delegated-turn-past-the-depth-limit-is-not-asked": "96a5304cc9ac53cc71f5b65b29af6250c46074b431b96afee14a6cef97a93c3e",
-      "tasks/a-delegated-turn-s-failure-is-reported-in-its-child-room": "96a5304cc9ac53cc71f5b65b29af6250c46074b431b96afee14a6cef97a93c3e",
-      "tasks/a-delegated-turn-s-returned-error-is-reported-in-its-child-room": "96a5304cc9ac53cc71f5b65b29af6250c46074b431b96afee14a6cef97a93c3e",
       "tasks/a-delegated-turn-s-trace-is-stored-as-its-responses": "96a5304cc9ac53cc71f5b65b29af6250c46074b431b96afee14a6cef97a93c3e",
       "tasks/a-re-prompt-never-reaches-a-shared-transport": "96a5304cc9ac53cc71f5b65b29af6250c46074b431b96afee14a6cef97a93c3e",
       "tasks/a-shared-room-reads-the-stream-of-an-answer-s-answer": "96a5304cc9ac53cc71f5b65b29af6250c46074b431b96afee14a6cef97a93c3e",
@@ -6427,7 +6409,6 @@
       "regenerate/the-room-takes-a-message-while-its-agent-regenerates": "db446d81bbff7e3745b17dc1f57dc76e02d9f918d1dbae2528689cab87b0335c"
     },
     "RK-8.5-012": {
-      "inbound/a-failed-turn-s-error-stays-in-its-trigger-s-thread": "9ccc10f84be1d90db810be7db6c5df9f8591290b511329fe2267f26a326ae57e",
       "inbound/every-path-that-commits-an-event-roots-its-parent": "9ccc10f84be1d90db810be7db6c5df9f8591290b511329fe2267f26a326ae57e",
       "streaming/a-streamed-row-is-rooted-at-its-own-commit": "9ccc10f84be1d90db810be7db6c5df9f8591290b511329fe2267f26a326ae57e"
     },

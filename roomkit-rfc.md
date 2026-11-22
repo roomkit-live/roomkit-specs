@@ -5110,7 +5110,7 @@ an event chain.
   (§9.5.1, §10.6.5), so that an agent that injects into its room at each
   turn, through any channel, stops at the limit as its answers do. <!-- /rfc --><!-- rfc: {"id": "RK-8.3-012", "kind": "behavior", "applies": "§8.3 chain depth tracking: a call made while a tool call outside a turn runs, a realtime or a conference tool call (§12.4, §21.4); the realtime voice and conference features (Level 3, media). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->So is a
   call made while a tool call outside a turn runs (a realtime or a conference
-  tool call, §12.4, §21.4), at least as deep as the answer that issued it.<!-- /rfc --><!-- rfc: {"id": "RK-8.3-013", "kind": "behavior", "applies": "§8.3 chain depth tracking: work a turn or a tool call began (a task it spawned) that calls once it is over; the exceptions are the next items'. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+  tool call, §12.4, §21.4), at least as deep as the answer that issued it.<!-- /rfc --><!-- rfc: {"id": "RK-8.3-013", "kind": "behavior", "applies": "§8.3 chain depth tracking: work a turn or a tool call began (a task it spawned) that calls once it is over, the exceptions it names kept; a tool call outside a turn is the realtime voice and conference features' (Level 3, media). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
   Once the turn or the tool call is over, the floor is gone: work it began (a
   task it spawned) calls as a new arrival with the depth of its own event, 0
   for a message it creates (§9.5.1). The body of a hook it fired that runs
@@ -5272,7 +5272,7 @@ trigger that fires per tool call (`BEFORE_TOOL_USE`, `ON_TOOL_CALL`,
 `AFTER_TOOL_ROUND`, `ON_USER_INPUT_REQUIRED`), which a turn may fire hundreds
 of times, are not the cascade's work: they run as a task the turn's work
 starts does, so a post they make while the turn's delivery runs draws one of
-the cascade's passes and a direct change draws nothing. <!-- /rfc --><!-- rfc: {"id": "RK-8.3-046", "kind": "behavior", "applies": "§8.3 the hook calls of a cascade: the depth of hooks on a realtime or conference tool call, on a speech-to-speech model's words or delegation (§12.4, §12.4.1), and on BEFORE_TTS and AFTER_TTS (§12.2); the voice, realtime voice and conference features (Level 3, media). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The body of every
+the cascade's passes and a direct change draws nothing. <!-- /rfc --><!-- rfc: {"id": "RK-8.3-046", "kind": "behavior", "applies": "§8.3 the hook calls of a cascade: the depth the body of every hook run asynchronously sends at, as RK-8.3-017 states it, and of hooks on a realtime or conference tool call, on a speech-to-speech model's words or delegation (§12.4, §12.4.1), and on BEFORE_TTS and AFTER_TTS (§12.2); the voice, realtime voice and conference features (Level 3, media). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The body of every
 hook run asynchronously sends at least as deep as the work that fired it was when its trigger
 fired, for as long as the body runs, that work over or not (§8.3): an
 observer of a tool call outside a turn (a realtime or a conference tool

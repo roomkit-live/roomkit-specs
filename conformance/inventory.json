@@ -321,7 +321,7 @@
     },
     {
       "section": "8.3",
-      "sha256": "206dc35c23b7788d2509ba0345a08179d17e91c3253b06f0ba223b6d0196fb3c",
+      "sha256": "e55b4f19b4cc23df65c96b80b6989975828f30cbcca63159f469bea152ad61fb",
       "classification": "normative",
       "review": "Source inventory: Event Chain Depth, split to one obligation per unit (RMK-1904). RK-8.3-001, which defines an event chain, holds no obligation and has no level. The depth tracking list gives a unit per item and per floor (turn, tool call outside a turn, hook bodies, handlers of framework events, and where each floor ends); the at-the-limit rules, the reentry cap and the hook calls of a cascade a unit per sentence, the record stored at the limit a unit per member; the requirements list a unit per obligation. The realtime voice, conference and TTS parts that stand in sentences of their own are media units (RK-8.3-012, 031 to 034, 046, 047); the speech-to-speech paths named inside a sentence stay in their unit. RK-8.3-004 stays one unit. Every other unit carries its level, must."
     },
