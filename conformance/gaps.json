@@ -386,6 +386,126 @@
       "card": "RMK-1976",
       "note": "The kit's commit_event of a record that brings delivery_results, read back with them; the store's own commit_event is shown by store/a-delivery-record-alone-writes-an-event-s-results."
     },
+    "RK-15.4-002": {
+      "class": "phase6",
+      "card": "RMK-1979",
+      "note": "The voice pipeline's metrics; suspect RMK-1977."
+    },
+    "RK-15.4-003": {
+      "class": "phase6",
+      "card": "RMK-1979",
+      "note": "The RECOMMENDED voice metric names, which neither implementation emits as named; suspect RMK-1977."
+    },
+    "RK-15.4-004": {
+      "class": "phase6",
+      "card": "RMK-1979",
+      "note": "The voice pipeline logger and its context fields; suspect RMK-1977."
+    },
+    "RK-15.6-005": {
+      "class": "writable",
+      "card": "RMK-1979",
+      "note": "A trace emitted for a room not yet created reaches ON_PROTOCOL_TRACE once create_room and attach_channel make it (requires protocol_trace)."
+    },
+    "RK-15.6-006": {
+      "class": "phase6",
+      "card": "RMK-1979",
+      "note": "A SIP voice backend's traces."
+    },
+    "RK-15.6-007": {
+      "class": "phase6",
+      "card": "RMK-1979",
+      "note": "Traces a channel's transport protocol emits; in both implementations only voice transports (SIP) emit them."
+    },
+    "RK-15.6-010": {
+      "class": "step",
+      "card": "RMK-1979",
+      "note": "Needs a trace callback registered with on_trace and a protocols filter, which no runner step registers."
+    },
+    "RK-15.6-011": {
+      "class": "step",
+      "card": "RMK-1979",
+      "note": "Needs a channel's trace_enabled read, which no runner step reads."
+    },
+    "RK-15.6-012": {
+      "class": "writable",
+      "card": "RMK-1979",
+      "note": "A trace naming only a session, on a channel that resolves no session, reaches no room's hook (requires protocol_trace)."
+    },
+    "RK-15.6-014": {
+      "class": "step",
+      "card": "RMK-1979",
+      "note": "Needs sync and async trace callbacks registered with on_trace, which no runner step registers."
+    },
+    "RK-15.6-015": {
+      "class": "phase6",
+      "card": "RMK-1979",
+      "note": "A voice or realtime voice channel bridging its backend's or transport's traces."
+    },
+    "RK-15.6-016": {
+      "class": "phase6",
+      "card": "RMK-1979",
+      "note": "The voice trace bridge activated once trace_enabled becomes true."
+    },
+    "RK-15.6-018": {
+      "class": "phase6",
+      "card": "RMK-1979",
+      "note": "The session-binding fallback, which a voice channel resolves."
+    },
+    "RK-15.7-008": {
+      "class": "step",
+      "card": "RMK-1979",
+      "note": "Needs a store's delivery cursor spans in telemetry.spans, whose kinds hold no store span."
+    },
+    "RK-15.7-009": {
+      "class": "step",
+      "card": "RMK-1979",
+      "note": "Needs a span's attributes read, which telemetry.spans does not return (only name, span_id and parent_id)."
+    },
+    "RK-15.8.1-009": {
+      "class": "writable",
+      "card": "RMK-1979",
+      "note": "An audited tool cancelled because its turn ended, by a steer cancel directive or the kit's close, is recorded cancelled."
+    },
+    "RK-15.8.1-015": {
+      "class": "step",
+      "card": "RMK-1979",
+      "note": "Needs an audited producer of the implementation's own, such as an MCP tool's isError result; the runners wrap scripted tools only."
+    },
+    "RK-15.8.1-023": {
+      "class": "step",
+      "card": "RMK-1979",
+      "note": "Needs a ToolAuditor of the scenario's own handed to audit_tool_handler."
+    },
+    "RK-15.8.2-009": {
+      "class": "phase6",
+      "card": "RMK-1979",
+      "note": "The speech entry, recorded on ON_TRANSCRIPTION."
+    },
+    "RK-15.8.2-011": {
+      "class": "phase6",
+      "card": "RMK-1979",
+      "note": "The vision entry, recorded on ON_VISION_RESULT."
+    },
+    "RK-15.8.2-012": {
+      "class": "phase6",
+      "card": "RMK-1979",
+      "note": "The barge_in entry, recorded on ON_BARGE_IN."
+    },
+    "RK-15.8.2-014": {
+      "class": "step",
+      "card": "RMK-1979",
+      "note": "Needs a step that records an application's own entry on the session auditor."
+    },
+    "RK-15.8.3-003": {
+      "class": "step",
+      "card": "RMK-1979",
+      "note": "Needs an auditor whose file's parent directories do not exist yet."
+    },
+    "RK-15.8.3-004": {
+      "class": "step",
+      "card": "RMK-1979",
+      "note": "Needs an auditor whose file write fails."
+    },
     "RK-19.1-004": {
       "class": "phase6",
       "card": "RMK-1925",

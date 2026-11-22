@@ -4669,6 +4669,135 @@
     "RK-14.3-032": {
       "idempotency/a-hard-delete-releases-the-key-and-keeps-its-index-spent": "a8b6c94b7075e637c77d17a5693353b958213e4f07f18fc0ba4739f81427c953"
     },
+    "RK-15.5-001": {
+      "hooks/ai-response-comes-once-the-on-ai-response-hooks-have-ended": "1d7063aa98326cc5c60cb60b4ce3be14af20e4b9e6072db311044bc95cf2d8f9",
+      "hooks/event-processed-comes-once-the-after-broadcast-hooks-have-ended": "1d7063aa98326cc5c60cb60b4ce3be14af20e4b9e6072db311044bc95cf2d8f9",
+      "hooks/feedback-comes-once-the-on-feedback-hooks-have-ended": "1d7063aa98326cc5c60cb60b4ce3be14af20e4b9e6072db311044bc95cf2d8f9",
+      "reentrancy/a-before-ai-generation-handler-sends-as-deep-as-the-turn": "1d7063aa98326cc5c60cb60b4ce3be14af20e4b9e6072db311044bc95cf2d8f9",
+      "reentrancy/a-tool-call-handler-sends-as-deep-as-the-turn": "1d7063aa98326cc5c60cb60b4ce3be14af20e4b9e6072db311044bc95cf2d8f9",
+      "reentrancy/a-turn-s-framework-event-handler-sends-while-it-runs": "1d7063aa98326cc5c60cb60b4ce3be14af20e4b9e6072db311044bc95cf2d8f9",
+      "reentrancy/an-ai-response-handler-posting-after-a-slower-on-ai-response-hook-stops-at-the-depth-limit": "1d7063aa98326cc5c60cb60b4ce3be14af20e4b9e6072db311044bc95cf2d8f9",
+      "reentrancy/an-ai-response-handler-posting-after-each-answer-stops-at-the-depth-limit": "1d7063aa98326cc5c60cb60b4ce3be14af20e4b9e6072db311044bc95cf2d8f9",
+      "reentrancy/an-ai-response-handler-sends-as-deep-as-the-turn": "1d7063aa98326cc5c60cb60b4ce3be14af20e4b9e6072db311044bc95cf2d8f9",
+      "tools/a-call-whose-hooks-context-fails-keeps-its-handler-s-result-non-streaming": "1d7063aa98326cc5c60cb60b4ce3be14af20e4b9e6072db311044bc95cf2d8f9",
+      "tools/a-call-whose-hooks-context-fails-keeps-its-handler-s-result-streaming": "1d7063aa98326cc5c60cb60b4ce3be14af20e4b9e6072db311044bc95cf2d8f9",
+      "tools/a-failed-call-whose-observers-context-fails-is-reported-once": "1d7063aa98326cc5c60cb60b4ce3be14af20e4b9e6072db311044bc95cf2d8f9",
+      "tools/a-refused-call-whose-observers-context-fails-is-reported-once": "1d7063aa98326cc5c60cb60b4ce3be14af20e4b9e6072db311044bc95cf2d8f9"
+    },
+    "RK-15.6-008": {
+      "media/an-emitted-protocol-trace-reaches-its-room-observer": "0daa9b14267d2fe7ffe2dba17c0b2eeb844dd361abe5485e057e49e197a3c44e"
+    },
+    "RK-15.6-009": {
+      "media/an-emitted-protocol-trace-reaches-its-room-observer": "716eafa4832d86af894a7be4c9772b8d4a3dad5f9559e085df0f88e96876ba23"
+    },
+    "RK-15.6-013": {
+      "media/an-emitted-protocol-trace-reaches-its-room-observer": "9cdb5b18bf4becca99ff232ef9f508c3dd63abefc34c52726427757408e88a37"
+    },
+    "RK-15.6-017": {
+      "media/an-emitted-protocol-trace-reaches-its-room-observer": "00c120ba265e88d12b5256e986145d213df3f274a59b2108c80ba621b8ac6f05"
+    },
+    "RK-15.6-019": {
+      "media/an-emitted-protocol-trace-reaches-its-room-observer": "c587cfb4725ee30b633539c70491f0087c90e7ebd1a4800436ab8d658b6e22d4"
+    },
+    "RK-15.7-005": {
+      "executors/a-built-channel-parents-its-generation-to-the-owner-broadcast": "69987215919cbb316c7947e15901f2479ebe018e4e98c674467280abe1249dc7"
+    },
+    "RK-15.7-006": {
+      "executors/a-built-channel-parents-its-generation-to-the-owner-broadcast": "c7153073f4163fd8df3b43f5be0a5fdb10ec426143609d68e1d3696bc84b6ae6"
+    },
+    "RK-15.7-007": {
+      "executors/a-built-channel-parents-its-generation-to-the-owner-broadcast": "cb8c1ad42547827923076ac77547ccb0322e3efce9c3e1c0f33bf4743e74d6f7"
+    },
+    "RK-15.8.1-004": {
+      "orchestration/an-audited-answer-reaches-the-model-unchanged": "614110e910d24bb3a0bd8fdb9478a2a2cbbb8ea43c18c26220b01f2cc3f24717",
+      "orchestration/an-audited-call-is-recorded-by-how-it-ended": "614110e910d24bb3a0bd8fdb9478a2a2cbbb8ea43c18c26220b01f2cc3f24717"
+    },
+    "RK-15.8.1-007": {
+      "orchestration/an-audited-answer-reaches-the-model-unchanged": "a453e55f39053ec429c5c07b799032d125039ae8be8eae5d04833023b7d043b9",
+      "orchestration/an-audited-call-is-recorded-by-how-it-ended": "a453e55f39053ec429c5c07b799032d125039ae8be8eae5d04833023b7d043b9"
+    },
+    "RK-15.8.1-008": {
+      "orchestration/an-audited-call-is-recorded-by-how-it-ended": "ec14c78c45d70a1603abe127cc41f37be8e9722184c47ca24d7b69ae511d3516"
+    },
+    "RK-15.8.1-010": {
+      "orchestration/an-audited-call-is-recorded-by-how-it-ended": "8bb1f387789b223081f672876b35b83b5faffe74e6ab132816688538ed92a11e"
+    },
+    "RK-15.8.1-011": {
+      "orchestration/an-audited-call-is-recorded-by-how-it-ended": "dd5c91e7bdf5665617cb2c9d7a4d43b3bc6d3925a1c0f29c8d4eb86e17a1bc51"
+    },
+    "RK-15.8.1-012": {
+      "orchestration/an-audited-call-is-recorded-by-how-it-ended": "c2e608bfd3859b698872b4c7390e518cd6921f889a3471e261e7fd9d85838e49"
+    },
+    "RK-15.8.1-013": {
+      "orchestration/an-audited-answer-reaches-the-model-unchanged": "2acca650eda8688462e9379e4c055f08cc457ebaa4dda51e6ed26bae14dfbdc9",
+      "orchestration/an-audited-call-is-recorded-by-how-it-ended": "2acca650eda8688462e9379e4c055f08cc457ebaa4dda51e6ed26bae14dfbdc9"
+    },
+    "RK-15.8.1-014": {
+      "orchestration/an-audited-answer-reaches-the-model-unchanged": "3b82923f0c242dbc4e8d26c5b81072f7362d3ccbf5f52811a8496a7eb2218205",
+      "orchestration/an-audited-call-is-recorded-by-how-it-ended": "3b82923f0c242dbc4e8d26c5b81072f7362d3ccbf5f52811a8496a7eb2218205"
+    },
+    "RK-15.8.1-016": {
+      "orchestration/an-audited-answer-reaches-the-model-unchanged": "5819ff5f39dae8b9bfc96ea5bfef5506a6ed45e71367cf390a7466590adfcb7d",
+      "orchestration/an-audited-call-is-recorded-by-how-it-ended": "5819ff5f39dae8b9bfc96ea5bfef5506a6ed45e71367cf390a7466590adfcb7d"
+    },
+    "RK-15.8.1-018": {
+      "orchestration/an-audited-answer-reaches-the-model-unchanged": "0aa644c0bc798200bfd1c7ce1821497b1c2896411ba7f240804149e9ef191c26",
+      "orchestration/an-audited-call-is-recorded-by-how-it-ended": "0aa644c0bc798200bfd1c7ce1821497b1c2896411ba7f240804149e9ef191c26"
+    },
+    "RK-15.8.1-019": {
+      "orchestration/an-audited-call-is-recorded-by-how-it-ended": "5145ba774f01e469f0a8922270ce9c7646c2879f71231a9970b543bacd2c8980"
+    },
+    "RK-15.8.1-020": {
+      "orchestration/an-audited-answer-reaches-the-model-unchanged": "6c103821b730b3f47ccedcee5010f237a4dfe5c313e22d96086f3f3549f9e3c2",
+      "orchestration/an-audited-call-is-recorded-by-how-it-ended": "6c103821b730b3f47ccedcee5010f237a4dfe5c313e22d96086f3f3549f9e3c2"
+    },
+    "RK-15.8.1-021": {
+      "orchestration/an-audited-answer-reaches-the-model-unchanged": "1ff30f589e43205754d1ca479568ba4f54ea649af61829bf489992700306f291"
+    },
+    "RK-15.8.1-022": {
+      "orchestration/an-audited-answer-reaches-the-model-unchanged": "db5e18a0e56e53336acaf1cda3988166785e5e86d97d5ea2555f3d05b2c2ec89",
+      "orchestration/an-audited-call-is-recorded-by-how-it-ended": "db5e18a0e56e53336acaf1cda3988166785e5e86d97d5ea2555f3d05b2c2ec89"
+    },
+    "RK-15.8.2-004": {
+      "orchestration/a-session-auditor-records-the-sessions-and-the-tool-calls": "33a4cfb647f8510b0fc7d491566addb683057dd439ea92af163b1ed53d20814b"
+    },
+    "RK-15.8.2-005": {
+      "orchestration/a-session-auditor-records-the-sessions-and-the-tool-calls": "221e2f11a90a482847fe4cf5a53848f21aea26674658a97493a15d555565de59"
+    },
+    "RK-15.8.2-006": {
+      "orchestration/a-session-auditor-records-the-sessions-and-the-tool-calls": "dd79dd97cbd270c10488875a5f7f47dd11d073f1bf95bce98b264ab4ba4b8684"
+    },
+    "RK-15.8.2-007": {
+      "orchestration/a-session-auditor-records-the-sessions-and-the-tool-calls": "f2329d26ed36dbb14e3365e8f2f8f5c7fe1c3ad11aee51780cfdbe56c95e8d38"
+    },
+    "RK-15.8.2-008": {
+      "orchestration/a-session-auditor-records-the-sessions-and-the-tool-calls": "e54ea1cd83ba36a76cb53d2d58b4dad5c1cad36a43d1668c2c1c1b0bec651e44"
+    },
+    "RK-15.8.2-010": {
+      "orchestration/a-session-auditor-records-the-sessions-and-the-tool-calls": "7cc3462a336b8b53b08a9d0edb1e069a231da49031badf9a5f5e1f9ebc1a7f33"
+    },
+    "RK-15.8.2-013": {
+      "orchestration/a-session-auditor-records-the-sessions-and-the-tool-calls": "ea4d4c4e13910adb0b8b0b907f71801d5e7518ea4759b9c093eaa8b4480f047c"
+    },
+    "RK-15.8.3-002": {
+      "orchestration/a-session-auditor-records-the-sessions-and-the-tool-calls": "b9cdd285ef5ef31a4fc1826215126a9a3c265044ed062f0c7f39537ba8089698",
+      "orchestration/an-audited-answer-reaches-the-model-unchanged": "b9cdd285ef5ef31a4fc1826215126a9a3c265044ed062f0c7f39537ba8089698",
+      "orchestration/an-audited-call-is-recorded-by-how-it-ended": "b9cdd285ef5ef31a4fc1826215126a9a3c265044ed062f0c7f39537ba8089698"
+    },
+    "RK-15.9-002": {
+      "hooks/feedback-comes-once-the-on-feedback-hooks-have-ended": "387ad7a6a7b44f47a5b468165307f4a4b372923d0c728538746a6249eae53eb6",
+      "observations/feedback-is-an-observation-the-hooks-observe": "387ad7a6a7b44f47a5b468165307f4a4b372923d0c728538746a6249eae53eb6"
+    },
+    "RK-15.9-003": {
+      "observations/feedback-is-an-observation-the-hooks-observe": "0fd58159cf40640287d65ca840ceb71c557b9a67583886c8cf29f67fb02ff387"
+    },
+    "RK-15.9-004": {
+      "observations/feedback-is-an-observation-the-hooks-observe": "3b27a3144d22dac39b9acda26a3aa863b08a5ae6a304a156182edf9b1a041ad9"
+    },
+    "RK-15.9-005": {
+      "hooks/feedback-comes-once-the-on-feedback-hooks-have-ended": "7f5d0e93a03f787d6baa6c22cf8cc8410f12ab725ad9ac7ebe1dfedab97a0515",
+      "observations/feedback-is-an-observation-the-hooks-observe": "7f5d0e93a03f787d6baa6c22cf8cc8410f12ab725ad9ac7ebe1dfedab97a0515"
+    },
     "RK-19.1-003": {
       "orchestration/an-agent-s-turn-prompt-ends-with-its-identity": "08c0adf0888830c833b83db7a45546853257829a2e4d660b13f82b4889dc112b"
     },
