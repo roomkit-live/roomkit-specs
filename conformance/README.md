@@ -21,6 +21,7 @@ a passing scenario suite alone certifies no conformance level.
 | `requirements.json`, `coverage.json`, `coverage.md` | Generated inventory and evidence report |
 | `evidence.json`, `inventory.json` | Reviewed links, execution receipts and source inventory reviews; a receipt's results are read from its report under `executions/` |
 | `links.lock.json`, `untested.json` | Each scenario citation pinned to its unit's text; the reason a unit has no scenario |
+| `gaps.json` | The decided gaps: units a scenario can test and none cites yet, each with its class and card; the process rule accepts them |
 | `rules/` | Generated per-rule report: each unit, its citing scenarios and their latest results |
 | `TRACEABILITY.md` | Update and review procedure |
 | `RFC_COMMIT` | The roomkit-specs commit whose `roomkit-rfc.md` the scenarios' `rules` are checked against |
@@ -1715,9 +1716,11 @@ or a skip to a passing result.
     citation, new or changed; then regenerate the report
     (`--traceability --update-traceability`);
   - the process rule, `check.py --changed-units --base-ref <full sha>`: a
-    `must` unit added or changed since needs a citing scenario or a reason in
+    `must` unit added or changed since needs a citing scenario, a reason in
     `untested.json` (`{"RK-10.4-999": "Needs a carrier's number lookup."}`
-    under `units`); a `should` one warns, a unit with no level is listed as
+    under `units`) or an entry in `gaps.json` (`{"RK-8.2-014": {"class":
+    "step", "card": "RMK-1904"}}` under `units`); a `should` one with none of
+    them warns, a unit with no level is listed as
     unreviewed, or is an error in a section every unit of which had a level at
     the base. CI runs it on every push and pull request to main, against the
     push's or the pull request's base, and fails on its errors; run it before

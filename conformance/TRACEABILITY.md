@@ -185,9 +185,9 @@ lock column of `rules/`, so run `--traceability --update-traceability` after it.
 `check.py --changed-units --base-ref <full sha>` reads the units added since
 that commit, or whose text, kind, applicability or level changed:
 
-- `must`: a scenario cites it, or `untested.json` gives the reason none does;
-  otherwise an error;
-- `should`: without either, a warning;
+- `must`: a scenario cites it, `untested.json` gives the reason none does, or
+  `gaps.json` lists it as a decided gap; otherwise an error;
+- `should`: without any of them, a warning;
 - `may`: nothing;
 - no level: listed as unreviewed, never blocking; but in a section every unit
   of which had a level at the base, its subsections' included, an error. A
@@ -201,7 +201,7 @@ so rewording it, or only rewrapping its lines, changes it.
 ```text
 $ python3 conformance/check.py --changed-units --base-ref 2f35a764a425fe69453e22bdba378482673c7e34
 process rule: units added or changed since 2f35a764a425: 1
-error: RK-10.4-999 (must, added since 2f35a764a425): no scenario cites it and untested.json gives no reason
+error: RK-10.4-999 (must, added since 2f35a764a425): no scenario cites it, untested.json gives no reason and gaps.json lists no gap
 ```
 
 CI runs the rule on every push to main and every pull request to main, in the
@@ -212,18 +212,20 @@ GitHub annotations titled "Process rule" (`--github-annotations`). GitHub
 caps how many annotations a step shows; the job's log lists every line. When
 the RFC is the same as at the base, the rule reads no unit and costs nothing.
 
-When it fires on a `must` unit, either:
+When it fires on a `must` unit:
 
 - cite the unit in the `requirements` of the scenario that tests it, writing
   the scenario if none does, and pin the citation once read (`--pin
   RK-10.4-999 routing/x`);
-- or, when no scenario can test it, give the reason in `untested.json`.
+- or, when no scenario can test it, give the reason in `untested.json`;
+- or, when a scenario can test it but is left for later, list it in
+  `gaps.json` with its class and card.
 
 When it fires on a unit with no level, give the unit its level in its
 annotation; the rule then reads it by that level. A `should` warning asks for
-a scenario or a reason without blocking. Before pushing, run the rule
-against the commit your change starts from: `--base-ref "$(git merge-base
-origin/main HEAD)"`.
+a scenario, a reason or a decided gap without blocking. Before pushing, run
+the rule against the commit your change starts from: `--base-ref "$(git
+merge-base origin/main HEAD)"`.
 
 `untested.json` maps a current unit to its reason; a unit scenarios cite cannot
 keep an entry (`--strict` says so):
@@ -237,19 +239,52 @@ keep an entry (`--strict` says so):
 }
 ```
 
+`gaps.json` lists the decided gaps: units a scenario can test, whose scenario
+is left for later. Each gives its class, the RMK card that tracks it, and an
+optional one-sentence note:
+
+- `writable`: a scenario can be written with the existing steps;
+- `step`: a runner step or fixture is missing;
+- `phase6`: media, deferred to phase 6.
+
+```json
+{
+  "version": 1,
+  "units": {
+    "RK-8.2-014": {"class": "step", "card": "RMK-1904", "note": "Needs a scripted source."}
+  }
+}
+```
+
+An entry names a current `must` or `should` unit that a scenario can test,
+absent from `untested.json`, with one of the three classes and an `RMK-<n>`
+card; the checker refuses any other. It leaves when its scenario lands: a
+unit scenarios cite cannot keep an entry (`--strict` says so). A decided gap
+stays a gap: the reports show its class and card, apart from a cited unit, a
+reason and a gap no file lists, and the listing earns no citation and no
+mapping.
+
 ### The per-rule report
 
 [rules/](rules/README.md) holds an index and one page per top-level section,
 generated and checked with the other artifacts. Each unit's row gives its kind,
-its level, the scenarios citing it (or its untested reason), each citation's
-lock state (`pinned`, `reread` after the unit changed, `unpinned`), and each
-citing scenario's latest Python and Rust outcome per backend:
+its level, the scenarios citing it (or its untested reason, or its decided
+gap's class and card), each citation's lock state (`pinned`, `reread` after
+the unit changed, `unpinned`), and each citing scenario's latest Python and
+Rust outcome per backend:
 
 ```markdown
 | Unit | Kind | Level | Scenario | Lock | Python | Rust |
 |---|---|---|---|---|---|---|
 | RK-10.4-022 | behavior | must | `routing/x` | pinned | memory passed, sqlite passed |  |
+| RK-8.2-014 | behavior | must | decided gap: step, RMK-1904: Needs a scripted source. | | | |
 ```
+
+The index counts each section's gaps: the `must` units a scenario can test
+that none cites and `untested.json` gives no reason for, decided or not. It
+also counts, by class, the units `gaps.json` lists. `coverage.md` and
+`coverage.json` count those by class for every section, and `coverage.md`
+lists them.
 
 An outcome counts when its receipt ran the scenario's current text (the same
 hash), whatever its RFC commit. Receipts are appended as they are recorded, so
