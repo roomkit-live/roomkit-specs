@@ -1205,55 +1205,55 @@
       "section": "19",
       "sha256": "2365cfcdc32623fe65536518dc979718bef1b31ccb45477a5d4d65332ef358ac",
       "classification": "normative",
-      "review": "Source inventory: Multi-Agent Orchestration. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "This introductory heading describes orchestration in terms of room primitives and agent identity. It has no independent obligation or neighbouring unit under the same heading."
     },
     {
       "section": "19.1",
-      "sha256": "1a121105f128b231fedbbbec0772e36d2cf5dc335e5bfbcabdbfa2fd516e897c",
+      "sha256": "30d33e6fd9806a10e5393b2fdfbf3082939c786e71161de2cd7926a3a4b956e1",
       "classification": "normative",
-      "review": "Source inventory: Overview. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "The agent interface, identity, configuration-only realtime use, selection of agents and text greeting have individual units. The greeting review distinguishes room and write behavior, reentry, automatic hook lifecycle, room retention and the voice and realtime paths."
     },
     {
       "section": "19.2",
-      "sha256": "6741624b558324107aeb26becf1eec99578420fbc80600cdab528e60b585f742",
+      "sha256": "61ce6515d6f46ec7d0db1571cc7e3b8895969e4fdcbba4c5f97c46fa38a4c628",
       "classification": "normative",
-      "review": "Source inventory: ConversationState. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "The state model, explicit phase transition, hook dispatch, host-written active agent and recommended public setter are separate units."
     },
     {
       "section": "19.3",
-      "sha256": "de72e7d245d8b1f730a833b4e79badd0a9ec165659f10ff93948cb1d598e105b",
+      "sha256": "e424a969a675a59fc384cd81f0a6a3999179cb737d355853ff6fdd0ba1421f69",
       "classification": "normative",
-      "review": "Source inventory: Addressing. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Units distinguish the public address, independent visibility, transport delivery, named or absent intelligence recipients, storage, injected events and their history, deferred discussion addressing, proactive publication and realtime session target. The Level 0 addressing rule retains its explicit obligation."
     },
     {
       "section": "19.3.1",
-      "sha256": "f28c7f58ac58eeabd89635791c86d2b3bb9ce830a97daf356173529da15e33bd",
+      "sha256": "a92fd4ca63460664dfb6f0899f30e030bc1686c4e8e6f65a6d2911a02d58d759",
       "classification": "normative",
-      "review": "Source inventory: Agent-sourced events. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "The available response policies, the default, explicit addresses, discussion mentions, changing an existing room, missing rooms, idempotence and the effective event boundary have separate obligations."
     },
     {
       "section": "19.3.2",
-      "sha256": "aa1ee82b64f16653aa2431ef9201c5e469bdd32045c06e144092f79d2d2ad8ff",
+      "sha256": "280ddf01f24b883e07db2b67f7707a10e2844b357660573daea8ad8bebcb6780",
       "classification": "normative",
-      "review": "Source inventory: Delivered versus solicited. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Units distinguish skipping the unsolicited channel, timeline availability at solicitation, per-reader visibility, optional bounding and recommended disclosure. The closing Level 2 reference is folded into its neighbour."
     },
     {
       "section": "19.4",
-      "sha256": "5580c7b60400f591f88e94a42add81c39ccb4524a4a13bb20dfb63c77b0eb650",
+      "sha256": "9335bb953e8570781e2fc588533475671a1e326632c9b5772373a83ec4bb4957",
       "classification": "normative",
-      "review": "Source inventory: ConversationRouter. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "The router registration, rule and priority fields, individual match conditions, selection precedence, supervisor exceptions and the provenance of routing keys and intent are reviewed separately."
     },
     {
       "section": "19.5",
-      "sha256": "f8659aefdfabcfa359f9cd5fa6bd317cffde3894cf47697d92aaf6612842be2f",
+      "sha256": "943a5edefee31a0d4f3c601d8187e060167fc1d89cbabdf03febe477f1e88e4a",
       "classification": "normative",
-      "review": "Source inventory: ConversationPipeline. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "The pipeline and stage model, rule generation, construction validation, installation, handoff target lists and phase transitions have separate units. Realtime session configuration, policy, serving and installation constraints have their own feature-scoped obligations."
     },
     {
       "section": "19.6",
-      "sha256": "b75c2e8c415203a50fee5656b2c30d1973b89be37d7630aa232b0b71c6ff5524",
+      "sha256": "d042ae91c48c75260e78e37a081ade88092f41c3751e849dfdbcb4c11d8f39ba",
       "classification": "normative",
-      "review": "Source inventory: HandoffHandler. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "The handoff models, agent and phase validation, accepted and refused hooks and results, summary and internal timeline record, setup, human hold, language changes, call room and greetings have separate units. Realtime handoff and session greeting behavior is scoped to the feature."
     },
     {
       "section": "19.7",
@@ -1293,9 +1293,9 @@
     },
     {
       "section": "19.8",
-      "sha256": "c5e97a02f0e60de7460bf5c8db5b40afec8ab4cf5801f7c3511b2aca6b19bed0",
+      "sha256": "b6360ee816ddcf65f23ab0abf61cc0bc37a07b8036fcaf26793487dfa9ebbdf3",
       "classification": "normative",
-      "review": "Source inventory: StatusBus. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "The status bus operations, entry model and wire values, room and hook routing, bounds on detail and completed outcomes, subscription and close boundaries, reentry, notices and delegated tasks are reviewed separately."
     },
     {
       "section": "20",

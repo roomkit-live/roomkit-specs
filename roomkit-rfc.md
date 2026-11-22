@@ -19370,7 +19370,7 @@ handoff, and state management use existing Room/Channel/Event primitives.
 
 ### 19.1 Overview
 
-<!-- rfc: {"id": "RK-19.1-001", "kind": "behavior", "applies": "§19.1 Overview; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-19.1-003", "kind": "structural", "applies": "An Agent is an AI intelligence channel with structured identity, including its role, description and scope.", "level": "must"} -->
 An **Agent** is an AIChannel subclass with structured identity:
 
 ```
@@ -19378,78 +19378,114 @@ Agent (extends AIChannel)
 ├── role: string | null                     # "Senior Engineer", "Triage Agent"
 ├── description: string | null              # Agent capabilities description
 ├── scope: string | null                    # "Backend systems", "Billing"
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-19.1-004", "kind": "structural", "applies": "Voice feature: an agent can specify a TTS voice identifier.", "level": "must"} -->
+```
 ├── voice: string | null                    # TTS voice identifier
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-19.1-005", "kind": "structural", "applies": "Greeting and language are optional agent identity fields.", "level": "must"} -->
+```
 ├── greeting: string | null                 # Auto-greeting text on session start
 ├── language: string | null                 # Preferred language
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-19.1-006", "kind": "structural", "applies": "The Agent's automatic session greeting is enabled by default.", "level": "must"} -->
+```
 ├── auto_greet: bool (default true)         # Greet on a session's start
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-19.1-007", "kind": "structural", "applies": "The agent renders its identity in prompts by default.", "level": "must"} -->
+```
 ├── identity_in_prompt: bool (default true) # false: the host renders identity itself
 │
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-19.1-008", "kind": "structural", "applies": "Realtime feature: the read-only configuration-only flag identifies an agent without an AI provider.", "level": "must"} -->
+```
 ├── is_config_only: bool (read-only)        # True when no AI provider (speech-to-speech mode)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-19.1-009", "kind": "structural", "applies": "The agent exposes a language-aware identity block builder.", "level": "must"} -->
+```
 └── build_identity_block(language) → string # Generate identity context for system prompt
 ```
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-19.1-010", "kind": "behavior", "applies": "The identity block is appended to an agent's system prompt on its turns.", "level": "must"} -->
 The identity block is appended to the agent's system prompt wherever RoomKit
-writes one: its turns, a handoff's language change, a realtime pipeline's
-sessions. An agent built with `identity_in_prompt` false writes it nowhere
+writes one: its turns, <!-- /rfc --><!-- rfc: {"id": "RK-19.1-011", "kind": "behavior", "applies": "A handoff language change appends the identity block to the agent prompt.", "level": "must"} -->a handoff's language change, <!-- /rfc --><!-- rfc: {"id": "RK-19.1-012", "kind": "behavior", "applies": "Realtime feature: the pipeline session prompt includes the agent's identity block.", "level": "must"} -->a realtime pipeline's
+sessions. <!-- /rfc --><!-- rfc: {"id": "RK-19.1-013", "kind": "behavior", "applies": "Turning off identity rendering suppresses the block everywhere and preserves the agent's orchestration identity.", "level": "must"} -->An agent built with `identity_in_prompt` false writes it nowhere
 (`build_identity_block` returns nothing), its fields kept for orchestration.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-19.1-014", "kind": "behavior", "applies": "Realtime feature: a configuration-only speech-to-speech agent accepts a null model provider and makes no generation calls.", "level": "must"} -->
 When `is_config_only` is true, the Agent has no AI provider and serves as a
 configuration container for speech-to-speech channels (voice, greeting, language
 metadata). A null provider MUST be accepted — no generation calls are made.
 
-Multiple Agents MAY be attached to a single room. The orchestration system
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-19.1-015", "kind": "behavior", "applies": "Hosts may attach more than one agent to the same room.", "level": "must"} -->
+Multiple Agents MAY be attached to a single room. <!-- /rfc --><!-- rfc: {"id": "RK-19.1-016", "kind": "behavior", "applies": "Orchestration selects the agent for each event, subject to explicit addressing.", "level": "must"} -->The orchestration system
 determines which Agent handles each event, unless the event names its
 recipients itself (§19.3).
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-19.1-002", "kind": "behavior", "applies": "§19.1 Overview; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-19.1-017", "kind": "behavior", "applies": "The greeting API selects an identity-bearing agent by agent ID, then channel ID, then room binding order.", "level": "must"} -->
 **The greeting.** `send_greeting(room_id, channel_id?, agent_id?, greeting?,
 organization_id?)` says an agent's greeting in a room. The agent is the one
 `agent_id`, then `channel_id`, names when it is an intelligence channel with an
-identity, else the first such channel the room binds; the words are `greeting`,
-else the agent's. With no agent or no words nothing happens. With an
+identity, else the first such channel the room binds; <!-- /rfc --><!-- rfc: {"id": "RK-19.1-018", "kind": "behavior", "applies": "An explicit greeting takes precedence over the selected agent's configured words.", "level": "must"} -->the words are `greeting`,
+else the agent's. <!-- /rfc --><!-- rfc: {"id": "RK-19.1-019", "kind": "behavior", "applies": "A greeting with no agent or no words has no effect.", "level": "must"} -->With no agent or no words nothing happens. <!-- /rfc --><!-- rfc: {"id": "RK-19.1-020", "kind": "behavior", "applies": "A greeting scoped to an organization first checks the room and reports an inaccessible room as not found.", "level": "must"} -->With an
 `organization_id`, the room is read first, and one it does not reach is not
 found (§17.2).
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-19.1-021", "kind": "behavior", "applies": "A text greeting is a delivered outbound AI message from the agent carrying auto_greeting metadata.", "level": "must"} -->
 With no voice or realtime session, the greeting is a MESSAGE from the agent,
-OUTBOUND, of channel type AI, DELIVERED, its metadata `auto_greeting: true`. It
-is committed under the room lock, the room's due timers applied (§5.1); a room
-missing, or whose status refuses events, takes nothing and fails no one. It is
+OUTBOUND, of channel type AI, DELIVERED, its metadata `auto_greeting: true`. <!-- /rfc --><!-- rfc: {"id": "RK-19.1-022", "kind": "behavior", "applies": "The text greeting is committed under the room lock after applying due room timers.", "level": "must"} -->It
+is committed under the room lock, the room's due timers applied (§5.1); <!-- /rfc --><!-- rfc: {"id": "RK-19.1-023", "kind": "behavior", "applies": "Missing rooms and rooms refusing events take no greeting and cause no failure on the ordinary commit path.", "level": "must"} -->a room
+missing, or whose status refuses events, takes nothing and fails no one. <!-- /rfc --><!-- rfc: {"id": "RK-19.1-024", "kind": "behavior", "applies": "A greeting bypasses the before-broadcast hook and the check of the source's right to write.", "level": "must"} -->It is
 committed by a path of its own (§7.5 rule 2): no BEFORE_BROADCAST hook runs for
-it and its source's right to write is not checked. Its visibility is narrowed
-by its agent's binding (§7.3). It is delivered on the room's lane (§10.2), the
-other agents' answers re-entering, and AFTER_BROADCAST observes it; an agent
-that cannot write has it stored and delivered to no one, and one the room does
-not bind has it stored with no delivery set and no AFTER_BROADCAST. Its
+it and its source's right to write is not checked. <!-- /rfc --><!-- rfc: {"id": "RK-19.1-025", "kind": "behavior", "applies": "The greeting inherits the agent binding's visibility restriction.", "level": "must"} -->Its visibility is narrowed
+by its agent's binding (§7.3). <!-- /rfc --><!-- rfc: {"id": "RK-19.1-026", "kind": "behavior", "applies": "Text greeting delivery uses the room lane, admits chained agent answers and runs the after-broadcast hook.", "level": "must"} -->It is delivered on the room's lane (§10.2), the
+other agents' answers re-entering, and AFTER_BROADCAST observes it; <!-- /rfc --><!-- rfc: {"id": "RK-19.1-027", "kind": "behavior", "applies": "A greeting from a bound agent that lacks write access is stored with no recipients.", "level": "must"} -->an agent
+that cannot write has it stored and delivered to no one, <!-- /rfc --><!-- rfc: {"id": "RK-19.1-028", "kind": "behavior", "applies": "An unbound agent's greeting is stored without a delivery set or after-broadcast observation.", "level": "must"} -->and one the room does
+not bind has it stored with no delivery set and no AFTER_BROADCAST. <!-- /rfc --><!-- rfc: {"id": "RK-19.1-029", "kind": "behavior", "applies": "A text greeting produces neither delivery reports nor an event_processed notification.", "level": "must"} -->Its
 deliveries are not reported and no `event_processed` follows it (§8.2): it
-entered neither through the inbound pipeline nor by direct injection. A stream
-that answers it is a chained stream (§8.3). The call returns once its delivery
+entered neither through the inbound pipeline nor by direct injection. <!-- /rfc --><!-- rfc: {"id": "RK-19.1-030", "kind": "behavior", "applies": "A stream answering a greeting follows chained-stream rules.", "level": "must"} -->A stream
+that answers it is a chained stream (§8.3). <!-- /rfc --><!-- rfc: {"id": "RK-19.1-031", "kind": "behavior", "applies": "A greeting waits for delivery outside the room lock and lane, returning at commit from the lock or lane.", "level": "must"} -->The call returns once its delivery
 is over; made under the room's lock or from its lane, at its commit.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-19.1-032", "kind": "behavior", "applies": "A greeting from a hook or room delivery inherits its depth and shares the work's reentry budget with responses.", "level": "must"} -->
 Made in the room's own work, a hook's body or a delivery, a greeting is that
 work's write, as a direct injection is (§9.5.1, §8.3): at the work's depth, and
 drawing a pass, or a hook call from an ASYNC hook's body, on the work's budget,
-which what answers it draws on too; past the budget it is stored BLOCKED
+which what answers it draws on too; <!-- /rfc --><!-- rfc: {"id": "RK-19.1-033", "kind": "behavior", "applies": "A greeting beyond the work's budget is stored blocked with reentry_loop_cap and is not delivered.", "level": "must"} -->past the budget it is stored BLOCKED
 `reentry_loop_cap`, with no delivery, so that a hook greeting on every answer,
-or on its own greeting, stops at the limit. A call made outside the room's work
+or on its own greeting, stops at the limit. <!-- /rfc --><!-- rfc: {"id": "RK-19.1-034", "kind": "behavior", "applies": "An external greeting starts at depth zero with its own budget.", "level": "must"} -->A call made outside the room's work
 has a budget of its own, at depth 0.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-19.1-035", "kind": "behavior", "applies": "An agent with auto_greet and a greeting uses a named ON_SESSION_STARTED hook which the starting message waits for.", "level": "must"} -->
 An Agent with a greeting and `auto_greet` greets on a session's start, through
 a hook on ON_SESSION_STARTED of the kit, named `_agent_auto_greet:<agent>`, so
-that the message that started the session waits for it (§10.1 step 2); it goes
-when the Agent is unregistered. It greets a room once, and only one that binds
-it: a room it was not bound to at a session's start may be greeted at the next.
-An implementation MAY bound what it remembers (the reference keeps 10 000 rooms
-per Agent, dropping the oldest tenth when full). No greeting gate holds a text
+that the message that started the session waits for it (§10.1 step 2); <!-- /rfc --><!-- rfc: {"id": "RK-19.1-036", "kind": "behavior", "applies": "Unregistering an agent removes its automatic greeting hook.", "level": "must"} -->it goes
+when the Agent is unregistered. <!-- /rfc --><!-- rfc: {"id": "RK-19.1-037", "kind": "behavior", "applies": "The agent greets a bound room once and may greet at a later start if first encountered unbound.", "level": "must"} -->It greets a room once, and only one that binds
+it: a room it was not bound to at a session's start may be greeted at the next.<!-- /rfc --><!-- rfc: {"id": "RK-19.1-038", "kind": "behavior", "applies": "Implementations may bound the per-agent set of previously greeted rooms.", "level": "may"} -->
+An implementation MAY bound what it remembers <!-- /rfc --><!-- rfc: {"id": "RK-19.1-039", "kind": "behavior", "applies": "When the reference bound is used, an agent tracks 10,000 rooms and drops the oldest tenth on overflow.", "level": "must"} -->(the reference keeps 10 000 rooms
+per Agent, dropping the oldest tenth when full). <!-- /rfc --><!-- rfc: {"id": "RK-19.1-040", "kind": "behavior", "applies": "A text session does not gate on greeting delivery beyond the initiating message's process timeout.", "level": "must"} -->No greeting gate holds a text
 session: another agent that reads the greeting and answers it delays the message
-only within the message's `process_timeout`. A voice session's greeting is said
-behind a gate the agents' deliveries wait for, and a realtime session's is
+only within the message's `process_timeout`. <!-- /rfc --><!-- rfc: {"id": "RK-19.1-041", "kind": "behavior", "applies": "Voice feature: the voice greeting gate delays agent deliveries until the greeting is said.", "level": "must"} -->A voice session's greeting is said
+behind a gate the agents' deliveries wait for, <!-- /rfc --><!-- rfc: {"id": "RK-19.1-042", "kind": "behavior", "applies": "Realtime feature: the session greeting is injected as the model's own turn.", "level": "must"} -->and a realtime session's is
 injected as the model's own turn (§12.4).
 <!-- /rfc -->
 
 ### 19.2 ConversationState
 
-<!-- rfc: {"id": "RK-19.2-001", "kind": "behavior", "applies": "§19.2 ConversationState; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-19.2-002", "kind": "structural", "applies": "Room metadata can hold a ConversationState with phase, active agent, human hold, language and custom metadata.", "level": "must"} -->
 Each room MAY have a `ConversationState` stored in room metadata:
 
 ```
@@ -19461,18 +19497,22 @@ ConversationState
 └── metadata: map<string, any>              # Custom state (intent, escalation level, etc.)
 ```
 
-Phase transitions MUST be explicit — either via handoff or programmatic update.
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-19.2-003", "kind": "behavior", "applies": "A transition of the room phase requires a handoff or an explicit programmatic update.", "level": "must"} -->
+Phase transitions MUST be explicit — either via handoff or programmatic update.<!-- /rfc --><!-- rfc: {"id": "RK-19.2-004", "kind": "behavior", "applies": "A state transition dispatches the ON_PHASE_TRANSITION hook.", "level": "must"} -->
 The framework fires `ON_PHASE_TRANSITION` hooks on state changes.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-19.2-005", "kind": "behavior", "applies": "The host may set a room's active agent independently of a handoff.", "level": "must"} -->
 `active_agent_id` MAY be written by the host, not only by a handoff: a
 console that switches which agent it is talking to is a legitimate writer of
-this field. Implementations SHOULD expose a supported way to set it —
+this field. <!-- /rfc --><!-- rfc: {"id": "RK-19.2-006", "kind": "behavior", "applies": "A supported public setter for a room's active agent is recommended.", "level": "should"} -->Implementations SHOULD expose a supported way to set it —
 reaching into room metadata from application code is not one.
 <!-- /rfc -->
 
 ### 19.3 Addressing
 
-<!-- rfc: {"id": "RK-19.3-001", "kind": "behavior", "applies": "§19.3 Addressing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-19.3-001", "kind": "structural", "applies": "An event sender may set addressed_to to a list of channel identifiers; null denotes an unaddressed event.", "level": "must"} -->
 Routing rules answer *which agent handles this kind of event*. Addressing
 answers a different question, asked per message by whoever sends it:
 **which agents are being asked to act, right now**. A room where a human
@@ -19487,49 +19527,53 @@ RoomEvent
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-19.3-002", "kind": "behavior", "applies": "§19.3 Addressing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-19.3-005", "kind": "behavior", "applies": "An explicit intelligence address never removes visibility that a channel otherwise has.", "level": "must"} -->
 **Addressing is not visibility.** Visibility (§7.3) is configured on a
 binding, narrowed by an event's own, and answers who may *see* what a source
 produces. Addressing is set on an event by its sender and answers who is
 *asked to act*. The two are orthogonal: addressing one agent MUST NOT hide
 the event from any channel visibility would have shown it to.
 
-Normative rules:
+Normative rules:<!-- /rfc --><!-- rfc: {"id": "RK-19.3-006", "kind": "behavior", "applies": "Addressing leaves deliveries to the room's transport channels unaffected.", "level": "must"} -->
 
 1. Addressing constrains **intelligence** channels only. Delivery to
    transport channels MUST NOT be affected — a message addressed to one
-   agent still reaches the humans in the room.
+   agent still reaches the humans in the room.<!-- /rfc --><!-- rfc: {"id": "RK-19.3-007", "kind": "behavior", "applies": "A non-null address solicits only the named intelligence channels.", "level": "must"} -->
 2. When `addressed_to` is non-null, the channels it names are the only
-   intelligence channels solicited for that event. Named ids not bound to
+   intelligence channels solicited for that event. <!-- /rfc --><!-- rfc: {"id": "RK-19.3-008", "kind": "behavior", "applies": "Unbound channel identifiers in an address are ignored, including when no bound intelligence recipient remains.", "level": "must"} -->Named ids not bound to
    the room are ignored; if none of them is bound, no intelligence channel
-   is solicited.
+   is solicited.<!-- /rfc --><!-- rfc: {"id": "RK-19.3-009", "kind": "behavior", "applies": "An empty address solicits no agent while preserving storage and transport delivery.", "level": "must"} -->
 3. An empty list addresses nobody: the event is stored and delivered, and no
-   agent is asked to respond.
+   agent is asked to respond.<!-- /rfc --><!-- rfc: {"id": "RK-19.3-010", "kind": "behavior", "applies": "The stored event retains the address that transcripts and replays use to reproduce solicitation.", "level": "must"} -->
 4. `addressed_to` is part of the stored event, so a transcript can show who
    was asked and a replay reproduces the same solicitation (in a discussion,
-   the same queued turns, Section 19.7.5).
+   the same queued turns, Section 19.7.5).<!-- /rfc --><!-- rfc: {"id": "RK-19.3-011", "kind": "behavior", "applies": "An event injected by a hook solicits no intelligence channel and reaches only its transport targets irrespective of address.", "level": "must"} -->
 5. An event a hook injects (Section 9.4) solicits no intelligence channel,
-   whatever its address: it is delivered to its transport targets only, and
+   whatever its address: it is delivered to its transport targets only, <!-- /rfc --><!-- rfc: {"id": "RK-19.3-012", "kind": "behavior", "applies": "A visible injected event is available to an agent reading its history on its next turn.", "level": "must"} -->and
    an agent its visibility names reads it in its history at its next turn.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-19.3-003", "kind": "behavior", "applies": "§19.3 Addressing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-19.3-013", "kind": "behavior", "applies": "A router selects recipients for unaddressed events; absent a router every eligible intelligence channel is solicited.", "level": "must"} -->
 **Unaddressed events** (`addressed_to = null`) keep the behaviour of earlier
 versions: the router decides (§19.4), and with no router installed every
-eligible intelligence channel is solicited. A discussion decides instead
+eligible intelligence channel is solicited. <!-- /rfc --><!-- rfc: {"id": "RK-19.3-014", "kind": "behavior", "applies": "An installed discussion determines the solicitation of unaddressed events.", "level": "must"} -->A discussion decides instead
 (Section 19.7.5, rule 8).
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-19.3-015", "kind": "behavior", "applies": "A discussion queues only the explicitly addressed agents and solicits each on its turn, one at a time.", "level": "must"} -->
 A discussion (Section 19.7.5) defers the solicitation an address asks for to
 the addressed agent's turn: the channels the address names are still the only
 ones asked to act, later, one at a time. It MUST NOT solicit a channel the
 address does not name.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-19.3-016", "kind": "behavior", "applies": "Proactive text delivery preserves the intelligence address through publication.", "level": "must"} -->
 Proactive `RoomKit.deliver()` calls carry the same intelligence address through
-the text publication pipeline (§22.1). A realtime session target is a separate
+the text publication pipeline (§22.1). <!-- /rfc --><!-- rfc: {"id": "RK-19.3-017", "kind": "behavior", "applies": "Realtime feature: choosing a target transport session does not address an intelligence channel.", "level": "must"} -->A realtime session target is a separate
 transport selection, not an intelligence address.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-19.3-004", "kind": "behavior", "applies": "§19.3 Addressing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-19.3-004", "kind": "behavior", "applies": "At Level 0 every event has the addressing field and an explicit address must be honored; Level 2 adds router precedence and response policies.", "level": "must"} -->
 **Conformance.** Addressing itself is Level 0 — the field exists on every
 event and MUST be honoured when set, which an implementation without
 intelligence channels satisfies trivially. The router precedence (§19.4,
@@ -19539,36 +19583,42 @@ section.
 
 #### 19.3.1 Agent-sourced events
 
-<!-- rfc: {"id": "RK-19.3.1-001", "kind": "behavior", "applies": "§19.3.1 Agent-sourced events; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-19.3.1-002", "kind": "behavior", "applies": "By default an agent's output solicits the other eligible agents within the maximum chain depth.", "level": "must"} -->
 An agent's own output is an event like any other, and by default it solicits
 the other agents in the room — the chaining Appendix B.4 describes, bounded
 by `max_chain_depth`. That is a feature for a pipeline (analyst → writer)
 and a hazard for a room of independent agents, where two agents answer each
 other until the depth limit stops them.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-19.3.1-003", "kind": "behavior", "applies": "The room can select either of the two agent response policies.", "level": "must"} -->
 Implementations MUST provide both policies (`AgentResponsePolicy`), selectable
 per room through the room's `agent_response_policy`:
 
 | Policy | An agent's output solicits |
 |---|---|
-| `AGENT_CHAIN` | every eligible intelligence channel — the behaviour of earlier versions |
-| `ADDRESSED_ONLY` | only the channels named in `addressed_to`, if any |
+| <!-- /rfc --><!-- rfc: {"id": "RK-19.3.1-004", "kind": "behavior", "applies": "Under AGENT_CHAIN an agent output solicits every eligible intelligence channel unless explicitly addressed.", "level": "must"} -->`AGENT_CHAIN` | every eligible intelligence channel — the behaviour of earlier versions |
+| <!-- /rfc --><!-- rfc: {"id": "RK-19.3.1-005", "kind": "behavior", "applies": "Under ADDRESSED_ONLY an agent output solicits only the intelligence channels it explicitly names.", "level": "must"} -->`ADDRESSED_ONLY` | only the channels named in `addressed_to`, if any |
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-19.3.1-006", "kind": "behavior", "applies": "AGENT_CHAIN is the default in a room without an explicit response policy.", "level": "must"} -->
 `AGENT_CHAIN` MUST remain the default, so a room written against an earlier
-version behaves unchanged. Under either policy an explicit address is
-honoured: an agent MAY address another agent and be answered by it alone.
+version behaves unchanged. <!-- /rfc --><!-- rfc: {"id": "RK-19.3.1-007", "kind": "behavior", "applies": "Under both response policies an explicit agent address solicits the named agents alone.", "level": "must"} -->Under either policy an explicit address is
+honoured: an agent MAY address another agent and be answered by it alone.<!-- /rfc --><!-- rfc: {"id": "RK-19.3.1-008", "kind": "behavior", "applies": "A discussion translates written agent mentions in its agent's output into the event address.", "level": "must"} -->
 Section 19.7.5 is how: under a discussion, the `@` names an agent writes
 become its event's address.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-19.3.1-009", "kind": "behavior", "applies": "The response policy is mutable on an existing room.", "level": "must"} -->
 Per room means *for the life of the room*, not at its creation only. A room
 rarely knows when it is created how many agents it will end up holding: one
 that opens with a single assistant and gains a second when a human asks for
 it becomes a room of independent agents at that moment, and the policy it
 needs changes with it. Implementations MUST therefore allow the policy to be
-set on an existing room (`set_agent_response_policy(room_id, policy)`:
-written under the room lock and the room returned, a missing room, or
-another organization's, not found, a room holding the policy already left
-as it is). A change applies to events processed after it; an
+set on an existing room (`set_agent_response_policy(room_id, policy)`:<!-- /rfc --><!-- rfc: {"id": "RK-19.3.1-010", "kind": "behavior", "applies": "The response-policy setter serializes its write under the room lock and returns the room.", "level": "must"} -->
+written under the room lock and the room returned, <!-- /rfc --><!-- rfc: {"id": "RK-19.3.1-011", "kind": "behavior", "applies": "The response-policy setter reports a missing room or another organization's room as not found.", "level": "must"} -->a missing room, or
+another organization's, not found, <!-- /rfc --><!-- rfc: {"id": "RK-19.3.1-012", "kind": "behavior", "applies": "Setting an already effective response policy leaves the room unchanged.", "level": "must"} -->a room holding the policy already left
+as it is). <!-- /rfc --><!-- rfc: {"id": "RK-19.3.1-013", "kind": "behavior", "applies": "A response-policy change acts on subsequent events without reopening a prior broadcast or its deferred discussion turn.", "level": "must"} -->A change applies to events processed after it; an
 event already broadcast is not reconsidered, because solicitation was
 decided when it was routed and reopening it would ask an agent to act on a
 turn that has already closed. A discussion's deferred turn (Section 19.7.5)
@@ -19578,7 +19628,7 @@ was routed.
 
 #### 19.3.2 Delivered versus solicited
 
-<!-- rfc: {"id": "RK-19.3.2-001", "kind": "behavior", "applies": "§19.3.2 Delivered versus solicited; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-19.3.2-003", "kind": "behavior", "applies": "An unsolicited intelligence channel is neither delivered the event nor asked to respond.", "level": "must"} -->
 A channel that is not solicited MUST NOT be asked to produce a response, and
 MUST NOT be delivered the event either — the implementation skips it. At
 §10.2 step 3c the two are one decision, not two.
@@ -19593,16 +19643,20 @@ private threads, and nothing in the transcript says so: asked what was said
 earlier, an agent answers from the only history it has, in good faith, about
 something else.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-19.3.2-004", "kind": "behavior", "applies": "The room timeline must be available to a solicited channel to rebuild missed context.", "level": "must"} -->
 The counterpart is therefore normative. An implementation MUST make the
 room's timeline available to a channel at the moment it *is* solicited, so a
 channel that keeps its own state can rebuild what it missed instead of
-diverging from the room. That rebuilt history is subject to §7.5 rule 8
+diverging from the room. <!-- /rfc --><!-- rfc: {"id": "RK-19.3.2-005", "kind": "behavior", "applies": "The rebuilt timeline is filtered for the reader using the same visibility boundary as delivery.", "level": "must"} -->That rebuilt history is subject to §7.5 rule 8
 without exception: it is filtered per reader, and a channel MUST NOT obtain
 through it an event visibility withheld from it at delivery. Catching up is
 not a second door into the room.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-19.3.2-006", "kind": "behavior", "applies": "Implementations may bound the context supplied to a solicited channel.", "level": "may"} -->
 The rebuild MAY be bounded — by a count of events, by a token budget, by
-whatever the channel can carry. When it is, the channel SHOULD be told that
+whatever the channel can carry. <!-- /rfc --><!-- rfc: {"id": "RK-19.3.2-007", "kind": "behavior", "applies": "When a rebuilt timeline is bounded, the channel should learn it is partial and how much is missing.", "level": "should"} -->When it is, the channel SHOULD be told that
 what it received is partial, and how much is missing. A bound the reader
 cannot see reproduces the same silent divergence one layer down: an agent
 that knows its history was truncated can say so, or ask for the rest; an
@@ -19612,18 +19666,18 @@ Nothing here obliges a channel to read the timeline. An implementation whose
 channels all rebuild their context from storage each turn satisfies this
 section by construction — which is why the requirement is that the timeline
 be *available*, not that it be consumed.
-<!-- /rfc -->
 
-<!-- rfc: {"id": "RK-19.3.2-002", "kind": "behavior", "applies": "§19.3.2 Delivered versus solicited; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Conformance.** Level 2, with the rest of §19.3.
 <!-- /rfc -->
 
 ### 19.4 ConversationRouter
 
-<!-- rfc: {"id": "RK-19.4-001", "kind": "behavior", "applies": "§19.4 ConversationRouter; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-19.4-005", "kind": "behavior", "applies": "The conversation router selects event recipients via a synchronous before-broadcast hook.", "level": "must"} -->
 The `ConversationRouter` selects which Agent processes each event. It is
 installed as a `BEFORE_BROADCAST` sync hook.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-19.4-006", "kind": "structural", "applies": "The router accepts ordered rules, an optional default agent and optional supervisor.", "level": "must"} -->
 ```
 ConversationRouter
 ├── rules: list<RoutingRule>                # Ordered by priority
@@ -19632,41 +19686,61 @@ ConversationRouter
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-19.4-002", "kind": "behavior", "applies": "§19.4 ConversationRouter; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-19.4-007", "kind": "structural", "applies": "A routing rule has a target agent, conditions and an integer priority.", "level": "must"} -->
 **RoutingRule:**
 
 ```
 RoutingRule
 ├── agent_id: string                        # Target agent
 ├── conditions: RoutingConditions           # When this rule applies
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-19.4-008", "kind": "structural", "applies": "A routing rule defaults to priority zero, with lower numbers evaluated first.", "level": "must"} -->
+```
 └── priority: int (default 0)               # Lower = evaluated first
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-19.4-003", "kind": "behavior", "applies": "§19.4 ConversationRouter; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-19.4-009", "kind": "behavior", "applies": "A routing rule may match the room's current conversation phase.", "level": "must"} -->
 **RoutingConditions:**
 
 ```
 RoutingConditions
 ├── phases: set<string> | null              # Match when ConversationState.phase is in set
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-19.4-010", "kind": "behavior", "applies": "A routing rule may match the event's source channel type.", "level": "must"} -->
+```
 ├── channel_types: set<ChannelType> | null  # Match when source channel type is in set
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-19.4-011", "kind": "behavior", "applies": "A routing rule may match the intent carried by the event.", "level": "must"} -->
+```
 ├── intents: set<string> | null             # Match on detected intent
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-19.4-012", "kind": "behavior", "applies": "A routing rule may match particular source channel IDs.", "level": "must"} -->
+```
 ├── source_channel_ids: set<string> | null  # Match on specific source channels
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-19.4-013", "kind": "behavior", "applies": "A custom routing rule may test the event, room context and conversation state.", "level": "must"} -->
+```
 └── custom: function | null                 # Arbitrary predicate (event, context, state) → bool
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-19.4-004", "kind": "behavior", "applies": "§19.4 ConversationRouter; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-19.4-014", "kind": "behavior", "applies": "An explicit address takes precedence, bypassing sticky affinity, matching rules and the default.", "level": "must"} -->
 **Evaluation order:**
 
 0. If the event is addressed (§19.3), the address decides. The router MUST
-   NOT override it, and steps 1–3 are skipped.
+   NOT override it, and steps 1–3 are skipped.<!-- /rfc --><!-- rfc: {"id": "RK-19.4-015", "kind": "behavior", "applies": "Without a phase transition a room's active agent takes precedence over routing rules.", "level": "must"} -->
 1. If `ConversationState.active_agent_id` is set and no phase transition
-   occurred, route to the active agent (sticky affinity).
-2. Evaluate rules in priority order. First matching rule wins.
-3. If no rule matches, use `default_agent_id`.
+   occurred, route to the active agent (sticky affinity).<!-- /rfc --><!-- rfc: {"id": "RK-19.4-016", "kind": "behavior", "applies": "Of the matching routing rules, the first in priority order wins.", "level": "must"} -->
+2. Evaluate rules in priority order. First matching rule wins.<!-- /rfc --><!-- rfc: {"id": "RK-19.4-017", "kind": "behavior", "applies": "The default agent is selected when no rule matches.", "level": "must"} -->
+3. If no rule matches, use `default_agent_id`.<!-- /rfc --><!-- rfc: {"id": "RK-19.4-018", "kind": "behavior", "applies": "A configured supervisor observes beside the selected agent or the addressed channels.", "level": "must"} -->
 4. If `supervisor_id` is set, the supervisor ALWAYS receives the event
-   (in addition to the selected agent, or to the addressed channels).
+   (in addition to the selected agent, or to the addressed channels).<!-- /rfc --><!-- rfc: {"id": "RK-19.4-019", "kind": "behavior", "applies": "The supervisor may observe unaddressed agent traffic even under ADDRESSED_ONLY.", "level": "must"} -->
 
    This holds under every `AgentResponsePolicy`, `ADDRESSED_ONLY` included,
    because the two rules answer different questions. A policy decides who is
@@ -19675,14 +19749,16 @@ RoutingConditions
    to precisely the traffic it exists to oversee — every unaddressed
    agent-to-agent exchange — and the role would be worth nothing in the
    deployments that need it most. The policy table in Section 19.3.1 describes
-   solicitation, and it is not narrowed by this step.
+   solicitation, and it is not narrowed by this step.<!-- /rfc --><!-- rfc: {"id": "RK-19.4-020", "kind": "behavior", "applies": "While a room is held for a human, the supervisor gets no turn for unaddressed or transport-only traffic.", "level": "must"} -->
 
    One exception: while a room is held for a human (Section 19.6), an event with
    no address, a post naming nobody or an address naming only a transport gives
    the supervisor no turn, since no agent acts on it and its reply would reach
-   the person who was promised a human. Beside an addressed agent, which still
+   the person who was promised a human. <!-- /rfc --><!-- rfc: {"id": "RK-19.4-021", "kind": "behavior", "applies": "During a human hold the supervisor remains beside an expressly addressed agent.", "level": "must"} -->Beside an addressed agent, which still
    acts, it stays.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-19.4-022", "kind": "behavior", "applies": "The router stamps routing metadata and the event router skips non-targeted intelligence channels.", "level": "must"} -->
 Step 0 exists because sticky affinity would otherwise swallow every explicit
 request. With the active agent consulted first, a rule written to honour an
 address is unreachable for as long as any agent holds the conversation — the
@@ -19692,21 +19768,25 @@ the sender and outranks both the affinity and the rules.
 The router stamps routing metadata on the event. The Event Router skips
 non-targeted intelligence channels during broadcast.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-19.4-023", "kind": "behavior", "applies": "Routing control metadata comes from framework hooks; equivalent sender-supplied keys are dropped.", "level": "must"} -->
 `_routed_to` and `_always_process`, the keys it stamps, are the framework's:
 only a hook writes them, the router among hooks, and a sender's are dropped
-(Section 10.1), so that a sender never chooses the agent that answers it.
+(Section 10.1), so that a sender never chooses the agent that answers it.<!-- /rfc --><!-- rfc: {"id": "RK-19.4-024", "kind": "behavior", "applies": "A routing rule reads intent as ordinary caller-supplied event data.", "level": "must"} -->
 `intent`, which a rule's `intents` reads from the event's metadata, is the
-caller's data, not a framework key: whoever wrote it is read, and a host that
+caller's data, not a framework key: whoever wrote it is read, <!-- /rfc --><!-- rfc: {"id": "RK-19.4-025", "kind": "non_testable", "applies": "A host that distrusts its transport's copied intent sets it in a before-broadcast hook ahead of the router.", "level": "must"} -->and a host that
 does not trust what its channel copies from the wire sets it itself, in a
 `BEFORE_BROADCAST` hook that runs before the router.
 <!-- /rfc -->
 
 ### 19.5 ConversationPipeline
 
-<!-- rfc: {"id": "RK-19.5-001", "kind": "behavior", "applies": "§19.5 ConversationPipeline; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-19.5-005", "kind": "behavior", "applies": "A linear pipeline generates routing rules from its stages.", "level": "must"} -->
 A `ConversationPipeline` generates `RoutingRule` entries from a linear stage
 definition:
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-19.5-006", "kind": "structural", "applies": "A pipeline has stages, an optional supervisor and a default phase that falls back to the first stage.", "level": "must"} -->
 ```
 ConversationPipeline
 ├── stages: list<PipelineStage>
@@ -19715,7 +19795,7 @@ ConversationPipeline
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-19.5-002", "kind": "behavior", "applies": "§19.5 ConversationPipeline; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-19.5-007", "kind": "structural", "applies": "Pipeline stages define their phase, agent, next phase, permitted returns and optional description.", "level": "must"} -->
 **PipelineStage:**
 
 ```
@@ -19727,95 +19807,99 @@ PipelineStage
 └── description: string | null              # Human-readable stage description
 ```
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-19.5-008", "kind": "behavior", "applies": "Each pipeline stage produces a routing rule matching that stage's phase.", "level": "must"} -->
 The pipeline generates one `RoutingRule` per stage with
 `conditions.phases = {stage.phase}`.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-19.5-009", "kind": "behavior", "applies": "Construction refuses a forward or return transition to an unknown phase, treating an empty next as absent.", "level": "must"} -->
 A stage whose `next` or `can_return_to` names a phase no stage holds MUST be
-refused when the pipeline is built; an empty `next` is none. The router's
+refused when the pipeline is built; an empty `next` is none. <!-- /rfc --><!-- rfc: {"id": "RK-19.5-010", "kind": "behavior", "applies": "The last stage for the default phase supplies the router's default agent, or none for an unknown default phase.", "level": "must"} -->The router's
 default agent is that of the default phase's stage, the last of several, and
-none when no stage holds that phase. A phase's allowed transitions are its
-stage's `next` and `can_return_to`, and an agent's phase is that of the last
+none when no stage holds that phase. <!-- /rfc --><!-- rfc: {"id": "RK-19.5-011", "kind": "behavior", "applies": "The next and permitted-return stage fields determine a phase's legal transitions.", "level": "must"} -->A phase's allowed transitions are its
+stage's `next` and `can_return_to`, <!-- /rfc --><!-- rfc: {"id": "RK-19.5-012", "kind": "behavior", "applies": "A multi-stage agent takes the last stage it occupies as its phase.", "level": "must"} -->and an agent's phase is that of the last
 stage it holds.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-19.5-013", "kind": "behavior", "applies": "Pipeline installation validates all agents before installing and a refused installation leaves no hook or tool.", "level": "must"} -->
 `ConversationPipeline.install` reads every agent before it installs anything:
-one it refuses leaves no hook and no tool behind, as does an agent whose handoff
+one it refuses leaves no hook and no tool behind, <!-- /rfc --><!-- rfc: {"id": "RK-19.5-014", "kind": "behavior", "applies": "Installation refuses existing handoff wiring in any or one room, duplicate agents and conflicts with the handoff tool name.", "level": "must"} -->as does an agent whose handoff
 is set up already, in every room or in one, an agent named twice, or one whose
-tools hold the handoff's name; a router's `install` refuses the same way. It
+tools hold the handoff's name; <!-- /rfc --><!-- rfc: {"id": "RK-19.5-015", "kind": "behavior", "applies": "A router installation observes the same preflight and atomic refusal as a pipeline installation.", "level": "must"} -->a router's `install` refuses the same way. <!-- /rfc --><!-- rfc: {"id": "RK-19.5-016", "kind": "behavior", "applies": "Pipeline installation registers the global before-broadcast router at priority -100 or the supplied priority.", "level": "must"} -->It
 registers the router's
-hook on every room's `BEFORE_BROADCAST`, at priority -100 unless given another,
-builds a `HandoffHandler` with those phases and transitions, and gives each
+hook on every room's `BEFORE_BROADCAST`, at priority -100 unless given another,<!-- /rfc --><!-- rfc: {"id": "RK-19.5-017", "kind": "behavior", "applies": "The installed handoff handler receives the pipeline phase map and allowed transitions.", "level": "must"} -->
+builds a `HandoffHandler` with those phases and transitions, <!-- /rfc --><!-- rfc: {"id": "RK-19.5-018", "kind": "behavior", "applies": "The installed handoff tool lists the agent's reachable peers in stage order, excludes itself and uses agent or stage descriptions.", "level": "must"} -->and gives each
 agent a handoff tool naming the agents its last stage reaches, itself excluded,
-in the stages' order, each by its own description, else its stage's. An agent
+in the stages' order, each by its own description, else its stage's. <!-- /rfc --><!-- rfc: {"id": "RK-19.5-019", "kind": "behavior", "applies": "An agent with no reachable stage or no stage receives the generic handoff tool.", "level": "must"} -->An agent
 that reaches none, or holds no stage, takes the generic tool.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-19.5-003", "kind": "behavior", "applies": "§19.5 ConversationPipeline; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-19.5-020", "kind": "behavior", "applies": "Realtime feature: an implementation may offer pipelines that drive speech-to-speech sessions.", "level": "may"} -->
 **On a realtime channel.** A pipeline MAY drive a speech-to-speech session
-(Section 12.4) instead of routing events: the active agent is then the
+(Section 12.4) instead of routing events: <!-- /rfc --><!-- rfc: {"id": "RK-19.5-021", "kind": "behavior", "applies": "Realtime feature: a session in pipeline mode takes the active agent's configuration and handoff switches it to the next agent.", "level": "must"} -->the active agent is then the
 session's configuration (its prompt, its voice, its tools), and a handoff
-reconfigures the session to the next agent's. The active agent is the room's:
+reconfigures the session to the next agent's. <!-- /rfc --><!-- rfc: {"id": "RK-19.5-022", "kind": "behavior", "applies": "Realtime feature: session start reads the room's agent and handoff changes only that room's sessions, leaving other rooms and channel defaults intact.", "level": "must"} -->The active agent is the room's:
 a session that starts in a room starts with that room's active agent, a
 handoff in one room reconfigures that room's sessions, and neither changes
 another room's sessions nor the channel's configuration for future sessions
-(Section 19.7). An agent with neither a prompt nor an identity block to set
+(Section 19.7). <!-- /rfc --><!-- rfc: {"id": "RK-19.5-023", "kind": "behavior", "applies": "Realtime feature: without a prompt or identity, the active agent inherits the channel prompt at session start or handoff.", "level": "must"} -->An agent with neither a prompt nor an identity block to set
 gives its session the channel's own prompt when a handoff makes it active, as
-a session that starts with it gets; a language change of the room keeps the
-session's prompt as it is. The tools an agent's
+a session that starts with it gets; <!-- /rfc --><!-- rfc: {"id": "RK-19.5-024", "kind": "behavior", "applies": "Realtime feature: a room language change preserves the session prompt when the agent supplies none.", "level": "must"} -->a language change of the room keeps the
+session's prompt as it is. <!-- /rfc --><!-- rfc: {"id": "RK-19.5-025", "kind": "behavior", "applies": "Realtime feature: a pipeline session includes the channel tools, the active agent's tools and handoff.", "level": "must"} -->The tools an agent's
 configuration declares are the channel's own tools, the agent's tools and the
 handoff tool; a pipeline MUST NOT drop the channel's tools, nor declare an
-agent without its own. The channel's tools are read as they are when a session
+agent without its own. <!-- /rfc --><!-- rfc: {"id": "RK-19.5-026", "kind": "behavior", "applies": "Realtime feature: late channel tool changes are read at session start or handoff.", "level": "must"} -->The channel's tools are read as they are when a session
 starts or a handoff lands: a channel configured after the install keeps them
-under every agent. A call to one of the active agent's tools is served by the
+under every agent. <!-- /rfc --><!-- rfc: {"id": "RK-19.5-027", "kind": "behavior", "applies": "Realtime feature: an agent tool uses its agent handler or falls back to the channel handler.", "level": "must"} -->A call to one of the active agent's tools is served by the
 handler the agent was given; a tool the agent declares without one is served
-by the channel's handler. A name the channel's tools carry is the channel's
+by the channel's handler. <!-- /rfc --><!-- rfc: {"id": "RK-19.5-028", "kind": "behavior", "applies": "Realtime feature: a conflicting tool retains the channel's definition and handler, is warned at install, and never reverts to the agent's copy.", "level": "must"} -->A name the channel's tools carry is the channel's
 (Section 21.1): declared with the channel's schema and served by its handler,
 and an agent's tool of that name is neither declared nor served, a warning
 naming it at the install, nor declared once the channel drops its own:
-nothing of the agent's serves it. The channel's tools here are its host
+nothing of the agent's serves it. <!-- /rfc --><!-- rfc: {"id": "RK-19.5-029", "kind": "behavior", "applies": "Realtime feature: channel reservations include host, human-input, search and skill tools even when hidden, without refusing the agent's other tools.", "level": "must"} -->The channel's tools here are its host
 definitions, every name its human-input tools serve, declared or not, and the
 tools it serves itself (Tool Search's and the skills', whether or not a session
 declares them now); for a pipeline agent's own tool, this skip takes the place
 of the refusal Section 21.1 gives a tool orchestration sets up over the
-channel's, so the install goes through with the agent's other tools. The active agent's tool policy holds on its
+channel's, so the install goes through with the agent's other tools. <!-- /rfc --><!-- rfc: {"id": "RK-19.5-030", "kind": "behavior", "applies": "Realtime feature: both participant-resolved policies govern declaration, discovery, handler catalogue and execution of a session tool.", "level": "must"} -->The active agent's tool policy holds on its
 session beside the channel's: a tool that either policy denies, each resolved for the
 session's participant, is neither declared, nor listed by Tool Search, nor
 among the names a handler reads, and the gate refuses it with the policy's
-words. A handoff applies the next agent's policy, read for each session's
+words. <!-- /rfc --><!-- rfc: {"id": "RK-19.5-031", "kind": "behavior", "applies": "Realtime feature: handoff applies the new agent policy per participant across the room before declaring its tools.", "level": "must"} -->A handoff applies the next agent's policy, read for each session's
 participant, to every session of the room before any declares the next
-agent's tools. The gate MUST judge a call by the agent the room talks to when
+agent's tools. <!-- /rfc --><!-- rfc: {"id": "RK-19.5-032", "kind": "behavior", "applies": "Realtime feature: the serving room agent's policy governs calls despite stale session declarations.", "level": "must"} -->The gate MUST judge a call by the agent the room talks to when
 the call reaches it, the one that serves the call, whatever a session still
-declares. A realtime session serves the channel's skills, human-input
+declares. <!-- /rfc --><!-- rfc: {"id": "RK-19.5-033", "kind": "behavior", "applies": "Realtime feature: sessions use only the channel's skills, human input and MCP instructions and do not serve an agent planner, sandbox or external handler.", "level": "must"} -->A realtime session serves the channel's skills, human-input
 tools and MCP servers' instructions (Section 21.2), never an agent's, and
-serves no agent's planner, sandbox or external tool handler: an agent that
+serves no agent's planner, sandbox or external tool handler: <!-- /rfc --><!-- rfc: {"id": "RK-19.5-034", "kind": "behavior", "applies": "Realtime feature: installation rejects unservable capabilities, including an empty agent skill registry, before partial installation and names each cause and available channel option.", "level": "must"} -->an agent that
 carries one of these, a skill registry even empty (a skill added to it later
 would open its gated tools with nothing to gate them), is refused at the
 install, before anything is installed, each cause named, with the channel's
 own option where the channel has one (its skills, its human-input handler,
 its servers' instructions). Its gated tools would run without their skill,
 and its other ones would be called by a model that was never told of them
-or of how to use them. A reasoning backend's agent is refused for the same
+or of how to use them. <!-- /rfc --><!-- rfc: {"id": "RK-19.5-035", "kind": "behavior", "applies": "Realtime feature: a reasoning backend rejects the same unsupported agent capabilities and agent tools; its MCP instructions reach its own model.", "level": "must"} -->A reasoning backend's agent is refused for the same
 causes by the same rule, its servers' instructions aside, which reach its own
-model (Section 21.2), and for tools of its own besides (Section 12.4.1). An
+model (Section 21.2), and for tools of its own besides (Section 12.4.1). <!-- /rfc --><!-- rfc: {"id": "RK-19.5-036", "kind": "behavior", "applies": "Realtime feature: installation refuses declaration-only agents and intelligence channels without an Agent's prompt.", "level": "must"} -->An
 agent the kit holds by its declaration alone, or an intelligence channel that
 is not an agent, is refused at the install as well: a session runs the
 agent's own prompt, which only the agent itself carries
 (Section 10.6.2).
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-19.5-004", "kind": "behavior", "applies": "§19.5 ConversationPipeline; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-19.5-037", "kind": "behavior", "applies": "A phase can hand off forward to its next stage or laterally/backward to a permitted return phase.", "level": "must"} -->
 **Allowed transitions:** An agent in phase P MAY hand off to:
 - `stage.next` (forward progression)
-- Any phase in `stage.can_return_to` (backward/lateral)
+- Any phase in `stage.can_return_to` (backward/lateral)<!-- /rfc --><!-- rfc: {"id": "RK-19.5-038", "kind": "behavior", "applies": "Handoffs to other phases are refused.", "level": "must"} -->
 - Transitions to other phases MUST be rejected.
 <!-- /rfc -->
 
 ### 19.6 HandoffHandler
 
-<!-- rfc: {"id": "RK-19.6-001", "kind": "behavior", "applies": "§19.6 HandoffHandler; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-19.6-009", "kind": "structural", "applies": "A HandoffRequest names the target, reason, summary and context for an agent's handoff tool call.", "level": "must"} -->
 Agents request handoffs by calling the `handoff_conversation` tool:
-<!-- /rfc -->
 
-<!-- rfc: {"id": "RK-19.6-002", "kind": "behavior", "applies": "§19.6 HandoffHandler; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **HandoffRequest:**
 
 ```
@@ -19824,12 +19908,20 @@ HandoffRequest
 ├── reason: string                          # Why the handoff is happening
 ├── summary: string                         # Context summary for the target agent
 ├── context: map<string, any>               # Additional handoff context
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-19.6-010", "kind": "structural", "applies": "The handoff request carries an optional channel escalation, illustrated by same, voice, email and sms; this field names the requested switch.", "level": "must"} -->
+```
 ├── channel_escalation: string | null       # "same", "voice", "email", "sms" (channel switch)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-19.6-011", "kind": "structural", "applies": "The handoff request's urgency flag defaults to false.", "level": "must"} -->
+```
 └── urgent: bool (default false)            # Priority flag
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-19.6-003", "kind": "behavior", "applies": "§19.6 HandoffHandler; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-19.6-003", "kind": "structural", "applies": "HandoffResult carries acceptance, new agent and phase, a readable message and the rejection reason where applicable.", "level": "must"} -->
 **HandoffResult:**
 
 ```
@@ -19842,99 +19934,105 @@ HandoffResult
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-19.6-004", "kind": "behavior", "applies": "§19.6 HandoffHandler; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-19.6-012", "kind": "behavior", "applies": "An agent initiates a handoff by calling handoff_conversation with a handoff request.", "level": "must"} -->
 **Handoff protocol:**
 
 1. Agent calls `handoff_conversation` tool with `HandoffRequest`.
-2. `HandoffHandler` validates:
+2. `HandoffHandler` validates:<!-- /rfc --><!-- rfc: {"id": "RK-19.6-013", "kind": "behavior", "applies": "Target validation admits a bound intelligence channel, human or a known target and refuses a bound transport.", "level": "must"} -->
    - Target is an intelligence channel attached to the room, `human`, or a
      target the handler knows. A transport the room binds is not found: an
-     active agent that is a transport leaves the room with no agent to answer.
-   - Phase transition is allowed (per pipeline rules, if applicable).
+     active agent that is a transport leaves the room with no agent to answer.<!-- /rfc --><!-- rfc: {"id": "RK-19.6-014", "kind": "behavior", "applies": "A handoff must satisfy configured pipeline transition rules.", "level": "must"} -->
+   - Phase transition is allowed (per pipeline rules, if applicable).<!-- /rfc --><!-- rfc: {"id": "RK-19.6-015", "kind": "behavior", "applies": "With a phase map and allowed transitions, the target must own its mapped or routed phase.", "level": "must"} -->
    - With allowed transitions and a phase map, the target holds the phase: the
-     one the map gives it, or one a rule of the router asks it in. A `human` or
+     one the map gives it, or one a rule of the router asks it in. <!-- /rfc --><!-- rfc: {"id": "RK-19.6-016", "kind": "behavior", "applies": "Under a phase map, human and known targets pass the target phase check only when unmapped, while other unmapped targets have no phase.", "level": "must"} -->A `human` or
      known target the map does not name passes; one it names does not, and a
      target it does not name otherwise holds no phase. A model's `next_phase`
      decides no more than that: a tool's `enum` is not enforced at run time,
-     and a model reads what a sender wrote. The caller holds the room's phase
-     by the same rule: an agent the room moved past hands nothing on. A caller
+     and a model reads what a sender wrote. <!-- /rfc --><!-- rfc: {"id": "RK-19.6-017", "kind": "behavior", "applies": "A caller must own the room's current phase; a stale agent cannot hand off.", "level": "must"} -->The caller holds the room's phase
+     by the same rule: an agent the room moved past hands nothing on. <!-- /rfc --><!-- rfc: {"id": "RK-19.6-018", "kind": "behavior", "applies": "An unmapped caller other than human or a known target passes only as the active agent or, with none active, the default.", "level": "must"} -->A caller
      the map does not name, neither `human` nor known, passes as the room's
-     active agent, or its default agent while none is active. With no phase map,
-     nothing ties an agent to a phase, and the target and the caller are free.
+     active agent, or its default agent while none is active. <!-- /rfc --><!-- rfc: {"id": "RK-19.6-019", "kind": "behavior", "applies": "With no phase map neither target nor caller is bound to a phase.", "level": "must"} -->With no phase map,
+     nothing ties an agent to a phase, and the target and the caller are free.<!-- /rfc --><!-- rfc: {"id": "RK-19.6-020", "kind": "behavior", "applies": "An accepted handoff updates the room's phase and active agent.", "level": "must"} -->
 3. If valid:
-   - Update `ConversationState.phase` and `active_agent_id`.
-   - Fire `ON_HANDOFF` hook.
-   - Fire `ON_PHASE_TRANSITION` hook.
-   - Return `HandoffResult(accepted=true)`.
+   - Update `ConversationState.phase` and `active_agent_id`.<!-- /rfc --><!-- rfc: {"id": "RK-19.6-021", "kind": "behavior", "applies": "An accepted handoff dispatches ON_HANDOFF.", "level": "must"} -->
+   - Fire `ON_HANDOFF` hook.<!-- /rfc --><!-- rfc: {"id": "RK-19.6-022", "kind": "behavior", "applies": "An accepted handoff dispatches ON_PHASE_TRANSITION.", "level": "must"} -->
+   - Fire `ON_PHASE_TRANSITION` hook.<!-- /rfc --><!-- rfc: {"id": "RK-19.6-023", "kind": "behavior", "applies": "A valid request returns an accepted handoff result.", "level": "must"} -->
+   - Return `HandoffResult(accepted=true)`.<!-- /rfc --><!-- rfc: {"id": "RK-19.6-024", "kind": "behavior", "applies": "A rejected handoff fires ON_HANDOFF_REJECTED.", "level": "must"} -->
 4. If invalid:
-   - Fire `ON_HANDOFF_REJECTED` hook.
+   - Fire `ON_HANDOFF_REJECTED` hook.<!-- /rfc --><!-- rfc: {"id": "RK-19.6-025", "kind": "behavior", "applies": "An invalid request returns an unaccepted handoff result with a reason.", "level": "must"} -->
    - Return `HandoffResult(accepted=false, reason=...)`.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-19.6-026", "kind": "behavior", "applies": "The target gets the conversation summary framed and attributed to the sanitized previous agent ID.", "level": "must"} -->
 The handoff summary is injected into the target agent's context so it
 has continuity, set apart as a summary of the conversation
 (`<conversation_summary>`, Section 6.4) under the previous agent's id kept to
-an identifier's characters. The reason the room's timeline records for the
+an identifier's characters. <!-- /rfc --><!-- rfc: {"id": "RK-19.6-027", "kind": "behavior", "applies": "The handoff timeline record quotes the reason.", "level": "must"} -->The reason the room's timeline records for the
 handoff is quoted.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-19.6-028", "kind": "behavior", "applies": "A handoff records a visible system event from the caller with the internal orchestration marker.", "level": "must"} -->
 The timeline's record of a handoff is a system event from the calling agent,
-visible to all, carrying `_orchestration_internal` in its metadata: an event
+visible to all, carrying `_orchestration_internal` in its metadata: <!-- /rfc --><!-- rfc: {"id": "RK-19.6-029", "kind": "behavior", "applies": "An internal orchestration event solicits no agent but still reaches the room's transports.", "level": "must"} -->an event
 that carries it asks no agent, whatever its type, and still reaches the room's
-transports. The key is the runtime's alone: a sender's is dropped at the door
+transports. <!-- /rfc --><!-- rfc: {"id": "RK-19.6-030", "kind": "behavior", "applies": "The inbound path discards a sender-supplied internal orchestration marker.", "level": "must"} -->The key is the runtime's alone: a sender's is dropped at the door
 (Section 10.1), or a sender would silence the room's agents.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-19.6-031", "kind": "behavior", "applies": "Setting up a handoff installs a callable agent tool served by the supplied handler.", "level": "must"} -->
 `setup_handoff(agent, handler, tool, room_id)` wires the handoff tool into an
-AI channel and serves its calls with the `HandoffHandler`. `tool` (default
-null) replaces the default `handoff_conversation` definition; `room_id`
+AI channel and serves its calls with the `HandoffHandler`. <!-- /rfc --><!-- rfc: {"id": "RK-19.6-032", "kind": "behavior", "applies": "An explicitly supplied handoff definition replaces the default handoff_conversation tool.", "level": "must"} -->`tool` (default
+null) replaces the default `handoff_conversation` definition; <!-- /rfc --><!-- rfc: {"id": "RK-19.6-033", "kind": "behavior", "applies": "Setup may scope the tool to a single room; the default exposes it in every room the agent serves.", "level": "must"} -->`room_id`
 (default null) declares it in that one room's turns, as a strategy installed
 in the room does (Section 19.7), and null declares it in every room the agent
-serves. Setting it up again where it is already declared is refused.
+serves. <!-- /rfc --><!-- rfc: {"id": "RK-19.6-034", "kind": "behavior", "applies": "Duplicate setup where the handoff tool is already declared is refused.", "level": "must"} -->Setting it up again where it is already declared is refused.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-19.6-005", "kind": "behavior", "applies": "§19.6 HandoffHandler; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-19.6-035", "kind": "behavior", "applies": "An accepted handoff to human sets human_hold.", "level": "must"} -->
 **A room held for a human (normative).** A handoff to `human` sets
-`human_hold`. While it holds, the router selects no agent and stamps
+`human_hold`. <!-- /rfc --><!-- rfc: {"id": "RK-19.6-036", "kind": "behavior", "applies": "While a room is held for a human its ordinary traffic reaches transports without soliciting an agent and receives the no-route marker.", "level": "must"} -->While it holds, the router selects no agent and stamps
 `_routed_to: _none_`, whichever rule or default would pick one, and the message
-still reaches the room's transports; an address naming an agent asks it and the
-supervisor beside it (Section 19.4, step 4). A handoff to an agent MUST
+still reaches the room's transports; <!-- /rfc --><!-- rfc: {"id": "RK-19.6-037", "kind": "behavior", "applies": "An explicitly addressed agent and its supervisor may act during a human hold.", "level": "must"} -->an address naming an agent asks it and the
+supervisor beside it (Section 19.4, step 4). <!-- /rfc --><!-- rfc: {"id": "RK-19.6-038", "kind": "behavior", "applies": "A human hold refuses an agent handoff through either the tool or handler and fires ON_HANDOFF_REJECTED.", "level": "must"} -->A handoff to an agent MUST
 be refused, by its tool and by the handler's own call alike, firing
-`ON_HANDOFF_REJECTED`; a further handoff to `human` is taken. Only the host's
-transition to an agent takes the hold off, with no model's tool on its way. A
+`ON_HANDOFF_REJECTED`; <!-- /rfc --><!-- rfc: {"id": "RK-19.6-039", "kind": "behavior", "applies": "A further handoff to human is accepted during a human hold.", "level": "must"} -->a further handoff to `human` is taken. <!-- /rfc --><!-- rfc: {"id": "RK-19.6-040", "kind": "behavior", "applies": "Only a host transition to an agent clears a human hold.", "level": "must"} -->Only the host's
+transition to an agent takes the hold off, with no model's tool on its way. <!-- /rfc --><!-- rfc: {"id": "RK-19.6-041", "kind": "behavior", "applies": "A human handoff emits ON_HANDOFF naming human for the host to audit.", "level": "must"} -->A
 model can start a hold by itself, so `ON_HANDOFF`, naming the human, is the
-signal a host audits it by. A realtime session's call names no agent of its own:
+signal a host audits it by. <!-- /rfc --><!-- rfc: {"id": "RK-19.6-042", "kind": "behavior", "applies": "Realtime feature: session handoffs use the room's active agent as caller; the human hold rule is not yet required there.", "level": "must"} -->A realtime session's call names no agent of its own:
 its caller is the room's active agent, and this paragraph does not yet hold there.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-19.6-006", "kind": "behavior", "applies": "§19.6 HandoffHandler; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-19.6-043", "kind": "behavior", "applies": "Realtime feature: handoff changes room sessions to the target agent's prompt and a language change uses the active agent's prompt.", "level": "must"} -->
 **A realtime handoff needs its agents (normative).** A realtime pipeline
 reconfigures the room's sessions with the next agent's prompt on a handoff
 (Section 19.5), and a handler's language change reconfigures them with the
 active agent's: the agent's own prompt, which a declaration does not carry
-(Section 10.6.2). A handler whose event channel is a realtime channel the kit
+(Section 10.6.2). <!-- /rfc --><!-- rfc: {"id": "RK-19.6-044", "kind": "behavior", "applies": "Realtime feature: a handler with a registered realtime event channel rejects declaration-only agents and intelligence channels without an Agent.", "level": "must"} -->A handler whose event channel is a realtime channel the kit
 holds MUST refuse an agent held by its declaration alone, or an intelligence
-channel that is not an agent, when it is given its agents; and a language
+channel that is not an agent, when it is given its agents; <!-- /rfc --><!-- rfc: {"id": "RK-19.6-045", "kind": "behavior", "applies": "Realtime feature: a language change refuses such an active agent before writing the room language.", "level": "must"} -->and a language
 change on a realtime channel whose active agent is one MUST be refused before
 the room's language is written, whoever put the agent among the handler's
-agents. A handler with no realtime channel takes declared agents.
+agents. <!-- /rfc --><!-- rfc: {"id": "RK-19.6-046", "kind": "behavior", "applies": "A handoff handler outside realtime accepts declared agents.", "level": "must"} -->A handler with no realtime channel takes declared agents.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-19.6-007", "kind": "behavior", "applies": "§19.6 HandoffHandler; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-19.6-047", "kind": "behavior", "applies": "A handoff acts on the room carried by the current tool call, irrespective of agent wiring or previous calls.", "level": "must"} -->
 **The room is the call's (normative).** A handoff acts on the room of the
 call that requested it, read from the tool call context (Section 21.4). One
 agent serves every room it is attached to, so a room captured when the tool
 was wired, or left behind by a hook of another event, names whichever room
-came first, not the one asking. A call made outside a tool call has no room
+came first, not the one asking. <!-- /rfc --><!-- rfc: {"id": "RK-19.6-048", "kind": "behavior", "applies": "A handoff tool invoked outside a tool call refuses to act without a room.", "level": "must"} -->A call made outside a tool call has no room
 to act on, and the tool MUST refuse it rather than guess.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-19.6-008", "kind": "behavior", "applies": "§19.6 HandoffHandler; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-19.6-049", "kind": "behavior", "applies": "Handler greeting uses the active agent's mapped line through the kit, irrespective of its own greeting and the room's language.", "level": "must"} -->
 **A handler's greeting (normative).** A handler's `send_greeting(room_id,
 channel_id)` has the room's active agent say the line the handler's greeting
 map gives it, through the kit's `send_greeting` (Section 19.1), whatever the
-agent's own greeting and the room's language. It reads the room first: a room
-missing is not found. With no active agent, no line or an empty one, or no
+agent's own greeting and the room's language. <!-- /rfc --><!-- rfc: {"id": "RK-19.6-050", "kind": "behavior", "applies": "The handler's greeting reports a missing room as not found.", "level": "must"} -->It reads the room first: a room
+missing is not found. <!-- /rfc --><!-- rfc: {"id": "RK-19.6-051", "kind": "behavior", "applies": "Without an active agent, a nonempty mapped line, or an explicit or configured event channel, greeting is a successful no-op.", "level": "must"} -->With no active agent, no line or an empty one, or no
 channel named by the call or by the handler's event channel, it says nothing
-and does not fail. The channel is read only for a realtime channel, whose
-sessions each take the greeting (Section 12.4); on any other, the greeting
+and does not fail. <!-- /rfc --><!-- rfc: {"id": "RK-19.6-052", "kind": "behavior", "applies": "Realtime feature: the addressed realtime channel delivers the handler's greeting to each of its sessions.", "level": "must"} -->The channel is read only for a realtime channel, whose
+sessions each take the greeting (Section 12.4); <!-- /rfc --><!-- rfc: {"id": "RK-19.6-053", "kind": "behavior", "applies": "Outside realtime, the handler's named event channel still greets the whole room.", "level": "must"} -->on any other, the greeting
 reaches the whole room.
 <!-- /rfc -->
 
@@ -20885,24 +20983,56 @@ at a time across the room).
 
 ### 19.8 StatusBus
 
-<!-- rfc: {"id": "RK-19.8-001", "kind": "behavior", "applies": "§19.8 StatusBus; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-19.8-002", "kind": "structural", "applies": "A StatusBus exposes the inter-agent status operations and returns a status entry when publishing.", "level": "must"} -->
 The `StatusBus` enables inter-agent coordination through status messages:
 
 ```
 StatusBus (interface)
 ├── post(agent_id, action, status, detail = "", metadata = null) → StatusEntry
 │       # Publishes without waiting for the subscribers
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-19.8-003", "kind": "behavior", "applies": "Asynchronous StatusBus posting waits for subscribers, unlike the synchronous post operation.", "level": "must"} -->
+```
 ├── post_async(agent_id, action, status, detail = "", metadata = null) → StatusEntry
 │       # Waits for the subscribers
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-19.8-004", "kind": "behavior", "applies": "A StatusBus subscriber receives each posted entry.", "level": "must"} -->
+```
 ├── subscribe(callback) → void              # callback(StatusEntry) on every post
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-19.8-005", "kind": "behavior", "applies": "A subscriber can leave the StatusBus.", "level": "must"} -->
+```
 ├── unsubscribe(callback) → void
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-19.8-006", "kind": "behavior", "applies": "Recent entries can be filtered by agent and status, defaulting to ten entries.", "level": "must"} -->
+```
 ├── recent(n = 10, agent_id = null, status = null) → list<StatusEntry>
 │       # Most recent entries, optionally filtered
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-19.8-007", "kind": "behavior", "applies": "Recent status can be obtained as context text, defaulting to ten entries.", "level": "must"} -->
+```
 ├── recent_text(n = 10) → string            # Recent entries as text, for an agent's context
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-19.8-008", "kind": "behavior", "applies": "Completion lookup optionally filters by agent across the last 50 completed entries.", "level": "must"} -->
+```
 ├── has_completed(agent_id = null) → bool
 │       # Whether a COMPLETED entry is among the last 50 completed ones
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-19.8-009", "kind": "structural", "applies": "The StatusBus interface supports closing the bus.", "level": "must"} -->
+```
 └── close() → void
 
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-19.8-010", "kind": "structural", "applies": "StatusEntry contains its UTC RFC 3339 timestamp, agent, action, status, detail and metadata.", "level": "must"} -->
+```
 StatusEntry
 ├── ts: string                              # RFC 3339 time of the post, in UTC (§1.4)
 ├── agent_id: string
@@ -20912,26 +21042,28 @@ StatusEntry
 └── metadata: map<string, any>              # room_id here names the entry's room
 ```
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-19.8-011", "kind": "structural", "applies": "Status levels use the specified lowercase wire values.", "level": "must"} -->
 `StatusLevel` values are written `ok`, `failed`, `pending`, `info` and
-`completed`. One bus serves the framework; an entry names its room, if any, in
-`metadata.room_id`. The framework's own posts bound `detail`, a summary for
+`completed`. <!-- /rfc --><!-- rfc: {"id": "RK-19.8-012", "kind": "behavior", "applies": "A framework shares one bus and an entry's optional room is named in its metadata.", "level": "must"} -->One bus serves the framework; an entry names its room, if any, in
+`metadata.room_id`. <!-- /rfc --><!-- rfc: {"id": "RK-19.8-013", "kind": "behavior", "applies": "Framework posts bound detail at a word boundary and mark truncation with an ellipsis.", "level": "must"} -->The framework's own posts bound `detail`, a summary for
 whoever follows the bus: cut at a word, the cut ending in `…`, never in the
-middle of a word or a number. A `completed` entry whose detail was cut keeps the
+middle of a word or a number. <!-- /rfc --><!-- rfc: {"id": "RK-19.8-014", "kind": "behavior", "applies": "A truncated completed entry retains its outcome separately in metadata.result, bounded to 4,000 characters on a marked word boundary.", "level": "must"} -->A `completed` entry whose detail was cut keeps the
 whole outcome in `metadata.result`, bounded at 4,000 characters and its cut
 marked the same way: an agent reads an outcome back from it (Section 23.4),
-never from the summary, which once turned a 14.9 °C forecast into "1". Status posts fire `ON_STATUS_POSTED` hooks in that room; an
-entry that names no room reaches no room's hooks. The framework follows its bus
+never from the summary, which once turned a 14.9 °C forecast into "1". <!-- /rfc --><!-- rfc: {"id": "RK-19.8-015", "kind": "behavior", "applies": "Status hooks are delivered only to the named room, with no hook for an entry without a room.", "level": "must"} -->Status posts fire `ON_STATUS_POSTED` hooks in that room; an
+entry that names no room reaches no room's hooks. <!-- /rfc --><!-- rfc: {"id": "RK-19.8-016", "kind": "behavior", "applies": "The first room activity awaits bus subscription, so later posts reach the room's hooks.", "level": "must"} -->The framework follows its bus
 from its first room activity on, which waits for the subscription when the
 backend's does not end at once: an entry posted once that activity is over
-reaches the room's hooks. The hooks fire at least as
+reaches the room's hooks. <!-- /rfc --><!-- rfc: {"id": "RK-19.8-017", "kind": "behavior", "applies": "Status hooks preserve the posting work's depth so feedback cannot evade the chain depth limit.", "level": "must"} -->The hooks fire at least as
 deep as the work that posted, read as it posts (§8.3): what a hook sends into
 the room is that deep, so a hook that tells the posting agent again ends at
-the depth limit. They fire during the framework's close too, until it seals
-its store (Section 12.10.4): the end of a task the close cuts reaches them. Its framework event,
+the depth limit. <!-- /rfc --><!-- rfc: {"id": "RK-19.8-018", "kind": "behavior", "applies": "Status hooks remain live during close until the framework seals its store.", "level": "must"} -->They fire during the framework's close too, until it seals
+its store (Section 12.10.4): the end of a task the close cuts reaches them. <!-- /rfc --><!-- rfc: {"id": "RK-19.8-019", "kind": "behavior", "applies": "The framework's status_posted event is roomless and its payload retains the entry's room identifier.", "level": "must"} -->Its framework event,
 `status_posted` (§8.2), is the bus's and names no room, whichever room the
-entry names: a reader finds that room in the entry's `metadata.room_id`. Agents MAY use the StatusBus to
-signal completion, progress, or request attention without sending room events.
-The framework posts each delegated task on the bus (Section 23.3), and an agent
+entry names: a reader finds that room in the entry's `metadata.room_id`. <!-- /rfc --><!-- rfc: {"id": "RK-19.8-020", "kind": "behavior", "applies": "Agents can signal completion, progress or attention through the bus without publishing a room event.", "level": "must"} -->Agents MAY use the StatusBus to
+signal completion, progress, or request attention without sending room events.<!-- /rfc --><!-- rfc: {"id": "RK-19.8-021", "kind": "behavior", "applies": "Delegated tasks are posted on the framework's status bus.", "level": "must"} -->
+The framework posts each delegated task on the bus (Section 23.3), <!-- /rfc --><!-- rfc: {"id": "RK-19.8-022", "kind": "behavior", "applies": "The task_status tool reads the room's tasks and an agent is not directed to an unavailable tool.", "level": "must"} -->and an agent
 reads its room's tasks through the `task_status` tool (Section 23.4); an agent is
 never pointed at a tool it was not given.
 
