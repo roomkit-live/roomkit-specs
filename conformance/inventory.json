@@ -1475,49 +1475,49 @@
       "section": "25",
       "sha256": "1e4d73872f06c46dc965b873bfbf45797396add1fdca913eef94fdb32d237804",
       "classification": "normative",
-      "review": "Source inventory: Image Generation. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "This heading introduces image synthesis. Its only unit has no independent obligation or same-heading neighbour."
     },
     {
       "section": "25.1",
-      "sha256": "059cf8528b58ce948214babe836b97c801ec9c708f7b8c214f467793d220ff42",
+      "sha256": "7ccd66b0bf88f10d2708c3eab93d2cbf6a9a3a71164f1595884fd4cd19f8f818",
       "classification": "normative",
-      "review": "Source inventory: A Surface of Its Own. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "The public provider boundary, independent configuration, cross-provider use and the conversational response contract have distinct units."
     },
     {
       "section": "25.2",
-      "sha256": "622c47d992e4c00ee6fab38fa43735cedb7655fc43720e543523df0ed05db19e",
+      "sha256": "1cd6d2f5dbdeeff70ef908c9c24eb3f76592d8fc3e0b7d9f48f3447587046279",
       "classification": "normative",
-      "review": "Source inventory: ImageProvider. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "The public provider interface, size and count, options and defaults, preflight checks, billing, retry classifications, concurrent completion, cancellation and progress are individually scoped."
     },
     {
       "section": "25.3",
-      "sha256": "02aee398e0608064fe5c19758def4d47d75a3fc3c4470f54a100e6c8f4ef34d6",
+      "sha256": "bd150a14ee8e29b38c026811d8128723464d19a05a97f413ca5bb6e045872ddc",
       "classification": "normative",
-      "review": "Source inventory: ImageResult. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "The result model distinguishes the data URI and its type, transport and editing reuse, URL retrieval, revised prompts, metadata, shared accounting and progress delivery."
     },
     {
       "section": "25.4",
-      "sha256": "f07107e57a6167de051408300b60bf473f0b5cd6947e5d312ca1c50263d23e3c",
+      "sha256": "c1684c7c7d7bb2bec251b056f704f3076ef98b6f2af0dc86e8d3a73a5fc0681e",
       "classification": "normative",
-      "review": "Source inventory: Editing. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "The editing interface, unsupported editing, optional continuity, caller authorization, storage and grounded search have separate units."
     },
     {
       "section": "25.5",
-      "sha256": "03dfb8c3717cf14379abcc9c4a596f84ce9e819a3d4627ad75f9a16f512dbc09",
+      "sha256": "3806e17a272b1ff9ae11a99c3c59f882f626ff88c387294df99e5023b067890f",
       "classification": "normative",
-      "review": "Source inventory: Usage Accounting. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "The usage model and accounting rules distinguish reported counters, normalization and absent values from optional pricing and calculated cost."
     },
     {
       "section": "25.6",
-      "sha256": "48bedc8f68d85bb1effaa70d6d92fd4a2bf64708f21a730d119992b2a6fc7cb3",
+      "sha256": "a21ea4394330d7d64124c020e632928c33012a9da2fcd40ebb0e3d50b56a4582",
       "classification": "normative",
-      "review": "Source inventory: Model Catalogue. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Catalogue membership, separate enumeration, recommended tags, optional model capabilities and preservation of unknown values are separately scoped."
     },
     {
       "section": "25.7",
-      "sha256": "549e76e67b81172a9303bdfcde6f76e67ca29eca01820f422f0f2e761f25ef88",
+      "sha256": "367fe579d57319ee5638bdf16a2581f45512827f9ab1b195e0d73685bcb66bc5",
       "classification": "normative",
-      "review": "Source inventory: Non-Goals. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "The service has no pipeline stage or new hooks. Callers invoke generation and the existing inbound and broadcast rules govern content entering a room. The exclusions for video, image understanding and avatars are folded into the last unit."
     },
     {
       "section": "26",

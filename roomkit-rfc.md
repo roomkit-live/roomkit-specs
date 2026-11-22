@@ -23501,10 +23501,10 @@ of the conversational response.
 
 ### 25.1 A Surface of Its Own
 
-<!-- rfc: {"id": "RK-25.1-001", "kind": "behavior", "applies": "§25.1 A Surface of Its Own; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-25.1-002", "kind": "structural", "applies": "Image generation has a provider interface distinct from the conversational AI provider.", "level": "must"} -->
 An implementation MUST expose image generation through a provider interface
-distinct from the AI provider interface, and MUST NOT require that the two be
-served by the same vendor, credential, or object. An agent conversing through
+distinct from the AI provider interface, <!-- /rfc --><!-- rfc: {"id": "RK-25.1-003", "kind": "behavior", "applies": "The two providers can use independent vendors, credentials and objects.", "level": "must"} -->and MUST NOT require that the two be
+served by the same vendor, credential, or object. <!-- /rfc --><!-- rfc: {"id": "RK-25.1-004", "kind": "behavior", "applies": "An agent using one conversational provider can generate images through another.", "level": "must"} -->An agent conversing through
 one provider MUST be able to draw through another, exactly as it transcribes
 through a third.
 
@@ -23515,6 +23515,8 @@ conversations already held by a model that draws, and acquiring it means
 migrating the conversation. The decoupled form is what makes the capability
 available to every conversation, and it is the property this section protects.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-25.1-005", "kind": "structural", "applies": "The conversational response type retains its content contract when image generation is available.", "level": "must"} -->
 An implementation MUST NOT widen the conversational response type to carry
 generated images. `AIResponse.content` is read by every consumer of the
 framework; turning it into a union imposes a migration on all of them for a
@@ -23523,128 +23525,182 @@ capability that two providers offer.
 
 ### 25.2 ImageProvider
 
-<!-- rfc: {"id": "RK-25.2-001", "kind": "behavior", "applies": "§25.2 ImageProvider; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-25.2-002", "kind": "structural", "applies": "ImageProvider exposes its provider identifier.", "level": "must"} -->
 ```
 ImageProvider
 ├── name → string                             # Provider identifier
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-25.2-032", "kind": "structural", "applies": "ImageProvider exposes its active model identifier.", "level": "must"} -->
+```
 ├── model_name → string                       # Active model id
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-25.2-003", "kind": "structural", "applies": "ImageProvider exposes whether it honours reference images for edits.", "level": "must"} -->
+```
 ├── supports_editing → bool                   # Whether reference_images is honoured
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-25.2-004", "kind": "structural", "applies": "ImageProvider exposes an offline list of model information.", "level": "must"} -->
+```
 ├── available_models() → list<ModelInfo>      # Offline catalogue (Section 25.6)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-25.2-005", "kind": "structural", "applies": "ImageProvider exposes generation with prompt, size, count and references, returning image results.", "level": "must"} -->
+```
 ├── generate(prompt, size, n, reference_images) → list<ImageResult>
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-25.2-006", "kind": "structural", "applies": "ImageProvider exposes close to release its resources.", "level": "must"} -->
+```
 └── close()                                   # Release resources
 ```
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-25.2-007", "kind": "behavior", "applies": "Generation returns exactly the requested number of results or raises.", "level": "must"} -->
 `generate` MUST return exactly `n` results or raise. Returning fewer without
 error leaves the caller to discover the shortfall by indexing, which it will do
 in production and not in testing.
 
-`size` is a `"WIDTHxHEIGHT"` string, or null for the provider's default. A
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-25.2-008", "kind": "behavior", "applies": "A width-by-height string requests an exact pixel size and null selects the provider default.", "level": "must"} -->
+`size` is a `"WIDTHxHEIGHT"` string, or null for the provider's default. <!-- /rfc --><!-- rfc: {"id": "RK-25.2-009", "kind": "behavior", "applies": "The provider translates portable pixel sizes to its native geometry and hides native geometry conventions from the caller.", "level": "must"} -->A
 provider whose API expresses geometry differently — an aspect ratio and a
 resolution tier, say — MUST translate, and MUST NOT require the caller to know
-which form its vendor speaks. A provider that cannot honour a requested size
+which form its vendor speaks. <!-- /rfc --><!-- rfc: {"id": "RK-25.2-010", "kind": "behavior", "applies": "The provider raises when it cannot honour the requested size.", "level": "must"} -->A provider that cannot honour a requested size
 MUST raise rather than silently substitute another: an image of the wrong
 geometry is a failure the caller can neither see nor correct.
 
-`n` greater than one MUST produce `n` distinct results. A provider whose API
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-25.2-011", "kind": "behavior", "applies": "A request for more than one image produces distinct results.", "level": "must"} -->
+`n` greater than one MUST produce `n` distinct results. <!-- /rfc --><!-- rfc: {"id": "RK-25.2-012", "kind": "behavior", "applies": "A provider without a native batch parameter handles the requested count with concurrent calls.", "level": "must"} -->A provider whose API
 has no batch parameter satisfies this with concurrent calls: the alternative —
 honouring `n` on some providers and refusing it on others — leaves a parameter
 in the interface that a caller cannot use without first knowing which provider
 is behind it, which is the coupling this section exists to remove.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-25.2-013", "kind": "structural", "applies": "An implementation may offer typed generation options.", "level": "may"} -->
 Implementations MAY accept an optional typed `options` argument for controls
 such as quality, output format, background, compression, aspect ratio and
-resolution tier. An explicit aspect ratio and tier are native geometry, not a
-promise of exact pixels. An implementation MUST reject incompatible or
-unsupported options before making a billable request. Omitted options inherit
-provider defaults; explicit values override them. Existing calls without
-options MUST remain valid. A mask MAY accompany references when supported.
+resolution tier. <!-- /rfc --><!-- rfc: {"id": "RK-25.2-014", "kind": "behavior", "applies": "Where typed options offer native aspect ratio and resolution tier, those options describe native geometry without promising exact pixels.", "level": "must"} -->An explicit aspect ratio and tier are native geometry, not a
+promise of exact pixels. <!-- /rfc --><!-- rfc: {"id": "RK-25.2-015", "kind": "behavior", "applies": "Where generation options are offered, incompatible and unsupported options are rejected before a billable request.", "level": "must"} -->An implementation MUST reject incompatible or
+unsupported options before making a billable request. <!-- /rfc --><!-- rfc: {"id": "RK-25.2-016", "kind": "behavior", "applies": "Where generation options are offered, omitted values inherit provider defaults.", "level": "must"} -->Omitted options inherit
+provider defaults; <!-- /rfc --><!-- rfc: {"id": "RK-25.2-017", "kind": "behavior", "applies": "Where generation options are offered, explicit settings override provider defaults.", "level": "must"} -->explicit values override them. <!-- /rfc --><!-- rfc: {"id": "RK-25.2-018", "kind": "behavior", "applies": "Where generation options are offered, existing calls omitting them remain valid.", "level": "must"} -->Existing calls without
+options MUST remain valid. <!-- /rfc --><!-- rfc: {"id": "RK-25.2-019", "kind": "behavior", "applies": "Where masking is supported the caller can supply a mask along with references.", "level": "must"} -->A mask MAY accompany references when supported.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-25.2-020", "kind": "behavior", "applies": "A failure after a request starts preserves every available result and usage report.", "level": "must"} -->
 An error after a request has started MUST preserve every available result and
-usage report. A partial generation still raises, carrying successful results
-and the outcomes of individual vendor calls. An implementation MUST NOT mark
-an ambiguous network failure as unbilled or automatically retry a paid
-generation. A failed status is marked retryable only where the vendor did not
-run the generation (408, 409, 429, 503); a 500, 502 or 504 may follow one it
-ran and billed, and is final: the host decides. A transport failure is
+usage report. <!-- /rfc --><!-- rfc: {"id": "RK-25.2-021", "kind": "behavior", "applies": "Incomplete generation raises with its successful results and the outcomes of individual vendor calls.", "level": "must"} -->A partial generation still raises, carrying successful results
+and the outcomes of individual vendor calls. <!-- /rfc --><!-- rfc: {"id": "RK-25.2-022", "kind": "behavior", "applies": "The billing status for an ambiguous network failure is not marked unbilled.", "level": "must"} -->An implementation MUST NOT mark
+an ambiguous network failure as unbilled <!-- /rfc --><!-- rfc: {"id": "RK-25.2-023", "kind": "behavior", "applies": "An implementation does not automatically retry a paid generation.", "level": "must"} -->or automatically retry a paid
+generation. <!-- /rfc --><!-- rfc: {"id": "RK-25.2-024", "kind": "behavior", "applies": "Only a status indicating the generation did not run is retryable, including 408, 409, 429 and 503.", "level": "must"} -->A failed status is marked retryable only where the vendor did not
+run the generation (408, 409, 429, 503); <!-- /rfc --><!-- rfc: {"id": "RK-25.2-025", "kind": "behavior", "applies": "HTTP 500, 502 and 504 are final generation outcomes and leave a further request to the host.", "level": "must"} -->a 500, 502 or 504 may follow one it
+ran and billed, and is final: the host decides. <!-- /rfc --><!-- rfc: {"id": "RK-25.2-026", "kind": "behavior", "applies": "A transport failure is retryable only when the request never left because the connection could not be made.", "level": "must"} -->A transport failure is
 retryable only when the request never left (the connection could not be
-made); a timeout or a connection lost once the request went out is ambiguous,
-and final. An image the vendor delivered in a form the provider cannot return
-was generated and billed: that failure is final too. Independent concurrent calls SHOULD settle so their outcomes can
-be collected. Cancellation MUST remain cancellation, with already received
+made); <!-- /rfc --><!-- rfc: {"id": "RK-25.2-027", "kind": "behavior", "applies": "A timeout or connection lost after sending leaves a final ambiguous outcome.", "level": "must"} -->a timeout or a connection lost once the request went out is ambiguous,
+and final. <!-- /rfc --><!-- rfc: {"id": "RK-25.2-028", "kind": "behavior", "applies": "An image delivered in a form the provider cannot return has a final billed failure.", "level": "must"} -->An image the vendor delivered in a form the provider cannot return
+was generated and billed: that failure is final too. <!-- /rfc --><!-- rfc: {"id": "RK-25.2-029", "kind": "behavior", "applies": "Independent concurrent generation calls should settle so that their outcomes can be collected.", "level": "should"} -->Independent concurrent calls SHOULD settle so their outcomes can
+be collected. <!-- /rfc --><!-- rfc: {"id": "RK-25.2-030", "kind": "behavior", "applies": "Cancelling generation propagates cancellation as cancellation.", "level": "must"} -->Cancellation MUST remain cancellation, <!-- /rfc --><!-- rfc: {"id": "RK-25.2-031", "kind": "behavior", "applies": "Generation makes already received outcomes accessible through an optional asynchronous progress callback when cancelled.", "level": "must"} -->with already received
 outcomes accessible through an optional asynchronous progress callback.
 <!-- /rfc -->
 
 ### 25.3 ImageResult
 
-<!-- rfc: {"id": "RK-25.3-001", "kind": "behavior", "applies": "§25.3 ImageResult; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-25.3-002", "kind": "structural", "applies": "ImageResult exposes encoded image data and its media type.", "level": "must"} -->
 ```
 ImageResult
 ├── data: string                              # data:<mime_type>;base64,<payload>
 ├── mime_type: string                         # Media type of the payload
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-25.3-019", "kind": "structural", "applies": "ImageResult exposes an optional revised prompt.", "level": "must"} -->
+```
 ├── revised_prompt: string | null             # Prompt as the model rewrote it, if reported
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-25.3-020", "kind": "structural", "applies": "ImageResult exposes a usage map for generation counters.", "level": "must"} -->
+```
 └── usage: map<string, any>                   # Token counters (Section 25.5)
 ```
 
-`data` MUST be a data URI, always, and its media type MUST equal `mime_type`.
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-25.3-003", "kind": "behavior", "applies": "Generated image data is always a data URI.", "level": "must"} -->
+`data` MUST be a data URI, always, <!-- /rfc --><!-- rfc: {"id": "RK-25.3-004", "kind": "behavior", "applies": "The generated data URI media type equals the result's mime_type.", "level": "must"} -->and its media type MUST equal `mime_type`.
 The alternative — a field documented as "a data URI or bare base64" — forces
 every consumer to sniff the value before it can use it, and one consumer will
-sniff it wrong. The invariant also makes the result directly usable: a data URI
+sniff it wrong. <!-- /rfc --><!-- rfc: {"id": "RK-25.3-005", "kind": "behavior", "applies": "Ordinary image message content and image message parts accept a data URI, so generated image data can enter a room without conversion.", "level": "must"} -->The invariant also makes the result directly usable: a data URI
 is what image message content and image message parts already accept, so a
-generated image enters a room, or returns as a reference for a subsequent
+generated image enters a room, <!-- /rfc --><!-- rfc: {"id": "RK-25.3-006", "kind": "behavior", "applies": "A generated data URI can be used directly as an image reference in a subsequent edit.", "level": "must"} -->or returns as a reference for a subsequent
 edit, without conversion.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-25.3-007", "kind": "behavior", "applies": "The provider fetches any returned URL and encodes the image bytes in the result.", "level": "must"} -->
 A provider whose API returns a fetchable URL rather than bytes MUST retrieve
 the bytes and encode them. Such URLs expire, and a result that decays into a
 dead link some time after it was returned is not a result.
 
-`revised_prompt` is null where the vendor reports none. An implementation MUST
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-25.3-008", "kind": "behavior", "applies": "An unreported revised prompt is null.", "level": "must"} -->
+`revised_prompt` is null where the vendor reports none. <!-- /rfc --><!-- rfc: {"id": "RK-25.3-009", "kind": "behavior", "applies": "The provider does not substitute the original prompt for an unreported revised prompt.", "level": "must"} -->An implementation MUST
 NOT substitute the original prompt for it: the field exists to show the caller
 what the model actually drew from, and echoing the input back conceals exactly
 the divergence it exists to reveal.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-25.3-010", "kind": "structural", "applies": "A result may expose original vendor identifiers and usage, effective parameters, actual dimensions and grounding attribution.", "level": "may"} -->
 Results MAY carry a vendor request or interaction identifier, the vendor's
 original usage report, effective parameters, actual dimensions where reported,
-and grounding attribution. Usage shared by a batch MUST be represented once,
-with its scope explicit; it MUST NOT be divided into invented per-image
-measurements. Original metadata MUST omit inline image payloads and secrets.
+and grounding attribution. <!-- /rfc --><!-- rfc: {"id": "RK-25.3-011", "kind": "behavior", "applies": "Shared batch usage appears once with explicit scope.", "level": "must"} -->Usage shared by a batch MUST be represented once,
+with its scope explicit; <!-- /rfc --><!-- rfc: {"id": "RK-25.3-012", "kind": "behavior", "applies": "Shared batch usage is not divided into invented per-image measurements.", "level": "must"} -->it MUST NOT be divided into invented per-image
+measurements. <!-- /rfc --><!-- rfc: {"id": "RK-25.3-013", "kind": "behavior", "applies": "Original image metadata excludes inline image payloads.", "level": "must"} -->Original metadata MUST omit inline image payloads <!-- /rfc --><!-- rfc: {"id": "RK-25.3-014", "kind": "behavior", "applies": "Original image metadata excludes secrets.", "level": "must"} -->and secrets.
 
-A progress callback MAY receive individual call outcomes or preview images.
-Previews MUST be distinguished from final results. Callback delivery does not
-imply vendor cancellation or a refund, and failure to deliver an outcome MUST
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-25.3-015", "kind": "behavior", "applies": "A generation progress callback may receive individual call outcomes or preview images.", "level": "may"} -->
+A progress callback MAY receive individual call outcomes or preview images.<!-- /rfc --><!-- rfc: {"id": "RK-25.3-016", "kind": "behavior", "applies": "A provider offering image previews identifies them separately from final results.", "level": "must"} -->
+Previews MUST be distinguished from final results. <!-- /rfc --><!-- rfc: {"id": "RK-25.3-017", "kind": "behavior", "applies": "Delivering image progress does not establish vendor cancellation or a refund.", "level": "must"} -->Callback delivery does not
+imply vendor cancellation or a refund, <!-- /rfc --><!-- rfc: {"id": "RK-25.3-018", "kind": "behavior", "applies": "Failure to deliver a progress outcome does not trigger another generation.", "level": "must"} -->and failure to deliver an outcome MUST
 NOT trigger another generation.
 <!-- /rfc -->
 
 ### 25.4 Editing
 
-<!-- rfc: {"id": "RK-25.4-001", "kind": "behavior", "applies": "§25.4 Editing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-25.4-002", "kind": "structural", "applies": "A caller edits through reference_images on generate rather than a separate public edit method.", "level": "must"} -->
 Editing — an image and a prompt in, an image out — is expressed through
 `reference_images` on `generate`, not through a second method.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-25.4-003", "kind": "behavior", "applies": "The provider hides its vendor's distinction between editing with references and prompt-only generation endpoints.", "level": "must"} -->
 The distinction is the vendor's, not the caller's: one API takes reference
 images as ordinary content on the same endpoint, another routes them to a
-separate one. A provider MUST absorb that difference. A provider that cannot
-edit MUST report `supports_editing` as false and MUST raise when
+separate one. A provider MUST absorb that difference. <!-- /rfc --><!-- rfc: {"id": "RK-25.4-004", "kind": "behavior", "applies": "Providers that cannot edit report supports_editing as false.", "level": "must"} -->A provider that cannot
+edit MUST report `supports_editing` as false <!-- /rfc --><!-- rfc: {"id": "RK-25.4-005", "kind": "behavior", "applies": "Providers that cannot edit reject nonempty references instead of ignoring them.", "level": "must"} -->and MUST raise when
 `reference_images` is non-empty, rather than generating from the prompt alone —
 a caller that asked for an edit and silently received a fresh image has no
 signal that the reference was dropped.
 
-A provider MAY support continuity through a previous interaction identifier.
-The caller remains responsible for authorizing access to that interaction.
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-25.4-006", "kind": "behavior", "applies": "A provider may expose continuity through an earlier interaction identifier.", "level": "may"} -->
+A provider MAY support continuity through a previous interaction identifier.<!-- /rfc --><!-- rfc: {"id": "RK-25.4-007", "kind": "non_testable", "applies": "The caller authorizes access to an earlier interaction used for continuity.", "level": "must"} -->
+The caller remains responsible for authorizing access to that interaction.<!-- /rfc --><!-- rfc: {"id": "RK-25.4-008", "kind": "behavior", "applies": "A stateful provider exposes an explicit choice that lets the caller disable remote history storage.", "level": "must"} -->
 A stateful provider MUST expose an explicit storage choice so applications can
-disable remote history retention. Omitting this choice MAY preserve the
-provider default; applications MUST NOT assume that omitted means stateless.
-Grounding with external search MAY be requested only on compatible models;
+disable remote history retention. <!-- /rfc --><!-- rfc: {"id": "RK-25.4-009", "kind": "behavior", "applies": "A stateful provider may retain its default storage behaviour when the caller omits the choice.", "level": "may"} -->Omitting this choice MAY preserve the
+provider default; <!-- /rfc --><!-- rfc: {"id": "RK-25.4-010", "kind": "non_testable", "applies": "Applications cannot assume that omitting the storage choice makes generation stateless.", "level": "must"} -->applications MUST NOT assume that omitted means stateless.<!-- /rfc --><!-- rfc: {"id": "RK-25.4-011", "kind": "behavior", "applies": "An implementation honours requests for external-search grounding only on models that support it.", "level": "must"} -->
+Grounding with external search MAY be requested only on compatible models;<!-- /rfc --><!-- rfc: {"id": "RK-25.4-012", "kind": "behavior", "applies": "Where external-search grounding is supported, available citations and search-suggestion metadata are retained for the caller to display under provider requirements.", "level": "must"} -->
 available citations and search-suggestion metadata MUST be retained for the
 caller to display according to the provider's requirements.
 <!-- /rfc -->
 
 ### 25.5 Usage Accounting
 
-<!-- rfc: {"id": "RK-25.5-001", "kind": "behavior", "applies": "§25.5 Usage Accounting; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-25.5-002", "kind": "behavior", "applies": "A generation reports the text and image consumption its vendor meters separately.", "level": "must"} -->
 A generation reports what it consumed. An image and the text around it are
 metered separately by the vendors that meter them at all, so the counters stay
 apart rather than collapsing into one number:
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-25.5-003", "kind": "structural", "applies": "The image generation usage model has separate integer input and output fields for text and image tokens.", "level": "must"} -->
 ```
 usage
 ├── input_tokens: int                         # Text input tokens
@@ -23653,13 +23709,17 @@ usage
 └── output_image_tokens: int                  # Generated-image tokens
 ```
 
-The counters MUST be disjoint: a token appears under exactly one of them.
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-25.5-004", "kind": "behavior", "applies": "A reported generation token belongs to exactly one counter.", "level": "must"} -->
+The counters MUST be disjoint: a token appears under exactly one of them.<!-- /rfc --><!-- rfc: {"id": "RK-25.5-005", "kind": "behavior", "applies": "When image tokens are included in a total, subtract them to report the text count.", "level": "must"} -->
 Where a vendor reports image tokens as a subset of a total, an implementation
 MUST subtract them before reporting the text counter, so a consumer summing
 the counters counts each token once. Without that guarantee the counters cannot
 be combined at all, and the breakdown is worth less than the single total it
 replaced.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-25.5-006", "kind": "behavior", "applies": "Unreported token counters are absent, preserving the distinction from a reported zero.", "level": "must"} -->
 Counters a vendor does not report are absent, not zero: a reported zero and an
 unreported quantity are different claims, and only one of them is safe to add
 up.
@@ -23667,7 +23727,7 @@ up.
 Usage is a report, not a price. What a generation costs depends on how its
 vendor meters it — per token in some lineups, a flat amount per image in
 others, varying by resolution or quality — and on commercial terms no
-specification can observe. An implementation MAY carry a price list and MAY
+specification can observe. <!-- /rfc --><!-- rfc: {"id": "RK-25.5-007", "kind": "behavior", "applies": "An implementation may expose a price list for image generation.", "level": "may"} -->An implementation MAY carry a price list <!-- /rfc --><!-- rfc: {"id": "RK-25.5-008", "kind": "behavior", "applies": "An implementation may derive a cost from image-generation counters, subject to the turn-budget rule in section 6.4.", "level": "may"} -->and MAY
 derive a cost from these counters; neither the shape of such a list nor the
 arithmetic over it is specified here, beyond what a turn's cost budget counts
 (Section 6.4). What is specified is that the counters
@@ -23677,30 +23737,34 @@ to price.
 
 ### 25.6 Model Catalogue
 
-<!-- rfc: {"id": "RK-25.6-001", "kind": "behavior", "applies": "§25.6 Model Catalogue; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-25.6-002", "kind": "behavior", "applies": "The offline image and conversation catalogues have disjoint sets of model identifiers.", "level": "must"} -->
 An image catalogue is a set disjoint from the conversational one: a model that
 draws is not a model that converses, and neither list contains an id belonging
 to the other.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-25.6-003", "kind": "behavior", "applies": "A single catalogue enumeration does not merge image and conversational models.", "level": "must"} -->
 An implementation MUST NOT merge the two into the response of a single
 enumeration. Merging saves no maintenance — the entries are written once
 either way — while obliging every consumer of the conversational catalogue,
 including those populating a model field for a conversational agent, to filter
-a class of models it can never use. Entries SHOULD nevertheless carry a
+a class of models it can never use. <!-- /rfc --><!-- rfc: {"id": "RK-25.6-004", "kind": "behavior", "applies": "Image catalogue entries should include a capability tag identifying image generation.", "level": "should"} -->Entries SHOULD nevertheless carry a
 capability tag identifying them as image-generating, so a consumer that
 deliberately combines the lists can still tell them apart.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-25.6-005", "kind": "structural", "applies": "An image catalogue entry may expose structured capabilities for its model.", "level": "may"} -->
 Catalogue entries MAY carry structured image capabilities, including accepted
 controls and values, geometry constraints, reference limits, continuity,
-masking, search, and retirement dates. Unknown capabilities MUST remain unknown
+masking, search, and retirement dates. <!-- /rfc --><!-- rfc: {"id": "RK-25.6-006", "kind": "behavior", "applies": "Unknown image-model capabilities stay unknown rather than being inferred from another model.", "level": "must"} -->Unknown capabilities MUST remain unknown
 rather than being inferred from another model in the same vendor's lineup.
 <!-- /rfc -->
 
 ### 25.7 Non-Goals
 
-<!-- rfc: {"id": "RK-25.7-001", "kind": "behavior", "applies": "§25.7 Non-Goals; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
-Image generation is not a pipeline stage and defines no hook triggers. It is
-invoked by a caller — a tool handler, an application — and its result enters a
+<!-- rfc: {"id": "RK-25.7-002", "kind": "behavior", "applies": "Image generation is not a stage of the inbound or broadcast pipeline.", "level": "must"} -->
+Image generation is not a pipeline stage <!-- /rfc --><!-- rfc: {"id": "RK-25.7-003", "kind": "behavior", "applies": "Image generation introduces no hook trigger.", "level": "must"} -->and defines no hook triggers. <!-- /rfc --><!-- rfc: {"id": "RK-25.7-004", "kind": "behavior", "applies": "A caller such as a tool handler or application invokes the generation service.", "level": "must"} -->It is
+invoked by a caller — a tool handler, an application — <!-- /rfc --><!-- rfc: {"id": "RK-25.7-005", "kind": "behavior", "applies": "Generated image content enters a room as ordinary message content subject to the existing inbound and broadcast rules.", "level": "must"} -->and its result enters a
 room as ordinary message content, which the inbound and broadcast pipelines
 (Section 10) already govern. Introducing a parallel path for images would
 duplicate ordering, permission, and visibility rules that Section 7 and
