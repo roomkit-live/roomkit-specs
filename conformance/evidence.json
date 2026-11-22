@@ -94,6 +94,14 @@
     "RK-22.2-001",
     "RK-22.2-002",
     "RK-22.3-001",
+    "RK-23.1-001",
+    "RK-23.2-001",
+    "RK-23.3-001",
+    "RK-23.3-002",
+    "RK-23.3-003",
+    "RK-23.4-001",
+    "RK-23.4-002",
+    "RK-23.5-001",
     "RK-5.1-002",
     "RK-5.1-003",
     "RK-5.1-004",
@@ -13060,8 +13068,8 @@
     },
     {
       "id": "phase4-task-discussion-names",
-      "requirement": "RK-23.4-001",
-      "clause_sha256": "9e3a7ad575f1453a3cf1ac412678739fa92733009483cbe89316ed528aae4fc8",
+      "requirement": "RK-23.4-037",
+      "clause_sha256": "a431387ae08f6acd91a49efa8e1e571cc187d6e6a9c4e17d2a055379e7162e1e",
       "scope": "Discussion handles in relayed task results and task_status through both owner-served and agent-owned tools; status bus identifiers remain channel ids.",
       "coverage": "partial",
       "review": "Assertions read against §23.4 and the source Python tests for discussion background task names and task_status; no claim for the other delegation helpers in this composite clause. Re-read after the start_task null-or-empty clarification: these unchanged scenarios and their six assertions still prove only the stated naming scope.",
@@ -13165,7 +13173,7 @@
     },
     {
       "id": "phase4-background-task-options",
-      "requirement": "RK-23.4-001",
+      "requirement": "RK-23.4-049",
       "scope": "Background task name and nested-task boundary through gated stored-metadata changes; empty start_task hand_back falls back to default or configured mode, explicit relay overrides post, and invalid non-empty values or an empty setup mode are refused.",
       "assertions": [
         {
@@ -13277,15 +13285,15 @@
       "missing": [
         "Other delegation tools, cancellation, concurrent setup replacement and external executor configurations are outside this mapping."
       ],
-      "clause_sha256": "9e3a7ad575f1453a3cf1ac412678739fa92733009483cbe89316ed528aae4fc8",
+      "clause_sha256": "d4bc04e9b73a0d7dbc6f9cb309e1bcbcc5ef6b95a6edaa62190513bec6f6de1d",
       "coverage": "partial",
       "review": "Read against the Python background/task-context implementation and its source tests; four new scenarios passed Python memory and Redis and reproduced the Rust defects before the correction. These are bounded shared scenarios, not complete coverage of the composite clause.",
       "tests": []
     },
     {
       "id": "phase4-failed-task-end-surfaces",
-      "requirement": "RK-23.3-001",
-      "clause_sha256": "02d70d71e8be5043c4e72f88ca7adfc69978b94c4e516ca0ed45aae9c0120b74",
+      "requirement": "RK-23.3-050",
+      "clause_sha256": "4023378c77ff16b6c4e0e7e2390259300b81d621b44b5ba8f76694d3d7d6a60a",
       "scope": "Empty answers and message-less worker failures are handed back as failed; the child room and result retain that end after a late host cancellation.",
       "coverage": "partial",
       "review": "Read against the Python source tests and RFC; the duplicated-hook mutation is rejected after linking expectations to their task ids. This bounded evidence is not full coverage of the clause.",
@@ -13368,8 +13376,8 @@
     },
     {
       "id": "phase4-failed-task-completion-hooks",
-      "requirement": "RK-23.5-001",
-      "clause_sha256": "633e48ed4e724fe99e6695935f5c8d7c60f59a9527da76682e976226e198bcbd",
+      "requirement": "RK-23.5-003",
+      "clause_sha256": "50b6c8766d22b68692c421781b1ff6cd2832cc46bf39a8e2758cc7a47e658ca4",
       "scope": "Each of two distinct failed background tasks emits its own ON_TASK_COMPLETED hook.",
       "coverage": "partial",
       "review": "Read against the Python source tests and RFC; the duplicated-hook mutation is rejected after linking expectations to their task ids. This bounded evidence is not full coverage of the clause.",
@@ -13389,8 +13397,8 @@
     },
     {
       "id": "phase4-task-handback-model-content",
-      "requirement": "RK-23.3-001",
-      "clause_sha256": "02d70d71e8be5043c4e72f88ca7adfc69978b94c4e516ca0ed45aae9c0120b74",
+      "requirement": "RK-23.3-048",
+      "clause_sha256": "cd5446bbc28b4328f8dda3a172558787fc789c74b2148d607277db8ded3fd135",
       "scope": "Text task hand-backs preserve the configured persona and deliver a framed result to the intended model, including the tool default recipient and a configured bound above 4000.",
       "coverage": "partial",
       "review": "Compared with tests/tasks/test_delegation_result_delivery.py and the RFC, including an independent review of the scenario schedules and exact model inputs. Native seams and voice routes are kept distinct from shared assertions.",
@@ -17024,8 +17032,8 @@
     },
     {
       "id": "delegation-announcement-cancellation-boundary",
-      "requirement": "RK-23.3-002",
-      "clause_sha256": "5c860ee4fbb427cbf2867faca21bfcdfb5f7acc12fe3766646f3e1c0b82601be",
+      "requirement": "RK-23.3-099",
+      "clause_sha256": "af0642256b54d9136d998b0f05eee160cbc8e02d8a78e24e6a4891f5e42755f8",
       "scope": "A deterministic caller cut before announcement produces no task-completion hook or worker model call; after announcement the child task and its completion hook end cancelled.",
       "coverage": "partial",
       "review": "Read the existing Python tests before the implementation, then paired Rust code and RFC. Independent review checked the shared scenarios, additive migration and before/after-announcement cancellation boundary. Native PostgreSQL and cross-read runs are retained separately; only supported Python memory/SQLite JUnit runs receive execution receipts. Re-read after the preparation amendment: its announcement boundary is unchanged; terminal child state has its own partial link.",
@@ -17094,8 +17102,8 @@
       ]
     },
     {
-      "requirement": "RK-23.3-002",
-      "clause_sha256": "5c860ee4fbb427cbf2867faca21bfcdfb5f7acc12fe3766646f3e1c0b82601be",
+      "requirement": "RK-23.3-101",
+      "clause_sha256": "eac218124a0bf4cc606a6a85e13483b3e5d161a1779fef4bf974c797b0e8f498",
       "coverage": "partial",
       "review": "Paired production code, native regression tests, shared assertions and RFC amendment reviewed independently. Review reproduced late creation and shutdown failures before accepting their fixes. Source tests remain static evidence here; their run logs are retained outside formal scenario receipts.",
       "id": "delegation-unannounced-child-state",
@@ -17263,8 +17271,8 @@
       ]
     },
     {
-      "requirement": "RK-23.3-002",
-      "clause_sha256": "5c860ee4fbb427cbf2867faca21bfcdfb5f7acc12fe3766646f3e1c0b82601be",
+      "requirement": "RK-23.3-103",
+      "clause_sha256": "7dfe7735431a949dd36576e3f25a37e0c41cb0f9a3a4301c282c1ebe004bd2e5",
       "coverage": "partial",
       "review": "Paired production code, native regression tests, shared assertions and RFC amendment reviewed independently. Review reproduced late creation and shutdown failures before accepting their fixes. Source tests remain static evidence here; their run logs are retained outside formal scenario receipts.",
       "id": "delegation-preparation-write-boundaries",

@@ -736,6 +736,171 @@
       "card": "RMK-1917",
       "note": "Raise from AFTER_DELIVER and compare the committed event and caller outcome to the successful case."
     },
+    "RK-23.1-002": {
+      "class": "step",
+      "card": "RMK-1922",
+      "note": "Observe task submission via a runner fixture. The RFC diagram names run but the public Python and Rust runner interfaces and §23.3 name submit (RMK-1923)."
+    },
+    "RK-23.1-005": {
+      "class": "step",
+      "card": "RMK-1922",
+      "note": "Install a runner whose public submission raises without taking the task and observe exactly one completion from delegation."
+    },
+    "RK-23.1-006": {
+      "class": "step",
+      "card": "RMK-1922",
+      "note": "Cancel the caller while the runner's cancel awaits completion and observe that the original completion finishes."
+    },
+    "RK-23.1-009": {
+      "class": "step",
+      "card": "RMK-1922",
+      "note": "Create an in-memory runner directly, submit work and close it, observing its tasks cancelled and resources released independently of kit.close()."
+    },
+    "RK-23.2-007": {
+      "class": "step",
+      "card": "RMK-1922",
+      "note": "Construct a public result without giving its duration and read the default. Durations measured on completed delegations exercise elapsed time instead."
+    },
+    "RK-23.3-018": {
+      "class": "writable",
+      "card": "RMK-1922",
+      "note": "Have a private worker publish structured content on a served tool call and inspect the structured copy of its stored child end row."
+    },
+    "RK-23.3-042": {
+      "class": "phase6",
+      "card": "RMK-1922",
+      "note": "Observe the instruction flag on a delegation hand-back to a channel hosting a realtime model."
+    },
+    "RK-23.3-044": {
+      "class": "phase6",
+      "card": "RMK-1922",
+      "note": "Observe private system-intent injection on the delegating realtime voice session and the sole session when delegation is outside a call."
+    },
+    "RK-23.3-045": {
+      "class": "phase6",
+      "card": "RMK-1922",
+      "note": "Observe the targeted audio-video session receiving the worker hand-back as an injection."
+    },
+    "RK-23.3-046": {
+      "class": "phase6",
+      "card": "RMK-1922",
+      "note": "Observe a conference with a realtime model receiving the private task result for its delegating or sole session."
+    },
+    "RK-23.3-053": {
+      "class": "phase6",
+      "card": "RMK-1922",
+      "note": "Compare a realtime task-result injection with the expected result, observing that it omits the text-agent-only turn instruction."
+    },
+    "RK-23.3-055": {
+      "class": "writable",
+      "card": "RMK-1922",
+      "note": "Delegate to a notifying channel and compare an empty successful task with an unsuccessful task that has no output. Assert which hand-backs arrive."
+    },
+    "RK-23.3-085": {
+      "class": "writable",
+      "card": "RMK-1922",
+      "note": "Hold inline and background workers at model gates, call framework close and observe cancellation and completion before the store is released."
+    },
+    "RK-23.3-086": {
+      "class": "step",
+      "card": "RMK-1922",
+      "note": "Expose an instrumented task completion callback and shutdown grace/unwind observations, including the callback that persists after cancellation and its log."
+    },
+    "RK-23.3-087": {
+      "class": "writable",
+      "card": "RMK-1922",
+      "note": "Hold a newly announced task at the announcement/worker boundary, close the kit, then verify terminal status and no worker invocation."
+    },
+    "RK-23.3-090": {
+      "class": "step",
+      "card": "RMK-1922",
+      "note": "Observe ordered log level and cause for recipient turn failure followed by the undelivered hand-back note."
+    },
+    "RK-23.3-091": {
+      "class": "writable",
+      "card": "RMK-1922",
+      "note": "Close a kit holding a notified task, observe the completion hook and absence of a new recipient turn; the diagnostic log additionally needs a log observer."
+    },
+    "RK-23.3-092": {
+      "class": "writable",
+      "card": "RMK-1922",
+      "note": "Gate a recipient model already handling a hand-back, close the kit and inspect the cancelled response, waiter and absence of subsequent stored output."
+    },
+    "RK-23.3-094": {
+      "class": "step",
+      "card": "RMK-1922",
+      "note": "The telemetry fixture must expose delegation spans and their terminal status to compare success, worker failure and cancellation."
+    },
+    "RK-23.3-095": {
+      "class": "step",
+      "card": "RMK-1922",
+      "note": "Install a runner that rejects submission or raises outside the turn after announcement and observe exactly one failing task end."
+    },
+    "RK-23.3-096": {
+      "class": "step",
+      "card": "RMK-1922",
+      "note": "Expose a rejected submission and its callbacks, waiters and delegation span alongside the child metadata, hooks and status bus."
+    },
+    "RK-23.3-097": {
+      "class": "step",
+      "card": "RMK-1922",
+      "note": "Provide a runner refusal and a background run raising outside its turn; separately observe the caller error and notification."
+    },
+    "RK-23.3-102": {
+      "class": "step",
+      "card": "RMK-1922",
+      "note": "Arrange a pre-creation failure and an existing child with a different task_id, observing both that no new child was made and that the unrelated child was not written."
+    },
+    "RK-23.3-103": {
+      "class": "step",
+      "card": "RMK-1922",
+      "note": "Gate the child store write separately from its post-create hooks and cancel preparation to observe cleanup ordering."
+    },
+    "RK-23.3-104": {
+      "class": "step",
+      "card": "RMK-1922",
+      "note": "Instrument terminal cleanup while issuing repeated caller cancellation and framework close under the configured budgets."
+    },
+    "RK-23.3-105": {
+      "class": "step",
+      "card": "RMK-1922",
+      "note": "Inject a store error specifically during preparation cleanup and compare the original error or cancellation, absence of announcement and logged cleanup diagnostic."
+    },
+    "RK-23.4-009": {
+      "class": "phase6",
+      "card": "RMK-1922",
+      "note": "Set up delegation on a realtime voice channel and inspect its session's declared tool and execution."
+    },
+    "RK-23.4-030": {
+      "class": "step",
+      "card": "RMK-1922",
+      "note": "Allow deterministic advancement or injection of a CompletedTaskCache clock and supply running durations around the reference expiry and maximum-run boundaries."
+    },
+    "RK-23.4-033": {
+      "class": "step",
+      "card": "RMK-1922",
+      "note": "Expose host insertion into the public task cache to compare caller-specific and host values and the most recent of both."
+    },
+    "RK-23.4-035": {
+      "class": "writable",
+      "card": "RMK-1922",
+      "note": "Gate concurrent calls on one configured handler and observe at most one active delegation in the same room, with another room still able to progress."
+    },
+    "RK-23.4-059": {
+      "class": "writable",
+      "card": "RMK-1922",
+      "note": "Keep a stale running bus entry, exceed the global ended-task retention using other rooms and then query the original task."
+    },
+    "RK-23.4-066": {
+      "class": "phase6",
+      "card": "RMK-1922",
+      "note": "Demonstrate that a realtime session with otherwise visible room tasks receives no task-notes block."
+    },
+    "RK-23.4-068": {
+      "class": "step",
+      "card": "RMK-1922",
+      "note": "Invoke the delegation tool itself without any current tool call and observe refusal. The delegate.handle step supplies a room explicitly and tests a different public API."
+    },
     "RK-6.4-049": {
       "class": "writable",
       "card": "RMK-1911"

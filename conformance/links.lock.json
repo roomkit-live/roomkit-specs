@@ -5334,8 +5334,873 @@
       "delivery/an-invalid-request-is-refused-before-it-is-queued": "824db2ee8cb99cb559d18e8e30cec6f6b36d7afabca3ed5e777e23138053b36e",
       "delivery/the-worker-does-not-retry-a-refusal": "824db2ee8cb99cb559d18e8e30cec6f6b36d7afabca3ed5e777e23138053b36e"
     },
-    "RK-23.3-001": {
-      "tasks/a-task-s-context-never-says-how-its-turn-ended": "02d70d71e8be5043c4e72f88ca7adfc69978b94c4e516ca0ed45aae9c0120b74"
+    "RK-23.1-004": {
+      "tasks/a-delegation-whose-worker-fails-ends-failed": "bed8ac43705a0a320f2995964e74048e6870a7b758eb7133e3b6d13e3e3a6391",
+      "tasks/a-failed-task-with-nothing-to-say-is-handed-back-as-failed": "bed8ac43705a0a320f2995964e74048e6870a7b758eb7133e3b6d13e3e3a6391",
+      "tasks/an-agent-s-turn-cancels-its-room-s-task-and-is-not-told-twice": "bed8ac43705a0a320f2995964e74048e6870a7b758eb7133e3b6d13e3e3a6391",
+      "tasks/an-inline-delegation-runs-its-agent-in-a-child-room": "bed8ac43705a0a320f2995964e74048e6870a7b758eb7133e3b6d13e3e3a6391",
+      "tasks/the-kit-cancels-a-background-task-once": "bed8ac43705a0a320f2995964e74048e6870a7b758eb7133e3b6d13e3e3a6391",
+      "tasks/two-background-delegations-of-a-room-run-at-once-each-to-its-own-end": "bed8ac43705a0a320f2995964e74048e6870a7b758eb7133e3b6d13e3e3a6391"
+    },
+    "RK-23.1-007": {
+      "tasks/a-failed-task-with-nothing-to-say-is-handed-back-as-failed": "6191e71c0a35e2f9dc5c7c8be3a76b822b6d2f7db9ae4c74c8ad63f989254419"
+    },
+    "RK-23.1-008": {
+      "tasks/the-kit-cancels-a-background-task-once": "26876fbb84453cc78db55cb4343ae783b9bb182a05e31523109a0736a0d3f9f6"
+    },
+    "RK-23.2-002": {
+      "tasks/an-inline-delegation-runs-its-agent-in-a-child-room": "fe13dbd1a42a166a07a2a865e7fdddeed6e4b24560c6133482b5f4d6054451d4",
+      "tasks/the-kit-cancels-a-background-task-once": "fe13dbd1a42a166a07a2a865e7fdddeed6e4b24560c6133482b5f4d6054451d4",
+      "tasks/two-background-delegations-of-a-room-run-at-once-each-to-its-own-end": "fe13dbd1a42a166a07a2a865e7fdddeed6e4b24560c6133482b5f4d6054451d4"
+    },
+    "RK-23.2-003": {
+      "tasks/an-inline-delegation-runs-its-agent-in-a-child-room": "f3c76335a9bf6b0358714a8b058e21825e5b56385c56036fe93db0b6711d5732",
+      "tasks/the-kit-cancels-a-background-task-once": "f3c76335a9bf6b0358714a8b058e21825e5b56385c56036fe93db0b6711d5732"
+    },
+    "RK-23.2-004": {
+      "host/a-task-cut-short-hands-its-failure-to-wait-task": "50fea3e87e134162f0e4f5220fdee2b3dc76ffd75af805888e678405299ddfb1",
+      "tasks/a-background-task-whose-worker-answers-nothing-ends-failed": "50fea3e87e134162f0e4f5220fdee2b3dc76ffd75af805888e678405299ddfb1",
+      "tasks/a-buffered-delegated-turn-failing-after-it-began-keeps-its-end": "50fea3e87e134162f0e4f5220fdee2b3dc76ffd75af805888e678405299ddfb1",
+      "tasks/a-buffered-turn-cut-short-fails-its-task-with-its-narration": "50fea3e87e134162f0e4f5220fdee2b3dc76ffd75af805888e678405299ddfb1",
+      "tasks/a-buffered-worker-whose-record-names-a-cut-fails-its-task": "50fea3e87e134162f0e4f5220fdee2b3dc76ffd75af805888e678405299ddfb1",
+      "tasks/a-delegated-agent-s-streamed-answer-is-kept-as-one-message": "50fea3e87e134162f0e4f5220fdee2b3dc76ffd75af805888e678405299ddfb1",
+      "tasks/a-delegated-turn-failing-after-a-tool-round-keeps-its-end": "50fea3e87e134162f0e4f5220fdee2b3dc76ffd75af805888e678405299ddfb1",
+      "tasks/a-delegation-whose-worker-fails-ends-failed": "50fea3e87e134162f0e4f5220fdee2b3dc76ffd75af805888e678405299ddfb1",
+      "tasks/a-failed-task-with-nothing-to-say-is-handed-back-as-failed": "50fea3e87e134162f0e4f5220fdee2b3dc76ffd75af805888e678405299ddfb1",
+      "tasks/a-task-carries-its-worker-s-turn-record": "50fea3e87e134162f0e4f5220fdee2b3dc76ffd75af805888e678405299ddfb1",
+      "tasks/a-task-cut-before-its-worker-wrote-any-text-fails-with-no-output": "50fea3e87e134162f0e4f5220fdee2b3dc76ffd75af805888e678405299ddfb1",
+      "tasks/a-worker-owing-a-result-is-held-to-what-it-submitted-before-its-cut": "50fea3e87e134162f0e4f5220fdee2b3dc76ffd75af805888e678405299ddfb1",
+      "tasks/an-inline-delegation-runs-its-agent-in-a-child-room": "50fea3e87e134162f0e4f5220fdee2b3dc76ffd75af805888e678405299ddfb1",
+      "tasks/an-inline-task-its-worker-s-round-cap-cut-fails-with-its-narration": "50fea3e87e134162f0e4f5220fdee2b3dc76ffd75af805888e678405299ddfb1",
+      "tasks/the-kit-cancels-a-background-task-once": "50fea3e87e134162f0e4f5220fdee2b3dc76ffd75af805888e678405299ddfb1"
+    },
+    "RK-23.2-005": {
+      "tasks/a-buffered-delegated-turn-failing-after-it-began-keeps-its-end": "fc22481e5c65c6fdf5571250ea84926add48b51a6db5a4232adb10db990daa13",
+      "tasks/a-buffered-turn-cut-short-fails-its-task-with-its-narration": "fc22481e5c65c6fdf5571250ea84926add48b51a6db5a4232adb10db990daa13",
+      "tasks/a-buffered-worker-whose-record-names-a-cut-fails-its-task": "fc22481e5c65c6fdf5571250ea84926add48b51a6db5a4232adb10db990daa13",
+      "tasks/a-delegated-turn-failing-after-a-tool-round-keeps-its-end": "fc22481e5c65c6fdf5571250ea84926add48b51a6db5a4232adb10db990daa13",
+      "tasks/a-failed-task-keeps-the-error-its-worker-s-turn-raised": "fc22481e5c65c6fdf5571250ea84926add48b51a6db5a4232adb10db990daa13",
+      "tasks/a-failed-task-s-exception-keeps-its-attributes": "fc22481e5c65c6fdf5571250ea84926add48b51a6db5a4232adb10db990daa13",
+      "tasks/a-task-cut-before-its-worker-wrote-any-text-fails-with-no-output": "fc22481e5c65c6fdf5571250ea84926add48b51a6db5a4232adb10db990daa13",
+      "tasks/a-worker-owing-a-result-is-held-to-what-it-submitted-before-its-cut": "fc22481e5c65c6fdf5571250ea84926add48b51a6db5a4232adb10db990daa13",
+      "tasks/an-inline-task-its-worker-s-round-cap-cut-fails-with-its-narration": "fc22481e5c65c6fdf5571250ea84926add48b51a6db5a4232adb10db990daa13",
+      "tasks/the-kit-cancels-a-background-task-once": "fc22481e5c65c6fdf5571250ea84926add48b51a6db5a4232adb10db990daa13"
+    },
+    "RK-23.2-006": {
+      "host/a-task-cut-short-hands-its-failure-to-wait-task": "20289b25729414568a832b75466eb893c04c2c80830dd132dffdd84fbe95ce2d",
+      "tasks/a-failed-task-keeps-the-error-its-worker-s-turn-raised": "20289b25729414568a832b75466eb893c04c2c80830dd132dffdd84fbe95ce2d",
+      "tasks/a-failed-task-s-exception-keeps-its-attributes": "20289b25729414568a832b75466eb893c04c2c80830dd132dffdd84fbe95ce2d"
+    },
+    "RK-23.2-008": {
+      "host/a-task-cut-short-hands-its-failure-to-wait-task": "1d9655fb060edc6eae0234c7f005e3dd9df5391d197cffb3a524bf16994c9138",
+      "tasks/a-buffered-delegated-turn-failing-after-it-began-keeps-its-end": "1d9655fb060edc6eae0234c7f005e3dd9df5391d197cffb3a524bf16994c9138",
+      "tasks/a-buffered-worker-whose-record-names-a-cut-fails-its-task": "1d9655fb060edc6eae0234c7f005e3dd9df5391d197cffb3a524bf16994c9138",
+      "tasks/a-delegated-turn-failing-after-a-tool-round-keeps-its-end": "1d9655fb060edc6eae0234c7f005e3dd9df5391d197cffb3a524bf16994c9138",
+      "tasks/a-re-prompted-worker-s-task-carries-its-last-turn-s-record-only": "1d9655fb060edc6eae0234c7f005e3dd9df5391d197cffb3a524bf16994c9138",
+      "tasks/a-task-carries-its-worker-s-turn-record": "1d9655fb060edc6eae0234c7f005e3dd9df5391d197cffb3a524bf16994c9138",
+      "tasks/a-task-cut-before-its-worker-wrote-any-text-fails-with-no-output": "1d9655fb060edc6eae0234c7f005e3dd9df5391d197cffb3a524bf16994c9138",
+      "tasks/a-task-s-context-never-says-how-its-turn-ended": "1d9655fb060edc6eae0234c7f005e3dd9df5391d197cffb3a524bf16994c9138",
+      "tasks/a-task-whose-shared-transport-stopped-reading-its-answer-fails-cancelled": "1d9655fb060edc6eae0234c7f005e3dd9df5391d197cffb3a524bf16994c9138",
+      "tasks/a-task-whose-shared-transport-stopped-reading-while-its-model-reasoned-fails-cancelled": "1d9655fb060edc6eae0234c7f005e3dd9df5391d197cffb3a524bf16994c9138",
+      "tasks/a-worker-owing-a-result-is-held-to-what-it-submitted-before-its-cut": "1d9655fb060edc6eae0234c7f005e3dd9df5391d197cffb3a524bf16994c9138",
+      "tasks/an-inline-task-its-worker-s-round-cap-cut-fails-with-its-narration": "1d9655fb060edc6eae0234c7f005e3dd9df5391d197cffb3a524bf16994c9138",
+      "tasks/the-kit-cancels-a-background-task-once": "1d9655fb060edc6eae0234c7f005e3dd9df5391d197cffb3a524bf16994c9138"
+    },
+    "RK-23.3-004": {
+      "tasks/a-delegation-hands-its-worker-the-room-s-last-messages": "9aed0710c4bdc07de3e4f02a80bd31c3f5f5e68598f4ae3d9b538c2a27870939",
+      "tasks/a-delegation-sets-how-much-of-its-result-is-handed-back": "9aed0710c4bdc07de3e4f02a80bd31c3f5f5e68598f4ae3d9b538c2a27870939",
+      "tasks/an-inline-delegation-runs-its-agent-in-a-child-room": "9aed0710c4bdc07de3e4f02a80bd31c3f5f5e68598f4ae3d9b538c2a27870939"
+    },
+    "RK-23.3-005": {
+      "executors/a-turn-apart-s-delegation-and-segments-fire-their-hooks-on-the-room-owner": "6dc5ece8171ec03540023b145e176b808299cc3a6b93cc136dd13ffacc2ca174",
+      "tasks/a-child-room-belongs-to-its-parent-room-s-organization": "6dc5ece8171ec03540023b145e176b808299cc3a6b93cc136dd13ffacc2ca174",
+      "tasks/a-worker-s-delegate-task-waits-for-its-task-on-the-handler-s-option": "6dc5ece8171ec03540023b145e176b808299cc3a6b93cc136dd13ffacc2ca174",
+      "tasks/an-inline-delegation-runs-its-agent-in-a-child-room": "6dc5ece8171ec03540023b145e176b808299cc3a6b93cc136dd13ffacc2ca174",
+      "tasks/cancelling-a-worker-cancels-the-task-its-delegate-task-waits-for": "6dc5ece8171ec03540023b145e176b808299cc3a6b93cc136dd13ffacc2ca174",
+      "tasks/delegate-task-reaches-its-handler-as-its-gate-left-it-at-its-turn-s-depth": "6dc5ece8171ec03540023b145e176b808299cc3a6b93cc136dd13ffacc2ca174",
+      "tasks/start-task-runs-an-agent-s-work-in-the-background": "6dc5ece8171ec03540023b145e176b808299cc3a6b93cc136dd13ffacc2ca174",
+      "tasks/two-background-delegations-of-a-room-run-at-once-each-to-its-own-end": "6dc5ece8171ec03540023b145e176b808299cc3a6b93cc136dd13ffacc2ca174"
+    },
+    "RK-23.3-006": {
+      "tasks/an-inline-delegation-runs-its-agent-in-a-child-room": "3dcbd5f5803908cf847cd9e21e871d6fb7be2d8f225380f0ce6bcb155fadcaed",
+      "tasks/delegate-task-frames-and-bounds-what-the-model-passed": "3dcbd5f5803908cf847cd9e21e871d6fb7be2d8f225380f0ce6bcb155fadcaed",
+      "tasks/delegate-task-hands-its-worker-the-room-s-previous-tasks-as-data": "3dcbd5f5803908cf847cd9e21e871d6fb7be2d8f225380f0ce6bcb155fadcaed",
+      "tasks/delegate-task-hands-its-worker-what-the-model-passed-as-data": "3dcbd5f5803908cf847cd9e21e871d6fb7be2d8f225380f0ce6bcb155fadcaed"
+    },
+    "RK-23.3-007": {
+      "tasks/an-inline-delegation-runs-its-agent-in-a-child-room": "c09b0d79fb1b6a5a080d1f2449d0ba6baf6d91cbd26e38342ea3bc364eacae27"
+    },
+    "RK-23.3-008": {
+      "orchestration/a-supervisor-s-workers-share-the-channels-it-names": "b415cda2f2ca0d2649dec703d2e7fcf78d0fa4262bbfef6aefd128586a149948",
+      "tasks/a-shared-agent-reads-the-task-and-the-trace-crosses-no-hook": "b415cda2f2ca0d2649dec703d2e7fcf78d0fa4262bbfef6aefd128586a149948",
+      "tasks/an-inline-delegation-runs-its-agent-in-a-child-room": "b415cda2f2ca0d2649dec703d2e7fcf78d0fa4262bbfef6aefd128586a149948",
+      "tasks/work-in-background-starts-its-agent-s-own-task-only": "b415cda2f2ca0d2649dec703d2e7fcf78d0fa4262bbfef6aefd128586a149948"
+    },
+    "RK-23.3-009": {
+      "orchestration/a-supervisor-s-workers-share-the-channels-it-names": "198827d157be407cb3f1466fe24f27f21adc52d6dfc78aff88d765c58205714e",
+      "tasks/a-muted-agent-s-answer-in-a-delegated-room-is-kept-once": "198827d157be407cb3f1466fe24f27f21adc52d6dfc78aff88d765c58205714e",
+      "tasks/a-shared-binding-s-access-decides-what-it-is-told": "198827d157be407cb3f1466fe24f27f21adc52d6dfc78aff88d765c58205714e",
+      "tasks/a-shared-channel-is-attached-with-its-parent-binding-s-metadata": "198827d157be407cb3f1466fe24f27f21adc52d6dfc78aff88d765c58205714e",
+      "tasks/a-shared-transport-is-told-the-answer-never-the-task": "198827d157be407cb3f1466fe24f27f21adc52d6dfc78aff88d765c58205714e",
+      "tasks/delegate-task-answers-its-model-with-the-task-or-why-not": "198827d157be407cb3f1466fe24f27f21adc52d6dfc78aff88d765c58205714e"
+    },
+    "RK-23.3-010": {
+      "tasks/a-delegated-turn-s-trace-is-stored-as-its-responses": "4ab96011731c108690ea4b74c81e76d5063860463fff61083d1777d9e7d2d388",
+      "tasks/a-re-prompt-never-reaches-a-shared-transport": "4ab96011731c108690ea4b74c81e76d5063860463fff61083d1777d9e7d2d388",
+      "tasks/a-shared-agent-reads-the-task-and-the-trace-crosses-no-hook": "4ab96011731c108690ea4b74c81e76d5063860463fff61083d1777d9e7d2d388",
+      "tasks/a-shared-transport-is-told-the-answer-never-the-task": "4ab96011731c108690ea4b74c81e76d5063860463fff61083d1777d9e7d2d388",
+      "tasks/an-inline-delegation-runs-its-agent-in-a-child-room": "4ab96011731c108690ea4b74c81e76d5063860463fff61083d1777d9e7d2d388"
+    },
+    "RK-23.3-011": {
+      "tasks/a-re-prompt-never-reaches-a-shared-transport": "5708b7da4e6032eb2f9b61fc072d5453de7bf973da9df66f5bca51434874f873",
+      "tasks/a-shared-binding-s-access-decides-what-it-is-told": "5708b7da4e6032eb2f9b61fc072d5453de7bf973da9df66f5bca51434874f873",
+      "tasks/a-shared-transport-is-told-the-answer-never-the-task": "5708b7da4e6032eb2f9b61fc072d5453de7bf973da9df66f5bca51434874f873"
+    },
+    "RK-23.3-012": {
+      "tasks/a-delegation-hands-its-worker-the-room-s-last-messages": "c2a94bef3afcdeb00a48aecc48aaca610dd2d1b2f49bee32c4ab15760f3a7249",
+      "tasks/a-person-named-like-an-agent-s-label-reads-as-a-participant-in-a-worker-s-brief": "c2a94bef3afcdeb00a48aecc48aaca610dd2d1b2f49bee32c4ab15760f3a7249",
+      "tasks/an-inline-delegation-runs-its-agent-in-a-child-room": "c2a94bef3afcdeb00a48aecc48aaca610dd2d1b2f49bee32c4ab15760f3a7249",
+      "tasks/delegate-task-frames-and-bounds-what-the-model-passed": "c2a94bef3afcdeb00a48aecc48aaca610dd2d1b2f49bee32c4ab15760f3a7249",
+      "tasks/delegate-task-hands-its-worker-what-the-model-passed-as-data": "c2a94bef3afcdeb00a48aecc48aaca610dd2d1b2f49bee32c4ab15760f3a7249",
+      "tasks/start-task-runs-an-agent-s-work-in-the-background": "c2a94bef3afcdeb00a48aecc48aaca610dd2d1b2f49bee32c4ab15760f3a7249"
+    },
+    "RK-23.3-013": {
+      "tasks/a-delegation-hands-its-worker-the-room-s-last-messages": "3ce7fbeaf19754c6158d0c98a97dd6adebdda0614683ffc209533f992da52ae4",
+      "tasks/a-person-named-like-an-agent-s-label-reads-as-a-participant-in-a-worker-s-brief": "3ce7fbeaf19754c6158d0c98a97dd6adebdda0614683ffc209533f992da52ae4",
+      "tasks/delegate-task-hands-over-what-its-calling-agent-may-read": "3ce7fbeaf19754c6158d0c98a97dd6adebdda0614683ffc209533f992da52ae4",
+      "tasks/delegate-task-offers-the-conversation-on-the-host-s-option-alone": "3ce7fbeaf19754c6158d0c98a97dd6adebdda0614683ffc209533f992da52ae4",
+      "tasks/start-task-runs-an-agent-s-work-in-the-background": "3ce7fbeaf19754c6158d0c98a97dd6adebdda0614683ffc209533f992da52ae4"
+    },
+    "RK-23.3-014": {
+      "tasks/a-delegation-hands-its-worker-the-room-s-last-messages": "8f0fbabdcb2273c1b9d17784260597916642545e1651f3c9bef402d2121b4b23",
+      "tasks/a-person-named-like-an-agent-s-label-reads-as-a-participant-in-a-worker-s-brief": "8f0fbabdcb2273c1b9d17784260597916642545e1651f3c9bef402d2121b4b23",
+      "tasks/delegate-task-hands-over-what-its-calling-agent-may-read": "8f0fbabdcb2273c1b9d17784260597916642545e1651f3c9bef402d2121b4b23",
+      "tasks/delegate-task-offers-the-conversation-on-the-host-s-option-alone": "8f0fbabdcb2273c1b9d17784260597916642545e1651f3c9bef402d2121b4b23"
+    },
+    "RK-23.3-015": {
+      "tasks/a-delegated-agent-s-streamed-answer-is-kept-as-one-message": "e9439a8a3c5d5ccd71e916fa8ddf88a145a3311638514c730cce5e71fd9f766b",
+      "tasks/a-delegated-turn-s-trace-is-stored-as-its-responses": "e9439a8a3c5d5ccd71e916fa8ddf88a145a3311638514c730cce5e71fd9f766b",
+      "tasks/a-shared-agent-reads-the-task-and-the-trace-crosses-no-hook": "e9439a8a3c5d5ccd71e916fa8ddf88a145a3311638514c730cce5e71fd9f766b",
+      "tasks/an-inline-delegation-runs-its-agent-in-a-child-room": "e9439a8a3c5d5ccd71e916fa8ddf88a145a3311638514c730cce5e71fd9f766b"
+    },
+    "RK-23.3-016": {
+      "tasks/a-delegated-turn-s-trace-is-stored-as-its-responses": "917a71a360aa3807037d202f8f4f78b620463ae800bbd6586f1c482946f942f0"
+    },
+    "RK-23.3-017": {
+      "tasks/a-shared-agent-reads-the-task-and-the-trace-crosses-no-hook": "ff2dc7c32f146ee1bf1edff9078a8ab89aeacd150169e861d0e9a1d22ec26722"
+    },
+    "RK-23.3-019": {
+      "tasks/a-delegated-turn-cut-while-its-call-runs-records-on-its-last-row": "5d21c4d812e127d570e25486af19700d0d3c4a0896c988e8709240ecada80467"
+    },
+    "RK-23.3-020": {
+      "streaming/a-call-closes-the-text-window": "912078ed8a87df8cea4163fca66bf1bae6ecb797746f7ade3691457314da581c",
+      "streaming/a-delegated-answer-publishes-each-round-s-text-under-its-round": "912078ed8a87df8cea4163fca66bf1bae6ecb797746f7ade3691457314da581c",
+      "streaming/a-delegated-answer-publishes-its-text-by-size": "912078ed8a87df8cea4163fca66bf1bae6ecb797746f7ade3691457314da581c",
+      "streaming/a-delegated-answer-publishes-no-text-unless-asked": "912078ed8a87df8cea4163fca66bf1bae6ecb797746f7ade3691457314da581c",
+      "streaming/a-delegated-turn-waiting-its-place-publishes-its-text": "912078ed8a87df8cea4163fca66bf1bae6ecb797746f7ade3691457314da581c",
+      "streaming/a-failure-closes-the-text-window": "912078ed8a87df8cea4163fca66bf1bae6ecb797746f7ade3691457314da581c",
+      "streaming/a-first-pass-in-a-task-s-room-publishes-no-text": "912078ed8a87df8cea4163fca66bf1bae6ecb797746f7ade3691457314da581c",
+      "streaming/a-task-sharing-a-transport-publishes-no-text": "912078ed8a87df8cea4163fca66bf1bae6ecb797746f7ade3691457314da581c",
+      "streaming/a-text-window-of-zero-publishes-each-piece": "912078ed8a87df8cea4163fca66bf1bae6ecb797746f7ade3691457314da581c",
+      "streaming/a-turn-of-its-room-publishes-no-text-though-asked": "912078ed8a87df8cea4163fca66bf1bae6ecb797746f7ade3691457314da581c",
+      "streaming/another-agent-s-message-in-a-task-s-room-publishes-no-text": "912078ed8a87df8cea4163fca66bf1bae6ecb797746f7ade3691457314da581c"
+    },
+    "RK-23.3-021": {
+      "tasks/a-shared-binding-s-access-decides-what-it-is-told": "89a87f00adc8151038d71d0085693b239b6353400eb70d364524cc1985e60e87",
+      "tasks/a-shared-room-reads-the-stream-of-an-answer-s-answer": "89a87f00adc8151038d71d0085693b239b6353400eb70d364524cc1985e60e87",
+      "tasks/a-shared-room-s-failed-streams-are-each-their-agent-s": "89a87f00adc8151038d71d0085693b239b6353400eb70d364524cc1985e60e87",
+      "tasks/a-shared-transport-is-told-the-answer-never-the-task": "89a87f00adc8151038d71d0085693b239b6353400eb70d364524cc1985e60e87",
+      "tasks/a-shared-transport-is-told-the-answer-the-room-s-hooks-left": "89a87f00adc8151038d71d0085693b239b6353400eb70d364524cc1985e60e87"
+    },
+    "RK-23.3-022": {
+      "tasks/a-delegated-turn-past-the-depth-limit-is-not-asked": "0c875b724c8a60544e1c9eb31188409856c976f94a456750a23b20382ae1d822"
+    },
+    "RK-23.3-023": {
+      "tasks/a-delegated-turn-s-metadata-updates-wait-for-the-room-s-lock": "6a64368103c94c184648d2848ff61965a8a04e2f54a3575f32f6cfd4527fc76a",
+      "tasks/a-delegated-turn-s-shared-answer-follows-its-metadata-updates": "6a64368103c94c184648d2848ff61965a8a04e2f54a3575f32f6cfd4527fc76a",
+      "tasks/a-delegated-turn-writes-no-framework-key-of-its-room": "6a64368103c94c184648d2848ff61965a8a04e2f54a3575f32f6cfd4527fc76a"
+    },
+    "RK-23.3-024": {
+      "tasks/a-delegated-turn-s-metadata-updates-wait-for-the-room-s-lock": "67b1ca1abb8e51c6c9a198d64ff6273950fda19303735f113df1fd9975b13c7c",
+      "tasks/a-delegated-turn-s-shared-answer-follows-its-metadata-updates": "67b1ca1abb8e51c6c9a198d64ff6273950fda19303735f113df1fd9975b13c7c",
+      "tasks/a-delegated-turn-s-tasks-are-created-in-its-child-room": "67b1ca1abb8e51c6c9a198d64ff6273950fda19303735f113df1fd9975b13c7c"
+    },
+    "RK-23.3-025": {
+      "tasks/a-delegated-agent-s-streamed-answer-is-kept-as-one-message": "171032288eeb2240986820c0f375e7acb5b4d4acfef1b7f091ff26d2406d7f0a",
+      "tasks/a-delegation-keeps-its-agent-s-answer-when-another-agent-answers-first": "171032288eeb2240986820c0f375e7acb5b4d4acfef1b7f091ff26d2406d7f0a",
+      "tasks/a-muted-agent-s-answer-in-a-delegated-room-is-kept-once": "171032288eeb2240986820c0f375e7acb5b4d4acfef1b7f091ff26d2406d7f0a",
+      "tasks/a-shared-room-reads-the-stream-of-an-answer-s-answer": "171032288eeb2240986820c0f375e7acb5b4d4acfef1b7f091ff26d2406d7f0a",
+      "tasks/a-shared-room-s-failed-streams-are-each-their-agent-s": "171032288eeb2240986820c0f375e7acb5b4d4acfef1b7f091ff26d2406d7f0a",
+      "tasks/a-shared-transport-is-told-the-answer-never-the-task": "171032288eeb2240986820c0f375e7acb5b4d4acfef1b7f091ff26d2406d7f0a",
+      "tasks/a-shared-transport-is-told-the-answer-the-room-s-hooks-left": "171032288eeb2240986820c0f375e7acb5b4d4acfef1b7f091ff26d2406d7f0a",
+      "tasks/an-inline-delegation-runs-its-agent-in-a-child-room": "171032288eeb2240986820c0f375e7acb5b4d4acfef1b7f091ff26d2406d7f0a",
+      "tasks/every-agent-s-stream-in-a-delegated-room-is-read-and-the-delegated-agent-answers": "171032288eeb2240986820c0f375e7acb5b4d4acfef1b7f091ff26d2406d7f0a"
+    },
+    "RK-23.3-026": {
+      "tasks/a-helper-cut-short-leaves-the-task-to-its-worker-that-owes-a-result": "db664856d9e4746a1cb0e6c4ba7d64258f642bf7ca5818dedc5972f4de041343",
+      "tasks/a-result-call-an-on-tool-call-hook-blocks-is-no-result": "db664856d9e4746a1cb0e6c4ba7d64258f642bf7ca5818dedc5972f4de041343",
+      "tasks/a-result-submitted-before-the-worker-s-failure-still-counts": "db664856d9e4746a1cb0e6c4ba7d64258f642bf7ca5818dedc5972f4de041343",
+      "tasks/a-structured-delegation-re-prompts-until-its-worker-submits": "db664856d9e4746a1cb0e6c4ba7d64258f642bf7ca5818dedc5972f4de041343",
+      "tasks/a-submit-round-that-gives-the-model-more-asks-it-again": "db664856d9e4746a1cb0e6c4ba7d64258f642bf7ca5818dedc5972f4de041343",
+      "tasks/a-submitted-result-normalizes-nested-summary-and-reason-values": "db664856d9e4746a1cb0e6c4ba7d64258f642bf7ca5818dedc5972f4de041343",
+      "tasks/a-worker-owing-a-result-is-held-to-what-it-submitted-before-its-cut": "db664856d9e4746a1cb0e6c4ba7d64258f642bf7ca5818dedc5972f4de041343"
+    },
+    "RK-23.3-027": {
+      "tasks/a-helper-cut-short-leaves-the-task-to-its-worker-that-owes-a-result": "f9dc339fde0dd019e2cb098fa21d5d121d43cda57711a42e464a15093bf34cff",
+      "tasks/a-result-call-an-on-tool-call-hook-blocks-is-no-result": "f9dc339fde0dd019e2cb098fa21d5d121d43cda57711a42e464a15093bf34cff",
+      "tasks/a-worker-whose-trace-holds-only-another-tool-s-call-ends-with-the-missing-payload": "f9dc339fde0dd019e2cb098fa21d5d121d43cda57711a42e464a15093bf34cff"
+    },
+    "RK-23.3-028": {
+      "host/a-task-cut-short-hands-its-failure-to-wait-task": "8aec3d9ce6b72d956486350360d51071270681ccef841d6fa4b993a66545d49b",
+      "tasks/a-buffered-turn-cut-short-fails-its-task-with-its-narration": "8aec3d9ce6b72d956486350360d51071270681ccef841d6fa4b993a66545d49b",
+      "tasks/a-buffered-worker-whose-record-names-a-cut-fails-its-task": "8aec3d9ce6b72d956486350360d51071270681ccef841d6fa4b993a66545d49b",
+      "tasks/a-delegated-turn-that-wrote-no-message-records-on-its-last-row": "8aec3d9ce6b72d956486350360d51071270681ccef841d6fa4b993a66545d49b",
+      "tasks/a-task-cut-before-its-worker-wrote-any-text-fails-with-no-output": "8aec3d9ce6b72d956486350360d51071270681ccef841d6fa4b993a66545d49b",
+      "tasks/a-task-whose-shared-transport-stopped-reading-its-answer-fails-cancelled": "8aec3d9ce6b72d956486350360d51071270681ccef841d6fa4b993a66545d49b",
+      "tasks/a-task-whose-shared-transport-stopped-reading-while-its-model-reasoned-fails-cancelled": "8aec3d9ce6b72d956486350360d51071270681ccef841d6fa4b993a66545d49b",
+      "tasks/a-worker-owing-a-result-is-held-to-what-it-submitted-before-its-cut": "8aec3d9ce6b72d956486350360d51071270681ccef841d6fa4b993a66545d49b",
+      "tasks/an-inline-task-its-worker-s-round-cap-cut-fails-with-its-narration": "8aec3d9ce6b72d956486350360d51071270681ccef841d6fa4b993a66545d49b"
+    },
+    "RK-23.3-029": {
+      "tasks/a-delegation-keeps-its-agent-s-answer-when-another-agent-answers-first": "f17e330da14a2558a7ce80178a38a38f1f339ebd948be41c8599b4a6fd8bae9c",
+      "tasks/a-helper-cut-short-leaves-the-task-to-its-worker-that-owes-a-result": "f17e330da14a2558a7ce80178a38a38f1f339ebd948be41c8599b4a6fd8bae9c",
+      "tasks/a-shared-room-s-failed-streams-are-each-their-agent-s": "f17e330da14a2558a7ce80178a38a38f1f339ebd948be41c8599b4a6fd8bae9c",
+      "tasks/every-agent-s-stream-in-a-delegated-room-is-read-and-the-delegated-agent-answers": "f17e330da14a2558a7ce80178a38a38f1f339ebd948be41c8599b4a6fd8bae9c",
+      "tasks/one-agent-s-failure-in-a-delegated-room-never-carries-another-s-end": "f17e330da14a2558a7ce80178a38a38f1f339ebd948be41c8599b4a6fd8bae9c"
+    },
+    "RK-23.3-030": {
+      "tasks/a-buffered-delegated-turn-failing-after-it-began-keeps-its-end": "53ff4f396605cc4dd4369ee7811acbd5aaf3ff938df612e9c04395438633e626",
+      "tasks/a-delegated-agent-s-failed-stream-fails-its-task-once-every-stream-is-kept": "53ff4f396605cc4dd4369ee7811acbd5aaf3ff938df612e9c04395438633e626",
+      "tasks/a-delegated-turn-failing-after-a-tool-round-keeps-its-end": "53ff4f396605cc4dd4369ee7811acbd5aaf3ff938df612e9c04395438633e626",
+      "tasks/a-delegated-turn-s-failure-is-reported-in-its-child-room": "53ff4f396605cc4dd4369ee7811acbd5aaf3ff938df612e9c04395438633e626",
+      "tasks/a-delegated-turn-s-returned-error-is-reported-in-its-child-room": "53ff4f396605cc4dd4369ee7811acbd5aaf3ff938df612e9c04395438633e626",
+      "tasks/a-failed-task-keeps-the-error-its-worker-s-turn-raised": "53ff4f396605cc4dd4369ee7811acbd5aaf3ff938df612e9c04395438633e626",
+      "tasks/a-failed-task-s-exception-keeps-its-attributes": "53ff4f396605cc4dd4369ee7811acbd5aaf3ff938df612e9c04395438633e626"
+    },
+    "RK-23.3-031": {
+      "tasks/a-delegated-reply-that-fails-is-reported-once-on-either-path": "254ba6edeaf2bc71f903a555ed2f6ecb403bee0e543188768fd5109e54893b7d",
+      "tasks/a-delegated-stream-failing-after-a-tool-round-is-reported-once": "254ba6edeaf2bc71f903a555ed2f6ecb403bee0e543188768fd5109e54893b7d",
+      "tasks/a-delegated-turn-s-failure-is-reported-in-its-child-room": "254ba6edeaf2bc71f903a555ed2f6ecb403bee0e543188768fd5109e54893b7d",
+      "tasks/a-delegated-turn-s-returned-error-is-reported-in-its-child-room": "254ba6edeaf2bc71f903a555ed2f6ecb403bee0e543188768fd5109e54893b7d",
+      "tasks/a-shared-room-s-failed-streams-are-each-their-agent-s": "254ba6edeaf2bc71f903a555ed2f6ecb403bee0e543188768fd5109e54893b7d"
+    },
+    "RK-23.3-032": {
+      "tasks/a-delegated-agent-s-failed-stream-fails-its-task-once-every-stream-is-kept": "e96e14a587e530751ee9bcb4ee1c7d5cc2b89ea99a0ea3e41be81db5b8c228fe",
+      "tasks/a-shared-room-s-failed-streams-are-each-their-agent-s": "e96e14a587e530751ee9bcb4ee1c7d5cc2b89ea99a0ea3e41be81db5b8c228fe",
+      "tasks/one-agent-s-failure-in-a-delegated-room-never-carries-another-s-end": "e96e14a587e530751ee9bcb4ee1c7d5cc2b89ea99a0ea3e41be81db5b8c228fe"
+    },
+    "RK-23.3-033": {
+      "tasks/a-shared-room-s-failed-streams-are-each-their-agent-s": "386a9d5b02349e2a93abb5bc027919aabf3c6b7980b2101c1704beda485bd1b1",
+      "tasks/one-agent-s-failure-in-a-delegated-room-never-carries-another-s-end": "386a9d5b02349e2a93abb5bc027919aabf3c6b7980b2101c1704beda485bd1b1"
+    },
+    "RK-23.3-034": {
+      "host/a-task-cut-short-hands-its-failure-to-wait-task": "9213f49fed95c1e792f88487eb6aa2d60320012bd6809dadd1e593a605e984e0",
+      "orchestration/a-loop-whose-producer-fails-hands-its-error-to-the-caller-reported-once": "9213f49fed95c1e792f88487eb6aa2d60320012bd6809dadd1e593a605e984e0",
+      "tasks/a-delegated-turn-s-failure-is-reported-in-its-child-room": "9213f49fed95c1e792f88487eb6aa2d60320012bd6809dadd1e593a605e984e0",
+      "tasks/a-delegated-turn-s-returned-error-is-reported-in-its-child-room": "9213f49fed95c1e792f88487eb6aa2d60320012bd6809dadd1e593a605e984e0",
+      "tasks/a-failed-task-keeps-the-error-its-worker-s-turn-raised": "9213f49fed95c1e792f88487eb6aa2d60320012bd6809dadd1e593a605e984e0",
+      "tasks/a-task-s-context-never-says-how-its-turn-ended": "9213f49fed95c1e792f88487eb6aa2d60320012bd6809dadd1e593a605e984e0"
+    },
+    "RK-23.3-035": {
+      "tasks/a-re-prompted-worker-s-task-carries-its-last-turn-s-record-only": "193a4343ff705366396db23768e74baec3c89b23191a72542d592aeba5fe1f21",
+      "tasks/a-task-carries-its-worker-s-turn-record": "193a4343ff705366396db23768e74baec3c89b23191a72542d592aeba5fe1f21",
+      "tasks/a-task-s-context-never-says-how-its-turn-ended": "193a4343ff705366396db23768e74baec3c89b23191a72542d592aeba5fe1f21",
+      "tasks/the-kit-cancels-a-background-task-once": "193a4343ff705366396db23768e74baec3c89b23191a72542d592aeba5fe1f21"
+    },
+    "RK-23.3-036": {
+      "host/a-task-cut-short-hands-its-failure-to-wait-task": "ac90831c34980b99cb8c01f92b079ffb594e1961311c4da695c561db59c6e93a",
+      "orchestration/a-loop-whose-producer-fails-hands-its-error-to-the-caller-reported-once": "ac90831c34980b99cb8c01f92b079ffb594e1961311c4da695c561db59c6e93a",
+      "tasks/a-failed-task-keeps-the-error-its-worker-s-turn-raised": "ac90831c34980b99cb8c01f92b079ffb594e1961311c4da695c561db59c6e93a",
+      "tasks/a-failed-task-s-exception-keeps-its-attributes": "ac90831c34980b99cb8c01f92b079ffb594e1961311c4da695c561db59c6e93a"
+    },
+    "RK-23.3-037": {
+      "tasks/a-result-submitted-before-the-worker-s-failure-still-counts": "8f5927771e676f6f5e501bbce9041b5cd93254393afa5dffe69242f857d7cf06",
+      "tasks/a-worker-owing-a-result-is-held-to-what-it-submitted-before-its-cut": "8f5927771e676f6f5e501bbce9041b5cd93254393afa5dffe69242f857d7cf06"
+    },
+    "RK-23.3-038": {
+      "host/a-task-cut-short-hands-its-failure-to-wait-task": "265b086241605eaf112086f7106bec9d176368cde5f914266f0d7cc28ee58a2a",
+      "orchestration/a-loop-whose-producer-fails-after-a-tool-round-gives-its-error-not-a-cut": "265b086241605eaf112086f7106bec9d176368cde5f914266f0d7cc28ee58a2a",
+      "orchestration/a-loop-whose-producer-fails-hands-its-error-to-the-caller-reported-once": "265b086241605eaf112086f7106bec9d176368cde5f914266f0d7cc28ee58a2a",
+      "orchestration/a-loop-whose-producer-is-cut-after-an-output-answers-that-output-not-approved": "265b086241605eaf112086f7106bec9d176368cde5f914266f0d7cc28ee58a2a",
+      "orchestration/a-loop-whose-producer-is-cut-short-answers-nothing-and-says-why": "265b086241605eaf112086f7106bec9d176368cde5f914266f0d7cc28ee58a2a",
+      "orchestration/a-step-whose-worker-fails-stops-the-chain-unreviewed": "265b086241605eaf112086f7106bec9d176368cde5f914266f0d7cc28ee58a2a",
+      "orchestration/a-supervisor-s-worker-tool-reads-a-failed-worker-as-failed": "265b086241605eaf112086f7106bec9d176368cde5f914266f0d7cc28ee58a2a"
+    },
+    "RK-23.3-039": {
+      "orchestration/a-team-cut-after-announcement-reports-only-what-started": "30e2c96e88b02cd3678d93bf891cfe1ab9f02509137d085bde0d654a6cd07bb2",
+      "orchestration/a-worker-cut-after-announcement-reports-only-what-started": "30e2c96e88b02cd3678d93bf891cfe1ab9f02509137d085bde0d654a6cd07bb2",
+      "tasks/a-background-delegation-relays-its-result-to-the-notified-agent": "30e2c96e88b02cd3678d93bf891cfe1ab9f02509137d085bde0d654a6cd07bb2",
+      "tasks/a-buffered-delegated-turn-failing-after-it-began-keeps-its-end": "30e2c96e88b02cd3678d93bf891cfe1ab9f02509137d085bde0d654a6cd07bb2",
+      "tasks/a-delegated-turn-failing-after-a-tool-round-keeps-its-end": "30e2c96e88b02cd3678d93bf891cfe1ab9f02509137d085bde0d654a6cd07bb2",
+      "tasks/a-delegation-not-posted-leaves-the-status-bus-alone": "30e2c96e88b02cd3678d93bf891cfe1ab9f02509137d085bde0d654a6cd07bb2",
+      "tasks/a-delegation-whose-worker-fails-ends-failed": "30e2c96e88b02cd3678d93bf891cfe1ab9f02509137d085bde0d654a6cd07bb2",
+      "tasks/a-failed-task-with-nothing-to-say-is-handed-back-as-failed": "30e2c96e88b02cd3678d93bf891cfe1ab9f02509137d085bde0d654a6cd07bb2",
+      "tasks/a-hand-back-in-a-room-with-no-transport-reaches-no-agent": "30e2c96e88b02cd3678d93bf891cfe1ab9f02509137d085bde0d654a6cd07bb2",
+      "tasks/a-task-cut-before-its-worker-wrote-any-text-fails-with-no-output": "30e2c96e88b02cd3678d93bf891cfe1ab9f02509137d085bde0d654a6cd07bb2",
+      "tasks/a-task-s-context-never-says-how-its-turn-ended": "30e2c96e88b02cd3678d93bf891cfe1ab9f02509137d085bde0d654a6cd07bb2",
+      "tasks/a-task-whose-end-is-being-told-reads-ended-at-once": "30e2c96e88b02cd3678d93bf891cfe1ab9f02509137d085bde0d654a6cd07bb2",
+      "tasks/an-agent-s-turn-cancels-its-room-s-task-and-is-not-told-twice": "30e2c96e88b02cd3678d93bf891cfe1ab9f02509137d085bde0d654a6cd07bb2",
+      "tasks/an-inline-delegation-runs-its-agent-in-a-child-room": "30e2c96e88b02cd3678d93bf891cfe1ab9f02509137d085bde0d654a6cd07bb2",
+      "tasks/an-inline-task-its-worker-s-round-cap-cut-fails-with-its-narration": "30e2c96e88b02cd3678d93bf891cfe1ab9f02509137d085bde0d654a6cd07bb2",
+      "tasks/the-kit-cancels-a-background-task-once": "30e2c96e88b02cd3678d93bf891cfe1ab9f02509137d085bde0d654a6cd07bb2"
+    },
+    "RK-23.3-040": {
+      "tasks/a-background-delegation-relays-its-result-to-the-notified-agent": "3b3a020726f3537942fd1a938ebe500b6b82adc370cb7e21eed55d1b1c6fab93",
+      "tasks/a-before-deliver-hook-s-block-keeps-a-hand-back-from-its-agent": "3b3a020726f3537942fd1a938ebe500b6b82adc370cb7e21eed55d1b1c6fab93",
+      "tasks/a-hand-back-in-a-room-with-no-transport-reaches-no-agent": "3b3a020726f3537942fd1a938ebe500b6b82adc370cb7e21eed55d1b1c6fab93",
+      "tasks/a-hand-back-to-a-transport-is-the-result-alone": "3b3a020726f3537942fd1a938ebe500b6b82adc370cb7e21eed55d1b1c6fab93"
+    },
+    "RK-23.3-041": {
+      "tasks/a-background-delegation-relays-its-result-to-the-notified-agent": "584d0b17db2c75384a9e200dec458c44dd4145d41fb98dbdef6be449f3acd3d2",
+      "tasks/a-delegation-outside-a-turn-opens-a-chain-at-depth-0": "584d0b17db2c75384a9e200dec458c44dd4145d41fb98dbdef6be449f3acd3d2",
+      "tasks/a-hand-back-leaves-the-notified-agent-s-prompt-as-its-binding-holds-it": "584d0b17db2c75384a9e200dec458c44dd4145d41fb98dbdef6be449f3acd3d2",
+      "tasks/a-relayed-task-result-names-its-worker-by-the-discussion-handle": "584d0b17db2c75384a9e200dec458c44dd4145d41fb98dbdef6be449f3acd3d2",
+      "tasks/an-empty-start-task-hand-back-keeps-the-default-or-configured-mode": "584d0b17db2c75384a9e200dec458c44dd4145d41fb98dbdef6be449f3acd3d2"
+    },
+    "RK-23.3-043": {
+      "tasks/a-background-delegation-relays-its-result-to-the-notified-agent": "5b633cf4c32e60682b26d8736640dd97aa028cfd99ec189eba86ee99eaca48ec",
+      "tasks/a-hand-back-leaves-the-notified-agent-s-prompt-as-its-binding-holds-it": "5b633cf4c32e60682b26d8736640dd97aa028cfd99ec189eba86ee99eaca48ec",
+      "tasks/a-relayed-task-result-names-its-worker-by-the-discussion-handle": "5b633cf4c32e60682b26d8736640dd97aa028cfd99ec189eba86ee99eaca48ec",
+      "tasks/delegate-task-answers-its-model-with-the-task-or-why-not": "5b633cf4c32e60682b26d8736640dd97aa028cfd99ec189eba86ee99eaca48ec"
+    },
+    "RK-23.3-047": {
+      "tasks/a-hand-back-to-a-transport-is-the-result-alone": "e1a4dcbb1e67a5fe47386be6e2ad95b4b334ccbda4907f8f05918ebdec9343db",
+      "tasks/a-worker-s-output-cannot-close-its-block-past-a-combining-mark-of-any-script": "e1a4dcbb1e67a5fe47386be6e2ad95b4b334ccbda4907f8f05918ebdec9343db",
+      "tasks/a-worker-s-output-cannot-close-its-block-with-a-disguised-separator": "e1a4dcbb1e67a5fe47386be6e2ad95b4b334ccbda4907f8f05918ebdec9343db"
+    },
+    "RK-23.3-048": {
+      "tasks/a-background-delegation-relays-its-result-to-the-notified-agent": "cd5446bbc28b4328f8dda3a172558787fc789c74b2148d607277db8ded3fd135",
+      "tasks/a-copy-of-a-hand-back-header-is-replaced-and-the-runtime-s-is-kept": "cd5446bbc28b4328f8dda3a172558787fc789c74b2148d607277db8ded3fd135",
+      "tasks/a-delegation-sets-how-much-of-its-result-is-handed-back": "cd5446bbc28b4328f8dda3a172558787fc789c74b2148d607277db8ded3fd135",
+      "tasks/a-hand-back-bounds-the-result-and-fences-it-as-data": "cd5446bbc28b4328f8dda3a172558787fc789c74b2148d607277db8ded3fd135",
+      "tasks/a-hand-back-to-a-transport-is-the-result-alone": "cd5446bbc28b4328f8dda3a172558787fc789c74b2148d607277db8ded3fd135",
+      "tasks/a-worker-s-output-cannot-close-its-block-past-a-combining-mark-of-any-script": "cd5446bbc28b4328f8dda3a172558787fc789c74b2148d607277db8ded3fd135",
+      "tasks/a-worker-s-output-cannot-close-its-block-with-a-disguised-separator": "cd5446bbc28b4328f8dda3a172558787fc789c74b2148d607277db8ded3fd135",
+      "tasks/delegate-task-hands-back-as-much-as-its-handler-allows": "cd5446bbc28b4328f8dda3a172558787fc789c74b2148d607277db8ded3fd135"
+    },
+    "RK-23.3-049": {
+      "tasks/a-delegation-sets-how-much-of-its-result-is-handed-back": "034928d60ab61164b424418a43ca7ac4191ccdd13923f3b526723dcfc9ee79cb",
+      "tasks/a-hand-back-bounds-the-result-and-fences-it-as-data": "034928d60ab61164b424418a43ca7ac4191ccdd13923f3b526723dcfc9ee79cb",
+      "tasks/delegate-task-hands-back-as-much-as-its-handler-allows": "034928d60ab61164b424418a43ca7ac4191ccdd13923f3b526723dcfc9ee79cb"
+    },
+    "RK-23.3-050": {
+      "tasks/a-failed-task-with-nothing-to-say-is-handed-back-as-failed": "4023378c77ff16b6c4e0e7e2390259300b81d621b44b5ba8f76694d3d7d6a60a",
+      "tasks/the-kit-cancels-a-background-task-once": "4023378c77ff16b6c4e0e7e2390259300b81d621b44b5ba8f76694d3d7d6a60a"
+    },
+    "RK-23.3-051": {
+      "tasks/a-background-delegation-relays-its-result-to-the-notified-agent": "58e978befba6326070e1fcbbe59438299ae87a9b74badc66b8b7bca16701f71f",
+      "tasks/a-hand-back-bounds-the-result-and-fences-it-as-data": "58e978befba6326070e1fcbbe59438299ae87a9b74badc66b8b7bca16701f71f",
+      "tasks/a-hand-back-to-a-transport-is-the-result-alone": "58e978befba6326070e1fcbbe59438299ae87a9b74badc66b8b7bca16701f71f",
+      "tasks/a-relayed-task-result-names-its-worker-by-the-discussion-handle": "58e978befba6326070e1fcbbe59438299ae87a9b74badc66b8b7bca16701f71f"
+    },
+    "RK-23.3-052": {
+      "tasks/a-background-delegation-relays-its-result-to-the-notified-agent": "9065585b03ccc34be9587e9274f90d94f4e90ebd589e3131d69a712f5fba8e25",
+      "tasks/a-delegation-sets-how-much-of-its-result-is-handed-back": "9065585b03ccc34be9587e9274f90d94f4e90ebd589e3131d69a712f5fba8e25",
+      "tasks/a-hand-back-bounds-the-result-and-fences-it-as-data": "9065585b03ccc34be9587e9274f90d94f4e90ebd589e3131d69a712f5fba8e25",
+      "tasks/a-hand-back-leaves-the-notified-agent-s-prompt-as-its-binding-holds-it": "9065585b03ccc34be9587e9274f90d94f4e90ebd589e3131d69a712f5fba8e25"
+    },
+    "RK-23.3-054": {
+      "tasks/a-hand-back-to-a-transport-is-the-result-alone": "09dcb68783b74fd84183be99e0d62c56bcde1bd6e978c88eba6ece1af53ac1d2",
+      "tasks/a-worker-s-output-cannot-close-its-block-past-a-combining-mark-of-any-script": "09dcb68783b74fd84183be99e0d62c56bcde1bd6e978c88eba6ece1af53ac1d2",
+      "tasks/a-worker-s-output-cannot-close-its-block-with-a-disguised-separator": "09dcb68783b74fd84183be99e0d62c56bcde1bd6e978c88eba6ece1af53ac1d2"
+    },
+    "RK-23.3-056": {
+      "tasks/a-background-delegation-relays-its-result-to-the-notified-agent": "4239fada0d293e4ec90111429e60d3d33ca8f5bbe96efbb9675eb00b75a8f2d3",
+      "tasks/a-relayed-task-result-names-its-worker-by-the-discussion-handle": "4239fada0d293e4ec90111429e60d3d33ca8f5bbe96efbb9675eb00b75a8f2d3",
+      "tasks/the-kit-cancels-a-background-task-once": "4239fada0d293e4ec90111429e60d3d33ca8f5bbe96efbb9675eb00b75a8f2d3"
+    },
+    "RK-23.3-057": {
+      "tasks/a-background-delegation-relays-its-result-to-the-notified-agent": "5764c9f859f9d6b274e70b47228f20ec3816607dd369ca011af0447186590f74",
+      "tasks/a-copy-of-a-hand-back-header-is-replaced-and-the-runtime-s-is-kept": "5764c9f859f9d6b274e70b47228f20ec3816607dd369ca011af0447186590f74",
+      "tasks/a-hand-back-leaves-the-notified-agent-s-prompt-as-its-binding-holds-it": "5764c9f859f9d6b274e70b47228f20ec3816607dd369ca011af0447186590f74"
+    },
+    "RK-23.3-058": {
+      "tasks/a-hand-back-leaves-the-notified-agent-s-prompt-as-its-binding-holds-it": "346be006aa2004a7f96866bb0546a238ff54455e31534d4e376d22fcbaaac4ef"
+    },
+    "RK-23.3-059": {
+      "tasks/a-hand-back-in-a-room-with-no-transport-reaches-no-agent": "b31fa797252be1984843f9c6704d0e90fa499c4d6ae84707c944f238058912b8"
+    },
+    "RK-23.3-060": {
+      "host/a-turn-s-host-delegates-and-waits-for-its-task": "7d06a28881f66c631e03caa058d3fbdb7120123e8845db0733f9eea16c69c736",
+      "tasks/a-delegation-cycle-ends-at-max-chain-depth": "7d06a28881f66c631e03caa058d3fbdb7120123e8845db0733f9eea16c69c736",
+      "tasks/delegate-task-reaches-its-handler-as-its-gate-left-it-at-its-turn-s-depth": "7d06a28881f66c631e03caa058d3fbdb7120123e8845db0733f9eea16c69c736"
+    },
+    "RK-23.3-061": {
+      "tasks/a-background-delegation-posts-its-result-as-the-notified-agent": "6eaaba409cb6d7d902be97f28e3c1c86e9266bc3e74811801ae103f158fd5029",
+      "tasks/a-background-delegation-relays-its-result-to-the-notified-agent": "6eaaba409cb6d7d902be97f28e3c1c86e9266bc3e74811801ae103f158fd5029",
+      "tasks/a-delegation-outside-a-turn-opens-a-chain-at-depth-0": "6eaaba409cb6d7d902be97f28e3c1c86e9266bc3e74811801ae103f158fd5029",
+      "tasks/the-kit-cancels-a-background-task-once": "6eaaba409cb6d7d902be97f28e3c1c86e9266bc3e74811801ae103f158fd5029"
+    },
+    "RK-23.3-062": {
+      "tasks/a-background-delegation-relays-its-result-to-the-notified-agent": "2935a810e6e118d7f8d115c82756fdac60dcc987d020dfb422015592d3f07f5b",
+      "tasks/a-hand-back-leaves-the-notified-agent-s-prompt-as-its-binding-holds-it": "2935a810e6e118d7f8d115c82756fdac60dcc987d020dfb422015592d3f07f5b",
+      "tasks/an-empty-start-task-hand-back-keeps-the-default-or-configured-mode": "2935a810e6e118d7f8d115c82756fdac60dcc987d020dfb422015592d3f07f5b",
+      "tasks/start-task-runs-an-agent-s-work-in-the-background": "2935a810e6e118d7f8d115c82756fdac60dcc987d020dfb422015592d3f07f5b"
+    },
+    "RK-23.3-063": {
+      "tasks/a-background-delegation-posts-its-result-as-the-notified-agent": "ecee2489d3868ad7bf99a4229e0decbf7f68fbd674699ba849a41477ebd9c148",
+      "tasks/a-posted-result-crosses-the-room-s-before-broadcast-hooks": "ecee2489d3868ad7bf99a4229e0decbf7f68fbd674699ba849a41477ebd9c148",
+      "tasks/an-empty-start-task-hand-back-keeps-the-default-or-configured-mode": "ecee2489d3868ad7bf99a4229e0decbf7f68fbd674699ba849a41477ebd9c148",
+      "tasks/start-task-runs-an-agent-s-work-in-the-background": "ecee2489d3868ad7bf99a4229e0decbf7f68fbd674699ba849a41477ebd9c148"
+    },
+    "RK-23.3-065": {
+      "tasks/a-delegation-is-refused-before-anything-is-made": "45f9a06ed474961e3d86f583b78f766a2759e92a3eecb51a576f8fe16ab11aab"
+    },
+    "RK-23.3-066": {
+      "tasks/a-background-delegation-posts-its-result-as-the-notified-agent": "01fcf9382852ea69817bbcbc6a2d0d216ec0d3e54188b467571067c23c636f5c",
+      "tasks/a-posted-result-crosses-the-room-s-before-broadcast-hooks": "01fcf9382852ea69817bbcbc6a2d0d216ec0d3e54188b467571067c23c636f5c",
+      "tasks/a-posted-result-says-its-task-failed-or-was-cancelled-never-its-error": "01fcf9382852ea69817bbcbc6a2d0d216ec0d3e54188b467571067c23c636f5c",
+      "tasks/an-empty-start-task-hand-back-keeps-the-default-or-configured-mode": "01fcf9382852ea69817bbcbc6a2d0d216ec0d3e54188b467571067c23c636f5c",
+      "tasks/start-task-runs-an-agent-s-work-in-the-background": "01fcf9382852ea69817bbcbc6a2d0d216ec0d3e54188b467571067c23c636f5c"
+    },
+    "RK-23.3-067": {
+      "tasks/a-posted-result-says-its-task-failed-or-was-cancelled-never-its-error": "39fcc39d1829353240b33c80491aad7753ec2db65ab8dc689d90fd6984e5f4d0"
+    },
+    "RK-23.3-068": {
+      "tasks/a-posted-result-says-its-task-failed-or-was-cancelled-never-its-error": "7ceca3adea0bddfbb116c39c1ff3bae3d9eafd013be13711aebc525feec9a762"
+    },
+    "RK-23.3-069": {
+      "tasks/a-background-delegation-posts-its-result-as-the-notified-agent": "32a526dab3d3da6dc97d6de97d906c8df3bf05016816520f990a285639b37076",
+      "tasks/a-posted-result-crosses-the-room-s-before-broadcast-hooks": "32a526dab3d3da6dc97d6de97d906c8df3bf05016816520f990a285639b37076"
+    },
+    "RK-23.3-070": {
+      "tasks/a-background-delegation-posts-its-result-as-the-notified-agent": "ac0d8708d353a532702e2679284bfad9cc36d2efa51bda8daa7d0b40779f30ac",
+      "tasks/a-posted-result-crosses-the-room-s-before-broadcast-hooks": "ac0d8708d353a532702e2679284bfad9cc36d2efa51bda8daa7d0b40779f30ac"
+    },
+    "RK-23.3-071": {
+      "tasks/a-structured-delegation-re-prompts-until-its-worker-submits": "603800ec8c9bb2d7a3b76be3d29bb4f2c17909ccb82243740def4cd8140132a0",
+      "tasks/a-worker-owing-a-result-is-held-to-what-it-submitted-before-its-cut": "603800ec8c9bb2d7a3b76be3d29bb4f2c17909ccb82243740def4cd8140132a0"
+    },
+    "RK-23.3-072": {
+      "executors/a-declared-worker-s-result-tool-rides-its-child-room-s-requests-alone": "11831a57d4c1a1b2f058a6bee42839e935cf41e90ee5ffa542924455f9cbeecc",
+      "tasks/a-helper-cut-short-leaves-the-task-to-its-worker-that-owes-a-result": "11831a57d4c1a1b2f058a6bee42839e935cf41e90ee5ffa542924455f9cbeecc",
+      "tasks/a-result-submitted-before-the-worker-s-failure-still-counts": "11831a57d4c1a1b2f058a6bee42839e935cf41e90ee5ffa542924455f9cbeecc",
+      "tasks/a-result-tool-is-declared-in-the-child-room-only": "11831a57d4c1a1b2f058a6bee42839e935cf41e90ee5ffa542924455f9cbeecc",
+      "tasks/a-structured-delegation-re-prompts-until-its-worker-submits": "11831a57d4c1a1b2f058a6bee42839e935cf41e90ee5ffa542924455f9cbeecc",
+      "tasks/a-submit-round-that-gives-the-model-more-asks-it-again": "11831a57d4c1a1b2f058a6bee42839e935cf41e90ee5ffa542924455f9cbeecc",
+      "tasks/a-submitted-result-normalizes-nested-summary-and-reason-values": "11831a57d4c1a1b2f058a6bee42839e935cf41e90ee5ffa542924455f9cbeecc",
+      "tasks/a-worker-owing-a-result-is-held-to-what-it-submitted-before-its-cut": "11831a57d4c1a1b2f058a6bee42839e935cf41e90ee5ffa542924455f9cbeecc"
+    },
+    "RK-23.3-073": {
+      "executors/a-declared-worker-s-result-tool-rides-its-child-room-s-requests-alone": "83765d220dfb6016704a933e49c941d8e2fa0041e6d64648289fa2133d515e6f",
+      "tasks/a-result-tool-is-declared-in-the-child-room-only": "83765d220dfb6016704a933e49c941d8e2fa0041e6d64648289fa2133d515e6f",
+      "tasks/a-structured-delegation-re-prompts-until-its-worker-submits": "83765d220dfb6016704a933e49c941d8e2fa0041e6d64648289fa2133d515e6f",
+      "tasks/a-submit-round-that-gives-the-model-more-asks-it-again": "83765d220dfb6016704a933e49c941d8e2fa0041e6d64648289fa2133d515e6f"
+    },
+    "RK-23.3-074": {
+      "tasks/a-structured-delegation-re-prompts-until-its-worker-submits": "d45a7a2126fe4aafb1372711216cd8bfb44bc5a4de693a60cc126dc34bb9f31b",
+      "tasks/a-worker-owing-a-result-is-held-to-what-it-submitted-before-its-cut": "d45a7a2126fe4aafb1372711216cd8bfb44bc5a4de693a60cc126dc34bb9f31b"
+    },
+    "RK-23.3-075": {
+      "tasks/a-submit-round-that-gives-the-model-more-asks-it-again": "4208de79ece653c63e11f48e2825b399ae0796b9891b43fef290148903b8f079"
+    },
+    "RK-23.3-076": {
+      "tasks/a-result-call-an-on-tool-call-hook-blocks-is-no-result": "9521d519e9e0b34e7d05a9eb6c247af97e7aa6c4f61017af38ccb21cf2389e4f"
+    },
+    "RK-23.3-077": {
+      "tasks/a-result-submitted-before-the-worker-s-failure-still-counts": "89407d399b46391e05de5dac843bdfc6106b94943a5900e5e839251bed87884e"
+    },
+    "RK-23.3-078": {
+      "executors/a-declared-worker-s-result-tool-rides-its-child-room-s-requests-alone": "fda2df1fd4772e56d3bce413e67ce4ab801d65ba08ba28260c77fbf3b08ac3e7",
+      "tasks/a-helper-cut-short-leaves-the-task-to-its-worker-that-owes-a-result": "fda2df1fd4772e56d3bce413e67ce4ab801d65ba08ba28260c77fbf3b08ac3e7",
+      "tasks/a-result-submitted-before-the-worker-s-failure-still-counts": "fda2df1fd4772e56d3bce413e67ce4ab801d65ba08ba28260c77fbf3b08ac3e7",
+      "tasks/a-structured-delegation-re-prompts-until-its-worker-submits": "fda2df1fd4772e56d3bce413e67ce4ab801d65ba08ba28260c77fbf3b08ac3e7",
+      "tasks/a-submit-round-that-gives-the-model-more-asks-it-again": "fda2df1fd4772e56d3bce413e67ce4ab801d65ba08ba28260c77fbf3b08ac3e7",
+      "tasks/a-submitted-result-normalizes-nested-summary-and-reason-values": "fda2df1fd4772e56d3bce413e67ce4ab801d65ba08ba28260c77fbf3b08ac3e7",
+      "tasks/a-worker-owing-a-result-is-held-to-what-it-submitted-before-its-cut": "fda2df1fd4772e56d3bce413e67ce4ab801d65ba08ba28260c77fbf3b08ac3e7"
+    },
+    "RK-23.3-079": {
+      "tasks/a-re-prompt-never-reaches-a-shared-transport": "0de2eb02c6e12c7afe9750028c26bda8f59cdaca20b7ca9a7c754ab80de4ffde",
+      "tasks/a-re-prompted-worker-s-task-carries-its-last-turn-s-record-only": "0de2eb02c6e12c7afe9750028c26bda8f59cdaca20b7ca9a7c754ab80de4ffde",
+      "tasks/a-result-call-an-on-tool-call-hook-blocks-is-no-result": "0de2eb02c6e12c7afe9750028c26bda8f59cdaca20b7ca9a7c754ab80de4ffde",
+      "tasks/a-structured-delegation-re-prompts-until-its-worker-submits": "0de2eb02c6e12c7afe9750028c26bda8f59cdaca20b7ca9a7c754ab80de4ffde",
+      "tasks/a-worker-that-never-submits-ends-with-the-missing-payload": "0de2eb02c6e12c7afe9750028c26bda8f59cdaca20b7ca9a7c754ab80de4ffde",
+      "tasks/a-worker-whose-trace-holds-only-another-tool-s-call-ends-with-the-missing-payload": "0de2eb02c6e12c7afe9750028c26bda8f59cdaca20b7ca9a7c754ab80de4ffde"
+    },
+    "RK-23.3-080": {
+      "tasks/a-re-prompt-never-reaches-a-shared-transport": "b65fef142a90a8d9b3cd3d0e0a3cef6bce1a50397eb59f642bb275141b268640",
+      "tasks/a-result-call-an-on-tool-call-hook-blocks-is-no-result": "b65fef142a90a8d9b3cd3d0e0a3cef6bce1a50397eb59f642bb275141b268640",
+      "tasks/a-worker-that-never-submits-ends-with-the-missing-payload": "b65fef142a90a8d9b3cd3d0e0a3cef6bce1a50397eb59f642bb275141b268640",
+      "tasks/a-worker-whose-trace-holds-only-another-tool-s-call-ends-with-the-missing-payload": "b65fef142a90a8d9b3cd3d0e0a3cef6bce1a50397eb59f642bb275141b268640"
+    },
+    "RK-23.3-081": {
+      "tasks/a-re-prompt-never-reaches-a-shared-transport": "10dc4dcb113e02451f0cc48d43fa2c989ea89c0c0453c052a6dc583c0f1b834a",
+      "tasks/a-result-call-an-on-tool-call-hook-blocks-is-no-result": "10dc4dcb113e02451f0cc48d43fa2c989ea89c0c0453c052a6dc583c0f1b834a",
+      "tasks/a-worker-that-never-submits-ends-with-the-missing-payload": "10dc4dcb113e02451f0cc48d43fa2c989ea89c0c0453c052a6dc583c0f1b834a",
+      "tasks/a-worker-whose-trace-holds-only-another-tool-s-call-ends-with-the-missing-payload": "10dc4dcb113e02451f0cc48d43fa2c989ea89c0c0453c052a6dc583c0f1b834a"
+    },
+    "RK-23.3-082": {
+      "tasks/an-agent-that-takes-no-owner-tools-gets-none-and-hands-back-its-text": "436db159f4c429fcae66b8cee82f191b67c13c049734c657aebd647491d92f53"
+    },
+    "RK-23.3-083": {
+      "orchestration/a-delegation-its-call-bound-cuts-posts-the-worker-cancelled": "3ac38ab143874d09579082e90e0028263ef661fac40f83d02243cc88eb33e92d",
+      "orchestration/a-team-call-its-bound-cuts-posts-each-worker-cancelled": "3ac38ab143874d09579082e90e0028263ef661fac40f83d02243cc88eb33e92d",
+      "orchestration/a-team-cut-after-announcement-reports-only-what-started": "3ac38ab143874d09579082e90e0028263ef661fac40f83d02243cc88eb33e92d",
+      "orchestration/a-worker-cut-after-announcement-reports-only-what-started": "3ac38ab143874d09579082e90e0028263ef661fac40f83d02243cc88eb33e92d",
+      "tasks/an-agent-s-turn-cancels-its-room-s-task-and-is-not-told-twice": "3ac38ab143874d09579082e90e0028263ef661fac40f83d02243cc88eb33e92d",
+      "tasks/cancelling-a-worker-cancels-the-task-its-delegate-task-waits-for": "3ac38ab143874d09579082e90e0028263ef661fac40f83d02243cc88eb33e92d",
+      "tasks/the-kit-cancels-a-background-task-once": "3ac38ab143874d09579082e90e0028263ef661fac40f83d02243cc88eb33e92d"
+    },
+    "RK-23.3-084": {
+      "tasks/the-kit-cancels-a-background-task-once": "524279930618357a5af2a45aa4f06f52a87c4b201e81f6d8a088093fe3cf447d"
+    },
+    "RK-23.3-088": {
+      "tasks/an-agent-s-turn-cancels-its-room-s-task-and-is-not-told-twice": "8e1bdf18170ea1a8d55144555dbb89e7dc909c29e8bb8cd61a4de4e558f2313d",
+      "tasks/the-kit-cancels-a-background-task-once": "8e1bdf18170ea1a8d55144555dbb89e7dc909c29e8bb8cd61a4de4e558f2313d"
+    },
+    "RK-23.3-089": {
+      "tasks/an-agent-s-turn-cancels-its-room-s-task-and-is-not-told-twice": "a012e69649d79ffe65f7b990286555b7e8c3750cc0adb8744fb6321af9e64120"
+    },
+    "RK-23.3-093": {
+      "tasks/a-failed-task-with-nothing-to-say-is-handed-back-as-failed": "c2060cdfde9b27d6f720dbbc3fcfa456d26af084f799c145ce69b864dc4ae574"
+    },
+    "RK-23.3-098": {
+      "tasks/a-failed-background-preparation-keeps-its-child-and-reports-no-task": "7c4e04ea6dad607c3a6bd45b82390d083948df67610773e49e169836016d3b06",
+      "tasks/a-failed-inline-preparation-keeps-its-child-and-reports-no-task": "7c4e04ea6dad607c3a6bd45b82390d083948df67610773e49e169836016d3b06"
+    },
+    "RK-23.3-099": {
+      "orchestration/a-team-cut-before-announcement-reports-only-what-started": "af0642256b54d9136d998b0f05eee160cbc8e02d8a78e24e6a4891f5e42755f8",
+      "orchestration/a-worker-cut-before-announcement-reports-only-what-started": "af0642256b54d9136d998b0f05eee160cbc8e02d8a78e24e6a4891f5e42755f8",
+      "tasks/a-failed-background-preparation-keeps-its-child-and-reports-no-task": "af0642256b54d9136d998b0f05eee160cbc8e02d8a78e24e6a4891f5e42755f8",
+      "tasks/a-failed-inline-preparation-keeps-its-child-and-reports-no-task": "af0642256b54d9136d998b0f05eee160cbc8e02d8a78e24e6a4891f5e42755f8"
+    },
+    "RK-23.3-100": {
+      "orchestration/a-team-cut-before-announcement-reports-only-what-started": "e07e764b611df236570cdcf2cdf80f7e321629e1422bafb2609c76c5246ade2d",
+      "orchestration/a-worker-cut-before-announcement-reports-only-what-started": "e07e764b611df236570cdcf2cdf80f7e321629e1422bafb2609c76c5246ade2d",
+      "tasks/a-failed-background-preparation-keeps-its-child-and-reports-no-task": "e07e764b611df236570cdcf2cdf80f7e321629e1422bafb2609c76c5246ade2d",
+      "tasks/a-failed-inline-preparation-keeps-its-child-and-reports-no-task": "e07e764b611df236570cdcf2cdf80f7e321629e1422bafb2609c76c5246ade2d"
+    },
+    "RK-23.3-101": {
+      "orchestration/a-team-cut-before-announcement-reports-only-what-started": "eac218124a0bf4cc606a6a85e13483b3e5d161a1779fef4bf974c797b0e8f498",
+      "orchestration/a-worker-cut-before-announcement-reports-only-what-started": "eac218124a0bf4cc606a6a85e13483b3e5d161a1779fef4bf974c797b0e8f498",
+      "tasks/a-failed-background-preparation-keeps-its-child-and-reports-no-task": "eac218124a0bf4cc606a6a85e13483b3e5d161a1779fef4bf974c797b0e8f498",
+      "tasks/a-failed-inline-preparation-keeps-its-child-and-reports-no-task": "eac218124a0bf4cc606a6a85e13483b3e5d161a1779fef4bf974c797b0e8f498"
+    },
+    "RK-23.3-106": {
+      "tasks/a-delegation-whose-worker-fails-ends-failed": "7ea99a6262f740adfd4254fdb3a5f9e4ef0bdc929b72db01203203b67f6155e2",
+      "tasks/a-failed-task-with-nothing-to-say-is-handed-back-as-failed": "7ea99a6262f740adfd4254fdb3a5f9e4ef0bdc929b72db01203203b67f6155e2",
+      "tasks/a-result-past-the-summary-is-kept-whole-for-task-status": "7ea99a6262f740adfd4254fdb3a5f9e4ef0bdc929b72db01203203b67f6155e2",
+      "tasks/a-worker-s-progress-reaches-the-agent-s-next-turn": "7ea99a6262f740adfd4254fdb3a5f9e4ef0bdc929b72db01203203b67f6155e2",
+      "tasks/an-inline-delegation-runs-its-agent-in-a-child-room": "7ea99a6262f740adfd4254fdb3a5f9e4ef0bdc929b72db01203203b67f6155e2",
+      "tasks/the-kit-cancels-a-background-task-once": "7ea99a6262f740adfd4254fdb3a5f9e4ef0bdc929b72db01203203b67f6155e2"
+    },
+    "RK-23.3-107": {
+      "tasks/a-result-past-the-summary-is-kept-whole-for-task-status": "0f735b1c7b664752926687963e2847798138f6bee4ea57c71f1195b2a34e6ca6",
+      "tasks/a-worker-s-progress-reaches-the-agent-s-next-turn": "0f735b1c7b664752926687963e2847798138f6bee4ea57c71f1195b2a34e6ca6",
+      "tasks/an-inline-delegation-runs-its-agent-in-a-child-room": "0f735b1c7b664752926687963e2847798138f6bee4ea57c71f1195b2a34e6ca6"
+    },
+    "RK-23.3-108": {
+      "tasks/a-delegated-turn-s-returned-error-is-reported-in-its-child-room": "58f21b18235764f5c31481b935a5fe39178f282129f535839e52d0b816b7ffd7",
+      "tasks/a-delegation-whose-worker-fails-ends-failed": "58f21b18235764f5c31481b935a5fe39178f282129f535839e52d0b816b7ffd7",
+      "tasks/a-failed-task-with-nothing-to-say-is-handed-back-as-failed": "58f21b18235764f5c31481b935a5fe39178f282129f535839e52d0b816b7ffd7",
+      "tasks/the-kit-cancels-a-background-task-once": "58f21b18235764f5c31481b935a5fe39178f282129f535839e52d0b816b7ffd7"
+    },
+    "RK-23.3-109": {
+      "tasks/a-worker-s-progress-reaches-the-agent-s-next-turn": "528e6fb996497d5929c1c64b4c4352d9c765f821136f4b3b25c7cfa1bbaf1c01",
+      "tasks/an-inline-delegation-runs-its-agent-in-a-child-room": "528e6fb996497d5929c1c64b4c4352d9c765f821136f4b3b25c7cfa1bbaf1c01",
+      "tasks/the-kit-cancels-a-background-task-once": "528e6fb996497d5929c1c64b4c4352d9c765f821136f4b3b25c7cfa1bbaf1c01"
+    },
+    "RK-23.3-110": {
+      "tasks/a-delegation-not-posted-leaves-the-status-bus-alone": "02a136bb07c22337f76634aaa37adc1bc4c9102eb8e9e4cf69514a5eec0cb6e0"
+    },
+    "RK-23.3-111": {
+      "tasks/a-worker-s-progress-reaches-the-agent-s-next-turn": "41fc4316ea986b3b21a8ca841cb3cd9a430a7e4836caa4fad9134e386c45570e"
+    },
+    "RK-23.3-112": {
+      "tasks/a-child-room-of-a-room-with-no-envelope-holds-the-delegation-s-keys-alone": "02492b5a4ae2829dc79d2cef415867c94e390d413f0616969d24411ba793f34a",
+      "tasks/a-worker-s-progress-reaches-the-agent-s-next-turn": "02492b5a4ae2829dc79d2cef415867c94e390d413f0616969d24411ba793f34a",
+      "tasks/an-inline-delegation-runs-its-agent-in-a-child-room": "02492b5a4ae2829dc79d2cef415867c94e390d413f0616969d24411ba793f34a"
+    },
+    "RK-23.3-113": {
+      "tasks/a-worker-s-progress-reaches-the-agent-s-next-turn": "7e95245c2acb63fb2d4b8f073c26b6f3cc788559712101b66ff0f64643d90ae7"
+    },
+    "RK-23.3-114": {
+      "tasks/a-worker-s-progress-reaches-the-agent-s-next-turn": "b7e58ba8aa2e1906197ba72b656c100bef54827e36cd6f82f9927ce83072e98f"
+    },
+    "RK-23.3-115": {
+      "tasks/a-turn-s-notes-list-the-room-s-tasks-and-how-far-each-got": "a6ddbceabb7fb8c6fd82ceef2ae5dad62293c2bafe8ebde2fd53f1ff00addbf6",
+      "tasks/a-worker-s-progress-reaches-the-agent-s-next-turn": "a6ddbceabb7fb8c6fd82ceef2ae5dad62293c2bafe8ebde2fd53f1ff00addbf6"
+    },
+    "RK-23.4-003": {
+      "executors/a-declared-agent-s-delegate-task-is-kept-by-the-owner-for-each-build": "91b52c482f044574f044d2b51115199de87160cf9722f8d47c494402029fcfbc",
+      "tasks/delegate-task-answers-its-model-with-the-task-or-why-not": "91b52c482f044574f044d2b51115199de87160cf9722f8d47c494402029fcfbc",
+      "tasks/delegate-task-holds-its-model-to-the-tool-s-targets": "91b52c482f044574f044d2b51115199de87160cf9722f8d47c494402029fcfbc",
+      "tasks/delegate-task-offers-the-conversation-on-the-host-s-option-alone": "91b52c482f044574f044d2b51115199de87160cf9722f8d47c494402029fcfbc"
+    },
+    "RK-23.4-004": {
+      "tasks/delegate-task-holds-its-model-to-the-tool-s-targets": "fc5bf1e3aac19762155e00675ad3151676f41a819910137f289fe4e10ce85bc4"
+    },
+    "RK-23.4-005": {
+      "executors/a-declared-agent-s-delegate-task-is-kept-by-the-owner-for-each-build": "86f47c6fb3975b359cad136fd3cd0030ec0ccb5592b3f8f7e216f6082d7b70a8",
+      "tasks/delegate-task-answers-its-model-with-the-task-or-why-not": "86f47c6fb3975b359cad136fd3cd0030ec0ccb5592b3f8f7e216f6082d7b70a8",
+      "tasks/delegate-task-holds-its-model-to-the-tool-s-targets": "86f47c6fb3975b359cad136fd3cd0030ec0ccb5592b3f8f7e216f6082d7b70a8"
+    },
+    "RK-23.4-006": {
+      "tasks/delegate-task-holds-its-model-to-the-tool-s-targets": "f1c94bb99b63d93527281c006b1ef5f043de0da27545f38271891ae5b7353b0c"
+    },
+    "RK-23.4-007": {
+      "tasks/delegate-task-holds-its-model-to-the-tool-s-targets": "5408569cea94c2a7e32f3dbcc4ccecbdd1cae8bb7e7047c56622ed20c55e78b3"
+    },
+    "RK-23.4-008": {
+      "tasks/delegate-task-holds-its-model-to-the-tool-s-targets": "6e834c2923a8ad81bfcce8101400e11a29a84216bff1e351933e5c14f0a855a2"
+    },
+    "RK-23.4-010": {
+      "tasks/delegate-task-answers-its-model-with-the-task-or-why-not": "e5ccfbc87403a35e999243d5774a95da5fceaa0aa4a13e92de0e1bd6758f957a",
+      "tasks/delegate-task-frames-and-bounds-what-the-model-passed": "e5ccfbc87403a35e999243d5774a95da5fceaa0aa4a13e92de0e1bd6758f957a",
+      "tasks/delegate-task-hands-back-as-much-as-its-handler-allows": "e5ccfbc87403a35e999243d5774a95da5fceaa0aa4a13e92de0e1bd6758f957a",
+      "tasks/delegate-task-hands-its-worker-what-the-model-passed-as-data": "e5ccfbc87403a35e999243d5774a95da5fceaa0aa4a13e92de0e1bd6758f957a",
+      "tasks/delegate-task-offers-the-conversation-on-the-host-s-option-alone": "e5ccfbc87403a35e999243d5774a95da5fceaa0aa4a13e92de0e1bd6758f957a"
+    },
+    "RK-23.4-011": {
+      "tasks/delegate-task-answers-its-model-with-the-task-or-why-not": "a7ac3379b6f029dfa652bbbf2eb9132fe7f86879c9e7015a15314579618957e3"
+    },
+    "RK-23.4-012": {
+      "tasks/delegate-task-answers-its-model-with-the-task-or-why-not": "b77a0e0e77bd264664a555e79da034b1b4741208f44ef4ae72ad63c074cbc983"
+    },
+    "RK-23.4-013": {
+      "tasks/delegate-task-answers-its-model-with-the-task-or-why-not": "a4315d4e53c0f065e850d141223c31aae9fe420ffed5e5f7b9c31e6b0a79d339",
+      "tasks/delegate-task-hands-back-as-much-as-its-handler-allows": "a4315d4e53c0f065e850d141223c31aae9fe420ffed5e5f7b9c31e6b0a79d339",
+      "tasks/delegate-task-hands-its-worker-what-the-model-passed-as-data": "a4315d4e53c0f065e850d141223c31aae9fe420ffed5e5f7b9c31e6b0a79d339",
+      "tasks/delegate-task-reaches-its-handler-as-its-gate-left-it-at-its-turn-s-depth": "a4315d4e53c0f065e850d141223c31aae9fe420ffed5e5f7b9c31e6b0a79d339"
+    },
+    "RK-23.4-014": {
+      "tasks/delegate-task-frames-and-bounds-what-the-model-passed": "a7bb340992ca9e2560b1ccf7ae07e58c5ffe387c976acb928a1cf6b706d44a51",
+      "tasks/delegate-task-hands-its-worker-the-room-s-previous-tasks-as-data": "a7bb340992ca9e2560b1ccf7ae07e58c5ffe387c976acb928a1cf6b706d44a51",
+      "tasks/delegate-task-hands-its-worker-what-the-model-passed-as-data": "a7bb340992ca9e2560b1ccf7ae07e58c5ffe387c976acb928a1cf6b706d44a51",
+      "tasks/delegate-task-hands-over-what-its-calling-agent-may-read": "a7bb340992ca9e2560b1ccf7ae07e58c5ffe387c976acb928a1cf6b706d44a51",
+      "tasks/delegate-task-offers-the-conversation-on-the-host-s-option-alone": "a7bb340992ca9e2560b1ccf7ae07e58c5ffe387c976acb928a1cf6b706d44a51"
+    },
+    "RK-23.4-015": {
+      "tasks/delegate-task-frames-and-bounds-what-the-model-passed": "e6c40902d169f971d88ae849c8bf6e86306371f87707bdf910eb9842cdb985c8",
+      "tasks/delegate-task-hands-its-worker-the-room-s-previous-tasks-as-data": "e6c40902d169f971d88ae849c8bf6e86306371f87707bdf910eb9842cdb985c8",
+      "tasks/delegate-task-hands-its-worker-what-the-model-passed-as-data": "e6c40902d169f971d88ae849c8bf6e86306371f87707bdf910eb9842cdb985c8",
+      "tasks/delegate-task-hands-over-what-its-calling-agent-may-read": "e6c40902d169f971d88ae849c8bf6e86306371f87707bdf910eb9842cdb985c8"
+    },
+    "RK-23.4-016": {
+      "tasks/delegate-task-frames-and-bounds-what-the-model-passed": "60f13021fcf9469fffaac6bbf12963064d5f2426a295b129a2c2ed2f0aac3b98",
+      "tasks/delegate-task-hands-its-worker-what-the-model-passed-as-data": "60f13021fcf9469fffaac6bbf12963064d5f2426a295b129a2c2ed2f0aac3b98"
+    },
+    "RK-23.4-017": {
+      "tasks/delegate-task-frames-and-bounds-what-the-model-passed": "15543ce99c64f33f0f151c368729c21cbcb864d33bd38b784b74479129edbffd",
+      "tasks/delegate-task-hands-its-worker-what-the-model-passed-as-data": "15543ce99c64f33f0f151c368729c21cbcb864d33bd38b784b74479129edbffd"
+    },
+    "RK-23.4-018": {
+      "tasks/delegate-task-frames-and-bounds-what-the-model-passed": "53ba0f1eccc77501889e338deeedda7d1509bb818dd67781fab3e04f06bfe241",
+      "tasks/delegate-task-hands-its-worker-what-the-model-passed-as-data": "53ba0f1eccc77501889e338deeedda7d1509bb818dd67781fab3e04f06bfe241"
+    },
+    "RK-23.4-019": {
+      "tasks/delegate-task-hands-its-worker-the-room-s-previous-tasks-as-data": "cd5b8d596706dd40362c2ce8b3f54f07c1a941e6ce6546fb5ae7d449d2138fae"
+    },
+    "RK-23.4-020": {
+      "tasks/delegate-task-hands-its-worker-the-room-s-previous-tasks-as-data": "ec937cf4afd78ed10f8963497ebd2fd506e8b6f97380daa9cb0c6a97808c9324",
+      "tasks/delegate-task-s-cache-answers-a-repeat-of-the-same-work": "ec937cf4afd78ed10f8963497ebd2fd506e8b6f97380daa9cb0c6a97808c9324"
+    },
+    "RK-23.4-021": {
+      "tasks/delegate-task-hands-over-what-its-calling-agent-may-read": "97e21ddc25f0e7b22b4f384b98000acdbfb4d05e0beb6781c1b73164364f9bc5",
+      "tasks/delegate-task-offers-the-conversation-on-the-host-s-option-alone": "97e21ddc25f0e7b22b4f384b98000acdbfb4d05e0beb6781c1b73164364f9bc5"
+    },
+    "RK-23.4-022": {
+      "tasks/delegate-task-hands-over-what-its-calling-agent-may-read": "66558fc7676a8e25d7bb59354d23f307bbb658f967d09942658c09e76a02f27c"
+    },
+    "RK-23.4-023": {
+      "tasks/delegate-task-hands-over-what-its-calling-agent-may-read": "bf3121c1817712eb4e12015d24dd28a0a26fe0d973d946c1d019228965a2a0ae"
+    },
+    "RK-23.4-024": {
+      "tasks/delegate-task-hands-back-as-much-as-its-handler-allows": "d2d3c7d6426b9a17a157e724e9eaf714abeb4d055a5403062e3175e64fa8bfc7"
+    },
+    "RK-23.4-025": {
+      "tasks/a-worker-s-delegate-task-waits-for-its-task-on-the-handler-s-option": "96dcb8212234eaef861271040bce57706bf8f00714b2569a0ca597139b526929"
+    },
+    "RK-23.4-026": {
+      "tasks/cancelling-a-worker-cancels-the-task-its-delegate-task-waits-for": "44a80778c234cca8577c011535b2bb887de3fac5311344cd3323ed8c9e60dc3e"
+    },
+    "RK-23.4-027": {
+      "tasks/a-worker-s-delegate-task-waits-for-its-task-on-the-handler-s-option": "352795fe17fbcb2b5e4ec3f074ac5067c9e136b31d021dcc5353702015a8487a",
+      "tasks/delegate-task-answers-its-model-with-the-task-or-why-not": "352795fe17fbcb2b5e4ec3f074ac5067c9e136b31d021dcc5353702015a8487a"
+    },
+    "RK-23.4-028": {
+      "tasks/delegate-task-offers-the-conversation-on-the-host-s-option-alone": "66139a2b7b39b27e148c4e6a916b720c12fc9aca51bf8a81f2b19ad4f8e7a046"
+    },
+    "RK-23.4-029": {
+      "tasks/delegate-task-offers-the-conversation-on-the-host-s-option-alone": "8eec79c867ff233d103622b869fd6a885c70a3656f00b3937d33f9bdd1560f0b"
+    },
+    "RK-23.4-031": {
+      "tasks/delegate-task-s-cache-answers-a-repeat-of-the-same-work": "0df5ee3701bccb8408f36c6fc6a0ccf287e40a56db927c9004e53edbd440cebc"
+    },
+    "RK-23.4-032": {
+      "tasks/delegate-task-hands-its-worker-the-room-s-previous-tasks-as-data": "6867564b7101535ad864bad719449001ad1fe44f0199dac94ed3a17c296ac649",
+      "tasks/delegate-task-s-cache-answers-a-repeat-of-the-same-work": "6867564b7101535ad864bad719449001ad1fe44f0199dac94ed3a17c296ac649"
+    },
+    "RK-23.4-034": {
+      "tasks/delegate-task-hands-its-worker-the-room-s-previous-tasks-as-data": "c408177e06b67ef469f665388e25369824a245a515c6322b1dde4ed96753f5cd",
+      "tasks/delegate-task-s-cache-answers-a-repeat-of-the-same-work": "c408177e06b67ef469f665388e25369824a245a515c6322b1dde4ed96753f5cd"
+    },
+    "RK-23.4-036": {
+      "tasks/a-own-task-status-tool-names-the-discussion-worker-by-handle": "b0371b34994dbd6f4d60e8d01b0027cca257f451a6d54a30b4465921a4cf2af7",
+      "tasks/a-owner-task-status-tool-names-the-discussion-worker-by-handle": "b0371b34994dbd6f4d60e8d01b0027cca257f451a6d54a30b4465921a4cf2af7",
+      "tasks/an-agent-reads-and-cancels-its-room-s-tasks": "b0371b34994dbd6f4d60e8d01b0027cca257f451a6d54a30b4465921a4cf2af7",
+      "tasks/an-agent-s-own-task-tools-read-and-cancel-its-room-s-tasks": "b0371b34994dbd6f4d60e8d01b0027cca257f451a6d54a30b4465921a4cf2af7"
+    },
+    "RK-23.4-037": {
+      "tasks/a-own-task-status-tool-names-the-discussion-worker-by-handle": "a431387ae08f6acd91a49efa8e1e571cc187d6e6a9c4e17d2a055379e7162e1e",
+      "tasks/a-owner-task-status-tool-names-the-discussion-worker-by-handle": "a431387ae08f6acd91a49efa8e1e571cc187d6e6a9c4e17d2a055379e7162e1e",
+      "tasks/a-relayed-task-result-names-its-worker-by-the-discussion-handle": "a431387ae08f6acd91a49efa8e1e571cc187d6e6a9c4e17d2a055379e7162e1e",
+      "tasks/a-task-whose-end-is-being-told-reads-ended-at-once": "a431387ae08f6acd91a49efa8e1e571cc187d6e6a9c4e17d2a055379e7162e1e",
+      "tasks/an-agent-reads-and-cancels-its-room-s-tasks": "a431387ae08f6acd91a49efa8e1e571cc187d6e6a9c4e17d2a055379e7162e1e",
+      "tasks/an-agent-s-own-task-tools-read-and-cancel-its-room-s-tasks": "a431387ae08f6acd91a49efa8e1e571cc187d6e6a9c4e17d2a055379e7162e1e"
+    },
+    "RK-23.4-038": {
+      "tasks/a-result-past-the-summary-is-kept-whole-for-task-status": "4f0faa7082b4cb95ea8e7b6b6741be984e3aef03068037e7c62d56d6ae25c6e5",
+      "tasks/a-task-whose-end-is-being-told-reads-ended-at-once": "4f0faa7082b4cb95ea8e7b6b6741be984e3aef03068037e7c62d56d6ae25c6e5",
+      "tasks/an-agent-reads-and-cancels-its-room-s-tasks": "4f0faa7082b4cb95ea8e7b6b6741be984e3aef03068037e7c62d56d6ae25c6e5",
+      "tasks/an-agent-s-own-task-tools-read-and-cancel-its-room-s-tasks": "4f0faa7082b4cb95ea8e7b6b6741be984e3aef03068037e7c62d56d6ae25c6e5"
+    },
+    "RK-23.4-039": {
+      "tasks/an-agent-reads-and-cancels-its-room-s-tasks": "a4fc2d269d5713a62f67856c3866a26ae6150ac9c009ad4cd6159fb6389295c7",
+      "tasks/an-agent-s-own-task-tools-read-and-cancel-its-room-s-tasks": "a4fc2d269d5713a62f67856c3866a26ae6150ac9c009ad4cd6159fb6389295c7"
+    },
+    "RK-23.4-040": {
+      "tasks/an-agent-reads-and-cancels-its-room-s-tasks": "32a6ba0305f4029493b470759507078e0fdb97a32828daa7114351c206f1e052",
+      "tasks/an-agent-s-own-task-tools-read-and-cancel-its-room-s-tasks": "32a6ba0305f4029493b470759507078e0fdb97a32828daa7114351c206f1e052"
+    },
+    "RK-23.4-041": {
+      "orchestration/a-supervisor-given-task-status-is-pointed-at-it-by-its-dispatched-team": "9169d5aef0809b5eca45c3ce30b82baafaadb3300412cb07e941b6622b100b38"
+    },
+    "RK-23.4-042": {
+      "tasks/a-background-task-names-its-agent-by-the-discussion-s-handle": "9b3bb6d6cfae775adcb367acbd7c56996b9b2d141e00f596331b50d094fbbc15",
+      "tasks/an-agent-starts-its-work-in-the-background": "9b3bb6d6cfae775adcb367acbd7c56996b9b2d141e00f596331b50d094fbbc15",
+      "tasks/work-in-background-starts-its-agent-s-own-task-only": "9b3bb6d6cfae775adcb367acbd7c56996b9b2d141e00f596331b50d094fbbc15"
+    },
+    "RK-23.4-043": {
+      "tasks/a-background-task-names-its-agent-by-the-discussion-s-handle": "e217f7889f9b6b8fef230e1b19807635ec88448f27dde129e6f0be899c37b1a5",
+      "tasks/a-background-tool-keeps-its-turns-name-before-a-post": "e217f7889f9b6b8fef230e1b19807635ec88448f27dde129e6f0be899c37b1a5",
+      "tasks/a-background-tool-keeps-its-turns-name-before-a-relay": "e217f7889f9b6b8fef230e1b19807635ec88448f27dde129e6f0be899c37b1a5",
+      "tasks/an-agent-starts-its-work-in-the-background": "e217f7889f9b6b8fef230e1b19807635ec88448f27dde129e6f0be899c37b1a5",
+      "tasks/start-task-runs-an-agent-s-work-in-the-background": "e217f7889f9b6b8fef230e1b19807635ec88448f27dde129e6f0be899c37b1a5",
+      "tasks/work-in-background-starts-its-agent-s-own-task-only": "e217f7889f9b6b8fef230e1b19807635ec88448f27dde129e6f0be899c37b1a5"
+    },
+    "RK-23.4-044": {
+      "tasks/start-task-runs-an-agent-s-work-in-the-background": "1b9487bb4e43c1145879a2a3e07f28725b699eda64a364ec971b762a76ee2d6b",
+      "tasks/work-in-background-starts-its-agent-s-own-task-only": "1b9487bb4e43c1145879a2a3e07f28725b699eda64a364ec971b762a76ee2d6b"
+    },
+    "RK-23.4-045": {
+      "tasks/a-background-task-names-its-agent-by-the-discussion-s-handle": "6885f26019ac1682b25476dffd6438fd7a4063900489c0a59b4492ab99819285",
+      "tasks/a-background-tool-keeps-its-turns-name-before-a-post": "6885f26019ac1682b25476dffd6438fd7a4063900489c0a59b4492ab99819285",
+      "tasks/a-background-tool-keeps-its-turns-name-before-a-relay": "6885f26019ac1682b25476dffd6438fd7a4063900489c0a59b4492ab99819285",
+      "tasks/an-agent-starts-its-work-in-the-background": "6885f26019ac1682b25476dffd6438fd7a4063900489c0a59b4492ab99819285",
+      "tasks/an-empty-start-task-hand-back-keeps-the-default-or-configured-mode": "6885f26019ac1682b25476dffd6438fd7a4063900489c0a59b4492ab99819285",
+      "tasks/start-task-runs-an-agent-s-work-in-the-background": "6885f26019ac1682b25476dffd6438fd7a4063900489c0a59b4492ab99819285",
+      "tasks/work-in-background-starts-its-agent-s-own-task-only": "6885f26019ac1682b25476dffd6438fd7a4063900489c0a59b4492ab99819285"
+    },
+    "RK-23.4-046": {
+      "tasks/a-background-task-cannot-close-its-frame": "f9c09b482e16b6add7a6c194d1090c343f90ff9a981c31453f15a70b6a1ff651",
+      "tasks/an-agent-starts-its-work-in-the-background": "f9c09b482e16b6add7a6c194d1090c343f90ff9a981c31453f15a70b6a1ff651",
+      "tasks/start-task-runs-an-agent-s-work-in-the-background": "f9c09b482e16b6add7a6c194d1090c343f90ff9a981c31453f15a70b6a1ff651"
+    },
+    "RK-23.4-047": {
+      "tasks/an-agent-starts-its-work-in-the-background": "82f2a76fd5ec7bd237e7b37195ff226dcc13984fc32fc9bda36bb25eebc881c3"
+    },
+    "RK-23.4-048": {
+      "tasks/a-background-worker-keeps-its-turns-task-boundary-after-a-store-patch": "560aae38fb7ac6d7a061a8dc45d64db8c05777c0d6cb8bfe7bd17a5b955c7ecd"
+    },
+    "RK-23.4-049": {
+      "tasks/an-empty-start-task-hand-back-keeps-the-default-or-configured-mode": "d4bc04e9b73a0d7dbc6f9cb309e1bcbcc5ef6b95a6edaa62190513bec6f6de1d",
+      "tasks/start-task-runs-an-agent-s-work-in-the-background": "d4bc04e9b73a0d7dbc6f9cb309e1bcbcc5ef6b95a6edaa62190513bec6f6de1d"
+    },
+    "RK-23.4-051": {
+      "tasks/an-agent-reads-and-cancels-its-room-s-tasks": "72f23afbc4621145f87b8b1fd6f0136c31b85204dcee7e69c2fc6e1253b2c81c",
+      "tasks/an-agent-s-own-task-tools-read-and-cancel-its-room-s-tasks": "72f23afbc4621145f87b8b1fd6f0136c31b85204dcee7e69c2fc6e1253b2c81c",
+      "tasks/an-agent-s-turn-cancels-its-room-s-task-and-is-not-told-twice": "72f23afbc4621145f87b8b1fd6f0136c31b85204dcee7e69c2fc6e1253b2c81c"
+    },
+    "RK-23.4-052": {
+      "tasks/a-line-for-a-task-the-room-does-not-hold-is-no-task-here": "9dc253cca2d1fb7b4103c388f6a7a3a69d62564da44a703f26b2388ee75078eb",
+      "tasks/a-strategy-s-unposted-task-is-never-a-room-s-to-cancel": "9dc253cca2d1fb7b4103c388f6a7a3a69d62564da44a703f26b2388ee75078eb",
+      "tasks/an-agent-reads-and-cancels-its-room-s-tasks": "9dc253cca2d1fb7b4103c388f6a7a3a69d62564da44a703f26b2388ee75078eb",
+      "tasks/an-agent-s-own-task-tools-read-and-cancel-its-room-s-tasks": "9dc253cca2d1fb7b4103c388f6a7a3a69d62564da44a703f26b2388ee75078eb"
+    },
+    "RK-23.4-053": {
+      "tasks/a-line-for-a-task-the-room-does-not-hold-is-no-task-here": "027ff17b3c905ba212f95c3d49894e4e50c87286a827c271cfae889612ecd362",
+      "tasks/a-line-the-bus-lists-ended-is-answered-as-it-lists-it": "027ff17b3c905ba212f95c3d49894e4e50c87286a827c271cfae889612ecd362",
+      "tasks/a-strategy-s-unposted-task-is-never-a-room-s-to-cancel": "027ff17b3c905ba212f95c3d49894e4e50c87286a827c271cfae889612ecd362",
+      "tasks/a-task-whose-end-is-being-told-reads-ended-at-once": "027ff17b3c905ba212f95c3d49894e4e50c87286a827c271cfae889612ecd362",
+      "tasks/an-agent-reads-and-cancels-its-room-s-tasks": "027ff17b3c905ba212f95c3d49894e4e50c87286a827c271cfae889612ecd362",
+      "tasks/an-agent-s-own-task-tools-read-and-cancel-its-room-s-tasks": "027ff17b3c905ba212f95c3d49894e4e50c87286a827c271cfae889612ecd362",
+      "tasks/an-agent-s-turn-cancels-its-room-s-task-and-is-not-told-twice": "027ff17b3c905ba212f95c3d49894e4e50c87286a827c271cfae889612ecd362"
+    },
+    "RK-23.4-054": {
+      "tasks/the-kit-cancels-a-background-task-once": "6949c76fd0c285e3291a17d09bea8c86698a7e2c143e6573a3c45da33db7a73f"
+    },
+    "RK-23.4-055": {
+      "tasks/a-task-whose-end-is-being-told-reads-ended-at-once": "a125a7d3a09b14fba229167c47872b07672890aaf60e933741e4dec2255ff131"
+    },
+    "RK-23.4-056": {
+      "tasks/a-line-the-bus-lists-ended-is-answered-as-it-lists-it": "84cafd890be3a7a3dcf8501b65632cf8e1d28cb3e479353e8e7014e8a4aa9f1b"
+    },
+    "RK-23.4-057": {
+      "tasks/a-line-for-a-task-the-room-does-not-hold-is-no-task-here": "4c4a126549d85b23fd7467bddc24c5db406cb914a00014e22d51959673340b18",
+      "tasks/a-strategy-s-unposted-task-is-never-a-room-s-to-cancel": "4c4a126549d85b23fd7467bddc24c5db406cb914a00014e22d51959673340b18",
+      "tasks/an-agent-reads-and-cancels-its-room-s-tasks": "4c4a126549d85b23fd7467bddc24c5db406cb914a00014e22d51959673340b18",
+      "tasks/an-agent-s-own-task-tools-read-and-cancel-its-room-s-tasks": "4c4a126549d85b23fd7467bddc24c5db406cb914a00014e22d51959673340b18"
+    },
+    "RK-23.4-058": {
+      "tasks/a-task-whose-end-is-being-told-reads-ended-at-once": "161bdaa912625d6b23912d0147aabe402ec47914bb3e778d733a713c4eb79800"
+    },
+    "RK-23.4-060": {
+      "executors/a-built-channel-reads-the-owner-s-task-in-the-model-input": "09bb1a2a111f91be0737f17b3bd5b91863a6d009819e4edef013524777935f8d",
+      "tasks/a-turn-s-notes-list-the-room-s-tasks-and-how-far-each-got": "09bb1a2a111f91be0737f17b3bd5b91863a6d009819e4edef013524777935f8d",
+      "tasks/a-worker-s-progress-reaches-the-agent-s-next-turn": "09bb1a2a111f91be0737f17b3bd5b91863a6d009819e4edef013524777935f8d",
+      "tasks/a-worker-s-words-in-the-tasks-note-are-quoted-and-its-name-and-ending-carry-none": "09bb1a2a111f91be0737f17b3bd5b91863a6d009819e4edef013524777935f8d",
+      "tasks/the-tasks-note-lists-the-latest-six-tasks-and-a-standalone-turn-none": "09bb1a2a111f91be0737f17b3bd5b91863a6d009819e4edef013524777935f8d"
+    },
+    "RK-23.4-061": {
+      "tasks/a-turn-s-notes-list-the-room-s-tasks-and-how-far-each-got": "66fe66c547df7091aed591ad906f1cf1b57064b93fef84309e4d78662db35182",
+      "tasks/a-worker-s-progress-reaches-the-agent-s-next-turn": "66fe66c547df7091aed591ad906f1cf1b57064b93fef84309e4d78662db35182",
+      "tasks/the-tasks-note-lists-the-latest-six-tasks-and-a-standalone-turn-none": "66fe66c547df7091aed591ad906f1cf1b57064b93fef84309e4d78662db35182"
+    },
+    "RK-23.4-062": {
+      "tasks/a-worker-s-words-in-the-tasks-note-are-quoted-and-its-name-and-ending-carry-none": "1631eb6b09099c8aaa533760f93e66bb09d7fdb2a09c4b35f08b65cbb5064e65"
+    },
+    "RK-23.4-063": {
+      "tasks/a-worker-s-words-in-the-tasks-note-are-quoted-and-its-name-and-ending-carry-none": "5cc959bbe9618fb72275b8a58b60258b454fb649cae9834f7f81d8f2058aa04b"
+    },
+    "RK-23.4-064": {
+      "tasks/a-turn-s-notes-list-the-room-s-tasks-and-how-far-each-got": "12774ad6104fea36132a267d0589bf8a846d482645761f28fdc9aa76532aa043",
+      "tasks/a-worker-s-progress-reaches-the-agent-s-next-turn": "12774ad6104fea36132a267d0589bf8a846d482645761f28fdc9aa76532aa043",
+      "tasks/the-tasks-note-lists-the-latest-six-tasks-and-a-standalone-turn-none": "12774ad6104fea36132a267d0589bf8a846d482645761f28fdc9aa76532aa043"
+    },
+    "RK-23.4-065": {
+      "tasks/the-tasks-note-lists-the-latest-six-tasks-and-a-standalone-turn-none": "5ac2e532c26592e5e0f64c5157a0ba2efb5297c1e8be93f3cc2cf338b21ac5bb"
+    },
+    "RK-23.4-067": {
+      "executors/a-turn-apart-s-delegation-and-segments-fire-their-hooks-on-the-room-owner": "48d1002aadf350299a9e5780be2d4cc086c89b8bd85811439fa57aa990298e9f",
+      "tasks/a-worker-s-delegate-task-waits-for-its-task-on-the-handler-s-option": "48d1002aadf350299a9e5780be2d4cc086c89b8bd85811439fa57aa990298e9f",
+      "tasks/cancelling-a-worker-cancels-the-task-its-delegate-task-waits-for": "48d1002aadf350299a9e5780be2d4cc086c89b8bd85811439fa57aa990298e9f"
+    },
+    "RK-23.5-002": {
+      "executors/a-turn-apart-s-delegation-and-segments-fire-their-hooks-on-the-room-owner": "c38d8480c3a1dc42cbccf170222aff1cfb74c8bfa30b63a7cf5fd7b68e0cac66",
+      "orchestration/a-team-cut-after-announcement-reports-only-what-started": "c38d8480c3a1dc42cbccf170222aff1cfb74c8bfa30b63a7cf5fd7b68e0cac66",
+      "orchestration/a-worker-cut-after-announcement-reports-only-what-started": "c38d8480c3a1dc42cbccf170222aff1cfb74c8bfa30b63a7cf5fd7b68e0cac66",
+      "tasks/a-delegation-whose-worker-fails-ends-failed": "c38d8480c3a1dc42cbccf170222aff1cfb74c8bfa30b63a7cf5fd7b68e0cac66",
+      "tasks/an-inline-delegation-runs-its-agent-in-a-child-room": "c38d8480c3a1dc42cbccf170222aff1cfb74c8bfa30b63a7cf5fd7b68e0cac66",
+      "tasks/delegate-task-hands-its-worker-what-the-model-passed-as-data": "c38d8480c3a1dc42cbccf170222aff1cfb74c8bfa30b63a7cf5fd7b68e0cac66"
+    },
+    "RK-23.5-003": {
+      "orchestration/a-team-cut-after-announcement-reports-only-what-started": "50b6c8766d22b68692c421781b1ff6cd2832cc46bf39a8e2758cc7a47e658ca4",
+      "orchestration/a-worker-cut-after-announcement-reports-only-what-started": "50b6c8766d22b68692c421781b1ff6cd2832cc46bf39a8e2758cc7a47e658ca4",
+      "tasks/a-background-delegation-relays-its-result-to-the-notified-agent": "50b6c8766d22b68692c421781b1ff6cd2832cc46bf39a8e2758cc7a47e658ca4",
+      "tasks/a-buffered-delegated-turn-failing-after-it-began-keeps-its-end": "50b6c8766d22b68692c421781b1ff6cd2832cc46bf39a8e2758cc7a47e658ca4",
+      "tasks/a-delegated-turn-failing-after-a-tool-round-keeps-its-end": "50b6c8766d22b68692c421781b1ff6cd2832cc46bf39a8e2758cc7a47e658ca4",
+      "tasks/a-delegation-not-posted-leaves-the-status-bus-alone": "50b6c8766d22b68692c421781b1ff6cd2832cc46bf39a8e2758cc7a47e658ca4",
+      "tasks/a-delegation-whose-worker-fails-ends-failed": "50b6c8766d22b68692c421781b1ff6cd2832cc46bf39a8e2758cc7a47e658ca4",
+      "tasks/a-failed-task-with-nothing-to-say-is-handed-back-as-failed": "50b6c8766d22b68692c421781b1ff6cd2832cc46bf39a8e2758cc7a47e658ca4",
+      "tasks/a-hand-back-in-a-room-with-no-transport-reaches-no-agent": "50b6c8766d22b68692c421781b1ff6cd2832cc46bf39a8e2758cc7a47e658ca4",
+      "tasks/a-task-cut-before-its-worker-wrote-any-text-fails-with-no-output": "50b6c8766d22b68692c421781b1ff6cd2832cc46bf39a8e2758cc7a47e658ca4",
+      "tasks/a-task-s-context-never-says-how-its-turn-ended": "50b6c8766d22b68692c421781b1ff6cd2832cc46bf39a8e2758cc7a47e658ca4",
+      "tasks/a-task-whose-end-is-being-told-reads-ended-at-once": "50b6c8766d22b68692c421781b1ff6cd2832cc46bf39a8e2758cc7a47e658ca4",
+      "tasks/an-agent-s-turn-cancels-its-room-s-task-and-is-not-told-twice": "50b6c8766d22b68692c421781b1ff6cd2832cc46bf39a8e2758cc7a47e658ca4",
+      "tasks/an-inline-delegation-runs-its-agent-in-a-child-room": "50b6c8766d22b68692c421781b1ff6cd2832cc46bf39a8e2758cc7a47e658ca4",
+      "tasks/an-inline-task-its-worker-s-round-cap-cut-fails-with-its-narration": "50b6c8766d22b68692c421781b1ff6cd2832cc46bf39a8e2758cc7a47e658ca4",
+      "tasks/the-kit-cancels-a-background-task-once": "50b6c8766d22b68692c421781b1ff6cd2832cc46bf39a8e2758cc7a47e658ca4"
     },
     "RK-5-001": {
       "permissions/reserved-channel-ids-are-refused": "c094c4292b80e298a0a8b1d7ca12bbef2df681c42d9366621b73e01f8938495c"
