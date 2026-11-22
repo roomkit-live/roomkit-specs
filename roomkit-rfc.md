@@ -3617,19 +3617,13 @@ more than that opening, which may be the whole answer. The model reads its own
 text whole; the turn's record (`ON_AI_RESPONSE`'s segments) says what the room
 saw.
 
-A stored interruption marker (`[Response interrupted]`, a message carrying
-`metadata["interruption_marker"] = true`, a key distinct from the
-`interrupted` of a spoken reply a barge-in cut, Section 12.3.13) is not an
-answer. It MUST NOT solicit any intelligence channel (Section 19.3), and
-nothing that reads an agent's answer (an orchestration strategy, a delegated
-task's result) may take it for one. A turn the provider interrupted after a
-round has no answer: a task delegated to it fails with the provider's error,
-and carries the turn's end (`error`) and narration as a cut turn does
-(Section 23.3 step 6), while what reads the task tells the error from a cut;
-a strategy that reads an agent's answer reads none from an output that
-carries an error, its rounds' text included. A turn constrained to a schema
-is the exception: interrupted after a round, it fails with `truncated`, and
-`ON_AI_RESPONSE` does not fire (Appendix A.9).
+A turn the provider interrupted after a round has no answer: a task delegated
+to it fails with the provider's error, and carries the turn's end (`error`)
+and narration as a cut turn does (Section 23.3 step 6), while what reads the
+task tells the error from a cut; a strategy that reads an agent's answer reads
+none from an output that carries an error, its rounds' text included. A turn
+constrained to a schema is the exception: interrupted after a round, it fails
+with `truncated`, and `ON_AI_RESPONSE` does not fire (Appendix A.9).
 <!-- /rfc -->
 
 <!-- rfc: {"id": "RK-6.4-031", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
@@ -19448,10 +19442,7 @@ Normative rules:
 4. `addressed_to` is part of the stored event, so a transcript can show who
    was asked and a replay reproduces the same solicitation (in a discussion,
    the same queued turns, Section 19.7.5).
-5. An interruption marker (Section 6.4) solicits no intelligence channel,
-   whatever its address or a router's stamp: it says an agent's turn was cut,
-   not something to act on. It is still stored and delivered like any event.
-6. An event a hook injects (Section 9.4) solicits no intelligence channel,
+5. An event a hook injects (Section 9.4) solicits no intelligence channel,
    whatever its address: it is delivered to its transport targets only, and
    an agent its visibility names reads it in its history at its next turn.
 <!-- /rfc -->

@@ -2201,7 +2201,7 @@
           "scenario": "hooks/an-injected-event-asks-no-agent",
           "pointer": "/expect",
           "sha256": "d2e1509f2d24250fabffb85e13cef7c9876ca0a50dbdd2a346c2cae4509f2858",
-          "scenario_sha256": "438a8ce3c9e606a945db5bba22f6e5fe86e2e0fdf66ecb9c33977bc427a6f130",
+          "scenario_sha256": "341fbbef016473ce664fc5e75b5a266f362ac14cf66a92ead078508d49aee8f0",
           "proves": "The injection remains visible to its bound intelligence target without invoking it; only the named transport receives it."
         },
         {

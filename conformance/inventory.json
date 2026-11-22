@@ -237,7 +237,7 @@
     },
     {
       "section": "6.4",
-      "sha256": "dd0ceff9a93249a827798142401dea06e7cdfffb2e05d532e9ab62a706a210b0",
+      "sha256": "1f0ee950e012da084b6a681fb698bf1c12c9aa32d55c7b00290e625602239506",
       "classification": "normative",
       "review": "Source inventory: Intelligence Channels. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage. Reviewed the added deferred-input association and protected-context clause against shared hook scenarios and native mutation/tool tests; existing source units are unchanged."
     },
@@ -1221,7 +1221,7 @@
     },
     {
       "section": "19.3",
-      "sha256": "6c9f614e8dec08dd9abf03753f702b32c38ea2cc3d2010fb12359b2339467c93",
+      "sha256": "de72e7d245d8b1f730a833b4e79badd0a9ec165659f10ff93948cb1d598e105b",
       "classification": "normative",
       "review": "Source inventory: Addressing. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
     },
