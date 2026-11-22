@@ -19499,36 +19499,36 @@ should live in the integration surface layer.
 
 ### 17.1 Input Validation
 
-<!-- rfc: {"id": "RK-17.1-001", "kind": "behavior", "applies": "§17.1 Input Validation; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
-- All inbound payloads MUST be validated before processing.
-- Webhook signatures SHOULD be verified when the provider supports them.
+<!-- rfc: {"id": "RK-17.1-002", "kind": "behavior", "applies": "§17.1 Input Validation: every inbound payload validated before it is processed.", "level": "must"} -->
+- All inbound payloads MUST be validated before processing.<!-- /rfc --><!-- rfc: {"id": "RK-17.1-003", "kind": "behavior", "applies": "§17.1 Input Validation: a webhook's signature verified where its provider signs it.", "level": "should"} -->
+- Webhook signatures SHOULD be verified when the provider supports them.<!-- /rfc --><!-- rfc: {"id": "RK-17.1-004", "kind": "behavior", "applies": "§17.1 Input Validation: event content sanitized against injection.", "level": "should"} -->
 - Event content SHOULD be sanitized to prevent injection attacks.
 <!-- /rfc -->
 
 ### 17.2 Multi-Tenant Isolation
 
-<!-- rfc: {"id": "RK-17.2-001", "kind": "behavior", "applies": "§17.2 Multi-Tenant Isolation; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-17.2-002", "kind": "behavior", "applies": "§17.2 Multi-Tenant Isolation: room operations isolated per organization; with the item that scopes a room by its organization_id. The items below say how.", "level": "must"} -->
 - Rooms are scoped by `organization_id`.
-- Implementations MUST ensure that room operations are isolated per organization.
-- Identity resolution MUST be scoped to the organization.
+- Implementations MUST ensure that room operations are isolated per organization.<!-- /rfc --><!-- rfc: {"id": "RK-17.2-003", "kind": "behavior", "applies": "§17.2 Multi-Tenant Isolation: identity resolution scoped to the organization.", "level": "must"} -->
+- Identity resolution MUST be scoped to the organization.<!-- /rfc --><!-- rfc: {"id": "RK-17.2-004", "kind": "behavior", "applies": "§17.2 Multi-Tenant Isolation: a room the framework creates for another room's work (a delegation's child room, §23.3) belongs to that room's organization, or to none with it.", "level": "must"} -->
 - A room the framework creates for another room's work (a delegation's
-  child room, Section 23.3) MUST belong to that room's organization.
+  child room, Section 23.3) MUST belong to that room's organization.<!-- /rfc --><!-- rfc: {"id": "RK-17.2-005", "kind": "behavior", "applies": "§17.2 Multi-Tenant Isolation: where an implementation offers voice, realtime or conference (media): a door that admits a participant into a room's media (a framework join, a realtime session start, a conference mint_access()) reads the room with the caller's organization before any session exists or is bound and before any credential is minted; another organization's room is not found, joined, admitted to, or told of the session's tracks.", "level": "must"} -->
 - A door that admits a participant into a room's media (a framework join, a
   realtime channel's session start, a conference channel's `mint_access()`)
   MUST read the room with the organization the caller acts for, before any
   session exists or is bound and before any credential is minted: another
   organization's room is not found, no session joins it, no credential admits
-  to it, and none of its recordings is told of the session's tracks. Called
+  to it, and none of its recordings is told of the session's tracks. <!-- /rfc --><!-- rfc: {"id": "RK-17.2-006", "kind": "behavior", "applies": "§17.2 Multi-Tenant Isolation: where an implementation offers voice, realtime or conference (media): called without an organization, a framework join reads the room unscoped, and a session start or a mint reads none for the scope.", "level": "must"} -->Called
   without an organization, a framework join reads the room unscoped, and a
-  session start or a mint reads none for the scope.
+  session start or a mint reads none for the scope.<!-- /rfc --><!-- rfc: {"id": "RK-17.2-007", "kind": "behavior", "applies": "§17.2 Multi-Tenant Isolation: a room's hooks, subscriptions and turns end with the room: the kit that creates a room under the id of a room the store deleted, for the same organization, another or none, forgets the deleted room's room hooks and enabled names and ends the subscriptions made through it to its ephemerals.", "level": "must"} -->
 - A room's hooks, its subscriptions and its turns end with the room
   (§8.4, §9.1, §10.6.2): the kit that creates a room under the id of a room
   the store deleted, for the same organization, another or none, forgets
   the room hooks registered for the deleted room and the names enabled for
   it, and ends the subscriptions made through it to the deleted room's
-  ephemerals. Nothing registered for one organization's room reads the
-  events of the room another organization creates after it. Hooks and
-  subscriptions registered while no room held the id are the new room's.
+  ephemerals. <!-- /rfc --><!-- rfc: {"id": "RK-17.2-008", "kind": "behavior", "applies": "§17.2 Multi-Tenant Isolation: nothing registered for one organization's room reads the events of the room another organization creates after it under its id.", "level": "must"} -->Nothing registered for one organization's room reads the
+  events of the room another organization creates after it. <!-- /rfc --><!-- rfc: {"id": "RK-17.2-009", "kind": "behavior", "applies": "§17.2 Multi-Tenant Isolation: hooks and subscriptions registered while no room held an id are the new room's.", "level": "must"} -->Hooks and
+  subscriptions registered while no room held the id are the new room's.<!-- /rfc --><!-- rfc: {"id": "RK-17.2-010", "kind": "behavior", "applies": "§17.2 Multi-Tenant Isolation: in every process, by the room's creation mark (created_at): a kit forgets for a later room the hooks and enabled names of an id (§9.1); a publication carries its room's mark and a subscription reads its own room's alone (§8.4); the owner keeps each turn record's mark, so a turn or a channel call in a room of another mark follows none of the earlier room's turns and an executor lets go of what it held (§10.6.2); a host verb made after a deleted room's turn is refused in the room created again (§10.6.5).", "level": "must"} -->
   So in every process: a kit keeps the creation mark (`created_at`) of the
   room its hooks and enabled names of an id are of, compares it with the
   room in hand when they fire, and forgets them for a later room (§9.1); a
@@ -19537,13 +19537,13 @@ should live in the integration surface layer.
   record is of, so that a turn or a channel call in a room of another mark
   follows none of the earlier room's turns and an executor lets go of what
   it held for the id (§10.6.2), and a host verb made after a deleted
-  room's turn is refused in the room created again since (§10.6.5).
+  room's turn is refused in the room created again since (§10.6.5).<!-- /rfc --><!-- rfc: {"id": "RK-17.2-011", "kind": "behavior", "applies": "§17.2 Multi-Tenant Isolation: a call that names no organization (an inbound message, a direct injection) reads rooms unscoped, and a room it creates belongs to no organization.", "level": "must"} -->
 - A call that names no organization (an inbound message, a direct
   injection) reads rooms unscoped, and a room it creates belongs to no
-  organization. A call acting for an organization reaches that
+  organization. <!-- /rfc --><!-- rfc: {"id": "RK-17.2-012", "kind": "behavior", "applies": "§17.2 Multi-Tenant Isolation: a call acting for an organization reaches that organization's rooms only: a room of another organization, or of none, is not its own (§10.1 step 2), and a room it creates belongs to the organization.", "level": "must"} -->A call acting for an organization reaches that
   organization's rooms only: a room of another organization, or of none, is
   not its own (§10.1 step 2), and a room it creates belongs to the
-  organization.
+  organization.<!-- /rfc --><!-- rfc: {"id": "RK-17.2-013", "kind": "structural", "applies": "§17.2 Multi-Tenant Isolation: every room operation names the organization it acts for, as a message does, among them the operations the item lists.", "level": "must"} -->
 - Every room operation names the organization it acts for, as a message does,
   among them a room's transitions (§5.1), a member's join, leave and rename
   and the reads of its roster (§5.5), a channel's attach, detach and binding
@@ -19554,7 +19554,7 @@ should live in the integration surface layer.
   direct injection and a record's commit (§10.5), a claim for a strategy
   (§19.7), a steer of a room's turns (§21.3), a delivery (§22), a delegation,
   a task the host starts and its cancel (§23.3, §23.4), a greeting, a
-  regeneration of an answer and a feedback. Against a room that is not the
+  regeneration of an answer and a feedback. <!-- /rfc --><!-- rfc: {"id": "RK-17.2-014", "kind": "behavior", "applies": "§17.2 Multi-Tenant Isolation: against a room that is not the caller's, each room operation acts as on a room that does not exist: the listed calls fail as not found before any hook runs, anything is queued or drawn from a reentry budget, a turn starts or is steered, or a room is created; an update or a delete is a no-op that fires nothing; a task's cancel cancels nothing.", "level": "must"} -->Against a room that is not the
   caller's, each acts as it does on a room that does not exist: a transition,
   a membership change or read, an attach, a detach or a binding change, a
   publication or a subscription, a read marker marked or listed, a room
@@ -19565,78 +19565,78 @@ should live in the integration surface layer.
   regeneration and a feedback, before any
   hook runs, anything is queued or drawn from a reentry budget, a turn starts
   or is steered, or a room is created; an update or a delete is a no-op that
-  fires nothing, and a task's cancel cancels nothing. A call that takes the
+  fires nothing, and a task's cancel cancels nothing. <!-- /rfc --><!-- rfc: {"id": "RK-17.2-015", "kind": "behavior", "applies": "§17.2 Multi-Tenant Isolation: a call that takes the room lock checks the room as the lock finds it, before its due timer transitions are applied, writing nothing in it; those transitions fall due all the same, and the room's next own call or its timer check applies them at the instant each fell due (§5.1).", "level": "must"} -->A call that takes the
   room lock checks the room as the lock finds it, before its due timer
   transitions are applied, so nothing is written in it, those transitions
   included: they fall due all the same, and the room's next own call or the
-  check of its timers applies them at the instant each fell due (§5.1). A call
+  check of its timers applies them at the instant each fell due (§5.1). <!-- /rfc --><!-- rfc: {"id": "RK-17.2-016", "kind": "behavior", "applies": "§17.2 Multi-Tenant Isolation: a call that takes no lock (a delivery, a publication, a steer) reads the room before its first effect; a room's organization never changes while it exists.", "level": "must"} -->A call
   that takes no lock (a delivery, a publication, a steer) reads the room
   before its first effect; a room's organization never changes while it
-  exists, so that read holds.
+  exists, so that read holds.<!-- /rfc --><!-- rfc: {"id": "RK-17.2-017", "kind": "behavior", "applies": "§17.2 Multi-Tenant Isolation: where an implementation offers a transport whose connection registry reads no room (the WebSocket channel, Appendix A.8): each connection held for the organization it was registered for, or for none.", "level": "must"} -->
 - A transport's connection registry that reads no room (a WebSocket channel's,
   Appendix A.8) holds each connection for the organization it was registered
-  for, or for none. A room of another organization, or of none, delivers
+  for, or for none. <!-- /rfc --><!-- rfc: {"id": "RK-17.2-018", "kind": "behavior", "applies": "§17.2 Multi-Tenant Isolation: where an implementation offers a transport whose connection registry reads no room (the WebSocket channel, Appendix A.8): a room of another organization, or of none, delivers nothing to a connection registered for one, whatever rooms it is subscribed to, streamed or not.", "level": "must"} -->A room of another organization, or of none, delivers
   nothing to a connection registered for one, whatever rooms it is subscribed
-  to, streamed or not. A stream under way sends only to the registrations
+  to, streamed or not. <!-- /rfc --><!-- rfc: {"id": "RK-17.2-019", "kind": "behavior", "applies": "§17.2 Multi-Tenant Isolation: where an implementation offers a transport whose connection registry reads no room (the WebSocket channel, Appendix A.8): a stream under way sends only to the registrations present when it started, checked as each send starts: an id unregistered, evicted or registered again since gets nothing more of it, its end included.", "level": "must"} -->A stream under way sends only to the registrations
   present when it started, checked as each send starts: an id unregistered,
   evicted or registered again since, for any organization or the same one,
   gets nothing more of it, its end included, since a new registration never
-  saw its start. A call acting for an organization subscribes, unsubscribes or
+  saw its start. <!-- /rfc --><!-- rfc: {"id": "RK-17.2-020", "kind": "behavior", "applies": "§17.2 Multi-Tenant Isolation: where an implementation offers a transport whose connection registry reads no room (the WebSocket channel, Appendix A.8): a call acting for an organization subscribes, unsubscribes, unregisters or registers again only a connection registered for that organization; one of another organization, one registered for none and one that does not exist are refused alike, nothing changed.", "level": "must"} -->A call acting for an organization subscribes, unsubscribes or
   unregisters only a connection registered for that organization, and
   registers again only such a connection: one of another organization, one
   registered for none and one that does not exist are refused alike, nothing
-  changed. A scoped registration of an id no connection holds succeeds, which
+  changed. <!-- /rfc --><!-- rfc: {"id": "RK-17.2-021", "kind": "behavior", "applies": "§17.2 Multi-Tenant Isolation: where an implementation offers a transport whose connection registry reads no room (the WebSocket channel, Appendix A.8): a scoped registration of an id no connection holds succeeds; connection ids are one namespace across organizations, generated by the host, never chosen by a client.", "level": "must"} -->A scoped registration of an id no connection holds succeeds, which
   tells that the id is free: connection ids are one namespace across
-  organizations, generated by the host and never chosen by a client. A call
+  organizations, generated by the host and never chosen by a client. <!-- /rfc --><!-- rfc: {"id": "RK-17.2-022", "kind": "behavior", "applies": "§17.2 Multi-Tenant Isolation: where an implementation offers a transport whose connection registry reads no room (the WebSocket channel, Appendix A.8): a call that names no organization, the host's own, acts on any connection, and registering an id again without one registers it for none.", "level": "must"} -->A call
   that names no organization, the host's own, acts on any connection as
-  before, and registering an id again without one registers it for none. A
+  before, and registering an id again without one registers it for none. <!-- /rfc --><!-- rfc: {"id": "RK-17.2-023", "kind": "behavior", "applies": "§17.2 Multi-Tenant Isolation: where an implementation offers a transport whose connection registry reads no room (the WebSocket channel, Appendix A.8): a registration that changes a known id's organization, to none included, drops the rooms the id followed; a connection evicted after repeated send failures is forgotten with its rooms and organization; a send failure of a registration gone counts against none.", "level": "must"} -->A
   registration that changes a known id's organization, to none included, drops
   the rooms the id followed, and a connection evicted after repeated send
   failures is forgotten with its rooms and its organization; a send failure of
-  a registration gone counts against none.
+  a registration gone counts against none.<!-- /rfc --><!-- rfc: {"id": "RK-17.2-024", "kind": "behavior", "applies": "§17.2 Multi-Tenant Isolation: by design, a call addressed by an identifier that works as a capability names no organization: answer_input() and reject_input() (a human-input request's id, §10.6.5) and unsubscribe_room() (a subscription's id, §8.4), holding the id being the authority; with the list's lead-in.", "level": "must"} -->
 - These calls name no organization, by design:
   - a call addressed by an identifier that works as a capability, issued to
     its holder: `answer_input()` and `reject_input()` (a human-input request's
     id, an unguessable random id, §10.6.5) and `unsubscribe_room()` (a
-    subscription's id, §8.4): holding the id is the authority;
+    subscription's id, §8.4): holding the id is the authority;<!-- /rfc --><!-- rfc: {"id": "RK-17.2-025", "kind": "behavior", "applies": "§17.2 Multi-Tenant Isolation: by design, a channel's own steering (AIChannel.steer()) and a turn client's (TurnClient.steer()) name no organization; given one, the turn client reaches only that organization's rooms' turns and answers 0 for the others; the kit's steer() is the door that reads a room.", "level": "must"} -->
   - a channel's own steering (`AIChannel.steer()`) and a turn client's
     (`TurnClient.steer()`): neither holds a store. Given an organization, the
     turn client reaches only the turns of that organization's rooms and
     answers 0 for the others: a turn it does not reach and one that does not
-    run read alike. The kit's `steer()` is the door that reads a room;
+    run read alike. The kit's `steer()` is the door that reads a room;<!-- /rfc --><!-- rfc: {"id": "RK-17.2-026", "kind": "behavior", "applies": "§17.2 Multi-Tenant Isolation: by design, the trusted levels below the kit's calls hold no store, read no room and name no organization: a hook engine's add_room_hook(), remove_room_hook() and replace_room_hook(), a turn client's enable_room_hook() and disable_room_hook().", "level": "must"} -->
   - the trusted levels below the kit's calls, which hold no store and read no
     room: a hook engine's `add_room_hook()`, `remove_room_hook()` and
     `replace_room_hook()`, and a turn client's `enable_room_hook()` and
-    `disable_room_hook()`;
+    `disable_room_hook()`;<!-- /rfc --><!-- rfc: {"id": "RK-17.2-027", "kind": "behavior", "applies": "§17.2 Multi-Tenant Isolation: by design, a strategy's install() called directly claims the room unscoped (claim_room_strategy()) and sets up its hooks with no organization; the kit's install_strategy() reads the room with the caller's organization first.", "level": "must"} -->
   - a strategy's `install()` called directly, which claims the room (through
     `claim_room_strategy()`, unscoped) and sets up its hooks with no
     organization: the kit's `install_strategy()` reads the room with the
-    caller's organization first;
+    caller's organization first;<!-- /rfc --><!-- rfc: {"id": "RK-17.2-028", "kind": "behavior", "applies": "§17.2 Multi-Tenant Isolation: where an implementation offers voice or video (media): by design, the deprecated connect_voice(), connect_video() and bind_voice_session() name no organization; join() replaces them with its organization.", "level": "must"} -->
   - the deprecated `connect_voice()`, `connect_video()` and
     `bind_voice_session()`, which `join()` replaces with its organization.
 <!-- /rfc -->
 
 ### 17.3 Sensitive Data
 
-<!-- rfc: {"id": "RK-17.3-001", "kind": "behavior", "applies": "§17.3 Sensitive Data; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-17.3-002", "kind": "behavior", "applies": "§17.3 Sensitive Data: configurable redaction or encryption at rest of raw_payload; with the sentence that says it may hold sensitive data.", "level": "should"} -->
 - `raw_payload` MAY contain sensitive data. Implementations SHOULD support
-  configurable redaction or encryption at rest.
+  configurable redaction or encryption at rest.<!-- /rfc --><!-- rfc: {"id": "RK-17.3-003", "kind": "non_testable", "applies": "§17.3 Sensitive Data: hook-based scanning for personal data (e.g. SIN/SSN detection) so that it does not traverse channels; the integrator's hooks keep it.", "level": "should"} -->
 - Hook-based PII scanning (e.g., SIN/SSN detection) SHOULD be used to prevent
-  sensitive data from traversing channels.
+  sensitive data from traversing channels.<!-- /rfc --><!-- rfc: {"id": "RK-17.3-004", "kind": "behavior", "applies": "§17.3 Sensitive Data: a blocked event stored for audit, its content handled according to the organization's data retention policy.", "level": "should"} -->
 - Blocked events are stored for audit but their content SHOULD be handled
   according to the organization's data retention policy.
 <!-- /rfc -->
 
 ### 17.4 Rate Limiting
 
-<!-- rfc: {"id": "RK-17.4-001", "kind": "behavior", "applies": "§17.4 Rate Limiting; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-17.4-001", "kind": "behavior", "applies": "§17.4 Rate Limiting: per-organization rate limits; with the lead-in on per-channel rate limits, which §13.3 states.", "level": "should"} -->
 - Per-channel rate limits prevent abuse of external provider APIs.
 - Implementations SHOULD support per-organization rate limits.
 <!-- /rfc -->
 
 ### 17.5 Chain Depth
 
-<!-- rfc: {"id": "RK-17.5-001", "kind": "behavior", "applies": "§17.5 Chain Depth; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-17.5-001", "kind": "behavior", "applies": "§17.5 Chain Depth: the chain depth limit enforced, never allowed to be disabled, a discussion's own max_depth included (§19.7.5); with the lead-in on unbounded AI-to-AI loops.", "level": "must"} -->
 - The chain depth limit prevents resource exhaustion from unbounded AI ↔ AI loops.
 - Implementations MUST enforce the limit and MUST NOT allow it to be disabled,
   a discussion's own `max_depth` included (Section 19.7.5).
@@ -19644,105 +19644,105 @@ should live in the integration surface layer.
 
 ### 17.6 Voice and Audio Security
 
-<!-- rfc: {"id": "RK-17.6-001", "kind": "behavior", "applies": "§17.6 Voice and Audio Security; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-17.6-008", "kind": "behavior", "applies": "§17.6 Voice and Audio Security, where an implementation supports audio recording (media: recording): a mechanism for recording consent management; with the paragraph's lead-in and its note on jurisdictions.", "level": "must"} -->
 **Recording consent and compliance:**
 
 - Implementations that support audio recording MUST provide a mechanism for
   recording consent management. In many jurisdictions (TCPA, GDPR, PIPEDA),
-  recording requires explicit consent from all parties.
+  recording requires explicit consent from all parties.<!-- /rfc --><!-- rfc: {"id": "RK-17.6-009", "kind": "behavior", "applies": "§17.6 Voice and Audio Security, where an implementation supports audio recording (media: recording): ON_RECORDING_STARTED fired before any audio is captured, so that integrators can notify participants.", "level": "should"} -->
 - The framework SHOULD fire ON_RECORDING_STARTED before any audio is captured,
-  giving integrators the opportunity to notify participants.
+  giving integrators the opportunity to notify participants.<!-- /rfc --><!-- rfc: {"id": "RK-17.6-010", "kind": "behavior", "applies": "§17.6 Voice and Audio Security, where an implementation supports audio recording (media: recording): configurable consent modes SINGLE_PARTY, ALL_PARTY and NONE.", "level": "should"} -->
 - Implementations SHOULD support configurable consent modes: `SINGLE_PARTY`
   (one party consents), `ALL_PARTY` (all parties must consent), or `NONE`
   (integrator manages consent externally).
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-17.6-002", "kind": "behavior", "applies": "§17.6 Voice and Audio Security; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-17.6-011", "kind": "behavior", "applies": "§17.6 Voice and Audio Security, where an implementation supports audio recording (media: recording): audio recordings encrypted at rest; with the paragraph's lead-in.", "level": "must"} -->
 **Audio data handling:**
 
-- Audio recordings MUST be encrypted at rest. Implementations MUST support
-  configurable encryption for stored recordings. Every recording
+- Audio recordings MUST be encrypted at rest. <!-- /rfc --><!-- rfc: {"id": "RK-17.6-012", "kind": "behavior", "applies": "§17.6 Voice and Audio Security, where an implementation supports audio recording (media: recording): configurable encryption for stored recordings.", "level": "must"} -->Implementations MUST support
+  configurable encryption for stored recordings. <!-- /rfc --><!-- rfc: {"id": "RK-17.6-013", "kind": "structural", "applies": "§17.6 Voice and Audio Security, where an implementation records audio or video (media: recording): every recording configuration carries the encryption settings (encryption, storage_encrypted_at_rest; Sections 12.3.7, 12.8.10, 12.10.8, 12.11).", "level": "must"} -->Every recording
   configuration carries it (`encryption`, `storage_encrypted_at_rest`;
-  Sections 12.3.7, 12.8.10, 12.10.8, 12.11). The audio recorder (Section
+  Sections 12.3.7, 12.8.10, 12.10.8, 12.11). <!-- /rfc --><!-- rfc: {"id": "RK-17.6-014", "kind": "behavior", "applies": "§17.6 Voice and Audio Security, where an implementation records audio or video (media: recording): the audio recorder, the room media recorder and conference recording fail closed when neither encryption setting is set, a recording of video alone included; the session video recorder applies them when they are set.", "level": "must"} -->The audio recorder (Section
   12.3.7), the room media recorder (Section 12.11) and conference recording
   (Section 12.10.8) fail closed when neither is set, a recording of video
   alone included; the session video recorder (Section 12.8.10) applies them
-  when they are set.
-- Audio streams in transit SHOULD use encrypted transport (TLS, SRTP, DTLS).
+  when they are set.<!-- /rfc --><!-- rfc: {"id": "RK-17.6-015", "kind": "non_testable", "applies": "§17.6 Voice and Audio Security, where an implementation offers voice (media: voice): audio streams in transit over an encrypted transport (TLS, SRTP, DTLS), as the deployment configures its transports.", "level": "should"} -->
+- Audio streams in transit SHOULD use encrypted transport (TLS, SRTP, DTLS).<!-- /rfc --><!-- rfc: {"id": "RK-17.6-016", "kind": "non_testable", "applies": "§17.6 Voice and Audio Security, where an implementation offers voice (media: voice): documentation of the providers that receive audio data, and provider selection configurable for data residency; with the sentence that says STT and TTS calls send audio out.", "level": "should"} -->
 - STT and TTS provider calls transmit audio to external services.
   Implementations SHOULD document which providers receive audio data and
   SHOULD support configurable provider selection based on data residency
-  requirements.
+  requirements.<!-- /rfc --><!-- rfc: {"id": "RK-17.6-017", "kind": "behavior", "applies": "§17.6 Voice and Audio Security, where an implementation offers voice (media: voice): voice session metadata (transcripts, recordings, DTMF digits) under the same data retention and redaction policies as other room events.", "level": "must"} -->
 - Voice session metadata (transcripts, recordings, DTMF digits) MUST follow
   the same data retention and redaction policies as other room events.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-17.6-003", "kind": "behavior", "applies": "§17.6 Voice and Audio Security; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-17.6-018", "kind": "behavior", "applies": "§17.6 Voice and Audio Security, TTS conversation context (Section 12.2.2), where an implementation offers voice (media: voice): context audio, a copy of the session's dialogue audio, kept in memory only: never written to the conversation store, the timeline, a recording, or a log; with the paragraph's lead-in.", "level": "must"} -->
 **TTS conversation context (Section 12.2.2):**
 
 - Context audio is a copy of the session's dialogue audio (what the user said and
   what was synthesized), held so the TTS can hear it.
   It MUST be kept in memory only: never written to the conversation store, the
-  timeline, a recording, or a log.
+  timeline, a recording, or a log.<!-- /rfc --><!-- rfc: {"id": "RK-17.6-019", "kind": "behavior", "applies": "§17.6 Voice and Audio Security, TTS conversation context (Section 12.2.2), where an implementation offers voice (media: voice): context audio stays within max_turns and max_audio_seconds, and is dropped when the session is unbound or ends, with the call to release_context.", "level": "must"} -->
 - It MUST stay within `max_turns` and `max_audio_seconds`, and MUST be dropped
   when the session is unbound or ends, together with the call to
-  `release_context`.
-- Keeping audio MUST be opt-in (`include_audio = false` by default). The text
+  `release_context`.<!-- /rfc --><!-- rfc: {"id": "RK-17.6-020", "kind": "behavior", "applies": "§17.6 Voice and Audio Security, TTS conversation context (Section 12.2.2), where an implementation offers voice (media: voice): keeping audio is opt-in (include_audio = false by default).", "level": "must"} -->
+- Keeping audio MUST be opt-in (`include_audio = false` by default). <!-- /rfc --><!-- rfc: {"id": "RK-17.6-021", "kind": "behavior", "applies": "§17.6 Voice and Audio Security, TTS conversation context (Section 12.2.2), where an implementation offers voice (media: voice): the context's text is the transcript already stored as room events, under the same policies.", "level": "must"} -->The text
   of the context is the transcript already stored as room events, and is under
-  the same policies.
-- A user turn whose transcript a hook modified MUST NOT keep its audio. When
+  the same policies.<!-- /rfc --><!-- rfc: {"id": "RK-17.6-022", "kind": "behavior", "applies": "§17.6 Voice and Audio Security, TTS conversation context (Section 12.2.2), where an implementation offers voice (media: voice): a user turn whose transcript a hook modified keeps no audio.", "level": "must"} -->
+- A user turn whose transcript a hook modified MUST NOT keep its audio. <!-- /rfc --><!-- rfc: {"id": "RK-17.6-023", "kind": "behavior", "applies": "§17.6 Voice and Audio Security, TTS conversation context (Section 12.2.2), where an implementation offers voice (media: voice): with DTMF redaction enabled, a user turn during which DTMF was detected keeps no audio.", "level": "must"} -->When
   DTMF redaction is enabled, a user turn during which DTMF was detected MUST
-  NOT keep its audio either: in-band tones carry the digits.
+  NOT keep its audio either: in-band tones carry the digits.<!-- /rfc --><!-- rfc: {"id": "RK-17.6-024", "kind": "non_testable", "applies": "§17.6 Voice and Audio Security, TTS conversation context (Section 12.2.2), where an implementation offers voice (media: voice): the documentation of the providers that receive audio says that one at level AUDIO run as an external service receives the user's voice on every call; with the sentence that says so.", "level": "should"} -->
 - A provider at level `AUDIO` that runs as an external service receives the
   user's voice on every call, not only the current sentence. Implementations
   SHOULD say so where they document which providers receive audio data.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-17.6-004", "kind": "behavior", "applies": "§17.6 Voice and Audio Security; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-17.6-025", "kind": "behavior", "applies": "§17.6 Voice and Audio Security, custom voices (Section 12.2.4), where an implementation offers them (media: voice): the recording of a voice made to replicate it and the recording of its consent are handed to the vendor for the call and kept nowhere: never written to the conversation store, the timeline, a recording, or a log; with the paragraph's lead-in and the sentence that calls them personal data.", "level": "must"} -->
 **Custom voices (Section 12.2.4):**
 
 - A recording of a person's voice made to replicate it, and the recording of
   their consent, are personal data identifying that person. An implementation
   MUST hand them to the vendor for the call and keep nothing: never written to
-  the conversation store, the timeline, a recording, or a log. What it keeps is
+  the conversation store, the timeline, a recording, or a log. <!-- /rfc --><!-- rfc: {"id": "RK-17.6-026", "kind": "behavior", "applies": "§17.6 Voice and Audio Security, custom voices (Section 12.2.4), where an implementation offers them (media: voice): what is kept is the integrator's evidence, as metadata: which voice was created, when, by whom, and whether the vendor verified the consent.", "level": "must"} -->What it keeps is
   the evidence the integrator needs, as metadata: which voice was created,
-  when, by whom, and whether the vendor verified the consent.
+  when, by whom, and whether the vendor verified the consent.<!-- /rfc --><!-- rfc: {"id": "RK-17.6-027", "kind": "behavior", "applies": "§17.6 Voice and Audio Security, custom voices (Section 12.2.4), where an implementation offers them (media: voice): replicating a voice without the consent of the person it belongs to is not possible through the framework (Section 12.2.4).", "level": "must"} -->
 - Replicating a voice without the consent of the person it belongs to MUST NOT
-  be possible through the framework (Section 12.2.4). The integrator remains
+  be possible through the framework (Section 12.2.4). <!-- /rfc --><!-- rfc: {"id": "RK-17.6-028", "kind": "non_testable", "applies": "§17.6 Voice and Audio Security, custom voices (Section 12.2.4), where an implementation offers them (media: voice): the integrator's responsibility for that consent and its withdrawal, a withdrawn consent meaning deleting the voice.", "level": "must"} -->The integrator remains
   responsible for that consent, and for its withdrawal: a withdrawn consent
-  means deleting the voice.
+  means deleting the voice.<!-- /rfc --><!-- rfc: {"id": "RK-17.6-029", "kind": "non_testable", "applies": "§17.6 Voice and Audio Security, custom voices (Section 12.2.4), where an implementation offers them (media: voice): documentation of where a stored custom voice lives and for how long; with the sentence that says the vendor holds it under the integrator's account.", "level": "should"} -->
 - A stored custom voice is held by the vendor under the integrator's account.
   Implementations SHOULD document where it lives and for how long, as they do
   for the providers that receive audio.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-17.6-005", "kind": "behavior", "applies": "§17.6 Voice and Audio Security; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-17.6-030", "kind": "behavior", "applies": "§17.6 Voice and Audio Security, provenance of synthesized audio, where an implementation offers voice (media: voice): a provenance mark received from the vendor (a C2PA manifest in the file, a watermark in the signal) is not removed: a file is passed on as produced, not rebuilt from its samples; with the paragraph's lead-in and the vendor's permission to mark.", "level": "must"} -->
 **Provenance of synthesized audio:**
 
 - A vendor MAY mark the audio it synthesizes: a manifest in the file (C2PA)
   or a watermark in the signal. An implementation MUST NOT remove a mark it
   received: a file is passed on as the vendor produced it, not rebuilt from
-  its samples. A stage that must decode the audio (resampling, mixing,
+  its samples. <!-- /rfc --><!-- rfc: {"id": "RK-17.6-031", "kind": "non_testable", "applies": "§17.6 Voice and Audio Security, provenance of synthesized audio, where an implementation offers voice (media: voice): documentation of where a stage that must decode the audio (resampling, mixing, encoding for a transport) loses a file-level manifest.", "level": "should"} -->A stage that must decode the audio (resampling, mixing,
   encoding for a transport) loses a file-level manifest by construction;
   implementations SHOULD document where that happens.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-17.6-006", "kind": "behavior", "applies": "§17.6 Voice and Audio Security; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-17.6-032", "kind": "behavior", "applies": "§17.6 Voice and Audio Security, DTMF sensitivity, where an implementation offers voice (media: voice): configurable DTMF redaction, masking DTMF digits in stored events and logs; with the paragraph's lead-in and the sentence on sensitive digits.", "level": "must"} -->
 **DTMF sensitivity:**
 
 - DTMF digits MAY contain sensitive data (credit card numbers, PINs, account
   numbers). Implementations MUST support configurable DTMF redaction — the
   ability to mask DTMF digits in stored events and logs (e.g., replacing
-  "4111111111111111" with "4111********1111").
+  "4111111111111111" with "4111********1111").<!-- /rfc --><!-- rfc: {"id": "RK-17.6-033", "kind": "behavior", "applies": "§17.6 Voice and Audio Security, DTMF sensitivity, where an implementation offers voice (media: voice): with DTMF redaction enabled, raw digits appear in no raw_payload, transcript or log output.", "level": "must"} -->
 - When DTMF redaction is enabled, raw digits MUST NOT appear in `raw_payload`,
   transcripts, or log output.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-17.6-007", "kind": "behavior", "applies": "§17.6 Voice and Audio Security; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-17.6-034", "kind": "non_testable", "applies": "§17.6 Voice and Audio Security, voice model privacy, where an implementation offers voice (media: voice): audio recordings and transcripts used for no model training without explicit integrator and end-user consent; the vendors' terms and the integrator's account keep it, the framework trains no model; with the paragraph's lead-in.", "level": "must"} -->
 **Voice model privacy:**
 
 - Audio recordings and transcripts MUST NOT be used for model training without
-  explicit integrator and end-user consent.
+  explicit integrator and end-user consent.<!-- /rfc --><!-- rfc: {"id": "RK-17.6-035", "kind": "behavior", "applies": "§17.6 Voice and Audio Security, voice model privacy, where an implementation offers voice (media: voice): a configuration flag that disables any data sharing with STT, TTS and speech-to-speech providers beyond what the API call requires.", "level": "should"} -->
 - Implementations SHOULD provide a configuration flag to disable any data
   sharing with STT/TTS/speech-to-speech providers beyond what is required for
   the API call.
@@ -19752,22 +19752,22 @@ should live in the integration surface layer.
 
 ### 17.7 Conference Access Security
 
-<!-- rfc: {"id": "RK-17.7-001", "kind": "behavior", "applies": "§17.7 Conference Access Security; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-17.7-003", "kind": "behavior", "applies": "§17.7 Conference Access Security, where an implementation offers conference (media: conference): tokens minted per participant with least-privilege grants (hidden observers subscribe-only); with the lead-in that calls them credentials.", "level": "should"} -->
 ConferenceAccess tokens are credentials:
 
 - Tokens SHOULD be minted per participant with least-privilege grants
-  (e.g., hidden observers receive subscribe-only grants). ConferenceGrants
+  (e.g., hidden observers receive subscribe-only grants). <!-- /rfc --><!-- rfc: {"id": "RK-17.7-004", "kind": "structural", "applies": "§17.7 Conference Access Security, where an implementation offers conference (media: conference): ConferenceGrants defaults to permissive values; narrowing them per participant is the integrator's call, RECOMMENDED wherever a role does not publish.", "level": "should"} -->ConferenceGrants
   (Section 12.10.2) defaults to permissive values so that the common case
   works unconfigured; narrowing them for a given participant is the
   integrator's call, and is RECOMMENDED wherever a role does not need to
-  publish.
-- Tokens SHOULD be short-lived (`expires_at`) and MUST NOT be logged.
+  publish.<!-- /rfc --><!-- rfc: {"id": "RK-17.7-005", "kind": "behavior", "applies": "§17.7 Conference Access Security, where an implementation offers conference (media: conference): tokens short-lived (expires_at, SHOULD) and never logged (MUST NOT).", "level": "must"} -->
+- Tokens SHOULD be short-lived (`expires_at`) and MUST NOT be logged.<!-- /rfc --><!-- rfc: {"id": "RK-17.7-006", "kind": "non_testable", "applies": "§17.7 Conference Access Security, where an implementation offers conference (media: conference): moderation operations (remove_participant, mute_track, unmute_track) reachable only through integrator-controlled code paths, never exposed unauthenticated; a review of the surfaces an implementation exposes.", "level": "must"} -->
 - Moderation operations (`remove_participant`, `mute_track`,
   `unmute_track`) MUST only be reachable through integrator-controlled code
   paths, never exposed unauthenticated.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-17.7-002", "kind": "behavior", "applies": "§17.7 Conference Access Security; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-17.7-007", "kind": "behavior", "applies": "§17.7 Conference Access Security, where an implementation offers conference (media: conference): the bot's presence, identity and hidden status observable to integrator code, as in force on the session, not as configured or admitted; with the paragraph that leaves disclosure to the jurisdiction.", "level": "must"} -->
 **Bot disclosure.** Whether a recording or transcribing bot must be
 announced to human participants — and how — is set by the jurisdiction the
 deployment operates in, and those rules differ by country and by sector.
@@ -19781,17 +19781,17 @@ whatever applies to it:
   not the one it was configured or admitted with: grants can change
   while a session runs (Section 12.10.4), and a surface reporting the
   construction answers a different question than the one a disclosure
-  obligation asks.
+  obligation asks.<!-- /rfc --><!-- rfc: {"id": "RK-17.7-008", "kind": "behavior", "applies": "§17.7 Conference Access Security, where an implementation offers conference (media: conference): whether STT, vision or recording is active on a conference observable at any time, not only at configuration time.", "level": "must"} -->
 - Whether STT, vision, or recording is active on a conference MUST be
-  observable at any time, not only at configuration time.
+  observable at any time, not only at configuration time.<!-- /rfc --><!-- rfc: {"id": "RK-17.7-009", "kind": "behavior", "applies": "§17.7 Conference Access Security, where an implementation offers conference (media: conference): ON_CONFERENCE_PARTICIPANT_JOINED fired for every human participant the backend delivered.", "level": "must"} -->
 - `ON_CONFERENCE_PARTICIPANT_JOINED` MUST fire for every human participant
   the backend delivered, giving the integrator the point at which to
   announce an active bot, gate entry on consent, or record that disclosure
-  was made. Across a *reported discontinuity* (Section 12.10.3) that
+  was made. <!-- /rfc --><!-- rfc: {"id": "RK-17.7-010", "kind": "non_testable", "applies": "§17.7 Conference Access Security, where an implementation offers conference (media: conference): across a reported discontinuity (Section 12.10.3), an integrator whose obligations require complete attendance treats the outage window as unaccounted, not as observed and empty; the integrator's to keep.", "level": "must"} -->Across a *reported discontinuity* (Section 12.10.3) that
   guarantee cannot reach the participants whose whole presence fell inside
   the outage window: the discontinuity is the signal that the window is
   unaccounted, and an integrator whose obligations require complete
-  attendance MUST treat it so rather than as observed-and-empty.
+  attendance MUST treat it so rather than as observed-and-empty.<!-- /rfc --><!-- rfc: {"id": "RK-17.7-011", "kind": "non_testable", "applies": "§17.7 Conference Access Security, where an implementation offers conference (media: conference): documentation of the integrator's disclosure responsibility rather than an assumed default; with the closing note on regulated sectors.", "level": "should"} -->
 
 Implementations SHOULD document this responsibility rather than assume a
 default. Deployments in regulated sectors typically do need visible bot
@@ -19801,22 +19801,22 @@ to decide it.
 
 ### 17.8 Skill-Bundled Files
 
-<!-- rfc: {"id": "RK-17.8-001", "kind": "behavior", "applies": "§17.8 Skill-Bundled Files; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-17.8-002", "kind": "behavior", "applies": "§17.8 Skill-Bundled Files: a skill file's resolution confined to the skill's own directory by resolving the path and checking containment, never by filtering the name alone (Section 24.6); with the item that makes every such read or execution an untrusted-input boundary.", "level": "must"} -->
 - A skill's references and scripts are addressed by a name the model chooses,
   which makes every such read or execution an untrusted-input boundary.
 - Resolution MUST be confined to the skill's own directory by resolving the
   path and checking containment, never by filtering the name alone
-  (Section 24.6).
+  (Section 24.6).<!-- /rfc --><!-- rfc: {"id": "RK-17.8-003", "kind": "behavior", "applies": "§17.8 Skill-Bundled Files: a file so checked read through the file its check opened, never by its name again, and a skill's SKILL.md resolving to a regular file inside the skill's directory (Section 24.6).", "level": "must"} -->
 - A file so checked MUST be read through the file its check opened, never by
   its name again, and a skill's `SKILL.md` MUST resolve to a regular file
-  inside the skill's directory (Section 24.6).
+  inside the skill's directory (Section 24.6).<!-- /rfc --><!-- rfc: {"id": "RK-17.8-004", "kind": "behavior", "applies": "§17.8 Skill-Bundled Files: the same containment applied to script execution, including where execution policy is delegated to the integrator.", "level": "must"} -->
 - The same containment MUST apply to script execution, including where
-  execution policy is delegated to the integrator.
+  execution policy is delegated to the integrator.<!-- /rfc --><!-- rfc: {"id": "RK-17.8-005", "kind": "behavior", "applies": "§17.8 Skill-Bundled Files: where an implementation serves MCP skills (Section 24.7): such a skill is text from outside (Section 6.4) whatever its digests say; a digest the same server supplies proves its content consistent with its entry, never trustworthy.", "level": "must"} -->
 - A skill an MCP server serves is text from outside (Section 6.4) whatever
   its digests say: a digest the same server supplies proves its content
-  consistent with its entry, never trustworthy.
+  consistent with its entry, never trustworthy.<!-- /rfc --><!-- rfc: {"id": "RK-17.8-006", "kind": "behavior", "applies": "§17.8 Skill-Bundled Files: where an implementation serves MCP skills (Section 24.7): such a skill's files are read only from the server that serves it, and only those its entry lists.", "level": "must"} -->
 - Such a skill's files are read only from the server that serves it, and
-  only those its entry lists. Its scripts never run through
+  only those its entry lists. <!-- /rfc --><!-- rfc: {"id": "RK-17.8-007", "kind": "behavior", "applies": "§17.8 Skill-Bundled Files: where an implementation serves MCP skills (Section 24.7): such a skill's scripts never run through run_skill_script, its allowed_tools grants nothing, and while it is active a tool that runs code is served only with the host's approval of that skill (Section 24.7).", "level": "must"} -->Its scripts never run through
   `run_skill_script`, its `allowed_tools` grants nothing, and while it is
   active a tool that runs code is served only with the host's approval of
   that skill (Section 24.7).

@@ -1149,51 +1149,51 @@
     },
     {
       "section": "17.1",
-      "sha256": "547870c7721fd7ffd8e0006440c65540bdf4377b51ff806c7df1b54e38114fdc",
+      "sha256": "4a609920816bf69f0f35acfe75391dcfb4bfb2e644bab5d75d73d183229a3d4e",
       "classification": "normative",
-      "review": "Source inventory: Input Validation. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Input Validation, split to one obligation per unit (RMK-1984): inbound payloads validated before processing (must); a webhook's signature verified where its provider signs it (should); event content sanitized (should); one unit per list item. Every unit carries its level."
     },
     {
       "section": "17.2",
-      "sha256": "d4adb6c7981092f9c26fe235fd04efbb672b1b0db9e8ce29550a30a91adbe47f",
+      "sha256": "32f8dd80e153eea57e3d87384da51d47f77dcf61b32013a5e4b6e335df144d9b",
       "classification": "normative",
-      "review": "Source inventory: Multi-Tenant Isolation. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Multi-Tenant Isolation, split to one obligation per unit (RMK-1984): room operations isolated per organization, the item scoping a room by its organization_id folded in; identity resolution scoped; a child room in its parent room's organization; the door to a room's media and its unscoped call (media); a deleted room's hooks, subscriptions and turns, one unit per sentence, the creation-mark sentence one unit; the unscoped call and the call acting for an organization; every room operation naming its organization, the not-found rule, the locked call checked before due timers, the lockless call read before its first effect; the connection registry that reads no room, one unit per sentence; the calls that name no organization by design, one unit per list item, the lead-in folded into the first, the deprecated media calls (media). All must. Every unit carries its level."
     },
     {
       "section": "17.3",
-      "sha256": "4c255bd5bacf35b9f6eaa3fc520cab487ef21309f07b3bc5b57681175f2f52eb",
+      "sha256": "6aeebc1060601b0ca60012126d68133457e536cd0a4d3d71b5fde7e5196a33f7",
       "classification": "normative",
-      "review": "Source inventory: Sensitive Data. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Sensitive Data, split to one obligation per unit (RMK-1984): configurable redaction or encryption at rest of raw_payload, its MAY sentence folded (should); hook-based PII scanning, the integrator's (non_testable, should); a blocked event stored for audit, its content under the organization's retention policy (should). Every unit carries its level."
     },
     {
       "section": "17.4",
-      "sha256": "bc5be1ba2a0fe7af947e2c7de82d7992e2f5669329e930a4ab2ed8c3c7c4ea1c",
+      "sha256": "75664c15c71826a2a6bb9a9466a8042792971155fa2dd2d4c8d6b152fe52982d",
       "classification": "normative",
-      "review": "Source inventory: Rate Limiting. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Rate Limiting, reviewed as one unit (RMK-1984): per-organization rate limits (should), with the lead-in on per-channel rate limits folded, which §13.3 states. Every unit carries its level."
     },
     {
       "section": "17.5",
-      "sha256": "4016a737dd040ab0d4794ec2bda2d9b98896502dad88a6f4002d6b56b3ae7b16",
+      "sha256": "4ea6ad14d47c104cc4bc0dc1fd5e2bc2dfee8385fe08577ffcffb504eeaec818",
       "classification": "normative",
-      "review": "Source inventory: Chain Depth. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Chain Depth, reviewed as one unit (RMK-1984): the limit enforced and never allowed to be disabled, a discussion's own max_depth included, one sentence (must), with its rationale folded. Every unit carries its level."
     },
     {
       "section": "17.6",
-      "sha256": "7e1905eb6bae3f4691aacd175a5ce172d1011a50778fd6a5d46b36673da14ec8",
+      "sha256": "93f9a9ea2112aa3e03d3cb3e6815eb61b8b99599e6e7c3c3a5b07444d30ab4bd",
       "classification": "normative",
-      "review": "Source inventory: Voice and Audio Security. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Voice and Audio Security (media), split to one obligation per unit (RMK-1984): recording consent (a consent mechanism, must; ON_RECORDING_STARTED before capture and consent modes, should); audio data handling (encryption at rest, configurable encryption, the settings every recording configuration carries and the recorders that fail closed, must; encrypted transport and the documentation of the providers that receive audio, non_testable should; voice metadata under the room's policies, must); TTS conversation context, one unit per sentence; custom voices; provenance of synthesized audio; DTMF redaction; voice model privacy. Bold lead-ins and descriptive sentences are folded into the unit they introduce; documentation duties and duties only an integrator or a vendor keeps are non_testable. Every unit carries its level."
     },
     {
       "section": "17.7",
-      "sha256": "bd152465c238e159193c20866b1207dd10761428fbb7ee5f4785d73c054e1742",
+      "sha256": "f58cc71556cd780c16db62483aac4400c924bb630ac0f419c9c23aef4dcbfc0b",
       "classification": "normative",
-      "review": "Source inventory: Conference Access Security. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Conference Access Security (media), split to one obligation per unit (RMK-1984): tokens minted per participant with least privilege, with the lead-in (should); ConferenceGrants' permissive defaults, narrowing RECOMMENDED (should); short-lived tokens never logged (must); moderation operations reachable through integrator code only (non_testable, must); bot disclosure: presence, identity and hidden status observable as in force on the session, active STT, vision or recording observable, ON_CONFERENCE_PARTICIPANT_JOINED for every human participant (must), with the disclosure preamble folded; the integrator's duty across a reported discontinuity (non_testable, must); the documentation of that responsibility, with the closing note (non_testable, should). Every unit carries its level."
     },
     {
       "section": "17.8",
-      "sha256": "c2ff64a0b254ee9c52f501e2c78c09fb4eaa83aa2e14a08f5a5e3c8f6cd2584f",
+      "sha256": "d67b1f9b29f73502cd604540331baf1df65f65f7b7e3dfff42e43a2f74211a00",
       "classification": "normative",
-      "review": "Source inventory: Skill-Bundled Files. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Skill-Bundled Files, split to one obligation per unit (RMK-1984): resolution confined by resolving and checking containment, with the item on the untrusted-input boundary folded; a checked file read through its open file and SKILL.md inside its skill; the same containment for script execution; a served skill as text from outside whatever its digests; its files from its server and its entry alone; its scripts, allowed_tools and code-running tools under the host's approval. All must. Every unit carries its level."
     },
     {
       "section": "18",
