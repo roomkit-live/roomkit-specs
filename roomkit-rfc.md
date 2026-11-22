@@ -24444,13 +24444,17 @@ A Level 3 implementation MAY additionally support audio and/or video real-time m
 
 ### A.1 SMS Channel
 
-<!-- rfc: {"id": "RK-A.1-001", "kind": "structural", "applies": "§A.1 SMS Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-A.1-002", "kind": "structural", "applies": "§A.1 SMS Channel, where an implementation offers one (Level 1, §26.2): its type SMS, category TRANSPORT, direction BIDIRECTIONAL and media types TEXT and MEDIA. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 SMSChannel
 ├── type: SMS
 ├── category: TRANSPORT
 ├── direction: BIDIRECTIONAL
 ├── media_types: [TEXT, MEDIA]
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.1-003", "kind": "structural", "applies": "§A.1 SMS Channel, where an implementation offers one (Level 1, §26.2): its default capabilities: max_length the platform's limit (stated in the implementation's documentation), read receipts and media (image/jpeg, image/png, image/gif) supported, no edit and no delete. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── capabilities:
 │   ├── max_length: int (the platform's limit, in the implementation's documentation)
 │   ├── supports_read_receipts: true
@@ -24458,10 +24462,18 @@ SMSChannel
 │   ├── supported_media_types: ["image/jpeg", "image/png", "image/gif"]
 │   ├── supports_edit: false
 │   └── supports_delete: false
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.1-004", "kind": "structural", "applies": "§A.1 SMS Channel, where an implementation offers one (Level 1, §26.2): the SMSProvider interface: send(event, to, from), parse_webhook(payload) and verify_signature(payload, signature, timestamp). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── provider_interface: SMSProvider
 │   ├── send(event, to, from) → ProviderResult
 │   ├── parse_webhook(payload) → InboundMessage
 │   └── verify_signature(payload, signature, timestamp) → bool
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.1-005", "kind": "behavior", "applies": "§A.1 SMS Channel, where an implementation offers one (Level 1, §26.2): its recipient, written under the binding metadata key phone_number (§5.7). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 └── binding_metadata:
     └── phone_number: string (recipient)
 ```
@@ -24469,13 +24481,17 @@ SMSChannel
 
 ### A.2 Email Channel
 
-<!-- rfc: {"id": "RK-A.2-001", "kind": "structural", "applies": "§A.2 Email Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-A.2-002", "kind": "structural", "applies": "§A.2 Email Channel, where an implementation offers one (Level 1, §26.2): its type EMAIL, category TRANSPORT, direction BIDIRECTIONAL and media types TEXT, RICH and MEDIA. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 EmailChannel
 ├── type: EMAIL
 ├── category: TRANSPORT
 ├── direction: BIDIRECTIONAL
 ├── media_types: [TEXT, RICH, MEDIA]
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.2-003", "kind": "structural", "applies": "§A.2 Email Channel, where an implementation offers one (Level 1, §26.2): its default capabilities: no length limit, threading, rich text and media supported, no edit and no delete. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── capabilities:
 │   ├── max_length: null (unlimited)
 │   ├── supports_threading: true
@@ -24483,24 +24499,40 @@ EmailChannel
 │   ├── supports_media: true
 │   ├── supports_edit: false
 │   └── supports_delete: false
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.2-004", "kind": "structural", "applies": "§A.2 Email Channel, where an implementation offers one (Level 1, §26.2): the EmailProvider interface: send(event, to, from, subject) and parse_inbound(payload). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── provider_interface: EmailProvider
 │   ├── send(event, to, from, subject) → ProviderResult
 │   └── parse_inbound(payload) → InboundMessage
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.2-005", "kind": "behavior", "applies": "§A.2 Email Channel, where an implementation offers one (Level 1, §26.2): its recipient, written under the binding metadata key email_address (§5.7). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 └── binding_metadata:
     ├── email_address: string (recipient)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.2-006", "kind": "structural", "applies": "§A.2 Email Channel, where an implementation offers one (Level 1, §26.2): the binding metadata subject, a string or null. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
     └── subject: string | null
 ```
 <!-- /rfc -->
 
 ### A.3 WhatsApp Channel
 
-<!-- rfc: {"id": "RK-A.3-001", "kind": "structural", "applies": "§A.3 WhatsApp Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-A.3-002", "kind": "structural", "applies": "§A.3 WhatsApp Channel, where an implementation offers one (Level 2, §26.3): its type WHATSAPP, category TRANSPORT, direction BIDIRECTIONAL and media types TEXT, RICH, MEDIA, LOCATION and TEMPLATE. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 WhatsAppChannel
 ├── type: WHATSAPP
 ├── category: TRANSPORT
 ├── direction: BIDIRECTIONAL
 ├── media_types: [TEXT, RICH, MEDIA, LOCATION, TEMPLATE]
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.3-003", "kind": "structural", "applies": "§A.3 WhatsApp Channel, where an implementation offers one (Level 2, §26.3): its default capabilities: max_length the platform's limit (stated in the implementation's documentation), reactions, templates, buttons (at most 3), quick replies, read receipts, media, edit and delete supported. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── capabilities:
 │   ├── max_length: int (the platform's limit, in the implementation's documentation)
 │   ├── supports_reactions: true
@@ -24511,10 +24543,18 @@ WhatsAppChannel
 │   ├── supports_media: true
 │   ├── supports_edit: true
 │   └── supports_delete: true
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.3-004", "kind": "structural", "applies": "§A.3 WhatsApp Channel, where an implementation offers one (Level 2, §26.3): the WhatsAppProvider interface: send(event, to), send_template(template, to) and send_reaction(chat, message_id, emoji). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── provider_interface: WhatsAppProvider
 │   ├── send(event, to) → ProviderResult
 │   ├── send_template(template, to) → ProviderResult
 │   └── send_reaction(chat, message_id, emoji) → ProviderResult
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.3-005", "kind": "behavior", "applies": "§A.3 WhatsApp Channel, where an implementation offers one (Level 2, §26.3): its recipient, written under the binding metadata key phone_number (§5.7). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 └── binding_metadata:
     └── phone_number: string (recipient)
 ```
@@ -24522,13 +24562,17 @@ WhatsAppChannel
 
 ### A.4 WhatsApp Personal Channel
 
-<!-- rfc: {"id": "RK-A.4-001", "kind": "structural", "applies": "§A.4 WhatsApp Personal Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-A.4-002", "kind": "structural", "applies": "§A.4 WhatsApp Personal Channel, where an implementation offers one (Level 2, §26.3): its type WHATSAPP_PERSONAL, category TRANSPORT, direction BIDIRECTIONAL and media types TEXT, RICH, MEDIA, AUDIO, VIDEO and LOCATION (content types, not the media pipeline of §12). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 WhatsAppPersonalChannel
 ├── type: WHATSAPP_PERSONAL
 ├── category: TRANSPORT
 ├── direction: BIDIRECTIONAL
 ├── media_types: [TEXT, RICH, MEDIA, AUDIO, VIDEO, LOCATION]
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.4-003", "kind": "structural", "applies": "§A.4 WhatsApp Personal Channel, where an implementation offers one (Level 2, §26.3): its default capabilities: max_length the platform's limit (stated in the implementation's documentation), reactions, typing, read receipts, audio, video, media, edit and delete supported. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── capabilities:
 │   ├── max_length: int (the platform's limit, in the implementation's documentation)
 │   ├── supports_reactions: true
@@ -24539,8 +24583,16 @@ WhatsAppPersonalChannel
 │   ├── supports_media: true
 │   ├── supports_edit: true
 │   └── supports_delete: true
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.4-004", "kind": "structural", "applies": "§A.4 WhatsApp Personal Channel, where an implementation offers one (Level 2, §26.3): its inbound source, a source provider (§6.5) holding a persistent connection to the platform's multidevice web protocol. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── source: WhatsAppPersonalSourceProvider
 │   └── Persistent WhatsApp Web multidevice connection
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.4-005", "kind": "structural", "applies": "§A.4 WhatsApp Personal Channel, where an implementation offers one (Level 2, §26.3): the WhatsAppPersonalProvider interface: send_message, send_image, send_audio, send_video, send_document, send_location and send_reaction, addressed by jid (audio and video here are message content, not the media pipeline of §12). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── provider_interface: WhatsAppPersonalProvider
 │   ├── send_message(jid, text) → ProviderResult
 │   ├── send_image(jid, data, caption) → ProviderResult
@@ -24549,8 +24601,16 @@ WhatsAppPersonalChannel
 │   ├── send_document(jid, data, filename) → ProviderResult
 │   ├── send_location(jid, lat, lon, name, address) → ProviderResult
 │   └── send_reaction(chat, sender, message_id, emoji) → ProviderResult
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.4-006", "kind": "behavior", "applies": "§A.4 WhatsApp Personal Channel, where an implementation offers one (Level 2, §26.3): its recipient, written under the binding metadata key phone_number (§5.7). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── binding_metadata:
 │   └── phone_number: string (recipient)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.4-007", "kind": "behavior", "applies": "§A.4 WhatsApp Personal Channel, where an implementation offers one (Level 2, §26.3): its chat key group_jid: a group message's conversation is its group, a private message's its sender (§5.7). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 └── chat_key: group_jid (a group message's group; a private message is its
     sender's, §5.7)
 ```
@@ -24558,13 +24618,17 @@ WhatsAppPersonalChannel
 
 ### A.5 Messenger Channel
 
-<!-- rfc: {"id": "RK-A.5-001", "kind": "structural", "applies": "§A.5 Messenger Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-A.5-002", "kind": "structural", "applies": "§A.5 Messenger Channel, where an implementation offers one (Level 2, §26.3): its type MESSENGER, category TRANSPORT, direction BIDIRECTIONAL and media types TEXT, RICH, MEDIA and TEMPLATE. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 MessengerChannel
 ├── type: MESSENGER
 ├── category: TRANSPORT
 ├── direction: BIDIRECTIONAL
 ├── media_types: [TEXT, RICH, MEDIA, TEMPLATE]
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.5-003", "kind": "structural", "applies": "§A.5 Messenger Channel, where an implementation offers one (Level 2, §26.3): its default capabilities: max_length the platform's limit (stated in the implementation's documentation), buttons (at most 3), quick replies, read receipts, media and delete supported, no edit. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── capabilities:
 │   ├── max_length: int (the platform's limit, in the implementation's documentation)
 │   ├── supports_buttons: true (max 3)
@@ -24573,9 +24637,17 @@ MessengerChannel
 │   ├── supports_media: true
 │   ├── supports_edit: false
 │   └── supports_delete: true
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.5-004", "kind": "structural", "applies": "§A.5 Messenger Channel, where an implementation offers one (Level 2, §26.3): the MessengerProvider interface: send(event, recipient_id) and parse_webhook(payload). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── provider_interface: MessengerProvider
 │   ├── send(event, recipient_id) → ProviderResult
 │   └── parse_webhook(payload) → InboundMessage
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.5-005", "kind": "behavior", "applies": "§A.5 Messenger Channel, where an implementation offers one (Level 2, §26.3): its recipient, written under the binding metadata key facebook_user_id (§5.7). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 └── binding_metadata:
     └── facebook_user_id: string (recipient)
 ```
@@ -24583,13 +24655,17 @@ MessengerChannel
 
 ### A.6 Teams Channel
 
-<!-- rfc: {"id": "RK-A.6-001", "kind": "structural", "applies": "§A.6 Teams Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-A.6-002", "kind": "structural", "applies": "§A.6 Teams Channel, where an implementation offers one (Level 2, §26.3): its type TEAMS, category TRANSPORT, direction BIDIRECTIONAL and media types TEXT and RICH. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 TeamsChannel
 ├── type: TEAMS
 ├── category: TRANSPORT
 ├── direction: BIDIRECTIONAL
 ├── media_types: [TEXT, RICH]
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.6-003", "kind": "structural", "applies": "§A.6 Teams Channel, where an implementation offers one (Level 2, §26.3): its default capabilities: max_length the platform's limit (stated in the implementation's documentation), threading, reactions, read receipts, rich text, edit and delete supported. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── capabilities:
 │   ├── max_length: int (the platform's limit, in the implementation's documentation)
 │   ├── supports_threading: true
@@ -24598,26 +24674,46 @@ TeamsChannel
 │   ├── supports_rich_text: true
 │   ├── supports_edit: true
 │   └── supports_delete: true
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.6-004", "kind": "structural", "applies": "§A.6 Teams Channel, where an implementation offers one (Level 2, §26.3): the TeamsProvider interface: send(event, conversation_reference), parse_webhook(activity) and save_conversation_reference(activity). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── provider_interface: TeamsProvider
 │   ├── send(event, conversation_reference) → ProviderResult
 │   ├── parse_webhook(activity) → InboundMessage
 │   └── save_conversation_reference(activity) → void
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.6-005", "kind": "structural", "applies": "§A.6 Teams Channel, where an implementation offers one (Level 2, §26.3): the channel requires a ConversationReferenceStore. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── requires: ConversationReferenceStore
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.6-006", "kind": "behavior", "applies": "§A.6 Teams Channel, where an implementation offers one (Level 2, §26.3): its recipient, the chat, written under the binding metadata key teams_conversation_id (§5.7). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── binding_metadata:
 │   └── teams_conversation_id: string (recipient: the chat, §5.7)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.6-007", "kind": "behavior", "applies": "§A.6 Teams Channel, where an implementation offers one (Level 2, §26.3): its chat key conversation_id (§5.7). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 └── chat_key: conversation_id
 ```
 <!-- /rfc -->
 
 ### A.7 RCS Channel
 
-<!-- rfc: {"id": "RK-A.7-001", "kind": "structural", "applies": "§A.7 RCS Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-A.7-002", "kind": "structural", "applies": "§A.7 RCS Channel, where an implementation offers one (Level 2, §26.3): its type RCS, category TRANSPORT, direction BIDIRECTIONAL and media types TEXT, RICH and MEDIA. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 RCSChannel
 ├── type: RCS
 ├── category: TRANSPORT
 ├── direction: BIDIRECTIONAL
 ├── media_types: [TEXT, RICH, MEDIA]
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.7-003", "kind": "structural", "applies": "§A.7 RCS Channel, where an implementation offers one (Level 2, §26.3): its default capabilities: max_length the platform's limit (stated in the implementation's documentation), buttons, cards, quick replies, read receipts, typing and media supported, no edit and no delete. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── capabilities:
 │   ├── max_length: int (the platform's limit, in the implementation's documentation)
 │   ├── supports_buttons: true
@@ -24628,12 +24724,24 @@ RCSChannel
 │   ├── supports_media: true
 │   ├── supports_edit: false
 │   └── supports_delete: false
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.7-004", "kind": "structural", "applies": "§A.7 RCS Channel, where an implementation offers one (Level 2, §26.3): the RCSProvider interface: send(event, to), returning an RCSDeliveryResult that includes channel_used and the fallback flag, and check_capability(phone). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── provider_interface: RCSProvider
 │   ├── send(event, to) → RCSDeliveryResult
 │   ├── check_capability(phone) → bool
 │   └── RCSDeliveryResult includes: channel_used, fallback flag
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.7-005", "kind": "behavior", "applies": "§A.7 RCS Channel, where an implementation offers one (Level 2, §26.3): its recipient, written under the binding metadata key phone_number (§5.7). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── binding_metadata:
 │   └── phone_number: string (recipient)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.7-006", "kind": "structural", "applies": "§A.7 RCS Channel, where an implementation offers one (Level 2, §26.3): the fallback setting, which falls back to SMS when RCS is unavailable. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 └── configuration:
     └── fallback: bool (auto-fallback to SMS when RCS unavailable)
 ```
@@ -24641,13 +24749,17 @@ RCSChannel
 
 ### A.8 WebSocket Channel
 
-<!-- rfc: {"id": "RK-A.8-001", "kind": "structural", "applies": "§A.8 WebSocket Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-A.8-002", "kind": "structural", "applies": "§A.8 WebSocket Channel, where an implementation offers one (Level 1, §26.2): its type WEBSOCKET, category TRANSPORT, direction BIDIRECTIONAL and media types TEXT, RICH, MEDIA, AUDIO, VIDEO and LOCATION (content types, not the media pipeline of §12). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 WebSocketChannel
 ├── type: WEBSOCKET
 ├── category: TRANSPORT
 ├── direction: BIDIRECTIONAL
 ├── media_types: [TEXT, RICH, MEDIA, AUDIO, VIDEO, LOCATION]
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.8-003", "kind": "structural", "applies": "§A.8 WebSocket Channel, where an implementation offers one (Level 1, §26.2): its default capabilities: no length limit; typing, read receipts, reactions, buttons, cards, quick replies, audio, video, media, edit and delete supported. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── capabilities:
 │   ├── max_length: null (unlimited)
 │   ├── supports_typing: true
@@ -24661,23 +24773,47 @@ WebSocketChannel
 │   ├── supports_media: true
 │   ├── supports_edit: true
 │   └── supports_delete: true
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.8-004", "kind": "behavior", "applies": "§A.8 WebSocket Channel, where an implementation offers one (Level 1, §26.2): the connection registry; register_connection() subscribes the connection to its room, and with a stream_send_fn the connection also receives streamed responses as they are produced. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── connection_registry: map<connection_id, send_function>
 │   ├── register_connection(id, send_fn, room_id,
 │   │       stream_send_fn: function | null,
 │   │       organization_id: string | null) → void
 │   │       # Subscribes the connection to room_id; with stream_send_fn
 │   │       # it also receives streamed responses as they are produced.
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.8-005", "kind": "behavior", "applies": "§A.8 WebSocket Channel, where an implementation offers one (Level 1, §26.2): register_connection() with an organization_id registers the connection as that organization's, refused for an id held for another organization or for none (§17.2). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   │       # With organization_id the connection is that organization's:
 │   │       # refused for an id held for another organization or for none
 │   │       # (§17.2)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.8-006", "kind": "behavior", "applies": "§A.8 WebSocket Channel, where an implementation offers one (Level 1, §26.2): subscribe() also delivers the room's events to the connection; scoped, it reaches only the organization's connection. One unit: no sentence of the code block starts at a line. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── subscribe(id, room_id, organization_id: string | null) → void
 │   │       # Also deliver room_id's events; scoped: only the
 │   │       # organization's connection
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.8-007", "kind": "behavior", "applies": "§A.8 WebSocket Channel, where an implementation offers one (Level 1, §26.2): unsubscribe() stops delivering the room's events to the connection, scoped as subscribe(). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── unsubscribe(id, room_id, organization_id: string | null) → void
 │   │       # Stop delivering room_id's events; scoped as subscribe
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.8-008", "kind": "behavior", "applies": "§A.8 WebSocket Channel, where an implementation offers one (Level 1, §26.2): unregister_connection() also drops the connection's subscriptions; scoped, it is refused for a connection not registered for the organization, nothing changed. One unit: no sentence of the code block starts at a line. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   └── unregister_connection(id, organization_id: string | null) → void
 │           # Also drops its subscriptions; scoped: refused for a
 │           # connection not registered for the organization, nothing changed
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.8-009", "kind": "behavior", "applies": "§A.8 WebSocket Channel, where an implementation offers one (Level 1, §26.2): delivery sends to the connections subscribed to the event's room, none registered for another organization than the room's (§17.2); a streamed delivery goes only to the registrations present when the stream started, checked as each send starts; a connection without stream_send_fn reads each handed row once and nothing more; the end a stream_send_fn connection reads carries no text a handed row does not; a stream cut from outside ends with the row deliver_cut is handed (§12.2 step 13s), read in its end by the stream_send_fn connections and once by the others. One unit: no sentence of the delivery entry starts at a line. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 └── delivery: sends to the connections subscribed to the event's room,
     none registered for another organization than the room's (§17.2);
     a stream sends only to the registrations present when it started,
@@ -24692,20 +24828,32 @@ WebSocketChannel
 
 ### A.9 AI Channel
 
-<!-- rfc: {"id": "RK-A.9-001", "kind": "structural", "applies": "§A.9 AI Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-A.9-004", "kind": "structural", "applies": "§A.9 AI Channel (Level 1, §26.2): its type AI, category INTELLIGENCE, direction BIDIRECTIONAL and media types TEXT, RICH and MEDIA. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 AIChannel
 ├── type: AI
 ├── category: INTELLIGENCE
 ├── direction: BIDIRECTIONAL
 ├── media_types: [TEXT, RICH, MEDIA]
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.9-005", "kind": "structural", "applies": "§A.9 AI Channel (Level 1, §26.2): its capabilities: rich text supported (provider-dependent), no edit and no delete. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── capabilities:
 │   ├── supports_rich_text: true (provider-dependent)
 │   ├── supports_edit: false
 │   └── supports_delete: false
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.9-006", "kind": "behavior", "applies": "§A.9 AI Channel (Level 1, §26.2): the channel's provider, which serves every turn, or its router, which picks each turn's provider (Section 6.4), one of the two. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── configuration:
 │   ├── provider: AIProvider | null         # Serves every turn; one of provider and router
 │   ├── router: AIRouter | null             # Picks each turn's provider (Section 6.4)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.9-007", "kind": "structural", "applies": "§A.9 AI Channel (Level 1, §26.2): the channel's own value of each per-turn setting (system_prompt, temperature, max_tokens, thinking_budget, enable_thinking, reasoning_effort, response_schema) and max_context_events, each a value or null. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── system_prompt: string | null
 │   ├── temperature: float | null
 │   ├── max_tokens: int | null
@@ -24714,21 +24862,69 @@ AIChannel
 │   ├── enable_thinking: bool | null        # Reasoning switch, after thinking_budget (Section 6.7)
 │   ├── reasoning_effort: string | null     # How much the model reasons (Section 6.7)
 │   ├── response_schema: map | null         # Each turn answers in this JSON Schema (Section 6.7)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.9-008", "kind": "structural", "applies": "§A.9 AI Channel (Level 1, §26.2): max_tool_rounds, the most rounds of tool calls in one generation's loop, 50 by default. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── max_tool_rounds: int (default 50)   # Maximum tool call iterations per generation
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.9-009", "kind": "structural", "applies": "§A.9 AI Channel (Level 1, §26.2): max_empty_retries, the tries an empty round and the continuation share, 1 by default. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── max_empty_retries: int (default 1)  # Tries an empty round and the continuation share
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.9-010", "kind": "structural", "applies": "§A.9 AI Channel (Level 1, §26.2): the continuation policy, which goes on an answer that did not act, and the turn budgets, the billed tokens a turn may spend and what it may cost at the catalogue price (Section 6.4), each null by default. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── continuation: policy | null         # Goes on an answer that did not act (Section 6.4)
 │   ├── turn_budget_tokens: int | null      # Billed tokens a turn may spend (Section 6.4)
 │   ├── turn_budget_usd: float | null       # What a turn may cost at the catalogue price
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.9-011", "kind": "structural", "applies": "§A.9 AI Channel (Level 1, §26.2): tool_loop_timeout_seconds, the timeout of the whole tool loop, 300 seconds by default. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── tool_loop_timeout_seconds: float | null (default 300)  # Timeout for entire tool loop
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.9-012", "kind": "structural", "applies": "§A.9 AI Channel (Level 1, §26.2): retry_policy, which tries a generation again (Section 6.4), or null. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── retry_policy: RetryPolicy | null    # Tries a generation again (Section 6.4)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.9-013", "kind": "structural", "applies": "§A.9 AI Channel (Level 1, §26.2): evict_threshold_tokens, the token threshold for context eviction, 5000 by default. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── evict_threshold_tokens: int (default 5000)  # Token threshold for context eviction
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.9-014", "kind": "structural", "applies": "§A.9 AI Channel (Level 1, §26.2): memory, the pluggable context construction (Section 20), and describe_empty_event, what an event with no content reads as, each a value or null. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── memory: MemoryProvider | null       # Pluggable context construction (Section 20)
 │   ├── describe_empty_event: callable | null # What an event with no content reads as
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.9-015", "kind": "structural", "applies": "§A.9 AI Channel (Level 1, §26.2): max_author_images, how many of the newest author images a turn sends (Section 6.4), 4 by default. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── max_author_images: int | null (default 4)  # Newest author images a turn sends (Section 6.4)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.9-016", "kind": "structural", "applies": "§A.9 AI Channel (Level 1, §26.2): publish_thinking_text, the reasoning text on the realtime channel (Section 8.4), false by default. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── publish_thinking_text: bool (default false)  # Reasoning text on the realtime channel (Section 8.4)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.9-017", "kind": "structural", "applies": "§A.9 AI Channel (Level 1, §26.2): publish_tool_call_text, tool calls' arguments and results on the realtime channel (Section 8.4), false by default. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── publish_tool_call_text: bool (default false)  # Tool calls' arguments and results on it (Section 8.4)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.9-018", "kind": "structural", "applies": "§A.9 AI Channel (Level 1, §26.2): tool_policy, the tool access control (Section 21), and skills, the available skills (Section 24), each a value or null. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── tool_policy: ToolPolicy | null      # Tool access control (Section 21)
 │   └── skills: SkillRegistry | null        # Available skills (Section 24)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.9-019", "kind": "behavior", "applies": "§A.9 AI Channel (Level 1, §26.2): the settings a room's binding metadata overrides: system_prompt, temperature, max_tokens, thinking_budget, enable_thinking, reasoning_effort, response_schema, turn_budget_tokens, turn_budget_usd and tools. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── per_room_overrides (via binding metadata):
 │   ├── system_prompt
 │   ├── temperature
@@ -24740,6 +24936,10 @@ AIChannel
 │   ├── turn_budget_tokens
 │   ├── turn_budget_usd
 │   └── tools
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.9-020", "kind": "structural", "applies": "§A.9 AI Channel (Level 1, §26.2): the content parts of the AIMessages a turn's conversation is built from and its tool loop extends (Section 6.7): text, image, thinking (kept in history), tool call and tool result. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── ai_message_parts:
 │   │   # AIMessage content parts (AIContentPart, Section 6.7), in the
 │   │   # conversation a turn is built from and its tool loop extends:
@@ -24748,41 +24948,61 @@ AIChannel
 │   ├── AIThinkingPart                      # Chain-of-thought reasoning (preserved in history)
 │   ├── AIToolCallPart                      # Function call with name and arguments
 │   └── AIToolResultPart                    # Tool execution result
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.9-021", "kind": "behavior", "applies": "§A.9 AI Channel (Level 1, §26.2): on_event() builds the conversation history and the target capabilities (Section 6.4). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 └── behavior:
     ├── on_event() builds conversation history + target capabilities
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.9-022", "kind": "behavior", "applies": "§A.9 AI Channel (Level 1, §26.2): the channel reads the provider's generate_structured_stream(), generate() wrapped when the provider does not stream (Section 6.7). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
     ├── Reads provider.generate_structured_stream(context) (generate() wrapped when it does not stream)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.9-023", "kind": "behavior", "applies": "§A.9 AI Channel (Level 1, §26.2): the channel runs one tool loop, generate, call the tools, feed the results and generate again, up to max_tool_rounds (Section 6.4). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
     ├── Runs one tool loop: generate → call tools → feed results → re-generate (up to max_tool_rounds)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.9-024", "kind": "behavior", "applies": "§A.9 AI Channel (Level 1, §26.2): the channel skips the events it produced itself (loop prevention). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
     ├── Skips events from self (loop prevention)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.9-025", "kind": "behavior", "applies": "§A.9 AI Channel (Level 1, §26.2): the channel returns a ChannelOutput with a response stream, which the framework delivers with deliver_stream() and stores segment by segment. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
     └── Returns ChannelOutput with a response stream, which the framework
         delivers with deliver_stream() and stores segment by segment
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-A.9-002", "kind": "behavior", "applies": "§A.9 AI Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-A.9-026", "kind": "behavior", "applies": "§A.9 AI Channel (Level 1, §26.2), per-turn settings: each per-turn setting resolves from the binding metadata, then the channel's per-turn configuration, then the channel default. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Per-turn settings.** Each per-turn setting (`system_prompt`, `temperature`,
 `max_tokens`, `thinking_budget`, `enable_thinking`, `reasoning_effort`,
 `response_schema`, `turn_budget_tokens`, `turn_budget_usd`) resolves from the
 binding metadata, then the channel's per-turn configuration, then the channel
-default. A level that does not set it, its key absent or `null`, defers to the
+default. <!-- /rfc --><!-- rfc: {"id": "RK-A.9-027", "kind": "behavior", "applies": "§A.9 AI Channel (Level 1, §26.2), per-turn settings: a level that does not set a setting, its key absent or null, defers to the next; null never clears a setting at either level. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A level that does not set it, its key absent or `null`, defers to the
 next: `null` never clears a setting, at either level, so an integrator that
-serializes an empty form field as `null` keeps the next level's value. A
+serializes an empty form field as `null` keeps the next level's value. <!-- /rfc --><!-- rfc: {"id": "RK-A.9-028", "kind": "behavior", "applies": "§A.9 AI Channel (Level 1, §26.2), per-turn settings: a setting is lifted for one room only by an explicit value that states off (thinking_budget 0, enable_thinking false, reasoning_effort \"none\", system_prompt \"\"). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
 setting is lifted for one room only by an explicit value that states off
 (`thinking_budget: 0`, `enable_thinking: false`, `reasoning_effort: "none"`,
-`system_prompt: ""`). The reasoning switch is read across two keys (Section
+`system_prompt: ""`). <!-- /rfc --><!-- rfc: {"id": "RK-A.9-029", "kind": "behavior", "applies": "§A.9 AI Channel (Level 1, §26.2), per-turn settings: the reasoning switch read across enable_thinking and thinking_budget (Section 6.7): an enable_thinking false at a level turns reasoning off over a less specific level's budget, a budget at the same or a more specific level still states the switch. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The reasoning switch is read across two keys (Section
 6.7): an `enable_thinking: false` set at a level turns reasoning off whatever
 `thinking_budget` a less specific level set, while a budget set at the same or
-a more specific level still states the switch. A setting with no value that
+a more specific level still states the switch. <!-- /rfc --><!-- rfc: {"id": "RK-A.9-030", "kind": "behavior", "applies": "§A.9 AI Channel (Level 1, §26.2), per-turn settings: a setting with no value that states off (temperature, max_tokens, response_schema, the turn budgets of Section 6.4) cannot be lifted for a room once a less specific level sets it, only replaced. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A setting with no value that
 states off (`temperature`, `max_tokens`, `response_schema`, and the turn
 budgets of Section 6.4) cannot be lifted for a room once a less specific level
-sets it, only replaced. The binding's `tools` is a toolset of its own, and a
-`null` there declares none, like an absent key. The per-turn configuration's
-`tools`, when it gives them, replace the binding's for that turn. Either
+sets it, only replaced. <!-- /rfc --><!-- rfc: {"id": "RK-A.9-031", "kind": "behavior", "applies": "§A.9 AI Channel (Level 1, §26.2), per-turn settings: the binding's tools are a toolset of their own, and a null there declares none, like an absent key. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The binding's `tools` is a toolset of its own, and a
+`null` there declares none, like an absent key. <!-- /rfc --><!-- rfc: {"id": "RK-A.9-032", "kind": "behavior", "applies": "§A.9 AI Channel (Level 1, §26.2), per-turn settings: the per-turn configuration's tools, when it gives them, replace the binding's for that turn. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The per-turn configuration's
+`tools`, when it gives them, replace the binding's for that turn. <!-- /rfc --><!-- rfc: {"id": "RK-A.9-033", "kind": "behavior", "applies": "§A.9 AI Channel (Level 1, §26.2), per-turn settings: either toolset is declared before the tools the channel was built with, and none of its tools under the name of one of those, of a tool the channel provides or of one the room's setup serves it (Section 21.1) is declared: that tool stands. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Either
 toolset is declared before the tools the channel was built with, and none of
 its tools under the name of one of those, of a tool the channel provides or of
-one the room's setup serves it (Section 21.1) is declared: that tool stands. A
+one the room's setup serves it (Section 21.1) is declared: that tool stands. <!-- /rfc --><!-- rfc: {"id": "RK-A.9-034", "kind": "behavior", "applies": "§A.9 AI Channel (Level 1, §26.2), per-turn settings: a binding's value read as its setting's type reads one of another kind (a number written as a text, a whole float or a whole number's text for an integer, a boolean for a number). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
 binding's value is read as its setting's type reads one of another kind: a
 number written as a text, a whole float or a whole number's text for an integer, a boolean for a number
-(`"0.3"` reads 0.3, `64.0` and `"100"` read 64 and 100). One that does not read
+(`"0.3"` reads 0.3, `64.0` and `"100"` read 64 and 100). <!-- /rfc --><!-- rfc: {"id": "RK-A.9-035", "kind": "behavior", "applies": "§A.9 AI Channel (Level 1, §26.2), per-turn settings: a binding value that does not read so fails the turn before its model is asked, its error naming every setting refused, and so does a turn_budget_tokens that is not a positive integer or a turn_budget_usd that is not a positive number, the budgets read strictly. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->One that does not read
 so (a `temperature` of `"hot"`, a `max_tokens` of `1.5`, a `system_prompt` that
 is no text) fails the turn before its model is asked, its error naming every
 setting refused, and so does a `turn_budget_tokens` that is not a positive
@@ -24790,159 +25010,359 @@ integer or a `turn_budget_usd` that is not a positive number, the budgets read
 strictly (a text or a boolean refused): a binding written wrong shows at its
 first turn, never replaced by the next level's value.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.9-036", "kind": "behavior", "applies": "§A.9 AI Channel (Level 1, §26.2), per-turn configuration: a skill registry of the turn's own (Section 24.3), no binding setting, replaces the channel's registry for that turn alone; a turn that gives none reads the channel's. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The per-turn configuration may also give the turn a skill registry of its own
 (Section 24.3). It is not a binding setting: it replaces the channel's registry
-for that turn alone, and a turn that gives none reads the channel's.
+for that turn alone, and a turn that gives none reads the channel's.<!-- /rfc --><!-- rfc: {"id": "RK-A.9-037", "kind": "behavior", "applies": "§A.9 AI Channel (Level 1, §26.2), per-turn configuration: a tool handler of the turn's own serves the host's tools for that turn in place of the channel's handler, the channel's self-serving tools included; a turn that gives none, the next one included, reads the channel's. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 It may give the turn a tool handler of its own the same way: it serves the
 host's tools for that turn in place of the channel's handler, the tools the
 channel was built with that serve themselves included, and a turn that gives
-none, the next one included, reads the channel's.
+none, the next one included, reads the channel's.<!-- /rfc --><!-- rfc: {"id": "RK-A.9-038", "kind": "behavior", "applies": "§A.9 AI Channel (Level 1, §26.2), per-turn configuration: the bounds of the turn's tool calls (Section 21.6), above the channel's own bounds per tool name, for that turn alone. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 It may give the bounds of the turn's tool calls the same way (Section 21.6):
 above the channel's own bounds per tool name, for that turn alone.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-A.9-003", "kind": "behavior", "applies": "§A.9 AI Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-A.9-039", "kind": "behavior", "applies": "§A.9 AI Channel (Level 1, §26.2), constrained turn: a turn's response_schema resolves like the other per-turn settings. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Constrained turn.** A turn's `response_schema` resolves like the other
-per-turn settings. When it is set, the channel MUST NOT
+per-turn settings. <!-- /rfc --><!-- rfc: {"id": "RK-A.9-040", "kind": "behavior", "applies": "§A.9 AI Channel (Level 1, §26.2), constrained turn: with a response_schema set, none of the answer's text is delivered or stored before the provider's check has passed (Section 6.7): a streamed answer is held until the done event, and a failed check fails the turn with its ResponseSchemaError, leaving nothing in the room. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->When it is set, the channel MUST NOT
 deliver or store any of the answer's text before the provider's check has
 passed (Section 6.7): a streamed answer is held until the done event, and a
 failed check fails the turn with its `ResponseSchemaError`, leaving nothing in
-the room. A turn whose tool loop stops before a final answer, on its round cap,
+the room. <!-- /rfc --><!-- rfc: {"id": "RK-A.9-041", "kind": "behavior", "applies": "§A.9 AI Channel (Level 1, §26.2), constrained turn: a turn whose tool loop stops before a final answer (its round cap, its deadline, its spending budget, a stop, or the provider interrupting it after a round) fails with truncated. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A turn whose tool loop stops before a final answer, on its round cap,
 its deadline or its spending budget, because it was stopped, or because the provider interrupted it
-after a round, has no document to deliver and fails with `truncated`. The turn's tools include those the channel adds itself
+after a round, has no document to deliver and fails with `truncated`. <!-- /rfc --><!-- rfc: {"id": "RK-A.9-042", "kind": "behavior", "applies": "§A.9 AI Channel (Level 1, §26.2), constrained turn: the turn's tools include those the channel adds itself (skills, sandbox, planning, orchestration), so a schema on a channel that adds any needs a provider whose supports_response_schema_with_tools is true. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The turn's tools include those the channel adds itself
 (skills, sandbox, planning, orchestration), so a schema on a channel that adds
 any needs a provider whose `supports_response_schema_with_tools` is true.
 <!-- /rfc -->
 
 ### A.9.1 ACP Agent Channel
 
-<!-- rfc: {"id": "RK-A.9.1-001", "kind": "behavior", "applies": "§A.9.1 ACP Agent Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-A.9.1-002", "kind": "structural", "applies": "§A.9.1 ACP Agent Channel, where an implementation offers one (Level 2, §26.3): its type AI, category INTELLIGENCE, direction BIDIRECTIONAL and media types TEXT and RICH. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 ACPChannel
 ├── type: AI
 ├── category: INTELLIGENCE
 ├── direction: BIDIRECTIONAL
 ├── media_types: [TEXT, RICH]
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.9.1-043", "kind": "behavior", "applies": "§A.9.1 ACP Agent Channel, where an implementation offers one (Level 2, §26.3): the channel is the ACP client, the external coding agent the ACP server. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── protocol side: ACP client (external coding agent is the ACP server)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.9.1-003", "kind": "structural", "applies": "§A.9.1 ACP Agent Channel, where an implementation offers one (Level 2, §26.3): stdio, the stable default transport. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── transport:
 │   ├── stable default: stdio
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.9.1-004", "kind": "behavior", "applies": "§A.9.1 ACP Agent Channel, where an implementation offers one (Level 2, §26.3): the agent's command, an argument vector never shell-expanded. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── command: argument vector (never shell-expanded)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.9.1-005", "kind": "behavior", "applies": "§A.9.1 ACP Agent Channel, where an implementation offers one (Level 2, §26.3): the protocol version the channel asks for, the stable ACP version. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   └── protocol_version: stable ACP version
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.9.1-006", "kind": "behavior", "applies": "§A.9.1 ACP Agent Channel, where an implementation offers one (Level 2, §26.3): one ACP connection per channel instance. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── sessions:
 │   ├── one ACP connection per channel instance
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.9.1-007", "kind": "behavior", "applies": "§A.9.1 ACP Agent Channel, where an implementation offers one (Level 2, §26.3): one ACP session per room. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── one ACP session per Room
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.9.1-008", "kind": "behavior", "applies": "§A.9.1 ACP Agent Channel, where an implementation offers one (Level 2, §26.3): a standalone turn has its own session, declared as the turn's (§10.1.1). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── a standalone turn: its own session, declared as the turn's (§10.1.1)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.9.1-009", "kind": "behavior", "applies": "§A.9.1 ACP Agent Channel, where an implementation offers one (Level 2, §26.3): the setup on every session open: the room's mcp_servers, session_config, then the values the host set on the room; a refused value fails the open. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── setup on every open: mcp_servers for the Room, session_config, then the
 │   │   values the host set on the Room; a refused value fails the open
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.9.1-010", "kind": "behavior", "applies": "§A.9.1 ACP Agent Channel, where an implementation offers one (Level 2, §26.3): prompts serialized per session. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   └── prompts serialized per session
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.9.1-011", "kind": "structural", "applies": "§A.9.1 ACP Agent Channel, where an implementation offers one (Level 2, §26.3): the configuration's command, a list of strings. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── configuration:
 │   ├── command: list<string>
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.9.1-012", "kind": "structural", "applies": "§A.9.1 ACP Agent Channel, where an implementation offers one (Level 2, §26.3): the configuration's cwd, an absolute path. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── cwd: absolute path
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.9.1-013", "kind": "structural", "applies": "§A.9.1 ACP Agent Channel, where an implementation offers one (Level 2, §26.3): the configuration's additional_directories, a list of absolute paths. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── additional_directories: list<absolute path>
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.9.1-014", "kind": "structural", "applies": "§A.9.1 ACP Agent Channel, where an implementation offers one (Level 2, §26.3): the configuration's environment, a map of strings or null, and authentication_method, a string or null. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── environment: map<string, string> | null
 │   ├── authentication_method: string | null
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.9.1-015", "kind": "structural", "applies": "§A.9.1 ACP Agent Channel, where an implementation offers one (Level 2, §26.3): the configuration's mcp_servers, a list of ACP MCP servers or a function of the room id returning one. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── mcp_servers: list<ACP MCPServer> | (room_id) → list<ACP MCPServer>
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.9.1-016", "kind": "behavior", "applies": "§A.9.1 ACP Agent Channel, where an implementation offers one (Level 2, §26.3): the configuration's session_config, set on every session opened. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── session_config: map<string, string | bool> | null  # set on every session opened
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.9.1-017", "kind": "structural", "applies": "§A.9.1 ACP Agent Channel, where an implementation offers one (Level 2, §26.3): the configuration's publish_tool_call_text, the room's tool notifications' text (§8.4), false by default. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── publish_tool_call_text: bool (default false)  # room tool notifications (§8.4)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.9.1-018", "kind": "structural", "applies": "§A.9.1 ACP Agent Channel, where an implementation offers one (Level 2, §26.3): the configuration's external_tool_handler, or null. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── external_tool_handler: ExternalToolHandler | null
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.9.1-019", "kind": "structural", "applies": "§A.9.1 ACP Agent Channel, where an implementation offers one (Level 2, §26.3): the configuration's name, role and description, its identity as an Agent's (§6.4). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── name, role, description: string | null  # its identity, as an Agent's (§6.4)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.9.1-020", "kind": "behavior", "applies": "§A.9.1 ACP Agent Channel, where an implementation offers one (Level 2, §26.3): the configuration's instructions, sent once per session (§6.4). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   └── instructions: string | null             # sent once per session (§6.4)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.9.1-021", "kind": "behavior", "applies": "§A.9.1 ACP Agent Channel, where an implementation offers one (Level 2, §26.3): an agent_message_chunk update maps to a text stream delta. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── update_mapping:
 │   ├── agent_message_chunk → text stream delta
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.9.1-022", "kind": "behavior", "applies": "§A.9.1 ACP Agent Channel, where an implementation offers one (Level 2, §26.3): an agent_thought_chunk update maps to a thinking stream marker and an ephemeral event. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── agent_thought_chunk → thinking stream marker + ephemeral event
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.9.1-023", "kind": "behavior", "applies": "§A.9.1 ACP Agent Channel, where an implementation offers one (Level 2, §26.3): tool call start and progress updates map to tool-call markers and ephemeral events. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── tool_call_start/progress → tool-call markers + ephemeral events
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.9.1-024", "kind": "behavior", "applies": "§A.9.1 ACP Agent Channel, where an implementation offers one (Level 2, §26.3): an agent_plan_update maps to an ephemeral custom event. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   └── agent_plan_update → ephemeral custom event
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.9.1-025", "kind": "behavior", "applies": "§A.9.1 ACP Agent Channel, where an implementation offers one (Level 2, §26.3): a completed turn fires ON_AI_RESPONSE with its text, tool count, duration and usage. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── end_of_turn:
 │   ├── completed turn → ON_AI_RESPONSE (text, tool count, duration, usage)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.9.1-026", "kind": "behavior", "applies": "§A.9.1 ACP Agent Channel, where an implementation offers one (Level 2, §26.3): an errored or abandoned turn fires no trigger. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── errored or abandoned turn → no trigger
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.9.1-027", "kind": "behavior", "applies": "§A.9.1 ACP Agent Channel, where an implementation offers one (Level 2, §26.3): a turn's usage: the agent's token counters relayed unaltered, plus context and cost. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   └── usage: agent's token counters relayed unaltered, plus context and cost
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.9.1-028", "kind": "behavior", "applies": "§A.9.1 ACP Agent Channel, where an implementation offers one (Level 2, §26.3): the filesystem and terminal client capabilities are disabled by default. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 └── safety:
     ├── filesystem/terminal client capabilities disabled by default
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.9.1-029", "kind": "behavior", "applies": "§A.9.1 ACP Agent Channel, where an implementation offers one (Level 2, §26.3): permission requests are denied by default. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
     ├── permission requests denied by default
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.9.1-030", "kind": "behavior", "applies": "§A.9.1 ACP Agent Channel, where an implementation offers one (Level 2, §26.3): a cancellation is forwarded to the ACP session. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
     ├── cancellation forwarded to ACP session
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.9.1-031", "kind": "behavior", "applies": "§A.9.1 ACP Agent Channel, where an implementation offers one (Level 2, §26.3): close releases the sessions and the process transport. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
     └── close releases sessions and process transport
 ```
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.9.1-032", "kind": "structural", "applies": "§A.9.1 ACP Agent Channel, where an implementation offers one (Level 2, §26.3), usage metadata: a response observation may include usage_metadata beside the numeric usage map. Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->
 ACP response observations MAY include optional `usage_metadata` alongside the
-existing numeric `usage` map. This metadata identifies the native session,
-measurement source and scope, separately from the host room/channel/request.
+existing numeric `usage` map. <!-- /rfc --><!-- rfc: {"id": "RK-A.9.1-033", "kind": "behavior", "applies": "§A.9.1 ACP Agent Channel, where an implementation offers one (Level 2, §26.3), usage metadata, where an implementation offers it: it identifies the native session, the measurement source and the scope, apart from the host's room, channel and request. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->This metadata identifies the native session,
+measurement source and scope, separately from the host room/channel/request.<!-- /rfc --><!-- rfc: {"id": "RK-A.9.1-034", "kind": "behavior", "applies": "§A.9.1 ACP Agent Channel, where an implementation offers one (Level 2, §26.3), usage: a session cost stays a cumulative observation, not a prompt cost, and context occupancy or capacity is never read as consumed-token counters. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A session cost MUST remain a cumulative observation, not a prompt cost; context
-occupancy/capacity MUST NOT be treated as consumed-token counters. Missing
+occupancy/capacity MUST NOT be treated as consumed-token counters. <!-- /rfc --><!-- rfc: {"id": "RK-A.9.1-035", "kind": "behavior", "applies": "§A.9.1 ACP Agent Channel, where an implementation offers one (Level 2, §26.3), usage: a missing measurement stays absent and a reported zero stays zero. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Missing
 measurements MUST remain absent and reported zero MUST remain zero.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.9.1-036", "kind": "behavior", "applies": "§A.9.1 ACP Agent Channel, where an implementation offers one (Level 2, §26.3), usage: the identities and timestamps the transport provides for reports, sessions and results are preserved across recovery and replay when available. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Transport-provided report/session/result identities and timestamps MUST be
-preserved across recovery and replay when available. A recovered terminal
-snapshot MUST NOT be combined with live observations from another session.
+preserved across recovery and replay when available. <!-- /rfc --><!-- rfc: {"id": "RK-A.9.1-037", "kind": "behavior", "applies": "§A.9.1 ACP Agent Channel, where an implementation offers one (Level 2, §26.3), usage: a recovered terminal snapshot is never combined with live observations from another session. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A recovered terminal
+snapshot MUST NOT be combined with live observations from another session.<!-- /rfc --><!-- rfc: {"id": "RK-A.9.1-038", "kind": "behavior", "applies": "§A.9.1 ACP Agent Channel, where an implementation offers one (Level 2, §26.3), usage: an observation without a source prompt identity is never assigned one from the currently active prompt. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 An observation without a source prompt identity MUST NOT be assigned one from
-the currently active prompt. Locally assigned receipt identities MUST be
-identified as local and MUST NOT imply durable continuity across resets.
+the currently active prompt. <!-- /rfc --><!-- rfc: {"id": "RK-A.9.1-039", "kind": "behavior", "applies": "§A.9.1 ACP Agent Channel, where an implementation offers one (Level 2, §26.3), usage: a locally assigned receipt identity is marked local and implies no durable continuity across resets. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Locally assigned receipt identities MUST be
+identified as local and MUST NOT imply durable continuity across resets.<!-- /rfc --><!-- rfc: {"id": "RK-A.9.1-040", "kind": "behavior", "applies": "§A.9.1 ACP Agent Channel, where an implementation offers one (Level 2, §26.3), usage: a model observed at prompt start or report receipt is never claimed as the model responsible for a whole cumulative session cost. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A model observed at prompt start or report receipt MUST NOT be claimed as the
 model responsible for a whole cumulative session cost.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.9.1-041", "kind": "behavior", "applies": "§A.9.1 ACP Agent Channel, where an implementation offers one (Level 2, §26.3), end of turn: the end-of-turn trigger is unchanged: a consumed prompt response, even with a non-success stop reason, still fires it; an exception or an abandoned stream is not a response. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The end-of-turn trigger remains unchanged: a consumed prompt response can
 report a non-success stop reason; an exception or abandoned stream is not a
-response. Intermediate usage observations MAY remain observable as ephemeral
+response. <!-- /rfc --><!-- rfc: {"id": "RK-A.9.1-042", "kind": "behavior", "applies": "§A.9.1 ACP Agent Channel, where an implementation offers one (Level 2, §26.3), end of turn: intermediate usage observations, which an implementation may keep observable as ephemeral events when the turn errs or is abandoned, establish neither a successful completion nor durable accounting (the note that no tariff, credit policy or cost delta is specified folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Intermediate usage observations MAY remain observable as ephemeral
 events in those cases, but do not establish successful completion or durable
 accounting. No tariff, credit policy or inferred cost delta is specified here.
 <!-- /rfc -->
 
 ### A.10 Voice Channel
 
-<!-- rfc: {"id": "RK-A.10-001", "kind": "structural", "applies": "§A.10 Voice Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-A.10-002", "kind": "structural", "applies": "§A.10 Voice Channel (media feature voice; Level 3, §26.4): its type VOICE, category TRANSPORT, direction BIDIRECTIONAL and media type AUDIO. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 VoiceChannel
 ├── type: VOICE
 ├── category: TRANSPORT
 ├── direction: BIDIRECTIONAL
 ├── media_types: [AUDIO]
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.10-003", "kind": "structural", "applies": "§A.10 Voice Channel (media feature voice; Level 3, §26.4): the channel requires an STT provider, a TTS provider, a voice backend and an audio pipeline configuration. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── requires:
 │   ├── stt: STTProvider
 │   ├── tts: TTSProvider
 │   ├── backend: VoiceBackend
 │   └── audio_pipeline: AudioPipelineConfig
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.10-004", "kind": "structural", "applies": "§A.10 Voice Channel (media feature voice; Level 3, §26.4): streaming, true by default. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── configuration:
 │   ├── streaming: bool (default true)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.10-005", "kind": "structural", "applies": "§A.10 Voice Channel (media feature voice; Level 3, §26.4): interruption, an InterruptionConfig or null, the current interruption surface (Section 12.6). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── interruption: InterruptionConfig | null   # Section 12.6 — the current surface
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.10-006", "kind": "structural", "applies": "§A.10 Voice Channel (media feature voice; Level 3, §26.4): enable_barge_in, legacy, true by default, superseded by interruption. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── enable_barge_in: bool (default true)      # legacy; superseded by interruption
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.10-007", "kind": "behavior", "applies": "§A.10 Voice Channel (media feature voice; Level 3, §26.4): barge_in_threshold_ms, legacy, 200 by default, mapped to allow_during_first_ms of the IMMEDIATE strategy and used only when no InterruptionConfig is given. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   └── barge_in_threshold_ms: int (default 200)  # legacy; maps to allow_during_first_ms
 │                                                 # (IMMEDIATE strategy; used only when
 │                                                 # no InterruptionConfig is given)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.10-008", "kind": "behavior", "applies": "§A.10 Voice Channel (media feature voice; Level 3, §26.4): supports_streaming_delivery, true when the TTS takes streaming input and a backend is configured. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── streaming_delivery:
 │   ├── supports_streaming_delivery: bool
 │   │   # True when TTS supports streaming input AND backend is configured
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.10-009", "kind": "behavior", "applies": "§A.10 Voice Channel (media feature voice; Level 3, §26.4): deliver_stream() pipes the text stream through the sentence splitter and synthesize_stream_input() to the outbound pipeline and the transport. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   └── deliver_stream(text_stream, event, binding, context) → ChannelOutput
 │       # Pipes text stream → sentence_splitter → synthesize_stream_input → outbound → transport
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.10-010", "kind": "behavior", "applies": "§A.10 Voice Channel (media feature voice; Level 3, §26.4): deliver_stream() fires the AFTER_TTS hook after the stream completes. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │       # Fires AFTER_TTS hook after stream completes
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.10-011", "kind": "structural", "applies": "§A.10 Voice Channel (media feature voice; Level 3, §26.4): bind_session(session, room_id, binding) and unbind_session(session). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── session_management:
 │   ├── bind_session(session, room_id, binding)
 │   └── unbind_session(session)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.10-012", "kind": "behavior", "applies": "§A.10 Voice Channel (media feature voice; Level 3, §26.4): the standard delivery path of AudioContent: postprocessors, recorder, resampler, transport, and the AEC reference. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 └── delivery:
     ├── Standard path:
     │   ├── AudioContent → [postprocessors] → [recorder] → [resampler] → transport → [AEC ref †]
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.10-013", "kind": "behavior", "applies": "§A.10 Voice Channel (media feature voice; Level 3, §26.4): the standard delivery path of TextContent: TTS, an AudioChunk stream, the outbound pipeline, the transport and the AEC reference. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
     │   ├── TextContent → TTS → AudioChunk stream → outbound pipeline → transport → [AEC ref †]
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.10-014", "kind": "behavior", "applies": "§A.10 Voice Channel (media feature voice; Level 3, §26.4): other content (system, tool-call, a composite keeping a part that is neither text nor audio) is not spoken, with no delivery error. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
     │   └── Other (system, tool-call, a composite keeping a part that is
     │       neither text nor audio) → not spoken, no delivery error
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.10-015", "kind": "behavior", "applies": "§A.10 Voice Channel (media feature voice; Level 3, §26.4): the framework-native streaming path: the framework pipes an AI channel's response stream into deliver_stream(), the sentence splitter, synthesize_stream_input(), the outbound pipeline and the transport. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
     ├── Streaming AI → TTS path (framework-native):
     │   └── Framework pipes AIChannel.response_stream → deliver_stream()
     │       → sentence_splitter → synthesize_stream_input() → outbound pipeline → transport
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.10-016", "kind": "behavior", "applies": "§A.10 Voice Channel (media feature voice; Level 3, §26.4): the AEC reference fed at transport level (local hardware) or at pipeline level (network), as Section 12.3.4 says. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
     └── † AEC ref fed at transport level (local hw) or pipeline level (network) — see 12.3.4
 ```
 <!-- /rfc -->
 
 ### A.11 Realtime Voice Channel
 
-<!-- rfc: {"id": "RK-A.11-001", "kind": "structural", "applies": "§A.11 Realtime Voice Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-A.11-002", "kind": "structural", "applies": "§A.11 Realtime Voice Channel (media feature realtime; Level 3, §26.4): its type REALTIME_VOICE, category TRANSPORT, direction BIDIRECTIONAL and media type AUDIO. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 RealtimeVoiceChannel
 ├── type: REALTIME_VOICE
 ├── category: TRANSPORT
 ├── direction: BIDIRECTIONAL
 ├── media_types: [AUDIO]
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.11-003", "kind": "structural", "applies": "§A.11 Realtime Voice Channel (media feature realtime; Level 3, §26.4): the channel requires a RealtimeVoiceProvider and a RealtimeAudioTransport. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── requires:
 │   ├── provider: RealtimeVoiceProvider
 │   ├── transport: RealtimeAudioTransport
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.11-004", "kind": "behavior", "applies": "§A.11 Realtime Voice Channel (media feature realtime; Level 3, §26.4): an optional reasoning_backend, which serves integrator-side reasoning delegation (Section 12.4.1); the channel works with or without it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── reasoning_backend: ReasoningBackend | null  # OPTIONAL: serves integrator-side reasoning delegation (Section 12.4.1)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.11-005", "kind": "behavior", "applies": "§A.11 Realtime Voice Channel (media feature realtime; Level 3, §26.4): an audio pipeline configuration, optional in speech-to-speech mode. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   └── audio_pipeline: AudioPipelineConfig | null  # OPTIONAL in speech-to-speech mode
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.11-006", "kind": "structural", "applies": "§A.11 Realtime Voice Channel (media feature realtime; Level 3, §26.4): the configuration: system_prompt, voice, tools, temperature, input and output sample rates, reasoning_timeout_s (the bound on one delegation's run, Section 12.4.1) and emit_transcription_events. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── configuration:
 │   ├── system_prompt: string | null
 │   ├── voice: string | null
@@ -24952,12 +25372,24 @@ RealtimeVoiceChannel
 │   ├── output_sample_rate: int
 │   ├── reasoning_timeout_s: float              # Bound on one delegation's run (Section 12.4.1)
 │   └── emit_transcription_events: bool
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.11-007", "kind": "structural", "applies": "§A.11 Realtime Voice Channel (media feature realtime; Level 3, §26.4): start_session(room_id, participant_id, connection, metadata, organization_id) and end_session(session). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── session_management:
 │   ├── start_session(room_id, participant_id, connection, metadata, organization_id)
 │   └── end_session(session)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.11-008", "kind": "behavior", "applies": "§A.11 Realtime Voice Channel (media feature realtime; Level 3, §26.4): a tool call goes to the async handler function first, and to the ON_TOOL_CALL hook as the fallback. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── tool_handling:
 │   ├── async handler function (priority)
 │   └── ON_TOOL_CALL hook (fallback)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.11-009", "kind": "behavior", "applies": "§A.11 Realtime Voice Channel (media feature realtime; Level 3, §26.4): delegation (Section 12.4.1): a hosted backend's function calls go through the tool handling; an integrator backend runs through reasoning_backend, its outputs returned through submit_delegation_output. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 └── delegation_handling:                            # Section 12.4.1
     ├── hosted backend → its function calls go through tool_handling
     └── integrator backend → reasoning_backend, outputs returned via submit_delegation_output
@@ -24966,51 +25398,107 @@ RealtimeVoiceChannel
 
 ### A.12 Video Channel
 
-<!-- rfc: {"id": "RK-A.12-001", "kind": "structural", "applies": "§A.12 Video Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-A.12-002", "kind": "structural", "applies": "§A.12 Video Channel (media feature video; Level 3, §26.4): its channel type VIDEO, category TRANSPORT, direction BIDIRECTIONAL and media type VIDEO. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 VideoChannel
 ├── channel_type: VIDEO
 ├── category: TRANSPORT
 ├── direction: BIDIRECTIONAL
 ├── media_types: [VIDEO]
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.12-003", "kind": "structural", "applies": "§A.12 Video Channel (media feature video; Level 3, §26.4): the channel requires a VideoBackend; a VisionProvider is optional, the channel working with or without it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── requires:
 │   ├── backend: VideoBackend
 │   ├── vision: VisionProvider | null     # OPTIONAL
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.12-004", "kind": "structural", "applies": "§A.12 Video Channel (media feature video; Level 3, §26.4): vision_interval_ms, 2000 by default. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   └── vision_interval_ms: int           # default 2000
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.12-005", "kind": "structural", "applies": "§A.12 Video Channel (media feature video; Level 3, §26.4): the session lifecycle: connect_video(), bind_session(), unbind_session() and disconnect_video(). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── session_lifecycle:
 │   ├── connect_video(room_id, participant_id, channel_id)
 │   ├── bind_session(session, room_id, binding)
 │   ├── unbind_session(session)
 │   └── disconnect_video(session)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.12-006", "kind": "behavior", "applies": "§A.12 Video Channel (media feature video; Level 3, §26.4): ON_VIDEO_SESSION_STARTED, with a SessionStartedEvent. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── hooks:
 │   ├── ON_VIDEO_SESSION_STARTED — SessionStartedEvent
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.12-007", "kind": "behavior", "applies": "§A.12 Video Channel (media feature video; Level 3, §26.4): ON_VIDEO_SESSION_ENDED, with a SessionStartedEvent, the same type as the start's. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── ON_VIDEO_SESSION_ENDED — SessionStartedEvent (same type as STARTED)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.12-008", "kind": "behavior", "applies": "§A.12 Video Channel (media feature video; Level 3, §26.4): the ON_VISION_RESULT and ON_VIDEO_DETECTION hooks. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── ON_VISION_RESULT, ON_VIDEO_DETECTION
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.12-009", "kind": "behavior", "applies": "§A.12 Video Channel (media feature video; Level 3, §26.4): the BEFORE_BRIDGE_VIDEO hook (Section 12.8.11). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   └── BEFORE_BRIDGE_VIDEO (Section 12.8.11)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.12-010", "kind": "behavior", "applies": "§A.12 Video Channel (media feature video; Level 3, §26.4): the framework event video_session_started. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── framework_events:
 │   ├── video_session_started
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.12-011", "kind": "behavior", "applies": "§A.12 Video Channel (media feature video; Level 3, §26.4): the framework event video_session_ended. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── video_session_ended
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.12-012", "kind": "behavior", "applies": "§A.12 Video Channel (media feature video; Level 3, §26.4): the framework event video_vision_result, with description, labels, confidence, text and faces. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   └── video_vision_result (description, labels, confidence, text, faces)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.12-013", "kind": "behavior", "applies": "§A.12 Video Channel (media feature video; Level 3, §26.4): vision results reach the AI turns as a <vision> block (Section 12.8.7); setup_video_vision() is deprecated and wires nothing. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── ai_integration:
 │   └── vision results reach the AI turns as a `<vision>` block
 │       (Section 12.8.7); setup_video_vision() is deprecated, wires nothing
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.12-014", "kind": "structural", "applies": "§A.12 Video Channel (media feature video; Level 3, §26.4): the backends LocalVideoBackend (local camera capture), ScreenCaptureBackend (screen capture) and MockVideoBackend (unit testing with call tracking). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 └── backends:
     ├── LocalVideoBackend — local camera capture (dev/testing)
     ├── ScreenCaptureBackend — screen capture (screen sharing, monitoring)
     ├── MockVideoBackend — Unit testing with call tracking
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.12-015", "kind": "structural", "applies": "§A.12 Video Channel (media feature video; Level 3, §26.4): optional WebRTC, RTP, SIP video and WebSocket backends. Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->
+```
     └── optional (MAY): WebRTC, RTP, SIP video, WebSocket backends
 ```
 <!-- /rfc -->
 
 ### A.13 Telegram Channel
 
-<!-- rfc: {"id": "RK-A.13-001", "kind": "structural", "applies": "§A.13 Telegram Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-A.13-002", "kind": "structural", "applies": "§A.13 Telegram Channel, where an implementation offers one (Level 2, §26.3): its type TELEGRAM, category TRANSPORT, direction BIDIRECTIONAL and media types TEXT, RICH, MEDIA, AUDIO, VIDEO and LOCATION (content types, not the media pipeline of §12). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 TelegramChannel
 ├── type: TELEGRAM
 ├── category: TRANSPORT
 ├── direction: BIDIRECTIONAL
 ├── media_types: [TEXT, RICH, MEDIA, AUDIO, VIDEO, LOCATION]
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.13-003", "kind": "structural", "applies": "§A.13 Telegram Channel, where an implementation offers one (Level 2, §26.3): its default capabilities: max_length the platform's limit (stated in the implementation's documentation), rich text (an HTML subset), buttons (inline keyboards), edit, delete and typing supported. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── capabilities:
 │   ├── max_length: int (the platform's limit, in the implementation's documentation)
 │   ├── supports_rich_text: true (HTML subset)
@@ -25018,29 +25506,49 @@ TelegramChannel
 │   ├── supports_edit: true
 │   ├── supports_delete: true
 │   └── supports_typing: true
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.13-004", "kind": "structural", "applies": "§A.13 Telegram Channel, where an implementation offers one (Level 2, §26.3): the TelegramBotProvider: bot_token (a secret), webhook_url, parse_webhook(request), verify_signature(request) and send(chat_id, content, options). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── provider: TelegramBotProvider
 │   ├── bot_token: string (secret)
 │   ├── webhook_url: string | null
 │   ├── parse_webhook(request) → InboundMessage
 │   ├── verify_signature(request) → bool
 │   └── send(chat_id, content, options) → DeliveryResult
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.13-005", "kind": "behavior", "applies": "§A.13 Telegram Channel, where an implementation offers one (Level 2, §26.3): its recipient, the chat, under the binding metadata key telegram_chat_id, a string or an integer, the framework writing a string (§5.7). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── binding_metadata:
 │   └── telegram_chat_id: string | int (recipient: the chat, §5.7; the
 │       framework writes a string)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.13-006", "kind": "behavior", "applies": "§A.13 Telegram Channel, where an implementation offers one (Level 2, §26.3): its chat key chat_id (§5.7). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── chat_key: chat_id
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.13-007", "kind": "behavior", "applies": "§A.13 Telegram Channel, where an implementation offers one (Level 2, §26.3): delivery through the platform's bot API (its message and photo sends). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 └── delivery: sends via Telegram Bot API (sendMessage, sendPhoto, etc.)
 ```
 <!-- /rfc -->
 
 ### A.14 CLI Channel
 
-<!-- rfc: {"id": "RK-A.14-001", "kind": "structural", "applies": "§A.14 CLI Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-A.14-002", "kind": "structural", "applies": "§A.14 CLI Channel, where an implementation offers one: its type CLI, category TRANSPORT, direction BIDIRECTIONAL and media type TEXT. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 CLIChannel
 ├── type: CLI
 ├── category: TRANSPORT
 ├── direction: BIDIRECTIONAL
 ├── media_types: [TEXT]
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.14-003", "kind": "structural", "applies": "§A.14 CLI Channel, where an implementation offers one: its capabilities: no length limit and no rich text (its purpose, development and testing on a terminal's stdin and stdout, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── capabilities:
 │   ├── max_length: null (unlimited)
 │   └── supports_rich_text: false
@@ -25052,14 +25560,30 @@ CLIChannel
 
 ### A.14.1 Host Channel
 
-<!-- rfc: {"id": "RK-A.14.1-001", "kind": "structural", "applies": "§A.14.1 Host Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-A.14.1-002", "kind": "structural", "applies": "§A.14.1 Host Channel (§10.5): its type HOST and category TRANSPORT. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 HostChannel
 ├── type: HOST
 ├── category: TRANSPORT
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.14.1-003", "kind": "behavior", "applies": "§A.14.1 Host Channel (§10.5): its direction INBOUND: it brings the host's words in and is never delivered to. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── direction: INBOUND             # brings the host's words in; never delivered to
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.14.1-004", "kind": "behavior", "applies": "§A.14.1 Host Channel (§10.5): its media types, every type: post() injects any content, transcoded per transport (§6.6). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── media_types: every type        # post() injects any content, transcoded per transport (§6.6)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.14.1-005", "kind": "behavior", "applies": "§A.14.1 Host Channel (§10.5): it narrows nothing: an answer carries what the transports that send carry (§10.5). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── narrows: nothing               # an answer carries what the transports that send carry (§10.5)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.14.1-006", "kind": "behavior", "applies": "§A.14.1 Host Channel (§10.5): it receives nothing, no external payload: post() and send_event inject (its purpose, the host writing to a room's people in its own name through post(), folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── receives: nothing              # no external payload: post() and send_event inject
 └── purpose: The host application writing to a room's people in its own
              name, through post() (§10.5)
@@ -25070,49 +25594,161 @@ HostChannel
 
 ### A.15 Conference Channel
 
-<!-- rfc: {"id": "RK-A.15-001", "kind": "structural", "applies": "§A.15 Conference Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-A.15-002", "kind": "structural", "applies": "§A.15 Conference Channel (media feature conference; Level 3, §26.4): its channel type CONFERENCE, category TRANSPORT, direction BIDIRECTIONAL and media type AUDIO. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 ConferenceChannel
 ├── channel_type: CONFERENCE
 ├── category: TRANSPORT
 ├── direction: BIDIRECTIONAL
 ├── media_types: [AUDIO]
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.15-003", "kind": "structural", "applies": "§A.15 Conference Channel (media feature conference; Level 3, §26.4): the channel requires a ConferenceBackend, and takes an STT provider (per-track transcription) and a TTS provider (AI voice through the bot track), each or null. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── requires:
 │   ├── backend: ConferenceBackend
 │   ├── stt: STTProvider | null           # Per-track transcription
 │   ├── tts: TTSProvider | null           # AI voice via bot track
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.15-004", "kind": "behavior", "applies": "§A.15 Conference Channel (media feature conference; Level 3, §26.4): an optional speech-to-speech realtime configuration, which excludes tts. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── realtime: ConferenceRealtimeConfig | null  # OPTIONAL — speech-to-speech; excludes tts
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.15-005", "kind": "behavior", "applies": "§A.15 Conference Channel (media feature conference; Level 3, §26.4): pipeline, the lane stages, null meaning the default VAD and format contract (the planned vision on video and screen tracks folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── pipeline: AudioPipelineConfig | null       # Lane stages; null = default VAD and format contract
 │   ├── vision: VisionProvider | null     # Planned — video/screen tracks
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.15-006", "kind": "structural", "applies": "§A.15 Conference Channel (media feature conference; Level 3, §26.4): interruption, a ConferenceInterruptionConfig, and recording, a ConferenceRecordingConfig or null. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── interruption: ConferenceInterruptionConfig
 │   ├── recording: ConferenceRecordingConfig | null
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.15-007", "kind": "behavior", "applies": "§A.15 Conference Channel (media feature conference; Level 3, §26.4): recorder, required with recording and refused without it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── recorder: MediaRecorder | null    # Required with recording, refused without it
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.15-008", "kind": "structural", "applies": "§A.15 Conference Channel (media feature conference; Level 3, §26.4): bot_identity, the bot's display identity. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── bot_identity: string              # Bot's display identity
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.15-009", "kind": "behavior", "applies": "§A.15 Conference Channel (media feature conference; Level 3, §26.4): bot_grants, explicit grants for join_as_bot(), derived when null. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── bot_grants: ConferenceGrants | null  # Explicit grants for join_as_bot(); null = derived
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.15-010", "kind": "structural", "applies": "§A.15 Conference Channel (media feature conference; Level 3, §26.4): default_grants, the grants minted for participants. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── default_grants: ConferenceGrants  # Grants minted for participants
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.15-011", "kind": "behavior", "applies": "§A.15 Conference Channel (media feature conference; Level 3, §26.4): e2ee, false by default, which requires the backend's E2EE capability. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── e2ee: bool                        # default false — requires E2EE cap
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.15-012", "kind": "structural", "applies": "§A.15 Conference Channel (media feature conference; Level 3, §26.4): close_room_on_detach, false by default. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── close_room_on_detach: bool        # default false
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.15-013", "kind": "structural", "applies": "§A.15 Conference Channel (media feature conference; Level 3, §26.4): speak_text_events, false by default. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   └── speak_text_events: bool           # default false
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.15-014", "kind": "behavior", "applies": "§A.15 Conference Channel (media feature conference; Level 3, §26.4): an attach ensures the SFU room, and joins the bot lazily with bot_grants. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── lifecycle:
 │   ├── attach → ensure_room() [+ lazy join_as_bot(…, bot_grants)]
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.15-015", "kind": "behavior", "applies": "§A.15 Conference Channel (media feature conference; Level 3, §26.4): a participant joining makes a Participant record and fires the hook, the bot excluded. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── on_participant_joined → Participant record + hook (bot excluded)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.15-016", "kind": "behavior", "applies": "§A.15 Conference Channel (media feature conference; Level 3, §26.4): a track published is subscribed when consumed, into a pipeline lane. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── on_track_published → subscribe_track() if consumed → pipeline lane
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.15-017", "kind": "behavior", "applies": "§A.15 Conference Channel (media feature conference; Level 3, §26.4): a track unpublished tears its lane down and is unsubscribed. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── on_track_unpublished → lane teardown + unsubscribe_track()
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.15-018", "kind": "behavior", "applies": "§A.15 Conference Channel (media feature conference; Level 3, §26.4): a detach leaves the SFU room, and closes it when close_room_on_detach. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   └── detach → leave() [+ close_room() if close_room_on_detach]
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.15-019", "kind": "behavior", "applies": "§A.15 Conference Channel (media feature conference; Level 3, §26.4): the ON_CONFERENCE_PARTICIPANT_JOINED and ON_CONFERENCE_PARTICIPANT_LEFT hooks. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── hooks:
 │   ├── ON_CONFERENCE_PARTICIPANT_JOINED / LEFT
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.15-020", "kind": "behavior", "applies": "§A.15 Conference Channel (media feature conference; Level 3, §26.4): the ON_CONFERENCE_TRACK_PUBLISHED and ON_CONFERENCE_TRACK_UNPUBLISHED hooks. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── ON_CONFERENCE_TRACK_PUBLISHED / UNPUBLISHED
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.15-021", "kind": "behavior", "applies": "§A.15 Conference Channel (media feature conference; Level 3, §26.4): the ON_CONFERENCE_TRACK_MUTED and ON_CONFERENCE_TRACK_UNMUTED hooks. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── ON_CONFERENCE_TRACK_MUTED / UNMUTED
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.15-022", "kind": "behavior", "applies": "§A.15 Conference Channel (media feature conference; Level 3, §26.4): the ON_ACTIVE_SPEAKER_CHANGED hook. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── ON_ACTIVE_SPEAKER_CHANGED
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.15-023", "kind": "behavior", "applies": "§A.15 Conference Channel (media feature conference; Level 3, §26.4): the ON_CONNECTION_QUALITY_CHANGED hook. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── ON_CONNECTION_QUALITY_CHANGED
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.15-024", "kind": "behavior", "applies": "§A.15 Conference Channel (media feature conference; Level 3, §26.4): the ON_SCREEN_SHARE_STARTED and ON_SCREEN_SHARE_STOPPED hooks. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── ON_SCREEN_SHARE_STARTED / STOPPED
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.15-025", "kind": "behavior", "applies": "§A.15 Conference Channel (media feature conference; Level 3, §26.4): the ON_TRANSCRIPTION hook, per track and attributed to its participant. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   └── ON_TRANSCRIPTION — per track, participant-attributed
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.15-026", "kind": "behavior", "applies": "§A.15 Conference Channel (media feature conference; Level 3, §26.4): the framework events conference_started and conference_ended. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── framework_events:
 │   ├── conference_started / conference_ended
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.15-027", "kind": "behavior", "applies": "§A.15 Conference Channel (media feature conference; Level 3, §26.4): the framework events conference_participant_joined and conference_participant_left. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── conference_participant_joined / conference_participant_left
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.15-028", "kind": "behavior", "applies": "§A.15 Conference Channel (media feature conference; Level 3, §26.4): the framework event conference_bot_grants_changed. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   └── conference_bot_grants_changed
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.15-029", "kind": "structural", "applies": "§A.15 Conference Channel (media feature conference; Level 3, §26.4): the MockConferenceBackend, for unit testing with scripted event sequences. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 └── backends:
     ├── MockConferenceBackend — unit testing with scripted event sequences
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-A.15-030", "kind": "structural", "applies": "§A.15 Conference Channel (media feature conference; Level 3, §26.4): SFU provider backends. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
     └── SFU providers (e.g., LiveKit)
 ```
 <!-- /rfc -->

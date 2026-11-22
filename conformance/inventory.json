@@ -1557,105 +1557,105 @@
     },
     {
       "section": "A.1",
-      "sha256": "744135b2368b2e5802e621949f785885930d9b8007e6bfcec17efbe7afccb93c",
+      "sha256": "6aee13d4e9a97e77d799392e55a112a821f3a0ba0d0b9de42c2a7b0253652691",
       "classification": "normative",
-      "review": "Source inventory: SMS Channel. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: SMS Channel, split to one obligation per unit (RMK-1959) by closing and reopening the code block: the channel's type, category, direction and media types; its default capabilities; the SMSProvider interface; the recipient key phone_number. All must where an implementation offers the channel. Every unit carries its level."
     },
     {
       "section": "A.2",
-      "sha256": "8a316a3a3cb97b22a3abda8d9f7d1050dbd720838c54653acad1106cf3da8d40",
+      "sha256": "4631bab27fb8430c98a17d53ce0aae4a662a4abeb7c125f5dead26f1f17fc3bb",
       "classification": "normative",
-      "review": "Source inventory: Email Channel. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Email Channel, split to one obligation per unit (RMK-1959) by closing and reopening the code block: the channel's type, category, direction and media types; its default capabilities; the EmailProvider interface; the recipient key email_address; the binding metadata subject. All must where an implementation offers the channel. Every unit carries its level."
     },
     {
       "section": "A.3",
-      "sha256": "9986ae10ed5803e75db93681b9f6b17942a622d862719a4eaadf6770771cc160",
+      "sha256": "601e810b75f35d651b8b1c834297054f7623955abaed30098fadaa5a274b72d1",
       "classification": "normative",
-      "review": "Source inventory: WhatsApp Channel. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: WhatsApp Channel, split to one obligation per unit (RMK-1959) by closing and reopening the code block: the channel's type, category, direction and media types; its default capabilities; the WhatsAppProvider interface; the recipient key phone_number. All must where an implementation offers the channel. Every unit carries its level."
     },
     {
       "section": "A.4",
-      "sha256": "1c6769eb5477d4688eb33cdf43442414227990fc4e4364718a19435c0a261ddf",
+      "sha256": "c8083c73d00b7282ac4306e5e31a7848bf4508d01842b1ebc0ba9ad2a3b79e3e",
       "classification": "normative",
-      "review": "Source inventory: WhatsApp Personal Channel. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: WhatsApp Personal Channel, split to one obligation per unit (RMK-1959) by closing and reopening the code block: the channel's type, category, direction and media types; its default capabilities; its source provider; the WhatsAppPersonalProvider interface (audio and video sends are message content, not the media pipeline); the recipient key phone_number; the chat key group_jid. All must where an implementation offers the channel. Every unit carries its level."
     },
     {
       "section": "A.5",
-      "sha256": "41f9a531a29a673bb99337552d061aad5d1bb6a5bc589abb0b1f4bc7648fbe0b",
+      "sha256": "2ded1f8b28d6810b3bc40cfa2b0983e1b86300d1341bbd29498adb3da47bf2e3",
       "classification": "normative",
-      "review": "Source inventory: Messenger Channel. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Messenger Channel, split to one obligation per unit (RMK-1959) by closing and reopening the code block: the channel's type, category, direction and media types; its default capabilities; the MessengerProvider interface; the recipient key facebook_user_id. All must where an implementation offers the channel. Every unit carries its level."
     },
     {
       "section": "A.6",
-      "sha256": "d65dd58f4dc58835afa7bcbfcadfba64f1cb7ec8b8ebb4c2cc1a848fbe1870b0",
+      "sha256": "96bab62125bdc8845b18988a5a53ffc036b411a5c66abe8f034a91e536ae9926",
       "classification": "normative",
-      "review": "Source inventory: Teams Channel. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Teams Channel, split to one obligation per unit (RMK-1959) by closing and reopening the code block: the channel's type, category, direction and media types; its default capabilities; the TeamsProvider interface; the ConversationReferenceStore it requires; the recipient key teams_conversation_id; the chat key conversation_id. All must where an implementation offers the channel. Every unit carries its level."
     },
     {
       "section": "A.7",
-      "sha256": "2dad52443d2656a56da79dedb059d800f52f55b8dac0f0460321cb20237e8e56",
+      "sha256": "4b8aa28fa259e385ac0063feffcf1a8f9351fffc391d1179c59a3d3e07409122",
       "classification": "normative",
-      "review": "Source inventory: RCS Channel. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: RCS Channel, split to one obligation per unit (RMK-1959) by closing and reopening the code block: the channel's type, category, direction and media types; its default capabilities; the RCSProvider interface and its delivery result; the recipient key phone_number; the SMS fallback setting. All must where an implementation offers the channel. Every unit carries its level."
     },
     {
       "section": "A.8",
-      "sha256": "8036e06f736a1233caee573a6027c2338a745bb5bad3352aafdcae5bd56625ed",
+      "sha256": "3d7fa9e2f27bc6da979a0625cf77ca0c9ad50985233a60269409a184bf1551ef",
       "classification": "normative",
-      "review": "Source inventory: WebSocket Channel. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: WebSocket Channel, split to one obligation per unit (RMK-1959) by closing and reopening the code block: the channel's type, category, direction and media types; its default capabilities; register_connection() and its organization scope (cut where the comment's second sentence starts a line); subscribe(), unsubscribe() and unregister_connection(), each with its scope (no sentence of theirs starts a line); delivery, plain and streamed, one unit (no sentence of the entry starts a line). All must where an implementation offers the channel. Every unit carries its level."
     },
     {
       "section": "A.9",
-      "sha256": "019272d78f974a25d68ebdef947d4e29948d4b3bd312e9edae8956149a91fcab",
+      "sha256": "963613d27655ca05f32abdeb59a498e38c10033081110de171e12261bfcd866a",
       "classification": "normative",
-      "review": "Source inventory: AI Channel. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: AI Channel, split to one obligation per unit (RMK-1959). The reference tree, cut by closing and reopening the code block: type and media types; capabilities; provider or router; the per-turn settings' channel values; one unit per configuration field that states a default or a rule, the plain fields between them grouped; the per-room overrides; the message parts; each behaviour line. The per-turn settings paragraphs, one unit per sentence (the skill registry's two sentences one unit), and the constrained turn, one unit per sentence. All must; the configuration table is a suspect (incomplete against Python and Section 6.4, RMK card). Every unit carries its level."
     },
     {
       "section": "A.9.1",
-      "sha256": "86f29f0c65291c19cb24171815b907b5fed5c393ea5ee78d1d4c0ee895b063d1",
+      "sha256": "3e9d5997912d01f0b7b7553e74c9f8bd617beaa1156d1913afc3589d6f2f1fdd",
       "classification": "normative",
-      "review": "Source inventory: ACP Agent Channel. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage. Reviewed the ACP subscriber tool-text option and the existing source units surrounding it."
+      "review": "Source inventory: ACP Agent Channel, split to one obligation per unit (RMK-1959). The reference tree, cut by closing and reopening the code block: identity; the protocol side; each transport, session, update mapping, end-of-turn and safety line; the configuration fields, one unit per field that states a rule or a default, the plain ones beside each other grouped. The usage paragraphs one unit per sentence: the optional usage_metadata (may), what it identifies once offered and the usage rules (must); the note that no tariff is specified is folded into the last unit. Every unit but RK-A.9.1-032 must where an implementation offers the channel. Every unit carries its level."
     },
     {
       "section": "A.10",
-      "sha256": "f522e7d32102b7bc775fd534cfca2063974197e184628e0be33fac7d4763850e",
+      "sha256": "dcc73b67ae0f48a4bc02b50c3cf343a5576240b678ec57ec870aaab13962564e",
       "classification": "normative",
-      "review": "Source inventory: Voice Channel. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Voice Channel (media feature voice), split to one obligation per unit (RMK-1959) by closing and reopening the code block: identity; requires (suspect, RMK card); each configuration field; streaming support, deliver_stream() and its AFTER_TTS hook; session binding; each delivery path; where the AEC reference is fed. All must. Every unit carries its level."
     },
     {
       "section": "A.11",
-      "sha256": "98b2d5636c5031f06a40a273a220478f81d1dc51ad8314ed3085c401e758d67c",
+      "sha256": "1df2eeba4a38a814121ab9f3d11df462e24b5f6db712d288d77d9f26ecf47126",
       "classification": "normative",
-      "review": "Source inventory: Realtime Voice Channel. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Realtime Voice Channel (media feature realtime), split to one obligation per unit (RMK-1959) by closing and reopening the code block: identity; the required provider and transport; the optional reasoning backend and audio pipeline (must: the channel honours either choice; the pipeline's name a suspect, RMK card); the configuration; sessions; tool handling; delegation. All must. Every unit carries its level."
     },
     {
       "section": "A.12",
-      "sha256": "182fa8438546c4f3f6f6ec5030890e934d5cca64a2e6889d56afb4c609314c01",
+      "sha256": "60ee181a852873546619322a07799737aa43f2de323281c579a708016a56e4dc",
       "classification": "normative",
-      "review": "Source inventory: Video Channel. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Video Channel (media feature video), split to one obligation per unit (RMK-1959) by closing and reopening the code block: identity; requires; the vision interval default; the session lifecycle; one unit per hook line and per framework event line; the AI integration; the required backends (must) and the optional ones (may). Every unit carries its level."
     },
     {
       "section": "A.13",
-      "sha256": "397ccde910f9d0c4e150dda7e11b659a958627b3d92200c7535baa69112e7cd5",
+      "sha256": "32c765a3e4eb0a1fea3e430327f4f92256782080065ed4f348b728fe18cf1640",
       "classification": "normative",
-      "review": "Source inventory: Telegram Channel. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Telegram Channel, split to one obligation per unit (RMK-1959) by closing and reopening the code block: the channel's type, category, direction and media types; its default capabilities; the bot provider; the recipient key telegram_chat_id, written as a string; the chat key chat_id; delivery through the platform's bot API (vendor named in the text). All must where an implementation offers the channel. Every unit carries its level."
     },
     {
       "section": "A.14",
-      "sha256": "c72f431a09fb1c8679ac3dc199d74a9a40c9d01567d6402b1ea0fcbdeefd874a",
+      "sha256": "3565362681136e8af5dffcf90289ada5f00521494705a296d328861c8853d023",
       "classification": "normative",
-      "review": "Source inventory: CLI Channel. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: CLI Channel, split to one obligation per unit (RMK-1959) by closing and reopening the code block: the channel's type, category, direction and media type; its capabilities, its purpose folded in. Both must where an implementation offers the channel. Every unit carries its level."
     },
     {
       "section": "A.14.1",
-      "sha256": "cd360d20c864ff1686a5329eeb8243a7bd1f40c2481422aa1eeed95435222a34",
+      "sha256": "d05964beafadc8b2243ecd3fd6b731db17690e7b91612fa01e1a939846b8520c",
       "classification": "normative",
-      "review": "Source inventory: Host Channel. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Host Channel, split to one obligation per unit (RMK-1959) by closing and reopening the code block: type and category; direction INBOUND, never delivered to; every media type; narrows nothing; receives nothing, its purpose folded in. All must. Every unit carries its level."
     },
     {
       "section": "A.15",
-      "sha256": "e9efbf41060d29fbae9230308390f0a3b28307169267a9952540c8df43bd81de",
+      "sha256": "81a3c02f5ecd62fb4bbad4e09985f941814486b92d51d4b6cee6f0e7ae44efa9",
       "classification": "normative",
-      "review": "Source inventory: Conference Channel. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Conference Channel (media feature conference), split to one obligation per unit (RMK-1959) by closing and reopening the code block: identity; the required backend with the optional STT and TTS; one unit per requirement field that states a default or a rule, the plain ones beside each other grouped (the planned vision folded into the pipeline unit); each lifecycle line; one unit per hook line and per framework event line; the mock backend and the SFU provider backends (vendor named in the text). All must. Every unit carries its level."
     },
     {
       "section": "B",
