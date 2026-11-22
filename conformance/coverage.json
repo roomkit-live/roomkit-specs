@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "rfc_sha256": "9e5144051dee68de49e8b62e955ce994e382bed97a5048f0a4b802c7f6ce72ca",
+  "rfc_sha256": "ae7ef77c70d078dac43d6e885083e9098b2796ef046665d40a6960031340358b",
   "corpus_sha256": "b752a9016a65e9f50264ec1b32683b11b8cf62888753c1ae2c043deb125f93b8",
   "python_commit": "1bb12d025296ee1c5f14b82267462fc4d13104a6",
   "scenario_count": 3402,
@@ -8048,11 +8048,15 @@
       "section": "19.1",
       "title": "Overview",
       "review": "normative",
-      "requirements": 2,
+      "requirements": 40,
       "mapping": {
-        "unmapped": 2
+        "unmapped": 40
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "phase6": 6,
+        "step": 1,
+        "writable": 2
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "greeting/a-channel-unregistered-greets-no-more",
@@ -8092,9 +8096,9 @@
       "section": "19.2",
       "title": "ConversationState",
       "review": "normative",
-      "requirements": 1,
+      "requirements": 5,
       "mapping": {
-        "unmapped": 1
+        "unmapped": 5
       },
       "decided_gaps": {},
       "unannotated_keyword_lines": [],
@@ -8114,11 +8118,14 @@
       "section": "19.3",
       "title": "Addressing",
       "review": "normative",
-      "requirements": 4,
+      "requirements": 15,
       "mapping": {
-        "unmapped": 4
+        "unmapped": 15
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "phase6": 1,
+        "writable": 1
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "addressing/a-sender-s-interruption-marker-asks-its-agents",
@@ -8140,11 +8147,13 @@
       "section": "19.3.1",
       "title": "Agent-sourced events",
       "review": "normative",
-      "requirements": 1,
+      "requirements": 12,
       "mapping": {
-        "unmapped": 1
+        "unmapped": 12
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "writable": 1
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "addressing/set-agent-response-policy-stops-an-agent-s-answer-asking-the-others",
@@ -8157,10 +8166,10 @@
       "section": "19.3.2",
       "title": "Delivered versus solicited",
       "review": "normative",
-      "requirements": 2,
+      "requirements": 5,
       "mapping": {
         "mapped_partial": 1,
-        "unmapped": 1
+        "unmapped": 4
       },
       "decided_gaps": {},
       "unannotated_keyword_lines": [],
@@ -8208,11 +8217,14 @@
       "section": "19.4",
       "title": "ConversationRouter",
       "review": "normative",
-      "requirements": 4,
+      "requirements": 21,
       "mapping": {
-        "unmapped": 4
+        "unmapped": 21
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "step": 1,
+        "writable": 2
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "orchestration/a-conversation-pipeline-routes-each-phase-to-its-agent",
@@ -8238,11 +8250,13 @@
       "section": "19.5",
       "title": "ConversationPipeline",
       "review": "normative",
-      "requirements": 4,
+      "requirements": 34,
       "mapping": {
-        "unmapped": 4
+        "unmapped": 34
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "phase6": 15
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "orchestration/a-conversation-pipeline-gives-each-agent-the-targets-it-can-reach",
@@ -8263,11 +8277,15 @@
       "section": "19.6",
       "title": "HandoffHandler",
       "review": "normative",
-      "requirements": 8,
+      "requirements": 46,
       "mapping": {
-        "unmapped": 8
+        "unmapped": 46
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "phase6": 5,
+        "step": 3,
+        "writable": 1
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "orchestration/a-conversation-pipeline-gives-each-agent-the-targets-it-can-reach",
@@ -8728,11 +8746,14 @@
       "section": "19.8",
       "title": "StatusBus",
       "review": "normative",
-      "requirements": 1,
+      "requirements": 21,
       "mapping": {
-        "unmapped": 1
+        "unmapped": 21
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "step": 5,
+        "writable": 1
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "host/a-turn-s-host-acts-for-its-room-alone",
@@ -25565,19 +25586,316 @@
       "links": []
     },
     {
-      "id": "RK-19.1-001",
+      "id": "RK-19.1-003",
       "section": "19.1",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-19.1-002",
+      "id": "RK-19.1-004",
+      "section": "19.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1925",
+        "note": "Exercise a voice-configured agent's TTS voice."
+      }
+    },
+    {
+      "id": "RK-19.1-005",
       "section": "19.1",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-19.2-001",
+      "id": "RK-19.1-006",
+      "section": "19.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.1-007",
+      "section": "19.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.1-008",
+      "section": "19.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1925",
+        "note": "A configuration-only speech-to-speech agent and its read-only flag need media coverage."
+      }
+    },
+    {
+      "id": "RK-19.1-009",
+      "section": "19.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1925",
+        "note": "Expose the public identity builder with a caller-specified language; turn prompt inspection exercises its output only indirectly."
+      }
+    },
+    {
+      "id": "RK-19.1-010",
+      "section": "19.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.1-011",
+      "section": "19.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1925",
+        "note": "Set a room's language through its handoff handler, then assert the new language in that agent's next system prompt."
+      }
+    },
+    {
+      "id": "RK-19.1-012",
+      "section": "19.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1925",
+        "note": "Inspect the identity block on an installed realtime pipeline session."
+      }
+    },
+    {
+      "id": "RK-19.1-013",
+      "section": "19.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.1-014",
+      "section": "19.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1925",
+        "note": "Exercise a configuration-only speech-to-speech agent with no model and observe no generation."
+      }
+    },
+    {
+      "id": "RK-19.1-015",
+      "section": "19.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.1-016",
+      "section": "19.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.1-017",
+      "section": "19.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.1-018",
+      "section": "19.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.1-019",
+      "section": "19.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.1-020",
+      "section": "19.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.1-021",
+      "section": "19.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.1-022",
+      "section": "19.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.1-023",
+      "section": "19.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.1-024",
+      "section": "19.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.1-025",
+      "section": "19.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.1-026",
+      "section": "19.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.1-027",
+      "section": "19.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.1-028",
+      "section": "19.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.1-029",
+      "section": "19.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.1-030",
+      "section": "19.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.1-031",
+      "section": "19.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.1-032",
+      "section": "19.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.1-033",
+      "section": "19.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.1-034",
+      "section": "19.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.1-035",
+      "section": "19.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.1-036",
+      "section": "19.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.1-037",
+      "section": "19.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.1-038",
+      "section": "19.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.1-039",
+      "section": "19.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1925",
+        "note": "Exercise the reference 10,000-room bound and oldest-tenth eviction on subsequent starts."
+      }
+    },
+    {
+      "id": "RK-19.1-040",
+      "section": "19.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.1-041",
+      "section": "19.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1925",
+        "note": "Observe the conventional voice session greeting gate and waiting deliveries."
+      }
+    },
+    {
+      "id": "RK-19.1-042",
+      "section": "19.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1925",
+        "note": "Inspect the realtime provider's own-turn injection for the greeting."
+      }
+    },
+    {
+      "id": "RK-19.2-002",
+      "section": "19.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.2-003",
+      "section": "19.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.2-004",
+      "section": "19.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.2-005",
+      "section": "19.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.2-006",
       "section": "19.2",
       "mapping": "unmapped",
       "links": []
@@ -25589,16 +25907,92 @@
       "links": []
     },
     {
-      "id": "RK-19.3-002",
+      "id": "RK-19.3-005",
       "section": "19.3",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-19.3-003",
+      "id": "RK-19.3-006",
       "section": "19.3",
       "mapping": "unmapped",
       "links": []
+    },
+    {
+      "id": "RK-19.3-007",
+      "section": "19.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.3-008",
+      "section": "19.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.3-009",
+      "section": "19.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.3-010",
+      "section": "19.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.3-011",
+      "section": "19.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.3-012",
+      "section": "19.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1925",
+        "note": "Deliver an injected event visible to an agent that is skipped, then assert its content in that agent's later model history."
+      }
+    },
+    {
+      "id": "RK-19.3-013",
+      "section": "19.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.3-014",
+      "section": "19.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.3-015",
+      "section": "19.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.3-016",
+      "section": "19.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.3-017",
+      "section": "19.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1925",
+        "note": "Select a realtime transport session and verify it does not select an intelligence recipient."
+      }
     },
     {
       "id": "RK-19.3-004",
@@ -25607,13 +26001,90 @@
       "links": []
     },
     {
-      "id": "RK-19.3.1-001",
+      "id": "RK-19.3.1-002",
       "section": "19.3.1",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-19.3.2-001",
+      "id": "RK-19.3.1-003",
+      "section": "19.3.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.3.1-004",
+      "section": "19.3.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.3.1-005",
+      "section": "19.3.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.3.1-006",
+      "section": "19.3.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.3.1-007",
+      "section": "19.3.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1925",
+        "note": "Issue an explicitly addressed event from a bound intelligence channel under each response policy and assert that only its named peer answers. An installed discussion supersedes the room policy."
+      }
+    },
+    {
+      "id": "RK-19.3.1-008",
+      "section": "19.3.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.3.1-009",
+      "section": "19.3.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.3.1-010",
+      "section": "19.3.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.3.1-011",
+      "section": "19.3.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.3.1-012",
+      "section": "19.3.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.3.1-013",
+      "section": "19.3.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.3.2-003",
+      "section": "19.3.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.3.2-004",
       "section": "19.3.2",
       "mapping": "mapped_partial",
       "links": [
@@ -25632,70 +26103,465 @@
       ]
     },
     {
-      "id": "RK-19.3.2-002",
+      "id": "RK-19.3.2-005",
       "section": "19.3.2",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-19.4-001",
+      "id": "RK-19.3.2-006",
+      "section": "19.3.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.3.2-007",
+      "section": "19.3.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.4-005",
       "section": "19.4",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-19.4-002",
+      "id": "RK-19.4-006",
       "section": "19.4",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-19.4-003",
+      "id": "RK-19.4-007",
       "section": "19.4",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-19.4-004",
+      "id": "RK-19.4-008",
       "section": "19.4",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-19.5-001",
+      "id": "RK-19.4-009",
+      "section": "19.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.4-010",
+      "section": "19.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.4-011",
+      "section": "19.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.4-012",
+      "section": "19.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1925",
+        "note": "Route otherwise identical events from two named source channels and assert the selected rule."
+      }
+    },
+    {
+      "id": "RK-19.4-013",
+      "section": "19.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1925",
+        "note": "Add a configurable predicate receiving event, context and conversation state, and assert its effect on routing."
+      }
+    },
+    {
+      "id": "RK-19.4-014",
+      "section": "19.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.4-015",
+      "section": "19.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.4-016",
+      "section": "19.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.4-017",
+      "section": "19.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.4-018",
+      "section": "19.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.4-019",
+      "section": "19.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1925",
+        "note": "Observe the supervisor on unaddressed agent output with ADDRESSED_ONLY explicitly selected."
+      }
+    },
+    {
+      "id": "RK-19.4-020",
+      "section": "19.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.4-021",
+      "section": "19.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.4-022",
+      "section": "19.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.4-023",
+      "section": "19.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.4-024",
+      "section": "19.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.4-025",
+      "section": "19.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.5-005",
       "section": "19.5",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-19.5-002",
+      "id": "RK-19.5-006",
       "section": "19.5",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-19.5-003",
+      "id": "RK-19.5-007",
       "section": "19.5",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-19.5-004",
+      "id": "RK-19.5-008",
       "section": "19.5",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-19.6-001",
+      "id": "RK-19.5-009",
+      "section": "19.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.5-010",
+      "section": "19.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.5-011",
+      "section": "19.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.5-012",
+      "section": "19.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.5-013",
+      "section": "19.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.5-014",
+      "section": "19.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.5-015",
+      "section": "19.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.5-016",
+      "section": "19.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.5-017",
+      "section": "19.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.5-018",
+      "section": "19.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.5-019",
+      "section": "19.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.5-020",
+      "section": "19.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.5-021",
+      "section": "19.5",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1925",
+        "note": "Exercise this realtime behavior in a shared feature scenario: a session in pipeline mode takes the active agent's configuration and handoff switches it to the next agent."
+      }
+    },
+    {
+      "id": "RK-19.5-022",
+      "section": "19.5",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1925",
+        "note": "Exercise this realtime behavior in a shared feature scenario: session start reads the room's agent and handoff changes only that room's sessions, leaving other rooms and channel defaults intact."
+      }
+    },
+    {
+      "id": "RK-19.5-023",
+      "section": "19.5",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1925",
+        "note": "Exercise this realtime behavior in a shared feature scenario: without a prompt or identity, the active agent inherits the channel prompt at session start or handoff."
+      }
+    },
+    {
+      "id": "RK-19.5-024",
+      "section": "19.5",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1925",
+        "note": "Exercise this realtime behavior in a shared feature scenario: a room language change preserves the session prompt when the agent supplies none."
+      }
+    },
+    {
+      "id": "RK-19.5-025",
+      "section": "19.5",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1925",
+        "note": "Exercise this realtime behavior in a shared feature scenario: a pipeline session includes the channel tools, the active agent's tools and handoff."
+      }
+    },
+    {
+      "id": "RK-19.5-026",
+      "section": "19.5",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1925",
+        "note": "Exercise this realtime behavior in a shared feature scenario: late channel tool changes are read at session start or handoff."
+      }
+    },
+    {
+      "id": "RK-19.5-027",
+      "section": "19.5",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1925",
+        "note": "Exercise this realtime behavior in a shared feature scenario: an agent tool uses its agent handler or falls back to the channel handler."
+      }
+    },
+    {
+      "id": "RK-19.5-028",
+      "section": "19.5",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1925",
+        "note": "Exercise this realtime behavior in a shared feature scenario: a conflicting tool retains the channel's definition and handler, is warned at install, and never reverts to the agent's copy."
+      }
+    },
+    {
+      "id": "RK-19.5-029",
+      "section": "19.5",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1925",
+        "note": "Exercise this realtime behavior in a shared feature scenario: channel reservations include host, human-input, search and skill tools even when hidden, without refusing the agent's other tools."
+      }
+    },
+    {
+      "id": "RK-19.5-030",
+      "section": "19.5",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1925",
+        "note": "Exercise this realtime behavior in a shared feature scenario: both participant-resolved policies govern declaration, discovery, handler catalogue and execution of a session tool."
+      }
+    },
+    {
+      "id": "RK-19.5-031",
+      "section": "19.5",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1925",
+        "note": "Exercise this realtime behavior in a shared feature scenario: handoff applies the new agent policy per participant across the room before declaring its tools."
+      }
+    },
+    {
+      "id": "RK-19.5-032",
+      "section": "19.5",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1925",
+        "note": "Exercise this realtime behavior in a shared feature scenario: the serving room agent's policy governs calls despite stale session declarations."
+      }
+    },
+    {
+      "id": "RK-19.5-033",
+      "section": "19.5",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1925",
+        "note": "Verify the session's actual channel-provided capabilities. The existing refusal observes installation, not a live session."
+      }
+    },
+    {
+      "id": "RK-19.5-034",
+      "section": "19.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.5-035",
+      "section": "19.5",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1925",
+        "note": "Exercise this realtime behavior in a shared feature scenario: a reasoning backend rejects the same unsupported agent capabilities and agent tools; its MCP instructions reach its own model."
+      }
+    },
+    {
+      "id": "RK-19.5-036",
+      "section": "19.5",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1925",
+        "note": "Exercise this realtime behavior in a shared feature scenario: installation refuses declaration-only agents and intelligence channels without an Agent's prompt."
+      }
+    },
+    {
+      "id": "RK-19.5-037",
+      "section": "19.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.5-038",
+      "section": "19.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.6-009",
       "section": "19.6",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-19.6-002",
+      "id": "RK-19.6-010",
       "section": "19.6",
       "mapping": "unmapped",
       "links": []
+    },
+    {
+      "id": "RK-19.6-011",
+      "section": "19.6",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1925",
+        "note": "Add a public HandoffRequest construction or inspection step to assert the urgent=false default; the stock model tool does not expose urgent."
+      }
     },
     {
       "id": "RK-19.6-003",
@@ -25704,31 +26570,293 @@
       "links": []
     },
     {
-      "id": "RK-19.6-004",
+      "id": "RK-19.6-012",
       "section": "19.6",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-19.6-005",
+      "id": "RK-19.6-013",
       "section": "19.6",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-19.6-006",
+      "id": "RK-19.6-014",
       "section": "19.6",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-19.6-007",
+      "id": "RK-19.6-015",
       "section": "19.6",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-19.6-008",
+      "id": "RK-19.6-016",
+      "section": "19.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.6-017",
+      "section": "19.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.6-018",
+      "section": "19.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.6-019",
+      "section": "19.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.6-020",
+      "section": "19.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.6-021",
+      "section": "19.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.6-022",
+      "section": "19.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.6-023",
+      "section": "19.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.6-024",
+      "section": "19.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.6-025",
+      "section": "19.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.6-026",
+      "section": "19.6",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1925",
+        "note": "Inspect the target's next model request for the framed conversation summary attributed to the sanitized previous agent ID; stored state alone is not that request."
+      }
+    },
+    {
+      "id": "RK-19.6-027",
+      "section": "19.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.6-028",
+      "section": "19.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.6-029",
+      "section": "19.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.6-030",
+      "section": "19.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.6-031",
+      "section": "19.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.6-032",
+      "section": "19.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.6-033",
+      "section": "19.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.6-034",
+      "section": "19.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.6-035",
+      "section": "19.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.6-036",
+      "section": "19.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.6-037",
+      "section": "19.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.6-038",
+      "section": "19.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.6-039",
+      "section": "19.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.6-040",
+      "section": "19.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.6-041",
+      "section": "19.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.6-042",
+      "section": "19.6",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1925",
+        "note": "Exercise this realtime behavior in a shared feature scenario: session handoffs use the room's active agent as caller; the human hold rule is not yet required there."
+      }
+    },
+    {
+      "id": "RK-19.6-043",
+      "section": "19.6",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1925",
+        "note": "Exercise this realtime behavior in a shared feature scenario: handoff changes room sessions to the target agent's prompt and a language change uses the active agent's prompt."
+      }
+    },
+    {
+      "id": "RK-19.6-044",
+      "section": "19.6",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1925",
+        "note": "Exercise this realtime behavior in a shared feature scenario: a handler with a registered realtime event channel rejects declaration-only agents and intelligence channels without an Agent."
+      }
+    },
+    {
+      "id": "RK-19.6-045",
+      "section": "19.6",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1925",
+        "note": "Exercise this realtime behavior in a shared feature scenario: a language change refuses such an active agent before writing the room language."
+      }
+    },
+    {
+      "id": "RK-19.6-046",
+      "section": "19.6",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1925",
+        "note": "Supply an agent held by declaration to the non-realtime handler and assert its acceptance; the direct handler fixture must support supplying that agent."
+      }
+    },
+    {
+      "id": "RK-19.6-047",
+      "section": "19.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.6-048",
+      "section": "19.6",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1925",
+        "note": "Invoke the installed tool outside the bound async tool context; the available handoff.handle step supplies an explicit room and bypasses the tool."
+      }
+    },
+    {
+      "id": "RK-19.6-049",
+      "section": "19.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.6-050",
+      "section": "19.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.6-051",
+      "section": "19.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.6-052",
+      "section": "19.6",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1925",
+        "note": "Exercise this realtime behavior in a shared feature scenario: the addressed realtime channel delivers the handler's greeting to each of its sessions."
+      }
+    },
+    {
+      "id": "RK-19.6-053",
       "section": "19.6",
       "mapping": "unmapped",
       "links": []
@@ -25890,7 +27018,157 @@
       "links": []
     },
     {
-      "id": "RK-19.8-001",
+      "id": "RK-19.8-002",
+      "section": "19.8",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.8-003",
+      "section": "19.8",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1925",
+        "note": "Expose the nonwaiting post and a held bus subscriber to compare return boundaries with post_async. A gated asynchronous hook body is not a bus subscriber."
+      }
+    },
+    {
+      "id": "RK-19.8-004",
+      "section": "19.8",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1925",
+        "note": "Add a StatusBus subscription callback that records each posted entry. ON_STATUS_POSTED hook registration only observes the framework bridge."
+      }
+    },
+    {
+      "id": "RK-19.8-005",
+      "section": "19.8",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1925",
+        "note": "Expose a removable bus subscriber and observe that later posted entries no longer reach it."
+      }
+    },
+    {
+      "id": "RK-19.8-006",
+      "section": "19.8",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.8-007",
+      "section": "19.8",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.8-008",
+      "section": "19.8",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1925",
+        "note": "Expose StatusBus.has_completed and exercise the fiftieth completed-entry boundary for an optional agent."
+      }
+    },
+    {
+      "id": "RK-19.8-009",
+      "section": "19.8",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1925",
+        "note": "Expose the bus's close operation independently of framework close, with a subscriber or resource that observes its effect."
+      }
+    },
+    {
+      "id": "RK-19.8-010",
+      "section": "19.8",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.8-011",
+      "section": "19.8",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.8-012",
+      "section": "19.8",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.8-013",
+      "section": "19.8",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.8-014",
+      "section": "19.8",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.8-015",
+      "section": "19.8",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.8-016",
+      "section": "19.8",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.8-017",
+      "section": "19.8",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.8-018",
+      "section": "19.8",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1925",
+        "note": "Close the framework while a task is active and assert its terminal status hook fires before the store is sealed; a post after close is a different boundary."
+      }
+    },
+    {
+      "id": "RK-19.8-019",
+      "section": "19.8",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.8-020",
+      "section": "19.8",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.8-021",
+      "section": "19.8",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.8-022",
       "section": "19.8",
       "mapping": "unmapped",
       "links": []
