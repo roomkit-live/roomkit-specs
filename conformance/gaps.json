@@ -1,6 +1,61 @@
 {
   "version": 1,
   "units": {
+    "RK-11.2-017": {
+      "class": "writable",
+      "card": "RMK-1942",
+      "note": "An identity hook that answers a status its trigger does not act on, as AMBIGUOUS on ON_IDENTITY_UNKNOWN, is read as null."
+    },
+    "RK-11.6-003": {
+      "class": "phase6",
+      "card": "RMK-1942",
+      "note": "A conference's utterances, under the identity their track was published under, are never put to the resolver (media feature conference)."
+    },
+    "RK-11.6-010": {
+      "class": "step",
+      "card": "RMK-1942",
+      "note": "Needs one of the implementation's own wire channels in the runners, which build scripted channels only (feature name transport_provider proposed)."
+    },
+    "RK-11.6-011": {
+      "class": "step",
+      "card": "RMK-1942",
+      "note": "Needs the implementation's interactive terminal channel in the runners; roomkit-rs has none, and no feature name is proposed for it."
+    },
+    "RK-11.6-012": {
+      "class": "step",
+      "card": "RMK-1942",
+      "note": "Needs one of the implementation's channels whose sender_id the integrator supplies, a WebSocket or HTTP one, in the runners (feature name websocket_channel proposed)."
+    },
+    "RK-11.7-001": {
+      "class": "writable",
+      "card": "RMK-1942",
+      "note": "An unknown or pending sender under a verification policy: no label, no hold and no ON_VERIFICATION_REQUIRED."
+    },
+    "RK-11.7.3-003": {
+      "class": "writable",
+      "card": "RMK-1942",
+      "note": "An IDENTIFIED participant's id arriving through a channel it was never resolved on: the event carries no verification."
+    },
+    "RK-11.7.3-019": {
+      "class": "phase6",
+      "card": "RMK-1942",
+      "note": "A speech-to-speech session's transcript is neither labelled nor held (media feature realtime)."
+    },
+    "RK-11.7.6-008": {
+      "class": "writable",
+      "card": "RMK-1942",
+      "note": "A deferred code reply sent from a hook's locked section has its released message answered after that hook's work is delivered."
+    },
+    "RK-11.7.6-014": {
+      "class": "writable",
+      "card": "RMK-1942",
+      "note": "A completion handle's cancel (delivery.cancel) reaches a held message while its delivery set runs, and nothing once it ran."
+    },
+    "RK-11.7.7-007": {
+      "class": "step",
+      "card": "RMK-1942",
+      "note": "Two attempts at a request's last one count once: racing them needs a gate inside a verification transition."
+    },
     "RK-19.1-004": {
       "class": "phase6",
       "card": "RMK-1925",
