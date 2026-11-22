@@ -2291,9 +2291,9 @@ called tools, and an answer's reasoning in it too: a round with no reasoning,
 as every round of an earlier turn is, carries the field empty, or the
 dialect's placeholder (a single space, say) where the server reads an empty
 one as missing. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-079", "kind": "behavior", "applies": "§6.4 Reasoning: a dialect that names its reasoning field without requiring it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A dialect that names the field without requiring it carries it on a round or
-an answer that reasoned, and nothing on one that did not. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-080", "kind": "behavior", "applies": "§6.4 Reasoning: a dialect that names the field a server reads (thinking_field), the integrator's choice. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Which field a server reads is the integrator's choice:
-a dialect MAY name it (`thinking_field`), for a server whose documentation asks
-for its reasoning back. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-081", "kind": "behavior", "applies": "§6.4 Reasoning: a dialect that names no field. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A dialect cannot tell whether a server takes the field, and strict
+an answer that reasoned, and nothing on one that did not. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-080", "kind": "behavior", "applies": "§6.4 Reasoning: a dialect that names the field a server reads (thinking_field), the integrator's choice. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The field a dialect names is the integrator's choice:
+a dialect MAY name the field a server reads (`thinking_field`), for a server
+whose documentation asks for its reasoning back. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-081", "kind": "behavior", "applies": "§6.4 Reasoning: a dialect that names no field. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A dialect cannot tell whether a server takes the field, and strict
 servers refuse one they do not know, so a dialect sends no reasoning unless it
 names the field. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-082", "kind": "behavior", "applies": "§6.4 Reasoning: a chat-messages request under a dialect that names no field. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A chat-messages request under a dialect that names no field
 carries no reasoning, in no form: a `<think>` block in a message's text is read
@@ -4449,9 +4449,7 @@ AIResponse
 <!-- /rfc -->
 
 <!-- rfc: {"id": "RK-6.7-115", "kind": "non_testable", "applies": "§6.7 Model listings: what a live listing reports of each model is the provider's own, outside this specification. Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->**Model listings.** What a live listing reports of each model, from its
-vendor's endpoint or its curated catalogue, is the provider's own. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-033", "kind": "behavior", "applies": "§6.7 Model listings: a provider whose endpoint reports no model type taking the tags from a catalogue that holds public tags only. Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->A provider whose
-endpoint reports no model type at all MAY take the tags from its catalogue
-when that catalogue holds public tags only. <!-- /rfc -->
+vendor's endpoint or its curated catalogue, is the provider's own. <!-- /rfc -->
 
 <!-- rfc: {"id": "RK-6.7-036", "kind": "behavior", "applies": "§6.7 Usage counters: input_tokens, output_tokens and the cache counters are disjoint (Section 25.5). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Usage counters.** `input_tokens`, `output_tokens` and the cache counters are
@@ -4597,7 +4595,7 @@ reason, which a caller of `generate()` outside the loop reads.
 
 <!-- /rfc -->
 <!-- rfc: {"id": "RK-6.7-091", "kind": "non_testable", "applies": "§6.7: a consumer that must run on any provider reads supports_response_schema and, where it is false, asks for JSON in the prompt; only the consumer keeps it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
-consumer that must run on any provider reads the property, and where it is false
+consumer that must run on any provider reads `supports_response_schema`, and where it is false
 asks for JSON in the prompt and parses the answer itself.
 <!-- /rfc -->
 
@@ -22692,7 +22690,10 @@ Cancellation during submission, an exception without proof of non-submission,
 or failure to persist the final outcome MUST preserve this conservative boundary.
 
 <!-- /rfc -->
-<!-- rfc: {"id": "RK-22.1-088", "kind": "behavior", "applies": "Realtime voice injection: permitting automatic retry after a provider call.", "level": "must"} -->Only an explicit retryable `not_sent` result permits
+<!-- rfc: {"id": "RK-22.1-105", "kind": "non_testable", "applies": "Realtime voice injection: what the three injection results mean; how a realtime provider establishes one is the provider's own, outside this specification.", "level": "may"} -->A realtime provider's injection result is `sent` (its send operation
+completed), `not_sent` (no submission happened or is pending) or `unknown`
+(acceptance cannot be established); how a provider establishes which is its
+own. <!-- /rfc --><!-- rfc: {"id": "RK-22.1-088", "kind": "behavior", "applies": "Realtime voice injection: permitting automatic retry after a provider call.", "level": "must"} -->Only an explicit retryable `not_sent` result permits
 automatic retry after invoking a provider. <!-- /rfc --><!-- rfc: {"id": "RK-22.1-089", "kind": "behavior", "applies": "Realtime voice injection: interpreting a provider that gives no result.", "level": "must"} -->Returning no result MUST NOT be
 interpreted as proof of acceptance. <!-- /rfc --><!-- rfc: {"id": "RK-22.1-090", "kind": "behavior", "applies": "Realtime voice injection: outcomes for unsupported injection and missing connections.", "level": "must"} -->Unsupported injection and missing connections
 MUST NOT return a successful result. <!-- /rfc --><!-- rfc: {"id": "RK-22.1-091", "kind": "behavior", "applies": "Realtime voice injection: uncertainty of a local queue without confirmed remote submission.", "level": "must"} -->Locally queued input whose remote submission
@@ -24214,6 +24215,7 @@ generated image enters a room without conversion.
 Results MAY carry a vendor request or interaction identifier, the vendor's
 original usage report, effective parameters, actual dimensions where reported,
 and grounding attribution. <!-- /rfc -->
+
 <!-- rfc: {"id": "RK-25.3-015", "kind": "behavior", "applies": "A generation progress callback may receive individual call outcomes or preview images.", "level": "may"} -->
 A progress callback MAY receive individual call outcomes or preview images.<!-- /rfc -->
 
