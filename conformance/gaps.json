@@ -2366,6 +2366,86 @@
       "card": "RMK-1934",
       "note": "Feed actual generated output through the public room integration path and observe inbound processing, delivery and visibility. Starting with a manually supplied image already on the ordinary route cannot detect a separate generation route."
     },
+    "RK-6.1-006": {
+      "class": "step",
+      "card": "RMK-1955",
+      "note": "Needs a scripted streaming channel that keeps deliver_stream's default, which the runners' streaming channels replace with their own reader."
+    },
+    "RK-6.1-007": {
+      "class": "step",
+      "card": "RMK-1955",
+      "note": "Needs a scripted streaming channel that keeps deliver_stream's default and a stream that raises, which the runners' streaming channels replace with their own reader."
+    },
+    "RK-6.1-009": {
+      "class": "step",
+      "card": "RMK-1955",
+      "note": "Needs a deliver_cut reaction that raises on the scripted streaming channel."
+    },
+    "RK-6.1-016": {
+      "class": "step",
+      "card": "RMK-1955",
+      "note": "Needs a channel built on a provider whose name the event source carries; scripted channels have no provider (feature name transport_provider proposed)."
+    },
+    "RK-6.1-018": {
+      "class": "writable",
+      "card": "RMK-1955",
+      "note": "agent.direct_prompt reads the responded flag: a channel that does not answer, its response events not re-entering."
+    },
+    "RK-6.2-003": {
+      "class": "phase6",
+      "card": "RMK-1955",
+      "note": "The media rows of the ChannelType table: VOICE, REALTIME_VOICE, AUDIO_VIDEO, REALTIME_AUDIO_VIDEO, VIDEO, CONFERENCE (media features voice, realtime, video, conference)."
+    },
+    "RK-6.2-007": {
+      "class": "writable",
+      "card": "RMK-1955",
+      "note": "A scripted channel whose type uses digits, _ and - is stored and read back as that plain string."
+    },
+    "RK-6.2-008": {
+      "class": "writable",
+      "card": "RMK-1955",
+      "note": "A scripted channel of a type the table does not list (slack) is registered, and an event naming it reads back as written."
+    },
+    "RK-6.2-009": {
+      "class": "step",
+      "card": "RMK-1955",
+      "note": "register_channel with a type outside the grammar: the Rust runner fails building the scripted channel instead of reporting the refusal as an outcome."
+    },
+    "RK-6.2-011": {
+      "class": "writable",
+      "card": "RMK-1955",
+      "note": "register_channel of a scripted channel of type system is refused."
+    },
+    "RK-6.2-012": {
+      "class": "writable",
+      "card": "RMK-1955",
+      "note": "A hook filtered on a channel type the table does not list (channel_types) fires for that type's events."
+    },
+    "RK-6.3-003": {
+      "class": "step",
+      "card": "RMK-1955",
+      "note": "Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed."
+    },
+    "RK-6.3-004": {
+      "class": "phase6",
+      "card": "RMK-1955",
+      "note": "Voice and Realtime Voice reference capabilities (media features voice and realtime)."
+    },
+    "RK-6.3-005": {
+      "class": "step",
+      "card": "RMK-1955",
+      "note": "Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed. The audit's suspect on the Telegram row is RMK-1954."
+    },
+    "RK-6.3-006": {
+      "class": "phase6",
+      "card": "RMK-1955",
+      "note": "Audio/Video, Realtime Audio/Video, Video and Conference reference capabilities (media features voice, realtime, video, conference)."
+    },
+    "RK-6.3-007": {
+      "class": "step",
+      "card": "RMK-1955",
+      "note": "Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed."
+    },
     "RK-6.4-049": {
       "class": "writable",
       "card": "RMK-1911"
@@ -3047,6 +3127,436 @@
       "class": "step",
       "card": "RMK-1951",
       "note": "Needs a step that reads a channel's provider and provider_name."
+    },
+    "RK-6.5-001": {
+      "class": "step",
+      "card": "RMK-1955",
+      "note": "Needs a scripted source provider in both runners; roomkit-rs has no sources (tier 1b), feature name source_provider proposed."
+    },
+    "RK-6.5-003": {
+      "class": "step",
+      "card": "RMK-1955",
+      "note": "Needs a scripted source provider in both runners; roomkit-rs has no sources (tier 1b), feature name source_provider proposed."
+    },
+    "RK-6.5-004": {
+      "class": "step",
+      "card": "RMK-1955",
+      "note": "Needs a scripted source provider in both runners; roomkit-rs has no sources (tier 1b), feature name source_provider proposed."
+    },
+    "RK-6.5-005": {
+      "class": "step",
+      "card": "RMK-1955",
+      "note": "Needs a scripted source provider in both runners; roomkit-rs has no sources (tier 1b), feature name source_provider proposed."
+    },
+    "RK-6.6-006": {
+      "class": "writable",
+      "card": "RMK-1955",
+      "note": "A text reaches a scripted channel whose media_types name no TEXT (location alone) unchanged, and a rich text as its plain text."
+    },
+    "RK-6.6-007": {
+      "class": "writable",
+      "card": "RMK-1955",
+      "note": "A text reaches a rich, a media and a text-only transport unchanged."
+    },
+    "RK-6.6-018": {
+      "class": "writable",
+      "card": "RMK-1955",
+      "note": "A tool call content reaches a text-only transport unchanged."
+    },
+    "RK-6.6-021": {
+      "class": "writable",
+      "card": "RMK-1955",
+      "note": "A composite of a text and a media reaches a channel that carries MEDIA as its parts, in order."
+    },
+    "RK-6.6-024": {
+      "class": "writable",
+      "card": "RMK-1955",
+      "note": "An edit's and a delete's text form as a reader reads it, whatever the reader supports."
+    },
+    "RK-6.6-029": {
+      "class": "writable",
+      "card": "RMK-1955",
+      "note": "A media or a location in a delegated task's brief, a memory's summary or a discussion's dispatch reads as its label."
+    },
+    "RK-6.6-030": {
+      "class": "writable",
+      "card": "RMK-1955",
+      "note": "An agent named only in a media's file name is not addressed by a discussion."
+    },
+    "RK-6.6-032": {
+      "class": "writable",
+      "card": "RMK-1955",
+      "note": "A text of multi-byte characters past max_length is cut on a code point."
+    },
+    "RK-6.6-036": {
+      "class": "step",
+      "card": "RMK-1955",
+      "note": "Needs a step that installs an integrator's transcoding strategy; neither implementation exposes one (suspect RMK-1952)."
+    },
+    "RK-6.7-004": {
+      "class": "step",
+      "card": "RMK-1955",
+      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+    },
+    "RK-6.7-013": {
+      "class": "writable",
+      "card": "RMK-1955",
+      "note": "model.chat_dialect anthropic records the vendor's messages: a refused or failed call's tool_result carries is_error, a served one does not; another vendor's format needs the provider wire fixture."
+    },
+    "RK-6.7-014": {
+      "class": "step",
+      "card": "RMK-1955",
+      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+    },
+    "RK-6.7-016": {
+      "class": "step",
+      "card": "RMK-1955",
+      "note": "Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed. Python's SMSProvider.send takes from_ as optional, as RMK-1953 records for email."
+    },
+    "RK-6.7-019": {
+      "class": "step",
+      "card": "RMK-1955",
+      "note": "Needs a scripted model that streams text only (generate_stream), in both runners."
+    },
+    "RK-6.7-021": {
+      "class": "step",
+      "card": "RMK-1955",
+      "note": "Needs a step that lists a provider's models."
+    },
+    "RK-6.7-022": {
+      "class": "step",
+      "card": "RMK-1955",
+      "note": "Needs a step that lists a provider's models."
+    },
+    "RK-6.7-023": {
+      "class": "step",
+      "card": "RMK-1955",
+      "note": "model.fails_once_closed observes a scripted model's close; a provider releasing its real connections needs the provider wire fixture."
+    },
+    "RK-6.7-032": {
+      "class": "step",
+      "card": "RMK-1955",
+      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+    },
+    "RK-6.7-034": {
+      "class": "step",
+      "card": "RMK-1955",
+      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+    },
+    "RK-6.7-035": {
+      "class": "step",
+      "card": "RMK-1955",
+      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+    },
+    "RK-6.7-036": {
+      "class": "step",
+      "card": "RMK-1955",
+      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+    },
+    "RK-6.7-037": {
+      "class": "step",
+      "card": "RMK-1955",
+      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+    },
+    "RK-6.7-038": {
+      "class": "step",
+      "card": "RMK-1955",
+      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+    },
+    "RK-6.7-039": {
+      "class": "step",
+      "card": "RMK-1955",
+      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+    },
+    "RK-6.7-040": {
+      "class": "step",
+      "card": "RMK-1955",
+      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+    },
+    "RK-6.7-041": {
+      "class": "step",
+      "card": "RMK-1955",
+      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+    },
+    "RK-6.7-042": {
+      "class": "step",
+      "card": "RMK-1955",
+      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+    },
+    "RK-6.7-043": {
+      "class": "step",
+      "card": "RMK-1955",
+      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+    },
+    "RK-6.7-044": {
+      "class": "step",
+      "card": "RMK-1955",
+      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+    },
+    "RK-6.7-045": {
+      "class": "step",
+      "card": "RMK-1955",
+      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+    },
+    "RK-6.7-046": {
+      "class": "step",
+      "card": "RMK-1955",
+      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+    },
+    "RK-6.7-047": {
+      "class": "step",
+      "card": "RMK-1955",
+      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+    },
+    "RK-6.7-048": {
+      "class": "step",
+      "card": "RMK-1955",
+      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+    },
+    "RK-6.7-049": {
+      "class": "step",
+      "card": "RMK-1955",
+      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+    },
+    "RK-6.7-050": {
+      "class": "step",
+      "card": "RMK-1955",
+      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+    },
+    "RK-6.7-052": {
+      "class": "step",
+      "card": "RMK-1955",
+      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+    },
+    "RK-6.7-053": {
+      "class": "step",
+      "card": "RMK-1955",
+      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+    },
+    "RK-6.7-054": {
+      "class": "step",
+      "card": "RMK-1955",
+      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+    },
+    "RK-6.7-055": {
+      "class": "step",
+      "card": "RMK-1955",
+      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+    },
+    "RK-6.7-056": {
+      "class": "step",
+      "card": "RMK-1955",
+      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+    },
+    "RK-6.7-057": {
+      "class": "step",
+      "card": "RMK-1955",
+      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+    },
+    "RK-6.7-065": {
+      "class": "step",
+      "card": "RMK-1955",
+      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+    },
+    "RK-6.7-070": {
+      "class": "writable",
+      "card": "RMK-1955",
+      "note": "A binding's schema whose type is a list, or a type outside the six, fails the turn before its model is asked."
+    },
+    "RK-6.7-071": {
+      "class": "writable",
+      "card": "RMK-1955",
+      "note": "A binding's schema whose object lacks properties fails the turn before its model is asked."
+    },
+    "RK-6.7-072": {
+      "class": "writable",
+      "card": "RMK-1955",
+      "note": "A binding's schema whose required list misses a property fails the turn before its model is asked."
+    },
+    "RK-6.7-073": {
+      "class": "writable",
+      "card": "RMK-1955",
+      "note": "A binding's schema whose object allows additional properties fails the turn before its model is asked."
+    },
+    "RK-6.7-074": {
+      "class": "writable",
+      "card": "RMK-1955",
+      "note": "A binding's schema with an array lacking items fails the turn before its model is asked."
+    },
+    "RK-6.7-075": {
+      "class": "writable",
+      "card": "RMK-1955",
+      "note": "A binding's schema with an enum on a number, or an empty enum, fails the turn before its model is asked."
+    },
+    "RK-6.7-076": {
+      "class": "writable",
+      "card": "RMK-1955",
+      "note": "A binding's schema whose subschemas carry a title and a description is taken."
+    },
+    "RK-6.7-077": {
+      "class": "writable",
+      "card": "RMK-1955",
+      "note": "A binding's schema using anyOf or a bound fails the turn before its model is asked."
+    },
+    "RK-6.7-079": {
+      "class": "writable",
+      "card": "RMK-1955",
+      "note": "A schema turn whose model takes no schema, under a retry policy, is not retried."
+    },
+    "RK-6.7-081": {
+      "class": "writable",
+      "card": "RMK-1955",
+      "note": "Under model.response_schema a round whose finish_reason is refusal is refused; a vendor's refusal field and a prompt blocked before any answer stay with the provider wire fixture."
+    },
+    "RK-6.7-082": {
+      "class": "writable",
+      "card": "RMK-1955",
+      "note": "Under model.response_schema a round that ran out of room is truncated; a vendor's own stop reasons and a context window filling up stay with the provider wire fixture."
+    },
+    "RK-6.7-088": {
+      "class": "step",
+      "card": "RMK-1955",
+      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+    },
+    "RK-6.7-090": {
+      "class": "step",
+      "card": "RMK-1955",
+      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+    },
+    "RK-6.7-092": {
+      "class": "step",
+      "card": "RMK-1955",
+      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+    },
+    "RK-6.7-093": {
+      "class": "step",
+      "card": "RMK-1955",
+      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+    },
+    "RK-6.7-094": {
+      "class": "step",
+      "card": "RMK-1955",
+      "note": "A tool name is refused when the tool is defined, before any step: needs a step that defines a tool and reads the refusal."
+    },
+    "RK-6.7-096": {
+      "class": "step",
+      "card": "RMK-1955",
+      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+    },
+    "RK-6.7-097": {
+      "class": "phase6",
+      "card": "RMK-1955",
+      "note": "A realtime endpoint that hands the tools to another model checks that model's vendor's rule (media feature realtime)."
+    },
+    "RK-6.7-098": {
+      "class": "step",
+      "card": "RMK-1955",
+      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+    },
+    "RK-6.7-099": {
+      "class": "step",
+      "card": "RMK-1955",
+      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+    },
+    "RK-6.7-100": {
+      "class": "step",
+      "card": "RMK-1955",
+      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+    },
+    "RK-6.7-101": {
+      "class": "step",
+      "card": "RMK-1955",
+      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+    },
+    "RK-6.7-102": {
+      "class": "step",
+      "card": "RMK-1955",
+      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+    },
+    "RK-6.7-103": {
+      "class": "step",
+      "card": "RMK-1955",
+      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+    },
+    "RK-6.7-104": {
+      "class": "step",
+      "card": "RMK-1955",
+      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+    },
+    "RK-6.7-105": {
+      "class": "step",
+      "card": "RMK-1955",
+      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+    },
+    "RK-6.7-107": {
+      "class": "step",
+      "card": "RMK-1955",
+      "note": "Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed. The audit's suspect on send()'s from is RMK-1953."
+    },
+    "RK-6.7-110": {
+      "class": "step",
+      "card": "RMK-1955",
+      "note": "Needs a scripted model that streams text only (generate_stream), in both runners."
+    },
+    "RK-6.7-113": {
+      "class": "writable",
+      "card": "RMK-1955",
+      "note": "model.chat_dialect records the requests in the vendor's format: a tool result's structured_content and outcome are not in them."
+    },
+    "RK-6.8-003": {
+      "class": "step",
+      "card": "RMK-1955",
+      "note": "Needs a step that asks a classifier its questions (a scripted or mock classifier) in both runners; feature name classifier_dispatch proposed."
+    },
+    "RK-6.8-004": {
+      "class": "step",
+      "card": "RMK-1955",
+      "note": "Needs a step that asks a classifier its questions (a scripted or mock classifier) in both runners; feature name classifier_dispatch proposed."
+    },
+    "RK-6.8-005": {
+      "class": "step",
+      "card": "RMK-1955",
+      "note": "Needs a step that asks a classifier its questions (a scripted or mock classifier) in both runners; feature name classifier_dispatch proposed."
+    },
+    "RK-6.8-006": {
+      "class": "step",
+      "card": "RMK-1955",
+      "note": "Needs a step that asks a classifier its questions (a scripted or mock classifier) in both runners; feature name classifier_dispatch proposed."
+    },
+    "RK-6.8-007": {
+      "class": "step",
+      "card": "RMK-1955",
+      "note": "Needs a step that asks a classifier its questions (a scripted or mock classifier) in both runners; feature name classifier_dispatch proposed."
+    },
+    "RK-6.8-008": {
+      "class": "step",
+      "card": "RMK-1955",
+      "note": "Needs a step that asks a classifier its questions (a scripted or mock classifier) in both runners; feature name classifier_dispatch proposed."
+    },
+    "RK-6.8-009": {
+      "class": "step",
+      "card": "RMK-1955",
+      "note": "Needs a step that asks a classifier its questions (a scripted or mock classifier) in both runners; feature name classifier_dispatch proposed."
+    },
+    "RK-6.8-010": {
+      "class": "step",
+      "card": "RMK-1955",
+      "note": "Needs a step that asks a classifier its questions (a scripted or mock classifier) in both runners; feature name classifier_dispatch proposed."
+    },
+    "RK-6.8-012": {
+      "class": "step",
+      "card": "RMK-1955",
+      "note": "Needs a scripted decision-model server behind a classifier in both runners; roomkit-rs has no decision-model classifier, feature name classifier_dispatch proposed."
+    },
+    "RK-6.8-013": {
+      "class": "step",
+      "card": "RMK-1955",
+      "note": "Needs a scripted decision-model server behind a classifier in both runners; roomkit-rs has no decision-model classifier, feature name classifier_dispatch proposed."
+    },
+    "RK-6.8-014": {
+      "class": "step",
+      "card": "RMK-1955",
+      "note": "Needs a scripted decision-model server behind a classifier in both runners; roomkit-rs has no decision-model classifier, feature name classifier_dispatch proposed."
     },
     "RK-8.1-008": {
       "class": "step",

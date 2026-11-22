@@ -11377,6 +11377,98 @@
     "RK-5.8-008": {
       "transcoding/a-media-channel-with-no-limit-takes-every-file-as-it-is": "a20617c49a3fb67861c6166e5cfbed214ce47935438b4b311e656fda5eba1435"
     },
+    "RK-6.1-004": {
+      "streaming/rows-reach-the-others": "af127b0266885b28de2dd100c8fc23e9b88f55177f5f0027db5e0304601ca604"
+    },
+    "RK-6.1-005": {
+      "streaming/a-failed-stream-hands-its-end-before-its-failure": "6eb88ca335249d795b5da969977cd18e328ca41a669c15e0c95b3173c654d29c",
+      "streaming/a-generation-a-fallback-serves-names-it-on-what-it-told-and-on-its-cut": "6eb88ca335249d795b5da969977cd18e328ca41a669c15e0c95b3173c654d29c",
+      "streaming/a-generation-that-reports-nothing-tells-a-streaming-channel-so": "6eb88ca335249d795b5da969977cd18e328ca41a669c15e0c95b3173c654d29c",
+      "streaming/a-generation-that-tells-its-input-first-tells-a-streaming-channel-so": "6eb88ca335249d795b5da969977cd18e328ca41a669c15e0c95b3173c654d29c",
+      "streaming/a-generation-the-fallback-served-names-it-to-a-streaming-channel": "6eb88ca335249d795b5da969977cd18e328ca41a669c15e0c95b3173c654d29c",
+      "streaming/a-model-s-reasoning-between-its-calls-stays-in-its-order": "6eb88ca335249d795b5da969977cd18e328ca41a669c15e0c95b3173c654d29c",
+      "streaming/a-model-s-reasoning-reaches-a-streaming-channel-before-its-text": "6eb88ca335249d795b5da969977cd18e328ca41a669c15e0c95b3173c654d29c",
+      "streaming/a-streamed-answer-hands-its-end-after-its-last-row": "6eb88ca335249d795b5da969977cd18e328ca41a669c15e0c95b3173c654d29c",
+      "streaming/a-turn-that-ends-on-a-call-hands-its-end-to-the-reader-last": "6eb88ca335249d795b5da969977cd18e328ca41a669c15e0c95b3173c654d29c",
+      "streaming/each-generation-tells-a-streaming-channel-what-it-used": "6eb88ca335249d795b5da969977cd18e328ca41a669c15e0c95b3173c654d29c",
+      "streaming/rows-reach-the-others": "6eb88ca335249d795b5da969977cd18e328ca41a669c15e0c95b3173c654d29c",
+      "streaming/stream-fails-mid-answer": "6eb88ca335249d795b5da969977cd18e328ca41a669c15e0c95b3173c654d29c"
+    },
+    "RK-6.1-008": {
+      "streaming/a-stream-cut-from-outside-ends-its-reader-s-stream-with-the-cut-row": "0b2db0d7bb32f88d0568a65ff86f77528c76e5b1b50f5354369eb8eeb9040751"
+    },
+    "RK-6.1-010": {
+      "author-images/an-agent-attached-over-its-attachment-sends-a-refused-image-again": "109dba7593e284bb3d559d8b5a54e92d5eb0d8858a6f4f0cbba4be472ccef2b9"
+    },
+    "RK-6.1-011": {
+      "rooms/a-refused-automatic-attach-fails-the-message": "68ab9bd3aabd07ba071388dec719d0cbd7cc6c0ab465b0d0e3e0f9fe76b02856",
+      "rooms/an-attach-tells-the-channel-before-its-hooks": "68ab9bd3aabd07ba071388dec719d0cbd7cc6c0ab465b0d0e3e0f9fe76b02856"
+    },
+    "RK-6.1-012": {
+      "rooms/a-channel-attached-once-its-refusal-is-over-is-bound": "78e6e5c1d6179fb3c3219d035afcaa0098c2be14ea0cf2cf1b0044e9d05e514b",
+      "rooms/a-refused-attach-leaves-nothing-behind": "78e6e5c1d6179fb3c3219d035afcaa0098c2be14ea0cf2cf1b0044e9d05e514b",
+      "rooms/a-refused-automatic-attach-fails-the-message": "78e6e5c1d6179fb3c3219d035afcaa0098c2be14ea0cf2cf1b0044e9d05e514b",
+      "rooms/a-refused-reattach-puts-back-the-binding-it-replaced": "78e6e5c1d6179fb3c3219d035afcaa0098c2be14ea0cf2cf1b0044e9d05e514b",
+      "rooms/an-agent-that-refuses-its-attach-stays-attached": "78e6e5c1d6179fb3c3219d035afcaa0098c2be14ea0cf2cf1b0044e9d05e514b"
+    },
+    "RK-6.1-013": {
+      "rooms/a-detach-of-nothing-tells-no-one": "63679f9dcbb39d0ccaa4e130327c5a87a32d0c4c597d44dd9f9619b3e7d46ec4",
+      "rooms/a-detach-tells-the-channel-before-its-hooks": "63679f9dcbb39d0ccaa4e130327c5a87a32d0c4c597d44dd9f9619b3e7d46ec4",
+      "rooms/an-unregistered-channel-is-not-told-of-its-detach": "63679f9dcbb39d0ccaa4e130327c5a87a32d0c4c597d44dd9f9619b3e7d46ec4"
+    },
+    "RK-6.1-014": {
+      "channel-call/a-failed-detach-still-forgets-the-room-s-state": "c051bedcb8ed051ba3742602cb5fd270e9674b4265c83d6132359c5896c8a033",
+      "executors/a-failed-state-discard-is-retried-before-the-next-turn": "c051bedcb8ed051ba3742602cb5fd270e9674b4265c83d6132359c5896c8a033",
+      "rooms/a-detach-the-channel-fails-still-detaches": "c051bedcb8ed051ba3742602cb5fd270e9674b4265c83d6132359c5896c8a033"
+    },
+    "RK-6.1-015": {
+      "media/an-inbound-session-connects-after-the-hook-allows-it": "bfe3a78bfda7107a3108b1b180d15ddb4db564b9e1d6bb177f6be208435e5c4e"
+    },
+    "RK-6.1-019": {
+      "permissions/a-muted-agent-reads-but-its-answer-is-blocked": "64ba28daa673628fbe15ab1b47028ff7705b181f3aecd59a85ee1054e1eb3c86"
+    },
+    "RK-6.1-020": {
+      "streaming/rows-reach-the-others": "20942a208b237272e1b098726fb85dd9c3f286604ac4cb5e40a623a5d4abf3d2"
+    },
+    "RK-6.1-021": {
+      "turn-record/a-tool-s-write-rides-the-next-message-and-reaches-its-caller": "06ad646d326c6eefc0a337be877d3f0049d962be14c069142bf3bdc81c6a3de0"
+    },
+    "RK-6.1-022": {
+      "delivery/a-retried-delivery-keeps-its-successful-provider-receipt": "f3f3573a46e1d9866a008d811383c6e7c3c141819b6e03b7d0badfed4ba20f46",
+      "delivery/a-successful-provider-receipt-reaches-the-caller": "f3f3573a46e1d9866a008d811383c6e7c3c141819b6e03b7d0badfed4ba20f46"
+    },
+    "RK-6.1-023": {
+      "broadcast/an-agent-s-observations-are-kept": "6c9088b9219b656d5a07e71511b68f0bcc5a1bbe913d6e1a48d923dc8be7c57b",
+      "inbound/an-agent-s-task-is-created": "6c9088b9219b656d5a07e71511b68f0bcc5a1bbe913d6e1a48d923dc8be7c57b",
+      "permissions/all-target-access-and-mute-combinations": "6c9088b9219b656d5a07e71511b68f0bcc5a1bbe913d6e1a48d923dc8be7c57b"
+    },
+    "RK-6.1-024": {
+      "inbound/an-agent-s-output-updates-the-room": "a29be5641233143a3c403bd25c38fa55b37ecadee41457bb9d99b23b9f8d56ee",
+      "streaming/what-a-target-s-outputs-leave-in-the-room": "a29be5641233143a3c403bd25c38fa55b37ecadee41457bb9d99b23b9f8d56ee"
+    },
+    "RK-6.1-025": {
+      "tasks/a-delegated-reply-that-fails-is-reported-once-on-either-path": "87624b295d8005cc3fb6cb9c201aa00e0b97f8c1286a3f5ac6822c35d5a4ce5c",
+      "tasks/a-delegated-turn-s-returned-error-is-reported-in-its-child-room": "87624b295d8005cc3fb6cb9c201aa00e0b97f8c1286a3f5ac6822c35d5a4ce5c"
+    },
+    "RK-6.1-027": {
+      "executors/a-released-channel-is-built-anew-for-the-next-turn": "130e68fe5124b19b2cf39a9782c27abbc020f06eabfd9ccdc5e1a67e7269d3dc"
+    },
+    "RK-6.2-004": {
+      "injection/a-post-speaks-through-the-host-channel": "b215e4502575786e97142d1ae2da7ae7747254c805518ea03262d97b88ad7045",
+      "tasks/an-inline-delegation-runs-its-agent-in-a-child-room": "b215e4502575786e97142d1ae2da7ae7747254c805518ea03262d97b88ad7045"
+    },
+    "RK-6.2-005": {
+      "injection/a-post-speaks-through-the-host-channel": "9f84fac38ee880f9aec4132ff5c48e04f37eb6f286a5a1d3efc9f30a0360c7b9"
+    },
+    "RK-6.2-006": {
+      "injection/the-host-s-voice-is-never-an-intelligence-channel": "a3f4fd81db6f90fbac14266581928f3852e74a27f8186ac4e95846e9822671e0"
+    },
+    "RK-6.2-010": {
+      "routing/each-channel-type-writes-its-addresses-in-its-own-form-under-its-own-keys": "a0247a8defba335364d748e0840b645fc2e7346b8734a213a5dbcc576cffa596"
+    },
+    "RK-6.3-008": {
+      "transcoding/a-long-text-is-cut-with-a-marker": "cb9d00c34b1e7a83044743adf4f01540da7a600e21bb5234e8ab335b04ebc51f"
+    },
     "RK-6.4-002": {
       "ai-context/a-disabled-target-still-supplies-capabilities-non-streaming": "15e4fed7eb4b077bba878add5ed7fed24bebe634e17b5d2fa84083add0e99385",
       "ai-context/a-disabled-target-still-supplies-capabilities-streaming": "15e4fed7eb4b077bba878add5ed7fed24bebe634e17b5d2fa84083add0e99385",
@@ -14225,6 +14317,617 @@
     },
     "RK-6.4-540": {
       "executors/a-turn-whose-owner-was-killed-is-cut-owner-lost-on-its-executor": "0914fef1ea1a9cd9252917b268339250cbb7b6087b3edbf9f3b14ae4e6238146"
+    },
+    "RK-6.6-005": {
+      "transcoding/a-composite-flattens-to-one-text": "cc8097d852b621c93252ac57876376a15f9719258e41bae857a3561b5fcd6c9e",
+      "transcoding/a-file-a-media-channel-does-not-take-reaches-it-as-its-text": "cc8097d852b621c93252ac57876376a15f9719258e41bae857a3561b5fcd6c9e",
+      "transcoding/a-location-reads-in-decimal": "cc8097d852b621c93252ac57876376a15f9719258e41bae857a3561b5fcd6c9e",
+      "transcoding/a-media-channel-with-no-limit-takes-every-file-as-it-is": "cc8097d852b621c93252ac57876376a15f9719258e41bae857a3561b5fcd6c9e",
+      "transcoding/a-media-reaches-a-text-channel-as-its-label": "cc8097d852b621c93252ac57876376a15f9719258e41bae857a3561b5fcd6c9e",
+      "transcoding/a-post-reaches-each-transport-transcoded-for-what-it-carries": "cc8097d852b621c93252ac57876376a15f9719258e41bae857a3561b5fcd6c9e",
+      "transcoding/a-template-reaches-a-text-channel-as-its-body": "cc8097d852b621c93252ac57876376a15f9719258e41bae857a3561b5fcd6c9e",
+      "transcoding/rich-text-reaches-a-text-channel-as-its-plain-text": "cc8097d852b621c93252ac57876376a15f9719258e41bae857a3561b5fcd6c9e"
+    },
+    "RK-6.6-008": {
+      "transcoding/rich-text-reaches-a-text-channel-as-its-plain-text": "f7f0d40f37b6ae52ba75c5aa5baffc0eef889630ea511c92c4b4af060d89d680"
+    },
+    "RK-6.6-009": {
+      "transcoding/a-composite-flattens-to-one-text": "25cc5cd1ee010d398908ea45022e4b437384346a6184da81a2295ff627ddeda9",
+      "transcoding/a-file-a-media-channel-does-not-take-reaches-it-as-its-text": "25cc5cd1ee010d398908ea45022e4b437384346a6184da81a2295ff627ddeda9",
+      "transcoding/a-media-reaches-a-text-channel-as-its-label": "25cc5cd1ee010d398908ea45022e4b437384346a6184da81a2295ff627ddeda9",
+      "transcoding/a-post-reaches-each-transport-transcoded-for-what-it-carries": "25cc5cd1ee010d398908ea45022e4b437384346a6184da81a2295ff627ddeda9"
+    },
+    "RK-6.6-010": {
+      "ai-context/a-content-without-text-reads-in-later-history-as-its-turn-read-it": "28ad875ae252f683febe529df1ec3428f7091683a6830db1722d185fa3720470"
+    },
+    "RK-6.6-011": {
+      "ai-context/a-content-without-text-reads-in-later-history-as-its-turn-read-it": "7392c51a809a8c73145fd764d5075c49f0e9b5f0c70e04cefac1819bd9a4235a"
+    },
+    "RK-6.6-012": {
+      "ai-context/a-content-without-text-reads-in-later-history-as-its-turn-read-it": "b6a950941d8655633dd17035ae68bef6a9561d9635add34c4a2211611e2f9fad",
+      "transcoding/a-location-reads-in-decimal": "b6a950941d8655633dd17035ae68bef6a9561d9635add34c4a2211611e2f9fad",
+      "transcoding/a-post-reaches-each-transport-transcoded-for-what-it-carries": "b6a950941d8655633dd17035ae68bef6a9561d9635add34c4a2211611e2f9fad"
+    },
+    "RK-6.6-013": {
+      "transcoding/a-composite-flattens-to-one-text": "9120e3f8030fde504d21d1f43da90ca9e85f1345fa1010dc98845dc37d15d914",
+      "transcoding/a-file-a-media-channel-does-not-take-reaches-it-as-its-text": "9120e3f8030fde504d21d1f43da90ca9e85f1345fa1010dc98845dc37d15d914"
+    },
+    "RK-6.6-014": {
+      "ai-context/a-content-without-text-reads-in-later-history-as-its-turn-read-it": "b2cd802e45966c5dc22cbd234256dc109db5cdcc434f614209f2a438cdaf4644",
+      "transcoding/a-template-reaches-a-text-channel-as-its-body": "b2cd802e45966c5dc22cbd234256dc109db5cdcc434f614209f2a438cdaf4644"
+    },
+    "RK-6.6-015": {
+      "appendix-b/b6-edit-with-fallback": "29bb54e4798e4c6b408cbf366ea00b66e8405d683cee7da6cae8e7b842fb0c77"
+    },
+    "RK-6.6-016": {
+      "appendix-b/b7-delete-with-fallback": "03ab26d8a41558884ec136306085d2ae9e50172ab6be78a5d345dcd40a6b7a0d"
+    },
+    "RK-6.6-017": {
+      "injection/a-system-content-is-stored-and-delivered-as-given": "109a8facd3fd4ac8a2d146fcc9870acb366972f218c5bc96d1654d9ea0c18bee"
+    },
+    "RK-6.6-019": {
+      "transcoding/a-composite-flattens-to-one-text": "ea740c5c78e87e96d078984656c8afcaba3fbfd08c57022f7b831428424e4446",
+      "transcoding/a-file-a-media-channel-does-not-take-reaches-it-as-its-text": "ea740c5c78e87e96d078984656c8afcaba3fbfd08c57022f7b831428424e4446"
+    },
+    "RK-6.6-020": {
+      "transcoding/a-composite-flattens-to-one-text": "181260137b06bb5cfeeba71c4a513c34fe8d0cc56144fe8ac8ca3cb256b94035",
+      "transcoding/a-file-a-media-channel-does-not-take-reaches-it-as-its-text": "181260137b06bb5cfeeba71c4a513c34fe8d0cc56144fe8ac8ca3cb256b94035"
+    },
+    "RK-6.6-022": {
+      "ai-context/a-content-without-text-reads-in-later-history-as-its-turn-read-it": "fae6894fe9f4d2809e63a80c17bcc92529e449ac0764a8b55e397310be597f81"
+    },
+    "RK-6.6-023": {
+      "ai-context/a-content-without-text-reads-in-later-history-as-its-turn-read-it": "858b0596a49624902b0154b51b25995e7fd128288fd2f19469a4adfbbe9f7c5b"
+    },
+    "RK-6.6-025": {
+      "ai-context/a-content-without-text-reads-in-later-history-as-its-turn-read-it": "3da7ef5267a370d2338ef7bb57ce7ccb8baed07273978a7cf07b7354274fff7d",
+      "transcoding/a-location-reads-in-decimal": "3da7ef5267a370d2338ef7bb57ce7ccb8baed07273978a7cf07b7354274fff7d"
+    },
+    "RK-6.6-026": {
+      "ai-context/a-content-without-text-reads-in-later-history-as-its-turn-read-it": "9f2129b2167c95cef9f8488db5fc62fc78a9664344c0f83808f25f8703b2492c",
+      "author-images/a-copy-of-a-media-or-location-label-reads-as-the-runtime-s": "9f2129b2167c95cef9f8488db5fc62fc78a9664344c0f83808f25f8703b2492c",
+      "author-images/a-describer-that-says-nothing-leaves-the-event-out": "9f2129b2167c95cef9f8488db5fc62fc78a9664344c0f83808f25f8703b2492c",
+      "author-images/a-model-that-does-not-see-reads-a-mention": "9f2129b2167c95cef9f8488db5fc62fc78a9664344c0f83808f25f8703b2492c",
+      "author-images/an-image-goes-after-its-caption": "9f2129b2167c95cef9f8488db5fc62fc78a9664344c0f83808f25f8703b2492c"
+    },
+    "RK-6.6-027": {
+      "appendix-b/b6-edit-with-fallback": "2760548421abe5b5843d73aeef4a3f99e0de6b30f34398488999f80945bc642b"
+    },
+    "RK-6.6-028": {
+      "appendix-b/b6-edit-with-fallback": "e0338748b3dfb764d0021e84c9d1a25c9031061f66c0e298042e3afbad0ea310",
+      "appendix-b/b7-delete-with-fallback": "e0338748b3dfb764d0021e84c9d1a25c9031061f66c0e298042e3afbad0ea310"
+    },
+    "RK-6.6-031": {
+      "transcoding/a-long-text-is-cut-with-a-marker": "96db2ad88a7bd3d7fffff714524eb69d1bd19436b06dd75f75286c8454213d02"
+    },
+    "RK-6.6-033": {
+      "transcoding/a-long-text-is-cut-with-a-marker": "5df55f18fc66efeed07b12ceb0d52acab7e95cb384543fe0969c0432c2673d19"
+    },
+    "RK-6.6-034": {
+      "transcoding/a-long-text-is-cut-with-a-marker": "065ca7d553c3b8f192bad561a011a31c655b749658bfd36d98e1de0fed5970d2"
+    },
+    "RK-6.6-035": {
+      "transcoding/a-long-text-is-cut-with-a-marker": "d6cd246222ec39bc2ba6bbbe47ad8d3f383f63754cdaa1d493d85015b09fb954"
+    },
+    "RK-6.7-018": {
+      "turn-record/a-generation-the-fallback-served-names-it-on-the-record": "0295ccfe022f300ae55acc5153c112aa401b41167cb0693e1bbd34c4839b3d6a",
+      "turn-record/a-turn-s-record-keeps-its-last-generation-its-model-and-its-provider": "0295ccfe022f300ae55acc5153c112aa401b41167cb0693e1bbd34c4839b3d6a"
+    },
+    "RK-6.7-020": {
+      "streaming/a-generation-a-fallback-serves-names-it-on-what-it-told-and-on-its-cut": "e68ec1732bd2e07beb80b0d8a10d71b9afba5516105bcef46cc0f2628dad735d",
+      "streaming/a-generation-cut-from-outside-counts-the-input-it-told": "e68ec1732bd2e07beb80b0d8a10d71b9afba5516105bcef46cc0f2628dad735d",
+      "streaming/a-generation-that-tells-its-input-first-tells-a-streaming-channel-so": "e68ec1732bd2e07beb80b0d8a10d71b9afba5516105bcef46cc0f2628dad735d",
+      "streaming/a-reader-that-stops-keeps-the-input-its-generation-told": "e68ec1732bd2e07beb80b0d8a10d71b9afba5516105bcef46cc0f2628dad735d",
+      "turn-record/a-cancel-during-a-generation-counts-the-input-it-told": "e68ec1732bd2e07beb80b0d8a10d71b9afba5516105bcef46cc0f2628dad735d",
+      "turn-record/a-fallback-that-told-its-input-then-failed-counts-it": "e68ec1732bd2e07beb80b0d8a10d71b9afba5516105bcef46cc0f2628dad735d",
+      "turn-record/a-generation-that-told-its-input-then-failed-counts-it": "e68ec1732bd2e07beb80b0d8a10d71b9afba5516105bcef46cc0f2628dad735d",
+      "turn-record/a-generation-whose-end-reports-no-usage-counts-what-it-told": "e68ec1732bd2e07beb80b0d8a10d71b9afba5516105bcef46cc0f2628dad735d",
+      "turn-record/a-turn-that-finishes-reports-to-its-hook-what-every-generation-used": "e68ec1732bd2e07beb80b0d8a10d71b9afba5516105bcef46cc0f2628dad735d"
+    },
+    "RK-6.7-024": {
+      "reasoning/a-generation-hook-reads-a-message-s-parts": "08fc8edd74f4e1af6357f511aed344d0f819fe3582133788264ebc09a571d1f1"
+    },
+    "RK-6.7-025": {
+      "reasoning/a-generation-hook-reads-a-message-s-parts": "b95910e4f2c134f81dcf2e13eabefdaec6719d1679f3ed06b1ec8dfde9fc454a",
+      "reasoning/a-response-read-whole-keeps-its-signature-and-its-call-s-metadata": "b95910e4f2c134f81dcf2e13eabefdaec6719d1679f3ed06b1ec8dfde9fc454a"
+    },
+    "RK-6.7-026": {
+      "tools/a-result-says-whether-its-call-failed": "22f073b9c640cc97ae0ca3c22c627c51f01967df623d9959d5f8df82e72cc56b"
+    },
+    "RK-6.7-027": {
+      "reasoning/a-delta-with-no-text-reaches-no-reader": "5a6b46904a560df00ed38dfd0ee5a10c32ddc312aa14801a6520dcbd5e9926de",
+      "reasoning/a-response-read-whole-keeps-its-signature-and-its-call-s-metadata": "5a6b46904a560df00ed38dfd0ee5a10c32ddc312aa14801a6520dcbd5e9926de",
+      "reasoning/a-response-read-whole-replays-its-blocks-first": "5a6b46904a560df00ed38dfd0ee5a10c32ddc312aa14801a6520dcbd5e9926de",
+      "reasoning/a-round-replays-its-blocks-where-they-came": "5a6b46904a560df00ed38dfd0ee5a10c32ddc312aa14801a6520dcbd5e9926de",
+      "reasoning/a-signature-joins-the-one-block-it-came-with": "5a6b46904a560df00ed38dfd0ee5a10c32ddc312aa14801a6520dcbd5e9926de",
+      "reasoning/signed-blocks-and-tool-results-replay-in-order": "5a6b46904a560df00ed38dfd0ee5a10c32ddc312aa14801a6520dcbd5e9926de"
+    },
+    "RK-6.7-028": {
+      "inbound/a-turn-takes-its-binding-s-temperature-and-max-tokens": "0590191bd8d5ae081b45533fd263f6e7227d095f1059320ed7552a89e2239c8e"
+    },
+    "RK-6.7-029": {
+      "ai-context/a-disabled-target-still-supplies-capabilities-non-streaming": "37675c7c1d4389811a859087dadabf2811627b6db67cc7220748e22b623a171e",
+      "ai-context/a-disabled-target-still-supplies-capabilities-streaming": "37675c7c1d4389811a859087dadabf2811627b6db67cc7220748e22b623a171e",
+      "ai-context/a-host-channel-narrows-nothing-an-agent-may-answer-with": "37675c7c1d4389811a859087dadabf2811627b6db67cc7220748e22b623a171e",
+      "ai-context/a-muted-target-still-supplies-capabilities-non-streaming": "37675c7c1d4389811a859087dadabf2811627b6db67cc7220748e22b623a171e",
+      "ai-context/a-muted-target-still-supplies-capabilities-streaming": "37675c7c1d4389811a859087dadabf2811627b6db67cc7220748e22b623a171e",
+      "ai-context/a-private-target-still-supplies-capabilities-non-streaming": "37675c7c1d4389811a859087dadabf2811627b6db67cc7220748e22b623a171e",
+      "ai-context/a-private-target-still-supplies-capabilities-streaming": "37675c7c1d4389811a859087dadabf2811627b6db67cc7220748e22b623a171e",
+      "ai-context/a-single-bidirectional-transport-supplies-all-capabilities-non-streaming": "37675c7c1d4389811a859087dadabf2811627b6db67cc7220748e22b623a171e",
+      "ai-context/a-single-bidirectional-transport-supplies-all-capabilities-streaming": "37675c7c1d4389811a859087dadabf2811627b6db67cc7220748e22b623a171e",
+      "ai-context/a-single-outbound-transport-supplies-all-capabilities-non-streaming": "37675c7c1d4389811a859087dadabf2811627b6db67cc7220748e22b623a171e",
+      "ai-context/a-single-outbound-transport-supplies-all-capabilities-streaming": "37675c7c1d4389811a859087dadabf2811627b6db67cc7220748e22b623a171e",
+      "ai-context/a-write-only-target-still-supplies-capabilities-non-streaming": "37675c7c1d4389811a859087dadabf2811627b6db67cc7220748e22b623a171e",
+      "ai-context/a-write-only-target-still-supplies-capabilities-streaming": "37675c7c1d4389811a859087dadabf2811627b6db67cc7220748e22b623a171e",
+      "ai-context/bounded-first-target-survives-unlimited-second-non-streaming": "37675c7c1d4389811a859087dadabf2811627b6db67cc7220748e22b623a171e",
+      "ai-context/bounded-first-target-survives-unlimited-second-streaming": "37675c7c1d4389811a859087dadabf2811627b6db67cc7220748e22b623a171e",
+      "ai-context/bounded-second-target-narrows-every-limit-and-flag-non-streaming": "37675c7c1d4389811a859087dadabf2811627b6db67cc7220748e22b623a171e",
+      "ai-context/bounded-second-target-narrows-every-limit-and-flag-streaming": "37675c7c1d4389811a859087dadabf2811627b6db67cc7220748e22b623a171e",
+      "ai-context/disjoint-media-still-leave-present-target-capabilities-non-streaming": "37675c7c1d4389811a859087dadabf2811627b6db67cc7220748e22b623a171e",
+      "ai-context/disjoint-media-still-leave-present-target-capabilities-streaming": "37675c7c1d4389811a859087dadabf2811627b6db67cc7220748e22b623a171e",
+      "ai-context/each-distinct-limit-keeps-its-own-minimum-first-target-non-streaming": "37675c7c1d4389811a859087dadabf2811627b6db67cc7220748e22b623a171e",
+      "ai-context/each-distinct-limit-keeps-its-own-minimum-first-target-streaming": "37675c7c1d4389811a859087dadabf2811627b6db67cc7220748e22b623a171e",
+      "ai-context/each-distinct-limit-keeps-its-own-minimum-second-target-non-streaming": "37675c7c1d4389811a859087dadabf2811627b6db67cc7220748e22b623a171e",
+      "ai-context/each-distinct-limit-keeps-its-own-minimum-second-target-streaming": "37675c7c1d4389811a859087dadabf2811627b6db67cc7220748e22b623a171e",
+      "ai-context/interleaved-rooms-and-hook-copies-preserve-provider-context-non-streaming": "37675c7c1d4389811a859087dadabf2811627b6db67cc7220748e22b623a171e",
+      "ai-context/interleaved-rooms-and-hook-copies-preserve-provider-context-streaming": "37675c7c1d4389811a859087dadabf2811627b6db67cc7220748e22b623a171e",
+      "ai-context/no-outgoing-transport-keeps-targets-absent-non-streaming": "37675c7c1d4389811a859087dadabf2811627b6db67cc7220748e22b623a171e",
+      "ai-context/no-outgoing-transport-keeps-targets-absent-streaming": "37675c7c1d4389811a859087dadabf2811627b6db67cc7220748e22b623a171e",
+      "ai-context/reversing-targets-retains-the-other-formats-non-streaming": "37675c7c1d4389811a859087dadabf2811627b6db67cc7220748e22b623a171e",
+      "ai-context/reversing-targets-retains-the-other-formats-streaming": "37675c7c1d4389811a859087dadabf2811627b6db67cc7220748e22b623a171e",
+      "ai-context/two-bounded-targets-use-smaller-values-and-and-flags-non-streaming": "37675c7c1d4389811a859087dadabf2811627b6db67cc7220748e22b623a171e",
+      "ai-context/two-bounded-targets-use-smaller-values-and-and-flags-streaming": "37675c7c1d4389811a859087dadabf2811627b6db67cc7220748e22b623a171e",
+      "ai-context/unlimited-targets-retain-first-target-formats-non-streaming": "37675c7c1d4389811a859087dadabf2811627b6db67cc7220748e22b623a171e",
+      "ai-context/unlimited-targets-retain-first-target-formats-streaming": "37675c7c1d4389811a859087dadabf2811627b6db67cc7220748e22b623a171e"
+    },
+    "RK-6.7-030": {
+      "turn-record/a-generation-hook-s-write-rides-every-message": "38beeeffb8895b4a2b2d2c086bbd016287b8277a90e366e05b1a756c90a0eb5a",
+      "turn-record/a-hook-s-replacement-record-is-the-turn-s-one": "38beeeffb8895b4a2b2d2c086bbd016287b8277a90e366e05b1a756c90a0eb5a"
+    },
+    "RK-6.7-031": {
+      "reasoning/a-response-read-whole-keeps-its-signature-and-its-call-s-metadata": "542ba7e5e5e9106b355f3a480fc56950587a427e721b983c731ed82192a0ed5d",
+      "reasoning/a-response-read-whole-replays-its-blocks-first": "542ba7e5e5e9106b355f3a480fc56950587a427e721b983c731ed82192a0ed5d"
+    },
+    "RK-6.7-051": {
+      "turn-config/an-off-turns-off-a-less-specific-budget": "68d940c33d2bb41b3e90a46cceafc04b83d482496f843edfc4983358034b8082"
+    },
+    "RK-6.7-058": {
+      "acp/tools-observer-turn-context": "5f7dba99c201d40b1fcf4ec69caa64c3264cf1a7893e3776b01cbe0f6d0cad91",
+      "acp/turn-record-concurrent-rooms": "5f7dba99c201d40b1fcf4ec69caa64c3264cf1a7893e3776b01cbe0f6d0cad91",
+      "turn-record/a-before-tool-use-write-reaches-the-caller": "5f7dba99c201d40b1fcf4ec69caa64c3264cf1a7893e3776b01cbe0f6d0cad91",
+      "turn-record/a-before-tool-use-write-reaches-the-caller-of-a-failed-turn": "5f7dba99c201d40b1fcf4ec69caa64c3264cf1a7893e3776b01cbe0f6d0cad91",
+      "turn-record/a-cut-first-pass-s-fallback-carries-what-its-tool-wrote": "5f7dba99c201d40b1fcf4ec69caa64c3264cf1a7893e3776b01cbe0f6d0cad91",
+      "turn-record/a-generation-hook-s-write-rides-every-message": "5f7dba99c201d40b1fcf4ec69caa64c3264cf1a7893e3776b01cbe0f6d0cad91",
+      "turn-record/a-hook-s-replacement-record-is-the-turn-s-one": "5f7dba99c201d40b1fcf4ec69caa64c3264cf1a7893e3776b01cbe0f6d0cad91",
+      "turn-record/a-memory-s-write-rides-the-reply": "5f7dba99c201d40b1fcf4ec69caa64c3264cf1a7893e3776b01cbe0f6d0cad91",
+      "turn-record/an-async-input-observer-writes-the-turn-s-record": "5f7dba99c201d40b1fcf4ec69caa64c3264cf1a7893e3776b01cbe0f6d0cad91",
+      "turn-record/an-async-observer-of-a-call-writes-the-turn-s-record": "5f7dba99c201d40b1fcf4ec69caa64c3264cf1a7893e3776b01cbe0f6d0cad91"
+    },
+    "RK-6.7-059": {
+      "delivery/a-cut-call-reads-its-record-while-a-transport-still-sends": "0f4d2f3f41102343fee62454478ed7364fac282846d490909994564f61b94cf4",
+      "turn-record/a-before-tool-use-write-reaches-the-caller": "0f4d2f3f41102343fee62454478ed7364fac282846d490909994564f61b94cf4",
+      "turn-record/a-before-tool-use-write-reaches-the-caller-of-a-failed-turn": "0f4d2f3f41102343fee62454478ed7364fac282846d490909994564f61b94cf4",
+      "turn-record/a-cut-first-pass-s-fallback-carries-what-its-tool-wrote": "0f4d2f3f41102343fee62454478ed7364fac282846d490909994564f61b94cf4",
+      "turn-record/a-deferred-wait-reads-what-the-stream-wrote": "0f4d2f3f41102343fee62454478ed7364fac282846d490909994564f61b94cf4",
+      "turn-record/a-generation-hook-s-write-rides-every-message": "0f4d2f3f41102343fee62454478ed7364fac282846d490909994564f61b94cf4",
+      "turn-record/a-memory-s-write-rides-the-reply": "0f4d2f3f41102343fee62454478ed7364fac282846d490909994564f61b94cf4",
+      "turn-record/a-reader-that-stops-keeps-what-the-tools-wrote": "0f4d2f3f41102343fee62454478ed7364fac282846d490909994564f61b94cf4",
+      "turn-record/a-tool-s-write-reaches-the-caller-of-a-serialized-turn": "0f4d2f3f41102343fee62454478ed7364fac282846d490909994564f61b94cf4",
+      "turn-record/a-tool-s-write-reaches-the-caller-with-no-streaming-channel": "0f4d2f3f41102343fee62454478ed7364fac282846d490909994564f61b94cf4",
+      "turn-record/a-tool-s-write-rides-the-next-message-and-reaches-its-caller": "0f4d2f3f41102343fee62454478ed7364fac282846d490909994564f61b94cf4",
+      "turn-record/a-turn-cut-from-outside-gives-its-caller-what-it-wrote": "0f4d2f3f41102343fee62454478ed7364fac282846d490909994564f61b94cf4",
+      "turn-record/an-adopted-deferred-call-s-wait-reads-its-stream-s-record": "0f4d2f3f41102343fee62454478ed7364fac282846d490909994564f61b94cf4",
+      "turn-record/an-off-lock-hook-s-adopted-call-s-wait-reads-its-stream-s-record": "0f4d2f3f41102343fee62454478ed7364fac282846d490909994564f61b94cf4"
+    },
+    "RK-6.7-060": {
+      "acp/a-message-is-prompted-and-the-agents-text-answers-it": "8daa2fe57a62668c4b6d29d19307fd24cea597dd206addb16cc861511f2fc4a1",
+      "acp/a-prompt-the-agent-fails-fails-the-turn": "8daa2fe57a62668c4b6d29d19307fd24cea597dd206addb16cc861511f2fc4a1",
+      "acp/a-stop-reason-other-than-end-turn-is-named-on-the-turn": "8daa2fe57a62668c4b6d29d19307fd24cea597dd206addb16cc861511f2fc4a1",
+      "acp/a-truncated-turn-preserves-max-tokens": "8daa2fe57a62668c4b6d29d19307fd24cea597dd206addb16cc861511f2fc4a1",
+      "delivery/a-cut-call-reads-its-record-while-a-transport-still-sends": "8daa2fe57a62668c4b6d29d19307fd24cea597dd206addb16cc861511f2fc4a1",
+      "delivery/a-key-cut-after-a-round-that-spoke-tells-its-caller-the-turn-s-end": "8daa2fe57a62668c4b6d29d19307fd24cea597dd206addb16cc861511f2fc4a1",
+      "delivery/a-key-cut-between-rounds-tells-its-caller-the-turn-s-end": "8daa2fe57a62668c4b6d29d19307fd24cea597dd206addb16cc861511f2fc4a1",
+      "delivery/a-key-cut-while-the-adopting-hook-waits-reaches-the-adopted-call": "8daa2fe57a62668c4b6d29d19307fd24cea597dd206addb16cc861511f2fc4a1",
+      "delivery/an-adopted-call-cut-while-its-answer-s-chained-turn-runs-reads-its-own-end": "8daa2fe57a62668c4b6d29d19307fd24cea597dd206addb16cc861511f2fc4a1",
+      "delivery/an-adopted-call-s-handle-cuts-its-turn-while-a-target-reads": "8daa2fe57a62668c4b6d29d19307fd24cea597dd206addb16cc861511f2fc4a1",
+      "delivery/an-adopted-call-waited-after-its-run-reads-its-answer": "8daa2fe57a62668c4b6d29d19307fd24cea597dd206addb16cc861511f2fc4a1",
+      "delivery/an-adopted-call-waited-in-its-hook-reads-its-turn": "8daa2fe57a62668c4b6d29d19307fd24cea597dd206addb16cc861511f2fc4a1",
+      "delivery/an-adopted-call-waited-in-its-parse-reads-its-turn": "8daa2fe57a62668c4b6d29d19307fd24cea597dd206addb16cc861511f2fc4a1",
+      "inbound/a-buffered-reply-s-end-goes-under-the-caller-s-turns": "8daa2fe57a62668c4b6d29d19307fd24cea597dd206addb16cc861511f2fc4a1",
+      "inbound/a-reply-s-generation-keys-stay-off-its-caller-s-record": "8daa2fe57a62668c4b6d29d19307fd24cea597dd206addb16cc861511f2fc4a1",
+      "inbound/a-transport-s-reply-record-is-the-caller-s-too": "8daa2fe57a62668c4b6d29d19307fd24cea597dd206addb16cc861511f2fc4a1",
+      "orchestration/a-loop-whose-producer-fails-after-a-tool-round-gives-its-error-not-a-cut": "8daa2fe57a62668c4b6d29d19307fd24cea597dd206addb16cc861511f2fc4a1",
+      "orchestration/a-loop-whose-producer-is-cut-short-answers-nothing-and-says-why": "8daa2fe57a62668c4b6d29d19307fd24cea597dd206addb16cc861511f2fc4a1",
+      "streaming/a-blank-answer-writes-no-message": "8daa2fe57a62668c4b6d29d19307fd24cea597dd206addb16cc861511f2fc4a1",
+      "streaming/a-cut-turn-that-wrote-no-message-tells-its-caller-what-it-used": "8daa2fe57a62668c4b6d29d19307fd24cea597dd206addb16cc861511f2fc4a1",
+      "streaming/a-generation-cut-from-outside-counts-the-input-it-told": "8daa2fe57a62668c4b6d29d19307fd24cea597dd206addb16cc861511f2fc4a1",
+      "streaming/a-room-turn-its-reader-stopped-tells-its-caller-cancelled": "8daa2fe57a62668c4b6d29d19307fd24cea597dd206addb16cc861511f2fc4a1",
+      "streaming/a-room-turn-its-reader-stopped-while-the-model-reasoned-tells-its-caller-cancelled": "8daa2fe57a62668c4b6d29d19307fd24cea597dd206addb16cc861511f2fc4a1",
+      "turn-record/a-turn-cut-from-outside-gives-its-caller-what-it-wrote": "8daa2fe57a62668c4b6d29d19307fd24cea597dd206addb16cc861511f2fc4a1",
+      "turn-record/a-turn-that-writes-nothing-adds-nothing": "8daa2fe57a62668c4b6d29d19307fd24cea597dd206addb16cc861511f2fc4a1",
+      "turn-record/a-turn-that-wrote-no-message-names-its-end-to-the-caller": "8daa2fe57a62668c4b6d29d19307fd24cea597dd206addb16cc861511f2fc4a1",
+      "turn-record/a-value-a-tool-writes-under-turns-leaves-each-agent-s-end": "8daa2fe57a62668c4b6d29d19307fd24cea597dd206addb16cc861511f2fc4a1",
+      "turn-record/an-adopted-deferred-call-s-wait-reads-its-stream-s-record": "8daa2fe57a62668c4b6d29d19307fd24cea597dd206addb16cc861511f2fc4a1",
+      "turn-record/an-answer-to-an-answer-is-not-the-agent-s-reply-to-the-caller": "8daa2fe57a62668c4b6d29d19307fd24cea597dd206addb16cc861511f2fc4a1",
+      "turn-record/an-off-lock-hook-s-adopted-call-s-wait-reads-its-stream-s-record": "8daa2fe57a62668c4b6d29d19307fd24cea597dd206addb16cc861511f2fc4a1"
+    },
+    "RK-6.7-061": {
+      "delivery/an-adopted-call-cut-while-its-answer-s-chained-turn-runs-reads-its-own-end": "6ee1ffb8a011d88bc182b8778955a1d31481ac9aafdbec7e84262a977c1d6529",
+      "turn-record/an-answer-to-an-answer-is-not-the-agent-s-reply-to-the-caller": "6ee1ffb8a011d88bc182b8778955a1d31481ac9aafdbec7e84262a977c1d6529"
+    },
+    "RK-6.7-062": {
+      "turn-record/a-delegated-turn-s-row-carries-no-value-under-turns": "b7ac66aedc921e5fb743812beb89a20fb735bbedbdfa3c7ebe3c781a1f1e0152",
+      "turn-record/a-value-a-tool-writes-under-turns-leaves-each-agent-s-end": "b7ac66aedc921e5fb743812beb89a20fb735bbedbdfa3c7ebe3c781a1f1e0152",
+      "turn-record/a-value-a-turn-writes-under-turns-is-not-carried": "b7ac66aedc921e5fb743812beb89a20fb735bbedbdfa3c7ebe3c781a1f1e0152"
+    },
+    "RK-6.7-063": {
+      "inbound/a-buffered-reply-s-end-goes-under-the-caller-s-turns": "6e02ef68cb07f755d60a80586befdf831b869f80c35ba193f3b87c53b2598e92",
+      "inbound/a-transport-s-reply-record-is-the-caller-s-too": "6e02ef68cb07f755d60a80586befdf831b869f80c35ba193f3b87c53b2598e92"
+    },
+    "RK-6.7-064": {
+      "turn-record/a-delegated-turn-s-row-carries-no-value-under-turns": "fcaf3a17b2cda5cfa1ba4cccd4876832f451e4cf7c672d9655a07ea9414b7b21",
+      "turn-record/a-generation-hook-s-write-rides-every-message": "fcaf3a17b2cda5cfa1ba4cccd4876832f451e4cf7c672d9655a07ea9414b7b21",
+      "turn-record/a-hook-s-replacement-record-is-the-turn-s-one": "fcaf3a17b2cda5cfa1ba4cccd4876832f451e4cf7c672d9655a07ea9414b7b21",
+      "turn-record/a-memory-s-write-rides-the-reply": "fcaf3a17b2cda5cfa1ba4cccd4876832f451e4cf7c672d9655a07ea9414b7b21",
+      "turn-record/a-reader-that-stops-keeps-what-the-tools-wrote": "fcaf3a17b2cda5cfa1ba4cccd4876832f451e4cf7c672d9655a07ea9414b7b21",
+      "turn-record/a-tool-s-write-reaches-the-caller-with-no-streaming-channel": "fcaf3a17b2cda5cfa1ba4cccd4876832f451e4cf7c672d9655a07ea9414b7b21",
+      "turn-record/a-tool-s-write-rides-the-next-message-and-reaches-its-caller": "fcaf3a17b2cda5cfa1ba4cccd4876832f451e4cf7c672d9655a07ea9414b7b21"
+    },
+    "RK-6.7-066": {
+      "response-schema/a-final-answer-failing-its-schema-after-a-round-is-no-interruption": "eb7bcf59c747f5cf3ae5c5c1ad36f0a09041d397c1d765e9c81efdb26daeb357",
+      "response-schema/a-generation-hook-s-schema-constrains-the-turn": "eb7bcf59c747f5cf3ae5c5c1ad36f0a09041d397c1d765e9c81efdb26daeb357",
+      "response-schema/an-answer-that-fails-its-check-is-never-stored-nor-sent": "eb7bcf59c747f5cf3ae5c5c1ad36f0a09041d397c1d765e9c81efdb26daeb357"
+    },
+    "RK-6.7-067": {
+      "response-schema/a-turn-under-a-schema-stores-its-json-document": "9d72ccebf86556ba41f380e3dee748f37f1ea8c777ad8bc43fc0a20680211910"
+    },
+    "RK-6.7-068": {
+      "response-schema/a-binding-s-schema-outside-the-portable-subset-fails-the-turn": "61c8da5d59a51143a8ea992d9acc72de29e5d47aae92b352bf47465c368687a6"
+    },
+    "RK-6.7-069": {
+      "response-schema/a-binding-s-schema-outside-the-portable-subset-fails-the-turn": "3fad3ff72d58c5b36cba2a2d8154a4ed533e45010f9fcb8d9487d04a9b4231a3"
+    },
+    "RK-6.7-078": {
+      "response-schema/a-generation-hook-s-schema-constrains-the-turn": "a498ec5d0dc834970d0af3f5b1f9de732c9a18d454087a8a87510ad82fd36ecc",
+      "response-schema/a-model-that-takes-no-schema-fails-the-turn-before-any-request": "a498ec5d0dc834970d0af3f5b1f9de732c9a18d454087a8a87510ad82fd36ecc"
+    },
+    "RK-6.7-080": {
+      "response-schema/a-model-that-takes-no-schema-fails-the-turn-before-any-request": "dfc5189bbd89a7d4fdb57020bc423c87a3b020f2b96ccce963dbf0afecedfed8",
+      "response-schema/tools-beside-a-schema-fail-where-the-model-cannot-take-both": "dfc5189bbd89a7d4fdb57020bc423c87a3b020f2b96ccce963dbf0afecedfed8"
+    },
+    "RK-6.7-083": {
+      "response-schema/an-answer-that-fails-its-check-is-never-stored-nor-sent": "f7c0bfbdc79d30cb52cf2493fe0e548a3bc6c535785473f7045a528e46205c4d"
+    },
+    "RK-6.7-084": {
+      "response-schema/a-turn-under-a-schema-stores-its-json-document": "938c0a4bca3cee3e0e9303729025b3495370654f5d09ad76370e8f01f75f85b5"
+    },
+    "RK-6.7-085": {
+      "response-schema/an-answer-that-fails-its-check-is-never-stored-nor-sent": "4803d2dd2a9c25878e887762592ce2f38692c94d4b35a812b37ebd93e8a78d7b"
+    },
+    "RK-6.7-086": {
+      "resilience/a-fallback-whose-answer-fails-its-check-leaves-the-primary-s-error": "6b1d5031c0ec803d9bb99ca63a9772aa9620c57a90d4f190cdd22c08e6a5d61a",
+      "resilience/a-refusal-after-text-a-schema-held-is-tried-again": "6b1d5031c0ec803d9bb99ca63a9772aa9620c57a90d4f190cdd22c08e6a5d61a",
+      "response-schema/an-answer-that-fails-its-check-is-never-stored-nor-sent": "6b1d5031c0ec803d9bb99ca63a9772aa9620c57a90d4f190cdd22c08e6a5d61a"
+    },
+    "RK-6.7-087": {
+      "response-schema/a-final-answer-failing-its-schema-after-a-round-is-no-interruption": "d226176a1fd4a8b089c82436e9e7a4d725373e43ab6b11365349236c892d5da2",
+      "response-schema/a-tool-round-s-text-and-the-document-are-two-messages": "d226176a1fd4a8b089c82436e9e7a4d725373e43ab6b11365349236c892d5da2"
+    },
+    "RK-6.7-089": {
+      "response-schema/a-malformed-call-under-a-schema-is-asked-again": "13b0ce8eac62712183b3284076bf01eab04a952a763e2ed4d9bfeffd07411edb"
+    },
+    "RK-6.7-095": {
+      "mcp-host/listing-metadata": "4d9b4d7012a99c49144d0b0db54d721d82e583a4e9b80ee1da4af4d3bc93522c"
+    },
+    "RK-6.7-106": {
+      "tasks/a-failed-task-s-exception-keeps-its-attributes": "33a9936ac7071d4af7e5162cd1fff7e9b6ebae650b6394037f41b57368f53e30"
+    },
+    "RK-6.7-109": {
+      "author-images/a-model-that-does-not-see-reads-a-mention": "9c99bb21c40d1036f87e8e5e1046aec82178ee1c605c4491d303aba572358361",
+      "author-images/an-image-goes-after-its-caption": "9c99bb21c40d1036f87e8e5e1046aec82178ee1c605c4491d303aba572358361"
+    },
+    "RK-6.7-111": {
+      "ai-context/a-disabled-target-still-supplies-capabilities-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "ai-context/a-muted-target-still-supplies-capabilities-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "ai-context/a-private-target-still-supplies-capabilities-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "ai-context/a-single-bidirectional-transport-supplies-all-capabilities-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "ai-context/a-single-outbound-transport-supplies-all-capabilities-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "ai-context/a-write-only-target-still-supplies-capabilities-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "ai-context/bounded-first-target-survives-unlimited-second-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "ai-context/bounded-second-target-narrows-every-limit-and-flag-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "ai-context/disjoint-media-still-leave-present-target-capabilities-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "ai-context/each-distinct-limit-keeps-its-own-minimum-first-target-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "ai-context/each-distinct-limit-keeps-its-own-minimum-second-target-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "ai-context/interleaved-rooms-and-hook-copies-preserve-provider-context-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "ai-context/no-outgoing-transport-keeps-targets-absent-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "ai-context/reversing-targets-retains-the-other-formats-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "ai-context/two-bounded-targets-use-smaller-values-and-and-flags-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "ai-context/unlimited-targets-retain-first-target-formats-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "ai-external-handler/close-during-decision-drains-cancelled-report-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "ai-external-handler/cut-at-start-keeps-known-failure-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "ai-external-handler/cut-at-start-keeps-known-success-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "ai-external-handler/cut-at-start-never-asks-the-handler-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "ai-external-handler/cut-during-decision-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "ai-external-handler/cut-during-decision-raise-after-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "ai-external-handler/cut-during-decision-raise-before-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "ai-external-handler/cut-during-report-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "ai-external-handler/cut-during-sync-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "ai-external-handler/cut-known-failure-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "ai-external-handler/cut-known-success-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "ai-external-handler/cut-local-tool-never-notifies-external-handler-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "ai-external-handler/cut-with-held-observer-keeps-one-report-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "ai-external-handler/decision-error-keeps-detail-private-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "ai-external-handler/duplicate-pending-call-is-refused-before-its-cut-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "ai-external-handler/empty-replacement-arguments-are-preserved-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "ai-external-handler/handler-denial-is-a-refusal-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "ai-external-handler/local-call-with-forged-result-stays-local-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "ai-external-handler/mixed-pending-and-local-calls-keep-their-owners-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "ai-external-handler/model-is-error-cannot-forge-provider-execution-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "ai-external-handler/model-result-cannot-forge-provider-execution-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "ai-external-handler/partial-call-never-reaches-the-handler-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "ai-external-handler/pending-empty-result-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "ai-external-handler/pending-result-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "ai-external-handler/policy-handler-keeps-wired-gate-arguments-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "ai-external-handler/policy-handler-keeps-wired-gate-refusal-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "ai-external-handler/policy-handler-reads-the-wired-gate-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "ai-external-handler/provider-failed-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "ai-external-handler/provider-failed-report-raise-after-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "ai-external-handler/provider-failed-report-raise-before-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "ai-external-handler/provider-served-beside-local-tools-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "ai-external-handler/provider-served-report-raise-after-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "ai-external-handler/provider-served-report-raise-before-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "ai-external-handler/read-stored-result-stays-local-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "ai-external-handler/refusal-private-detail-delegate-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "ai-external-handler/refusal-private-detail-raise-after-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "ai-external-handler/refusal-private-detail-raise-before-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "ai-external-handler/replacement-arguments-reach-the-report-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "ai-external-handler/report-block-keeps-the-original-outcome-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "ai-external-handler/report-metadata-keeps-the-original-outcome-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "ai-external-handler/report-modify-keeps-the-original-outcome-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "ai-external-handler/report-raise-after-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "ai-external-handler/report-raise-before-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "ai-external-handler/report-skip-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "ai-external-handler/reused-call-ids-in-the-next-round-get-new-reports-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "ai-external-handler/withdrawn-local-tool-never-reaches-the-handler-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "host-declared/arguments-and-results-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "host-declared/builtin-call-refused-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "host-declared/cancelling-one-call-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "host-declared/concurrent-record-contributions-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "host-declared/concurrent-record-merges-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "host-declared/owner-context-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "host-declared/record-equal-values-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "host-declared/record-error-permissionerror-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "host-declared/record-error-runtimeerror-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "host-declared/record-error-valueerror-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "host-declared/record-return-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "host-declared/unknown-name-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "input-request/blocked-whole": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "input-request/open-record-whole": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "input-request/organization-scope-whole": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "input-request/rejected-whole": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "input-request/timed-out-whole": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "orchestration/each-room-s-background-team-runs-its-own-workers-without-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "orchestration/each-room-s-per-worker-tools-run-with-its-own-install-without-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "planning/a-before-tool-rewrite-is-the-plan-that-is-stored-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "planning/a-denied-planner-writes-and-publishes-nothing-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "planning/an-empty-replacement-publishes-and-clears-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "planning/counts-and-cleaned-extras-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "planning/empty-tasks-publishes-an-empty-plan-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "planning/missing-required-tasks-is-refused-before-the-planner-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "planning/missing-title-does-not-replace-the-plan-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "planning/nonobject-task-does-not-replace-the-plan-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "planning/nonstring-status-does-not-replace-the-plan-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "planning/nonstring-title-does-not-replace-the-plan-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "planning/null-tasks-does-not-replace-the-plan-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "planning/planning-is-disabled-by-default-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "planning/sandbox-declarations-precede-the-planner-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "planning/scalar-tasks-does-not-replace-the-plan-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "planning/tool-search-always-declares-the-planner-before-and-after-use-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "planning/unknown-status-does-not-replace-the-plan-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "planning/unknown-top-level-argument-is-refused-before-the-planner-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "planning/with-planning-disabled-the-host-keeps-its-name-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "provider-served/absent-is-pending-whole": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "provider-served/bounded-mixed-round-whole": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "provider-served/cut-known-failure-whole": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "provider-served/cut-known-success-whole": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "provider-served/empty-whole": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "provider-served/failure-whole": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "provider-served/forged-arguments-refused-by-before-whole": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "provider-served/forged-arguments-refused-by-policy-whole": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "provider-served/mixed-round-whole": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "provider-served/null-is-pending-whole": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "provider-served/report-block-failure-whole": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "provider-served/report-block-success-whole": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "provider-served/report-clear-failure-whole": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "provider-served/report-clear-success-whole": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "provider-served/reused-id-whole": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "provider-served/stop-at-end-failure-whole": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "provider-served/stop-at-end-success-whole": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "provider-served/stop-at-start-failure-whole": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "provider-served/stop-at-start-success-whole": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "provider-served/success-whole": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "provider-served/without-handler-whole": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "role-policy/a-later-turn-reads-the-new-role-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "role-policy/a-skill-hint-keeps-the-role-restriction-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "role-policy/activation-cannot-bypass-role-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "role-policy/agent-selects-each-senders-role-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "role-policy/ai-selects-each-senders-role-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "role-policy/allowed-catalogue-keeps-gated-tools-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "role-policy/an-alias-must-pass-both-role-names-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "role-policy/deferred-definitions-omit-denied-tools-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "role-policy/denied-prerequisite-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "role-policy/exact-name-cannot-recover-denied-tool-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "role-policy/interleaved-turns-keep-their-role-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "role-policy/mcp-allowed-server-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "role-policy/mcp-bare-policy-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "role-policy/mcp-denied-server-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "role-policy/script-denied-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "role-policy/script-owner-replaces-base-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "role-policy/search-and-list-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "role-policy/the-named-record-selects-the-role-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "sandbox/a-missing-skill-does-not-hint-at-a-sandbox-command-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "sandbox/a-nonprefixed-name-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "sandbox/an-empty-catalogue-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "sandbox/defers-then-reveals-the-matching-command-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "sandbox/gets-an-empty-argument-object-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "sandbox/is-denied-before-it-runs-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "sandbox/is-hidden-and-refused-by-an-inactive-skill-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "sandbox/offers-only-allowed-commands-with-search-off-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "sandbox/receives-exact-command-and-arguments-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "sandbox/removes-only-the-first-prefix-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "sandbox/reports-an-executor-failure-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "sandbox/returns-a-nonzero-result-as-served-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "sandbox/search-cannot-reveal-a-denied-command-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "sandbox/validates-a-hidden-command-before-execution-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "sandbox/yields-a-prefix-only-name-to-the-host-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "skill-gating/a-blocked-activation-never-references-a-held-tool-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "skill-gating/a-blocked-activation-opens-no-gate-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "skill-gating/a-held-tool-stays-gated-until-the-activation-references-it-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "skill-gating/activating-one-skill-leaves-the-other-gate-closed-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "skill-gating/activation-cannot-restore-a-withdrawn-tool-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "skill-gating/activation-never-overrides-policy-and-infrastructure-escapes-both-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "skill-gating/activation-opens-the-next-round-and-its-hook-catalogue-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "skill-gating/an-activation-in-one-room-does-not-open-another-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "skill-gating/an-ordinary-success-does-not-reference-still-gated-tools-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "skill-gating/bracketed-text-is-a-list-not-a-character-class-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "skill-gating/discovery-cannot-reveal-gated-tools-before-activation-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "skill-gating/each-turn-uses-its-configured-gates-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "skill-gating/every-covering-skill-must-be-active-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "skill-gating/list-globs-hide-and-refuse-only-matching-tools-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "skill-gating/room-activation-persists-but-a-standalone-turn-starts-closed-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "skill-gating/scalar-globs-hide-and-refuse-only-matching-tools-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "skill-gating/tool-search-keeps-an-activated-held-tool-unreferenced-until-found-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "skill-prerequisites/a-absent-prerequisite-refuses-activation-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "skill-prerequisites/a-candidate-opens-a-shared-closed-pattern-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "skill-prerequisites/a-closed-gate-makes-a-declared-prerequisite-unavailable-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "skill-prerequisites/a-denied-prerequisite-refuses-activation-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "skill-prerequisites/a-failed-prerequisite-check-references-no-deferred-tool-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "skill-prerequisites/a-host-matcher-failure-never-opens-a-gate-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "skill-prerequisites/a-host-matcher-reads-only-closed-requirements-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "skill-prerequisites/a-host-matcher-reads-only-denied-requirements-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "skill-prerequisites/a-host-matcher-reads-only-offered-requirements-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "skill-prerequisites/a-standalone-prerequisite-check-uses-only-its-own-activations-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "skill-prerequisites/a-withdrawn-prerequisite-refuses-activation-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "skill-prerequisites/all-missing-requirements-retain-their-declared-order-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "skill-prerequisites/an-active-skill-opens-a-shared-closed-prerequisite-for-another-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "skill-prerequisites/an-already-active-skill-rechecks-its-prerequisites-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "skill-prerequisites/an-available-skill-can-open-a-pattern-also-gated-by-an-unavailable-skill-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "skill-prerequisites/an-overlapping-but-different-pattern-does-not-open-a-closed-gate-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "skill-prerequisites/an-unavailable-skill-keeps-its-tools-closed-and-explains-why-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "skill-prerequisites/an-unavailable-skill-never-offers-a-matching-tool-hint-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "skill-prerequisites/an-unlisted-skill-remains-activatable-and-opens-its-tools-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "skill-prerequisites/channel-owned-tools-count-as-prerequisites-despite-policy-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "skill-prerequisites/each-turn-uses-its-own-prerequisites-and-availability-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "skill-prerequisites/list-prerequisites-include-the-candidates-own-gated-tools-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "skill-prerequisites/requirements-are-exact-names-not-glob-grants-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "skill-prerequisites/scalar-prerequisites-include-the-candidates-own-gated-tools-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "skill-prerequisites/unavailable-references-explain-the-same-restriction-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "skill-scripts/arguments-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "skill-scripts/close-without-registry-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "skill-scripts/empty-arguments-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "skill-scripts/executor-error-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "skill-scripts/explicit-failure-result-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "skill-scripts/missing-file-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "skill-scripts/no-executor-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "skill-scripts/omitted-arguments-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "skill-scripts/policy-denied-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "skill-scripts/script-does-not-count-toward-search-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "skill-scripts/script-is-not-a-skill-activation-hint-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "skill-scripts/search-never-hides-script-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "skill-scripts/traversal-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "skill-scripts/turn-registry-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "skill-scripts/unavailable-skill-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "skill-scripts/unknown-skill-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "speaking/a-block-silences-the-agent-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "speaking/a-failed-closed-hook-silences-the-agent-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "speaking/a-failed-open-hook-keeps-the-decision-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "speaking/a-failing-thinker-keeps-the-current-thought-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "speaking/a-final-silence-does-not-wait-for-its-thought-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "speaking/a-generation-hook-can-block-thinking-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "speaking/a-hook-can-silence-the-decision-taken-after-thinking-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "speaking/a-hook-gives-the-agent-the-floor-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "speaking/a-hook-reads-the-previous-hooks-decision-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "speaking/a-hook-turns-an-offer-into-silence-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "speaking/a-late-offer-is-observed-without-a-generation-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "speaking/a-late-speak-decision-runs-no-turn-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "speaking/a-replaced-generation-context-reaches-the-thinker-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "speaking/a-thought-in-time-is-marked-as-another-decision-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "speaking/a-thought-in-time-offers-and-is-emptied-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "speaking/an-instruction-bypasses-the-policy-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "speaking/an-unchanged-thought-is-not-reported-twice-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "speaking/no-policy-runs-without-a-decision-report-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "speaking/offer-adds-its-own-note-after-the-decision-notes-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "speaking/policy-failure-falls-back-to-speak-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "speaking/policy-timeout-falls-back-to-speak-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "speaking/reattaching-starts-with-an-empty-thought-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "speaking/silence-thinks-without-a-new-request-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "speaking/silent-keeps-the-event-in-memory-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "speaking/speak-includes-the-decision-notes-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "speaking/strategy-bypasses-policy-and-thinker-one-pass-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "speaking/strategy-bypasses-policy-and-thinker-two-passes-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "tasks/the-repeat-guard-holds-on-delegate-task-without-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "tool-allowed-names/a-handler-reads-the-resolved-catalogue-and-first-round-reread-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "tool-allowed-names/a-shared-channel-reads-each-turns-configured-catalogue-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "tool-allowed-names/policy-denial-removes-a-name-and-owned-tools-escape-the-allow-list-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "tool-allowed-names/round-withdrawals-remove-base-and-declared-extra-tools-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "tool-allowed-names/skill-hidden-tools-remain-allowed-but-policy-denied-tools-do-not-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "tool-allowed-names/the-generation-hook-refreshes-the-allowed-catalogue-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "tool-allowed-names/tool-search-hides-definitions-without-narrowing-allowed-names-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "tool-structured/a-handler-copy-reaches-the-hook-and-row-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "tools/a-call-whose-hooks-context-fails-keeps-its-handler-s-result-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "tools/continuation-cancelled-generation-is-not-consulted-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "tools/continuation-empty-nudge-is-a-real-retry-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "tools/continuation-empty-round-spends-the-shared-bound-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "tools/continuation-empty-text-is-not-consulted-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "tools/continuation-error-after-tool-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "tools/continuation-error-before-tool-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "tools/continuation-excluded-content-filter-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "tools/continuation-excluded-length-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "tools/continuation-excluded-max-tokens-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "tools/continuation-excluded-none-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "tools/continuation-excluded-safety-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "tools/continuation-force-stopped-round-is-not-consulted-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "tools/continuation-local-calls-are-not-consulted-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "tools/continuation-natural-end-turn-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "tools/continuation-natural-stop-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "tools/continuation-natural-stop-sequence-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "tools/continuation-natural-upper-stop-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "tools/continuation-none-ends-the-turn-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "tools/continuation-round-cap-still-applies-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "tools/continuation-second-announcement-is-unfinished-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "tools/continuation-served-calls-are-not-consulted-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "tools/continuation-shares-the-empty-retry-bound-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "tools/continuation-token-budget-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "tools/continuation-whitespace-nudge-is-preserved-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "tools/continuation-whitespace-text-is-not-consulted-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "tools/continuation-without-tools-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "tools/continuation-zero-retry-bound-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "tools/extra-tools-collision-binding-agent-whole": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "tools/extra-tools-collision-binding-channel-whole": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "tools/extra-tools-collision-builtin-agent-whole": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "tools/extra-tools-collision-builtin-channel-whole": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "tools/extra-tools-collision-host-agent-whole": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "tools/extra-tools-collision-host-channel-whole": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "tools/extra-tools-live-fields-agent-whole": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "tools/extra-tools-live-fields-channel-whole": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "tools/extra-tools-separate-sources-agent-whole": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "tools/extra-tools-separate-sources-channel-whole": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "tools/report-claim-matching-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "tools/report-claim-previous-turn-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "tools/report-claim-reused-id-non-streaming": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "turn-tool-timeouts/absent-name-whole": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "turn-tool-timeouts/bounded-configured-tool-whole": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "turn-tool-timeouts/budget-before-bound-whole": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "turn-tool-timeouts/concurrent-turns-whole": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "turn-tool-timeouts/empty-map-whole": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "turn-tool-timeouts/null-map-whole": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "turn-tool-timeouts/route-before-bound-whole": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "turn-tool-timeouts/unbounded-configured-tool-whole": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "turn-tool-timeouts/waiting-tool-whole": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
+      "turn-tool-timeouts/zero-refused-whole": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986"
+    },
+    "RK-6.7-114": {
+      "response-schema/a-binding-s-schema-outside-the-portable-subset-fails-the-turn": "d4bf096e07f2624c134537b724011dce5fbdfb80127570fe7c06468180ae60ce"
     },
     "RK-7.1-002": {
       "permissions/all-source-access-and-mute-combinations": "09e15544fea0657bef56fbca15075385d6cd074a82f5f472f02ac5c31fb5fe92",
