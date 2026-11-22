@@ -985,15 +985,15 @@
       "section": "6.4",
       "title": "Intelligence Channels",
       "review": "normative",
-      "requirements": 376,
+      "requirements": 497,
       "mapping": {
-        "mapped_partial": 13,
-        "unmapped": 363
+        "mapped_partial": 23,
+        "unmapped": 474
       },
       "decided_gaps": {
         "phase6": 8,
-        "step": 55,
-        "writable": 54
+        "step": 63,
+        "writable": 71
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -12834,7 +12834,37 @@
       "links": []
     },
     {
-      "id": "RK-6.4-044",
+      "id": "RK-6.4-535",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-536",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-537",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-538",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-539",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-540",
       "section": "6.4",
       "mapping": "unmapped",
       "links": []
@@ -15004,7 +15034,13 @@
       }
     },
     {
-      "id": "RK-6.4-043",
+      "id": "RK-6.4-528",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-529",
       "section": "6.4",
       "mapping": "mapped_partial",
       "links": [
@@ -15016,7 +15052,26 @@
             "Multipart input matching and deferred-tool reopening combined with ambiguous inputs are outside these shared scenarios."
           ],
           "executions": []
-        },
+        }
+      ]
+    },
+    {
+      "id": "RK-6.4-530",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-531",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-532",
+      "section": "6.4",
+      "mapping": "mapped_partial",
+      "links": [
         {
           "id": "deferred-hook-context-native-mutations",
           "scope": "In-place mutation, replacement, mutation followed by copying and input removal preserve historical tool results and memory additions while shortening only earlier new results, in both generation modes.",
@@ -15029,7 +15084,110 @@
       ]
     },
     {
-      "id": "RK-6.4-042",
+      "id": "RK-6.4-533",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-534",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-516",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1951",
+        "note": "Needs a channel spec that gives both a provider and a router, or neither, and a step that expects its build to fail."
+      }
+    },
+    {
+      "id": "RK-6.4-517",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-518",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1951",
+        "note": "A thinker's thought on a channel with a router asks the router as a turn's start does."
+      }
+    },
+    {
+      "id": "RK-6.4-519",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1951",
+        "note": "A router that names no provider at a turn's start fails the turn."
+      }
+    },
+    {
+      "id": "RK-6.4-520",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-521",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-522",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-523",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1951",
+        "note": "A loop run inside another channel's turn asks its own channel for its provider."
+      }
+    },
+    {
+      "id": "RK-6.4-524",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-525",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1951",
+        "note": "Needs a step that reads a channel's provider and provider_name."
+      }
+    },
+    {
+      "id": "RK-6.4-526",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-527",
       "section": "6.4",
       "mapping": "unmapped",
       "links": []
@@ -15476,110 +15634,482 @@
       }
     },
     {
-      "id": "RK-6.4-028",
+      "id": "RK-6.4-403",
       "section": "6.4",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-6.4-029",
+      "id": "RK-6.4-404",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1951",
+        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+      }
+    },
+    {
+      "id": "RK-6.4-405",
       "section": "6.4",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-6.4-030",
+      "id": "RK-6.4-406",
       "section": "6.4",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-6.4-031",
+      "id": "RK-6.4-407",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1951",
+        "note": "A turn cut short after a round, whose deliveries show no round text delivered twice and nothing of an earlier turn."
+      }
+    },
+    {
+      "id": "RK-6.4-408",
       "section": "6.4",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-6.4-032",
+      "id": "RK-6.4-409",
       "section": "6.4",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-6.4-033",
+      "id": "RK-6.4-410",
       "section": "6.4",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-6.4-034",
+      "id": "RK-6.4-411",
       "section": "6.4",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-6.4-035",
+      "id": "RK-6.4-412",
       "section": "6.4",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-6.4-036",
+      "id": "RK-6.4-413",
       "section": "6.4",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-6.4-037",
+      "id": "RK-6.4-414",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-415",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-416",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-417",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-418",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-419",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-420",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-421",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-422",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-423",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1951",
+        "note": "Needs telemetry.spans to report a span's status and what it carries; it reports name and ids only."
+      }
+    },
+    {
+      "id": "RK-6.4-424",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1951",
+        "note": "Needs telemetry.spans to report a span's status; it reports name and ids only."
+      }
+    },
+    {
+      "id": "RK-6.4-425",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-426",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-427",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-428",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-429",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-430",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-431",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-432",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1951",
+        "note": "A store fault on the record's update (store_faults), the turn's outcome standing."
+      }
+    },
+    {
+      "id": "RK-6.4-433",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-434",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-435",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-436",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-437",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-438",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-439",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-440",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-441",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-442",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-443",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-444",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-445",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-446",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1951",
+        "note": "Two serialized turns of one agent in a room, the first's answer delivered while the second waits its place."
+      }
+    },
+    {
+      "id": "RK-6.4-447",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-448",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-449",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1951",
+        "note": "A serialized agent detached from the room while its second turn waits: that turn never starts."
+      }
+    },
+    {
+      "id": "RK-6.4-450",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1951",
+        "note": "A muted serialized agent's turns run as each event comes, their answers not delivered."
+      }
+    },
+    {
+      "id": "RK-6.4-451",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1951",
+        "note": "A tool of a serialized agent's turn that sends a message into its own room asking the same agent: the call returns, and the answer comes after the turn."
+      }
+    },
+    {
+      "id": "RK-6.4-452",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1951",
+        "note": "A strategy that takes a serialized agent's turns orders its generations itself, none waiting."
+      }
+    },
+    {
+      "id": "RK-6.4-453",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1951",
+        "note": "Needs two processes, each handed a delivery of the same room."
+      }
+    },
+    {
+      "id": "RK-6.4-454",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-455",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-456",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1951",
+        "note": "Needs a channel that declares it steers its room turns without serializing them, registered in both runners."
+      }
+    },
+    {
+      "id": "RK-6.4-457",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-458",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1951",
+        "note": "Steering with two people under one sender id, or two senders signing one name: neither is the running turn's author."
+      }
+    },
+    {
+      "id": "RK-6.4-459",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-460",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-461",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1951",
+        "note": "Steering with no running turn, or several, of the channel in the room: the message waits a turn of its own."
+      }
+    },
+    {
+      "id": "RK-6.4-462",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-463",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-464",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-465",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-466",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-467",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-468",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-469",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-470",
       "section": "6.4",
       "mapping": "mapped_partial",
       "links": [
-        {
-          "id": "acp-authorized-recovery-outcomes",
-          "scope": "Partial lifecycle and response outcomes around a host-native session invalidation: session identity, terminal errors, interruption markers and completion-hook absence. The Python reference additionally specifies bounded authorization and activity refusal; these shared assertions prepare the ACP area's later RFC amendment, without treating those recovery details as explicit clauses of the current RFC.",
-          "coverage": "partial",
-          "missing": [
-            "This link does not cover the whole ACP channel. Full tool/thinking/plan publications, permission policy, standalone sessions, catch-up, instructions, usage provenance and public preparation cancellation remain separate contracts.",
-            "Native Rust tests establish actual room-lock contention and stream terminal/drop boundaries; they are not formal scenario execution receipts. They do not establish remote release acknowledgement before every following turn after cancellation.",
-            "The activity scenarios test only the prohibition of replay after an update or a permission request. They do not claim complete support for those update types."
-          ],
-          "executions": []
-        },
-        {
-          "id": "acp-public-room-cancellation",
-          "scope": "Public room cancellation during initial opening, required configuration and authorized reconstruction ends without prompting and preserves interrupted metadata. An already prompting room receives session/cancel and retains the agent's returned outcome. Idle and absent-session boolean results follow the Python API reference; they are not asserted as new normative clauses.",
-          "coverage": "partial",
-          "missing": [
-            "Steering Cancel, detach and standalone sessions remain separate contracts. This link does not close the entire ACP requirement.",
-            "The suspended set_config_option RPC does not establish the later configuration-publication callback boundary; that Python source variant remains open.",
-            "The active-prompt scenario explicitly releases an agent response after cancellation. It does not guarantee that arbitrary agents promptly acknowledge cancellation.",
-            "Transport-start and final-cleanup boundaries have native regression tests, not shared scenario execution receipts. This link does not claim parity of activity counters during cleanup.",
-            "Permissions, complete notifications, room context and instructions, usage provenance and previously deferred shutdown cases are outside this link."
-          ],
-          "executions": []
-        },
-        {
-          "id": "acp-close-pending-mcp-supplier",
-          "scope": "Release of an active room preparation blocked in its initial MCP supplier when the ACP channel itself closes, before any session or prompt. The kit remains alive and the supplier gate is never released. No response completion is announced.",
-          "coverage": "partial",
-          "missing": [
-            "Only initial room preparation blocked in the MCP supplier is covered here; standalone and other shutdown boundaries keep their separate contracts.",
-            "Close is distinct from the public cancel/steer operation: the observed turn-link error and absence of an ACP interrupted marker are recorded, without claiming the cancellation-marker clauses from this close scenario.",
-            "This link does not claim all requirements grouped in RK-6.4-037, or synchronous active-turn count changes before the consumer drains."
-          ],
-          "executions": []
-        },
-        {
-          "id": "acp-active-turn-thought-lifecycle",
-          "scope": "Thoughts route to the session's current room turn after another room opened the connection. Reused sessions start fresh windows; error and abandoned consumption close the window without a response report. Public cancel of an engaged prompt preserves a subsequently returned cancelled response and its report.",
-          "coverage": "partial",
-          "missing": [
-            "The two-room scenario is sequential; it does not establish concurrent prompt isolation.",
-            "Updates and permission callbacks with no active turn remain outside this proof.",
-            "Preparation cancellation, standalone sessions and the rest of RK-6.4-037 retain their separate contracts."
-          ],
-          "executions": []
-        },
         {
           "id": "acp-active-tool-lifecycle-and-context",
           "scope": "Outstanding tools close on the tested terminal paths; sequential room prompts retain their room routing, and both report-hook modes see room metadata updated after prompt start.",
@@ -15594,7 +16124,205 @@
       ]
     },
     {
-      "id": "RK-6.4-038",
+      "id": "RK-6.4-471",
+      "section": "6.4",
+      "mapping": "mapped_partial",
+      "links": [
+        {
+          "id": "acp-active-turn-thought-lifecycle",
+          "scope": "Thoughts route to the session's current room turn after another room opened the connection. Reused sessions start fresh windows; error and abandoned consumption close the window without a response report. Public cancel of an engaged prompt preserves a subsequently returned cancelled response and its report.",
+          "coverage": "partial",
+          "missing": [
+            "The two-room scenario is sequential; it does not establish concurrent prompt isolation.",
+            "Updates and permission callbacks with no active turn remain outside this proof.",
+            "Preparation cancellation, standalone sessions and the rest of RK-6.4-037 retain their separate contracts."
+          ],
+          "executions": []
+        }
+      ]
+    },
+    {
+      "id": "RK-6.4-472",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-473",
+      "section": "6.4",
+      "mapping": "mapped_partial",
+      "links": [
+        {
+          "id": "acp-close-pending-mcp-supplier",
+          "scope": "Release of an active room preparation blocked in its initial MCP supplier when the ACP channel itself closes, before any session or prompt. The kit remains alive and the supplier gate is never released. No response completion is announced.",
+          "coverage": "partial",
+          "missing": [
+            "Only initial room preparation blocked in the MCP supplier is covered here; standalone and other shutdown boundaries keep their separate contracts.",
+            "Close is distinct from the public cancel/steer operation: the observed turn-link error and absence of an ACP interrupted marker are recorded, without claiming the cancellation-marker clauses from this close scenario.",
+            "This link does not claim all requirements grouped in RK-6.4-037, or synchronous active-turn count changes before the consumer drains."
+          ],
+          "executions": []
+        }
+      ]
+    },
+    {
+      "id": "RK-6.4-474",
+      "section": "6.4",
+      "mapping": "mapped_partial",
+      "links": [
+        {
+          "id": "acp-public-room-cancellation",
+          "scope": "Public room cancellation during initial opening, required configuration and authorized reconstruction ends without prompting and preserves interrupted metadata. An already prompting room receives session/cancel and retains the agent's returned outcome. Idle and absent-session boolean results follow the Python API reference; they are not asserted as new normative clauses.",
+          "coverage": "partial",
+          "missing": [
+            "Steering Cancel, detach and standalone sessions remain separate contracts. This link does not close the entire ACP requirement.",
+            "The suspended set_config_option RPC does not establish the later configuration-publication callback boundary; that Python source variant remains open.",
+            "The active-prompt scenario explicitly releases an agent response after cancellation. It does not guarantee that arbitrary agents promptly acknowledge cancellation.",
+            "Transport-start and final-cleanup boundaries have native regression tests, not shared scenario execution receipts. This link does not claim parity of activity counters during cleanup.",
+            "Permissions, complete notifications, room context and instructions, usage provenance and previously deferred shutdown cases are outside this link."
+          ],
+          "executions": []
+        }
+      ]
+    },
+    {
+      "id": "RK-6.4-475",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-476",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-477",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-478",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-479",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-480",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-481",
+      "section": "6.4",
+      "mapping": "mapped_partial",
+      "links": [
+        {
+          "id": "acp-authorized-recovery-outcomes",
+          "scope": "Partial lifecycle and response outcomes around a host-native session invalidation: session identity, terminal errors, interruption markers and completion-hook absence. The Python reference additionally specifies bounded authorization and activity refusal; these shared assertions prepare the ACP area's later RFC amendment, without treating those recovery details as explicit clauses of the current RFC.",
+          "coverage": "partial",
+          "missing": [
+            "This link does not cover the whole ACP channel. Full tool/thinking/plan publications, permission policy, standalone sessions, catch-up, instructions, usage provenance and public preparation cancellation remain separate contracts.",
+            "Native Rust tests establish actual room-lock contention and stream terminal/drop boundaries; they are not formal scenario execution receipts. They do not establish remote release acknowledgement before every following turn after cancellation.",
+            "The activity scenarios test only the prohibition of replay after an update or a permission request. They do not claim complete support for those update types."
+          ],
+          "executions": []
+        }
+      ]
+    },
+    {
+      "id": "RK-6.4-482",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-483",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-484",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-485",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1951",
+        "note": "The scripted agent answers initialize with another protocol version (acp.agent.initialize.protocol_version): the channel fails clearly."
+      }
+    },
+    {
+      "id": "RK-6.4-486",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1951",
+        "note": "Needs a real stdio launch of an ACP agent command in both runners."
+      }
+    },
+    {
+      "id": "RK-6.4-487",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-488",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1951",
+        "note": "An ACP agent channel hosted on a turn executor (setup.executors): its sessions stay that executor's, and the room's turns are placed there."
+      }
+    },
+    {
+      "id": "RK-6.4-489",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-490",
+      "section": "6.4",
+      "mapping": "mapped_partial",
+      "links": [
+        {
+          "id": "acp-room-mcp-servers",
+          "scope": "Fixed and per-room synchronous/asynchronous MCP suppliers for room sessions. Complete ordered descriptors are declared at every opening; reuse avoids resolution, reconnect and authorized rebuild resolve again (including an empty list), and host-opened sessions are reused. Supplier errors and cancellation before session creation leave no fallback session or prompt; a held room supplier does not prevent another room from opening.",
+          "coverage": "partial",
+          "missing": [
+            "Standalone session suppliers remain part of RMK-1655 and are not credited here.",
+            "No external MCP server is contacted; these assertions prove descriptor resolution and declaration, not server access or authorization.",
+            "The remainder of session setup in RK-6.4-038 keeps its separate links and outstanding contracts.",
+            "Python iterable materialization and the approved Rust callback/list language forms have native tests, not additional formal scenario receipts."
+          ],
+          "executions": []
+        }
+      ]
+    },
+    {
+      "id": "RK-6.4-491",
       "section": "6.4",
       "mapping": "mapped_partial",
       "links": [
@@ -15612,35 +16340,12 @@
           "executions": []
         },
         {
-          "id": "acp-room-opening-and-reconnection",
-          "scope": "Public results and wire traces for shared room openings, independent rooms, settings during prompts, real transport loss and reapplication or refusal of host values.",
-          "coverage": "partial",
-          "missing": [
-            "Background owner calls alone do not establish lock contention: four native Rust opening tests poll the actual channel work while session/new is unanswered; their logs are not formal scenario receipts.",
-            "Authorized invalidation/rebuild, standalone, per-room MCP sources and directories, detach/cancellation matrices and agent-originated publications remain separate contracts.",
-            "Local reconnection does not prove remote executor loss or recovery. Native retired-lock and cleanup-warning checks are retained in the implementation, not represented as scenario receipts."
-          ],
-          "executions": []
-        },
-        {
           "id": "acp-rebuilt-session-required-settings",
           "scope": "On an authorized rebuilt room session, default settings and host overrides are reapplied before prompting. Refusal of required configuration requests closure of the replacement and fails the turn without prompting it.",
           "coverage": "partial",
           "missing": [
             "Standalone setup, per-room MCP sources and remote executor replacement remain outside these assertions. This is local session reconstruction on one connection.",
             "Configuration publication callbacks and agent-originated setting persistence are not established by these scenarios."
-          ],
-          "executions": []
-        },
-        {
-          "id": "acp-room-mcp-servers",
-          "scope": "Fixed and per-room synchronous/asynchronous MCP suppliers for room sessions. Complete ordered descriptors are declared at every opening; reuse avoids resolution, reconnect and authorized rebuild resolve again (including an empty list), and host-opened sessions are reused. Supplier errors and cancellation before session creation leave no fallback session or prompt; a held room supplier does not prevent another room from opening.",
-          "coverage": "partial",
-          "missing": [
-            "Standalone session suppliers remain part of RMK-1655 and are not credited here.",
-            "No external MCP server is contacted; these assertions prove descriptor resolution and declaration, not server access or authorization.",
-            "The remainder of session setup in RK-6.4-038 keeps its separate links and outstanding contracts.",
-            "Python iterable materialization and the approved Rust callback/list language forms have native tests, not additional formal scenario receipts."
           ],
           "executions": []
         },
@@ -15657,7 +16362,60 @@
       ]
     },
     {
-      "id": "RK-6.4-039",
+      "id": "RK-6.4-492",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-493",
+      "section": "6.4",
+      "mapping": "mapped_partial",
+      "links": [
+        {
+          "id": "acp-room-opening-and-reconnection",
+          "scope": "Public results and wire traces for shared room openings, independent rooms, settings during prompts, real transport loss and reapplication or refusal of host values.",
+          "coverage": "partial",
+          "missing": [
+            "Background owner calls alone do not establish lock contention: four native Rust opening tests poll the actual channel work while session/new is unanswered; their logs are not formal scenario receipts.",
+            "Authorized invalidation/rebuild, standalone, per-room MCP sources and directories, detach/cancellation matrices and agent-originated publications remain separate contracts.",
+            "Local reconnection does not prove remote executor loss or recovery. Native retired-lock and cleanup-warning checks are retained in the implementation, not represented as scenario receipts."
+          ],
+          "executions": []
+        }
+      ]
+    },
+    {
+      "id": "RK-6.4-494",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-495",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1951",
+        "note": "A mode the scripted ACP agent switches to itself is not set on the Room's next session."
+      }
+    },
+    {
+      "id": "RK-6.4-496",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-497",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-498",
       "section": "6.4",
       "mapping": "mapped_partial",
       "links": [
@@ -15673,7 +16431,38 @@
             "Native lifecycle regressions do not create shared scenario execution receipts."
           ],
           "executions": []
-        },
+        }
+      ]
+    },
+    {
+      "id": "RK-6.4-499",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-500",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-501",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-502",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-503",
+      "section": "6.4",
+      "mapping": "mapped_partial",
+      "links": [
         {
           "id": "acp-default-permission-replies",
           "scope": "ACP permissions with no external handler: actual reject option selection and cancellation fallback.",
@@ -15683,7 +16472,20 @@
             "This link does not establish detach behavior, filesystem/terminal support, or transient plan/tool progress in the same RFC source unit."
           ],
           "executions": []
-        },
+        }
+      ]
+    },
+    {
+      "id": "RK-6.4-504",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-505",
+      "section": "6.4",
+      "mapping": "mapped_partial",
+      "links": [
         {
           "id": "acp-configured-permission-decisions",
           "scope": "Configured handler callbacks and actual ACP permission choices, including unsupported overrides and repeated decisions.",
@@ -15697,21 +16499,28 @@
       ]
     },
     {
-      "id": "RK-6.4-040",
+      "id": "RK-6.4-506",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-507",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-508",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-509",
       "section": "6.4",
       "mapping": "mapped_partial",
       "links": [
-        {
-          "id": "acp-standing-instruction-prompts",
-          "scope": "The exact texts of sequential ACP prompt attempts with standing application instructions, including absent/blank defaults, RPC failure, separate rooms, explicit close, transport reconnect and authorized session rebuild.",
-          "coverage": "partial",
-          "missing": [
-            "Identity and Discussion integration are separate work; these assertions inspect prompt text, not returned model content or session identifiers.",
-            "The native received-RPC/abandoned-reader and late-response races are separate proofs and are not credited to these sequential scenarios.",
-            "No standalone-session, service backend, remote-executor or overall conformance-level claim follows from these assertions."
-          ],
-          "executions": []
-        },
         {
           "id": "acp-discussion-local-identity",
           "scope": "ACP local identity reaches Discussion addressing, dispatch candidates and peer notes.",
@@ -15725,7 +16534,31 @@
       ]
     },
     {
-      "id": "RK-6.4-041",
+      "id": "RK-6.4-510",
+      "section": "6.4",
+      "mapping": "mapped_partial",
+      "links": [
+        {
+          "id": "acp-standing-instruction-prompts",
+          "scope": "The exact texts of sequential ACP prompt attempts with standing application instructions, including absent/blank defaults, RPC failure, separate rooms, explicit close, transport reconnect and authorized session rebuild.",
+          "coverage": "partial",
+          "missing": [
+            "Identity and Discussion integration are separate work; these assertions inspect prompt text, not returned model content or session identifiers.",
+            "The native received-RPC/abandoned-reader and late-response races are separate proofs and are not credited to these sequential scenarios.",
+            "No standalone-session, service backend, remote-executor or overall conformance-level claim follows from these assertions."
+          ],
+          "executions": []
+        }
+      ]
+    },
+    {
+      "id": "RK-6.4-511",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-512",
       "section": "6.4",
       "mapping": "mapped_partial",
       "links": [
@@ -15741,6 +16574,34 @@
           "executions": []
         }
       ]
+    },
+    {
+      "id": "RK-6.4-513",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1951",
+        "note": "An ACP discussion turn sends only what the agent has not read, up to its start, and its notes name the event and who asked."
+      }
+    },
+    {
+      "id": "RK-6.4-514",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-515",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1951",
+        "note": "A silent ACP discussion answer is held back and blocked as rule 13 says."
+      }
     },
     {
       "id": "RK-6.5-001",
