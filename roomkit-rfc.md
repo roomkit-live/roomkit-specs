@@ -20940,7 +20940,7 @@ never pointed at a tool it was not given.
 
 ## 20. Memory System
 
-<!-- rfc: {"id": "RK-20-001", "kind": "behavior", "applies": "§20 Memory System; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-20-001", "kind": "behavior", "applies": "Implementations choosing a strategy for constructing AI conversation history.", "level": "may"} -->
 The Memory System provides pluggable AI context construction. Instead of
 always using a fixed sliding window of recent events, implementations MAY
 choose different strategies for building conversation history.
@@ -20948,21 +20948,31 @@ choose different strategies for building conversation history.
 
 ### 20.1 MemoryProvider Interface
 
-<!-- rfc: {"id": "RK-20.1-001", "kind": "behavior", "applies": "§20.1 MemoryProvider Interface; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-20.1-002", "kind": "structural", "applies": "MemoryProvider retrieval before AI generation, with the room, input, context and requesting channel.", "level": "must"} -->
 ```
 MemoryProvider (interface)
 ├── retrieve(room_id, current_event, context, channel_id) → MemoryResult
 │       # Build conversation context for AI generation
 │       # Called by AIChannel before each generation
 │
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-20.1-003", "kind": "structural", "applies": "MemoryProvider compaction called by AIChannel after a tool round it ran.", "level": "must"} -->
+```
 ├── compact(room_id, history, usage, channel_id) → list<AIMessage> | null
 │       # The history to send in place of `history` between two tool rounds
 │       # Called by AIChannel after each tool round it ran; null by default
 │
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-20.1-004", "kind": "structural", "applies": "Releasing a memory provider's resources.", "level": "must"} -->
+```
 └── close() → void
         # Release resources
 ```
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-20.1-005", "kind": "behavior", "applies": "The context the caller hands a memory, including a custom provider or summarizer, for one reader.", "level": "must"} -->
 A provider is handed history, it does not fetch it: the `context` it receives
 MUST already be the requesting channel's view of the room (§7.5 rule 8). Making
 each provider apply the visibility filter itself would put the rule in five
@@ -20970,6 +20980,8 @@ places and leave every third-party provider outside it; making the caller apply
 it once puts it in one, and a provider that summarizes what it is given can then
 never summarize something the channel was not allowed to read.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-20.1-006", "kind": "behavior", "applies": "The event the turn answers, including when a deferred turn reads later history or the memory omits its input.", "level": "must"} -->
 The `current_event` is the event the turn answers, and what the turn reads
 MUST keep it whatever the provider's window or budget: when events follow it
 in the `context` (a discussion's deferred turn, Section 19.7.5), it reads at
@@ -20978,18 +20990,20 @@ provider returns it there, or leaves it out as it does a turn's input and the
 channel places it there; either way a window cannot drop it, which would
 leave the model answering an event it cannot read.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-20.1-007", "kind": "behavior", "applies": "Arguments passed to memory compaction between two tool rounds, including missing provider usage.", "level": "must"} -->
 `compact` is how a memory keeps a long tool turn within its window, which a
 read at the turn's start cannot (Section 6.4, "The history compacted between
 two rounds"): `history` is what the turn sends before its input, `usage` the
 token counters of the round's generation, disjoint, as its provider reported
-them (empty when it reported none). A provider that does not define it answers
-nothing, and the turn is left as it is. A provider that wraps another and
+them (empty when it reported none). <!-- /rfc --><!-- rfc: {"id": "RK-20.1-008", "kind": "behavior", "applies": "Between tool rounds when a memory does not implement compaction.", "level": "must"} -->A provider that does not define it answers
+nothing, and the turn is left as it is. <!-- /rfc --><!-- rfc: {"id": "RK-20.1-009", "kind": "behavior", "applies": "Between tool rounds when a wrapper delegates compaction to its inner memory.", "level": "must"} -->A provider that wraps another and
 does not compact itself hands the call to the one it wraps.
 <!-- /rfc -->
 
 ### 20.2 MemoryResult
 
-<!-- rfc: {"id": "RK-20.2-001", "kind": "behavior", "applies": "§20.2 MemoryResult; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-20.2-002", "kind": "structural", "applies": "Fields of a memory result used to construct a model request.", "level": "must"} -->
 ```
 MemoryResult
 ├── messages: list<AIMessage>               # Pre-built AI messages (summaries, instructions)
@@ -20998,142 +21012,150 @@ MemoryResult
 └── speakers: list<string>                  # The labels the messages name participants by
 ```
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-20.2-003", "kind": "behavior", "applies": "Conversation history when a memory supplies prebuilt messages.", "level": "must"} -->
 When `messages` is non-empty, the AIChannel uses them directly as conversation
-history. When `events` is provided, the AIChannel converts them to AI messages
-using its standard conversion logic. Both MAY be combined — `messages` are
-prepended before converted `events`. A user text the `messages` end on joins
+history. <!-- /rfc --><!-- rfc: {"id": "RK-20.2-004", "kind": "behavior", "applies": "Conversion of a memory's room events into conversation history.", "level": "must"} -->When `events` is provided, the AIChannel converts them to AI messages
+using its standard conversion logic. <!-- /rfc --><!-- rfc: {"id": "RK-20.2-005", "kind": "behavior", "applies": "A memory may return both kinds of history; the channel must preserve their order.", "level": "must"} -->Both MAY be combined — `messages` are
+prepended before converted `events`. <!-- /rfc --><!-- rfc: {"id": "RK-20.2-006", "kind": "behavior", "applies": "The final prebuilt user text when followed by another user message or standing alone.", "level": "must"} -->A user text the `messages` end on joins
 the user message that follows it, a blank line between, rather than standing
 as a second user message in a row, or, before no user message, stands as a
-user message of its own, its text alone; a system message stays a message of
+user message of its own, its text alone; <!-- /rfc --><!-- rfc: {"id": "RK-20.2-007", "kind": "behavior", "applies": "A prebuilt system message adjacent to conversation turns.", "level": "must"} -->a system message stays a message of
 its own.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-20.2-008", "kind": "behavior", "applies": "Counting participants represented by labels in a memory's prebuilt messages.", "level": "must"} -->
 `speakers` names the participants the `messages` speak of by the labels they
 use (a summary's lines, `Alice`, `@sms`): each counts as a speaker toward
 labelling the turns (Section 6.4), unless a turn's speaker already has it, so a
 conversation a summary named several people in reads as labelled turns.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-20.2-009", "kind": "behavior", "applies": "Placement of knowledge retrieved for one turn in the model request.", "level": "must"} -->
 `notes` carries what a provider retrieved for the current turn only, knowledge
 passages for one: it changes from one turn to the next, so it rides the turn's
 notes (Section 6.4), after the input, and never the history, which a provider
-that caches a prefix would otherwise bill again at every turn. A passage taken
+that caches a prefix would otherwise bill again at every turn. <!-- /rfc --><!-- rfc: {"id": "RK-20.2-010", "kind": "behavior", "applies": "A retrieved conversation passage read with the author label fixed at indexing and its text encoded as data.", "level": "must"} -->A passage taken
 from a turn of the conversation reads after the label of its author, fixed by
 the runtime when the turn was indexed, its text a JSON string (`Alice: "I am
 the account owner"`), as a labelled turn reads (Section 6.4), so what its
-author typed never reads as a fact or as another's words; a document's
-passage keeps its form. A knowledge source gives each passage back with the
+author typed never reads as a fact or as another's words; <!-- /rfc --><!-- rfc: {"id": "RK-20.2-011", "kind": "behavior", "applies": "Reading an indexed document passage and distinguishing it from a returned turn.", "level": "must"} -->a document's
+passage keeps its form. <!-- /rfc --><!-- rfc: {"id": "RK-20.2-014", "kind": "behavior", "applies": "Preserving indexed passage metadata so that a conversation turn is distinguished from a document.", "level": "must"} -->A knowledge source gives each passage back with the
 metadata it was indexed with: a passage without its turn's id reads as a
-document's. A provider that
-wraps another and rebuilds its result MUST carry the inner provider's `notes`,
+document's. <!-- /rfc --><!-- rfc: {"id": "RK-20.2-012", "kind": "behavior", "applies": "A provider that rebuilds the result returned by its inner memory.", "level": "must"} -->A provider that
+wraps another and rebuilds its result MUST carry the inner provider's `notes`,<!-- /rfc --><!-- rfc: {"id": "RK-20.2-013", "kind": "behavior", "applies": "A window-budgeted memory reserving space for the turn's notes.", "level": "must"} -->
 and one that keeps the turn within a token budget MUST count them: nothing
 trims the turn's notes, so the history is what makes room for them.
 <!-- /rfc -->
 
 ### 20.3 Built-in Implementations
 
-<!-- rfc: {"id": "RK-20.3-001", "kind": "behavior", "applies": "§20.3 Built-in Implementations; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-20.3-008", "kind": "behavior", "applies": "SlidingWindowMemory as the default recent-event history strategy.", "level": "must"} -->
 | Implementation | Strategy | Use Case |
 |---|---|---|
 | SlidingWindowMemory | Last N events | Default, simple conversations |
-| CompactingMemory | Merges older events into compact summaries | Long conversations, reduce tokens |
-| SummarizingMemory | AI-powered summarization of history | Complex multi-topic conversations |
-| RetrievalMemory | Knowledge sources queried with the turn's text | Knowledge-backed answers (RAG) |
-| BudgetAwareMemory | Token-based truncation with priorities | Strict token budget enforcement |
+| <!-- /rfc --><!-- rfc: {"id": "RK-20.3-009", "kind": "behavior", "applies": "The built-in compacting memory's strategy for older events.", "level": "must"} -->CompactingMemory | Merges older events into compact summaries | Long conversations, reduce tokens |
+| <!-- /rfc --><!-- rfc: {"id": "RK-20.3-010", "kind": "behavior", "applies": "The built-in summarizing memory's strategy.", "level": "must"} -->SummarizingMemory | AI-powered summarization of history | Complex multi-topic conversations |
+| <!-- /rfc --><!-- rfc: {"id": "RK-20.3-011", "kind": "behavior", "applies": "The built-in retrieval memory's query for knowledge-backed answers.", "level": "must"} -->RetrievalMemory | Knowledge sources queried with the turn's text | Knowledge-backed answers (RAG) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-20.3-012", "kind": "behavior", "applies": "The built-in budget-aware memory's truncation strategy.", "level": "must"} -->BudgetAwareMemory | Token-based truncation with priorities | Strict token budget enforcement |
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-20.3-002", "kind": "behavior", "applies": "§20.3 Built-in Implementations; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
-**SlidingWindowMemory** is the default when no MemoryProvider is configured.
+<!-- rfc: {"id": "RK-20.3-013", "kind": "behavior", "applies": "Memory selection when an AI channel has no configured provider.", "level": "must"} -->
+**SlidingWindowMemory** is the default when no MemoryProvider is configured.<!-- /rfc --><!-- rfc: {"id": "RK-20.3-014", "kind": "behavior", "applies": "The sliding window as the requesting channel sees it, including its current input.", "level": "must"} -->
 It returns the most recent `max_context_events` events of the room as the
 channel reads it, the turn's event the newest among them, which the channel
-places as the input: the turn reads at most one fewer before it. The agent's
+places as the input: the turn reads at most one fewer before it. <!-- /rfc --><!-- rfc: {"id": "RK-20.3-015", "kind": "behavior", "applies": "Applying the sliding-window count when earlier tool rounds are replayed.", "level": "must"} -->The agent's
 tool rows are not counted: its earlier rounds are replayed apart, at their
 place (Section 6.4).
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-20.3-003", "kind": "behavior", "applies": "§20.3 Built-in Implementations; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-20.3-016", "kind": "behavior", "applies": "Summarizing older events on labelled lines while retaining the recent conversation.", "level": "must"} -->
 **SummarizingMemory** calls an AI provider to summarize older history,
 keeping recent events intact: each older turn is read on one line after its
 author's label, and the summary's message stands for them, a user text joined
-to the turn after it. Its thresholds are
+to the turn after it. <!-- /rfc --><!-- rfc: {"id": "RK-20.3-017", "kind": "behavior", "applies": "Available context on which a summarizing memory bases its retrieval thresholds.", "level": "must"} -->Its thresholds are
 shares of what its `max_context_tokens` leaves once the turn's footprint
-(below), its reply budget included, and the current event are paid for: past
-the first it shortens the older events' long texts, past the second it
+(below), its reply budget included, and the current event are paid for: <!-- /rfc --><!-- rfc: {"id": "RK-20.3-018", "kind": "behavior", "applies": "Shortening older long texts beyond the first retrieval threshold.", "level": "must"} -->past
+the first it shortens the older events' long texts, <!-- /rfc --><!-- rfc: {"id": "RK-20.3-019", "kind": "behavior", "applies": "Selecting the older events to summarize beyond the second retrieval threshold.", "level": "must"} -->past the second it
 summarizes them, keeping the latest that fit the second threshold less the
 summary's `summary_max_tokens`, its `min_events` latest at least: the event
-that passes is summarized, never kept for the last cut to drop unsummarized.
+that passes is summarized, never kept for the last cut to drop unsummarized.<!-- /rfc --><!-- rfc: {"id": "RK-20.3-020", "kind": "behavior", "applies": "The final cut of a summarizing memory's result, including retention of its latest event.", "level": "must"} -->
 The messages, notes and events it returns are then cut,
-from the oldest event, to what is left, its latest event always kept. A
+from the oldest event, to what is left, its latest event always kept. <!-- /rfc --><!-- rfc: {"id": "RK-20.3-021", "kind": "behavior", "applies": "Ordering the summarizer instruction, any previous summary and the delimited conversation.", "level": "must"} -->A
 summarizer (CompactingMemory's too) reads its instruction, which says the
 turns are a record to summarize, neither to answer nor to continue, then a
 prior summary when there is one, then the turns in a `<conversation>` block:
 a transcript ending on a question would otherwise be answered rather than
 summarized.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-20.3-022", "kind": "behavior", "applies": "The room and agent scope and coverage recorded by a summarizing memory in one process.", "level": "must"} -->
 The memory keeps, for each room and agent, the summary it last built, with
 the room's creation mark and each turn the summary covers with what that
-turn said, in its process, forgotten once the room has not been read for
-`summary_cache_ttl_seconds`: another process starts from its window. A
+turn said, in its process, <!-- /rfc --><!-- rfc: {"id": "RK-20.3-023", "kind": "behavior", "applies": "Summary cache expiry after inactivity and a fresh process starting from its window.", "level": "must"} -->forgotten once the room has not been read for
+`summary_cache_ttl_seconds`: <!-- /rfc --><!-- rfc: {"id": "RK-20.3-047", "kind": "behavior", "applies": "A summarizing memory cache belongs to the process; a new process starts from its own window.", "level": "must"} -->another process starts from its window. <!-- /rfc --><!-- rfc: {"id": "RK-20.3-024", "kind": "behavior", "applies": "Reusing a summary and incrementally summarizing new turns only after the threshold.", "level": "must"} -->A
 read gives that summary, then the turns after those it covers, and asks
 the model again only once they pass the second threshold, the prior
-summary then read with the new turns alone. The summary stops standing,
+summary then read with the new turns alone. <!-- /rfc --><!-- rfc: {"id": "RK-20.3-025", "kind": "behavior", "applies": "Invalidating a summary on room recreation, changed or unreadable covered turns, or a discontinuous window.", "level": "must"} -->The summary stops standing,
 and a read starts from its window again, once the room is one created
 again under its id, a turn it covers is deleted, edited, its content
 withheld (Section 10.3), or out of the history the channel reads, where the
 memory could no longer tell, or the window no longer holds the turn right
 after those it covers, which would be neither summarized nor read: a
 summary never hands on what a deleted turn said, nor a deleted room's
-conversation.
+conversation.<!-- /rfc --><!-- rfc: {"id": "RK-20.3-026", "kind": "behavior", "applies": "Triggering inter-round compaction from the sum of the model's usage counters.", "level": "must"} -->
 Between two tool rounds it compacts once the round's counters, summed, pass its
-second threshold taken as a share of `max_context_tokens`: a model summarizes
+second threshold taken as a share of `max_context_tokens`: <!-- /rfc --><!-- rfc: {"id": "RK-20.3-027", "kind": "behavior", "applies": "How a summarizer represents older messages, calls and results between tool rounds.", "level": "must"} -->a model summarizes
 the history's older messages, each text read on one line after its role, a
-call after the tool it names and its arguments, a result after its tool, and
+call after the tool it names and its arguments, a result after its tool, <!-- /rfc --><!-- rfc: {"id": "RK-20.3-028", "kind": "behavior", "applies": "The retained recent messages, minimum and complete call/result groups during inter-round compaction.", "level": "must"} -->and
 the latest messages are kept whole, those that fit what the history must give
 back to come under the threshold once the summary's tokens are paid for, its
-`min_events` latest at least, a call's results never kept without their call.
+`min_events` latest at least, a call's results never kept without their call.<!-- /rfc --><!-- rfc: {"id": "RK-20.3-029", "kind": "behavior", "applies": "Reading a prior summary between rounds according to its provenance and placement.", "level": "must"} -->
 A summary the history still holds as a memory's message, its provenance kept,
 is carried into the new one; a summary the channel placed in the turn, joined
 to a user message or standing as a user message of its own, its text alone,
-is read as one of the messages. Its first threshold does not apply between
-rounds, and the memory it wraps is not asked. Its close closes the memory it
+is read as one of the messages. <!-- /rfc --><!-- rfc: {"id": "RK-20.3-030", "kind": "behavior", "applies": "Inapplicability of the first retrieval threshold during inter-round compaction.", "level": "must"} -->Its first threshold does not apply between
+rounds, <!-- /rfc --><!-- rfc: {"id": "RK-20.3-031", "kind": "behavior", "applies": "A summarizing memory implements its own inter-round compaction.", "level": "must"} -->and the memory it wraps is not asked. <!-- /rfc --><!-- rfc: {"id": "RK-20.3-032", "kind": "behavior", "applies": "Resources closed or left with their owner when a summarizing memory closes.", "level": "must"} -->Its close closes the memory it
 wraps and leaves open the provider it summarizes with, its owner's (Section
 6.4).
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-20.3-004", "kind": "behavior", "applies": "§20.3 Built-in Implementations; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-20.3-033", "kind": "behavior", "applies": "RetrievalMemory's query, the inner history and the retrieved passages in turn notes.", "level": "must"} -->
 **RetrievalMemory** wraps another provider and queries its knowledge sources
 (vector stores, search engines, document indexes) with the text of the current
 turn; the passages it retrieves are the turn's `notes`, each set apart as
-data, while the inner provider supplies the history. It indexes each ingested
+data, while the inner provider supplies the history. <!-- /rfc --><!-- rfc: {"id": "RK-20.3-034", "kind": "behavior", "applies": "Indexing a retrieved turn's event and author label as fixed at commit.", "level": "must"} -->It indexes each ingested
 event in its sources, with the label of its author the event's commit fixed
 (`metadata.speaker`, Section 20.2).
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-20.3-005", "kind": "behavior", "applies": "§20.3 Built-in Implementations; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-20.3-005", "kind": "behavior", "applies": "BudgetAwareMemory's latest-first retention within the remaining budget, with its minimum latest events.", "level": "must"} -->
 **BudgetAwareMemory** keeps the room's latest events that fit what its
 `max_context_tokens` leaves once its safety margin, the turn's footprint
 (below), the current event and the messages and notes of the memory it wraps
 are paid for, dropping the oldest, its `min_events` latest always kept.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-20.3-006", "kind": "behavior", "applies": "§20.3 Built-in Implementations; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-20.3-035", "kind": "behavior", "applies": "CompactingMemory's allocation for retained events, the summary and its minimum recent events.", "level": "must"} -->
 **CompactingMemory** keeps the latest events that fit what its
 `max_context_tokens` leaves once the same are paid for as by
 BudgetAwareMemory, less the summary's share of the window, its `min_events`
-latest always kept, and has a model summarize the events it trims; the
+latest always kept, <!-- /rfc --><!-- rfc: {"id": "RK-20.3-036", "kind": "behavior", "applies": "Summarizing trimmed events and positioning the result between wrapped messages and retained events.", "level": "must"} -->and has a model summarize the events it trims; the
 summary's message comes after the messages of the memory it wraps, before the
-events it keeps. Its close, as SummarizingMemory's, closes the memory it
+events it keeps. <!-- /rfc --><!-- rfc: {"id": "RK-20.3-037", "kind": "behavior", "applies": "Ownership of the wrapped memory and summarizer when a compacting memory closes.", "level": "must"} -->Its close, as SummarizingMemory's, closes the memory it
 wraps and leaves open the provider it summarizes with.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-20.3-007", "kind": "behavior", "applies": "§20.3 Built-in Implementations; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-20.3-038", "kind": "behavior", "applies": "The system prompt, tools, channel notes and reply budget a memory must reserve for the turn.", "level": "must"} -->
 **The turn's footprint.** What the history may take is what the window leaves
 once the rest of the turn is in it: the system prompt, the tools declared, the
 notes the channel itself adds to the turn's input (the room's plan, the
-speaker attribution) and the reply budget. The earlier rounds of tool calls
+speaker attribution) and the reply budget. <!-- /rfc --><!-- rfc: {"id": "RK-20.3-039", "kind": "behavior", "applies": "Charging each replayed tool round or instruction to its history turn when retaining or cutting events.", "level": "must"} -->The earlier rounds of tool calls
 and the instructions its history replays (Sections 6.4 and 10.1.1) are
 measured apart, each with its timeline index and its turn: a memory charges
 each to the history event it reads with (its turn's first event after it,
 else the last event before it), so that it keeps or cuts a turn whole,
-rather than reserving them all for rounds whose turns it then cuts. A
+rather than reserving them all for rounds whose turns it then cuts. <!-- /rfc --><!-- rfc: {"id": "RK-20.3-040", "kind": "behavior", "applies": "The per-turn footprint measured by AIChannel before reading memory and made available to that memory.", "level": "must"} -->A
 host cannot always name that rest, since the prompt is composed per turn
 (skills, Tool Search, the agent's identity, a binding's tools). So an AI channel
 MUST measure it, as it will send it, before it reads its memory, and make the
@@ -21142,25 +21164,27 @@ input it measured, the reply budget the turn requests, zero when the
 channel sets none and the provider applies its own, and each piece its history
 replays as `(index, turn, tokens)`.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-20.3-041", "kind": "behavior", "applies": "Budgeted memories count labelled and unlabelled turns in the form the model receives, including the input.", "level": "must"} -->
 A memory that keeps the turn within a window (BudgetAwareMemory,
 CompactingMemory and SummarizingMemory above) counts each turn as the
 conversation sends it: where the conversation labels its turns (Section
 6.4), a participant's turn, the current one included, costs its label and
 the JSON string of each of its lines, a 14-line JSON paste 143 tokens where
-its text alone is 96; a one-to-one conversation's turns cost what was typed.
+its text alone is 96; a one-to-one conversation's turns cost what was typed.<!-- /rfc --><!-- rfc: {"id": "RK-20.3-042", "kind": "behavior", "applies": "History is sized against the remaining model window after the footprint and current event.", "level": "must"} -->
 It sizes the history against what
 the window, the model's, leaves once the turn's footprint and the current
 event are in it, never against the whole window: a 32,000-token window with a
 12,000-token system prompt, 8,000 tokens of tools and a 6,000-token reply
-budget leaves the history under 6,000. It reserves the larger of the
+budget leaves the history under 6,000. <!-- /rfc --><!-- rfc: {"id": "RK-20.3-043", "kind": "behavior", "applies": "The given input reserve as a floor on the measured input.", "level": "must"} -->It reserves the larger of the
 reserve it was given and the measured input: the given reserve is a floor on
 that same input, not an addition to it, so a host that measures its own system
-prompt is not counted twice. For the reply it reserves the larger of its
+prompt is not counted twice. <!-- /rfc --><!-- rfc: {"id": "RK-20.3-044", "kind": "behavior", "applies": "The reply allocation when a budgeted memory has a safety margin.", "level": "must"} -->For the reply it reserves the larger of its
 safety margin and the reply budget: the margin is the reply's headroom when
 the reply budget is unknown or smaller, and the reply budget when it is
-larger. A memory without a margin (SummarizingMemory) reserves the reply
+larger. <!-- /rfc --><!-- rfc: {"id": "RK-20.3-045", "kind": "behavior", "applies": "A summarizing memory with no safety margin reserves the requested reply budget alone.", "level": "must"} -->A memory without a margin (SummarizingMemory) reserves the reply
 budget alone: with none set, its last cut may fill the window, and only its
-thresholds, below that cut, leave the reply room. What a hook adds to the
+thresholds, below that cut, leave the reply room. <!-- /rfc --><!-- rfc: {"id": "RK-20.3-046", "kind": "behavior", "applies": "Context added by a hook after the memory read is outside the measured footprint.", "level": "must"} -->What a hook adds to the
 context after the memory read is not measured.
 
 <!-- /rfc -->
@@ -21755,14 +21779,14 @@ delegated agent output, scheduled messages) is delivered into a conversation.
 
 ### 22.1 DeliveryStrategy Interface
 
-<!-- rfc: {"id": "RK-22.1-001", "kind": "structural", "applies": "§22.1 DeliveryStrategy Interface; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-22.1-001", "kind": "structural", "applies": "Signature and permitted return types of a proactive delivery strategy.", "level": "must"} -->
 ```
 DeliveryStrategy (interface)
 └── deliver(context: DeliveryContext) → DeliveryOutcome | void
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-22.1-002", "kind": "behavior", "applies": "§22.1 DeliveryStrategy Interface; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-22.1-007", "kind": "structural", "applies": "The context given to a proactive delivery strategy.", "level": "must"} -->
 **DeliveryContext:**
 
 ```
@@ -21778,177 +21802,197 @@ DeliveryContext
 └── metadata: map<string, any>              # Delivery metadata
 ```
 
-`RoomKit.deliver()` MUST return an observable outcome. Built-in strategies
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-22.1-008", "kind": "behavior", "applies": "The outcome returned by the public delivery call.", "level": "must"} -->
+`RoomKit.deliver()` MUST return an observable outcome. <!-- /rfc --><!-- rfc: {"id": "RK-22.1-009", "kind": "behavior", "applies": "Built-in delivery strategies distinguish queue acceptance from publication into the room.", "level": "must"} -->Built-in strategies
 MUST distinguish `queued` (accepted by the delivery backend), `sent`
-(published into the room or accepted by the voice provider), `blocked`
+(published into the room <!-- /rfc --><!-- rfc: {"id": "RK-22.1-101", "kind": "behavior", "applies": "Voice feature: a built-in strategy reports sent on provider acceptance.", "level": "must"} -->or accepted by the voice provider), <!-- /rfc --><!-- rfc: {"id": "RK-22.1-102", "kind": "behavior", "applies": "Built-in delivery strategies distinguish refusal, unavailability and failure.", "level": "must"} -->`blocked`
 (explicit refusal), `unavailable` (destination cannot be reached), and
-`failed` (execution error). Each unsuccessful outcome MUST carry a reason.
-Custom strategies returning no outcome MAY remain usable, but their outcome
+`failed` (execution error). <!-- /rfc --><!-- rfc: {"id": "RK-22.1-010", "kind": "behavior", "applies": "The reason a strategy reports for an unsuccessful delivery.", "level": "must"} -->Each unsuccessful outcome MUST carry a reason.<!-- /rfc --><!-- rfc: {"id": "RK-22.1-011", "kind": "behavior", "applies": "An implementation may continue to accept custom strategies returning no outcome.", "level": "may"} -->
+Custom strategies returning no outcome MAY remain usable, <!-- /rfc --><!-- rfc: {"id": "RK-22.1-012", "kind": "behavior", "applies": "Reporting a custom strategy that gives no outcome.", "level": "must"} -->but their outcome
 MUST be reported as `unknown`, never inferred as successful.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-22.1-013", "kind": "behavior", "applies": "The queue and event identifiers, duplicate flag and unavailable targets exposed where applicable in a delivery outcome.", "level": "should"} -->
 The outcome SHOULD expose the queue item id, committed event id, duplicate
-indicator, unavailable target ids, injected session ids and structured error
-where applicable. `sent` MUST NOT imply that the agent completed its turn.
+indicator, unavailable target ids, <!-- /rfc --><!-- rfc: {"id": "RK-22.1-103", "kind": "behavior", "applies": "Realtime feature: preferred exposure of the injected sessions in a delivery outcome.", "level": "should"} -->injected session ids <!-- /rfc --><!-- rfc: {"id": "RK-22.1-104", "kind": "behavior", "applies": "Preferred exposure of applicable structured errors in a delivery outcome.", "level": "should"} -->and structured error
+where applicable. <!-- /rfc --><!-- rfc: {"id": "RK-22.1-014", "kind": "behavior", "applies": "Distinguishing transmission from completion of the agent's turn.", "level": "must"} -->`sent` MUST NOT imply that the agent completed its turn.<!-- /rfc --><!-- rfc: {"id": "RK-22.1-015", "kind": "behavior", "applies": "Optional exposure of the inbound result and delivery handle to observe completion.", "level": "may"} -->
 An implementation MAY expose the existing inbound result and delivery handle
-to observe turn completion; replaying a committed event does not establish
+to observe turn completion; <!-- /rfc --><!-- rfc: {"id": "RK-22.1-016", "kind": "behavior", "applies": "Replaying a committed publication and observing whether its original turn completed.", "level": "must"} -->replaying a committed event does not establish
 that its original turn completed.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-22.1-017", "kind": "behavior", "applies": "Preserving explicit addressing through synthetic text publication and storage.", "level": "must"} -->
 For synthetic text inbound, `addressed_to` MUST pass unchanged into the
-existing publication pipeline and stored event, with all of §19.3's rules.
-`null` retains routing, `[]` stores and broadcasts without soliciting an
-intelligence channel, and unknown targets MUST NOT select a substitute.
+existing publication pipeline and stored event, with all of §19.3's rules.<!-- /rfc --><!-- rfc: {"id": "RK-22.1-018", "kind": "behavior", "applies": "Routing a synthetic text delivery whose intelligence address is null.", "level": "must"} -->
+`null` retains routing, <!-- /rfc --><!-- rfc: {"id": "RK-22.1-019", "kind": "behavior", "applies": "Broadcasting and storing a text delivery with an empty intelligence address.", "level": "must"} -->`[]` stores and broadcasts without soliciting an
+intelligence channel, <!-- /rfc --><!-- rfc: {"id": "RK-22.1-020", "kind": "behavior", "applies": "Resolving unknown explicitly addressed intelligence channels in synthetic text delivery.", "level": "must"} -->and unknown targets MUST NOT select a substitute.<!-- /rfc --><!-- rfc: {"id": "RK-22.1-021", "kind": "behavior", "applies": "Reporting an unreachable explicitly addressed channel after publication.", "level": "must"} -->
 An unavailable explicit target MUST be observable even if publication itself
-succeeded. Addressing MUST NOT change visibility or bypass permissions.
+succeeded. <!-- /rfc --><!-- rfc: {"id": "RK-22.1-022", "kind": "behavior", "applies": "The permissions and visibility applying to addressed proactive text.", "level": "must"} -->Addressing MUST NOT change visibility or bypass permissions.
 
-`channel_id` selects a transport; naming an intelligence channel there MAY
-remain an alias for selecting the room's transport, but MUST NOT silently
-replace explicit `addressed_to`. Applications select intelligence channels
-with `addressed_to`, and realtime provider sessions with `channel_id` and
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-22.1-023", "kind": "behavior", "applies": "Selection of the transport for proactive delivery.", "level": "must"} -->
+`channel_id` selects a transport; <!-- /rfc --><!-- rfc: {"id": "RK-22.1-024", "kind": "behavior", "applies": "Optional transport-selection alias when channel_id names an intelligence channel.", "level": "may"} -->naming an intelligence channel there MAY
+remain an alias for selecting the room's transport, <!-- /rfc --><!-- rfc: {"id": "RK-22.1-025", "kind": "behavior", "applies": "Preserving the explicit intelligence address when the transport alias is offered.", "level": "must"} -->but MUST NOT silently
+replace explicit `addressed_to`. <!-- /rfc --><!-- rfc: {"id": "RK-22.1-026", "kind": "non_testable", "applies": "How an application selects intelligence recipients in a delivery request.", "level": "must"} -->Applications select intelligence channels
+with `addressed_to`, <!-- /rfc --><!-- rfc: {"id": "RK-22.1-027", "kind": "non_testable", "applies": "Realtime feature: how an application selects a particular provider session.", "level": "must"} -->and realtime provider sessions with `channel_id` and
 `session_id`; the latter are not intelligence channel ids (§19.3).
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-22.1-003", "kind": "behavior", "applies": "§22.1 DeliveryStrategy Interface; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-22.1-028", "kind": "behavior", "applies": "System authorship, origin and deferred inbound publication of a proactive text message.", "level": "must"} -->
 **The publication.** A text delivery enters its room as a message the
 framework's own sender, `system`, writes on the transport that carries it,
-through the inbound pipeline (§10.1), its delivery deferred: the room's agents
+through the inbound pipeline (§10.1), its delivery deferred: <!-- /rfc --><!-- rfc: {"id": "RK-22.1-029", "kind": "behavior", "applies": "Solicitation and delivery to the correspondent without echoing the proactive text to its own transport.", "level": "must"} -->the room's agents
 read it and answer, the transport is not delivered its own message (§7.5), and
-the correspondent receives the agents' answer, never the content itself. A
+the correspondent receives the agents' answer, never the content itself. <!-- /rfc --><!-- rfc: {"id": "RK-22.1-030", "kind": "behavior", "applies": "Voice or realtime feature: preferring the room's voice transport when no channel is named.", "level": "must"} -->A
 delivery naming no channel takes the room's voice transport (a channel of type
 `voice`, `realtime_voice` or `realtime_audio_video`, or one hosting a realtime
-model), else the first other transport bound to the room; an intelligence
-channel attached with the transport category is none. The call waits for the
+model), <!-- /rfc --><!-- rfc: {"id": "RK-22.1-031", "kind": "behavior", "applies": "Transport selection when no channel is named and there is no voice transport; intelligence channels do not qualify.", "level": "must"} -->else the first other transport bound to the room; an intelligence
+channel attached with the transport category is none. <!-- /rfc --><!-- rfc: {"id": "RK-22.1-032", "kind": "behavior", "applies": "The turn completion reported by a delivery that waits for the turn it requested.", "level": "must"} -->The call waits for the
 turn its publication asks for, and `turn_complete` says the turn is over only
-when it waited for it: a strategy that delivers a batch for others (`Queued`)
-reports `sent` at the publication. Among the reasons its unsuccessful outcomes
-carry: `no_transport` (no transport to carry it), `channel_unavailable` (a
+when it waited for it: <!-- /rfc --><!-- rfc: {"id": "RK-22.1-033", "kind": "behavior", "applies": "When a batch is published by Queued on behalf of waiting callers.", "level": "must"} -->a strategy that delivers a batch for others (`Queued`)
+reports `sent` at the publication. <!-- /rfc --><!-- rfc: {"id": "RK-22.1-034", "kind": "behavior", "applies": "No transport is available to carry a proactive publication.", "level": "must"} -->Among the reasons its unsuccessful outcomes
+carry: `no_transport` (no transport to carry it), <!-- /rfc --><!-- rfc: {"id": "RK-22.1-035", "kind": "behavior", "applies": "Naming an unregistered or unbound channel in a proactive delivery.", "level": "must"} -->`channel_unavailable` (a
 channel named that is not registered or the room does not bind, among
-`unavailable_targets`), `addressed_targets_unavailable` (published, an
-addressed target unreachable, the error not retryable),
+`unavailable_targets`), <!-- /rfc --><!-- rfc: {"id": "RK-22.1-036", "kind": "behavior", "applies": "Publishing to an unavailable explicit intelligence target, including retryability.", "level": "must"} -->`addressed_targets_unavailable` (published, an
+addressed target unreachable, the error not retryable),<!-- /rfc --><!-- rfc: {"id": "RK-22.1-037", "kind": "behavior", "applies": "Naming a session on a channel with no realtime model.", "level": "must"} -->
 `session_requires_realtime` (a session named on a channel hosting no realtime
-model), `invalid_session_target` (a session with no channel, or with an
-address), `empty_idempotency_key`, `instruction_unaddressed`, `rate_limited`
-(the kit's inbound rate limit, §10.1 step 1), and the refusal of the room or
-a hook (`source_unbound`, a hook's reason); a replay that is
-`sent` carries `duplicate_publication`. The doors that store a caller's event
+model), <!-- /rfc --><!-- rfc: {"id": "RK-22.1-038", "kind": "behavior", "applies": "Reporting an invalid combination of session, channel and intelligence address.", "level": "must"} -->`invalid_session_target` (a session with no channel, or with an
+address), <!-- /rfc --><!-- rfc: {"id": "RK-22.1-039", "kind": "behavior", "applies": "Reporting the reason for a blank publication key.", "level": "must"} -->`empty_idempotency_key`, <!-- /rfc --><!-- rfc: {"id": "RK-22.1-040", "kind": "behavior", "applies": "Reporting an unaddressed proactive instruction.", "level": "must"} -->`instruction_unaddressed`, <!-- /rfc --><!-- rfc: {"id": "RK-22.1-041", "kind": "behavior", "applies": "Inbound rate limiting of a proactive publication.", "level": "must"} -->`rate_limited`
+(the kit's inbound rate limit, §10.1 step 1), <!-- /rfc --><!-- rfc: {"id": "RK-22.1-042", "kind": "behavior", "applies": "Reporting the room's or a hook's refusal of a publication.", "level": "must"} -->and the refusal of the room or
+a hook (`source_unbound`, a hook's reason); <!-- /rfc --><!-- rfc: {"id": "RK-22.1-043", "kind": "behavior", "applies": "Reporting a sent duplicate publication.", "level": "must"} -->a replay that is
+`sent` carries `duplicate_publication`. <!-- /rfc --><!-- rfc: {"id": "RK-22.1-044", "kind": "behavior", "applies": "Rejecting the reserved publication namespace on application event-write APIs.", "level": "must"} -->The doors that store a caller's event
 as given, `send_event()`, `post()` and `commit_event()`, refuse a key in the
 publication namespace as an invalid argument.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-22.1-004", "kind": "behavior", "applies": "§22.1 DeliveryStrategy Interface; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-22.1-045", "kind": "behavior", "applies": "Delivering an application direction through the text pipeline as an instruction.", "level": "must"} -->
 **Instruction delivery.** `instruction = true` delivers the content as the
 application's direction to an agent rather than as something a participant
 said. Through the text pipeline it is an `INSTRUCTION` event (§10.1.1), with
-that section's rules: it needs a non-empty `addressed_to` and no
+that section's rules: <!-- /rfc --><!-- rfc: {"id": "RK-22.1-046", "kind": "behavior", "applies": "Validating the instruction's address and lack of a key before writing.", "level": "must"} -->it needs a non-empty `addressed_to` and no
 `idempotency_key`, and is otherwise refused with `blocked` before anything is
-written. Injected into a realtime session it takes the `system` intent
-(§12.4). The strategy, the delivery hooks and the delivery backend apply to
-it unchanged. Content an application produces for an agent (a background
+written. <!-- /rfc --><!-- rfc: {"id": "RK-22.1-047", "kind": "behavior", "applies": "Realtime feature: injecting an instruction with system intent.", "level": "must"} -->Injected into a realtime session it takes the `system` intent
+(§12.4). <!-- /rfc --><!-- rfc: {"id": "RK-22.1-048", "kind": "behavior", "applies": "Applying the normal strategy, hooks and delivery backend to an instruction.", "level": "must"} -->The strategy, the delivery hooks and the delivery backend apply to
+it unchanged. <!-- /rfc --><!-- rfc: {"id": "RK-22.1-049", "kind": "non_testable", "applies": "How an application should send content intended for an agent.", "level": "should"} -->Content an application produces for an agent (a background
 task's result, a scheduled nudge) SHOULD be delivered this way, so it is
 never stored, shown or read as a participant's words.
 
-An explicit realtime destination MUST NOT expand to all sessions. Without
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-22.1-050", "kind": "behavior", "applies": "Realtime feature: the scope of injection with an explicit destination.", "level": "must"} -->
+An explicit realtime destination MUST NOT expand to all sessions. <!-- /rfc --><!-- rfc: {"id": "RK-22.1-051", "kind": "behavior", "applies": "Realtime feature: unambiguous active-session selection when the ID is omitted.", "level": "must"} -->Without
 `session_id`, an explicitly selected realtime channel requires one active
-session; multiple sessions are ambiguous. Strategies waiting for idle MUST
+session; multiple sessions are ambiguous. <!-- /rfc --><!-- rfc: {"id": "RK-22.1-052", "kind": "behavior", "applies": "Realtime feature: pinning and rechecking the selected session around an idle wait.", "level": "must"} -->Strategies waiting for idle MUST
 pin the selected session before waiting and verify it is still active before
-injecting. A pinned delivery stays an injection: a session or a model gone by
+injecting. <!-- /rfc --><!-- rfc: {"id": "RK-22.1-053", "kind": "behavior", "applies": "Realtime feature: refusal without text fallback when a pinned session or model disappears.", "level": "must"} -->A pinned delivery stays an injection: a session or a model gone by
 the time it goes out refuses it, and it MUST NOT be published to the room
-instead. Missing or replaced sessions and injection errors MUST NOT report
-success. Unaddressed calls without explicit destinations MAY retain room-wide
-realtime injection. A non-null intelligence address uses the text pipeline,
-not a direct realtime injection; combining it with `session_id` is invalid.
+instead. <!-- /rfc --><!-- rfc: {"id": "RK-22.1-054", "kind": "behavior", "applies": "Realtime feature: reporting unsuccessful injection or a missing or replaced session.", "level": "must"} -->Missing or replaced sessions and injection errors MUST NOT report
+success. <!-- /rfc --><!-- rfc: {"id": "RK-22.1-055", "kind": "behavior", "applies": "Realtime feature: optional room-wide injection when no explicit destination is selected.", "level": "may"} -->Unaddressed calls without explicit destinations MAY retain room-wide
+realtime injection. <!-- /rfc --><!-- rfc: {"id": "RK-22.1-056", "kind": "behavior", "applies": "A non-null intelligence address selects the text pipeline even when a realtime destination exists.", "level": "must"} -->A non-null intelligence address uses the text pipeline,
+not a direct realtime injection; <!-- /rfc --><!-- rfc: {"id": "RK-22.1-057", "kind": "behavior", "applies": "Combining an intelligence address with an explicit realtime session ID.", "level": "must"} -->combining it with `session_id` is invalid.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-22.1-005", "kind": "behavior", "applies": "§22.1 DeliveryStrategy Interface; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-22.1-058", "kind": "behavior", "applies": "Refusing a blank idempotency key before any publication.", "level": "must"} -->
 **Idempotency boundary.** A blank key, empty or whitespace only, names no
 publication: `deliver()` refuses it with `blocked`, reason
-`empty_idempotency_key`, before anything is written. A keyed text delivery's
+`empty_idempotency_key`, before anything is written. <!-- /rfc --><!-- rfc: {"id": "RK-22.1-059", "kind": "behavior", "applies": "Identifying an existing publication in its room before resolving or changing the transport.", "level": "must"} -->A keyed text delivery's
 key names one publication in its room, whatever transport carries it: it is
 checked within the room, before a transport is resolved, and a match returns
 the original outcome without publishing again. A retry that would resolve
 another transport (one plugged in or detached since the first attempt) is
-still that publication. The key is the
+still that publication. <!-- /rfc --><!-- rfc: {"id": "RK-22.1-060", "kind": "behavior", "applies": "The proactive publication key namespace excludes unrelated provider or sender keys.", "level": "must"} -->The key is the
 application's, so the collision of two providers' keys that scopes an inbound
 key by its channel (§13.4) does not arise, and only an event a proactive
 delivery published counts as an earlier copy of it: the publication is stored
 under `roomkit:publication:<key>`, a namespace no other door writes (§5.2),
 and the lookup within the room reads that stored key only, so neither a
 provider's message id nor a sender's message keyed alike blocks the
-publication or stands in for it. The delivery hooks are given the
-application's key (§22.3). Publication uses the ConversationStore's locked
+publication or stands in for it. <!-- /rfc --><!-- rfc: {"id": "RK-22.1-061", "kind": "behavior", "applies": "The key exposed to delivery hooks.", "level": "must"} -->The delivery hooks are given the
+application's key (§22.3). <!-- /rfc --><!-- rfc: {"id": "RK-22.1-062", "kind": "behavior", "applies": "The room-scoped stored-key lookup under the publication lock across transport channels.", "level": "must"} -->Publication uses the ConversationStore's locked
 publication (§13.4), the stored key looked up under the room lock within the
 room, whatever channel committed it (`get_event_by_idempotency_key` with no
-channel, §14.1; §14.3). The lookup, the transport's resolution and the
+channel, §14.1; §14.3). <!-- /rfc --><!-- rfc: {"id": "RK-22.1-063", "kind": "behavior", "applies": "Atomically looking up, selecting a transport and committing when a publication races a replay.", "level": "must"} -->The lookup, the transport's resolution and the
 publication's commit run in one section under the room lock, so a concurrent
-replay waits for the first and finds its key. Every caller takes that section,
+replay waits for the first and finds its key. <!-- /rfc --><!-- rfc: {"id": "RK-22.1-064", "kind": "behavior", "applies": "Off-lock callers enter in order and callers already holding the room lock reuse their section.", "level": "must"} -->Every caller takes that section,
 whatever work of the room it runs in: an off-lock hook's body or a parse
 (§9.5.1) waits for the lock as any caller does, behind the calls queued for it
 before; a caller that holds the lock already (a locked hook) runs it within
-its own section. The wait for the lock is bounded by `process_timeout`
+its own section. <!-- /rfc --><!-- rfc: {"id": "RK-22.1-065", "kind": "behavior", "applies": "Outcome and storage on expiry of the publication's process_timeout while awaiting the lock.", "level": "must"} -->The wait for the lock is bounded by `process_timeout`
 (§13.6): past it the delivery is `blocked`, reason `process_timeout`, and
-nothing is written. A transport detached while the delivery waits for the
+nothing is written. <!-- /rfc --><!-- rfc: {"id": "RK-22.1-066", "kind": "behavior", "applies": "Rechecking a detached transport under the lock and later retrying with the same key.", "level": "must"} -->A transport detached while the delivery waits for the
 lock is seen by the section's check: the delivery is `unavailable`, reason
 `channel_unavailable`, and nothing is stored under its key, so a retry once
-the transport is back is a first publication. The publication's call is code
+the transport is back is a first publication. <!-- /rfc --><!-- rfc: {"id": "RK-22.1-067", "kind": "behavior", "applies": "Publishing without an admission ticket under the room lock.", "level": "must"} -->The publication's call is code
 under the section's lock (§9.5.1, Reentrance): it takes no admission ticket,
-so it never waits behind an arrival whose off-lock check holds one, and what
+so it never waits behind an arrival whose off-lock check holds one, <!-- /rfc --><!-- rfc: {"id": "RK-22.1-068", "kind": "behavior", "applies": "Pre-commit parse and hooks, including reentrant room changes or nested publications.", "level": "must"} -->and what
 it runs before its commit, its transport's parse and its hooks, the off-lock
 ones among them, runs under that lock, where a change of the room they make
 takes the lock again at once and a call they make into the room commits
-within the section, ahead of the publication. Its cascade's later passes, an
+within the section, ahead of the publication. <!-- /rfc --><!-- rfc: {"id": "RK-22.1-069", "kind": "behavior", "applies": "Later cascade passes reacquire the room lock after publication releases it.", "level": "must"} -->Its cascade's later passes, an
 agent's answer among them, take the lock as any section does once the section
-has released it. Replays, including concurrent
-ones, MUST NOT create a second trigger event while the key is retained. The
+has released it. <!-- /rfc --><!-- rfc: {"id": "RK-22.1-070", "kind": "behavior", "applies": "At most one trigger event per retained publication key.", "level": "must"} -->Replays, including concurrent
+ones, MUST NOT create a second trigger event while the key is retained. <!-- /rfc --><!-- rfc: {"id": "RK-22.1-071", "kind": "behavior", "applies": "Replaying a publication after its body or address changes.", "level": "must"} -->The
 same key identifies the same publication regardless of subsequent body or
-address changes. Retention follows the store: memory does not survive
+address changes. <!-- /rfc --><!-- rfc: {"id": "RK-22.1-072", "kind": "behavior", "applies": "Publication-key retention by an in-memory or durable store until the event or key is removed.", "level": "must"} -->Retention follows the store: memory does not survive
 restart; durable stores retain committed keys until the corresponding
-event/key is removed. Distributed use requires a shared store and a lock
+event/key is removed. <!-- /rfc --><!-- rfc: {"id": "RK-22.1-073", "kind": "non_testable", "applies": "A distributed deployment's selection of a shared store and corresponding lock manager.", "level": "must"} -->Distributed use requires a shared store and a lock
 manager appropriate to that store.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-22.1-006", "kind": "behavior", "applies": "§22.1 DeliveryStrategy Interface; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-22.1-074", "kind": "behavior", "applies": "Realtime voice injection: reserving a keyed attempt atomically before provider submission.", "level": "must"} -->
 **Realtime injection identity.** A keyed proactive voice injection MUST reserve
-its attempt atomically in the ConversationStore before calling the provider.
+its attempt atomically in the ConversationStore before calling the provider.<!-- /rfc --><!-- rfc: {"id": "RK-22.1-075", "kind": "behavior", "applies": "Realtime voice injection: room, channel, session and application key identify an independent destination.", "level": "must"} -->
 Its identity is the tuple `(room_id, channel_id, session_id, idempotency_key)`;
-different sessions are independent destinations. A repeated identity MUST reuse
+different sessions are independent destinations. <!-- /rfc --><!-- rfc: {"id": "RK-22.1-076", "kind": "behavior", "applies": "Realtime voice injection: reusing a recorded outcome unless non-submission and retryability are established.", "level": "must"} -->A repeated identity MUST reuse
 its recorded outcome without reinjection, unless the previous attempt explicitly
-established that nothing was submitted and that retry is allowed. Reusing a voice
+established that nothing was submitted and that retry is allowed. <!-- /rfc --><!-- rfc: {"id": "RK-22.1-077", "kind": "behavior", "applies": "Realtime voice injection: refusing the same identity for different effective text.", "level": "must"} -->Reusing a voice
 identity for different effective text MUST be refused as an idempotency conflict.
 This does not change the text publication replay semantics above.
 
-The store MUST persist the reservation, a unique attempt token and its outcome.
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-22.1-078", "kind": "behavior", "applies": "Realtime voice injection: persistence of the reservation, unique attempt token and outcome.", "level": "must"} -->
+The store MUST persist the reservation, a unique attempt token and its outcome.<!-- /rfc --><!-- rfc: {"id": "RK-22.1-079", "kind": "behavior", "applies": "Realtime voice injection: conditional claim and completion writes, including stale owners.", "level": "must"} -->
 Claiming a retry and completing an attempt MUST use atomic conditional writes;
-an old owner MUST NOT overwrite another attempt. The reservation MUST outlive
-queue acknowledgement. A process-local store provides process-local retention;
-durable stores MUST preserve reservations across restart until the room is deleted.
-A store without this capability MUST refuse keyed voice injection before sending.
+an old owner MUST NOT overwrite another attempt. <!-- /rfc --><!-- rfc: {"id": "RK-22.1-080", "kind": "behavior", "applies": "Realtime voice injection: reservation retention beyond queue acknowledgement.", "level": "must"} -->The reservation MUST outlive
+queue acknowledgement. <!-- /rfc --><!-- rfc: {"id": "RK-22.1-081", "kind": "behavior", "applies": "Realtime voice injection: retention by process-local and durable stores including room deletion.", "level": "must"} -->A process-local store provides process-local retention;
+durable stores MUST preserve reservations across restart until the room is deleted.<!-- /rfc --><!-- rfc: {"id": "RK-22.1-082", "kind": "behavior", "applies": "Realtime voice injection: refusing a keyed send on a store without reservation support.", "level": "must"} -->
+A store without this capability MUST refuse keyed voice injection before sending.<!-- /rfc --><!-- rfc: {"id": "RK-22.1-083", "kind": "behavior", "applies": "Realtime voice injection: an uncertain attempt remains protected across expiry or recovery.", "level": "must"} -->
 No expiry or abandoned-claim recovery may authorize an uncertain injection again.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-22.1-084", "kind": "behavior", "applies": "Realtime voice injection: a caller may wait for the unresolved attempt's owner through the lock manager.", "level": "may"} -->
 A reservation without a final outcome is an unresolved attempt. A concurrent
-caller MAY wait for its owner through the existing lock manager; if completion
-cannot be established, its result MUST be `unknown`, with no automatic reinjection.
+caller MAY wait for its owner through the existing lock manager; <!-- /rfc --><!-- rfc: {"id": "RK-22.1-085", "kind": "behavior", "applies": "Realtime voice injection: unknown outcome without automatic reinjection when completion is unestablished.", "level": "must"} -->if completion
+cannot be established, its result MUST be `unknown`, with no automatic reinjection.<!-- /rfc --><!-- rfc: {"id": "RK-22.1-086", "kind": "behavior", "applies": "Realtime voice injection: preserving uncertainty across cancellation, unproven submission errors or failed outcome writes.", "level": "must"} -->
 Cancellation during submission, an exception without proof of non-submission,
 or failure to persist the final outcome MUST preserve this conservative boundary.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-22.1-087", "kind": "behavior", "applies": "Realtime voice injection: providers report sent, not_sent or unknown according to submission certainty.", "level": "should"} -->
 Realtime providers SHOULD report `sent` (their send operation completed),
 `not_sent` (no submission or pending submission exists), or `unknown` (acceptance
-cannot be established). Only an explicit retryable `not_sent` result permits
-automatic retry after invoking a provider. Returning no result MUST NOT be
-interpreted as proof of acceptance. Unsupported injection and missing connections
-MUST NOT return a successful result. Locally queued input whose remote submission
-is not known remains uncertain. An injection result does not prove that the peer
+cannot be established). <!-- /rfc --><!-- rfc: {"id": "RK-22.1-088", "kind": "behavior", "applies": "Realtime voice injection: permitting automatic retry after a provider call.", "level": "must"} -->Only an explicit retryable `not_sent` result permits
+automatic retry after invoking a provider. <!-- /rfc --><!-- rfc: {"id": "RK-22.1-089", "kind": "behavior", "applies": "Realtime voice injection: interpreting a provider that gives no result.", "level": "must"} -->Returning no result MUST NOT be
+interpreted as proof of acceptance. <!-- /rfc --><!-- rfc: {"id": "RK-22.1-090", "kind": "behavior", "applies": "Realtime voice injection: outcomes for unsupported injection and missing connections.", "level": "must"} -->Unsupported injection and missing connections
+MUST NOT return a successful result. <!-- /rfc --><!-- rfc: {"id": "RK-22.1-091", "kind": "behavior", "applies": "Realtime voice injection: uncertainty of a local queue without confirmed remote submission.", "level": "must"} -->Locally queued input whose remote submission
+is not known remains uncertain. <!-- /rfc --><!-- rfc: {"id": "RK-22.1-092", "kind": "behavior", "applies": "Realtime voice injection: the limits of an outcome as evidence of audio reception or turn completion.", "level": "must"} -->An injection result does not prove that the peer
 heard audio or that the agent completed its turn.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-22.1-093", "kind": "behavior", "applies": "Realtime voice injection: per-session outcomes for mixed results in a multi-session request.", "level": "must"} -->
 The delivery outcome MUST expose each selected session's result for a multi-session
-request, retaining successes and duplicates alongside failures or uncertainty.
+request, retaining successes and duplicates alongside failures or uncertainty.<!-- /rfc --><!-- rfc: {"id": "RK-22.1-094", "kind": "behavior", "applies": "Realtime voice injection: suppressing a repeat for each successful or unresolved session.", "level": "must"} -->
 A retry MUST NOT inject again into a session with a successful or unresolved
-reservation. When `session_id` is omitted, selection still happens at execution;
-applications targeting one original call MUST supply that session's id. A known
+reservation. <!-- /rfc --><!-- rfc: {"id": "RK-22.1-095", "kind": "behavior", "applies": "Realtime voice injection: selecting an unspecified session at execution time.", "level": "must"} -->When `session_id` is omitted, selection still happens at execution;<!-- /rfc --><!-- rfc: {"id": "RK-22.1-096", "kind": "non_testable", "applies": "Realtime voice injection: an application selecting its original call explicitly.", "level": "must"} -->
+applications targeting one original call MUST supply that session's id. <!-- /rfc --><!-- rfc: {"id": "RK-22.1-097", "kind": "behavior", "applies": "Realtime voice injection: optional replay for an explicit session after it ends.", "level": "may"} -->A known
 outcome for an explicit session MAY be replayed after that session has ended.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-22.1-098", "kind": "behavior", "applies": "Realtime voice injection: limits of retry suppression without verified remote idempotency.", "level": "must"} -->
 Direct realtime injection has no atomic transaction with the remote service.
 Suppressing retries after uncertainty can leave an announcement undelivered;
-eliminating that tradeoff requires verified idempotency at the remote service.
-Unkeyed calls retain no deduplication guarantee. Queue delivery remains
+eliminating that tradeoff requires verified idempotency at the remote service.<!-- /rfc --><!-- rfc: {"id": "RK-22.1-099", "kind": "behavior", "applies": "Realtime voice injection: deduplication guarantees of unkeyed requests.", "level": "must"} -->
+Unkeyed calls retain no deduplication guarantee. <!-- /rfc --><!-- rfc: {"id": "RK-22.1-100", "kind": "behavior", "applies": "At-least-once queue delivery, limits of event and queue acknowledgement, and separate crash-recovery capabilities.", "level": "must"} -->Queue delivery remains
 at-least-once, and neither a committed text event nor a queue acknowledgement
 proves exactly-once agent execution or resumes a turn interrupted after commit.
 A durable delivery-lane outbox and crash recovery of turns are separate capabilities.
@@ -21956,79 +22000,91 @@ A durable delivery-lane outbox and crash recovery of turns are separate capabili
 
 ### 22.2 Built-in Strategies
 
-<!-- rfc: {"id": "RK-22.2-001", "kind": "behavior", "applies": "§22.2 Built-in Strategies; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-22.2-003", "kind": "behavior", "applies": "Immediate dispatch runs synchronously.", "level": "must"} -->
 | Strategy | Behavior |
 |---|---|
-| Immediate | Deliver synchronously. May interrupt active voice playback. |
-| WaitForIdle(buffer = 1.0, playback_timeout = 15.0) | On a voice channel, wait until the room's TTS playback has finished; on a channel hosting a realtime model, wait until the model's sessions are idle (no answer in flight, nobody heard speaking, no tool call in flight, its audio forwarded); then wait `buffer` seconds and deliver. On any other channel, deliver at once, with no buffer. A wait longer than `playback_timeout` seconds delivers anyway. |
-| Queued(buffer = 1.0, playback_timeout = 15.0, separator) | Batch multiple delivery items, then deliver together after `buffer` seconds of inactivity, their contents joined with `separator` (default a blank line). It waits for idle as WaitForIdle does, and a wait longer than `playback_timeout` seconds delivers the batch anyway. |
+| Immediate | Deliver synchronously. <!-- /rfc --><!-- rfc: {"id": "RK-22.2-004", "kind": "behavior", "applies": "Voice feature: Immediate is permitted to interrupt active playback.", "level": "may"} -->May interrupt active voice playback. |
+| <!-- /rfc --><!-- rfc: {"id": "RK-22.2-005", "kind": "structural", "applies": "Defaults of the WaitForIdle buffer and playback timeout.", "level": "must"} -->WaitForIdle(buffer = 1.0, playback_timeout = 15.0) | <!-- /rfc --><!-- rfc: {"id": "RK-22.2-006", "kind": "behavior", "applies": "Voice feature: waiting for the room's TTS playback to finish.", "level": "must"} -->On a voice channel, wait until the room's TTS playback has finished; <!-- /rfc --><!-- rfc: {"id": "RK-22.2-007", "kind": "behavior", "applies": "Realtime feature: waiting for idle sessions before the buffer and delivery.", "level": "must"} -->on a channel hosting a realtime model, wait until the model's sessions are idle (no answer in flight, nobody heard speaking, no tool call in flight, its audio forwarded); then wait `buffer` seconds and deliver. <!-- /rfc --><!-- rfc: {"id": "RK-22.2-008", "kind": "behavior", "applies": "A WaitForIdle text delivery with no voice or realtime activity.", "level": "must"} -->On any other channel, deliver at once, with no buffer. <!-- /rfc --><!-- rfc: {"id": "RK-22.2-009", "kind": "behavior", "applies": "Voice or realtime feature: WaitForIdle delivers at its playback timeout.", "level": "must"} -->A wait longer than `playback_timeout` seconds delivers anyway. |
+| <!-- /rfc --><!-- rfc: {"id": "RK-22.2-010", "kind": "structural", "applies": "Defaults of the queued strategy's buffer and playback timeout.", "level": "must"} -->Queued(buffer = 1.0, playback_timeout = 15.0, separator) | <!-- /rfc --><!-- rfc: {"id": "RK-22.2-011", "kind": "behavior", "applies": "Batching after inactivity and joining with the configured separator or default blank line.", "level": "must"} -->Batch multiple delivery items, then deliver together after `buffer` seconds of inactivity, their contents joined with `separator` (default a blank line). <!-- /rfc --><!-- rfc: {"id": "RK-22.2-012", "kind": "behavior", "applies": "Voice or realtime feature: Queued waits for idle and sends the batch upon playback timeout.", "level": "must"} -->It waits for idle as WaitForIdle does, and a wait longer than `playback_timeout` seconds delivers the batch anyway. |
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-22.2-002", "kind": "behavior", "applies": "§22.2 Built-in Strategies; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-22.2-013", "kind": "non_testable", "applies": "Voice feature: recommended strategy choice where a deployment wants to avoid playback interruption.", "level": "should"} -->
 **WaitForIdle** is RECOMMENDED for voice channels where interruptions are
-disruptive. On a channel hosting a realtime model it watches both the model's
-answer and the user's speech; on a voice channel, the TTS playback.
+disruptive. <!-- /rfc --><!-- rfc: {"id": "RK-22.2-014", "kind": "behavior", "applies": "Realtime feature: watching both the model's response and user speech for idle.", "level": "must"} -->On a channel hosting a realtime model it watches both the model's
+answer and the user's speech; <!-- /rfc --><!-- rfc: {"id": "RK-22.2-015", "kind": "behavior", "applies": "Voice feature: watching TTS playback for idle.", "level": "must"} -->on a voice channel, the TTS playback.
 
-`Queued` MUST keep incompatible rooms, transports, intelligence addresses,
-sessions, intents (message or instruction) and metadata separate. Keyed
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-22.2-016", "kind": "behavior", "applies": "Queued delivery separates requests with incompatible rooms, transports or intelligence addresses.", "level": "must"} -->
+`Queued` MUST keep incompatible rooms, transports, intelligence addresses,<!-- /rfc --><!-- rfc: {"id": "RK-22.2-029", "kind": "behavior", "applies": "Realtime feature: queued callers addressing different sessions remain separate.", "level": "must"} -->
+sessions, <!-- /rfc --><!-- rfc: {"id": "RK-22.2-030", "kind": "behavior", "applies": "Queued delivery preserves distinct message or instruction intent and metadata.", "level": "must"} -->intents (message or instruction) and metadata separate. <!-- /rfc --><!-- rfc: {"id": "RK-22.2-017", "kind": "behavior", "applies": "Preservation of each queued caller's key and attributed outcome.", "level": "must"} -->Keyed
 requests MUST preserve their individual publication keys and outcome
-attribution rather than merging into an event with a different key. Every
+attribution rather than merging into an event with a different key. <!-- /rfc --><!-- rfc: {"id": "RK-22.2-018", "kind": "behavior", "applies": "Returning outcomes to the waiting callers, including arrivals during a drain.", "level": "must"} -->Every
 waiting caller MUST receive its own outcome, including requests arriving
-while a batch is being delivered. A caller that holds a room's lock while
+while a batch is being delivered. <!-- /rfc --><!-- rfc: {"id": "RK-22.2-019", "kind": "behavior", "applies": "A caller holding a room lock while a queue drain is underway delivers immediately without batching.", "level": "must"} -->A caller that holds a room's lock while
 another caller drains the queue MUST NOT wait behind it, whichever room it
 delivers into: it is nested in the section that holds the lock (§9.5.1), and
 a batch for that room ahead of it, or its own request batched into one,
 needs that lock to be delivered (one strategy may queue for several rooms,
-as the kit's does). It delivers at once, unbatched, as `Immediate`; a caller
+as the kit's does). It delivers at once, unbatched, as `Immediate`; <!-- /rfc --><!-- rfc: {"id": "RK-22.2-020", "kind": "behavior", "applies": "A lock holder drains as usual when no drain is in progress.", "level": "must"} -->a caller
 holding a lock that finds no drain under way drains as any caller does.
 
-Delivery backends MUST preserve addresses, keys, session targets and the
-instruction flag in their serialized items and across retries. Enqueue
-acceptance is not transmission.
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-22.2-021", "kind": "behavior", "applies": "Delivery backends preserve intelligence addresses and keys in serialized items and across retries.", "level": "must"} -->
+Delivery backends MUST preserve addresses, keys, <!-- /rfc --><!-- rfc: {"id": "RK-22.2-031", "kind": "behavior", "applies": "Realtime feature: preserving a queued delivery’s session target in serialized items and across retries.", "level": "must"} -->session targets <!-- /rfc --><!-- rfc: {"id": "RK-22.2-032", "kind": "behavior", "applies": "A queued item retains its instruction flag through serialization and retry.", "level": "must"} -->and the
+instruction flag in their serialized items and across retries. <!-- /rfc --><!-- rfc: {"id": "RK-22.2-022", "kind": "behavior", "applies": "Distinguishing queue acceptance from transmission.", "level": "must"} -->Enqueue
+acceptance is not transmission.<!-- /rfc --><!-- rfc: {"id": "RK-22.2-023", "kind": "behavior", "applies": "Distinguishing refusal from retryable failure and avoiding a successful acknowledgement on absence.", "level": "must"} -->
 Workers MUST distinguish a refusal from a retryable unavailable/failed target;
 an absent recipient MUST NOT be acknowledged as successful transmission.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-22.2-024", "kind": "behavior", "applies": "The public call's immediate refusal or queued result with an item ID and no event.", "level": "must"} -->
 With a backend, `deliver()` reports a request its form refuses at once, else
-`queued`, the outcome naming the item (`delivery_item_id`) and no event. The
+`queued`, the outcome naming the item (`delivery_item_id`) and no event. <!-- /rfc --><!-- rfc: {"id": "RK-22.2-025", "kind": "behavior", "applies": "Worker execution with the item's strategy and hooks and acknowledgement according to outcome.", "level": "must"} -->The
 backend's worker executes each item with its strategy and the delivery hooks,
 then acknowledges its outcome unless it is a failure: `unavailable`, `failed`,
-or `unknown` with an error. A failure is attempted again after its retry delay,
+or `unknown` with an error. <!-- /rfc --><!-- rfc: {"id": "RK-22.2-026", "kind": "behavior", "applies": "Exponential retry delays up to a cap, exhaustion and immediate dead-letter for a permanent failure.", "level": "must"} -->A failure is attempted again after its retry delay,
 doubling from the first (§13.2, base 2) up to a cap, and dead-lettered once its
-retries are spent, or at once when its error is not retryable. An item made
+retries are spent, or at once when its error is not retryable. <!-- /rfc --><!-- rfc: {"id": "RK-22.2-027", "kind": "behavior", "applies": "Depth on publication of work queued by a turn, tool or hook.", "level": "must"} -->An item made
 within a turn, a tool call or a hook's body carries at least that work's depth
-(§8.3), which the worker publishes it at. The worker starts when the kit is
-entered (started) and stops at its close, the items it held queued again.
+(§8.3), which the worker publishes it at. <!-- /rfc --><!-- rfc: {"id": "RK-22.2-028", "kind": "behavior", "applies": "Starting the delivery backend worker when the kit is entered.", "level": "must"} -->The worker starts when the kit is
+entered (started) <!-- /rfc --><!-- rfc: {"id": "RK-22.2-033", "kind": "behavior", "applies": "Closing the delivery worker requeues items it still holds.", "level": "must"} -->and stops at its close, the items it held queued again.
 <!-- /rfc -->
 
 ### 22.3 Delivery Hooks
 
-<!-- rfc: {"id": "RK-22.3-001", "kind": "behavior", "applies": "§22.3 Delivery Hooks; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-22.3-002", "kind": "behavior", "applies": "BEFORE_DELIVER, its synchronous execution and its ability to refuse or rewrite.", "level": "must"} -->
 | Hook | Execution | When |
 |---|---|---|
 | BEFORE_DELIVER | SYNC | Before strategy executes — can block or modify content |
-| AFTER_DELIVER | ASYNC | After delivery completes |
+| <!-- /rfc --><!-- rfc: {"id": "RK-22.3-003", "kind": "behavior", "applies": "AFTER_DELIVER runs asynchronously after completion.", "level": "must"} -->AFTER_DELIVER | ASYNC | After delivery completes |
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-22.3-004", "kind": "behavior", "applies": "The actual outcome reported by AFTER_DELIVER, including refusal, absence and duplicate.", "level": "must"} -->
 `AFTER_DELIVER` MUST report the actual outcome, including explicit refusal,
-missing destination and duplicate publication. Its payload MUST include the
+missing destination and duplicate publication. <!-- /rfc --><!-- rfc: {"id": "RK-22.3-005", "kind": "behavior", "applies": "Effective content and targets of AFTER_DELIVER after any BEFORE_DELIVER rewrite.", "level": "must"} -->Its payload MUST include the
 effective content and targeting information; a rewrite in `BEFORE_DELIVER`
-must be reflected. Hook observation remains best-effort and MUST NOT change
+must be reflected. <!-- /rfc --><!-- rfc: {"id": "RK-22.3-006", "kind": "behavior", "applies": "Best-effort hook observation preserves the delivery outcome.", "level": "must"} -->Hook observation remains best-effort and MUST NOT change
 the delivery outcome.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-22.3-007", "kind": "behavior", "applies": "Source, visibility, content, addressing and application key of framework-generated delivery hook events.", "level": "must"} -->
 Both hooks are handed an event the framework writes: its source the `system`
 channel, its visibility `internal`, its content the delivery's text, its
 address and its key the delivery's; for `AFTER_DELIVER` of a delivery that
 published an event, that event's content and address, and its key the
-application's. `BEFORE_DELIVER`'s is `PENDING`; `AFTER_DELIVER`'s takes the
+application's. <!-- /rfc --><!-- rfc: {"id": "RK-22.3-008", "kind": "behavior", "applies": "Pending status of a BEFORE_DELIVER hook event.", "level": "must"} -->`BEFORE_DELIVER`'s is `PENDING`; <!-- /rfc --><!-- rfc: {"id": "RK-22.3-014", "kind": "behavior", "applies": "Lifecycle status of an AFTER_DELIVER event for each reported outcome.", "level": "must"} -->`AFTER_DELIVER`'s takes the
 outcome's status (`sent` `DELIVERED`, `blocked` `BLOCKED`, `unavailable` and
-`failed` `FAILED`, `queued` and `unknown` `PENDING`). Its metadata is the
+`failed` `FAILED`, `queued` and `unknown` `PENDING`). <!-- /rfc --><!-- rfc: {"id": "RK-22.3-009", "kind": "behavior", "applies": "Delivery metadata, item, session, channel and strategy fields exposed to both hooks.", "level": "must"} -->Its metadata is the
 delivery's, with `delivery_item_id`, `session_id`, `channel_id` and `strategy`
-(the strategy's serialized type), and for `AFTER_DELIVER` `delivery_outcome`,
+(the strategy's serialized type), <!-- /rfc --><!-- rfc: {"id": "RK-22.3-010", "kind": "behavior", "applies": "AFTER_DELIVER's serialized outcome and error or reason metadata.", "level": "must"} -->and for `AFTER_DELIVER` `delivery_outcome`,
 the outcome serialized, and `error`, the error's message, else the reason, of
-an unsuccessful outcome, null when it has neither. `BEFORE_DELIVER` fails open
-(§9.3): a hook that raises lets the delivery through. A request its form
+an unsuccessful outcome, null when it has neither. <!-- /rfc --><!-- rfc: {"id": "RK-22.3-011", "kind": "behavior", "applies": "A raising BEFORE_DELIVER hook allows the delivery through.", "level": "must"} -->`BEFORE_DELIVER` fails open
+(§9.3): a hook that raises lets the delivery through. <!-- /rfc --><!-- rfc: {"id": "RK-22.3-012", "kind": "behavior", "applies": "AFTER_DELIVER observation of invalid requests before queueing or execution.", "level": "must"} -->A request its form
 refuses (`empty_idempotency_key`, `invalid_session_target`) is reported to
 `AFTER_DELIVER` before anything is enqueued or executed.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-22.3-013", "kind": "behavior", "applies": "Instruction event type in both proactive delivery hooks.", "level": "must"} -->
 Both hooks see an instruction delivery as an event of type `INSTRUCTION`,
 so a hook that gates proactive content gates it too.
 

@@ -1299,27 +1299,27 @@
     },
     {
       "section": "20",
-      "sha256": "130a4a3ae62ca6405eb940914367bebc770c83921675982c3c9e975746e3e396",
+      "sha256": "3c0a12507c5c7c281f84f559685266d2093cf278da68ed3a0e73212e35761b4e",
       "classification": "normative",
-      "review": "Source inventory: Memory System. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "The introduction permits implementations to choose a memory strategy. The interfaces and built-in implementations are reviewed under their own headings."
     },
     {
       "section": "20.1",
-      "sha256": "b542be7ec8b3517b4c56bd3d8d76d46249a6ebd97515672fdb2336e8bf9d97ff",
+      "sha256": "091de26efb65674a89922e01901b28074ab10af5629acd1663cc46cf8d5c1c80",
       "classification": "normative",
-      "review": "Source inventory: MemoryProvider Interface. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "The retrieval, inter-round compaction and close interface is split at the methods. The remaining units distinguish reader visibility, the current input, compaction arguments, the default and wrapper delegation."
     },
     {
       "section": "20.2",
-      "sha256": "ac761e65a25a40c51f92ddc2b4e11fe11ed9f80d202278a04bedf714135d8826",
+      "sha256": "71f046550b1f528b1c6dc117751016e0592fb322817b3d70e3296a82e78c61ad",
       "classification": "normative",
-      "review": "Source inventory: MemoryResult. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "The result interface is followed by independent units for message and event conversion, order and joining, system messages, speaker labels, turn notes, passage provenance, and the wrapper and budget obligations."
     },
     {
       "section": "20.3",
-      "sha256": "fdf78123d86441b5b293245c43b1dd85b044bfb338936c15491b0b9e0747a2c9",
+      "sha256": "ea67c1bba50e01f405ed7320ae9b25d95083e6c103c04214d677675bdfa175b2",
       "classification": "normative",
-      "review": "Source inventory: Built-in Implementations. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "The five built-in strategies are reviewed row by row. The units distinguish selection, window and tool replay, retrieval, summarization thresholds and cache validity, compaction, ownership, and the input and reply reserves of a measured turn."
     },
     {
       "section": "21",
@@ -1367,25 +1367,25 @@
       "section": "22",
       "sha256": "77df80f6cf4a3bb07028fb8cbfa2fa400bb98966a8764196dbac57c365dd0a8c",
       "classification": "normative",
-      "review": "Source inventory: Delivery Strategies. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "The heading contains a single introductory statement about the purpose of proactive delivery. It carries no independent obligation and has no neighbouring unit under this heading."
     },
     {
       "section": "22.1",
-      "sha256": "5907f45fa2c3b858202d8fadda2da70347841213f82327fce0f53674302d55d2",
+      "sha256": "d7ada74d1bdfc285ee707b1fed0932b01fd3a14e24ed04b4db0ef15f66df5af4",
       "classification": "normative",
-      "review": "Source inventory: DeliveryStrategy Interface. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "The strategy and its context are separated from each outcome, addressing and transport rule, publication reason, instruction and session rule, lock and retention requirement. The realtime reservation, uncertainty, retry and multi-session rules have their own levels and capability conditions."
     },
     {
       "section": "22.2",
-      "sha256": "1fbb2ba6c84d2a0e77d4dea40ce7cce23b102daaa3b805f3672cd8f5974f6101",
+      "sha256": "2478ab16699f6657085013bb13487d449ef2942a3129cfa4e8f570ffb4d73bae",
       "classification": "normative",
-      "review": "Source inventory: Built-in Strategies. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "The strategy table gives separate units for immediate, queued and idle behaviour, defaults, and media. Queue compatibility, individual outcomes, reentrance, serialization, worker acknowledgement, retry, depth and lifecycle are reviewed separately."
     },
     {
       "section": "22.3",
-      "sha256": "7a89a920affb40d5c325718b76c6f0970518f423682e4d8072ac33d406062c27",
+      "sha256": "aec9bd137d909ffdb2fb0c5ad67df69fe5a9a667f6f607ff9e204cfbed2c7052",
       "classification": "normative",
-      "review": "Source inventory: Delivery Hooks. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "The two hook triggers, outcomes, rewritten content, failure isolation, event fields, metadata, invalid requests and instruction event types are distinct units."
     },
     {
       "section": "23",
