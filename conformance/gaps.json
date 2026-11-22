@@ -232,9 +232,9 @@
       "note": "A regeneration waiting for the room lock past process_timeout: blocked process_timeout and the process_timeout event with operation regenerate."
     },
     "RK-14.1-007": {
-      "class": "writable",
+      "class": "step",
       "card": "RMK-1976",
-      "note": "store.create_room under an id the store holds: refused, the room it holds unchanged."
+      "note": "No error name for a refused duplicate room: README's error table has none, and neither runner maps the store's error."
     },
     "RK-14.1-010": {
       "class": "step",
@@ -244,7 +244,7 @@
     "RK-14.1-011": {
       "class": "writable",
       "card": "RMK-1976",
-      "note": "Six scenarios call store.patch_room_metadata as a mechanism only; none asserts the merge, unset's keys removed first, nothing else written or an unknown room's null."
+      "note": "Six scenarios call store.patch_room_metadata, its merge and unset asserted only as setup; none makes them the subject, nor the null of an unknown room."
     },
     "RK-14.1-012": {
       "class": "writable",
@@ -311,6 +311,11 @@
       "card": "RMK-1976",
       "note": "No store.get_event_count step."
     },
+    "RK-14.1-041": {
+      "class": "step",
+      "card": "RMK-1976",
+      "note": "No store.get_binding step; the scenarios call store.add_binding only as setup."
+    },
     "RK-14.1-045": {
       "class": "step",
       "card": "RMK-1976",
@@ -351,20 +356,15 @@
       "card": "RMK-1976",
       "note": "No store.get_event_count step."
     },
-    "RK-14.1-076": {
-      "class": "step",
-      "card": "RMK-1976",
-      "note": "No store.load_room_context step, and no fixture reopens a durable store."
-    },
     "RK-14.3-013": {
       "class": "writable",
       "card": "RMK-1976",
       "note": "store.update_event of an event the store lacks and store.add_participant into a room it lacks: refused, nothing written."
     },
     "RK-14.3-015": {
-      "class": "writable",
+      "class": "step",
       "card": "RMK-1976",
-      "note": "store.create_room under an id the store holds: refused, the room it holds unchanged."
+      "note": "No error name for a refused duplicate room: README's error table has none, and neither runner maps the store's error."
     },
     "RK-14.3-018": {
       "class": "step",
@@ -379,7 +379,7 @@
     "RK-14.3-025": {
       "class": "writable",
       "card": "RMK-1976",
-      "note": "A commit_event record that brings delivery_results, read back with them."
+      "note": "The kit's commit_event of a record that brings delivery_results, read back with them; the store's own commit_event is shown by store/a-delivery-record-alone-writes-an-event-s-results."
     },
     "RK-19.1-004": {
       "class": "phase6",

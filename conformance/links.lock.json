@@ -4403,14 +4403,18 @@
       "store/a-room-is-written-only-while-it-holds-what-the-write-read": "3abf41c0b7906d98e14872834179c1bdae98c474601da2bf52998b422a669eb5"
     },
     "RK-14.1-020": {
-      "store/the-timeline-is-what-the-room-received-every-type-in-index-order": "270424b9968859141af0786df464495ed651387d99e12e0045243af970827248"
+      "store/the-timeline-is-what-the-room-received-every-type-in-index-order": "270424b9968859141af0786df464495ed651387d99e12e0045243af970827248",
+      "store/timeline-predicates-precede-the-page-cut": "270424b9968859141af0786df464495ed651387d99e12e0045243af970827248"
     },
     "RK-14.1-025": {
       "rooms/a-metadata-update-merges-the-caller-s-keys": "61a0e6d4ebc96d2430c20fb02d19f9f3fb36720f56fe0736876e0701b41c80c0"
     },
     "RK-14.1-029": {
+      "store/a-delivery-record-alone-writes-an-event-s-results": "cab7383d562dbb2c74b99501f9ca953a1e8624aba6a06f38aa64886781bfdb40",
       "store/a-held-key-refuses-every-write-without-changing-the-target-or-sequence": "cab7383d562dbb2c74b99501f9ca953a1e8624aba6a06f38aa64886781bfdb40",
-      "store/an-added-event-keeps-its-index-and-the-room-s-next-is-past-it": "cab7383d562dbb2c74b99501f9ca953a1e8624aba6a06f38aa64886781bfdb40"
+      "store/a-room-is-written-only-while-it-holds-what-the-write-read": "cab7383d562dbb2c74b99501f9ca953a1e8624aba6a06f38aa64886781bfdb40",
+      "store/an-added-event-keeps-its-index-and-the-room-s-next-is-past-it": "cab7383d562dbb2c74b99501f9ca953a1e8624aba6a06f38aa64886781bfdb40",
+      "store/concurrent-commits-take-each-rooms-own-sequence": "cab7383d562dbb2c74b99501f9ca953a1e8624aba6a06f38aa64886781bfdb40"
     },
     "RK-14.1-030": {
       "store/an-added-event-keeps-its-index-and-the-room-s-next-is-past-it": "b2eea1fc6e0e2d54060cdfe879cd0dfe0ecb4ef7aa8080ab0e23af32b9ed6cf7"
@@ -4438,16 +4442,15 @@
     },
     "RK-14.1-038": {
       "edits/a-hard-delete-removes-an-edit-that-replies-once": "8a0ba6dc34c0f358502273d54ddecbe6c2faf31c722d2b213f32f8607bae4cda",
-      "edits/direct-update-and-hard-delete": "8a0ba6dc34c0f358502273d54ddecbe6c2faf31c722d2b213f32f8607bae4cda"
+      "edits/direct-update-and-hard-delete": "8a0ba6dc34c0f358502273d54ddecbe6c2faf31c722d2b213f32f8607bae4cda",
+      "store/an-added-event-keeps-its-index-and-the-room-s-next-is-past-it": "8a0ba6dc34c0f358502273d54ddecbe6c2faf31c722d2b213f32f8607bae4cda"
     },
     "RK-14.1-039": {
+      "store/a-held-key-refuses-every-write-without-changing-the-target-or-sequence": "c5d7f72526b311c23fe38d435e638530d472bb3feea4b10c141ed963deb572fc",
       "store/a-key-is-looked-up-in-its-scope-by-lowest-index": "c5d7f72526b311c23fe38d435e638530d472bb3feea4b10c141ed963deb572fc"
     },
     "RK-14.1-040": {
       "store/a-key-is-looked-up-in-its-scope-by-lowest-index": "fa96bbf8507c523440099e4f9a583a059c4b7a078df9b94898eaaf627788a591"
-    },
-    "RK-14.1-041": {
-      "store/a-binding-exists-as-get-binding-finds-it": "3239fd2160b66564713da4907f53353b3e7a2f40515ba655f2f7a1bedfaef313"
     },
     "RK-14.1-042": {
       "store/a-binding-exists-as-get-binding-finds-it": "b048c62c9b15bdd3fad9c87a27e2aa69d9f2889817cdbc89a4834cfeed478507"
@@ -4456,7 +4459,8 @@
       "store/the-latest-room-follows-the-bindings-and-rooms-the-store-holds": "30af447bc62efcb034cda720520e80ce3cf4d6e46285257a575c55840dc68c74"
     },
     "RK-14.1-044": {
-      "store/a-binding-exists-as-get-binding-finds-it": "2eee2c63f11a3f7f7da4b8506bfb627aa380729da0a02cd6ab73b17474a74fdb"
+      "store/a-binding-exists-as-get-binding-finds-it": "2eee2c63f11a3f7f7da4b8506bfb627aa380729da0a02cd6ab73b17474a74fdb",
+      "store/the-latest-room-follows-the-bindings-and-rooms-the-store-holds": "2eee2c63f11a3f7f7da4b8506bfb627aa380729da0a02cd6ab73b17474a74fdb"
     },
     "RK-14.1-046": {
       "store/a-participant-id-the-room-has-is-refused-and-an-update-rewrites-a-record": "de25d5c5f2fb0e813bbcebe07bdf22d4c5490e18b2b7913ccf3105b3de906828"
@@ -4474,7 +4478,8 @@
       "store/unlink-address-removes-an-address-the-identity-holds-in-its-organization": "e1ad2ec39f00515cf1e28bede7e64974f8b83b79dad1347ac0adb21d463902b0"
     },
     "RK-14.1-050": {
-      "store/an-address-belongs-to-one-identity-of-an-organization-per-channel-type": "e31fb9d28eb08822b3718710667c8946cf8804879d5cc6c0755c7f1837f079d9"
+      "store/an-address-belongs-to-one-identity-of-an-organization-per-channel-type": "e31fb9d28eb08822b3718710667c8946cf8804879d5cc6c0755c7f1837f079d9",
+      "store/identity-resolution-reads-the-organization-it-names-and-none-reads-none": "e31fb9d28eb08822b3718710667c8946cf8804879d5cc6c0755c7f1837f079d9"
     },
     "RK-14.1-051": {
       "store/a-verification-is-read-by-its-identity-within-its-organization": "bcd5cdc6bcdd00cdf9a2bfd7a5b0d866b31eb24f0f804f7e03568ff778bea8de",
@@ -4504,10 +4509,9 @@
     },
     "RK-14.1-058": {
       "store/a-task-is-read-by-its-id-and-rewritten-whole": "c78f2ef53d53980be23f721d723bca208062815e76604b4c34aa17f352fd74d1",
-      "tasks/the-kit-lists-a-room-s-tasks-by-status": "c78f2ef53d53980be23f721d723bca208062815e76604b4c34aa17f352fd74d1"
+      "store/an-update-of-a-task-the-store-lacks-is-refused": "c78f2ef53d53980be23f721d723bca208062815e76604b4c34aa17f352fd74d1"
     },
     "RK-14.1-059": {
-      "store/a-task-is-read-by-its-id-and-rewritten-whole": "17bd44545527cc9ccfde23e7c6b1e9cce4228c2c2f2d6dabeccfb729c39bd273",
       "store/an-update-of-a-task-the-store-lacks-is-refused": "17bd44545527cc9ccfde23e7c6b1e9cce4228c2c2f2d6dabeccfb729c39bd273"
     },
     "RK-14.1-061": {
@@ -4540,7 +4544,8 @@
       "store/timeline-predicates-precede-the-page-cut": "0e72589679ed6669e43079d8d94304d4ab955af538e2c5e28aa72550ba59dcee"
     },
     "RK-14.1-069": {
-      "rooms/public-timeline-keeps-its-pagination-and-audit-options": "b898bd6ff19a307c40ba6390765d36d878d3c54bb52dffad953647ce8fac6733"
+      "rooms/public-timeline-keeps-its-pagination-and-audit-options": "b898bd6ff19a307c40ba6390765d36d878d3c54bb52dffad953647ce8fac6733",
+      "store/timeline-predicates-precede-the-page-cut": "b898bd6ff19a307c40ba6390765d36d878d3c54bb52dffad953647ce8fac6733"
     },
     "RK-14.1-072": {
       "store/reattached-binding-moves-behind-existing-streaming-targets": "7daf2b214cfac91eefc4d75e65b6a26a7a982242f929ebdf3657341e83a685a0",
@@ -4548,21 +4553,24 @@
       "streaming/the-stream-goes-to-the-first-streaming-transport-bound": "7daf2b214cfac91eefc4d75e65b6a26a7a982242f929ebdf3657341e83a685a0"
     },
     "RK-14.1-073": {
-      "store/reattached-binding-moves-behind-existing-streaming-targets": "08c69f09ebdc8499f31f38c8453453ee1a641326ddd2a975240a8ba5b4ac8538",
       "store/updated-bindings-keep-the-first-streaming-target": "08c69f09ebdc8499f31f38c8453453ee1a641326ddd2a975240a8ba5b4ac8538"
     },
     "RK-14.1-074": {
       "store/reattached-binding-moves-behind-existing-streaming-targets": "09f3973bfe8ce03e28c91a321402c99b9286a9da7a52168fa476cccb4bfed7af"
     },
     "RK-14.1-075": {
-      "store/reattached-binding-moves-behind-existing-streaming-targets": "f5c1fa69e1fa949c26d7f1eaed5afc5fc3808dfbcca70aa56367029c5183d86a",
-      "store/updated-bindings-keep-the-first-streaming-target": "f5c1fa69e1fa949c26d7f1eaed5afc5fc3808dfbcca70aa56367029c5183d86a"
+      "store/updated-bindings-keep-the-first-streaming-target": "f5c1fa69e1fa949c26d7f1eaed5afc5fc3808dfbcca70aa56367029c5183d86a",
+      "streaming/the-stream-goes-to-the-first-streaming-transport-bound": "f5c1fa69e1fa949c26d7f1eaed5afc5fc3808dfbcca70aa56367029c5183d86a"
+    },
+    "RK-14.1-076": {
+      "store/reattached-binding-moves-behind-existing-streaming-targets": "2a7df5ec943cffa5d5d3e64d3a6b5073da74a3afe68f5a54f21b8ea2e9ed4cb6",
+      "store/updated-bindings-keep-the-first-streaming-target": "2a7df5ec943cffa5d5d3e64d3a6b5073da74a3afe68f5a54f21b8ea2e9ed4cb6",
+      "streaming/the-stream-goes-to-the-first-streaming-transport-bound": "2a7df5ec943cffa5d5d3e64d3a6b5073da74a3afe68f5a54f21b8ea2e9ed4cb6"
     },
     "RK-14.3-002": {
       "store/concurrent-commits-take-each-rooms-own-sequence": "3a0cfb8625f00f9ea55c1fcf335492d8796e533f921ea89172dfec396cfca735"
     },
     "RK-14.3-004": {
-      "store/an-added-event-keeps-its-index-and-the-room-s-next-is-past-it": "ff83d882c166436988175fff3549b8cb60bd568178e6e0a6a00d287fc657f119",
       "store/concurrent-commits-take-each-rooms-own-sequence": "ff83d882c166436988175fff3549b8cb60bd568178e6e0a6a00d287fc657f119"
     },
     "RK-14.3-005": {
@@ -4578,6 +4586,7 @@
       "edits/a-delete-the-persistence-policy-keeps-out-still-marks-its-target-and-edits": "750f9cfd9810a6fab4f4e646fe710409e3c9600b692ea14856f7c55cff72a174",
       "edits/an-edit-the-persistence-policy-keeps-out-still-rewrites-its-target": "750f9cfd9810a6fab4f4e646fe710409e3c9600b692ea14856f7c55cff72a174",
       "idempotency/an-unstored-event-reserves-neither-key-nor-index": "750f9cfd9810a6fab4f4e646fe710409e3c9600b692ea14856f7c55cff72a174",
+      "inbound/a-turn-the-persistence-policy-keeps-out-still-holds-its-author-s-rank": "750f9cfd9810a6fab4f4e646fe710409e3c9600b692ea14856f7c55cff72a174",
       "store/the-persistence-policy-delivers-an-event-it-keeps-out-of-the-timeline": "750f9cfd9810a6fab4f4e646fe710409e3c9600b692ea14856f7c55cff72a174",
       "store/the-persistence-policy-stores-the-types-it-names-but-those-it-excludes": "750f9cfd9810a6fab4f4e646fe710409e3c9600b692ea14856f7c55cff72a174",
       "streaming/a-streamed-row-the-persistence-policy-keeps-out-keeps-its-hook-s-effects": "750f9cfd9810a6fab4f4e646fe710409e3c9600b692ea14856f7c55cff72a174",
@@ -4606,8 +4615,7 @@
     },
     "RK-14.3-016": {
       "edits/a-hard-delete-leaves-the-index-it-took": "d35e336ddbb9218fc96297a4151ab1ccba838c13ce070ad5fc3d0a6c53a73da3",
-      "idempotency/a-hard-delete-releases-the-key-and-keeps-its-index-spent": "d35e336ddbb9218fc96297a4151ab1ccba838c13ce070ad5fc3d0a6c53a73da3",
-      "store/an-added-event-keeps-its-index-and-the-room-s-next-is-past-it": "d35e336ddbb9218fc96297a4151ab1ccba838c13ce070ad5fc3d0a6c53a73da3"
+      "idempotency/a-hard-delete-releases-the-key-and-keeps-its-index-spent": "d35e336ddbb9218fc96297a4151ab1ccba838c13ce070ad5fc3d0a6c53a73da3"
     },
     "RK-14.3-017": {
       "idempotency/a-hard-delete-releases-the-key-and-keeps-its-index-spent": "395054f277e2919cc886eabd38c48e6ea6be2722aed59b172f3044f9c481dca8"
@@ -4651,7 +4659,10 @@
     "RK-14.3-029": {
       "delivery/a-keyed-delivery-is-one-publication": "1fa052d01f751ba40c8ec43142aa485fa362d9c0cb3b1aca99a0d91004499468",
       "delivery/a-message-keyed-like-a-publication-stands-in-for-none": "1fa052d01f751ba40c8ec43142aa485fa362d9c0cb3b1aca99a0d91004499468",
-      "delivery/a-publication-key-is-scoped-to-its-room": "1fa052d01f751ba40c8ec43142aa485fa362d9c0cb3b1aca99a0d91004499468"
+      "delivery/a-publication-key-is-scoped-to-its-room": "1fa052d01f751ba40c8ec43142aa485fa362d9c0cb3b1aca99a0d91004499468",
+      "delivery/a-retry-resolving-another-transport-is-the-same-publication": "1fa052d01f751ba40c8ec43142aa485fa362d9c0cb3b1aca99a0d91004499468",
+      "delivery/concurrent-keyed-deliveries-publish-once": "1fa052d01f751ba40c8ec43142aa485fa362d9c0cb3b1aca99a0d91004499468",
+      "delivery/concurrent-replays-on-two-transports-publish-once": "1fa052d01f751ba40c8ec43142aa485fa362d9c0cb3b1aca99a0d91004499468"
     },
     "RK-14.3-030": {
       "idempotency/a-record-under-a-held-key-is-refused-without-taking-an-index": "47cdc209dca794cfecb04c05e7fee3616ba1b72493e4ea232ea4d8d4dcf6fdc5",

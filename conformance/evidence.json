@@ -12042,8 +12042,8 @@
     },
     {
       "id": "storage-delivery-timeline",
-      "requirement": "RK-14.1-064",
-      "clause_sha256": "851741c9c83beed5786049bc044d29c5a261356c1badc66325bbb950f4beb87d",
+      "requirement": "RK-14.1-061",
+      "clause_sha256": "269fb7a924de28089561c38181589d38e6642cd12146597227d58c5c73d202e6",
       "scope": "Timeline predicates combine before pagination; exclusive time bounds, blocked rows, source, type and correlation filters, cursor and limit behavior.",
       "coverage": "partial",
       "review": "Python source tests and parameterizations were reviewed first. Nine new scenarios and two strengthened scenarios passed on Python with memory, SQLite and PostgreSQL before their Rust comparison. Native tests retain provider adapters, exception classes, pure functions and ownership semantics. The SQLite runner uses an independent reader to observe durable records after the kit closes its own store. No production API or RFC behavior changed. This is a bounded core-storage and delivery proof, not certification of every provider, store or distributed runtime.",
@@ -17029,8 +17029,8 @@
     },
     {
       "id": "store-binding-insertion-order",
-      "requirement": "RK-14.1-072",
-      "clause_sha256": "7daf2b214cfac91eefc4d75e65b6a26a7a982242f929ebdf3657341e83a685a0",
+      "requirement": "RK-14.1-076",
+      "clause_sha256": "2a7df5ec943cffa5d5d3e64d3a6b5073da74a3afe68f5a54f21b8ea2e9ed4cb6",
       "scope": "The first streaming transport survives updates, changes after reattachment and remains stable on durable reads; native tests cover list/context, equal or backdated timestamps, reopen and legacy migration.",
       "coverage": "partial",
       "review": "Read the existing Python tests before the implementation, then paired Rust code and RFC. Independent review checked the shared scenarios, additive migration and before/after-announcement cancellation boundary. Native PostgreSQL and cross-read runs are retained separately; only supported Python memory/SQLite JUnit runs receive execution receipts.",
