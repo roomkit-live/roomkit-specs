@@ -97,6 +97,21 @@
     "RK-7.3-003",
     "RK-7.3-004",
     "RK-7.5-001",
+    "RK-8.1-002",
+    "RK-8.1-003",
+    "RK-8.2-001",
+    "RK-8.3-002",
+    "RK-8.3-003",
+    "RK-8.3-005",
+    "RK-8.3-006",
+    "RK-8.3-007",
+    "RK-8.4-001",
+    "RK-8.4-002",
+    "RK-8.4-003",
+    "RK-8.5-002",
+    "RK-8.5-003",
+    "RK-8.5-004",
+    "RK-8.5-005",
     "RK-9.1-001",
     "RK-9.2-001",
     "RK-9.2-002",
@@ -1804,8 +1819,8 @@
     },
     {
       "id": "response-scopes-and-cascades",
-      "requirement": "RK-8.5-004",
-      "clause_sha256": "19c0fc7615ed067d5bca4ac0274b90b3604d1ebc8cd2df7482aa72ab7e902666",
+      "requirement": "RK-8.5-022",
+      "clause_sha256": "b7ce6c68d1681253d814e848cd17ce1926c6617736e734434aae5adcd1fdfc4d",
       "scope": "Response visibility intersections, propagation through a two-agent cascade, buffered real-model streams, hook narrowing and depth-limit records.",
       "coverage": "partial",
       "review": "Read each scenario assertion and each named Python test against this exact clause. Lists assert cardinality and order; object fields assert only the named contract. Shared execution and specialized source evidence remain distinct.",
@@ -6755,8 +6770,8 @@
     },
     {
       "id": "core-event-index-allocation",
-      "requirement": "RK-8.1-002",
-      "clause_sha256": "2adb8658314481eb30f989bba69258ac533042d3054e47f33f1064612248e243",
+      "requirement": "RK-8.1-005",
+      "clause_sha256": "09f7a082a4c65a1474813b0893eade900dfc6c334a5f9b5d6ee5484c6015a62a",
       "scope": "Empty-room indexes, consecutive per-room commits and counters, concurrent writers, hard-deletion gaps, and every major pipeline commit path.",
       "coverage": "partial",
       "review": "Source tests, scenario fixtures and assertions reviewed against this clause. The runners expose the real duplicate flag and invoke the store key lookup directly. Index normalization removes only optional lifecycle records. The concurrent shared store case does not prove multiple independent connection owners; specialized SQLite and PostgreSQL tests retain that responsibility. No complete conformance claim follows from a count of green cases.",
@@ -12538,8 +12553,8 @@
     },
     {
       "id": "reentrancy-replay-budget",
-      "requirement": "RK-8.3-005",
-      "clause_sha256": "0c71b8d7d38718d6b336a87f8e16d326fff97cc53cf146e7ab34d5e647b1b976",
+      "requirement": "RK-8.3-035",
+      "clause_sha256": "d0bd22882199f118df9ac63021f7acd43e3d01f3d100ae091cceda0e1c534189",
       "scope": "Twelve sends with one key under one locked hook return the original id and content without consuming its ten-pass budget; a following fresh send still commits.",
       "coverage": "partial",
       "review": "Read Python source and its assertions before writing the shared cases; all seven changed cases pass on Python memory, SQLite and PostgreSQL. Six cases are new and one now queues the neighbor before cancellation. Public API and RFC semantics are unchanged. Native Rust waiter tests separately establish first-poll/drop and active multiwaiter behavior; the JSON runner does not express future destruction. The initial 231-method inventory is not a claim that every method or variant was reviewed in this slice.",
@@ -12572,8 +12587,8 @@
     },
     {
       "id": "reentrancy-independent-hook-budget",
-      "requirement": "RK-8.3-006",
-      "clause_sha256": "f19b26904dad3bd27cf1c0123f03c9c51dce3d03a9a89b4bab30202e19003f19",
+      "requirement": "RK-8.3-042",
+      "clause_sha256": "0dc1c1b99efc500a849074219e594bbba7c1c0b29749b86bbe8b5a9131ed44dd",
       "scope": "Forty-five buffered answers and forty-five hook notices fit separate budgets of fifty. Exact turn counts and transport deliveries reject prematurely capped work.",
       "coverage": "partial",
       "review": "Read Python source and its assertions before writing the shared cases; all seven changed cases pass on Python memory, SQLite and PostgreSQL. Six cases are new and one now queues the neighbor before cancellation. Public API and RFC semantics are unchanged. Native Rust waiter tests separately establish first-poll/drop and active multiwaiter behavior; the JSON runner does not express future destruction. The initial 231-method inventory is not a claim that every method or variant was reviewed in this slice.",
@@ -19896,7 +19911,7 @@
     },
     {
       "id": "acp-thought-answer-scope",
-      "requirement": "RK-8.4-002",
+      "requirement": "RK-8.4-034",
       "scope": "Static visibility restriction for active ACP thought publications, through either the binding or the triggering message's answer scope, on a second room sharing an already-open connection.",
       "assertions": [
         {
@@ -19933,7 +19948,7 @@
         "Tools, hooks and other ephemeral families retain their separate contracts.",
         "Direct channel calls and a revocation during model generation are outside these two ACP scenarios."
       ],
-      "clause_sha256": "a176d7d55e4901a7f53ebb798ee91394f035660ee6bce5b9b66a8d019bf0dc85",
+      "clause_sha256": "13628684c94f42a893dfab1ecfea062503d1cc0df2610e10bfed927884ba8389",
       "coverage": "partial",
       "tests": [],
       "review": "Independent full review reads the Python source tests, shared scenarios, RFC and Rust port together. A baseline Rust run fails on the missing marker, report thought and ephemeral events. Review found the preview case did not enable publication; it now enables the actual option and asserts its 1000-character Unicode preview, full 1001-character marker/report and length. Python passes before Rust. Rust passes on one and four workers. Both scenarios submit their events through process_inbound. Their static binding and triggering-event restrictions still exercise the owner-issued turn path in the current clause."
@@ -20308,7 +20323,7 @@
     },
     {
       "id": "acp-tool-observer-reentry-budget",
-      "requirement": "RK-8.3-005",
+      "requirement": "RK-8.3-035",
       "scope": "An ACP tool observer posting through its captured local kit draws the active delivery cascade budget, without an additional ACP loop depth.",
       "assertions": [
         {
@@ -20337,7 +20352,7 @@
         "The budget fixture is in-process: it calls its captured kit, not a remote TurnHost. Other-room posts, background work after contexts end and the remote host path are not exercised here.",
         "The native context guard separately checks inherited depth and expired admission."
       ],
-      "clause_sha256": "0c71b8d7d38718d6b336a87f8e16d326fff97cc53cf146e7ab34d5e647b1b976",
+      "clause_sha256": "d0bd22882199f118df9ac63021f7acd43e3d01f3d100ae091cceda0e1c534189",
       "coverage": "partial",
       "tests": [],
       "review": "Full independent review read Python source tests, scenarios, RFC and Rust. Missing tool output first failed on Rust, then passed after the port. Review additionally reproduced unbounded binary rows/errors and a stale hook room context; fixes have separate red/green evidence. Final gate and receipt status is recorded separately, not inferred from this review statement."
@@ -23186,8 +23201,8 @@
     },
     {
       "id": "phase4-acp-observer-live-delivery-budget",
-      "requirement": "RK-8.3-006",
-      "clause_sha256": "f19b26904dad3bd27cf1c0123f03c9c51dce3d03a9a89b4bab30202e19003f19",
+      "requirement": "RK-8.3-045",
+      "clause_sha256": "4fd5375cc8f7fd8e69c19a459f7f66a112a4c009ef995a7fd065679db951137b",
       "scope": "In-process ACP per-tool observers: live delivery draws a pass; a post after delivery ends starts independent work at depth zero.",
       "coverage": "partial",
       "review": "Read Python source/tests and both context implementations. Retain the exact cap assertion while establishing its temporal precondition with barriers. Add the converse expired-context case for both policy-handler triggers. No production or RFC behavior change. Independent review covers the tests and fixture synchronization; execution is recorded separately.",
@@ -25860,8 +25875,8 @@
     },
     {
       "id": "phase4-acp-subscriber-tool-text",
-      "requirement": "RK-8.4-001",
-      "clause_sha256": "de82eb627de4f58961266c0ee00bd19e07011b6e62893c1b5cdc7806c9d16f4d",
+      "requirement": "RK-8.4-025",
+      "clause_sha256": "eb339c31d415d21ec87e7fac41685ea27fb0d1ff974250568a1b763b27488872",
       "coverage": "partial",
       "scope": "ACP lifecycle and intermediate custom progress on an ordinary room tool call, with default and explicit tool-text settings.",
       "assertions": [
@@ -25903,8 +25918,8 @@
     },
     {
       "id": "phase4-acp-tool-rows-and-ephemerals",
-      "requirement": "RK-8.4-003",
-      "clause_sha256": "0d6a61afe2ebf8df6580432d38781833e95cc9777e2207cc2e742cd48514337a",
+      "requirement": "RK-8.4-037",
+      "clause_sha256": "98a752f11689b61c2ffedc83b5c66a0315b1c2c0a9a2aadc5f4706c35de97304",
       "coverage": "partial",
       "scope": "The subscriber receives structural tool activity even when BEFORE_BROADCAST blocks the corresponding ACP room rows.",
       "assertions": [
@@ -25938,8 +25953,8 @@
     },
     {
       "id": "direct-ai-prompt-tool-audience",
-      "requirement": "RK-8.4-002",
-      "clause_sha256": "a176d7d55e4901a7f53ebb798ee91394f035660ee6bce5b9b66a8d019bf0dc85",
+      "requirement": "RK-8.4-035",
+      "clause_sha256": "24a1c5f52b9c1d7e0f00e914193c730d36901b81d774e492f07259a29f839e3a",
       "coverage": "partial",
       "scope": "Tool start and end publications from a directly wired scripted AI channel, for an unrestricted trigger, a private trigger and a binding narrowed after admission.",
       "assertions": [

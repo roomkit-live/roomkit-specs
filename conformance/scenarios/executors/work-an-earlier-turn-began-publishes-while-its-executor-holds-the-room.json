@@ -7,7 +7,8 @@
     "§8.4"
   ],
   "requirements": [
-    "RK-10.6.3-037"
+    "RK-10.6.3-037",
+    "RK-8.4-012"
   ],
   "notes": "Python: tests/test_turns_between.py test_a_publication_after_the_turn_reaches_the_owner_for_its_room_only; turns/_owner_publish.py. A.'s work waits at the gate, B.'s turn is sent and ends on first, which still holds the room's state, then A.'s publication names A.'s turn and is published.",
   "setup": {
