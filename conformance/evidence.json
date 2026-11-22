@@ -11886,8 +11886,8 @@
         {
           "scenario": "delivery/a-status-reaches-its-tenant-s-room-only",
           "pointer": "/expect",
-          "sha256": "daf6434c0d50a7c1870ef4c11e003ec3bc13fb9128b3db0db2170dcdfef8647c",
-          "scenario_sha256": "46a299275bcf1ab4ccef1bb3ec9f090de23b18c79e3237b1b9d73037f4fe19f2",
+          "sha256": "a715418576f0c140f867f98e772ad79dec1a1bd0b3cfe34a953ae5621f2038b3",
+          "scenario_sha256": "a494a94aef9607bf747de01fbec58d549d12be73345e8c7f81ddfc33fd5d644d",
           "proves": "A delivery status acting for an organization is routed among that organization's rooms only, and a status naming another organization's room is dispatched nowhere. Only named fields are compared. Empty deliveries, timelines and framework-event lists are negative assertions."
         },
         {

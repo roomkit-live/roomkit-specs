@@ -7403,7 +7403,7 @@
           }
         },
         "chat_dialect": {
-          "description": "The options of the core's chat rendering (\u00a76.4, its ChatDialect) each of the model's requests is also written through by the core's chat_messages, kept as `chat_messages` under `models`: thinking_field, the assistant field a replayed round's reasoning goes in, none when absent; names_tool_results, each tool message names its tool; flattens_text, a message of text parts goes as one string and an empty message is not sent; round_thinking_required, every round that called tools carries the field, even one that did not reason; round_thinking_placeholder, what that field holds for a round that did not reason, empty when absent. Each flag is false when absent, and {} is the default rendering, which sends no reasoning back. Options the core's ChatDialect refuses fail the scenario. Not rendered when absent. The model still answers from its rounds.",
+          "description": "The options of the core's chat rendering (\u00a76.4, its ChatDialect) each of the model's requests is also written through by the core's chat_messages, kept as `chat_messages` under `models`: thinking_field, the assistant field a replayed round's reasoning goes in, none when absent; names_tool_results, each tool message names its tool; flattens_text, a message of text parts goes as one string and an empty message is not sent; round_thinking_required, every round that called tools carries the field, even one that did not reason; round_thinking_placeholder, what that field holds for a round that did not reason, empty when absent. Each flag is false when absent, and {} is the default rendering, which sends no reasoning back. As the core's ChatDialect does, round_thinking_required needs a thinking_field, and a round_thinking_placeholder needs round_thinking_required. Not rendered when absent. The model still answers from its rounds.",
           "type": "object",
           "additionalProperties": false,
           "properties": {
@@ -7423,7 +7423,48 @@
             "round_thinking_placeholder": {
               "type": "string"
             }
-          }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "round_thinking_required": {
+                    "const": true
+                  }
+                },
+                "required": [
+                  "round_thinking_required"
+                ]
+              },
+              "then": {
+                "required": [
+                  "thinking_field"
+                ]
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "round_thinking_placeholder": {
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "round_thinking_placeholder"
+                ]
+              },
+              "then": {
+                "properties": {
+                  "round_thinking_required": {
+                    "const": true
+                  }
+                },
+                "required": [
+                  "round_thinking_required"
+                ]
+              }
+            }
+          ]
         },
         "vision": {
           "description": "Whether the model sees images (\u00a76.4, a provider's supports_vision): false by default.",

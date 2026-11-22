@@ -536,12 +536,24 @@ class SchemaTests(unittest.TestCase):
                 },
                 True,
             ),
-            ("openai", False),
+            ("default", False),
             ({"thinking_field": ""}, False),
             ({"thinking_field": None}, False),
             ({"names_tool_results": "yes"}, False),
             ({"round_thinking_placeholder": 1}, False),
-            ({"vendor": "deepseek"}, False),
+            ({"dialect": "default"}, False),
+            ({"round_thinking_required": True}, False),
+            ({"thinking_field": "reasoning", "round_thinking_required": False}, True),
+            ({"thinking_field": "reasoning", "round_thinking_placeholder": " "}, False),
+            (
+                {
+                    "thinking_field": "reasoning",
+                    "round_thinking_required": False,
+                    "round_thinking_placeholder": " ",
+                },
+                False,
+            ),
+            ({"thinking_field": "reasoning", "round_thinking_placeholder": ""}, True),
         ):
             with self.subTest(dialect=dialect):
                 scenario = json.loads(fixture.read_text())

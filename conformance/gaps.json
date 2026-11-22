@@ -3654,9 +3654,9 @@
       "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
     },
     "RK-6.7-013": {
-      "class": "writable",
+      "class": "step",
       "card": "RMK-1955",
-      "note": "model.chat_dialect anthropic records the vendor's messages: a refused or failed call's tool_result carries is_error, a served one does not; another vendor's format needs the provider wire fixture."
+      "note": "Needs a provider wire fixture: only a vendor's own format carries an error flag on a tool result, and the core's chat rendering has none."
     },
     "RK-6.7-014": {
       "class": "step",

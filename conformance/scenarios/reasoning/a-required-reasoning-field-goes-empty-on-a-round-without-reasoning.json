@@ -120,6 +120,12 @@
               "role": "assistant",
               "content": "Let me look.",
               "reasoning_content": "WHY.",
+              "reasoning": {
+                "$absent": true
+              },
+              "reasoning_details": {
+                "$absent": true
+              },
               "tool_calls": [
                 {
                   "type": "function",
@@ -138,6 +144,12 @@
               "role": "assistant",
               "content": null,
               "reasoning_content": "",
+              "reasoning": {
+                "$absent": true
+              },
+              "reasoning_details": {
+                "$absent": true
+              },
               "tool_calls": [
                 {
                   "type": "function",
