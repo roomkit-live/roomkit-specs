@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "rfc_sha256": "d005ba5399f96d4ba642953a778948dfa7b118db930deced3bd0304ebc36bb3b",
+  "rfc_sha256": "9e5144051dee68de49e8b62e955ce994e382bed97a5048f0a4b802c7f6ce72ca",
   "corpus_sha256": "b752a9016a65e9f50264ec1b32683b11b8cf62888753c1ae2c043deb125f93b8",
   "python_commit": "1bb12d025296ee1c5f14b82267462fc4d13104a6",
   "scenario_count": 3402,
@@ -9648,11 +9648,13 @@
       "section": "23.1",
       "title": "TaskRunner Interface",
       "review": "normative",
-      "requirements": 1,
+      "requirements": 8,
       "mapping": {
-        "unmapped": 1
+        "unmapped": 8
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "step": 4
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "tasks/a-background-delegation-relays-its-result-to-the-notified-agent",
@@ -9665,11 +9667,13 @@
       "section": "23.2",
       "title": "DelegatedTask",
       "review": "normative",
-      "requirements": 1,
+      "requirements": 7,
       "mapping": {
-        "unmapped": 1
+        "unmapped": 7
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "step": 1
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -9677,12 +9681,16 @@
       "section": "23.3",
       "title": "Delegation Protocol",
       "review": "normative",
-      "requirements": 3,
+      "requirements": 112,
       "mapping": {
-        "mapped_partial": 2,
-        "unmapped": 1
+        "mapped_partial": 5,
+        "unmapped": 107
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "phase6": 5,
+        "step": 10,
+        "writable": 6
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "delivery/a-task-delegated-from-a-delivery-is-not-its-turn-work",
@@ -9845,12 +9853,16 @@
       "section": "23.4",
       "title": "Delegation Tools",
       "review": "normative",
-      "requirements": 2,
+      "requirements": 66,
       "mapping": {
-        "mapped_partial": 1,
-        "unmapped": 1
+        "mapped_partial": 2,
+        "unmapped": 64
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "phase6": 2,
+        "step": 3,
+        "writable": 2
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "executors/a-built-channel-reads-the-owner-s-task-in-the-model-input",
@@ -9908,9 +9920,10 @@
       "section": "23.5",
       "title": "Delegation Hooks",
       "review": "normative",
-      "requirements": 1,
+      "requirements": 2,
       "mapping": {
-        "mapped_partial": 1
+        "mapped_partial": 1,
+        "unmapped": 1
       },
       "decided_gaps": {},
       "unannotated_keyword_lines": [],
@@ -29299,31 +29312,414 @@
       "links": []
     },
     {
-      "id": "RK-23.1-001",
+      "id": "RK-23.1-002",
+      "section": "23.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1922",
+        "note": "Observe task submission via a runner fixture. The RFC diagram names run but the public Python and Rust runner interfaces and §23.3 name submit (RMK-1923)."
+      }
+    },
+    {
+      "id": "RK-23.1-008",
       "section": "23.1",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-23.2-001",
+      "id": "RK-23.1-009",
+      "section": "23.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1922",
+        "note": "Create an in-memory runner directly, submit work and close it, observing its tasks cancelled and resources released independently of kit.close()."
+      }
+    },
+    {
+      "id": "RK-23.1-003",
+      "section": "23.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.1-004",
+      "section": "23.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.1-005",
+      "section": "23.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1922",
+        "note": "Install a runner whose public submission raises without taking the task and observe exactly one completion from delegation."
+      }
+    },
+    {
+      "id": "RK-23.1-006",
+      "section": "23.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1922",
+        "note": "Cancel the caller while the runner's cancel awaits completion and observe that the original completion finishes."
+      }
+    },
+    {
+      "id": "RK-23.1-007",
+      "section": "23.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.2-002",
       "section": "23.2",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-23.3-001",
+      "id": "RK-23.2-003",
+      "section": "23.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.2-004",
+      "section": "23.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.2-005",
+      "section": "23.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.2-006",
+      "section": "23.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.2-007",
+      "section": "23.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1922",
+        "note": "Construct a public result without giving its duration and read the default. Durations measured on completed delegations exercise elapsed time instead."
+      }
+    },
+    {
+      "id": "RK-23.2-008",
+      "section": "23.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-004",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-005",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-006",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-007",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-008",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-009",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-010",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-011",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-012",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-013",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-014",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-015",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-016",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-017",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-018",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1922",
+        "note": "Have a private worker publish structured content on a served tool call and inspect the structured copy of its stored child end row."
+      }
+    },
+    {
+      "id": "RK-23.3-019",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-020",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-021",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-022",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-023",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-024",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-025",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-026",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-027",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-028",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-029",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-030",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-031",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-032",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-033",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-034",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-035",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-036",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-037",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-038",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-039",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-040",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-041",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-042",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1922",
+        "note": "Observe the instruction flag on a delegation hand-back to a channel hosting a realtime model."
+      }
+    },
+    {
+      "id": "RK-23.3-043",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-044",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1922",
+        "note": "Observe private system-intent injection on the delegating realtime voice session and the sole session when delegation is outside a call."
+      }
+    },
+    {
+      "id": "RK-23.3-045",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1922",
+        "note": "Observe the targeted audio-video session receiving the worker hand-back as an injection."
+      }
+    },
+    {
+      "id": "RK-23.3-046",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1922",
+        "note": "Observe a conference with a realtime model receiving the private task result for its delegating or sole session."
+      }
+    },
+    {
+      "id": "RK-23.3-047",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-048",
       "section": "23.3",
       "mapping": "mapped_partial",
       "links": [
-        {
-          "id": "phase4-failed-task-end-surfaces",
-          "scope": "Empty answers and message-less worker failures are handed back as failed; the child room and result retain that end after a late host cancellation.",
-          "coverage": "partial",
-          "missing": [
-            "Other delegation pipeline steps, callbacks, runner refusal, telemetry and voice-session delivery are outside this shared assertion set."
-          ],
-          "executions": []
-        },
         {
           "id": "phase4-task-handback-model-content",
           "scope": "Text task hand-backs preserve the configured persona and deliver a framed result to the intended model, including the tool default recipient and a configured bound above 4000.",
@@ -29336,7 +29732,377 @@
       ]
     },
     {
-      "id": "RK-23.3-002",
+      "id": "RK-23.3-049",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-050",
+      "section": "23.3",
+      "mapping": "mapped_partial",
+      "links": [
+        {
+          "id": "phase4-failed-task-end-surfaces",
+          "scope": "Empty answers and message-less worker failures are handed back as failed; the child room and result retain that end after a late host cancellation.",
+          "coverage": "partial",
+          "missing": [
+            "Other delegation pipeline steps, callbacks, runner refusal, telemetry and voice-session delivery are outside this shared assertion set."
+          ],
+          "executions": []
+        }
+      ]
+    },
+    {
+      "id": "RK-23.3-051",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-052",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-053",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1922",
+        "note": "Compare a realtime task-result injection with the expected result, observing that it omits the text-agent-only turn instruction."
+      }
+    },
+    {
+      "id": "RK-23.3-054",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-055",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1922",
+        "note": "Delegate to a notifying channel and compare an empty successful task with an unsuccessful task that has no output. Assert which hand-backs arrive."
+      }
+    },
+    {
+      "id": "RK-23.3-056",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-057",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-058",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-059",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-060",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-061",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-062",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-063",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-064",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-065",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-066",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-067",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-068",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-069",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-070",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-071",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-072",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-073",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-074",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-075",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-076",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-077",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-078",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-079",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-080",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-081",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-082",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-083",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-084",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-085",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1922",
+        "note": "Hold inline and background workers at model gates, call framework close and observe cancellation and completion before the store is released."
+      }
+    },
+    {
+      "id": "RK-23.3-086",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1922",
+        "note": "Expose an instrumented task completion callback and shutdown grace/unwind observations, including the callback that persists after cancellation and its log."
+      }
+    },
+    {
+      "id": "RK-23.3-087",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1922",
+        "note": "Hold a newly announced task at the announcement/worker boundary, close the kit, then verify terminal status and no worker invocation."
+      }
+    },
+    {
+      "id": "RK-23.3-088",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-089",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-090",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1922",
+        "note": "Observe ordered log level and cause for recipient turn failure followed by the undelivered hand-back note."
+      }
+    },
+    {
+      "id": "RK-23.3-091",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1922",
+        "note": "Close a kit holding a notified task, observe the completion hook and absence of a new recipient turn; the diagnostic log additionally needs a log observer."
+      }
+    },
+    {
+      "id": "RK-23.3-092",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1922",
+        "note": "Gate a recipient model already handling a hand-back, close the kit and inspect the cancelled response, waiter and absence of subsequent stored output."
+      }
+    },
+    {
+      "id": "RK-23.3-093",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-094",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1922",
+        "note": "The telemetry fixture must expose delegation spans and their terminal status to compare success, worker failure and cancellation."
+      }
+    },
+    {
+      "id": "RK-23.3-095",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1922",
+        "note": "Install a runner that rejects submission or raises outside the turn after announcement and observe exactly one failing task end."
+      }
+    },
+    {
+      "id": "RK-23.3-096",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1922",
+        "note": "Expose a rejected submission and its callbacks, waiters and delegation span alongside the child metadata, hooks and status bus."
+      }
+    },
+    {
+      "id": "RK-23.3-097",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1922",
+        "note": "Provide a runner refusal and a background run raising outside its turn; separately observe the caller error and notification."
+      }
+    },
+    {
+      "id": "RK-23.3-098",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-099",
       "section": "23.3",
       "mapping": "mapped_partial",
       "links": [
@@ -29349,7 +30115,20 @@
             "Preparation cleanup and persistence failure are linked separately; this boundary link does not establish them."
           ],
           "executions": []
-        },
+        }
+      ]
+    },
+    {
+      "id": "RK-23.3-100",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-101",
+      "section": "23.3",
+      "mapping": "mapped_partial",
+      "links": [
         {
           "id": "delegation-unannounced-child-state",
           "scope": "Cancelled or failed preparation retains the child, its application records and successful bindings, with terminal task metadata and no task announcement, worker turn or hand-back.",
@@ -29359,7 +30138,25 @@
             "Other structured-result and announced-task obligations of this broad unit are outside this link."
           ],
           "executions": []
-        },
+        }
+      ]
+    },
+    {
+      "id": "RK-23.3-102",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1922",
+        "note": "Arrange a pre-creation failure and an existing child with a different task_id, observing both that no new child was made and that the unrelated child was not written."
+      }
+    },
+    {
+      "id": "RK-23.3-103",
+      "section": "23.3",
+      "mapping": "mapped_partial",
+      "links": [
         {
           "id": "delegation-preparation-write-boundaries",
           "scope": "Native preparation boundaries, late creation, repeated cancellation, foreign room protection, cleanup failure and bounded shutdown preserve the preparation outcome.",
@@ -29370,16 +30167,321 @@
           ],
           "executions": []
         }
-      ]
+      ],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1922",
+        "note": "Gate the child store write separately from its post-create hooks and cancel preparation to observe cleanup ordering."
+      }
     },
     {
-      "id": "RK-23.3-003",
+      "id": "RK-23.3-104",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1922",
+        "note": "Instrument terminal cleanup while issuing repeated caller cancellation and framework close under the configured budgets."
+      }
+    },
+    {
+      "id": "RK-23.3-105",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1922",
+        "note": "Inject a store error specifically during preparation cleanup and compare the original error or cancellation, absence of announcement and logged cleanup diagnostic."
+      }
+    },
+    {
+      "id": "RK-23.3-106",
       "section": "23.3",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-23.4-001",
+      "id": "RK-23.3-107",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-108",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-109",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-110",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-111",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-112",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-113",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-114",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-115",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.4-003",
+      "section": "23.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.4-004",
+      "section": "23.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.4-005",
+      "section": "23.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.4-006",
+      "section": "23.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.4-007",
+      "section": "23.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.4-008",
+      "section": "23.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.4-009",
+      "section": "23.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1922",
+        "note": "Set up delegation on a realtime voice channel and inspect its session's declared tool and execution."
+      }
+    },
+    {
+      "id": "RK-23.4-010",
+      "section": "23.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.4-011",
+      "section": "23.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.4-012",
+      "section": "23.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.4-013",
+      "section": "23.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.4-014",
+      "section": "23.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.4-015",
+      "section": "23.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.4-016",
+      "section": "23.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.4-017",
+      "section": "23.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.4-018",
+      "section": "23.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.4-019",
+      "section": "23.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.4-020",
+      "section": "23.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.4-021",
+      "section": "23.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.4-022",
+      "section": "23.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.4-023",
+      "section": "23.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.4-024",
+      "section": "23.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.4-025",
+      "section": "23.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.4-026",
+      "section": "23.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.4-027",
+      "section": "23.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.4-028",
+      "section": "23.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.4-029",
+      "section": "23.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.4-030",
+      "section": "23.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1922",
+        "note": "Allow deterministic advancement or injection of a CompletedTaskCache clock and supply running durations around the reference expiry and maximum-run boundaries."
+      }
+    },
+    {
+      "id": "RK-23.4-031",
+      "section": "23.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.4-032",
+      "section": "23.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.4-033",
+      "section": "23.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1922",
+        "note": "Expose host insertion into the public task cache to compare caller-specific and host values and the most recent of both."
+      }
+    },
+    {
+      "id": "RK-23.4-034",
+      "section": "23.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.4-035",
+      "section": "23.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1922",
+        "note": "Gate concurrent calls on one configured handler and observe at most one active delegation in the same room, with another room still able to progress."
+      }
+    },
+    {
+      "id": "RK-23.4-036",
+      "section": "23.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.4-037",
       "section": "23.4",
       "mapping": "mapped_partial",
       "links": [
@@ -29391,7 +30493,80 @@
             "Other delegation-tool obligations, human input, background setup changes during a turn, and external executor/backend configurations are outside this mapping."
           ],
           "executions": []
-        },
+        }
+      ]
+    },
+    {
+      "id": "RK-23.4-038",
+      "section": "23.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.4-039",
+      "section": "23.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.4-040",
+      "section": "23.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.4-041",
+      "section": "23.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.4-042",
+      "section": "23.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.4-043",
+      "section": "23.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.4-044",
+      "section": "23.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.4-045",
+      "section": "23.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.4-046",
+      "section": "23.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.4-047",
+      "section": "23.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.4-048",
+      "section": "23.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.4-049",
+      "section": "23.4",
+      "mapping": "mapped_partial",
+      "links": [
         {
           "id": "phase4-background-task-options",
           "scope": "Background task name and nested-task boundary through gated stored-metadata changes; empty start_task hand_back falls back to default or configured mode, explicit relay overrides post, and invalid non-empty values or an empty setup mode are refused.",
@@ -29404,13 +30579,142 @@
       ]
     },
     {
-      "id": "RK-23.4-002",
+      "id": "RK-23.4-050",
       "section": "23.4",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-23.5-001",
+      "id": "RK-23.4-051",
+      "section": "23.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.4-052",
+      "section": "23.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.4-053",
+      "section": "23.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.4-054",
+      "section": "23.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.4-055",
+      "section": "23.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.4-056",
+      "section": "23.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.4-057",
+      "section": "23.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.4-058",
+      "section": "23.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.4-059",
+      "section": "23.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1922",
+        "note": "Keep a stale running bus entry, exceed the global ended-task retention using other rooms and then query the original task."
+      }
+    },
+    {
+      "id": "RK-23.4-060",
+      "section": "23.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.4-061",
+      "section": "23.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.4-062",
+      "section": "23.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.4-063",
+      "section": "23.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.4-064",
+      "section": "23.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.4-065",
+      "section": "23.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.4-066",
+      "section": "23.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1922",
+        "note": "Demonstrate that a realtime session with otherwise visible room tasks receives no task-notes block."
+      }
+    },
+    {
+      "id": "RK-23.4-067",
+      "section": "23.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.4-068",
+      "section": "23.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1922",
+        "note": "Invoke the delegation tool itself without any current tool call and observe refusal. The delegate.handle step supplies a room explicitly and tests a different public API."
+      }
+    },
+    {
+      "id": "RK-23.5-002",
+      "section": "23.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.5-003",
       "section": "23.5",
       "mapping": "mapped_partial",
       "links": [
