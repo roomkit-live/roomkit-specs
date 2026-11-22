@@ -1601,7 +1601,7 @@
       "section": "17.7",
       "title": "Conference Access Security",
       "line": 19753,
-      "sha256": "c6c53896a8c8a3e36bae5578f36dca2dfa6a1a235f90044efa9126cccd5a174d",
+      "sha256": "770205d1d53c9d59e0a363f314b266badf3e7c39383fca19674fa58645d59e7b",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
     },
@@ -31614,12 +31614,12 @@
     {
       "id": "RK-17.7-004",
       "kind": "structural",
-      "applies": "§17.7 Conference Access Security, where an implementation offers conference (media: conference): ConferenceGrants defaults to permissive values; narrowing them per participant is the integrator's call, RECOMMENDED to the integrator wherever a role does not publish, so the unit's level is the implementation's default's.",
+      "applies": "§17.7 Conference Access Security, where an implementation offers conference (media: conference): ConferenceGrants defaults to permissive values; narrowing them per participant is the integrator's call, RECOMMENDED to the integrator wherever a role does not publish.",
       "level": "must",
       "section": "17.7",
       "line": 19759,
       "text": "ConferenceGrants\n  (Section 12.10.2) defaults to permissive values so that the common case\n  works unconfigured; narrowing them for a given participant is the\n  integrator's call, and is RECOMMENDED wherever a role does not need to\n  publish.",
-      "sha256": "6b6794e4d5e000d72f614bc3e6e44d3835ad19c66b6d22e2d7196ed2801b95f7"
+      "sha256": "2e30c6e8e8fdf1f3627668978f6318f1d2f9e1f57f5ce9fc2225ae3fded14d66"
     },
     {
       "id": "RK-17.7-005",

@@ -41,7 +41,7 @@ proof: a scenario can cite a unit without covering all of it.
 | [§14 Storage Interface](section-14.md) | 110 | 107 | 1 | 2 | 0 | 69 | 146 | 0 | 31 | 8 | 23 | 0 |
 | [§15 Observability](section-15.md) | 71 | 58 | 11 | 1 | 1 | 35 | 59 | 0 | 19 | 3 | 11 | 11 |
 | [§16 Integration Surfaces](section-16.md) | 12 | 4 | 8 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| [§17 Security Considerations](section-17.md) | 78 | 62 | 16 | 0 | 0 | 24 | 150 | 0 | 36 | 0 | 14 | 26 |
+| [§17 Security Considerations](section-17.md) | 78 | 62 | 16 | 0 | 0 | 24 | 165 | 0 | 36 | 0 | 14 | 26 |
 | [§18 Design Principles](section-18.md) | 1 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | [§19 Multi-Agent Orchestration](section-19.md) | 567 | 560 | 3 | 3 | 1 | 417 | 1826 | 0 | 141 | 69 | 20 | 52 |
 | [§20 Memory System](section-20.md) | 63 | 62 | 0 | 1 | 0 | 48 | 234 | 0 | 12 | 10 | 2 | 0 |
