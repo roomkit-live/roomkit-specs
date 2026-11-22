@@ -1047,99 +1047,99 @@
     },
     {
       "section": "15.1",
-      "sha256": "9d0ae2ae040aefd571a0bbce4dab89bcef6ae1d0bd576a6aecc2d48eac21f9ee",
+      "sha256": "5d2bdf0bb7c48a195e7e4713fe29c73eb6f9ab2a06537b6f8a300092992dffdf",
       "classification": "normative",
-      "review": "Source inventory: Logging. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Logging, split to one obligation per unit (RMK-1971): structured logging through named loggers (must, Level 0) and the RECOMMENDED logger hierarchy (should, structural), split at the sentence. Every unit carries its level."
     },
     {
       "section": "15.2",
-      "sha256": "2db180e34493eef8c74e91d9489712d92d8dc00cb019167ff99724e8279fb6c7",
+      "sha256": "966176d3897449a36fd01b546bf7c90dcf82c41a6accaca1e33ad19e67d8536d",
       "classification": "normative",
-      "review": "Source inventory: Log Levels. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Log Levels, split to one obligation per unit (RMK-1971): the table of what each level logs (one unit, its four rows sharing their fate), and one unit per sentence of the rule that a failure is logged once at its cause's level and that a failure no caller receives keeps its level. All must. Every unit carries its level."
     },
     {
       "section": "15.3",
-      "sha256": "860b8ec3856adf4610bab7e7918abdb5d259769f13497f2054eae7d0650abce4",
+      "sha256": "2e47580fb5bec88b735abed62fc457d8970786c2d99ec9e8d298b633a76076a8",
       "classification": "normative",
-      "review": "Source inventory: Structured Log Context. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Structured Log Context, reviewed (RMK-1971): one unit, the SHOULD on each log entry's structured context with its example. Every unit carries its level."
     },
     {
       "section": "15.4",
-      "sha256": "29895c9b7ca0e6c98e8b70c1b4ea7ee447968d0c6022ca4c6ab17434e353bff0",
+      "sha256": "a2ac0a27034143f255129cbef9d3a0b0490e537d6c21e52718fa6e5faf4d55db",
       "classification": "normative",
-      "review": "Source inventory: Voice Pipeline Observability. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Voice Pipeline Observability, split to one obligation per unit (RMK-1971), all media (voice): the stages' structured metrics, the RECOMMENDED metrics table (one structural unit, its rows sharing their fate) and the voice pipeline logger with its context fields. All should; the metric and logger names are a suspect (RMK-1977). Every unit carries its level."
     },
     {
       "section": "15.5",
-      "sha256": "86db95b59e8475fa3b769038dba505ec12ed82754d76dabd068245bb5990a82c",
+      "sha256": "a03a4a63dc6db962987fd02c59128cbf57cd21db1ab6f049aee2cc74f9532904",
       "classification": "normative",
-      "review": "Source inventory: Framework Events for Monitoring. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Framework Events for Monitoring, reviewed (RMK-1971): one unit, the framework events an implementation owes emitted and subscribable by integrators, the pointer to §8.2 included. Must. Every unit carries its level."
     },
     {
       "section": "15.6",
-      "sha256": "45756d871ed12e62b8a8922990ca1cf6d4f41c8364b097fb85897392842091bf",
+      "sha256": "33680574c49775477d7c5fafe31ae7f1ce1f09591689cfc912c6c24a83f298ca",
       "classification": "normative",
-      "review": "Source inventory: Protocol Trace Infrastructure. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Protocol Trace Infrastructure, split to one obligation per unit (RMK-1971), where an implementation offers it (Level 3, §26.4): the opening paragraph split at the sentence (channels on transport-level protocols emit traces, should; the framework routes them to room hooks); the channel-level trace API cut by closing and reopening its code block, one unit per member (emit_trace, on_trace and its filter, trace_enabled, resolve_trace_room); emit_trace's handlers and the sync or async handlers; the voice channels' bridge and its lazy activation (media); the framework handler, one unit per list item (trace.room_id, the session fallback, the hook); pre-room buffering (one procedure); the SIP backend's traces (should, media). Every unit carries its level."
     },
     {
       "section": "15.7",
-      "sha256": "ce880217ff356ad960596768e1060395d9620676fbf60d66f02afd0f5676327a",
+      "sha256": "c8e6398bc2893101d68ed11efe7bf46cc88143363593e98febeeb6322edc227d",
       "classification": "normative",
-      "review": "Source inventory: Telemetry Provider. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Telemetry Provider, split to one obligation per unit (RMK-1971): the provider abstraction and its interface (should; its record_event is a suspect, RMK-1978); the three required providers (one structural unit); one unit per sentence of the spans paragraph (instrumented operations and attributes, should; executor spans under the broadcast span; a store's cursor spans under a process_inbound span); what a span holds and the console provider's escaping. Every unit carries its level."
     },
     {
       "section": "15.8",
       "sha256": "7e130a962138b1ec378ae86ecc07ea21a3c5f9688449c4a59f39e470ad123abc",
       "classification": "normative",
-      "review": "Source inventory: Audit System. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Audit System. Its one unit (RK-15.8-001) introduces the two audit tiers and holds no obligation; no levelled unit shares its heading, so it carries no level (RMK-1971)."
     },
     {
       "section": "15.8.1",
-      "sha256": "1389b757025ef07cd7075fc42e962d07eaff70c670924e822aad32aa00a79827",
+      "sha256": "082b107e4bf9bafefa6746bf552d200021f95a7dee8105a0aa0ca7076c4578f2",
       "classification": "normative",
-      "review": "Source inventory: Tool Auditing. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Tool Auditing, split to one obligation per unit (RMK-1971), where an implementation offers it: the opening sentence, a summary, folded into the ToolAuditEntry unit; status detection, one unit per list item and per sentence (error; cancelled, never ok, the per-call bound's cut; failed structurally and from the body; ok; the producer's SHOULD); the ToolAuditor interface; the built-in auditors, one unit per row; the handler wrapper, one unit per step, its lead-in with step 1, and the integrator's own backend (the MAY the wrapper honours, must). Every unit carries its level."
     },
     {
       "section": "15.8.2",
-      "sha256": "810061a90ee020183215f3ebf772b4a81c8f004279abb590845453c377c26f8f",
+      "sha256": "ebd265488f4c75596b2835692862bef75a99cab832bd8f36e969c02f4fde3027",
       "classification": "normative",
-      "review": "Source inventory: Session Auditing. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Session Auditing, split to one obligation per unit (RMK-1971), where an implementation offers it: the opening sentence, a summary, folded into the SessionAuditEntry unit; the event types table, one unit per row, speech, vision and barge_in media; the SessionAuditor interface, attach's hooks, the bridge and the JSONL auditor kept. All must. Every unit carries its level."
     },
     {
       "section": "15.8.3",
-      "sha256": "8ffc14e3310f822f2f24711eed5c5b14fb908c37789ad4b72c6d2759d4c62978",
+      "sha256": "e255caed695650f3b0330eb94d19f360c69fc14e6e469a19bcd19332317ae496",
       "classification": "normative",
-      "review": "Source inventory: Audit Data Format. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Audit Data Format, split to one obligation per unit (RMK-1971): the JSONL format with its example and append-only rule; parent directories created; write errors logged, never raised. All must. Every unit carries its level."
     },
     {
       "section": "15.9",
-      "sha256": "2fe81867d3f5649aea3951e0d387426e8ec4aa4cdc5ccd0904c4aaba781da416",
+      "sha256": "f31344a512b725dab994aa9a7f352525dccda917bbbb867d2392b97a90375673",
       "classification": "normative",
-      "review": "Source inventory: Feedback. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Feedback, split to one obligation per unit (RMK-1971): submit_feedback, the MAY that permits it (may); then, where an implementation offers it, one unit per sentence: the clamped rating, its Observation, ON_FEEDBACK and the feedback event. Every unit carries its level."
     },
     {
       "section": "16",
-      "sha256": "76b875655343bced8bc7595de347072ce3cc98ef8fce3ca74ca1836a376a1cd0",
+      "sha256": "934fef9f31df46ac6eba7b41ce8b9522cac7e9ba49722bba4ccc2db3625b1c64",
       "classification": "normative",
-      "review": "Source inventory: Integration Surfaces. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Integration Surfaces, reviewed (RMK-1971): one unit, the core depending on no web framework, with the sentence on thin surfaces. Must. Every unit carries its level."
     },
     {
       "section": "16.1",
-      "sha256": "07341555f2e92243f57976e0335b2756a38367785e88d7864bc008598914aa1e",
+      "sha256": "c855e7c93a568a0668985b6abd65eb3cc2c50bbd6104d6c6b0d6ac372e837ad8",
       "classification": "normative",
-      "review": "Source inventory: REST API (OPTIONAL). Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: REST API (OPTIONAL), split to one obligation per unit (RMK-1971), where an implementation offers one (Level 2, §26.3): the lead-in, which carries the SHOULD, folded into the room endpoints' unit; one unit per endpoint block (rooms, channels, events, participants, tasks and observations, identity, webhooks, WebSocket), its endpoint lines sharing their fate. All should; neither implementation offers the surface. Every unit carries its level."
     },
     {
       "section": "16.2",
-      "sha256": "d3438e8ce76ea6dac336bc5392dfae2417b6d19289ff7e692cbb3e51708a8695",
+      "sha256": "7abaa97dd5f8012bfa5b88081fd88909dff1e8db98d0c3e4200e390994406bdb",
       "classification": "normative",
-      "review": "Source inventory: MCP Server (OPTIONAL). Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: MCP Server (OPTIONAL), split to one obligation per unit (RMK-1971), where an implementation offers one (Level 2, §26.3): the lead-in folded into the tools table's unit; the tools and the resources tables, one unit each, their rows sharing their fate. Both must; neither implementation offers the surface. Every unit carries its level."
     },
     {
       "section": "16.3",
-      "sha256": "3b85e99402d662b3ae841155143be1ad0fc00c4af2e8c2121c3e2651787dcaba",
+      "sha256": "af55bf830dc7ac017ceafbe5a5cac8c7553c01678faef6973adb3e1c3bfade55",
       "classification": "normative",
-      "review": "Source inventory: Surface Independence. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Surface Independence, reviewed (RMK-1971): one unit, both surfaces calling the same core methods with no business logic of their own, where an implementation offers either. Must. Every unit carries its level."
     },
     {
       "section": "17",

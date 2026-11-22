@@ -18857,8 +18857,8 @@ reads saves a copy each time; one that copies per read stays conformant.
 
 ### 15.1 Logging
 
-<!-- rfc: {"id": "RK-15.1-001", "kind": "behavior", "applies": "§15.1 Logging; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
-Implementations MUST use structured logging with named loggers. The following
+<!-- rfc: {"id": "RK-15.1-002", "kind": "behavior", "applies": "§15.1 Logging: an implementation logs in a structured form, through named loggers (Level 0: §26.1 lists structured logging). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+Implementations MUST use structured logging with named loggers.<!-- /rfc --> <!-- rfc: {"id": "RK-15.1-003", "kind": "structural", "applies": "§15.1 Logging: the logger hierarchy RECOMMENDED for those named loggers, its voice loggers included (§15.4 names the voice pipeline's). Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->The following
 logger hierarchy is RECOMMENDED:
 
 ```
@@ -18885,20 +18885,22 @@ roomkit
 
 ### 15.2 Log Levels
 
-<!-- rfc: {"id": "RK-15.2-001", "kind": "behavior", "applies": "§15.2 Log Levels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-15.2-002", "kind": "behavior", "applies": "§15.2 Log Levels: what each level logs, the table's four rows (DEBUG, INFO, WARNING, ERROR). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 | Level | What to Log |
 |---|---|
 | DEBUG | Full pipeline trace, raw payloads, hook decisions |
 | INFO | Room created, event stored, channel attached, participant resolved |
 | WARNING | Delivery failed (retryable), hook timeout, chain depth approaching limit, an AI turn that ended before its answer (a delegated worker's, a reasoning backend's: an expected outcome, logged without a traceback) |
 | ERROR | Provider error (non-retryable), circuit breaker opened, store failure |
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-15.2-003", "kind": "behavior", "applies": "§15.2 Log Levels: a failure is logged once, by the component that catches it, at the level its cause calls for; a provider's error drops to DEBUG only where its caller receives the error and owns its line, and a stream a streaming target rendered keeps its line, except a delegation's, whose task logs it (§23.3). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A failure is logged once, by the component that catches it, at the level
 its cause calls for; a provider's error drops to DEBUG only where the
 caller receives the error itself (on `InboundResult.error`, or raised) and
 owns its line, and a stream a streaming target rendered keeps its line
 even then, except a delegation's, whose task logs every failure of its
-turn (§23.3). A failure no caller receives keeps its level: the failed
+turn (§23.3).<!-- /rfc --> <!-- rfc: {"id": "RK-15.2-004", "kind": "behavior", "applies": "§15.2 Log Levels: a failure no caller receives keeps its level: the failed turn of an agent a send_event asks, the stream of a deferred call read in the background, the turns a held message's release runs (§11.7.6). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A failure no caller receives keeps its level: the failed
 turn of an agent a `send_event` asks, the stream of a deferred call read in
 the background, the turns of the agents a held message's release runs
 (§11.7.6), whose result nobody reads.
@@ -18906,7 +18908,7 @@ the background, the turns of the agents a held message's release runs
 
 ### 15.3 Structured Log Context
 
-<!-- rfc: {"id": "RK-15.3-001", "kind": "behavior", "applies": "§15.3 Structured Log Context; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-15.3-001", "kind": "behavior", "applies": "§15.3 Structured Log Context: the structured context each log entry carries (room, event, channel, provider, chain depth, status, latency). Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 Each log entry SHOULD include structured context:
 
 ```
@@ -18924,9 +18926,9 @@ Each log entry SHOULD include structured context:
 
 ### 15.4 Voice Pipeline Observability
 
-<!-- rfc: {"id": "RK-15.4-001", "kind": "behavior", "applies": "§15.4 Voice Pipeline Observability; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-15.4-002", "kind": "behavior", "applies": "§15.4 Voice Pipeline Observability, where an implementation offers voice (Level 3, §26.4): voice pipeline stages emit structured metrics for monitoring and debugging. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 Voice pipeline stages SHOULD emit structured metrics for monitoring and
-debugging. The following metrics are RECOMMENDED:
+debugging.<!-- /rfc --> <!-- rfc: {"id": "RK-15.4-003", "kind": "structural", "applies": "§15.4 Voice Pipeline Observability, where an implementation offers voice (Level 3, §26.4): the RECOMMENDED metrics, the table's seventeen pipeline and transport rows, each with its source and what it measures. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->The following metrics are RECOMMENDED:
 
 | Metric | Source | Description |
 |---|---|---|
@@ -18947,7 +18949,9 @@ debugging. The following metrics are RECOMMENDED:
 | `pipeline.tts_context_audio_s` | Voice Channel | Seconds of audio held in the TTS context, per session |
 | `transport.packets_lost` | VoiceBackend | Count of packets confirmed lost per session (Section 12.2.1) |
 | `transport.concealed_frames` | VoiceBackend | Count of frames synthesized by packet loss concealment per session |
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-15.4-004", "kind": "behavior", "applies": "§15.4 Voice Pipeline Observability, where an implementation offers voice (Level 3, §26.4): the voice pipeline's logs use the roomkit.channels.voice.pipeline logger with the session_id, room_id, stage_name, latency_ms and frame_timestamp_ms context fields. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 Voice pipeline logs SHOULD use the `roomkit.channels.voice.pipeline` logger
 with the following structured context fields: `session_id`, `room_id`,
 `stage_name`, `latency_ms`, and `frame_timestamp_ms`.
@@ -18955,7 +18959,7 @@ with the following structured context fields: `session_id`, `room_id`,
 
 ### 15.5 Framework Events for Monitoring
 
-<!-- rfc: {"id": "RK-15.5-001", "kind": "behavior", "applies": "§15.5 Framework Events for Monitoring; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-15.5-001", "kind": "behavior", "applies": "§15.5 Framework Events for Monitoring: the framework events an implementation owes (§8.2, those of the features it provides) are emitted and integrators can subscribe to them; with the pointer to §8.2's list. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 See Section 8.2 for the complete list of framework events; an implementation
 owes the events of the features it provides. These MUST be emittable and
 subscribable by integrators for monitoring dashboards, alerting, and
@@ -18964,14 +18968,14 @@ integration purposes.
 
 ### 15.6 Protocol Trace Infrastructure
 
-<!-- rfc: {"id": "RK-15.6-001", "kind": "behavior", "applies": "§15.6 Protocol Trace Infrastructure; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-15.6-007", "kind": "behavior", "applies": "§15.6 Protocol Trace Infrastructure, where an implementation offers it (Level 3, §26.4): a channel that interacts with a transport-level protocol (SIP, RTP, SMTP) emits ProtocolTrace records (§5.14) for its significant protocol events; SIP and RTP are voice transports (Level 3, §26.4). Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 Channels that interact with transport-level protocols (SIP, RTP, SMTP, etc.)
 SHOULD emit `ProtocolTrace` records (Section 5.14) for significant protocol
-events. The framework provides a layered trace infrastructure that routes these
+events.<!-- /rfc --> <!-- rfc: {"id": "RK-15.6-008", "kind": "behavior", "applies": "§15.6 Protocol Trace Infrastructure, where an implementation offers it (Level 3, §26.4): the framework routes the traces channels emit to the hooks integrators register at the room level (the framework-level routing below details it). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The framework provides a layered trace infrastructure that routes these
 traces to integrator-registered hooks at the room level.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-15.6-002", "kind": "behavior", "applies": "§15.6 Protocol Trace Infrastructure; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-15.6-009", "kind": "structural", "applies": "§15.6 Protocol Trace Infrastructure, where an implementation offers it (Level 3, §26.4): the channel-level trace API and its emit_trace, which emits a trace to every registered handler and is called by backend and transport implementations. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Channel-level trace API:**
 
 ```
@@ -18980,25 +18984,39 @@ Channel (trace extensions)
 │       # Emit a trace to all registered handlers
 │       # Called by backend/transport implementations
 │
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-15.6-010", "kind": "structural", "applies": "§15.6 Protocol Trace Infrastructure, where an implementation offers it (Level 3, §26.4): the channel-level trace API's on_trace, which registers a user-level trace callback; with protocols set, only the traces that match the filter are forwarded. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── on_trace(callback, protocols: list<string> | null) → void
 │       # Register a user-level trace callback
 │       # If protocols is set, only traces matching the filter are forwarded
 │
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-15.6-011", "kind": "structural", "applies": "§15.6 Protocol Trace Infrastructure, where an implementation offers it (Level 3, §26.4): the channel-level trace API's read-only trace_enabled, true when any trace handler, the user's or the framework's, is registered. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── trace_enabled: bool (read-only)
 │       # True if any trace handler is registered (user or framework)
 │
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-15.6-012", "kind": "structural", "applies": "§15.6 Protocol Trace Infrastructure, where an implementation offers it (Level 3, §26.4): the channel-level trace API's resolve_trace_room, the room of a session id through session bindings, null by default (voice channels override it). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 └── resolve_trace_room(session_id: string | null) → string | null
         # Resolve a room_id from a session_id via session bindings
         # Default: null (override in voice channels)
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-15.6-013", "kind": "behavior", "applies": "§15.6 Protocol Trace Infrastructure, where an implementation offers it (Level 3, §26.4): emit_trace invokes every registered handler: the user-level callbacks on_trace registered and the framework handler register_channel set. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 `emit_trace()` invokes all registered handlers: user-level callbacks (registered
-via `on_trace()`), and the framework handler (set during `register_channel()`).
+via `on_trace()`), and the framework handler (set during `register_channel()`).<!-- /rfc --><!-- rfc: {"id": "RK-15.6-014", "kind": "behavior", "applies": "§15.6 Protocol Trace Infrastructure, where an implementation offers it (Level 3, §26.4): a trace handler may be sync or async, the integrator's choice the framework honours; an async handler is scheduled as a task and never blocks the caller. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Handlers MAY be sync or async — async handlers MUST be scheduled as tasks and
 MUST NOT block the caller.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-15.6-003", "kind": "behavior", "applies": "§15.6 Protocol Trace Infrastructure; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-15.6-015", "kind": "behavior", "applies": "§15.6 Protocol Trace Infrastructure, where an implementation offers it (Level 3, §26.4), for voice and realtime voice channels (Level 3, §26.4): a voice channel bridges its backend's traces, a realtime voice channel its transport's, to the channel's emit_trace through set_trace_emitter; a transport may forward to its own backend. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Trace bridging for voice channels:**
 
 Voice channels (VoiceChannel, RealtimeVoiceChannel) bridge traces from their
@@ -19013,25 +19031,27 @@ RealtimeVoiceChannel:
     # Calls transport.set_trace_emitter(self.emit_trace) when trace is enabled
     # Transport MAY forward to underlying backend (e.g., SIPRealtimeTransport → SIPVoiceBackend)
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-15.6-016", "kind": "behavior", "applies": "§15.6 Protocol Trace Infrastructure, where an implementation offers it (Level 3, §26.4), for voice and realtime voice channels (Level 3, §26.4): the bridge is activated lazily, only once trace_enabled becomes true, by an on_trace registration or the framework handler's assignment. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The bridge is activated lazily — only when `trace_enabled` becomes true (via
 `on_trace()` registration or framework handler assignment).
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-15.6-004", "kind": "behavior", "applies": "§15.6 Protocol Trace Infrastructure; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-15.6-017", "kind": "behavior", "applies": "§15.6 Protocol Trace Infrastructure, where an implementation offers it (Level 3, §26.4): register_channel sets the framework trace handler on the channel, which resolves a trace's room from trace.room_id when it is set. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Framework-level trace routing:**
 
 When a channel is registered via `register_channel()`, the framework sets a
 framework trace handler on the channel. This handler:
 
 1. Resolves the `room_id` for the trace:
-   - Uses `trace.room_id` if set directly.
+   - Uses `trace.room_id` if set directly.<!-- /rfc --><!-- rfc: {"id": "RK-15.6-018", "kind": "behavior", "applies": "§15.6 Protocol Trace Infrastructure, where an implementation offers it (Level 3, §26.4): without trace.room_id, the framework handler falls back to channel.resolve_trace_room(trace.session_id), the room of the session's bindings, which a session channel (voice, Level 3, §26.4) resolves. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
    - Falls back to `channel.resolve_trace_room(trace.session_id)` to look up
-     the room via session bindings.
+     the room via session bindings.<!-- /rfc --><!-- rfc: {"id": "RK-15.6-019", "kind": "behavior", "applies": "§15.6 Protocol Trace Infrastructure, where an implementation offers it (Level 3, §26.4): the framework handler fires ON_PROTOCOL_TRACE for the room it resolved. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 2. Fires the `ON_PROTOCOL_TRACE` hook for the resolved room.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-15.6-005", "kind": "behavior", "applies": "§15.6 Protocol Trace Infrastructure; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-15.6-005", "kind": "behavior", "applies": "§15.6 Protocol Trace Infrastructure, where an implementation offers it (Level 3, §26.4): a trace emitted before its room exists is buffered and replayed as ON_PROTOCOL_TRACE hooks once the room is created and the channel attached, so that none is lost; the steps name Python's private members. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Pre-room trace buffering:**
 
 Transport-level traces (e.g., SIP INVITE) often fire before `process_inbound()`
@@ -19052,7 +19072,7 @@ This ensures that no protocol traces are lost, even for the initial signaling
 messages that precede room creation.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-15.6-006", "kind": "behavior", "applies": "§15.6 Protocol Trace Infrastructure; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-15.6-006", "kind": "behavior", "applies": "§15.6 Protocol Trace Infrastructure, where an implementation offers it (Level 3, §26.4), for a SIP voice backend (Level 3, §26.4): the traces it emits, the table's four rows (call received, call accepted, remote hangup, local hangup) with their direction, protocol, summary and raw form. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 **SIP trace examples:**
 
 A SIP voice backend SHOULD emit the following traces:
@@ -19067,7 +19087,7 @@ A SIP voice backend SHOULD emit the following traces:
 
 ### 15.7 Telemetry Provider
 
-<!-- rfc: {"id": "RK-15.7-001", "kind": "behavior", "applies": "§15.7 Telemetry Provider; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-15.7-001", "kind": "structural", "applies": "§15.7 Telemetry Provider: a pluggable telemetry provider abstraction for distributed tracing and metrics, and its interface: start_span, record_metric, record_event and close (Level 1, §26.2). Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 Implementations SHOULD provide a pluggable telemetry provider abstraction for
 distributed tracing and metrics collection:
 
@@ -19087,7 +19107,7 @@ TelemetryProvider (interface)
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-15.7-002", "kind": "behavior", "applies": "§15.7 Telemetry Provider; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-15.7-004", "kind": "structural", "applies": "§15.7 Telemetry Provider, where an implementation offers the abstraction (§15.7 makes it a SHOULD): the three required providers, the table's rows: OpenTelemetry (OTLP export), console and no-op. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Required implementations:**
 
 | Provider | Description |
@@ -19095,22 +19115,26 @@ TelemetryProvider (interface)
 | OpenTelemetryProvider | Industry-standard distributed tracing (OTLP export) |
 | ConsoleTelemetryProvider | Human-readable console output for development |
 | NoopTelemetryProvider | No-op implementation (telemetry disabled) |
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-15.7-005", "kind": "behavior", "applies": "§15.7 Telemetry Provider: the operations instrumented with spans: process_inbound, broadcast, hook execution, delivery, AI generation, identity resolution and event storage, and, with voice (Level 3, §26.4), STT transcription and TTS synthesis. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 Implementations SHOULD instrument the following operations with spans:
 `process_inbound`, `broadcast`, `hook_execution`, `deliver`, `ai_generate`,
 `stt_transcribe`, `tts_synthesize`, `identity_resolve`, and `store_event`.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-15.7-006", "kind": "behavior", "applies": "§15.7 Telemetry Provider: the structured attributes each span carries: room_id, channel_id, event_id, provider and latency_ms. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 Each span SHOULD include structured attributes: `room_id`, `channel_id`,
-`event_id`, `provider`, and `latency_ms`. The spans a turn executor records
+`event_id`, `provider`, and `latency_ms`.<!-- /rfc --> <!-- rfc: {"id": "RK-15.7-007", "kind": "behavior", "applies": "§15.7 Telemetry Provider, where an implementation offers the abstraction (§15.7 makes it a SHOULD): the spans a turn executor records for a turn are children of the broadcast span, through the trace context the turn's request carries (§10.6), whichever process runs it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The spans a turn executor records
 for a turn are children of the broadcast span, through the trace context the
-turn's request carries (Section 10.6), whichever process runs it. The spans a
+turn's request carries (Section 10.6), whichever process runs it.<!-- /rfc --> <!-- rfc: {"id": "RK-15.7-008", "kind": "behavior", "applies": "§15.7 Telemetry Provider, where an implementation offers the abstraction (§15.7 makes it a SHOULD): the spans a store records for the reads and writes of a room's delivery cursor (§13.5), a skip past a hole included, made to deliver messages process_inbound brought in, are children of the span of one of those calls, wherever the delivery runs, never trace roots. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The spans a
 store records for the reads and writes of a room's delivery cursor (Section
 13.5) made to deliver messages `process_inbound` brought in, a skip past a hole
 included, are children of the span of one of those calls, wherever the delivery
 runs, never trace roots.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-15.7-003", "kind": "behavior", "applies": "§15.7 Telemetry Provider; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-15.7-009", "kind": "behavior", "applies": "§15.7 Telemetry Provider, where an implementation offers the abstraction (§15.7 makes it a SHOULD): a span carries nothing that can hold personal data unless TelemetryConfig.record_sensitive_data asks for it (off by default, a provider handed alone included): no sender or recipient address, no provider error, an error_message that reads the error's class or a stable code, never its text; with the paragraph's lead-in. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **What a span holds.** An exporter often stands outside the application's
 production data, so a span MUST NOT carry what can hold personal data unless
 the application asks for it (`TelemetryConfig.record_sensitive_data`, off by
@@ -19118,7 +19142,7 @@ default, a provider handed alone included): a sender's or a recipient's address
 is left out (`sender_id`, `delivery.recipient`), a provider's error too
 (`delivery.error`), and a span's `error_message` reads the error's class or a
 stable code (`ValueError`, `send_failed`), never its text, which can quote a
-message or an address. A console provider MUST write out a value's line breaks
+message or an address.<!-- /rfc --> <!-- rfc: {"id": "RK-15.7-010", "kind": "behavior", "applies": "§15.7 Telemetry Provider, where an implementation offers the abstraction (§15.7 makes it a SHOULD): the console provider writes out a value's line breaks and control characters and quotes it, so that no value forges a log line. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A console provider MUST write out a value's line breaks
 and control characters and quote it, so that no value forges a log line.
 <!-- /rfc -->
 
@@ -19132,11 +19156,9 @@ and monitoring: **tool auditing** captures individual tool calls, and
 
 #### 15.8.1 Tool Auditing
 
-<!-- rfc: {"id": "RK-15.8.1-001", "kind": "behavior", "applies": "§15.8.1 Tool Auditing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-15.8.1-007", "kind": "structural", "applies": "§15.8.1 Tool Auditing, where an implementation offers it (no level of §26 lists it): every tool call recorded with its input, output, timing and status, as a ToolAuditEntry with its members; the result's 500-character cut is the wrapper's step 4. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Tool auditing records every tool call with input, output, timing, and status.
-<!-- /rfc -->
 
-<!-- rfc: {"id": "RK-15.8.1-002", "kind": "behavior", "applies": "§15.8.1 Tool Auditing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **ToolAuditEntry:**
 
 ```
@@ -19152,32 +19174,32 @@ ToolAuditEntry
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-15.8.1-003", "kind": "behavior", "applies": "§15.8.1 Tool Auditing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-15.8.1-008", "kind": "behavior", "applies": "§15.8.1 Tool Auditing, where an implementation offers it (no level of §26 lists it): status detection: \"error\" when the tool handler raises an exception; with the list's lead-in. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Status detection:**
-- `"error"` — set when the tool handler raises an exception.
+- `"error"` — set when the tool handler raises an exception.<!-- /rfc --><!-- rfc: {"id": "RK-15.8.1-009", "kind": "behavior", "applies": "§15.8.1 Tool Auditing, where an implementation offers it (no level of §26 lists it): \"cancelled\" when the call was cancelled before its handler answered: its turn or session ended, or the provider abandoned it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - `"cancelled"` — set when the call was cancelled before its handler answered
-  (its turn or session ended, the provider abandoned it). A cancelled call
+  (its turn or session ended, the provider abandoned it).<!-- /rfc --> <!-- rfc: {"id": "RK-15.8.1-010", "kind": "behavior", "applies": "§15.8.1 Tool Auditing, where an implementation offers it (no level of §26 lists it): a cancelled call is never recorded \"ok\", and its cancellation still reaches the caller. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A cancelled call
   MUST NOT be recorded as `"ok"`, and the cancellation still reaches the
-  caller. A call the channel's per-call bound cut short (Section 21.6)
+  caller.<!-- /rfc --> <!-- rfc: {"id": "RK-15.8.1-011", "kind": "behavior", "applies": "§15.8.1 Tool Auditing, where an implementation offers it (no level of §26 lists it): a call the channel's per-call bound cut short (§21.6) reaches a wrapped handler as a cancellation and is recorded \"cancelled\", its duration the bound, while the channel reports it failed. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A call the channel's per-call bound cut short (Section 21.6)
   reaches a wrapped handler as a cancellation and is recorded `"cancelled"`
-  as well, its duration the bound; the channel reports it as failed.
+  as well, its duration the bound; the channel reports it as failed.<!-- /rfc --><!-- rfc: {"id": "RK-15.8.1-012", "kind": "behavior", "applies": "§15.8.1 Tool Auditing, where an implementation offers it (no level of §26 lists it): \"failed\" stated structurally: a refusal (ToolRefusedError), a failure stated in the handler's words (ToolFailedError, an MCP isError result) or a call declined as not the handler's own (§21.4). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - `"failed"`, structurally — set when the handler refused the call
   (`ToolRefusedError`), stated its failure in its own words
   (`ToolFailedError`, an MCP `isError` result: the structured form of the
   envelope below, which reads `"failed"` too) or declined it as not its own
-  (Section 21.4).
+  (Section 21.4).<!-- /rfc --><!-- rfc: {"id": "RK-15.8.1-013", "kind": "behavior", "applies": "§15.8.1 Tool Auditing, where an implementation offers it (no level of §26 lists it): \"failed\" read from the result body, inspected for every failure envelope the implementation itself emits: {\"status\": \"failed\"}, the {\"error\": ...} envelope of a refused call and of a wrapped MCP isError result, and {\"success\": false}. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - `"failed"`, from the body — read from the result body, which MUST be inspected for every
   failure envelope the implementation itself emits, not for one convention
   only: `{"status": "failed"}`, the `{"error": ...}` envelope a refused call
   and a wrapped MCP `isError` result return, and the `{"success": false}`
   convention hosts commonly use. Recognising one shape and not the others
-  records a denied tool — the outcome an audit exists for — as `"ok"`.
+  records a denied tool — the outcome an audit exists for — as `"ok"`.<!-- /rfc --><!-- rfc: {"id": "RK-15.8.1-014", "kind": "behavior", "applies": "§15.8.1 Tool Auditing, where an implementation offers it (no level of §26 lists it): \"ok\", the default, what a body outside every envelope reads as. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - `"ok"` — the default, and a degradation rather than a contract: it is what a
-  body outside every envelope reads as. A producer that can state its outcome
+  body outside every envelope reads as.<!-- /rfc --> <!-- rfc: {"id": "RK-15.8.1-015", "kind": "behavior", "applies": "§15.8.1 Tool Auditing, where an implementation offers it (no level of §26 lists it): a producer of a tool call's outcome that can state it structurally does so (§9.3) instead of relying on the body's reading. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->A producer that can state its outcome
   structurally SHOULD do so (Section 9.3) instead of relying on this reading.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-15.8.1-004", "kind": "behavior", "applies": "§15.8.1 Tool Auditing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-15.8.1-004", "kind": "structural", "applies": "§15.8.1 Tool Auditing, where an implementation offers it (no level of §26 lists it): the ToolAuditor interface: record, entries, summary and print_summary. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **ToolAuditor** (interface):
 
 ```
@@ -19189,44 +19211,44 @@ ToolAuditor (interface)
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-15.8.1-005", "kind": "behavior", "applies": "§15.8.1 Tool Auditing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-15.8.1-016", "kind": "structural", "applies": "§15.8.1 Tool Auditing, where an implementation offers it (no level of §26 lists it): the built-in JSONL tool auditor, which appends one JSON line per call and keeps its entries in memory; with the table's lead-in and header. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Built-in implementations:**
 
 | Implementation | Persistence | Description |
 |---|---|---|
 | JSONLToolAuditor | JSONL file | Appends one JSON line per call; maintains in-memory list |
-| ConsoleToolAuditor | Logger | Real-time logging via Python logging module |
+| <!-- /rfc --><!-- rfc: {"id": "RK-15.8.1-017", "kind": "structural", "applies": "§15.8.1 Tool Auditing, where an implementation offers it (no level of §26 lists it): the built-in console tool auditor, which logs each entry as it is recorded (the text names Python's logging module). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ConsoleToolAuditor | Logger | Real-time logging via Python logging module |
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-15.8.1-006", "kind": "behavior", "applies": "§15.8.1 Tool Auditing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-15.8.1-018", "kind": "behavior", "applies": "§15.8.1 Tool Auditing, where an implementation offers it (no level of §26 lists it): audit_tool_handler(handler, auditor, agent_id) wraps any tool handler to record its audit entries, measuring its execution time (step 1); with the wrapper's lead-in. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Handler wrapper:**
 
 The `audit_tool_handler(handler, auditor, agent_id)` function wraps any tool
 handler to automatically record audit entries. It:
 
-1. Measures execution time.
+1. Measures execution time.<!-- /rfc --><!-- rfc: {"id": "RK-15.8.1-019", "kind": "behavior", "applies": "§15.8.1 Tool Auditing, where an implementation offers it (no level of §26 lists it): the wrapper records a raised exception \"error\", a refusal, a stated failure or a declined call \"failed\" and a cancelled call \"cancelled\", then re-raises each, so that the channel reads the outcome it would read without it (step 2). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 2. Records a raised exception as `"error"`, a refusal, a stated failure
    (`ToolFailedError`) or a declined call as `"failed"` and a cancelled call
    as `"cancelled"`, then re-raises each, so
-   the channel reads the outcome it would have read without the wrapper.
-3. Auto-detects `"failed"` from the response body otherwise.
-4. Truncates the recorded result to 500 characters.
+   the channel reads the outcome it would have read without the wrapper.<!-- /rfc --><!-- rfc: {"id": "RK-15.8.1-020", "kind": "behavior", "applies": "§15.8.1 Tool Auditing, where an implementation offers it (no level of §26 lists it): the wrapper otherwise detects \"failed\" from the response body (step 3). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+3. Auto-detects `"failed"` from the response body otherwise.<!-- /rfc --><!-- rfc: {"id": "RK-15.8.1-021", "kind": "behavior", "applies": "§15.8.1 Tool Auditing, where an implementation offers it (no level of §26 lists it): the wrapper cuts the recorded result to 500 characters (step 4). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+4. Truncates the recorded result to 500 characters.<!-- /rfc --><!-- rfc: {"id": "RK-15.8.1-022", "kind": "behavior", "applies": "§15.8.1 Tool Auditing, where an implementation offers it (no level of §26 lists it): the wrapper returns the handler's result unchanged, the same object, so that content parts and structured values reach the channel as the handler gave them (step 5). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 5. Returns the original handler result unchanged: the same object, never a
    printed copy of it, so content parts and structured values reach the
    channel as the handler gave them.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-15.8.1-023", "kind": "behavior", "applies": "§15.8.1 Tool Auditing, where an implementation offers it (no level of §26 lists it): an integrator may implement a ToolAuditor backend of its own by implementing the interface, the integrator's choice the wrapper honours (the text names two vendors as examples). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Integrators MAY implement custom `ToolAuditor` backends (e.g., Datadog,
 Elasticsearch) by implementing the interface.
 <!-- /rfc -->
 
 #### 15.8.2 Session Auditing
 
-<!-- rfc: {"id": "RK-15.8.2-001", "kind": "behavior", "applies": "§15.8.2 Session Auditing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-15.8.2-008", "kind": "structural", "applies": "§15.8.2 Session Auditing, where an implementation offers it (no level of §26 lists it): the SessionAuditEntry and its members; with the sentence naming what session auditing captures, each kind a row of the type table. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Session auditing captures the full conversation timeline: speech turns, tool
 calls, vision events, interruptions, and session lifecycle.
-<!-- /rfc -->
 
-<!-- rfc: {"id": "RK-15.8.2-002", "kind": "behavior", "applies": "§15.8.2 Session Auditing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **SessionAuditEntry:**
 
 ```
@@ -19240,20 +19262,20 @@ SessionAuditEntry
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-15.8.2-003", "kind": "behavior", "applies": "§15.8.2 Session Auditing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-15.8.2-009", "kind": "behavior", "applies": "§15.8.2 Session Auditing, where an implementation offers it (no level of §26 lists it), with voice (Level 3, §26.4): the speech entry, user or assistant, recorded on ON_TRANSCRIPTION, its content the transcribed speech; with the table's lead-in and header. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Session audit event types:**
 
 | Type | Role | Trigger | Content |
 |---|---|---|---|
 | speech | user/assistant | ON_TRANSCRIPTION hook | Transcribed speech text |
-| tool_call | assistant | Manual `record_tool()` | Tool result |
-| vision | system | ON_VISION_RESULT hook | Frame description |
-| barge_in | user | ON_BARGE_IN hook | "User interrupted" |
-| session | system | ON_SESSION_STARTED hook | "Session started" |
-| error | system | Application-specific | Error message |
+| <!-- /rfc --><!-- rfc: {"id": "RK-15.8.2-010", "kind": "behavior", "applies": "§15.8.2 Session Auditing, where an implementation offers it (no level of §26 lists it): the tool_call entry, assistant, recorded by record_tool, its content the tool's result. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->tool_call | assistant | Manual `record_tool()` | Tool result |
+| <!-- /rfc --><!-- rfc: {"id": "RK-15.8.2-011", "kind": "behavior", "applies": "§15.8.2 Session Auditing, where an implementation offers it (no level of §26 lists it), with video (Level 3, §26.4): the vision entry, system, recorded on ON_VISION_RESULT, its content the frame's description. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->vision | system | ON_VISION_RESULT hook | Frame description |
+| <!-- /rfc --><!-- rfc: {"id": "RK-15.8.2-012", "kind": "behavior", "applies": "§15.8.2 Session Auditing, where an implementation offers it (no level of §26 lists it), with voice (Level 3, §26.4): the barge_in entry, user, recorded on ON_BARGE_IN, its content \"User interrupted\". Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->barge_in | user | ON_BARGE_IN hook | "User interrupted" |
+| <!-- /rfc --><!-- rfc: {"id": "RK-15.8.2-013", "kind": "behavior", "applies": "§15.8.2 Session Auditing, where an implementation offers it (no level of §26 lists it): the session entry, system, recorded on ON_SESSION_STARTED, its content \"Session started\". Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->session | system | ON_SESSION_STARTED hook | "Session started" |
+| <!-- /rfc --><!-- rfc: {"id": "RK-15.8.2-014", "kind": "behavior", "applies": "§15.8.2 Session Auditing, where an implementation offers it (no level of §26 lists it): the error entry, system, which the application records, its content the error message. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->error | system | Application-specific | Error message |
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-15.8.2-004", "kind": "behavior", "applies": "§15.8.2 Session Auditing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-15.8.2-004", "kind": "structural", "applies": "§15.8.2 Session Auditing, where an implementation offers it (no level of §26 lists it): the SessionAuditor interface: record, entries, summary, print_summary, the record_tool and tool_auditor bridge to tool auditing, and attach. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **SessionAuditor** (interface):
 
 ```
@@ -19272,27 +19294,27 @@ SessionAuditor (interface)
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-15.8.2-005", "kind": "behavior", "applies": "§15.8.2 Session Auditing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-15.8.2-005", "kind": "behavior", "applies": "§15.8.2 Session Auditing, where an implementation offers it (no level of §26 lists it): attach(kit) registers hooks for ON_TRANSCRIPTION, ON_BARGE_IN, ON_SESSION_STARTED and ON_VISION_RESULT that capture the conversation's events; all but ON_SESSION_STARTED are voice and video triggers (Level 3, §26.4). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Hook auto-registration:** When `attach(kit)` is called, the session auditor
 registers hooks for `ON_TRANSCRIPTION`, `ON_BARGE_IN`, `ON_SESSION_STARTED`,
 and `ON_VISION_RESULT` to capture conversation events automatically.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-15.8.2-006", "kind": "behavior", "applies": "§15.8.2 Session Auditing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-15.8.2-006", "kind": "behavior", "applies": "§15.8.2 Session Auditing, where an implementation offers it (no level of §26 lists it): the tool_auditor property's bridge turns ToolAuditEntry records into SessionAuditEntry records, so that one SessionAuditor holds tool calls and conversation events in one timeline. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **ToolAuditor bridge:** The `tool_auditor` property returns a bridge adapter
 that converts `ToolAuditEntry` records into `SessionAuditEntry` records. This
 allows a single `SessionAuditor` to capture both tool calls and conversation
 events in a unified timeline.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-15.8.2-007", "kind": "behavior", "applies": "§15.8.2 Session Auditing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-15.8.2-007", "kind": "structural", "applies": "§15.8.2 Session Auditing, where an implementation offers it (no level of §26 lists it): the built-in JSONL session auditor, which writes its entries to a JSONL file and keeps them in memory in chronological order. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Built-in implementation:** `JSONLSessionAuditor` — writes entries to a JSONL
 file and maintains an in-memory chronological list.
 <!-- /rfc -->
 
 #### 15.8.3 Audit Data Format
 
-<!-- rfc: {"id": "RK-15.8.3-001", "kind": "behavior", "applies": "§15.8.3 Audit Data Format; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-15.8.3-002", "kind": "behavior", "applies": "§15.8.3 Audit Data Format, where an implementation offers tool or session auditing: both auditors persist as JSONL, one independently parseable JSON object per line, appended only; with the example lines. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Both auditors use JSONL (JSON Lines) for persistence — one JSON object per
 line, independently parseable:
 
@@ -19301,14 +19323,14 @@ line, independently parseable:
 {"ts":"...","type":"speech","role":"user","content":"Open Chrome","duration_ms":null,"metadata":{}}
 ```
 
-JSONL files are append-only. Implementations MUST create parent directories
-automatically. Write errors MUST be logged but MUST NOT propagate exceptions
+JSONL files are append-only.<!-- /rfc --> <!-- rfc: {"id": "RK-15.8.3-003", "kind": "behavior", "applies": "§15.8.3 Audit Data Format, where an implementation offers tool or session auditing: the auditor creates its file's parent directories. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Implementations MUST create parent directories
+automatically.<!-- /rfc --> <!-- rfc: {"id": "RK-15.8.3-004", "kind": "behavior", "applies": "§15.8.3 Audit Data Format, where an implementation offers tool or session auditing: a write error is logged and never propagated to the caller as an exception. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Write errors MUST be logged but MUST NOT propagate exceptions
 to the caller.
 <!-- /rfc -->
 
 ### 15.9 Feedback
 
-<!-- rfc: {"id": "RK-15.9-001", "kind": "behavior", "applies": "§15.9 Feedback; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-15.9-002", "kind": "behavior", "applies": "§15.9 Feedback: an implementation may let a host record how a room, or one of its responses, was rated, through submit_feedback with this signature. Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->
 An implementation MAY let a host record how a room, or one of its
 responses, was rated:
 
@@ -19316,13 +19338,15 @@ responses, was rated:
 submit_feedback(room_id, rating, event_id | null, channel_id | null,
                 comment = "", dimension = "overall", metadata) → void
 ```
+<!-- /rfc -->
 
-The rating is a number from 0.0 to 1.0; a value outside is clamped. It is
+<!-- rfc: {"id": "RK-15.9-003", "kind": "behavior", "applies": "§15.9 Feedback, where an implementation offers submit_feedback (§15.9 makes it a MAY): the rating is a number from 0.0 to 1.0, a value outside clamped. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+The rating is a number from 0.0 to 1.0; a value outside is clamped.<!-- /rfc --> <!-- rfc: {"id": "RK-15.9-004", "kind": "behavior", "applies": "§15.9 Feedback, where an implementation offers submit_feedback (§15.9 makes it a MAY): the rating is recorded as an Observation of the room (§5.11): its channel_id the rated channel (empty when none is named), its category feedback:<dimension>, its confidence the rating, its content naming the dimension, the rating and the comment, and its metadata beside the caller's. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->It is
 recorded as an Observation of the room (§5.11): its `channel_id` the rated
 channel (empty when none is named), its `category` `feedback:<dimension>`,
 its `confidence` the rating, its `content` a line naming the dimension, the
 rating and the comment, and its metadata `type = "feedback"`, `dimension`,
-`rating`, `comment` and `event_id`, beside the caller's `metadata`. Once the
+`rating`, `comment` and `event_id`, beside the caller's `metadata`.<!-- /rfc --> <!-- rfc: {"id": "RK-15.9-005", "kind": "behavior", "applies": "§15.9 Feedback, where an implementation offers submit_feedback (§15.9 makes it a MAY): once the observation is stored, ON_FEEDBACK (ASYNC, §9.2) fires with it as its payload, and feedback is emitted (§8.2) with the room, the channel, the event, the dimension and the rating. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Once the
 observation is stored, `ON_FEEDBACK` (ASYNC, §9.2) fires with it as its
 payload, and `feedback` is emitted (§8.2) with the room, the channel, the
 event, the dimension and the rating.
@@ -19332,19 +19356,17 @@ event, the dimension and the rating.
 
 ## 16. Integration Surfaces
 
-<!-- rfc: {"id": "RK-16-001", "kind": "behavior", "applies": "§16 Integration Surfaces; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-16-001", "kind": "behavior", "applies": "§16 Integration Surfaces: the core depends on no specific web framework; the integration surfaces are thin wrappers that expose it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The RoomKit core MUST NOT depend on any specific web framework. Integration
 surfaces are thin wrappers that expose core functionality.
 <!-- /rfc -->
 
 ### 16.1 REST API (OPTIONAL)
 
-<!-- rfc: {"id": "RK-16.1-001", "kind": "behavior", "applies": "§16.1 REST API (OPTIONAL); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-16.1-010", "kind": "behavior", "applies": "§16.1 REST API, where an implementation offers one (OPTIONAL; Level 2, §26.3): the room endpoints (create, get, update, delete, list by organization and status); with the lead-in: the host owns its HTTP surface, and an implementation that offers a REST API provides the endpoints below. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 The framework is a library, and the host owns its HTTP surface. An
 implementation that offers a REST API SHOULD provide the following endpoints:
-<!-- /rfc -->
 
-<!-- rfc: {"id": "RK-16.1-002", "kind": "behavior", "applies": "§16.1 REST API (OPTIONAL); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Rooms:**
 
 ```
@@ -19356,7 +19378,7 @@ GET    /rooms?organization_id=X&status=active   # List rooms
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-16.1-003", "kind": "behavior", "applies": "§16.1 REST API (OPTIONAL); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-16.1-003", "kind": "behavior", "applies": "§16.1 REST API, where an implementation offers one (OPTIONAL; Level 2, §26.3): the channel endpoints (attach, detach, update a binding's access and visibility, mute, unmute, list a room's bindings, list the registered channels). Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 **Channels:**
 
 ```
@@ -19370,7 +19392,7 @@ GET    /channels                                # List registered channels
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-16.1-004", "kind": "behavior", "applies": "§16.1 REST API (OPTIONAL); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-16.1-004", "kind": "behavior", "applies": "§16.1 REST API, where an implementation offers one (OPTIONAL; Level 2, §26.3): the event endpoints (inject an event, read the timeline with pagination and a visibility filter). Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 **Events & Timeline:**
 
 ```
@@ -19379,7 +19401,7 @@ GET    /rooms/{id}/timeline                     # Get timeline (supports paginat
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-16.1-005", "kind": "behavior", "applies": "§16.1 REST API (OPTIONAL); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-16.1-005", "kind": "behavior", "applies": "§16.1 REST API, where an implementation offers one (OPTIONAL; Level 2, §26.3): the participant endpoints (add, remove, list, resolve a pending identity). Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 **Participants:**
 
 ```
@@ -19390,7 +19412,7 @@ POST   /rooms/{id}/participants/{pid}/resolve   # Resolve pending identity
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-16.1-006", "kind": "behavior", "applies": "§16.1 REST API (OPTIONAL); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-16.1-006", "kind": "behavior", "applies": "§16.1 REST API, where an implementation offers one (OPTIONAL; Level 2, §26.3): the task and observation endpoints (list a room's tasks, update a task's status, list a room's observations). Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 **Tasks & Observations:**
 
 ```
@@ -19400,7 +19422,7 @@ GET    /rooms/{id}/observations                 # List observations for room
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-16.1-007", "kind": "behavior", "applies": "§16.1 REST API (OPTIONAL); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-16.1-007", "kind": "behavior", "applies": "§16.1 REST API, where an implementation offers one (OPTIONAL; Level 2, §26.3): the identity endpoints (create an identity, resolve one by channel and address, link a channel address to it). Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 **Identity:**
 
 ```
@@ -19410,7 +19432,7 @@ POST   /identities/{id}/addresses               # Link a channel address to an i
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-16.1-008", "kind": "behavior", "applies": "§16.1 REST API (OPTIONAL); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-16.1-008", "kind": "behavior", "applies": "§16.1 REST API, where an implementation offers one (OPTIONAL; Level 2, §26.3): the webhook endpoints (an inbound webhook and a delivery status webhook, by channel type and provider). Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 **Webhooks:**
 
 ```
@@ -19419,7 +19441,7 @@ POST   /webhooks/{channel_type}/{provider}/status   # Delivery status webhook
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-16.1-009", "kind": "behavior", "applies": "§16.1 REST API (OPTIONAL); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-16.1-009", "kind": "behavior", "applies": "§16.1 REST API, where an implementation offers one (OPTIONAL; Level 2, §26.3): the WebSocket endpoint, a real-time room connection through the WebSocket channel (Appendix A.8). Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 **WebSocket:**
 
 ```
@@ -19429,11 +19451,9 @@ WS     /ws/{room_id}                            # Real-time room connection (Web
 
 ### 16.2 MCP Server (OPTIONAL)
 
-<!-- rfc: {"id": "RK-16.2-001", "kind": "behavior", "applies": "§16.2 MCP Server (OPTIONAL); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-16.2-004", "kind": "behavior", "applies": "§16.2 MCP Server, where an implementation offers one (OPTIONAL; Level 2, §26.3): the MCP tools, the table's eleven actions on rooms, tasks, observations, channels, room metadata and identities, and the escalation to a human; with the lead-in. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 For AI agents to interact with rooms natively via the Model Context Protocol:
-<!-- /rfc -->
 
-<!-- rfc: {"id": "RK-16.2-002", "kind": "behavior", "applies": "§16.2 MCP Server (OPTIONAL); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **MCP Tools (actions):**
 
 | Tool | Description |
@@ -19451,7 +19471,7 @@ For AI agents to interact with rooms natively via the Model Context Protocol:
 | escalate_to_human | Escalate to a human agent |
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-16.2-003", "kind": "behavior", "applies": "§16.2 MCP Server (OPTIONAL); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-16.2-003", "kind": "behavior", "applies": "§16.2 MCP Server, where an implementation offers one (OPTIONAL; Level 2, §26.3): the MCP resources, the table's six rows: a room's state, timeline, participants, channel bindings and tasks, and an identity's details. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **MCP Resources (data):**
 
 | Resource | Description |
@@ -19466,7 +19486,7 @@ For AI agents to interact with rooms natively via the Model Context Protocol:
 
 ### 16.3 Surface Independence
 
-<!-- rfc: {"id": "RK-16.3-001", "kind": "behavior", "applies": "§16.3 Surface Independence; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-16.3-001", "kind": "behavior", "applies": "§16.3 Surface Independence, where an implementation offers a REST API or an MCP server (§16.1, §16.2): both surfaces call the same core methods, and no business logic lives in them. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Both REST and MCP surfaces MUST call the same core methods. No business logic
 should live in the integration surface layer.
 
