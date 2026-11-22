@@ -985,15 +985,15 @@
       "section": "6.4",
       "title": "Intelligence Channels",
       "review": "normative",
-      "requirements": 204,
+      "requirements": 376,
       "mapping": {
         "mapped_partial": 13,
-        "unmapped": 191
+        "unmapped": 363
       },
       "decided_gaps": {
-        "phase6": 4,
-        "step": 48,
-        "writable": 28
+        "phase6": 8,
+        "step": 55,
+        "writable": 54
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -14068,37 +14068,505 @@
       }
     },
     {
-      "id": "RK-6.4-015",
+      "id": "RK-6.4-218",
       "section": "6.4",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-6.4-016",
+      "id": "RK-6.4-219",
       "section": "6.4",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-6.4-017",
+      "id": "RK-6.4-220",
       "section": "6.4",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-6.4-018",
+      "id": "RK-6.4-221",
       "section": "6.4",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-6.4-019",
+      "id": "RK-6.4-222",
       "section": "6.4",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-6.4-020",
+      "id": "RK-6.4-223",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-224",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1940",
+        "note": "A hook under Tool Search that removes a tool from the first round's declaration only, the tool still found and declared."
+      }
+    },
+    {
+      "id": "RK-6.4-400",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-225",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-226",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-227",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-228",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-229",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-230",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1940",
+        "note": "Media feature realtime."
+      }
+    },
+    {
+      "id": "RK-6.4-231",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-232",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-233",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-234",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-235",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-236",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-237",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1940",
+        "note": "Media feature realtime."
+      }
+    },
+    {
+      "id": "RK-6.4-238",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-239",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-240",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-241",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-242",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1940",
+        "note": "An ACP agent's turn under an ON_AI_RESPONSE hook, its declared_tools empty."
+      }
+    },
+    {
+      "id": "RK-6.4-243",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-244",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-245",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-246",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-247",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-248",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-249",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-250",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-251",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-252",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-253",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-254",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-255",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-256",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-257",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-258",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-259",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1940",
+        "note": "Needs a scripted AFTER_TOOL_ROUND hook whose MODIFY returns no event, in both runners."
+      }
+    },
+    {
+      "id": "RK-6.4-260",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-261",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-262",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1940",
+        "note": "An ACP agent's turn with an AFTER_TOOL_ROUND hook registered, the hook never called; a reasoning backend's agent needs the realtime feature."
+      }
+    },
+    {
+      "id": "RK-6.4-263",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-264",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1940",
+        "note": "A later turn after a BEFORE_TOOL_USE rewrite, its replayed call holding the model's arguments."
+      }
+    },
+    {
+      "id": "RK-6.4-265",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1940",
+        "note": "A later turn after an ON_TOOL_CALL rewrite or an evicted result, its replayed result the one the model read."
+      }
+    },
+    {
+      "id": "RK-6.4-266",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-267",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-268",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-269",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-270",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1940",
+        "note": "A history window shorter than the turns, the round before it not replayed."
+      }
+    },
+    {
+      "id": "RK-6.4-271",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-272",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-273",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-274",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-275",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-401",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1940",
+        "note": "A standalone instruction's turn in a room whose earlier turns read instructions, none replayed."
+      }
+    },
+    {
+      "id": "RK-6.4-276",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-277",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-278",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-279",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-280",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-281",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-282",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-283",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-284",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1940",
+        "note": "Needs a scripted model that refuses an image before any request leaves, in both runners."
+      }
+    },
+    {
+      "id": "RK-6.4-285",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-286",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-287",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1940",
+        "note": "Needs a scripted BEFORE_AI_GENERATION hook that adds a block to the turn's notes, in both runners."
+      }
+    },
+    {
+      "id": "RK-6.4-288",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-289",
       "section": "6.4",
       "mapping": "mapped_partial",
       "links": [
@@ -14116,13 +14584,294 @@
       ]
     },
     {
-      "id": "RK-6.4-021",
+      "id": "RK-6.4-290",
       "section": "6.4",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-6.4-022",
+      "id": "RK-6.4-291",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-292",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-293",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-294",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1940",
+        "note": "Media feature realtime."
+      }
+    },
+    {
+      "id": "RK-6.4-295",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-296",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-297",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-298",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1940",
+        "note": "Two turns over one participant's copy of a mark, the same replacement in both requests."
+      }
+    },
+    {
+      "id": "RK-6.4-299",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1940",
+        "note": "A tool's result and the agent's text between calls holding a mark's words, replayed as written."
+      }
+    },
+    {
+      "id": "RK-6.4-300",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-402",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-301",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1940",
+        "note": "A standalone instruction's turn on an agent with a memory provider, no memory in its request."
+      }
+    },
+    {
+      "id": "RK-6.4-302",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-303",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-304",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-305",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-306",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1940",
+        "note": "Needs a scripted transport provider that opens a string as a local path, in both runners, and a requires_features name such as transport_provider (decision D1)."
+      }
+    },
+    {
+      "id": "RK-6.4-307",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-308",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-309",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-310",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-311",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-312",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-313",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-314",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-315",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-316",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1940",
+        "note": "Needs an attached-media reader that fails, in both runners."
+      }
+    },
+    {
+      "id": "RK-6.4-317",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-318",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-319",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-320",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-321",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-322",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-323",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-324",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-325",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-326",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1940",
+        "note": "A memory budget counting an author's image and a media's mention."
+      }
+    },
+    {
+      "id": "RK-6.4-327",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-328",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-329",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-330",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-331",
       "section": "6.4",
       "mapping": "mapped_partial",
       "links": [
@@ -14149,7 +14898,37 @@
       ]
     },
     {
-      "id": "RK-6.4-023",
+      "id": "RK-6.4-332",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-333",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-334",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-335",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-336",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-337",
       "section": "6.4",
       "mapping": "mapped_partial",
       "links": [
@@ -14174,6 +14953,41 @@
           "executions": []
         }
       ]
+    },
+    {
+      "id": "RK-6.4-338",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-339",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-340",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-341",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-342",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1940",
+        "note": "A memory compaction between rounds, then an overflow, the call's compacted replay kept."
+      }
     },
     {
       "id": "RK-6.4-043",
@@ -14207,13 +15021,84 @@
       "links": []
     },
     {
-      "id": "RK-6.4-024",
+      "id": "RK-6.4-343",
       "section": "6.4",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-6.4-025",
+      "id": "RK-6.4-344",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-345",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-346",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-347",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-348",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-349",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-350",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-351",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-352",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-353",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-354",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1940",
+        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+      }
+    },
+    {
+      "id": "RK-6.4-355",
       "section": "6.4",
       "mapping": "mapped_partial",
       "links": [
@@ -14230,19 +15115,351 @@
           ],
           "executions": []
         }
-      ]
+      ],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1940",
+        "note": "A text cut short through a block, naming the block instead."
+      }
     },
     {
-      "id": "RK-6.4-026",
+      "id": "RK-6.4-356",
       "section": "6.4",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-6.4-027",
+      "id": "RK-6.4-357",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1940",
+        "note": "A tool whose description holds a block tag, declared as written and never framed."
+      }
+    },
+    {
+      "id": "RK-6.4-358",
       "section": "6.4",
       "mapping": "unmapped",
       "links": []
+    },
+    {
+      "id": "RK-6.4-359",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-360",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-361",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-362",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1940",
+        "note": "A participant's message with a carriage return and a Unicode line separator, each line labelled."
+      }
+    },
+    {
+      "id": "RK-6.4-363",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-364",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-365",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1940",
+        "note": "An ACP agent's request from two participants, each line labelled."
+      }
+    },
+    {
+      "id": "RK-6.4-366",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1940",
+        "note": "One room read by the conversation and an ACP agent, the same labels at the same threshold."
+      }
+    },
+    {
+      "id": "RK-6.4-367",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-368",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1940",
+        "note": "Media feature conference."
+      }
+    },
+    {
+      "id": "RK-6.4-369",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-370",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-371",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-372",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1940",
+        "note": "SpeakTurn.people in a speak policy's snapshot with two people taking part."
+      }
+    },
+    {
+      "id": "RK-6.4-373",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-374",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1940",
+        "note": "Two requests in one ACP session, the second labelled and the note given once."
+      }
+    },
+    {
+      "id": "RK-6.4-375",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-376",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1940",
+        "note": "A memory summary joined to a labelled turn, its label out of the quote in the compaction's rendering."
+      }
+    },
+    {
+      "id": "RK-6.4-377",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-378",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-379",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-380",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1940",
+        "note": "Three senders, one name reading like the two others, ranked after both."
+      }
+    },
+    {
+      "id": "RK-6.4-381",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-382",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1940",
+        "note": "A participant renamed after a turn, the earlier turn keeping its recorded name."
+      }
+    },
+    {
+      "id": "RK-6.4-383",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-384",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-385",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-386",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-387",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-388",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-389",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-390",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-391",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1940",
+        "note": "A deferred-loading model and a compaction that summarizes a referencing result away."
+      }
+    },
+    {
+      "id": "RK-6.4-392",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-393",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-394",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1940",
+        "note": "A reopening exchange under a deferred-loading model, absent from the timeline and the tool counts."
+      }
+    },
+    {
+      "id": "RK-6.4-395",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1940",
+        "note": "A standalone instruction's turn under a deferred-loading model, no reopening and no room declaration kept."
+      }
+    },
+    {
+      "id": "RK-6.4-396",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1940",
+        "note": "A deferred-loading room whose tool a policy denies on a later turn, and a room with no known declaration."
+      }
+    },
+    {
+      "id": "RK-6.4-397",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-398",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-399",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1940",
+        "note": "Needs a scripted model that streams text alone (generate_stream), in both runners."
+      }
     },
     {
       "id": "RK-6.4-028",
