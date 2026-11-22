@@ -8,6 +8,8 @@ from pathlib import Path
 from typing import Any
 
 from .evidence import requirement_status
+from .links import GAP_CLASSES
+from .rules import cell_text
 from .source import digest, scenario_digest
 
 
@@ -16,8 +18,10 @@ def build(
     evidence: dict[str, Any],
     scenarios: dict[str, Any],
     reviews: dict[str, Any],
+    gaps: dict[str, dict[str, str]],
 ) -> tuple[dict[str, Any], list[str]]:
-    """Generate a report, invalidating section reviews when their source moves."""
+    """Generate a report, invalidating section reviews when their source moves.
+    A unit gaps.json lists carries its entry as `gap`, which maps nothing."""
     errors = []
     inventory = {row["section"]: row for row in reviews["sections"]}
     if len(inventory) != len(reviews["sections"]):
@@ -31,6 +35,7 @@ def build(
         requirement_status(
             item, evidence["links"], evidence, scenarios, registry["rfc_sha256"]
         )
+        | ({"gap": gaps[item["id"]]} if item["id"] in gaps else {})
         for item in registry["requirements"]
     ]
     sections = []
@@ -65,6 +70,7 @@ def build(
                 "review": review["classification"] if review else "not_reviewed",
                 "requirements": sum(counted.values()),
                 "mapping": dict(sorted(counted.items())),
+                "decided_gaps": decided_gaps(requirements, number),
                 "unannotated_keyword_lines": section["unannotated_keyword_lines"],
                 "candidate_scenarios": candidates(number, scenarios),
             }
@@ -96,6 +102,19 @@ def build(
             for run in evidence["executions"]
         ],
     }, errors
+
+
+def decided_gaps(requirements: list[dict[str, Any]], number: str) -> dict[str, int]:
+    """A section's decided gaps, by class."""
+    return dict(
+        sorted(
+            Counter(
+                item["gap"]["class"]
+                for item in requirements
+                if item["section"] == number and "gap" in item
+            ).items()
+        )
+    )
 
 
 def candidates(number: str, scenarios: dict[str, Any]) -> list[str]:
@@ -135,24 +154,53 @@ def markdown(report: dict[str, Any]) -> str:
         "Execution receipts name their own RFC, corpus and implementation commits, backend and runtime.",
         "`recorded_pass` describes that receipt only; it certifies no conformance level.",
         "Unannotated keyword lines are a reading aid, not a complete list of implicit requirements.",
+        "A decided gap is a unit gaps.json lists with its class and card: no scenario cites it yet, and the listing maps nothing.",
         "",
         "See [requirements.json](requirements.json) for exact clauses and applicability,",
         "[coverage.json](coverage.json) for each mapping and execution, and",
         "[evidence.json](evidence.json) for assertions, tests, review scope and remaining cases.",
         "",
-        "| Section | Inventory review | Units | Unmapped | Partial mappings | Complete mappings | Candidate scenarios | Keyword lines to review |",
-        "|---|---|---:|---:|---:|---:|---:|---:|",
+        "| Section | Inventory review | Units | Unmapped | Partial mappings | Complete mappings | Candidate scenarios | Keyword lines to review | Decided writable | Decided step | Decided phase6 |",
+        "|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|",
     ]
     for item in report["sections"]:
         counts = item["mapping"]
+        decided = " | ".join(
+            str(item["decided_gaps"].get(name, 0)) for name in GAP_CLASSES
+        )
         lines.append(
             f"| §{item['section']} {item['title'].replace('|', '/')} | {item['review']} | "
             f"{item['requirements']} | {counts.get('unmapped', 0)} | "
             f"{counts.get('mapped_partial', 0)} | {counts.get('mapped_complete', 0)} | "
-            f"{len(item['candidate_scenarios'])} | {len(item['unannotated_keyword_lines'])} |"
+            f"{len(item['candidate_scenarios'])} | {len(item['unannotated_keyword_lines'])} | "
+            f"{decided} |"
         )
+    lines += gap_markdown(report)
     lines += execution_markdown(report)
     return "\n".join(lines) + "\n"
+
+
+def gap_markdown(report: dict[str, Any]) -> list[str]:
+    """Each decided gap with its class and card; nothing while gaps.json
+    lists none."""
+    rows = [
+        f"| {item['id']} | §{item['section']} | {item['gap']['class']} | "
+        f"{item['gap']['card']} | {cell_text(item['gap'].get('note', ''))} |"
+        for item in report["requirements"]
+        if "gap" in item
+    ]
+    if not rows:
+        return []
+    return [
+        "",
+        "## Decided gaps",
+        "",
+        "Units [gaps.json](gaps.json) lists: a scenario can test each, and none cites it yet.",
+        "",
+        "| Source unit | Section | Class | Card | Note |",
+        "|---|---|---|---|---|",
+        *rows,
+    ]
 
 
 def execution_markdown(report: dict[str, Any]) -> list[str]:

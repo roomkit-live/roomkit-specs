@@ -9,7 +9,7 @@ from __future__ import annotations
 from collections import Counter
 from typing import Any
 
-from .links import UNTESTED, citations
+from .links import GAPS, UNTESTED, citations
 
 
 def changed_units(
@@ -52,14 +52,16 @@ def process_rule(
     base: dict[str, Any],
     scenarios: dict[str, dict[str, Any]],
     untested: dict[str, str],
+    gaps: dict[str, dict[str, str]],
     base_ref: str,
 ) -> tuple[list[str], list[str], list[str]]:
     """Errors, warnings and unreviewed units among the units changed since the
-    base: a must unit needs a citing scenario or a reason in untested.json, a
-    should unit without either warns, a may unit passes, a unit with no level
-    is unreviewed. A non_testable unit needs neither: its kind is its reason.
-    In a section every unit of which had a level at the base, a unit with no
-    level is an error, whether added, moved in or with its level dropped."""
+    base: a must unit needs a citing scenario, a reason in untested.json or an
+    entry in gaps.json, a should unit with none of them warns, a may unit
+    passes, a unit with no level is unreviewed. A non_testable unit needs none:
+    its kind is its reason. In a section every unit of which had a level at
+    the base, a unit with no level is an error, whether added, moved in or with
+    its level dropped."""
     cited = citations(scenarios)
     levelled = levelled_sections(base)
     changed = {item["id"]: how for item, how in changed_units(registry, base)}
@@ -79,12 +81,12 @@ def process_rule(
             continue
         if how is None or item["kind"] == "non_testable":
             continue
-        if unit in cited or unit in untested:
+        if unit in cited or unit in untested or unit in gaps:
             continue
         if level == "must":
             errors.append(
-                f"{unit} (must, {how} since {since}): no scenario cites it "
-                f"and {UNTESTED} gives no reason"
+                f"{unit} (must, {how} since {since}): no scenario cites it, "
+                f"{UNTESTED} gives no reason and {GAPS} lists no gap"
             )
         elif level == "should":
             warnings.append(f"{unit} (should, {how} since {since}): no scenario cites it")

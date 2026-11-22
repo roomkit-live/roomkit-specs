@@ -2,8 +2,8 @@
 
 One page per top-level section under `conformance/rules/`, and an index. The
 pages are generated from the RFC, the scenarios, `links.lock.json`,
-`untested.json` and the execution receipts in `evidence.json`; nothing in them
-is written by hand.
+`untested.json`, `gaps.json` and the execution receipts in `evidence.json`;
+nothing in them is written by hand.
 """
 
 from __future__ import annotations
@@ -12,7 +12,7 @@ from collections import Counter, defaultdict
 from pathlib import Path
 from typing import Any
 
-from .links import Lock, citations
+from .links import GAP_CLASSES, Lock, citations
 from .source import LEVELS, scenario_digest
 
 DIRECTORY = "rules"
@@ -38,6 +38,7 @@ def pages(
     scenarios: dict[str, dict[str, Any]],
     lock: Lock,
     untested: dict[str, str],
+    gaps: dict[str, dict[str, str]],
     executions: list[dict[str, Any]],
 ) -> dict[str, str]:
     """Every page of the report, by file name, in a deterministic layout."""
@@ -67,9 +68,11 @@ def pages(
                 "|---|---|---|---|---|---|---|",
             ]
             for unit in by_section[section]:
-                lines += unit_rows(unit, cited, states, results, untested)
+                lines += unit_rows(unit, cited, states, results, untested, gaps)
         found[page_name(number)] = "\n".join(lines) + "\n"
-    found["README.md"] = index(tops, titles, by_section, cited, states)
+    found["README.md"] = index(
+        tops, titles, by_section, cited, states, untested, gaps
+    )
     return found
 
 
@@ -79,14 +82,14 @@ def unit_rows(
     states: dict[tuple[str, str], str],
     results: dict[tuple[str, str], dict[str, str]],
     untested: dict[str, str],
+    gaps: dict[str, dict[str, str]],
 ) -> list[str]:
-    """A unit's rows: one per citing scenario, or one saying why it has none."""
+    """A unit's rows: one per citing scenario, or one saying why it has none,
+    or that it is a decided gap."""
     head = f"| {unit['id']} | {unit['kind']} | {unit.get('level', '—')} |"
     names = sorted(cited.get(unit["id"], ()))
     if not names:
-        reason = untested.get(unit["id"])
-        cell = f"untested: {cell_text(reason)}" if reason else "—"
-        return [f"{head} {cell} | | | |"]
+        return [f"{head} {uncited_cell(unit['id'], untested, gaps)} | | | |"]
     rows = []
     for position, name in enumerate(names):
         prefix = head if position == 0 else "| | | |"
@@ -99,6 +102,19 @@ def unit_rows(
             f"{outcomes[0]} | {outcomes[1]} |"
         )
     return rows
+
+
+def uncited_cell(
+    unit: str, untested: dict[str, str], gaps: dict[str, dict[str, str]]
+) -> str:
+    """`untested: <reason>`, `decided gap: <class>, <card>[: <note>]` or `—`."""
+    if unit in untested:
+        return f"untested: {cell_text(untested[unit])}"
+    if unit in gaps:
+        gap = gaps[unit]
+        note = f": {cell_text(gap['note'])}" if "note" in gap else ""
+        return f"decided gap: {gap['class']}, {gap['card']}{note}"
+    return "—"
 
 
 def outcome_cell(by_backend: dict[str, str]) -> str:
@@ -117,8 +133,11 @@ def index(
     by_section: dict[str, list[dict[str, Any]]],
     cited: dict[str, set[str]],
     states: dict[tuple[str, str], str],
+    untested: dict[str, str],
+    gaps: dict[str, dict[str, str]],
 ) -> str:
-    """The index: per top-level section, its units by level and its citations."""
+    """The index: per top-level section, its units by level, its citations, its
+    gaps, and the units gaps.json lists, by class."""
     lines = [
         "# Rules and the scenarios citing them",
         "",
@@ -136,9 +155,17 @@ def index(
         "- An outcome counts when its receipt ran the scenario's current text,",
         "  whatever its RFC commit; the latest receipt recorded wins. Empty: no",
         "  receipt ran it.",
+        "- Scenario `untested`: [untested.json](../untested.json) gives the reason",
+        "  no scenario can test the unit; `decided gap`: [gaps.json](../gaps.json)",
+        "  lists it, with its class and card, until a scenario cites it; `—`: no",
+        "  scenario cites it and neither file lists it.",
+        "- Gaps: the `must` units a scenario can test that none cites and",
+        "  `untested.json` gives no reason for, decided gaps included. Decided",
+        "  writable, step and phase6: the units gaps.json lists, by class.",
         "",
-        "| Section | Units | must | should | may | No level | Cited units | Citations | To reread |",
-        "|---|---:|---:|---:|---:|---:|---:|---:|---:|",
+        "| Section | Units | must | should | may | No level | Cited units | Citations "
+        "| To reread | Gaps | Decided writable | Decided step | Decided phase6 |",
+        "|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|",
     ]
     for number, sections in tops.items():
         units = [unit for section in sections for unit in by_section[section]]
@@ -150,9 +177,29 @@ def index(
             f"({page_name(number)}) | {len(units)} | "
             + " | ".join(str(levels[level]) for level in LEVELS)
             + f" | {levels[None]} | {sum(unit in cited for unit in ids)} | "
-            f"{len(pairs)} | {pairs.count('reread')} |"
+            f"{len(pairs)} | {pairs.count('reread')} | "
+            f"{gap_cells(units, cited, untested, gaps)} |"
         )
     return "\n".join(lines) + "\n"
+
+
+def gap_cells(
+    units: list[dict[str, Any]],
+    cited: dict[str, set[str]],
+    untested: dict[str, str],
+    gaps: dict[str, dict[str, str]],
+) -> str:
+    """The gaps among these units, decided or not (`must`, testable, cited by
+    no scenario, no reason in untested.json), then the decided ones by class."""
+    count = sum(
+        unit.get("level") == "must"
+        and unit["kind"] != "non_testable"
+        and unit["id"] not in cited
+        and unit["id"] not in untested
+        for unit in units
+    )
+    decided = Counter(gaps[unit["id"]]["class"] for unit in units if unit["id"] in gaps)
+    return " | ".join([str(count), *(str(decided[name]) for name in GAP_CLASSES)])
 
 
 def artifacts(directory: Path, expected: dict[str, str], update: bool) -> list[str]:

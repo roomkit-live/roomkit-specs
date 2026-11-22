@@ -60,6 +60,32 @@ class IntegrationTests(unittest.TestCase):
             ["rules/section-9.md: generated page differs; run --update-traceability"],
         )
 
+    def test_a_decided_gap_reaches_every_report(self) -> None:
+        self.text = "## 9. Hooks\n" + marked("Keep the event.", level="must")
+        gap = {"class": "step", "card": "RMK-1909"}
+        self.write("gaps.json", {"version": 1, "units": {"RK-9.3-001": gap}})
+        self.assertEqual(check(self.root, self.text, [], update=True), [])
+        coverage = json.loads((self.directory / "coverage.json").read_text())
+        self.assertEqual(coverage["requirements"][0]["gap"], gap)
+        self.assertIn(
+            "| RK-9.3-001 | §9 | step | RMK-1909 |  |",
+            (self.directory / "coverage.md").read_text(),
+        )
+        self.assertIn(
+            "| RK-9.3-001 | behavior | must | decided gap: step, RMK-1909 | | | |",
+            (self.directory / "rules/section-9.md").read_text(),
+        )
+        self.write("gaps.json", {"version": 1, "units": {}})
+        self.assertEqual(
+            check(self.root, self.text, []),
+            [
+                "coverage.json: generated artifact differs; run --update-traceability",
+                "coverage.md: generated artifact differs; run --update-traceability",
+                "rules/README.md: generated page differs; run --update-traceability",
+                "rules/section-9.md: generated page differs; run --update-traceability",
+            ],
+        )
+
     def git(self, *args: str) -> str:
         return subprocess.check_output(
             ["git", "-C", str(self.root), *args], text=True

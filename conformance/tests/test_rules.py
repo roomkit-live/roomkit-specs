@@ -31,6 +31,9 @@ class RulesReportTests(unittest.TestCase):
             + marked("Route it.", "RK-10.4-001", level="must")
             + marked("Refuse it.", "RK-10.4-002")
             + marked("Log it.", "RK-10.4-003")
+            + marked("Trace it.", "RK-10.4-004", level="must")
+            + marked("Name it.", "RK-10.4-005", level="must")
+            + marked("Alias it.", "RK-10.4-006", level="should")
             + "## Appendix A: Wire\n"
             + marked("A field.", "RK-A-001", kind="structural")
         )
@@ -51,7 +54,11 @@ class RulesReportTests(unittest.TestCase):
         ]
         lock = {"RK-10.4-001": {"routing/a": self.sha["RK-10.4-001"], "routing/b": "1" * 64}}
         untested = {"RK-10.4-002": "needs a real | carrier"}
-        report = pages(self.registry, self.scenarios, lock, untested, executions)
+        gaps = {
+            "RK-10.4-004": {"class": "step", "card": "RMK-1904", "note": "A | source."},
+            "RK-10.4-006": {"class": "writable", "card": "RMK-1905"},
+        }
+        report = pages(self.registry, self.scenarios, lock, untested, gaps, executions)
         self.assertEqual(sorted(report), ["README.md", "appendix-A.md", "section-10.md"])
         page = report["section-10.md"]
         self.assertIn("## §10.4 Routing", page)
@@ -66,14 +73,31 @@ class RulesReportTests(unittest.TestCase):
             page,
         )
         self.assertIn("| RK-10.4-003 | behavior | — | — | | | |", page)
-        self.assertIn("# Appendix A: Wire", report["appendix-A.md"])
         self.assertIn(
-            "| [§10 Inbound](section-10.md) | 3 | 1 | 0 | 0 | 2 | 1 | 2 | 1 |",
+            "| RK-10.4-004 | behavior | must | decided gap: step, RMK-1904: "
+            "A \\| source. | | | |",
+            page,
+        )
+        self.assertIn("| RK-10.4-005 | behavior | must | — | | | |", page)
+        self.assertIn(
+            "| RK-10.4-006 | behavior | should | decided gap: writable, RMK-1905 | | | |",
+            page,
+        )
+        self.assertIn("# Appendix A: Wire", report["appendix-A.md"])
+        # Gaps counts the must units 004, listed, and 005, not listed.
+        self.assertIn(
+            "| [§10 Inbound](section-10.md) | 6 | 3 | 1 | 0 | 2 | 1 | 2 | 1 "
+            "| 2 | 1 | 1 | 0 |",
+            report["README.md"],
+        )
+        self.assertIn(
+            "| Cited units | Citations | To reread | Gaps | Decided writable "
+            "| Decided step | Decided phase6 |",
             report["README.md"],
         )
 
     def test_a_stale_or_extra_page_fails_until_regenerated(self) -> None:
-        report = pages(self.registry, self.scenarios, {}, {}, [])
+        report = pages(self.registry, self.scenarios, {}, {}, {}, [])
         with tempfile.TemporaryDirectory() as temp:
             directory = Path(temp)
             self.assertEqual(len(artifacts(directory, report, False)), 3)

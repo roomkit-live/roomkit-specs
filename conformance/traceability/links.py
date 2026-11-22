@@ -4,12 +4,14 @@ A scenario cites the units it tests in `requirements`. `links.lock.json` keeps,
 for each (unit, scenario) citation, the unit's fingerprint when the scenario
 was last read against it: a unit whose text changes since names the scenarios
 to reread, until `check.py --pin` records that they were. `untested.json` gives
-the reason a unit has no scenario.
+the reason a unit has no scenario; `gaps.json` lists the units a scenario can
+test and none does yet, each with its class and the card that tracks it.
 """
 
 from __future__ import annotations
 
 import json
+import re
 from collections import defaultdict
 from pathlib import Path
 from typing import Any
@@ -20,7 +22,13 @@ from .source import ID
 
 LOCK = "links.lock.json"
 UNTESTED = "untested.json"
+GAPS = "gaps.json"
 PIN = "python3 conformance/check.py --pin"
+# What a decided gap's scenario waits for: nothing (the existing steps can
+# write it), a runner step or fixture, or phase 6 (media).
+GAP_CLASSES = ("writable", "step", "phase6")
+GAP_LEVELS = ("must", "should")
+CARD = re.compile(r"RMK-[1-9][0-9]*")
 
 _UNIT = ID.pattern
 _SCENARIO = "^[a-z0-9.-]+/[a-z0-9-]+$"
@@ -55,6 +63,30 @@ UNTESTED_SCHEMA = {
             "type": "object",
             "propertyNames": {"pattern": f"^{_UNIT}$"},
             "additionalProperties": {"type": "string", "pattern": r"\S"},
+        },
+    },
+}
+
+# A class or card the schema lets through is check_gaps' error, with its own
+# message: the schema keeps the shape.
+GAPS_SCHEMA = {
+    "type": "object",
+    "required": ["version", "units"],
+    "additionalProperties": False,
+    "properties": {
+        "version": {"const": 1},
+        "units": {
+            "type": "object",
+            "propertyNames": {"pattern": f"^{_UNIT}$"},
+            "additionalProperties": {
+                "type": "object",
+                "additionalProperties": False,
+                "properties": {
+                    "class": {"type": "string"},
+                    "card": {"type": "string"},
+                    "note": {"type": "string", "pattern": r"\S"},
+                },
+            },
         },
     },
 }
@@ -102,7 +134,7 @@ def check_citations(
 
 
 def read(directory: Path, name: str, schema: dict[str, Any], empty: Any) -> Any:
-    """A lock or untested file, validated; an absent file holds nothing."""
+    """A lock, untested or gaps file, validated; an absent file holds nothing."""
     path = directory / name
     if not path.exists():
         return empty
@@ -136,6 +168,11 @@ def read_untested(directory: Path) -> dict[str, str]:
     ]
 
 
+def read_gaps(directory: Path) -> dict[str, dict[str, str]]:
+    """Each decided gap: its class, its card and an optional note."""
+    return read(directory, GAPS, GAPS_SCHEMA, {"version": 1, "units": {}})["units"]
+
+
 def lock_layout(lock: Lock) -> str:
     """The lock's one layout: units, then scenarios, sorted."""
     value = {
@@ -152,10 +189,12 @@ def lock_problems(
     registry: dict[str, Any],
     lock: Lock,
     untested: dict[str, str],
+    gaps: dict[str, dict[str, str]],
 ) -> list[str]:
     """What `--strict` refuses: a cited unit changed since a scenario read it, a
-    citation the lock does not pin, a pin with no citation, a stale reason.
-    A citation of a unit the RFC lacks is check_citations' error, not drift."""
+    citation the lock does not pin, a pin with no citation, a stale reason, a
+    closed gap. A citation of a unit the RFC lacks is check_citations' error,
+    not drift."""
     fingerprints = {item["id"]: item["sha256"] for item in registry["requirements"]}
     cited = citations(scenarios)
     known = {unit: names for unit, names in cited.items() if unit in fingerprints}
@@ -166,6 +205,11 @@ def lock_problems(
         f"{UNTESTED} gives a reason {unit} has no scenario, but "
         f"{', '.join(sorted(cited[unit]))} cite it: remove its entry"
         for unit in sorted(untested.keys() & cited.keys())
+    ]
+    problems += [
+        f"{GAPS} lists {unit} as a gap, but {', '.join(sorted(cited[unit]))} cite "
+        "it: the gap is closed, remove its entry"
+        for unit in sorted(gaps.keys() & cited.keys())
     ]
     return problems
 
@@ -227,6 +271,58 @@ def check_untested(
         for unit in sorted(untested)
         if unit not in units
     ]
+
+
+def check_gaps(
+    gaps: dict[str, dict[str, str]],
+    untested: dict[str, str],
+    registry: dict[str, Any],
+    retired: list[str],
+) -> list[str]:
+    """A decided gap names a current unit a scenario can test, of level must or
+    should, with no reason in untested.json; it gives a known class and an RMK
+    card. A gap a scenario now cites is lock_problems' drift."""
+    units = {item["id"]: item for item in registry["requirements"]}
+    return [
+        f"{GAPS}: {unit}: {problem}"
+        for unit, entry in sorted(gaps.items())
+        for problem in gap_problems(unit, entry, units.get(unit), retired, untested)
+    ]
+
+
+def gap_problems(
+    unit: str,
+    entry: dict[str, str],
+    item: dict[str, Any] | None,
+    retired: list[str],
+    untested: dict[str, str],
+) -> list[str]:
+    """What is wrong with one entry of gaps.json; a unit that is not current
+    is the entry's only problem."""
+    if unit in retired:
+        return ["retired; list the units that replace it"]
+    if item is None:
+        return ["no such unit in the RFC"]
+    problems = []
+    if item["kind"] == "non_testable":
+        problems.append("non_testable; its kind is its reason, so it is no gap")
+    if item.get("level") not in GAP_LEVELS:
+        level = f"level {item['level']}" if "level" in item else "no level"
+        problems.append(f"{level}; only a must or should unit is a gap")
+    if unit in untested:
+        problems.append(
+            f"{UNTESTED} gives a reason no scenario can test it; keep one of the two"
+        )
+    classes = "writable, step or phase6"
+    if "class" not in entry:
+        problems.append(f"no class; give {classes}")
+    elif entry["class"] not in GAP_CLASSES:
+        problems.append(f"class {entry['class']!r} is not {classes}")
+    if "card" not in entry:
+        problems.append("no card; give the RMK-<n> card that tracks it")
+    elif not CARD.fullmatch(entry["card"]):
+        problems.append(f"card {entry['card']!r} is not an RMK-<n> id")
+    return problems
 
 
 def pin(

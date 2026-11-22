@@ -55,6 +55,83 @@ class CitationTests(unittest.TestCase):
             ],
         )
 
+    def test_a_decided_gap_names_a_unit_a_scenario_can_test(self) -> None:
+        registry = rfc(
+            marked("Route it.", "RK-10.4-001", level="must"),
+            marked("Log it.", "RK-10.4-002", level="should"),
+            marked("Trace it.", "RK-10.4-003", level="may"),
+            marked("Name it.", "RK-10.4-004"),
+            marked("Review it.", "RK-10.4-005", kind="non_testable", level="must"),
+            marked("Keep it.", "RK-10.4-006", level="must"),
+            marked("Alias it.", "RK-10.4-007", level="must"),
+        )
+        card = {"card": "RMK-1904"}
+        gaps = {
+            "RK-10.4-001": {"class": "writable", **card, "note": "Steps exist."},
+            "RK-10.4-002": {"class": "phase6", **card},
+            "RK-10.4-003": {"class": "step", **card},
+            "RK-10.4-004": {"class": "step", **card},
+            "RK-10.4-005": {"class": "step", **card},
+            "RK-10.4-006": {"class": "step", **card},
+            "RK-10.4-007": {"card": "PROJ-12"},
+            "RK-10.4-008": {"class": "step", **card},
+            "RK-10.4-009": {"class": "media", "card": "RMK-0"},
+        }
+        untested = {"RK-10.4-006": "a log line"}
+        self.assertEqual(
+            links.check_gaps(gaps, untested, registry, ["RK-10.4-008"]),
+            [
+                "gaps.json: RK-10.4-003: level may; only a must or should unit is a gap",
+                "gaps.json: RK-10.4-004: no level; only a must or should unit is a gap",
+                "gaps.json: RK-10.4-005: non_testable; its kind is its reason, so it "
+                "is no gap",
+                "gaps.json: RK-10.4-006: untested.json gives a reason no scenario can "
+                "test it; keep one of the two",
+                "gaps.json: RK-10.4-007: no class; give writable, step or phase6",
+                "gaps.json: RK-10.4-007: card 'PROJ-12' is not an RMK-<n> id",
+                "gaps.json: RK-10.4-008: retired; list the units that replace it",
+                "gaps.json: RK-10.4-009: no such unit in the RFC",
+            ],
+        )
+        wrong = {"RK-10.4-001": {"class": "media", "card": "RMK-0"}, "RK-10.4-002": {}}
+        self.assertEqual(
+            links.check_gaps(wrong, {}, registry, []),
+            [
+                "gaps.json: RK-10.4-001: class 'media' is not writable, step or phase6",
+                "gaps.json: RK-10.4-001: card 'RMK-0' is not an RMK-<n> id",
+                "gaps.json: RK-10.4-002: no class; give writable, step or phase6",
+                "gaps.json: RK-10.4-002: no card; give the RMK-<n> card that tracks it",
+            ],
+        )
+
+    def test_a_malformed_gap_entry_is_refused_with_its_place(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            directory = Path(temp)
+            self.assertEqual(links.read_gaps(directory), {})
+            entry = {"class": "step", "card": "RMK-1"}
+            for units, error in (
+                (
+                    {"RK-10.4-001": "writable"},
+                    "units/RK-10.4-001: 'writable' is not of type 'object'",
+                ),
+                (
+                    {"RK-10.4-001": {**entry, "owner": "x"}},
+                    "units/RK-10.4-001: Additional properties",
+                ),
+                (
+                    {"RK-10.4-001": {**entry, "note": " "}},
+                    "units/RK-10.4-001/note: ' ' does not match",
+                ),
+                ({"10.4": entry}, "units: '10.4' does not match"),
+            ):
+                with self.subTest(units=units):
+                    (directory / links.GAPS).write_text(
+                        json.dumps({"version": 1, "units": units})
+                    )
+                    with self.assertRaises(ValueError) as raised:
+                        links.read_gaps(directory)
+                    self.assertIn(f"gaps.json: {error}", str(raised.exception))
+
 
 class LockTests(unittest.TestCase):
     def setUp(self) -> None:
@@ -73,7 +150,7 @@ class LockTests(unittest.TestCase):
 
     def test_a_changed_unit_names_the_scenarios_to_reread(self) -> None:
         self.assertEqual(
-            links.lock_problems(self.scenarios, self.registry, self.lock, {}),
+            links.lock_problems(self.scenarios, self.registry, self.lock, {}, {}),
             [
                 "RK-10.4-001 changed since routing/b read it: reread it, then run "
                 "python3 conformance/check.py --pin RK-10.4-001"
@@ -85,7 +162,7 @@ class LockTests(unittest.TestCase):
         self.lock["RK-10.4-001"]["routing/b"] = self.sha["RK-10.4-001"]
         self.lock["RK-10.4-001"]["routing/gone"] = self.sha["RK-10.4-001"]
         self.assertEqual(
-            links.lock_problems(self.scenarios, self.registry, self.lock, {}),
+            links.lock_problems(self.scenarios, self.registry, self.lock, {}, {}),
             [
                 "routing/a cites RK-10.4-002 with no lock entry: once it is read "
                 "against it, run python3 conformance/check.py --pin RK-10.4-002 routing/a",
@@ -97,13 +174,24 @@ class LockTests(unittest.TestCase):
     def test_a_cited_unit_cannot_keep_an_untested_reason(self) -> None:
         self.lock["RK-10.4-001"]["routing/b"] = self.sha["RK-10.4-001"]
         problems = links.lock_problems(
-            self.scenarios, self.registry, self.lock, {"RK-10.4-002": "no fake"}
+            self.scenarios, self.registry, self.lock, {"RK-10.4-002": "no fake"}, {}
         )
         self.assertEqual(
             problems,
             [
                 "untested.json gives a reason RK-10.4-002 has no scenario, but "
                 "routing/a cite it: remove its entry"
+            ],
+        )
+
+    def test_a_cited_unit_closes_its_gap(self) -> None:
+        self.lock["RK-10.4-001"]["routing/b"] = self.sha["RK-10.4-001"]
+        gaps = {"RK-10.4-001": {"class": "writable", "card": "RMK-1904"}}
+        self.assertEqual(
+            links.lock_problems(self.scenarios, self.registry, self.lock, {}, gaps),
+            [
+                "gaps.json lists RK-10.4-001 as a gap, but routing/a, routing/b cite "
+                "it: the gap is closed, remove its entry"
             ],
         )
 
@@ -215,22 +303,32 @@ class ProcessRuleTests(unittest.TestCase):
             marked("New, optional.", "RK-10.4-006", level="may"),
             marked("New, not reviewed.", "RK-10.4-007"),
             marked("New, operational.", "RK-10.4-008", kind="non_testable", level="must"),
+            marked("New, a decided gap.", "RK-10.4-009", level="must"),
+            marked("New, a decided gap too.", "RK-10.4-010", level="should"),
+            marked("New, with neither.", "RK-10.4-011", level="should"),
         )
         scenarios = {"routing/a": {"requirements": ["RK-10.4-004"]}}
         untested = {"RK-10.4-005": "needs a real carrier"}
+        gaps = {
+            unit: {"class": "step", "card": "RMK-1904"}
+            for unit in ("RK-10.4-009", "RK-10.4-010")
+        }
         errors, warnings, unreviewed = process.process_rule(
-            current, base, scenarios, untested, "a" * 40
+            current, base, scenarios, untested, gaps, "a" * 40
         )
         self.assertEqual(
             errors,
             [
-                "RK-10.4-002 (must, changed since aaaaaaaaaaaa): no scenario cites it "
-                "and untested.json gives no reason"
+                "RK-10.4-002 (must, changed since aaaaaaaaaaaa): no scenario cites it, "
+                "untested.json gives no reason and gaps.json lists no gap"
             ],
         )
         self.assertEqual(
             warnings,
-            ["RK-10.4-003 (should, changed since aaaaaaaaaaaa): no scenario cites it"],
+            [
+                "RK-10.4-003 (should, changed since aaaaaaaaaaaa): no scenario cites it",
+                "RK-10.4-011 (should, added since aaaaaaaaaaaa): no scenario cites it",
+            ],
         )
         self.assertEqual(
             unreviewed, ["RK-10.4-007 (added since aaaaaaaaaaaa): no level yet"]
@@ -376,7 +474,7 @@ class CommandTests(unittest.TestCase):
         self.assertEqual(run.returncode, 1)
         self.assertIn(
             f"error: RK-10.4-002 (must, added since {base[:12]}): no scenario cites "
-            "it and untested.json gives no reason",
+            "it, untested.json gives no reason and gaps.json lists no gap",
             run.stdout,
         )
         self.write("untested.json", {"version": 1, "units": {"RK-10.4-002": "a log"}})
@@ -417,6 +515,10 @@ class CommandTests(unittest.TestCase):
         def reason() -> None:
             self.write("untested.json", {"version": 1, "units": {"RK-10.4-004": "a trace"}})
 
+        def gap() -> None:
+            entry = {"class": "writable", "card": "RMK-1909"}
+            self.write("gaps.json", {"version": 1, "units": {"RK-10.4-004": entry}})
+
         def cite() -> None:
             value = json.loads(scenario.read_text())
             value["requirements"].append("RK-10.4-004")
@@ -427,7 +529,10 @@ class CommandTests(unittest.TestCase):
             self.write("evidence.json", {"retired": ["RK-10.4-003"]})
 
         error = "::error title=Process rule::"
-        missing = "no scenario cites it and untested.json gives no reason"
+        missing = (
+            "no scenario cites it, untested.json gives no reason and gaps.json lists "
+            "no gap"
+        )
         unlevelled = "no level, in §10 where every unit has one"
         cases = [
             (
@@ -439,6 +544,8 @@ class CommandTests(unittest.TestCase):
             ),
             ("a must unit added with a reason", added(level="must"), reason, 0, []),
             ("a must unit added with a scenario", added(level="must"), cite, 0, []),
+            ("a must unit added as a decided gap", added(level="must"), gap, 0, []),
+            ("a should unit added as a decided gap", added(level="should"), gap, 0, []),
             (
                 "a should unit added with neither",
                 added(level="should"),
@@ -524,6 +631,7 @@ class CommandTests(unittest.TestCase):
                 for path, text in kept.items():
                     path.write_text(text)
                 (self.directory / links.UNTESTED).unlink(missing_ok=True)
+                (self.directory / links.GAPS).unlink(missing_ok=True)
                 self.rfc.write_text("### 10.4 Routing\n" + units)
                 if prepare is not None:
                     prepare()
@@ -538,6 +646,43 @@ class CommandTests(unittest.TestCase):
                     annotations,
                 )
                 self.assertNotIn("error: RK-", run.stdout)
+
+    def test_a_wrong_or_closed_gap_entry_fails_the_check(self) -> None:
+        self.rfc.write_text(
+            "### 10.4 Routing\n"
+            + marked("Route it.", "RK-10.4-001", level="must")
+            + marked("Log it.", "RK-10.4-002", level="must")
+        )
+        self.assertEqual(self.check("--pin", "routing/a").returncode, 0)
+        closed = {"class": "writable", "card": "RMK-1909"}
+        self.write("gaps.json", {"version": 1, "units": {"RK-10.4-001": closed}})
+        run = self.check()
+        self.assertEqual(run.returncode, 0, "a closed gap fails only --strict")
+        closing = (
+            "gaps.json lists RK-10.4-001 as a gap, but routing/a cite it: the gap is "
+            "closed, remove its entry"
+        )
+        self.assertIn(f"lock: {closing}", run.stdout)
+        run = self.check("--strict")
+        self.assertEqual(run.returncode, 1)
+        self.assertIn(f"lock: {closing}", run.stdout)
+        self.write("gaps.json", {"version": 1, "units": {"RK-10.4-002": {"class": "step"}}})
+        run = self.check()
+        self.assertEqual(run.returncode, 1)
+        self.assertIn(
+            "error: gaps.json: RK-10.4-002: no card; give the RMK-<n> card that tracks it",
+            run.stdout,
+        )
+        self.write("gaps.json", {"version": 1, "units": {"RK-10.4-002": []}})
+        run = self.check()
+        self.assertEqual(run.returncode, 1)
+        self.assertIn(
+            "error: requirements: gaps.json: units/RK-10.4-002: [] is not of type 'object'",
+            run.stdout,
+        )
+        entry = {"class": "step", "card": "RMK-1909", "note": "A scripted source."}
+        self.write("gaps.json", {"version": 1, "units": {"RK-10.4-002": entry}})
+        self.assertEqual(self.check("--strict").returncode, 0)
 
     def test_ci_reads_no_unit_when_the_rfc_is_unchanged(self) -> None:
         self.assertEqual(self.check("--pin", "routing/a").returncode, 0)

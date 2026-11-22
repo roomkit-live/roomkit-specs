@@ -107,7 +107,10 @@ def check(
             )
         if errors:
             return errors
-        coverage, review_errors = report.build(registry, document, by_id, reviews)
+        gaps = links.read_gaps(directory)
+        coverage, review_errors = report.build(
+            registry, document, by_id, reviews, gaps
+        )
         errors += review_errors
         if errors:
             return errors
@@ -122,6 +125,7 @@ def check(
             by_id,
             links.read_lock(directory),
             links.read_untested(directory),
+            gaps,
             document["executions"],
         )
         errors += rules.artifacts(directory, pages, update)

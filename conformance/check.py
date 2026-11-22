@@ -324,7 +324,8 @@ def main() -> int:
         "--changed-units",
         action="store_true",
         help="the process rule: each unit added or changed since --base-ref needs, "
-        "by its level, a citing scenario or a reason in untested.json",
+        "by its level, a citing scenario, a reason in untested.json or a decided gap "
+        "in gaps.json",
     )
     parser.add_argument(
         "--github-annotations",
@@ -453,11 +454,13 @@ def citation_checks(
         registry = source.extract(text)
         retired = json.loads((HERE / "evidence.json").read_text())["retired"]
         untested = links.read_untested(HERE)
+        gaps = links.read_gaps(HERE)
         lock = links.read_lock(HERE)
     except (OSError, ValueError, KeyError) as error:
         return Citations([f"requirements: {error}"], [], [], [], [])
     errors = links.check_citations(scenarios, registry, retired)
     errors += links.check_untested(untested, registry, retired)
+    errors += links.check_gaps(gaps, untested, registry, retired)
     notes = []
     if args.pin and (blocked or errors):
         errors.append("--pin: nothing pinned while the check reports an error")
@@ -468,7 +471,7 @@ def citation_checks(
             (HERE / links.LOCK).write_text(links.lock_layout(lock), encoding="utf-8")
             notes.append(f"{links.LOCK}: pinned {' '.join(args.pin)}")
     errors += links.lock_layout_errors(HERE, lock)  # after --pin, which rewrites it
-    drift = links.lock_problems(scenarios, registry, lock, untested)
+    drift = links.lock_problems(scenarios, registry, lock, untested, gaps)
     if not args.changed_units:
         return Citations(errors, drift, notes, [], [])
     since = args.base_ref[:12]
@@ -484,7 +487,7 @@ def citation_checks(
     changed = len(process.changed_units(registry, base))
     notes.append(f"process rule: units added or changed since {since}: {changed}")
     failed, warned, unreviewed = process.process_rule(
-        registry, base, scenarios, untested, args.base_ref
+        registry, base, scenarios, untested, gaps, args.base_ref
     )
     notes += [f"unreviewed: {line}" for line in unreviewed]
     return Citations(errors, drift, notes, failed, warned)
