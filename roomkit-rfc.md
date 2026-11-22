@@ -7361,10 +7361,12 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
    │   ├── UNKNOWN or REJECTED → fire ON_IDENTITY_UNKNOWN hook (§11.2)
 ```
 <!-- /rfc -->
-<!-- rfc: {"id": "RK-10.1-037", "kind": "behavior", "applies": "§10.1 step 5, with an identity resolver configured and a sender with an address left to resolve (§11.6): a CHALLENGE_SENT result. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+<!-- rfc: {"id": "RK-10.1-037", "kind": "behavior", "applies": "§10.1 step 5, with an identity resolver configured and a sender with an address left to resolve (§11.6): the resolver's own CHALLENGE_SENT result, which carries no challenge to commit; a hook's challenge is §11.3's. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
-   │   └── CHALLENGE_SENT → commit the challenge as an injected event
-   │       (§9.4), block processing
+   │   └── CHALLENGE_SENT → the resolver has put the challenge itself:
+   │       block processing with the resolver's message, else
+   │       identity_challenge_sent; no identity hook runs and nothing
+   │       is committed
 ```
 <!-- /rfc -->
 <!-- rfc: {"id": "RK-10.1-038", "kind": "behavior", "applies": "§10.1 step 5, with an identity resolver configured and a sender with an address left to resolve (§11.6): the participant the event names. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
@@ -10410,7 +10412,10 @@ IdentityResult
 ├── status: IdentificationStatus            # IDENTIFIED, AMBIGUOUS, UNKNOWN, PENDING, CHALLENGE_SENT, REJECTED
 ├── identity: Identity | null               # Resolved identity (if IDENTIFIED)
 ├── candidates: list<Identity>              # Candidate identities (if AMBIGUOUS)
-└── metadata: map<string, any>              # Resolution metadata
+├── address: string | null                  # The address resolved; the sender's if unset
+├── channel_type: string | null             # Its channel type; the message's if unset
+├── challenge_type: string | null           # For CHALLENGE_SENT: its kind; not read
+└── message: string | null                  # For CHALLENGE_SENT and REJECTED: the block's reason
 ```
 <!-- /rfc -->
 
@@ -10435,9 +10440,9 @@ Returns IdentityResult
       │
 ```
 <!-- /rfc -->
-<!-- rfc: {"id": "RK-11.2-004", "kind": "behavior", "applies": "§11.2 Resolution pipeline: a resolver's AMBIGUOUS result (several matches), which fires ON_IDENTITY_AMBIGUOUS. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+<!-- rfc: {"id": "RK-11.2-004", "kind": "behavior", "applies": "§11.2 Resolution pipeline: a resolver's AMBIGUOUS result (several matches) or its PENDING, either of which fires ON_IDENTITY_AMBIGUOUS. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
-      ├── AMBIGUOUS (N matches)
+      ├── AMBIGUOUS (N matches), or the resolver's PENDING
       │   ├── Fire ON_IDENTITY_AMBIGUOUS hook
       │   └── Hook returns:
 ```
@@ -10460,6 +10465,14 @@ Returns IdentityResult
 <!-- rfc: {"id": "RK-11.2-008", "kind": "behavior", "applies": "§11.2 ON_IDENTITY_AMBIGUOUS: a hook's reject(). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
       │       └── reject() → reject the message
+      │
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-11.2-023", "kind": "behavior", "applies": "§11.2 Resolution pipeline: a resolver's CHALLENGE_SENT result, the challenge put by the resolver itself, which no identity hook reads. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
+      ├── CHALLENGE_SENT (the resolver put the challenge itself)
+      │   └── Block the message with the resolver's message, else
+      │       identity_challenge_sent; no hook runs, nothing is committed
       │
 ```
 <!-- /rfc -->

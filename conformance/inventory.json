@@ -393,7 +393,7 @@
     },
     {
       "section": "10.1",
-      "sha256": "57f35d10202b6901b3f120f0511bf4242b4de4ad09c9798506e22db78164cd69",
+      "sha256": "030839d94cfd168b33370cd6140445a946748e7fabafe0a4bbcd5e32e01cbaf8",
       "classification": "normative",
       "review": "Source inventory: Inbound Pipeline, split to one obligation per unit (RMK-1778). RK-10.1-001, the opening sentence and the process_inbound signature, keeps its id and text. The step-by-step block is cut by closing and reopening its fence at step, branch and comment boundaries, its text otherwise unchanged: steps 1 to 18 become RK-10.1-006 to 097 and 137 to 140, a step, a branch or a comment per unit. The prose after it is cut at sentence and list-item boundaries: explicit delivery cancellation (RK-10.1-098 to 122), InboundResult, whose interface block is a unit of its own (RK-10.1-123 to 133), and the keys a sender never supplies (RK-10.1-134 to 136). Each unit keeps its conditions, exceptions and rationale; where a unit's exception or limit is held by a neighbouring unit, its applies names that unit. A concurrent event committing between a trigger and its response, exposing explicit cancellation, resuming after its cleanup and naming a delivery by a key of the caller's are may (RK-10.1-087, RK-10.1-098, RK-10.1-106, RK-10.1-111); propagating the caller's cancellation, a cancellation handle on detached completion and namespaced metadata keys are should (RK-10.1-108, RK-10.1-110, RK-10.1-133). A MAY or a SHOULD inside a step or a sentence that states what the implementation does stays in its must unit (RK-10.1-047, RK-10.1-097, RK-10.1-131). That no room-state write follows the commit's transaction has no scenario, and untested.json says why (RK-10.1-073). Every unit carries its level."
     },
@@ -495,15 +495,15 @@
     },
     {
       "section": "11.1",
-      "sha256": "8573cd2cf3547aea3891074115b9d0dd3cdb058cef7463f4c826c19bce91a1bf",
+      "sha256": "6b33f0a332b007f253b1c93300fed6f6e942094bca8d48af87cc412cc92ed272",
       "classification": "normative",
       "review": "Source inventory: Identity Resolver Interface, reviewed for one obligation per unit (RMK-1935). RK-11.1-001 keeps the IdentityResolver interface and RK-11.1-002 the IdentityResult model, each one structural unit, as the core keeps a model's fields together. Every unit carries its level, must."
     },
     {
       "section": "11.2",
-      "sha256": "008a958081a1b6d46e4e14717d11054f84c4c703a940bd8088d3096c13779aa2",
+      "sha256": "335f18c6edc4d93601af5f97c940ffdd5e5b9a77365d0ad92bc1aa52c4a345c8",
       "classification": "normative",
-      "review": "Source inventory: Resolution Pipeline, split to one obligation per unit (RMK-1935). The flow is cut at its branches by closing and reopening the code block: the resolver's call (RK-11.2-002), each resolver result (IDENTIFIED, AMBIGUOUS, UNKNOWN or REJECTED) and each identity hook result per trigger, the null of ON_IDENTITY_UNKNOWN one unit for UNKNOWN and REJECTED as its one list item gives them. The paragraphs give a unit per sentence: what the hooks are handed and their order, the first result deciding, a result the trigger ignores, observers, the pending participant's candidates and name, a resolver's REJECTED, the pending sender's record (with the sentence that gives its reason) and the address that names it. Every unit carries its level, must."
+      "review": "Source inventory: Resolution Pipeline, split to one obligation per unit (RMK-1935). The flow is cut at its branches by closing and reopening the code block: the resolver's call (RK-11.2-002), each resolver result (IDENTIFIED, AMBIGUOUS or PENDING, CHALLENGE_SENT, UNKNOWN or REJECTED) and each identity hook result per trigger, the null of ON_IDENTITY_UNKNOWN one unit for UNKNOWN and REJECTED as its one list item gives them. The paragraphs give a unit per sentence: what the hooks are handed and their order, the first result deciding, a result the trigger ignores, observers, the pending participant's candidates and name, a resolver's REJECTED, the pending sender's record (with the sentence that gives its reason) and the address that names it. Every unit carries its level, must."
     },
     {
       "section": "11.3",
