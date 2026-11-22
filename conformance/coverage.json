@@ -985,12 +985,16 @@
       "section": "6.4",
       "title": "Intelligence Channels",
       "review": "normative",
-      "requirements": 44,
+      "requirements": 204,
       "mapping": {
-        "mapped_partial": 11,
-        "unmapped": 33
+        "mapped_partial": 13,
+        "unmapped": 191
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "phase6": 4,
+        "step": 48,
+        "writable": 28
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "acp/a-copy-of-the-room-context-lines-is-replaced-and-the-runtime-s-are-kept",
@@ -12471,7 +12475,19 @@
       "links": []
     },
     {
-      "id": "RK-6.4-001",
+      "id": "RK-6.4-045",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-046",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-047",
       "section": "6.4",
       "mapping": "unmapped",
       "links": []
@@ -12483,7 +12499,29 @@
       "links": []
     },
     {
-      "id": "RK-6.4-003",
+      "id": "RK-6.4-049",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1911"
+      }
+    },
+    {
+      "id": "RK-6.4-050",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-051",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-052",
       "section": "6.4",
       "mapping": "unmapped",
       "links": []
@@ -12495,36 +12533,62 @@
       "links": []
     },
     {
-      "id": "RK-6.4-005",
+      "id": "RK-6.4-053",
       "section": "6.4",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-6.4-006",
+      "id": "RK-6.4-054",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-055",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-056",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-057",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-058",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-059",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1911"
+      }
+    },
+    {
+      "id": "RK-6.4-060",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-061",
       "section": "6.4",
       "mapping": "mapped_partial",
       "links": [
-        {
-          "id": "tool-composition-local-events",
-          "scope": "Local tool-call composition: cumulative character counts, slot identity and order, size coalescing, terminal frames, retry/fallback isolation, visibility and absence of partial call persistence.",
-          "coverage": "partial",
-          "missing": [
-            "Provider wire parsing, distributed executors and publication failures are not established by these scenarios.",
-            "Wall-clock coalescing is not covered here; forced consumer abandonment and cross-family order have separate native source evidence.",
-            "The rest of this broad clause, including all stored tool outcome combinations, remains outside this link."
-          ],
-          "executions": []
-        },
-        {
-          "id": "tool-composition-native-interruption",
-          "scope": "Public realtime observations when a composing turn is cancelled, exceeds its loop budget or its caller is abandoned.",
-          "coverage": "partial",
-          "missing": [
-            "Does not establish every provider or distributed executor lifecycle, nor wall-clock coalescing."
-          ],
-          "executions": []
-        },
         {
           "id": "openai-composition-wire",
           "scope": "Chat Completions tool-call composition, through the actual provider decoder and public room bus on simulated HTTP responses.",
@@ -12538,58 +12602,1332 @@
       ]
     },
     {
+      "id": "RK-6.4-062",
+      "section": "6.4",
+      "mapping": "mapped_partial",
+      "links": [
+        {
+          "id": "tool-composition-local-events",
+          "scope": "Local tool-call composition: cumulative character counts, slot identity and order, size coalescing, terminal frames, retry/fallback isolation, visibility and absence of partial call persistence.",
+          "coverage": "partial",
+          "missing": [
+            "Provider wire parsing, distributed executors and publication failures are not established by these scenarios.",
+            "Wall-clock coalescing is not covered here; forced consumer abandonment and cross-family order have separate native source evidence.",
+            "The rest of this broad clause, including all stored tool outcome combinations, remains outside this link."
+          ],
+          "executions": []
+        }
+      ]
+    },
+    {
+      "id": "RK-6.4-063",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-064",
+      "section": "6.4",
+      "mapping": "mapped_partial",
+      "links": [
+        {
+          "id": "tool-composition-native-interruption",
+          "scope": "Public realtime observations when a composing turn is cancelled, exceeds its loop budget or its caller is abandoned.",
+          "coverage": "partial",
+          "missing": [
+            "Does not establish every provider or distributed executor lifecycle, nor wall-clock coalescing."
+          ],
+          "executions": []
+        }
+      ]
+    },
+    {
+      "id": "RK-6.4-065",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-066",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-067",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-068",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-069",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1911"
+      }
+    },
+    {
+      "id": "RK-6.4-070",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
       "id": "RK-6.4-044",
       "section": "6.4",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-6.4-007",
+      "id": "RK-6.4-071",
       "section": "6.4",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-6.4-008",
+      "id": "RK-6.4-072",
       "section": "6.4",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-6.4-009",
+      "id": "RK-6.4-073",
       "section": "6.4",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-6.4-010",
+      "id": "RK-6.4-074",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1911"
+      }
+    },
+    {
+      "id": "RK-6.4-075",
       "section": "6.4",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-6.4-011",
+      "id": "RK-6.4-076",
       "section": "6.4",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-6.4-012",
+      "id": "RK-6.4-077",
       "section": "6.4",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-6.4-013",
+      "id": "RK-6.4-078",
       "section": "6.4",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-6.4-014",
+      "id": "RK-6.4-079",
       "section": "6.4",
       "mapping": "unmapped",
       "links": []
+    },
+    {
+      "id": "RK-6.4-080",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-081",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-082",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-083",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-084",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-085",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1911",
+        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+      }
+    },
+    {
+      "id": "RK-6.4-086",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-087",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1911",
+        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+      }
+    },
+    {
+      "id": "RK-6.4-088",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1911",
+        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+      }
+    },
+    {
+      "id": "RK-6.4-089",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1911",
+        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+      }
+    },
+    {
+      "id": "RK-6.4-090",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1911",
+        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+      }
+    },
+    {
+      "id": "RK-6.4-091",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1911",
+        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+      }
+    },
+    {
+      "id": "RK-6.4-092",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1911",
+        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+      }
+    },
+    {
+      "id": "RK-6.4-093",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1911",
+        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+      }
+    },
+    {
+      "id": "RK-6.4-094",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-095",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1911",
+        "note": "Media feature realtime."
+      }
+    },
+    {
+      "id": "RK-6.4-096",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1911"
+      }
+    },
+    {
+      "id": "RK-6.4-097",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-098",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1911"
+      }
+    },
+    {
+      "id": "RK-6.4-099",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-100",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1911"
+      }
+    },
+    {
+      "id": "RK-6.4-101",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1911"
+      }
+    },
+    {
+      "id": "RK-6.4-102",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1911"
+      }
+    },
+    {
+      "id": "RK-6.4-103",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1911"
+      }
+    },
+    {
+      "id": "RK-6.4-104",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1911",
+        "note": "Needs the scripted agent options tool_call_intents_required and tool_call_intents_only in both runners."
+      }
+    },
+    {
+      "id": "RK-6.4-105",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1911",
+        "note": "Needs the scripted agent options tool_call_intents_required and tool_call_intents_only in both runners."
+      }
+    },
+    {
+      "id": "RK-6.4-106",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1911",
+        "note": "Needs the scripted agent options tool_call_intents_required and tool_call_intents_only in both runners."
+      }
+    },
+    {
+      "id": "RK-6.4-107",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1911",
+        "note": "Needs the scripted agent options tool_call_intents_required and tool_call_intents_only in both runners."
+      }
+    },
+    {
+      "id": "RK-6.4-108",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-109",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1911"
+      }
+    },
+    {
+      "id": "RK-6.4-110",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-111",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-112",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1911"
+      }
+    },
+    {
+      "id": "RK-6.4-113",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1911"
+      }
+    },
+    {
+      "id": "RK-6.4-114",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-115",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1911"
+      }
+    },
+    {
+      "id": "RK-6.4-116",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1911"
+      }
+    },
+    {
+      "id": "RK-6.4-117",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1911"
+      }
+    },
+    {
+      "id": "RK-6.4-118",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1911"
+      }
+    },
+    {
+      "id": "RK-6.4-119",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1911"
+      }
+    },
+    {
+      "id": "RK-6.4-120",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1911"
+      }
+    },
+    {
+      "id": "RK-6.4-121",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1911",
+        "note": "Media feature realtime."
+      }
+    },
+    {
+      "id": "RK-6.4-122",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-123",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-124",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-125",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-126",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-127",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-128",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-129",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-130",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-131",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-132",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-133",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1911"
+      }
+    },
+    {
+      "id": "RK-6.4-134",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-135",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-136",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-137",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-138",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-139",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-140",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-141",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-142",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-143",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-144",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1911",
+        "note": "Needs a classifier fixture: scripted classifier answers behind the provided speak policy."
+      }
+    },
+    {
+      "id": "RK-6.4-145",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-146",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1911"
+      }
+    },
+    {
+      "id": "RK-6.4-147",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-148",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-149",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-150",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1911"
+      }
+    },
+    {
+      "id": "RK-6.4-151",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1911"
+      }
+    },
+    {
+      "id": "RK-6.4-152",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1911"
+      }
+    },
+    {
+      "id": "RK-6.4-153",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1911",
+        "note": "Needs a classifier fixture: scripted classifier answers behind the provided speak policy."
+      }
+    },
+    {
+      "id": "RK-6.4-154",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-155",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-156",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-157",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1911",
+        "note": "Needs a classifier fixture: scripted classifier answers behind the provided speak policy."
+      }
+    },
+    {
+      "id": "RK-6.4-158",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1911",
+        "note": "Needs a classifier fixture: scripted classifier answers behind the provided speak policy."
+      }
+    },
+    {
+      "id": "RK-6.4-159",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1911",
+        "note": "Needs a classifier fixture: scripted classifier answers behind the provided speak policy."
+      }
+    },
+    {
+      "id": "RK-6.4-160",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1911",
+        "note": "Needs a classifier fixture: scripted classifier answers behind the provided speak policy."
+      }
+    },
+    {
+      "id": "RK-6.4-161",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1911",
+        "note": "Needs a classifier fixture: scripted classifier answers behind the provided speak policy."
+      }
+    },
+    {
+      "id": "RK-6.4-162",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1911",
+        "note": "Needs a classifier fixture: scripted classifier answers behind the provided speak policy."
+      }
+    },
+    {
+      "id": "RK-6.4-163",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1911",
+        "note": "Needs a classifier fixture: scripted classifier answers behind the provided speak policy."
+      }
+    },
+    {
+      "id": "RK-6.4-164",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1911",
+        "note": "Needs a classifier fixture: scripted classifier answers behind the provided speak policy."
+      }
+    },
+    {
+      "id": "RK-6.4-165",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1911",
+        "note": "Needs a classifier fixture: scripted classifier answers behind the provided speak policy."
+      }
+    },
+    {
+      "id": "RK-6.4-166",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1911",
+        "note": "Needs a classifier fixture: scripted classifier answers behind the provided speak policy."
+      }
+    },
+    {
+      "id": "RK-6.4-167",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1911",
+        "note": "Needs a classifier fixture: scripted classifier answers behind the provided speak policy."
+      }
+    },
+    {
+      "id": "RK-6.4-168",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1911",
+        "note": "Needs a classifier fixture: scripted classifier answers behind the provided speak policy."
+      }
+    },
+    {
+      "id": "RK-6.4-169",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1911",
+        "note": "Needs a classifier fixture: scripted classifier answers behind the provided speak policy."
+      }
+    },
+    {
+      "id": "RK-6.4-170",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1911",
+        "note": "Needs a classifier fixture: scripted classifier answers behind the provided speak policy."
+      }
+    },
+    {
+      "id": "RK-6.4-171",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1911",
+        "note": "Needs a classifier fixture: scripted classifier answers behind the provided speak policy."
+      }
+    },
+    {
+      "id": "RK-6.4-172",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1911",
+        "note": "Needs a step that builds the provided answer-only policy around a scripted one."
+      }
+    },
+    {
+      "id": "RK-6.4-173",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1911",
+        "note": "Needs a step that builds the provided answer-only policy around a scripted one."
+      }
+    },
+    {
+      "id": "RK-6.4-174",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1911",
+        "note": "Needs a step that builds the provided answer-only policy around a scripted one."
+      }
+    },
+    {
+      "id": "RK-6.4-175",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1911",
+        "note": "Needs a step that builds the provided answer-only policy around a scripted one."
+      }
+    },
+    {
+      "id": "RK-6.4-176",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-177",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-178",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-179",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-180",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-181",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-182",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-183",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-184",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-185",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1911"
+      }
+    },
+    {
+      "id": "RK-6.4-186",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-187",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-188",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-189",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-190",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-191",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1911"
+      }
+    },
+    {
+      "id": "RK-6.4-192",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-193",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1911"
+      }
+    },
+    {
+      "id": "RK-6.4-194",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1911"
+      }
+    },
+    {
+      "id": "RK-6.4-195",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-196",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-197",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-198",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-199",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-200",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-201",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1911",
+        "note": "Needs a classifier fixture: scripted classifier answers behind the provided speak policy."
+      }
+    },
+    {
+      "id": "RK-6.4-202",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1911",
+        "note": "Needs a classifier fixture: scripted classifier answers behind the provided speak policy."
+      }
+    },
+    {
+      "id": "RK-6.4-203",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1911",
+        "note": "Needs a classifier fixture: scripted classifier answers behind the provided speak policy."
+      }
+    },
+    {
+      "id": "RK-6.4-204",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1911",
+        "note": "Needs a step that chooses the provided LLM thinker over a scripted provider answering JSON."
+      }
+    },
+    {
+      "id": "RK-6.4-205",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1911",
+        "note": "Media feature voice."
+      }
+    },
+    {
+      "id": "RK-6.4-206",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1911",
+        "note": "A scenario can store the cut record through the store calls (a binding and an internal event of a voice channel) on Python today; roomkit-rs reads no cut record, so the scenario needs a requires_features name in both runners' feature tables (decision D1), which lot T-1 does not add."
+      }
+    },
+    {
+      "id": "RK-6.4-207",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1911",
+        "note": "A scenario can store the cut record through the store calls (a binding and an internal event of a voice channel) on Python today; roomkit-rs reads no cut record, so the scenario needs a requires_features name in both runners' feature tables (decision D1), which lot T-1 does not add."
+      }
+    },
+    {
+      "id": "RK-6.4-208",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1911",
+        "note": "A scenario can store the cut record through the store calls (a binding and an internal event of a voice channel) on Python today; roomkit-rs reads no cut record, so the scenario needs a requires_features name in both runners' feature tables (decision D1), which lot T-1 does not add."
+      }
+    },
+    {
+      "id": "RK-6.4-209",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1911",
+        "note": "A scenario can store the cut record through the store calls (a binding and an internal event of a voice channel) on Python today; roomkit-rs reads no cut record, so the scenario needs a requires_features name in both runners' feature tables (decision D1), which lot T-1 does not add."
+      }
+    },
+    {
+      "id": "RK-6.4-210",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1911",
+        "note": "A scenario can store the cut record through the store calls (a binding and an internal event of a voice channel) on Python today; roomkit-rs reads no cut record, so the scenario needs a requires_features name in both runners' feature tables (decision D1), which lot T-1 does not add."
+      }
+    },
+    {
+      "id": "RK-6.4-211",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1911",
+        "note": "A scenario can store the cut record through the store calls (a binding and an internal event of a voice channel) on Python today; roomkit-rs reads no cut record, so the scenario needs a requires_features name in both runners' feature tables (decision D1), which lot T-1 does not add."
+      }
+    },
+    {
+      "id": "RK-6.4-212",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1911",
+        "note": "Needs a stored cut record and the speak_turns snapshot to carry the turn's cut, in both runners."
+      }
+    },
+    {
+      "id": "RK-6.4-213",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1911",
+        "note": "Needs a classifier fixture (scripted classifier answers behind the provided speak policy) and a stored cut record."
+      }
+    },
+    {
+      "id": "RK-6.4-214",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1911",
+        "note": "Needs a classifier fixture (scripted classifier answers behind the provided speak policy) and a stored cut record."
+      }
+    },
+    {
+      "id": "RK-6.4-215",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1911",
+        "note": "Media feature voice."
+      }
+    },
+    {
+      "id": "RK-6.4-216",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1911",
+        "note": "A scenario can store the cut record through the store calls (a binding and an internal event of a voice channel) on Python today; roomkit-rs reads no cut record, so the scenario needs a requires_features name in both runners' feature tables (decision D1), which lot T-1 does not add."
+      }
+    },
+    {
+      "id": "RK-6.4-217",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1911",
+        "note": "A scenario can store the cut record through the store calls (a binding and an internal event of a voice channel) on Python today; roomkit-rs reads no cut record, so the scenario needs a requires_features name in both runners' feature tables (decision D1), which lot T-1 does not add."
+      }
     },
     {
       "id": "RK-6.4-015",
