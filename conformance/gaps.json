@@ -87,20 +87,24 @@
       "card": "RMK-1911"
     },
     "RK-6.4-104": {
-      "class": "writable",
-      "card": "RMK-1911"
+      "class": "step",
+      "card": "RMK-1911",
+      "note": "Needs the scripted agent options tool_call_intents_required and tool_call_intents_only in both runners."
     },
     "RK-6.4-105": {
-      "class": "writable",
-      "card": "RMK-1911"
+      "class": "step",
+      "card": "RMK-1911",
+      "note": "Needs the scripted agent options tool_call_intents_required and tool_call_intents_only in both runners."
     },
     "RK-6.4-106": {
-      "class": "writable",
-      "card": "RMK-1911"
+      "class": "step",
+      "card": "RMK-1911",
+      "note": "Needs the scripted agent options tool_call_intents_required and tool_call_intents_only in both runners."
     },
     "RK-6.4-107": {
-      "class": "writable",
-      "card": "RMK-1911"
+      "class": "step",
+      "card": "RMK-1911",
+      "note": "Needs the scripted agent options tool_call_intents_required and tool_call_intents_only in both runners."
     },
     "RK-6.4-109": {
       "class": "writable",
@@ -312,32 +316,32 @@
     "RK-6.4-206": {
       "class": "step",
       "card": "RMK-1911",
-      "note": "Needs a stored cut record: an internal event from a channel bound as voice, written through the store calls; roomkit-rs reads no cut record yet."
+      "note": "A scenario can store the cut record through the store calls (a binding and an internal event of a voice channel) on Python today; roomkit-rs reads no cut record, so the scenario needs a requires_features name in both runners' feature tables (decision D1), which lot T-1 does not add."
     },
     "RK-6.4-207": {
       "class": "step",
       "card": "RMK-1911",
-      "note": "Needs a stored cut record: an internal event from a channel bound as voice, written through the store calls; roomkit-rs reads no cut record yet."
+      "note": "A scenario can store the cut record through the store calls (a binding and an internal event of a voice channel) on Python today; roomkit-rs reads no cut record, so the scenario needs a requires_features name in both runners' feature tables (decision D1), which lot T-1 does not add."
     },
     "RK-6.4-208": {
       "class": "step",
       "card": "RMK-1911",
-      "note": "Needs a stored cut record: an internal event from a channel bound as voice, written through the store calls; roomkit-rs reads no cut record yet."
+      "note": "A scenario can store the cut record through the store calls (a binding and an internal event of a voice channel) on Python today; roomkit-rs reads no cut record, so the scenario needs a requires_features name in both runners' feature tables (decision D1), which lot T-1 does not add."
     },
     "RK-6.4-209": {
       "class": "step",
       "card": "RMK-1911",
-      "note": "Needs a stored cut record: an internal event from a channel bound as voice, written through the store calls; roomkit-rs reads no cut record yet."
+      "note": "A scenario can store the cut record through the store calls (a binding and an internal event of a voice channel) on Python today; roomkit-rs reads no cut record, so the scenario needs a requires_features name in both runners' feature tables (decision D1), which lot T-1 does not add."
     },
     "RK-6.4-210": {
       "class": "step",
       "card": "RMK-1911",
-      "note": "Needs a stored cut record: an internal event from a channel bound as voice, written through the store calls; roomkit-rs reads no cut record yet."
+      "note": "A scenario can store the cut record through the store calls (a binding and an internal event of a voice channel) on Python today; roomkit-rs reads no cut record, so the scenario needs a requires_features name in both runners' feature tables (decision D1), which lot T-1 does not add."
     },
     "RK-6.4-211": {
       "class": "step",
       "card": "RMK-1911",
-      "note": "Needs a stored cut record: an internal event from a channel bound as voice, written through the store calls; roomkit-rs reads no cut record yet."
+      "note": "A scenario can store the cut record through the store calls (a binding and an internal event of a voice channel) on Python today; roomkit-rs reads no cut record, so the scenario needs a requires_features name in both runners' feature tables (decision D1), which lot T-1 does not add."
     },
     "RK-6.4-212": {
       "class": "step",
@@ -362,12 +366,12 @@
     "RK-6.4-216": {
       "class": "step",
       "card": "RMK-1911",
-      "note": "Needs a stored cut record: an internal event from a channel bound as voice, written through the store calls; roomkit-rs reads no cut record yet."
+      "note": "A scenario can store the cut record through the store calls (a binding and an internal event of a voice channel) on Python today; roomkit-rs reads no cut record, so the scenario needs a requires_features name in both runners' feature tables (decision D1), which lot T-1 does not add."
     },
     "RK-6.4-217": {
       "class": "step",
       "card": "RMK-1911",
-      "note": "Needs a stored cut record: an internal event from a channel bound as voice, written through the store calls; roomkit-rs reads no cut record yet."
+      "note": "A scenario can store the cut record through the store calls (a binding and an internal event of a voice channel) on Python today; roomkit-rs reads no cut record, so the scenario needs a requires_features name in both runners' feature tables (decision D1), which lot T-1 does not add."
     },
     "RK-8.1-008": {
       "class": "step",

@@ -2037,7 +2037,7 @@ by a turn executor (Section 10.6), which may live in another process than the
 room's owner.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.4-002", "kind": "behavior", "applies": "§6.4 AI channel: the outline of what on_event() does, and the anatomy of a turn, a table naming the contract that carries each step; each step is carried by its own contract, below, in Sections 6.7, 9, 19.3, 20, 21, 24 and Appendix A.9. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+<!-- rfc: {"id": "RK-6.4-002", "kind": "behavior", "applies": "§6.4 AI channel: the outline of what on_event() does, and the anatomy of a turn, a table naming the contract that carries each step; each step is carried by its own contract, below, in Sections 6.7, 7.5, 9, 19.3, 20, 21, 24 and Appendix A.9. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **AI Channel:**
 
 An AI channel wraps an AI Provider (see Section 6.7). When `on_event()` is called:
