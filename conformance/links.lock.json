@@ -3688,8 +3688,11 @@
       "verification/a-completed-request-verifies-the-identity": "04dd6447015a3f85d6f88c5bd3090fc9406993741367e25f88de82814e193ead",
       "verification/a-link-s-release-is-answered-past-the-budget": "04dd6447015a3f85d6f88c5bd3090fc9406993741367e25f88de82814e193ead",
       "verification/a-new-request-cancels-the-open-one": "04dd6447015a3f85d6f88c5bd3090fc9406993741367e25f88de82814e193ead",
+      "verification/a-request-that-fails-while-verified-ends-the-verification": "04dd6447015a3f85d6f88c5bd3090fc9406993741367e25f88de82814e193ead",
+      "verification/a-revocation-ends-the-verification-and-its-open-request": "04dd6447015a3f85d6f88c5bd3090fc9406993741367e25f88de82814e193ead",
       "verification/a-secret-is-checked-against-its-scrypt-hash": "04dd6447015a3f85d6f88c5bd3090fc9406993741367e25f88de82814e193ead",
-      "verification/a-verification-ends-when-its-time-runs-out": "04dd6447015a3f85d6f88c5bd3090fc9406993741367e25f88de82814e193ead"
+      "verification/a-verification-ends-when-its-time-runs-out": "04dd6447015a3f85d6f88c5bd3090fc9406993741367e25f88de82814e193ead",
+      "verification/asking-a-verified-identity-again-keeps-it-verified": "04dd6447015a3f85d6f88c5bd3090fc9406993741367e25f88de82814e193ead"
     },
     "RK-11.7.3-002": {
       "verification/a-code-reply-is-consumed-and-verifies": "cd79237217d299081cfcbe199e0bc9c67650c828a3a5bd85756628e39837726c",
@@ -3706,13 +3709,18 @@
       "verification/a-marker-a-sender-supplies-releases-nothing": "cd79237217d299081cfcbe199e0bc9c67650c828a3a5bd85756628e39837726c",
       "verification/a-policy-can-keep-held-messages-held": "cd79237217d299081cfcbe199e0bc9c67650c828a3a5bd85756628e39837726c",
       "verification/a-policy-that-does-not-hold-only-labels": "cd79237217d299081cfcbe199e0bc9c67650c828a3a5bd85756628e39837726c",
+      "verification/a-reply-of-other-digits-is-a-wrong-code": "cd79237217d299081cfcbe199e0bc9c67650c828a3a5bd85756628e39837726c",
       "verification/a-verification-hook-past-process-timeout-expires-its-message": "cd79237217d299081cfcbe199e0bc9c67650c828a3a5bd85756628e39837726c",
       "verification/a-verification-labels-only-its-organization-s-rooms": "cd79237217d299081cfcbe199e0bc9c67650c828a3a5bd85756628e39837726c",
       "verification/a-verified-sender-s-message-reaches-the-agents": "cd79237217d299081cfcbe199e0bc9c67650c828a3a5bd85756628e39837726c",
       "verification/an-unverified-sender-s-edit-is-refused": "cd79237217d299081cfcbe199e0bc9c67650c828a3a5bd85756628e39837726c",
       "verification/an-unverified-sender-s-message-is-held-from-the-agents": "cd79237217d299081cfcbe199e0bc9c67650c828a3a5bd85756628e39837726c",
       "verification/digits-with-no-code-request-open-are-an-ordinary-message": "cd79237217d299081cfcbe199e0bc9c67650c828a3a5bd85756628e39837726c",
-      "verification/holding-never-widens-what-a-message-reached": "cd79237217d299081cfcbe199e0bc9c67650c828a3a5bd85756628e39837726c"
+      "verification/holding-never-widens-what-a-message-reached": "cd79237217d299081cfcbe199e0bc9c67650c828a3a5bd85756628e39837726c",
+      "verification/nothing-is-released-twice": "cd79237217d299081cfcbe199e0bc9c67650c828a3a5bd85756628e39837726c",
+      "verification/only-a-message-the-pipeline-held-is-released": "cd79237217d299081cfcbe199e0bc9c67650c828a3a5bd85756628e39837726c",
+      "verification/only-the-request-s-window-is-released": "cd79237217d299081cfcbe199e0bc9c67650c828a3a5bd85756628e39837726c",
+      "verification/the-release-keeps-to-its-bound": "cd79237217d299081cfcbe199e0bc9c67650c828a3a5bd85756628e39837726c"
     },
     "RK-11.7.3-004": {
       "verification/a-blocked-message-is-observed-by-no-hook": "175cd12628bce038273bef44b356b3f6f8c9c9c61dafad7f0be70fcee09ed4a9",
@@ -3721,6 +3729,7 @@
       "verification/a-hook-passes-an-unverified-sender-s-message-labelled": "175cd12628bce038273bef44b356b3f6f8c9c9c61dafad7f0be70fcee09ed4a9",
       "verification/a-hook-past-its-timeout-leaves-the-message-held": "175cd12628bce038273bef44b356b3f6f8c9c9c61dafad7f0be70fcee09ed4a9",
       "verification/a-hook-reads-whose-verification-to-ask-for": "175cd12628bce038273bef44b356b3f6f8c9c9c61dafad7f0be70fcee09ed4a9",
+      "verification/a-hook-s-rewrite-goes-on-with-its-pass": "175cd12628bce038273bef44b356b3f6f8c9c9c61dafad7f0be70fcee09ed4a9",
       "verification/a-policy-that-does-not-hold-only-labels": "175cd12628bce038273bef44b356b3f6f8c9c9c61dafad7f0be70fcee09ed4a9",
       "verification/a-verification-hook-past-process-timeout-expires-its-message": "175cd12628bce038273bef44b356b3f6f8c9c9c61dafad7f0be70fcee09ed4a9",
       "verification/a-verified-sender-s-message-reaches-the-agents": "175cd12628bce038273bef44b356b3f6f8c9c9c61dafad7f0be70fcee09ed4a9",
@@ -3733,11 +3742,15 @@
       "verification/a-hook-past-its-timeout-leaves-the-message-held": "df75af36e78bc049773e1fb79f76526e67d4cf3fceb1f752cc3e4c9cd25c7df7",
       "verification/a-hook-reads-whose-verification-to-ask-for": "df75af36e78bc049773e1fb79f76526e67d4cf3fceb1f752cc3e4c9cd25c7df7",
       "verification/a-policy-can-keep-held-messages-held": "df75af36e78bc049773e1fb79f76526e67d4cf3fceb1f752cc3e4c9cd25c7df7",
+      "verification/a-reply-of-other-digits-is-a-wrong-code": "df75af36e78bc049773e1fb79f76526e67d4cf3fceb1f752cc3e4c9cd25c7df7",
       "verification/a-verification-labels-only-its-organization-s-rooms": "df75af36e78bc049773e1fb79f76526e67d4cf3fceb1f752cc3e4c9cd25c7df7",
       "verification/a-verified-sender-s-message-reaches-the-agents": "df75af36e78bc049773e1fb79f76526e67d4cf3fceb1f752cc3e4c9cd25c7df7",
+      "verification/an-unverified-sender-s-edit-is-refused": "df75af36e78bc049773e1fb79f76526e67d4cf3fceb1f752cc3e4c9cd25c7df7",
       "verification/an-unverified-sender-s-message-is-held-from-the-agents": "df75af36e78bc049773e1fb79f76526e67d4cf3fceb1f752cc3e4c9cd25c7df7",
       "verification/digits-with-no-code-request-open-are-an-ordinary-message": "df75af36e78bc049773e1fb79f76526e67d4cf3fceb1f752cc3e4c9cd25c7df7",
-      "verification/holding-never-widens-what-a-message-reached": "df75af36e78bc049773e1fb79f76526e67d4cf3fceb1f752cc3e4c9cd25c7df7"
+      "verification/holding-never-widens-what-a-message-reached": "df75af36e78bc049773e1fb79f76526e67d4cf3fceb1f752cc3e4c9cd25c7df7",
+      "verification/only-the-request-s-window-is-released": "df75af36e78bc049773e1fb79f76526e67d4cf3fceb1f752cc3e4c9cd25c7df7",
+      "verification/the-release-keeps-to-its-bound": "df75af36e78bc049773e1fb79f76526e67d4cf3fceb1f752cc3e4c9cd25c7df7"
     },
     "RK-11.7.3-006": {
       "verification/holding-never-widens-what-a-message-reached": "71fa075419d4fc607af588a428b479b61b35ecc87a2310f56f01bd6714d732e8"
@@ -3749,11 +3762,15 @@
       "verification/a-hook-past-its-timeout-leaves-the-message-held": "ef4a755d0b7339f567498ebcbaa9334e369aed2bf760dcf47a0ffa93afed4065",
       "verification/a-hook-reads-whose-verification-to-ask-for": "ef4a755d0b7339f567498ebcbaa9334e369aed2bf760dcf47a0ffa93afed4065",
       "verification/a-policy-can-keep-held-messages-held": "ef4a755d0b7339f567498ebcbaa9334e369aed2bf760dcf47a0ffa93afed4065",
+      "verification/a-reply-of-other-digits-is-a-wrong-code": "ef4a755d0b7339f567498ebcbaa9334e369aed2bf760dcf47a0ffa93afed4065",
       "verification/a-verification-labels-only-its-organization-s-rooms": "ef4a755d0b7339f567498ebcbaa9334e369aed2bf760dcf47a0ffa93afed4065",
       "verification/a-verified-sender-s-message-reaches-the-agents": "ef4a755d0b7339f567498ebcbaa9334e369aed2bf760dcf47a0ffa93afed4065",
+      "verification/an-unverified-sender-s-edit-is-refused": "ef4a755d0b7339f567498ebcbaa9334e369aed2bf760dcf47a0ffa93afed4065",
       "verification/an-unverified-sender-s-message-is-held-from-the-agents": "ef4a755d0b7339f567498ebcbaa9334e369aed2bf760dcf47a0ffa93afed4065",
       "verification/digits-with-no-code-request-open-are-an-ordinary-message": "ef4a755d0b7339f567498ebcbaa9334e369aed2bf760dcf47a0ffa93afed4065",
-      "verification/holding-never-widens-what-a-message-reached": "ef4a755d0b7339f567498ebcbaa9334e369aed2bf760dcf47a0ffa93afed4065"
+      "verification/holding-never-widens-what-a-message-reached": "ef4a755d0b7339f567498ebcbaa9334e369aed2bf760dcf47a0ffa93afed4065",
+      "verification/only-the-request-s-window-is-released": "ef4a755d0b7339f567498ebcbaa9334e369aed2bf760dcf47a0ffa93afed4065",
+      "verification/the-release-keeps-to-its-bound": "ef4a755d0b7339f567498ebcbaa9334e369aed2bf760dcf47a0ffa93afed4065"
     },
     "RK-11.7.3-008": {
       "verification/a-hook-passes-an-unverified-sender-s-message-labelled": "ce09c147cb898fd9089e3fee8e98156b524c5b459b8da74e3b47bba75a75affc",
@@ -3802,6 +3819,7 @@
       "verification/a-code-reply-s-release-is-answered-past-its-budget": "9f2da8e212ca17221dab6555ee1dd86c60b9197e31a4046fff3e858ee62ef244",
       "verification/a-deferred-code-reply-returns-before-its-release": "9f2da8e212ca17221dab6555ee1dd86c60b9197e31a4046fff3e858ee62ef244",
       "verification/a-held-message-cancelled-in-flight-is-released-with-no-answer": "9f2da8e212ca17221dab6555ee1dd86c60b9197e31a4046fff3e858ee62ef244",
+      "verification/a-released-message-s-turn-reads-what-came-after-it": "9f2da8e212ca17221dab6555ee1dd86c60b9197e31a4046fff3e858ee62ef244",
       "verification/a-reply-of-other-digits-is-a-wrong-code": "9f2da8e212ca17221dab6555ee1dd86c60b9197e31a4046fff3e858ee62ef244"
     },
     "RK-11.7.4-003": {
