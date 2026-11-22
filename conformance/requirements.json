@@ -1553,7 +1553,7 @@
       "section": "17.1",
       "title": "Input Validation",
       "line": 19500,
-      "sha256": "547870c7721fd7ffd8e0006440c65540bdf4377b51ff806c7df1b54e38114fdc",
+      "sha256": "4a609920816bf69f0f35acfe75391dcfb4bfb2e644bab5d75d73d183229a3d4e",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
     },
@@ -1561,7 +1561,7 @@
       "section": "17.2",
       "title": "Multi-Tenant Isolation",
       "line": 19508,
-      "sha256": "d4adb6c7981092f9c26fe235fd04efbb672b1b0db9e8ce29550a30a91adbe47f",
+      "sha256": "d5b5535a7ef88e5babd9e489c81ab671e787f2e7ad7660147ac3b6819d2f4738",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
     },
@@ -1569,7 +1569,7 @@
       "section": "17.3",
       "title": "Sensitive Data",
       "line": 19619,
-      "sha256": "4c255bd5bacf35b9f6eaa3fc520cab487ef21309f07b3bc5b57681175f2f52eb",
+      "sha256": "6aeebc1060601b0ca60012126d68133457e536cd0a4d3d71b5fde7e5196a33f7",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
     },
@@ -1577,7 +1577,7 @@
       "section": "17.4",
       "title": "Rate Limiting",
       "line": 19630,
-      "sha256": "bc5be1ba2a0fe7af947e2c7de82d7992e2f5669329e930a4ab2ed8c3c7c4ea1c",
+      "sha256": "75664c15c71826a2a6bb9a9466a8042792971155fa2dd2d4c8d6b152fe52982d",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
     },
@@ -1585,7 +1585,7 @@
       "section": "17.5",
       "title": "Chain Depth",
       "line": 19637,
-      "sha256": "4016a737dd040ab0d4794ec2bda2d9b98896502dad88a6f4002d6b56b3ae7b16",
+      "sha256": "4ea6ad14d47c104cc4bc0dc1fd5e2bc2dfee8385fe08577ffcffb504eeaec818",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
     },
@@ -1593,7 +1593,7 @@
       "section": "17.6",
       "title": "Voice and Audio Security",
       "line": 19645,
-      "sha256": "7e1905eb6bae3f4691aacd175a5ce172d1011a50778fd6a5d46b36673da14ec8",
+      "sha256": "f42c2f61e82d8a76da6d2d61ff1df977b3d8bb4e89bec4f3eaa06498e827950b",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
     },
@@ -1601,7 +1601,7 @@
       "section": "17.7",
       "title": "Conference Access Security",
       "line": 19753,
-      "sha256": "bd152465c238e159193c20866b1207dd10761428fbb7ee5f4785d73c054e1742",
+      "sha256": "c6c53896a8c8a3e36bae5578f36dca2dfa6a1a235f90044efa9126cccd5a174d",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
     },
@@ -1609,7 +1609,7 @@
       "section": "17.8",
       "title": "Skill-Bundled Files",
       "line": 19802,
-      "sha256": "c2ff64a0b254ee9c52f501e2c78c09fb4eaa83aa2e14a08f5a5e3c8f6cd2584f",
+      "sha256": "b6547d9fb437c8f3083295c0e6ec24210637c61f31aa2c25df03e7afaa7fd3dc",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
     },
@@ -30972,139 +30972,784 @@
       "sha256": "d662150a2924f8de7fc80f643d7edfe5cf232e0c4fd37b8927ddb49aab84246a"
     },
     {
-      "id": "RK-17.1-001",
+      "id": "RK-17.1-002",
       "kind": "behavior",
-      "applies": "§17.1 Input Validation; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
+      "applies": "§17.1 Input Validation: every inbound payload validated before it is processed.",
+      "level": "must",
       "section": "17.1",
       "line": 19502,
-      "text": "- All inbound payloads MUST be validated before processing.\n- Webhook signatures SHOULD be verified when the provider supports them.\n- Event content SHOULD be sanitized to prevent injection attacks.",
-      "sha256": "13864cf2cf5851f5da755bc5ebe157ecef3c13e08c65dd79b43a985e9d355bd1"
+      "text": "- All inbound payloads MUST be validated before processing.",
+      "sha256": "b75bb4eeecca342869a3e756ff91cf292a83123d489978a290f2b28373d08321"
     },
     {
-      "id": "RK-17.2-001",
+      "id": "RK-17.1-003",
       "kind": "behavior",
-      "applies": "§17.2 Multi-Tenant Isolation; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
+      "applies": "§17.1 Input Validation: a webhook's signature verified where its provider signs it.",
+      "level": "should",
+      "section": "17.1",
+      "line": 19503,
+      "text": "- Webhook signatures SHOULD be verified when the provider supports them.",
+      "sha256": "32634e672b6bce588fcaf14efc19e0d9a027448c3abd69200f24317f129d6abc"
+    },
+    {
+      "id": "RK-17.1-004",
+      "kind": "behavior",
+      "applies": "§17.1 Input Validation: event content sanitized against injection.",
+      "level": "should",
+      "section": "17.1",
+      "line": 19504,
+      "text": "- Event content SHOULD be sanitized to prevent injection attacks.",
+      "sha256": "89a3c769125280b4b8f35b5948d82d96804d2eb95f8cd5cc8d926975862d7f45"
+    },
+    {
+      "id": "RK-17.2-002",
+      "kind": "behavior",
+      "applies": "§17.2 Multi-Tenant Isolation: room operations isolated per organization; with the item that scopes a room by its organization_id. The items below say how.",
+      "level": "must",
       "section": "17.2",
       "line": 19510,
-      "text": "- Rooms are scoped by `organization_id`.\n- Implementations MUST ensure that room operations are isolated per organization.\n- Identity resolution MUST be scoped to the organization.\n- A room the framework creates for another room's work (a delegation's\n  child room, Section 23.3) MUST belong to that room's organization.\n- A door that admits a participant into a room's media (a framework join, a\n  realtime channel's session start, a conference channel's `mint_access()`)\n  MUST read the room with the organization the caller acts for, before any\n  session exists or is bound and before any credential is minted: another\n  organization's room is not found, no session joins it, no credential admits\n  to it, and none of its recordings is told of the session's tracks. Called\n  without an organization, a framework join reads the room unscoped, and a\n  session start or a mint reads none for the scope.\n- A room's hooks, its subscriptions and its turns end with the room\n  (§8.4, §9.1, §10.6.2): the kit that creates a room under the id of a room\n  the store deleted, for the same organization, another or none, forgets\n  the room hooks registered for the deleted room and the names enabled for\n  it, and ends the subscriptions made through it to the deleted room's\n  ephemerals. Nothing registered for one organization's room reads the\n  events of the room another organization creates after it. Hooks and\n  subscriptions registered while no room held the id are the new room's.\n  So in every process: a kit keeps the creation mark (`created_at`) of the\n  room its hooks and enabled names of an id are of, compares it with the\n  room in hand when they fire, and forgets them for a later room (§9.1); a\n  publication carries the mark of its room and a subscription reads its\n  own room's alone (§8.4); the owner keeps the mark of the room each turn\n  record is of, so that a turn or a channel call in a room of another mark\n  follows none of the earlier room's turns and an executor lets go of what\n  it held for the id (§10.6.2), and a host verb made after a deleted\n  room's turn is refused in the room created again since (§10.6.5).\n- A call that names no organization (an inbound message, a direct\n  injection) reads rooms unscoped, and a room it creates belongs to no\n  organization. A call acting for an organization reaches that\n  organization's rooms only: a room of another organization, or of none, is\n  not its own (§10.1 step 2), and a room it creates belongs to the\n  organization.\n- Every room operation names the organization it acts for, as a message does,\n  among them a room's transitions (§5.1), a member's join, leave and rename\n  and the reads of its roster (§5.5), a channel's attach, detach and binding\n  changes (§7.5), an ephemeral's publication and a subscription to a room's\n  ephemerals (§8.4), a room's read markers, marked and listed (§14.1), a\n  room hook's registration, enabling, disabling and\n  removal (§9.1, §10.6.6), an update or a delete of a stored event (§10.3), a\n  direct injection and a record's commit (§10.5), a claim for a strategy\n  (§19.7), a steer of a room's turns (§21.3), a delivery (§22), a delegation,\n  a task the host starts and its cancel (§23.3, §23.4), a greeting, a\n  regeneration of an answer and a feedback. Against a room that is not the\n  caller's, each acts as it does on a room that does not exist: a transition,\n  a membership change or read, an attach, a detach or a binding change, a\n  publication or a subscription, a read marker marked or listed, a room\n  hook's registration, enabling,\n  disabling and removal, and a claim for a strategy, fail as not found, as\n  do a message that names the room (§10.1 step 1), an injection, a record, a\n  steer, a delivery, a delegation, a task, a greeting, a\n  regeneration and a feedback, before any\n  hook runs, anything is queued or drawn from a reentry budget, a turn starts\n  or is steered, or a room is created; an update or a delete is a no-op that\n  fires nothing, and a task's cancel cancels nothing. A call that takes the\n  room lock checks the room as the lock finds it, before its due timer\n  transitions are applied, so nothing is written in it, those transitions\n  included: they fall due all the same, and the room's next own call or the\n  check of its timers applies them at the instant each fell due (§5.1). A call\n  that takes no lock (a delivery, a publication, a steer) reads the room\n  before its first effect; a room's organization never changes while it\n  exists, so that read holds.\n- A transport's connection registry that reads no room (a WebSocket channel's,\n  Appendix A.8) holds each connection for the organization it was registered\n  for, or for none. A room of another organization, or of none, delivers\n  nothing to a connection registered for one, whatever rooms it is subscribed\n  to, streamed or not. A stream under way sends only to the registrations\n  present when it started, checked as each send starts: an id unregistered,\n  evicted or registered again since, for any organization or the same one,\n  gets nothing more of it, its end included, since a new registration never\n  saw its start. A call acting for an organization subscribes, unsubscribes or\n  unregisters only a connection registered for that organization, and\n  registers again only such a connection: one of another organization, one\n  registered for none and one that does not exist are refused alike, nothing\n  changed. A scoped registration of an id no connection holds succeeds, which\n  tells that the id is free: connection ids are one namespace across\n  organizations, generated by the host and never chosen by a client. A call\n  that names no organization, the host's own, acts on any connection as\n  before, and registering an id again without one registers it for none. A\n  registration that changes a known id's organization, to none included, drops\n  the rooms the id followed, and a connection evicted after repeated send\n  failures is forgotten with its rooms and its organization; a send failure of\n  a registration gone counts against none.\n- These calls name no organization, by design:\n  - a call addressed by an identifier that works as a capability, issued to\n    its holder: `answer_input()` and `reject_input()` (a human-input request's\n    id, an unguessable random id, §10.6.5) and `unsubscribe_room()` (a\n    subscription's id, §8.4): holding the id is the authority;\n  - a channel's own steering (`AIChannel.steer()`) and a turn client's\n    (`TurnClient.steer()`): neither holds a store. Given an organization, the\n    turn client reaches only the turns of that organization's rooms and\n    answers 0 for the others: a turn it does not reach and one that does not\n    run read alike. The kit's `steer()` is the door that reads a room;\n  - the trusted levels below the kit's calls, which hold no store and read no\n    room: a hook engine's `add_room_hook()`, `remove_room_hook()` and\n    `replace_room_hook()`, and a turn client's `enable_room_hook()` and\n    `disable_room_hook()`;\n  - a strategy's `install()` called directly, which claims the room (through\n    `claim_room_strategy()`, unscoped) and sets up its hooks with no\n    organization: the kit's `install_strategy()` reads the room with the\n    caller's organization first;\n  - the deprecated `connect_voice()`, `connect_video()` and\n    `bind_voice_session()`, which `join()` replaces with its organization.",
-      "sha256": "26ebdd62afa7246a7de9a102714d3aad0764f1fbed5fa919a41d7b414b8e746c"
+      "text": "- Rooms are scoped by `organization_id`.\n- Implementations MUST ensure that room operations are isolated per organization.",
+      "sha256": "a5d6465c1baa671ad73c40a7e22951e68fe03d99003e86fd29013b4f305a2695"
     },
     {
-      "id": "RK-17.3-001",
+      "id": "RK-17.2-003",
       "kind": "behavior",
-      "applies": "§17.3 Sensitive Data; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
+      "applies": "§17.2 Multi-Tenant Isolation: identity resolution scoped to the organization.",
+      "level": "must",
+      "section": "17.2",
+      "line": 19512,
+      "text": "- Identity resolution MUST be scoped to the organization.",
+      "sha256": "97ed6e84295681bbab0154a1f6a842f09f7028c8b70287111e01dad0d646bdcc"
+    },
+    {
+      "id": "RK-17.2-004",
+      "kind": "behavior",
+      "applies": "§17.2 Multi-Tenant Isolation: a room the framework creates for another room's work (a delegation's child room, §23.3) belongs to that room's organization, or to none with it.",
+      "level": "must",
+      "section": "17.2",
+      "line": 19513,
+      "text": "- A room the framework creates for another room's work (a delegation's\n  child room, Section 23.3) MUST belong to that room's organization.",
+      "sha256": "cec6fe8504feed974e62b5be463d2af49f3fea6cdf3fe98c087ded692e58fedc"
+    },
+    {
+      "id": "RK-17.2-005",
+      "kind": "behavior",
+      "applies": "§17.2 Multi-Tenant Isolation: where an implementation offers voice, realtime or conference (media): a door that admits a participant into a room's media (a framework join, a realtime session start, a conference mint_access()) reads the room with the caller's organization before any session exists or is bound and before any credential is minted; another organization's room is not found, joined, admitted to, or told of the session's tracks.",
+      "level": "must",
+      "section": "17.2",
+      "line": 19515,
+      "text": "- A door that admits a participant into a room's media (a framework join, a\n  realtime channel's session start, a conference channel's `mint_access()`)\n  MUST read the room with the organization the caller acts for, before any\n  session exists or is bound and before any credential is minted: another\n  organization's room is not found, no session joins it, no credential admits\n  to it, and none of its recordings is told of the session's tracks.",
+      "sha256": "3fe98010aafbbca650720cf59b1e7098d9dc717fc119e07269e610d756c10063"
+    },
+    {
+      "id": "RK-17.2-006",
+      "kind": "behavior",
+      "applies": "§17.2 Multi-Tenant Isolation: where an implementation offers voice, realtime or conference (media): called without an organization, a framework join reads the room unscoped, and a session start or a mint reads none for the scope.",
+      "level": "must",
+      "section": "17.2",
+      "line": 19521,
+      "text": "Called\n  without an organization, a framework join reads the room unscoped, and a\n  session start or a mint reads none for the scope.",
+      "sha256": "d31f133c1fa7001071378cc83b6e3d91890296ea296ed5210c87fd8acf0c9224"
+    },
+    {
+      "id": "RK-17.2-007",
+      "kind": "behavior",
+      "applies": "§17.2 Multi-Tenant Isolation: a room's hooks, subscriptions and turns end with the room: the kit that creates a room under the id of a room the store deleted, for the same organization, another or none, forgets the deleted room's room hooks and enabled names and ends the subscriptions made through it to its ephemerals.",
+      "level": "must",
+      "section": "17.2",
+      "line": 19523,
+      "text": "- A room's hooks, its subscriptions and its turns end with the room\n  (§8.4, §9.1, §10.6.2): the kit that creates a room under the id of a room\n  the store deleted, for the same organization, another or none, forgets\n  the room hooks registered for the deleted room and the names enabled for\n  it, and ends the subscriptions made through it to the deleted room's\n  ephemerals.",
+      "sha256": "cec1058467941d1257f0c34220afc76e025f2b8716397654c16d82898c5ea83e"
+    },
+    {
+      "id": "RK-17.2-008",
+      "kind": "behavior",
+      "applies": "§17.2 Multi-Tenant Isolation: nothing registered for one organization's room reads the events of the room another organization creates after it under its id.",
+      "level": "must",
+      "section": "17.2",
+      "line": 19529,
+      "text": "Nothing registered for one organization's room reads the\n  events of the room another organization creates after it.",
+      "sha256": "7ea4521557e81bf81d683ee6873468b68b781e68e39b61036d2a37f4c1763b6b"
+    },
+    {
+      "id": "RK-17.2-009",
+      "kind": "behavior",
+      "applies": "§17.2 Multi-Tenant Isolation: hooks and subscriptions registered while no room held an id are the new room's.",
+      "level": "must",
+      "section": "17.2",
+      "line": 19530,
+      "text": "Hooks and\n  subscriptions registered while no room held the id are the new room's.",
+      "sha256": "06c7f7820fe189d4535a1c6c247ae8cba3042a9c688ececf8e5e2c805769d3e6"
+    },
+    {
+      "id": "RK-17.2-010",
+      "kind": "behavior",
+      "applies": "§17.2 Multi-Tenant Isolation: in every process, by the room's creation mark (created_at): a kit forgets for a later room the hooks and enabled names of an id (§9.1); a publication carries its room's mark and a subscription reads its own room's alone (§8.4); the owner keeps each turn record's mark, so a turn or a channel call in a room of another mark follows none of the earlier room's turns and an executor lets go of what it held (§10.6.2); a host verb made after a deleted room's turn is refused in the room created again (§10.6.5).",
+      "level": "must",
+      "section": "17.2",
+      "line": 19531,
+      "text": "So in every process: a kit keeps the creation mark (`created_at`) of the\n  room its hooks and enabled names of an id are of, compares it with the\n  room in hand when they fire, and forgets them for a later room (§9.1); a\n  publication carries the mark of its room and a subscription reads its\n  own room's alone (§8.4); the owner keeps the mark of the room each turn\n  record is of, so that a turn or a channel call in a room of another mark\n  follows none of the earlier room's turns and an executor lets go of what\n  it held for the id (§10.6.2), and a host verb made after a deleted\n  room's turn is refused in the room created again since (§10.6.5).",
+      "sha256": "7a8dde30dde41476932a452b6887dd5bed9424c080146451dbed1ff47bf8d4d9"
+    },
+    {
+      "id": "RK-17.2-011",
+      "kind": "behavior",
+      "applies": "§17.2 Multi-Tenant Isolation: a call that names no organization (an inbound message, a direct injection) reads rooms unscoped, and a room it creates belongs to no organization.",
+      "level": "must",
+      "section": "17.2",
+      "line": 19540,
+      "text": "- A call that names no organization (an inbound message, a direct\n  injection) reads rooms unscoped, and a room it creates belongs to no\n  organization.",
+      "sha256": "f79a992dd1e7cf72b8d5dd29dcbadde31691f03e46e398e9e147237f369e53ee"
+    },
+    {
+      "id": "RK-17.2-012",
+      "kind": "behavior",
+      "applies": "§17.2 Multi-Tenant Isolation: a call acting for an organization reaches that organization's rooms only: a room of another organization, or of none, is not its own (§10.1 step 2), and a room it creates belongs to the organization.",
+      "level": "must",
+      "section": "17.2",
+      "line": 19543,
+      "text": "A call acting for an organization reaches that\n  organization's rooms only: a room of another organization, or of none, is\n  not its own (§10.1 step 2), and a room it creates belongs to the\n  organization.",
+      "sha256": "a0223e770f90e3f5ca2ad89711c7677ffa55639b3b201137002672ead4586087"
+    },
+    {
+      "id": "RK-17.2-013",
+      "kind": "structural",
+      "applies": "§17.2 Multi-Tenant Isolation: every room operation names the organization it acts for, as a message does, among them the operations the item lists.",
+      "level": "must",
+      "section": "17.2",
+      "line": 19546,
+      "text": "- Every room operation names the organization it acts for, as a message does,\n  among them a room's transitions (§5.1), a member's join, leave and rename\n  and the reads of its roster (§5.5), a channel's attach, detach and binding\n  changes (§7.5), an ephemeral's publication and a subscription to a room's\n  ephemerals (§8.4), a room's read markers, marked and listed (§14.1), a\n  room hook's registration, enabling, disabling and\n  removal (§9.1, §10.6.6), an update or a delete of a stored event (§10.3), a\n  direct injection and a record's commit (§10.5), a claim for a strategy\n  (§19.7), a steer of a room's turns (§21.3), a delivery (§22), a delegation,\n  a task the host starts and its cancel (§23.3, §23.4), a greeting, a\n  regeneration of an answer and a feedback.",
+      "sha256": "739f7953e0f3927007284ec52cf5737bb98a76f4b90e9f257bd476870718bc9a"
+    },
+    {
+      "id": "RK-17.2-014",
+      "kind": "behavior",
+      "applies": "§17.2 Multi-Tenant Isolation: against a room that is not the caller's, each room operation acts as on a room that does not exist: the listed calls fail as not found before any hook runs, anything is queued or drawn from a reentry budget, a turn starts or is steered, or a room is created; an update or a delete is a no-op that fires nothing; a task's cancel cancels nothing.",
+      "level": "must",
+      "section": "17.2",
+      "line": 19557,
+      "text": "Against a room that is not the\n  caller's, each acts as it does on a room that does not exist: a transition,\n  a membership change or read, an attach, a detach or a binding change, a\n  publication or a subscription, a read marker marked or listed, a room\n  hook's registration, enabling,\n  disabling and removal, and a claim for a strategy, fail as not found, as\n  do a message that names the room (§10.1 step 1), an injection, a record, a\n  steer, a delivery, a delegation, a task, a greeting, a\n  regeneration and a feedback, before any\n  hook runs, anything is queued or drawn from a reentry budget, a turn starts\n  or is steered, or a room is created; an update or a delete is a no-op that\n  fires nothing, and a task's cancel cancels nothing.",
+      "sha256": "38f590e479a330c1fa59c0b3545c2ee277d1b9218be8129a74ea2282a1d8dbb9"
+    },
+    {
+      "id": "RK-17.2-015",
+      "kind": "behavior",
+      "applies": "§17.2 Multi-Tenant Isolation: a call that takes the room lock checks the room's organization as the lock finds it, before its due timer transitions are applied, so it writes nothing in a room that is not the caller's, those transitions included; they fall due all the same, and the room's next own call or its timer check applies them at the instant each fell due (§5.1).",
+      "level": "must",
+      "section": "17.2",
+      "line": 19568,
+      "text": "A call that takes the\n  room lock checks the room as the lock finds it, before its due timer\n  transitions are applied, so nothing is written in it, those transitions\n  included: they fall due all the same, and the room's next own call or the\n  check of its timers applies them at the instant each fell due (§5.1).",
+      "sha256": "486c87ebafd7269cd05255203c952532e515e51d3fc582392df0d1ffc19d4ca1"
+    },
+    {
+      "id": "RK-17.2-016",
+      "kind": "behavior",
+      "applies": "§17.2 Multi-Tenant Isolation: a call that takes no lock (a delivery, a publication, a steer) checks the room's organization before its first effect, so it has none in a room that is not the caller's; a room's organization never changes while it exists, so that read holds.",
+      "level": "must",
+      "section": "17.2",
+      "line": 19572,
+      "text": "A call\n  that takes no lock (a delivery, a publication, a steer) reads the room\n  before its first effect; a room's organization never changes while it\n  exists, so that read holds.",
+      "sha256": "8e9b04fde80c8efce562a62496977465d8804e074591694115824f69daa1166d"
+    },
+    {
+      "id": "RK-17.2-017",
+      "kind": "behavior",
+      "applies": "§17.2 Multi-Tenant Isolation: where an implementation offers a transport whose connection registry reads no room (the WebSocket channel, Appendix A.8): each connection held for the organization it was registered for, or for none.",
+      "level": "must",
+      "section": "17.2",
+      "line": 19575,
+      "text": "- A transport's connection registry that reads no room (a WebSocket channel's,\n  Appendix A.8) holds each connection for the organization it was registered\n  for, or for none.",
+      "sha256": "545116e11a56642803c8e35f610b9b3c5e462887c9eefa6820ed69c18cc909fd"
+    },
+    {
+      "id": "RK-17.2-018",
+      "kind": "behavior",
+      "applies": "§17.2 Multi-Tenant Isolation: where an implementation offers a transport whose connection registry reads no room (the WebSocket channel, Appendix A.8): a room of another organization, or of none, delivers nothing to a connection registered for one, whatever rooms it is subscribed to, streamed or not.",
+      "level": "must",
+      "section": "17.2",
+      "line": 19578,
+      "text": "A room of another organization, or of none, delivers\n  nothing to a connection registered for one, whatever rooms it is subscribed\n  to, streamed or not.",
+      "sha256": "5ee7a81af6f4de9bd3efcef5b319fd0ffdfa6d6d84881372ce9472b9e29973c9"
+    },
+    {
+      "id": "RK-17.2-019",
+      "kind": "behavior",
+      "applies": "§17.2 Multi-Tenant Isolation: where an implementation offers a transport whose connection registry reads no room (the WebSocket channel, Appendix A.8): a stream under way sends only to the registrations present when it started, checked as each send starts: an id unregistered, evicted or registered again since gets nothing more of it, its end included.",
+      "level": "must",
+      "section": "17.2",
+      "line": 19580,
+      "text": "A stream under way sends only to the registrations\n  present when it started, checked as each send starts: an id unregistered,\n  evicted or registered again since, for any organization or the same one,\n  gets nothing more of it, its end included, since a new registration never\n  saw its start.",
+      "sha256": "e9c3a319ba17c7897ca0a3ed597e0fa7c7611cf262c9a42493846e4455370c02"
+    },
+    {
+      "id": "RK-17.2-020",
+      "kind": "behavior",
+      "applies": "§17.2 Multi-Tenant Isolation: where an implementation offers a transport whose connection registry reads no room (the WebSocket channel, Appendix A.8): a call acting for an organization subscribes, unsubscribes, unregisters or registers again only a connection registered for that organization; one of another organization, one registered for none and one that does not exist are refused alike, nothing changed.",
+      "level": "must",
+      "section": "17.2",
+      "line": 19584,
+      "text": "A call acting for an organization subscribes, unsubscribes or\n  unregisters only a connection registered for that organization, and\n  registers again only such a connection: one of another organization, one\n  registered for none and one that does not exist are refused alike, nothing\n  changed.",
+      "sha256": "f2f6d25efd5d63b121511753300d03da8f5c798ddddb5a20775b9f0b3914f844"
+    },
+    {
+      "id": "RK-17.2-021",
+      "kind": "behavior",
+      "applies": "§17.2 Multi-Tenant Isolation: where an implementation offers a transport whose connection registry reads no room (the WebSocket channel, Appendix A.8): a scoped registration of an id no connection holds succeeds; connection ids are one namespace across organizations, generated by the host, never chosen by a client.",
+      "level": "must",
+      "section": "17.2",
+      "line": 19588,
+      "text": "A scoped registration of an id no connection holds succeeds, which\n  tells that the id is free: connection ids are one namespace across\n  organizations, generated by the host and never chosen by a client.",
+      "sha256": "8a8236d7a5b73e8cc0f97f71a0ddef4fe6fe0dd63c6ff6c3f630d39823ccb161"
+    },
+    {
+      "id": "RK-17.2-022",
+      "kind": "behavior",
+      "applies": "§17.2 Multi-Tenant Isolation: where an implementation offers a transport whose connection registry reads no room (the WebSocket channel, Appendix A.8): a call that names no organization, the host's own, acts on any connection, and registering an id again without one registers it for none.",
+      "level": "must",
+      "section": "17.2",
+      "line": 19590,
+      "text": "A call\n  that names no organization, the host's own, acts on any connection as\n  before, and registering an id again without one registers it for none.",
+      "sha256": "a1f4a31c01eca09660e8eba60d50440dd1d7644730023213ac917418dca02816"
+    },
+    {
+      "id": "RK-17.2-023",
+      "kind": "behavior",
+      "applies": "§17.2 Multi-Tenant Isolation: where an implementation offers a transport whose connection registry reads no room (the WebSocket channel, Appendix A.8): a registration that changes a known id's organization, to none included, drops the rooms the id followed; a connection evicted after repeated send failures is forgotten with its rooms and organization; a send failure of a registration gone counts against none.",
+      "level": "must",
+      "section": "17.2",
+      "line": 19592,
+      "text": "A\n  registration that changes a known id's organization, to none included, drops\n  the rooms the id followed, and a connection evicted after repeated send\n  failures is forgotten with its rooms and its organization; a send failure of\n  a registration gone counts against none.",
+      "sha256": "80587f21c79292bc92ec1372635b26035e7592a36f5cc9a795a831e581aa93be"
+    },
+    {
+      "id": "RK-17.2-024",
+      "kind": "behavior",
+      "applies": "§17.2 Multi-Tenant Isolation: by design, a call addressed by an identifier that works as a capability names no organization: answer_input() and reject_input() (a human-input request's id, §10.6.5) and unsubscribe_room() (a subscription's id, §8.4), holding the id being the authority; with the list's lead-in.",
+      "level": "must",
+      "section": "17.2",
+      "line": 19596,
+      "text": "- These calls name no organization, by design:\n  - a call addressed by an identifier that works as a capability, issued to\n    its holder: `answer_input()` and `reject_input()` (a human-input request's\n    id, an unguessable random id, §10.6.5) and `unsubscribe_room()` (a\n    subscription's id, §8.4): holding the id is the authority;",
+      "sha256": "df2db821bc2d7f335e5ca92333909175f696345bf534dd89ff621ce6a808d507"
+    },
+    {
+      "id": "RK-17.2-025",
+      "kind": "behavior",
+      "applies": "§17.2 Multi-Tenant Isolation: by design, a channel's own steering (AIChannel.steer()) and a turn client's (TurnClient.steer()) name no organization; given one, the turn client reaches only that organization's rooms' turns and answers 0 for the others; the kit's steer() is the door that reads a room.",
+      "level": "must",
+      "section": "17.2",
+      "line": 19601,
+      "text": "- a channel's own steering (`AIChannel.steer()`) and a turn client's\n    (`TurnClient.steer()`): neither holds a store. Given an organization, the\n    turn client reaches only the turns of that organization's rooms and\n    answers 0 for the others: a turn it does not reach and one that does not\n    run read alike. The kit's `steer()` is the door that reads a room;",
+      "sha256": "0118a82d1d481c8a6d1e09825f80bba501907cd4ec1e48d482c90a23480d64fd"
+    },
+    {
+      "id": "RK-17.2-026",
+      "kind": "behavior",
+      "applies": "§17.2 Multi-Tenant Isolation: by design, the trusted levels below the kit's calls hold no store, read no room and name no organization: a hook engine's add_room_hook(), remove_room_hook() and replace_room_hook(), a turn client's enable_room_hook() and disable_room_hook().",
+      "level": "must",
+      "section": "17.2",
+      "line": 19606,
+      "text": "- the trusted levels below the kit's calls, which hold no store and read no\n    room: a hook engine's `add_room_hook()`, `remove_room_hook()` and\n    `replace_room_hook()`, and a turn client's `enable_room_hook()` and\n    `disable_room_hook()`;",
+      "sha256": "23e935dcd1d5a5d69b8b41a5c36fad566c162d36c3aeed3627632d227b07de18"
+    },
+    {
+      "id": "RK-17.2-027",
+      "kind": "behavior",
+      "applies": "§17.2 Multi-Tenant Isolation: by design, a strategy's install() called directly claims the room unscoped (claim_room_strategy()) and sets up its hooks with no organization; the kit's install_strategy() reads the room with the caller's organization first.",
+      "level": "must",
+      "section": "17.2",
+      "line": 19610,
+      "text": "- a strategy's `install()` called directly, which claims the room (through\n    `claim_room_strategy()`, unscoped) and sets up its hooks with no\n    organization: the kit's `install_strategy()` reads the room with the\n    caller's organization first;",
+      "sha256": "34728d08b1fcf21266157053b471738a1fa1563274366f2988848251b75f4c01"
+    },
+    {
+      "id": "RK-17.2-028",
+      "kind": "behavior",
+      "applies": "§17.2 Multi-Tenant Isolation: where an implementation offers voice or video (media): by design, the deprecated connect_voice(), connect_video() and bind_voice_session() name no organization; join() replaces them with its organization.",
+      "level": "must",
+      "section": "17.2",
+      "line": 19614,
+      "text": "- the deprecated `connect_voice()`, `connect_video()` and\n    `bind_voice_session()`, which `join()` replaces with its organization.",
+      "sha256": "9db9a149befd071db30dd200d2e8d9f1ee1cb50b0bf7c66acd8c6b9825f357a5"
+    },
+    {
+      "id": "RK-17.3-002",
+      "kind": "behavior",
+      "applies": "§17.3 Sensitive Data: configurable redaction or encryption at rest of raw_payload; with the sentence that says it may hold sensitive data.",
+      "level": "should",
       "section": "17.3",
       "line": 19621,
-      "text": "- `raw_payload` MAY contain sensitive data. Implementations SHOULD support\n  configurable redaction or encryption at rest.\n- Hook-based PII scanning (e.g., SIN/SSN detection) SHOULD be used to prevent\n  sensitive data from traversing channels.\n- Blocked events are stored for audit but their content SHOULD be handled\n  according to the organization's data retention policy.",
-      "sha256": "b42031ffbd348ddbe768cccdf01279d047523f1436f6a5a04cd9aa3fae884272"
+      "text": "- `raw_payload` MAY contain sensitive data. Implementations SHOULD support\n  configurable redaction or encryption at rest.",
+      "sha256": "6228266701390e4c052e0d7be98b1c3d7b8de56d066c52e27c678c3f5e1b70e4"
+    },
+    {
+      "id": "RK-17.3-003",
+      "kind": "non_testable",
+      "applies": "§17.3 Sensitive Data: hook-based scanning for personal data (e.g. SIN/SSN detection) so that it does not traverse channels; the integrator's hooks keep it.",
+      "level": "should",
+      "section": "17.3",
+      "line": 19623,
+      "text": "- Hook-based PII scanning (e.g., SIN/SSN detection) SHOULD be used to prevent\n  sensitive data from traversing channels.",
+      "sha256": "415a8d2d45418c7ee490522821b354b2d6c099629d3ea6341a190e7dfe0fbf17"
+    },
+    {
+      "id": "RK-17.3-004",
+      "kind": "behavior",
+      "applies": "§17.3 Sensitive Data: a blocked event stored for audit, its content handled according to the organization's data retention policy.",
+      "level": "should",
+      "section": "17.3",
+      "line": 19625,
+      "text": "- Blocked events are stored for audit but their content SHOULD be handled\n  according to the organization's data retention policy.",
+      "sha256": "a107d90220a0bd793ddcc9a9eaa7258890ec64896581270947c1b0d8e55f96d7"
     },
     {
       "id": "RK-17.4-001",
       "kind": "behavior",
-      "applies": "§17.4 Rate Limiting; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
+      "applies": "§17.4 Rate Limiting: per-organization rate limits; with the lead-in on per-channel rate limits, which §13.3 states.",
+      "level": "should",
       "section": "17.4",
       "line": 19632,
       "text": "- Per-channel rate limits prevent abuse of external provider APIs.\n- Implementations SHOULD support per-organization rate limits.",
-      "sha256": "85ec94f3bf6b673ede0420036dccab66006e666e1fc30346e75ba50f966a0bab"
+      "sha256": "d48b699a095ce0003769ffffc91c235795a839ef1334a4f0f6245ffca1726d75"
     },
     {
       "id": "RK-17.5-001",
       "kind": "behavior",
-      "applies": "§17.5 Chain Depth; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
+      "applies": "§17.5 Chain Depth: the chain depth limit enforced, never allowed to be disabled, a discussion's own max_depth included (§19.7.5); with the lead-in on unbounded AI-to-AI loops.",
+      "level": "must",
       "section": "17.5",
       "line": 19639,
       "text": "- The chain depth limit prevents resource exhaustion from unbounded AI ↔ AI loops.\n- Implementations MUST enforce the limit and MUST NOT allow it to be disabled,\n  a discussion's own `max_depth` included (Section 19.7.5).",
-      "sha256": "1deded432f0584eadd66e3aba2e1dd4a4e1d66039d3a00c691c39cb31a762c2a"
+      "sha256": "e68d2d1a4e9aac41d130aca0975125c64858a59023e3c540aa8dbe57cde9e3c5"
     },
     {
-      "id": "RK-17.6-001",
+      "id": "RK-17.6-008",
       "kind": "behavior",
-      "applies": "§17.6 Voice and Audio Security; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
+      "applies": "§17.6 Voice and Audio Security, where an implementation supports audio recording (media: recording): a mechanism for recording consent management; with the paragraph's lead-in and its note on jurisdictions.",
+      "level": "must",
       "section": "17.6",
       "line": 19647,
-      "text": "**Recording consent and compliance:**\n\n- Implementations that support audio recording MUST provide a mechanism for\n  recording consent management. In many jurisdictions (TCPA, GDPR, PIPEDA),\n  recording requires explicit consent from all parties.\n- The framework SHOULD fire ON_RECORDING_STARTED before any audio is captured,\n  giving integrators the opportunity to notify participants.\n- Implementations SHOULD support configurable consent modes: `SINGLE_PARTY`\n  (one party consents), `ALL_PARTY` (all parties must consent), or `NONE`\n  (integrator manages consent externally).",
-      "sha256": "14521cf4d25958e7e14c6349f0fe9b6f82c2ce6f6694af4ffcc324c344955a1e"
+      "text": "**Recording consent and compliance:**\n\n- Implementations that support audio recording MUST provide a mechanism for\n  recording consent management. In many jurisdictions (TCPA, GDPR, PIPEDA),\n  recording requires explicit consent from all parties.",
+      "sha256": "2aded13f970c310016fedc75996906a0148140cf53a5e850a7f7de54a671de7f"
     },
     {
-      "id": "RK-17.6-002",
+      "id": "RK-17.6-009",
       "kind": "behavior",
-      "applies": "§17.6 Voice and Audio Security; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
+      "applies": "§17.6 Voice and Audio Security, where an implementation supports audio recording (media: recording): ON_RECORDING_STARTED fired before any audio is captured, so that integrators can notify participants.",
+      "level": "should",
+      "section": "17.6",
+      "line": 19652,
+      "text": "- The framework SHOULD fire ON_RECORDING_STARTED before any audio is captured,\n  giving integrators the opportunity to notify participants.",
+      "sha256": "a4c3c8087f88af04caeb8d0f94b13093494855673ebc98d42f771e270f8602c7"
+    },
+    {
+      "id": "RK-17.6-010",
+      "kind": "behavior",
+      "applies": "§17.6 Voice and Audio Security, where an implementation supports audio recording (media: recording): configurable consent modes SINGLE_PARTY, ALL_PARTY and NONE.",
+      "level": "should",
+      "section": "17.6",
+      "line": 19654,
+      "text": "- Implementations SHOULD support configurable consent modes: `SINGLE_PARTY`\n  (one party consents), `ALL_PARTY` (all parties must consent), or `NONE`\n  (integrator manages consent externally).",
+      "sha256": "51addbe200ea2536ebd153bf0b8f5ddb96e055396bdca5edbe7439d10b4c7292"
+    },
+    {
+      "id": "RK-17.6-011",
+      "kind": "behavior",
+      "applies": "§17.6 Voice and Audio Security, where an implementation supports audio recording (media: recording): audio recordings encrypted at rest; with the paragraph's lead-in.",
+      "level": "must",
       "section": "17.6",
       "line": 19660,
-      "text": "**Audio data handling:**\n\n- Audio recordings MUST be encrypted at rest. Implementations MUST support\n  configurable encryption for stored recordings. Every recording\n  configuration carries it (`encryption`, `storage_encrypted_at_rest`;\n  Sections 12.3.7, 12.8.10, 12.10.8, 12.11). The audio recorder (Section\n  12.3.7), the room media recorder (Section 12.11) and conference recording\n  (Section 12.10.8) fail closed when neither is set, a recording of video\n  alone included; the session video recorder (Section 12.8.10) applies them\n  when they are set.\n- Audio streams in transit SHOULD use encrypted transport (TLS, SRTP, DTLS).\n- STT and TTS provider calls transmit audio to external services.\n  Implementations SHOULD document which providers receive audio data and\n  SHOULD support configurable provider selection based on data residency\n  requirements.\n- Voice session metadata (transcripts, recordings, DTMF digits) MUST follow\n  the same data retention and redaction policies as other room events.",
-      "sha256": "29d723fbeccbc285429d4b0b92ca3cfd4c7394668fec300b25004ac89ddf680a"
+      "text": "**Audio data handling:**\n\n- Audio recordings MUST be encrypted at rest.",
+      "sha256": "e32b778f68f5d9e211942b637c39c9dd37c017f905711733a8332347cfa61d76"
     },
     {
-      "id": "RK-17.6-003",
+      "id": "RK-17.6-012",
       "kind": "behavior",
-      "applies": "§17.6 Voice and Audio Security; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
+      "applies": "§17.6 Voice and Audio Security, where an implementation supports audio recording (media: recording): configurable encryption for stored recordings.",
+      "level": "must",
+      "section": "17.6",
+      "line": 19663,
+      "text": "Implementations MUST support\n  configurable encryption for stored recordings.",
+      "sha256": "258b635253e4e250e09db2f64b091067f796f1f32eb5624b328b46a418ba0c54"
+    },
+    {
+      "id": "RK-17.6-013",
+      "kind": "structural",
+      "applies": "§17.6 Voice and Audio Security, where an implementation records audio or video (media: recording): every recording configuration carries the encryption settings (encryption, storage_encrypted_at_rest; Sections 12.3.7, 12.8.10, 12.10.8, 12.11).",
+      "level": "must",
+      "section": "17.6",
+      "line": 19664,
+      "text": "Every recording\n  configuration carries it (`encryption`, `storage_encrypted_at_rest`;\n  Sections 12.3.7, 12.8.10, 12.10.8, 12.11).",
+      "sha256": "2d9d04933f75e6afd4d6adc002249e3698d4571e0ae491c0ba0fa7ee754549ad"
+    },
+    {
+      "id": "RK-17.6-014",
+      "kind": "behavior",
+      "applies": "§17.6 Voice and Audio Security, where an implementation records audio or video (media: recording): the audio recorder, the room media recorder and conference recording fail closed when neither encryption setting is set, a recording of video alone included; the session video recorder applies them when they are set.",
+      "level": "must",
+      "section": "17.6",
+      "line": 19666,
+      "text": "The audio recorder (Section\n  12.3.7), the room media recorder (Section 12.11) and conference recording\n  (Section 12.10.8) fail closed when neither is set, a recording of video\n  alone included; the session video recorder (Section 12.8.10) applies them\n  when they are set.",
+      "sha256": "af4e2210220df0f63539ec7d1bb77e524e6b04ede2c79993f12ff992d2483f14"
+    },
+    {
+      "id": "RK-17.6-015",
+      "kind": "non_testable",
+      "applies": "§17.6 Voice and Audio Security, where an implementation offers voice (media: voice): audio streams in transit carried over an encrypted transport (TLS, SRTP, DTLS); shown by the transports an implementation offers and a deployment uses, not by a scenario.",
+      "level": "should",
+      "section": "17.6",
+      "line": 19670,
+      "text": "- Audio streams in transit SHOULD use encrypted transport (TLS, SRTP, DTLS).",
+      "sha256": "4de70d6448f71488d5ea99d203878a897e03396163d5b5b2c8bdb828c4e5ac4e"
+    },
+    {
+      "id": "RK-17.6-016",
+      "kind": "non_testable",
+      "applies": "§17.6 Voice and Audio Security, where an implementation offers voice (media: voice): documentation of the providers that receive audio data, and the integrator's choice of provider configurable for data residency requirements; with the sentence that says STT and TTS calls send audio out.",
+      "level": "should",
+      "section": "17.6",
+      "line": 19671,
+      "text": "- STT and TTS provider calls transmit audio to external services.\n  Implementations SHOULD document which providers receive audio data and\n  SHOULD support configurable provider selection based on data residency\n  requirements.",
+      "sha256": "d98c5a5c66c59300faf69d6b8b8bb2ac461d91946a03b7e7bc42f56399976407"
+    },
+    {
+      "id": "RK-17.6-017",
+      "kind": "behavior",
+      "applies": "§17.6 Voice and Audio Security, where an implementation offers voice (media: voice): voice session metadata (transcripts, recordings, DTMF digits) under the same data retention and redaction policies as other room events.",
+      "level": "must",
+      "section": "17.6",
+      "line": 19675,
+      "text": "- Voice session metadata (transcripts, recordings, DTMF digits) MUST follow\n  the same data retention and redaction policies as other room events.",
+      "sha256": "be370aea28c7cf49801cd45608dd90713428340078219229250399035b6673c4"
+    },
+    {
+      "id": "RK-17.6-018",
+      "kind": "behavior",
+      "applies": "§17.6 Voice and Audio Security, TTS conversation context (Section 12.2.2), where an implementation offers voice (media: voice): context audio, a copy of the session's dialogue audio, kept in memory only: never written to the conversation store, the timeline, a recording, or a log; with the paragraph's lead-in.",
+      "level": "must",
       "section": "17.6",
       "line": 19680,
-      "text": "**TTS conversation context (Section 12.2.2):**\n\n- Context audio is a copy of the session's dialogue audio (what the user said and\n  what was synthesized), held so the TTS can hear it.\n  It MUST be kept in memory only: never written to the conversation store, the\n  timeline, a recording, or a log.\n- It MUST stay within `max_turns` and `max_audio_seconds`, and MUST be dropped\n  when the session is unbound or ends, together with the call to\n  `release_context`.\n- Keeping audio MUST be opt-in (`include_audio = false` by default). The text\n  of the context is the transcript already stored as room events, and is under\n  the same policies.\n- A user turn whose transcript a hook modified MUST NOT keep its audio. When\n  DTMF redaction is enabled, a user turn during which DTMF was detected MUST\n  NOT keep its audio either: in-band tones carry the digits.\n- A provider at level `AUDIO` that runs as an external service receives the\n  user's voice on every call, not only the current sentence. Implementations\n  SHOULD say so where they document which providers receive audio data.",
-      "sha256": "8c865b6f71694b40d6f1175c328b40dd47aeb97fcd6b3113c474369e67d8d8b3"
+      "text": "**TTS conversation context (Section 12.2.2):**\n\n- Context audio is a copy of the session's dialogue audio (what the user said and\n  what was synthesized), held so the TTS can hear it.\n  It MUST be kept in memory only: never written to the conversation store, the\n  timeline, a recording, or a log.",
+      "sha256": "9457361342d05fb4895b66fbc4fd997c77e54166a6fc17828c274bd724c089c5"
     },
     {
-      "id": "RK-17.6-004",
+      "id": "RK-17.6-019",
       "kind": "behavior",
-      "applies": "§17.6 Voice and Audio Security; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
+      "applies": "§17.6 Voice and Audio Security, TTS conversation context (Section 12.2.2), where an implementation offers voice (media: voice): context audio stays within max_turns and max_audio_seconds, and is dropped when the session is unbound or ends, with the call to release_context.",
+      "level": "must",
+      "section": "17.6",
+      "line": 19686,
+      "text": "- It MUST stay within `max_turns` and `max_audio_seconds`, and MUST be dropped\n  when the session is unbound or ends, together with the call to\n  `release_context`.",
+      "sha256": "b538d8aedd9b4001f54d3ebaa92ef0ba67610a246263762a1d3602a6bd5e79d2"
+    },
+    {
+      "id": "RK-17.6-020",
+      "kind": "behavior",
+      "applies": "§17.6 Voice and Audio Security, TTS conversation context (Section 12.2.2), where an implementation offers voice (media: voice): keeping audio is opt-in (include_audio = false by default).",
+      "level": "must",
+      "section": "17.6",
+      "line": 19689,
+      "text": "- Keeping audio MUST be opt-in (`include_audio = false` by default).",
+      "sha256": "0c22d0d9041a5e27808e704010c7705f7e200f1f462c03d08607eb1b6cf5fdc2"
+    },
+    {
+      "id": "RK-17.6-021",
+      "kind": "behavior",
+      "applies": "§17.6 Voice and Audio Security, TTS conversation context (Section 12.2.2), where an implementation offers voice (media: voice): the context's text is the transcript already stored as room events, under the same policies.",
+      "level": "must",
+      "section": "17.6",
+      "line": 19690,
+      "text": "The text\n  of the context is the transcript already stored as room events, and is under\n  the same policies.",
+      "sha256": "c128a7286563bbf4dead5ea2d63d45d7d505fbfd7848d7bbcd9491b2dadc41d3"
+    },
+    {
+      "id": "RK-17.6-022",
+      "kind": "behavior",
+      "applies": "§17.6 Voice and Audio Security, TTS conversation context (Section 12.2.2), where an implementation offers voice (media: voice): a user turn whose transcript a hook modified keeps no audio.",
+      "level": "must",
+      "section": "17.6",
+      "line": 19692,
+      "text": "- A user turn whose transcript a hook modified MUST NOT keep its audio.",
+      "sha256": "cb6c1c25ea8d2688d3312a814308d9a2083bede8499ed0b92d8a682756712c46"
+    },
+    {
+      "id": "RK-17.6-023",
+      "kind": "behavior",
+      "applies": "§17.6 Voice and Audio Security, TTS conversation context (Section 12.2.2), where an implementation offers voice (media: voice): with DTMF redaction enabled, a user turn during which DTMF was detected keeps no audio.",
+      "level": "must",
+      "section": "17.6",
+      "line": 19693,
+      "text": "When\n  DTMF redaction is enabled, a user turn during which DTMF was detected MUST\n  NOT keep its audio either: in-band tones carry the digits.",
+      "sha256": "605f1ab7b9a9a1cc704e55d4e40dd89f9e88f25cd7535fe147887838e4a806e8"
+    },
+    {
+      "id": "RK-17.6-024",
+      "kind": "non_testable",
+      "applies": "§17.6 Voice and Audio Security, TTS conversation context (Section 12.2.2), where an implementation offers voice (media: voice): the documentation of the providers that receive audio says that one at level AUDIO run as an external service receives the user's voice on every call; with the sentence that says so.",
+      "level": "should",
+      "section": "17.6",
+      "line": 19695,
+      "text": "- A provider at level `AUDIO` that runs as an external service receives the\n  user's voice on every call, not only the current sentence. Implementations\n  SHOULD say so where they document which providers receive audio data.",
+      "sha256": "a35374baad0b6b0ac67aa4a6dcc284dccc44325104a06909b6eba50136293e0f"
+    },
+    {
+      "id": "RK-17.6-025",
+      "kind": "behavior",
+      "applies": "§17.6 Voice and Audio Security, custom voices (Section 12.2.4), where an implementation offers them (media: voice): the recording of a voice made to replicate it and the recording of its consent are handed to the vendor for the call and kept nowhere: never written to the conversation store, the timeline, a recording, or a log; with the paragraph's lead-in and the sentence that calls them personal data.",
+      "level": "must",
       "section": "17.6",
       "line": 19701,
-      "text": "**Custom voices (Section 12.2.4):**\n\n- A recording of a person's voice made to replicate it, and the recording of\n  their consent, are personal data identifying that person. An implementation\n  MUST hand them to the vendor for the call and keep nothing: never written to\n  the conversation store, the timeline, a recording, or a log. What it keeps is\n  the evidence the integrator needs, as metadata: which voice was created,\n  when, by whom, and whether the vendor verified the consent.\n- Replicating a voice without the consent of the person it belongs to MUST NOT\n  be possible through the framework (Section 12.2.4). The integrator remains\n  responsible for that consent, and for its withdrawal: a withdrawn consent\n  means deleting the voice.\n- A stored custom voice is held by the vendor under the integrator's account.\n  Implementations SHOULD document where it lives and for how long, as they do\n  for the providers that receive audio.",
-      "sha256": "16ec031d23bafba95abf0257f563ba338b681d4a5723f138a4a72fe71179bc4d"
+      "text": "**Custom voices (Section 12.2.4):**\n\n- A recording of a person's voice made to replicate it, and the recording of\n  their consent, are personal data identifying that person. An implementation\n  MUST hand them to the vendor for the call and keep nothing: never written to\n  the conversation store, the timeline, a recording, or a log.",
+      "sha256": "81d8b29705403ab17083f0bf36954a8c4fd7f58ed5f38c2259fce7def2ed03a3"
     },
     {
-      "id": "RK-17.6-005",
+      "id": "RK-17.6-026",
       "kind": "behavior",
-      "applies": "§17.6 Voice and Audio Security; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
+      "applies": "§17.6 Voice and Audio Security, custom voices (Section 12.2.4), where an implementation offers them (media: voice): what is kept is the integrator's evidence, as metadata: which voice was created, when, by whom, and whether the vendor verified the consent.",
+      "level": "must",
+      "section": "17.6",
+      "line": 19707,
+      "text": "What it keeps is\n  the evidence the integrator needs, as metadata: which voice was created,\n  when, by whom, and whether the vendor verified the consent.",
+      "sha256": "efa669c2bc2aa6856b85b9c414c46eefd77d6ec78c76eba61c467c176010179f"
+    },
+    {
+      "id": "RK-17.6-027",
+      "kind": "behavior",
+      "applies": "§17.6 Voice and Audio Security, custom voices (Section 12.2.4), where an implementation offers them (media: voice): replicating a voice without the consent of the person it belongs to is not possible through the framework (Section 12.2.4).",
+      "level": "must",
+      "section": "17.6",
+      "line": 19709,
+      "text": "- Replicating a voice without the consent of the person it belongs to MUST NOT\n  be possible through the framework (Section 12.2.4).",
+      "sha256": "e6887f8f3cb93b9c092fefe07922d7ba0c3ad7e025fb8ec4da5650fdb271953c"
+    },
+    {
+      "id": "RK-17.6-028",
+      "kind": "non_testable",
+      "applies": "§17.6 Voice and Audio Security, custom voices (Section 12.2.4), where an implementation offers them (media: voice): the integrator's responsibility for that consent and its withdrawal, a withdrawn consent meaning deleting the voice.",
+      "level": "must",
+      "section": "17.6",
+      "line": 19711,
+      "text": "The integrator remains\n  responsible for that consent, and for its withdrawal: a withdrawn consent\n  means deleting the voice.",
+      "sha256": "03bac7b059dbec5f88cb43f7810ad6229bcad8768031bb04f29de94c08f5de86"
+    },
+    {
+      "id": "RK-17.6-029",
+      "kind": "non_testable",
+      "applies": "§17.6 Voice and Audio Security, custom voices (Section 12.2.4), where an implementation offers them (media: voice): documentation of where a stored custom voice lives and for how long; with the sentence that says the vendor holds it under the integrator's account.",
+      "level": "should",
+      "section": "17.6",
+      "line": 19713,
+      "text": "- A stored custom voice is held by the vendor under the integrator's account.\n  Implementations SHOULD document where it lives and for how long, as they do\n  for the providers that receive audio.",
+      "sha256": "92b4dbb1c8e590a8799ecc8eab1a9870785d991c86a21733ca099fc94c80aa34"
+    },
+    {
+      "id": "RK-17.6-030",
+      "kind": "behavior",
+      "applies": "§17.6 Voice and Audio Security, provenance of synthesized audio, where an implementation offers voice (media: voice): a provenance mark received from the vendor (a C2PA manifest in the file, a watermark in the signal) is not removed: a file is passed on as produced, not rebuilt from its samples; with the paragraph's lead-in and the vendor's permission to mark.",
+      "level": "must",
       "section": "17.6",
       "line": 19719,
-      "text": "**Provenance of synthesized audio:**\n\n- A vendor MAY mark the audio it synthesizes: a manifest in the file (C2PA)\n  or a watermark in the signal. An implementation MUST NOT remove a mark it\n  received: a file is passed on as the vendor produced it, not rebuilt from\n  its samples. A stage that must decode the audio (resampling, mixing,\n  encoding for a transport) loses a file-level manifest by construction;\n  implementations SHOULD document where that happens.",
-      "sha256": "c2f8964b1a767e50b208571ad80bcb3ecc902be8550b9448ca3c70c3644f3f36"
+      "text": "**Provenance of synthesized audio:**\n\n- A vendor MAY mark the audio it synthesizes: a manifest in the file (C2PA)\n  or a watermark in the signal. An implementation MUST NOT remove a mark it\n  received: a file is passed on as the vendor produced it, not rebuilt from\n  its samples.",
+      "sha256": "0381cb82ff30958752c86d65beefa8255ebb1cf0e32f32cd48d9ad0c8f2edab3"
     },
     {
-      "id": "RK-17.6-006",
+      "id": "RK-17.6-031",
+      "kind": "non_testable",
+      "applies": "§17.6 Voice and Audio Security, provenance of synthesized audio, where an implementation offers voice (media: voice): documentation of where a stage that must decode the audio (resampling, mixing, encoding for a transport) loses a file-level manifest.",
+      "level": "should",
+      "section": "17.6",
+      "line": 19725,
+      "text": "A stage that must decode the audio (resampling, mixing,\n  encoding for a transport) loses a file-level manifest by construction;\n  implementations SHOULD document where that happens.",
+      "sha256": "dc9167e0c9ea55edba26cc75ebd40652da98cbbd87ebe183800c66c56e022425"
+    },
+    {
+      "id": "RK-17.6-032",
       "kind": "behavior",
-      "applies": "§17.6 Voice and Audio Security; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
+      "applies": "§17.6 Voice and Audio Security, DTMF sensitivity, where an implementation offers voice (media: voice): configurable DTMF redaction, masking DTMF digits in stored events and logs; with the paragraph's lead-in and the sentence on sensitive digits.",
+      "level": "must",
       "section": "17.6",
       "line": 19730,
-      "text": "**DTMF sensitivity:**\n\n- DTMF digits MAY contain sensitive data (credit card numbers, PINs, account\n  numbers). Implementations MUST support configurable DTMF redaction — the\n  ability to mask DTMF digits in stored events and logs (e.g., replacing\n  \"4111111111111111\" with \"4111********1111\").\n- When DTMF redaction is enabled, raw digits MUST NOT appear in `raw_payload`,\n  transcripts, or log output.",
-      "sha256": "23c9a627757f02bedbc540dda9ef9dd6c97e30f5231228bd9c19166d90a35374"
+      "text": "**DTMF sensitivity:**\n\n- DTMF digits MAY contain sensitive data (credit card numbers, PINs, account\n  numbers). Implementations MUST support configurable DTMF redaction — the\n  ability to mask DTMF digits in stored events and logs (e.g., replacing\n  \"4111111111111111\" with \"4111********1111\").",
+      "sha256": "bb974eca1eabc274e13ca1aa51d109af3caf730f572baa987decf5dc56757807"
     },
     {
-      "id": "RK-17.6-007",
+      "id": "RK-17.6-033",
       "kind": "behavior",
-      "applies": "§17.6 Voice and Audio Security; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
+      "applies": "§17.6 Voice and Audio Security, DTMF sensitivity, where an implementation offers voice (media: voice): with DTMF redaction enabled, raw digits appear in no raw_payload, transcript or log output.",
+      "level": "must",
+      "section": "17.6",
+      "line": 19736,
+      "text": "- When DTMF redaction is enabled, raw digits MUST NOT appear in `raw_payload`,\n  transcripts, or log output.",
+      "sha256": "d4fc8f58a2350e0578b60aa3962d4ee20eb35e96a062a1654fbe28c510f84673"
+    },
+    {
+      "id": "RK-17.6-034",
+      "kind": "non_testable",
+      "applies": "§17.6 Voice and Audio Security, voice model privacy, where an implementation offers voice (media: voice): audio recordings and transcripts used for no model training without explicit integrator and end-user consent; the vendors' terms and the integrator's account keep it, the framework trains no model; with the paragraph's lead-in.",
+      "level": "must",
       "section": "17.6",
       "line": 19741,
-      "text": "**Voice model privacy:**\n\n- Audio recordings and transcripts MUST NOT be used for model training without\n  explicit integrator and end-user consent.\n- Implementations SHOULD provide a configuration flag to disable any data\n  sharing with STT/TTS/speech-to-speech providers beyond what is required for\n  the API call.",
-      "sha256": "c4a3ab5c10574cebc85bb380c7d26e1585c776f9b1507bdb7b429596bc01dfc9"
+      "text": "**Voice model privacy:**\n\n- Audio recordings and transcripts MUST NOT be used for model training without\n  explicit integrator and end-user consent.",
+      "sha256": "13f5250fc85c642242a22d0325f17a9879d06e0abaf6b84ddda26430ca8b4bf1"
     },
     {
-      "id": "RK-17.7-001",
+      "id": "RK-17.6-035",
       "kind": "behavior",
-      "applies": "§17.7 Conference Access Security; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
+      "applies": "§17.6 Voice and Audio Security, voice model privacy, where an implementation offers voice (media: voice): a configuration flag that disables any data sharing with STT, TTS and speech-to-speech providers beyond what the API call requires.",
+      "level": "should",
+      "section": "17.6",
+      "line": 19745,
+      "text": "- Implementations SHOULD provide a configuration flag to disable any data\n  sharing with STT/TTS/speech-to-speech providers beyond what is required for\n  the API call.",
+      "sha256": "1ebe47bbd3c97b7794578d502d5cd9565f71c6a1627cb41465ea0d3117a73347"
+    },
+    {
+      "id": "RK-17.7-003",
+      "kind": "behavior",
+      "applies": "§17.7 Conference Access Security, where an implementation offers conference (media: conference): tokens minted per participant with least-privilege grants (hidden observers subscribe-only); with the lead-in that calls them credentials.",
+      "level": "should",
       "section": "17.7",
       "line": 19755,
-      "text": "ConferenceAccess tokens are credentials:\n\n- Tokens SHOULD be minted per participant with least-privilege grants\n  (e.g., hidden observers receive subscribe-only grants). ConferenceGrants\n  (Section 12.10.2) defaults to permissive values so that the common case\n  works unconfigured; narrowing them for a given participant is the\n  integrator's call, and is RECOMMENDED wherever a role does not need to\n  publish.\n- Tokens SHOULD be short-lived (`expires_at`) and MUST NOT be logged.\n- Moderation operations (`remove_participant`, `mute_track`,\n  `unmute_track`) MUST only be reachable through integrator-controlled code\n  paths, never exposed unauthenticated.",
-      "sha256": "dafc94e61267eef5377232a3d3d062f1d2b97480a10962240de7a678c6c39a64"
+      "text": "ConferenceAccess tokens are credentials:\n\n- Tokens SHOULD be minted per participant with least-privilege grants\n  (e.g., hidden observers receive subscribe-only grants).",
+      "sha256": "1f67742e8f4cab908a67d6481dba5a439ae26b4c80f2d7a63e3515ed696521a4"
     },
     {
-      "id": "RK-17.7-002",
+      "id": "RK-17.7-004",
+      "kind": "structural",
+      "applies": "§17.7 Conference Access Security, where an implementation offers conference (media: conference): ConferenceGrants defaults to permissive values; narrowing them per participant is the integrator's call, RECOMMENDED to the integrator wherever a role does not publish, so the unit's level is the implementation's default's.",
+      "level": "must",
+      "section": "17.7",
+      "line": 19759,
+      "text": "ConferenceGrants\n  (Section 12.10.2) defaults to permissive values so that the common case\n  works unconfigured; narrowing them for a given participant is the\n  integrator's call, and is RECOMMENDED wherever a role does not need to\n  publish.",
+      "sha256": "6b6794e4d5e000d72f614bc3e6e44d3835ad19c66b6d22e2d7196ed2801b95f7"
+    },
+    {
+      "id": "RK-17.7-005",
       "kind": "behavior",
-      "applies": "§17.7 Conference Access Security; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
+      "applies": "§17.7 Conference Access Security, where an implementation offers conference (media: conference): tokens short-lived (expires_at, SHOULD) and never logged (MUST NOT).",
+      "level": "must",
+      "section": "17.7",
+      "line": 19763,
+      "text": "- Tokens SHOULD be short-lived (`expires_at`) and MUST NOT be logged.",
+      "sha256": "f49de54daff8badaa28481e026c1f1bdd539cfb796cffaab903971ee6e8ef3a6"
+    },
+    {
+      "id": "RK-17.7-006",
+      "kind": "non_testable",
+      "applies": "§17.7 Conference Access Security, where an implementation offers conference (media: conference): moderation operations (remove_participant, mute_track, unmute_track) reachable only through integrator-controlled code paths, never exposed unauthenticated; a review of the surfaces an implementation exposes.",
+      "level": "must",
+      "section": "17.7",
+      "line": 19764,
+      "text": "- Moderation operations (`remove_participant`, `mute_track`,\n  `unmute_track`) MUST only be reachable through integrator-controlled code\n  paths, never exposed unauthenticated.",
+      "sha256": "ba3d88b25c52c7ba22ba299aead4b9f1f7c1e8b237c5a24b2165303abf6aa902"
+    },
+    {
+      "id": "RK-17.7-007",
+      "kind": "behavior",
+      "applies": "§17.7 Conference Access Security, where an implementation offers conference (media: conference): the bot's presence, identity and hidden status observable to integrator code, as in force on the session, not as configured or admitted; with the paragraph that leaves disclosure to the jurisdiction.",
+      "level": "must",
       "section": "17.7",
       "line": 19770,
-      "text": "**Bot disclosure.** Whether a recording or transcribing bot must be\nannounced to human participants — and how — is set by the jurisdiction the\ndeployment operates in, and those rules differ by country and by sector.\nThis specification therefore mandates no disclosure behaviour and no\nrestriction on `hidden` observers (Section 12.10.6). It requires instead\nthat the framework give the integrator what it needs to comply with\nwhatever applies to it:\n\n- The bot's presence, its `identity`, and its `hidden` status MUST be\n  observable to integrator code — the status in force *on the session*,\n  not the one it was configured or admitted with: grants can change\n  while a session runs (Section 12.10.4), and a surface reporting the\n  construction answers a different question than the one a disclosure\n  obligation asks.\n- Whether STT, vision, or recording is active on a conference MUST be\n  observable at any time, not only at configuration time.\n- `ON_CONFERENCE_PARTICIPANT_JOINED` MUST fire for every human participant\n  the backend delivered, giving the integrator the point at which to\n  announce an active bot, gate entry on consent, or record that disclosure\n  was made. Across a *reported discontinuity* (Section 12.10.3) that\n  guarantee cannot reach the participants whose whole presence fell inside\n  the outage window: the discontinuity is the signal that the window is\n  unaccounted, and an integrator whose obligations require complete\n  attendance MUST treat it so rather than as observed-and-empty.\n\nImplementations SHOULD document this responsibility rather than assume a\ndefault. Deployments in regulated sectors typically do need visible bot\nidentification; the specification's role is to make that implementable, not\nto decide it.",
-      "sha256": "f7732899c3a99ae89cd4ca48a9ed913f28778083482780a2d261e834d1311ef1"
+      "text": "**Bot disclosure.** Whether a recording or transcribing bot must be\nannounced to human participants — and how — is set by the jurisdiction the\ndeployment operates in, and those rules differ by country and by sector.\nThis specification therefore mandates no disclosure behaviour and no\nrestriction on `hidden` observers (Section 12.10.6). It requires instead\nthat the framework give the integrator what it needs to comply with\nwhatever applies to it:\n\n- The bot's presence, its `identity`, and its `hidden` status MUST be\n  observable to integrator code — the status in force *on the session*,\n  not the one it was configured or admitted with: grants can change\n  while a session runs (Section 12.10.4), and a surface reporting the\n  construction answers a different question than the one a disclosure\n  obligation asks.",
+      "sha256": "c50f247baf356940b0a6446ed5b877c84ce2627807ce894d4ce29abb4db38e7e"
     },
     {
-      "id": "RK-17.8-001",
+      "id": "RK-17.7-008",
       "kind": "behavior",
-      "applies": "§17.8 Skill-Bundled Files; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
+      "applies": "§17.7 Conference Access Security, where an implementation offers conference (media: conference): whether STT, vision or recording is active on a conference observable at any time, not only at configuration time.",
+      "level": "must",
+      "section": "17.7",
+      "line": 19784,
+      "text": "- Whether STT, vision, or recording is active on a conference MUST be\n  observable at any time, not only at configuration time.",
+      "sha256": "17042e4fda4cbf3ffbcea1c5811d3f0e3a99ce0e7b3f1351fe8aeeb4c6809755"
+    },
+    {
+      "id": "RK-17.7-009",
+      "kind": "behavior",
+      "applies": "§17.7 Conference Access Security, where an implementation offers conference (media: conference): ON_CONFERENCE_PARTICIPANT_JOINED fired for every human participant the backend delivered.",
+      "level": "must",
+      "section": "17.7",
+      "line": 19786,
+      "text": "- `ON_CONFERENCE_PARTICIPANT_JOINED` MUST fire for every human participant\n  the backend delivered, giving the integrator the point at which to\n  announce an active bot, gate entry on consent, or record that disclosure\n  was made.",
+      "sha256": "ea7e6d0bec934386da126546e983715647ac19849b3075ed688483b31ae4f580"
+    },
+    {
+      "id": "RK-17.7-010",
+      "kind": "non_testable",
+      "applies": "§17.7 Conference Access Security, where an implementation offers conference (media: conference): across a reported discontinuity (Section 12.10.3), an integrator whose obligations require complete attendance treats the outage window as unaccounted, not as observed and empty; the integrator's to keep.",
+      "level": "must",
+      "section": "17.7",
+      "line": 19790,
+      "text": "Across a *reported discontinuity* (Section 12.10.3) that\n  guarantee cannot reach the participants whose whole presence fell inside\n  the outage window: the discontinuity is the signal that the window is\n  unaccounted, and an integrator whose obligations require complete\n  attendance MUST treat it so rather than as observed-and-empty.",
+      "sha256": "2820f32bd58113878b4a46a0c0f349f9d462777d4a8f9f2f8b3972b678ceb016"
+    },
+    {
+      "id": "RK-17.7-011",
+      "kind": "non_testable",
+      "applies": "§17.7 Conference Access Security, where an implementation offers conference (media: conference): documentation of the integrator's disclosure responsibility rather than an assumed default; with the closing note on regulated sectors.",
+      "level": "should",
+      "section": "17.7",
+      "line": 19794,
+      "text": "Implementations SHOULD document this responsibility rather than assume a\ndefault. Deployments in regulated sectors typically do need visible bot\nidentification; the specification's role is to make that implementable, not\nto decide it.",
+      "sha256": "537cf6c10c83373cbaf6efdb93ff7193cd21d46180c7cd185e7d24ac940e32bc"
+    },
+    {
+      "id": "RK-17.8-002",
+      "kind": "behavior",
+      "applies": "§17.8 Skill-Bundled Files: a skill file's resolution confined to the skill's own directory by resolving the path and checking containment, never by filtering the name alone (Section 24.6); with the item that makes every such read or execution an untrusted-input boundary.",
+      "level": "must",
       "section": "17.8",
       "line": 19804,
-      "text": "- A skill's references and scripts are addressed by a name the model chooses,\n  which makes every such read or execution an untrusted-input boundary.\n- Resolution MUST be confined to the skill's own directory by resolving the\n  path and checking containment, never by filtering the name alone\n  (Section 24.6).\n- A file so checked MUST be read through the file its check opened, never by\n  its name again, and a skill's `SKILL.md` MUST resolve to a regular file\n  inside the skill's directory (Section 24.6).\n- The same containment MUST apply to script execution, including where\n  execution policy is delegated to the integrator.\n- A skill an MCP server serves is text from outside (Section 6.4) whatever\n  its digests say: a digest the same server supplies proves its content\n  consistent with its entry, never trustworthy.\n- Such a skill's files are read only from the server that serves it, and\n  only those its entry lists. Its scripts never run through\n  `run_skill_script`, its `allowed_tools` grants nothing, and while it is\n  active a tool that runs code is served only with the host's approval of\n  that skill (Section 24.7).",
-      "sha256": "193dd122c4b02282969f1e1445787b8f7fc502d980399ef3d57b38d86ba71be1"
+      "text": "- A skill's references and scripts are addressed by a name the model chooses,\n  which makes every such read or execution an untrusted-input boundary.\n- Resolution MUST be confined to the skill's own directory by resolving the\n  path and checking containment, never by filtering the name alone\n  (Section 24.6).",
+      "sha256": "ab9660cec8ffa6c51666aa6a49cf5443bb1b3e245276e3ead8d23352cd940b07"
+    },
+    {
+      "id": "RK-17.8-003",
+      "kind": "behavior",
+      "applies": "§17.8 Skill-Bundled Files: a file so checked read through the file its check opened, never by its name again, and a skill's SKILL.md resolving to a regular file inside the skill's directory (Section 24.6).",
+      "level": "must",
+      "section": "17.8",
+      "line": 19809,
+      "text": "- A file so checked MUST be read through the file its check opened, never by\n  its name again, and a skill's `SKILL.md` MUST resolve to a regular file\n  inside the skill's directory (Section 24.6).",
+      "sha256": "afb277721fda706b26e2976f3f7e4583b38e1bab57588038c2245909358111fc"
+    },
+    {
+      "id": "RK-17.8-004",
+      "kind": "behavior",
+      "applies": "§17.8 Skill-Bundled Files: the same containment applied to script execution, including where execution policy is delegated to the integrator.",
+      "level": "must",
+      "section": "17.8",
+      "line": 19812,
+      "text": "- The same containment MUST apply to script execution, including where\n  execution policy is delegated to the integrator.",
+      "sha256": "79fdd538d08da69da7d48efd11ecdc1f7b329eb15caa7126ea2a0898efdec9cb"
+    },
+    {
+      "id": "RK-17.8-005",
+      "kind": "behavior",
+      "applies": "§17.8 Skill-Bundled Files, where an implementation reads skills an MCP server serves (Section 24.7): such a skill is text from outside (Section 6.4) whatever its digests say; a digest the same server supplies proves its content consistent with its entry, never trustworthy.",
+      "level": "must",
+      "section": "17.8",
+      "line": 19814,
+      "text": "- A skill an MCP server serves is text from outside (Section 6.4) whatever\n  its digests say: a digest the same server supplies proves its content\n  consistent with its entry, never trustworthy.",
+      "sha256": "de81010b701c8aa7ee868097e30940133fc05409d315ac00d084c374f7d81c63"
+    },
+    {
+      "id": "RK-17.8-006",
+      "kind": "behavior",
+      "applies": "§17.8 Skill-Bundled Files, where an implementation reads skills an MCP server serves (Section 24.7): such a skill's files are read only from the server that serves it, and only those its entry lists.",
+      "level": "must",
+      "section": "17.8",
+      "line": 19817,
+      "text": "- Such a skill's files are read only from the server that serves it, and\n  only those its entry lists.",
+      "sha256": "4180dd5b7fcd7189886023f23743b5db3a5d5f3f61dae3934d9cfb67dfd48e04"
+    },
+    {
+      "id": "RK-17.8-007",
+      "kind": "behavior",
+      "applies": "§17.8 Skill-Bundled Files, where an implementation reads skills an MCP server serves (Section 24.7): such a skill's scripts never run through run_skill_script, its allowed_tools grants nothing, and while it is active a tool that runs code is served only with the host's approval of that skill (Section 24.7).",
+      "level": "must",
+      "section": "17.8",
+      "line": 19819,
+      "text": "Its scripts never run through\n  `run_skill_script`, its `allowed_tools` grants nothing, and while it is\n  active a tool that runs code is served only with the host's approval of\n  that skill (Section 24.7).",
+      "sha256": "8b22521e392f91d52b8221b8f58394912bf3c008031b4eff2d057977c0c91fbf"
     },
     {
       "id": "RK-18-001",

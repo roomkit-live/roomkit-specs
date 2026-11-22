@@ -7899,9 +7899,9 @@
       "section": "17.1",
       "title": "Input Validation",
       "review": "normative",
-      "requirements": 1,
+      "requirements": 3,
       "mapping": {
-        "unmapped": 1
+        "unmapped": 3
       },
       "decided_gaps": {},
       "unannotated_keyword_lines": [],
@@ -7911,11 +7911,15 @@
       "section": "17.2",
       "title": "Multi-Tenant Isolation",
       "review": "normative",
-      "requirements": 1,
+      "requirements": 27,
       "mapping": {
-        "mapped_partial": 1
+        "mapped_partial": 1,
+        "unmapped": 26
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "phase6": 3,
+        "step": 9
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "addressing/set-agent-response-policy-stops-an-agent-s-answer-asking-the-others",
@@ -8030,11 +8034,13 @@
       "section": "17.3",
       "title": "Sensitive Data",
       "review": "normative",
-      "requirements": 1,
+      "requirements": 3,
       "mapping": {
-        "unmapped": 1
+        "unmapped": 3
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "step": 1
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -8046,7 +8052,9 @@
       "mapping": {
         "unmapped": 1
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "step": 1
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -8066,11 +8074,13 @@
       "section": "17.6",
       "title": "Voice and Audio Security",
       "review": "normative",
-      "requirements": 7,
+      "requirements": 28,
       "mapping": {
-        "unmapped": 7
+        "unmapped": 28
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "phase6": 18
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -8078,11 +8088,13 @@
       "section": "17.7",
       "title": "Conference Access Security",
       "review": "normative",
-      "requirements": 2,
+      "requirements": 9,
       "mapping": {
-        "unmapped": 2
+        "unmapped": 9
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "phase6": 5
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -8090,11 +8102,13 @@
       "section": "17.8",
       "title": "Skill-Bundled Files",
       "review": "normative",
-      "requirements": 1,
+      "requirements": 6,
       "mapping": {
-        "unmapped": 1
+        "unmapped": 6
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "step": 3
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -31714,13 +31728,107 @@
       "links": []
     },
     {
-      "id": "RK-17.1-001",
+      "id": "RK-17.1-002",
       "section": "17.1",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-17.2-001",
+      "id": "RK-17.1-003",
+      "section": "17.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-17.1-004",
+      "section": "17.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-17.2-002",
+      "section": "17.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-17.2-003",
+      "section": "17.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-17.2-004",
+      "section": "17.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-17.2-005",
+      "section": "17.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1986",
+        "note": "A media door (a join, a realtime session start, a conference mint_access()) refusing another organization's room before any session, credential or recording."
+      }
+    },
+    {
+      "id": "RK-17.2-006",
+      "section": "17.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1986",
+        "note": "A media door called without an organization."
+      }
+    },
+    {
+      "id": "RK-17.2-007",
+      "section": "17.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-17.2-008",
+      "section": "17.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-17.2-009",
+      "section": "17.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-17.2-010",
+      "section": "17.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-17.2-011",
+      "section": "17.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-17.2-012",
+      "section": "17.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-17.2-013",
+      "section": "17.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-17.2-014",
       "section": "17.2",
       "mapping": "mapped_partial",
       "links": [
@@ -31736,7 +31844,158 @@
       ]
     },
     {
-      "id": "RK-17.3-001",
+      "id": "RK-17.2-015",
+      "section": "17.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-17.2-016",
+      "section": "17.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-17.2-017",
+      "section": "17.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1986",
+        "note": "No step registers, subscribes or unregisters a connection of a transport whose registry reads no room; roomkit-rs has none, so it needs a requires_features name."
+      }
+    },
+    {
+      "id": "RK-17.2-018",
+      "section": "17.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1986",
+        "note": "No step registers, subscribes or unregisters a connection of a transport whose registry reads no room; roomkit-rs has none, so it needs a requires_features name."
+      }
+    },
+    {
+      "id": "RK-17.2-019",
+      "section": "17.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1986",
+        "note": "No step registers, subscribes or unregisters a connection of a transport whose registry reads no room; roomkit-rs has none, so it needs a requires_features name."
+      }
+    },
+    {
+      "id": "RK-17.2-020",
+      "section": "17.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1986",
+        "note": "No step registers, subscribes or unregisters a connection of a transport whose registry reads no room; roomkit-rs has none, so it needs a requires_features name."
+      }
+    },
+    {
+      "id": "RK-17.2-021",
+      "section": "17.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1986",
+        "note": "No step registers, subscribes or unregisters a connection of a transport whose registry reads no room; roomkit-rs has none, so it needs a requires_features name."
+      }
+    },
+    {
+      "id": "RK-17.2-022",
+      "section": "17.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1986",
+        "note": "No step registers, subscribes or unregisters a connection of a transport whose registry reads no room; roomkit-rs has none, so it needs a requires_features name."
+      }
+    },
+    {
+      "id": "RK-17.2-023",
+      "section": "17.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1986",
+        "note": "No step registers, subscribes or unregisters a connection of a transport whose registry reads no room; roomkit-rs has none, so it needs a requires_features name."
+      }
+    },
+    {
+      "id": "RK-17.2-024",
+      "section": "17.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-17.2-025",
+      "section": "17.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1986",
+        "note": "No step steers through a channel's own steer() or a turn client's, with or without an organization."
+      }
+    },
+    {
+      "id": "RK-17.2-026",
+      "section": "17.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-17.2-027",
+      "section": "17.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1986",
+        "note": "No step calls a strategy's install() directly, below the kit's install_strategy()."
+      }
+    },
+    {
+      "id": "RK-17.2-028",
+      "section": "17.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1986",
+        "note": "The deprecated connect_voice(), connect_video() and bind_voice_session(), which name no organization."
+      }
+    },
+    {
+      "id": "RK-17.3-002",
+      "section": "17.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1986",
+        "note": "Neither implementation offers configurable redaction or encryption of raw_payload at rest, so no step configures one."
+      }
+    },
+    {
+      "id": "RK-17.3-003",
+      "section": "17.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-17.3-004",
       "section": "17.3",
       "mapping": "unmapped",
       "links": []
@@ -31745,7 +32004,12 @@
       "id": "RK-17.4-001",
       "section": "17.4",
       "mapping": "unmapped",
-      "links": []
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1986",
+        "note": "Neither implementation offers per-organization rate limits, so no step configures one."
+      }
     },
     {
       "id": "RK-17.5-001",
@@ -31754,61 +32018,389 @@
       "links": []
     },
     {
-      "id": "RK-17.6-001",
+      "id": "RK-17.6-008",
       "section": "17.6",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-17.6-002",
+      "id": "RK-17.6-009",
       "section": "17.6",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-17.6-003",
+      "id": "RK-17.6-010",
+      "section": "17.6",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1986",
+        "note": "Configurable consent modes; suspect RMK-1985: Python offers none."
+      }
+    },
+    {
+      "id": "RK-17.6-011",
+      "section": "17.6",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1986",
+        "note": "A recording encrypted at rest."
+      }
+    },
+    {
+      "id": "RK-17.6-012",
+      "section": "17.6",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1986",
+        "note": "Configurable encryption of stored recordings."
+      }
+    },
+    {
+      "id": "RK-17.6-013",
+      "section": "17.6",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1986",
+        "note": "The encryption settings every recording configuration carries."
+      }
+    },
+    {
+      "id": "RK-17.6-014",
+      "section": "17.6",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1986",
+        "note": "A recorder that fails closed when neither encryption setting is set, a recording of video alone included."
+      }
+    },
+    {
+      "id": "RK-17.6-015",
       "section": "17.6",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-17.6-004",
+      "id": "RK-17.6-016",
       "section": "17.6",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-17.6-005",
+      "id": "RK-17.6-017",
+      "section": "17.6",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1986",
+        "note": "Voice session metadata under the room's retention and redaction policies."
+      }
+    },
+    {
+      "id": "RK-17.6-018",
+      "section": "17.6",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1986",
+        "note": "TTS context audio kept in memory only."
+      }
+    },
+    {
+      "id": "RK-17.6-019",
+      "section": "17.6",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1986",
+        "note": "TTS context audio within max_turns and max_audio_seconds, dropped with its session."
+      }
+    },
+    {
+      "id": "RK-17.6-020",
+      "section": "17.6",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1986",
+        "note": "TTS context audio kept only when include_audio is set."
+      }
+    },
+    {
+      "id": "RK-17.6-021",
+      "section": "17.6",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1986",
+        "note": "The TTS context's text read from the stored transcript."
+      }
+    },
+    {
+      "id": "RK-17.6-022",
+      "section": "17.6",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1986",
+        "note": "A user turn whose transcript a hook modified keeps no context audio."
+      }
+    },
+    {
+      "id": "RK-17.6-023",
+      "section": "17.6",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1986",
+        "note": "Under DTMF redaction, a user turn with detected DTMF keeps no context audio."
+      }
+    },
+    {
+      "id": "RK-17.6-024",
       "section": "17.6",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-17.6-006",
+      "id": "RK-17.6-025",
+      "section": "17.6",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1986",
+        "note": "A custom voice's recordings handed to the synthesizer for the call and kept nowhere."
+      }
+    },
+    {
+      "id": "RK-17.6-026",
+      "section": "17.6",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1986",
+        "note": "A custom voice's evidence kept as metadata."
+      }
+    },
+    {
+      "id": "RK-17.6-027",
+      "section": "17.6",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1986",
+        "note": "No custom voice created without the consent of the person it belongs to."
+      }
+    },
+    {
+      "id": "RK-17.6-028",
       "section": "17.6",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-17.6-007",
+      "id": "RK-17.6-029",
       "section": "17.6",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-17.7-001",
+      "id": "RK-17.6-030",
+      "section": "17.6",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1986",
+        "note": "A provenance mark passed on as the synthesizer produced it."
+      }
+    },
+    {
+      "id": "RK-17.6-031",
+      "section": "17.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-17.6-032",
+      "section": "17.6",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1986",
+        "note": "Configurable DTMF redaction in stored events and logs."
+      }
+    },
+    {
+      "id": "RK-17.6-033",
+      "section": "17.6",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1986",
+        "note": "Under DTMF redaction, no raw digit in raw_payload, transcripts or log output."
+      }
+    },
+    {
+      "id": "RK-17.6-034",
+      "section": "17.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-17.6-035",
+      "section": "17.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-17.7-003",
+      "section": "17.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1986",
+        "note": "Conference tokens minted per participant, hidden observers subscribe-only."
+      }
+    },
+    {
+      "id": "RK-17.7-004",
+      "section": "17.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1986",
+        "note": "ConferenceGrants' permissive defaults."
+      }
+    },
+    {
+      "id": "RK-17.7-005",
+      "section": "17.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1986",
+        "note": "Short-lived conference tokens; their absence from logs needs a log reader no step has."
+      }
+    },
+    {
+      "id": "RK-17.7-006",
       "section": "17.7",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-17.7-002",
+      "id": "RK-17.7-007",
+      "section": "17.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1986",
+        "note": "The bot's presence, identity and hidden status as in force on the session."
+      }
+    },
+    {
+      "id": "RK-17.7-008",
+      "section": "17.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1986",
+        "note": "Whether STT, vision or recording is active on a conference, observable at any time."
+      }
+    },
+    {
+      "id": "RK-17.7-009",
       "section": "17.7",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-17.8-001",
+      "id": "RK-17.7-010",
+      "section": "17.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-17.7-011",
+      "section": "17.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-17.8-002",
+      "section": "17.8",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1986",
+        "note": "The skills fixture writes each skill to a directory, but no step stages a name that resolves outside it only once resolved (a symlink); the traversal scenarios refuse a parent segment by its name."
+      }
+    },
+    {
+      "id": "RK-17.8-003",
+      "section": "17.8",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1986",
+        "note": "No step swaps a skill file between its check and its read, or makes a skill's SKILL.md resolve outside its directory."
+      }
+    },
+    {
+      "id": "RK-17.8-004",
+      "section": "17.8",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1986",
+        "note": "No step stages a script name that resolves outside its skill only once resolved; the traversal scenarios refuse a parent segment by its name before the integrator's executor runs."
+      }
+    },
+    {
+      "id": "RK-17.8-005",
+      "section": "17.8",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-17.8-006",
+      "section": "17.8",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-17.8-007",
       "section": "17.8",
       "mapping": "unmapped",
       "links": []
