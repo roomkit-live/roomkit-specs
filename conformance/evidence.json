@@ -72,6 +72,20 @@
     "RK-20.3-004",
     "RK-20.3-006",
     "RK-20.3-007",
+    "RK-21.1-002",
+    "RK-21.1-003",
+    "RK-21.1-004",
+    "RK-21.1-005",
+    "RK-21.1-006",
+    "RK-21.1-007",
+    "RK-21.2-001",
+    "RK-21.2-002",
+    "RK-21.3-001",
+    "RK-21.3-002",
+    "RK-21.3-003",
+    "RK-21.4-001",
+    "RK-21.5-001",
+    "RK-21.6-001",
     "RK-22.1-002",
     "RK-22.1-003",
     "RK-22.1-004",
@@ -13102,7 +13116,7 @@
     },
     {
       "id": "phase4-background-turn-context",
-      "requirement": "RK-21.4-001",
+      "requirement": "RK-21.4-034",
       "scope": "Owner-served work_in_background reads its turn snapshot for agent naming and the nested-task guard, while start_task builds the worker brief from current storage.",
       "assertions": [
         {
@@ -13144,7 +13158,7 @@
       "missing": [
         "Other context accessors, realtime calls, handler result shapes and arbitrary custom handlers are outside this mapping."
       ],
-      "clause_sha256": "f0673543e013cdd3057779e8da7c70ad70d63f7a61c305f6d31af888a3e86026",
+      "clause_sha256": "1702f728ef763256e44ce24dab90530c7b90e19433864acb5bdbc762573191c4",
       "coverage": "partial",
       "review": "Read against the Python background/task-context implementation and its source tests; four new scenarios passed Python memory and Redis and reproduced the Rust defects before the correction. These are bounded shared scenarios, not complete coverage of the composite clause.",
       "tests": []
@@ -13737,8 +13751,8 @@
     },
     {
       "id": "strategy-tool-install-integrity",
-      "requirement": "RK-21.1-005",
-      "clause_sha256": "126e4f99ab86e4293282b385038b929a4a2f2647a6188337a222711612b7d6a1",
+      "requirement": "RK-21.1-055",
+      "clause_sha256": "362f509a3cebcc0392739ae457a2d63fe8ec64ccc27984dbb286a5d8184bbc30",
       "scope": "Atomic strategy tool installation, preservation of host tools, and same-strategy reinstallation.",
       "coverage": "partial",
       "review": "Read the host-tool collision and structured-result collision paths and their source tests. The specialized Python reinstallation test covers eight variants; the corresponding native Rust tests cover six text variants. Scenario execution receipts do not certify execution of those specialized tests.",
@@ -20744,8 +20758,8 @@
     },
     {
       "id": "acp-handler-policy-admission",
-      "requirement": "RK-21.1-002",
-      "clause_sha256": "a1357e93854112c480e6b43a2061b99883fff02867cdbecc4b1affd1bebc0e7d",
+      "requirement": "RK-21.1-031",
+      "clause_sha256": "8e1641b526208c70c0d1f33b0b47bdcc1ffabdf1710c3b4472bc7b8c14a53cd0",
       "coverage": "partial",
       "scope": "Policy admission before approval hooks, including the bare and MCP alias names.",
       "assertions": [
@@ -22031,8 +22045,8 @@
     },
     {
       "id": "phase4-local-allowed-tool-catalogue",
-      "requirement": "RK-21.4-001",
-      "clause_sha256": "f0673543e013cdd3057779e8da7c70ad70d63f7a61c305f6d31af888a3e86026",
+      "requirement": "RK-21.4-022",
+      "clause_sha256": "35225f91a8f2185c82c92f2281158dd3295e020aa65ee2e7fdd85451c9cd09b7",
       "scope": "Local AI handlers read the resolved catalogue, policy denial and owned-tool exemptions, hidden Tool Search tools, hook additions/withdrawals, per-room configuration and first-round reread declarations, in both provider modes. The two skill-gated cases now pass the Rust local runner (RMK-1709); Rust aggregate output is not an execution receipt.",
       "coverage": "partial",
       "review": "Compared with current_tool_allowed_names, _stamp_toolset, _adopt_hook_toolset and the source tests listed in the lot 54 checklist. Each assertion reads an actual public context accessor from a handler; neither runner derives the answer from scripted definitions. The earlier Rust skill-gated setup failures are fixed by the reviewed local skill-gating port; historical receipts are preserved unchanged.",
@@ -23757,8 +23771,8 @@
     },
     {
       "id": "phase4-mcp-discovery",
-      "requirement": "RK-21.2-001",
-      "clause_sha256": "2067cc7016984cf898aa0e7a1a72c4a5fc3ce70ef41b233755d0269d2eefd1d0",
+      "requirement": "RK-21.2-021",
+      "clause_sha256": "b76ba61215992b6221fd416e598767f81049eb02a2450badcf1cf0545535c1c9",
       "scope": "Connection/discovery, admitted tool metadata and owned copies; native stdio complements shared HTTP observations.",
       "coverage": "partial",
       "review": "Full independent production and fixture reviews accepted the MCP host slice after reproduced model-boundary and fixture-oracle defects were corrected. Source mapping retains 10 full, 4 partial and 1 unclosed selected source contracts. No historical execution receipt is changed. Reviewed again after 07fd11f clarified server-aware bare-name policy and listing bounds. The host access assertions are unchanged; this link does not certify those additional policy or listing-bound contracts.",
@@ -23823,8 +23837,8 @@
     },
     {
       "id": "phase4-mcp-host-access",
-      "requirement": "RK-21.2-002",
-      "clause_sha256": "a892807ce32837232750d357eda3f607f613321e4d323036d468f5e42e6b14ec",
+      "requirement": "RK-21.2-046",
+      "clause_sha256": "318ab83e9781e00a70f742a34d88de13f3a8b082f98de8b4a43a5dc5ae3d67cc",
       "scope": "Handshake information and extensions, raw request/resource fidelity, model boundaries and deadlines; native stdio adds instructions and cancellation witnesses.",
       "coverage": "partial",
       "review": "Full independent production and fixture reviews accepted the MCP host slice after reproduced model-boundary and fixture-oracle defects were corrected. Source mapping retains 10 full, 4 partial and 1 unclosed selected source contracts. No historical execution receipt is changed. The two MCP timeout witnesses use a 1-second caller deadline after a retained 32-session probe reproduced expiry before dispatch at 10 ms; the exact request/result assertions and the product deadlines are unchanged. Both fixtures now reject mismatched held requests immediately.",
@@ -24000,8 +24014,8 @@
     },
     {
       "id": "phase4-mcp-tool-dictionaries",
-      "requirement": "RK-21.2-001",
-      "clause_sha256": "2067cc7016984cf898aa0e7a1a72c4a5fc3ce70ef41b233755d0269d2eefd1d0",
+      "requirement": "RK-21.2-021",
+      "clause_sha256": "b76ba61215992b6221fd416e598767f81049eb02a2450badcf1cf0545535c1c9",
       "scope": "Public get_tools_as_dicts: connected filtered and paged catalogue snapshots with all six AITool model fields; native witnesses establish detached ownership.",
       "coverage": "partial",
       "review": "Full independent production, API, scenario and source review accepted this narrow slice. JSON and SSE are response framing over streamable HTTP. The four exact canonical oracles were independently checked. One existing source function is covered in full and one only for its dictionary guard; the new specialized ownership test is separate source evidence.",
@@ -24061,8 +24075,8 @@
     },
     {
       "id": "phase4-role-policy-text-turns",
-      "requirement": "RK-21.1-007",
-      "clause_sha256": "e3672a45c7088db38013c06dab0589c486a67028a1d7603f27b7050cfff1586b",
+      "requirement": "RK-21.1-070",
+      "clause_sha256": "745234ce0f2238847171e9fe19eac872bbaf1b83a950a591a8bb750e48c39cd3",
       "scope": "Role selection and effective policy in local AIChannel and Agent text turns, including declaration, dispatch, readers, search, script prompts and MCP names.",
       "coverage": "partial",
       "review": "Full independent review of product, runners, schema, source assertions and complete scenario expectations accepted this text-turn slice. Search and list separately assert positive membership and both role and skill exclusions. Native model and context tests remain separate proofs; the broad unit stays partial.",
@@ -25757,8 +25771,8 @@
     },
     {
       "id": "phase4-extract-tools-handlers",
-      "requirement": "RK-21.4-001",
-      "clause_sha256": "f0673543e013cdd3057779e8da7c70ad70d63f7a61c305f6d31af888a3e86026",
+      "requirement": "RK-21.4-008",
+      "clause_sha256": "389f8e61251b051156249ecfc7cc9f531604585981ac5649a32c69ef5a06a1eb",
       "scope": "Extraction selects zero, one or composed handlers; existing composition and a standalone mixed channel preserve first-match dispatch and ordinary results.",
       "coverage": "partial",
       "review": "Independent source and full code reviews accepted the public helper, existing composition counterparts and the standalone channel witness. Native Rust counterparts and final gate logs are retained separately; this link is source mapping only.",

@@ -3788,18 +3788,1148 @@
       "memory/a-summarizing-memory-never-summarizes-a-returned-current-input": "79dfdc2ecf1ef49120ee886dd5fba92a487af278a53988a94de0b111ed220533",
       "memory/a-summary-stands-for-the-older-turns": "79dfdc2ecf1ef49120ee886dd5fba92a487af278a53988a94de0b111ed220533"
     },
-    "RK-21.1-004": {
-      "tools/every-argument-that-does-not-fit-is-named": "0fdb54986121a7f92e06d9891f6980dc27e90fb9104af4924e50038212397853"
+    "RK-21.1-008": {
+      "acp/handler-policy-deny": "b7db799acbc370ccd4358ea309307220419d64aa08514efcd9a2c001c9c226cb",
+      "tool-allowed-names/policy-denial-removes-a-name-and-owned-tools-escape-the-allow-list-non-streaming": "b7db799acbc370ccd4358ea309307220419d64aa08514efcd9a2c001c9c226cb",
+      "tool-allowed-names/policy-denial-removes-a-name-and-owned-tools-escape-the-allow-list-streaming": "b7db799acbc370ccd4358ea309307220419d64aa08514efcd9a2c001c9c226cb",
+      "tools/refusal-per-cause": "b7db799acbc370ccd4358ea309307220419d64aa08514efcd9a2c001c9c226cb"
     },
-    "RK-21.4-001": {
-      "tools/a-message-under-the-framework-s-name-in-a-room-the-host-names-reads-system-as-its-actor": "f0673543e013cdd3057779e8da7c70ad70d63f7a61c305f6d31af888a3e86026",
-      "tools/a-participant-is-the-actor-of-the-turn-their-message-opens": "f0673543e013cdd3057779e8da7c70ad70d63f7a61c305f6d31af888a3e86026",
-      "tools/a-participant-s-id-on-a-channel-that-does-not-reach-them-names-no-actor": "f0673543e013cdd3057779e8da7c70ad70d63f7a61c305f6d31af888a3e86026",
-      "tools/a-sender-with-no-record-is-the-actor-by-the-id-they-wrote-under": "f0673543e013cdd3057779e8da7c70ad70d63f7a61c305f6d31af888a3e86026",
-      "tools/a-turn-another-agent-s-message-opens-reads-no-actor-and-that-agent-as-who-asked": "f0673543e013cdd3057779e8da7c70ad70d63f7a61c305f6d31af888a3e86026",
-      "tools/a-turn-the-host-opens-with-deliver-reads-system-as-its-actor": "f0673543e013cdd3057779e8da7c70ad70d63f7a61c305f6d31af888a3e86026",
-      "tools/a-turn-the-host-opens-with-post-reads-no-actor": "f0673543e013cdd3057779e8da7c70ad70d63f7a61c305f6d31af888a3e86026",
-      "tools/a-turn-the-host-opens-with-send-event-reads-no-actor": "f0673543e013cdd3057779e8da7c70ad70d63f7a61c305f6d31af888a3e86026"
+    "RK-21.1-009": {
+      "acp/handler-policy-allow-list": "c9303bc819672a50bf531538ada87ee50f364b7dd2554b9bf484419cd4e7b195",
+      "mcp/a-bare-name-runs-only-on-the-server-the-policy-admits": "c9303bc819672a50bf531538ada87ee50f364b7dd2554b9bf484419cd4e7b195",
+      "role-policy/a-later-turn-reads-the-new-role-non-streaming": "c9303bc819672a50bf531538ada87ee50f364b7dd2554b9bf484419cd4e7b195",
+      "role-policy/a-later-turn-reads-the-new-role-streaming": "c9303bc819672a50bf531538ada87ee50f364b7dd2554b9bf484419cd4e7b195",
+      "role-policy/agent-selects-each-senders-role-non-streaming": "c9303bc819672a50bf531538ada87ee50f364b7dd2554b9bf484419cd4e7b195",
+      "role-policy/agent-selects-each-senders-role-streaming": "c9303bc819672a50bf531538ada87ee50f364b7dd2554b9bf484419cd4e7b195",
+      "role-policy/ai-selects-each-senders-role-non-streaming": "c9303bc819672a50bf531538ada87ee50f364b7dd2554b9bf484419cd4e7b195",
+      "role-policy/ai-selects-each-senders-role-streaming": "c9303bc819672a50bf531538ada87ee50f364b7dd2554b9bf484419cd4e7b195",
+      "role-policy/allowed-catalogue-keeps-gated-tools-non-streaming": "c9303bc819672a50bf531538ada87ee50f364b7dd2554b9bf484419cd4e7b195",
+      "role-policy/allowed-catalogue-keeps-gated-tools-streaming": "c9303bc819672a50bf531538ada87ee50f364b7dd2554b9bf484419cd4e7b195",
+      "sandbox/offers-only-allowed-commands-with-search-off-non-streaming": "c9303bc819672a50bf531538ada87ee50f364b7dd2554b9bf484419cd4e7b195",
+      "sandbox/offers-only-allowed-commands-with-search-off-streaming": "c9303bc819672a50bf531538ada87ee50f364b7dd2554b9bf484419cd4e7b195",
+      "tool-search/tool-search-names-no-denied-tool-and-runs-under-an-allow-list": "c9303bc819672a50bf531538ada87ee50f364b7dd2554b9bf484419cd4e7b195"
+    },
+    "RK-21.1-010": {
+      "acp/handler-policy-mcp-both-admitted": "bcc7ec0eaf6eee4217b93a47e2132ec7f5fe287a373f31ad4882479e13f57646",
+      "mcp/a-bare-name-runs-on-the-first-server-of-the-chain-that-serves-it": "bcc7ec0eaf6eee4217b93a47e2132ec7f5fe287a373f31ad4882479e13f57646",
+      "mcp/a-policy-that-names-no-server-leaves-a-bare-name-on-the-first-server": "bcc7ec0eaf6eee4217b93a47e2132ec7f5fe287a373f31ad4882479e13f57646",
+      "role-policy/agent-selects-each-senders-role-non-streaming": "bcc7ec0eaf6eee4217b93a47e2132ec7f5fe287a373f31ad4882479e13f57646",
+      "role-policy/agent-selects-each-senders-role-streaming": "bcc7ec0eaf6eee4217b93a47e2132ec7f5fe287a373f31ad4882479e13f57646",
+      "role-policy/ai-selects-each-senders-role-non-streaming": "bcc7ec0eaf6eee4217b93a47e2132ec7f5fe287a373f31ad4882479e13f57646",
+      "role-policy/ai-selects-each-senders-role-streaming": "bcc7ec0eaf6eee4217b93a47e2132ec7f5fe287a373f31ad4882479e13f57646"
+    },
+    "RK-21.1-011": {
+      "acp/handler-policy-deny": "5e121ee2d1fbfc31dd143f6081a4e3cb2fc35286eecc11396d75e640a66752c6",
+      "acp/handler-policy-mcp-alias-deny": "5e121ee2d1fbfc31dd143f6081a4e3cb2fc35286eecc11396d75e640a66752c6",
+      "mcp/a-bare-name-never-runs-on-a-server-the-policy-keeps-out": "5e121ee2d1fbfc31dd143f6081a4e3cb2fc35286eecc11396d75e640a66752c6",
+      "mcp/a-bare-name-runs-only-on-the-server-the-policy-admits": "5e121ee2d1fbfc31dd143f6081a4e3cb2fc35286eecc11396d75e640a66752c6",
+      "mcp/a-catalogue-of-aliases-holds-a-policy-that-names-a-server": "5e121ee2d1fbfc31dd143f6081a4e3cb2fc35286eecc11396d75e640a66752c6",
+      "role-policy/an-alias-must-pass-both-role-names-non-streaming": "5e121ee2d1fbfc31dd143f6081a4e3cb2fc35286eecc11396d75e640a66752c6",
+      "role-policy/an-alias-must-pass-both-role-names-streaming": "5e121ee2d1fbfc31dd143f6081a4e3cb2fc35286eecc11396d75e640a66752c6",
+      "role-policy/mcp-denied-server-non-streaming": "5e121ee2d1fbfc31dd143f6081a4e3cb2fc35286eecc11396d75e640a66752c6",
+      "role-policy/mcp-denied-server-streaming": "5e121ee2d1fbfc31dd143f6081a4e3cb2fc35286eecc11396d75e640a66752c6",
+      "sandbox/offers-only-allowed-commands-with-search-off-non-streaming": "5e121ee2d1fbfc31dd143f6081a4e3cb2fc35286eecc11396d75e640a66752c6",
+      "sandbox/offers-only-allowed-commands-with-search-off-streaming": "5e121ee2d1fbfc31dd143f6081a4e3cb2fc35286eecc11396d75e640a66752c6",
+      "tools/refusal-per-cause": "5e121ee2d1fbfc31dd143f6081a4e3cb2fc35286eecc11396d75e640a66752c6"
+    },
+    "RK-21.1-014": {
+      "skill-gating/list-globs-hide-and-refuse-only-matching-tools-non-streaming": "7b76c8603da21230b79b9e88eaebb837720ee85d50458b0de3c823634e273f66",
+      "skill-gating/list-globs-hide-and-refuse-only-matching-tools-streaming": "7b76c8603da21230b79b9e88eaebb837720ee85d50458b0de3c823634e273f66",
+      "skill-gating/scalar-globs-hide-and-refuse-only-matching-tools-non-streaming": "7b76c8603da21230b79b9e88eaebb837720ee85d50458b0de3c823634e273f66",
+      "skill-gating/scalar-globs-hide-and-refuse-only-matching-tools-streaming": "7b76c8603da21230b79b9e88eaebb837720ee85d50458b0de3c823634e273f66"
+    },
+    "RK-21.1-015": {
+      "role-policy/activation-cannot-bypass-role-non-streaming": "809df685a1391cf27ebc8d3889e023751b7ee30fdfd26b2ddc1021824bc7f43b",
+      "role-policy/activation-cannot-bypass-role-streaming": "809df685a1391cf27ebc8d3889e023751b7ee30fdfd26b2ddc1021824bc7f43b",
+      "role-policy/script-denied-non-streaming": "809df685a1391cf27ebc8d3889e023751b7ee30fdfd26b2ddc1021824bc7f43b",
+      "role-policy/script-denied-streaming": "809df685a1391cf27ebc8d3889e023751b7ee30fdfd26b2ddc1021824bc7f43b",
+      "role-policy/script-owner-replaces-base-non-streaming": "809df685a1391cf27ebc8d3889e023751b7ee30fdfd26b2ddc1021824bc7f43b",
+      "role-policy/script-owner-replaces-base-streaming": "809df685a1391cf27ebc8d3889e023751b7ee30fdfd26b2ddc1021824bc7f43b",
+      "sandbox/is-denied-before-it-runs-non-streaming": "809df685a1391cf27ebc8d3889e023751b7ee30fdfd26b2ddc1021824bc7f43b",
+      "sandbox/is-denied-before-it-runs-streaming": "809df685a1391cf27ebc8d3889e023751b7ee30fdfd26b2ddc1021824bc7f43b",
+      "sandbox/offers-only-allowed-commands-with-search-off-non-streaming": "809df685a1391cf27ebc8d3889e023751b7ee30fdfd26b2ddc1021824bc7f43b",
+      "sandbox/offers-only-allowed-commands-with-search-off-streaming": "809df685a1391cf27ebc8d3889e023751b7ee30fdfd26b2ddc1021824bc7f43b",
+      "skill-gating/activation-never-overrides-policy-and-infrastructure-escapes-both-non-streaming": "809df685a1391cf27ebc8d3889e023751b7ee30fdfd26b2ddc1021824bc7f43b",
+      "skill-gating/activation-never-overrides-policy-and-infrastructure-escapes-both-streaming": "809df685a1391cf27ebc8d3889e023751b7ee30fdfd26b2ddc1021824bc7f43b",
+      "tool-allowed-names/policy-denial-removes-a-name-and-owned-tools-escape-the-allow-list-non-streaming": "809df685a1391cf27ebc8d3889e023751b7ee30fdfd26b2ddc1021824bc7f43b",
+      "tool-allowed-names/policy-denial-removes-a-name-and-owned-tools-escape-the-allow-list-streaming": "809df685a1391cf27ebc8d3889e023751b7ee30fdfd26b2ddc1021824bc7f43b",
+      "tool-search/tool-search-names-no-denied-tool-and-runs-under-an-allow-list": "809df685a1391cf27ebc8d3889e023751b7ee30fdfd26b2ddc1021824bc7f43b",
+      "tools/refusal-per-cause": "809df685a1391cf27ebc8d3889e023751b7ee30fdfd26b2ddc1021824bc7f43b"
+    },
+    "RK-21.1-016": {
+      "role-policy/activation-cannot-bypass-role-non-streaming": "2dac3ef236aa29b250f146de74b20722a7e986ab9b10ab9da5fce3ed2d4bd2e3",
+      "role-policy/activation-cannot-bypass-role-streaming": "2dac3ef236aa29b250f146de74b20722a7e986ab9b10ab9da5fce3ed2d4bd2e3",
+      "role-policy/allowed-catalogue-keeps-gated-tools-non-streaming": "2dac3ef236aa29b250f146de74b20722a7e986ab9b10ab9da5fce3ed2d4bd2e3",
+      "role-policy/allowed-catalogue-keeps-gated-tools-streaming": "2dac3ef236aa29b250f146de74b20722a7e986ab9b10ab9da5fce3ed2d4bd2e3",
+      "role-policy/search-and-list-non-streaming": "2dac3ef236aa29b250f146de74b20722a7e986ab9b10ab9da5fce3ed2d4bd2e3",
+      "role-policy/search-and-list-streaming": "2dac3ef236aa29b250f146de74b20722a7e986ab9b10ab9da5fce3ed2d4bd2e3",
+      "skill-gating/activation-never-overrides-policy-and-infrastructure-escapes-both-non-streaming": "2dac3ef236aa29b250f146de74b20722a7e986ab9b10ab9da5fce3ed2d4bd2e3",
+      "skill-gating/activation-never-overrides-policy-and-infrastructure-escapes-both-streaming": "2dac3ef236aa29b250f146de74b20722a7e986ab9b10ab9da5fce3ed2d4bd2e3",
+      "skill-prerequisites/channel-owned-tools-count-as-prerequisites-despite-policy-non-streaming": "2dac3ef236aa29b250f146de74b20722a7e986ab9b10ab9da5fce3ed2d4bd2e3",
+      "skill-prerequisites/channel-owned-tools-count-as-prerequisites-despite-policy-streaming": "2dac3ef236aa29b250f146de74b20722a7e986ab9b10ab9da5fce3ed2d4bd2e3",
+      "skills/a-turn-s-skill-tools-escape-the-tool-policy": "2dac3ef236aa29b250f146de74b20722a7e986ab9b10ab9da5fce3ed2d4bd2e3",
+      "tool-allowed-names/policy-denial-removes-a-name-and-owned-tools-escape-the-allow-list-non-streaming": "2dac3ef236aa29b250f146de74b20722a7e986ab9b10ab9da5fce3ed2d4bd2e3",
+      "tool-allowed-names/policy-denial-removes-a-name-and-owned-tools-escape-the-allow-list-streaming": "2dac3ef236aa29b250f146de74b20722a7e986ab9b10ab9da5fce3ed2d4bd2e3",
+      "tool-allowed-names/skill-hidden-tools-remain-allowed-but-policy-denied-tools-do-not-non-streaming": "2dac3ef236aa29b250f146de74b20722a7e986ab9b10ab9da5fce3ed2d4bd2e3",
+      "tool-allowed-names/skill-hidden-tools-remain-allowed-but-policy-denied-tools-do-not-streaming": "2dac3ef236aa29b250f146de74b20722a7e986ab9b10ab9da5fce3ed2d4bd2e3",
+      "tool-search/tool-search-names-no-denied-tool-and-runs-under-an-allow-list": "2dac3ef236aa29b250f146de74b20722a7e986ab9b10ab9da5fce3ed2d4bd2e3"
+    },
+    "RK-21.1-020": {
+      "role-policy/script-denied-non-streaming": "3c2bff998ca3a7d2f42511c2134c9024383a826db7b065441cfe54c92873fc38",
+      "role-policy/script-denied-streaming": "3c2bff998ca3a7d2f42511c2134c9024383a826db7b065441cfe54c92873fc38",
+      "role-policy/script-owner-replaces-base-non-streaming": "3c2bff998ca3a7d2f42511c2134c9024383a826db7b065441cfe54c92873fc38",
+      "role-policy/script-owner-replaces-base-streaming": "3c2bff998ca3a7d2f42511c2134c9024383a826db7b065441cfe54c92873fc38",
+      "sandbox/is-denied-before-it-runs-non-streaming": "3c2bff998ca3a7d2f42511c2134c9024383a826db7b065441cfe54c92873fc38",
+      "sandbox/is-denied-before-it-runs-streaming": "3c2bff998ca3a7d2f42511c2134c9024383a826db7b065441cfe54c92873fc38",
+      "sandbox/is-hidden-and-refused-by-an-inactive-skill-non-streaming": "3c2bff998ca3a7d2f42511c2134c9024383a826db7b065441cfe54c92873fc38",
+      "sandbox/is-hidden-and-refused-by-an-inactive-skill-streaming": "3c2bff998ca3a7d2f42511c2134c9024383a826db7b065441cfe54c92873fc38",
+      "sandbox/offers-only-allowed-commands-with-search-off-non-streaming": "3c2bff998ca3a7d2f42511c2134c9024383a826db7b065441cfe54c92873fc38",
+      "sandbox/offers-only-allowed-commands-with-search-off-streaming": "3c2bff998ca3a7d2f42511c2134c9024383a826db7b065441cfe54c92873fc38",
+      "sandbox/search-cannot-reveal-a-denied-command-non-streaming": "3c2bff998ca3a7d2f42511c2134c9024383a826db7b065441cfe54c92873fc38",
+      "sandbox/search-cannot-reveal-a-denied-command-streaming": "3c2bff998ca3a7d2f42511c2134c9024383a826db7b065441cfe54c92873fc38"
+    },
+    "RK-21.1-021": {
+      "skill-gating/a-held-tool-stays-gated-until-the-activation-references-it-non-streaming": "1e4d5633d645806cb385b32c6e8a1e0633c4586fcda5b063e7295c887b1ae7a6",
+      "skill-gating/a-held-tool-stays-gated-until-the-activation-references-it-streaming": "1e4d5633d645806cb385b32c6e8a1e0633c4586fcda5b063e7295c887b1ae7a6",
+      "skill-gating/activation-never-overrides-policy-and-infrastructure-escapes-both-non-streaming": "1e4d5633d645806cb385b32c6e8a1e0633c4586fcda5b063e7295c887b1ae7a6",
+      "skill-gating/activation-never-overrides-policy-and-infrastructure-escapes-both-streaming": "1e4d5633d645806cb385b32c6e8a1e0633c4586fcda5b063e7295c887b1ae7a6",
+      "skill-gating/activation-opens-the-next-round-and-its-hook-catalogue-non-streaming": "1e4d5633d645806cb385b32c6e8a1e0633c4586fcda5b063e7295c887b1ae7a6",
+      "skill-gating/activation-opens-the-next-round-and-its-hook-catalogue-streaming": "1e4d5633d645806cb385b32c6e8a1e0633c4586fcda5b063e7295c887b1ae7a6",
+      "skills/a-turn-s-skill-tools-escape-the-tool-policy": "1e4d5633d645806cb385b32c6e8a1e0633c4586fcda5b063e7295c887b1ae7a6"
+    },
+    "RK-21.1-024": {
+      "acp/handler-policy-mcp-alias-deny": "a4fbab0e7edec59f15c84d866106e58af275ca3a8a2e14dfcccab493d81c57be",
+      "acp/handler-policy-mcp-bare-deny": "a4fbab0e7edec59f15c84d866106e58af275ca3a8a2e14dfcccab493d81c57be",
+      "acp/handler-policy-mcp-both-admitted": "a4fbab0e7edec59f15c84d866106e58af275ca3a8a2e14dfcccab493d81c57be",
+      "mcp/a-catalogue-of-aliases-holds-a-policy-that-names-a-server": "a4fbab0e7edec59f15c84d866106e58af275ca3a8a2e14dfcccab493d81c57be",
+      "role-policy/an-alias-must-pass-both-role-names-non-streaming": "a4fbab0e7edec59f15c84d866106e58af275ca3a8a2e14dfcccab493d81c57be",
+      "role-policy/an-alias-must-pass-both-role-names-streaming": "a4fbab0e7edec59f15c84d866106e58af275ca3a8a2e14dfcccab493d81c57be"
+    },
+    "RK-21.1-025": {
+      "acp/handler-policy-mcp-alias-deny": "9bb9aae3f818a8469cf2b67a0fc48694bbd23c979deddcc2ae6781adc4c52e38",
+      "acp/handler-policy-mcp-bare-deny": "9bb9aae3f818a8469cf2b67a0fc48694bbd23c979deddcc2ae6781adc4c52e38",
+      "mcp/a-bare-name-never-runs-on-a-server-the-policy-keeps-out": "9bb9aae3f818a8469cf2b67a0fc48694bbd23c979deddcc2ae6781adc4c52e38",
+      "mcp/a-bare-name-runs-only-on-the-server-the-policy-admits": "9bb9aae3f818a8469cf2b67a0fc48694bbd23c979deddcc2ae6781adc4c52e38",
+      "mcp/a-catalogue-of-aliases-holds-a-policy-that-names-a-server": "9bb9aae3f818a8469cf2b67a0fc48694bbd23c979deddcc2ae6781adc4c52e38",
+      "role-policy/an-alias-must-pass-both-role-names-non-streaming": "9bb9aae3f818a8469cf2b67a0fc48694bbd23c979deddcc2ae6781adc4c52e38",
+      "role-policy/an-alias-must-pass-both-role-names-streaming": "9bb9aae3f818a8469cf2b67a0fc48694bbd23c979deddcc2ae6781adc4c52e38",
+      "role-policy/mcp-allowed-server-non-streaming": "9bb9aae3f818a8469cf2b67a0fc48694bbd23c979deddcc2ae6781adc4c52e38",
+      "role-policy/mcp-allowed-server-streaming": "9bb9aae3f818a8469cf2b67a0fc48694bbd23c979deddcc2ae6781adc4c52e38",
+      "role-policy/mcp-denied-server-non-streaming": "9bb9aae3f818a8469cf2b67a0fc48694bbd23c979deddcc2ae6781adc4c52e38",
+      "role-policy/mcp-denied-server-streaming": "9bb9aae3f818a8469cf2b67a0fc48694bbd23c979deddcc2ae6781adc4c52e38"
+    },
+    "RK-21.1-026": {
+      "mcp/a-bare-name-never-runs-on-a-server-the-policy-keeps-out": "fdfa8b6a61b9a458b7046e1aa5fd3814d52e71de20a8fafae81fa96f1d8a75a2",
+      "mcp/a-bare-name-no-server-admits-is-served-by-nothing": "fdfa8b6a61b9a458b7046e1aa5fd3814d52e71de20a8fafae81fa96f1d8a75a2",
+      "mcp/a-bare-name-runs-on-the-first-server-of-the-chain-that-serves-it": "fdfa8b6a61b9a458b7046e1aa5fd3814d52e71de20a8fafae81fa96f1d8a75a2",
+      "mcp/a-bare-name-runs-only-on-the-server-the-policy-admits": "fdfa8b6a61b9a458b7046e1aa5fd3814d52e71de20a8fafae81fa96f1d8a75a2",
+      "mcp/a-forwarding-handler-runs-no-bare-name-the-policy-keeps-off-its-server": "fdfa8b6a61b9a458b7046e1aa5fd3814d52e71de20a8fafae81fa96f1d8a75a2",
+      "mcp/a-policy-that-names-no-server-leaves-a-bare-name-on-the-first-server": "fdfa8b6a61b9a458b7046e1aa5fd3814d52e71de20a8fafae81fa96f1d8a75a2",
+      "role-policy/mcp-allowed-server-non-streaming": "fdfa8b6a61b9a458b7046e1aa5fd3814d52e71de20a8fafae81fa96f1d8a75a2",
+      "role-policy/mcp-allowed-server-streaming": "fdfa8b6a61b9a458b7046e1aa5fd3814d52e71de20a8fafae81fa96f1d8a75a2",
+      "role-policy/mcp-bare-policy-non-streaming": "fdfa8b6a61b9a458b7046e1aa5fd3814d52e71de20a8fafae81fa96f1d8a75a2",
+      "role-policy/mcp-bare-policy-streaming": "fdfa8b6a61b9a458b7046e1aa5fd3814d52e71de20a8fafae81fa96f1d8a75a2",
+      "role-policy/mcp-denied-server-non-streaming": "fdfa8b6a61b9a458b7046e1aa5fd3814d52e71de20a8fafae81fa96f1d8a75a2",
+      "role-policy/mcp-denied-server-streaming": "fdfa8b6a61b9a458b7046e1aa5fd3814d52e71de20a8fafae81fa96f1d8a75a2"
+    },
+    "RK-21.1-027": {
+      "role-policy/a-later-turn-reads-the-new-role-non-streaming": "0d17fa74a7bc5a5c31509139531530e7e7b44e354039ef140e52ddde88204b24",
+      "role-policy/a-later-turn-reads-the-new-role-streaming": "0d17fa74a7bc5a5c31509139531530e7e7b44e354039ef140e52ddde88204b24",
+      "role-policy/agent-selects-each-senders-role-non-streaming": "0d17fa74a7bc5a5c31509139531530e7e7b44e354039ef140e52ddde88204b24",
+      "role-policy/agent-selects-each-senders-role-streaming": "0d17fa74a7bc5a5c31509139531530e7e7b44e354039ef140e52ddde88204b24",
+      "role-policy/ai-selects-each-senders-role-non-streaming": "0d17fa74a7bc5a5c31509139531530e7e7b44e354039ef140e52ddde88204b24",
+      "role-policy/ai-selects-each-senders-role-streaming": "0d17fa74a7bc5a5c31509139531530e7e7b44e354039ef140e52ddde88204b24",
+      "role-policy/an-alias-must-pass-both-role-names-non-streaming": "0d17fa74a7bc5a5c31509139531530e7e7b44e354039ef140e52ddde88204b24",
+      "role-policy/an-alias-must-pass-both-role-names-streaming": "0d17fa74a7bc5a5c31509139531530e7e7b44e354039ef140e52ddde88204b24",
+      "role-policy/exact-name-cannot-recover-denied-tool-non-streaming": "0d17fa74a7bc5a5c31509139531530e7e7b44e354039ef140e52ddde88204b24",
+      "role-policy/exact-name-cannot-recover-denied-tool-streaming": "0d17fa74a7bc5a5c31509139531530e7e7b44e354039ef140e52ddde88204b24",
+      "role-policy/script-denied-non-streaming": "0d17fa74a7bc5a5c31509139531530e7e7b44e354039ef140e52ddde88204b24",
+      "role-policy/script-denied-streaming": "0d17fa74a7bc5a5c31509139531530e7e7b44e354039ef140e52ddde88204b24",
+      "role-policy/script-owner-replaces-base-non-streaming": "0d17fa74a7bc5a5c31509139531530e7e7b44e354039ef140e52ddde88204b24",
+      "role-policy/script-owner-replaces-base-streaming": "0d17fa74a7bc5a5c31509139531530e7e7b44e354039ef140e52ddde88204b24",
+      "sandbox/is-denied-before-it-runs-non-streaming": "0d17fa74a7bc5a5c31509139531530e7e7b44e354039ef140e52ddde88204b24",
+      "sandbox/is-denied-before-it-runs-streaming": "0d17fa74a7bc5a5c31509139531530e7e7b44e354039ef140e52ddde88204b24",
+      "sandbox/is-hidden-and-refused-by-an-inactive-skill-non-streaming": "0d17fa74a7bc5a5c31509139531530e7e7b44e354039ef140e52ddde88204b24",
+      "sandbox/is-hidden-and-refused-by-an-inactive-skill-streaming": "0d17fa74a7bc5a5c31509139531530e7e7b44e354039ef140e52ddde88204b24",
+      "skill-gating/activation-never-overrides-policy-and-infrastructure-escapes-both-non-streaming": "0d17fa74a7bc5a5c31509139531530e7e7b44e354039ef140e52ddde88204b24",
+      "skill-gating/activation-never-overrides-policy-and-infrastructure-escapes-both-streaming": "0d17fa74a7bc5a5c31509139531530e7e7b44e354039ef140e52ddde88204b24",
+      "tool-search/a-denied-tool-is-not-recovered": "0d17fa74a7bc5a5c31509139531530e7e7b44e354039ef140e52ddde88204b24",
+      "tool-search/tool-search-names-no-denied-tool-and-runs-under-an-allow-list": "0d17fa74a7bc5a5c31509139531530e7e7b44e354039ef140e52ddde88204b24",
+      "tools/refusal-per-cause": "0d17fa74a7bc5a5c31509139531530e7e7b44e354039ef140e52ddde88204b24"
+    },
+    "RK-21.1-028": {
+      "acp/handler-policy-allow-list": "c7edc940418c792fc124f0ed438d7a3f92b18e6bde7d9852309135da124008b6",
+      "acp/handler-policy-deny": "c7edc940418c792fc124f0ed438d7a3f92b18e6bde7d9852309135da124008b6",
+      "acp/handler-policy-mcp-alias-deny": "c7edc940418c792fc124f0ed438d7a3f92b18e6bde7d9852309135da124008b6",
+      "acp/handler-policy-mcp-bare-deny": "c7edc940418c792fc124f0ed438d7a3f92b18e6bde7d9852309135da124008b6",
+      "tools/refusal-per-cause": "c7edc940418c792fc124f0ed438d7a3f92b18e6bde7d9852309135da124008b6"
+    },
+    "RK-21.1-031": {
+      "acp/handler-policy-allow-list": "8e1641b526208c70c0d1f33b0b47bdcc1ffabdf1710c3b4472bc7b8c14a53cd0",
+      "acp/handler-policy-deny": "8e1641b526208c70c0d1f33b0b47bdcc1ffabdf1710c3b4472bc7b8c14a53cd0",
+      "acp/handler-policy-mcp-alias-deny": "8e1641b526208c70c0d1f33b0b47bdcc1ffabdf1710c3b4472bc7b8c14a53cd0",
+      "acp/handler-policy-mcp-bare-deny": "8e1641b526208c70c0d1f33b0b47bdcc1ffabdf1710c3b4472bc7b8c14a53cd0",
+      "acp/handler-policy-mcp-both-admitted": "8e1641b526208c70c0d1f33b0b47bdcc1ffabdf1710c3b4472bc7b8c14a53cd0",
+      "planning/missing-required-tasks-is-refused-before-the-planner-non-streaming": "8e1641b526208c70c0d1f33b0b47bdcc1ffabdf1710c3b4472bc7b8c14a53cd0",
+      "planning/missing-required-tasks-is-refused-before-the-planner-streaming": "8e1641b526208c70c0d1f33b0b47bdcc1ffabdf1710c3b4472bc7b8c14a53cd0",
+      "planning/null-tasks-does-not-replace-the-plan-non-streaming": "8e1641b526208c70c0d1f33b0b47bdcc1ffabdf1710c3b4472bc7b8c14a53cd0",
+      "planning/null-tasks-does-not-replace-the-plan-streaming": "8e1641b526208c70c0d1f33b0b47bdcc1ffabdf1710c3b4472bc7b8c14a53cd0",
+      "planning/scalar-tasks-does-not-replace-the-plan-non-streaming": "8e1641b526208c70c0d1f33b0b47bdcc1ffabdf1710c3b4472bc7b8c14a53cd0",
+      "planning/scalar-tasks-does-not-replace-the-plan-streaming": "8e1641b526208c70c0d1f33b0b47bdcc1ffabdf1710c3b4472bc7b8c14a53cd0",
+      "planning/unknown-top-level-argument-is-refused-before-the-planner-non-streaming": "8e1641b526208c70c0d1f33b0b47bdcc1ffabdf1710c3b4472bc7b8c14a53cd0",
+      "planning/unknown-top-level-argument-is-refused-before-the-planner-streaming": "8e1641b526208c70c0d1f33b0b47bdcc1ffabdf1710c3b4472bc7b8c14a53cd0",
+      "sandbox/is-denied-before-it-runs-non-streaming": "8e1641b526208c70c0d1f33b0b47bdcc1ffabdf1710c3b4472bc7b8c14a53cd0",
+      "sandbox/is-denied-before-it-runs-streaming": "8e1641b526208c70c0d1f33b0b47bdcc1ffabdf1710c3b4472bc7b8c14a53cd0",
+      "sandbox/is-hidden-and-refused-by-an-inactive-skill-non-streaming": "8e1641b526208c70c0d1f33b0b47bdcc1ffabdf1710c3b4472bc7b8c14a53cd0",
+      "sandbox/is-hidden-and-refused-by-an-inactive-skill-streaming": "8e1641b526208c70c0d1f33b0b47bdcc1ffabdf1710c3b4472bc7b8c14a53cd0",
+      "sandbox/validates-a-hidden-command-before-execution-non-streaming": "8e1641b526208c70c0d1f33b0b47bdcc1ffabdf1710c3b4472bc7b8c14a53cd0",
+      "sandbox/validates-a-hidden-command-before-execution-streaming": "8e1641b526208c70c0d1f33b0b47bdcc1ffabdf1710c3b4472bc7b8c14a53cd0",
+      "tools/a-tool-the-generation-hook-withdraws-is-refused": "8e1641b526208c70c0d1f33b0b47bdcc1ffabdf1710c3b4472bc7b8c14a53cd0",
+      "tools/a-tool-withdrawn-after-a-round-is-refused": "8e1641b526208c70c0d1f33b0b47bdcc1ffabdf1710c3b4472bc7b8c14a53cd0",
+      "tools/every-argument-that-does-not-fit-is-named": "8e1641b526208c70c0d1f33b0b47bdcc1ffabdf1710c3b4472bc7b8c14a53cd0",
+      "tools/refusal-per-cause": "8e1641b526208c70c0d1f33b0b47bdcc1ffabdf1710c3b4472bc7b8c14a53cd0",
+      "tools/rewritten-arguments-are-not-repaired": "8e1641b526208c70c0d1f33b0b47bdcc1ffabdf1710c3b4472bc7b8c14a53cd0"
+    },
+    "RK-21.1-032": {
+      "planning/missing-required-tasks-is-refused-before-the-planner-non-streaming": "fcf96740b7de91bdb533d4a0caa6fad7b64efc7cfd39d3787bd2fd9e2fa2ed41",
+      "planning/missing-required-tasks-is-refused-before-the-planner-streaming": "fcf96740b7de91bdb533d4a0caa6fad7b64efc7cfd39d3787bd2fd9e2fa2ed41",
+      "sandbox/validates-a-hidden-command-before-execution-non-streaming": "fcf96740b7de91bdb533d4a0caa6fad7b64efc7cfd39d3787bd2fd9e2fa2ed41",
+      "sandbox/validates-a-hidden-command-before-execution-streaming": "fcf96740b7de91bdb533d4a0caa6fad7b64efc7cfd39d3787bd2fd9e2fa2ed41",
+      "tool-search/find-tools-without-its-query-is-refused-by-its-schema": "fcf96740b7de91bdb533d4a0caa6fad7b64efc7cfd39d3787bd2fd9e2fa2ed41",
+      "tool-search/invalid-arguments-keep-the-schema-for-the-turn-alone": "fcf96740b7de91bdb533d4a0caa6fad7b64efc7cfd39d3787bd2fd9e2fa2ed41",
+      "tools/a-tool-the-generation-hook-edited-keeps-its-edit": "fcf96740b7de91bdb533d4a0caa6fad7b64efc7cfd39d3787bd2fd9e2fa2ed41",
+      "tools/every-argument-that-does-not-fit-is-named": "fcf96740b7de91bdb533d4a0caa6fad7b64efc7cfd39d3787bd2fd9e2fa2ed41",
+      "tools/refusal-per-cause": "fcf96740b7de91bdb533d4a0caa6fad7b64efc7cfd39d3787bd2fd9e2fa2ed41"
+    },
+    "RK-21.1-033": {
+      "planning/null-tasks-does-not-replace-the-plan-non-streaming": "382ca43d03fdb8d1b7651c16e2076ecd5a5f23d8ac6b82e798bbc6260a1cd126",
+      "planning/null-tasks-does-not-replace-the-plan-streaming": "382ca43d03fdb8d1b7651c16e2076ecd5a5f23d8ac6b82e798bbc6260a1cd126",
+      "planning/scalar-tasks-does-not-replace-the-plan-non-streaming": "382ca43d03fdb8d1b7651c16e2076ecd5a5f23d8ac6b82e798bbc6260a1cd126",
+      "planning/scalar-tasks-does-not-replace-the-plan-streaming": "382ca43d03fdb8d1b7651c16e2076ecd5a5f23d8ac6b82e798bbc6260a1cd126",
+      "tools/an-integer-past-64-bits-is-an-integer": "382ca43d03fdb8d1b7651c16e2076ecd5a5f23d8ac6b82e798bbc6260a1cd126",
+      "tools/every-argument-that-does-not-fit-is-named": "382ca43d03fdb8d1b7651c16e2076ecd5a5f23d8ac6b82e798bbc6260a1cd126"
+    },
+    "RK-21.1-034": {
+      "planning/unknown-top-level-argument-is-refused-before-the-planner-non-streaming": "86de588daded58d5697b9fdf575e4cfa5b94494b86a6a892ba948b77c853eb3d",
+      "planning/unknown-top-level-argument-is-refused-before-the-planner-streaming": "86de588daded58d5697b9fdf575e4cfa5b94494b86a6a892ba948b77c853eb3d",
+      "tools/every-argument-that-does-not-fit-is-named": "86de588daded58d5697b9fdf575e4cfa5b94494b86a6a892ba948b77c853eb3d",
+      "tools/rewritten-arguments-are-not-repaired": "86de588daded58d5697b9fdf575e4cfa5b94494b86a6a892ba948b77c853eb3d"
+    },
+    "RK-21.1-036": {
+      "tools/every-argument-that-does-not-fit-is-named": "db160797e525d72a93e281ae195dc7acced47c68c8dc8a1ab2db50ddd111a82d"
+    },
+    "RK-21.1-037": {
+      "tools/every-argument-that-does-not-fit-is-named": "5ac7f4a224feaef9da1dafee22adfebd7f7231a61f7c28fd6b5993aed263d1b8"
+    },
+    "RK-21.1-039": {
+      "planning/missing-required-tasks-is-refused-before-the-planner-non-streaming": "81866c37c4a5f638a017e6d609ea6b6a91d718e52abca10e6d19781dcaf5fa92",
+      "planning/missing-required-tasks-is-refused-before-the-planner-streaming": "81866c37c4a5f638a017e6d609ea6b6a91d718e52abca10e6d19781dcaf5fa92",
+      "planning/null-tasks-does-not-replace-the-plan-non-streaming": "81866c37c4a5f638a017e6d609ea6b6a91d718e52abca10e6d19781dcaf5fa92",
+      "planning/null-tasks-does-not-replace-the-plan-streaming": "81866c37c4a5f638a017e6d609ea6b6a91d718e52abca10e6d19781dcaf5fa92",
+      "planning/scalar-tasks-does-not-replace-the-plan-non-streaming": "81866c37c4a5f638a017e6d609ea6b6a91d718e52abca10e6d19781dcaf5fa92",
+      "planning/scalar-tasks-does-not-replace-the-plan-streaming": "81866c37c4a5f638a017e6d609ea6b6a91d718e52abca10e6d19781dcaf5fa92",
+      "planning/unknown-top-level-argument-is-refused-before-the-planner-non-streaming": "81866c37c4a5f638a017e6d609ea6b6a91d718e52abca10e6d19781dcaf5fa92",
+      "planning/unknown-top-level-argument-is-refused-before-the-planner-streaming": "81866c37c4a5f638a017e6d609ea6b6a91d718e52abca10e6d19781dcaf5fa92",
+      "sandbox/validates-a-hidden-command-before-execution-non-streaming": "81866c37c4a5f638a017e6d609ea6b6a91d718e52abca10e6d19781dcaf5fa92",
+      "sandbox/validates-a-hidden-command-before-execution-streaming": "81866c37c4a5f638a017e6d609ea6b6a91d718e52abca10e6d19781dcaf5fa92",
+      "tool-search/find-tools-without-its-query-is-refused-by-its-schema": "81866c37c4a5f638a017e6d609ea6b6a91d718e52abca10e6d19781dcaf5fa92",
+      "tool-search/invalid-arguments-keep-the-schema-for-the-turn-alone": "81866c37c4a5f638a017e6d609ea6b6a91d718e52abca10e6d19781dcaf5fa92",
+      "tools/a-tool-the-generation-hook-edited-keeps-its-edit": "81866c37c4a5f638a017e6d609ea6b6a91d718e52abca10e6d19781dcaf5fa92",
+      "tools/both-hub-forms-at-once-are-refused": "81866c37c4a5f638a017e6d609ea6b6a91d718e52abca10e6d19781dcaf5fa92",
+      "tools/every-argument-that-does-not-fit-is-named": "81866c37c4a5f638a017e6d609ea6b6a91d718e52abca10e6d19781dcaf5fa92",
+      "tools/refusal-per-cause": "81866c37c4a5f638a017e6d609ea6b6a91d718e52abca10e6d19781dcaf5fa92"
+    },
+    "RK-21.1-040": {
+      "tools/rewritten-arguments-are-not-repaired": "8c940440ceac8cb112fd5e860475a950ca8e62173057077bba551793af8ac1c4"
+    },
+    "RK-21.1-041": {
+      "acp/handler-policy-allow-list": "200d40dc6cafce88e989a834037f74baa0b15f5ab1eecaf2fcf69270af9f46d5",
+      "acp/handler-policy-deny": "200d40dc6cafce88e989a834037f74baa0b15f5ab1eecaf2fcf69270af9f46d5",
+      "acp/handler-policy-mcp-alias-deny": "200d40dc6cafce88e989a834037f74baa0b15f5ab1eecaf2fcf69270af9f46d5",
+      "acp/handler-policy-mcp-bare-deny": "200d40dc6cafce88e989a834037f74baa0b15f5ab1eecaf2fcf69270af9f46d5",
+      "role-policy/a-later-turn-reads-the-new-role-non-streaming": "200d40dc6cafce88e989a834037f74baa0b15f5ab1eecaf2fcf69270af9f46d5",
+      "role-policy/a-later-turn-reads-the-new-role-streaming": "200d40dc6cafce88e989a834037f74baa0b15f5ab1eecaf2fcf69270af9f46d5",
+      "role-policy/activation-cannot-bypass-role-non-streaming": "200d40dc6cafce88e989a834037f74baa0b15f5ab1eecaf2fcf69270af9f46d5",
+      "role-policy/activation-cannot-bypass-role-streaming": "200d40dc6cafce88e989a834037f74baa0b15f5ab1eecaf2fcf69270af9f46d5",
+      "role-policy/agent-selects-each-senders-role-non-streaming": "200d40dc6cafce88e989a834037f74baa0b15f5ab1eecaf2fcf69270af9f46d5",
+      "role-policy/agent-selects-each-senders-role-streaming": "200d40dc6cafce88e989a834037f74baa0b15f5ab1eecaf2fcf69270af9f46d5",
+      "role-policy/ai-selects-each-senders-role-non-streaming": "200d40dc6cafce88e989a834037f74baa0b15f5ab1eecaf2fcf69270af9f46d5",
+      "role-policy/ai-selects-each-senders-role-streaming": "200d40dc6cafce88e989a834037f74baa0b15f5ab1eecaf2fcf69270af9f46d5",
+      "role-policy/an-alias-must-pass-both-role-names-non-streaming": "200d40dc6cafce88e989a834037f74baa0b15f5ab1eecaf2fcf69270af9f46d5",
+      "role-policy/an-alias-must-pass-both-role-names-streaming": "200d40dc6cafce88e989a834037f74baa0b15f5ab1eecaf2fcf69270af9f46d5",
+      "role-policy/exact-name-cannot-recover-denied-tool-non-streaming": "200d40dc6cafce88e989a834037f74baa0b15f5ab1eecaf2fcf69270af9f46d5",
+      "role-policy/exact-name-cannot-recover-denied-tool-streaming": "200d40dc6cafce88e989a834037f74baa0b15f5ab1eecaf2fcf69270af9f46d5",
+      "role-policy/script-denied-non-streaming": "200d40dc6cafce88e989a834037f74baa0b15f5ab1eecaf2fcf69270af9f46d5",
+      "role-policy/script-denied-streaming": "200d40dc6cafce88e989a834037f74baa0b15f5ab1eecaf2fcf69270af9f46d5",
+      "sandbox/is-denied-before-it-runs-non-streaming": "200d40dc6cafce88e989a834037f74baa0b15f5ab1eecaf2fcf69270af9f46d5",
+      "sandbox/is-denied-before-it-runs-streaming": "200d40dc6cafce88e989a834037f74baa0b15f5ab1eecaf2fcf69270af9f46d5",
+      "skill-gating/activation-never-overrides-policy-and-infrastructure-escapes-both-non-streaming": "200d40dc6cafce88e989a834037f74baa0b15f5ab1eecaf2fcf69270af9f46d5",
+      "skill-gating/activation-never-overrides-policy-and-infrastructure-escapes-both-streaming": "200d40dc6cafce88e989a834037f74baa0b15f5ab1eecaf2fcf69270af9f46d5",
+      "steering/another-person-s-message-is-served-under-its-own-role-s-tools": "200d40dc6cafce88e989a834037f74baa0b15f5ab1eecaf2fcf69270af9f46d5",
+      "tool-search/a-denied-tool-is-not-recovered": "200d40dc6cafce88e989a834037f74baa0b15f5ab1eecaf2fcf69270af9f46d5",
+      "tools/refusal-per-cause": "200d40dc6cafce88e989a834037f74baa0b15f5ab1eecaf2fcf69270af9f46d5"
+    },
+    "RK-21.1-042": {
+      "role-policy/denied-prerequisite-non-streaming": "b9a6591b57651d0bc4f5881c192d5f6033b901f977721bcffd55c8a801c14ee9",
+      "role-policy/denied-prerequisite-streaming": "b9a6591b57651d0bc4f5881c192d5f6033b901f977721bcffd55c8a801c14ee9",
+      "sandbox/is-hidden-and-refused-by-an-inactive-skill-non-streaming": "b9a6591b57651d0bc4f5881c192d5f6033b901f977721bcffd55c8a801c14ee9",
+      "sandbox/is-hidden-and-refused-by-an-inactive-skill-streaming": "b9a6591b57651d0bc4f5881c192d5f6033b901f977721bcffd55c8a801c14ee9",
+      "skill-gating/a-blocked-activation-never-references-a-held-tool-non-streaming": "b9a6591b57651d0bc4f5881c192d5f6033b901f977721bcffd55c8a801c14ee9",
+      "skill-gating/a-blocked-activation-never-references-a-held-tool-streaming": "b9a6591b57651d0bc4f5881c192d5f6033b901f977721bcffd55c8a801c14ee9",
+      "skill-gating/a-blocked-activation-opens-no-gate-non-streaming": "b9a6591b57651d0bc4f5881c192d5f6033b901f977721bcffd55c8a801c14ee9",
+      "skill-gating/a-blocked-activation-opens-no-gate-streaming": "b9a6591b57651d0bc4f5881c192d5f6033b901f977721bcffd55c8a801c14ee9",
+      "skill-gating/a-held-tool-stays-gated-until-the-activation-references-it-non-streaming": "b9a6591b57651d0bc4f5881c192d5f6033b901f977721bcffd55c8a801c14ee9",
+      "skill-gating/a-held-tool-stays-gated-until-the-activation-references-it-streaming": "b9a6591b57651d0bc4f5881c192d5f6033b901f977721bcffd55c8a801c14ee9",
+      "skill-gating/activation-opens-the-next-round-and-its-hook-catalogue-non-streaming": "b9a6591b57651d0bc4f5881c192d5f6033b901f977721bcffd55c8a801c14ee9",
+      "skill-gating/activation-opens-the-next-round-and-its-hook-catalogue-streaming": "b9a6591b57651d0bc4f5881c192d5f6033b901f977721bcffd55c8a801c14ee9",
+      "skill-gating/an-activation-in-one-room-does-not-open-another-non-streaming": "b9a6591b57651d0bc4f5881c192d5f6033b901f977721bcffd55c8a801c14ee9",
+      "skill-gating/an-activation-in-one-room-does-not-open-another-streaming": "b9a6591b57651d0bc4f5881c192d5f6033b901f977721bcffd55c8a801c14ee9",
+      "skill-gating/bracketed-text-is-a-list-not-a-character-class-non-streaming": "b9a6591b57651d0bc4f5881c192d5f6033b901f977721bcffd55c8a801c14ee9",
+      "skill-gating/bracketed-text-is-a-list-not-a-character-class-streaming": "b9a6591b57651d0bc4f5881c192d5f6033b901f977721bcffd55c8a801c14ee9",
+      "skill-gating/each-turn-uses-its-configured-gates-non-streaming": "b9a6591b57651d0bc4f5881c192d5f6033b901f977721bcffd55c8a801c14ee9",
+      "skill-gating/each-turn-uses-its-configured-gates-streaming": "b9a6591b57651d0bc4f5881c192d5f6033b901f977721bcffd55c8a801c14ee9",
+      "skill-gating/every-covering-skill-must-be-active-non-streaming": "b9a6591b57651d0bc4f5881c192d5f6033b901f977721bcffd55c8a801c14ee9",
+      "skill-gating/every-covering-skill-must-be-active-streaming": "b9a6591b57651d0bc4f5881c192d5f6033b901f977721bcffd55c8a801c14ee9",
+      "skill-gating/list-globs-hide-and-refuse-only-matching-tools-non-streaming": "b9a6591b57651d0bc4f5881c192d5f6033b901f977721bcffd55c8a801c14ee9",
+      "skill-gating/list-globs-hide-and-refuse-only-matching-tools-streaming": "b9a6591b57651d0bc4f5881c192d5f6033b901f977721bcffd55c8a801c14ee9",
+      "skill-gating/room-activation-persists-but-a-standalone-turn-starts-closed-non-streaming": "b9a6591b57651d0bc4f5881c192d5f6033b901f977721bcffd55c8a801c14ee9",
+      "skill-gating/room-activation-persists-but-a-standalone-turn-starts-closed-streaming": "b9a6591b57651d0bc4f5881c192d5f6033b901f977721bcffd55c8a801c14ee9",
+      "skill-gating/scalar-globs-hide-and-refuse-only-matching-tools-non-streaming": "b9a6591b57651d0bc4f5881c192d5f6033b901f977721bcffd55c8a801c14ee9",
+      "skill-gating/scalar-globs-hide-and-refuse-only-matching-tools-streaming": "b9a6591b57651d0bc4f5881c192d5f6033b901f977721bcffd55c8a801c14ee9",
+      "skill-prerequisites/a-absent-prerequisite-refuses-activation-non-streaming": "b9a6591b57651d0bc4f5881c192d5f6033b901f977721bcffd55c8a801c14ee9",
+      "skill-prerequisites/a-absent-prerequisite-refuses-activation-streaming": "b9a6591b57651d0bc4f5881c192d5f6033b901f977721bcffd55c8a801c14ee9",
+      "skill-prerequisites/a-denied-prerequisite-refuses-activation-non-streaming": "b9a6591b57651d0bc4f5881c192d5f6033b901f977721bcffd55c8a801c14ee9",
+      "skill-prerequisites/a-denied-prerequisite-refuses-activation-streaming": "b9a6591b57651d0bc4f5881c192d5f6033b901f977721bcffd55c8a801c14ee9",
+      "skill-prerequisites/a-failed-prerequisite-check-references-no-deferred-tool-non-streaming": "b9a6591b57651d0bc4f5881c192d5f6033b901f977721bcffd55c8a801c14ee9",
+      "skill-prerequisites/a-failed-prerequisite-check-references-no-deferred-tool-streaming": "b9a6591b57651d0bc4f5881c192d5f6033b901f977721bcffd55c8a801c14ee9",
+      "skill-prerequisites/a-host-matcher-failure-never-opens-a-gate-non-streaming": "b9a6591b57651d0bc4f5881c192d5f6033b901f977721bcffd55c8a801c14ee9",
+      "skill-prerequisites/a-host-matcher-failure-never-opens-a-gate-streaming": "b9a6591b57651d0bc4f5881c192d5f6033b901f977721bcffd55c8a801c14ee9",
+      "skill-prerequisites/a-withdrawn-prerequisite-refuses-activation-non-streaming": "b9a6591b57651d0bc4f5881c192d5f6033b901f977721bcffd55c8a801c14ee9",
+      "skill-prerequisites/a-withdrawn-prerequisite-refuses-activation-streaming": "b9a6591b57651d0bc4f5881c192d5f6033b901f977721bcffd55c8a801c14ee9",
+      "skill-prerequisites/an-available-skill-can-open-a-pattern-also-gated-by-an-unavailable-skill-non-streaming": "b9a6591b57651d0bc4f5881c192d5f6033b901f977721bcffd55c8a801c14ee9",
+      "skill-prerequisites/an-available-skill-can-open-a-pattern-also-gated-by-an-unavailable-skill-streaming": "b9a6591b57651d0bc4f5881c192d5f6033b901f977721bcffd55c8a801c14ee9",
+      "tools/refusal-per-cause": "b9a6591b57651d0bc4f5881c192d5f6033b901f977721bcffd55c8a801c14ee9"
+    },
+    "RK-21.1-044": {
+      "mcp/a-catalogue-of-aliases-holds-a-policy-that-names-a-server": "49e56daf6e50e0f1c0954b54578b707689196cbb57561c03d32e5c4e44391ca6",
+      "skills/a-channel-built-without-skills-ignores-a-turn-s-registry": "49e56daf6e50e0f1c0954b54578b707689196cbb57561c03d32e5c4e44391ca6",
+      "skills/a-turn-s-empty-registry-leaves-the-skills-out-and-active": "49e56daf6e50e0f1c0954b54578b707689196cbb57561c03d32e5c4e44391ca6",
+      "tasks/a-result-tool-is-declared-in-the-child-room-only": "49e56daf6e50e0f1c0954b54578b707689196cbb57561c03d32e5c4e44391ca6",
+      "tool-search/a-call-to-find-tools-where-nothing-is-hidden-is-refused": "49e56daf6e50e0f1c0954b54578b707689196cbb57561c03d32e5c4e44391ca6",
+      "tools/a-find-tools-no-search-serves-is-refused-at-its-second": "49e56daf6e50e0f1c0954b54578b707689196cbb57561c03d32e5c4e44391ca6",
+      "tools/a-find-tools-with-search-off-is-any-tool-s-name": "49e56daf6e50e0f1c0954b54578b707689196cbb57561c03d32e5c4e44391ca6",
+      "tools/refusal-per-cause": "49e56daf6e50e0f1c0954b54578b707689196cbb57561c03d32e5c4e44391ca6"
+    },
+    "RK-21.1-045": {
+      "tool-search/a-turn-s-own-tools-are-its-catalogue": "53b6af7368e78002e6956570516ee2afa53e2962d8ac187dc563c7ac6b2d593a",
+      "tool-search/an-unknown-name-under-tool-search-hints-find-tools": "53b6af7368e78002e6956570516ee2afa53e2962d8ac187dc563c7ac6b2d593a"
+    },
+    "RK-21.1-047": {
+      "role-policy/activation-cannot-bypass-role-non-streaming": "206bafa78e78392d587615b18de21e32c38001b0667066b267ada6854bdd72ce",
+      "role-policy/activation-cannot-bypass-role-streaming": "206bafa78e78392d587615b18de21e32c38001b0667066b267ada6854bdd72ce",
+      "skill-gating/activation-never-overrides-policy-and-infrastructure-escapes-both-non-streaming": "206bafa78e78392d587615b18de21e32c38001b0667066b267ada6854bdd72ce",
+      "skill-gating/activation-never-overrides-policy-and-infrastructure-escapes-both-streaming": "206bafa78e78392d587615b18de21e32c38001b0667066b267ada6854bdd72ce",
+      "tools/refusal-per-cause": "206bafa78e78392d587615b18de21e32c38001b0667066b267ada6854bdd72ce"
+    },
+    "RK-21.1-048": {
+      "role-policy/a-later-turn-reads-the-new-role-non-streaming": "347896ade0c66750922ad492710c6fe858175cffccb3c4c66db9c4094fae4523",
+      "role-policy/a-later-turn-reads-the-new-role-streaming": "347896ade0c66750922ad492710c6fe858175cffccb3c4c66db9c4094fae4523",
+      "role-policy/agent-selects-each-senders-role-non-streaming": "347896ade0c66750922ad492710c6fe858175cffccb3c4c66db9c4094fae4523",
+      "role-policy/agent-selects-each-senders-role-streaming": "347896ade0c66750922ad492710c6fe858175cffccb3c4c66db9c4094fae4523",
+      "role-policy/ai-selects-each-senders-role-non-streaming": "347896ade0c66750922ad492710c6fe858175cffccb3c4c66db9c4094fae4523",
+      "role-policy/ai-selects-each-senders-role-streaming": "347896ade0c66750922ad492710c6fe858175cffccb3c4c66db9c4094fae4523",
+      "role-policy/an-alias-must-pass-both-role-names-non-streaming": "347896ade0c66750922ad492710c6fe858175cffccb3c4c66db9c4094fae4523",
+      "role-policy/an-alias-must-pass-both-role-names-streaming": "347896ade0c66750922ad492710c6fe858175cffccb3c4c66db9c4094fae4523",
+      "role-policy/exact-name-cannot-recover-denied-tool-non-streaming": "347896ade0c66750922ad492710c6fe858175cffccb3c4c66db9c4094fae4523",
+      "role-policy/exact-name-cannot-recover-denied-tool-streaming": "347896ade0c66750922ad492710c6fe858175cffccb3c4c66db9c4094fae4523",
+      "role-policy/script-denied-non-streaming": "347896ade0c66750922ad492710c6fe858175cffccb3c4c66db9c4094fae4523",
+      "role-policy/script-denied-streaming": "347896ade0c66750922ad492710c6fe858175cffccb3c4c66db9c4094fae4523",
+      "sandbox/is-denied-before-it-runs-non-streaming": "347896ade0c66750922ad492710c6fe858175cffccb3c4c66db9c4094fae4523",
+      "sandbox/is-denied-before-it-runs-streaming": "347896ade0c66750922ad492710c6fe858175cffccb3c4c66db9c4094fae4523",
+      "sandbox/is-hidden-and-refused-by-an-inactive-skill-non-streaming": "347896ade0c66750922ad492710c6fe858175cffccb3c4c66db9c4094fae4523",
+      "sandbox/is-hidden-and-refused-by-an-inactive-skill-streaming": "347896ade0c66750922ad492710c6fe858175cffccb3c4c66db9c4094fae4523",
+      "skill-gating/a-held-tool-stays-gated-until-the-activation-references-it-non-streaming": "347896ade0c66750922ad492710c6fe858175cffccb3c4c66db9c4094fae4523",
+      "skill-gating/a-held-tool-stays-gated-until-the-activation-references-it-streaming": "347896ade0c66750922ad492710c6fe858175cffccb3c4c66db9c4094fae4523",
+      "skill-gating/activation-never-overrides-policy-and-infrastructure-escapes-both-non-streaming": "347896ade0c66750922ad492710c6fe858175cffccb3c4c66db9c4094fae4523",
+      "skill-gating/activation-never-overrides-policy-and-infrastructure-escapes-both-streaming": "347896ade0c66750922ad492710c6fe858175cffccb3c4c66db9c4094fae4523",
+      "skill-gating/an-activation-in-one-room-does-not-open-another-non-streaming": "347896ade0c66750922ad492710c6fe858175cffccb3c4c66db9c4094fae4523",
+      "skill-gating/an-activation-in-one-room-does-not-open-another-streaming": "347896ade0c66750922ad492710c6fe858175cffccb3c4c66db9c4094fae4523",
+      "tool-search/a-denied-tool-is-not-recovered": "347896ade0c66750922ad492710c6fe858175cffccb3c4c66db9c4094fae4523",
+      "tools/refusal-per-cause": "347896ade0c66750922ad492710c6fe858175cffccb3c4c66db9c4094fae4523"
+    },
+    "RK-21.1-052": {
+      "mcp/a-tool-listed-twice-is-declared-once": "b353b5e87589c27a0669a934542133be45e535b21e1f7f2060be2e91fe41d703",
+      "orchestration/a-supervisor-install-refused-halfway-sets-nothing-up": "b353b5e87589c27a0669a934542133be45e535b21e1f7f2060be2e91fe41d703",
+      "orchestration/a-supervisor-s-own-tools-stay-its-own": "b353b5e87589c27a0669a934542133be45e535b21e1f7f2060be2e91fe41d703",
+      "skills/a-generation-hook-cannot-declare-a-skill-tool-s-name": "b353b5e87589c27a0669a934542133be45e535b21e1f7f2060be2e91fe41d703",
+      "tasks/delegate-task-is-not-set-up-over-a-live-agent-s-own-tool": "b353b5e87589c27a0669a934542133be45e535b21e1f7f2060be2e91fe41d703",
+      "tool-search/a-binding-tool-under-a-discovery-name-yields-to-the-channel-s": "b353b5e87589c27a0669a934542133be45e535b21e1f7f2060be2e91fe41d703",
+      "tool-search/a-generation-hook-cannot-redefine-a-discovery-tool": "b353b5e87589c27a0669a934542133be45e535b21e1f7f2060be2e91fe41d703",
+      "turn-config/a-turn-config-s-tool-under-a-setup-s-tool-name-is-not-declared": "b353b5e87589c27a0669a934542133be45e535b21e1f7f2060be2e91fe41d703"
+    },
+    "RK-21.1-053": {
+      "skills/a-channel-with-skills-keeps-the-script-tool-s-name": "b632df41503d394485f08a2b69587bc4ae9225c00d699ccee177cdf3f55c494b",
+      "skills/a-generation-hook-cannot-declare-a-skill-tool-s-name": "b632df41503d394485f08a2b69587bc4ae9225c00d699ccee177cdf3f55c494b",
+      "tool-search/a-binding-tool-under-a-discovery-name-yields-to-the-channel-s": "b632df41503d394485f08a2b69587bc4ae9225c00d699ccee177cdf3f55c494b",
+      "tool-search/a-generation-hook-cannot-declare-a-discovery-name-while-nothing-is-hidden": "b632df41503d394485f08a2b69587bc4ae9225c00d699ccee177cdf3f55c494b",
+      "tool-search/a-generation-hook-cannot-redefine-a-discovery-tool": "b632df41503d394485f08a2b69587bc4ae9225c00d699ccee177cdf3f55c494b",
+      "tools/extra-tools-collision-builtin-agent-stream": "b632df41503d394485f08a2b69587bc4ae9225c00d699ccee177cdf3f55c494b",
+      "tools/extra-tools-collision-builtin-agent-whole": "b632df41503d394485f08a2b69587bc4ae9225c00d699ccee177cdf3f55c494b",
+      "tools/extra-tools-collision-builtin-channel-stream": "b632df41503d394485f08a2b69587bc4ae9225c00d699ccee177cdf3f55c494b",
+      "tools/extra-tools-collision-builtin-channel-whole": "b632df41503d394485f08a2b69587bc4ae9225c00d699ccee177cdf3f55c494b"
+    },
+    "RK-21.1-055": {
+      "orchestration/a-supervisor-install-refused-halfway-sets-nothing-up": "362f509a3cebcc0392739ae457a2d63fe8ec64ccc27984dbb286a5d8184bbc30",
+      "orchestration/an-install-refused-by-a-handoff-already-set-up-leaves-nothing": "362f509a3cebcc0392739ae457a2d63fe8ec64ccc27984dbb286a5d8184bbc30",
+      "tasks/a-structured-delegation-refuses-the-workers-own-result-tool": "362f509a3cebcc0392739ae457a2d63fe8ec64ccc27984dbb286a5d8184bbc30",
+      "tasks/delegate-task-is-not-set-up-over-a-live-agent-s-own-tool": "362f509a3cebcc0392739ae457a2d63fe8ec64ccc27984dbb286a5d8184bbc30"
+    },
+    "RK-21.1-057": {
+      "skills/a-generation-hook-cannot-declare-a-skill-tool-s-name": "d47d8f86c86d950c89174efd71da1746c3723fb55ba9e3a35765f9e719c26e6b",
+      "tool-search/a-binding-tool-under-a-discovery-name-yields-to-the-channel-s": "d47d8f86c86d950c89174efd71da1746c3723fb55ba9e3a35765f9e719c26e6b",
+      "tool-search/a-generation-hook-cannot-declare-a-discovery-name-while-nothing-is-hidden": "d47d8f86c86d950c89174efd71da1746c3723fb55ba9e3a35765f9e719c26e6b",
+      "tool-search/a-generation-hook-cannot-redefine-a-discovery-tool": "d47d8f86c86d950c89174efd71da1746c3723fb55ba9e3a35765f9e719c26e6b",
+      "turn-config/a-turn-config-s-tool-under-a-setup-s-tool-name-is-not-declared": "d47d8f86c86d950c89174efd71da1746c3723fb55ba9e3a35765f9e719c26e6b"
+    },
+    "RK-21.1-059": {
+      "tools/extra-tools-collision-binding-agent-stream": "d3b4662c09e5699559399ec8dfbb34e8863e6d933c3b0f8512a030b3880bc842",
+      "tools/extra-tools-collision-binding-agent-whole": "d3b4662c09e5699559399ec8dfbb34e8863e6d933c3b0f8512a030b3880bc842",
+      "tools/extra-tools-collision-binding-channel-stream": "d3b4662c09e5699559399ec8dfbb34e8863e6d933c3b0f8512a030b3880bc842",
+      "tools/extra-tools-collision-binding-channel-whole": "d3b4662c09e5699559399ec8dfbb34e8863e6d933c3b0f8512a030b3880bc842",
+      "tools/extra-tools-collision-host-agent-stream": "d3b4662c09e5699559399ec8dfbb34e8863e6d933c3b0f8512a030b3880bc842",
+      "tools/extra-tools-collision-host-agent-whole": "d3b4662c09e5699559399ec8dfbb34e8863e6d933c3b0f8512a030b3880bc842",
+      "tools/extra-tools-collision-host-channel-stream": "d3b4662c09e5699559399ec8dfbb34e8863e6d933c3b0f8512a030b3880bc842",
+      "tools/extra-tools-collision-host-channel-whole": "d3b4662c09e5699559399ec8dfbb34e8863e6d933c3b0f8512a030b3880bc842"
+    },
+    "RK-21.1-060": {
+      "mcp/a-tool-listed-twice-is-declared-once": "d61617eb18d5887e05ce569163f646bc3561b6e1f6051aada4165ca56d31d89b",
+      "skills/a-generation-hook-cannot-declare-a-skill-tool-s-name": "d61617eb18d5887e05ce569163f646bc3561b6e1f6051aada4165ca56d31d89b",
+      "tool-search/a-binding-tool-under-a-discovery-name-yields-to-the-channel-s": "d61617eb18d5887e05ce569163f646bc3561b6e1f6051aada4165ca56d31d89b",
+      "tool-search/a-generation-hook-cannot-redefine-a-discovery-tool": "d61617eb18d5887e05ce569163f646bc3561b6e1f6051aada4165ca56d31d89b",
+      "tools/extra-tools-collision-binding-agent-stream": "d61617eb18d5887e05ce569163f646bc3561b6e1f6051aada4165ca56d31d89b",
+      "tools/extra-tools-collision-binding-agent-whole": "d61617eb18d5887e05ce569163f646bc3561b6e1f6051aada4165ca56d31d89b",
+      "tools/extra-tools-collision-binding-channel-stream": "d61617eb18d5887e05ce569163f646bc3561b6e1f6051aada4165ca56d31d89b",
+      "tools/extra-tools-collision-binding-channel-whole": "d61617eb18d5887e05ce569163f646bc3561b6e1f6051aada4165ca56d31d89b",
+      "tools/extra-tools-collision-builtin-agent-stream": "d61617eb18d5887e05ce569163f646bc3561b6e1f6051aada4165ca56d31d89b",
+      "tools/extra-tools-collision-builtin-agent-whole": "d61617eb18d5887e05ce569163f646bc3561b6e1f6051aada4165ca56d31d89b",
+      "tools/extra-tools-collision-builtin-channel-stream": "d61617eb18d5887e05ce569163f646bc3561b6e1f6051aada4165ca56d31d89b",
+      "tools/extra-tools-collision-builtin-channel-whole": "d61617eb18d5887e05ce569163f646bc3561b6e1f6051aada4165ca56d31d89b",
+      "tools/extra-tools-collision-host-agent-stream": "d61617eb18d5887e05ce569163f646bc3561b6e1f6051aada4165ca56d31d89b",
+      "tools/extra-tools-collision-host-agent-whole": "d61617eb18d5887e05ce569163f646bc3561b6e1f6051aada4165ca56d31d89b",
+      "tools/extra-tools-collision-host-channel-stream": "d61617eb18d5887e05ce569163f646bc3561b6e1f6051aada4165ca56d31d89b",
+      "tools/extra-tools-collision-host-channel-whole": "d61617eb18d5887e05ce569163f646bc3561b6e1f6051aada4165ca56d31d89b",
+      "turn-config/a-turn-config-s-tool-under-a-setup-s-tool-name-is-not-declared": "d61617eb18d5887e05ce569163f646bc3561b6e1f6051aada4165ca56d31d89b"
+    },
+    "RK-21.1-061": {
+      "role-policy/deferred-definitions-omit-denied-tools-non-streaming": "f844c43b0dbdc9f7bff3187dccce58586cd0b44fa70e63ca98db7b7d3391cbe1",
+      "role-policy/deferred-definitions-omit-denied-tools-streaming": "f844c43b0dbdc9f7bff3187dccce58586cd0b44fa70e63ca98db7b7d3391cbe1",
+      "role-policy/exact-name-cannot-recover-denied-tool-non-streaming": "f844c43b0dbdc9f7bff3187dccce58586cd0b44fa70e63ca98db7b7d3391cbe1",
+      "role-policy/exact-name-cannot-recover-denied-tool-streaming": "f844c43b0dbdc9f7bff3187dccce58586cd0b44fa70e63ca98db7b7d3391cbe1",
+      "role-policy/search-and-list-non-streaming": "f844c43b0dbdc9f7bff3187dccce58586cd0b44fa70e63ca98db7b7d3391cbe1",
+      "role-policy/search-and-list-streaming": "f844c43b0dbdc9f7bff3187dccce58586cd0b44fa70e63ca98db7b7d3391cbe1",
+      "sandbox/search-cannot-reveal-a-denied-command-non-streaming": "f844c43b0dbdc9f7bff3187dccce58586cd0b44fa70e63ca98db7b7d3391cbe1",
+      "sandbox/search-cannot-reveal-a-denied-command-streaming": "f844c43b0dbdc9f7bff3187dccce58586cd0b44fa70e63ca98db7b7d3391cbe1",
+      "skill-gating/discovery-cannot-reveal-gated-tools-before-activation-non-streaming": "f844c43b0dbdc9f7bff3187dccce58586cd0b44fa70e63ca98db7b7d3391cbe1",
+      "skill-gating/discovery-cannot-reveal-gated-tools-before-activation-streaming": "f844c43b0dbdc9f7bff3187dccce58586cd0b44fa70e63ca98db7b7d3391cbe1",
+      "tool-search/a-denied-tool-is-not-held": "f844c43b0dbdc9f7bff3187dccce58586cd0b44fa70e63ca98db7b7d3391cbe1",
+      "tool-search/a-denied-tool-is-not-recovered": "f844c43b0dbdc9f7bff3187dccce58586cd0b44fa70e63ca98db7b7d3391cbe1",
+      "tool-search/a-tool-the-generation-hook-withdrew-is-neither-found-nor-listed-nor-run": "f844c43b0dbdc9f7bff3187dccce58586cd0b44fa70e63ca98db7b7d3391cbe1",
+      "tool-search/a-tool-withdrawn-after-a-round-is-neither-found-nor-listed-nor-run": "f844c43b0dbdc9f7bff3187dccce58586cd0b44fa70e63ca98db7b7d3391cbe1",
+      "tool-search/tool-search-names-no-denied-tool-and-runs-under-an-allow-list": "f844c43b0dbdc9f7bff3187dccce58586cd0b44fa70e63ca98db7b7d3391cbe1"
+    },
+    "RK-21.1-062": {
+      "role-policy/search-and-list-non-streaming": "0d9ebc841d2325683b177a3fc41e4bd3272a4ada1a1c0c7de53391a864d22ce7",
+      "role-policy/search-and-list-streaming": "0d9ebc841d2325683b177a3fc41e4bd3272a4ada1a1c0c7de53391a864d22ce7",
+      "tool-search/list-tools-filters-by-a-name-prefix-and-names-no-discovery-tool": "0d9ebc841d2325683b177a3fc41e4bd3272a4ada1a1c0c7de53391a864d22ce7",
+      "tool-search/list-tools-lists-the-catalogue-and-reveals-nothing": "0d9ebc841d2325683b177a3fc41e4bd3272a4ada1a1c0c7de53391a864d22ce7",
+      "tool-search/list-tools-lists-the-re-read-of-stored-results": "0d9ebc841d2325683b177a3fc41e4bd3272a4ada1a1c0c7de53391a864d22ce7",
+      "tool-search/tool-search-names-no-denied-tool-and-runs-under-an-allow-list": "0d9ebc841d2325683b177a3fc41e4bd3272a4ada1a1c0c7de53391a864d22ce7"
+    },
+    "RK-21.1-063": {
+      "role-policy/search-and-list-non-streaming": "84551966a0847017ae4c4c12d2a7f9bffa5f0cf38e86f1de157dd7e7f0534014",
+      "role-policy/search-and-list-streaming": "84551966a0847017ae4c4c12d2a7f9bffa5f0cf38e86f1de157dd7e7f0534014",
+      "skill-gating/discovery-cannot-reveal-gated-tools-before-activation-non-streaming": "84551966a0847017ae4c4c12d2a7f9bffa5f0cf38e86f1de157dd7e7f0534014",
+      "skill-gating/discovery-cannot-reveal-gated-tools-before-activation-streaming": "84551966a0847017ae4c4c12d2a7f9bffa5f0cf38e86f1de157dd7e7f0534014",
+      "tool-search/a-match-names-its-family-bar-the-pinned": "84551966a0847017ae4c4c12d2a7f9bffa5f0cf38e86f1de157dd7e7f0534014",
+      "tool-search/a-person-s-tool-stays-declared-while-the-catalogue-is-hidden": "84551966a0847017ae4c4c12d2a7f9bffa5f0cf38e86f1de157dd7e7f0534014",
+      "tool-search/a-tool-the-generation-hook-added-stays-declared-and-is-never-named": "84551966a0847017ae4c4c12d2a7f9bffa5f0cf38e86f1de157dd7e7f0534014",
+      "tool-search/an-injected-tool-stays-declared-while-the-catalogue-is-hidden": "84551966a0847017ae4c4c12d2a7f9bffa5f0cf38e86f1de157dd7e7f0534014",
+      "tool-search/find-tools-reveals-its-matches-for-the-next-round": "84551966a0847017ae4c4c12d2a7f9bffa5f0cf38e86f1de157dd7e7f0534014",
+      "tool-search/list-tools-filters-by-a-name-prefix-and-names-no-discovery-tool": "84551966a0847017ae4c4c12d2a7f9bffa5f0cf38e86f1de157dd7e7f0534014",
+      "tool-search/list-tools-lists-the-catalogue-and-reveals-nothing": "84551966a0847017ae4c4c12d2a7f9bffa5f0cf38e86f1de157dd7e7f0534014",
+      "tool-search/tool-search-names-no-denied-tool-and-runs-under-an-allow-list": "84551966a0847017ae4c4c12d2a7f9bffa5f0cf38e86f1de157dd7e7f0534014"
+    },
+    "RK-21.1-064": {
+      "tool-search/an-injected-tool-does-not-count-toward-the-catalogue": "3adc9aebc89d933fe4b91ffc188606fcc66b9d2473103f64ce3feef22ed5b398",
+      "tool-search/an-injected-tool-is-reported-always-even-once-used": "3adc9aebc89d933fe4b91ffc188606fcc66b9d2473103f64ce3feef22ed5b398",
+      "tool-search/an-injected-tool-stays-declared-while-the-catalogue-is-hidden": "3adc9aebc89d933fe4b91ffc188606fcc66b9d2473103f64ce3feef22ed5b398"
+    },
+    "RK-21.1-065": {
+      "tool-search/an-injected-tool-does-not-count-toward-the-catalogue": "cb3a4298e81d1a21fc147c45ee327af3607c90e3367abe7581ff3fb5bc314e6d"
+    },
+    "RK-21.1-067": {
+      "tool-search/an-injected-tool-stays-declared-while-the-catalogue-is-hidden": "a0587e57a482eb50337d5960ea2b82d3115264ea93c600ae4a3f99736084c4ae"
+    },
+    "RK-21.1-068": {
+      "tool-search/an-injected-tool-is-reported-always-even-once-used": "d626e78b1a797c475b1622bde65d1676f3c8f9994d0fa690fcf02de1f918a2c0",
+      "tool-search/an-injected-tool-stays-declared-while-the-catalogue-is-hidden": "d626e78b1a797c475b1622bde65d1676f3c8f9994d0fa690fcf02de1f918a2c0"
+    },
+    "RK-21.1-070": {
+      "role-policy/a-later-turn-reads-the-new-role-non-streaming": "745234ce0f2238847171e9fe19eac872bbaf1b83a950a591a8bb750e48c39cd3",
+      "role-policy/a-later-turn-reads-the-new-role-streaming": "745234ce0f2238847171e9fe19eac872bbaf1b83a950a591a8bb750e48c39cd3",
+      "role-policy/agent-selects-each-senders-role-non-streaming": "745234ce0f2238847171e9fe19eac872bbaf1b83a950a591a8bb750e48c39cd3",
+      "role-policy/agent-selects-each-senders-role-streaming": "745234ce0f2238847171e9fe19eac872bbaf1b83a950a591a8bb750e48c39cd3",
+      "role-policy/ai-selects-each-senders-role-non-streaming": "745234ce0f2238847171e9fe19eac872bbaf1b83a950a591a8bb750e48c39cd3",
+      "role-policy/ai-selects-each-senders-role-streaming": "745234ce0f2238847171e9fe19eac872bbaf1b83a950a591a8bb750e48c39cd3",
+      "role-policy/interleaved-turns-keep-their-role-non-streaming": "745234ce0f2238847171e9fe19eac872bbaf1b83a950a591a8bb750e48c39cd3",
+      "role-policy/interleaved-turns-keep-their-role-streaming": "745234ce0f2238847171e9fe19eac872bbaf1b83a950a591a8bb750e48c39cd3",
+      "role-policy/the-named-record-selects-the-role-non-streaming": "745234ce0f2238847171e9fe19eac872bbaf1b83a950a591a8bb750e48c39cd3",
+      "role-policy/the-named-record-selects-the-role-streaming": "745234ce0f2238847171e9fe19eac872bbaf1b83a950a591a8bb750e48c39cd3",
+      "steering/another-person-s-message-is-served-under-its-own-role-s-tools": "745234ce0f2238847171e9fe19eac872bbaf1b83a950a591a8bb750e48c39cd3"
+    },
+    "RK-21.1-071": {
+      "role-policy/agent-selects-each-senders-role-non-streaming": "13ab13d6e81d7243c6903ca8ac220daac8d182d1c298c1c52c706d0adeeb493f",
+      "role-policy/agent-selects-each-senders-role-streaming": "13ab13d6e81d7243c6903ca8ac220daac8d182d1c298c1c52c706d0adeeb493f",
+      "role-policy/ai-selects-each-senders-role-non-streaming": "13ab13d6e81d7243c6903ca8ac220daac8d182d1c298c1c52c706d0adeeb493f",
+      "role-policy/ai-selects-each-senders-role-streaming": "13ab13d6e81d7243c6903ca8ac220daac8d182d1c298c1c52c706d0adeeb493f"
+    },
+    "RK-21.1-072": {
+      "role-policy/a-later-turn-reads-the-new-role-non-streaming": "ad14c629f531d7c01b318b05ca0a7dc9c6533f977d3be7c177ef7597bb99c7ff",
+      "role-policy/a-later-turn-reads-the-new-role-streaming": "ad14c629f531d7c01b318b05ca0a7dc9c6533f977d3be7c177ef7597bb99c7ff",
+      "role-policy/a-skill-hint-keeps-the-role-restriction-non-streaming": "ad14c629f531d7c01b318b05ca0a7dc9c6533f977d3be7c177ef7597bb99c7ff",
+      "role-policy/a-skill-hint-keeps-the-role-restriction-streaming": "ad14c629f531d7c01b318b05ca0a7dc9c6533f977d3be7c177ef7597bb99c7ff",
+      "role-policy/activation-cannot-bypass-role-non-streaming": "ad14c629f531d7c01b318b05ca0a7dc9c6533f977d3be7c177ef7597bb99c7ff",
+      "role-policy/activation-cannot-bypass-role-streaming": "ad14c629f531d7c01b318b05ca0a7dc9c6533f977d3be7c177ef7597bb99c7ff",
+      "role-policy/agent-selects-each-senders-role-non-streaming": "ad14c629f531d7c01b318b05ca0a7dc9c6533f977d3be7c177ef7597bb99c7ff",
+      "role-policy/agent-selects-each-senders-role-streaming": "ad14c629f531d7c01b318b05ca0a7dc9c6533f977d3be7c177ef7597bb99c7ff",
+      "role-policy/ai-selects-each-senders-role-non-streaming": "ad14c629f531d7c01b318b05ca0a7dc9c6533f977d3be7c177ef7597bb99c7ff",
+      "role-policy/ai-selects-each-senders-role-streaming": "ad14c629f531d7c01b318b05ca0a7dc9c6533f977d3be7c177ef7597bb99c7ff",
+      "role-policy/an-alias-must-pass-both-role-names-non-streaming": "ad14c629f531d7c01b318b05ca0a7dc9c6533f977d3be7c177ef7597bb99c7ff",
+      "role-policy/an-alias-must-pass-both-role-names-streaming": "ad14c629f531d7c01b318b05ca0a7dc9c6533f977d3be7c177ef7597bb99c7ff",
+      "role-policy/deferred-definitions-omit-denied-tools-non-streaming": "ad14c629f531d7c01b318b05ca0a7dc9c6533f977d3be7c177ef7597bb99c7ff",
+      "role-policy/deferred-definitions-omit-denied-tools-streaming": "ad14c629f531d7c01b318b05ca0a7dc9c6533f977d3be7c177ef7597bb99c7ff",
+      "role-policy/denied-prerequisite-non-streaming": "ad14c629f531d7c01b318b05ca0a7dc9c6533f977d3be7c177ef7597bb99c7ff",
+      "role-policy/denied-prerequisite-streaming": "ad14c629f531d7c01b318b05ca0a7dc9c6533f977d3be7c177ef7597bb99c7ff",
+      "role-policy/exact-name-cannot-recover-denied-tool-non-streaming": "ad14c629f531d7c01b318b05ca0a7dc9c6533f977d3be7c177ef7597bb99c7ff",
+      "role-policy/exact-name-cannot-recover-denied-tool-streaming": "ad14c629f531d7c01b318b05ca0a7dc9c6533f977d3be7c177ef7597bb99c7ff",
+      "role-policy/mcp-denied-server-non-streaming": "ad14c629f531d7c01b318b05ca0a7dc9c6533f977d3be7c177ef7597bb99c7ff",
+      "role-policy/mcp-denied-server-streaming": "ad14c629f531d7c01b318b05ca0a7dc9c6533f977d3be7c177ef7597bb99c7ff",
+      "role-policy/script-denied-non-streaming": "ad14c629f531d7c01b318b05ca0a7dc9c6533f977d3be7c177ef7597bb99c7ff",
+      "role-policy/script-denied-streaming": "ad14c629f531d7c01b318b05ca0a7dc9c6533f977d3be7c177ef7597bb99c7ff",
+      "steering/another-person-s-message-is-served-under-its-own-role-s-tools": "ad14c629f531d7c01b318b05ca0a7dc9c6533f977d3be7c177ef7597bb99c7ff"
+    },
+    "RK-21.1-073": {
+      "role-policy/a-later-turn-reads-the-new-role-non-streaming": "298e79c593af08a1c7190fbabaca64b0a0099c3878328cda8fd9937d7c237f5f",
+      "role-policy/a-later-turn-reads-the-new-role-streaming": "298e79c593af08a1c7190fbabaca64b0a0099c3878328cda8fd9937d7c237f5f",
+      "role-policy/agent-selects-each-senders-role-non-streaming": "298e79c593af08a1c7190fbabaca64b0a0099c3878328cda8fd9937d7c237f5f",
+      "role-policy/agent-selects-each-senders-role-streaming": "298e79c593af08a1c7190fbabaca64b0a0099c3878328cda8fd9937d7c237f5f",
+      "role-policy/ai-selects-each-senders-role-non-streaming": "298e79c593af08a1c7190fbabaca64b0a0099c3878328cda8fd9937d7c237f5f",
+      "role-policy/ai-selects-each-senders-role-streaming": "298e79c593af08a1c7190fbabaca64b0a0099c3878328cda8fd9937d7c237f5f",
+      "role-policy/allowed-catalogue-keeps-gated-tools-non-streaming": "298e79c593af08a1c7190fbabaca64b0a0099c3878328cda8fd9937d7c237f5f",
+      "role-policy/allowed-catalogue-keeps-gated-tools-streaming": "298e79c593af08a1c7190fbabaca64b0a0099c3878328cda8fd9937d7c237f5f",
+      "role-policy/search-and-list-non-streaming": "298e79c593af08a1c7190fbabaca64b0a0099c3878328cda8fd9937d7c237f5f",
+      "role-policy/search-and-list-streaming": "298e79c593af08a1c7190fbabaca64b0a0099c3878328cda8fd9937d7c237f5f",
+      "role-policy/the-named-record-selects-the-role-non-streaming": "298e79c593af08a1c7190fbabaca64b0a0099c3878328cda8fd9937d7c237f5f",
+      "role-policy/the-named-record-selects-the-role-streaming": "298e79c593af08a1c7190fbabaca64b0a0099c3878328cda8fd9937d7c237f5f"
+    },
+    "RK-21.1-074": {
+      "role-policy/a-later-turn-reads-the-new-role-non-streaming": "a8cbc5a55ad2b839f6c35894f4cd46207a3aa2851abaae18bb1e5f35b36cd5f4",
+      "role-policy/a-later-turn-reads-the-new-role-streaming": "a8cbc5a55ad2b839f6c35894f4cd46207a3aa2851abaae18bb1e5f35b36cd5f4",
+      "role-policy/agent-selects-each-senders-role-non-streaming": "a8cbc5a55ad2b839f6c35894f4cd46207a3aa2851abaae18bb1e5f35b36cd5f4",
+      "role-policy/agent-selects-each-senders-role-streaming": "a8cbc5a55ad2b839f6c35894f4cd46207a3aa2851abaae18bb1e5f35b36cd5f4",
+      "role-policy/ai-selects-each-senders-role-non-streaming": "a8cbc5a55ad2b839f6c35894f4cd46207a3aa2851abaae18bb1e5f35b36cd5f4",
+      "role-policy/ai-selects-each-senders-role-streaming": "a8cbc5a55ad2b839f6c35894f4cd46207a3aa2851abaae18bb1e5f35b36cd5f4",
+      "role-policy/interleaved-turns-keep-their-role-non-streaming": "a8cbc5a55ad2b839f6c35894f4cd46207a3aa2851abaae18bb1e5f35b36cd5f4",
+      "role-policy/interleaved-turns-keep-their-role-streaming": "a8cbc5a55ad2b839f6c35894f4cd46207a3aa2851abaae18bb1e5f35b36cd5f4",
+      "role-policy/script-owner-replaces-base-non-streaming": "a8cbc5a55ad2b839f6c35894f4cd46207a3aa2851abaae18bb1e5f35b36cd5f4",
+      "role-policy/script-owner-replaces-base-streaming": "a8cbc5a55ad2b839f6c35894f4cd46207a3aa2851abaae18bb1e5f35b36cd5f4"
+    },
+    "RK-21.2-003": {
+      "mcp-construction/direct-sse-discovery-empty-headers": "7b6045fe2924195a498848b0c3305e4c2de44432866d22cf3f3545522e592899",
+      "mcp-construction/from-url-sse-discovery-empty-headers": "7b6045fe2924195a498848b0c3305e4c2de44432866d22cf3f3545522e592899",
+      "mcp-host/listing-metadata": "7b6045fe2924195a498848b0c3305e4c2de44432866d22cf3f3545522e592899",
+      "mcp/a-bare-name-never-runs-on-a-server-the-policy-keeps-out": "7b6045fe2924195a498848b0c3305e4c2de44432866d22cf3f3545522e592899",
+      "mcp/a-bare-name-no-server-admits-is-served-by-nothing": "7b6045fe2924195a498848b0c3305e4c2de44432866d22cf3f3545522e592899",
+      "mcp/a-bare-name-runs-on-the-first-server-of-the-chain-that-serves-it": "7b6045fe2924195a498848b0c3305e4c2de44432866d22cf3f3545522e592899",
+      "mcp/a-bare-name-runs-only-on-the-server-the-policy-admits": "7b6045fe2924195a498848b0c3305e4c2de44432866d22cf3f3545522e592899",
+      "mcp/a-catalogue-of-aliases-holds-a-policy-that-names-a-server": "7b6045fe2924195a498848b0c3305e4c2de44432866d22cf3f3545522e592899",
+      "mcp/a-forwarding-handler-runs-no-bare-name-the-policy-keeps-off-its-server": "7b6045fe2924195a498848b0c3305e4c2de44432866d22cf3f3545522e592899",
+      "mcp/a-policy-that-names-no-server-leaves-a-bare-name-on-the-first-server": "7b6045fe2924195a498848b0c3305e4c2de44432866d22cf3f3545522e592899",
+      "mcp/a-tool-description-reaches-the-model-as-the-server-wrote-it": "7b6045fe2924195a498848b0c3305e4c2de44432866d22cf3f3545522e592899",
+      "mcp/a-tool-listed-twice-is-declared-once": "7b6045fe2924195a498848b0c3305e4c2de44432866d22cf3f3545522e592899",
+      "mcp/an-is-error-result-is-a-failure-never-a-refusal-non-streaming": "7b6045fe2924195a498848b0c3305e4c2de44432866d22cf3f3545522e592899",
+      "mcp/an-is-error-result-is-a-failure-never-a-refusal-streaming": "7b6045fe2924195a498848b0c3305e4c2de44432866d22cf3f3545522e592899"
+    },
+    "RK-21.2-004": {
+      "mcp-construction/direct-sse-discovery-empty-headers": "2d93810cbefe129cd80d89c8b4dfffed550e615d1e237d6dbed15cd31783f001",
+      "mcp-construction/from-url-sse-discovery-empty-headers": "2d93810cbefe129cd80d89c8b4dfffed550e615d1e237d6dbed15cd31783f001",
+      "mcp-host/handshake-copies": "2d93810cbefe129cd80d89c8b4dfffed550e615d1e237d6dbed15cd31783f001",
+      "mcp-host/listing-metadata": "2d93810cbefe129cd80d89c8b4dfffed550e615d1e237d6dbed15cd31783f001",
+      "mcp-host/raw-results-json": "2d93810cbefe129cd80d89c8b4dfffed550e615d1e237d6dbed15cd31783f001",
+      "mcp-host/raw-results-sse": "2d93810cbefe129cd80d89c8b4dfffed550e615d1e237d6dbed15cd31783f001",
+      "mcp-host/resource-results-json": "2d93810cbefe129cd80d89c8b4dfffed550e615d1e237d6dbed15cd31783f001",
+      "mcp-host/resource-results-sse": "2d93810cbefe129cd80d89c8b4dfffed550e615d1e237d6dbed15cd31783f001",
+      "mcp-host/tool-dictionaries-json": "2d93810cbefe129cd80d89c8b4dfffed550e615d1e237d6dbed15cd31783f001",
+      "mcp-host/tool-dictionaries-sse": "2d93810cbefe129cd80d89c8b4dfffed550e615d1e237d6dbed15cd31783f001",
+      "mcp-host/tool-dictionaries-without-discovery": "2d93810cbefe129cd80d89c8b4dfffed550e615d1e237d6dbed15cd31783f001"
+    },
+    "RK-21.2-007": {
+      "mcp-construction/direct-sse-timeout-endpoint": "68f1413b5b796e34a30d99f60f6af705a98103e78ba6e7e7ee44a8d3ebaa5ab2",
+      "mcp-construction/direct-sse-timeout-listing": "68f1413b5b796e34a30d99f60f6af705a98103e78ba6e7e7ee44a8d3ebaa5ab2",
+      "mcp-construction/from-url-sse-timeout-endpoint": "68f1413b5b796e34a30d99f60f6af705a98103e78ba6e7e7ee44a8d3ebaa5ab2",
+      "mcp-construction/from-url-sse-timeout-listing": "68f1413b5b796e34a30d99f60f6af705a98103e78ba6e7e7ee44a8d3ebaa5ab2"
+    },
+    "RK-21.2-008": {
+      "mcp-construction/direct-sse-timeout-endpoint": "96d03fd39c57ff166ded60b94958f6a47ba31f54502797665db075cb2d638722",
+      "mcp-construction/direct-sse-timeout-listing": "96d03fd39c57ff166ded60b94958f6a47ba31f54502797665db075cb2d638722",
+      "mcp-construction/from-url-sse-timeout-endpoint": "96d03fd39c57ff166ded60b94958f6a47ba31f54502797665db075cb2d638722",
+      "mcp-construction/from-url-sse-timeout-listing": "96d03fd39c57ff166ded60b94958f6a47ba31f54502797665db075cb2d638722"
+    },
+    "RK-21.2-013": {
+      "mcp/a-catalogue-of-aliases-holds-a-policy-that-names-a-server": "12a942f54596e2c72cc81d9c153ad089a19949a2a783d4c4b3f2b8d8efc5287f"
+    },
+    "RK-21.2-015": {
+      "mcp/a-bare-name-never-runs-on-a-server-the-policy-keeps-out": "6926eecffa8248bcc0bab276df137e2892286b9a1a0eb462a55d4086b4de800c",
+      "mcp/a-bare-name-no-server-admits-is-served-by-nothing": "6926eecffa8248bcc0bab276df137e2892286b9a1a0eb462a55d4086b4de800c",
+      "mcp/a-bare-name-runs-on-the-first-server-of-the-chain-that-serves-it": "6926eecffa8248bcc0bab276df137e2892286b9a1a0eb462a55d4086b4de800c",
+      "mcp/a-bare-name-runs-only-on-the-server-the-policy-admits": "6926eecffa8248bcc0bab276df137e2892286b9a1a0eb462a55d4086b4de800c",
+      "mcp/a-forwarding-handler-runs-no-bare-name-the-policy-keeps-off-its-server": "6926eecffa8248bcc0bab276df137e2892286b9a1a0eb462a55d4086b4de800c",
+      "mcp/a-policy-that-names-no-server-leaves-a-bare-name-on-the-first-server": "6926eecffa8248bcc0bab276df137e2892286b9a1a0eb462a55d4086b4de800c",
+      "role-policy/mcp-allowed-server-non-streaming": "6926eecffa8248bcc0bab276df137e2892286b9a1a0eb462a55d4086b4de800c",
+      "role-policy/mcp-allowed-server-streaming": "6926eecffa8248bcc0bab276df137e2892286b9a1a0eb462a55d4086b4de800c",
+      "role-policy/mcp-bare-policy-non-streaming": "6926eecffa8248bcc0bab276df137e2892286b9a1a0eb462a55d4086b4de800c",
+      "role-policy/mcp-bare-policy-streaming": "6926eecffa8248bcc0bab276df137e2892286b9a1a0eb462a55d4086b4de800c",
+      "role-policy/mcp-denied-server-non-streaming": "6926eecffa8248bcc0bab276df137e2892286b9a1a0eb462a55d4086b4de800c",
+      "role-policy/mcp-denied-server-streaming": "6926eecffa8248bcc0bab276df137e2892286b9a1a0eb462a55d4086b4de800c"
+    },
+    "RK-21.2-016": {
+      "mcp/a-bare-name-never-runs-on-a-server-the-policy-keeps-out": "3cd4b5456493e5e707428150e1f3f1d846a9cdf0c220549ed8518b3797301882",
+      "mcp/a-bare-name-no-server-admits-is-served-by-nothing": "3cd4b5456493e5e707428150e1f3f1d846a9cdf0c220549ed8518b3797301882",
+      "mcp/a-bare-name-runs-on-the-first-server-of-the-chain-that-serves-it": "3cd4b5456493e5e707428150e1f3f1d846a9cdf0c220549ed8518b3797301882",
+      "mcp/a-bare-name-runs-only-on-the-server-the-policy-admits": "3cd4b5456493e5e707428150e1f3f1d846a9cdf0c220549ed8518b3797301882",
+      "mcp/a-forwarding-handler-runs-no-bare-name-the-policy-keeps-off-its-server": "3cd4b5456493e5e707428150e1f3f1d846a9cdf0c220549ed8518b3797301882",
+      "mcp/a-policy-that-names-no-server-leaves-a-bare-name-on-the-first-server": "3cd4b5456493e5e707428150e1f3f1d846a9cdf0c220549ed8518b3797301882"
+    },
+    "RK-21.2-017": {
+      "mcp/a-bare-name-runs-on-the-first-server-of-the-chain-that-serves-it": "fefefc6cbf1bf79677d4e675ed6420537e26235203b2f7e2da12a1a3961da25e",
+      "mcp/a-policy-that-names-no-server-leaves-a-bare-name-on-the-first-server": "fefefc6cbf1bf79677d4e675ed6420537e26235203b2f7e2da12a1a3961da25e"
+    },
+    "RK-21.2-018": {
+      "mcp/a-bare-name-never-runs-on-a-server-the-policy-keeps-out": "e614177e7f50eaeaa3c63e9066f7796428f53351f8ce72d96124695732a42b4c",
+      "mcp/a-bare-name-no-server-admits-is-served-by-nothing": "e614177e7f50eaeaa3c63e9066f7796428f53351f8ce72d96124695732a42b4c",
+      "mcp/a-bare-name-runs-on-the-first-server-of-the-chain-that-serves-it": "e614177e7f50eaeaa3c63e9066f7796428f53351f8ce72d96124695732a42b4c",
+      "mcp/a-bare-name-runs-only-on-the-server-the-policy-admits": "e614177e7f50eaeaa3c63e9066f7796428f53351f8ce72d96124695732a42b4c",
+      "mcp/a-catalogue-of-aliases-holds-a-policy-that-names-a-server": "e614177e7f50eaeaa3c63e9066f7796428f53351f8ce72d96124695732a42b4c",
+      "mcp/a-forwarding-handler-runs-no-bare-name-the-policy-keeps-off-its-server": "e614177e7f50eaeaa3c63e9066f7796428f53351f8ce72d96124695732a42b4c",
+      "mcp/a-policy-that-names-no-server-leaves-a-bare-name-on-the-first-server": "e614177e7f50eaeaa3c63e9066f7796428f53351f8ce72d96124695732a42b4c",
+      "role-policy/mcp-allowed-server-non-streaming": "e614177e7f50eaeaa3c63e9066f7796428f53351f8ce72d96124695732a42b4c",
+      "role-policy/mcp-allowed-server-streaming": "e614177e7f50eaeaa3c63e9066f7796428f53351f8ce72d96124695732a42b4c",
+      "role-policy/mcp-bare-policy-non-streaming": "e614177e7f50eaeaa3c63e9066f7796428f53351f8ce72d96124695732a42b4c",
+      "role-policy/mcp-bare-policy-streaming": "e614177e7f50eaeaa3c63e9066f7796428f53351f8ce72d96124695732a42b4c",
+      "role-policy/mcp-denied-server-non-streaming": "e614177e7f50eaeaa3c63e9066f7796428f53351f8ce72d96124695732a42b4c",
+      "role-policy/mcp-denied-server-streaming": "e614177e7f50eaeaa3c63e9066f7796428f53351f8ce72d96124695732a42b4c"
+    },
+    "RK-21.2-021": {
+      "mcp-construction/direct-sse-discovery-empty-headers": "b76ba61215992b6221fd416e598767f81049eb02a2450badcf1cf0545535c1c9",
+      "mcp-construction/direct-sse-discovery-retained-headers": "b76ba61215992b6221fd416e598767f81049eb02a2450badcf1cf0545535c1c9",
+      "mcp-construction/from-url-sse-discovery-empty-headers": "b76ba61215992b6221fd416e598767f81049eb02a2450badcf1cf0545535c1c9",
+      "mcp-construction/from-url-sse-discovery-retained-headers": "b76ba61215992b6221fd416e598767f81049eb02a2450badcf1cf0545535c1c9",
+      "mcp-host/listing-metadata": "b76ba61215992b6221fd416e598767f81049eb02a2450badcf1cf0545535c1c9",
+      "mcp-host/reconnect-snapshots": "b76ba61215992b6221fd416e598767f81049eb02a2450badcf1cf0545535c1c9",
+      "mcp-host/tool-dictionaries-empty-catalogue": "b76ba61215992b6221fd416e598767f81049eb02a2450badcf1cf0545535c1c9",
+      "mcp-host/tool-dictionaries-json": "b76ba61215992b6221fd416e598767f81049eb02a2450badcf1cf0545535c1c9",
+      "mcp-host/tool-dictionaries-sse": "b76ba61215992b6221fd416e598767f81049eb02a2450badcf1cf0545535c1c9"
+    },
+    "RK-21.2-023": {
+      "mcp/a-tool-description-reaches-the-model-as-the-server-wrote-it": "d5d32619d71f3b18d6daeb392a00a4388756caf8c48fb3be06f087db9df918b6",
+      "mcp/a-tool-listed-twice-is-declared-once": "d5d32619d71f3b18d6daeb392a00a4388756caf8c48fb3be06f087db9df918b6"
+    },
+    "RK-21.2-024": {
+      "mcp/a-tool-description-reaches-the-model-as-the-server-wrote-it": "8379be3acc9a4763f2ca9c51da2c37601fc29cf18c3dc6ffefe4997468a703d8"
+    },
+    "RK-21.2-025": {
+      "mcp/a-tool-description-reaches-the-model-as-the-server-wrote-it": "f3212a5a03a243269c32715197629f244e2dd261b6dbd4adfc8b3ae00af6fa57"
+    },
+    "RK-21.2-026": {
+      "mcp/a-tool-listed-twice-is-declared-once": "f7328935a6694d3ff07d1e831837cb8fc4b817e536b45461510fcd143d89d1dd"
+    },
+    "RK-21.2-028": {
+      "mcp-construction/direct-sse-resource-only-empty-headers": "f38159738290105339abee952db3f8165cc0bb6f6786c5b97d97adcc6667f289",
+      "mcp-construction/direct-sse-resource-only-retained-headers": "f38159738290105339abee952db3f8165cc0bb6f6786c5b97d97adcc6667f289",
+      "mcp-construction/from-url-sse-resource-only-empty-headers": "f38159738290105339abee952db3f8165cc0bb6f6786c5b97d97adcc6667f289",
+      "mcp-construction/from-url-sse-resource-only-retained-headers": "f38159738290105339abee952db3f8165cc0bb6f6786c5b97d97adcc6667f289",
+      "mcp-host/tool-dictionaries-without-discovery": "f38159738290105339abee952db3f8165cc0bb6f6786c5b97d97adcc6667f289",
+      "mcp-host/without-discovery": "f38159738290105339abee952db3f8165cc0bb6f6786c5b97d97adcc6667f289"
+    },
+    "RK-21.2-029": {
+      "mcp-construction/direct-sse-discovery-empty-headers": "5e661120c9233852418a47148773b4a3e04611317ab97ffc410f4d70716c16e4",
+      "mcp-construction/direct-sse-discovery-retained-headers": "5e661120c9233852418a47148773b4a3e04611317ab97ffc410f4d70716c16e4",
+      "mcp-construction/direct-sse-resource-only-empty-headers": "5e661120c9233852418a47148773b4a3e04611317ab97ffc410f4d70716c16e4",
+      "mcp-construction/direct-sse-resource-only-retained-headers": "5e661120c9233852418a47148773b4a3e04611317ab97ffc410f4d70716c16e4",
+      "mcp-construction/from-url-sse-discovery-empty-headers": "5e661120c9233852418a47148773b4a3e04611317ab97ffc410f4d70716c16e4",
+      "mcp-construction/from-url-sse-discovery-retained-headers": "5e661120c9233852418a47148773b4a3e04611317ab97ffc410f4d70716c16e4",
+      "mcp-construction/from-url-sse-resource-only-empty-headers": "5e661120c9233852418a47148773b4a3e04611317ab97ffc410f4d70716c16e4",
+      "mcp-construction/from-url-sse-resource-only-retained-headers": "5e661120c9233852418a47148773b4a3e04611317ab97ffc410f4d70716c16e4"
+    },
+    "RK-21.2-031": {
+      "mcp-construction/direct-sse-resource-only-empty-headers": "cbfbda3664278dea6dafb3f2258dced18f51b513c791a682bdc6242b7a37daa5",
+      "mcp-construction/direct-sse-resource-only-retained-headers": "cbfbda3664278dea6dafb3f2258dced18f51b513c791a682bdc6242b7a37daa5",
+      "mcp-construction/from-url-sse-resource-only-empty-headers": "cbfbda3664278dea6dafb3f2258dced18f51b513c791a682bdc6242b7a37daa5",
+      "mcp-construction/from-url-sse-resource-only-retained-headers": "cbfbda3664278dea6dafb3f2258dced18f51b513c791a682bdc6242b7a37daa5"
+    },
+    "RK-21.2-032": {
+      "mcp/a-bare-name-never-runs-on-a-server-the-policy-keeps-out": "b6ab0637b72b535a786a227734a6272825ad92863af9ebd0da22fd9562d0209d",
+      "mcp/a-bare-name-no-server-admits-is-served-by-nothing": "b6ab0637b72b535a786a227734a6272825ad92863af9ebd0da22fd9562d0209d",
+      "mcp/a-bare-name-runs-on-the-first-server-of-the-chain-that-serves-it": "b6ab0637b72b535a786a227734a6272825ad92863af9ebd0da22fd9562d0209d",
+      "mcp/a-bare-name-runs-only-on-the-server-the-policy-admits": "b6ab0637b72b535a786a227734a6272825ad92863af9ebd0da22fd9562d0209d",
+      "mcp/a-catalogue-of-aliases-holds-a-policy-that-names-a-server": "b6ab0637b72b535a786a227734a6272825ad92863af9ebd0da22fd9562d0209d",
+      "mcp/a-forwarding-handler-runs-no-bare-name-the-policy-keeps-off-its-server": "b6ab0637b72b535a786a227734a6272825ad92863af9ebd0da22fd9562d0209d",
+      "mcp/a-policy-that-names-no-server-leaves-a-bare-name-on-the-first-server": "b6ab0637b72b535a786a227734a6272825ad92863af9ebd0da22fd9562d0209d",
+      "role-policy/an-alias-must-pass-both-role-names-non-streaming": "b6ab0637b72b535a786a227734a6272825ad92863af9ebd0da22fd9562d0209d",
+      "role-policy/an-alias-must-pass-both-role-names-streaming": "b6ab0637b72b535a786a227734a6272825ad92863af9ebd0da22fd9562d0209d"
+    },
+    "RK-21.2-034": {
+      "mcp-host/handshake-copies": "c03de0a344615c886e9730e576ff719a6bb61717742b12272684ec7c567708ad",
+      "mcp-host/reconnect-snapshots": "c03de0a344615c886e9730e576ff719a6bb61717742b12272684ec7c567708ad",
+      "mcp-host/server-info-icon-nulls": "c03de0a344615c886e9730e576ff719a6bb61717742b12272684ec7c567708ad"
+    },
+    "RK-21.2-045": {
+      "mcp-host/extension-container-validation": "6766e9c764e79a34bab08ea7ef9af25d6bb414d319f5fa69eab597f565697650",
+      "mcp-host/handshake-copies": "6766e9c764e79a34bab08ea7ef9af25d6bb414d319f5fa69eab597f565697650",
+      "mcp-host/mixed-extension-settings": "6766e9c764e79a34bab08ea7ef9af25d6bb414d319f5fa69eab597f565697650",
+      "mcp-host/reconnect-snapshots": "6766e9c764e79a34bab08ea7ef9af25d6bb414d319f5fa69eab597f565697650",
+      "mcp-host/undeclared-extensions": "6766e9c764e79a34bab08ea7ef9af25d6bb414d319f5fa69eab597f565697650"
+    },
+    "RK-21.2-046": {
+      "mcp-host/raw-results-json": "318ab83e9781e00a70f742a34d88de13f3a8b082f98de8b4a43a5dc5ae3d67cc",
+      "mcp-host/raw-results-sse": "318ab83e9781e00a70f742a34d88de13f3a8b082f98de8b4a43a5dc5ae3d67cc",
+      "mcp-host/read-resource-timeout": "318ab83e9781e00a70f742a34d88de13f3a8b082f98de8b4a43a5dc5ae3d67cc",
+      "mcp-host/request-arguments": "318ab83e9781e00a70f742a34d88de13f3a8b082f98de8b4a43a5dc5ae3d67cc",
+      "mcp-host/request-metadata-validation": "318ab83e9781e00a70f742a34d88de13f3a8b082f98de8b4a43a5dc5ae3d67cc",
+      "mcp-host/request-timeout": "318ab83e9781e00a70f742a34d88de13f3a8b082f98de8b4a43a5dc5ae3d67cc",
+      "mcp-host/resource-results-json": "318ab83e9781e00a70f742a34d88de13f3a8b082f98de8b4a43a5dc5ae3d67cc",
+      "mcp-host/resource-results-sse": "318ab83e9781e00a70f742a34d88de13f3a8b082f98de8b4a43a5dc5ae3d67cc",
+      "mcp-host/resource-uri-normalization": "318ab83e9781e00a70f742a34d88de13f3a8b082f98de8b4a43a5dc5ae3d67cc",
+      "mcp-host/resource-validation": "318ab83e9781e00a70f742a34d88de13f3a8b082f98de8b4a43a5dc5ae3d67cc",
+      "mcp-host/server-errors": "318ab83e9781e00a70f742a34d88de13f3a8b082f98de8b4a43a5dc5ae3d67cc"
+    },
+    "RK-21.2-047": {
+      "served-skills/first-uri-wins-across-pages": "a7e5a76f844c32f0f98c845863864359fe18278153fca8d7da239e01ab0b7349",
+      "served-skills/listing-reads-no-content-or-tool-grant": "a7e5a76f844c32f0f98c845863864359fe18278153fca8d7da239e01ab0b7349",
+      "served-skills/load-refuses-digest": "a7e5a76f844c32f0f98c845863864359fe18278153fca8d7da239e01ab0b7349",
+      "served-skills/text-file-mismatch-retires-active-content": "a7e5a76f844c32f0f98c845863864359fe18278153fca8d7da239e01ab0b7349",
+      "served-skills/verified-files-and-shared-cache": "a7e5a76f844c32f0f98c845863864359fe18278153fca8d7da239e01ab0b7349"
+    },
+    "RK-21.2-048": {
+      "mcp-construction/direct-sse-discovery-empty-headers": "cddb8a8145f1ac0439d78f3162dcf7a90fe5dc0df181b5277177481b2d1b73a7",
+      "mcp-construction/direct-sse-discovery-retained-headers": "cddb8a8145f1ac0439d78f3162dcf7a90fe5dc0df181b5277177481b2d1b73a7",
+      "mcp-construction/direct-sse-resource-only-empty-headers": "cddb8a8145f1ac0439d78f3162dcf7a90fe5dc0df181b5277177481b2d1b73a7",
+      "mcp-construction/direct-sse-resource-only-retained-headers": "cddb8a8145f1ac0439d78f3162dcf7a90fe5dc0df181b5277177481b2d1b73a7",
+      "mcp-construction/from-url-sse-discovery-empty-headers": "cddb8a8145f1ac0439d78f3162dcf7a90fe5dc0df181b5277177481b2d1b73a7",
+      "mcp-construction/from-url-sse-discovery-retained-headers": "cddb8a8145f1ac0439d78f3162dcf7a90fe5dc0df181b5277177481b2d1b73a7",
+      "mcp-construction/from-url-sse-resource-only-empty-headers": "cddb8a8145f1ac0439d78f3162dcf7a90fe5dc0df181b5277177481b2d1b73a7",
+      "mcp-construction/from-url-sse-resource-only-retained-headers": "cddb8a8145f1ac0439d78f3162dcf7a90fe5dc0df181b5277177481b2d1b73a7"
+    },
+    "RK-21.3-006": {
+      "reasoning/a-steered-answer-keeps-its-blocks-in-place": "8dc3f04c7a89e420730dc6e8d537fff80a3dc4a7392036ff41d6acc358fa8fa6",
+      "reasoning/a-steered-answer-keeps-its-reasoning": "8dc3f04c7a89e420730dc6e8d537fff80a3dc4a7392036ff41d6acc358fa8fa6",
+      "reasoning/a-steered-answer-s-reasoning-reaches-no-chat-request": "8dc3f04c7a89e420730dc6e8d537fff80a3dc4a7392036ff41d6acc358fa8fa6",
+      "steering/a-message-during-the-answer-is-answered-by-the-same-turn": "8dc3f04c7a89e420730dc6e8d537fff80a3dc4a7392036ff41d6acc358fa8fa6",
+      "steering/a-steer-reaches-the-room-it-names-alone": "8dc3f04c7a89e420730dc6e8d537fff80a3dc4a7392036ff41d6acc358fa8fa6"
+    },
+    "RK-21.3-007": {
+      "tools/a-cancel-while-the-calls-are-announced-counts-no-round": "43e74b1b7e44807c5e78e21a83513a6fda04b345fa1c69c791d2dc235f1ec85d"
+    },
+    "RK-21.3-009": {
+      "reasoning/a-steered-answer-keeps-its-blocks-in-place": "f30d47c1b2f3137d364383745b75b8e9909e7cd672efb6907f4127aa056721d1",
+      "reasoning/a-steered-answer-keeps-its-reasoning": "f30d47c1b2f3137d364383745b75b8e9909e7cd672efb6907f4127aa056721d1",
+      "reasoning/a-steered-answer-s-reasoning-reaches-no-chat-request": "f30d47c1b2f3137d364383745b75b8e9909e7cd672efb6907f4127aa056721d1",
+      "steering/a-message-during-a-tool-round-is-read-by-the-running-turn": "f30d47c1b2f3137d364383745b75b8e9909e7cd672efb6907f4127aa056721d1",
+      "steering/a-message-during-the-answer-is-answered-by-the-same-turn": "f30d47c1b2f3137d364383745b75b8e9909e7cd672efb6907f4127aa056721d1",
+      "steering/a-steer-reaches-the-room-it-names-alone": "f30d47c1b2f3137d364383745b75b8e9909e7cd672efb6907f4127aa056721d1"
+    },
+    "RK-21.3-010": {
+      "reasoning/a-steered-answer-keeps-its-blocks-in-place": "91645551c4485dff760dc043c65ff6e475cf7f06a1ddaa8e934d2b5f7252ad0f",
+      "reasoning/a-steered-answer-keeps-its-reasoning": "91645551c4485dff760dc043c65ff6e475cf7f06a1ddaa8e934d2b5f7252ad0f",
+      "reasoning/a-steered-answer-s-reasoning-reaches-no-chat-request": "91645551c4485dff760dc043c65ff6e475cf7f06a1ddaa8e934d2b5f7252ad0f",
+      "steering/a-message-during-the-answer-is-answered-by-the-same-turn": "91645551c4485dff760dc043c65ff6e475cf7f06a1ddaa8e934d2b5f7252ad0f"
+    },
+    "RK-21.3-011": {
+      "steering/a-message-delivered-after-a-cut-gets-a-turn-of-its-own": "c2bd06207b7d0951372f8e1de57e5558db321ef5bab01513d69d80358f4baa1f",
+      "steering/a-message-handed-to-a-turn-then-cut-waits-for-the-next-turn": "c2bd06207b7d0951372f8e1de57e5558db321ef5bab01513d69d80358f4baa1f",
+      "streaming/a-message-steered-at-an-answer-a-reader-still-shows-is-too-late": "c2bd06207b7d0951372f8e1de57e5558db321ef5bab01513d69d80358f4baa1f"
+    },
+    "RK-21.3-013": {
+      "acp/steer-isolates-running-rooms": "cfe33521423d83255069515e2c906f27622b204b59eb404409a67181df0cff2f",
+      "acp/steer-running-prompt-keeps-its-outcome": "cfe33521423d83255069515e2c906f27622b204b59eb404409a67181df0cff2f",
+      "steering/a-steer-reaches-the-room-it-names-alone": "cfe33521423d83255069515e2c906f27622b204b59eb404409a67181df0cff2f"
+    },
+    "RK-21.3-014": {
+      "steering/a-steer-reaches-the-room-it-names-alone": "e4aa58b5c0c86b9928892ca891ace08f3ca5f015ee22ec8bbc18b966ae4025bf"
+    },
+    "RK-21.3-015": {
+      "acp/steer-isolates-running-rooms": "8231eab7ebc69c209fbd4668d0557c11d7cb72674bba5a45a6c8054f1463e31d",
+      "executors/owners-steer-only-the-turns-they-submitted": "8231eab7ebc69c209fbd4668d0557c11d7cb72674bba5a45a6c8054f1463e31d",
+      "steering/a-steer-reaches-the-room-it-names-alone": "8231eab7ebc69c209fbd4668d0557c11d7cb72674bba5a45a6c8054f1463e31d"
+    },
+    "RK-21.3-016": {
+      "acp/steer-during-configuration": "f04f4b7f3313ba64d821c24ce9ac7e1a080fe516ac4190b1e601c1f4bfec86a0",
+      "acp/steer-during-opening": "f04f4b7f3313ba64d821c24ce9ac7e1a080fe516ac4190b1e601c1f4bfec86a0",
+      "acp/steer-during-rebuild-configuration": "f04f4b7f3313ba64d821c24ce9ac7e1a080fe516ac4190b1e601c1f4bfec86a0",
+      "acp/steer-idle-reaches-no-agent": "f04f4b7f3313ba64d821c24ce9ac7e1a080fe516ac4190b1e601c1f4bfec86a0",
+      "acp/steer-isolates-running-rooms": "f04f4b7f3313ba64d821c24ce9ac7e1a080fe516ac4190b1e601c1f4bfec86a0",
+      "acp/steer-running-prompt-keeps-its-outcome": "f04f4b7f3313ba64d821c24ce9ac7e1a080fe516ac4190b1e601c1f4bfec86a0",
+      "executors/owners-steer-only-the-turns-they-submitted": "f04f4b7f3313ba64d821c24ce9ac7e1a080fe516ac4190b1e601c1f4bfec86a0",
+      "steering/a-steer-reaches-the-room-it-names-alone": "f04f4b7f3313ba64d821c24ce9ac7e1a080fe516ac4190b1e601c1f4bfec86a0",
+      "streaming/a-message-steered-at-an-answer-a-reader-still-shows-is-too-late": "f04f4b7f3313ba64d821c24ce9ac7e1a080fe516ac4190b1e601c1f4bfec86a0"
+    },
+    "RK-21.3-017": {
+      "delivery/a-cascade-cancel-leaves-another-room-s-running-turn-alone": "ab93799fc5799158cb4dc4f00d0f3f8a6b953920351441c9ef685e3c0270a09a",
+      "delivery/a-delivery-cancelled-before-its-commit-starts-no-turn": "ab93799fc5799158cb4dc4f00d0f3f8a6b953920351441c9ef685e3c0270a09a",
+      "delivery/a-handle-s-cancel-cuts-its-running-turn": "ab93799fc5799158cb4dc4f00d0f3f8a6b953920351441c9ef685e3c0270a09a",
+      "delivery/a-key-cuts-the-running-turn-of-its-delivery": "ab93799fc5799158cb4dc4f00d0f3f8a6b953920351441c9ef685e3c0270a09a"
+    },
+    "RK-21.3-018": {
+      "executors/owners-steer-only-the-turns-they-submitted": "7bbc0952ccbfdbf7a718a0e5911b535e05b6940947d4eff53f4b6751859e64b0"
+    },
+    "RK-21.4-002": {
+      "eviction/a-result-of-parts-keeps-its-images": "a9faf4afcead228dfae1c155d69d1f95d87b0a7136e436c3d704096800f1719e",
+      "orchestration/an-audited-answer-reaches-the-model-unchanged": "a9faf4afcead228dfae1c155d69d1f95d87b0a7136e436c3d704096800f1719e",
+      "tools/a-model-that-does-not-see-reads-a-tool-s-parts-as-text": "a9faf4afcead228dfae1c155d69d1f95d87b0a7136e436c3d704096800f1719e",
+      "tools/a-tool-s-part-shaped-json-reaches-the-model-as-parts": "a9faf4afcead228dfae1c155d69d1f95d87b0a7136e436c3d704096800f1719e",
+      "tools/a-tool-s-parts-reach-the-model-intact": "a9faf4afcead228dfae1c155d69d1f95d87b0a7136e436c3d704096800f1719e"
+    },
+    "RK-21.4-003": {
+      "tools/a-tool-s-part-shaped-json-reaches-the-model-as-parts": "e1c5c4d2dabb22be4421bb5cef98239e9a67161b84e99c3f77f4cdeede99be0f"
+    },
+    "RK-21.4-004": {
+      "orchestration/an-audited-answer-reaches-the-model-unchanged": "f5757ec6e5ccce213ef5fcbe09584769a9b26abcc1b5853485c6961178680863",
+      "tools/a-hook-that-clears-a-served-result-has-the-model-and-the-next-hook-read-null": "f5757ec6e5ccce213ef5fcbe09584769a9b26abcc1b5853485c6961178680863",
+      "tools/a-json-result-keeps-its-members-order": "f5757ec6e5ccce213ef5fcbe09584769a9b26abcc1b5853485c6961178680863",
+      "tools/a-tool-s-part-shaped-json-reaches-the-model-as-parts": "f5757ec6e5ccce213ef5fcbe09584769a9b26abcc1b5853485c6961178680863"
+    },
+    "RK-21.4-005": {
+      "tools/a-hook-that-clears-a-served-result-has-the-model-and-the-next-hook-read-null": "f534b2bf9f2bdb6dfbb56d09b5cfdc11b3efbaf256cee69536f2d6d2ab027e1c",
+      "tools/an-observer-reads-a-replaced-result-as-the-model-reads-it": "f534b2bf9f2bdb6dfbb56d09b5cfdc11b3efbaf256cee69536f2d6d2ab027e1c"
+    },
+    "RK-21.4-008": {
+      "mcp/a-bare-name-no-server-admits-is-served-by-nothing": "389f8e61251b051156249ecfc7cc9f531604585981ac5649a32c69ef5a06a1eb",
+      "mcp/a-bare-name-runs-on-the-first-server-of-the-chain-that-serves-it": "389f8e61251b051156249ecfc7cc9f531604585981ac5649a32c69ef5a06a1eb",
+      "mcp/a-bare-name-runs-only-on-the-server-the-policy-admits": "389f8e61251b051156249ecfc7cc9f531604585981ac5649a32c69ef5a06a1eb",
+      "mcp/a-catalogue-of-aliases-holds-a-policy-that-names-a-server": "389f8e61251b051156249ecfc7cc9f531604585981ac5649a32c69ef5a06a1eb",
+      "mcp/a-forwarding-handler-runs-no-bare-name-the-policy-keeps-off-its-server": "389f8e61251b051156249ecfc7cc9f531604585981ac5649a32c69ef5a06a1eb",
+      "mcp/a-policy-that-names-no-server-leaves-a-bare-name-on-the-first-server": "389f8e61251b051156249ecfc7cc9f531604585981ac5649a32c69ef5a06a1eb",
+      "tool-structured/a-declined-call-whose-hook-raises-reads-as-any-unserved-call": "389f8e61251b051156249ecfc7cc9f531604585981ac5649a32c69ef5a06a1eb",
+      "tool-structured/an-unserved-handler-publishes-no-copy": "389f8e61251b051156249ecfc7cc9f531604585981ac5649a32c69ef5a06a1eb"
+    },
+    "RK-21.4-009": {
+      "mcp/a-bare-name-no-server-admits-is-served-by-nothing": "e504f97a804279149346afab12ad47bfe23bf441b824cb9e96d5c2578329719a",
+      "orchestration/an-audited-call-is-recorded-by-how-it-ended": "e504f97a804279149346afab12ad47bfe23bf441b824cb9e96d5c2578329719a",
+      "tool-structured/a-declined-call-whose-hook-raises-reads-as-any-unserved-call": "e504f97a804279149346afab12ad47bfe23bf441b824cb9e96d5c2578329719a",
+      "tool-structured/an-unserved-handler-publishes-no-copy": "e504f97a804279149346afab12ad47bfe23bf441b824cb9e96d5c2578329719a",
+      "tools/a-tool-the-generation-hook-adds-is-declared-without-tools-of-its-own": "e504f97a804279149346afab12ad47bfe23bf441b824cb9e96d5c2578329719a"
+    },
+    "RK-21.4-012": {
+      "host-declared/owner-context-non-streaming": "f42940deb4e8a8322722e4df10226456aceec33b22f2069614d8300d19fc6a9c",
+      "host-declared/owner-context-streaming": "f42940deb4e8a8322722e4df10226456aceec33b22f2069614d8300d19fc6a9c",
+      "tasks/a-background-tool-keeps-its-turns-name-before-a-post": "f42940deb4e8a8322722e4df10226456aceec33b22f2069614d8300d19fc6a9c",
+      "tasks/a-background-tool-keeps-its-turns-name-before-a-relay": "f42940deb4e8a8322722e4df10226456aceec33b22f2069614d8300d19fc6a9c",
+      "tasks/a-background-worker-keeps-its-turns-task-boundary-after-a-store-patch": "f42940deb4e8a8322722e4df10226456aceec33b22f2069614d8300d19fc6a9c",
+      "tool-structured/a-handler-copy-reaches-the-hook-and-row-non-streaming": "f42940deb4e8a8322722e4df10226456aceec33b22f2069614d8300d19fc6a9c",
+      "tool-structured/a-handler-copy-reaches-the-hook-and-row-streaming": "f42940deb4e8a8322722e4df10226456aceec33b22f2069614d8300d19fc6a9c",
+      "tool-structured/parallel-calls-keep-their-own-structured-copies": "f42940deb4e8a8322722e4df10226456aceec33b22f2069614d8300d19fc6a9c"
+    },
+    "RK-21.4-014": {
+      "executors/a-hook-on-an-executor-fired-by-an-acp-agent-between-prompts-reads-the-last-turn-s-context-and-changes-nothing": "b52b7efdeb5bd080d5a3e4cc7f113ed79955d449208a3c9edf18b3318856de07"
+    },
+    "RK-21.4-016": {
+      "host-declared/owner-context-non-streaming": "ee18c205decd187806221b1dc23f4453ebe573ea28678a634e6125d5ecd78e76",
+      "host-declared/owner-context-streaming": "ee18c205decd187806221b1dc23f4453ebe573ea28678a634e6125d5ecd78e76"
+    },
+    "RK-21.4-017": {
+      "host-declared/owner-context-non-streaming": "81742b7894f7e81afa720793c41ea712417561e4dafbb7682c1a113598c726a3",
+      "host-declared/owner-context-streaming": "81742b7894f7e81afa720793c41ea712417561e4dafbb7682c1a113598c726a3",
+      "tasks/a-background-tool-keeps-its-turns-name-before-a-post": "81742b7894f7e81afa720793c41ea712417561e4dafbb7682c1a113598c726a3",
+      "tasks/a-background-tool-keeps-its-turns-name-before-a-relay": "81742b7894f7e81afa720793c41ea712417561e4dafbb7682c1a113598c726a3",
+      "tasks/a-background-worker-keeps-its-turns-task-boundary-after-a-store-patch": "81742b7894f7e81afa720793c41ea712417561e4dafbb7682c1a113598c726a3"
+    },
+    "RK-21.4-019": {
+      "host-declared/owner-context-non-streaming": "9e41681de566a27bcb2e39484db00c756afbfec2cc601b63ea448163630aca69",
+      "host-declared/owner-context-streaming": "9e41681de566a27bcb2e39484db00c756afbfec2cc601b63ea448163630aca69",
+      "tools/a-participant-is-the-actor-of-the-turn-their-message-opens": "9e41681de566a27bcb2e39484db00c756afbfec2cc601b63ea448163630aca69",
+      "tools/a-sender-with-no-record-is-the-actor-by-the-id-they-wrote-under": "9e41681de566a27bcb2e39484db00c756afbfec2cc601b63ea448163630aca69"
+    },
+    "RK-21.4-020": {
+      "identity/an-instruction-the-host-delivers-is-not-challenged": "0ff7e23df625cda2186b43950e74805fe107eb86805580fe4abd8b4f1e740162",
+      "identity/the-framework-s-own-delivery-is-not-challenged": "0ff7e23df625cda2186b43950e74805fe107eb86805580fe4abd8b4f1e740162",
+      "identity/the-framework-s-own-delivery-is-not-resolved": "0ff7e23df625cda2186b43950e74805fe107eb86805580fe4abd8b4f1e740162",
+      "identity/the-framework-s-own-delivery-is-not-sent-under-a-record-of-its-name": "0ff7e23df625cda2186b43950e74805fe107eb86805580fe4abd8b4f1e740162",
+      "tools/a-message-under-the-framework-s-name-in-a-room-the-host-names-reads-system-as-its-actor": "0ff7e23df625cda2186b43950e74805fe107eb86805580fe4abd8b4f1e740162",
+      "tools/a-turn-the-host-opens-with-deliver-reads-system-as-its-actor": "0ff7e23df625cda2186b43950e74805fe107eb86805580fe4abd8b4f1e740162"
+    },
+    "RK-21.4-021": {
+      "tools/a-participant-s-id-on-a-channel-that-does-not-reach-them-names-no-actor": "2fe46d3a38af437af9b080e4cf8c19cc9bf501fbb2bf75ab71c0d9129fa7267a",
+      "tools/a-turn-another-agent-s-message-opens-reads-no-actor-and-that-agent-as-who-asked": "2fe46d3a38af437af9b080e4cf8c19cc9bf501fbb2bf75ab71c0d9129fa7267a",
+      "tools/a-turn-the-host-opens-with-post-reads-no-actor": "2fe46d3a38af437af9b080e4cf8c19cc9bf501fbb2bf75ab71c0d9129fa7267a",
+      "tools/a-turn-the-host-opens-with-send-event-reads-no-actor": "2fe46d3a38af437af9b080e4cf8c19cc9bf501fbb2bf75ab71c0d9129fa7267a"
+    },
+    "RK-21.4-022": {
+      "host-declared/owner-context-non-streaming": "35225f91a8f2185c82c92f2281158dd3295e020aa65ee2e7fdd85451c9cd09b7",
+      "host-declared/owner-context-streaming": "35225f91a8f2185c82c92f2281158dd3295e020aa65ee2e7fdd85451c9cd09b7",
+      "tool-allowed-names/a-handler-reads-the-resolved-catalogue-and-first-round-reread-non-streaming": "35225f91a8f2185c82c92f2281158dd3295e020aa65ee2e7fdd85451c9cd09b7",
+      "tool-allowed-names/a-handler-reads-the-resolved-catalogue-and-first-round-reread-streaming": "35225f91a8f2185c82c92f2281158dd3295e020aa65ee2e7fdd85451c9cd09b7",
+      "tool-allowed-names/a-shared-channel-reads-each-turns-configured-catalogue-non-streaming": "35225f91a8f2185c82c92f2281158dd3295e020aa65ee2e7fdd85451c9cd09b7",
+      "tool-allowed-names/a-shared-channel-reads-each-turns-configured-catalogue-streaming": "35225f91a8f2185c82c92f2281158dd3295e020aa65ee2e7fdd85451c9cd09b7",
+      "tool-allowed-names/policy-denial-removes-a-name-and-owned-tools-escape-the-allow-list-non-streaming": "35225f91a8f2185c82c92f2281158dd3295e020aa65ee2e7fdd85451c9cd09b7",
+      "tool-allowed-names/policy-denial-removes-a-name-and-owned-tools-escape-the-allow-list-streaming": "35225f91a8f2185c82c92f2281158dd3295e020aa65ee2e7fdd85451c9cd09b7",
+      "tool-allowed-names/round-withdrawals-remove-base-and-declared-extra-tools-non-streaming": "35225f91a8f2185c82c92f2281158dd3295e020aa65ee2e7fdd85451c9cd09b7",
+      "tool-allowed-names/round-withdrawals-remove-base-and-declared-extra-tools-streaming": "35225f91a8f2185c82c92f2281158dd3295e020aa65ee2e7fdd85451c9cd09b7",
+      "tool-allowed-names/skill-hidden-tools-remain-allowed-but-policy-denied-tools-do-not-non-streaming": "35225f91a8f2185c82c92f2281158dd3295e020aa65ee2e7fdd85451c9cd09b7",
+      "tool-allowed-names/skill-hidden-tools-remain-allowed-but-policy-denied-tools-do-not-streaming": "35225f91a8f2185c82c92f2281158dd3295e020aa65ee2e7fdd85451c9cd09b7",
+      "tool-allowed-names/the-generation-hook-refreshes-the-allowed-catalogue-non-streaming": "35225f91a8f2185c82c92f2281158dd3295e020aa65ee2e7fdd85451c9cd09b7",
+      "tool-allowed-names/the-generation-hook-refreshes-the-allowed-catalogue-streaming": "35225f91a8f2185c82c92f2281158dd3295e020aa65ee2e7fdd85451c9cd09b7",
+      "tool-allowed-names/tool-search-hides-definitions-without-narrowing-allowed-names-non-streaming": "35225f91a8f2185c82c92f2281158dd3295e020aa65ee2e7fdd85451c9cd09b7",
+      "tool-allowed-names/tool-search-hides-definitions-without-narrowing-allowed-names-streaming": "35225f91a8f2185c82c92f2281158dd3295e020aa65ee2e7fdd85451c9cd09b7"
+    },
+    "RK-21.4-024": {
+      "host-declared/owner-context-non-streaming": "4fec895f7abe61b8456cb7132d6767248c305c86c355dc131489dcff78d337cc",
+      "host-declared/owner-context-streaming": "4fec895f7abe61b8456cb7132d6767248c305c86c355dc131489dcff78d337cc",
+      "orchestration/a-supervised-team-s-digest-names-who-asked-for-its-task": "4fec895f7abe61b8456cb7132d6767248c305c86c355dc131489dcff78d337cc",
+      "orchestration/a-supervisor-s-team-call-names-who-asked-for-its-task": "4fec895f7abe61b8456cb7132d6767248c305c86c355dc131489dcff78d337cc",
+      "orchestration/an-auto-delegating-supervisor-s-one-pass-names-who-asked": "4fec895f7abe61b8456cb7132d6767248c305c86c355dc131489dcff78d337cc",
+      "steering/another-person-s-message-waits-a-turn-of-its-own": "4fec895f7abe61b8456cb7132d6767248c305c86c355dc131489dcff78d337cc",
+      "tools/a-turn-another-agent-s-message-opens-reads-no-actor-and-that-agent-as-who-asked": "4fec895f7abe61b8456cb7132d6767248c305c86c355dc131489dcff78d337cc",
+      "tools/a-turn-tells-its-tools-who-asked-when-several-people-take-part": "4fec895f7abe61b8456cb7132d6767248c305c86c355dc131489dcff78d337cc"
+    },
+    "RK-21.4-025": {
+      "host-declared/owner-context-non-streaming": "653960cefcb8bbf7fa2d4b7c7878234069e6211ec7a05a18ea1dc3d6b0bc270a",
+      "host-declared/owner-context-streaming": "653960cefcb8bbf7fa2d4b7c7878234069e6211ec7a05a18ea1dc3d6b0bc270a",
+      "tool-structured/a-handler-copy-reaches-the-hook-and-row-non-streaming": "653960cefcb8bbf7fa2d4b7c7878234069e6211ec7a05a18ea1dc3d6b0bc270a",
+      "tool-structured/a-handler-copy-reaches-the-hook-and-row-streaming": "653960cefcb8bbf7fa2d4b7c7878234069e6211ec7a05a18ea1dc3d6b0bc270a",
+      "tool-structured/a-hook-clears-the-handler-copy": "653960cefcb8bbf7fa2d4b7c7878234069e6211ec7a05a18ea1dc3d6b0bc270a",
+      "tool-structured/a-hook-replaces-the-handler-copy": "653960cefcb8bbf7fa2d4b7c7878234069e6211ec7a05a18ea1dc3d6b0bc270a",
+      "tool-structured/a-non-object-hook-copy-is-dropped": "653960cefcb8bbf7fa2d4b7c7878234069e6211ec7a05a18ea1dc3d6b0bc270a",
+      "tool-structured/a-text-only-rewrite-keeps-the-handler-copy": "653960cefcb8bbf7fa2d4b7c7878234069e6211ec7a05a18ea1dc3d6b0bc270a",
+      "tool-structured/an-absent-copy-remains-null": "653960cefcb8bbf7fa2d4b7c7878234069e6211ec7a05a18ea1dc3d6b0bc270a",
+      "tool-structured/an-empty-copy-remains-an-empty-object": "653960cefcb8bbf7fa2d4b7c7878234069e6211ec7a05a18ea1dc3d6b0bc270a",
+      "tool-structured/parallel-calls-keep-their-own-structured-copies": "653960cefcb8bbf7fa2d4b7c7878234069e6211ec7a05a18ea1dc3d6b0bc270a"
+    },
+    "RK-21.4-026": {
+      "host-declared/concurrent-record-contributions-non-streaming": "0faac6714c6968ca1fd86b22dd3d80c81b1429f56a2c4f04980d5865979ba9ec",
+      "host-declared/concurrent-record-contributions-streaming": "0faac6714c6968ca1fd86b22dd3d80c81b1429f56a2c4f04980d5865979ba9ec",
+      "host-declared/concurrent-record-merges-non-streaming": "0faac6714c6968ca1fd86b22dd3d80c81b1429f56a2c4f04980d5865979ba9ec",
+      "host-declared/concurrent-record-merges-streaming": "0faac6714c6968ca1fd86b22dd3d80c81b1429f56a2c4f04980d5865979ba9ec",
+      "host-declared/owner-context-non-streaming": "0faac6714c6968ca1fd86b22dd3d80c81b1429f56a2c4f04980d5865979ba9ec",
+      "host-declared/owner-context-streaming": "0faac6714c6968ca1fd86b22dd3d80c81b1429f56a2c4f04980d5865979ba9ec",
+      "host-declared/record-equal-values-non-streaming": "0faac6714c6968ca1fd86b22dd3d80c81b1429f56a2c4f04980d5865979ba9ec",
+      "host-declared/record-equal-values-streaming": "0faac6714c6968ca1fd86b22dd3d80c81b1429f56a2c4f04980d5865979ba9ec",
+      "host-declared/record-error-permissionerror-non-streaming": "0faac6714c6968ca1fd86b22dd3d80c81b1429f56a2c4f04980d5865979ba9ec",
+      "host-declared/record-error-permissionerror-streaming": "0faac6714c6968ca1fd86b22dd3d80c81b1429f56a2c4f04980d5865979ba9ec",
+      "host-declared/record-error-runtimeerror-non-streaming": "0faac6714c6968ca1fd86b22dd3d80c81b1429f56a2c4f04980d5865979ba9ec",
+      "host-declared/record-error-runtimeerror-streaming": "0faac6714c6968ca1fd86b22dd3d80c81b1429f56a2c4f04980d5865979ba9ec",
+      "host-declared/record-error-valueerror-non-streaming": "0faac6714c6968ca1fd86b22dd3d80c81b1429f56a2c4f04980d5865979ba9ec",
+      "host-declared/record-error-valueerror-streaming": "0faac6714c6968ca1fd86b22dd3d80c81b1429f56a2c4f04980d5865979ba9ec",
+      "host-declared/record-return-non-streaming": "0faac6714c6968ca1fd86b22dd3d80c81b1429f56a2c4f04980d5865979ba9ec",
+      "host-declared/record-return-streaming": "0faac6714c6968ca1fd86b22dd3d80c81b1429f56a2c4f04980d5865979ba9ec"
+    },
+    "RK-21.4-028": {
+      "executors/a-hook-on-an-executor-fired-by-an-acp-agent-between-prompts-reads-the-last-turn-s-context-and-changes-nothing": "bb3875336638b1fa4b479bc848031a140c1f2dfb43ee9f56627a761b08907f6e",
+      "executors/a-turn-apart-calls-the-host-verbs-during-and-after-it": "bb3875336638b1fa4b479bc848031a140c1f2dfb43ee9f56627a761b08907f6e",
+      "host/a-turn-s-host-acts-for-its-room-alone": "bb3875336638b1fa4b479bc848031a140c1f2dfb43ee9f56627a761b08907f6e",
+      "host/a-turn-s-host-delegates-and-waits-for-its-task": "bb3875336638b1fa4b479bc848031a140c1f2dfb43ee9f56627a761b08907f6e",
+      "host/a-turn-s-host-writes-its-room-s-metadata-status-and-observations": "bb3875336638b1fa4b479bc848031a140c1f2dfb43ee9f56627a761b08907f6e",
+      "host/work-a-turn-began-acts-for-its-room-and-organization-after-it": "bb3875336638b1fa4b479bc848031a140c1f2dfb43ee9f56627a761b08907f6e",
+      "host/work-a-turn-began-is-refused-the-verbs-that-need-its-turn": "bb3875336638b1fa4b479bc848031a140c1f2dfb43ee9f56627a761b08907f6e"
+    },
+    "RK-21.4-029": {
+      "host-declared/owner-context-non-streaming": "e6be0d2da5b4f12c014b946c56bd0e2f34deb3a5e1f84d943006e085ab92e930",
+      "host-declared/owner-context-streaming": "e6be0d2da5b4f12c014b946c56bd0e2f34deb3a5e1f84d943006e085ab92e930",
+      "tasks/delegate-task-reaches-its-handler-as-its-gate-left-it-at-its-turn-s-depth": "e6be0d2da5b4f12c014b946c56bd0e2f34deb3a5e1f84d943006e085ab92e930"
+    },
+    "RK-21.4-031": {
+      "tasks/a-delegation-outside-a-turn-opens-a-chain-at-depth-0": "ba9e33b37a1a028dd7881b7df9329df4c8177befaad2e92484a8c45e516ce787",
+      "tasks/delegate-task-reaches-its-handler-as-its-gate-left-it-at-its-turn-s-depth": "ba9e33b37a1a028dd7881b7df9329df4c8177befaad2e92484a8c45e516ce787"
+    },
+    "RK-21.4-032": {
+      "tools/a-participant-is-the-actor-of-the-turn-their-message-opens": "6b6d8cff7a8fe844e568a08493a33c71fa7a700bc5c964466ad29dc48662a010",
+      "tools/a-participant-s-id-on-a-channel-that-does-not-reach-them-names-no-actor": "6b6d8cff7a8fe844e568a08493a33c71fa7a700bc5c964466ad29dc48662a010",
+      "tools/a-sender-with-no-record-is-the-actor-by-the-id-they-wrote-under": "6b6d8cff7a8fe844e568a08493a33c71fa7a700bc5c964466ad29dc48662a010"
+    },
+    "RK-21.4-034": {
+      "tasks/a-background-tool-keeps-its-turns-name-before-a-post": "1702f728ef763256e44ce24dab90530c7b90e19433864acb5bdbc762573191c4",
+      "tasks/a-background-tool-keeps-its-turns-name-before-a-relay": "1702f728ef763256e44ce24dab90530c7b90e19433864acb5bdbc762573191c4",
+      "tasks/a-background-worker-keeps-its-turns-task-boundary-after-a-store-patch": "1702f728ef763256e44ce24dab90530c7b90e19433864acb5bdbc762573191c4"
+    },
+    "RK-21.4-035": {
+      "tasks/a-background-tool-keeps-its-turns-name-before-a-post": "2c8ee0f2a86a6414745e6321b2998b5768b73d9a0181ee3d1d6cda5ad5ee91c3",
+      "tasks/a-background-tool-keeps-its-turns-name-before-a-relay": "2c8ee0f2a86a6414745e6321b2998b5768b73d9a0181ee3d1d6cda5ad5ee91c3",
+      "tasks/a-background-worker-keeps-its-turns-task-boundary-after-a-store-patch": "2c8ee0f2a86a6414745e6321b2998b5768b73d9a0181ee3d1d6cda5ad5ee91c3"
+    },
+    "RK-21.4-041": {
+      "orchestration/an-audited-call-is-recorded-by-how-it-ended": "22fefc1415c3605cf54c7aa8eb609395b952d7ca0ee209c94c3005d7948cca18",
+      "tool-structured/a-refused-handler-publishes-no-copy": "22fefc1415c3605cf54c7aa8eb609395b952d7ca0ee209c94c3005d7948cca18",
+      "tools/a-result-says-whether-its-call-failed": "22fefc1415c3605cf54c7aa8eb609395b952d7ca0ee209c94c3005d7948cca18"
+    },
+    "RK-21.4-042": {
+      "orchestration/an-audited-answer-reaches-the-model-unchanged": "fae4ccf508759f145804895baeed2e711ba4e05686a0791552e43c38210de0f5",
+      "orchestration/an-audited-call-is-recorded-by-how-it-ended": "fae4ccf508759f145804895baeed2e711ba4e05686a0791552e43c38210de0f5"
+    },
+    "RK-21.5-002": {
+      "eviction/a-call-id-reused-in-a-later-turn-is-stored-under-a-new-id": "8f35f6d476b0b8f64e42ab1466dac1965422c7469c3d9580825662e3b76fd74d",
+      "eviction/a-call-under-an-id-its-round-holds-is-refused-unstored": "8f35f6d476b0b8f64e42ab1466dac1965422c7469c3d9580825662e3b76fd74d",
+      "eviction/a-hook-s-refusal-and-its-override-past-the-threshold-are-stored": "8f35f6d476b0b8f64e42ab1466dac1965422c7469c3d9580825662e3b76fd74d",
+      "eviction/a-refusal-and-a-failure-past-the-threshold-are-stored-too": "8f35f6d476b0b8f64e42ab1466dac1965422c7469c3d9580825662e3b76fd74d",
+      "eviction/a-result-of-parts-keeps-its-images": "8f35f6d476b0b8f64e42ab1466dac1965422c7469c3d9580825662e3b76fd74d",
+      "eviction/a-result-past-the-threshold-reaches-the-model-as-a-preview": "8f35f6d476b0b8f64e42ab1466dac1965422c7469c3d9580825662e3b76fd74d",
+      "eviction/a-stored-result-of-parts-read-as-text-is-never-noted-as-a-repeat": "8f35f6d476b0b8f64e42ab1466dac1965422c7469c3d9580825662e3b76fd74d",
+      "eviction/an-evicted-answer-given-a-third-time-is-noted": "8f35f6d476b0b8f64e42ab1466dac1965422c7469c3d9580825662e3b76fd74d",
+      "provider-served/bounded-mixed-round-stream": "8f35f6d476b0b8f64e42ab1466dac1965422c7469c3d9580825662e3b76fd74d",
+      "provider-served/bounded-mixed-round-whole": "8f35f6d476b0b8f64e42ab1466dac1965422c7469c3d9580825662e3b76fd74d"
+    },
+    "RK-21.5-003": {
+      "tools/a-compaction-stores-the-older-rounds-long-results": "0dba8dafe0dbacaf6b6da87a24b4c3eaa2cc3075a51babeba5d725eed9927658"
+    },
+    "RK-21.5-004": {
+      "eviction/a-result-of-parts-keeps-its-images": "44c546b8fcf5d5b1cf6240e9ef5545e2040c216aea90a82d22d199f98693d182",
+      "tools/a-compaction-stores-the-text-of-a-result-of-parts-and-keeps-its-images": "44c546b8fcf5d5b1cf6240e9ef5545e2040c216aea90a82d22d199f98693d182"
+    },
+    "RK-21.5-005": {
+      "eviction/a-stored-result-of-parts-read-as-text-is-never-noted-as-a-repeat": "b7c33533ecbf80a1cf0a1fc099b90cb762f12e01851a00d87f460723f2ea315f",
+      "tools/a-model-that-does-not-see-reads-a-tool-s-parts-as-text": "b7c33533ecbf80a1cf0a1fc099b90cb762f12e01851a00d87f460723f2ea315f"
+    },
+    "RK-21.5-006": {
+      "eviction/a-hook-s-refusal-and-its-override-past-the-threshold-are-stored": "f36458c28388015f9fb4b62d017eb081425b9d09d5e1b17eaba86c240048e255",
+      "eviction/a-result-past-the-threshold-reaches-the-model-as-a-preview": "f36458c28388015f9fb4b62d017eb081425b9d09d5e1b17eaba86c240048e255",
+      "provider-served/bounded-mixed-round-stream": "f36458c28388015f9fb4b62d017eb081425b9d09d5e1b17eaba86c240048e255",
+      "provider-served/bounded-mixed-round-whole": "f36458c28388015f9fb4b62d017eb081425b9d09d5e1b17eaba86c240048e255"
+    },
+    "RK-21.5-008": {
+      "eviction/a-skill-s-instructions-are-never-stored": "fcb731ecdb36ce00471907c04d06bea9aafac59a73fd4d33d6f730e7fb1903d5",
+      "tools/a-compaction-keeps-a-skill-s-instructions-and-a-page-read-back-whole": "fcb731ecdb36ce00471907c04d06bea9aafac59a73fd4d33d6f730e7fb1903d5"
+    },
+    "RK-21.5-009": {
+      "eviction/read-stored-result-searches-a-stored-result": "c53b138f5d60d1f7dd1fc47fd38ecd3a593590dbc448c71661f62092f730f9e6"
+    },
+    "RK-21.5-010": {
+      "eviction/read-stored-result-searches-a-stored-result": "56ab32f0213257ce861e65d49951530771020618b98c2a39bd7f2f42754d5cd0"
+    },
+    "RK-21.5-011": {
+      "eviction/read-stored-result-searches-a-stored-result": "035d01a89d025611276e7a5f635970e3cf7a052632be19ebc80e98e5f1a1709a"
+    },
+    "RK-21.5-013": {
+      "eviction/a-call-id-reused-in-a-later-turn-is-stored-under-a-new-id": "b5e44278ee10d43b5e51c5d3c604a9dc9fa8374ae57144e8467b48dd02e8990c",
+      "eviction/read-stored-result-pages-a-stored-result": "b5e44278ee10d43b5e51c5d3c604a9dc9fa8374ae57144e8467b48dd02e8990c",
+      "eviction/read-stored-result-searches-a-stored-result": "b5e44278ee10d43b5e51c5d3c604a9dc9fa8374ae57144e8467b48dd02e8990c"
+    },
+    "RK-21.5-016": {
+      "eviction/a-call-id-reused-in-a-later-turn-is-stored-under-a-new-id": "be07471d0b9c26347ba542734a6c3f2c7226263fcf5980063914a08bf77b2ea2",
+      "eviction/a-call-under-an-id-its-round-holds-is-refused-unstored": "be07471d0b9c26347ba542734a6c3f2c7226263fcf5980063914a08bf77b2ea2"
+    },
+    "RK-21.5-018": {
+      "tools/a-tool-s-parts-reach-the-model-intact": "3e8bc6a74e9d020060ed8417ad951717ed4b51fa056b1ffd1109a02882a00ca1",
+      "tools/served-call-rows": "3e8bc6a74e9d020060ed8417ad951717ed4b51fa056b1ffd1109a02882a00ca1"
+    },
+    "RK-21.5-019": {
+      "tools/a-tool-s-parts-reach-the-model-intact": "02bf5961fc0c31172e02d964809c6166875470a9edf7ec3741d2469e35237d96"
+    },
+    "RK-21.6-002": {
+      "executors/a-turn-apart-silent-while-its-tool-runs-past-the-heartbeat-timeout-is-kept": "f44e9c9ce98eed4e4e4dd68fd38206036bdbff9c538bd1b94bace62ab479728b",
+      "inputs/a-bound-named-for-a-person-s-tool-still-cuts-its-call": "f44e9c9ce98eed4e4e4dd68fd38206036bdbff9c538bd1b94bace62ab479728b",
+      "orchestration/an-audited-call-is-recorded-by-how-it-ended": "f44e9c9ce98eed4e4e4dd68fd38206036bdbff9c538bd1b94bace62ab479728b",
+      "tools/a-tool-left-unbounded-outlives-the-default": "f44e9c9ce98eed4e4e4dd68fd38206036bdbff9c538bd1b94bace62ab479728b",
+      "tools/a-tool-s-own-bound-cuts-its-call": "f44e9c9ce98eed4e4e4dd68fd38206036bdbff9c538bd1b94bace62ab479728b",
+      "turn-tool-timeouts/absent-name-stream": "f44e9c9ce98eed4e4e4dd68fd38206036bdbff9c538bd1b94bace62ab479728b",
+      "turn-tool-timeouts/absent-name-whole": "f44e9c9ce98eed4e4e4dd68fd38206036bdbff9c538bd1b94bace62ab479728b",
+      "turn-tool-timeouts/bounded-configured-tool-stream": "f44e9c9ce98eed4e4e4dd68fd38206036bdbff9c538bd1b94bace62ab479728b",
+      "turn-tool-timeouts/bounded-configured-tool-whole": "f44e9c9ce98eed4e4e4dd68fd38206036bdbff9c538bd1b94bace62ab479728b",
+      "turn-tool-timeouts/concurrent-turns-stream": "f44e9c9ce98eed4e4e4dd68fd38206036bdbff9c538bd1b94bace62ab479728b",
+      "turn-tool-timeouts/concurrent-turns-whole": "f44e9c9ce98eed4e4e4dd68fd38206036bdbff9c538bd1b94bace62ab479728b",
+      "turn-tool-timeouts/empty-map-stream": "f44e9c9ce98eed4e4e4dd68fd38206036bdbff9c538bd1b94bace62ab479728b",
+      "turn-tool-timeouts/empty-map-whole": "f44e9c9ce98eed4e4e4dd68fd38206036bdbff9c538bd1b94bace62ab479728b",
+      "turn-tool-timeouts/null-map-stream": "f44e9c9ce98eed4e4e4dd68fd38206036bdbff9c538bd1b94bace62ab479728b",
+      "turn-tool-timeouts/null-map-whole": "f44e9c9ce98eed4e4e4dd68fd38206036bdbff9c538bd1b94bace62ab479728b",
+      "turn-tool-timeouts/unbounded-configured-tool-stream": "f44e9c9ce98eed4e4e4dd68fd38206036bdbff9c538bd1b94bace62ab479728b",
+      "turn-tool-timeouts/unbounded-configured-tool-whole": "f44e9c9ce98eed4e4e4dd68fd38206036bdbff9c538bd1b94bace62ab479728b",
+      "turn-tool-timeouts/waiting-tool-stream": "f44e9c9ce98eed4e4e4dd68fd38206036bdbff9c538bd1b94bace62ab479728b",
+      "turn-tool-timeouts/waiting-tool-whole": "f44e9c9ce98eed4e4e4dd68fd38206036bdbff9c538bd1b94bace62ab479728b"
+    },
+    "RK-21.6-005": {
+      "inputs/a-bound-named-for-a-person-s-tool-still-cuts-its-call": "dc6f784033856914bc0029b8d9f6d3f0dfccbc9bfba7814a0eb6ebbc73f0004f",
+      "orchestration/an-audited-call-is-recorded-by-how-it-ended": "dc6f784033856914bc0029b8d9f6d3f0dfccbc9bfba7814a0eb6ebbc73f0004f",
+      "tools/a-tool-left-unbounded-outlives-the-default": "dc6f784033856914bc0029b8d9f6d3f0dfccbc9bfba7814a0eb6ebbc73f0004f",
+      "tools/a-tool-s-own-bound-cuts-its-call": "dc6f784033856914bc0029b8d9f6d3f0dfccbc9bfba7814a0eb6ebbc73f0004f",
+      "turn-tool-timeouts/absent-name-stream": "dc6f784033856914bc0029b8d9f6d3f0dfccbc9bfba7814a0eb6ebbc73f0004f",
+      "turn-tool-timeouts/absent-name-whole": "dc6f784033856914bc0029b8d9f6d3f0dfccbc9bfba7814a0eb6ebbc73f0004f",
+      "turn-tool-timeouts/bounded-configured-tool-stream": "dc6f784033856914bc0029b8d9f6d3f0dfccbc9bfba7814a0eb6ebbc73f0004f",
+      "turn-tool-timeouts/bounded-configured-tool-whole": "dc6f784033856914bc0029b8d9f6d3f0dfccbc9bfba7814a0eb6ebbc73f0004f",
+      "turn-tool-timeouts/empty-map-stream": "dc6f784033856914bc0029b8d9f6d3f0dfccbc9bfba7814a0eb6ebbc73f0004f",
+      "turn-tool-timeouts/empty-map-whole": "dc6f784033856914bc0029b8d9f6d3f0dfccbc9bfba7814a0eb6ebbc73f0004f",
+      "turn-tool-timeouts/null-map-stream": "dc6f784033856914bc0029b8d9f6d3f0dfccbc9bfba7814a0eb6ebbc73f0004f",
+      "turn-tool-timeouts/null-map-whole": "dc6f784033856914bc0029b8d9f6d3f0dfccbc9bfba7814a0eb6ebbc73f0004f",
+      "turn-tool-timeouts/unbounded-configured-tool-stream": "dc6f784033856914bc0029b8d9f6d3f0dfccbc9bfba7814a0eb6ebbc73f0004f",
+      "turn-tool-timeouts/unbounded-configured-tool-whole": "dc6f784033856914bc0029b8d9f6d3f0dfccbc9bfba7814a0eb6ebbc73f0004f"
+    },
+    "RK-21.6-008": {
+      "turn-tool-timeouts/absent-name-stream": "19698e2fff9d3fee9e93d41049d9e483b4f1107e1285db2451b913d8596f9907",
+      "turn-tool-timeouts/absent-name-whole": "19698e2fff9d3fee9e93d41049d9e483b4f1107e1285db2451b913d8596f9907",
+      "turn-tool-timeouts/bounded-configured-tool-stream": "19698e2fff9d3fee9e93d41049d9e483b4f1107e1285db2451b913d8596f9907",
+      "turn-tool-timeouts/bounded-configured-tool-whole": "19698e2fff9d3fee9e93d41049d9e483b4f1107e1285db2451b913d8596f9907",
+      "turn-tool-timeouts/concurrent-turns-stream": "19698e2fff9d3fee9e93d41049d9e483b4f1107e1285db2451b913d8596f9907",
+      "turn-tool-timeouts/concurrent-turns-whole": "19698e2fff9d3fee9e93d41049d9e483b4f1107e1285db2451b913d8596f9907",
+      "turn-tool-timeouts/empty-map-stream": "19698e2fff9d3fee9e93d41049d9e483b4f1107e1285db2451b913d8596f9907",
+      "turn-tool-timeouts/empty-map-whole": "19698e2fff9d3fee9e93d41049d9e483b4f1107e1285db2451b913d8596f9907",
+      "turn-tool-timeouts/null-map-stream": "19698e2fff9d3fee9e93d41049d9e483b4f1107e1285db2451b913d8596f9907",
+      "turn-tool-timeouts/null-map-whole": "19698e2fff9d3fee9e93d41049d9e483b4f1107e1285db2451b913d8596f9907",
+      "turn-tool-timeouts/unbounded-configured-tool-stream": "19698e2fff9d3fee9e93d41049d9e483b4f1107e1285db2451b913d8596f9907",
+      "turn-tool-timeouts/unbounded-configured-tool-whole": "19698e2fff9d3fee9e93d41049d9e483b4f1107e1285db2451b913d8596f9907",
+      "turn-tool-timeouts/waiting-tool-stream": "19698e2fff9d3fee9e93d41049d9e483b4f1107e1285db2451b913d8596f9907",
+      "turn-tool-timeouts/waiting-tool-whole": "19698e2fff9d3fee9e93d41049d9e483b4f1107e1285db2451b913d8596f9907"
+    },
+    "RK-21.6-009": {
+      "turn-tool-timeouts/concurrent-turns-stream": "1e757126a9a76de4f2e20fc06330c71bce1c8a75a4a935d594e1e40060a464dd",
+      "turn-tool-timeouts/concurrent-turns-whole": "1e757126a9a76de4f2e20fc06330c71bce1c8a75a4a935d594e1e40060a464dd"
+    },
+    "RK-21.6-010": {
+      "turn-tool-timeouts/route-before-bound-stream": "8f35b54a483e172948cd50e9b96a7870d6966679370f0b927cfb1e03814a3f17",
+      "turn-tool-timeouts/route-before-bound-whole": "8f35b54a483e172948cd50e9b96a7870d6966679370f0b927cfb1e03814a3f17",
+      "turn-tool-timeouts/zero-refused-stream": "8f35b54a483e172948cd50e9b96a7870d6966679370f0b927cfb1e03814a3f17",
+      "turn-tool-timeouts/zero-refused-whole": "8f35b54a483e172948cd50e9b96a7870d6966679370f0b927cfb1e03814a3f17"
+    },
+    "RK-21.6-011": {
+      "inputs/a-request-no-one-answers-in-time-fails": "03f79905c22660e0814d36621a11fa7afe90c54a2104c2301178720cd232bc5e",
+      "orchestration/a-worker-past-its-task-timeout-is-cut-and-read-as-timed-out": "03f79905c22660e0814d36621a11fa7afe90c54a2104c2301178720cd232bc5e"
+    },
+    "RK-21.6-012": {
+      "inputs/a-bound-named-for-a-person-s-tool-still-cuts-its-call": "d2b001b2c2c4b3b1b0dc616f267d396bb952e3cd9e81f55eeaa0b5adcf106f72",
+      "orchestration/a-delegation-its-call-bound-cuts-posts-the-worker-cancelled": "d2b001b2c2c4b3b1b0dc616f267d396bb952e3cd9e81f55eeaa0b5adcf106f72",
+      "orchestration/a-team-call-its-bound-cuts-posts-each-worker-cancelled": "d2b001b2c2c4b3b1b0dc616f267d396bb952e3cd9e81f55eeaa0b5adcf106f72",
+      "turn-tool-timeouts/waiting-tool-stream": "d2b001b2c2c4b3b1b0dc616f267d396bb952e3cd9e81f55eeaa0b5adcf106f72",
+      "turn-tool-timeouts/waiting-tool-whole": "d2b001b2c2c4b3b1b0dc616f267d396bb952e3cd9e81f55eeaa0b5adcf106f72"
+    },
+    "RK-21.6-014": {
+      "inputs/a-bound-named-for-a-person-s-tool-still-cuts-its-call": "ca854e5c535ae7eb3425425880060294fa76f309957b76cd84131baff752b34e",
+      "orchestration/a-delegation-its-call-bound-cuts-posts-the-worker-cancelled": "ca854e5c535ae7eb3425425880060294fa76f309957b76cd84131baff752b34e",
+      "orchestration/a-team-call-its-bound-cuts-posts-each-worker-cancelled": "ca854e5c535ae7eb3425425880060294fa76f309957b76cd84131baff752b34e",
+      "orchestration/an-audited-call-is-recorded-by-how-it-ended": "ca854e5c535ae7eb3425425880060294fa76f309957b76cd84131baff752b34e",
+      "tools/a-tool-left-unbounded-outlives-the-default": "ca854e5c535ae7eb3425425880060294fa76f309957b76cd84131baff752b34e",
+      "tools/a-tool-s-own-bound-cuts-its-call": "ca854e5c535ae7eb3425425880060294fa76f309957b76cd84131baff752b34e",
+      "turn-tool-timeouts/bounded-configured-tool-stream": "ca854e5c535ae7eb3425425880060294fa76f309957b76cd84131baff752b34e",
+      "turn-tool-timeouts/bounded-configured-tool-whole": "ca854e5c535ae7eb3425425880060294fa76f309957b76cd84131baff752b34e",
+      "turn-tool-timeouts/concurrent-turns-stream": "ca854e5c535ae7eb3425425880060294fa76f309957b76cd84131baff752b34e",
+      "turn-tool-timeouts/concurrent-turns-whole": "ca854e5c535ae7eb3425425880060294fa76f309957b76cd84131baff752b34e",
+      "turn-tool-timeouts/waiting-tool-stream": "ca854e5c535ae7eb3425425880060294fa76f309957b76cd84131baff752b34e",
+      "turn-tool-timeouts/waiting-tool-whole": "ca854e5c535ae7eb3425425880060294fa76f309957b76cd84131baff752b34e"
+    },
+    "RK-21.6-016": {
+      "tools/a-tool-left-unbounded-outlives-the-default": "226f91dcc15645b29dbdc55cfa8e6d0514d05a4dc4eb485c1b71cf1afd6ebf6e",
+      "turn-tool-timeouts/absent-name-stream": "226f91dcc15645b29dbdc55cfa8e6d0514d05a4dc4eb485c1b71cf1afd6ebf6e",
+      "turn-tool-timeouts/absent-name-whole": "226f91dcc15645b29dbdc55cfa8e6d0514d05a4dc4eb485c1b71cf1afd6ebf6e",
+      "turn-tool-timeouts/empty-map-stream": "226f91dcc15645b29dbdc55cfa8e6d0514d05a4dc4eb485c1b71cf1afd6ebf6e",
+      "turn-tool-timeouts/empty-map-whole": "226f91dcc15645b29dbdc55cfa8e6d0514d05a4dc4eb485c1b71cf1afd6ebf6e",
+      "turn-tool-timeouts/null-map-stream": "226f91dcc15645b29dbdc55cfa8e6d0514d05a4dc4eb485c1b71cf1afd6ebf6e",
+      "turn-tool-timeouts/null-map-whole": "226f91dcc15645b29dbdc55cfa8e6d0514d05a4dc4eb485c1b71cf1afd6ebf6e",
+      "turn-tool-timeouts/unbounded-configured-tool-stream": "226f91dcc15645b29dbdc55cfa8e6d0514d05a4dc4eb485c1b71cf1afd6ebf6e",
+      "turn-tool-timeouts/unbounded-configured-tool-whole": "226f91dcc15645b29dbdc55cfa8e6d0514d05a4dc4eb485c1b71cf1afd6ebf6e"
     },
     "RK-22.1-008": {
       "delivery/a-before-broadcast-refusal-is-reported-to-the-caller-and-after-deliver": "5475c133665fbcb561e2cad9503b05340d92a673ccb90148379fd77a389bae09",
