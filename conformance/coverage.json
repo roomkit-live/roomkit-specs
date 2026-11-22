@@ -8329,12 +8329,16 @@
       "section": "19.7",
       "title": "Orchestration Strategies",
       "review": "normative",
-      "requirements": 4,
+      "requirements": 67,
       "mapping": {
         "mapped_partial": 2,
-        "unmapped": 2
+        "unmapped": 65
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "phase6": 6,
+        "step": 1,
+        "writable": 5
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "discussion/a-discussion-installed-on-a-live-room-reads-its-history",
@@ -8407,11 +8411,13 @@
       "section": "19.7.1",
       "title": "Pipeline",
       "review": "normative",
-      "requirements": 1,
+      "requirements": 11,
       "mapping": {
-        "unmapped": 1
+        "unmapped": 11
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "phase6": 4
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "orchestration/a-host-s-words-are-a-person-s-message-to-a-pipeline-s-routing",
@@ -8432,9 +8438,9 @@
       "section": "19.7.2",
       "title": "Swarm",
       "review": "normative",
-      "requirements": 1,
+      "requirements": 2,
       "mapping": {
-        "unmapped": 1
+        "unmapped": 2
       },
       "decided_gaps": {},
       "unannotated_keyword_lines": [],
@@ -8446,11 +8452,16 @@
       "section": "19.7.3",
       "title": "Supervisor",
       "review": "normative",
-      "requirements": 1,
+      "requirements": 55,
       "mapping": {
-        "mapped_partial": 1
+        "mapped_partial": 2,
+        "unmapped": 53
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "phase6": 2,
+        "step": 2,
+        "writable": 4
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "executors/a-supervisor-s-passes-are-turns-of-its-agent-on-the-executor-hosting-it",
@@ -8526,11 +8537,15 @@
       "section": "19.7.4",
       "title": "Loop",
       "review": "normative",
-      "requirements": 1,
+      "requirements": 31,
       "mapping": {
-        "unmapped": 1
+        "unmapped": 31
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "phase6": 12,
+        "step": 1,
+        "writable": 1
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "orchestration/a-loop-leaves-its-producer-the-events-that-are-no-task",
@@ -26871,7 +26886,64 @@
       "links": []
     },
     {
-      "id": "RK-19.7-002",
+      "id": "RK-19.7-005",
+      "section": "19.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7-006",
+      "section": "19.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1929",
+        "note": "Attach one realtime channel to multiple rooms and observe it serving sessions in both."
+      }
+    },
+    {
+      "id": "RK-19.7-007",
+      "section": "19.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7-008",
+      "section": "19.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1929",
+        "note": "Install strategy additions in one room on a shared realtime channel and inspect the declarations in each room's session."
+      }
+    },
+    {
+      "id": "RK-19.7-009",
+      "section": "19.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7-010",
+      "section": "19.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1929",
+        "note": "Inspect tools declared to realtime sessions on both an installed room and a different room using the same channel."
+      }
+    },
+    {
+      "id": "RK-19.7-011",
+      "section": "19.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7-012",
       "section": "19.7",
       "mapping": "mapped_partial",
       "links": [
@@ -26888,13 +26960,211 @@
       ]
     },
     {
-      "id": "RK-19.7-003",
+      "id": "RK-19.7-013",
       "section": "19.7",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-19.7-004",
+      "id": "RK-19.7-014",
+      "section": "19.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1929",
+        "note": "Change the active agent in one of two realtime rooms and inspect each session's configuration."
+      }
+    },
+    {
+      "id": "RK-19.7-015",
+      "section": "19.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7-016",
+      "section": "19.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7-017",
+      "section": "19.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7-018",
+      "section": "19.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7-019",
+      "section": "19.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7-020",
+      "section": "19.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7-021",
+      "section": "19.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7-022",
+      "section": "19.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7-069",
+      "section": "19.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1929",
+        "note": "Observe the same shared agent or realtime channel's voice in two rooms while strategy installs and turns alter the active voice in one room."
+      }
+    },
+    {
+      "id": "RK-19.7-070",
+      "section": "19.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1929",
+        "note": "Read a shared binding's original options before and after strategy install and work in a second room. Tests of selected child transport bindings do not read back the original binding."
+      }
+    },
+    {
+      "id": "RK-19.7-023",
+      "section": "19.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7-024",
+      "section": "19.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7-025",
+      "section": "19.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7-026",
+      "section": "19.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7-027",
+      "section": "19.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1929",
+        "note": "Configure global realtime delegation and check declaration and destination across two rooms."
+      }
+    },
+    {
+      "id": "RK-19.7-028",
+      "section": "19.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7-029",
+      "section": "19.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7-030",
+      "section": "19.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7-031",
+      "section": "19.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7-032",
+      "section": "19.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7-033",
+      "section": "19.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7-034",
+      "section": "19.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7-035",
+      "section": "19.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7-036",
+      "section": "19.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1929",
+        "note": "Set store_fault on the initial list_bindings snapshot, assert the returned error and the retained install claim. The native Python case test_an_uninstall_after_an_install_the_store_cut_short_frees_the_room identifies this boundary."
+      }
+    },
+    {
+      "id": "RK-19.7-037",
+      "section": "19.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1929",
+        "note": "After failing the snapshot with store_fault, explicitly uninstall under a bound and install a replacement."
+      }
+    },
+    {
+      "id": "RK-19.7-038",
+      "section": "19.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7-039",
+      "section": "19.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7-040",
       "section": "19.7",
       "mapping": "mapped_partial",
       "links": [
@@ -26911,19 +27181,341 @@
       ]
     },
     {
-      "id": "RK-19.7.1-001",
+      "id": "RK-19.7-041",
+      "section": "19.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7-042",
+      "section": "19.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7-043",
+      "section": "19.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7-044",
+      "section": "19.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7-045",
+      "section": "19.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7-046",
+      "section": "19.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7-047",
+      "section": "19.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7-048",
+      "section": "19.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7-049",
+      "section": "19.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7-050",
+      "section": "19.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7-051",
+      "section": "19.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7-052",
+      "section": "19.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7-053",
+      "section": "19.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7-054",
+      "section": "19.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1929",
+        "note": "Hold a claimed installation, close the room in another call and check that close returns before the installation resumes."
+      }
+    },
+    {
+      "id": "RK-19.7-055",
+      "section": "19.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1929",
+        "note": "Make strategy cleanup raise on room close and observe its log message and the closed room together; the shared execution surface has no application-log oracle."
+      }
+    },
+    {
+      "id": "RK-19.7-056",
+      "section": "19.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7-057",
+      "section": "19.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1929",
+        "note": "Race a gated strategy claim against closing the room and verify the installer does not land after close."
+      }
+    },
+    {
+      "id": "RK-19.7-058",
+      "section": "19.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7-059",
+      "section": "19.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7-060",
+      "section": "19.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7-061",
+      "section": "19.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7-062",
+      "section": "19.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7-063",
+      "section": "19.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7-064",
+      "section": "19.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7-065",
+      "section": "19.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7-066",
+      "section": "19.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7-067",
+      "section": "19.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7-068",
+      "section": "19.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7.1-002",
       "section": "19.7.1",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-19.7.2-001",
+      "id": "RK-19.7.1-003",
+      "section": "19.7.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7.1-004",
+      "section": "19.7.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7.1-005",
+      "section": "19.7.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7.1-006",
+      "section": "19.7.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7.1-007",
+      "section": "19.7.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7.1-008",
+      "section": "19.7.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7.1-009",
+      "section": "19.7.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1929",
+        "note": "A named physical voice channel exposes the installed pipeline's agent voice map."
+      }
+    },
+    {
+      "id": "RK-19.7.1-010",
+      "section": "19.7.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1929",
+        "note": "Enable the host's greet_on_handoff option and observe the new active agent's greeting on the named voice channel."
+      }
+    },
+    {
+      "id": "RK-19.7.1-011",
+      "section": "19.7.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1929",
+        "note": "Observe the old agent's farewell and the new agent's greeting in order, and verify that a second room's voice hooks are not invoked."
+      }
+    },
+    {
+      "id": "RK-19.7.1-012",
+      "section": "19.7.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1929",
+        "note": "Installing a room-scoped Pipeline with a realtime voice channel is refused."
+      }
+    },
+    {
+      "id": "RK-19.7.2-002",
       "section": "19.7.2",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-19.7.3-001",
+      "id": "RK-19.7.2-003",
+      "section": "19.7.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7.3-002",
+      "section": "19.7.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7.3-003",
+      "section": "19.7.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7.3-004",
+      "section": "19.7.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1929",
+        "note": "Send media, a composite and empty text to a one-pass supervisor and check its channel answers each with no worker. The comparable existing no-task scenario installs Loop."
+      }
+    },
+    {
+      "id": "RK-19.7.3-005",
+      "section": "19.7.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7.3-006",
+      "section": "19.7.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7.3-007",
+      "section": "19.7.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7.3-008",
+      "section": "19.7.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7.3-009",
+      "section": "19.7.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7.3-010",
       "section": "19.7.3",
       "mapping": "mapped_partial",
       "links": [
@@ -26935,7 +27527,130 @@
             "Other supervisor strategies, timeout and cancellation paths, and its internal release callback are outside these shared assertions."
           ],
           "executions": []
-        },
+        }
+      ]
+    },
+    {
+      "id": "RK-19.7.3-011",
+      "section": "19.7.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7.3-012",
+      "section": "19.7.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7.3-013",
+      "section": "19.7.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7.3-014",
+      "section": "19.7.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1929",
+        "note": "Observe the original background exception in the application log independently of the generic instruction and the bus entry."
+      }
+    },
+    {
+      "id": "RK-19.7.3-056",
+      "section": "19.7.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7.3-015",
+      "section": "19.7.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7.3-016",
+      "section": "19.7.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1929",
+        "note": "Call the same background strategy tool from sessions on two voice channels in one room and observe exclusivity across them."
+      }
+    },
+    {
+      "id": "RK-19.7.3-017",
+      "section": "19.7.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1929",
+        "note": "Observe the outcome of a strategy call on the originating session when other voice sessions are available."
+      }
+    },
+    {
+      "id": "RK-19.7.3-018",
+      "section": "19.7.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7.3-019",
+      "section": "19.7.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7.3-020",
+      "section": "19.7.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7.3-021",
+      "section": "19.7.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7.3-022",
+      "section": "19.7.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7.3-023",
+      "section": "19.7.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7.3-024",
+      "section": "19.7.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1929",
+        "note": "Start a gated background team, close the framework, and inspect worker terminal entries before the run's failure, with no hand-back."
+      }
+    },
+    {
+      "id": "RK-19.7.3-025",
+      "section": "19.7.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7.3-026",
+      "section": "19.7.3",
+      "mapping": "mapped_partial",
+      "links": [
         {
           "id": "orchestration-worker-preparation-and-cuts",
           "scope": "Worker and team runs post one terminal cancelled status before or after task announcement; task_id appears after announcement; task and tool deadlines include preparation but these scenarios explicitly reach the worker before expiry.",
@@ -26949,10 +27664,449 @@
       ]
     },
     {
-      "id": "RK-19.7.4-001",
+      "id": "RK-19.7.3-027",
+      "section": "19.7.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7.3-028",
+      "section": "19.7.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7.3-029",
+      "section": "19.7.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7.3-030",
+      "section": "19.7.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1929",
+        "note": "Expose a configuration-only supervisor to the shared sequential team fixture, then inspect the workers' actual inputs and order without a supervisor generation. Python tests/orchestration/test_supervisor_text_background.py::test_a_supervisor_without_a_model_lets_its_chain_run_unsupervised checks worker order natively."
+      }
+    },
+    {
+      "id": "RK-19.7.3-031",
+      "section": "19.7.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7.3-032",
+      "section": "19.7.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1929",
+        "note": "Begin framework shutdown around a gated background run, then dispatch another and observe that it starts no workers."
+      }
+    },
+    {
+      "id": "RK-19.7.3-033",
+      "section": "19.7.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7.3-034",
+      "section": "19.7.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7.3-035",
+      "section": "19.7.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7.3-036",
+      "section": "19.7.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7.3-037",
+      "section": "19.7.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7.3-038",
+      "section": "19.7.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7.3-039",
+      "section": "19.7.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7.3-040",
+      "section": "19.7.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1929",
+        "note": "Gate a formulation turn and inspect a simultaneous ordinary request from a second room on the shared supervisor, checking its prompt and configuration."
+      }
+    },
+    {
+      "id": "RK-19.7.3-041",
+      "section": "19.7.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7.3-042",
+      "section": "19.7.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7.3-043",
+      "section": "19.7.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7.3-044",
+      "section": "19.7.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7.3-045",
+      "section": "19.7.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7.3-046",
+      "section": "19.7.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7.3-047",
+      "section": "19.7.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7.3-048",
+      "section": "19.7.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7.3-049",
+      "section": "19.7.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7.3-050",
+      "section": "19.7.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7.3-051",
+      "section": "19.7.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7.3-052",
+      "section": "19.7.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7.3-053",
+      "section": "19.7.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7.3-054",
+      "section": "19.7.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7.3-055",
+      "section": "19.7.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7.4-002",
       "section": "19.7.4",
       "mapping": "unmapped",
       "links": []
+    },
+    {
+      "id": "RK-19.7.4-003",
+      "section": "19.7.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7.4-004",
+      "section": "19.7.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7.4-005",
+      "section": "19.7.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7.4-006",
+      "section": "19.7.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7.4-007",
+      "section": "19.7.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1929",
+        "note": "Provide a declared reviewer whose turns take no owner tools, script both APPROVED and verdict-shaped text, and inspect its declared tools and unapproved outcome. Python tests/test_declared_strategies.py::test_a_reviewer_whose_turns_take_no_owner_tools_approves_nothing and Rust crates/roomkit/tests/review_loop.rs::a_reviewer_whose_turns_take_no_owner_tools_approves_nothing test that outcome natively."
+      }
+    },
+    {
+      "id": "RK-19.7.4-008",
+      "section": "19.7.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7.4-009",
+      "section": "19.7.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7.4-010",
+      "section": "19.7.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7.4-011",
+      "section": "19.7.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7.4-012",
+      "section": "19.7.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7.4-013",
+      "section": "19.7.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7.4-014",
+      "section": "19.7.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7.4-015",
+      "section": "19.7.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7.4-016",
+      "section": "19.7.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7.4-017",
+      "section": "19.7.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7.4-018",
+      "section": "19.7.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1929",
+        "note": "Dispatch delegate_loop from a realtime voice session and observe its private instruction addressed to that voice channel."
+      }
+    },
+    {
+      "id": "RK-19.7.4-019",
+      "section": "19.7.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1929",
+        "note": "Inspect the 4,000-character default and worker framing in an asynchronous realtime voice Loop hand-back."
+      }
+    },
+    {
+      "id": "RK-19.7.4-020",
+      "section": "19.7.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1929",
+        "note": "Check that the asynchronous voice Loop outcome is excluded from participant messages."
+      }
+    },
+    {
+      "id": "RK-19.7.4-021",
+      "section": "19.7.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1929",
+        "note": "Listen for how the asynchronous voice hand-back describes a producer cutoff and verify it excludes the underlying task error."
+      }
+    },
+    {
+      "id": "RK-19.7.4-022",
+      "section": "19.7.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1929",
+        "note": "Make the realtime voice Loop raise, then inspect its generic reasoning fallback and exclusion of the original message."
+      }
+    },
+    {
+      "id": "RK-19.7.4-023",
+      "section": "19.7.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1929",
+        "note": "Observe the original exception in the application's logs for a voice-triggered asynchronous Loop."
+      }
+    },
+    {
+      "id": "RK-19.7.4-030",
+      "section": "19.7.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1929",
+        "note": "Observe the original exception in the status bus for an asynchronous voice Loop failure."
+      }
+    },
+    {
+      "id": "RK-19.7.4-024",
+      "section": "19.7.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1929",
+        "note": "Call the asynchronous Loop from multiple voice channels sharing a room and check one run is admitted."
+      }
+    },
+    {
+      "id": "RK-19.7.4-031",
+      "section": "19.7.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1929",
+        "note": "Verify that an asynchronous Loop returns its instruction to the originating realtime voice session."
+      }
+    },
+    {
+      "id": "RK-19.7.4-025",
+      "section": "19.7.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1929",
+        "note": "Dispatch another Loop from the voice session's hand-back and check that the previous run freed the room first."
+      }
+    },
+    {
+      "id": "RK-19.7.4-026",
+      "section": "19.7.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1929",
+        "note": "Inspect the terminal status of a voice-triggered Loop stopped by its producer task."
+      }
+    },
+    {
+      "id": "RK-19.7.4-027",
+      "section": "19.7.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1929",
+        "note": "Hold a Loop producer and its reviewer independently past a run bound, release them and verify that no strategy per-task timeout cut either delegation."
+      }
+    },
+    {
+      "id": "RK-19.7.4-032",
+      "section": "19.7.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7.4-028",
+      "section": "19.7.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7.4-029",
+      "section": "19.7.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1929",
+        "note": "Close the framework with a voice-triggered asynchronous Loop active and inspect its cancellation, cleanup and absence of hand-back."
+      }
     },
     {
       "id": "RK-19.7.5-001",

@@ -43,7 +43,7 @@ proof: a scenario can cite a unit without covering all of it.
 | [§16 Integration Surfaces](section-16.md) | 14 | 0 | 0 | 0 | 14 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | [§17 Security Considerations](section-17.md) | 15 | 0 | 0 | 0 | 15 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | [§18 Design Principles](section-18.md) | 1 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| [§19 Multi-Agent Orchestration](section-19.md) | 212 | 194 | 2 | 3 | 13 | 151 | 533 | 0 | 45 | 8 | 10 | 27 |
+| [§19 Multi-Agent Orchestration](section-19.md) | 370 | 359 | 3 | 3 | 5 | 279 | 1177 | 0 | 83 | 18 | 14 | 51 |
 | [§20 Memory System](section-20.md) | 63 | 62 | 0 | 1 | 0 | 48 | 234 | 0 | 12 | 10 | 2 | 0 |
 | [§21 Tool Access Control](section-21.md) | 214 | 199 | 13 | 2 | 0 | 127 | 880 | 0 | 71 | 18 | 30 | 30 |
 | [§22 Delivery Strategies](section-22.md) | 144 | 130 | 6 | 7 | 1 | 72 | 268 | 0 | 55 | 12 | 5 | 40 |
