@@ -312,6 +312,7 @@
     },
     "RK-10.1-035": {
       "identity/a-challenge-is-delivered-and-the-message-held": "591f35a2705417e9ff3a3836cd2b7c9b5f389c22b5b6fa75c7bab7ae67e63387",
+      "identity/a-resolver-s-pending-asks-the-ambiguous-identity-hooks": "591f35a2705417e9ff3a3836cd2b7c9b5f389c22b5b6fa75c7bab7ae67e63387",
       "identity/an-ambiguous-sender-no-hook-names-is-pending": "591f35a2705417e9ff3a3836cd2b7c9b5f389c22b5b6fa75c7bab7ae67e63387",
       "identity/an-ambiguous-sender-s-hook-names-it": "591f35a2705417e9ff3a3836cd2b7c9b5f389c22b5b6fa75c7bab7ae67e63387",
       "identity/identity-hooks-run-in-order-on-the-events-they-filter": "591f35a2705417e9ff3a3836cd2b7c9b5f389c22b5b6fa75c7bab7ae67e63387",
@@ -327,12 +328,9 @@
       "identity/identity-hooks-run-in-order-on-the-events-they-filter": "6c56ff33ff12dae2a8231c08d59ea9dc2d3ac7f602175b3b09e2d3ef2f7f9add"
     },
     "RK-10.1-037": {
-      "identity/a-challenge-is-delivered-and-the-message-held": "0bd757fdd8f8b4460bbebdf3785b9a010b915d90072688addc5f2bbc7a4a2ce7",
-      "identity/a-challenge-runs-the-before-broadcast-hooks": "0bd757fdd8f8b4460bbebdf3785b9a010b915d90072688addc5f2bbc7a4a2ce7",
       "identity/a-resolver-that-challenged-holds-the-message": "0bd757fdd8f8b4460bbebdf3785b9a010b915d90072688addc5f2bbc7a4a2ce7",
       "locks/a-challenged-message-carries-its-attach-s-failed-release": "0bd757fdd8f8b4460bbebdf3785b9a010b915d90072688addc5f2bbc7a4a2ce7",
-      "locks/an-adopted-call-held-for-its-sender-carries-its-attach-s-failed-release": "0bd757fdd8f8b4460bbebdf3785b9a010b915d90072688addc5f2bbc7a4a2ce7",
-      "locks/an-adopted-message-held-for-its-sender-carries-its-challenge-s-failed-release": "0bd757fdd8f8b4460bbebdf3785b9a010b915d90072688addc5f2bbc7a4a2ce7"
+      "locks/an-adopted-call-held-for-its-sender-carries-its-attach-s-failed-release": "0bd757fdd8f8b4460bbebdf3785b9a010b915d90072688addc5f2bbc7a4a2ce7"
     },
     "RK-10.1-038": {
       "identity/a-member-the-host-left-pending-keeps-their-record": "ef30b30bc5ca33316bc7fd70ca60e659f4a4ad648a364d2a047aa11b058e1cda",
@@ -3497,11 +3495,14 @@
     },
     "RK-11.2-006": {
       "identity/a-pending-sender-cannot-take-an-identity-s-record": "1e0c6aa2108ab2e0c840e2bf73f55d380ddc73ff6dab2199f905fb0e7a1a33d4",
+      "identity/a-resolver-s-pending-asks-the-ambiguous-identity-hooks": "1e0c6aa2108ab2e0c840e2bf73f55d380ddc73ff6dab2199f905fb0e7a1a33d4",
       "identity/an-ambiguous-sender-no-hook-names-is-pending": "1e0c6aa2108ab2e0c840e2bf73f55d380ddc73ff6dab2199f905fb0e7a1a33d4"
     },
     "RK-11.2-007": {
       "identity/a-challenge-is-delivered-and-the-message-held": "9aef1ad9f2143b7038f0c6b702357a5abece06cc2debe3f45a6c34adb6145401",
-      "identity/a-challenge-runs-the-before-broadcast-hooks": "9aef1ad9f2143b7038f0c6b702357a5abece06cc2debe3f45a6c34adb6145401"
+      "identity/a-challenge-runs-the-before-broadcast-hooks": "9aef1ad9f2143b7038f0c6b702357a5abece06cc2debe3f45a6c34adb6145401",
+      "identity/a-resolver-s-pending-asks-the-ambiguous-identity-hooks": "9aef1ad9f2143b7038f0c6b702357a5abece06cc2debe3f45a6c34adb6145401",
+      "locks/an-adopted-message-held-for-its-sender-carries-its-challenge-s-failed-release": "9aef1ad9f2143b7038f0c6b702357a5abece06cc2debe3f45a6c34adb6145401"
     },
     "RK-11.2-008": {
       "identity/a-rejection-blocks-the-message": "79744d7372b8739c5105e0980de03f6f70af3046e836224a945bbad297d4d0cf"
@@ -3578,7 +3579,8 @@
     "RK-11.3-004": {
       "identity/a-challenge-is-delivered-and-the-message-held": "8b3f80fba3d583ed2c63959c34820567ef2ccc0dd99f88fe4ca4be13b59b2692",
       "identity/a-challenge-runs-the-before-broadcast-hooks": "8b3f80fba3d583ed2c63959c34820567ef2ccc0dd99f88fe4ca4be13b59b2692",
-      "identity/a-rejection-blocks-the-message": "8b3f80fba3d583ed2c63959c34820567ef2ccc0dd99f88fe4ca4be13b59b2692"
+      "identity/a-rejection-blocks-the-message": "8b3f80fba3d583ed2c63959c34820567ef2ccc0dd99f88fe4ca4be13b59b2692",
+      "locks/an-adopted-message-held-for-its-sender-carries-its-challenge-s-failed-release": "8b3f80fba3d583ed2c63959c34820567ef2ccc0dd99f88fe4ca4be13b59b2692"
     },
     "RK-11.4-001": {
       "identity/the-resolver-runs-for-the-configured-channel-types": "33c0cb33efc250f527a357b432042033fc7e77e1b038a5c9540502ce4b3cc282"
