@@ -11886,8 +11886,8 @@
         {
           "scenario": "delivery/a-status-reaches-its-tenant-s-room-only",
           "pointer": "/expect",
-          "sha256": "357a350b97263dce3a7a35877ac961377424a8fabef1ee8a12565e7b1ccb17a7",
-          "scenario_sha256": "c9c598ed286abd46be5decf0e511c4b9b028976e361703febc0161ba5729b3d3",
+          "sha256": "daf6434c0d50a7c1870ef4c11e003ec3bc13fb9128b3db0db2170dcdfef8647c",
+          "scenario_sha256": "46a299275bcf1ab4ccef1bb3ec9f090de23b18c79e3237b1b9d73037f4fe19f2",
           "proves": "A delivery status acting for an organization is routed among that organization's rooms only, and a status naming another organization's room is dispatched nowhere. Only named fields are compared. Empty deliveries, timelines and framework-event lists are negative assertions."
         },
         {
@@ -18059,112 +18059,112 @@
           "scenario": "channel-call/a-concurrent-call-restores-empty-state-on-failure",
           "pointer": "/expect/rooms",
           "sha256": "d772545d15a5eb98057aa8430092f9f7fefbeb96928a04ff9626f987bf590067",
-          "scenario_sha256": "a9d59d123b014f32f810b0163ba2c404b9734d781d2df82b5d3d2b483e1502b6",
+          "scenario_sha256": "65c498125f3c622d863b3dacd082e8b72a097305ee40759f81aa31850be76c9c",
           "proves": "After the intervening setter was stored, the restoring verb replaces its state or removes the key, including when it raises."
         },
         {
           "scenario": "channel-call/a-concurrent-call-restores-empty-state-on-failure",
           "pointer": "/steps/3/expect",
-          "sha256": "c4bf336363ed2c10cc0b95fdc3dad2ae914bb50461d64cecc78ff7540c7c5e12",
-          "scenario_sha256": "a9d59d123b014f32f810b0163ba2c404b9734d781d2df82b5d3d2b483e1502b6",
+          "sha256": "3afa11c346dd5c9da459d55c334acfdf69c851e53afe126fd6a74ab6ca1d51f1",
+          "scenario_sha256": "65c498125f3c622d863b3dacd082e8b72a097305ee40759f81aa31850be76c9c",
           "proves": "The intervening setter value is already stored before the restoring verb is released."
         },
         {
           "scenario": "channel-call/a-concurrent-call-restores-empty-state-on-failure",
           "pointer": "/steps/5/expect",
           "sha256": "ac5efe2465db07225b759158b8dc884c0a553d72b8feeaf4425ab8545e741c42",
-          "scenario_sha256": "a9d59d123b014f32f810b0163ba2c404b9734d781d2df82b5d3d2b483e1502b6",
+          "scenario_sha256": "65c498125f3c622d863b3dacd082e8b72a097305ee40759f81aa31850be76c9c",
           "proves": "The restoring verb reports channel_failed after its gate is released."
         },
         {
           "scenario": "channel-call/a-concurrent-call-restores-empty-state-on-failure",
           "pointer": "/steps/6/expect",
           "sha256": "1c9d64ce7719748bf26cd81580ea58245e2a130baf32cd5fc92e08602626c26c",
-          "scenario_sha256": "a9d59d123b014f32f810b0163ba2c404b9734d781d2df82b5d3d2b483e1502b6",
+          "scenario_sha256": "65c498125f3c622d863b3dacd082e8b72a097305ee40759f81aa31850be76c9c",
           "proves": "A subsequent channel read succeeds with an object result. Only the final room assertion proves that the stored state key is absent."
         },
         {
           "scenario": "channel-call/a-concurrent-call-restores-empty-state-on-success",
           "pointer": "/expect/rooms",
           "sha256": "d772545d15a5eb98057aa8430092f9f7fefbeb96928a04ff9626f987bf590067",
-          "scenario_sha256": "91d854c07644ae335feb0a8b9e7346c4b35c8c11403b92e8ef5deec39bca1b23",
+          "scenario_sha256": "1af821992f8d601afb18ab5e8b71490753aa266068643613a02558f44785ef9d",
           "proves": "After the intervening setter was stored, the restoring verb replaces its state or removes the key, including when it raises."
         },
         {
           "scenario": "channel-call/a-concurrent-call-restores-empty-state-on-success",
           "pointer": "/steps/3/expect",
-          "sha256": "c4bf336363ed2c10cc0b95fdc3dad2ae914bb50461d64cecc78ff7540c7c5e12",
-          "scenario_sha256": "91d854c07644ae335feb0a8b9e7346c4b35c8c11403b92e8ef5deec39bca1b23",
+          "sha256": "3afa11c346dd5c9da459d55c334acfdf69c851e53afe126fd6a74ab6ca1d51f1",
+          "scenario_sha256": "1af821992f8d601afb18ab5e8b71490753aa266068643613a02558f44785ef9d",
           "proves": "The intervening setter value is already stored before the restoring verb is released."
         },
         {
           "scenario": "channel-call/a-concurrent-call-restores-empty-state-on-success",
           "pointer": "/steps/5/expect",
           "sha256": "1c9d64ce7719748bf26cd81580ea58245e2a130baf32cd5fc92e08602626c26c",
-          "scenario_sha256": "91d854c07644ae335feb0a8b9e7346c4b35c8c11403b92e8ef5deec39bca1b23",
+          "scenario_sha256": "1af821992f8d601afb18ab5e8b71490753aa266068643613a02558f44785ef9d",
           "proves": "The restoring verb succeeds with an object result; this partial match does not establish that the object is empty."
         },
         {
           "scenario": "channel-call/a-concurrent-call-restores-empty-state-on-success",
           "pointer": "/steps/6/expect",
           "sha256": "1c9d64ce7719748bf26cd81580ea58245e2a130baf32cd5fc92e08602626c26c",
-          "scenario_sha256": "91d854c07644ae335feb0a8b9e7346c4b35c8c11403b92e8ef5deec39bca1b23",
+          "scenario_sha256": "1af821992f8d601afb18ab5e8b71490753aa266068643613a02558f44785ef9d",
           "proves": "A subsequent channel read succeeds with an object result. Only the final room assertion proves that the stored state key is absent."
         },
         {
           "scenario": "channel-call/a-concurrent-call-restores-initial-state-on-failure",
           "pointer": "/expect/rooms",
-          "sha256": "44086c1c55d301675cdf3824301229528c488ccc40a214f085f284bb842b1633",
-          "scenario_sha256": "9bc200d226309118808ec8263e709eb0d5c41d59b2ff33e9f0cd1b776954243b",
+          "sha256": "581ce1e3d231cc98d326abe00b99245109b2224426588d24b0b65b4d60f545b8",
+          "scenario_sha256": "30c8ae6a39893aacaaf7936722f85174df5bb08b45cd22803b0409bc0b707c2a",
           "proves": "After the intervening setter was stored, the restoring verb replaces its state or removes the key, including when it raises."
         },
         {
           "scenario": "channel-call/a-concurrent-call-restores-initial-state-on-failure",
           "pointer": "/steps/4/expect",
-          "sha256": "c4bf336363ed2c10cc0b95fdc3dad2ae914bb50461d64cecc78ff7540c7c5e12",
-          "scenario_sha256": "9bc200d226309118808ec8263e709eb0d5c41d59b2ff33e9f0cd1b776954243b",
+          "sha256": "3afa11c346dd5c9da459d55c334acfdf69c851e53afe126fd6a74ab6ca1d51f1",
+          "scenario_sha256": "30c8ae6a39893aacaaf7936722f85174df5bb08b45cd22803b0409bc0b707c2a",
           "proves": "The intervening setter value is already stored before the restoring verb is released."
         },
         {
           "scenario": "channel-call/a-concurrent-call-restores-initial-state-on-failure",
           "pointer": "/steps/6/expect",
           "sha256": "ac5efe2465db07225b759158b8dc884c0a553d72b8feeaf4425ab8545e741c42",
-          "scenario_sha256": "9bc200d226309118808ec8263e709eb0d5c41d59b2ff33e9f0cd1b776954243b",
+          "scenario_sha256": "30c8ae6a39893aacaaf7936722f85174df5bb08b45cd22803b0409bc0b707c2a",
           "proves": "The restoring verb reports channel_failed after its gate is released."
         },
         {
           "scenario": "channel-call/a-concurrent-call-restores-initial-state-on-failure",
           "pointer": "/steps/7/expect",
-          "sha256": "0b53e636b1610bfa893f8b22a500c4b98086628d0a42646d68e6c145a7e41cf2",
-          "scenario_sha256": "9bc200d226309118808ec8263e709eb0d5c41d59b2ff33e9f0cd1b776954243b",
+          "sha256": "25b0de8d43cc42e461247dc7bdcf5f385a5e633efff357cec4a7f984f6d9edc4",
+          "scenario_sha256": "30c8ae6a39893aacaaf7936722f85174df5bb08b45cd22803b0409bc0b707c2a",
           "proves": "A subsequent channel read returns the initial model value."
         },
         {
           "scenario": "channel-call/a-concurrent-call-restores-initial-state-on-success",
           "pointer": "/expect/rooms",
-          "sha256": "44086c1c55d301675cdf3824301229528c488ccc40a214f085f284bb842b1633",
-          "scenario_sha256": "8eeeb954e34aa7d9532c8c258d83ef81d9664610bd9671b9f38050b1df8e4ab9",
+          "sha256": "581ce1e3d231cc98d326abe00b99245109b2224426588d24b0b65b4d60f545b8",
+          "scenario_sha256": "a5203913d67c10eec7072d79c89960810027c8859d549f67066553645ebf2470",
           "proves": "After the intervening setter was stored, the restoring verb replaces its state or removes the key, including when it raises."
         },
         {
           "scenario": "channel-call/a-concurrent-call-restores-initial-state-on-success",
           "pointer": "/steps/4/expect",
-          "sha256": "c4bf336363ed2c10cc0b95fdc3dad2ae914bb50461d64cecc78ff7540c7c5e12",
-          "scenario_sha256": "8eeeb954e34aa7d9532c8c258d83ef81d9664610bd9671b9f38050b1df8e4ab9",
+          "sha256": "3afa11c346dd5c9da459d55c334acfdf69c851e53afe126fd6a74ab6ca1d51f1",
+          "scenario_sha256": "a5203913d67c10eec7072d79c89960810027c8859d549f67066553645ebf2470",
           "proves": "The intervening setter value is already stored before the restoring verb is released."
         },
         {
           "scenario": "channel-call/a-concurrent-call-restores-initial-state-on-success",
           "pointer": "/steps/6/expect",
-          "sha256": "0b53e636b1610bfa893f8b22a500c4b98086628d0a42646d68e6c145a7e41cf2",
-          "scenario_sha256": "8eeeb954e34aa7d9532c8c258d83ef81d9664610bd9671b9f38050b1df8e4ab9",
+          "sha256": "25b0de8d43cc42e461247dc7bdcf5f385a5e633efff357cec4a7f984f6d9edc4",
+          "scenario_sha256": "a5203913d67c10eec7072d79c89960810027c8859d549f67066553645ebf2470",
           "proves": "The restoring verb succeeds and returns the initial model value."
         },
         {
           "scenario": "channel-call/a-concurrent-call-restores-initial-state-on-success",
           "pointer": "/steps/7/expect",
-          "sha256": "0b53e636b1610bfa893f8b22a500c4b98086628d0a42646d68e6c145a7e41cf2",
-          "scenario_sha256": "8eeeb954e34aa7d9532c8c258d83ef81d9664610bd9671b9f38050b1df8e4ab9",
+          "sha256": "25b0de8d43cc42e461247dc7bdcf5f385a5e633efff357cec4a7f984f6d9edc4",
+          "scenario_sha256": "a5203913d67c10eec7072d79c89960810027c8859d549f67066553645ebf2470",
           "proves": "A subsequent channel read returns the initial model value."
         }
       ],
@@ -24376,14 +24376,14 @@
           "scenario": "role-policy/deferred-definitions-omit-denied-tools-non-streaming",
           "pointer": "/expect",
           "sha256": "4f0848824a6b34aec9d2f82e24529496835dabc9f2027d06fd203d897e980f76",
-          "scenario_sha256": "c5bb769c76de029fb04cfb9c722a3499d1bbb86ecdbebfe0b8c2988c49cc057b",
+          "scenario_sha256": "f20b2deecbd93c5ac9ecf2ee184d3050ef858a6995517a66503bfc46b87a9656",
           "proves": "The provider receives no deferred definition for a role-denied tool."
         },
         {
           "scenario": "role-policy/deferred-definitions-omit-denied-tools-streaming",
           "pointer": "/expect",
           "sha256": "4f0848824a6b34aec9d2f82e24529496835dabc9f2027d06fd203d897e980f76",
-          "scenario_sha256": "09060c1af46d182028e3460db58377943fe538a60de9c577cced50d9d86e36dd",
+          "scenario_sha256": "9d9977fed0a7a5494427ef0b165ea5c3d3c7fbf4b88071afcfea162c4ed758d3",
           "proves": "The provider receives no deferred definition for a role-denied tool."
         },
         {
@@ -25290,21 +25290,21 @@
           "scenario": "provider-served/mixed-reasoning-order",
           "pointer": "/expect/models",
           "sha256": "0ff0734a51f83d43b1cd00e470d7ab620fa57331d85cbf9478c5a2504f01c123",
-          "scenario_sha256": "961d39b2605e9d1b1c317a9cfaa00579b5f2a5184a79f4991c74630520a53bde",
+          "scenario_sha256": "2e1e1716b361871164239fdac651c3f68a7e3148b43e96c59f3503649e1f1b60",
           "proves": "Checks only the fields and matchers written under models in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
         },
         {
           "scenario": "provider-served/mixed-reasoning-order",
           "pointer": "/expect/hooks",
           "sha256": "0eced9c9c1dce772fb22f9d8152790b617b3b394d4faae5d1373fa1b696b258f",
-          "scenario_sha256": "961d39b2605e9d1b1c317a9cfaa00579b5f2a5184a79f4991c74630520a53bde",
+          "scenario_sha256": "2e1e1716b361871164239fdac651c3f68a7e3148b43e96c59f3503649e1f1b60",
           "proves": "Checks only the fields and matchers written under hooks in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
         },
         {
           "scenario": "provider-served/mixed-reasoning-order",
           "pointer": "/expect/timeline",
           "sha256": "97e6133c7bcd5be7b716df359387fea3efed91e2749186671974f8db5c239082",
-          "scenario_sha256": "961d39b2605e9d1b1c317a9cfaa00579b5f2a5184a79f4991c74630520a53bde",
+          "scenario_sha256": "2e1e1716b361871164239fdac651c3f68a7e3148b43e96c59f3503649e1f1b60",
           "proves": "Checks only the fields and matchers written under timeline in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
         },
         {

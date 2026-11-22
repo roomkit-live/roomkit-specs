@@ -519,3 +519,31 @@ class SchemaTests(unittest.TestCase):
                 hook = scenario["setup"]["executors"][0]["hooks"][0]
                 hook["reactions"][1]["do"][0]["call"] = call
                 self.assertEqual(validator.is_valid(scenario), valid)
+
+    def test_a_chat_dialect_states_the_core_s_options_and_names_no_vendor(self) -> None:
+        validator = Draft202012Validator(json.loads((ROOT / "scenario.schema.json").read_text()))
+        fixture = ROOT / "scenarios/reasoning/a-named-thinking-field-carries-a-round-s-reasoning.json"
+        for dialect, valid in (
+            ({}, True),
+            ({"thinking_field": "reasoning_content"}, True),
+            (
+                {
+                    "thinking_field": "reasoning",
+                    "names_tool_results": True,
+                    "flattens_text": True,
+                    "round_thinking_required": True,
+                    "round_thinking_placeholder": " ",
+                },
+                True,
+            ),
+            ("openai", False),
+            ({"thinking_field": ""}, False),
+            ({"thinking_field": None}, False),
+            ({"names_tool_results": "yes"}, False),
+            ({"round_thinking_placeholder": 1}, False),
+            ({"vendor": "deepseek"}, False),
+        ):
+            with self.subTest(dialect=dialect):
+                scenario = json.loads(fixture.read_text())
+                scenario["setup"]["channels"][1]["model"]["chat_dialect"] = dialect
+                self.assertEqual(validator.is_valid(scenario), valid)

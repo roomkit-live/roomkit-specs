@@ -618,11 +618,18 @@ scripted.
   model's catalogue price (§6.7, a provider's `catalog_entry().pricing`,
   Python's `ModelPricing` fields), none when absent; a `fallback_model`
   takes one too.
-  `model.chat_dialect`: the implementation's Chat Completions rendering, `openai`,
-  `openai_thinking_field` (OpenAI's, told by its configuration that the server reads
-  `reasoning_content`), `deepseek`, `minimax`, `kimi`, or `anthropic` (native Messages, without cache markers), each request is also written through, whatever the rounds
-  answer (`models`, `chat_messages`); a dialect the implementation does not have
-  fails the scenario; a `fallback_model` takes one too.
+  `model.chat_dialect`: the options of the core's chat rendering (§6.4, its
+  `ChatDialect`), each request also written through the core's `chat_messages`
+  under them, whatever the rounds answer (`models`, `chat_messages`): an object
+  of `thinking_field` (the assistant field a replayed round's reasoning goes
+  in, none when absent), `names_tool_results` (each tool message names its
+  tool), `flattens_text` (a message of text parts goes as one string, and an
+  empty message is not sent), `round_thinking_required` (every round that
+  called tools carries the field, even one that did not reason) and
+  `round_thinking_placeholder` (what that field holds for a round that did
+  not reason, empty when absent), each flag false when absent, and `{}` the
+  default rendering, which sends no reasoning back; options the core's
+  `ChatDialect` refuses fail the scenario; a `fallback_model` takes one too.
   `model.deferred_tools`: whether this provider holds unseen definitions and accepts
   tool references (false by default); a fallback model takes it too.
   `model.name` and `model.provider`: the names a turn's record gives as

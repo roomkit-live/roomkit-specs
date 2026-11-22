@@ -7403,15 +7403,27 @@
           }
         },
         "chat_dialect": {
-          "description": "The implementation's Chat Completions rendering each of the model's requests is also written through, kept as `chat_messages` under `models` (\u00a76.4, what a provider renders of a replayed round's reasoning): `openai`, a generic server's, `openai_thinking_field`, a generic server's told by its configuration that it reads `reasoning_content`, or `deepseek`, `minimax` or `kimi`, that vendor's. Not rendered when absent. The model still answers from its rounds. `anthropic` renders native Messages content blocks, without cache markers.",
-          "enum": [
-            "openai",
-            "openai_thinking_field",
-            "deepseek",
-            "minimax",
-            "kimi",
-            "anthropic"
-          ]
+          "description": "The options of the core's chat rendering (\u00a76.4, its ChatDialect) each of the model's requests is also written through by the core's chat_messages, kept as `chat_messages` under `models`: thinking_field, the assistant field a replayed round's reasoning goes in, none when absent; names_tool_results, each tool message names its tool; flattens_text, a message of text parts goes as one string and an empty message is not sent; round_thinking_required, every round that called tools carries the field, even one that did not reason; round_thinking_placeholder, what that field holds for a round that did not reason, empty when absent. Each flag is false when absent, and {} is the default rendering, which sends no reasoning back. Options the core's ChatDialect refuses fail the scenario. Not rendered when absent. The model still answers from its rounds.",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "thinking_field": {
+              "type": "string",
+              "minLength": 1
+            },
+            "names_tool_results": {
+              "type": "boolean"
+            },
+            "flattens_text": {
+              "type": "boolean"
+            },
+            "round_thinking_required": {
+              "type": "boolean"
+            },
+            "round_thinking_placeholder": {
+              "type": "string"
+            }
+          }
         },
         "vision": {
           "description": "Whether the model sees images (\u00a76.4, a provider's supports_vision): false by default.",

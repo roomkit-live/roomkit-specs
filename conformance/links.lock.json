@@ -12903,14 +12903,12 @@
       "reasoning/a-fallback-s-blocks-go-back": "f977ea5ac1a7cd6e4be434cd1ce32b324eee1f45761fdf1f24567076dc19d852",
       "reasoning/a-round-replays-its-blocks-where-they-came": "f977ea5ac1a7cd6e4be434cd1ce32b324eee1f45761fdf1f24567076dc19d852",
       "reasoning/a-steered-answer-keeps-its-blocks-in-place": "f977ea5ac1a7cd6e4be434cd1ce32b324eee1f45761fdf1f24567076dc19d852",
-      "reasoning/signed-blocks-and-tool-results-replay-in-order": "f977ea5ac1a7cd6e4be434cd1ce32b324eee1f45761fdf1f24567076dc19d852",
       "reasoning/text-between-blocks-stays-where-it-came": "f977ea5ac1a7cd6e4be434cd1ce32b324eee1f45761fdf1f24567076dc19d852",
       "reasoning/the-cap-on-a-round-s-calls-keeps-what-came-past-them": "f977ea5ac1a7cd6e4be434cd1ce32b324eee1f45761fdf1f24567076dc19d852",
       "reasoning/the-rounds-keep-their-place-past-a-nudge-and-a-hook": "f977ea5ac1a7cd6e4be434cd1ce32b324eee1f45761fdf1f24567076dc19d852"
     },
     "RK-6.4-073": {
-      "reasoning/a-block-cut-before-its-signature-is-not-replayed": "b51553809b03cc57fae78248b756c4d0013d6312fccd3592fbbf12ea0bb5304b",
-      "reasoning/a-block-without-a-signature-is-not-replayed": "b51553809b03cc57fae78248b756c4d0013d6312fccd3592fbbf12ea0bb5304b"
+      "reasoning/a-block-cut-before-its-signature-is-not-replayed": "b51553809b03cc57fae78248b756c4d0013d6312fccd3592fbbf12ea0bb5304b"
     },
     "RK-6.4-075": {
       "reasoning/a-signature-joins-the-one-block-it-came-with": "c5a8181ff61a7f7011f0768f6883f5a35385bc451f1cc54f551519b7a12658b0",
@@ -12922,14 +12920,16 @@
       "reasoning/a-response-read-whole-replays-its-blocks-first": "8067f33b71c2eedb9b9e8319e8b82138b5adcc677806347b80fd5a55a65ac7dd"
     },
     "RK-6.4-077": {
-      "reasoning/signed-blocks-and-tool-results-replay-in-order": "f36d47cbfa111bcbaaa5674d0362d21e175ba122de3aa5a7537dd0f4bd65a4a0"
+      "reasoning/a-named-thinking-field-carries-a-round-s-reasoning": "f36d47cbfa111bcbaaa5674d0362d21e175ba122de3aa5a7537dd0f4bd65a4a0",
+      "reasoning/a-required-reasoning-field-carries-a-placeholder-where-empty-reads-as-missing": "f36d47cbfa111bcbaaa5674d0362d21e175ba122de3aa5a7537dd0f4bd65a4a0",
+      "reasoning/a-required-reasoning-field-goes-empty-on-a-round-without-reasoning": "f36d47cbfa111bcbaaa5674d0362d21e175ba122de3aa5a7537dd0f4bd65a4a0"
     },
     "RK-6.4-078": {
-      "reasoning/deepseek-s-dialect-sends-a-round-s-reasoning-in-its-field": "b7c69a850e7be3bfbfef0e1da26996a45af4704eaaef3b0b4eba8eaea4c783bb",
-      "reasoning/kimi-s-dialect-sends-a-round-s-reasoning-in-its-field": "b7c69a850e7be3bfbfef0e1da26996a45af4704eaaef3b0b4eba8eaea4c783bb"
+      "reasoning/a-required-reasoning-field-carries-a-placeholder-where-empty-reads-as-missing": "b7c69a850e7be3bfbfef0e1da26996a45af4704eaaef3b0b4eba8eaea4c783bb",
+      "reasoning/a-required-reasoning-field-goes-empty-on-a-round-without-reasoning": "b7c69a850e7be3bfbfef0e1da26996a45af4704eaaef3b0b4eba8eaea4c783bb"
     },
     "RK-6.4-079": {
-      "reasoning/minimax-s-dialect-sends-a-round-s-reasoning-in-its-field": "cdff2d8f3caa9ea64f58daa71f3e7a3c12d354fdb408444e4585451f51d95b85"
+      "reasoning/a-named-thinking-field-carries-a-round-s-reasoning": "cdff2d8f3caa9ea64f58daa71f3e7a3c12d354fdb408444e4585451f51d95b85"
     },
     "RK-6.4-080": {
       "reasoning/a-named-thinking-field-carries-a-round-s-reasoning": "b4c68019fd7605d52b1a9a181a968715be8267bc7651f4ef7339f3c7a5bc640c"
@@ -15508,8 +15508,7 @@
       "reasoning/a-response-read-whole-keeps-its-signature-and-its-call-s-metadata": "5a6b46904a560df00ed38dfd0ee5a10c32ddc312aa14801a6520dcbd5e9926de",
       "reasoning/a-response-read-whole-replays-its-blocks-first": "5a6b46904a560df00ed38dfd0ee5a10c32ddc312aa14801a6520dcbd5e9926de",
       "reasoning/a-round-replays-its-blocks-where-they-came": "5a6b46904a560df00ed38dfd0ee5a10c32ddc312aa14801a6520dcbd5e9926de",
-      "reasoning/a-signature-joins-the-one-block-it-came-with": "5a6b46904a560df00ed38dfd0ee5a10c32ddc312aa14801a6520dcbd5e9926de",
-      "reasoning/signed-blocks-and-tool-results-replay-in-order": "5a6b46904a560df00ed38dfd0ee5a10c32ddc312aa14801a6520dcbd5e9926de"
+      "reasoning/a-signature-joins-the-one-block-it-came-with": "5a6b46904a560df00ed38dfd0ee5a10c32ddc312aa14801a6520dcbd5e9926de"
     },
     "RK-6.7-028": {
       "inbound/a-turn-takes-its-binding-s-temperature-and-max-tokens": "0590191bd8d5ae081b45533fd263f6e7227d095f1059320ed7552a89e2239c8e"
