@@ -14926,6 +14926,17 @@
       "turn-tool-timeouts/waiting-tool-whole": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986",
       "turn-tool-timeouts/zero-refused-whole": "ab335ad268d5567859d212d1a0b210ce7730df871880e291c747d3d009ca7986"
     },
+    "RK-6.7-112": {
+      "response-schema/a-model-that-takes-no-schema-fails-the-turn-before-any-request": "33bf6cf0051769844351283f2380dcb0ef40fcd55d2728c03bc43f6edcce12e5",
+      "response-schema/tools-beside-a-schema-fail-where-the-model-cannot-take-both": "33bf6cf0051769844351283f2380dcb0ef40fcd55d2728c03bc43f6edcce12e5",
+      "tasks/the-repeat-guard-holds-on-delegate-task-without-streaming": "33bf6cf0051769844351283f2380dcb0ef40fcd55d2728c03bc43f6edcce12e5",
+      "tool-search/past-its-share-of-the-window-the-catalogue-goes-behind-find-tools": "33bf6cf0051769844351283f2380dcb0ef40fcd55d2728c03bc43f6edcce12e5"
+    },
+    "RK-6.7-113": {
+      "tool-search/a-held-tool-called-without-search-references-itself": "a8e0a96d24760486845c1d4e820931f0426c2542e9f5c0ba898bac6c075b46f4",
+      "tool-search/a-held-tool-with-invalid-arguments-references-its-schema": "a8e0a96d24760486845c1d4e820931f0426c2542e9f5c0ba898bac6c075b46f4",
+      "tool-search/a-revealed-tool-is-referenced-without-changing-the-declaration": "a8e0a96d24760486845c1d4e820931f0426c2542e9f5c0ba898bac6c075b46f4"
+    },
     "RK-6.7-114": {
       "response-schema/a-binding-s-schema-outside-the-portable-subset-fails-the-turn": "d4bf096e07f2624c134537b724011dce5fbdfb80127570fe7c06468180ae60ce"
     },

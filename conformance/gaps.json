@@ -3498,11 +3498,6 @@
       "card": "RMK-1955",
       "note": "Needs a scripted model that streams text only (generate_stream), in both runners."
     },
-    "RK-6.7-113": {
-      "class": "writable",
-      "card": "RMK-1955",
-      "note": "model.chat_dialect records the requests in the vendor's format: a tool result's structured_content and outcome are not in them."
-    },
     "RK-6.8-003": {
       "class": "step",
       "card": "RMK-1955",
