@@ -346,17 +346,17 @@
     "RK-6.4-212": {
       "class": "step",
       "card": "RMK-1911",
-      "note": "Needs a stored cut record: an internal event from a channel bound as voice, written through the store calls; roomkit-rs reads no cut record yet."
+      "note": "Needs a stored cut record and the speak_turns snapshot to carry the turn's cut, in both runners."
     },
     "RK-6.4-213": {
       "class": "step",
       "card": "RMK-1911",
-      "note": "Needs a stored cut record: an internal event from a channel bound as voice, written through the store calls; roomkit-rs reads no cut record yet."
+      "note": "Needs a classifier fixture (scripted classifier answers behind the provided speak policy) and a stored cut record."
     },
     "RK-6.4-214": {
       "class": "step",
       "card": "RMK-1911",
-      "note": "Needs a stored cut record: an internal event from a channel bound as voice, written through the store calls; roomkit-rs reads no cut record yet."
+      "note": "Needs a classifier fixture (scripted classifier answers behind the provided speak policy) and a stored cut record."
     },
     "RK-6.4-215": {
       "class": "phase6",
