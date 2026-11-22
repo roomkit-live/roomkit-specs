@@ -1017,27 +1017,27 @@
     },
     {
       "section": "14.1",
-      "sha256": "a2f908cd076526f1b95503dfad196514541a960bc4e7224d646fa2389fdba51d",
+      "sha256": "ce38949c5abc9af9af2117a0f3f9016769e3f6a9337f4954824632319e2fadaa",
       "classification": "normative",
-      "review": "Source inventory: Conversation Store. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage. Reviewed binding-order amendment RK-14.1-005 against shared streaming-recipient scenarios, native store mutation, reopen and migration tests, and the matching Python/Rust implementation. Existing section content is unchanged."
+      "review": "Source inventory: Conversation Store, split to one obligation per unit (RMK-1969). The interface block is cut between its entries (54 bare fence lines added, no word changed): the pluggable backend with the interface's head; a unit per operation whose comment or defaults state a rule, bare neighbouring signatures grouped (get_event with list_events, add_binding with get_binding, the identity operations, the verification and request operations, the task and observation reads); each group header goes with its first entry; the private-state key comment and the two finders' shared comment are units of their own. Reading a timeline, a timeline read serving what the room received, a count and binding order are split to a unit per sentence, the sentences with no obligation folded into the unit they explain; the upgrade of historical binding order is a may. Every unit carries its level."
     },
     {
       "section": "14.2",
-      "sha256": "20c07ab86d92761a21b6a66bdeeea1e76449ef2dd9e5b67f7b4e7509abf9d0d8",
+      "sha256": "ee27476382bd2a9a05c1ed9842cc724e9d36d989047b879865911a41ee86e17c",
       "classification": "normative",
-      "review": "Source inventory: Required Implementations. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Required Implementations, split to one obligation per unit (RMK-1969): the in-memory store (must) with the table's head, and the persistent store (should), the second unit opening in its row's first cell. Every unit carries its level."
     },
     {
       "section": "14.3",
-      "sha256": "5f847ae60780930e2de15cbbc854ee5801ea8bd38d398d422de390b1670b6e0a",
+      "sha256": "9a93f80a0243a5fb6d083fb9d7958a7d4794a170fc98a5cdd5b97dc714a4af0a",
       "classification": "normative",
-      "review": "Source inventory: Consistency Requirements. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Consistency Requirements, split to one obligation per unit (RMK-1969): a unit per sentence of each item, the sentences giving a reason folded into the unit they explain; the persistence policy's semantics are must where an implementation offers one, the sentence permitting it; the sentence that leaves an event under a held id outside the duplicate-key rule goes with the key a hard delete frees. Every unit carries its level."
     },
     {
       "section": "14.4",
-      "sha256": "d30b9e512c3065cbc957045711656a75c5b2adc364ca05192cbbb87bad1ef146",
+      "sha256": "fab50d0bde4bc456243a2d7395738ea80dae8a9570c3d223b7837356f54d84be",
       "classification": "normative",
-      "review": "Source inventory: Returned-Object Ownership. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Returned-Object Ownership, split to one obligation per unit (RMK-1969): the write interface as the only way a committed event changes; the caller's duty to treat a returned record as frozen, a RoomContext's included (non_testable); a store's choice to share or copy its reads (may); copy-in from the moment a write returns; private state caller-owned, with the closing note on stores that share their reads. Every unit carries its level."
     },
     {
       "section": "15",

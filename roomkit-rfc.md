@@ -18199,34 +18199,70 @@ a state applies to **delivery**, not to the committed timeline event.
 
 ### 14.1 Conversation Store
 
-<!-- rfc: {"id": "RK-14.1-001", "kind": "behavior", "applies": "§14.1 Conversation Store; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-14.1-006", "kind": "structural", "applies": "§14.1 ConversationStore interface: a pluggable storage backend implementing the ConversationStore interface, whose operations the units that follow give, grouped as rooms, events, bindings, participants, identity, verification, read markers, tasks and observations. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Implementations MUST provide a pluggable storage backend via the following
 interface:
 
 ```
 ConversationStore (interface)
 │
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-14.1-007", "kind": "behavior", "applies": "§14.1 ConversationStore interface: create_room(room) returns the room as the framework built it, its id the one §10.1 step 2 holds or a fresh one, and refuses an id the store holds (§14.3). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── Rooms
 │   ├── create_room(room) → Room
 │   │                                         # the room as the framework built
 │   │                                         # it, its id §10.1 step 2's or a
 │   │                                         # fresh one; refuses an id the
 │   │                                         # store holds (§14.3)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-14.1-008", "kind": "structural", "applies": "§14.1 ConversationStore interface: get_room(room_id), the room or null. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── get_room(room_id) → Room | null
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-14.1-009", "kind": "behavior", "applies": "§14.1 ConversationStore interface: room_exists(room_id), get_room's answer as a boolean, the room unread. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── room_exists(room_id) → bool        # get_room's answer, the room unread
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-14.1-010", "kind": "behavior", "applies": "§14.1 ConversationStore interface: update_room(room) writes the whole record, under the room lock, and keeps the counters and the delivered index the store holds (§14.3). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── update_room(room) → Room              # the whole record, under the
 │   │                                         # room lock; keeps the counters
 │   │                                         # and the delivered index the
 │   │                                         # store holds (§14.3)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-14.1-011", "kind": "behavior", "applies": "§14.1 ConversationStore interface: patch_room_metadata(room_id, patch, unset) merges patch into the metadata, unset's keys removed first, writes nothing else of the room, and returns null for an unknown room. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── patch_room_metadata(room_id, patch, unset = []) → Room | null
 │   │                                         # merges patch into the metadata,
 │   │                                         # unset's keys removed first, and
 │   │                                         # writes nothing else of the room;
 │   │                                         # null for an unknown room
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-14.1-012", "kind": "structural", "applies": "§14.1 ConversationStore interface: delete_room(room_id), which returns nothing as written. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── delete_room(room_id) → void
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-14.1-013", "kind": "structural", "applies": "§14.1 ConversationStore interface: list_rooms(offset, limit), offset 0 and limit 50 by default. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── list_rooms(offset = 0, limit = 50) → list<Room>
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-14.1-014", "kind": "structural", "applies": "§14.1 ConversationStore interface: find_rooms(organization_id, status, metadata_filter, limit, offset), limit 100 and offset 0 by default. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── find_rooms(organization_id | null, status | null, metadata_filter | null,
 │   │              limit = 100, offset = 0) → list<Room>
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-14.1-015", "kind": "behavior", "applies": "§14.1 ConversationStore interface: find_latest_room(participant_id, channel_type, status), the newest room holding the participant's record on any channel, or a binding naming them of channel_type when given: the last created, the greatest id by code point breaking a tie. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── find_latest_room(participant_id, channel_type | null, status | null)
 │   │                         → Room | null
 │   │                                         # the newest room holding the
@@ -18236,11 +18272,19 @@ ConversationStore (interface)
 │   │                                         # given: the last created, the
 │   │                                         # greatest id by code point
 │   │                                         # breaking a tie
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-14.1-016", "kind": "behavior", "applies": "§14.1 ConversationStore interface: find_room_id_by_channel(channel_id, status), the oldest room binding the channel, as find_room_ids_by_channel orders rooms. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── find_room_id_by_channel(channel_id, status | null) → string | null
 │   │                                         # the oldest room binding the
 │   │                                         # channel, as
 │   │                                         # find_room_ids_by_channel
 │   │                                         # orders rooms
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-14.1-017", "kind": "behavior", "applies": "§14.1 ConversationStore interface: update_room_if(room, status, paused_at, last_activity_at), update_room only while the stored room holds the status, pause and last activity the write was computed from (the compare-and-set a timer transition writes, §5.1), null and nothing written otherwise. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── update_room_if(room, status, paused_at, last_activity_at) → Room | null
 │   │                                         # update_room, only while the
 │   │                                         # stored room holds the status,
@@ -18249,36 +18293,72 @@ ConversationStore (interface)
 │   │                                         # compare-and-set a timer
 │   │                                         # transition writes (§5.1); null
 │   │                                         # and nothing written otherwise
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-14.1-018", "kind": "behavior", "applies": "§14.1 ConversationStore interface: load_room_context(room_id), the room, its bindings and its participants read together, the three reads a room's context takes (§10.1 step 3). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── load_room_context(room_id) → (Room | null, list<ChannelBinding>,
 │   │                                 list<Participant>)
 │   │                                         # the three reads a room's context
 │   │                                         # takes (§10.1 step 3), together
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-14.1-019", "kind": "behavior", "applies": "§14.1 ConversationStore interface: get_conversation(room_id, limit, after_index), limit 50 by default, the conversation a context holds (§7.5 rule 8). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── get_conversation(room_id, limit = 50, after_index | null) → list<RoomEvent>
 │   │                                         # the conversation a context holds
 │   │                                         # (§7.5 rule 8)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-14.1-020", "kind": "behavior", "applies": "§14.1 ConversationStore interface: get_timeline(room_id, event_filter, limit, after_index, newest_first), limit 50 and newest_first false by default, list_events of every type the room received. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── get_timeline(room_id, event_filter | null, limit = 50, after_index | null,
 │   │                newest_first = false) → list<RoomEvent>
 │   │                                         # list_events of every type the
 │   │                                         # room received
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-14.1-021", "kind": "behavior", "applies": "§14.1 ConversationStore interface: get_delivered_index(room_id), -1 before any delivery set ran (§13.5). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── get_delivered_index(room_id) → int    # -1 before any set ran (§13.5)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-14.1-022", "kind": "behavior", "applies": "§14.1 ConversationStore interface: advance_delivered_index(room_id, index, force), a compare-and-set from index - 1, or from any lower value when forced. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── advance_delivered_index(room_id, index, force = false) → bool
 │   │                                         # compare-and-set from index - 1, or
 │   │                                         # from any lower value when forced
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-14.1-023", "kind": "behavior", "applies": "§14.1 ConversationStore interface: get_private_state(room_id, key), a key the implementation keeps for itself apart from the room's metadata, returned as the caller's copy (§14.4). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── get_private_state(room_id, key) → map | null
 │   │                                         # a key the implementation keeps for
 │   │                                         # itself, apart from the room's
 │   │                                         # metadata; the caller's copy (§14.4)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-14.1-024", "kind": "behavior", "applies": "§14.1 ConversationStore interface: set_private_state(room_id, key, value), under the room lock: nothing for an unknown room, null removes the key, the metadata's copy under the key removed, the state deleted with the room. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── set_private_state(room_id, key, value | null) → void
 │   │                                         # under the room lock; nothing for an
 │   │                                         # unknown room; null removes the key;
 │   │                                         # removes the metadata's copy under the
 │   │                                         # key; deleted with the room
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-14.1-025", "kind": "behavior", "applies": "§14.1 ConversationStore interface: a private-state key is the implementation's and reserves the same key in the room's metadata: a store that keeps no private state keeps it there, set removes the copy there, and only the runtime writes the key there (§5.1). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   │   # A key is the implementation's (the register of authors is
 │   │   # author_register, §10.1 step 12; a discussion's task results to
 │   │   # post are _speak_queue_results, §19.7.5 rule 16) and reserves the
 │   │   # same key in the room's metadata: a store that keeps no private
 │   │   # state keeps it there, and set removes the copy there. Only the
 │   │   # runtime writes the key there (§5.1).
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-14.1-026", "kind": "behavior", "applies": "§14.1 ConversationStore interface: find_room_id_by_binding(channel_id, participant_id, identity_id, filter, recipient_key), the newest room whose binding of channel_id names participant_id or identity_id, or, naming no correspondent and not group, holds participant_id under the channel's recipient_key (§5.7). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── find_room_id_by_binding(channel_id, participant_id, identity_id, filter,
 │   │                           recipient_key) → string | null
 │   │                                         # newest room whose binding of
@@ -18290,18 +18370,30 @@ ConversationStore (interface)
 │   │                                         # recipient_key is null on a
 │   │                                         # channel with no recipient key
 │   │                                         # (§5.7)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-14.1-027", "kind": "behavior", "applies": "§14.1 ConversationStore interface: find_room_id_by_participant(channel_id, participant_id, identity_id, filter), the newest room holding a participant whose id or identity_id is participant_id or identity_id, reached through channel_id. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   └── find_room_id_by_participant(channel_id, participant_id, identity_id, filter)
 │                                 → string | null
 │                                             # newest room holding a participant
 │                                             # whose id or identity_id is
 │                                             # participant_id or identity_id,
 │                                             # reached through channel_id
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-14.1-028", "kind": "behavior", "applies": "§14.1 ConversationStore interface: the two room finders serve §10.4 step 1: identity_id is the identity the caller resolved for the sender in the call's organization, null when none; filter names the statuses and the organization; the newest room is ordered as step 1 orders rooms. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │       # Both serve §10.4 step 1: identity_id is the identity the caller
 │       # resolved for the sender (resolve_identity, in the call's
 │       # organization), null when none; filter names the statuses (ACTIVE
 │       # and PAUSED for step 1) and the organization; the newest room is
 │       # ordered as step 1 orders rooms, whichever name found it
 │
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-14.1-029", "kind": "behavior", "applies": "§14.1 ConversationStore interface: commit_event(room_id, event, target, activity) is the commit (§10.1 step 12): the index, the event and the room's counters in one transaction, the room's activity too unless activity is false (§5.1), a DELIVERED edit or delete's target written in it (§14.3); it refuses an event whose source channel and idempotency key an event of the room carries, as a duplicate key (§14.3). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── Events
 │   ├── commit_event(room_id, event, target | null, activity = true) → RoomEvent
 │   │                                         # the commit (§10.1 step 12): its
@@ -18315,16 +18407,32 @@ ConversationStore (interface)
 │   │                                         # idempotency key an event of the
 │   │                                         # room carries, as a duplicate key
 │   │                                         # (§14.3)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-14.1-030", "kind": "behavior", "applies": "§14.1 ConversationStore interface: add_event(event) stores the event as it is, at the caller's index, the counters unmoved and the room's next index kept past it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── add_event(event) → RoomEvent         # the event as it is, its index
 │   │                                         # the caller's; the counters
 │   │                                         # unmoved, the room's next
 │   │                                         # index kept past it
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-14.1-031", "kind": "behavior", "applies": "§14.1 ConversationStore interface: add_event_auto_index(room_id, event) stores the event at the room's next index, never one given out before, the counters unmoved. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── add_event_auto_index(room_id, event) → RoomEvent
 │   │                                         # at the room's next index, never
 │   │                                         # one given out before; the
 │   │                                         # counters unmoved
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-14.1-032", "kind": "structural", "applies": "§14.1 ConversationStore interface: get_event(event_id), the event or null, and list_events(room_id, filters), whose pages the rules of reading a timeline give. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── get_event(event_id) → RoomEvent | null
 │   ├── list_events(room_id, filters) → list<RoomEvent>
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-14.1-033", "kind": "behavior", "applies": "§14.1 ConversationStore interface: get_thread_summaries(room_id, root_event_ids), per root with replies a ThreadSummary of their count and the latest one's created_at, a reply the room refused not counted. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── get_thread_summaries(room_id, root_event_ids) → map<string, ThreadSummary>
 │   │                                         # per root with replies, a
 │   │                                         # ThreadSummary {root_event_id,
@@ -18332,15 +18440,31 @@ ConversationStore (interface)
 │   │                                         # their count and the latest
 │   │                                         # one's created_at, a reply the
 │   │                                         # room refused not counted
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-14.1-034", "kind": "structural", "applies": "§14.1 ConversationStore interface: get_event_count(room_id, filter), whose count the rule of a count gives. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── get_event_count(room_id, filter | null) → int
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-14.1-035", "kind": "behavior", "applies": "§14.1 ConversationStore interface: update_event(event) writes the whole record and keeps the stored delivery_results (§14.3). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── update_event(event) → RoomEvent      # the whole record; keeps the
 │   │                                         # stored delivery_results (§14.3)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-14.1-036", "kind": "behavior", "applies": "§14.1 ConversationStore interface: record_delivery_results(room_id, event_id, results) replaces the event's delivery_results with results and writes nothing else of it; an event_id that is not an event of room_id is left alone. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── record_delivery_results(room_id, event_id, results) → void
 │   │                                         # replaces the event's
 │   │                                         # delivery_results with results,
 │   │                                         # and writes nothing else of it;
 │   │                                         # an event_id that is not an
 │   │                                         # event of room_id is left alone
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-14.1-037", "kind": "behavior", "applies": "§14.1 ConversationStore interface: write_change_target(room_id, target) writes a change's target alone, its delivery_results kept, the counters unmoved, its edits marked deleted with it (§10.3); a target the room lacks is not found and nothing is written. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── write_change_target(room_id, target) → void
 │   │                                         # a change's target written alone,
 │   │                                         # its delivery_results kept, the
@@ -18348,6 +18472,10 @@ ConversationStore (interface)
 │   │                                         # marked deleted with it (§10.3);
 │   │                                         # a target the room lacks is not
 │   │                                         # found, nothing written
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-14.1-038", "kind": "behavior", "applies": "§14.1 ConversationStore interface: delete_event(room_id, event_id, cascade_replies) returns the ids removed in §10.3's order (the target, its replies by index, the changes by index); a store MAY return the removed events instead, in that order, the framework's call returning their ids. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── delete_event(room_id, event_id, cascade_replies = true) → list<string>
 │   │                                         # the ids removed, in §10.3's order
 │   │                                         # (the target, its replies by
@@ -18356,53 +18484,117 @@ ConversationStore (interface)
 │   │                                         # events in their place, in that
 │   │                                         # order, the framework's call
 │   │                                         # returning their ids
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-14.1-039", "kind": "behavior", "applies": "§14.1 ConversationStore interface: get_event_by_idempotency_key(room_id, key, channel_id), the event of channel_id that key committed, BLOCKED included (§13.4); with a null channel, any channel of the room, for a proactive delivery's key (§22.1). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── get_event_by_idempotency_key(room_id, key, channel_id | null) → RoomEvent | null
 │   │                                         # the event of channel_id that key
 │   │                                         # committed, BLOCKED included (§13.4);
 │   │                                         # null: any channel of the room, for a
 │   │                                         # proactive delivery's key (§22.1)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-14.1-040", "kind": "behavior", "applies": "§14.1 ConversationStore interface: check_idempotency(room_id, key, channel_id), whether that event exists. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   └── check_idempotency(room_id, key, channel_id | null) → bool
 │                                             # whether that event exists
 │
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-14.1-041", "kind": "structural", "applies": "§14.1 ConversationStore interface: the binding operations add_binding(binding) and get_binding(room_id, channel_id), the binding or null. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── Bindings
 │   ├── add_binding(binding) → ChannelBinding
 │   ├── get_binding(room_id, channel_id) → ChannelBinding | null
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-14.1-042", "kind": "behavior", "applies": "§14.1 ConversationStore interface: binding_exists(room_id, channel_id), get_binding's answer as a boolean, the binding unread. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── binding_exists(room_id, channel_id) → bool
 │   │                                         # get_binding's answer, the
 │   │                                         # binding unread
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-14.1-043", "kind": "structural", "applies": "§14.1 ConversationStore interface: update_binding(binding). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── update_binding(binding) → ChannelBinding
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-14.1-044", "kind": "behavior", "applies": "§14.1 ConversationStore interface: remove_binding(room_id, channel_id), whether the channel was attached. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── remove_binding(room_id, channel_id) → bool
 │   │                                         # whether the channel was attached
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-14.1-045", "kind": "structural", "applies": "§14.1 ConversationStore interface: list_bindings(room_id), whose order the rule of binding order gives. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   └── list_bindings(room_id) → list<ChannelBinding>
 │
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-14.1-046", "kind": "structural", "applies": "§14.1 ConversationStore interface: the participant operations add_participant(participant) and get_participant(room_id, participant_id), the participant or null. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── Participants
 │   ├── add_participant(participant) → Participant
 │   ├── get_participant(room_id, participant_id) → Participant | null
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-14.1-047", "kind": "behavior", "applies": "§14.1 ConversationStore interface: update_participant(participant) writes the whole record, keyed by (room_id, id) (§5.5). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── update_participant(participant) → Participant
 │   │                                         # writes the whole record, keyed
 │   │                                         # by (room_id, id) (§5.5)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-14.1-048", "kind": "structural", "applies": "§14.1 ConversationStore interface: delete_participant(room_id, participant_id) and list_participants(room_id). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── delete_participant(room_id, participant_id) → void
 │   └── list_participants(room_id) → list<Participant>
 │
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-14.1-049", "kind": "structural", "applies": "§14.1 ConversationStore interface: the identity operations (§5.6) create_identity, get_identity (the identity or null), resolve_identity(channel_type, address, organization_id), link_address and unlink_address, each scoped to an organization or none. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── Identity (§5.6)
 │   ├── create_identity(identity) → Identity
 │   ├── get_identity(identity_id) → Identity | null
 │   ├── resolve_identity(channel_type, address, organization_id | null) → Identity | null
 │   ├── link_address(identity_id, channel_type, address, organization_id | null) → void
 │   └── unlink_address(identity_id, channel_type, address, organization_id | null) → void
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-14.1-050", "kind": "behavior", "applies": "§14.1 ConversationStore interface: an address may belong to a different identity in each organization and to one identity within it; moving it is an unlink then a link (§5.6). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │       # The same address may belong to a different identity in each
 │       # organization, and to one identity within it; moving it is an
 │       # unlink then a link (§5.6)
 │
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-14.1-051", "kind": "structural", "applies": "§14.1 ConversationStore interface: the verification operations get_verification(identity_id, organization_id), put_verification and list_verifications_in_force(), where an implementation supports verification (§11.7, Level 2). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── Verification (§11.7; Level 2)
 │   ├── get_verification(identity_id, organization_id | null) → Verification | null
 │   ├── put_verification(verification) → Verification
 │   ├── list_verifications_in_force() → list<Verification>
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-14.1-052", "kind": "behavior", "applies": "§14.1 ConversationStore interface: list_verifications_in_force re-arms the expiry timers when the implementation starts, where an implementation supports verification (§11.7, Level 2). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   │   # Re-arms the expiry timers when the implementation starts
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-14.1-053", "kind": "structural", "applies": "§14.1 ConversationStore interface: the verification request operations create_verification_request, get_verification_request (the request or null) and update_verification_request, where an implementation supports verification (§11.7, Level 2). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── create_verification_request(request) → VerificationRequest
 │   ├── get_verification_request(request_id) → VerificationRequest | null
 │   └── update_verification_request(request) → VerificationRequest
 │
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-14.1-054", "kind": "behavior", "applies": "§14.1 ConversationStore interface: mark_read(room_id, channel_id, event_id) moves the channel's marker, the highest index it read, to the event's, never back; an event the room does not hold marks nothing. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── Read markers
 │   ├── mark_read(room_id, channel_id, event_id) → void
 │   │                                         # the channel's marker, the highest
@@ -18410,71 +18602,95 @@ ConversationStore (interface)
 │   │                                         # event's, never back; an event
 │   │                                         # the room does not hold marks
 │   │                                         # nothing
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-14.1-055", "kind": "behavior", "applies": "§14.1 ConversationStore interface: mark_all_read(room_id, channel_id) moves the marker to the room's highest index; an empty room gets no marker. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── mark_all_read(room_id, channel_id) → void
 │   │                                         # to the room's highest index; an
 │   │                                         # empty room gets no marker
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-14.1-056", "kind": "behavior", "applies": "§14.1 ConversationStore interface: get_unread_count(room_id, channel_id), the events above the marker, every one without it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── get_unread_count(room_id, channel_id) → int
 │   │                                         # the events above the marker,
 │   │                                         # every one without it
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-14.1-057", "kind": "behavior", "applies": "§14.1 ConversationStore interface: list_read_markers(room_id), each channel's marker, deleted with the room. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   └── list_read_markers(room_id) → map<string, int>
 │                                             # each channel's marker; deleted
 │                                             # with the room
 │
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-14.1-058", "kind": "structural", "applies": "§14.1 ConversationStore interface: the task operations add_task(task), get_task(task_id) (the task or null) and list_tasks(room_id, status). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── Tasks
 │   ├── add_task(task) → Task
 │   ├── get_task(task_id) → Task | null
 │   ├── list_tasks(room_id, status | null) → list<Task>
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-14.1-059", "kind": "behavior", "applies": "§14.1 ConversationStore interface: update_task(task) refuses a task the store does not hold (§14.3). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   └── update_task(task) → Task              # refuses a task the store does
 │                                             # not hold (§14.3)
 │
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-14.1-060", "kind": "structural", "applies": "§14.1 ConversationStore interface: the observation operations add_observation(observation) and list_observations(room_id). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 └── Observations
     ├── add_observation(observation) → Observation
     └── list_observations(room_id) → list<Observation>
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-14.1-002", "kind": "behavior", "applies": "§14.1 Conversation Store; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-14.1-061", "kind": "behavior", "applies": "§14.1, reading a timeline (list_events): two pagination modes, offset-based (offset and limit) and cursor-based (after_index or before_index, mutually exclusive), offset ignored under a cursor. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Reading a timeline (`list_events`).** Two pagination modes exist:
 offset-based (`offset` + `limit`) and cursor-based (`after_index` or
-`before_index`, mutually exclusive; `offset` is then ignored). `limit` is 50
+`before_index`, mutually exclusive; `offset` is then ignored). <!-- /rfc --><!-- rfc: {"id": "RK-14.1-062", "kind": "behavior", "applies": "§14.1, reading a timeline: limit is 50 by default, for list_events and the timeline reads built on it, and a limit of 0 returns no event, whatever the window. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`limit` is 50
 by default, for `list_events` and the timeline reads built on it, and a
-`limit` of 0 returns no event, whatever the window. *Which* events a
+`limit` of 0 returns no event, whatever the window. <!-- /rfc --><!-- rfc: {"id": "RK-14.1-063", "kind": "behavior", "applies": "§14.1, reading a timeline: before_index, and in offset mode newest_first (ignored under a cursor), select the window, the limit events nearest the cursor or the room's tail, offset then counted back from the newest end; with the sentence that tells the window from the order. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->*Which* events a
 page holds and the *order* they come back in are two different answers.
 `before_index`, and in offset mode the `newest_first` flag (ignored under a
 cursor), select the **window**: the `limit` events nearest the cursor, or the
 room's tail instead of its head, with `offset` then counted back from the
-newest end. The page itself MUST always be rendered in ascending `index`
+newest end. <!-- /rfc --><!-- rfc: {"id": "RK-14.1-064", "kind": "behavior", "applies": "§14.1, reading a timeline: the page is rendered in ascending index order whatever the window and the order rows were written, ties between events stored without an index broken deterministically by the store; with the sentence on the caller that reads the last element and the implementation that reverses a descending fetch. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The page itself MUST always be rendered in ascending `index`
 order, whichever window was selected and whatever the order the rows were
 written or stamped in (ties between events stored without an index are broken
 deterministically by the store): its first element is the oldest event of the
 window and its last element the newest. A caller that wants the most recent
 event of a page reads its last element, never its first; an implementation
 that fetches descending to find the window reverses the page before returning
-it. The conversation and timeline reads built on `list_events` inherit both
+it. <!-- /rfc --><!-- rfc: {"id": "RK-14.1-065", "kind": "behavior", "applies": "§14.1, reading a timeline: the conversation and timeline reads built on list_events inherit the window rule and the ascending order. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The conversation and timeline reads built on `list_events` inherit both
 halves of this rule.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-14.1-003", "kind": "behavior", "applies": "§14.1 Conversation Store; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-14.1-066", "kind": "behavior", "applies": "§14.1, a timeline read serves what the room received: by default list_events returns no event stored BLOCKED. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **A timeline read serves what the room received.** By default `list_events`
 MUST NOT return an event stored `BLOCKED` (§10.1 step 10, §7.5 rule 2, §8.3):
 the room refused that turn, and a reader listing what was said in the room is
-not asking for what was refused. The refused rows MUST stay readable on
+not asking for what was refused. <!-- /rfc --><!-- rfc: {"id": "RK-14.1-067", "kind": "behavior", "applies": "§14.1, a timeline read serves what the room received: the refused rows stay readable on explicit request (include_blocked) and by id (get_event), and the filter applies before the page is cut. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The refused rows MUST stay readable on
 explicit request (a filter flag, `include_blocked`) and by id (`get_event`),
 because a host audits, copies or deletes them by those paths, and the filter
 MUST apply before the page is cut, so a page of `limit` received events is
-full whatever was refused around them. The conversation read that fills
+full whatever was refused around them. <!-- /rfc --><!-- rfc: {"id": "RK-14.1-068", "kind": "behavior", "applies": "§14.1, a timeline read serves what the room received: the conversation read that fills RoomContext.recent_events asks for the whole timeline, refused rows included, the per-reader filter of §7.5 rule 8 dropping them for channels. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The conversation read that fills
 `RoomContext.recent_events` asks for the whole timeline: hooks read it whole
 (§7.5 rule 8), and the per-reader filter of that rule drops the refused rows
-for channels. A refused row still consumes an index (§10.1 step 8), so the room's
+for channels. <!-- /rfc --><!-- rfc: {"id": "RK-14.1-069", "kind": "behavior", "applies": "§14.1, a timeline read serves what the room received: a refused row still consumes an index, and the room's counters count it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A refused row still consumes an index (§10.1 step 8), so the room's
 counters keep counting it.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-14.1-004", "kind": "behavior", "applies": "§14.1 Conversation Store; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-14.1-070", "kind": "behavior", "applies": "§14.1, a count follows the rule of its page: get_event_count without a filter counts every committed row, the refused ones included, the timeline's size, the twin of the room's event_count until a hard delete removes rows. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **A count follows the rule of the page it stands for.** `get_event_count`
 without a filter counts every committed row, the refused ones included: a
 refused row consumed an index (§8.3), and that count is the timeline's size,
 the twin of the room's maintained `event_count` until a hard delete removes
-rows, which leaves `event_count` as it was (§14.3). `get_event_count` with
+rows, which leaves `event_count` as it was (§14.3). <!-- /rfc --><!-- rfc: {"id": "RK-14.1-071", "kind": "behavior", "applies": "§14.1, a count follows the rule of its page: get_event_count with an EventFilter counts exactly the rows list_events would serve under that filter, with no page, the received-rows default lifted by include_blocked. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`get_event_count` with
 an `EventFilter` MUST count exactly the rows `list_events` would serve under
 that filter, with no page: the same criteria, and the same received-rows
 default lifted by `include_blocked`, so a host that needs the exact number of
@@ -18482,15 +18698,15 @@ a subset (an agent's turns before an instant) never measures a page to get it
 and never inherits the page's cap.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-14.1-005", "kind": "behavior", "applies": "§14.1 Conversation Store; binding insertion order, updates, reattachment and durable reads."} -->
+<!-- rfc: {"id": "RK-14.1-072", "kind": "behavior", "applies": "§14.1, binding order: list_bindings returns a room's bindings in the order they were first added. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Binding order.** `list_bindings` MUST return a room's bindings in the order
-they were first added. Updating a binding, including replacing it through
-`add_binding`, MUST preserve its position. Removing a binding and adding it
-again places it after the bindings still present. Equal or backdated
-`attached_at` values and channel identifiers MUST NOT reorder new bindings.
+they were first added. <!-- /rfc --><!-- rfc: {"id": "RK-14.1-073", "kind": "behavior", "applies": "§14.1, binding order: updating a binding, including replacing it through add_binding, preserves its position. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Updating a binding, including replacing it through
+`add_binding`, MUST preserve its position. <!-- /rfc --><!-- rfc: {"id": "RK-14.1-074", "kind": "behavior", "applies": "§14.1, binding order: a binding removed and added again comes after the bindings still present. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Removing a binding and adding it
+again places it after the bindings still present. <!-- /rfc --><!-- rfc: {"id": "RK-14.1-075", "kind": "behavior", "applies": "§14.1, binding order: equal or backdated attached_at values and channel identifiers never reorder new bindings. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Equal or backdated
+`attached_at` values and channel identifiers MUST NOT reorder new bindings.<!-- /rfc --><!-- rfc: {"id": "RK-14.1-076", "kind": "behavior", "applies": "§14.1, binding order: load_room_context preserves the same order, and a durable store retains it across reopening; with the sentence on the first eligible streaming transport (§12.2 step 11s). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 `load_room_context` MUST preserve the same order, and a durable store MUST
 retain it across reopening. This makes selection of the first eligible
-streaming transport (§12.2 step 11s) stable across store implementations.
+streaming transport (§12.2 step 11s) stable across store implementations.<!-- /rfc --><!-- rfc: {"id": "RK-14.1-077", "kind": "behavior", "applies": "§14.1, binding order: a store upgrading historical data that recorded no insertion order may reconstruct it once from attachment timestamps with a deterministic tie-breaker, later writes and reads following the binding order rules. Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->
 When upgrading historical data that did not record insertion order, a store
 MAY reconstruct it once from attachment timestamps with a deterministic
 tie-breaker; subsequent writes and reads MUST follow the rules above.
@@ -18498,117 +18714,117 @@ tie-breaker; subsequent writes and reads MUST follow the rules above.
 
 ### 14.2 Required Implementations
 
-<!-- rfc: {"id": "RK-14.2-001", "kind": "behavior", "applies": "§14.2 Required Implementations; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-14.2-002", "kind": "behavior", "applies": "§14.2 Required Implementations: an implementation provides an in-memory store, for testing, prototyping and a single process. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 | Implementation | Purpose | Conformance |
 |---|---|---|
 | In-Memory Store | Testing, prototyping, single-process | MUST provide |
-| Persistent Store | Production (SQL, document DB) | SHOULD provide |
+| <!-- /rfc --><!-- rfc: {"id": "RK-14.2-003", "kind": "behavior", "applies": "§14.2 Required Implementations: an implementation provides a persistent store, for production (SQL, document DB). Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->Persistent Store | Production (SQL, document DB) | SHOULD provide |
 <!-- /rfc -->
 
 ### 14.3 Consistency Requirements
 
-<!-- rfc: {"id": "RK-14.3-001", "kind": "behavior", "applies": "§14.3 Consistency Requirements; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
-- Event index assignment MUST be atomic within a room. For a persistent store
+<!-- rfc: {"id": "RK-14.3-002", "kind": "behavior", "applies": "§14.3: event index assignment is atomic within a room. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+- Event index assignment MUST be atomic within a room. <!-- /rfc --><!-- rfc: {"id": "RK-14.3-003", "kind": "behavior", "applies": "§14.3: for a persistent store more than one process may access, index atomicity is enforced at the storage layer (one transaction and a UNIQUE(room_id, index) constraint, §8.1), not by an in-process lock alone. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->For a persistent store
   that may be accessed by more than one process, this atomicity MUST be enforced
   at the storage layer — a single transaction plus a `UNIQUE(room_id, index)`
-  constraint (§8.1) — not by an in-process lock alone.
+  constraint (§8.1) — not by an in-process lock alone.<!-- /rfc --><!-- rfc: {"id": "RK-14.3-004", "kind": "behavior", "applies": "§14.3: storing an event (DELIVERED at §10.1 step 12, BLOCKED at steps 10 to 11) and bumping the room's event_count and latest_index are one atomic commit: no observer sees a stored event the counters miss, nor counters that count an event absent from the timeline but one a hard delete removed. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - Room state updates MUST be consistent with event storage. Specifically,
   storing an event — DELIVERED at §10.1 step 12, BLOCKED at steps 10–11 — and
   bumping the room's `event_count` / `latest_index` form a **single atomic
   commit**: an observer MUST never see a stored event that is not reflected in
   the room counters, nor counters that count an event absent from the
-  timeline, but one a hard delete removed (below). An EDIT or a DELETE and
+  timeline, but one a hard delete removed (below). <!-- /rfc --><!-- rfc: {"id": "RK-14.3-005", "kind": "behavior", "applies": "§14.3: an EDIT or a DELETE and its target's update (§10.3) are part of the commit, written in one transaction with the counters, the whole commit failing when the target is gone. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An EDIT or a DELETE and
   its target's update (§10.3) are part of that commit: the store writes the
   change, the counters and the target in one transaction, and fails the
-  whole commit when the target is gone.
+  whole commit when the target is gone.<!-- /rfc --><!-- rfc: {"id": "RK-14.3-006", "kind": "behavior", "applies": "§14.3, persistence policy, where an implementation offers one (the sentence permits it): the event types its commits store (persist_types, every type when absent), less those it never stores (exclude_types, which wins). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - A kit MAY be configured with a persistence policy: the event types its
   commits store (`persist_types`, every type when absent), less those it
-  never stores (`exclude_types`, which wins). An event of a type it keeps
+  never stores (`exclude_types`, which wins). <!-- /rfc --><!-- rfc: {"id": "RK-14.3-007", "kind": "behavior", "applies": "§14.3, persistence policy, where an implementation offers one: an event of a type kept out is delivered as any event, its hooks and delivery set running, and nothing of it is stored: no index, no counter moved, no activity (§5.1), none of the call's response_events; it keeps the provisional index its hooks were shown and its delivery set's context holds it as its newest event. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An event of a type it keeps
   out is delivered as any event, its hooks and its delivery set running,
   and nothing of it is stored: it takes no index, moves none of the room's
   counters, is no activity (§5.1) and is none of the call's
   `response_events`; it keeps the provisional index its hooks were shown,
-  and its delivery set's context holds it as its newest event. It still
+  and its delivery set's context holds it as its newest event. <!-- /rfc --><!-- rfc: {"id": "RK-14.3-008", "kind": "behavior", "applies": "§14.3, persistence policy, where an implementation offers one: an event kept out still takes its author record, which extends the room's register of authors (§10.1 step 12). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->It still
   takes its author record, which extends the room's register of authors
   (§10.1 step 12), so that a later source never holds the rank a reader
-  saw it hold. A streamed row kept out is handed to no reader of the
+  saw it hold. <!-- /rfc --><!-- rfc: {"id": "RK-14.3-009", "kind": "behavior", "applies": "§14.3, persistence policy, where an implementation offers one: a streamed row kept out is handed to no reader of the stream (§7.5 rule 2), the turn's record landing among the rows stored (§6.4); a discussion is not told of a message kept out, which asks no agent (§19.7.5 rule 8). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A streamed row kept out is handed to no reader of the
   stream (§7.5 rule 2), and the turn's record lands as §6.4 says, among
   the rows stored; a discussion is not told of a message kept out, which asks no
-  agent (§19.7.5 rule 8). An EDIT or a DELETE kept out still writes its
+  agent (§19.7.5 rule 8). <!-- /rfc --><!-- rfc: {"id": "RK-14.3-010", "kind": "behavior", "applies": "§14.3, persistence policy, where an implementation offers one: an EDIT or a DELETE kept out still writes its target alone (write_change_target), a delete marking the target's edits deleted, and its mutation trigger fires (§10.3). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An EDIT or a DELETE kept out still writes its
   target alone (`write_change_target`, §14.1), a delete marking the
-  target's edits deleted, and its mutation trigger fires (§10.3). A
+  target's edits deleted, and its mutation trigger fires (§10.3). <!-- /rfc --><!-- rfc: {"id": "RK-14.3-011", "kind": "behavior", "applies": "§14.3, persistence policy, where an implementation offers one: a lifecycle record kept out is not written, and its change, a timer's transition included, is announced all the same. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
   lifecycle record kept out is not written: its change, a timer's
-  transition included, is announced all the same. A hook's injected event
+  transition included, is announced all the same. <!-- /rfc --><!-- rfc: {"id": "RK-14.3-012", "kind": "behavior", "applies": "§14.3, persistence policy, where an implementation offers one: a hook's injected event (§9.4), a record stored BLOCKED, a record committed outside the pipeline (§10.5) and a delegation's trace in its child room (§23.3) are stored whatever the policy. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A hook's injected event
   (§9.4), a record stored `BLOCKED`, a record committed outside the
   pipeline (§10.5) and a delegation's trace in its child room (§23.3) are
-  stored whatever the policy.
+  stored whatever the policy.<!-- /rfc --><!-- rfc: {"id": "RK-14.3-013", "kind": "behavior", "applies": "§14.3: a write naming what the store does not hold is refused, nothing written: update_room of a room it does not hold and add_participant into one (room not found), update_event of an event it does not hold (event not found); with the sentence on what a store that wrote it would keep. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - A write naming what the store does not hold is refused, nothing written:
   `update_room` of a room it does not hold and `add_participant` into one
   (room not found), `update_event` of an event it does not hold (event not
   found). A store that wrote it would keep an event no timeline read finds,
-  or a participant of no room. `add_participant` under an id the room has is
+  or a participant of no room. <!-- /rfc --><!-- rfc: {"id": "RK-14.3-014", "kind": "behavior", "applies": "§14.3: add_participant under an id the room has is refused (participant exists, §5.5), the record it holds kept; update_participant of a record the room does not hold (participant not found) and update_task of a task the store does not hold (task not found) are refused. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`add_participant` under an id the room has is
   refused too (participant exists, §5.5), the record it holds kept, and
   `update_participant` of a record the room does not hold (participant not
   found), and `update_task` of a task the store does not hold (task not
-  found): an update is no creation, which `add_task` makes.
+  found): an update is no creation, which `add_task` makes.<!-- /rfc --><!-- rfc: {"id": "RK-14.3-015", "kind": "behavior", "applies": "§14.3: a store refuses to create a room under an id it already holds and never replaces the room it holds; with the sentence on why (§10.1 step 2). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - A room is created once: a store MUST refuse to create a room under an id it
   already holds, and never replaces the room it holds. §10.1 step 2 creates
   a room under an id in hand, and a store that replaced the room would
-  re-home another conversation, another organization's included.
+  re-home another conversation, another organization's included.<!-- /rfc --><!-- rfc: {"id": "RK-14.3-016", "kind": "behavior", "applies": "§14.3: a hard delete (§10.3) leaves the room's counters as they are, and a store refuses a commit at an index below the room's event_count, a removed one included. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - A hard delete (§10.3) leaves the room's counters as they are:
   `event_count` counts every index given out, and an index is never given
   again, so a store refuses a commit at an index below the room's
-  `event_count`, a removed one included. A removed event's idempotency key
-  goes with it (§13.4).
+  `event_count`, a removed one included. <!-- /rfc --><!-- rfc: {"id": "RK-14.3-017", "kind": "behavior", "applies": "§14.3: a removed event's idempotency key goes with it (§13.4). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A removed event's idempotency key
+  goes with it (§13.4).<!-- /rfc --><!-- rfc: {"id": "RK-14.3-018", "kind": "behavior", "applies": "§14.3: a whole-record write of a room (update_room) is made under the room lock, from the room as read under that lock. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - A whole-record write of a room (`update_room`) is made under the room
   lock, from the room as read under that lock: a copy read before it would
-  undo what was written since. It keeps the counters (`event_count`,
+  undo what was written since. <!-- /rfc --><!-- rfc: {"id": "RK-14.3-019", "kind": "behavior", "applies": "§14.3: update_room keeps the counters (event_count, latest_index) and the delivered index the store holds, which only a commit and the cursor's compare-and-set move. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->It keeps the counters (`event_count`,
   `latest_index`) and the delivered index the store holds, which only a
-  commit and the cursor's compare-and-set move. A change of the room's
+  commit and the cursor's compare-and-set move. <!-- /rfc --><!-- rfc: {"id": "RK-14.3-020", "kind": "behavior", "applies": "§14.3: a change of the room's metadata alone goes through patch_room_metadata, which merges its keys and writes nothing else, so a concurrent writer's keys stand. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A change of the room's
   metadata alone goes through `patch_room_metadata`, which merges its keys
-  and writes nothing else, so a concurrent writer's keys stand.
+  and writes nothing else, so a concurrent writer's keys stand.<!-- /rfc --><!-- rfc: {"id": "RK-14.3-021", "kind": "behavior", "applies": "§14.3: once committed (DELIVERED), an event is never retroactively re-marked BLOCKED or FAILED. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - Once committed (DELIVERED), an event MUST NOT be retroactively re-marked
-  BLOCKED or FAILED. A processing timeout or a delivery failure after the
-  commit point (§13.6) MUST NOT alter the event's committed status.
+  BLOCKED or FAILED. <!-- /rfc --><!-- rfc: {"id": "RK-14.3-022", "kind": "behavior", "applies": "§14.3: a processing timeout or a delivery failure after the commit point (§13.6) never alters the event's committed status. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A processing timeout or a delivery failure after the
+  commit point (§13.6) MUST NOT alter the event's committed status.<!-- /rfc --><!-- rfc: {"id": "RK-14.3-023", "kind": "behavior", "applies": "§14.3: once stored, an event's delivery_results is written by the store's record of its deliveries alone (record_delivery_results), which replaces that map and writes nothing else of the event. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - Once stored, an event's `delivery_results` is written by the store's
   record of its deliveries alone (`record_delivery_results`, §14.1), which
-  replaces that map and writes nothing else of the event. Every other write
+  replaces that map and writes nothing else of the event. <!-- /rfc --><!-- rfc: {"id": "RK-14.3-024", "kind": "behavior", "applies": "§14.3: every other write of a stored event keeps the delivery_results the store holds, whatever the copy carries: update_event (§10.3) and the update of a change's target its commit writes (§10.3); with the sentence on what that keeps. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Every other write
   of a stored event MUST keep the `delivery_results` the store holds,
   whatever the copy it is given carries: an update of the event
   (`update_event`, §10.3), and the update of a change's target, which the
   change's commit writes (§10.3). So an edit or a delete committed while the
   event's deliveries ran never undoes their record, and the record never
-  undoes the change. A record committed outside the pipeline is stored with
-  the `delivery_results` it brings (§10.5).
-- Idempotency key checks MUST be performed under the room lock. A key is
+  undoes the change. <!-- /rfc --><!-- rfc: {"id": "RK-14.3-025", "kind": "behavior", "applies": "§14.3: a record committed outside the pipeline is stored with the delivery_results it brings (§10.5). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A record committed outside the pipeline is stored with
+  the `delivery_results` it brings (§10.5).<!-- /rfc --><!-- rfc: {"id": "RK-14.3-026", "kind": "behavior", "applies": "§14.3: idempotency key checks are performed under the room lock. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+- Idempotency key checks MUST be performed under the room lock. <!-- /rfc --><!-- rfc: {"id": "RK-14.3-027", "kind": "behavior", "applies": "§14.3: a key is looked up within its room and its source channel (§13.4), and a store's index or uniqueness constraint on keys covers (room_id, source.channel_id, idempotency_key). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A key is
   looked up within its room and its source channel (§13.4): a store's index
   or uniqueness constraint on keys covers
   `(room_id, source.channel_id, idempotency_key)`, since a constraint over
   the room and the key alone would refuse one channel's message for
-  another's. A proactive delivery's key is the exception: it names one
+  another's. <!-- /rfc --><!-- rfc: {"id": "RK-14.3-028", "kind": "behavior", "applies": "§14.3: a proactive delivery's key names one publication in its room (§22.1) and is looked up within the room, under the same lock, whatever channel committed it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A proactive delivery's key is the exception: it names one
   publication in its room, whatever transport carries it (§22.1), and is
   looked up within the room, under the same lock, whatever channel
-  committed it. It is stored in the namespace the pipeline reserves for it
+  committed it. <!-- /rfc --><!-- rfc: {"id": "RK-14.3-029", "kind": "behavior", "applies": "§14.3: a proactive delivery's key is stored in the namespace the pipeline reserves for it (the roomkit:publication: prefix, §5.2), so per-channel uniqueness never sets a publication against a message keyed alike. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->It is stored in the namespace the pipeline reserves for it
   (`roomkit:publication:<key>`, §5.2), so the per-channel uniqueness never
-  sets a publication against a message keyed alike.
+  sets a publication against a message keyed alike.<!-- /rfc --><!-- rfc: {"id": "RK-14.3-030", "kind": "behavior", "applies": "§14.3: a store refuses to commit an event when its room holds an event of the same source channel with the same idempotency key, nothing written, failing as a duplicate key with an error every store raises alike (IdempotencyKeyTakenError), never its driver's error and never by replacing the event. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - A store MUST refuse to commit an event when its room already holds an
   event of the same source channel with the same idempotency key, with
   nothing written: the commit fails as a duplicate key, with an error of its
   own that every store raises alike (`IdempotencyKeyTakenError`), never its
-  storage driver's error, and never by replacing the event the key names.
+  storage driver's error, and never by replacing the event the key names.<!-- /rfc --><!-- rfc: {"id": "RK-14.3-031", "kind": "behavior", "applies": "§14.3: the pipeline looks the key up first, under the room lock, before it commits anything of the event, a record past the reentry budget included (§10.1 step 7, §13.4), so only a direct commit meets the refusal: a record committed outside the pipeline (§10.5), never a replay, or a caller of the store itself. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
   The pipeline looks the key up first, under the room lock, before it
   commits anything of the event, a record past the reentry budget included
   (§10.1 step 7, §13.4), so only a direct commit meets the refusal: a record
   committed outside the pipeline (§10.5), which is never a replay and fails
-  with this error, or a caller of the store itself. A key a hard delete
+  with this error, or a caller of the store itself. <!-- /rfc --><!-- rfc: {"id": "RK-14.3-032", "kind": "behavior", "applies": "§14.3: a key a hard delete released (§13.4) is free again; with the sentence that leaves an event under an id the store holds outside the duplicate-key rule. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A key a hard delete
   released (§13.4) is free again. An event under an id the
   store already holds is outside this rule.
 <!-- /rfc -->
 
 ### 14.4 Returned-Object Ownership
 
-<!-- rfc: {"id": "RK-14.4-001", "kind": "behavior", "applies": "§14.4 Returned-Object Ownership; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
-- A committed event changes only through the write interface (§4.3). An
+<!-- rfc: {"id": "RK-14.4-002", "kind": "behavior", "applies": "§14.4: a committed event changes only through the write interface (§4.3). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+- A committed event changes only through the write interface (§4.3). <!-- /rfc --><!-- rfc: {"id": "RK-14.4-003", "kind": "non_testable", "applies": "§14.4: an event, room, binding or participant returned by a read or by the write that stored it is a snapshot, which the caller treats as frozen, never mutates, and changes through a copy and a write; so are the room, bindings and participants of a RoomContext a hook or a channel receives. A duty of the caller. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An
   event, room, binding or participant object returned by a read
   (`get_event`, `list_events`, conversation reads, `get_room`,
   `list_rooms`, `find_rooms`, `find_latest_room`, `get_binding`,
@@ -18616,25 +18832,25 @@ tie-breaker; subsequent writes and reads MUST follow the rules above.
   that stored it is a snapshot of the stored record: the caller MUST treat
   it as frozen and MUST NOT mutate it, and changes it through a copy and a
   write. So are the room, bindings and participants of the `RoomContext` a
-  hook or a channel receives, which are read from the store. A store MAY
+  hook or a channel receives, which are read from the store. <!-- /rfc --><!-- rfc: {"id": "RK-14.4-004", "kind": "behavior", "applies": "§14.4: a store may return the same object to several readers or a fresh object per read, both conformant, and a portable caller relies on neither aliasing nor isolation. Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->A store MAY
   return the same object to multiple readers (an in-memory store sharing
   its stored objects) or a fresh object per read (a SQL store deserialising
   rows) — both are conformant, and a portable caller can rely on neither
-  aliasing nor isolation.
+  aliasing nor isolation.<!-- /rfc --><!-- rfc: {"id": "RK-14.4-005", "kind": "behavior", "applies": "§14.4: a store owns its stored representation from the moment a write returns: a caller's later mutation of an object it passed to commit_event, update_event, create_room, update_room, add_binding, update_binding, add_participant, update_participant or set_private_state never alters stored state. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - A store MUST own its stored representation from the moment a write
   returns: a caller's later mutation of an object it passed to
   `commit_event` / `update_event` / `create_room` / `update_room` /
   `add_binding` / `update_binding` / `add_participant` / `update_participant` /
   `set_private_state` MUST NOT alter stored state (copy-in and
-  serialisation both satisfy this).
+  serialisation both satisfy this).<!-- /rfc --><!-- rfc: {"id": "RK-14.4-006", "kind": "behavior", "applies": "§14.4: a room's private state returned by a read is caller-owned, and mutating it never affects stored state, changes going through set_private_state; with the closing note on stores that share their reads. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - A room's private state returned by a read is caller-owned: mutating it
   MUST NOT affect stored state — changes are applied through
   `set_private_state`.
 
 A message reads its room's records many times, so a store that shares its
 reads saves a copy each time; one that copies per read stays conformant.
-
 <!-- /rfc -->
+
 ---
 
 ## 15. Observability
