@@ -23013,7 +23013,7 @@ self-contained packages.
 
 ### 24.1 Skill Definition
 
-<!-- rfc: {"id": "RK-24.1-001", "kind": "behavior", "applies": "§24.1 Skill Definition; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-24.1-002", "kind": "structural", "applies": "A local skill is defined by SKILL.md with frontmatter and an instruction body.", "level": "must"} -->
 A Skill is defined by a `SKILL.md` file with YAML frontmatter:
 
 ```
@@ -23038,19 +23038,23 @@ You are a web search specialist. When asked to find information...
 - [Search API docs](https://...)
 ```
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-24.1-003", "kind": "behavior", "applies": "The YAML reader refuses aliases before constructing frontmatter.", "level": "must"} -->
 The frontmatter is read as YAML, within bounds that keep a few hundred bytes
-from exhausting the host: a YAML alias is refused, and so are collections
-nested past 64 levels, more than 64 brackets or braces open at once (quoted
-ones counted too) and a frontmatter past 65536 characters, each before
-anything is built. Past a bound, the skill cannot be parsed (Section 24.5),
+from exhausting the host: a YAML alias is refused, <!-- /rfc --><!-- rfc: {"id": "RK-24.1-004", "kind": "behavior", "applies": "The reader rejects collection nesting past 64 levels before construction.", "level": "must"} -->and so are collections
+nested past 64 levels, <!-- /rfc --><!-- rfc: {"id": "RK-24.1-005", "kind": "behavior", "applies": "Before construction the reader rejects more than 64 simultaneously open brackets or braces, counting quoted ones.", "level": "must"} -->more than 64 brackets or braces open at once (quoted
+ones counted too) <!-- /rfc --><!-- rfc: {"id": "RK-24.1-006", "kind": "behavior", "applies": "The reader refuses frontmatter larger than 65,536 characters before construction.", "level": "must"} -->and a frontmatter past 65536 characters, each before
+anything is built. <!-- /rfc --><!-- rfc: {"id": "RK-24.1-007", "kind": "behavior", "applies": "Exceeding a frontmatter bound prevents parsing a local skill and verification of served content.", "level": "must"} -->Past a bound, the skill cannot be parsed (Section 24.5),
 and a served skill's content fails its check (Section 24.7).
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-24.1-008", "kind": "behavior", "applies": "An implementation may read local non-YAML frontmatter or local skills without a YAML reader line by line.", "level": "may"} -->
 A host's own skill whose frontmatter is not YAML, or is read without a YAML
-reader, MAY be read line by line, each `key: value` line at the top level a
-field; a line indented under a key is not one. That reading MUST keep both
+reader, MAY be read line by line, <!-- /rfc --><!-- rfc: {"id": "RK-24.1-009", "kind": "behavior", "applies": "A line-oriented reader recognizes top-level fields and excludes nested fields as top-level keys.", "level": "must"} -->each `key: value` line at the top level a
+field; a line indented under a key is not one. <!-- /rfc --><!-- rfc: {"id": "RK-24.1-010", "kind": "behavior", "applies": "A line-oriented reader must support block-item and single-line flow lists.", "level": "must"} -->That reading MUST keep both
 YAML list forms: a key alone on its line followed by `- item` lines, as in the
-example, and `[a, b]` whole on the key's line. Of a frontmatter that is also
-YAML, it MUST NOT gate or require less than the YAML reading does. Whichever
+example, and `[a, b]` whole on the key's line. <!-- /rfc --><!-- rfc: {"id": "RK-24.1-011", "kind": "behavior", "applies": "For valid YAML the alternate reading must preserve all tool gates and prerequisites.", "level": "must"} -->Of a frontmatter that is also
+YAML, it MUST NOT gate or require less than the YAML reading does. <!-- /rfc --><!-- rfc: {"id": "RK-24.1-012", "kind": "behavior", "applies": "Both readers reject non-text gate or prerequisite values, lists containing non-text items and incomplete line-oriented parses.", "level": "must"} -->Whichever
 reader, an `allowed_tools` or `requires` that is neither a text nor a list of
 texts, or that a line-by-line reading cannot read whole (a list spread over
 several lines, a block scalar, a line under the key that is not a `- item`),
@@ -23060,22 +23064,50 @@ the model, before any activation, the tools it was meant to keep closed.
 
 ### 24.2 SkillMetadata
 
-<!-- rfc: {"id": "RK-24.2-001", "kind": "structural", "applies": "§24.2 SkillMetadata; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-24.2-002", "kind": "structural", "applies": "Skill metadata identifies the skill by a unique name and description.", "level": "must"} -->
 ```
 SkillMetadata
 ├── name: string                            # Unique skill identifier
 ├── description: string                     # What the skill does
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-24.2-009", "kind": "structural", "applies": "Skill metadata exposes an optional license identifier.", "level": "must"} -->
+```
 ├── license: string | null                  # License identifier
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-24.2-003", "kind": "behavior", "applies": "Optional compatibility text is uninterpreted and the manifest displays it alongside the license.", "level": "must"} -->
+```
 ├── compatibility: string | null            # Free text, not interpreted; shown with
 │       # the license in to_prompt_xml()
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-24.2-004", "kind": "structural", "applies": "The optional allowed_tools field accepts text or a list of strings and defaults to null.", "level": "must"} -->
+```
 ├── allowed_tools: string | list<string> | null  # Tool access patterns, null by default;
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-24.2-005", "kind": "behavior", "applies": "Frontmatter gate lists accept comma-separated or bracketed text and quoted entries, including a single bracketed name.", "level": "must"} -->
+```
 │       # in frontmatter, a list or comma-separated (a text `[a, b]` and
 │       # quoted entries read as that list; `[ab]` reads as the single
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-24.2-006", "kind": "behavior", "applies": "Gate patterns recognize only star and question mark as globs and reject a bracket remaining inside an entry.", "level": "must"} -->
+```
 │       # name `ab`, not a character class. Only `*` and `?` are globs;
 │       # a bracket remaining inside an entry is refused, as in Section 21.1)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-24.2-007", "kind": "structural", "applies": "Skill prerequisites are exact tool names, read from extra_metadata using the gate list syntax without globs and defaulting to empty.", "level": "must"} -->
+```
 ├── requires: list<string>                  # Exact names of the tools the skill needs
 │       # (Section 24.3), read from extra_metadata `requires` as
 │       # allowed_tools is, its glob reading aside; empty by default
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-24.2-008", "kind": "structural", "applies": "Remaining frontmatter keys are retained as strings with list items joined by commas.", "level": "must"} -->
+```
 └── extra_metadata: map<string, string>     # Every other frontmatter key (`version`,
         # `requires`, ...), its value as a string, a list's items joined
         # by commas
@@ -23084,143 +23116,227 @@ SkillMetadata
 
 ### 24.3 SkillRegistry
 
-<!-- rfc: {"id": "RK-24.3-001", "kind": "behavior", "applies": "§24.3 SkillRegistry; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-24.3-002", "kind": "structural", "applies": "SkillRegistry exposes directory discovery and returns the number of skills discovered.", "level": "must"} -->
 ```
 SkillRegistry
 ├── discover(*directories) → int            # Scan directories for SKILL.md files, return count
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-24.3-003", "kind": "structural", "applies": "Registering a directory returns metadata for its single skill.", "level": "must"} -->
+```
 ├── register(skill_dir) → SkillMetadata     # Register a single skill
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-24.3-004", "kind": "structural", "applies": "The registry looks up metadata by name, with null for an absent skill.", "level": "must"} -->
+```
 ├── get_metadata(name) → SkillMetadata | null  # Look up skill metadata
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-24.3-005", "kind": "structural", "applies": "A full lookup returns metadata, body and the directory path, or null.", "level": "must"} -->
+```
 ├── get_skill(name) → Skill | null          # Load full skill (metadata, instructions and
 │       # the path of its directory)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-24.3-006", "kind": "structural", "applies": "The registry can add a skill built in memory.", "level": "must"} -->
+```
 ├── add(skill: Skill) → void                # Register a skill built in memory
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-24.3-007", "kind": "structural", "applies": "The registry can register the skills a server provides and return their count.", "level": "must"} -->
+```
 ├── add_mcp_server(provider, label, ...) → int  # Register the skills an MCP server
 │       # serves (Section 24.7)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-24.3-008", "kind": "structural", "applies": "Copying a registry can select a subset while keeping registered paths and marks by default.", "level": "must"} -->
+```
 ├── copy(names?, marks = true) → SkillRegistry  # A subset, its paths and marks kept
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-24.3-009", "kind": "structural", "applies": "The registry lists the metadata for all registered skills.", "level": "must"} -->
+```
 ├── all_metadata() → list<SkillMetadata>    # List all registered skills
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-24.3-010", "kind": "structural", "applies": "The registry can mark a skill unavailable, retaining its reason and keeping its gated tools closed.", "level": "must"} -->
+```
 ├── mark_unavailable(name, reason) → void   # The skill leaves the available set, its reason kept; what it gated stays closed
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-24.3-011", "kind": "structural", "applies": "A registry looks up the reason a name is unavailable and returns null otherwise.", "level": "must"} -->
+```
 ├── get_unavailable_reason(name) → string | null
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-24.3-012", "kind": "structural", "applies": "A registry exposes a map of unavailable names and reasons.", "level": "must"} -->
+```
 ├── unavailable_skills → map<string, string>  # Unavailable skill name → reason
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-24.3-013", "kind": "structural", "applies": "An unlisted skill is hidden from the manifest but remains activatable.", "level": "must"} -->
+```
 ├── mark_unlisted(name) → void              # Still activatable, left out of to_prompt_xml()
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-24.3-014", "kind": "structural", "applies": "Gated tool names include the unactivated skills' patterns and closed patterns.", "level": "must"} -->
+```
 ├── gated_tool_names(activated) → set<string>  # Patterns kept closed: unactivated skills', closed ones
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-24.3-015", "kind": "structural", "applies": "Closed patterns are those gated only by unavailable skills and opened by no activated skill.", "level": "must"} -->
+```
 ├── closed_tool_names(activated) → set<string> # Patterns only unavailable skills gate, none activated opens
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-24.3-016", "kind": "structural", "applies": "Registry prerequisite matching defaults to an exact tool name and accepts a host matcher.", "level": "must"} -->
+```
 ├── requires_match: (name, offered) → bool  # How a requires name is served (default: an exact tool name)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-24.3-017", "kind": "structural", "applies": "The registry produces an XML available-skills manifest.", "level": "must"} -->
+```
 └── to_prompt_xml() → string               # Generate <available_skills> XML for AI context
 ```
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-24.3-018", "kind": "behavior", "applies": "In-memory registration accepts skills supplied by the host.", "level": "must"} -->
 A host that builds its skills elsewhere (a store, a marketplace) registers them
-with `add`, and one that narrows a registry for an agent copies it with
+with `add`, <!-- /rfc --><!-- rfc: {"id": "RK-24.3-019", "kind": "behavior", "applies": "A narrowed copy resolves included skills, including discovered but not yet loaded skills, and preserves marks unless asked otherwise.", "level": "must"} -->and one that narrows a registry for an agent copies it with
 `copy`: a copy finds every skill the source finds, a skill discovered but not
 yet loaded included, and keeps the source's marks unless asked not to.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-24.3-020", "kind": "behavior", "applies": "A channel retains its original registry and accepts a per-turn registry through per-turn configuration.", "level": "must"} -->
 A channel's registry is the one it was built with. A host whose skills depend
 on the person a turn is for (their own skills beside the agent's) gives each
 turn a registry of its own through the channel's per-turn configuration
-(Appendix A.9, per-turn settings). That turn's manifest, its activation,
+(Appendix A.9, per-turn settings). <!-- /rfc --><!-- rfc: {"id": "RK-24.3-021", "kind": "behavior", "applies": "The per-turn registry controls the manifest, activation, reference and script tools and skill gating.", "level": "must"} -->That turn's manifest, its activation,
 reference and script tools and its skill gating MUST read it in place of the
-channel's; it MUST NOT be installed on the channel nor read by another turn,
+channel's; <!-- /rfc --><!-- rfc: {"id": "RK-24.3-022", "kind": "behavior", "applies": "A per-turn registry is isolated from the channel and other turns, including concurrent rooms.", "level": "must"} -->it MUST NOT be installed on the channel nor read by another turn,
 so a channel that serves one agent in several rooms serves each person their
-own skills, concurrent turns included. A turn whose configuration gives none
-reads the channel's. A turn's registry is read only on a channel built with
+own skills, concurrent turns included. <!-- /rfc --><!-- rfc: {"id": "RK-24.3-023", "kind": "behavior", "applies": "A turn without a registry override uses the channel's registry.", "level": "must"} -->A turn whose configuration gives none
+reads the channel's. <!-- /rfc --><!-- rfc: {"id": "RK-24.3-024", "kind": "behavior", "applies": "The override requires a registry at channel construction, including an empty one; a channel without one declares no skill tools and warns when ignoring an override.", "level": "must"} -->A turn's registry is read only on a channel built with
 one, an empty one included: a channel built without skills declares no skill
-tools, and ignores a turn's registry with a warning. Activation stays the
+tools, and ignores a turn's registry with a warning. <!-- /rfc --><!-- rfc: {"id": "RK-24.3-025", "kind": "behavior", "applies": "An active skill absent from a turn's registry leaves room activation and a later activation delivers the body again.", "level": "must"} -->Activation stays the
 conversation's (Section 24.4): a skill active in the room that the turn's
 registry does not hold leaves the room's active skills, as one its registry no
 longer serves does, since its instructions cannot be in front of the model; its
 next activation delivers its body again.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-24.3-026", "kind": "behavior", "applies": "The system prompt includes the XML skills manifest.", "level": "must"} -->
 Skills are injected into the AI agent's system prompt via `to_prompt_xml()`.
-The agent can then select and apply skills based on the user's request. A
+The agent can then select and apply skills based on the user's request. A<!-- /rfc --><!-- rfc: {"id": "RK-24.3-027", "kind": "behavior", "applies": "The prompt explains unavailable skills and a wholly unavailable registry still declares activation tools.", "level": "must"} -->
 skill a host marks unavailable is listed there with its reason, and a registry
 whose every skill is unavailable still has something to tell: the prompt
 carries the reasons and the activation tools are declared, on every path, so
-the model says why instead of guessing. A skill's `requires` is checked by
-every activation, on a text turn as on a realtime session, with one rule:
+the model says why instead of guessing. <!-- /rfc --><!-- rfc: {"id": "RK-24.3-028", "kind": "behavior", "applies": "Each text activation checks prerequisites, including reactivation.", "level": "must"} -->A skill's `requires` is checked by
+every activation, on a text turn <!-- /rfc --><!-- rfc: {"id": "RK-24.3-029", "kind": "behavior", "applies": "Realtime feature: each realtime activation checks prerequisites against the conversation's tool catalogue.", "level": "must"} -->as on a realtime session, with one rule:<!-- /rfc --><!-- rfc: {"id": "RK-24.3-030", "kind": "behavior", "applies": "Activation checks declared tools, including channel and orchestration tools, after policy and before applying the candidate's skill gate.", "level": "must"} -->
 against every tool the conversation declares, the channel's own and what
 orchestration set up included, once its tool policy is applied and skill
-gating aside (the skill opens what it gates). A `requires` name is an exact
+gating aside (the skill opens what it gates). <!-- /rfc --><!-- rfc: {"id": "RK-24.3-031", "kind": "behavior", "applies": "Prerequisites use exact tool names unless the host supplies its matcher.", "level": "must"} -->A `requires` name is an exact
 tool name unless the registry's host says how its names are served
-(`requires_match`: a hub served by any tool named `<hub>_*`, say), and an
-activation hands over the schemas of the tools that serve it. A tool the
+(`requires_match`: a hub served by any tool named `<hub>_*`, say), <!-- /rfc --><!-- rfc: {"id": "RK-24.3-032", "kind": "behavior", "applies": "A successful activation hands over the schemas of the tools serving the prerequisites.", "level": "must"} -->and an
+activation hands over the schemas of the tools that serve it. <!-- /rfc --><!-- rfc: {"id": "RK-24.3-033", "kind": "behavior", "applies": "A denied prerequisite refuses activation with the missing names and discloses no denied schema to model or hook.", "level": "must"} -->A tool the
 policy denies is no tool the skill can use: the activation is refused
 (`Required tools not available: <names>`) and never hands over that tool's
-schema, to the model or to a hook. A skill marked unavailable can never be
+schema, to the model or to a hook. <!-- /rfc --><!-- rfc: {"id": "RK-24.3-034", "kind": "behavior", "applies": "An unavailable skill cannot be activated and marking it keeps its gates closed.", "level": "must"} -->A skill marked unavailable can never be
 activated, so the tools it gates stay closed (marked while the registry holds
-it): marking it does not open them, a required tool only such a gate holds is
-missing, and a call to it reads that a skill not available here gates it.
+it): marking it does not open them, <!-- /rfc --><!-- rfc: {"id": "RK-24.3-035", "kind": "behavior", "applies": "A required tool held only by an unavailable gate is missing and a direct call explains the restriction.", "level": "must"} -->a required tool only such a gate holds is
+missing, and a call to it reads that a skill not available here gates it.<!-- /rfc --><!-- rfc: {"id": "RK-24.3-036", "kind": "behavior", "applies": "An activated skill opens its pattern even when an unavailable skill gates that same pattern.", "level": "must"} -->
 A pattern an activated skill gates is that skill's to open: an unavailable
-skill gating the same pattern does not hold it closed (`closed_tool_names`).
+skill gating the same pattern does not hold it closed (`closed_tool_names`).<!-- /rfc --><!-- rfc: {"id": "RK-24.3-037", "kind": "behavior", "applies": "The same skill gating determines access at both tool doors.", "level": "must"} -->
 `gated_tool_names` is the one reading of skill gating both doors use.
 <!-- /rfc -->
 
 ### 24.4 Activation Lifecycle
 
-<!-- rfc: {"id": "RK-24.4-001", "kind": "behavior", "applies": "§24.4 Activation Lifecycle; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-24.4-002", "kind": "behavior", "applies": "Loading a skill activates it for the conversation across multiple turns.", "level": "must"} -->
 Loading a skill's body is an **activation**, and an activation is scoped to the
 **conversation**, not to the turn that made it. A model working across several
 turns on the same task is following the same rules throughout; a skill that
 silently stops applying between two turns is a skill the model cannot rely on.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-24.4-003", "kind": "behavior", "applies": "The model retains an active skill's instructions for the duration of activation and activation reporting reflects their presence.", "level": "must"} -->
 An implementation MUST keep an active skill's instructions reachable by the
 model for as long as the skill is active. It MUST NOT report a skill as active
 while its instructions are absent from the model's context.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-24.4-004", "kind": "behavior", "applies": "An implementation may deliver instructions through the system prompt.", "level": "may"} -->
 The instructions MAY travel through the system prompt rather than through the
-activation tool's result. This is RECOMMENDED where the context is rebuilt per
+activation tool's result. <!-- /rfc --><!-- rfc: {"id": "RK-24.4-005", "kind": "behavior", "applies": "On turns rebuilt from stored events, the system prompt is the recommended carrier of instructions.", "level": "should"} -->This is RECOMMENDED where the context is rebuilt per
 turn from stored events: tool results that do not survive that rebuild force the
 model to re-activate — and re-pay the full body — on every turn, whereas the
-system prompt is composed fresh each turn and can carry the body once. Where the
+system prompt is composed fresh each turn and can carry the body once. <!-- /rfc --><!-- rfc: {"id": "RK-24.4-006", "kind": "behavior", "applies": "When the prompt carries the body, repeat activation should answer with a short acknowledgement.", "level": "should"} -->Where the
 body is carried this way, the activation tool SHOULD answer subsequent calls with
-a short acknowledgement instead of the body, and that acknowledgement MUST state
+a short acknowledgement instead of the body, <!-- /rfc --><!-- rfc: {"id": "RK-24.4-007", "kind": "behavior", "applies": "A repeated activation acknowledgement must say the instructions are already in force.", "level": "must"} -->and that acknowledgement MUST state
 that the instructions are already in force.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-24.4-008", "kind": "behavior", "applies": "Large-result and context-compression mechanisms must preserve active instructions whole.", "level": "must"} -->
 An active skill's instructions MUST NOT be truncated, evicted, or summarized by
 a large-result or context-compression mechanism. Such mechanisms exist for
 *data*, which can be paginated or condensed without changing what it means;
-binding rules reduced to a preview are no longer binding rules. Skill
+binding rules reduced to a preview are no longer binding rules. Skill<!-- /rfc --><!-- rfc: {"id": "RK-24.4-009", "kind": "behavior", "applies": "Skill reference data remains subject to ordinary large-result and context-compression mechanisms.", "level": "must"} -->
 *references* are data and remain subject to those mechanisms.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-24.4-010", "kind": "behavior", "applies": "Activation is isolated by conversation scope even when a channel serves several conversations.", "level": "must"} -->
 Activation state is per (implementation-defined) conversation scope — a room, a
-session — and is never global to a channel serving several conversations. An
-implementation MAY bound the number of simultaneously active skills; when it
+session — and is never global to a channel serving several conversations. An<!-- /rfc --><!-- rfc: {"id": "RK-24.4-011", "kind": "behavior", "applies": "An implementation may limit simultaneous active skills.", "level": "may"} -->
+implementation MAY bound the number of simultaneously active skills; <!-- /rfc --><!-- rfc: {"id": "RK-24.4-012", "kind": "behavior", "applies": "Where active skills are bounded, retiring a skill makes its next activation deliver the body again.", "level": "must"} -->when it
 does, retiring a skill MUST be equivalent to it never having been activated, so
 that a later activation delivers the body again.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-24.4-013", "kind": "behavior", "applies": "A lost local activation record requires delivery of the body again.", "level": "must"} -->
 An implementation whose activation record is lost (process restart, a channel
 object replaced) MUST fall back to delivering the body: losing the record and
 losing the prompt block are the same event, and the model is never left holding
 an acknowledgement without rules.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-24.4-014", "kind": "behavior", "applies": "A standalone turn omits active instructions and activating in it always returns the body.", "level": "must"} -->
 A turn that stands alone (Section 10.1.1) carries no active skill in its prompt,
-so an activation in it MUST deliver the body, the skill active or not. What it
+so an activation in it MUST deliver the body, the skill active or not. <!-- /rfc --><!-- rfc: {"id": "RK-24.4-015", "kind": "behavior", "applies": "Standalone activation reads stored activations first and persists its activation for the next room-aware turn.", "level": "must"} -->What it
 activates counts for the conversation all the same, with what the room's stored
 rows show activated, which the turn reads first, none of it reaching its prompt:
-the next turn that reads the room carries the instructions. A stored row shows
+the next turn that reads the room carries the instructions. <!-- /rfc --><!-- rfc: {"id": "RK-24.4-016", "kind": "behavior", "applies": "Restoration uses the TOOL_CALL_END arguments actually served, including a before-tool-use rewrite.", "level": "must"} -->A stored row shows
 the skill its call ran with, its `TOOL_CALL_END`'s arguments, a `BEFORE_TOOL_USE`
 rewrite included: those are the rules the model received.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-24.4-017", "kind": "behavior", "applies": "Activated tools stay open in the same conversation while the skill is active.", "level": "must"} -->
 Tool gating (Section 21) follows the same scope: tools revealed by activating a
 skill stay revealed while the skill is active.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-24.4-018", "kind": "behavior", "applies": "A served skill's instructions stay separate from the binding rules of local skills.", "level": "must"} -->
 A skill an MCP server serves follows this lifecycle with what Section 24.7
 adds: its instructions are data set apart as that server's, never among the
-binding rules of the host's own skills, and a lost record of its activation
+binding rules of the host's own skills, <!-- /rfc --><!-- rfc: {"id": "RK-24.4-019", "kind": "behavior", "applies": "Lost served activation is never restored from stored history.", "level": "must"} -->and a lost record of its activation
 is not restored from the stored history.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-24.4-020", "kind": "behavior", "applies": "Unknown skill activation names the missing skill and hints at matching callable tools.", "level": "must"} -->
 An activation that finds no skill under its name, when that name matches tools
 the turn may call (a model that took the `spotify_play` tool for a "spotify"
-skill), answers with the skill's absence and names those tools, and reveals
+skill), answers with the skill's absence and names those tools, <!-- /rfc --><!-- rfc: {"id": "RK-24.4-021", "kind": "behavior", "applies": "Once served, the missing-skill hint replaces the reveal window, omitting already declared tools, for the rest of the session.", "level": "must"} -->and reveals
 them as `find_tools` reveals its matches (the window swapped, what is declared
-anyway left out), for the rest of the session, once the call is served: an
-`ON_TOOL_CALL` block reveals nothing. The same answer and the same reveal on
-every door, text or realtime; where the tools are reached through `call_tool`,
-the answer says so. Only the turn's own catalogue is matched, never the tools
-the channel serves itself. A skill that exists but is unavailable answers with
+anyway left out), for the rest of the session, once the call is served: <!-- /rfc --><!-- rfc: {"id": "RK-24.4-022", "kind": "behavior", "applies": "A hook-blocked missing-skill activation reveals no tools.", "level": "must"} -->an
+`ON_TOOL_CALL` block reveals nothing. <!-- /rfc --><!-- rfc: {"id": "RK-24.4-023", "kind": "behavior", "applies": "Realtime feature: a missing-skill activation returns the same answer and reveals tools as on text channels.", "level": "must"} -->The same answer and the same reveal on
+every door, text or realtime; <!-- /rfc --><!-- rfc: {"id": "RK-24.4-024", "kind": "behavior", "applies": "Where matching tools are reached through call_tool, including a realtime provider with fixed tools, the hint identifies that gateway.", "level": "must"} -->where the tools are reached through `call_tool`,
+the answer says so. <!-- /rfc --><!-- rfc: {"id": "RK-24.4-025", "kind": "behavior", "applies": "The missing-skill hint matches the current turn's tools and excludes channel-served tools.", "level": "must"} -->Only the turn's own catalogue is matched, never the tools
+the channel serves itself. <!-- /rfc --><!-- rfc: {"id": "RK-24.4-026", "kind": "behavior", "applies": "An unavailable skill returns its reason without a matching-tool hint.", "level": "must"} -->A skill that exists but is unavailable answers with
 its reason and no such hint.
 <!-- /rfc -->
 
 ### 24.5 Loading Failures
 
-<!-- rfc: {"id": "RK-24.5-001", "kind": "behavior", "applies": "§24.5 Loading Failures; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-24.5-002", "kind": "behavior", "applies": "Invalid or unparseable deployed skills are deployment failures.", "level": "must"} -->
 A skill that cannot be parsed, or whose metadata does not validate, is a
 deployment error rather than a runtime condition. The two have opposite
 remedies. A skill that exists but cannot be used in the present context is a
@@ -23228,6 +23344,8 @@ fact the model can be told and can work around; a malformed `SKILL.md` is a
 mistake in what someone deployed, and nothing the model does at runtime will
 repair it.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-24.5-003", "kind": "behavior", "applies": "Loading failures cannot silently omit a skill.", "level": "must"} -->
 An implementation MUST NOT silently omit a skill it failed to load. Omission is
 the worst outcome available: the catalogue simply does not list the capability,
 the model is never told it was meant to exist, and the agent answers as though
@@ -23236,48 +23354,60 @@ error surfaces much later, as an agent that inexplicably cannot do the thing it
 was configured to do, by which point the frontmatter typo that caused it is far
 out of view.
 
-Discovery MUST therefore fail by default on the first skill it cannot load, and
-MUST report which skill failed and why. A directory that cannot be scanned is
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-24.5-004", "kind": "behavior", "applies": "Default discovery stops at the first unparseable skill.", "level": "must"} -->
+Discovery MUST therefore fail by default on the first skill it cannot load, and<!-- /rfc --><!-- rfc: {"id": "RK-24.5-005", "kind": "behavior", "applies": "Default discovery identifies the failed skill and gives the reason.", "level": "must"} -->
+MUST report which skill failed and why. <!-- /rfc --><!-- rfc: {"id": "RK-24.5-006", "kind": "behavior", "applies": "An unscannable directory is reported as a discovery failure.", "level": "must"} -->A directory that cannot be scanned is
 the same class of failure and MUST be reported the same way: returning an empty
 count for a path that does not exist is, to the caller, indistinguishable from a
 directory that is genuinely empty.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-24.5-007", "kind": "behavior", "applies": "An implementation may offer a discovery mode that logs failures and continues.", "level": "may"} -->
 An implementation MAY offer a mode that logs each failure and continues. It is
 the right behaviour where skills come from a source the deployment does not
-control and a partial catalogue beats no service at all. That mode MUST be
-requested explicitly by the caller and MUST NOT be the default, and every
+control and a partial catalogue beats no service at all. <!-- /rfc --><!-- rfc: {"id": "RK-24.5-008", "kind": "behavior", "applies": "Lenient discovery requires an explicit caller opt-in.", "level": "must"} -->That mode MUST be
+requested explicitly by the caller and MUST NOT be the default, <!-- /rfc --><!-- rfc: {"id": "RK-24.5-009", "kind": "behavior", "applies": "Lenient discovery logs the reason for every skipped skill.", "level": "must"} -->and every
 skipped skill MUST be logged with the reason it was skipped.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-24.5-010", "kind": "behavior", "applies": "Discovery commits the entire discovered set or preserves the preceding registry.", "level": "must"} -->
 Discovery MUST NOT leave the registry partially populated. Whatever the outcome,
 the registry a caller observes afterwards MUST be either the state that preceded
 the call or the state with every discovered skill present. A half-filled
 catalogue reproduces exactly the silent gap this section exists to prevent, and
 does so at the moment the caller has most reason to believe the opposite.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-24.5-011", "kind": "behavior", "applies": "The fully rendered XML manifest, including escaping, wrappers, reasons and served origins, permits exactly 65,536 Unicode characters and no more.", "level": "must"} -->
 The registry's manifest, which every system prompt carries (§24.3), MUST NOT
 pass 65,536 Unicode characters in its final rendered XML, after escaping,
 including unavailable reasons, wrappers and served origins. Exactly 65,536
-characters is permitted. Operations that add or replace manifest content, or
+characters is permitted. <!-- /rfc --><!-- rfc: {"id": "RK-24.5-012", "kind": "behavior", "applies": "Every addition, replacement and registry-producing operation checks the prospective manifest before committing or returning, with a manifest-size error for excess.", "level": "must"} -->Operations that add or replace manifest content, or
 return a new registry, MUST validate the complete prospective manifest and fail
 with the manifest-size error before committing or returning an oversized result:
 discovery, registration, in-memory addition, an unavailable mark, a copy that
-removes unlisted marks, and registration or fetching of served entries included. A
-failed copy leaves its source unchanged; replacement is checked after removing
+removes unlisted marks, and registration or fetching of served entries included. A<!-- /rfc --><!-- rfc: {"id": "RK-24.5-013", "kind": "behavior", "applies": "A failed copy preserves the source registry.", "level": "must"} -->
+failed copy leaves its source unchanged; <!-- /rfc --><!-- rfc: {"id": "RK-24.5-014", "kind": "behavior", "applies": "Manifest replacement checks the state after dropping the old name's marks.", "level": "must"} -->replacement is checked after removing
 the replaced name's old marks, not with both versions temporarily present.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-24.5-015", "kind": "behavior", "applies": "Rejection of a served listing or fetch preserves the shared catalogue.", "level": "must"} -->
 For served skills, a rejected listing or fetch MUST NOT change the shared
-catalog either. Following a catalog update already accepted by another registry
+catalog either. <!-- /rfc --><!-- rfc: {"id": "RK-24.5-016", "kind": "behavior", "applies": "A local refusal reason that would overflow leaves the local record unchanged and forbids serving stale cached content.", "level": "must"} -->Following a catalog update already accepted by another registry
 is a local operation: if recording its refusal reason exceeds this registry's
 bound, the read fails before changing its local record and MUST NOT serve its
-old cached skill or file. It does not undo the earlier shared update or a
+old cached skill or file. <!-- /rfc --><!-- rfc: {"id": "RK-24.5-017", "kind": "behavior", "applies": "A failed local follow does not undo a previously accepted shared update or verification retirement.", "level": "must"} -->It does not undo the earlier shared update or a
 verification retirement (§24.7).
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-24.5-018", "kind": "behavior", "applies": "When callers share mutable metadata, oversized rendering fails without modifying caller objects.", "level": "must"} -->
 An implementation exposing mutable metadata shared with its caller MUST also
 reject an oversized manifest at rendering, without changing the caller's
-objects. Direct writes through such aliases are not registry transactions.
+objects. Direct writes through such aliases are not registry transactions.<!-- /rfc --><!-- rfc: {"id": "RK-24.5-019", "kind": "behavior", "applies": "Removing or hiding entries may partially repair oversized state introduced by callers.", "level": "may"} -->
 Operations that only remove or hide entries MAY reduce an oversized state
 introduced through external aliases in several steps; they need not reject a
-partial repair, but rendering MUST still reject any oversized result. A caller
+partial repair, <!-- /rfc --><!-- rfc: {"id": "RK-24.5-020", "kind": "behavior", "applies": "A partially repaired manifest still fails to render while oversized.", "level": "must"} -->but rendering MUST still reject any oversized result. <!-- /rfc --><!-- rfc: {"id": "RK-24.5-021", "kind": "behavior", "applies": "Replacing the offending entry or returning a fitting subset can succeed without repairing the source registry.", "level": "must"} -->A caller
 can also replace an offending entry or return a fitting subset copy without
 repairing its source. A manifest without a bound grows each prompt, and every
 turn's cost, with each skill a deployment adds.
@@ -23285,10 +23415,12 @@ turn's cost, with each skill a deployment adds.
 
 ### 24.6 Access to Bundled Files
 
-<!-- rfc: {"id": "RK-24.6-001", "kind": "behavior", "applies": "§24.6 Access to Bundled Files; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-24.6-002", "kind": "behavior", "applies": "Resolution of every bundled reference and script is confined to its skill directory.", "level": "must"} -->
 A skill's references and scripts are addressed by name, and the name is chosen
 by the model. Resolution MUST be confined to the skill's own directory.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-24.6-003", "kind": "behavior", "applies": "A name filter alone does not establish containment; resolution follows links and verifies the destination remains inside the directory.", "level": "must"} -->
 Filtering the name does not achieve that, and an implementation MUST NOT rely on
 name filtering alone. A name containing no traversal sequence, no separator and
 no drive letter still leaves the directory when a symbolic link bearing that
@@ -23297,42 +23429,50 @@ links followed, and MUST verify that the result is still inside the skill
 directory, rejecting it otherwise. Containment is a property of where a path
 ends up, not of how it is spelled.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-24.6-004", "kind": "behavior", "applies": "File reads verify the opened regular file corresponds to the checked path within the skill directory.", "level": "must"} -->
 The file an implementation reads MUST be the one whose path it checked. It
 opens the resolved path and verifies the open file before reading it: a
 regular file, which the path resolved again still names, inside the
-directory. Where the implementation reads the path the system gives an open
+directory. <!-- /rfc --><!-- rfc: {"id": "RK-24.6-005", "kind": "behavior", "applies": "Where system-provided open-file paths are inspected, the path must be readable and inside the directory.", "level": "must"} -->Where the implementation reads the path the system gives an open
 file, that path MUST be inside the directory, and a file whose path cannot be
-read there is refused. It MUST NOT read the checked path again by its name,
+read there is refused. <!-- /rfc --><!-- rfc: {"id": "RK-24.6-006", "kind": "behavior", "applies": "The implementation reads the checked open file without reopening it by name.", "level": "must"} -->It MUST NOT read the checked path again by its name,
 so that a file swapped for a link out of the directory between the check and
-the read is refused, not read. A skill's `SKILL.md` is held to the same rules:
+the read is refused, not read. <!-- /rfc --><!-- rfc: {"id": "RK-24.6-007", "kind": "behavior", "applies": "SKILL.md must itself resolve to a regular file inside the skill directory and be read via the verified open file.", "level": "must"} -->A skill's `SKILL.md` is held to the same rules:
 once its links are followed, it MUST be a regular file inside the skill's
 directory, read through the file its check opened.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-24.6-008", "kind": "behavior", "applies": "Path normalization precedes validation.", "level": "must"} -->
 Names MUST be normalized before they are inspected, so that a character which is
 not the ASCII separator but normalizes onto it cannot pass a check performed on
-the raw string. Absolute paths MUST be rejected, in every spelling the host
+the raw string. <!-- /rfc --><!-- rfc: {"id": "RK-24.6-009", "kind": "behavior", "applies": "All absolute path spellings recognized by the host are rejected.", "level": "must"} -->Absolute paths MUST be rejected, in every spelling the host
 platform recognises.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-24.6-010", "kind": "behavior", "applies": "A delegated script is verified and rejected on boundary failure before the host executor is invoked.", "level": "must"} -->
 The requirement does not lapse where execution policy — sandboxing, timeouts,
 permitted interpreters — is delegated to the integrator. *What* runs is part of
 the skill boundary; *how* it runs is not. An implementation that delegates
 execution MUST resolve the script name under these same rules and MUST reject a
-name that fails them before any integrator-supplied executor is invoked, and
+name that fails them before any integrator-supplied executor is invoked, and<!-- /rfc --><!-- rfc: {"id": "RK-24.6-011", "kind": "behavior", "applies": "Where execution is delegated, the executor should receive the resolved script path.", "level": "should"} -->
 SHOULD make the resolved path available to that executor. A check every
 integrator is expected to rediscover is a check some integrator will omit.
 <!-- /rfc -->
 
 ### 24.7 Skills Served over MCP
 
-<!-- rfc: {"id": "RK-24.7-001", "kind": "behavior", "applies": "§24.7 Skills Served over MCP; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-24.7-010", "kind": "non_testable", "applies": "An MCP server may implement the Skills extension by listing skills, fetching entries by URI and serving individual files as resources.", "level": "may"} -->
 An MCP server MAY serve skills beside its tools under the MCP Skills
 extension (`io.modelcontextprotocol/skills`, SEP-2640): it lists them with
 `skills/list`, answers `skills/get` for one by the URI of its `SKILL.md`, and
-serves each file of a skill as a resource read with `resources/read`. The
+serves each file of a skill as a resource read with `resources/read`. <!-- /rfc --><!-- rfc: {"id": "RK-24.7-011", "kind": "behavior", "applies": "A registry uses the skill format of Section 24.1 for server skills.", "level": "must"} -->The
 skill format is the one Section 24.1 reads. This section is what a registry,
 and every channel serving its skills, adds for such a skill; a skill the host
 deploys itself is unchanged.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-24.7-012", "kind": "structural", "applies": "Registry server registration accepts a provider and label, with dynamic content off, no approval callback and no execution-tools list entries by default.", "level": "must"} -->
 ```
 SkillRegistry
 └── add_mcp_server(provider, label, allow_dynamic = false,
@@ -23340,150 +23480,152 @@ SkillRegistry
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-24.7-002", "kind": "behavior", "applies": "§24.7 Skills Served over MCP; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-24.7-013", "kind": "behavior", "applies": "Server registration lists its skills, registers them under the host's label and returns the number registered.", "level": "must"} -->
 **Registration.** `add_mcp_server` lists the skills of the server `provider`
 is connected to (Section 21.2) and registers them under `label`, returning
-how many it registered. The label is the host's name for that server: an
+how many it registered. <!-- /rfc --><!-- rfc: {"id": "RK-24.7-014", "kind": "behavior", "applies": "The registry labels a server with the host-supplied identifier.", "level": "must"} -->The label is the host's name for that server: an
 identifier, never the name the server gives itself, which any server can
-copy. A registry MUST refuse a label it already holds for another provider,
+copy. <!-- /rfc --><!-- rfc: {"id": "RK-24.7-015", "kind": "behavior", "applies": "A label already assigned to another provider is refused.", "level": "must"} -->A registry MUST refuse a label it already holds for another provider,<!-- /rfc --><!-- rfc: {"id": "RK-24.7-016", "kind": "behavior", "applies": "A server without the Skills extension causes a registration error.", "level": "must"} -->
 and MUST raise for a server that does not declare the extension rather than
-register nothing in silence. The listing follows the cursor across every page
-within the bounds of a tool listing (Section 21.2) and reads no file: nothing
-of a skill is fetched before it is activated. A listing answered over a
+register nothing in silence. <!-- /rfc --><!-- rfc: {"id": "RK-24.7-017", "kind": "behavior", "applies": "Registration follows all cursor pages subject to the tool-listing bounds.", "level": "must"} -->The listing follows the cursor across every page
+within the bounds of a tool listing (Section 21.2) <!-- /rfc --><!-- rfc: {"id": "RK-24.7-018", "kind": "behavior", "applies": "Listing fetches no skill file before activation.", "level": "must"} -->and reads no file: nothing
+of a skill is fetched before it is activated. <!-- /rfc --><!-- rfc: {"id": "RK-24.7-019", "kind": "behavior", "applies": "An older negotiated protocol revision admits a complete listing without the new optional metadata.", "level": "must"} -->A listing answered over a
 connection that negotiated an earlier protocol revision may lack `ttlMs`,
-`cacheScope` and `resultType`, and is read as complete. Registering a server
+`cacheScope` and `resultType`, and is read as complete. <!-- /rfc --><!-- rfc: {"id": "RK-24.7-020", "kind": "behavior", "applies": "Re-registration retires entries no longer offered or accepted and stops serving them everywhere.", "level": "must"} -->Registering a server
 again replaces its entries: a skill it no longer offers, or offers in a form
-the host does not take, retires and is served nowhere any more; one it still
-offers keeps, while active, the entry it was loaded from. A copy of a registry
+the host does not take, retires and is served nowhere any more; <!-- /rfc --><!-- rfc: {"id": "RK-24.7-021", "kind": "behavior", "applies": "Active skills still offered retain their loaded entries on relisting.", "level": "must"} -->one it still
+offers keeps, while active, the entry it was loaded from. <!-- /rfc --><!-- rfc: {"id": "RK-24.7-022", "kind": "behavior", "applies": "A narrowed registry can only fetch its selected names and only a full registry can fetch an unlisted server entry.", "level": "must"} -->A copy of a registry
 narrowed to some names (Section 24.3) reaches those names and no other: only
 a registry that took the server whole asks it for a skill its listing did not
-hold. A registry and its copies share the entries the servers gave: a skill
+hold. <!-- /rfc --><!-- rfc: {"id": "RK-24.7-023", "kind": "behavior", "applies": "Retirement following relisting or verification failure is shared by all copies, including active ones.", "level": "must"} -->A registry and its copies share the entries the servers gave: a skill
 one of them retires, when it registers the server again or when a file fails
-its check, is retired in each of them, an active one included, and a copy made
+its check, is retired in each of them, an active one included, <!-- /rfc --><!-- rfc: {"id": "RK-24.7-024", "kind": "behavior", "applies": "Copies excluding unavailable names do not ask the server for them.", "level": "must"} -->and a copy made
 without the names its source marks unavailable never asks a server for them
 either.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-24.7-003", "kind": "behavior", "applies": "§24.7 Skills Served over MCP; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-24.7-025", "kind": "behavior", "applies": "An entry with missing or invalid resources is recorded as unavailable with a reason.", "level": "must"} -->
 **Entries.** Each entry is read on its own. An entry whose `resources` is
-missing or neither a list nor `"dynamic"`, whose URI's last segment before
-`SKILL.md` is not its frontmatter `name`, whose list omits its own `SKILL.md`,
-names a file outside the skill's directory or one file twice; an entry past
-512 files or 16 MiB in all; and an entry whose `resources` is `"dynamic"`
+missing or neither a list nor `"dynamic"`, <!-- /rfc --><!-- rfc: {"id": "RK-24.7-026", "kind": "behavior", "applies": "A mismatched directory name and frontmatter name makes an entry unavailable with a reason.", "level": "must"} -->whose URI's last segment before
+`SKILL.md` is not its frontmatter `name`, <!-- /rfc --><!-- rfc: {"id": "RK-24.7-027", "kind": "behavior", "applies": "The entry must list its own SKILL.md or be marked unavailable with a reason.", "level": "must"} -->whose list omits its own `SKILL.md`,<!-- /rfc --><!-- rfc: {"id": "RK-24.7-028", "kind": "behavior", "applies": "A resource list naming a file outside its skill directory makes the entry unavailable with a reason.", "level": "must"} -->
+names a file outside the skill's directory <!-- /rfc --><!-- rfc: {"id": "RK-24.7-081", "kind": "behavior", "applies": "A resource list naming the same file twice makes the entry unavailable with a reason.", "level": "must"} -->or one file twice; <!-- /rfc --><!-- rfc: {"id": "RK-24.7-029", "kind": "behavior", "applies": "A listing above 512 files makes the entry unavailable with a reason.", "level": "must"} -->an entry past
+512 files <!-- /rfc --><!-- rfc: {"id": "RK-24.7-082", "kind": "behavior", "applies": "A listing above 16 MiB in total makes the entry unavailable with a reason.", "level": "must"} -->or 16 MiB in all; <!-- /rfc --><!-- rfc: {"id": "RK-24.7-030", "kind": "behavior", "applies": "Dynamic resources are unavailable with a reason unless the host allows them.", "level": "must"} -->and an entry whose `resources` is `"dynamic"`
 while the host did not allow them (`allow_dynamic`) is registered as
 unavailable with its reason (Section 24.5: a skill the server meant to offer
-is never dropped in silence). The server's other skills stay usable. A
+is never dropped in silence). <!-- /rfc --><!-- rfc: {"id": "RK-24.7-031", "kind": "behavior", "applies": "One invalid entry does not prevent use of the server's other skills.", "level": "must"} -->The server's other skills stay usable. <!-- /rfc --><!-- rfc: {"id": "RK-24.7-032", "kind": "behavior", "applies": "Where dynamic entries are accepted, content is unverified and the reader stops at 16 MiB.", "level": "must"} -->A
 `"dynamic"` skill offers nothing to verify: a host that allows one takes its
 content unverified, and an implementation MUST stop reading such a skill once
 what it read reaches 16 MiB.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-24.7-004", "kind": "behavior", "applies": "§24.7 Skills Served over MCP; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-24.7-033", "kind": "behavior", "applies": "Served registry names combine the host label and the URI path, omitting the terminal SKILL.md and the skill scheme when present.", "level": "must"} -->
 **Names.** A skill an MCP server serves is registered under `<label>:<path>`,
 which is its name in the registry (Section 24.2): its path is its URI without
 the trailing `/SKILL.md`, and without the scheme when the scheme is
 `skill://` (`hf:hf-cli`, `hf:acme/billing/refunds`,
-`docs:github://owner/repo/skills/refunds`). A host's own skill is named as
+`docs:github://owner/repo/skills/refunds`). <!-- /rfc --><!-- rfc: {"id": "RK-24.7-034", "kind": "behavior", "applies": "Local skill names exclude a colon and registry names already held by a different origin cannot be reassigned.", "level": "must"} -->A host's own skill is named as
 Section 24.1 names it, which never holds `:`, and a registry MUST refuse to
 give a name it holds to a skill of another origin, so that a served skill
-never shadows a host's skill nor another server's, and the reverse. Two
-entries of one listing sharing a frontmatter `name` keep distinct paths. The
+never shadows a host's skill nor another server's, and the reverse. <!-- /rfc --><!-- rfc: {"id": "RK-24.7-035", "kind": "behavior", "applies": "Entries sharing a frontmatter name retain their distinct paths.", "level": "must"} -->Two
+entries of one listing sharing a frontmatter `name` keep distinct paths. The<!-- /rfc --><!-- rfc: {"id": "RK-24.7-036", "kind": "behavior", "applies": "A served entry, its verification and activation are identified by label and URI.", "level": "must"} -->
 skill's identity is the pair of its label and its URI everywhere it is kept:
-the activation record, the entry held, what was verified. The manifest
+the activation record, the entry held, what was verified. <!-- /rfc --><!-- rfc: {"id": "RK-24.7-037", "kind": "behavior", "applies": "The skills manifest identifies the server label as origin and quotes the description as outside text.", "level": "must"} -->The manifest
 (`to_prompt_xml()`) names the label as the skill's origin and gives its
-description as Section 6.4 quotes a text from outside. `requires` is read from
+description as Section 6.4 quotes a text from outside. <!-- /rfc --><!-- rfc: {"id": "RK-24.7-038", "kind": "behavior", "applies": "Served frontmatter prerequisites use the ordinary skill prerequisite rules.", "level": "must"} -->`requires` is read from
 the frontmatter as for any skill (Section 24.3).
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-24.7-005", "kind": "behavior", "applies": "§24.7 Skills Served over MCP; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-24.7-039", "kind": "behavior", "applies": "Activation fetches SKILL.md from its own server on demand.", "level": "must"} -->
 **Activation.** Activating such a skill reads its `SKILL.md` from its own
 server then, and not before. The content MUST match the entry before anything
-of it reaches the model: its length the entry's `size`, its SHA-256 digest
-the entry's `digest`, and its frontmatter, parsed, the entry's `frontmatter`
-field by field. The parsed frontmatter is normalized as JSON before comparison:
+of it reaches the model: <!-- /rfc --><!-- rfc: {"id": "RK-24.7-040", "kind": "behavior", "applies": "The fetched bytes match the entry's declared size before content reaches the model.", "level": "must"} -->its length the entry's `size`, <!-- /rfc --><!-- rfc: {"id": "RK-24.7-041", "kind": "behavior", "applies": "The fetched bytes match the entry's SHA-256 digest before content reaches the model.", "level": "must"} -->its SHA-256 digest
+the entry's `digest`, <!-- /rfc --><!-- rfc: {"id": "RK-24.7-042", "kind": "behavior", "applies": "Parsed frontmatter must match the listed frontmatter field by field.", "level": "must"} -->and its frontmatter, parsed, the entry's `frontmatter`
+field by field. <!-- /rfc --><!-- rfc: {"id": "RK-24.7-043", "kind": "behavior", "applies": "Nested and top-level YAML sets become arrays of normalized elements sorted by canonical JSON, including the empty set.", "level": "must"} -->The parsed frontmatter is normalized as JSON before comparison:
 YAML sets, including nested sets, become arrays of their normalized elements,
 sorted by each element's canonical JSON text (sorted object keys, UTF-8 and
-compact separators); an empty set becomes `[]`. YAML's equality determines
-set membership before normalization. Dates and binary values retain their
-existing string normalization. This replaces process-dependent set display
+compact separators); an empty set becomes `[]`. <!-- /rfc --><!-- rfc: {"id": "RK-24.7-044", "kind": "behavior", "applies": "YAML equality determines set membership before normalization for comparison.", "level": "must"} -->YAML's equality determines
+set membership before normalization. <!-- /rfc --><!-- rfc: {"id": "RK-24.7-045", "kind": "behavior", "applies": "Frontmatter retains the existing string normalizations for dates and binary values.", "level": "must"} -->Dates and binary values retain their
+existing string normalization. <!-- /rfc --><!-- rfc: {"id": "RK-24.7-046", "kind": "non_testable", "applies": "A publishing server using a former set-display string must publish the canonical array.", "level": "must"} -->This replaces process-dependent set display
 strings: a server publishing that former string MUST publish the canonical
-array instead; an old string is not an equivalent value. The file digests and
+array instead; <!-- /rfc --><!-- rfc: {"id": "RK-24.7-047", "kind": "behavior", "applies": "A former set-display string is not accepted as equivalent to a canonical array.", "level": "must"} -->an old string is not an equivalent value. <!-- /rfc --><!-- rfc: {"id": "RK-24.7-048", "kind": "behavior", "applies": "File digests and approval fingerprints cover the original file bytes.", "level": "must"} -->The file digests and
 approval fingerprint still cover the same file bytes, not their normalized
-representation. A previously loaded cache retains its held content until it
-is reloaded; new verified loads use this normalization.
+representation. <!-- /rfc --><!-- rfc: {"id": "RK-24.7-049", "kind": "behavior", "applies": "Existing held content remains usable until reload and new verification applies the canonical normalization.", "level": "must"} -->A previously loaded cache retains its held content until it
+is reloaded; new verified loads use this normalization.<!-- /rfc --><!-- rfc: {"id": "RK-24.7-050", "kind": "behavior", "applies": "Verification mismatch loads no content, refreshes the entry with skills/get and returns a verification or changed-skill response without a body.", "level": "must"} -->
 A mismatch loads nothing: the registry reads the entry again
 with `skills/get`, and the activation answers that the skill changed on its
-server or could not be verified, without its body. An entry read again is held
+server or could not be verified, without its body. <!-- /rfc --><!-- rfc: {"id": "RK-24.7-051", "kind": "behavior", "applies": "Refreshed entries undergo the listing checks and rejected entries stay unavailable with their reason.", "level": "must"} -->An entry read again is held
 to the rules a listed one is (Entries): one the host does not take leaves the
-skill unavailable with its reason. The instructions then
+skill unavailable with its reason. <!-- /rfc --><!-- rfc: {"id": "RK-24.7-052", "kind": "behavior", "applies": "Served instructions remain whole in a labeled and URI-attributed skill block after the host's binding rules throughout their activation lifecycle.", "level": "must"} -->The instructions then
 follow Section 24.4 (whole, carried by the system prompt, acknowledged
 afterwards, retired as if never activated) as data: in a `<skill>` block
 (Section 6.4) naming the label and the URI, after the host's own skills and
-never among their binding rules. Where the body travels in the activation's
+never among their binding rules. <!-- /rfc --><!-- rfc: {"id": "RK-24.7-053", "kind": "behavior", "applies": "Realtime feature: a fixed-instructions provider returns served skill bodies as attributed outside data.", "level": "must"} -->Where the body travels in the activation's
 result (a realtime provider whose instructions are fixed), it is set apart
-the same way. A skill's content outranks nothing else in the context. An
+the same way. <!-- /rfc --><!-- rfc: {"id": "RK-24.7-054", "kind": "behavior", "applies": "Served content has no higher instruction authority than the surrounding context.", "level": "must"} -->A skill's content outranks nothing else in the context. <!-- /rfc --><!-- rfc: {"id": "RK-24.7-055", "kind": "behavior", "applies": "Activation records the entry actually loaded and cannot activate an unavailable skill, including one previously loaded.", "level": "must"} -->An
 activation records what it loaded, never what a second lookup finds: a skill
-marked unavailable is never activated, one loaded before included. A session
+marked unavailable is never activated, one loaded before included. <!-- /rfc --><!-- rfc: {"id": "RK-24.7-056", "kind": "behavior", "applies": "The session preserves the served body's original rendered separation on later delivery.", "level": "must"} -->A session
 keeps an activated skill's body as it rendered it, set apart, so nothing read
 later delivers it otherwise.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-24.7-057", "kind": "behavior", "applies": "An unknown qualified name under a known server label is looked up with skills/get even when absent from a listing.", "level": "must"} -->
 A listing may be partial or empty, which proves no skill missing. An
 activation naming `<label>:<path>` that the registry does not hold, under a
-label it holds, asks that server for the entry with `skills/get`: an entry it
+label it holds, asks that server for the entry with `skills/get`: <!-- /rfc --><!-- rfc: {"id": "RK-24.7-058", "kind": "behavior", "applies": "An on-demand entry is registered subject to listing checks, hidden from the manifest and activated.", "level": "must"} -->an entry it
 returns is registered as a listed one would be, kept out of the manifest
-(`mark_unlisted`), and activated; an error answers that the server serves no
+(`mark_unlisted`), and activated; <!-- /rfc --><!-- rfc: {"id": "RK-24.7-059", "kind": "behavior", "applies": "A failed on-demand lookup reports that the server serves no such skill.", "level": "must"} -->an error answers that the server serves no
 such skill. A skill the server's own instructions point to is reached so.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-24.7-006", "kind": "behavior", "applies": "§24.7 Skills Served over MCP; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-24.7-060", "kind": "behavior", "applies": "The registry holds the entry used to activate the skill for as long as it stays active.", "level": "must"} -->
 **Files.** While such a skill is active, the registry holds the entry it was
-loaded from. `read_skill_reference` resolves the name it is given against the
+loaded from. <!-- /rfc --><!-- rfc: {"id": "RK-24.7-061", "kind": "behavior", "applies": "A served reference is resolved relative to its skill directory and read from the same server.", "level": "must"} -->`read_skill_reference` resolves the name it is given against the
 skill's directory (`templates/invoice.md`), reads the file from the same
-server, and reads only a file that entry lists: a name the entry does not
+server, <!-- /rfc --><!-- rfc: {"id": "RK-24.7-062", "kind": "behavior", "applies": "A served reference absent from the loaded entry is refused as unverified.", "level": "must"} -->and reads only a file that entry lists: a name the entry does not
 list is refused as content that failed verification, whatever the server
-would serve. Each file read is verified against the entry as `SKILL.md` is,
-and reaches the model naming the same origin. A file that fails retires the
+would serve. <!-- /rfc --><!-- rfc: {"id": "RK-24.7-063", "kind": "behavior", "applies": "Reference content is verified against the held entry before reaching the model.", "level": "must"} -->Each file read is verified against the entry as `SKILL.md` is,<!-- /rfc --><!-- rfc: {"id": "RK-24.7-064", "kind": "behavior", "applies": "Served reference content names its original server when delivered to the model.", "level": "must"} -->
+and reaches the model naming the same origin. <!-- /rfc --><!-- rfc: {"id": "RK-24.7-065", "kind": "behavior", "applies": "A failed reference check retires the skill, refreshes the entry and calls for a new activation which delivers the current body.", "level": "must"} -->A file that fails retires the
 skill (Section 24.4): the registry reads the entry again, and the model is
-told to activate the skill again, which delivers its current body. A read
+told to activate the skill again, which delivers its current body. <!-- /rfc --><!-- rfc: {"id": "RK-24.7-066", "kind": "behavior", "applies": "Reading one server's skill must never query another server.", "level": "must"} -->A read
 never reaches another server: the content of one server's skill causes no
 read on another.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-24.7-007", "kind": "behavior", "applies": "§24.7 Skills Served over MCP; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-24.7-067", "kind": "behavior", "applies": "A lost served activation cannot be restored from history and the next activation delivers the body again.", "level": "must"} -->
 **Lost record.** An activation of such a skill is not restored from the
 stored history: its body is no longer held, so its next activation delivers it
-again (Section 24.4). A delivery that hands every skill's body over when a
+again (Section 24.4). <!-- /rfc --><!-- rfc: {"id": "RK-24.7-068", "kind": "behavior", "applies": "Realtime feature: in inline_full mode, served entries are unavailable with the reason that eager fetching would be required.", "level": "must"} -->A delivery that hands every skill's body over when a
 session starts (a realtime session in `inline_full` mode) would fetch them all
 ahead of need: there, a skill an MCP server serves is unavailable, with that
 reason.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-24.7-008", "kind": "behavior", "applies": "§24.7 Skills Served over MCP; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-24.7-069", "kind": "behavior", "applies": "The served skill's allowed_tools neither opens nor closes tool gates.", "level": "must"} -->
 **Permissions.** What such a skill's frontmatter would grant is not granted:
-its `allowed_tools` gates nothing and opens nothing (Section 24.2), and a
+its `allowed_tools` gates nothing and opens nothing (Section 24.2), <!-- /rfc --><!-- rfc: {"id": "RK-24.7-070", "kind": "behavior", "applies": "A nested SKILL.md remains an ordinary file of the served skill and is not activated.", "level": "must"} -->and a
 `SKILL.md` within its directory is one of its files, never a skill activated
-with it. Its files are never written to disk to be run: `run_skill_script`
-refuses it. While such a skill is active in a conversation, a call to a tool
+with it. <!-- /rfc --><!-- rfc: {"id": "RK-24.7-071", "kind": "behavior", "applies": "Served files are never materialized to disk for execution and run_skill_script refuses them.", "level": "must"} -->Its files are never written to disk to be run: `run_skill_script`
+refuses it. <!-- /rfc --><!-- rfc: {"id": "RK-24.7-072", "kind": "behavior", "applies": "Tools running code, including sandbox and host-configured tools, require approval for every served skill currently active in the conversation.", "level": "must"} -->While such a skill is active in a conversation, a call to a tool
 that runs code (a sandbox command, `sandbox_*`, and every tool the host names
 in `execution_tools`) is served only when `approve_execution` approves each
 such skill active there; an implementation MUST refuse the call otherwise (a
-refused call, Section 9.3), and always when the host gave no callback. The
+refused call, Section 9.3), <!-- /rfc --><!-- rfc: {"id": "RK-24.7-073", "kind": "behavior", "applies": "An execution call with active served skills and no approval callback is refused.", "level": "must"} -->and always when the host gave no callback. <!-- /rfc --><!-- rfc: {"id": "RK-24.7-074", "kind": "behavior", "applies": "Approval receives the server label, URI, conversation and fingerprint of the sorted file URIs and digests.", "level": "must"} -->The
 callback receives the label, the URI, the conversation and the entry's
-fingerprint (the SHA-256 of its files' URIs and digests, sorted), and an
+fingerprint (the SHA-256 of its files' URIs and digests, sorted), <!-- /rfc --><!-- rfc: {"id": "RK-24.7-075", "kind": "behavior", "applies": "Approval is scoped to the conversation, fingerprint and registry provider, and changed files or another registry require a fresh approval.", "level": "must"} -->and an
 approval holds for that conversation, that fingerprint and the registry's
 server that gave it only: an entry read again with another set of files is
 asked again, and the same entry another registry serves (a turn's own,
-Section 24.3) asks that registry's callback. A host that keeps approvals keeps
-them by fingerprint. A `"dynamic"` skill has no fingerprint an approval could bind,
+Section 24.3) asks that registry's callback. <!-- /rfc --><!-- rfc: {"id": "RK-24.7-076", "kind": "non_testable", "applies": "A host persisting approvals keeps them by fingerprint.", "level": "must"} -->A host that keeps approvals keeps
+them by fingerprint. <!-- /rfc --><!-- rfc: {"id": "RK-24.7-077", "kind": "behavior", "applies": "The approval callback is informed that a dynamic skill has no fingerprint.", "level": "must"} -->A `"dynamic"` skill has no fingerprint an approval could bind,
 and the callback is told so.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-24.7-009", "kind": "behavior", "applies": "§24.7 Skills Served over MCP; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-24.7-078", "kind": "behavior", "applies": "A served digest establishes only consistency with the entry and content retains outside-text treatment.", "level": "must"} -->
 **Trust.** A digest the server supplies proves the content consistent with an
 entry from the same server, never trustworthy: the content stays text from
-outside (Section 6.4). Content kept on disk between reads MUST meet the
+outside (Section 6.4). <!-- /rfc --><!-- rfc: {"id": "RK-24.7-079", "kind": "behavior", "applies": "Disk caches, where used, must be inaccessible to model-executed code and outside discoverable skill directories, and verify content anew on every read.", "level": "must"} -->Content kept on disk between reads MUST meet the
 extension's cache requirements (out of reach of what the model runs, verified
-again on each read, outside every directory a registry discovers skills in);
+again on each read, outside every directory a registry discovers skills in);<!-- /rfc --><!-- rfc: {"id": "RK-24.7-080", "kind": "behavior", "applies": "A cache retained in memory for the held entry need not implement persistent-cache requirements.", "level": "must"} -->
 content kept in memory for the entry held needs none of them.
 
 <!-- /rfc -->

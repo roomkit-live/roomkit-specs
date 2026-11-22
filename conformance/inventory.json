@@ -1427,49 +1427,49 @@
       "section": "24",
       "sha256": "adb773866e49a1bff655e26c48a2e128caf3464112a761b436ef395ae0834d7d",
       "classification": "normative",
-      "review": "Source inventory: Skills Framework. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "This heading introduces discoverable skill packages and contains no obligation or neighbouring unit under the heading."
     },
     {
       "section": "24.1",
-      "sha256": "08adcb8d7d40830951f6387b049b14f019711e048739bf6c2608e314815e89dd",
+      "sha256": "4eca2256edfbc9c36b94d9cf6215cc3162e27ec0191cc01b6c7f4764efea7bd9",
       "classification": "normative",
-      "review": "Source inventory: Skill Definition. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "The skill definition and the bounded frontmatter parser are distinguished from the optional local line-oriented reader and the forms both readers must preserve or reject."
     },
     {
       "section": "24.2",
-      "sha256": "268d23f77baa4c6deb6f3e6162174334f2379b8369c5562fa7b8289969fffcd8",
+      "sha256": "2861dc8ddedc3eec65599816e4759885366c30a78b8e985aa47b8826ffeeb4d5",
       "classification": "normative",
-      "review": "Source inventory: SkillMetadata. Reviewed the full structural block after preserving allowed_tools as string, list or null and correcting bracketed text to a list. All fields and defaults remain inventoried; no complete behavioral coverage is inferred. The metadata native tests and skill-gating bracket scenarios prove this amendment (RMK-1709)."
+      "review": "The metadata schema separates identity, rendered compatibility, gate forms and their restricted glob language, exact prerequisites and string-valued extra metadata."
     },
     {
       "section": "24.3",
-      "sha256": "1650facdc786686c17b726bfbd2b49f8721292e0c092c3ad8f5a19ab76ae44dc",
+      "sha256": "8be86dd9a9479ff2bc5f73de9a2f8df0703ba557726182eb1a641c727d38ed53",
       "classification": "normative",
-      "review": "Source inventory: SkillRegistry. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Registry operations, copying and marks, prompt and per-turn scope, text and realtime prerequisite checks, host matching, admitted tools and overlapping gates have distinct units."
     },
     {
       "section": "24.4",
-      "sha256": "687400ac29e2e1523c96d6c76aba5d9223735bad5848c841c6cced5a9d578972",
+      "sha256": "a3d32240e97072dea9089d3c12d413e7bab6b6d8eff785078e8a2afaa597169f",
       "classification": "normative",
-      "review": "Source inventory: Activation Lifecycle. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Activation lifetime, context carriers, acknowledgements, compression, conversation isolation, retirement and restoration, standalone turns, gate lifetime and missing-skill hints are distinguished. Realtime hints and served history have separate rules."
     },
     {
       "section": "24.5",
-      "sha256": "91ee41f69e84e236e795f5329809c42a3cd99d90db018c51ed9c09b9087e61f5",
+      "sha256": "ee82ca6fe592dc041049f2292c487aca19399143d9128adeb57cc4d09e55fc58",
       "classification": "normative",
-      "review": "Reviewed the global final XML bound amendment against local registry and existing Python MCP tests, including aliases, atomic preflights and shared retirement. The complete discovery source unit is retained; this is an inventory review, not a claim of full discovery coverage."
+      "review": "Strict and lenient discovery, reporting, atomic updates, the Unicode manifest limit, externally mutated metadata and transaction boundaries for replacements, copies and shared served catalogs are distinguished."
     },
     {
       "section": "24.6",
-      "sha256": "a159dbe70015a3c5b42e1bb78b93f72e0db52b14ec3e292fbfb787edfc92540d",
+      "sha256": "06c75b8b9971fb53f9819c9b54c7a93b2cc4a8771e68fdbc95434fe61bc15cf0",
       "classification": "normative",
-      "review": "Source inventory: Access to Bundled Files. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Bundled file resolution, verification of the opened file and SKILL.md, normalization and absolute paths, and the delegated script executor boundary are reviewed against the amended specification."
     },
     {
       "section": "24.7",
-      "sha256": "64afbff13eaa167f61a502a4c32e91cd680879a853042aef7e89f3cde6fc334e",
+      "sha256": "0da43f1813ab3df986d280137e5ba52f64fa0dc650b6a277c2c2c4dbd92769c0",
       "classification": "normative",
-      "review": "Source inventory: Skills Served over MCP. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage. Re-read after the canonical YAML-set normalization amendment to Activation; the existing contextual classification is retained without implementation coverage credit."
+      "review": "Units cover server and registry contracts, paging and shared catalogs, validation, origin and qualified identity, canonical frontmatter, verified activation and references, lost records, realtime delivery, execution consent and conditional caching."
     },
     {
       "section": "25",
