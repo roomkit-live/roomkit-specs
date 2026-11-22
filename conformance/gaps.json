@@ -196,6 +196,196 @@
       "card": "RMK-1925",
       "note": "Exercise this realtime behavior in a shared feature scenario: the addressed realtime channel delivers the handler's greeting to each of its sessions."
     },
+    "RK-19.7-006": {
+      "class": "phase6",
+      "card": "RMK-1929",
+      "note": "Attach one realtime channel to multiple rooms and observe it serving sessions in both."
+    },
+    "RK-19.7-008": {
+      "class": "phase6",
+      "card": "RMK-1929",
+      "note": "Install strategy additions in one room on a shared realtime channel and inspect the declarations in each room's session."
+    },
+    "RK-19.7-010": {
+      "class": "phase6",
+      "card": "RMK-1929",
+      "note": "Inspect tools declared to realtime sessions on both an installed room and a different room using the same channel."
+    },
+    "RK-19.7-014": {
+      "class": "phase6",
+      "card": "RMK-1929",
+      "note": "Change the active agent in one of two realtime rooms and inspect each session's configuration."
+    },
+    "RK-19.7-027": {
+      "class": "phase6",
+      "card": "RMK-1929",
+      "note": "Configure global realtime delegation and check declaration and destination across two rooms."
+    },
+    "RK-19.7-036": {
+      "class": "writable",
+      "card": "RMK-1929",
+      "note": "Set store_fault on the initial list_bindings snapshot, assert the returned error and the retained install claim. The native Python case test_an_uninstall_after_an_install_the_store_cut_short_frees_the_room identifies this boundary."
+    },
+    "RK-19.7-037": {
+      "class": "writable",
+      "card": "RMK-1929",
+      "note": "After failing the snapshot with store_fault, explicitly uninstall under a bound and install a replacement."
+    },
+    "RK-19.7-054": {
+      "class": "writable",
+      "card": "RMK-1929",
+      "note": "Hold a claimed installation, close the room in another call and check that close returns before the installation resumes."
+    },
+    "RK-19.7-055": {
+      "class": "step",
+      "card": "RMK-1929",
+      "note": "Make strategy cleanup raise on room close and observe its log message and the closed room together; the shared execution surface has no application-log oracle."
+    },
+    "RK-19.7-057": {
+      "class": "writable",
+      "card": "RMK-1929",
+      "note": "Race a gated strategy claim against closing the room and verify the installer does not land after close."
+    },
+    "RK-19.7-069": {
+      "class": "phase6",
+      "card": "RMK-1929",
+      "note": "Observe the same shared agent or realtime channel's voice in two rooms while strategy installs and turns alter the active voice in one room."
+    },
+    "RK-19.7-070": {
+      "class": "writable",
+      "card": "RMK-1929",
+      "note": "Read a shared binding's original options before and after strategy install and work in a second room. Tests of selected child transport bindings do not read back the original binding."
+    },
+    "RK-19.7.1-009": {
+      "class": "phase6",
+      "card": "RMK-1929",
+      "note": "A named physical voice channel exposes the installed pipeline's agent voice map."
+    },
+    "RK-19.7.1-010": {
+      "class": "phase6",
+      "card": "RMK-1929",
+      "note": "Enable the host's greet_on_handoff option and observe the new active agent's greeting on the named voice channel."
+    },
+    "RK-19.7.1-011": {
+      "class": "phase6",
+      "card": "RMK-1929",
+      "note": "Observe the old agent's farewell and the new agent's greeting in order, and verify that a second room's voice hooks are not invoked."
+    },
+    "RK-19.7.1-012": {
+      "class": "phase6",
+      "card": "RMK-1929",
+      "note": "Installing a room-scoped Pipeline with a realtime voice channel is refused."
+    },
+    "RK-19.7.3-004": {
+      "class": "writable",
+      "card": "RMK-1929",
+      "note": "Send media, a composite and empty text to a one-pass supervisor and check its channel answers each with no worker. The comparable existing no-task scenario installs Loop."
+    },
+    "RK-19.7.3-014": {
+      "class": "step",
+      "card": "RMK-1929",
+      "note": "Observe the original background exception in the application log independently of the generic instruction and the bus entry."
+    },
+    "RK-19.7.3-016": {
+      "class": "phase6",
+      "card": "RMK-1929",
+      "note": "Call the same background strategy tool from sessions on two voice channels in one room and observe exclusivity across them."
+    },
+    "RK-19.7.3-017": {
+      "class": "phase6",
+      "card": "RMK-1929",
+      "note": "Observe the outcome of a strategy call on the originating session when other voice sessions are available."
+    },
+    "RK-19.7.3-024": {
+      "class": "writable",
+      "card": "RMK-1929",
+      "note": "Start a gated background team, close the framework, and inspect worker terminal entries before the run's failure, with no hand-back."
+    },
+    "RK-19.7.3-030": {
+      "class": "step",
+      "card": "RMK-1929",
+      "note": "Expose a configuration-only supervisor to the shared sequential team fixture, then inspect the workers' actual inputs and order without a supervisor generation. Python tests/orchestration/test_supervisor_text_background.py::test_a_supervisor_without_a_model_lets_its_chain_run_unsupervised checks worker order natively."
+    },
+    "RK-19.7.3-032": {
+      "class": "writable",
+      "card": "RMK-1929",
+      "note": "Begin framework shutdown around a gated background run, then dispatch another and observe that it starts no workers."
+    },
+    "RK-19.7.3-040": {
+      "class": "writable",
+      "card": "RMK-1929",
+      "note": "Gate a formulation turn and inspect a simultaneous ordinary request from a second room on the shared supervisor, checking its prompt and configuration."
+    },
+    "RK-19.7.4-007": {
+      "class": "step",
+      "card": "RMK-1929",
+      "note": "Provide a declared reviewer whose turns take no owner tools, script both APPROVED and verdict-shaped text, and inspect its declared tools and unapproved outcome. Python tests/test_declared_strategies.py::test_a_reviewer_whose_turns_take_no_owner_tools_approves_nothing and Rust crates/roomkit/tests/review_loop.rs::a_reviewer_whose_turns_take_no_owner_tools_approves_nothing test that outcome natively."
+    },
+    "RK-19.7.4-018": {
+      "class": "phase6",
+      "card": "RMK-1929",
+      "note": "Dispatch delegate_loop from a realtime voice session and observe its private instruction addressed to that voice channel."
+    },
+    "RK-19.7.4-019": {
+      "class": "phase6",
+      "card": "RMK-1929",
+      "note": "Inspect the 4,000-character default and worker framing in an asynchronous realtime voice Loop hand-back."
+    },
+    "RK-19.7.4-020": {
+      "class": "phase6",
+      "card": "RMK-1929",
+      "note": "Check that the asynchronous voice Loop outcome is excluded from participant messages."
+    },
+    "RK-19.7.4-021": {
+      "class": "phase6",
+      "card": "RMK-1929",
+      "note": "Listen for how the asynchronous voice hand-back describes a producer cutoff and verify it excludes the underlying task error."
+    },
+    "RK-19.7.4-022": {
+      "class": "phase6",
+      "card": "RMK-1929",
+      "note": "Make the realtime voice Loop raise, then inspect its generic reasoning fallback and exclusion of the original message."
+    },
+    "RK-19.7.4-023": {
+      "class": "phase6",
+      "card": "RMK-1929",
+      "note": "Observe the original exception in the application's logs for a voice-triggered asynchronous Loop."
+    },
+    "RK-19.7.4-024": {
+      "class": "phase6",
+      "card": "RMK-1929",
+      "note": "Call the asynchronous Loop from multiple voice channels sharing a room and check one run is admitted."
+    },
+    "RK-19.7.4-025": {
+      "class": "phase6",
+      "card": "RMK-1929",
+      "note": "Dispatch another Loop from the voice session's hand-back and check that the previous run freed the room first."
+    },
+    "RK-19.7.4-026": {
+      "class": "phase6",
+      "card": "RMK-1929",
+      "note": "Inspect the terminal status of a voice-triggered Loop stopped by its producer task."
+    },
+    "RK-19.7.4-027": {
+      "class": "writable",
+      "card": "RMK-1929",
+      "note": "Hold a Loop producer and its reviewer independently past a run bound, release them and verify that no strategy per-task timeout cut either delegation."
+    },
+    "RK-19.7.4-029": {
+      "class": "phase6",
+      "card": "RMK-1929",
+      "note": "Close the framework with a voice-triggered asynchronous Loop active and inspect its cancellation, cleanup and absence of hand-back."
+    },
+    "RK-19.7.4-030": {
+      "class": "phase6",
+      "card": "RMK-1929",
+      "note": "Observe the original exception in the status bus for an asynchronous voice Loop failure."
+    },
+    "RK-19.7.4-031": {
+      "class": "phase6",
+      "card": "RMK-1929",
+      "note": "Verify that an asynchronous Loop returns its instruction to the originating realtime voice session."
+    },
     "RK-19.8-003": {
       "class": "step",
       "card": "RMK-1925",

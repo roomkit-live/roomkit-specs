@@ -4221,6 +4221,906 @@
       "orchestration/a-handoff-greeting-is-the-active-agent-s-line": "040e5d0b8cc604bcc6dd20e8795f5d64b53baabd150414f5b5a4ad02b43122cc",
       "orchestration/a-handoff-greeting-takes-the-handler-s-event-channel": "040e5d0b8cc604bcc6dd20e8795f5d64b53baabd150414f5b5a4ad02b43122cc"
     },
+    "RK-19.7-001": {
+      "discussion/a-discussion-installed-on-a-live-room-reads-its-history": "4aed4bb879ac545457cbff66cbb6b86c9602f5e5dc351060e59ecc2a9f2ea9db",
+      "orchestration/a-loop-revises-its-output-until-its-reviewer-approves": "4aed4bb879ac545457cbff66cbb6b86c9602f5e5dc351060e59ecc2a9f2ea9db",
+      "orchestration/a-pipeline-chains-its-agents-and-starts-at-the-first": "4aed4bb879ac545457cbff66cbb6b86c9602f5e5dc351060e59ecc2a9f2ea9db",
+      "orchestration/a-supervised-team-has-each-step-framed-and-checked": "4aed4bb879ac545457cbff66cbb6b86c9602f5e5dc351060e59ecc2a9f2ea9db",
+      "orchestration/a-swarm-hands-the-room-from-agent-to-agent": "4aed4bb879ac545457cbff66cbb6b86c9602f5e5dc351060e59ecc2a9f2ea9db"
+    },
+    "RK-19.7-005": {
+      "executors/a-declared-worker-s-result-tool-rides-its-child-room-s-requests-alone": "9096d65faa856e32b2adb53654f6be6ef26cf4db11e8f18d95ba1631f9d75f43",
+      "executors/one-build-serving-two-rooms-takes-a-strategy-s-tools-in-its-room-alone": "9096d65faa856e32b2adb53654f6be6ef26cf4db11e8f18d95ba1631f9d75f43",
+      "orchestration/a-pipeline-serves-each-room-its-own-install": "9096d65faa856e32b2adb53654f6be6ef26cf4db11e8f18d95ba1631f9d75f43",
+      "orchestration/a-room-s-handoff-tool-names-its-targets-in-that-room-alone": "9096d65faa856e32b2adb53654f6be6ef26cf4db11e8f18d95ba1631f9d75f43",
+      "orchestration/a-swarm-starts-at-its-entry-and-serves-each-room-its-own-install": "9096d65faa856e32b2adb53654f6be6ef26cf4db11e8f18d95ba1631f9d75f43",
+      "orchestration/an-auto-delegating-supervisor-in-two-rooms-runs-its-team-once-per-message-in-each": "9096d65faa856e32b2adb53654f6be6ef26cf4db11e8f18d95ba1631f9d75f43",
+      "orchestration/each-room-s-background-team-runs-its-own-workers": "9096d65faa856e32b2adb53654f6be6ef26cf4db11e8f18d95ba1631f9d75f43",
+      "orchestration/each-room-s-background-team-runs-its-own-workers-without-streaming": "9096d65faa856e32b2adb53654f6be6ef26cf4db11e8f18d95ba1631f9d75f43",
+      "orchestration/each-room-s-loop-runs-with-its-own-reviewer": "9096d65faa856e32b2adb53654f6be6ef26cf4db11e8f18d95ba1631f9d75f43",
+      "orchestration/each-room-s-per-worker-tools-run-with-its-own-install": "9096d65faa856e32b2adb53654f6be6ef26cf4db11e8f18d95ba1631f9d75f43",
+      "orchestration/each-room-s-per-worker-tools-run-with-its-own-install-without-streaming": "9096d65faa856e32b2adb53654f6be6ef26cf4db11e8f18d95ba1631f9d75f43",
+      "orchestration/each-room-s-supervisor-install-runs-its-own-team": "9096d65faa856e32b2adb53654f6be6ef26cf4db11e8f18d95ba1631f9d75f43"
+    },
+    "RK-19.7-007": {
+      "executors/a-declared-worker-s-result-tool-rides-its-child-room-s-requests-alone": "f01abcd70f78262724fb294859c2c867127bbbef0046bad8351588b98ef5b9da",
+      "executors/a-supervisor-s-passes-are-turns-of-its-agent-on-the-executor-hosting-it": "f01abcd70f78262724fb294859c2c867127bbbef0046bad8351588b98ef5b9da",
+      "executors/one-build-serving-two-rooms-takes-a-strategy-s-tools-in-its-room-alone": "f01abcd70f78262724fb294859c2c867127bbbef0046bad8351588b98ef5b9da",
+      "kit-executor/uninstalling-a-strategy-removes-only-its-activation": "f01abcd70f78262724fb294859c2c867127bbbef0046bad8351588b98ef5b9da",
+      "orchestration/a-pipeline-serves-each-room-its-own-install": "f01abcd70f78262724fb294859c2c867127bbbef0046bad8351588b98ef5b9da",
+      "orchestration/a-supervised-team-has-each-step-framed-and-checked": "f01abcd70f78262724fb294859c2c867127bbbef0046bad8351588b98ef5b9da",
+      "orchestration/a-swarm-starts-at-its-entry-and-serves-each-room-its-own-install": "f01abcd70f78262724fb294859c2c867127bbbef0046bad8351588b98ef5b9da",
+      "orchestration/an-auto-delegating-supervisor-in-two-rooms-runs-its-team-once-per-message-in-each": "f01abcd70f78262724fb294859c2c867127bbbef0046bad8351588b98ef5b9da",
+      "orchestration/each-room-s-background-team-runs-its-own-workers": "f01abcd70f78262724fb294859c2c867127bbbef0046bad8351588b98ef5b9da",
+      "orchestration/each-room-s-background-team-runs-its-own-workers-without-streaming": "f01abcd70f78262724fb294859c2c867127bbbef0046bad8351588b98ef5b9da",
+      "orchestration/each-room-s-loop-runs-with-its-own-reviewer": "f01abcd70f78262724fb294859c2c867127bbbef0046bad8351588b98ef5b9da",
+      "orchestration/each-room-s-per-worker-tools-run-with-its-own-install": "f01abcd70f78262724fb294859c2c867127bbbef0046bad8351588b98ef5b9da",
+      "orchestration/each-room-s-per-worker-tools-run-with-its-own-install-without-streaming": "f01abcd70f78262724fb294859c2c867127bbbef0046bad8351588b98ef5b9da",
+      "orchestration/each-room-s-supervisor-install-runs-its-own-team": "f01abcd70f78262724fb294859c2c867127bbbef0046bad8351588b98ef5b9da"
+    },
+    "RK-19.7-009": {
+      "executors/a-declared-worker-s-result-tool-rides-its-child-room-s-requests-alone": "895f1caa4647c41b1bc86bf5604bb24fcf0d01e4416bc15e3dfe004f10ea24d3",
+      "executors/one-build-serving-two-rooms-takes-a-strategy-s-tools-in-its-room-alone": "895f1caa4647c41b1bc86bf5604bb24fcf0d01e4416bc15e3dfe004f10ea24d3",
+      "orchestration/a-pipeline-serves-each-room-its-own-install": "895f1caa4647c41b1bc86bf5604bb24fcf0d01e4416bc15e3dfe004f10ea24d3",
+      "orchestration/a-supervised-team-has-each-step-framed-and-checked": "895f1caa4647c41b1bc86bf5604bb24fcf0d01e4416bc15e3dfe004f10ea24d3",
+      "orchestration/a-supervisor-s-worker-tool-hands-the-model-the-worker-s-result": "895f1caa4647c41b1bc86bf5604bb24fcf0d01e4416bc15e3dfe004f10ea24d3",
+      "orchestration/a-swarm-starts-at-its-entry-and-serves-each-room-its-own-install": "895f1caa4647c41b1bc86bf5604bb24fcf0d01e4416bc15e3dfe004f10ea24d3",
+      "orchestration/each-room-s-background-team-runs-its-own-workers": "895f1caa4647c41b1bc86bf5604bb24fcf0d01e4416bc15e3dfe004f10ea24d3",
+      "orchestration/each-room-s-background-team-runs-its-own-workers-without-streaming": "895f1caa4647c41b1bc86bf5604bb24fcf0d01e4416bc15e3dfe004f10ea24d3",
+      "orchestration/each-room-s-per-worker-tools-run-with-its-own-install": "895f1caa4647c41b1bc86bf5604bb24fcf0d01e4416bc15e3dfe004f10ea24d3",
+      "orchestration/each-room-s-per-worker-tools-run-with-its-own-install-without-streaming": "895f1caa4647c41b1bc86bf5604bb24fcf0d01e4416bc15e3dfe004f10ea24d3",
+      "orchestration/each-room-s-supervisor-install-runs-its-own-team": "895f1caa4647c41b1bc86bf5604bb24fcf0d01e4416bc15e3dfe004f10ea24d3",
+      "tasks/a-result-tool-is-declared-in-the-child-room-only": "895f1caa4647c41b1bc86bf5604bb24fcf0d01e4416bc15e3dfe004f10ea24d3"
+    },
+    "RK-19.7-011": {
+      "tasks/a-result-tool-is-declared-in-the-child-room-only": "0dcc445ac655468225c9a61e4b21b39ab9250e3da6175651600f054e2e924a5b"
+    },
+    "RK-19.7-012": {
+      "orchestration/a-background-worker-busy-in-one-room-is-free-in-another": "083e681991864b0c6ede41ef0cc3cdc94445aa2387acf785ef85747f7403e375",
+      "orchestration/a-pipeline-serves-each-room-its-own-install": "083e681991864b0c6ede41ef0cc3cdc94445aa2387acf785ef85747f7403e375",
+      "orchestration/a-swarm-starts-at-its-entry-and-serves-each-room-its-own-install": "083e681991864b0c6ede41ef0cc3cdc94445aa2387acf785ef85747f7403e375",
+      "orchestration/an-auto-delegating-supervisor-in-two-rooms-runs-its-team-once-per-message-in-each": "083e681991864b0c6ede41ef0cc3cdc94445aa2387acf785ef85747f7403e375",
+      "orchestration/each-room-s-background-team-runs-its-own-workers": "083e681991864b0c6ede41ef0cc3cdc94445aa2387acf785ef85747f7403e375",
+      "orchestration/each-room-s-background-team-runs-its-own-workers-without-streaming": "083e681991864b0c6ede41ef0cc3cdc94445aa2387acf785ef85747f7403e375",
+      "orchestration/each-room-s-loop-runs-with-its-own-reviewer": "083e681991864b0c6ede41ef0cc3cdc94445aa2387acf785ef85747f7403e375",
+      "orchestration/each-room-s-per-worker-tools-run-with-its-own-install": "083e681991864b0c6ede41ef0cc3cdc94445aa2387acf785ef85747f7403e375",
+      "orchestration/each-room-s-per-worker-tools-run-with-its-own-install-without-streaming": "083e681991864b0c6ede41ef0cc3cdc94445aa2387acf785ef85747f7403e375",
+      "orchestration/each-room-s-supervisor-install-runs-its-own-team": "083e681991864b0c6ede41ef0cc3cdc94445aa2387acf785ef85747f7403e375"
+    },
+    "RK-19.7-013": {
+      "orchestration/a-loop-leaves-its-producer-the-events-that-are-no-task": "fc3219b2f69149562a07f52cf4bf1ab288f837e68aa9544fcea14e17066af168",
+      "orchestration/a-room-created-again-gives-the-producer-its-turns-back": "fc3219b2f69149562a07f52cf4bf1ab288f837e68aa9544fcea14e17066af168",
+      "orchestration/an-auto-delegating-supervisor-in-two-rooms-runs-its-team-once-per-message-in-each": "fc3219b2f69149562a07f52cf4bf1ab288f837e68aa9544fcea14e17066af168",
+      "orchestration/an-uninstalled-auto-delegating-supervisor-answers-as-itself": "fc3219b2f69149562a07f52cf4bf1ab288f837e68aa9544fcea14e17066af168",
+      "orchestration/an-uninstalled-loop-gives-its-producer-its-turns-back": "fc3219b2f69149562a07f52cf4bf1ab288f837e68aa9544fcea14e17066af168",
+      "orchestration/each-room-s-loop-runs-with-its-own-reviewer": "fc3219b2f69149562a07f52cf4bf1ab288f837e68aa9544fcea14e17066af168"
+    },
+    "RK-19.7-015": {
+      "orchestration/a-background-worker-busy-in-one-room-is-free-in-another": "64bc2640ff2c992588c131eb10d39fbb06d6c1e0839ac7b8c5fa55bbf2a83915",
+      "orchestration/a-background-worker-tool-answers-at-once-and-hands-the-outcome-back": "64bc2640ff2c992588c131eb10d39fbb06d6c1e0839ac7b8c5fa55bbf2a83915",
+      "orchestration/a-loop-out-of-iterations-answers-its-last-output-not-approved": "64bc2640ff2c992588c131eb10d39fbb06d6c1e0839ac7b8c5fa55bbf2a83915",
+      "orchestration/a-loop-reviewer-s-refusal-approves-nothing": "64bc2640ff2c992588c131eb10d39fbb06d6c1e0839ac7b8c5fa55bbf2a83915",
+      "orchestration/a-loop-revises-its-output-until-its-reviewer-approves": "64bc2640ff2c992588c131eb10d39fbb06d6c1e0839ac7b8c5fa55bbf2a83915",
+      "orchestration/a-loop-s-parallel-reviewers-review-the-same-output-at-once": "64bc2640ff2c992588c131eb10d39fbb06d6c1e0839ac7b8c5fa55bbf2a83915",
+      "orchestration/a-loop-s-reviewers-review-in-turn-each-handed-the-feedback-before-it": "64bc2640ff2c992588c131eb10d39fbb06d6c1e0839ac7b8c5fa55bbf2a83915",
+      "orchestration/a-rejected-step-is-done-again-with-the-supervisor-s-feedback": "64bc2640ff2c992588c131eb10d39fbb06d6c1e0839ac7b8c5fa55bbf2a83915",
+      "orchestration/a-repeated-team-call-reads-the-room-s-last-answer": "64bc2640ff2c992588c131eb10d39fbb06d6c1e0839ac7b8c5fa55bbf2a83915",
+      "orchestration/a-review-that-says-nothing-or-fails-approves-nothing": "64bc2640ff2c992588c131eb10d39fbb06d6c1e0839ac7b8c5fa55bbf2a83915",
+      "orchestration/a-step-out-of-revisions-stops-the-chain-unvalidated": "64bc2640ff2c992588c131eb10d39fbb06d6c1e0839ac7b8c5fa55bbf2a83915",
+      "orchestration/a-step-whose-worker-fails-stops-the-chain-unreviewed": "64bc2640ff2c992588c131eb10d39fbb06d6c1e0839ac7b8c5fa55bbf2a83915",
+      "orchestration/a-supervised-step-past-its-task-timeout-stops-the-chain-unreviewed": "64bc2640ff2c992588c131eb10d39fbb06d6c1e0839ac7b8c5fa55bbf2a83915",
+      "orchestration/a-supervised-team-has-each-step-framed-and-checked": "64bc2640ff2c992588c131eb10d39fbb06d6c1e0839ac7b8c5fa55bbf2a83915",
+      "orchestration/a-supervisor-s-background-team-past-its-task-timeout-is-told-as-not-completed": "64bc2640ff2c992588c131eb10d39fbb06d6c1e0839ac7b8c5fa55bbf2a83915",
+      "orchestration/a-supervisor-s-dispatch-answering-its-team-s-results-starts-anew": "64bc2640ff2c992588c131eb10d39fbb06d6c1e0839ac7b8c5fa55bbf2a83915",
+      "orchestration/a-supervisor-s-team-call-names-who-asked-for-its-task": "64bc2640ff2c992588c131eb10d39fbb06d6c1e0839ac7b8c5fa55bbf2a83915",
+      "orchestration/a-supervisor-s-team-tool-in-the-background-answers-at-once-and-hands-the-results-back": "64bc2640ff2c992588c131eb10d39fbb06d6c1e0839ac7b8c5fa55bbf2a83915",
+      "orchestration/a-supervisor-s-team-tool-runs-its-workers-at-once": "64bc2640ff2c992588c131eb10d39fbb06d6c1e0839ac7b8c5fa55bbf2a83915",
+      "orchestration/a-team-call-another-person-asks-for-within-the-window-runs-the-team-again": "64bc2640ff2c992588c131eb10d39fbb06d6c1e0839ac7b8c5fa55bbf2a83915",
+      "orchestration/a-team-worker-past-its-task-timeout-is-read-as-timed-out-beside-the-others": "64bc2640ff2c992588c131eb10d39fbb06d6c1e0839ac7b8c5fa55bbf2a83915",
+      "orchestration/an-auto-delegating-supervisor-refines-with-its-own-instruction-and-supervises-a-sequential-team": "64bc2640ff2c992588c131eb10d39fbb06d6c1e0839ac7b8c5fa55bbf2a83915",
+      "orchestration/an-auto-delegating-supervisor-s-first-pass-stores-its-calls-and-hands-on-its-final-answer": "64bc2640ff2c992588c131eb10d39fbb06d6c1e0839ac7b8c5fa55bbf2a83915",
+      "orchestration/an-auto-delegating-supervisor-that-does-not-refine-hands-its-team-the-message": "64bc2640ff2c992588c131eb10d39fbb06d6c1e0839ac7b8c5fa55bbf2a83915",
+      "orchestration/an-auto-delegating-supervisor-turns-the-request-into-its-team-s-task-then-answers-from-their-results": "64bc2640ff2c992588c131eb10d39fbb06d6c1e0839ac7b8c5fa55bbf2a83915",
+      "orchestration/each-revision-of-a-step-starts-from-its-own-task": "64bc2640ff2c992588c131eb10d39fbb06d6c1e0839ac7b8c5fa55bbf2a83915"
+    },
+    "RK-19.7-016": {
+      "orchestration/a-loop-out-of-iterations-answers-its-last-output-not-approved": "02fe3e32fdc89a3ea5430847d6435c38d52b79389ffbcb0f8b16adf87a3e5bc1",
+      "orchestration/a-loop-reviewer-s-refusal-approves-nothing": "02fe3e32fdc89a3ea5430847d6435c38d52b79389ffbcb0f8b16adf87a3e5bc1",
+      "orchestration/a-loop-revises-its-output-until-its-reviewer-approves": "02fe3e32fdc89a3ea5430847d6435c38d52b79389ffbcb0f8b16adf87a3e5bc1",
+      "orchestration/a-loop-s-parallel-reviewers-review-the-same-output-at-once": "02fe3e32fdc89a3ea5430847d6435c38d52b79389ffbcb0f8b16adf87a3e5bc1",
+      "orchestration/a-loop-s-reviewers-review-in-turn-each-handed-the-feedback-before-it": "02fe3e32fdc89a3ea5430847d6435c38d52b79389ffbcb0f8b16adf87a3e5bc1",
+      "orchestration/a-rejected-step-is-done-again-with-the-supervisor-s-feedback": "02fe3e32fdc89a3ea5430847d6435c38d52b79389ffbcb0f8b16adf87a3e5bc1",
+      "orchestration/a-repeated-team-call-reads-the-room-s-last-answer": "02fe3e32fdc89a3ea5430847d6435c38d52b79389ffbcb0f8b16adf87a3e5bc1",
+      "orchestration/a-review-that-says-nothing-or-fails-approves-nothing": "02fe3e32fdc89a3ea5430847d6435c38d52b79389ffbcb0f8b16adf87a3e5bc1",
+      "orchestration/a-step-out-of-revisions-stops-the-chain-unvalidated": "02fe3e32fdc89a3ea5430847d6435c38d52b79389ffbcb0f8b16adf87a3e5bc1",
+      "orchestration/a-step-whose-worker-fails-stops-the-chain-unreviewed": "02fe3e32fdc89a3ea5430847d6435c38d52b79389ffbcb0f8b16adf87a3e5bc1",
+      "orchestration/a-supervised-step-past-its-task-timeout-stops-the-chain-unreviewed": "02fe3e32fdc89a3ea5430847d6435c38d52b79389ffbcb0f8b16adf87a3e5bc1",
+      "orchestration/a-supervised-team-has-each-step-framed-and-checked": "02fe3e32fdc89a3ea5430847d6435c38d52b79389ffbcb0f8b16adf87a3e5bc1",
+      "orchestration/a-supervised-team-s-digest-names-who-asked-for-its-task": "02fe3e32fdc89a3ea5430847d6435c38d52b79389ffbcb0f8b16adf87a3e5bc1",
+      "orchestration/a-supervisor-s-team-call-names-who-asked-for-its-task": "02fe3e32fdc89a3ea5430847d6435c38d52b79389ffbcb0f8b16adf87a3e5bc1",
+      "orchestration/a-supervisor-s-team-tool-runs-its-workers-at-once": "02fe3e32fdc89a3ea5430847d6435c38d52b79389ffbcb0f8b16adf87a3e5bc1",
+      "orchestration/a-team-call-another-person-asks-for-within-the-window-runs-the-team-again": "02fe3e32fdc89a3ea5430847d6435c38d52b79389ffbcb0f8b16adf87a3e5bc1",
+      "orchestration/a-team-worker-past-its-task-timeout-is-read-as-timed-out-beside-the-others": "02fe3e32fdc89a3ea5430847d6435c38d52b79389ffbcb0f8b16adf87a3e5bc1",
+      "orchestration/an-auto-delegating-supervisor-s-one-pass-names-who-asked": "02fe3e32fdc89a3ea5430847d6435c38d52b79389ffbcb0f8b16adf87a3e5bc1",
+      "orchestration/an-auto-delegating-supervisor-that-does-not-refine-hands-its-team-the-message": "02fe3e32fdc89a3ea5430847d6435c38d52b79389ffbcb0f8b16adf87a3e5bc1",
+      "orchestration/each-revision-of-a-step-starts-from-its-own-task": "02fe3e32fdc89a3ea5430847d6435c38d52b79389ffbcb0f8b16adf87a3e5bc1"
+    },
+    "RK-19.7-017": {
+      "executors/a-supervisor-s-passes-are-turns-of-its-agent-on-the-executor-hosting-it": "4a20c5f4ad3452043a7b7c0c2f5058b284ece98cb987bc114f64439ff9442529",
+      "orchestration/a-loop-out-of-iterations-answers-its-last-output-not-approved": "4a20c5f4ad3452043a7b7c0c2f5058b284ece98cb987bc114f64439ff9442529",
+      "orchestration/a-loop-reviewer-s-refusal-approves-nothing": "4a20c5f4ad3452043a7b7c0c2f5058b284ece98cb987bc114f64439ff9442529",
+      "orchestration/a-loop-revises-its-output-until-its-reviewer-approves": "4a20c5f4ad3452043a7b7c0c2f5058b284ece98cb987bc114f64439ff9442529",
+      "orchestration/a-loop-s-parallel-review-that-raises-fails-at-once-and-cuts-the-other-reviews": "4a20c5f4ad3452043a7b7c0c2f5058b284ece98cb987bc114f64439ff9442529",
+      "orchestration/a-loop-s-parallel-reviewers-review-the-same-output-at-once": "4a20c5f4ad3452043a7b7c0c2f5058b284ece98cb987bc114f64439ff9442529",
+      "orchestration/a-loop-s-reviewers-review-in-turn-each-handed-the-feedback-before-it": "4a20c5f4ad3452043a7b7c0c2f5058b284ece98cb987bc114f64439ff9442529",
+      "orchestration/a-rejected-step-is-done-again-with-the-supervisor-s-feedback": "4a20c5f4ad3452043a7b7c0c2f5058b284ece98cb987bc114f64439ff9442529",
+      "orchestration/a-repeated-team-call-reads-the-room-s-last-answer": "4a20c5f4ad3452043a7b7c0c2f5058b284ece98cb987bc114f64439ff9442529",
+      "orchestration/a-supervised-team-has-each-step-framed-and-checked": "4a20c5f4ad3452043a7b7c0c2f5058b284ece98cb987bc114f64439ff9442529",
+      "orchestration/a-supervisor-s-team-call-names-who-asked-for-its-task": "4a20c5f4ad3452043a7b7c0c2f5058b284ece98cb987bc114f64439ff9442529",
+      "orchestration/a-supervisor-s-team-tool-runs-its-workers-at-once": "4a20c5f4ad3452043a7b7c0c2f5058b284ece98cb987bc114f64439ff9442529",
+      "orchestration/an-auto-delegating-supervisor-in-two-rooms-runs-its-team-once-per-message-in-each": "4a20c5f4ad3452043a7b7c0c2f5058b284ece98cb987bc114f64439ff9442529",
+      "orchestration/an-auto-delegating-supervisor-refines-with-its-own-instruction-and-supervises-a-sequential-team": "4a20c5f4ad3452043a7b7c0c2f5058b284ece98cb987bc114f64439ff9442529",
+      "orchestration/an-auto-delegating-supervisor-s-first-pass-stores-its-calls-and-hands-on-its-final-answer": "4a20c5f4ad3452043a7b7c0c2f5058b284ece98cb987bc114f64439ff9442529",
+      "orchestration/an-auto-delegating-supervisor-s-two-passes-carry-a-correlation-id-each": "4a20c5f4ad3452043a7b7c0c2f5058b284ece98cb987bc114f64439ff9442529",
+      "orchestration/an-auto-delegating-supervisor-that-does-not-refine-hands-its-team-the-message": "4a20c5f4ad3452043a7b7c0c2f5058b284ece98cb987bc114f64439ff9442529",
+      "orchestration/an-auto-delegating-supervisor-turns-the-request-into-its-team-s-task-then-answers-from-their-results": "4a20c5f4ad3452043a7b7c0c2f5058b284ece98cb987bc114f64439ff9442529",
+      "orchestration/each-revision-of-a-step-starts-from-its-own-task": "4a20c5f4ad3452043a7b7c0c2f5058b284ece98cb987bc114f64439ff9442529",
+      "orchestration/each-room-s-background-team-runs-its-own-workers": "4a20c5f4ad3452043a7b7c0c2f5058b284ece98cb987bc114f64439ff9442529",
+      "orchestration/each-room-s-background-team-runs-its-own-workers-without-streaming": "4a20c5f4ad3452043a7b7c0c2f5058b284ece98cb987bc114f64439ff9442529",
+      "orchestration/each-room-s-per-worker-tools-run-with-its-own-install": "4a20c5f4ad3452043a7b7c0c2f5058b284ece98cb987bc114f64439ff9442529",
+      "orchestration/each-room-s-per-worker-tools-run-with-its-own-install-without-streaming": "4a20c5f4ad3452043a7b7c0c2f5058b284ece98cb987bc114f64439ff9442529"
+    },
+    "RK-19.7-018": {
+      "orchestration/an-auto-delegating-supervisor-s-one-pass-names-who-asked": "ee08c1096df530c2ce6f735fcccae3c1077ad709c90a9f5c017385be399b80e3",
+      "orchestration/an-auto-delegating-supervisor-that-does-not-refine-hands-its-team-the-message": "ee08c1096df530c2ce6f735fcccae3c1077ad709c90a9f5c017385be399b80e3"
+    },
+    "RK-19.7-019": {
+      "orchestration/a-supervised-team-s-digest-names-who-asked-for-its-task": "e59b4f4575867dc23b2b5819fb9f0641da034f34c02ebcb2610170862559f676",
+      "orchestration/a-supervisor-s-team-call-names-who-asked-for-its-task": "e59b4f4575867dc23b2b5819fb9f0641da034f34c02ebcb2610170862559f676",
+      "orchestration/a-team-call-another-person-asks-for-within-the-window-runs-the-team-again": "e59b4f4575867dc23b2b5819fb9f0641da034f34c02ebcb2610170862559f676"
+    },
+    "RK-19.7-020": {
+      "orchestration/a-supervisor-s-team-call-names-who-asked-for-its-task": "3d043158b119c872266716c666acf67aeb7a1de56ba22c12e84826dfed44d734",
+      "orchestration/a-team-call-another-person-asks-for-within-the-window-runs-the-team-again": "3d043158b119c872266716c666acf67aeb7a1de56ba22c12e84826dfed44d734",
+      "orchestration/an-auto-delegating-supervisor-s-one-pass-names-who-asked": "3d043158b119c872266716c666acf67aeb7a1de56ba22c12e84826dfed44d734"
+    },
+    "RK-19.7-021": {
+      "orchestration/a-loop-out-of-iterations-answers-its-last-output-not-approved": "564646f786970698d8d6f5ee2f311c3638c0e724094b662861fd17a25d11e296",
+      "orchestration/a-loop-reviewer-s-refusal-approves-nothing": "564646f786970698d8d6f5ee2f311c3638c0e724094b662861fd17a25d11e296",
+      "orchestration/a-loop-revises-its-output-until-its-reviewer-approves": "564646f786970698d8d6f5ee2f311c3638c0e724094b662861fd17a25d11e296",
+      "orchestration/a-loop-s-parallel-reviewers-review-the-same-output-at-once": "564646f786970698d8d6f5ee2f311c3638c0e724094b662861fd17a25d11e296",
+      "orchestration/a-loop-s-reviewers-review-in-turn-each-handed-the-feedback-before-it": "564646f786970698d8d6f5ee2f311c3638c0e724094b662861fd17a25d11e296",
+      "orchestration/a-rejected-step-is-done-again-with-the-supervisor-s-feedback": "564646f786970698d8d6f5ee2f311c3638c0e724094b662861fd17a25d11e296",
+      "orchestration/a-review-that-says-nothing-or-fails-approves-nothing": "564646f786970698d8d6f5ee2f311c3638c0e724094b662861fd17a25d11e296",
+      "orchestration/each-revision-of-a-step-starts-from-its-own-task": "564646f786970698d8d6f5ee2f311c3638c0e724094b662861fd17a25d11e296"
+    },
+    "RK-19.7-022": {
+      "executors/a-declared-worker-s-result-tool-rides-its-child-room-s-requests-alone": "5fb629e43bf6582affcafd62e6e9a5f1b81d394bb182fbe703ff6e49be8c8c75",
+      "executors/one-build-serving-two-rooms-takes-a-strategy-s-tools-in-its-room-alone": "5fb629e43bf6582affcafd62e6e9a5f1b81d394bb182fbe703ff6e49be8c8c75",
+      "orchestration/a-pipeline-serves-each-room-its-own-install": "5fb629e43bf6582affcafd62e6e9a5f1b81d394bb182fbe703ff6e49be8c8c75",
+      "orchestration/a-swarm-starts-at-its-entry-and-serves-each-room-its-own-install": "5fb629e43bf6582affcafd62e6e9a5f1b81d394bb182fbe703ff6e49be8c8c75",
+      "orchestration/an-auto-delegating-supervisor-in-two-rooms-runs-its-team-once-per-message-in-each": "5fb629e43bf6582affcafd62e6e9a5f1b81d394bb182fbe703ff6e49be8c8c75",
+      "orchestration/an-uninstalled-auto-delegating-supervisor-answers-as-itself": "5fb629e43bf6582affcafd62e6e9a5f1b81d394bb182fbe703ff6e49be8c8c75",
+      "orchestration/an-uninstalled-loop-gives-its-producer-its-turns-back": "5fb629e43bf6582affcafd62e6e9a5f1b81d394bb182fbe703ff6e49be8c8c75",
+      "orchestration/each-room-s-background-team-runs-its-own-workers": "5fb629e43bf6582affcafd62e6e9a5f1b81d394bb182fbe703ff6e49be8c8c75",
+      "orchestration/each-room-s-background-team-runs-its-own-workers-without-streaming": "5fb629e43bf6582affcafd62e6e9a5f1b81d394bb182fbe703ff6e49be8c8c75",
+      "orchestration/each-room-s-loop-runs-with-its-own-reviewer": "5fb629e43bf6582affcafd62e6e9a5f1b81d394bb182fbe703ff6e49be8c8c75",
+      "orchestration/each-room-s-per-worker-tools-run-with-its-own-install": "5fb629e43bf6582affcafd62e6e9a5f1b81d394bb182fbe703ff6e49be8c8c75",
+      "orchestration/each-room-s-per-worker-tools-run-with-its-own-install-without-streaming": "5fb629e43bf6582affcafd62e6e9a5f1b81d394bb182fbe703ff6e49be8c8c75",
+      "orchestration/each-room-s-supervisor-install-runs-its-own-team": "5fb629e43bf6582affcafd62e6e9a5f1b81d394bb182fbe703ff6e49be8c8c75"
+    },
+    "RK-19.7-023": {
+      "orchestration/a-supervised-team-has-each-step-framed-and-checked": "f7da7f675a8530cd07e2f614f8ab99668754fb62dce561f19324dac08579eb01",
+      "orchestration/a-swarm-starts-at-its-entry-and-serves-each-room-its-own-install": "f7da7f675a8530cd07e2f614f8ab99668754fb62dce561f19324dac08579eb01",
+      "orchestration/each-room-s-background-team-runs-its-own-workers": "f7da7f675a8530cd07e2f614f8ab99668754fb62dce561f19324dac08579eb01",
+      "orchestration/each-room-s-background-team-runs-its-own-workers-without-streaming": "f7da7f675a8530cd07e2f614f8ab99668754fb62dce561f19324dac08579eb01",
+      "orchestration/each-room-s-supervisor-install-runs-its-own-team": "f7da7f675a8530cd07e2f614f8ab99668754fb62dce561f19324dac08579eb01"
+    },
+    "RK-19.7-024": {
+      "orchestration/a-background-worker-busy-in-one-room-is-free-in-another": "046fc9e7d61d1d579c9445702214c9a5d16c68603b36028ccbb6466ea73fb640"
+    },
+    "RK-19.7-025": {
+      "orchestration/a-background-worker-busy-in-one-room-is-free-in-another": "bd3043bb7a942f5909e93f2a7ee92bbfa224028376e2dd226106124cfb0fadae",
+      "orchestration/a-pipeline-serves-each-room-its-own-install": "bd3043bb7a942f5909e93f2a7ee92bbfa224028376e2dd226106124cfb0fadae",
+      "orchestration/a-swarm-starts-at-its-entry-and-serves-each-room-its-own-install": "bd3043bb7a942f5909e93f2a7ee92bbfa224028376e2dd226106124cfb0fadae",
+      "orchestration/each-room-s-background-team-runs-its-own-workers": "bd3043bb7a942f5909e93f2a7ee92bbfa224028376e2dd226106124cfb0fadae",
+      "orchestration/each-room-s-background-team-runs-its-own-workers-without-streaming": "bd3043bb7a942f5909e93f2a7ee92bbfa224028376e2dd226106124cfb0fadae",
+      "orchestration/each-room-s-per-worker-tools-run-with-its-own-install": "bd3043bb7a942f5909e93f2a7ee92bbfa224028376e2dd226106124cfb0fadae",
+      "orchestration/each-room-s-per-worker-tools-run-with-its-own-install-without-streaming": "bd3043bb7a942f5909e93f2a7ee92bbfa224028376e2dd226106124cfb0fadae",
+      "orchestration/each-room-s-supervisor-install-runs-its-own-team": "bd3043bb7a942f5909e93f2a7ee92bbfa224028376e2dd226106124cfb0fadae"
+    },
+    "RK-19.7-026": {
+      "executors/a-declared-agent-s-delegate-task-is-kept-by-the-owner-for-each-build": "f300598aad4a47a34255bde79b2acce3668d153977bf715670d72678efb4e526",
+      "orchestration/the-generic-handoff-tool-is-declared-in-every-room-the-agent-serves": "f300598aad4a47a34255bde79b2acce3668d153977bf715670d72678efb4e526"
+    },
+    "RK-19.7-028": {
+      "executors/a-supervisor-s-passes-are-turns-of-its-agent-on-the-executor-hosting-it": "f8797e06d272f6f208139152e83067f9ef2ccc6e1a4e14dfd70fd79013379328",
+      "executors/one-build-serving-two-rooms-takes-a-strategy-s-tools-in-its-room-alone": "f8797e06d272f6f208139152e83067f9ef2ccc6e1a4e14dfd70fd79013379328",
+      "orchestration/an-auto-delegating-supervisor-in-two-rooms-runs-its-team-once-per-message-in-each": "f8797e06d272f6f208139152e83067f9ef2ccc6e1a4e14dfd70fd79013379328",
+      "orchestration/each-room-s-loop-runs-with-its-own-reviewer": "f8797e06d272f6f208139152e83067f9ef2ccc6e1a4e14dfd70fd79013379328"
+    },
+    "RK-19.7-029": {
+      "executors/a-supervisor-s-passes-are-turns-of-its-agent-on-the-executor-hosting-it": "a0654f3d206f935b68f8b50748390d75e74e1e27b5c03aa44fa460f0fdd0cab2",
+      "orchestration/an-auto-delegating-supervisor-s-two-passes-carry-a-correlation-id-each": "a0654f3d206f935b68f8b50748390d75e74e1e27b5c03aa44fa460f0fdd0cab2"
+    },
+    "RK-19.7-030": {
+      "discussion/a-process-that-never-read-the-room-claims-it-for-no-other-strategy": "718e9c4589c195bf314dc74b4d06a517bdaaf800f5dcaa5d4aed87c5231e4e39",
+      "discussion/a-room-moves-from-a-swarm-to-a-discussion-and-back": "718e9c4589c195bf314dc74b4d06a517bdaaf800f5dcaa5d4aed87c5231e4e39",
+      "orchestration/a-room-holds-one-strategy-at-a-time": "718e9c4589c195bf314dc74b4d06a517bdaaf800f5dcaa5d4aed87c5231e4e39"
+    },
+    "RK-19.7-031": {
+      "discussion/a-process-that-only-follows-uninstalls-the-discussion-for-all": "773e4cd69d4bd4747f1c345a3c97d8f430a6cebdaaa15a185454b015bdedfcd8",
+      "discussion/a-room-moves-from-a-swarm-to-a-discussion-and-back": "773e4cd69d4bd4747f1c345a3c97d8f430a6cebdaaa15a185454b015bdedfcd8",
+      "discussion/an-install-right-after-another-process-uninstalled-is-the-room-s-strategy": "773e4cd69d4bd4747f1c345a3c97d8f430a6cebdaaa15a185454b015bdedfcd8",
+      "orchestration/a-hosts-own-strategy-is-taken-back-out-whole": "773e4cd69d4bd4747f1c345a3c97d8f430a6cebdaaa15a185454b015bdedfcd8",
+      "orchestration/a-room-holds-one-strategy-at-a-time": "773e4cd69d4bd4747f1c345a3c97d8f430a6cebdaaa15a185454b015bdedfcd8",
+      "orchestration/an-agent-bound-before-the-install-stays-bound": "773e4cd69d4bd4747f1c345a3c97d8f430a6cebdaaa15a185454b015bdedfcd8",
+      "orchestration/an-agent-the-uninstall-step-detached-is-taken-back-all-the-same": "773e4cd69d4bd4747f1c345a3c97d8f430a6cebdaaa15a185454b015bdedfcd8",
+      "orchestration/an-uninstall-during-an-install-takes-it-back-once-it-is-over": "773e4cd69d4bd4747f1c345a3c97d8f430a6cebdaaa15a185454b015bdedfcd8",
+      "orchestration/an-uninstall-runs-the-strategy-s-own-step-first": "773e4cd69d4bd4747f1c345a3c97d8f430a6cebdaaa15a185454b015bdedfcd8",
+      "orchestration/an-uninstall-under-the-room-s-lock-does-not-wait-for-an-install": "773e4cd69d4bd4747f1c345a3c97d8f430a6cebdaaa15a185454b015bdedfcd8",
+      "orchestration/an-uninstalled-pipeline-takes-its-router-and-its-tools-back": "773e4cd69d4bd4747f1c345a3c97d8f430a6cebdaaa15a185454b015bdedfcd8",
+      "orchestration/an-uninstalled-supervisor-takes-its-router-and-its-tools-back": "773e4cd69d4bd4747f1c345a3c97d8f430a6cebdaaa15a185454b015bdedfcd8",
+      "orchestration/an-uninstalled-swarm-takes-its-router-and-its-tools-back": "773e4cd69d4bd4747f1c345a3c97d8f430a6cebdaaa15a185454b015bdedfcd8",
+      "orchestration/create-room-installs-through-the-same-path": "773e4cd69d4bd4747f1c345a3c97d8f430a6cebdaaa15a185454b015bdedfcd8",
+      "orchestration/the-room-strategy-is-read-within-a-tenant": "773e4cd69d4bd4747f1c345a3c97d8f430a6cebdaaa15a185454b015bdedfcd8"
+    },
+    "RK-19.7-032": {
+      "discussion/a-discussion-room-created-again-takes-a-discussion-again": "10321adcd7211476952abc9fe9986e020f288dbe2f919955eacaccf946d1901a",
+      "orchestration/a-kit-s-pipeline-is-installed-in-the-rooms-it-creates": "10321adcd7211476952abc9fe9986e020f288dbe2f919955eacaccf946d1901a",
+      "orchestration/a-room-a-first-message-opens-is-announced-with-its-strategy-s-agents-and-not-the-sender-s-channel": "10321adcd7211476952abc9fe9986e020f288dbe2f919955eacaccf946d1901a",
+      "orchestration/a-room-created-again-takes-a-strategy-again": "10321adcd7211476952abc9fe9986e020f288dbe2f919955eacaccf946d1901a",
+      "orchestration/a-room-created-with-a-strategy-is-announced-once-it-is-installed": "10321adcd7211476952abc9fe9986e020f288dbe2f919955eacaccf946d1901a",
+      "orchestration/create-room-installs-through-the-same-path": "10321adcd7211476952abc9fe9986e020f288dbe2f919955eacaccf946d1901a",
+      "orchestration/the-kit-s-default-strategy-unless-the-room-names-another-or-none": "10321adcd7211476952abc9fe9986e020f288dbe2f919955eacaccf946d1901a"
+    },
+    "RK-19.7-033": {
+      "discussion/a-discussion-installed-on-a-live-room-reads-its-history": "16e5ae2aef701379c87a507d30c6d46864f3621e76533bc6170c3ec6cab2fcbb",
+      "orchestration/a-pipeline-chains-its-agents-and-starts-at-the-first": "16e5ae2aef701379c87a507d30c6d46864f3621e76533bc6170c3ec6cab2fcbb",
+      "orchestration/a-supervised-team-has-each-step-framed-and-checked": "16e5ae2aef701379c87a507d30c6d46864f3621e76533bc6170c3ec6cab2fcbb",
+      "orchestration/a-supervisor-s-team-tool-runs-its-workers-at-once": "16e5ae2aef701379c87a507d30c6d46864f3621e76533bc6170c3ec6cab2fcbb",
+      "orchestration/a-supervisor-s-worker-tool-hands-the-model-the-worker-s-result": "16e5ae2aef701379c87a507d30c6d46864f3621e76533bc6170c3ec6cab2fcbb",
+      "orchestration/a-swarm-hands-the-room-from-agent-to-agent": "16e5ae2aef701379c87a507d30c6d46864f3621e76533bc6170c3ec6cab2fcbb",
+      "orchestration/an-install-attaches-its-agents-as-intelligence-channels": "16e5ae2aef701379c87a507d30c6d46864f3621e76533bc6170c3ec6cab2fcbb"
+    },
+    "RK-19.7-034": {
+      "kit-executor/uninstalling-a-strategy-removes-only-its-activation": "e43778a3c0d5a2180162fe793abdc3d749dccfc8a841f6ff53db804daeef4b01",
+      "orchestration/a-hosts-own-strategy-is-taken-back-out-whole": "e43778a3c0d5a2180162fe793abdc3d749dccfc8a841f6ff53db804daeef4b01",
+      "orchestration/a-pipeline-chains-its-agents-and-starts-at-the-first": "e43778a3c0d5a2180162fe793abdc3d749dccfc8a841f6ff53db804daeef4b01",
+      "orchestration/a-pipeline-s-router-hooks-its-room-at-minus-100": "e43778a3c0d5a2180162fe793abdc3d749dccfc8a841f6ff53db804daeef4b01",
+      "orchestration/a-pipeline-serves-each-room-its-own-install": "e43778a3c0d5a2180162fe793abdc3d749dccfc8a841f6ff53db804daeef4b01",
+      "orchestration/a-supervised-team-has-each-step-framed-and-checked": "e43778a3c0d5a2180162fe793abdc3d749dccfc8a841f6ff53db804daeef4b01",
+      "orchestration/a-swarm-hands-the-room-from-agent-to-agent": "e43778a3c0d5a2180162fe793abdc3d749dccfc8a841f6ff53db804daeef4b01",
+      "orchestration/an-auto-delegating-supervisor-in-two-rooms-runs-its-team-once-per-message-in-each": "e43778a3c0d5a2180162fe793abdc3d749dccfc8a841f6ff53db804daeef4b01",
+      "orchestration/each-room-s-loop-runs-with-its-own-reviewer": "e43778a3c0d5a2180162fe793abdc3d749dccfc8a841f6ff53db804daeef4b01"
+    },
+    "RK-19.7-035": {
+      "discussion/a-discussion-installed-on-a-live-room-reads-its-history": "cbed4b9ed19d00214cb98a22121e413fa95eb4b9d8c5ea7099201c371767c4f1",
+      "orchestration/a-swarm-hands-the-room-from-agent-to-agent": "cbed4b9ed19d00214cb98a22121e413fa95eb4b9d8c5ea7099201c371767c4f1"
+    },
+    "RK-19.7-038": {
+      "discussion/a-process-that-never-read-the-room-claims-it-for-no-other-strategy": "036f03f1d0db997a0708f188a7f3f0a7d92a442c7c085df13b5a095f4b636e1e",
+      "discussion/a-room-moves-from-a-swarm-to-a-discussion-and-back": "036f03f1d0db997a0708f188a7f3f0a7d92a442c7c085df13b5a095f4b636e1e",
+      "orchestration/a-room-holds-one-strategy-at-a-time": "036f03f1d0db997a0708f188a7f3f0a7d92a442c7c085df13b5a095f4b636e1e"
+    },
+    "RK-19.7-039": {
+      "discussion/a-process-changing-its-discussion-s-agents-keeps-the-queue-and-lets-the-agent-it-drops-go": "61a84a729bb0a668eb8ccb9ec5d1e989ed3e5b9f88f7fd6355cda6eb7e72fb84",
+      "discussion/a-process-that-takes-a-discussion-over-detaches-what-the-first-install-attached": "61a84a729bb0a668eb8ccb9ec5d1e989ed3e5b9f88f7fd6355cda6eb7e72fb84",
+      "discussion/a-process-whose-install-another-replaced-is-current-again-once-it-installs": "61a84a729bb0a668eb8ccb9ec5d1e989ed3e5b9f88f7fd6355cda6eb7e72fb84",
+      "discussion/a-restarted-process-takes-the-discussion-back": "61a84a729bb0a668eb8ccb9ec5d1e989ed3e5b9f88f7fd6355cda6eb7e72fb84",
+      "discussion/an-install-another-process-replaced-is-not-current": "61a84a729bb0a668eb8ccb9ec5d1e989ed3e5b9f88f7fd6355cda6eb7e72fb84",
+      "discussion/the-same-configuration-installed-by-another-process-keeps-both-current": "61a84a729bb0a668eb8ccb9ec5d1e989ed3e5b9f88f7fd6355cda6eb7e72fb84"
+    },
+    "RK-19.7-040": {
+      "kit-executor/uninstalling-a-strategy-removes-only-its-activation": "d9306fbc35a7223e8caa17b6e3dad5e206901cea4eace2dda61c7637818a84aa",
+      "orchestration/a-hosts-own-strategy-is-taken-back-out-whole": "d9306fbc35a7223e8caa17b6e3dad5e206901cea4eace2dda61c7637818a84aa",
+      "orchestration/a-pipeline-serves-each-room-its-own-install": "d9306fbc35a7223e8caa17b6e3dad5e206901cea4eace2dda61c7637818a84aa",
+      "orchestration/an-uninstalled-auto-delegating-supervisor-answers-as-itself": "d9306fbc35a7223e8caa17b6e3dad5e206901cea4eace2dda61c7637818a84aa",
+      "orchestration/an-uninstalled-loop-gives-its-producer-its-turns-back": "d9306fbc35a7223e8caa17b6e3dad5e206901cea4eace2dda61c7637818a84aa",
+      "orchestration/an-uninstalled-pipeline-takes-its-router-and-its-tools-back": "d9306fbc35a7223e8caa17b6e3dad5e206901cea4eace2dda61c7637818a84aa",
+      "orchestration/an-uninstalled-supervisor-takes-its-router-and-its-tools-back": "d9306fbc35a7223e8caa17b6e3dad5e206901cea4eace2dda61c7637818a84aa",
+      "orchestration/an-uninstalled-swarm-takes-its-router-and-its-tools-back": "d9306fbc35a7223e8caa17b6e3dad5e206901cea4eace2dda61c7637818a84aa"
+    },
+    "RK-19.7-041": {
+      "discussion/a-process-that-only-follows-uninstalls-the-discussion-for-all": "be6d0b86264d24855e4e54e377b1affa60abb6c6c6b78c8236e002459f20d185",
+      "discussion/a-process-that-takes-a-discussion-over-detaches-what-the-first-install-attached": "be6d0b86264d24855e4e54e377b1affa60abb6c6c6b78c8236e002459f20d185",
+      "discussion/an-uninstall-detaches-what-another-process-s-install-attached": "be6d0b86264d24855e4e54e377b1affa60abb6c6c6b78c8236e002459f20d185",
+      "orchestration/a-hosts-own-strategy-is-taken-back-out-whole": "be6d0b86264d24855e4e54e377b1affa60abb6c6c6b78c8236e002459f20d185",
+      "orchestration/a-pipeline-serves-each-room-its-own-install": "be6d0b86264d24855e4e54e377b1affa60abb6c6c6b78c8236e002459f20d185",
+      "orchestration/an-agent-bound-before-the-install-stays-bound": "be6d0b86264d24855e4e54e377b1affa60abb6c6c6b78c8236e002459f20d185",
+      "orchestration/an-agent-the-uninstall-step-detached-is-taken-back-all-the-same": "be6d0b86264d24855e4e54e377b1affa60abb6c6c6b78c8236e002459f20d185",
+      "orchestration/an-install-holds-the-room-until-it-is-over": "be6d0b86264d24855e4e54e377b1affa60abb6c6c6b78c8236e002459f20d185",
+      "orchestration/an-uninstall-during-an-install-takes-it-back-once-it-is-over": "be6d0b86264d24855e4e54e377b1affa60abb6c6c6b78c8236e002459f20d185",
+      "orchestration/an-uninstalled-pipeline-takes-its-router-and-its-tools-back": "be6d0b86264d24855e4e54e377b1affa60abb6c6c6b78c8236e002459f20d185",
+      "orchestration/an-uninstalled-swarm-takes-its-router-and-its-tools-back": "be6d0b86264d24855e4e54e377b1affa60abb6c6c6b78c8236e002459f20d185"
+    },
+    "RK-19.7-042": {
+      "discussion/a-process-that-only-follows-uninstalls-the-discussion-for-all": "f538703a1156fc23183d09e8790cb45b0a1b768f4a84e4367aa72053db232eca",
+      "discussion/a-room-moves-from-a-swarm-to-a-discussion-and-back": "f538703a1156fc23183d09e8790cb45b0a1b768f4a84e4367aa72053db232eca",
+      "discussion/uninstalling-forgets-the-queue-so-a-new-discussion-starts-fresh": "f538703a1156fc23183d09e8790cb45b0a1b768f4a84e4367aa72053db232eca",
+      "discussion/uninstalling-gives-the-room-back-to-its-policy": "f538703a1156fc23183d09e8790cb45b0a1b768f4a84e4367aa72053db232eca",
+      "orchestration/a-hosts-own-strategy-is-taken-back-out-whole": "f538703a1156fc23183d09e8790cb45b0a1b768f4a84e4367aa72053db232eca",
+      "orchestration/a-pipeline-serves-each-room-its-own-install": "f538703a1156fc23183d09e8790cb45b0a1b768f4a84e4367aa72053db232eca",
+      "orchestration/an-uninstalled-loop-gives-its-producer-its-turns-back": "f538703a1156fc23183d09e8790cb45b0a1b768f4a84e4367aa72053db232eca",
+      "orchestration/an-uninstalled-pipeline-takes-its-router-and-its-tools-back": "f538703a1156fc23183d09e8790cb45b0a1b768f4a84e4367aa72053db232eca",
+      "orchestration/an-uninstalled-supervisor-takes-its-router-and-its-tools-back": "f538703a1156fc23183d09e8790cb45b0a1b768f4a84e4367aa72053db232eca",
+      "orchestration/an-uninstalled-swarm-takes-its-router-and-its-tools-back": "f538703a1156fc23183d09e8790cb45b0a1b768f4a84e4367aa72053db232eca"
+    },
+    "RK-19.7-043": {
+      "orchestration/an-uninstall-runs-the-strategy-s-own-step-first": "95cc314c9ff2b17e6008d7288a046ede02e71a59e472e0aa63d467cc69f699ef"
+    },
+    "RK-19.7-044": {
+      "discussion/uninstalling-cuts-the-turn-under-way": "07def249ab0db3c0f97e9126aa3e1dbbcbeb675b810b93258c4ca3d8df059ab9"
+    },
+    "RK-19.7-045": {
+      "discussion/uninstalling-gives-the-room-back-to-its-policy": "b415bd03e1bc99eb925a1274e93ab775090dcffa4a62882b585e6bd2fddb823a",
+      "discussion/uninstalling-in-one-process-ends-the-discussion-in-the-others": "b415bd03e1bc99eb925a1274e93ab775090dcffa4a62882b585e6bd2fddb823a",
+      "orchestration/a-hosts-own-strategy-is-taken-back-out-whole": "b415bd03e1bc99eb925a1274e93ab775090dcffa4a62882b585e6bd2fddb823a",
+      "orchestration/a-pipeline-serves-each-room-its-own-install": "b415bd03e1bc99eb925a1274e93ab775090dcffa4a62882b585e6bd2fddb823a",
+      "orchestration/an-uninstalled-pipeline-takes-its-router-and-its-tools-back": "b415bd03e1bc99eb925a1274e93ab775090dcffa4a62882b585e6bd2fddb823a",
+      "orchestration/an-uninstalled-swarm-takes-its-router-and-its-tools-back": "b415bd03e1bc99eb925a1274e93ab775090dcffa4a62882b585e6bd2fddb823a"
+    },
+    "RK-19.7-046": {
+      "discussion/a-process-that-only-follows-uninstalls-the-discussion-for-all": "16b78e56ae9b9cab4c38a8e6f47f98606ce5428938623d0ad0b0f8268b088da3",
+      "discussion/uninstalling-gives-the-room-back-to-its-policy": "16b78e56ae9b9cab4c38a8e6f47f98606ce5428938623d0ad0b0f8268b088da3",
+      "discussion/uninstalling-in-one-process-ends-the-discussion-in-the-others": "16b78e56ae9b9cab4c38a8e6f47f98606ce5428938623d0ad0b0f8268b088da3",
+      "orchestration/a-pipeline-serves-each-room-its-own-install": "16b78e56ae9b9cab4c38a8e6f47f98606ce5428938623d0ad0b0f8268b088da3",
+      "orchestration/an-uninstalled-auto-delegating-supervisor-answers-as-itself": "16b78e56ae9b9cab4c38a8e6f47f98606ce5428938623d0ad0b0f8268b088da3",
+      "orchestration/an-uninstalled-loop-gives-its-producer-its-turns-back": "16b78e56ae9b9cab4c38a8e6f47f98606ce5428938623d0ad0b0f8268b088da3",
+      "orchestration/an-uninstalled-pipeline-takes-its-router-and-its-tools-back": "16b78e56ae9b9cab4c38a8e6f47f98606ce5428938623d0ad0b0f8268b088da3",
+      "orchestration/an-uninstalled-supervisor-takes-its-router-and-its-tools-back": "16b78e56ae9b9cab4c38a8e6f47f98606ce5428938623d0ad0b0f8268b088da3",
+      "orchestration/an-uninstalled-swarm-takes-its-router-and-its-tools-back": "16b78e56ae9b9cab4c38a8e6f47f98606ce5428938623d0ad0b0f8268b088da3"
+    },
+    "RK-19.7-047": {
+      "discussion/a-room-moves-from-a-swarm-to-a-discussion-and-back": "f350ee8564b0a4d2d63890adf6d20a103ae61158c019f05f4ab33b574aa17e7f",
+      "discussion/an-install-right-after-another-process-uninstalled-is-the-room-s-strategy": "f350ee8564b0a4d2d63890adf6d20a103ae61158c019f05f4ab33b574aa17e7f",
+      "discussion/uninstalling-forgets-the-queue-so-a-new-discussion-starts-fresh": "f350ee8564b0a4d2d63890adf6d20a103ae61158c019f05f4ab33b574aa17e7f",
+      "discussion/uninstalling-in-another-process-leaves-no-record-behind": "f350ee8564b0a4d2d63890adf6d20a103ae61158c019f05f4ab33b574aa17e7f",
+      "orchestration/a-room-holds-one-strategy-at-a-time": "f350ee8564b0a4d2d63890adf6d20a103ae61158c019f05f4ab33b574aa17e7f"
+    },
+    "RK-19.7-048": {
+      "discussion/a-process-that-only-follows-uninstalls-the-discussion-for-all": "fd06257bb648765df4fd16209ed979b2f073ff7e06b05c9130165e1fcabd6bb3",
+      "discussion/a-process-that-takes-a-discussion-over-detaches-what-the-first-install-attached": "fd06257bb648765df4fd16209ed979b2f073ff7e06b05c9130165e1fcabd6bb3",
+      "discussion/an-uninstall-detaches-what-another-process-s-install-attached": "fd06257bb648765df4fd16209ed979b2f073ff7e06b05c9130165e1fcabd6bb3"
+    },
+    "RK-19.7-049": {
+      "orchestration/closing-a-room-takes-its-strategy-back-out": "b8306b9c530ca4845e7e535ed5d0f4e194c6483cba388364eaf7746bf45e177e"
+    },
+    "RK-19.7-050": {
+      "orchestration/closing-a-room-takes-its-strategy-back-out": "ca0dfd3abc81fd0968076cd26822029f419dbc6edb227d1cdcadd5c13691c9d5"
+    },
+    "RK-19.7-051": {
+      "orchestration/closing-a-room-takes-its-strategy-back-out": "dc889ccc79060b1218747524fdb82f2f1ba005f96545e2eadce9c0567ae5493a"
+    },
+    "RK-19.7-052": {
+      "orchestration/closing-a-room-takes-its-strategy-back-out": "ea9c6f5c998e780a4dae373a433c1a478c5bbf108444b1912893c634e4bac3be"
+    },
+    "RK-19.7-053": {
+      "orchestration/closing-a-room-takes-its-strategy-back-out": "ef8074065b365dffd7127d5c9e2970cec519009f49927e68b22c9b03c44d826e"
+    },
+    "RK-19.7-056": {
+      "orchestration/closing-a-room-takes-its-strategy-back-out": "775394fd1c98c1e3dfa959c3af9f3f22d774d132ca7812d4e114196ccc5fb428"
+    },
+    "RK-19.7-058": {
+      "orchestration/closing-a-room-takes-its-strategy-back-out": "a6cb546e04d3841f92c41240695b59a664e38342e9687c3cbbbc731061cb6bf3"
+    },
+    "RK-19.7-059": {
+      "orchestration/an-uninstall-under-the-room-s-lock-does-not-wait-for-an-install": "32d1c10836b949021aedd028be20399d01601bbd2edcf8185c06692e8ec8bfb0"
+    },
+    "RK-19.7-060": {
+      "discussion/uninstalling-cuts-the-turn-under-way": "4cbe2a209bff8746cf750ecf9c1072db1d26b7b668127f57527ba531c5634433"
+    },
+    "RK-19.7-061": {
+      "discussion/a-process-changing-its-discussion-s-agents-keeps-the-queue-and-lets-the-agent-it-drops-go": "5f2631791693d7aecf66b748e7f425f92d635bc601878e7b6b7a436d7200698f",
+      "discussion/a-process-that-takes-a-discussion-over-detaches-what-the-first-install-attached": "5f2631791693d7aecf66b748e7f425f92d635bc601878e7b6b7a436d7200698f",
+      "discussion/a-process-whose-host-installed-the-old-agents-routes-by-the-new-ones-and-gives-no-turn": "5f2631791693d7aecf66b748e7f425f92d635bc601878e7b6b7a436d7200698f",
+      "discussion/a-process-whose-install-another-replaced-is-current-again-once-it-installs": "5f2631791693d7aecf66b748e7f425f92d635bc601878e7b6b7a436d7200698f",
+      "discussion/a-restarted-process-takes-the-discussion-back": "5f2631791693d7aecf66b748e7f425f92d635bc601878e7b6b7a436d7200698f",
+      "discussion/an-install-another-process-replaced-is-not-current": "5f2631791693d7aecf66b748e7f425f92d635bc601878e7b6b7a436d7200698f",
+      "discussion/the-same-configuration-installed-by-another-process-keeps-both-current": "5f2631791693d7aecf66b748e7f425f92d635bc601878e7b6b7a436d7200698f"
+    },
+    "RK-19.7-062": {
+      "discussion/a-process-changing-its-discussion-s-agents-keeps-the-queue-and-lets-the-agent-it-drops-go": "c36fe4be86b8cb9b59008971c878bfa6372d1ad91750d3f3f0a1eeb2c2a16175",
+      "discussion/a-process-that-installed-none-or-whose-discussion-went-is-not-current": "c36fe4be86b8cb9b59008971c878bfa6372d1ad91750d3f3f0a1eeb2c2a16175",
+      "discussion/a-process-whose-install-another-replaced-is-current-again-once-it-installs": "c36fe4be86b8cb9b59008971c878bfa6372d1ad91750d3f3f0a1eeb2c2a16175",
+      "discussion/an-install-another-process-replaced-is-not-current": "c36fe4be86b8cb9b59008971c878bfa6372d1ad91750d3f3f0a1eeb2c2a16175",
+      "discussion/an-install-right-after-another-process-uninstalled-is-the-room-s-strategy": "c36fe4be86b8cb9b59008971c878bfa6372d1ad91750d3f3f0a1eeb2c2a16175",
+      "discussion/the-kind-asked-about-is-the-kind-installed": "c36fe4be86b8cb9b59008971c878bfa6372d1ad91750d3f3f0a1eeb2c2a16175",
+      "discussion/the-same-configuration-installed-by-another-process-keeps-both-current": "c36fe4be86b8cb9b59008971c878bfa6372d1ad91750d3f3f0a1eeb2c2a16175"
+    },
+    "RK-19.7-063": {
+      "discussion/a-process-changing-its-discussion-s-agents-keeps-the-queue-and-lets-the-agent-it-drops-go": "94aa26fe583c47776a207d37507ad2d9d293b866ca8b8ab5387212aff48a8a7b",
+      "discussion/a-process-whose-install-another-replaced-is-current-again-once-it-installs": "94aa26fe583c47776a207d37507ad2d9d293b866ca8b8ab5387212aff48a8a7b",
+      "discussion/an-install-another-process-replaced-is-not-current": "94aa26fe583c47776a207d37507ad2d9d293b866ca8b8ab5387212aff48a8a7b"
+    },
+    "RK-19.7-064": {
+      "discussion/a-process-that-installed-none-or-whose-discussion-went-is-not-current": "1f8af6a0dd2e4ffb82c48667bf1043d42b3f16da07e70cf659e3e6db1881e092"
+    },
+    "RK-19.7-065": {
+      "discussion/a-process-that-installed-none-or-whose-discussion-went-is-not-current": "82f4c6bd76ec23c0df31f3ec88518f949eeb192808b5295aedd18bfc7929c9b9",
+      "discussion/the-kind-asked-about-is-the-kind-installed": "82f4c6bd76ec23c0df31f3ec88518f949eeb192808b5295aedd18bfc7929c9b9"
+    },
+    "RK-19.7-066": {
+      "discussion/a-process-that-installed-none-or-whose-discussion-went-is-not-current": "008d0e4c45fc57fafecdc6d3c79cad6f765e4d09d9505cea0d787199e608b67c",
+      "discussion/uninstalling-in-another-process-leaves-no-record-behind": "008d0e4c45fc57fafecdc6d3c79cad6f765e4d09d9505cea0d787199e608b67c"
+    },
+    "RK-19.7-067": {
+      "discussion/an-install-another-process-replaced-is-not-current": "996f98b3c658a45401c43b0773363582eaf6d3d3c30c0e7b613d3fbb15372e32"
+    },
+    "RK-19.7-068": {
+      "discussion/asking-about-a-strategy-not-stored-with-the-room-is-refused": "b177bc39d0ed0172820cf04620aeda3c1097c1919190b445006401f3326fcb96"
+    },
+    "RK-19.7.1-002": {
+      "orchestration/a-pipeline-chains-its-agents-and-starts-at-the-first": "2a794367236fdf0edaaf68461ce0074004c4d1ecec992cd98ca356fea2327b7b",
+      "orchestration/a-pipeline-keeps-to-its-chain": "2a794367236fdf0edaaf68461ce0074004c4d1ecec992cd98ca356fea2327b7b",
+      "orchestration/a-pipeline-s-agent-that-handed-off-cannot-hand-off-again": "2a794367236fdf0edaaf68461ce0074004c4d1ecec992cd98ca356fea2327b7b",
+      "orchestration/a-pipeline-s-handoff-leads-its-target-to-a-phase-it-holds": "2a794367236fdf0edaaf68461ce0074004c4d1ecec992cd98ca356fea2327b7b"
+    },
+    "RK-19.7.1-003": {
+      "orchestration/a-host-s-words-are-a-person-s-message-to-a-pipeline-s-routing": "c156f96b6367f0eacdf82c998e7c83a53af97c830ff8489eac192f0abf2a2285",
+      "orchestration/a-kit-s-pipeline-is-installed-in-the-rooms-it-creates": "c156f96b6367f0eacdf82c998e7c83a53af97c830ff8489eac192f0abf2a2285",
+      "orchestration/a-pipeline-chains-its-agents-and-starts-at-the-first": "c156f96b6367f0eacdf82c998e7c83a53af97c830ff8489eac192f0abf2a2285",
+      "orchestration/a-pipeline-s-router-hooks-its-room-at-minus-100": "c156f96b6367f0eacdf82c998e7c83a53af97c830ff8489eac192f0abf2a2285",
+      "orchestration/a-pipeline-s-supervisor-is-asked-beside-each-stage": "c156f96b6367f0eacdf82c998e7c83a53af97c830ff8489eac192f0abf2a2285",
+      "orchestration/a-pipeline-serves-each-room-its-own-install": "c156f96b6367f0eacdf82c998e7c83a53af97c830ff8489eac192f0abf2a2285"
+    },
+    "RK-19.7.1-004": {
+      "orchestration/a-pipeline-chains-its-agents-and-starts-at-the-first": "5f86f13460f3a109ac558ac4d1e17af92b02eec85d38185e9d3336e48c5eccd0",
+      "orchestration/a-pipeline-keeps-to-its-chain": "5f86f13460f3a109ac558ac4d1e17af92b02eec85d38185e9d3336e48c5eccd0",
+      "orchestration/a-pipeline-s-agent-that-handed-off-cannot-hand-off-again": "5f86f13460f3a109ac558ac4d1e17af92b02eec85d38185e9d3336e48c5eccd0",
+      "orchestration/a-pipeline-s-handoff-leads-its-target-to-a-phase-it-holds": "5f86f13460f3a109ac558ac4d1e17af92b02eec85d38185e9d3336e48c5eccd0"
+    },
+    "RK-19.7.1-005": {
+      "orchestration/a-kit-s-pipeline-is-installed-in-the-rooms-it-creates": "f5c4c7868dbc2cb6c1680c11a68126c73a1d872ead8805d59439c7a9dc30655e",
+      "orchestration/a-pipeline-chains-its-agents-and-starts-at-the-first": "f5c4c7868dbc2cb6c1680c11a68126c73a1d872ead8805d59439c7a9dc30655e",
+      "orchestration/a-pipeline-keeps-to-its-chain": "f5c4c7868dbc2cb6c1680c11a68126c73a1d872ead8805d59439c7a9dc30655e",
+      "orchestration/a-pipeline-s-agent-that-handed-off-cannot-hand-off-again": "f5c4c7868dbc2cb6c1680c11a68126c73a1d872ead8805d59439c7a9dc30655e",
+      "orchestration/a-pipeline-s-handoff-leads-its-target-to-a-phase-it-holds": "f5c4c7868dbc2cb6c1680c11a68126c73a1d872ead8805d59439c7a9dc30655e",
+      "orchestration/a-pipeline-serves-each-room-its-own-install": "f5c4c7868dbc2cb6c1680c11a68126c73a1d872ead8805d59439c7a9dc30655e"
+    },
+    "RK-19.7.1-006": {
+      "orchestration/a-pipeline-with-no-agent-is-refused-at-its-install": "3bcd6b625eebe2147ee17e12ace46c8bf1f4f7ca481ac6084486f06f17289693"
+    },
+    "RK-19.7.1-007": {
+      "orchestration/a-kit-s-pipeline-is-installed-in-the-rooms-it-creates": "806089270cc104b4ea98ca85ad1c6749bc7ad141cc2dad20f2ab638a37fe6a33",
+      "orchestration/a-pipeline-chains-its-agents-and-starts-at-the-first": "806089270cc104b4ea98ca85ad1c6749bc7ad141cc2dad20f2ab638a37fe6a33",
+      "orchestration/a-pipeline-serves-each-room-its-own-install": "806089270cc104b4ea98ca85ad1c6749bc7ad141cc2dad20f2ab638a37fe6a33"
+    },
+    "RK-19.7.1-008": {
+      "orchestration/a-pipeline-s-router-hooks-its-room-at-minus-100": "db459d6bd24bc29794528858fe9aa5a3be6a83aa9e5149e4e7346759baf0ac5b"
+    },
+    "RK-19.7.2-002": {
+      "orchestration/a-swarm-hands-the-room-from-agent-to-agent": "e84e4f530a210bc0ebda6647f1d4e47116bbee47dac9a38699a7bf14541ba4a4",
+      "orchestration/a-swarm-starts-at-its-entry-and-serves-each-room-its-own-install": "e84e4f530a210bc0ebda6647f1d4e47116bbee47dac9a38699a7bf14541ba4a4"
+    },
+    "RK-19.7.2-003": {
+      "orchestration/a-swarm-hands-the-room-from-agent-to-agent": "3644d4ab26e2583850853c36bbb903b52e2c9d859eea25ec63979cac9302694e",
+      "orchestration/a-swarm-starts-at-its-entry-and-serves-each-room-its-own-install": "3644d4ab26e2583850853c36bbb903b52e2c9d859eea25ec63979cac9302694e"
+    },
+    "RK-19.7.3-002": {
+      "executors/a-supervisor-s-passes-are-turns-of-its-agent-on-the-executor-hosting-it": "07385e75be188be538b15978ff16d429ed0c33feb4bda8bb64f2af223eecdcb2",
+      "orchestration/a-supervised-team-has-each-step-framed-and-checked": "07385e75be188be538b15978ff16d429ed0c33feb4bda8bb64f2af223eecdcb2",
+      "orchestration/a-supervisor-s-team-tool-in-the-background-answers-at-once-and-hands-the-results-back": "07385e75be188be538b15978ff16d429ed0c33feb4bda8bb64f2af223eecdcb2",
+      "orchestration/a-supervisor-s-team-tool-runs-its-workers-at-once": "07385e75be188be538b15978ff16d429ed0c33feb4bda8bb64f2af223eecdcb2",
+      "orchestration/a-supervisor-s-worker-tool-hands-the-model-the-worker-s-result": "07385e75be188be538b15978ff16d429ed0c33feb4bda8bb64f2af223eecdcb2",
+      "orchestration/an-auto-delegating-supervisor-in-two-rooms-runs-its-team-once-per-message-in-each": "07385e75be188be538b15978ff16d429ed0c33feb4bda8bb64f2af223eecdcb2",
+      "orchestration/an-auto-delegating-supervisor-refines-with-its-own-instruction-and-supervises-a-sequential-team": "07385e75be188be538b15978ff16d429ed0c33feb4bda8bb64f2af223eecdcb2",
+      "orchestration/an-auto-delegating-supervisor-that-does-not-refine-hands-its-team-the-message": "07385e75be188be538b15978ff16d429ed0c33feb4bda8bb64f2af223eecdcb2",
+      "orchestration/an-auto-delegating-supervisor-turns-the-request-into-its-team-s-task-then-answers-from-their-results": "07385e75be188be538b15978ff16d429ed0c33feb4bda8bb64f2af223eecdcb2",
+      "speaking/strategy-bypasses-policy-and-thinker-one-pass-non-streaming": "07385e75be188be538b15978ff16d429ed0c33feb4bda8bb64f2af223eecdcb2",
+      "speaking/strategy-bypasses-policy-and-thinker-one-pass-streaming": "07385e75be188be538b15978ff16d429ed0c33feb4bda8bb64f2af223eecdcb2",
+      "speaking/strategy-bypasses-policy-and-thinker-two-passes-non-streaming": "07385e75be188be538b15978ff16d429ed0c33feb4bda8bb64f2af223eecdcb2",
+      "speaking/strategy-bypasses-policy-and-thinker-two-passes-streaming": "07385e75be188be538b15978ff16d429ed0c33feb4bda8bb64f2af223eecdcb2"
+    },
+    "RK-19.7.3-003": {
+      "executors/a-supervisor-s-passes-are-turns-of-its-agent-on-the-executor-hosting-it": "80ed09c87b8c032f067c5e8e211ba2d6b529414b07164c6e2b47423392ae0365",
+      "orchestration/a-supervised-team-has-each-step-framed-and-checked": "80ed09c87b8c032f067c5e8e211ba2d6b529414b07164c6e2b47423392ae0365",
+      "orchestration/a-supervisor-s-worker-tool-hands-the-model-the-worker-s-result": "80ed09c87b8c032f067c5e8e211ba2d6b529414b07164c6e2b47423392ae0365",
+      "orchestration/a-supervisor-s-workers-share-the-channels-it-names": "80ed09c87b8c032f067c5e8e211ba2d6b529414b07164c6e2b47423392ae0365",
+      "orchestration/an-auto-delegating-supervisor-in-two-rooms-runs-its-team-once-per-message-in-each": "80ed09c87b8c032f067c5e8e211ba2d6b529414b07164c6e2b47423392ae0365",
+      "orchestration/an-auto-delegating-supervisor-refines-with-its-own-instruction-and-supervises-a-sequential-team": "80ed09c87b8c032f067c5e8e211ba2d6b529414b07164c6e2b47423392ae0365",
+      "orchestration/an-auto-delegating-supervisor-that-does-not-refine-hands-its-team-the-message": "80ed09c87b8c032f067c5e8e211ba2d6b529414b07164c6e2b47423392ae0365",
+      "orchestration/an-auto-delegating-supervisor-turns-the-request-into-its-team-s-task-then-answers-from-their-results": "80ed09c87b8c032f067c5e8e211ba2d6b529414b07164c6e2b47423392ae0365",
+      "orchestration/each-room-s-background-team-runs-its-own-workers": "80ed09c87b8c032f067c5e8e211ba2d6b529414b07164c6e2b47423392ae0365",
+      "orchestration/each-room-s-background-team-runs-its-own-workers-without-streaming": "80ed09c87b8c032f067c5e8e211ba2d6b529414b07164c6e2b47423392ae0365",
+      "orchestration/each-room-s-per-worker-tools-run-with-its-own-install": "80ed09c87b8c032f067c5e8e211ba2d6b529414b07164c6e2b47423392ae0365",
+      "orchestration/each-room-s-per-worker-tools-run-with-its-own-install-without-streaming": "80ed09c87b8c032f067c5e8e211ba2d6b529414b07164c6e2b47423392ae0365"
+    },
+    "RK-19.7.3-005": {
+      "orchestration/a-rejected-step-is-done-again-with-the-supervisor-s-feedback": "45d40b88bc0fce28f9f02f044f86869ace26c7cf426ed7047380d09d2c5632c7",
+      "orchestration/a-supervised-team-has-each-step-framed-and-checked": "45d40b88bc0fce28f9f02f044f86869ace26c7cf426ed7047380d09d2c5632c7",
+      "orchestration/a-supervisor-s-team-tool-runs-its-workers-at-once": "45d40b88bc0fce28f9f02f044f86869ace26c7cf426ed7047380d09d2c5632c7",
+      "orchestration/a-team-call-its-bound-cuts-posts-each-worker-cancelled": "45d40b88bc0fce28f9f02f044f86869ace26c7cf426ed7047380d09d2c5632c7",
+      "orchestration/a-team-whose-worker-raises-answers-at-once": "45d40b88bc0fce28f9f02f044f86869ace26c7cf426ed7047380d09d2c5632c7",
+      "orchestration/an-auto-delegating-supervisor-refines-with-its-own-instruction-and-supervises-a-sequential-team": "45d40b88bc0fce28f9f02f044f86869ace26c7cf426ed7047380d09d2c5632c7"
+    },
+    "RK-19.7.3-006": {
+      "orchestration/a-team-whose-worker-raises-answers-at-once": "a7f55423cd2b305b526dcfdd48ef00f5647a0008684ac51d119bc825557b0886"
+    },
+    "RK-19.7.3-007": {
+      "orchestration/a-team-whose-worker-raises-answers-at-once": "2c74441ed75f3455018604913f2dc4c2ad617b6edde87c492ad4cb5d9f9f89b9"
+    },
+    "RK-19.7.3-008": {
+      "orchestration/a-background-worker-busy-in-one-room-is-free-in-another": "43966fbbd9d30bced4313e6522d0d19b6f152c8ac72f2ce52b2ede0e8a564fca",
+      "orchestration/a-background-worker-past-its-task-timeout-is-cut-and-told-as-not-completed": "43966fbbd9d30bced4313e6522d0d19b6f152c8ac72f2ce52b2ede0e8a564fca",
+      "orchestration/a-background-worker-tool-answers-at-once-and-hands-the-outcome-back": "43966fbbd9d30bced4313e6522d0d19b6f152c8ac72f2ce52b2ede0e8a564fca",
+      "orchestration/a-supervisor-s-background-team-that-fails-hands-back-its-failure": "43966fbbd9d30bced4313e6522d0d19b6f152c8ac72f2ce52b2ede0e8a564fca",
+      "orchestration/a-supervisor-s-team-tool-in-the-background-answers-at-once-and-hands-the-results-back": "43966fbbd9d30bced4313e6522d0d19b6f152c8ac72f2ce52b2ede0e8a564fca"
+    },
+    "RK-19.7.3-009": {
+      "executors/a-supervisor-s-passes-are-turns-of-its-agent-on-the-executor-hosting-it": "dd164030470270ee7e0886328ed649011b5b25fc783750848064e27abcbad4e3",
+      "orchestration/a-rejected-step-is-done-again-with-the-supervisor-s-feedback": "dd164030470270ee7e0886328ed649011b5b25fc783750848064e27abcbad4e3",
+      "orchestration/a-supervised-step-past-its-task-timeout-stops-the-chain-unreviewed": "dd164030470270ee7e0886328ed649011b5b25fc783750848064e27abcbad4e3",
+      "orchestration/a-supervised-team-has-each-step-framed-and-checked": "dd164030470270ee7e0886328ed649011b5b25fc783750848064e27abcbad4e3",
+      "orchestration/a-supervisor-s-team-tool-runs-its-workers-at-once": "dd164030470270ee7e0886328ed649011b5b25fc783750848064e27abcbad4e3",
+      "orchestration/a-supervisor-s-worker-tool-hands-the-model-the-worker-s-result": "dd164030470270ee7e0886328ed649011b5b25fc783750848064e27abcbad4e3",
+      "orchestration/a-supervisor-s-worker-tool-reads-a-failed-worker-as-failed": "dd164030470270ee7e0886328ed649011b5b25fc783750848064e27abcbad4e3",
+      "orchestration/an-auto-delegating-supervisor-in-two-rooms-runs-its-team-once-per-message-in-each": "dd164030470270ee7e0886328ed649011b5b25fc783750848064e27abcbad4e3",
+      "orchestration/an-auto-delegating-supervisor-refines-with-its-own-instruction-and-supervises-a-sequential-team": "dd164030470270ee7e0886328ed649011b5b25fc783750848064e27abcbad4e3",
+      "orchestration/an-auto-delegating-supervisor-s-first-pass-stores-its-calls-and-hands-on-its-final-answer": "dd164030470270ee7e0886328ed649011b5b25fc783750848064e27abcbad4e3",
+      "orchestration/an-auto-delegating-supervisor-s-two-passes-carry-a-correlation-id-each": "dd164030470270ee7e0886328ed649011b5b25fc783750848064e27abcbad4e3",
+      "orchestration/an-auto-delegating-supervisor-that-does-not-refine-hands-its-team-the-message": "dd164030470270ee7e0886328ed649011b5b25fc783750848064e27abcbad4e3",
+      "orchestration/an-auto-delegating-supervisor-turns-the-request-into-its-team-s-task-then-answers-from-their-results": "dd164030470270ee7e0886328ed649011b5b25fc783750848064e27abcbad4e3"
+    },
+    "RK-19.7.3-010": {
+      "orchestration/a-background-worker-busy-in-one-room-is-free-in-another": "f062644bb8078d73dee0bd763384896904bf6ce216321c80866ac681e5198c97",
+      "orchestration/a-background-worker-past-its-task-timeout-is-cut-and-told-as-not-completed": "f062644bb8078d73dee0bd763384896904bf6ce216321c80866ac681e5198c97",
+      "orchestration/a-background-worker-tool-answers-at-once-and-hands-the-outcome-back": "f062644bb8078d73dee0bd763384896904bf6ce216321c80866ac681e5198c97",
+      "orchestration/a-supervisor-s-background-team-that-fails-hands-back-its-failure": "f062644bb8078d73dee0bd763384896904bf6ce216321c80866ac681e5198c97",
+      "orchestration/a-supervisor-s-team-tool-in-the-background-answers-at-once-and-hands-the-results-back": "f062644bb8078d73dee0bd763384896904bf6ce216321c80866ac681e5198c97"
+    },
+    "RK-19.7.3-011": {
+      "orchestration/a-supervisor-s-team-tool-in-the-background-answers-at-once-and-hands-the-results-back": "60c953266cd13b50d1cb805903030f1c612d7f57100f5ad0b990802155d9f15a"
+    },
+    "RK-19.7.3-012": {
+      "orchestration/a-background-worker-busy-in-one-room-is-free-in-another": "9cbecee5040836c93f8792ee8f451f8cc6ced2b10bf81f8b43175069e08fc975",
+      "orchestration/a-background-worker-past-its-task-timeout-is-cut-and-told-as-not-completed": "9cbecee5040836c93f8792ee8f451f8cc6ced2b10bf81f8b43175069e08fc975",
+      "orchestration/a-background-worker-tool-answers-at-once-and-hands-the-outcome-back": "9cbecee5040836c93f8792ee8f451f8cc6ced2b10bf81f8b43175069e08fc975",
+      "orchestration/a-supervisor-s-background-team-that-fails-hands-back-its-failure": "9cbecee5040836c93f8792ee8f451f8cc6ced2b10bf81f8b43175069e08fc975",
+      "orchestration/a-supervisor-s-team-tool-in-the-background-answers-at-once-and-hands-the-results-back": "9cbecee5040836c93f8792ee8f451f8cc6ced2b10bf81f8b43175069e08fc975"
+    },
+    "RK-19.7.3-013": {
+      "orchestration/a-supervisor-s-background-team-that-fails-hands-back-its-failure": "f8c5a4d209e68c198338e4593f2dda2d930b026f4284581a90aa76a4c545a4c2"
+    },
+    "RK-19.7.3-015": {
+      "orchestration/a-team-whose-worker-raises-answers-at-once": "09be73d8989c82c0dd47bae9c231f677f0a25ad1ada19cbaa7c2eb598a9281ec"
+    },
+    "RK-19.7.3-018": {
+      "orchestration/a-supervisor-s-dispatch-answering-its-team-s-results-starts-anew": "0e49d6a8dd0a5bda828e8fcda40759d6d200ebb32f95ae688f3f11abf0a42f7a"
+    },
+    "RK-19.7.3-019": {
+      "orchestration/a-background-worker-past-its-task-timeout-is-cut-and-told-as-not-completed": "aadf63f16e193fff492d6aa15bde984073e3b150e1c849ed65d6968894969f29",
+      "orchestration/a-background-worker-tool-answers-at-once-and-hands-the-outcome-back": "aadf63f16e193fff492d6aa15bde984073e3b150e1c849ed65d6968894969f29",
+      "orchestration/a-supervisor-s-background-team-past-its-task-timeout-is-told-as-not-completed": "aadf63f16e193fff492d6aa15bde984073e3b150e1c849ed65d6968894969f29",
+      "orchestration/a-supervisor-s-background-team-that-fails-hands-back-its-failure": "aadf63f16e193fff492d6aa15bde984073e3b150e1c849ed65d6968894969f29",
+      "orchestration/a-supervisor-s-background-team-whose-results-nobody-hears-posts-its-run-failed": "aadf63f16e193fff492d6aa15bde984073e3b150e1c849ed65d6968894969f29",
+      "orchestration/a-supervisor-s-dispatch-answering-its-team-s-results-starts-anew": "aadf63f16e193fff492d6aa15bde984073e3b150e1c849ed65d6968894969f29",
+      "orchestration/a-supervisor-s-team-tool-in-the-background-answers-at-once-and-hands-the-results-back": "aadf63f16e193fff492d6aa15bde984073e3b150e1c849ed65d6968894969f29"
+    },
+    "RK-19.7.3-020": {
+      "orchestration/a-background-worker-busy-in-one-room-is-free-in-another": "53ae8a25fe0e0d60f0cb8eadbf84e8a1de9aa5a4f1480ad5e0eca4e4daf8750f",
+      "orchestration/a-background-worker-past-its-task-timeout-is-cut-and-told-as-not-completed": "53ae8a25fe0e0d60f0cb8eadbf84e8a1de9aa5a4f1480ad5e0eca4e4daf8750f",
+      "orchestration/a-background-worker-tool-answers-at-once-and-hands-the-outcome-back": "53ae8a25fe0e0d60f0cb8eadbf84e8a1de9aa5a4f1480ad5e0eca4e4daf8750f"
+    },
+    "RK-19.7.3-021": {
+      "orchestration/a-background-worker-past-its-task-timeout-is-cut-and-told-as-not-completed": "e652583b47b15845960138598a5c62c1cb949ddadc12e8c2018881b86a9e89ed"
+    },
+    "RK-19.7.3-022": {
+      "orchestration/a-background-worker-tool-answers-at-once-and-hands-the-outcome-back": "027c1f8d378a43bddf761810483cde9309248947e15b9ab6f791f9a91c302c42"
+    },
+    "RK-19.7.3-023": {
+      "orchestration/a-background-worker-past-its-task-timeout-is-cut-and-told-as-not-completed": "37fbef093ab70ec033fb9af639c51898db2648cd3bf94d30ff554ebeee49ae2c",
+      "orchestration/a-background-worker-tool-answers-at-once-and-hands-the-outcome-back": "37fbef093ab70ec033fb9af639c51898db2648cd3bf94d30ff554ebeee49ae2c"
+    },
+    "RK-19.7.3-025": {
+      "orchestration/a-background-worker-past-its-task-timeout-is-cut-and-told-as-not-completed": "85a9c12ae13e6de93efdf1a3a98e0c7bd2c0b8023b2116c544591e6647159f07",
+      "orchestration/a-supervised-step-past-its-task-timeout-stops-the-chain-unreviewed": "85a9c12ae13e6de93efdf1a3a98e0c7bd2c0b8023b2116c544591e6647159f07",
+      "orchestration/a-team-worker-past-its-task-timeout-is-read-as-timed-out-beside-the-others": "85a9c12ae13e6de93efdf1a3a98e0c7bd2c0b8023b2116c544591e6647159f07",
+      "orchestration/a-worker-past-its-task-timeout-is-cut-and-read-as-timed-out": "85a9c12ae13e6de93efdf1a3a98e0c7bd2c0b8023b2116c544591e6647159f07"
+    },
+    "RK-19.7.3-026": {
+      "orchestration/a-background-worker-past-its-task-timeout-is-cut-and-told-as-not-completed": "912521ab65440a32b410ba29417a5a61bc25e7f2167591177f5429bcb4d405f4",
+      "orchestration/a-background-worker-tool-answers-at-once-and-hands-the-outcome-back": "912521ab65440a32b410ba29417a5a61bc25e7f2167591177f5429bcb4d405f4",
+      "orchestration/a-delegation-its-call-bound-cuts-posts-the-worker-cancelled": "912521ab65440a32b410ba29417a5a61bc25e7f2167591177f5429bcb4d405f4",
+      "orchestration/a-loop-reviewer-s-refusal-approves-nothing": "912521ab65440a32b410ba29417a5a61bc25e7f2167591177f5429bcb4d405f4",
+      "orchestration/a-loop-revises-its-output-until-its-reviewer-approves": "912521ab65440a32b410ba29417a5a61bc25e7f2167591177f5429bcb4d405f4",
+      "orchestration/a-loop-s-parallel-review-that-raises-fails-at-once-and-cuts-the-other-reviews": "912521ab65440a32b410ba29417a5a61bc25e7f2167591177f5429bcb4d405f4",
+      "orchestration/a-loop-s-parallel-reviewers-review-the-same-output-at-once": "912521ab65440a32b410ba29417a5a61bc25e7f2167591177f5429bcb4d405f4",
+      "orchestration/a-loop-s-reviewers-review-in-turn-each-handed-the-feedback-before-it": "912521ab65440a32b410ba29417a5a61bc25e7f2167591177f5429bcb4d405f4",
+      "orchestration/a-loop-whose-producer-is-cut-short-answers-nothing-and-says-why": "912521ab65440a32b410ba29417a5a61bc25e7f2167591177f5429bcb4d405f4",
+      "orchestration/a-rejected-step-is-done-again-with-the-supervisor-s-feedback": "912521ab65440a32b410ba29417a5a61bc25e7f2167591177f5429bcb4d405f4",
+      "orchestration/a-repeated-team-call-reads-the-room-s-last-answer": "912521ab65440a32b410ba29417a5a61bc25e7f2167591177f5429bcb4d405f4",
+      "orchestration/a-review-that-says-nothing-or-fails-approves-nothing": "912521ab65440a32b410ba29417a5a61bc25e7f2167591177f5429bcb4d405f4",
+      "orchestration/a-step-whose-worker-fails-stops-the-chain-unreviewed": "912521ab65440a32b410ba29417a5a61bc25e7f2167591177f5429bcb4d405f4",
+      "orchestration/a-supervised-step-past-its-task-timeout-stops-the-chain-unreviewed": "912521ab65440a32b410ba29417a5a61bc25e7f2167591177f5429bcb4d405f4",
+      "orchestration/a-supervised-team-has-each-step-framed-and-checked": "912521ab65440a32b410ba29417a5a61bc25e7f2167591177f5429bcb4d405f4",
+      "orchestration/a-supervisor-s-team-tool-runs-its-workers-at-once": "912521ab65440a32b410ba29417a5a61bc25e7f2167591177f5429bcb4d405f4",
+      "orchestration/a-supervisor-s-worker-tool-hands-the-model-the-worker-s-result": "912521ab65440a32b410ba29417a5a61bc25e7f2167591177f5429bcb4d405f4",
+      "orchestration/a-supervisor-s-worker-tool-reads-a-failed-worker-as-failed": "912521ab65440a32b410ba29417a5a61bc25e7f2167591177f5429bcb4d405f4",
+      "orchestration/a-team-call-its-bound-cuts-posts-each-worker-cancelled": "912521ab65440a32b410ba29417a5a61bc25e7f2167591177f5429bcb4d405f4",
+      "orchestration/a-team-cut-after-announcement-reports-only-what-started": "912521ab65440a32b410ba29417a5a61bc25e7f2167591177f5429bcb4d405f4",
+      "orchestration/a-team-cut-before-announcement-reports-only-what-started": "912521ab65440a32b410ba29417a5a61bc25e7f2167591177f5429bcb4d405f4",
+      "orchestration/a-team-whose-worker-raises-answers-at-once": "912521ab65440a32b410ba29417a5a61bc25e7f2167591177f5429bcb4d405f4",
+      "orchestration/a-team-worker-past-its-task-timeout-is-read-as-timed-out-beside-the-others": "912521ab65440a32b410ba29417a5a61bc25e7f2167591177f5429bcb4d405f4",
+      "orchestration/a-worker-cut-after-announcement-reports-only-what-started": "912521ab65440a32b410ba29417a5a61bc25e7f2167591177f5429bcb4d405f4",
+      "orchestration/a-worker-cut-before-announcement-reports-only-what-started": "912521ab65440a32b410ba29417a5a61bc25e7f2167591177f5429bcb4d405f4",
+      "orchestration/a-worker-past-its-task-timeout-is-cut-and-read-as-timed-out": "912521ab65440a32b410ba29417a5a61bc25e7f2167591177f5429bcb4d405f4"
+    },
+    "RK-19.7.3-027": {
+      "orchestration/a-background-worker-past-its-task-timeout-is-cut-and-told-as-not-completed": "c1a9354a3ff3ce39c99b9bc80d56bac2ab69f4e764739d0181d8e392442f4168",
+      "orchestration/a-background-worker-tool-answers-at-once-and-hands-the-outcome-back": "c1a9354a3ff3ce39c99b9bc80d56bac2ab69f4e764739d0181d8e392442f4168",
+      "orchestration/a-delegation-its-call-bound-cuts-posts-the-worker-cancelled": "c1a9354a3ff3ce39c99b9bc80d56bac2ab69f4e764739d0181d8e392442f4168",
+      "orchestration/a-loop-revises-its-output-until-its-reviewer-approves": "c1a9354a3ff3ce39c99b9bc80d56bac2ab69f4e764739d0181d8e392442f4168",
+      "orchestration/a-loop-whose-producer-is-cut-short-answers-nothing-and-says-why": "c1a9354a3ff3ce39c99b9bc80d56bac2ab69f4e764739d0181d8e392442f4168",
+      "orchestration/a-rejected-step-is-done-again-with-the-supervisor-s-feedback": "c1a9354a3ff3ce39c99b9bc80d56bac2ab69f4e764739d0181d8e392442f4168",
+      "orchestration/a-repeated-team-call-reads-the-room-s-last-answer": "c1a9354a3ff3ce39c99b9bc80d56bac2ab69f4e764739d0181d8e392442f4168",
+      "orchestration/a-step-whose-worker-fails-stops-the-chain-unreviewed": "c1a9354a3ff3ce39c99b9bc80d56bac2ab69f4e764739d0181d8e392442f4168",
+      "orchestration/a-supervised-step-past-its-task-timeout-stops-the-chain-unreviewed": "c1a9354a3ff3ce39c99b9bc80d56bac2ab69f4e764739d0181d8e392442f4168",
+      "orchestration/a-supervised-team-has-each-step-framed-and-checked": "c1a9354a3ff3ce39c99b9bc80d56bac2ab69f4e764739d0181d8e392442f4168",
+      "orchestration/a-supervisor-s-team-tool-runs-its-workers-at-once": "c1a9354a3ff3ce39c99b9bc80d56bac2ab69f4e764739d0181d8e392442f4168",
+      "orchestration/a-supervisor-s-worker-tool-hands-the-model-the-worker-s-result": "c1a9354a3ff3ce39c99b9bc80d56bac2ab69f4e764739d0181d8e392442f4168",
+      "orchestration/a-supervisor-s-worker-tool-reads-a-failed-worker-as-failed": "c1a9354a3ff3ce39c99b9bc80d56bac2ab69f4e764739d0181d8e392442f4168",
+      "orchestration/a-team-call-its-bound-cuts-posts-each-worker-cancelled": "c1a9354a3ff3ce39c99b9bc80d56bac2ab69f4e764739d0181d8e392442f4168",
+      "orchestration/a-team-cut-after-announcement-reports-only-what-started": "c1a9354a3ff3ce39c99b9bc80d56bac2ab69f4e764739d0181d8e392442f4168",
+      "orchestration/a-team-cut-before-announcement-reports-only-what-started": "c1a9354a3ff3ce39c99b9bc80d56bac2ab69f4e764739d0181d8e392442f4168",
+      "orchestration/a-team-worker-past-its-task-timeout-is-read-as-timed-out-beside-the-others": "c1a9354a3ff3ce39c99b9bc80d56bac2ab69f4e764739d0181d8e392442f4168",
+      "orchestration/a-worker-cut-after-announcement-reports-only-what-started": "c1a9354a3ff3ce39c99b9bc80d56bac2ab69f4e764739d0181d8e392442f4168",
+      "orchestration/a-worker-cut-before-announcement-reports-only-what-started": "c1a9354a3ff3ce39c99b9bc80d56bac2ab69f4e764739d0181d8e392442f4168",
+      "orchestration/a-worker-past-its-task-timeout-is-cut-and-read-as-timed-out": "c1a9354a3ff3ce39c99b9bc80d56bac2ab69f4e764739d0181d8e392442f4168"
+    },
+    "RK-19.7.3-028": {
+      "host/a-turn-s-host-acts-for-its-room-alone": "8e8f84988f67a219cd973d4957b3a27164582972801b50188afea053bb1f32a9",
+      "orchestration/a-background-worker-past-its-task-timeout-is-cut-and-told-as-not-completed": "8e8f84988f67a219cd973d4957b3a27164582972801b50188afea053bb1f32a9",
+      "orchestration/a-background-worker-tool-answers-at-once-and-hands-the-outcome-back": "8e8f84988f67a219cd973d4957b3a27164582972801b50188afea053bb1f32a9",
+      "orchestration/a-delegation-its-call-bound-cuts-posts-the-worker-cancelled": "8e8f84988f67a219cd973d4957b3a27164582972801b50188afea053bb1f32a9",
+      "orchestration/a-loop-revises-its-output-until-its-reviewer-approves": "8e8f84988f67a219cd973d4957b3a27164582972801b50188afea053bb1f32a9",
+      "orchestration/a-loop-s-parallel-review-that-raises-fails-at-once-and-cuts-the-other-reviews": "8e8f84988f67a219cd973d4957b3a27164582972801b50188afea053bb1f32a9",
+      "orchestration/a-rejected-step-is-done-again-with-the-supervisor-s-feedback": "8e8f84988f67a219cd973d4957b3a27164582972801b50188afea053bb1f32a9",
+      "orchestration/a-repeated-team-call-reads-the-room-s-last-answer": "8e8f84988f67a219cd973d4957b3a27164582972801b50188afea053bb1f32a9",
+      "orchestration/a-step-whose-worker-fails-stops-the-chain-unreviewed": "8e8f84988f67a219cd973d4957b3a27164582972801b50188afea053bb1f32a9",
+      "orchestration/a-supervised-step-past-its-task-timeout-stops-the-chain-unreviewed": "8e8f84988f67a219cd973d4957b3a27164582972801b50188afea053bb1f32a9",
+      "orchestration/a-supervised-team-has-each-step-framed-and-checked": "8e8f84988f67a219cd973d4957b3a27164582972801b50188afea053bb1f32a9",
+      "orchestration/a-supervisor-s-team-tool-runs-its-workers-at-once": "8e8f84988f67a219cd973d4957b3a27164582972801b50188afea053bb1f32a9",
+      "orchestration/a-supervisor-s-worker-tool-hands-the-model-the-worker-s-result": "8e8f84988f67a219cd973d4957b3a27164582972801b50188afea053bb1f32a9",
+      "orchestration/a-team-call-its-bound-cuts-posts-each-worker-cancelled": "8e8f84988f67a219cd973d4957b3a27164582972801b50188afea053bb1f32a9",
+      "orchestration/a-team-cut-after-announcement-reports-only-what-started": "8e8f84988f67a219cd973d4957b3a27164582972801b50188afea053bb1f32a9",
+      "orchestration/a-team-cut-before-announcement-reports-only-what-started": "8e8f84988f67a219cd973d4957b3a27164582972801b50188afea053bb1f32a9",
+      "orchestration/a-team-whose-worker-raises-answers-at-once": "8e8f84988f67a219cd973d4957b3a27164582972801b50188afea053bb1f32a9",
+      "orchestration/a-team-worker-past-its-task-timeout-is-read-as-timed-out-beside-the-others": "8e8f84988f67a219cd973d4957b3a27164582972801b50188afea053bb1f32a9",
+      "orchestration/a-worker-cut-after-announcement-reports-only-what-started": "8e8f84988f67a219cd973d4957b3a27164582972801b50188afea053bb1f32a9",
+      "orchestration/a-worker-cut-before-announcement-reports-only-what-started": "8e8f84988f67a219cd973d4957b3a27164582972801b50188afea053bb1f32a9",
+      "orchestration/a-worker-past-its-task-timeout-is-cut-and-read-as-timed-out": "8e8f84988f67a219cd973d4957b3a27164582972801b50188afea053bb1f32a9"
+    },
+    "RK-19.7.3-029": {
+      "orchestration/a-rejected-step-is-done-again-with-the-supervisor-s-feedback": "08a25d578bcff2b4a8d7365f5aced583603abca7a780472c6782014a41965b81",
+      "orchestration/a-step-out-of-revisions-stops-the-chain-unvalidated": "08a25d578bcff2b4a8d7365f5aced583603abca7a780472c6782014a41965b81",
+      "orchestration/a-step-whose-worker-fails-stops-the-chain-unreviewed": "08a25d578bcff2b4a8d7365f5aced583603abca7a780472c6782014a41965b81",
+      "orchestration/a-supervised-step-past-its-task-timeout-stops-the-chain-unreviewed": "08a25d578bcff2b4a8d7365f5aced583603abca7a780472c6782014a41965b81",
+      "orchestration/a-supervised-team-has-each-step-framed-and-checked": "08a25d578bcff2b4a8d7365f5aced583603abca7a780472c6782014a41965b81",
+      "orchestration/an-auto-delegating-supervisor-refines-with-its-own-instruction-and-supervises-a-sequential-team": "08a25d578bcff2b4a8d7365f5aced583603abca7a780472c6782014a41965b81",
+      "orchestration/each-revision-of-a-step-starts-from-its-own-task": "08a25d578bcff2b4a8d7365f5aced583603abca7a780472c6782014a41965b81"
+    },
+    "RK-19.7.3-031": {
+      "orchestration/a-step-out-of-revisions-stops-the-chain-unvalidated": "f0fecf95a5fe2bb3d0f3a9433e95738bd0148de42f15411a1c24875c67aa5713",
+      "orchestration/a-step-whose-worker-fails-stops-the-chain-unreviewed": "f0fecf95a5fe2bb3d0f3a9433e95738bd0148de42f15411a1c24875c67aa5713",
+      "orchestration/a-supervised-step-past-its-task-timeout-stops-the-chain-unreviewed": "f0fecf95a5fe2bb3d0f3a9433e95738bd0148de42f15411a1c24875c67aa5713"
+    },
+    "RK-19.7.3-033": {
+      "executors/one-build-serving-two-rooms-takes-a-strategy-s-tools-in-its-room-alone": "e1c0b15daad04bb72f970eb18b730d1f787b63618518d6ffe6c67d337f098134",
+      "orchestration/a-supervisor-s-own-tools-stay-its-own": "e1c0b15daad04bb72f970eb18b730d1f787b63618518d6ffe6c67d337f098134",
+      "orchestration/a-supervisor-s-worker-tool-hands-the-model-the-worker-s-result": "e1c0b15daad04bb72f970eb18b730d1f787b63618518d6ffe6c67d337f098134",
+      "orchestration/a-worker-tool-is-named-as-every-provider-accepts": "e1c0b15daad04bb72f970eb18b730d1f787b63618518d6ffe6c67d337f098134",
+      "orchestration/each-room-s-per-worker-tools-run-with-its-own-install": "e1c0b15daad04bb72f970eb18b730d1f787b63618518d6ffe6c67d337f098134",
+      "orchestration/each-room-s-per-worker-tools-run-with-its-own-install-without-streaming": "e1c0b15daad04bb72f970eb18b730d1f787b63618518d6ffe6c67d337f098134",
+      "tool-search/an-injected-tool-does-not-count-toward-the-catalogue": "e1c0b15daad04bb72f970eb18b730d1f787b63618518d6ffe6c67d337f098134",
+      "tool-search/an-injected-tool-is-reported-always-even-once-used": "e1c0b15daad04bb72f970eb18b730d1f787b63618518d6ffe6c67d337f098134",
+      "tool-search/an-injected-tool-stays-declared-while-the-catalogue-is-hidden": "e1c0b15daad04bb72f970eb18b730d1f787b63618518d6ffe6c67d337f098134",
+      "turn-config/a-turn-config-s-tool-under-a-setup-s-tool-name-is-not-declared": "e1c0b15daad04bb72f970eb18b730d1f787b63618518d6ffe6c67d337f098134"
+    },
+    "RK-19.7.3-034": {
+      "orchestration/a-supervisor-s-own-tools-stay-its-own": "dfa502a00962bf0e6c041af5f4b99df2dfdefb58ccff8fc7ed3b9122a63d0475",
+      "orchestration/a-supervisor-s-worker-tool-hands-the-model-the-worker-s-result": "dfa502a00962bf0e6c041af5f4b99df2dfdefb58ccff8fc7ed3b9122a63d0475",
+      "orchestration/a-worker-tool-is-named-as-every-provider-accepts": "dfa502a00962bf0e6c041af5f4b99df2dfdefb58ccff8fc7ed3b9122a63d0475",
+      "orchestration/each-room-s-per-worker-tools-run-with-its-own-install": "dfa502a00962bf0e6c041af5f4b99df2dfdefb58ccff8fc7ed3b9122a63d0475",
+      "orchestration/each-room-s-per-worker-tools-run-with-its-own-install-without-streaming": "dfa502a00962bf0e6c041af5f4b99df2dfdefb58ccff8fc7ed3b9122a63d0475",
+      "turn-config/a-turn-config-s-tool-under-a-setup-s-tool-name-is-not-declared": "dfa502a00962bf0e6c041af5f4b99df2dfdefb58ccff8fc7ed3b9122a63d0475"
+    },
+    "RK-19.7.3-035": {
+      "orchestration/a-worker-tool-is-named-as-every-provider-accepts": "2141b03057be29e3795f5234174761058a272c6f125070d1960fbcb288a092ab"
+    },
+    "RK-19.7.3-036": {
+      "orchestration/a-worker-tool-is-named-as-every-provider-accepts": "9571f38373fa3e0d30141d0c60f600d3e1447f5987b060d3560c47adbf19b7d4"
+    },
+    "RK-19.7.3-037": {
+      "orchestration/a-supervisor-s-worker-tool-hands-the-model-the-worker-s-result": "b5de54175a7383ccf3c2241ca273251a53a1191a30af40e33a8907eaf52c362b",
+      "orchestration/a-worker-tool-is-named-as-every-provider-accepts": "b5de54175a7383ccf3c2241ca273251a53a1191a30af40e33a8907eaf52c362b",
+      "orchestration/each-room-s-per-worker-tools-run-with-its-own-install": "b5de54175a7383ccf3c2241ca273251a53a1191a30af40e33a8907eaf52c362b",
+      "orchestration/each-room-s-per-worker-tools-run-with-its-own-install-without-streaming": "b5de54175a7383ccf3c2241ca273251a53a1191a30af40e33a8907eaf52c362b"
+    },
+    "RK-19.7.3-038": {
+      "orchestration/a-worker-tool-is-named-as-every-provider-accepts": "83b269d6957c17bdbff741ed6af0578ecb444eae9d1878693623f5fddf210c1a",
+      "turn-config/a-turn-config-s-tool-under-a-setup-s-tool-name-is-not-declared": "83b269d6957c17bdbff741ed6af0578ecb444eae9d1878693623f5fddf210c1a"
+    },
+    "RK-19.7.3-039": {
+      "orchestration/an-auto-delegating-supervisor-refines-with-its-own-instruction-and-supervises-a-sequential-team": "8e2eaa8de1a97ff9870e014d4c304eafbb5eaab8560708ada99cc3d2642c5da7",
+      "orchestration/an-auto-delegating-supervisor-turns-the-request-into-its-team-s-task-then-answers-from-their-results": "8e2eaa8de1a97ff9870e014d4c304eafbb5eaab8560708ada99cc3d2642c5da7",
+      "orchestration/an-empty-refine-instruction-gives-the-first-pass-the-implementation-s-own": "8e2eaa8de1a97ff9870e014d4c304eafbb5eaab8560708ada99cc3d2642c5da7"
+    },
+    "RK-19.7.3-041": {
+      "orchestration/an-auto-delegating-supervisor-whose-first-pass-fails-after-a-tool-round-reports-its-rows-correlation-id": "9084eb3d14f75dda1423e1dc0ca535d195bb88cbb71d4f2e25ddc97520f2e10c",
+      "orchestration/an-auto-delegating-supervisor-whose-first-pass-fails-runs-no-team-and-reports-the-failure-once": "9084eb3d14f75dda1423e1dc0ca535d195bb88cbb71d4f2e25ddc97520f2e10c"
+    },
+    "RK-19.7.3-042": {
+      "orchestration/an-auto-delegating-supervisor-whose-first-pass-fails-after-a-tool-round-reports-its-rows-correlation-id": "7e58e11638d27c605463a11f0278b7bcb2e97a7d284c4d1106506aadb3a2df1b",
+      "orchestration/an-auto-delegating-supervisor-whose-first-pass-fails-runs-no-team-and-reports-the-failure-once": "7e58e11638d27c605463a11f0278b7bcb2e97a7d284c4d1106506aadb3a2df1b"
+    },
+    "RK-19.7.3-043": {
+      "orchestration/an-auto-delegating-supervisor-s-two-passes-carry-a-correlation-id-each": "f716707595193cd48685271166f8227e8f7b732f8ab371231c59ca5700050ed7",
+      "orchestration/an-auto-delegating-supervisor-whose-first-pass-fails-after-a-tool-round-reports-its-rows-correlation-id": "f716707595193cd48685271166f8227e8f7b732f8ab371231c59ca5700050ed7",
+      "orchestration/an-auto-delegating-supervisor-whose-second-pass-fails-reports-that-pass-s-correlation-id": "f716707595193cd48685271166f8227e8f7b732f8ab371231c59ca5700050ed7"
+    },
+    "RK-19.7.3-044": {
+      "orchestration/an-auto-delegating-supervisor-whose-worker-raises-after-a-streamed-first-pass-fails-its-generation": "41db370e1722ed885db8fde3d01c80b6b29b5e9152cf5a18fac264bf6f772c68"
+    },
+    "RK-19.7.3-045": {
+      "orchestration/an-auto-delegating-supervisor-whose-worker-raises-after-a-streamed-first-pass-fails-its-generation": "4919dca8a90cc2c1516e8a8ae296767e52a958f9dd0dec09d123ee5db9f5fddb"
+    },
+    "RK-19.7.3-046": {
+      "orchestration/an-auto-delegating-supervisor-whose-worker-raises-after-a-streamed-first-pass-fails-its-generation": "649f61ab434b27d34c8dfe585730181db1120aa06dfbd825deeab055ac3db7a1"
+    },
+    "RK-19.7.3-047": {
+      "orchestration/an-auto-delegating-supervisor-s-first-pass-stores-its-calls-and-hands-on-its-final-answer": "356e232b7ff9f5e8805f0f5c34cfa547cf6a908c875bf8ef8f2a67eb32a17192",
+      "orchestration/an-auto-delegating-supervisor-s-two-passes-carry-a-correlation-id-each": "356e232b7ff9f5e8805f0f5c34cfa547cf6a908c875bf8ef8f2a67eb32a17192",
+      "orchestration/an-auto-delegating-supervisor-turns-the-request-into-its-team-s-task-then-answers-from-their-results": "356e232b7ff9f5e8805f0f5c34cfa547cf6a908c875bf8ef8f2a67eb32a17192"
+    },
+    "RK-19.7.3-048": {
+      "orchestration/an-auto-delegating-supervisor-whose-first-pass-is-cut-short-answers-its-fallback-and-runs-no-team": "ddfbc1b958665250dd0d1e538d51bdd80582e0b4e323599953b22343cd2a3faf",
+      "turn-record/a-cut-first-pass-s-fallback-carries-what-its-tool-wrote": "ddfbc1b958665250dd0d1e538d51bdd80582e0b4e323599953b22343cd2a3faf"
+    },
+    "RK-19.7.3-049": {
+      "orchestration/a-first-pass-cut-short-streams-nothing-and-its-fallback-is-delivered": "dc5aa6d554b527416b79949a523d70a9d0e2922872c3a28a2a2ab77fe4ce99c4",
+      "orchestration/a-first-pass-that-wrote-no-text-records-on-none-of-its-rows": "dc5aa6d554b527416b79949a523d70a9d0e2922872c3a28a2a2ab77fe4ce99c4",
+      "orchestration/an-auto-delegating-supervisor-whose-first-pass-is-cut-short-answers-its-fallback-and-runs-no-team": "dc5aa6d554b527416b79949a523d70a9d0e2922872c3a28a2a2ab77fe4ce99c4",
+      "turn-record/a-cut-first-pass-s-fallback-carries-what-its-tool-wrote": "dc5aa6d554b527416b79949a523d70a9d0e2922872c3a28a2a2ab77fe4ce99c4"
+    },
+    "RK-19.7.3-050": {
+      "orchestration/a-first-pass-that-wrote-no-text-records-on-none-of-its-rows": "0c12cd08589dbf0c71f6975b777f9397d8b979876c582747ce148d8ce892f764",
+      "orchestration/an-auto-delegating-supervisor-whose-first-pass-is-cut-short-answers-its-fallback-and-runs-no-team": "0c12cd08589dbf0c71f6975b777f9397d8b979876c582747ce148d8ce892f764",
+      "turn-record/a-cut-first-pass-s-fallback-carries-what-its-tool-wrote": "0c12cd08589dbf0c71f6975b777f9397d8b979876c582747ce148d8ce892f764"
+    },
+    "RK-19.7.3-051": {
+      "orchestration/an-auto-delegating-supervisor-whose-first-pass-fails-after-a-tool-round-reports-its-rows-correlation-id": "ddf801a9c74e10028cc48509a9c54ee233022db589c5fc12256de5238e57a6c9",
+      "orchestration/an-auto-delegating-supervisor-whose-first-pass-fails-runs-no-team-and-reports-the-failure-once": "ddf801a9c74e10028cc48509a9c54ee233022db589c5fc12256de5238e57a6c9"
+    },
+    "RK-19.7.3-052": {
+      "orchestration/a-first-pass-cut-short-streams-nothing-and-its-fallback-is-delivered": "1ca1ecf15bb7f49192152559d414e8c39ac4126c39b9ff3249d71131e88317a0",
+      "orchestration/an-auto-delegating-supervisor-s-first-pass-streams-nothing-to-the-room-s-transport": "1ca1ecf15bb7f49192152559d414e8c39ac4126c39b9ff3249d71131e88317a0"
+    },
+    "RK-19.7.3-053": {
+      "orchestration/a-first-pass-cut-while-its-call-runs-records-on-none-of-its-rows": "05a5f272644fa90b078987a913185e120d11b604dd7949d9d871673554029083",
+      "orchestration/a-first-pass-that-wrote-no-text-records-on-none-of-its-rows": "05a5f272644fa90b078987a913185e120d11b604dd7949d9d871673554029083",
+      "orchestration/an-auto-delegating-supervisor-s-first-pass-stores-its-calls-and-hands-on-its-final-answer": "05a5f272644fa90b078987a913185e120d11b604dd7949d9d871673554029083",
+      "orchestration/an-auto-delegating-supervisor-s-two-passes-carry-a-correlation-id-each": "05a5f272644fa90b078987a913185e120d11b604dd7949d9d871673554029083",
+      "orchestration/an-auto-delegating-supervisor-whose-first-pass-fails-after-a-tool-round-reports-its-rows-correlation-id": "05a5f272644fa90b078987a913185e120d11b604dd7949d9d871673554029083",
+      "orchestration/an-auto-delegating-supervisor-whose-first-pass-is-cut-short-answers-its-fallback-and-runs-no-team": "05a5f272644fa90b078987a913185e120d11b604dd7949d9d871673554029083",
+      "orchestration/an-auto-delegating-supervisor-whose-second-pass-fails-reports-that-pass-s-correlation-id": "05a5f272644fa90b078987a913185e120d11b604dd7949d9d871673554029083",
+      "orchestration/an-auto-delegating-supervisor-whose-worker-raises-after-a-streamed-first-pass-fails-its-generation": "05a5f272644fa90b078987a913185e120d11b604dd7949d9d871673554029083",
+      "turn-record/a-cut-first-pass-s-fallback-carries-what-its-tool-wrote": "05a5f272644fa90b078987a913185e120d11b604dd7949d9d871673554029083"
+    },
+    "RK-19.7.3-054": {
+      "orchestration/an-auto-delegating-supervisor-in-two-rooms-runs-its-team-once-per-message-in-each": "47bc4c16c9258ed29d7d724d50f637dc2148c4b07ec0e9059b75d635aecc665b",
+      "orchestration/an-auto-delegating-supervisor-refines-with-its-own-instruction-and-supervises-a-sequential-team": "47bc4c16c9258ed29d7d724d50f637dc2148c4b07ec0e9059b75d635aecc665b",
+      "orchestration/an-auto-delegating-supervisor-s-first-pass-stores-its-calls-and-hands-on-its-final-answer": "47bc4c16c9258ed29d7d724d50f637dc2148c4b07ec0e9059b75d635aecc665b",
+      "orchestration/an-auto-delegating-supervisor-s-two-passes-carry-a-correlation-id-each": "47bc4c16c9258ed29d7d724d50f637dc2148c4b07ec0e9059b75d635aecc665b",
+      "orchestration/an-auto-delegating-supervisor-turns-the-request-into-its-team-s-task-then-answers-from-their-results": "47bc4c16c9258ed29d7d724d50f637dc2148c4b07ec0e9059b75d635aecc665b",
+      "orchestration/an-auto-delegating-supervisor-whose-first-pass-fails-runs-no-team-and-reports-the-failure-once": "47bc4c16c9258ed29d7d724d50f637dc2148c4b07ec0e9059b75d635aecc665b",
+      "orchestration/an-auto-delegating-supervisor-whose-first-pass-is-cut-short-answers-its-fallback-and-runs-no-team": "47bc4c16c9258ed29d7d724d50f637dc2148c4b07ec0e9059b75d635aecc665b",
+      "orchestration/an-auto-delegating-supervisor-whose-second-pass-fails-reports-that-pass-s-correlation-id": "47bc4c16c9258ed29d7d724d50f637dc2148c4b07ec0e9059b75d635aecc665b",
+      "orchestration/an-auto-delegating-supervisor-whose-worker-raises-after-a-streamed-first-pass-fails-its-generation": "47bc4c16c9258ed29d7d724d50f637dc2148c4b07ec0e9059b75d635aecc665b"
+    },
+    "RK-19.7.3-055": {
+      "orchestration/a-first-pass-cut-while-its-call-runs-records-on-none-of-its-rows": "dad9837a365af9c07f85e6f78f1b44250ce8ac5908c63cc06a403e9247f05833",
+      "orchestration/a-first-pass-that-wrote-no-text-records-on-none-of-its-rows": "dad9837a365af9c07f85e6f78f1b44250ce8ac5908c63cc06a403e9247f05833",
+      "orchestration/an-auto-delegating-supervisor-whose-first-pass-is-cut-short-answers-its-fallback-and-runs-no-team": "dad9837a365af9c07f85e6f78f1b44250ce8ac5908c63cc06a403e9247f05833",
+      "turn-record/a-cut-first-pass-s-fallback-carries-what-its-tool-wrote": "dad9837a365af9c07f85e6f78f1b44250ce8ac5908c63cc06a403e9247f05833"
+    },
+    "RK-19.7.3-056": {
+      "orchestration/a-supervisor-s-background-team-that-fails-hands-back-its-failure": "01b2676408abef94f9d1dea43c642a34379200f796c754b60c4b70434a2cc5be"
+    },
+    "RK-19.7.4-002": {
+      "orchestration/a-loop-out-of-iterations-answers-its-last-output-not-approved": "6f32cac812a784310f17f15bb345a7a92daddea5cc3991068c6207728cc722a6",
+      "orchestration/a-loop-reviewer-s-refusal-approves-nothing": "6f32cac812a784310f17f15bb345a7a92daddea5cc3991068c6207728cc722a6",
+      "orchestration/a-loop-revises-its-output-until-its-reviewer-approves": "6f32cac812a784310f17f15bb345a7a92daddea5cc3991068c6207728cc722a6",
+      "orchestration/a-loop-s-parallel-reviewers-review-the-same-output-at-once": "6f32cac812a784310f17f15bb345a7a92daddea5cc3991068c6207728cc722a6",
+      "orchestration/a-loop-s-reviewers-review-in-turn-each-handed-the-feedback-before-it": "6f32cac812a784310f17f15bb345a7a92daddea5cc3991068c6207728cc722a6",
+      "orchestration/a-loop-whose-producer-is-cut-after-an-output-answers-that-output-not-approved": "6f32cac812a784310f17f15bb345a7a92daddea5cc3991068c6207728cc722a6",
+      "orchestration/a-review-that-says-nothing-or-fails-approves-nothing": "6f32cac812a784310f17f15bb345a7a92daddea5cc3991068c6207728cc722a6",
+      "orchestration/each-room-s-loop-runs-with-its-own-reviewer": "6f32cac812a784310f17f15bb345a7a92daddea5cc3991068c6207728cc722a6"
+    },
+    "RK-19.7.4-003": {
+      "orchestration/a-loop-leaves-its-producer-the-events-that-are-no-task": "7fbb96168375ad10ae3f0e90189d3f1b66c2aa0a3aa3904ba7f94e6924796c8a"
+    },
+    "RK-19.7.4-004": {
+      "orchestration/a-loop-reviewer-s-refusal-approves-nothing": "07eecbefaf5a662e28f53585ee1d2f25ae706fe51c9540a3c8733fe44e9f727b",
+      "orchestration/a-loop-revises-its-output-until-its-reviewer-approves": "07eecbefaf5a662e28f53585ee1d2f25ae706fe51c9540a3c8733fe44e9f727b",
+      "orchestration/a-loop-s-parallel-reviewers-review-the-same-output-at-once": "07eecbefaf5a662e28f53585ee1d2f25ae706fe51c9540a3c8733fe44e9f727b",
+      "orchestration/a-loop-s-reviewers-review-in-turn-each-handed-the-feedback-before-it": "07eecbefaf5a662e28f53585ee1d2f25ae706fe51c9540a3c8733fe44e9f727b"
+    },
+    "RK-19.7.4-005": {
+      "orchestration/a-loop-reviewer-s-refusal-approves-nothing": "adf090e29dd6038bd26b77ed59d12544874826bf11f48b833d82b2c17ddd3465",
+      "orchestration/a-loop-revises-its-output-until-its-reviewer-approves": "adf090e29dd6038bd26b77ed59d12544874826bf11f48b833d82b2c17ddd3465"
+    },
+    "RK-19.7.4-006": {
+      "orchestration/a-loop-out-of-iterations-answers-its-last-output-not-approved": "6bc33ebea65674cce946bd2cb1f1178dd038489762e9fd90f9a1d78598c1d0b5",
+      "orchestration/a-loop-reviewer-s-refusal-approves-nothing": "6bc33ebea65674cce946bd2cb1f1178dd038489762e9fd90f9a1d78598c1d0b5",
+      "orchestration/a-loop-revises-its-output-until-its-reviewer-approves": "6bc33ebea65674cce946bd2cb1f1178dd038489762e9fd90f9a1d78598c1d0b5",
+      "orchestration/a-review-that-says-nothing-or-fails-approves-nothing": "6bc33ebea65674cce946bd2cb1f1178dd038489762e9fd90f9a1d78598c1d0b5"
+    },
+    "RK-19.7.4-008": {
+      "orchestration/a-loop-out-of-iterations-answers-its-last-output-not-approved": "2a457779c230580a4aa07c3df0d36f95a6b6ebb9526bccc9d7d567fc8c6ddbeb",
+      "orchestration/a-loop-reviewer-s-refusal-approves-nothing": "2a457779c230580a4aa07c3df0d36f95a6b6ebb9526bccc9d7d567fc8c6ddbeb",
+      "orchestration/a-loop-revises-its-output-until-its-reviewer-approves": "2a457779c230580a4aa07c3df0d36f95a6b6ebb9526bccc9d7d567fc8c6ddbeb",
+      "orchestration/a-loop-s-parallel-reviewers-review-the-same-output-at-once": "2a457779c230580a4aa07c3df0d36f95a6b6ebb9526bccc9d7d567fc8c6ddbeb",
+      "orchestration/a-loop-s-reviewers-review-in-turn-each-handed-the-feedback-before-it": "2a457779c230580a4aa07c3df0d36f95a6b6ebb9526bccc9d7d567fc8c6ddbeb",
+      "orchestration/a-review-that-says-nothing-or-fails-approves-nothing": "2a457779c230580a4aa07c3df0d36f95a6b6ebb9526bccc9d7d567fc8c6ddbeb",
+      "orchestration/each-room-s-loop-runs-with-its-own-reviewer": "2a457779c230580a4aa07c3df0d36f95a6b6ebb9526bccc9d7d567fc8c6ddbeb"
+    },
+    "RK-19.7.4-009": {
+      "orchestration/a-loop-revises-its-output-until-its-reviewer-approves": "6e6652a977941530ce50772c4461e5bbdcd51fa1cb5eeed0a232c8a398e7ebec"
+    },
+    "RK-19.7.4-010": {
+      "orchestration/a-loop-reviewer-s-refusal-approves-nothing": "7334d0cd402953cf8dfef6cd6ad3f931d8512912b6454ec3174cf1c2ebb46211",
+      "orchestration/a-loop-revises-its-output-until-its-reviewer-approves": "7334d0cd402953cf8dfef6cd6ad3f931d8512912b6454ec3174cf1c2ebb46211",
+      "orchestration/a-loop-s-parallel-reviewers-review-the-same-output-at-once": "7334d0cd402953cf8dfef6cd6ad3f931d8512912b6454ec3174cf1c2ebb46211",
+      "orchestration/a-loop-s-reviewers-review-in-turn-each-handed-the-feedback-before-it": "7334d0cd402953cf8dfef6cd6ad3f931d8512912b6454ec3174cf1c2ebb46211",
+      "orchestration/a-review-that-says-nothing-or-fails-approves-nothing": "7334d0cd402953cf8dfef6cd6ad3f931d8512912b6454ec3174cf1c2ebb46211"
+    },
+    "RK-19.7.4-011": {
+      "orchestration/a-loop-out-of-iterations-answers-its-last-output-not-approved": "bb6acbd3cbc60d2a5eb398c23c39fad89cb7117737b85164b3b598aa82ab9534",
+      "orchestration/a-loop-revises-its-output-until-its-reviewer-approves": "bb6acbd3cbc60d2a5eb398c23c39fad89cb7117737b85164b3b598aa82ab9534"
+    },
+    "RK-19.7.4-012": {
+      "orchestration/a-loop-whose-producer-fails-after-a-tool-round-gives-its-error-not-a-cut": "5160ea4883edff056b7135f973ea94dafefb230805d85727740ea2e2ef3182c1",
+      "orchestration/a-loop-whose-producer-fails-hands-its-error-to-the-caller-reported-once": "5160ea4883edff056b7135f973ea94dafefb230805d85727740ea2e2ef3182c1",
+      "orchestration/a-loop-whose-producer-is-cut-after-an-output-answers-that-output-not-approved": "5160ea4883edff056b7135f973ea94dafefb230805d85727740ea2e2ef3182c1",
+      "orchestration/a-loop-whose-producer-is-cut-short-answers-nothing-and-says-why": "5160ea4883edff056b7135f973ea94dafefb230805d85727740ea2e2ef3182c1",
+      "orchestration/a-loop-with-no-output-blames-its-producer-only-once-it-ran": "5160ea4883edff056b7135f973ea94dafefb230805d85727740ea2e2ef3182c1"
+    },
+    "RK-19.7.4-013": {
+      "orchestration/a-loop-whose-producer-fails-after-a-tool-round-gives-its-error-not-a-cut": "f426640ba77e2a7cdc2faf653a2f2dc6bbe94f70cd4e0077dfbfb54cb5337e00",
+      "orchestration/a-loop-whose-producer-fails-hands-its-error-to-the-caller-reported-once": "f426640ba77e2a7cdc2faf653a2f2dc6bbe94f70cd4e0077dfbfb54cb5337e00",
+      "orchestration/a-loop-whose-producer-is-cut-short-answers-nothing-and-says-why": "f426640ba77e2a7cdc2faf653a2f2dc6bbe94f70cd4e0077dfbfb54cb5337e00",
+      "orchestration/a-loop-with-no-output-blames-its-producer-only-once-it-ran": "f426640ba77e2a7cdc2faf653a2f2dc6bbe94f70cd4e0077dfbfb54cb5337e00"
+    },
+    "RK-19.7.4-014": {
+      "orchestration/a-loop-revises-its-output-until-its-reviewer-approves": "3f01b5ee9937452b01828585f662f91e4610cfceb2c5016c8c73e21c8fba011b",
+      "orchestration/a-loop-whose-producer-fails-after-a-tool-round-gives-its-error-not-a-cut": "3f01b5ee9937452b01828585f662f91e4610cfceb2c5016c8c73e21c8fba011b",
+      "orchestration/a-loop-whose-producer-is-cut-after-an-output-answers-that-output-not-approved": "3f01b5ee9937452b01828585f662f91e4610cfceb2c5016c8c73e21c8fba011b",
+      "orchestration/a-loop-whose-producer-is-cut-short-answers-nothing-and-says-why": "3f01b5ee9937452b01828585f662f91e4610cfceb2c5016c8c73e21c8fba011b"
+    },
+    "RK-19.7.4-015": {
+      "orchestration/a-loop-whose-producer-is-cut-after-an-output-answers-that-output-not-approved": "d70b3dbf0a288964b631c82335cb7fb67595dbdaba66629c69436377e7e8193e",
+      "orchestration/a-loop-whose-producer-is-cut-short-answers-nothing-and-says-why": "d70b3dbf0a288964b631c82335cb7fb67595dbdaba66629c69436377e7e8193e"
+    },
+    "RK-19.7.4-016": {
+      "orchestration/a-loop-whose-producer-fails-after-a-tool-round-gives-its-error-not-a-cut": "a5967ab8f718ca4ab12946996d02a2da340264ab788647ce2cf3013bb31ec0b7",
+      "orchestration/a-loop-whose-producer-fails-hands-its-error-to-the-caller-reported-once": "a5967ab8f718ca4ab12946996d02a2da340264ab788647ce2cf3013bb31ec0b7"
+    },
+    "RK-19.7.4-017": {
+      "orchestration/a-loop-whose-producer-fails-hands-its-error-to-the-caller-reported-once": "01d76dd0c423d56fc41efc964fa88dd2d9a04f4001fbc7b9eaf9c135593968e3"
+    },
+    "RK-19.7.4-028": {
+      "orchestration/a-loop-s-parallel-review-that-raises-fails-at-once-and-cuts-the-other-reviews": "62342800a9a10855615524bcbcf2af182f3ae6b14a336326581de8781ca4b1e2"
+    },
+    "RK-19.7.4-032": {
+      "orchestration/a-loop-reviewer-s-refusal-approves-nothing": "dc9f3664072dd993766b242af635f720b5276aa75621f2cd68d0724a1f10cde2",
+      "orchestration/a-loop-revises-its-output-until-its-reviewer-approves": "dc9f3664072dd993766b242af635f720b5276aa75621f2cd68d0724a1f10cde2",
+      "orchestration/a-loop-s-parallel-review-that-raises-fails-at-once-and-cuts-the-other-reviews": "dc9f3664072dd993766b242af635f720b5276aa75621f2cd68d0724a1f10cde2",
+      "orchestration/a-loop-s-parallel-reviewers-review-the-same-output-at-once": "dc9f3664072dd993766b242af635f720b5276aa75621f2cd68d0724a1f10cde2",
+      "orchestration/a-loop-s-reviewers-review-in-turn-each-handed-the-feedback-before-it": "dc9f3664072dd993766b242af635f720b5276aa75621f2cd68d0724a1f10cde2",
+      "orchestration/a-loop-whose-producer-is-cut-short-answers-nothing-and-says-why": "dc9f3664072dd993766b242af635f720b5276aa75621f2cd68d0724a1f10cde2",
+      "orchestration/a-review-that-says-nothing-or-fails-approves-nothing": "dc9f3664072dd993766b242af635f720b5276aa75621f2cd68d0724a1f10cde2"
+    },
     "RK-19.8-002": {
       "status/a-status-reaches-the-hooks-of-the-room-it-names": "0f73469f09d2fc0ba6d38ea917e2d53b7468e37acf55513f3a6df5af52db1cf0"
     },

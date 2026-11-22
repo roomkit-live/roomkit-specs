@@ -1257,7 +1257,7 @@
     },
     {
       "section": "19.7",
-      "sha256": "1581a0b61e5e9837562e0e310eacc550cad9001c6eef407909c3aea4283cf154",
+      "sha256": "3ee887f02ac3c76ce6a85ad3cceed0cc88c7b9a1d3de736b9a5375b3918f6e67",
       "classification": "normative",
       "review": "The recommended strategy helpers, room-specific installation and model input framing, lifecycle and stored strategy ownership are individually scoped. Realtime-specific declarations and ownership are distinguished from agent turns."
     },

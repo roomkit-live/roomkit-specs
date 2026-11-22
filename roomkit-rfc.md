@@ -20092,10 +20092,10 @@ feedback: never from an earlier revision, whose text would nest one
 revision inside the next, and never without the task.
 
 <!-- /rfc -->
-<!-- rfc: {"id": "RK-19.7-022", "kind": "behavior", "applies": "Room-specific installs and turns preserve shared agent and channel data, including tools, handler, events, prompt, voice and shared bindings.", "level": "must"} -->
+<!-- rfc: {"id": "RK-19.7-022", "kind": "behavior", "applies": "A room-specific strategy install or turn preserves the shared agent or channel's tools, handler, event handling and prompt.", "level": "must"} -->
 No install and no turn writes into the shared agent or channel on behalf of
-one room: not its tools, its handler, its handling of events, its prompt, its
-voice, nor a binding it shares. A write made for one room is read by every
+one room: not its tools, its handler, its handling of events, its prompt, <!-- /rfc --><!-- rfc: {"id": "RK-19.7-069", "kind": "behavior", "applies": "Voice feature: a room-specific strategy install or turn preserves the shared agent or channel's voice.", "level": "must"} -->its
+voice, <!-- /rfc --><!-- rfc: {"id": "RK-19.7-070", "kind": "behavior", "applies": "A room-specific strategy install or turn preserves a binding the agent or channel shares across rooms.", "level": "must"} -->nor a binding it shares. A write made for one room is read by every
 other room the object serves, which would answer, or refuse, another room's
 user with this room's configuration. <!-- /rfc --><!-- rfc: {"id": "RK-19.7-023", "kind": "behavior", "applies": "Installing a strategy in a second room does not duplicate the tools declared in either room.", "level": "must"} -->Installing a strategy in a second room
 MUST NOT declare a tool twice in a room. <!-- /rfc --><!-- rfc: {"id": "RK-19.7-024", "kind": "behavior", "applies": "Running-work flags belong to their room.", "level": "must"} -->A flag it keeps while work runs for a
