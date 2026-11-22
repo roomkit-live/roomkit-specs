@@ -1257,33 +1257,33 @@
     },
     {
       "section": "19.7",
-      "sha256": "12c8bc79ad533f3b436566fd7d28425073106515d78c0583dc54865d686ea27e",
+      "sha256": "1581a0b61e5e9837562e0e310eacc550cad9001c6eef407909c3aea4283cf154",
       "classification": "normative",
-      "review": "Source inventory: Orchestration Strategies. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage. Reviewed the initial snapshot failure recovery clarification against the Python source test and native Rust regression; no complete implementation coverage is claimed."
+      "review": "The recommended strategy helpers, room-specific installation and model input framing, lifecycle and stored strategy ownership are individually scoped. Realtime-specific declarations and ownership are distinguished from agent turns."
     },
     {
       "section": "19.7.1",
-      "sha256": "6f9575a704bb5d92adc829a5aecabfc696b67a3917c8bdf07fcce21241df300f",
+      "sha256": "6154b07df3bc5f177abc434e3b62bf672cbc2135777d251f7573c8b4f85ad13d",
       "classification": "normative",
-      "review": "Source inventory: Pipeline. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Pipeline routing, entry state, hook registration and the named voice channel are separated. The optional voice greeting and the refusal of a realtime voice channel have their own conditions."
     },
     {
       "section": "19.7.2",
-      "sha256": "435e7042ecaf3802a83c270dc261714640067b907e0b243f89190d938e9c8db3",
+      "sha256": "66cb1f019b1007983c1539ddbb731dbe2445e0d5f66977d7bea3a0315ed45bef",
       "classification": "normative",
-      "review": "Source inventory: Swarm. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Swarm routing between all agents and sticky affinity are distinct obligations."
     },
     {
       "section": "19.7.3",
-      "sha256": "bfe64d54cc11e4e5dbba7417130edf20078806bfef10c84c30437321a4dfa1d7",
+      "sha256": "42a8b701938cd7c55c3c1b6a6489e86f56d22b6653d31dcea042c98892616af4",
       "classification": "normative",
-      "review": "Source inventory: Supervisor. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Supervisor execution separates team, child, status, timeout and cancellation behavior from optional parallelism, room/session hand-back, worker tool naming and formulation turns."
     },
     {
       "section": "19.7.4",
-      "sha256": "2d364711016bfdfe5930630565c634992ed47292fc3c918633ad88898522b116",
+      "sha256": "02aff135154df8b269210604f62a23221d184d696637f75d8834b9ef773cc5e0",
       "classification": "normative",
-      "review": "Source inventory: Loop. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Loop handling distinguishes the producer, structured reviewer verdicts, generation errors, realtime voice hand-backs, parallel reviews and framework shutdown."
     },
     {
       "section": "19.7.5",

@@ -20038,145 +20038,147 @@ reaches the whole room.
 
 ### 19.7 Orchestration Strategies
 
-<!-- rfc: {"id": "RK-19.7-001", "kind": "behavior", "applies": "§19.7 Orchestration Strategies; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-19.7-001", "kind": "behavior", "applies": "Implementations should provide helpers for each of the common orchestration strategies.", "level": "should"} -->
 The following strategies are common patterns built on router and pipeline
 primitives. Implementations SHOULD provide helpers for each.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-19.7-002", "kind": "behavior", "applies": "§19.7 Orchestration Strategies; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-19.7-005", "kind": "behavior", "applies": "A strategy is installed per room while an agent object serves all rooms it is attached to.", "level": "must"} -->
 **A strategy in several rooms (normative).** A strategy is installed per room,
 but its agents are shared: one agent object serves every room it is attached
-to, and so does a realtime channel. What a strategy adds for a room is set up
-for that room, kept by the room's owner for an agent (§10.6.1) and on the
-realtime channel itself, and MUST reach that room only:
+to, <!-- /rfc --><!-- rfc: {"id": "RK-19.7-006", "kind": "behavior", "applies": "Realtime feature: one realtime channel serves its attached rooms.", "level": "must"} -->and so does a realtime channel. <!-- /rfc --><!-- rfc: {"id": "RK-19.7-007", "kind": "behavior", "applies": "A room's owner keeps its agent configuration and a strategy's additions reach only that room.", "level": "must"} -->What a strategy adds for a room is set up
+for that room, kept by the room's owner for an agent (§10.6.1) <!-- /rfc --><!-- rfc: {"id": "RK-19.7-008", "kind": "behavior", "applies": "Realtime feature: a channel keeps a strategy's additions in the room's scope.", "level": "must"} -->and on the
+realtime channel itself, and MUST reach that room only:<!-- /rfc --><!-- rfc: {"id": "RK-19.7-009", "kind": "behavior", "applies": "Tools installed by a strategy are declared in that room's agent turns.", "level": "must"} -->
 
 - a tool it adds for a room (a supervisor's delegation tools, a delegation's
-  result tool, a loop's tool, a handoff tool) is declared in that room's turns
+  result tool, a loop's tool, a handoff tool) is declared in that room's turns<!-- /rfc --><!-- rfc: {"id": "RK-19.7-010", "kind": "behavior", "applies": "Realtime feature: room-installed tools are declared only in the room's realtime sessions.", "level": "must"} -->
   and in that room's realtime sessions, not in every room the agent or the
-  channel serves, and a call to it from another room is served as a call to
-  an undeclared tool;
+  channel serves, <!-- /rfc --><!-- rfc: {"id": "RK-19.7-011", "kind": "behavior", "applies": "A call from another room to a room-installed tool is served as undeclared.", "level": "must"} -->and a call to it from another room is served as a call to
+  an undeclared tool;<!-- /rfc --><!-- rfc: {"id": "RK-19.7-012", "kind": "behavior", "applies": "A strategy tool uses the call room's configuration, preserving the first install when another room installs a different one.", "level": "must"} -->
 - the configuration that tool runs with (the workers, the reviewers, the
   strategy, the limits, the handoff's routing) is the one installed for the
   room of the call: a second room's install, with another configuration, runs
-  its own, and changes nothing the first room runs;
+  its own, and changes nothing the first room runs;<!-- /rfc --><!-- rfc: {"id": "RK-19.7-013", "kind": "behavior", "applies": "Replacement agent turns run only in rooms with the strategy. An attached agent serves other rooms as itself.", "level": "must"} -->
 - a turn the strategy runs in place of an agent's (a loop's produce and review,
   a supervisor's delegation passes) runs in the rooms it was installed in only,
   and an agent attached to a room with no such install answers there as
-  itself;
+  itself;<!-- /rfc --><!-- rfc: {"id": "RK-19.7-014", "kind": "behavior", "applies": "Realtime feature: the active agent's configuration is the room's.", "level": "must"} -->
 - on a realtime channel, the active agent's configuration (Section 19.5) is the
   room's.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-19.7-003", "kind": "behavior", "applies": "§19.7 Orchestration Strategies; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-19.7-015", "kind": "behavior", "applies": "Model inputs assembled from model outputs frame and label each worker separately, preserving boundaries and verdicts.", "level": "must"} -->
 **What a strategy hands a model (normative).** A strategy that composes a
 model's input from other models' outputs (the workers' results a supervisor
 reviews or presents, the team's work a next worker builds on, the content a
 reviewer judges, a reviewer's feedback a producer revises with) sets each
 output apart in a `<worker_output>` block of its own under its author's label:
 one output cannot close its block, nor pass itself off as another worker's or
-as a verdict. The user's goal or task it copies into such an input is a
-`<task>` block. The input a model acts on as its own (the task framed for a
-worker, a worker's own task) stays that model's input and is not set apart.
+as a verdict. <!-- /rfc --><!-- rfc: {"id": "RK-19.7-016", "kind": "behavior", "applies": "A user's task copied into a composed strategy input is framed as a task.", "level": "must"} -->The user's goal or task it copies into such an input is a
+`<task>` block. <!-- /rfc --><!-- rfc: {"id": "RK-19.7-017", "kind": "behavior", "applies": "A model's own task stays its input without a task block around it.", "level": "must"} -->The input a model acts on as its own (the task framed for a
+worker, a worker's own task) stays that model's input and is not set apart.<!-- /rfc --><!-- rfc: {"id": "RK-19.7-018", "kind": "behavior", "applies": "In a multiparty conversation a copied participant task names its actual asker using the conversation's label; one-to-one input retains its form.", "level": "must"} -->
 When several people speak in the room (the conversation's threshold, Section
 6.4; a one-to-one conversation left as it is), the user's task such an input
 holds as a `<task>` block is headed by who asked for it, by the label the
 conversation gives the turn that led to it: `Alice asked:` before a
-participant's own words, `Requested by Alice (2, not Alice), in the delegating
-agent's words:` before a task the delegating agent wrote. The heading names the
+participant's own words, <!-- /rfc --><!-- rfc: {"id": "RK-19.7-019", "kind": "behavior", "applies": "An agent-authored task in multiparty composed input identifies its requester and the delegating agent's authorship.", "level": "must"} -->`Requested by Alice (2, not Alice), in the delegating
+agent's words:` before a task the delegating agent wrote. <!-- /rfc --><!-- rfc: {"id": "RK-19.7-020", "kind": "behavior", "applies": "A runtime-authored prompt or worker's own task has no asker heading.", "level": "must"} -->The heading names the
 asker of the task the block holds and nothing else: the runtime's own
-prompts and the input a worker acts on as its own carry no asker.
+prompts and the input a worker acts on as its own carry no asker.<!-- /rfc --><!-- rfc: {"id": "RK-19.7-021", "kind": "behavior", "applies": "A supervised or Loop revision contains the original task and only the latest output and feedback.", "level": "must"} -->
 A revision a strategy asks for (a supervised step's rework, a Loop
 producer's revision) starts from the original task, the step's or the
 producer's, as a `<task>` block, with only the latest output and the latest
 feedback: never from an earlier revision, whose text would nest one
 revision inside the next, and never without the task.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-19.7-022", "kind": "behavior", "applies": "Room-specific installs and turns preserve shared agent and channel data, including tools, handler, events, prompt, voice and shared bindings.", "level": "must"} -->
 No install and no turn writes into the shared agent or channel on behalf of
 one room: not its tools, its handler, its handling of events, its prompt, its
 voice, nor a binding it shares. A write made for one room is read by every
 other room the object serves, which would answer, or refuse, another room's
-user with this room's configuration. Installing a strategy in a second room
-MUST NOT declare a tool twice in a room. A flag it keeps while work runs for a
-room is that room's, and its tools act on the room of the call (Sections 19.6
-and 23.4). A tool set up on an agent outside any strategy (`setup_handoff`
-without a `room_id`, `setup_delegation`, `setup_realtime_delegation`) belongs
+user with this room's configuration. <!-- /rfc --><!-- rfc: {"id": "RK-19.7-023", "kind": "behavior", "applies": "Installing a strategy in a second room does not duplicate the tools declared in either room.", "level": "must"} -->Installing a strategy in a second room
+MUST NOT declare a tool twice in a room. <!-- /rfc --><!-- rfc: {"id": "RK-19.7-024", "kind": "behavior", "applies": "Running-work flags belong to their room.", "level": "must"} -->A flag it keeps while work runs for a
+room is that room's, <!-- /rfc --><!-- rfc: {"id": "RK-19.7-025", "kind": "behavior", "applies": "Tools installed by a strategy act on the room of the call.", "level": "must"} -->and its tools act on the room of the call (Sections 19.6
+and 23.4). <!-- /rfc --><!-- rfc: {"id": "RK-19.7-026", "kind": "behavior", "applies": "Global handoff and delegation tools are declared wherever the agent serves, acting on the room of the call.", "level": "must"} -->A tool set up on an agent outside any strategy (`setup_handoff`
+without a `room_id`, `setup_delegation`, <!-- /rfc --><!-- rfc: {"id": "RK-19.7-027", "kind": "behavior", "applies": "Realtime feature: global realtime delegation is declared wherever the channel serves and acts on the calling room.", "level": "must"} -->`setup_realtime_delegation`) belongs
 to the agent whatever the room: it
-is declared wherever the agent serves, and still acts on the room of the call.
+is declared wherever the agent serves, and still acts on the room of the call.<!-- /rfc --><!-- rfc: {"id": "RK-19.7-028", "kind": "behavior", "applies": "Room-specific agent setup and its turn runner are kept by the owner per channel and room.", "level": "must"} -->
 What a strategy sets up for a room is kept by the room's owner, per channel and
-room, and its turn runner runs there, each generation it asks of an agent a
+room, and its turn runner runs there, <!-- /rfc --><!-- rfc: {"id": "RK-19.7-029", "kind": "behavior", "applies": "Each generation a strategy requests is a separate turn through the turn backend.", "level": "must"} -->each generation it asks of an agent a
 turn of its own through the turn backend (§10.6.1).
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-19.7-004", "kind": "behavior", "applies": "§19.7 Orchestration Strategies; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-19.7-030", "kind": "behavior", "applies": "A room holds at most one installed strategy.", "level": "must"} -->
 **One strategy per room, installed while the room lives (normative).** A room
-holds at most one strategy. An implementation MUST provide
+holds at most one strategy. <!-- /rfc --><!-- rfc: {"id": "RK-19.7-031", "kind": "structural", "applies": "The framework exposes strategy installation and uninstallation on a room.", "level": "must"} -->An implementation MUST provide
 `install_strategy(room_id, strategy)` and `uninstall_strategy(room_id)` on
-the framework, and `create_room(orchestration=...)` installs through the same
-path:
+the framework, <!-- /rfc --><!-- rfc: {"id": "RK-19.7-032", "kind": "behavior", "applies": "Supplying orchestration during room creation installs it through the same path.", "level": "must"} -->and `create_room(orchestration=...)` installs through the same
+path:<!-- /rfc --><!-- rfc: {"id": "RK-19.7-033", "kind": "behavior", "applies": "Installation in a live room registers and attaches its agents as intelligence channels.", "level": "must"} -->
 
 - Installing on a room that already lives does what creating the room with
   the strategy does: the strategy's agents are registered and attached as
-  intelligence channels, and its hooks, tools, turn runners and state are set
-  up, the owner keeping an agent's for the room (§10.6.1). The room's
-  timeline stays, and the agents' turns read it (Section 20.1).
+  intelligence channels, <!-- /rfc --><!-- rfc: {"id": "RK-19.7-034", "kind": "behavior", "applies": "A live install establishes room-owned hooks, tools, turn runners and state as at creation.", "level": "must"} -->and its hooks, tools, turn runners and state are set
+  up, the owner keeping an agent's for the room (§10.6.1). <!-- /rfc --><!-- rfc: {"id": "RK-19.7-035", "kind": "behavior", "applies": "A live install preserves room history and agents read it in their turns.", "level": "must"} -->The room's
+  timeline stays, and the agents' turns read it (Section 20.1).<!-- /rfc --><!-- rfc: {"id": "RK-19.7-036", "kind": "behavior", "applies": "After claiming a room, a failed initial snapshot returns the error and retains the claim until explicit uninstallation.", "level": "must"} -->
   If the initial snapshot of the room cannot be read after the install
   claims it, the error is returned and the claim remains until an explicit
-  `uninstall_strategy`. That failed attempt is over: an uninstall MUST NOT
-  keep waiting for it, and releases the claim so another install can run.
+  `uninstall_strategy`. <!-- /rfc --><!-- rfc: {"id": "RK-19.7-037", "kind": "behavior", "applies": "An uninstall after a failed snapshot releases the claim without waiting so another install can run.", "level": "must"} -->That failed attempt is over: an uninstall MUST NOT
+  keep waiting for it, and releases the claim so another install can run.<!-- /rfc --><!-- rfc: {"id": "RK-19.7-038", "kind": "behavior", "applies": "A conflicting install including a custom host strategy is refused until uninstall.", "level": "must"} -->
 - While a strategy is installed, installing another one is refused, whatever
   the strategy, the host's own included: one rule decides who speaks.
-  `uninstall_strategy` comes first. One exception: a Discussion installed in
+  `uninstall_strategy` comes first. <!-- /rfc --><!-- rfc: {"id": "RK-19.7-039", "kind": "behavior", "applies": "Installing Discussion over a stored Discussion replaces it while preserving its state, including replacement from another process.", "level": "must"} -->One exception: a Discussion installed in
   a room that holds a discussion, installed in this process or followed from
   another (Section 19.7.5 rule 16), takes the place of the one the room holds
   and keeps its state (rule 1). That is how a process that restarted takes
-  the discussion back, and how a host changes its agents.
+  the discussion back, and how a host changes its agents.<!-- /rfc --><!-- rfc: {"id": "RK-19.7-040", "kind": "behavior", "applies": "Uninstalling removes the room hooks, tools and turn runners installed for that room.", "level": "must"} -->
 - Uninstalling removes what the install added for that room, and only that:
-  its room hooks, the tools and turn runners it set up for the room's agents,
-  the agents it attached (an agent bound before the install stays bound), and
-  the room state it wrote (`ConversationState`, a discussion's speak queue). A
-  strategy MAY have an uninstall step of its own, run first (a discussion
+  its room hooks, the tools and turn runners it set up for the room's agents,<!-- /rfc --><!-- rfc: {"id": "RK-19.7-041", "kind": "behavior", "applies": "Uninstalling detaches agents added by the install and keeps pre-existing bindings.", "level": "must"} -->
+  the agents it attached (an agent bound before the install stays bound), <!-- /rfc --><!-- rfc: {"id": "RK-19.7-042", "kind": "behavior", "applies": "Uninstalling clears strategy-owned conversation state and any Discussion speak queue.", "level": "must"} -->and
+  the room state it wrote (`ConversationState`, a discussion's speak queue). <!-- /rfc --><!-- rfc: {"id": "RK-19.7-043", "kind": "behavior", "applies": "A host strategy can provide a custom uninstall step, which the framework runs before its own cleanup.", "level": "must"} -->A
+  strategy MAY have an uninstall step of its own, run first <!-- /rfc --><!-- rfc: {"id": "RK-19.7-044", "kind": "behavior", "applies": "Uninstalling Discussion stops turns and posts claimed, uncommitted task results.", "level": "must"} -->(a discussion
   stops giving turns and posts the task results it took and has not
-  committed, Section 19.7.5 rule 19). The timeline stays. The room then answers by its
-  `agent_response_policy`, and another strategy may be installed. A
+  committed, Section 19.7.5 rule 19). <!-- /rfc --><!-- rfc: {"id": "RK-19.7-045", "kind": "behavior", "applies": "Uninstalling preserves the timeline.", "level": "must"} -->The timeline stays. <!-- /rfc --><!-- rfc: {"id": "RK-19.7-046", "kind": "behavior", "applies": "After uninstallation, the room's agent response policy governs answers.", "level": "must"} -->The room then answers by its
+  `agent_response_policy`, <!-- /rfc --><!-- rfc: {"id": "RK-19.7-047", "kind": "behavior", "applies": "A new strategy can be installed after uninstallation.", "level": "must"} -->and another strategy may be installed. <!-- /rfc --><!-- rfc: {"id": "RK-19.7-048", "kind": "behavior", "applies": "A Discussion persists the agents its installations attached so any serving process can uninstall it.", "level": "must"} -->A
   discussion stores the agents its installs attached with it (Section 19.7.5
   rule 16), so any process serving the room uninstalls it, one where no host
-  installed it included.
+  installed it included.<!-- /rfc --><!-- rfc: {"id": "RK-19.7-049", "kind": "behavior", "applies": "Closing a room explicitly uninstalls its strategy as explicit uninstallation does.", "level": "must"} -->
 - A room holds its strategy only while it lives. Its close, by
-  `close_room` or by its timers (Section 5.1), and its archiving while it
-  is still open, uninstall the strategy as `uninstall_strategy` does, in
+  `close_room` <!-- /rfc --><!-- rfc: {"id": "RK-19.7-050", "kind": "behavior", "applies": "A timer closing the room uninstalls the strategy.", "level": "must"} -->or by its timers (Section 5.1), <!-- /rfc --><!-- rfc: {"id": "RK-19.7-051", "kind": "behavior", "applies": "Archiving a live room uninstalls the strategy.", "level": "must"} -->and its archiving while it
+  is still open, uninstall the strategy as `uninstall_strategy` does, <!-- /rfc --><!-- rfc: {"id": "RK-19.7-052", "kind": "behavior", "applies": "The closing process uninstalls the strategy, and persisted Discussion removal reaches other processes.", "level": "must"} -->in
   the process that closes it (a discussion, stored with the room, for every
-  process): once the close is written and announced (its record,
+  process): <!-- /rfc --><!-- rfc: {"id": "RK-19.7-053", "kind": "behavior", "applies": "Automatic uninstall takes place after the close record, notification and hook start and before the caller returns, preserving history.", "level": "must"} -->once the close is written and announced (its record,
   `room_closed`, its `ON_ROOM_CLOSED` hooks started), and before the call
-  that applied it returns; the timeline stays. An install still under way
-  is not waited for. A failure to take the strategy back is logged, and the
-  room is closed all the same. A CLOSED or ARCHIVED room takes no strategy:
-  `install_strategy` refuses it (`room_closed`, Python's `RoomClosedError`),
+  that applied it returns; the timeline stays. <!-- /rfc --><!-- rfc: {"id": "RK-19.7-054", "kind": "behavior", "applies": "Automatic room cleanup proceeds without waiting for an in-flight installation.", "level": "must"} -->An install still under way
+  is not waited for. <!-- /rfc --><!-- rfc: {"id": "RK-19.7-055", "kind": "behavior", "applies": "Cleanup failure is logged and the room stays closed.", "level": "must"} -->A failure to take the strategy back is logged, and the
+  room is closed all the same. <!-- /rfc --><!-- rfc: {"id": "RK-19.7-056", "kind": "behavior", "applies": "Installing on a closed or archived room is refused with room_closed.", "level": "must"} -->A CLOSED or ARCHIVED room takes no strategy:
+  `install_strategy` refuses it (`room_closed`, Python's `RoomClosedError`),<!-- /rfc --><!-- rfc: {"id": "RK-19.7-057", "kind": "behavior", "applies": "Installation reads lifecycle state under the room lock, and a claim made before close cannot land after it.", "level": "must"} -->
   read under the room's lock, so an install claimed before a close does not
-  land after it. A reopened room holds no strategy until its host installs
+  land after it. <!-- /rfc --><!-- rfc: {"id": "RK-19.7-058", "kind": "behavior", "applies": "Reopening a room restores no strategy until its host installs one.", "level": "must"} -->A reopened room holds no strategy until its host installs
   one again: what the rooms an agent serves set up on it never outlives
-  their life.
+  their life.<!-- /rfc --><!-- rfc: {"id": "RK-19.7-059", "kind": "behavior", "applies": "A host can install or uninstall while holding the room lock; each reenters and avoids waiting on work that needs it.", "level": "must"} -->
 - A host MAY install and uninstall a strategy while it holds the room's lock
   (Section 13.5), as it does to serialise its own changes of the room: both
   take the lock again within the same task, and neither waits on work that
-  needs it. Uninstalling a discussion cuts its running turn without waiting
-  for that turn's end to be recorded (Section 19.7.5 rule 1).
+  needs it. <!-- /rfc --><!-- rfc: {"id": "RK-19.7-060", "kind": "behavior", "applies": "Discussion uninstallation interrupts an active turn without waiting for its end record.", "level": "must"} -->Uninstalling a discussion cuts its running turn without waiting
+  for that turn's end to be recorded (Section 19.7.5 rule 1).<!-- /rfc --><!-- rfc: {"id": "RK-19.7-061", "kind": "behavior", "applies": "A process may replace a strategy stored with the room.", "level": "must"} -->
 - A strategy stored with the room (a discussion, Section 19.7.5 rule 16) can
-  be replaced by another process's install. For such a kind, an
+  be replaced by another process's install. <!-- /rfc --><!-- rfc: {"id": "RK-19.7-062", "kind": "structural", "applies": "For a stored strategy kind the framework provides room_strategy_is_current to read whether the local install is the stored one.", "level": "must"} -->For such a kind, an
   implementation MUST provide `room_strategy_is_current(room_id, kind)`,
   which tells the host whether the strategy of that kind it installed in
-  this process is the one the room stores now: false once another process
-  installed another configuration, when this process installed none, or
-  once the strategy was uninstalled. It reads the room's stored state when
+  this process is the one the room stores now: <!-- /rfc --><!-- rfc: {"id": "RK-19.7-063", "kind": "behavior", "applies": "A replaced local install is no longer current.", "level": "must"} -->false once another process
+  installed another configuration, <!-- /rfc --><!-- rfc: {"id": "RK-19.7-064", "kind": "behavior", "applies": "A process with no local install reports that it is not current.", "level": "must"} -->when this process installed none, <!-- /rfc --><!-- rfc: {"id": "RK-19.7-065", "kind": "behavior", "applies": "An uninstalled strategy is no longer current.", "level": "must"} -->or
+  once the strategy was uninstalled. <!-- /rfc --><!-- rfc: {"id": "RK-19.7-066", "kind": "behavior", "applies": "A remote uninstall is read immediately and clears room_strategy for the local process.", "level": "must"} -->It reads the room's stored state when
   called; an uninstall another process made is taken at once, so
-  `room_strategy(room_id)` answers none from then on, where a replaced
-  install still names this process's own. Asked about a kind that is not
+  `room_strategy(room_id)` answers none from then on, <!-- /rfc --><!-- rfc: {"id": "RK-19.7-067", "kind": "behavior", "applies": "Following remote replacement, room_strategy continues to name the process's own install.", "level": "must"} -->where a replaced
+  install still names this process's own. <!-- /rfc --><!-- rfc: {"id": "RK-19.7-068", "kind": "behavior", "applies": "Querying currency for a non-stored kind is refused.", "level": "must"} -->Asked about a kind that is not
   stored with the room, it is refused rather than answered false, so the
   question keeps its meaning when another kind comes to be stored.
 <!-- /rfc -->
 
 #### 19.7.1 Pipeline
 
-<!-- rfc: {"id": "RK-19.7.1-001", "kind": "behavior", "applies": "§19.7.1 Pipeline; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-19.7.1-002", "kind": "behavior", "applies": "A pipeline chains its agents linearly with a phase and next-agent handoff per agent.", "level": "must"} -->
 Agents are chained linearly. Each agent handles one phase and hands off to
 the next:
 
@@ -20184,18 +20186,24 @@ the next:
 Triage → Specialist → Resolution → Closing
 ```
 
-The first agent is the entry point. Only forward transitions (and explicitly
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-19.7.1-003", "kind": "behavior", "applies": "The first pipeline agent is the entry point.", "level": "must"} -->
+The first agent is the entry point. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.1-004", "kind": "behavior", "applies": "Routing permits forward and explicitly allowed backward transitions only.", "level": "must"} -->Only forward transitions (and explicitly
 allowed backward transitions) are permitted.
 
-Each agent's phase is its channel id. The install MUST refuse a pipeline with
-no agent; otherwise it sets the room's conversation state at the first agent
-and its phase, and hooks its router on that room's `BEFORE_BROADCAST` at
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-19.7.1-005", "kind": "behavior", "applies": "The pipeline's phase is the agent's channel ID.", "level": "must"} -->
+Each agent's phase is its channel id. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.1-006", "kind": "behavior", "applies": "An empty pipeline is refused.", "level": "must"} -->The install MUST refuse a pipeline with
+no agent; <!-- /rfc --><!-- rfc: {"id": "RK-19.7.1-007", "kind": "behavior", "applies": "Installation starts conversation state at the first agent and phase.", "level": "must"} -->otherwise it sets the room's conversation state at the first agent
+and its phase, <!-- /rfc --><!-- rfc: {"id": "RK-19.7.1-008", "kind": "behavior", "applies": "The pipeline registers its router on that room's BEFORE_BROADCAST at priority -100.", "level": "must"} -->and hooks its router on that room's `BEFORE_BROADCAST` at
 priority -100.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-19.7.1-009", "kind": "behavior", "applies": "Voice feature: a named voice channel uses the pipeline agents' voices as its voice map.", "level": "must"} -->
 On a voice channel the strategy names, the agents' voices are the channel's
-voice map, and a handoff in a room the strategy runs MAY greet with the
-agent it made active (a farewell spoken first), through hooks of that room
-only. A realtime voice channel is refused: its sessions' configuration and
+voice map, <!-- /rfc --><!-- rfc: {"id": "RK-19.7.1-010", "kind": "behavior", "applies": "Voice feature: a pipeline handoff may greet using the newly active agent.", "level": "may"} -->and a handoff in a room the strategy runs MAY greet with the
+agent it made active <!-- /rfc --><!-- rfc: {"id": "RK-19.7.1-011", "kind": "behavior", "applies": "Voice feature: a greeting provided by a pipeline handoff follows the farewell and uses only the calling room's hooks.", "level": "must"} -->(a farewell spoken first), through hooks of that room
+only. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.1-012", "kind": "behavior", "applies": "Realtime voice feature: a room-installed pipeline refuses a realtime voice channel.", "level": "must"} -->A realtime voice channel is refused: its sessions' configuration and
 the handoff it serves are the channel's, for every room, as
 `ConversationPipeline.install` wires them (Section 19.5), which a strategy
 installed room by room cannot hold.
@@ -20203,7 +20211,7 @@ installed room by room cannot hold.
 
 #### 19.7.2 Swarm
 
-<!-- rfc: {"id": "RK-19.7.2-001", "kind": "behavior", "applies": "§19.7.2 Swarm; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-19.7.2-002", "kind": "behavior", "applies": "Every swarm agent can hand off to any other, without a linear order.", "level": "must"} -->
 Every agent can hand off to every other agent. No linear ordering. Useful
 for collaborative agent pools where any agent may be most appropriate:
 
@@ -20211,16 +20219,18 @@ for collaborative agent pools where any agent may be most appropriate:
 Agent A ⇄ Agent B ⇄ Agent C
 ```
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-19.7.2-003", "kind": "behavior", "applies": "A swarm keeps the current agent until an explicit handoff.", "level": "must"} -->
 Sticky affinity keeps the conversation with the current agent until an
 explicit handoff occurs.
 <!-- /rfc -->
 
 #### 19.7.3 Supervisor
 
-<!-- rfc: {"id": "RK-19.7.3-001", "kind": "behavior", "applies": "§19.7.3 Supervisor; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
-A supervisor agent talks to the user and delegates work to specialist agents.
+<!-- rfc: {"id": "RK-19.7.3-002", "kind": "behavior", "applies": "The supervisor serves the user and delegates work to specialist agents.", "level": "must"} -->
+A supervisor agent talks to the user and delegates work to specialist agents.<!-- /rfc --><!-- rfc: {"id": "RK-19.7.3-003", "kind": "behavior", "applies": "Workers run in isolated child rooms and return results to the supervisor.", "level": "must"} -->
 Specialists run in isolated **child rooms** — their output is collected and
-returned to the supervisor. When the workers run on the user's message
+returned to the supervisor. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.3-004", "kind": "behavior", "applies": "A one-pass supervisor answers media, composite or empty-text messages alone through its own channel.", "level": "must"} -->When the workers run on the user's message
 itself (one pass), a message its tasks cannot carry (a media, a composite,
 an empty text) is answered by the supervisor alone: the workers' tasks carry
 text, and the supervisor's own channel sees the media.
@@ -20231,162 +20241,172 @@ User ↔ Supervisor
               └── delegates to → Worker B (child room)
 ```
 
-The supervisor MAY delegate sequentially or in parallel. In parallel, a
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-19.7.3-005", "kind": "behavior", "applies": "A supervisor supports the selected sequential or parallel team execution.", "level": "must"} -->
+The supervisor MAY delegate sequentially or in parallel. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.3-006", "kind": "behavior", "applies": "A parallel worker delegation that raises fails the team immediately with its own error.", "level": "must"} -->In parallel, a
 delegation that raises (its worker no longer held by the kit, for example;
 a task that failed does not raise) ends the team's run with its error
-without waiting for the other workers' work: each of them has started and
+without waiting for the other workers' work: <!-- /rfc --><!-- rfc: {"id": "RK-19.7.3-007", "kind": "behavior", "applies": "Other parallel workers start, post pending, are cut and each posts one failed, cancelled end.", "level": "must"} -->each of them has started and
 been posted `pending`, and their delegations are cut, each posting its
-terminal entry `failed` with `cancelled`. None is left running unread.
+terminal entry `failed` with `cancelled`. None is left running unread.<!-- /rfc --><!-- rfc: {"id": "RK-19.7.3-008", "kind": "behavior", "applies": "Results return through the configured delivery strategy at the delegating turn's chain depth.", "level": "must"} -->
 Results are delivered back via the delivery strategy system (Section 22),
-at the chain depth of the turn that delegated (Section 23.3); results presented within the turn leave
-the supervisor's answer one deeper than the event it answers (§8.3). Results
+at the chain depth of the turn that delegated (Section 23.3); <!-- /rfc --><!-- rfc: {"id": "RK-19.7.3-009", "kind": "behavior", "applies": "An inline supervisor presentation answers one level deeper than the initiating event.", "level": "must"} -->results presented within the turn leave
+the supervisor's answer one deeper than the event it answers (§8.3). <!-- /rfc --><!-- rfc: {"id": "RK-19.7.3-010", "kind": "behavior", "applies": "Background supervisor work returns an instruction addressed to the supervisor.", "level": "must"} -->Results
 of workers dispatched in the background are handed back to the supervisor
 as a background delegation's are (§23.3 step 8): an instruction addressed to
-it, each worker's output bounded at 4,000 characters, the default of
-`max_result_chars`, never published as a participant's message. A background pipeline that fails before its results (a delegation
+it, <!-- /rfc --><!-- rfc: {"id": "RK-19.7.3-011", "kind": "behavior", "applies": "A background hand-back bounds each worker output to max_result_chars with a default of 4,000 characters.", "level": "must"} -->each worker's output bounded at 4,000 characters, the default of
+`max_result_chars`, <!-- /rfc --><!-- rfc: {"id": "RK-19.7.3-012", "kind": "behavior", "applies": "A background supervisor instruction stays private.", "level": "must"} -->never published as a participant's message. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.3-013", "kind": "behavior", "applies": "A background pipeline failure returns a generic failure instruction using the reasoning backend's fallback, excluding the error.", "level": "must"} -->A background pipeline that fails before its results (a delegation
 that raised) hands its failure back the same way: an instruction that the
 work could not be completed, carrying the reasoning backend's fallback text
-(Section 12.4.1) and never the error's message, which goes to the logs
+(Section 12.4.1) and never the error's message, <!-- /rfc --><!-- rfc: {"id": "RK-19.7.3-014", "kind": "behavior", "applies": "The background failure's own error is logged and sent to the status bus.", "level": "must"} -->which goes to the logs
 (Section 9.3) and the status bus (Section 19.8). The supervisor told the user
 results would follow;
-it is told they will not, as the dispatching caller of a pipeline run within
-the turn reads its error. A strategy's background tool serves one run per room
-at a time, whichever voice channel's session called it, and the outcome goes
-to the session that made the call (Section 23.3 step 8). The room is freed,
+it is told they will not, <!-- /rfc --><!-- rfc: {"id": "RK-19.7.3-015", "kind": "behavior", "applies": "An inline pipeline that raises returns its error to its dispatching caller.", "level": "must"} -->as the dispatching caller of a pipeline run within
+the turn reads its error. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.3-016", "kind": "behavior", "applies": "Realtime voice feature: background dispatch admits one run per room across voice channels.", "level": "must"} -->A strategy's background tool serves one run per room
+at a time, whichever voice channel's session called it, <!-- /rfc --><!-- rfc: {"id": "RK-19.7.3-017", "kind": "behavior", "applies": "Realtime voice feature: the background outcome reaches the originating session.", "level": "must"} -->and the outcome goes
+to the session that made the call (Section 23.3 step 8). <!-- /rfc --><!-- rfc: {"id": "RK-19.7.3-018", "kind": "behavior", "applies": "A background run frees the room and clears its repeat-call answer before hand-back, allowing a new dispatch from that outcome.", "level": "must"} -->The room is freed,
 and any answer the tool serves a repeated call forgotten, before the outcome
-is handed back: a dispatch answering the outcome starts a new run. The run posts one
+is handed back: a dispatch answering the outcome starts a new run. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.3-019", "kind": "behavior", "applies": "A background run posts one terminal status after hand-back, completed on success or failed on work failure, no completed worker or undelivered outcome.", "level": "must"} -->The run posts one
 terminal status entry once its outcome was handed back: `completed`, or
 `failed` when the work failed, none of its workers' tasks completed, or its
-outcome reached no one. A per-worker tool dispatched in the background is
+outcome reached no one. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.3-020", "kind": "behavior", "applies": "A per-worker background dispatch retains its framework-runner task and returns its cancellable ID.", "level": "must"} -->A per-worker tool dispatched in the background is
 followed by such a run, for that worker in that room: its delegation stays a
 task of the framework's task runner (its id in the dispatch answer, which
-cancels it), the run waits for it within the per-task timeout, past which it
-is cancelled, the worker is free again before its outcome is handed back, and
-the run alone hands it back. A background run ends with the framework:
+cancels it), <!-- /rfc --><!-- rfc: {"id": "RK-19.7.3-021", "kind": "behavior", "applies": "A background per-worker run waits up to its task timeout and then cancels the task.", "level": "must"} -->the run waits for it within the per-task timeout, past which it
+is cancelled, <!-- /rfc --><!-- rfc: {"id": "RK-19.7.3-022", "kind": "behavior", "applies": "A background worker becomes available before hand-back.", "level": "must"} -->the worker is free again before its outcome is handed back, <!-- /rfc --><!-- rfc: {"id": "RK-19.7.3-023", "kind": "behavior", "applies": "Only the background run hands back the per-worker outcome.", "level": "must"} -->and
+the run alone hands it back. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.3-024", "kind": "behavior", "applies": "Framework shutdown cancels background runs, frees rooms, and posts failed without hand-back after all cut worker terminal entries.", "level": "must"} -->A background run ends with the framework:
 closing the framework cancels it, which frees its room and posts its terminal
 entry `failed`, with nothing handed back, once each worker delegation it
 cut has posted its own.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-19.7.3-025", "kind": "behavior", "applies": "Within-turn and background worker delegations have a per-task timeout; overdue work is cut and its cancelled task reads as failed.", "level": "must"} -->
 Each worker's delegation, within the turn or in the background, is bounded
 by the strategy's per-task timeout: a worker past it is cut, its task ended
-cancelled, and it reads as failed. The worker is posted `pending` on the
+cancelled, and it reads as failed. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.3-026", "kind": "behavior", "applies": "A worker posts pending then exactly one terminal status for completion, failure, timeout, a raised error or caller cancellation.", "level": "must"} -->The worker is posted `pending` on the
 status bus, then one terminal entry however the delegation ends: completed,
-failed, timed out, raised, or cancelled by its caller. That entry names the
+failed, timed out, raised, or cancelled by its caller. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.3-027", "kind": "behavior", "applies": "Once a worker task exists, its terminal entry names its task ID and ends its status line, including progress and Loop actions.", "level": "must"} -->That entry names the
 task (`task_id`) once the task exists, whatever ended it, so the task's line
 on the bus (Section 23.4) ends with it, the progress its worker posted
 meanwhile included, whatever action the run posts under (a Loop's
-`iteration` and `review`, Section 19.7.4). The run marks its entries as its
+`iteration` and `review`, Section 19.7.4). <!-- /rfc --><!-- rfc: {"id": "RK-19.7.3-028", "kind": "behavior", "applies": "Worker entries carry the runtime-owned mark and host turns cannot end a task's line with it.", "level": "must"} -->The run marks its entries as its
 own, a mark a turn's host refuses (Section 10.6.5), so no entry a turn posts
-ends a task's line. A sequential team is
+ends a task's line. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.3-029", "kind": "behavior", "applies": "Sequential teams are supervised with task framing and validation both inline and in the background.", "level": "must"} -->A sequential team is
 supervised (the supervisor frames and validates each step) whether it runs
-within the turn or in the background; a supervisor without a model (a
+within the turn or in the background; <!-- /rfc --><!-- rfc: {"id": "RK-19.7.3-030", "kind": "behavior", "applies": "A model-less supervisor's sequential team runs unsupervised; each worker receives its task and earlier work.", "level": "must"} -->a supervisor without a model (a
 configuration-only agent, as a voice supervisor often is) cannot frame nor
 judge a step, and its team runs unsupervised, each worker given the task and
-the work done before it. A run whose supervised chain stopped on a step the
+the work done before it. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.3-031", "kind": "behavior", "applies": "A supervised chain stopping at an unvalidated step reports incomplete work.", "level": "must"} -->A run whose supervised chain stopped on a step the
 supervisor left unvalidated did not complete its work, as the supervisor
-reads it within the turn. A run asked for once the framework began closing
+reads it within the turn. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.3-032", "kind": "behavior", "applies": "A background run requested after framework shutdown begins does not start.", "level": "must"} -->A run asked for once the framework began closing
 does not start.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-19.7.3-033", "kind": "behavior", "applies": "A supervisor without a team strategy declares one delegation tool per room worker using the worker's channel ID.", "level": "must"} -->
 A supervisor without a strategy declares one tool per worker in the room it
 is installed in, `delegate_to_<id>` after the worker's channel id, under a
-name every built-in provider accepts (Section 6.7): a worker whose
+name every built-in provider accepts (Section 6.7): <!-- /rfc --><!-- rfc: {"id": "RK-19.7.3-034", "kind": "behavior", "applies": "A valid ASCII delegation tool name up to 128 characters retains its original spelling.", "level": "must"} -->a worker whose
 `delegate_to_<id>` holds only ASCII letters, digits, `_` and `-`, within 128
-characters, keeps it; any other id has each other character replaced by `_`
-(`agent:<uuid>` gives `delegate_to_agent_<uuid>`). A replaced name that
+characters, keeps it; <!-- /rfc --><!-- rfc: {"id": "RK-19.7.3-035", "kind": "behavior", "applies": "A worker tool replaces other characters in its name with underscores.", "level": "must"} -->any other id has each other character replaced by `_`
+(`agent:<uuid>` gives `delegate_to_agent_<uuid>`). <!-- /rfc --><!-- rfc: {"id": "RK-19.7.3-036", "kind": "behavior", "applies": "A colliding replacement or overlong worker tool name is truncated to 128 characters including an underscore and eight hex digits of SHA-256 of the original UTF-8 ID.", "level": "must"} -->A replaced name that
 another worker's name already is, or one longer than 128 characters, ends
 instead with `_` and the first 8 hex digits of the SHA-256 of the id's UTF-8
-bytes, the name before them cut to fit 128 characters. A call on the name
-reaches its worker, and the tool's description names the worker's id.
+bytes, the name before them cut to fit 128 characters. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.3-037", "kind": "behavior", "applies": "A generated worker tool name routes to its own worker.", "level": "must"} -->A call on the name
+reaches its worker, <!-- /rfc --><!-- rfc: {"id": "RK-19.7.3-038", "kind": "behavior", "applies": "A worker tool description names its original worker ID.", "level": "must"} -->and the tool's description names the worker's id.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-19.7.3-039", "kind": "behavior", "applies": "A task-formulation instruction overrides the ordinary prompt for its one turn only.", "level": "must"} -->
 An instruction a strategy needs for one turn (a supervisor's task-formulation
-pass) is passed for that turn only, over the prompt the turn would have had.
+pass) is passed for that turn only, over the prompt the turn would have had.<!-- /rfc --><!-- rfc: {"id": "RK-19.7.3-040", "kind": "behavior", "applies": "A supervisor's shared configuration excludes turn instructions even during concurrent turns in different rooms.", "level": "must"} -->
 The supervisor, like any channel, serves every room it is attached to, so its
 configuration carries no turn's instruction: one written there and restored
 afterwards leaks into the turns of other rooms running meanwhile.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-19.7.3-041", "kind": "behavior", "applies": "The formulation pass consumes a streamed turn and reports a failure to ON_ERROR once at streaming with the correlation of its tool rows.", "level": "must"} -->
 The task-formulation pass is read as any streamed turn is (Section 6.4), and
 fails as one does: its failure fires ON_ERROR once, as a streamed turn's
-(`streaming`, with the correlation of the tool rows it wrote), is logged once,
-and reaches the room turn's caller without a second report. It is a turn of
+(`streaming`, with the correlation of the tool rows it wrote), <!-- /rfc --><!-- rfc: {"id": "RK-19.7.3-042", "kind": "behavior", "applies": "A formulation failure is logged once and reaches the room caller without duplicate reporting.", "level": "must"} -->is logged once,
+and reaches the room turn's caller without a second report. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.3-043", "kind": "behavior", "applies": "Formulation rows use the pass's own correlation, distinct from the presentation rows, answer and presentation failure.", "level": "must"} -->It is a turn of
 its own (Section 10.6.1): its rows carry a `correlation_id` of their own, and
 the supervisor's presentation of the results, its rows, its answer and the
-ON_ERROR of its failure carry another. A worker that raises once the pass
+ON_ERROR of its failure carry another. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.3-044", "kind": "behavior", "applies": "A worker raising after formulation fails the supervisor turn with one ON_ERROR at generation and no correlation ID.", "level": "must"} -->A worker that raises once the pass
 handed on its task (its channel no longer registered) fails the supervisor's
 turn as a turn that raised: ON_ERROR once, `generation`, with no
-`correlation_id`; the supervisor's delivery of the event failed, reported and
-recorded with the event's other delivery results (Section 5.13); the caller
-reads the error, and no presentation runs. The
+`correlation_id`; <!-- /rfc --><!-- rfc: {"id": "RK-19.7.3-045", "kind": "behavior", "applies": "Delivery failure is reported and retained among the initiating event's other delivery results.", "level": "must"} -->the supervisor's delivery of the event failed, reported and
+recorded with the event's other delivery results (Section 5.13); <!-- /rfc --><!-- rfc: {"id": "RK-19.7.3-046", "kind": "behavior", "applies": "The caller receives a post-formulation worker exception and no presentation runs.", "level": "must"} -->the caller
+reads the error, and no presentation runs. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.3-047", "kind": "behavior", "applies": "A formulation pass delegates its final answer, excluding tool-round narration.", "level": "must"} -->The
 task it hands the workers is its final answer, never the narration of its
-tool rounds joined to it, and a pass its round cap, deadline or budget cut
-short has none, so no worker runs. A pass that stopped short of its answer
+tool rounds joined to it, <!-- /rfc --><!-- rfc: {"id": "RK-19.7.3-048", "kind": "behavior", "applies": "A formulation pass cut by its round cap, deadline or budget has no final task or worker dispatch.", "level": "must"} -->and a pass its round cap, deadline or budget cut
+short has none, so no worker runs. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.3-049", "kind": "behavior", "applies": "An incomplete formulation pass other than a chosen cancellation returns the reasoning fallback as the supervisor's stored, delivered answer.", "level": "must"} -->A pass that stopped short of its answer
 (it ended for any reason but `completed`, save a stop someone chose,
 `cancelled`) still answers the message it answered: the supervisor's
 fallback message, the text a reasoning backend speaks when its delegated work
 could not be completed (Section 12.4.1), stored and delivered as the
-supervisor's response, carrying the turn's record (its `loop_end_reason`,
-its `ai_usage`, what the turn wrote) as the turn's last message would. A
+supervisor's response, <!-- /rfc --><!-- rfc: {"id": "RK-19.7.3-050", "kind": "behavior", "applies": "The formulation fallback carries the pass's end reason, usage and recorded turn output.", "level": "must"} -->carrying the turn's record (its `loop_end_reason`,
+its `ai_usage`, what the turn wrote) as the turn's last message would. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.3-051", "kind": "behavior", "applies": "A pass raising an error provides no fallback and the turn logs the error once at its level.", "level": "must"} -->A
 pass that failed with an error has no fallback: the error is the turn's, as
-on any turn, logged once at its own level. Nothing of the pass's own stream
-reaches the room's transports. Its tool calls are stored in the room as
+on any turn, logged once at its own level. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.3-052", "kind": "behavior", "applies": "The formulation stream is withheld from room transports.", "level": "must"} -->Nothing of the pass's own stream
+reaches the room's transports. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.3-053", "kind": "behavior", "applies": "Formulation TOOL_CALL rows are stored through the commit gate in the answered event's scope and thread.", "level": "must"} -->Its tool calls are stored in the room as
 any turn's TOOL_CALL rows, through the room's commit gate (Section 10.1) and
-in the answered event's scope and thread. Its text is not stored: it is the
-workers' task, an answer to no one in the room. Its record rides none of those
+in the answered event's scope and thread. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.3-054", "kind": "behavior", "applies": "The formulation pass's worker-facing text is not stored as a room answer.", "level": "must"} -->Its text is not stored: it is the
+workers' task, an answer to no one in the room. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.3-055", "kind": "behavior", "applies": "The formulation pass's record stays off its tool rows and is handed on to its fallback message.", "level": "must"} -->Its record rides none of those
 rows: the pass hands it on, and its fallback message carries it.
 <!-- /rfc -->
 
 #### 19.7.4 Loop
 
-<!-- rfc: {"id": "RK-19.7.4-001", "kind": "behavior", "applies": "§19.7.4 Loop; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-19.7.4-002", "kind": "behavior", "applies": "A Loop repeatedly refines the producer's work.", "level": "must"} -->
 A single agent handles the conversation indefinitely, looping back for
-refinement. Useful for iterative workflows (editing, code review, tutoring).
+refinement. Useful for iterative workflows (editing, code review, tutoring).<!-- /rfc --><!-- rfc: {"id": "RK-19.7.4-003", "kind": "behavior", "applies": "Media, composite and empty text are answered by the producer alone through its channel when the task cannot carry the initiating message.", "level": "must"} -->
 A message its tasks cannot carry (a media, a composite, an empty text) is
 answered by the producer alone, as a one-pass supervisor answers it
 (§19.7.3), through the same reading of the message: the loop's
 tasks carry text, and the producer's own channel sees the media; it is never
-left without an answer.
+left without an answer.<!-- /rfc --><!-- rfc: {"id": "RK-19.7.4-004", "kind": "behavior", "applies": "A reviewer supplies a verdict via submit_review with boolean approved and textual feedback, treating other feedback as absent.", "level": "must"} -->
 Each reviewer gives its verdict by calling `submit_review` (`approved`, a
-boolean; `feedback`, a text, any other value read as none), a tool its
+boolean; `feedback`, a text, any other value read as none), <!-- /rfc --><!-- rfc: {"id": "RK-19.7.4-005", "kind": "behavior", "applies": "The reviewer task declares and forces submit_review, including reminders.", "level": "must"} -->a tool its
 review's task declares and forces as a worker's structured result is forced
-(Section 23.3), reminders included. Only a verdict whose `approved` is true
+(Section 23.3), reminders included. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.4-006", "kind": "behavior", "applies": "Approval requires an approved true verdict; a refusal, words without a tool submission or a failed task do not approve.", "level": "must"} -->Only a verdict whose `approved` is true
 approves: a refusal, a review that never called the tool (its words saying
-APPROVED included), a reviewer whose turns take no owner tools (Section
+APPROVED included), <!-- /rfc --><!-- rfc: {"id": "RK-19.7.4-007", "kind": "behavior", "applies": "A reviewer whose turns do not accept owner tools gets no review tool, and even verdict-shaped text cannot approve.", "level": "must"} -->a reviewer whose turns take no owner tools (Section
 10.6.5), never given the tool, whatever its text holds (a verdict's JSON
-included), and a review whose task failed approve nothing, the reviewer's
-feedback, or its last words without a verdict, going back to the producer.
+included), and a review whose task failed approve nothing, <!-- /rfc --><!-- rfc: {"id": "RK-19.7.4-008", "kind": "behavior", "applies": "On nonapproval the reviewer feedback or its last words are passed to the producer.", "level": "must"} -->the reviewer's
+feedback, or its last words without a verdict, going back to the producer.<!-- /rfc --><!-- rfc: {"id": "RK-19.7.4-009", "kind": "behavior", "applies": "A reviewer with the tool returns the verdict JSON payload as its task result.", "level": "must"} -->
 A review given the tool hands the verdict's JSON payload back as its task's
-result; its terminal status entry carries the feedback, or `Approved.` or
-`Not approved.` when there is none.
+result; <!-- /rfc --><!-- rfc: {"id": "RK-19.7.4-010", "kind": "behavior", "applies": "The review's terminal status carries feedback or the corresponding Approved. or Not approved. default.", "level": "must"} -->its terminal status entry carries the feedback, or `Approved.` or
+`Not approved.` when there is none.<!-- /rfc --><!-- rfc: {"id": "RK-19.7.4-011", "kind": "behavior", "applies": "The Loop result answers the initiating event one level deeper.", "level": "must"} -->
 The loop's result is the agent's response to the event that started it, one
-deeper than that event (§8.3). A producer's task that failed (§23.3 step 6)
+deeper than that event (§8.3). <!-- /rfc --><!-- rfc: {"id": "RK-19.7.4-012", "kind": "behavior", "applies": "A failed producer stops the Loop and its last output, if present, is unapproved and indicates the failure.", "level": "must"} -->A producer's task that failed (§23.3 step 6)
 stops the loop: the last output it produced, if any, is the result, not
-approved, and says the loop stopped on that failure; with no output at all
-the turn has no answer, never an empty response passed off as one. Either
+approved, and says the loop stopped on that failure; <!-- /rfc --><!-- rfc: {"id": "RK-19.7.4-013", "kind": "behavior", "applies": "With no producer output the turn has no response.", "level": "must"} -->with no output at all
+the turn has no answer, never an empty response passed off as one. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.4-014", "kind": "behavior", "applies": "The caller reads the producer's actual last-turn record and usage keyed by the producer in turns.", "level": "must"} -->Either
 way the loop's caller reads how the producer's last turn ended under `turns`,
-keyed by the producer, with its usage, as a room turn's caller does (§6.4): a
+keyed by the producer, with its usage, as a room turn's caller does (§6.4): <!-- /rfc --><!-- rfc: {"id": "RK-19.7.4-015", "kind": "behavior", "applies": "A producer cut by a cap, deadline, budget or stop is not an error and fires no ON_ERROR.", "level": "must"} -->a
 turn its round cap, deadline, budget or a stop cut short is read there, is
-no error and fires no ON_ERROR, as a room turn's does; a turn that failed
+no error and fires no ON_ERROR, as a room turn's does; <!-- /rfc --><!-- rfc: {"id": "RK-19.7.4-016", "kind": "behavior", "applies": "A producer's raised failure reaches the caller with its original type.", "level": "must"} -->a turn that failed
 reaches the caller as the error it raised, its type unchanged (a provider's
-failure as that provider's error), reported to ON_ERROR once, where the
-producer's turn failed (its task's room), and logged once. An asynchronous loop
+failure as that provider's error), <!-- /rfc --><!-- rfc: {"id": "RK-19.7.4-017", "kind": "behavior", "applies": "A raised producer error is reported once to ON_ERROR in the task's room and logged once.", "level": "must"} -->reported to ON_ERROR once, where the
+producer's turn failed (its task's room), and logged once. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.4-018", "kind": "behavior", "applies": "Realtime voice feature: an asynchronous Loop sends a private instruction back to the originating voice channel.", "level": "must"} -->An asynchronous loop
 (a voice channel's `delegate_loop`) hands its outcome back to the voice
 channel that started it as a background delegation's result is (§23.3 step
-8): an instruction to that channel, its output bounded at 4,000 characters,
-the default of `max_result_chars`, and set apart as a worker's, never published
-as a participant's message. The text says how the
+8): an instruction to that channel, <!-- /rfc --><!-- rfc: {"id": "RK-19.7.4-019", "kind": "behavior", "applies": "Realtime voice feature: a Loop hand-back bounds its framed worker output to max_result_chars, defaulting to 4,000.", "level": "must"} -->its output bounded at 4,000 characters,
+the default of `max_result_chars`, and set apart as a worker's, <!-- /rfc --><!-- rfc: {"id": "RK-19.7.4-020", "kind": "behavior", "applies": "Realtime voice feature: an asynchronous Loop hand-back is never published as a participant's message.", "level": "must"} -->never published
+as a participant's message. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.4-021", "kind": "behavior", "applies": "Realtime voice feature: the hand-back describes the Loop outcome and any producer failure and cut without the task's error.", "level": "must"} -->The text says how the
 loop ended; for a producer's task that failed, that it failed and the cut
-that ended its turn, never with the task's error. A loop that raised hands
+that ended its turn, never with the task's error. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.4-022", "kind": "behavior", "applies": "Realtime voice feature: an exception produces a generic reasoning-fallback instruction excluding the exception message.", "level": "must"} -->A loop that raised hands
 back that the work could not be completed, carrying the reasoning backend's
-fallback text (Section 12.4.1) and never the error's message, which goes to
+fallback text (Section 12.4.1) and never the error's message, <!-- /rfc --><!-- rfc: {"id": "RK-19.7.4-023", "kind": "behavior", "applies": "A background Loop exception's message is recorded in the logs and status bus.", "level": "must"} -->which goes to
 the logs (Section 9.3) and the status bus (Section 19.8), as a supervisor's
-background pipeline does (Section 19.7.3), one loop per room and in the session that
-made the call. The room is free for a new loop before the outcome is handed
-back: the model's turn on it may start one. A loop its producer's task
-stopped posts its terminal status entry as `failed`. The producer and the
+background pipeline does (Section 19.7.3), <!-- /rfc --><!-- rfc: {"id": "RK-19.7.4-024", "kind": "behavior", "applies": "Realtime voice feature: a room has one asynchronous Loop and the originating session receives its outcome.", "level": "must"} -->one loop per room and in the session that
+made the call. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.4-025", "kind": "behavior", "applies": "A Loop releases its room before handing back the outcome so the model may dispatch another.", "level": "must"} -->The room is free for a new loop before the outcome is handed
+back: the model's turn on it may start one. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.4-026", "kind": "behavior", "applies": "A stopped producer task results in a failed terminal Loop status.", "level": "must"} -->A loop its producer's task
+stopped posts its terminal status entry as `failed`. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.4-027", "kind": "behavior", "applies": "Loop producer and reviewer tasks have no per-task timeout, and each receives pending then one terminal status however it ends.", "level": "must"} -->The producer and the
 reviewers are delegated as a supervisor's workers are (Section 19.7.3),
 without a per-task bound: each is posted `pending`, then one terminal entry
-however its delegation ends. Parallel reviews end as a parallel team does:
+however its delegation ends. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.4-028", "kind": "behavior", "applies": "A raised parallel review fails the Loop without waiting and other reviews are cut, each with its terminal entry.", "level": "must"} -->Parallel reviews end as a parallel team does:
 a review that raises fails the loop without waiting for the others, which
-are cut, each posting its terminal entry. An asynchronous loop ends with
+are cut, each posting its terminal entry. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.4-029", "kind": "behavior", "applies": "An asynchronous Loop ends with framework shutdown under the background-run cleanup rules.", "level": "must"} -->An asynchronous loop ends with
 the framework as a supervisor's background run does.
 <!-- /rfc -->
 
