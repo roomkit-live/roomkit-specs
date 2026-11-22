@@ -1,9 +1,9 @@
 {
   "version": 1,
-  "rfc_sha256": "83cc834a50a44efa43dc058d67bdd759874cf140946505d06b5e3f5424d59b78",
-  "corpus_sha256": "37ce1659520364151f2d18279692004466771a59da825152ca73512df8182cbd",
+  "rfc_sha256": "6e88364ca3a1fc87a201184a3019a5bfacd2a26cb2be38ec7921cc7cd323a2b4",
+  "corpus_sha256": "b6be90365c506d3356efc99c81d6387592780678f23506e174c78dae3ca578be",
   "python_commit": "1bb12d025296ee1c5f14b82267462fc4d13104a6",
-  "scenario_count": 3391,
+  "scenario_count": 3393,
   "sections": [
     {
       "section": "0",
@@ -997,15 +997,15 @@
       "section": "6.4",
       "title": "Intelligence Channels",
       "review": "normative",
-      "requirements": 497,
+      "requirements": 494,
       "mapping": {
-        "mapped_partial": 23,
-        "unmapped": 474
+        "mapped_partial": 22,
+        "unmapped": 472
       },
       "decided_gaps": {
         "phase6": 8,
-        "step": 63,
-        "writable": 71
+        "step": 53,
+        "writable": 70
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -2325,15 +2325,14 @@
       "section": "6.7",
       "title": "Provider Abstraction",
       "review": "normative",
-      "requirements": 101,
+      "requirements": 74,
       "mapping": {
         "mapped_partial": 4,
-        "unmapped": 97
+        "unmapped": 70
       },
       "decided_gaps": {
-        "phase6": 1,
-        "step": 49,
-        "writable": 11
+        "step": 7,
+        "writable": 9
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -2388,12 +2387,14 @@
         "response-schema/a-generation-hook-that-clears-the-schema-frees-the-turn",
         "response-schema/a-malformed-call-under-a-schema-is-asked-again",
         "response-schema/a-model-that-takes-no-schema-fails-the-turn-before-any-request",
+        "response-schema/a-refusal-under-a-schema-fails-the-turn-refused",
         "response-schema/a-schema-turn-its-round-cap-cuts-fails-truncated",
         "response-schema/a-schema-turn-its-token-budget-stops-fails-truncated",
         "response-schema/a-schema-turn-the-provider-interrupts-after-a-round-fails-truncated",
         "response-schema/a-tool-round-s-text-and-the-document-are-two-messages",
         "response-schema/a-turn-under-a-schema-stores-its-json-document",
         "response-schema/a-turn-with-no-schema-anywhere-asks-for-none",
+        "response-schema/an-answer-cut-for-room-under-a-schema-fails-truncated",
         "response-schema/an-answer-that-fails-its-check-is-never-stored-nor-sent",
         "response-schema/tools-beside-a-schema-fail-where-the-model-cannot-take-both",
         "streaming/a-coalesce-window-of-zero-publishes-each-piece",
@@ -2448,12 +2449,12 @@
       "section": "6.8",
       "title": "Classifiers",
       "review": "normative",
-      "requirements": 13,
+      "requirements": 10,
       "mapping": {
-        "unmapped": 13
+        "unmapped": 10
       },
       "decided_gaps": {
-        "step": 11
+        "step": 8
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
@@ -9642,7 +9643,7 @@
         "unmapped": 99
       },
       "decided_gaps": {
-        "phase6": 32,
+        "phase6": 31,
         "step": 2,
         "writable": 3
       },
@@ -10590,12 +10591,12 @@
       "section": "25.2",
       "title": "ImageProvider",
       "review": "normative",
-      "requirements": 31,
+      "requirements": 9,
       "mapping": {
-        "unmapped": 31
+        "unmapped": 9
       },
       "decided_gaps": {
-        "step": 30
+        "step": 6
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
@@ -10604,12 +10605,12 @@
       "section": "25.3",
       "title": "ImageResult",
       "review": "normative",
-      "requirements": 19,
+      "requirements": 8,
       "mapping": {
-        "unmapped": 19
+        "unmapped": 8
       },
       "decided_gaps": {
-        "step": 16
+        "step": 3
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
@@ -10618,12 +10619,12 @@
       "section": "25.4",
       "title": "Editing",
       "review": "normative",
-      "requirements": 11,
+      "requirements": 6,
       "mapping": {
-        "unmapped": 11
+        "unmapped": 6
       },
       "decided_gaps": {
-        "step": 7
+        "step": 1
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
@@ -10632,12 +10633,12 @@
       "section": "25.5",
       "title": "Usage Accounting",
       "review": "normative",
-      "requirements": 7,
+      "requirements": 5,
       "mapping": {
-        "unmapped": 7
+        "unmapped": 5
       },
       "decided_gaps": {
-        "step": 5
+        "step": 1
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
@@ -10646,13 +10647,11 @@
       "section": "25.6",
       "title": "Model Catalogue",
       "review": "normative",
-      "requirements": 5,
+      "requirements": 1,
       "mapping": {
-        "unmapped": 5
+        "unmapped": 1
       },
-      "decided_gaps": {
-        "step": 4
-      },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -13233,19 +13232,8 @@
     {
       "id": "RK-6.4-061",
       "section": "6.4",
-      "mapping": "mapped_partial",
-      "links": [
-        {
-          "id": "openai-composition-wire",
-          "scope": "Chat Completions tool-call composition, through the actual provider decoder and public room bus on simulated HTTP responses.",
-          "coverage": "partial",
-          "missing": [
-            "Does not establish every provider protocol, remote service behavior, distributed executor or publication failure.",
-            "Wall-clock coalescing and all other outcomes of this broad clause remain outside this source link."
-          ],
-          "executions": []
-        }
-      ]
+      "mapping": "unmapped",
+      "links": []
     },
     {
       "id": "RK-6.4-062",
@@ -13382,16 +13370,6 @@
       "links": []
     },
     {
-      "id": "RK-6.4-074",
-      "section": "6.4",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1911"
-      }
-    },
-    {
       "id": "RK-6.4-075",
       "section": "6.4",
       "mapping": "unmapped",
@@ -13455,12 +13433,7 @@
       "id": "RK-6.4-085",
       "section": "6.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1911",
-        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-      }
+      "links": []
     },
     {
       "id": "RK-6.4-086",
@@ -13472,78 +13445,43 @@
       "id": "RK-6.4-087",
       "section": "6.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1911",
-        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-      }
+      "links": []
     },
     {
       "id": "RK-6.4-088",
       "section": "6.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1911",
-        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-      }
+      "links": []
     },
     {
       "id": "RK-6.4-089",
       "section": "6.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1911",
-        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-      }
+      "links": []
     },
     {
       "id": "RK-6.4-090",
       "section": "6.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1911",
-        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-      }
+      "links": []
     },
     {
       "id": "RK-6.4-091",
       "section": "6.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1911",
-        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-      }
+      "links": []
     },
     {
       "id": "RK-6.4-092",
       "section": "6.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1911",
-        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-      }
+      "links": []
     },
     {
       "id": "RK-6.4-093",
       "section": "6.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1911",
-        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-      }
+      "links": []
     },
     {
       "id": "RK-6.4-094",
@@ -15753,17 +15691,6 @@
       "links": []
     },
     {
-      "id": "RK-6.4-354",
-      "section": "6.4",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1940",
-        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-      }
-    },
-    {
       "id": "RK-6.4-355",
       "section": "6.4",
       "mapping": "mapped_partial",
@@ -16132,17 +16059,6 @@
       "section": "6.4",
       "mapping": "unmapped",
       "links": []
-    },
-    {
-      "id": "RK-6.4-404",
-      "section": "6.4",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1951",
-        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-      }
     },
     {
       "id": "RK-6.4-405",
@@ -17456,12 +17372,7 @@
       "id": "RK-6.7-023",
       "section": "6.7",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1955",
-        "note": "model.fails_once_closed observes a scripted model's close; a provider releasing its real connections needs the provider wire fixture."
-      }
+      "links": []
     },
     {
       "id": "RK-6.7-024",
@@ -17557,291 +17468,58 @@
       "links": []
     },
     {
-      "id": "RK-6.7-032",
-      "section": "6.7",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1955",
-        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-      }
-    },
-    {
-      "id": "RK-6.7-033",
+      "id": "RK-6.7-115",
       "section": "6.7",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-6.7-034",
-      "section": "6.7",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1955",
-        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-      }
-    },
-    {
-      "id": "RK-6.7-035",
-      "section": "6.7",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1955",
-        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-      }
-    },
-    {
-      "id": "RK-6.7-004",
-      "section": "6.7",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1955",
-        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-      }
-    },
-    {
       "id": "RK-6.7-036",
       "section": "6.7",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1955",
-        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-      }
+      "links": []
     },
     {
       "id": "RK-6.7-037",
       "section": "6.7",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1955",
-        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-      }
+      "links": []
     },
     {
       "id": "RK-6.7-038",
       "section": "6.7",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1955",
-        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-      }
+      "links": []
     },
     {
       "id": "RK-6.7-039",
       "section": "6.7",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1955",
-        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-      }
+      "links": []
     },
     {
-      "id": "RK-6.7-040",
+      "id": "RK-6.7-116",
       "section": "6.7",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1955",
-        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-      }
-    },
-    {
-      "id": "RK-6.7-041",
-      "section": "6.7",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1955",
-        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-      }
-    },
-    {
-      "id": "RK-6.7-042",
-      "section": "6.7",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1955",
-        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-      }
-    },
-    {
-      "id": "RK-6.7-043",
-      "section": "6.7",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1955",
-        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-      }
-    },
-    {
-      "id": "RK-6.7-044",
-      "section": "6.7",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1955",
-        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-      }
-    },
-    {
-      "id": "RK-6.7-045",
-      "section": "6.7",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1955",
-        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-      }
-    },
-    {
-      "id": "RK-6.7-046",
-      "section": "6.7",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1955",
-        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-      }
-    },
-    {
-      "id": "RK-6.7-047",
-      "section": "6.7",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1955",
-        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-      }
+      "links": []
     },
     {
       "id": "RK-6.7-048",
       "section": "6.7",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1955",
-        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-      }
-    },
-    {
-      "id": "RK-6.7-049",
-      "section": "6.7",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1955",
-        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-      }
+      "links": []
     },
     {
       "id": "RK-6.7-050",
       "section": "6.7",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1955",
-        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-      }
+      "links": []
     },
     {
       "id": "RK-6.7-051",
       "section": "6.7",
       "mapping": "unmapped",
       "links": []
-    },
-    {
-      "id": "RK-6.7-052",
-      "section": "6.7",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1955",
-        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-      }
-    },
-    {
-      "id": "RK-6.7-053",
-      "section": "6.7",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1955",
-        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-      }
-    },
-    {
-      "id": "RK-6.7-054",
-      "section": "6.7",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1955",
-        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-      }
-    },
-    {
-      "id": "RK-6.7-055",
-      "section": "6.7",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1955",
-        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-      }
-    },
-    {
-      "id": "RK-6.7-056",
-      "section": "6.7",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1955",
-        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-      }
-    },
-    {
-      "id": "RK-6.7-057",
-      "section": "6.7",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1955",
-        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-      }
     },
     {
       "id": "RK-6.7-058",
@@ -17901,12 +17579,7 @@
       "id": "RK-6.7-065",
       "section": "6.7",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1955",
-        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-      }
+      "links": []
     },
     {
       "id": "RK-6.7-066",
@@ -18053,23 +17726,13 @@
       "id": "RK-6.7-081",
       "section": "6.7",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1955",
-        "note": "Under model.response_schema a round whose finish_reason is refusal is refused; a vendor's refusal field and a prompt blocked before any answer stay with the provider wire fixture."
-      }
+      "links": []
     },
     {
       "id": "RK-6.7-082",
       "section": "6.7",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1955",
-        "note": "Under model.response_schema a round that ran out of room is truncated; a vendor's own stop reasons and a context window filling up stay with the provider wire fixture."
-      }
+      "links": []
     },
     {
       "id": "RK-6.7-083",
@@ -18102,60 +17765,16 @@
       "links": []
     },
     {
-      "id": "RK-6.7-088",
-      "section": "6.7",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1955",
-        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-      }
-    },
-    {
       "id": "RK-6.7-089",
       "section": "6.7",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-6.7-090",
-      "section": "6.7",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1955",
-        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-      }
-    },
-    {
       "id": "RK-6.7-091",
       "section": "6.7",
       "mapping": "unmapped",
       "links": []
-    },
-    {
-      "id": "RK-6.7-092",
-      "section": "6.7",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1955",
-        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-      }
-    },
-    {
-      "id": "RK-6.7-093",
-      "section": "6.7",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1955",
-        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-      }
     },
     {
       "id": "RK-6.7-094",
@@ -18175,136 +17794,46 @@
       "links": []
     },
     {
-      "id": "RK-6.7-096",
+      "id": "RK-6.7-117",
       "section": "6.7",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1955",
-        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-      }
-    },
-    {
-      "id": "RK-6.7-097",
-      "section": "6.7",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1955",
-        "note": "A realtime endpoint that hands the tools to another model checks that model's vendor's rule (media feature realtime)."
-      }
-    },
-    {
-      "id": "RK-6.7-098",
-      "section": "6.7",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1955",
-        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-      }
-    },
-    {
-      "id": "RK-6.7-013",
-      "section": "6.7",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1955",
-        "note": "Needs a provider wire fixture: only a vendor's own format carries an error flag on a tool result, and the core's chat rendering has none."
-      }
-    },
-    {
-      "id": "RK-6.7-014",
-      "section": "6.7",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1955",
-        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-      }
+      "links": []
     },
     {
       "id": "RK-6.7-099",
       "section": "6.7",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1955",
-        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-      }
+      "links": []
     },
     {
       "id": "RK-6.7-100",
       "section": "6.7",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1955",
-        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-      }
+      "links": []
     },
     {
       "id": "RK-6.7-101",
       "section": "6.7",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1955",
-        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-      }
+      "links": []
     },
     {
       "id": "RK-6.7-102",
       "section": "6.7",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1955",
-        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-      }
+      "links": []
     },
     {
       "id": "RK-6.7-103",
       "section": "6.7",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1955",
-        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-      }
+      "links": []
     },
     {
       "id": "RK-6.7-104",
       "section": "6.7",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1955",
-        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-      }
-    },
-    {
-      "id": "RK-6.7-105",
-      "section": "6.7",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1955",
-        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
-      }
+      "links": []
     },
     {
       "id": "RK-6.7-106",
@@ -18439,39 +17968,6 @@
       "section": "6.8",
       "mapping": "unmapped",
       "links": []
-    },
-    {
-      "id": "RK-6.8-012",
-      "section": "6.8",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1955",
-        "note": "Needs a scripted decision-model server behind a classifier in both runners; roomkit-rs has no decision-model classifier, feature name classifier_dispatch proposed."
-      }
-    },
-    {
-      "id": "RK-6.8-013",
-      "section": "6.8",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1955",
-        "note": "Needs a scripted decision-model server behind a classifier in both runners; roomkit-rs has no decision-model classifier, feature name classifier_dispatch proposed."
-      }
-    },
-    {
-      "id": "RK-6.8-014",
-      "section": "6.8",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1955",
-        "note": "Needs a scripted decision-model server behind a classifier in both runners; roomkit-rs has no decision-model classifier, feature name classifier_dispatch proposed."
-      }
     },
     {
       "id": "RK-7-001",
@@ -39515,15 +39011,10 @@
       }
     },
     {
-      "id": "RK-22.1-087",
+      "id": "RK-22.1-105",
       "section": "22.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1917",
-        "note": "Read actual provider submission results for sent, not_sent and unknown."
-      }
+      "links": []
     },
     {
       "id": "RK-22.1-088",
@@ -43125,271 +42616,19 @@
       "id": "RK-25.2-007",
       "section": "25.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1934",
-        "note": "Drive an actual image provider against a scripted image endpoint, request a count and compare complete and short responses."
-      }
+      "links": []
     },
     {
       "id": "RK-25.2-008",
       "section": "25.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1934",
-        "note": "Generate with a portable width-by-height value and with null, and compare the resulting requests and resolutions."
-      }
-    },
-    {
-      "id": "RK-25.2-009",
-      "section": "25.2",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1934",
-        "note": "Use a scripted native-geometry endpoint behind the provider and compare its request with the public pixel-size input."
-      }
-    },
-    {
-      "id": "RK-25.2-010",
-      "section": "25.2",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1934",
-        "note": "Request an exact size the selected provider cannot supply and inspect its error."
-      }
-    },
-    {
-      "id": "RK-25.2-011",
-      "section": "25.2",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1934",
-        "note": "Supply separately identifiable image results from a scripted endpoint and assert the requested batch returns distinct results."
-      }
-    },
-    {
-      "id": "RK-25.2-012",
-      "section": "25.2",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1934",
-        "note": "Gate individual image requests on a non-batching endpoint and observe multiple submissions before completing any one of them."
-      }
+      "links": []
     },
     {
       "id": "RK-25.2-013",
       "section": "25.2",
       "mapping": "unmapped",
       "links": []
-    },
-    {
-      "id": "RK-25.2-014",
-      "section": "25.2",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1934",
-        "note": "Exercise native aspect ratio and tier separately from exact pixel size and inspect their actual encoding and effective settings."
-      }
-    },
-    {
-      "id": "RK-25.2-015",
-      "section": "25.2",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1934",
-        "note": "Feed an unsupported or incompatible option to a real provider and check its local failure and the endpoint's zero request count."
-      }
-    },
-    {
-      "id": "RK-25.2-016",
-      "section": "25.2",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1934",
-        "note": "Set a provider-level default, omit the corresponding request option and inspect its effective selection."
-      }
-    },
-    {
-      "id": "RK-25.2-017",
-      "section": "25.2",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1934",
-        "note": "Set conflicting provider and call-level option values and check which reaches the image request."
-      }
-    },
-    {
-      "id": "RK-25.2-018",
-      "section": "25.2",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1934",
-        "note": "Call an options-capable image provider using the original argument list and inspect its results."
-      }
-    },
-    {
-      "id": "RK-25.2-019",
-      "section": "25.2",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1934",
-        "note": "Invoke an editing provider with a mask and references and inspect the submitted materials."
-      }
-    },
-    {
-      "id": "RK-25.2-020",
-      "section": "25.2",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1934",
-        "note": "Return both available images and usage across failed image requests and read the preserved data from the error."
-      }
-    },
-    {
-      "id": "RK-25.2-021",
-      "section": "25.2",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1934",
-        "note": "Combine successful and failed vendor calls in one image request and inspect its raised partial outcome."
-      }
-    },
-    {
-      "id": "RK-25.2-022",
-      "section": "25.2",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1934",
-        "note": "Have a scripted endpoint lose a response after receiving the paid request and examine the public billing state."
-      }
-    },
-    {
-      "id": "RK-25.2-023",
-      "section": "25.2",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1934",
-        "note": "Drive the actual provider and SDK against a local endpoint that fails after receiving the request, then count attempted generations. Python tests/test_providers/test_openai_transport.py::test_a_generation_that_may_have_run_is_never_sent_again covers the landed retry change offline."
-      }
-    },
-    {
-      "id": "RK-25.2-024",
-      "section": "25.2",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1934",
-        "note": "Return each of HTTP 408, 409, 429 and 503 from a scripted image endpoint and observe the retryable status of the reported outcome."
-      }
-    },
-    {
-      "id": "RK-25.2-025",
-      "section": "25.2",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1934",
-        "note": "Return HTTP 500, 502 and 504 from a scripted image endpoint and inspect each final outcome."
-      }
-    },
-    {
-      "id": "RK-25.2-026",
-      "section": "25.2",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1934",
-        "note": "Inject failures before a connection can send an image request and read the provider's resulting retry classification."
-      }
-    },
-    {
-      "id": "RK-25.2-027",
-      "section": "25.2",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1934",
-        "note": "Inject a timeout and a dropped connection after the request reached an image endpoint, then read the final status."
-      }
-    },
-    {
-      "id": "RK-25.2-028",
-      "section": "25.2",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1934",
-        "note": "Return a generated image in an unusable form and inspect the final billed failure."
-      }
-    },
-    {
-      "id": "RK-25.2-029",
-      "section": "25.2",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1934",
-        "note": "Gate sibling image calls independently, fail one, and observe whether the remaining outcomes are collected."
-      }
-    },
-    {
-      "id": "RK-25.2-030",
-      "section": "25.2",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1934",
-        "note": "Cancel an in-flight image-provider call and inspect the caller's cancellation result."
-      }
-    },
-    {
-      "id": "RK-25.2-031",
-      "section": "25.2",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1934",
-        "note": "Observe the asynchronous progress callback across a completed image call and a sibling cancelled while still running."
-      }
     },
     {
       "id": "RK-25.3-002",
@@ -43428,23 +42667,13 @@
       "id": "RK-25.3-003",
       "section": "25.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1934",
-        "note": "Obtain an ImageResult from the provider and validate its data URI. Supplying an existing URI to a chat input exercises its consumer only."
-      }
+      "links": []
     },
     {
       "id": "RK-25.3-004",
       "section": "25.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1934",
-        "note": "Compare the MIME header of a result issued by the image provider with that result's mime_type field."
-      }
+      "links": []
     },
     {
       "id": "RK-25.3-005",
@@ -43453,137 +42682,16 @@
       "links": []
     },
     {
-      "id": "RK-25.3-006",
-      "section": "25.3",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1934",
-        "note": "Pass the URI from an actual image-generation result to a second generate call as an edit reference without conversion."
-      }
-    },
-    {
-      "id": "RK-25.3-007",
-      "section": "25.3",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1934",
-        "note": "Script a vendor response with a fetchable local URL, observe the fetch, and read the embedded encoded bytes in the eventual result."
-      }
-    },
-    {
-      "id": "RK-25.3-008",
-      "section": "25.3",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1934",
-        "note": "Omit the revised prompt from a scripted vendor result and read the corresponding null field."
-      }
-    },
-    {
-      "id": "RK-25.3-009",
-      "section": "25.3",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1934",
-        "note": "Use a distinctive input prompt, omit its revision from the vendor result, and check that the returned revision is not the input."
-      }
-    },
-    {
       "id": "RK-25.3-010",
       "section": "25.3",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-25.3-011",
-      "section": "25.3",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1934",
-        "note": "Script one usage report for a multi-image batch and inspect the single report and its scope."
-      }
-    },
-    {
-      "id": "RK-25.3-012",
-      "section": "25.3",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1934",
-        "note": "Compare the measured batch usage with individual image results and assert that no per-image measurements are fabricated."
-      }
-    },
-    {
-      "id": "RK-25.3-013",
-      "section": "25.3",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1934",
-        "note": "Include an inline image in original vendor metadata and verify that the retained original metadata omits the payload."
-      }
-    },
-    {
-      "id": "RK-25.3-014",
-      "section": "25.3",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1934",
-        "note": "Seed vendor metadata with a harmless secret sentinel and check its omission from retained original metadata."
-      }
-    },
-    {
       "id": "RK-25.3-015",
       "section": "25.3",
       "mapping": "unmapped",
       "links": []
-    },
-    {
-      "id": "RK-25.3-016",
-      "section": "25.3",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1934",
-        "note": "Return a preview followed by a final image and compare their explicitly distinguishable representations."
-      }
-    },
-    {
-      "id": "RK-25.3-017",
-      "section": "25.3",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1934",
-        "note": "Observe progress while the simulated vendor still tracks the call and its billing state, and compare those states after notification."
-      }
-    },
-    {
-      "id": "RK-25.3-018",
-      "section": "25.3",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1934",
-        "note": "Fail the progress callback and inspect the scripted endpoint's generation count."
-      }
     },
     {
       "id": "RK-25.4-002",
@@ -43597,37 +42705,16 @@
       }
     },
     {
-      "id": "RK-25.4-003",
-      "section": "25.4",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1934",
-        "note": "Exercise providers with one endpoint and with separate edit endpoints through the same public operation and compare the submitted image references."
-      }
-    },
-    {
       "id": "RK-25.4-004",
       "section": "25.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1934",
-        "note": "Select a nonediting image provider and read its advertised supports_editing value."
-      }
+      "links": []
     },
     {
       "id": "RK-25.4-005",
       "section": "25.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1934",
-        "note": "Supply nonempty reference images to a provider that cannot edit and inspect its error and lack of prompt-only output."
-      }
+      "links": []
     },
     {
       "id": "RK-25.4-006",
@@ -43642,60 +42729,10 @@
       "links": []
     },
     {
-      "id": "RK-25.4-008",
-      "section": "25.4",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1934",
-        "note": "Configure an explicit storage choice on a stateful image provider and observe that disabling remote history is honoured."
-      }
-    },
-    {
-      "id": "RK-25.4-009",
-      "section": "25.4",
-      "mapping": "unmapped",
-      "links": []
-    },
-    {
-      "id": "RK-25.4-010",
-      "section": "25.4",
-      "mapping": "unmapped",
-      "links": []
-    },
-    {
-      "id": "RK-25.4-011",
-      "section": "25.4",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1934",
-        "note": "Exercise external-search grounding on compatible and incompatible image models and inspect admission and the request."
-      }
-    },
-    {
       "id": "RK-25.4-012",
       "section": "25.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1934",
-        "note": "Return citations and search-suggestion metadata from a grounded image model and read both through the provider."
-      }
-    },
-    {
-      "id": "RK-25.5-002",
-      "section": "25.5",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1934",
-        "note": "Generate an image using a scripted vendor report with separate text and image measurements and inspect the public usage report."
-      }
+      "links": []
     },
     {
       "id": "RK-25.5-003",
@@ -43712,34 +42749,13 @@
       "id": "RK-25.5-004",
       "section": "25.5",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1934",
-        "note": "Feed a known vendor accounting breakdown and verify that no generation token appears in multiple reported categories."
-      }
-    },
-    {
-      "id": "RK-25.5-005",
-      "section": "25.5",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1934",
-        "note": "Script a vendor total containing an image subtotal and compare the normalized text counter with their difference."
-      }
+      "links": []
     },
     {
       "id": "RK-25.5-006",
       "section": "25.5",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1934",
-        "note": "Compare a vendor report omitting one counter with a report explicitly setting that same counter to zero."
-      }
+      "links": []
     },
     {
       "id": "RK-25.5-007",
@@ -43754,54 +42770,10 @@
       "links": []
     },
     {
-      "id": "RK-25.6-002",
-      "section": "25.6",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1934",
-        "note": "Enumerate both actual catalogues on a provider offering image generation and compare their full model-ID sets."
-      }
-    },
-    {
-      "id": "RK-25.6-003",
-      "section": "25.6",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1934",
-        "note": "Request each actual catalogue separately and inspect the enumerations for mixed entries."
-      }
-    },
-    {
-      "id": "RK-25.6-004",
-      "section": "25.6",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1934",
-        "note": "Inspect the published capability tags of image catalogue entries."
-      }
-    },
-    {
       "id": "RK-25.6-005",
       "section": "25.6",
       "mapping": "unmapped",
       "links": []
-    },
-    {
-      "id": "RK-25.6-006",
-      "section": "25.6",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1934",
-        "note": "Read a model entry with an unspecified image capability alongside an entry with a known value and verify the former stays unknown."
-      }
     },
     {
       "id": "RK-25.7-002",

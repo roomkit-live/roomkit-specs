@@ -30,7 +30,7 @@ proof: a scenario can cite a unit without covering all of it.
 | [§3 Architecture Overview](section-3.md) | 3 | 0 | 0 | 0 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | [§4 Core Concepts](section-4.md) | 11 | 0 | 0 | 0 | 11 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | [§5 Data Models](section-5.md) | 184 | 171 | 9 | 4 | 0 | 169 | 675 | 0 | 0 | 0 | 0 | 0 |
-| [§6 Channel System](section-6.md) | 690 | 674 | 9 | 7 | 0 | 419 | 2680 | 0 | 239 | 95 | 136 | 12 |
+| [§6 Channel System](section-6.md) | 657 | 641 | 7 | 9 | 0 | 422 | 2683 | 0 | 182 | 92 | 81 | 11 |
 | [§7 Permission Model](section-7.md) | 85 | 84 | 0 | 1 | 0 | 83 | 339 | 0 | 0 | 0 | 0 | 0 |
 | [§8 Event System](section-8.md) | 177 | 176 | 1 | 0 | 0 | 119 | 1211 | 0 | 55 | 16 | 16 | 23 |
 | [§9 Hook System](section-9.md) | 350 | 343 | 3 | 4 | 0 | 333 | 1342 | 0 | 0 | 0 | 0 | 0 |
@@ -46,9 +46,9 @@ proof: a scenario can cite a unit without covering all of it.
 | [§19 Multi-Agent Orchestration](section-19.md) | 567 | 560 | 3 | 3 | 1 | 417 | 1826 | 0 | 141 | 69 | 20 | 52 |
 | [§20 Memory System](section-20.md) | 63 | 62 | 0 | 1 | 0 | 48 | 234 | 0 | 12 | 10 | 2 | 0 |
 | [§21 Tool Access Control](section-21.md) | 214 | 199 | 13 | 2 | 0 | 127 | 880 | 0 | 71 | 18 | 30 | 30 |
-| [§22 Delivery Strategies](section-22.md) | 144 | 130 | 6 | 7 | 1 | 72 | 268 | 0 | 55 | 12 | 5 | 40 |
+| [§22 Delivery Strategies](section-22.md) | 144 | 130 | 5 | 8 | 1 | 72 | 268 | 0 | 55 | 12 | 5 | 39 |
 | [§23 Task Delegation](section-23.md) | 196 | 194 | 1 | 0 | 1 | 159 | 550 | 0 | 33 | 8 | 18 | 7 |
 | [§24 Skills Framework](section-24.md) | 184 | 174 | 3 | 6 | 1 | 106 | 733 | 0 | 71 | 42 | 24 | 5 |
-| [§25 Image Generation](section-25.md) | 82 | 71 | 2 | 8 | 1 | 1 | 15 | 0 | 68 | 0 | 70 | 0 |
+| [§25 Image Generation](section-25.md) | 38 | 30 | 0 | 7 | 1 | 1 | 15 | 0 | 19 | 0 | 19 | 0 |
 | [§26 Conformance Levels](section-26.md) | 24 | 21 | 0 | 0 | 3 | 20 | 229 | 0 | 0 | 0 | 0 | 0 |
 | [Appendix A: Channel Reference](appendix-A.md) | 202 | 200 | 0 | 2 | 0 | 98 | 267 | 0 | 102 | 7 | 44 | 51 |
