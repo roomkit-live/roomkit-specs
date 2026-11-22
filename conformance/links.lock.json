@@ -3464,11 +3464,11 @@
       "identity/an-identified-sender-joins-the-room": "83c3cc663df00e563822f4c4c8a897132e1c8440f71c5e362e335d8aa4344861"
     },
     "RK-11.1-002": {
-      "identity/a-resolver-s-rejection-holds-the-message-no-hook-answers": "543fd64838fdbbd60afbc0656d22f77b4bdfd2ae1cc912c97ee2230dd486f0ce",
-      "identity/a-resolver-that-challenged-holds-the-message": "543fd64838fdbbd60afbc0656d22f77b4bdfd2ae1cc912c97ee2230dd486f0ce",
-      "identity/an-ambiguous-sender-no-hook-names-is-pending": "543fd64838fdbbd60afbc0656d22f77b4bdfd2ae1cc912c97ee2230dd486f0ce",
-      "identity/an-identified-sender-joins-the-room": "543fd64838fdbbd60afbc0656d22f77b4bdfd2ae1cc912c97ee2230dd486f0ce",
-      "identity/the-identity-hooks-read-the-resolver-s-answer-completed": "543fd64838fdbbd60afbc0656d22f77b4bdfd2ae1cc912c97ee2230dd486f0ce"
+      "identity/a-resolver-s-rejection-holds-the-message-no-hook-answers": "7ff303d8a124ed621c6aa6d67b87d6d8c6f1f73ad9ab4032cde2fc94b14e33ef",
+      "identity/a-resolver-that-challenged-holds-the-message": "7ff303d8a124ed621c6aa6d67b87d6d8c6f1f73ad9ab4032cde2fc94b14e33ef",
+      "identity/an-ambiguous-sender-no-hook-names-is-pending": "7ff303d8a124ed621c6aa6d67b87d6d8c6f1f73ad9ab4032cde2fc94b14e33ef",
+      "identity/an-identified-sender-joins-the-room": "7ff303d8a124ed621c6aa6d67b87d6d8c6f1f73ad9ab4032cde2fc94b14e33ef",
+      "identity/the-identity-hooks-read-the-resolver-s-answer-completed": "7ff303d8a124ed621c6aa6d67b87d6d8c6f1f73ad9ab4032cde2fc94b14e33ef"
     },
     "RK-11.2-002": {
       "identity/a-caller-s-message-under-the-framework-s-name-is-still-resolved": "610b411fcc71db85440c4d6d53e2e802299fa62cdce7f3717b2a552338865a56",

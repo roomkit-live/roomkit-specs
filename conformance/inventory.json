@@ -495,7 +495,7 @@
     },
     {
       "section": "11.1",
-      "sha256": "d7c1d6db18a7f0f91c5ffd47ec708af501e21b5d31685fa67d6743e038948180",
+      "sha256": "f8561290e025ccf96421ba4c13b01e4a5760ce4667abe8852aa0d4944f0800c1",
       "classification": "normative",
       "review": "Source inventory: Identity Resolver Interface, reviewed for one obligation per unit (RMK-1935). RK-11.1-001 keeps the IdentityResolver interface and RK-11.1-002 the IdentityResult model, each one structural unit, as the core keeps a model's fields together. Every unit carries its level, must."
     },

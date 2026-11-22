@@ -10411,7 +10411,7 @@ IdentityResolver (interface)
 IdentityResult
 ├── status: IdentificationStatus            # IDENTIFIED, AMBIGUOUS, UNKNOWN, PENDING, CHALLENGE_SENT, REJECTED
 ├── identity: Identity | null               # Resolved identity (if IDENTIFIED)
-├── candidates: list<Identity>              # Candidate identities (if AMBIGUOUS or PENDING)
+├── candidates: list<Identity>              # Candidate identities, which a pending record keeps (§11.2)
 ├── address: string | null                  # The address resolved; the sender's if unset
 ├── channel_type: string | null             # Its channel type; the message's channel's if unset
 ├── challenge_type: string | null           # For CHALLENGE_SENT: its kind; not read
