@@ -17,9 +17,9 @@
       "note": "Hooks read the inbound id it is committed with, and a reused id gets a fresh one."
     },
     "RK-8.1-013": {
-      "class": "step",
+      "class": "writable",
       "card": "RMK-1912",
-      "note": "Needs a transport provider's parse."
+      "note": "process_webhook reaches it, but its scenario keeps the provider's id in external_id: suspect RMK-1913."
     },
     "RK-8.2-012": {
       "class": "step",
@@ -156,9 +156,9 @@
       "note": "A hook a turn executor fires carries its floor with the host verb it makes."
     },
     "RK-8.3-021": {
-      "class": "writable",
+      "class": "step",
       "card": "RMK-1912",
-      "note": "A task a framework event handler spawns calls at its own depth once the handler returned."
+      "note": "Needs a framework-event handler reaction that spawns a task."
     },
     "RK-8.3-030": {
       "class": "writable",
