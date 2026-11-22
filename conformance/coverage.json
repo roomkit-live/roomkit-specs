@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "ae7ef77c70d078dac43d6e885083e9098b2796ef046665d40a6960031340358b",
-  "corpus_sha256": "b752a9016a65e9f50264ec1b32683b11b8cf62888753c1ae2c043deb125f93b8",
+  "corpus_sha256": "3342c73755ecd7755711678240e455b6ae4ce67a9fd3640b72a4ec28f4141540",
   "python_commit": "1bb12d025296ee1c5f14b82267462fc4d13104a6",
-  "scenario_count": 3402,
+  "scenario_count": 3403,
   "sections": [
     {
       "section": "0",
@@ -1455,6 +1455,7 @@
         "executors/a-turn-apart-s-plan-and-person-s-tools-run-on-its-executor",
         "executors/a-turn-cut-on-its-executor-names-it-in-its-record",
         "executors/a-turn-on-another-executor-reads-none-of-the-rows-a-delete-removed",
+        "executors/a-turn-on-another-executor-whose-rows-the-store-fails-to-read-runs-without-them",
         "executors/a-turn-s-record-names-the-executor-that-ran-it-apart",
         "executors/another-executor-replays-the-tool-calls-of-the-first",
         "inbound/a-binding-s-cost-budget-on-an-unpriced-model-fails-the-turn",
@@ -5557,6 +5558,7 @@
         "executors/a-turn-apart-runs-the-host-s-tool-on-its-executor",
         "executors/a-turn-apart-s-plan-and-person-s-tools-run-on-its-executor",
         "executors/a-turn-on-another-executor-reads-none-of-the-rows-a-delete-removed",
+        "executors/a-turn-on-another-executor-whose-rows-the-store-fails-to-read-runs-without-them",
         "executors/an-executor-refuses-a-turn-whose-channel-declares-an-owner-s-tool",
         "executors/one-build-serving-two-rooms-reads-each-turn-s-room-alone",
         "executors/the-owner-cancels-the-calls-of-a-turn-it-loses",
@@ -7469,6 +7471,7 @@
       "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
+        "executors/a-turn-on-another-executor-whose-rows-the-store-fails-to-read-runs-without-them",
         "inbound/a-kit-s-inbound-rate-limit-refuses-a-channel-s-excess-messages",
         "reentrancy/a-named-refusal-at-the-cap-precedes-an-empty-rate-bucket",
         "reentrancy/a-named-refusal-at-the-cap-spends-no-inbound-rate-token",
