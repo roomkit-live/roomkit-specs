@@ -2337,14 +2337,12 @@ which keeps what either copy carries (its id, its thought signature). <!-- /rfc 
 arguments reach the loop as a mapping and never as an error: no arguments
 (nothing, or JSON `null`) are `{}`, and arguments that do not parse to an
 object (invalid JSON, an array, a fragment) are kept whole under `raw`. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-091", "kind": "behavior", "applies": "§6.4 Provider calls: the stop reasons that mark a response cut short, read alike by every provider. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
-response is cut short when it ran out of room (the output cap, or the context
-window filling up mid-answer), when a content filter or a refusal stopped it,
-or when its stream ended without a stop reason, under any provider's word for
-each (`length`, `max_tokens`, `MAX_TOKENS`, `model_context_window_exceeded`,
-`model_length`, `content_filter`, `refusal`, and `error` where it ends a
-generation that failed):
-every provider reads one such set,
-so none runs a call another provider refuses. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-092", "kind": "behavior", "applies": "§6.4 Provider calls: the calls of a response cut short that are not its last. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Only the last call of a response
+response is cut short when it ran out of room (`length`: the output cap, or
+the context window filling up mid-answer), when a content filter or a refusal
+stopped it (`content_filter`, `refusal`), when its generation failed
+(`error`), or when it ended on no stop reason (none given, or a word its
+provider does not know): every provider reads its vendor's words into these
+stop reasons (Section 6.7), so none runs a call another provider refuses. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-092", "kind": "behavior", "applies": "§6.4 Provider calls: the calls of a response cut short that are not its last. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Only the last call of a response
 can be cut: a call another call followed was closed by it, and runs when its
 arguments read, the response cut over its successor or not. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-093", "kind": "behavior", "applies": "§6.4 Provider calls: the last call of a response cut short, and the argument text that shows it whole. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Under a response
 cut short, only argument text that arrived and reads shows the last call's
@@ -2463,9 +2461,9 @@ nothing when the answer stands (a host's recognizer of an announced action, "I
 will check that", say). <!-- /rfc --><!-- rfc: {"id": "RK-6.4-123", "kind": "behavior", "applies": "§6.4 Continuation policy: the rounds the loop consults it on. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The loop consults it only for a round that ended
 naturally, with text and without a call: not cut short (Section 6.4 above), not
 a call it could not parse, not a refusal, and with a tool declared, since going
-on means acting. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-124", "kind": "behavior", "applies": "§6.4 Continuation policy: the stop reasons that count as a natural stop, read alike by every provider. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Every provider's word for a natural stop counts alike (`stop`,
-`end_turn`, `stop_sequence`, `STOP`), and only those: a truncation, a filter, a
-refusal or a stream that ended without saying why is never one. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-125", "kind": "behavior", "applies": "§6.4 Continuation policy: its bound, shared with an empty round's, and the loop's guards. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The policy shares the bound of an empty round, and the loop keeps
+on means acting. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-124", "kind": "behavior", "applies": "§6.4 Continuation policy: the stop reasons that count as a natural stop, read alike by every provider. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A round that ended `stop` stopped naturally, whatever its
+provider's own word for it (Section 6.7), and no other: a truncation, a filter,
+a refusal or a stream that ended without saying why is never one. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-125", "kind": "behavior", "applies": "§6.4 Continuation policy: its bound, shared with an empty round's, and the loop's guards. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The policy shares the bound of an empty round, and the loop keeps
 its guards: no continuation after a cancellation or a force-stop, nor past the
 turn's deadline or budget. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-126", "kind": "behavior", "applies": "§6.4 Continuation policy: what a continuation hands the next round, and the round's segment already sent. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A continuation hands the next round the text as the
 assistant's message, then the instruction as the user's; the text already
@@ -4449,7 +4447,11 @@ AIResponse
 ├── thinking: string | null                 # Reasoning the provider exposed
 ├── thinking_signature: string | null       # The last block's signature, for a reader of one
 ├── thinking_parts: list<AIThinkingPart> | null  # The blocks to replay, in order; null for reasoning without blocks
-├── finish_reason: string | null            # The provider's own stop reason
+├── finish_reason: "stop" | "tool_calls" | "length" | "content_filter"
+│       | "refusal" | "malformed_call" | "unexpected_call" | "error" | null
+│       # Why it stopped, in one closed vocabulary that each provider maps
+│       # its vendor's words onto, a stream's end as a whole response; null
+│       # for no reason the provider knows
 ├── usage: map<string, int>                 # input_tokens, output_tokens, cache counters
 ├── tool_calls: list<AIToolCall>            # Calls for the tool loop to run
 ├── tasks: list<Task>                       # Tasks to create
@@ -4629,7 +4631,7 @@ these reasons:
 |---|---|
 | `unsupported` | `supports_response_schema` is false, or the context also carries `tools` and `supports_response_schema_with_tools` is false. Raised before any request is sent. |
 | <!-- /rfc --><!-- rfc: {"id": "RK-6.7-081", "kind": "behavior", "applies": "§6.7 ResponseSchemaError reasons, the refusal row. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`refusal` | The model declined to answer: a refusal field, a refusal or safety stop reason, or the prompt itself blocked before any answer. |
-| <!-- /rfc --><!-- rfc: {"id": "RK-6.7-082", "kind": "behavior", "applies": "§6.7 ResponseSchemaError reasons, the truncated row. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`truncated` | The answer was cut: a length or max-tokens stop reason, or the context window filling up mid-answer. |
+| <!-- /rfc --><!-- rfc: {"id": "RK-6.7-082", "kind": "behavior", "applies": "§6.7 ResponseSchemaError reasons, the truncated row. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`truncated` | The answer was cut: the stop reason `length`, its output cap or the context window filling up mid-answer. |
 | <!-- /rfc --><!-- rfc: {"id": "RK-6.7-083", "kind": "behavior", "applies": "§6.7 ResponseSchemaError reasons, the invalid_json row. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`invalid_json` | The text is not a JSON document satisfying the schema: a server that accepted the constraint and did not apply it. |
 <!-- /rfc -->
 

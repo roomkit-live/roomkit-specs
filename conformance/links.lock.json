@@ -13221,14 +13221,14 @@
       "tools/continuation-without-tools-streaming": "887fbd43be985c0cde007eb1bfa3aa832564497b917ea2c05bf63e5fe33c8b23"
     },
     "RK-6.4-124": {
-      "tools/continuation-excluded-content-filter-non-streaming": "25f005df22e8320819143aa86f37bcdc2997c61191696e749486771accdbb56d",
-      "tools/continuation-excluded-content-filter-streaming": "25f005df22e8320819143aa86f37bcdc2997c61191696e749486771accdbb56d",
-      "tools/continuation-excluded-length-non-streaming": "25f005df22e8320819143aa86f37bcdc2997c61191696e749486771accdbb56d",
-      "tools/continuation-excluded-length-streaming": "25f005df22e8320819143aa86f37bcdc2997c61191696e749486771accdbb56d",
-      "tools/continuation-excluded-none-non-streaming": "25f005df22e8320819143aa86f37bcdc2997c61191696e749486771accdbb56d",
-      "tools/continuation-excluded-none-streaming": "25f005df22e8320819143aa86f37bcdc2997c61191696e749486771accdbb56d",
-      "tools/continuation-natural-stop-non-streaming": "25f005df22e8320819143aa86f37bcdc2997c61191696e749486771accdbb56d",
-      "tools/continuation-natural-stop-streaming": "25f005df22e8320819143aa86f37bcdc2997c61191696e749486771accdbb56d"
+      "tools/continuation-excluded-content-filter-non-streaming": "596448b971dea5c947f1e04c6b77c1c11de37df9c4f9335320dfc1869490e479",
+      "tools/continuation-excluded-content-filter-streaming": "596448b971dea5c947f1e04c6b77c1c11de37df9c4f9335320dfc1869490e479",
+      "tools/continuation-excluded-length-non-streaming": "596448b971dea5c947f1e04c6b77c1c11de37df9c4f9335320dfc1869490e479",
+      "tools/continuation-excluded-length-streaming": "596448b971dea5c947f1e04c6b77c1c11de37df9c4f9335320dfc1869490e479",
+      "tools/continuation-excluded-none-non-streaming": "596448b971dea5c947f1e04c6b77c1c11de37df9c4f9335320dfc1869490e479",
+      "tools/continuation-excluded-none-streaming": "596448b971dea5c947f1e04c6b77c1c11de37df9c4f9335320dfc1869490e479",
+      "tools/continuation-natural-stop-non-streaming": "596448b971dea5c947f1e04c6b77c1c11de37df9c4f9335320dfc1869490e479",
+      "tools/continuation-natural-stop-streaming": "596448b971dea5c947f1e04c6b77c1c11de37df9c4f9335320dfc1869490e479"
     },
     "RK-6.4-125": {
       "tools/continuation-cancelled-generation-is-not-consulted-non-streaming": "04025562332873e55adf7242ca115de5c7e5b760ffebdd33b7043d734541b30d",
@@ -15727,8 +15727,8 @@
       "turn-record/a-hook-s-replacement-record-is-the-turn-s-one": "38beeeffb8895b4a2b2d2c086bbd016287b8277a90e366e05b1a756c90a0eb5a"
     },
     "RK-6.7-031": {
-      "reasoning/a-response-read-whole-keeps-its-signature-and-its-call-s-metadata": "542ba7e5e5e9106b355f3a480fc56950587a427e721b983c731ed82192a0ed5d",
-      "reasoning/a-response-read-whole-replays-its-blocks-first": "542ba7e5e5e9106b355f3a480fc56950587a427e721b983c731ed82192a0ed5d"
+      "reasoning/a-response-read-whole-keeps-its-signature-and-its-call-s-metadata": "67ea7a1dbf9b4d3ed07b4c4ee318497c7b96822318b8a0d920a21999042091ff",
+      "reasoning/a-response-read-whole-replays-its-blocks-first": "67ea7a1dbf9b4d3ed07b4c4ee318497c7b96822318b8a0d920a21999042091ff"
     },
     "RK-6.7-051": {
       "turn-config/an-off-turns-off-a-less-specific-budget": "68d940c33d2bb41b3e90a46cceafc04b83d482496f843edfc4983358034b8082"
