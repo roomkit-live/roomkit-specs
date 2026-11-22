@@ -630,7 +630,7 @@ scripted.
   not reason, empty when absent), each flag false when absent, and `{}` the
   default rendering, which sends no reasoning back; as the core's
   `ChatDialect` does, `round_thinking_required` needs a `thinking_field`, and
-  a `round_thinking_placeholder` needs `round_thinking_required`; a
+  a non-empty `round_thinking_placeholder` needs `round_thinking_required`; a
   `fallback_model` takes one too.
   `model.deferred_tools`: whether this provider holds unseen definitions and accepts
   tool references (false by default); a fallback model takes it too.
