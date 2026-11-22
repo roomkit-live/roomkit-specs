@@ -65,7 +65,7 @@ See [requirements.json](requirements.json) for exact clauses and applicability,
 | §6.4 Intelligence Channels | normative | 497 | 474 | 23 | 0 | 1276 | 0 | 71 | 63 | 8 |
 | §6.5 Source Providers | normative | 4 | 4 | 0 | 0 | 0 | 0 | 0 | 4 | 0 |
 | §6.6 Content Transcoding | normative | 32 | 32 | 0 | 0 | 17 | 0 | 8 | 1 | 0 |
-| §6.7 Provider Abstraction | normative | 101 | 97 | 4 | 0 | 105 | 0 | 13 | 48 | 1 |
+| §6.7 Provider Abstraction | normative | 101 | 97 | 4 | 0 | 105 | 0 | 12 | 48 | 1 |
 | §6.8 Classifiers | normative | 13 | 13 | 0 | 0 | 0 | 0 | 0 | 11 | 0 |
 | §7 Permission Model | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | §7.1 Access | normative | 4 | 3 | 1 | 0 | 2 | 0 | 0 | 0 | 0 |
@@ -492,7 +492,6 @@ Units [gaps.json](gaps.json) lists: a scenario can test each, and none cites it 
 | RK-6.7-021 | §6.7 | step | RMK-1955 | Needs a step that lists a provider's models. |
 | RK-6.7-022 | §6.7 | step | RMK-1955 | Needs a step that lists a provider's models. |
 | RK-6.7-023 | §6.7 | step | RMK-1955 | model.fails_once_closed observes a scripted model's close; a provider releasing its real connections needs the provider wire fixture. |
-| RK-6.7-113 | §6.7 | writable | RMK-1955 | model.chat_dialect records the requests in the vendor's format: a tool result's structured_content and outcome are not in them. |
 | RK-6.7-032 | §6.7 | step | RMK-1955 | Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners. |
 | RK-6.7-034 | §6.7 | step | RMK-1955 | Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners. |
 | RK-6.7-035 | §6.7 | step | RMK-1955 | Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners. |

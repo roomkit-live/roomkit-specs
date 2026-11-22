@@ -2344,7 +2344,7 @@
       "decided_gaps": {
         "phase6": 1,
         "step": 48,
-        "writable": 13
+        "writable": 12
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -17338,12 +17338,7 @@
           ],
           "executions": []
         }
-      ],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1955",
-        "note": "model.chat_dialect records the requests in the vendor's format: a tool result's structured_content and outcome are not in them."
-      }
+      ]
     },
     {
       "id": "RK-6.7-027",
