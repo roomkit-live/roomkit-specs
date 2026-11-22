@@ -1,6 +1,374 @@
 {
   "version": 1,
   "units": {
+    "RK-6.4-049": {
+      "class": "writable",
+      "card": "RMK-1911"
+    },
+    "RK-6.4-059": {
+      "class": "writable",
+      "card": "RMK-1911"
+    },
+    "RK-6.4-069": {
+      "class": "writable",
+      "card": "RMK-1911"
+    },
+    "RK-6.4-074": {
+      "class": "writable",
+      "card": "RMK-1911"
+    },
+    "RK-6.4-085": {
+      "class": "step",
+      "card": "RMK-1911",
+      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+    },
+    "RK-6.4-087": {
+      "class": "step",
+      "card": "RMK-1911",
+      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+    },
+    "RK-6.4-088": {
+      "class": "step",
+      "card": "RMK-1911",
+      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+    },
+    "RK-6.4-089": {
+      "class": "step",
+      "card": "RMK-1911",
+      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+    },
+    "RK-6.4-090": {
+      "class": "step",
+      "card": "RMK-1911",
+      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+    },
+    "RK-6.4-091": {
+      "class": "step",
+      "card": "RMK-1911",
+      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+    },
+    "RK-6.4-092": {
+      "class": "step",
+      "card": "RMK-1911",
+      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+    },
+    "RK-6.4-093": {
+      "class": "step",
+      "card": "RMK-1911",
+      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+    },
+    "RK-6.4-095": {
+      "class": "phase6",
+      "card": "RMK-1911",
+      "note": "Media feature realtime."
+    },
+    "RK-6.4-096": {
+      "class": "writable",
+      "card": "RMK-1911"
+    },
+    "RK-6.4-098": {
+      "class": "writable",
+      "card": "RMK-1911"
+    },
+    "RK-6.4-100": {
+      "class": "writable",
+      "card": "RMK-1911"
+    },
+    "RK-6.4-101": {
+      "class": "writable",
+      "card": "RMK-1911"
+    },
+    "RK-6.4-102": {
+      "class": "writable",
+      "card": "RMK-1911"
+    },
+    "RK-6.4-103": {
+      "class": "writable",
+      "card": "RMK-1911"
+    },
+    "RK-6.4-104": {
+      "class": "writable",
+      "card": "RMK-1911"
+    },
+    "RK-6.4-105": {
+      "class": "writable",
+      "card": "RMK-1911"
+    },
+    "RK-6.4-106": {
+      "class": "writable",
+      "card": "RMK-1911"
+    },
+    "RK-6.4-107": {
+      "class": "writable",
+      "card": "RMK-1911"
+    },
+    "RK-6.4-109": {
+      "class": "writable",
+      "card": "RMK-1911"
+    },
+    "RK-6.4-112": {
+      "class": "writable",
+      "card": "RMK-1911"
+    },
+    "RK-6.4-113": {
+      "class": "writable",
+      "card": "RMK-1911"
+    },
+    "RK-6.4-115": {
+      "class": "writable",
+      "card": "RMK-1911"
+    },
+    "RK-6.4-116": {
+      "class": "writable",
+      "card": "RMK-1911"
+    },
+    "RK-6.4-117": {
+      "class": "writable",
+      "card": "RMK-1911"
+    },
+    "RK-6.4-118": {
+      "class": "writable",
+      "card": "RMK-1911"
+    },
+    "RK-6.4-119": {
+      "class": "writable",
+      "card": "RMK-1911"
+    },
+    "RK-6.4-120": {
+      "class": "writable",
+      "card": "RMK-1911"
+    },
+    "RK-6.4-121": {
+      "class": "phase6",
+      "card": "RMK-1911",
+      "note": "Media feature realtime."
+    },
+    "RK-6.4-133": {
+      "class": "writable",
+      "card": "RMK-1911"
+    },
+    "RK-6.4-144": {
+      "class": "step",
+      "card": "RMK-1911",
+      "note": "Needs a classifier fixture: scripted classifier answers behind the provided speak policy."
+    },
+    "RK-6.4-146": {
+      "class": "writable",
+      "card": "RMK-1911"
+    },
+    "RK-6.4-150": {
+      "class": "writable",
+      "card": "RMK-1911"
+    },
+    "RK-6.4-151": {
+      "class": "writable",
+      "card": "RMK-1911"
+    },
+    "RK-6.4-152": {
+      "class": "writable",
+      "card": "RMK-1911"
+    },
+    "RK-6.4-153": {
+      "class": "step",
+      "card": "RMK-1911",
+      "note": "Needs a classifier fixture: scripted classifier answers behind the provided speak policy."
+    },
+    "RK-6.4-157": {
+      "class": "step",
+      "card": "RMK-1911",
+      "note": "Needs a classifier fixture: scripted classifier answers behind the provided speak policy."
+    },
+    "RK-6.4-158": {
+      "class": "step",
+      "card": "RMK-1911",
+      "note": "Needs a classifier fixture: scripted classifier answers behind the provided speak policy."
+    },
+    "RK-6.4-159": {
+      "class": "step",
+      "card": "RMK-1911",
+      "note": "Needs a classifier fixture: scripted classifier answers behind the provided speak policy."
+    },
+    "RK-6.4-160": {
+      "class": "step",
+      "card": "RMK-1911",
+      "note": "Needs a classifier fixture: scripted classifier answers behind the provided speak policy."
+    },
+    "RK-6.4-161": {
+      "class": "step",
+      "card": "RMK-1911",
+      "note": "Needs a classifier fixture: scripted classifier answers behind the provided speak policy."
+    },
+    "RK-6.4-162": {
+      "class": "step",
+      "card": "RMK-1911",
+      "note": "Needs a classifier fixture: scripted classifier answers behind the provided speak policy."
+    },
+    "RK-6.4-163": {
+      "class": "step",
+      "card": "RMK-1911",
+      "note": "Needs a classifier fixture: scripted classifier answers behind the provided speak policy."
+    },
+    "RK-6.4-164": {
+      "class": "step",
+      "card": "RMK-1911",
+      "note": "Needs a classifier fixture: scripted classifier answers behind the provided speak policy."
+    },
+    "RK-6.4-165": {
+      "class": "step",
+      "card": "RMK-1911",
+      "note": "Needs a classifier fixture: scripted classifier answers behind the provided speak policy."
+    },
+    "RK-6.4-166": {
+      "class": "step",
+      "card": "RMK-1911",
+      "note": "Needs a classifier fixture: scripted classifier answers behind the provided speak policy."
+    },
+    "RK-6.4-167": {
+      "class": "step",
+      "card": "RMK-1911",
+      "note": "Needs a classifier fixture: scripted classifier answers behind the provided speak policy."
+    },
+    "RK-6.4-168": {
+      "class": "step",
+      "card": "RMK-1911",
+      "note": "Needs a classifier fixture: scripted classifier answers behind the provided speak policy."
+    },
+    "RK-6.4-169": {
+      "class": "step",
+      "card": "RMK-1911",
+      "note": "Needs a classifier fixture: scripted classifier answers behind the provided speak policy."
+    },
+    "RK-6.4-170": {
+      "class": "step",
+      "card": "RMK-1911",
+      "note": "Needs a classifier fixture: scripted classifier answers behind the provided speak policy."
+    },
+    "RK-6.4-171": {
+      "class": "step",
+      "card": "RMK-1911",
+      "note": "Needs a classifier fixture: scripted classifier answers behind the provided speak policy."
+    },
+    "RK-6.4-172": {
+      "class": "step",
+      "card": "RMK-1911",
+      "note": "Needs a step that builds the provided answer-only policy around a scripted one."
+    },
+    "RK-6.4-173": {
+      "class": "step",
+      "card": "RMK-1911",
+      "note": "Needs a step that builds the provided answer-only policy around a scripted one."
+    },
+    "RK-6.4-174": {
+      "class": "step",
+      "card": "RMK-1911",
+      "note": "Needs a step that builds the provided answer-only policy around a scripted one."
+    },
+    "RK-6.4-175": {
+      "class": "step",
+      "card": "RMK-1911",
+      "note": "Needs a step that builds the provided answer-only policy around a scripted one."
+    },
+    "RK-6.4-185": {
+      "class": "writable",
+      "card": "RMK-1911"
+    },
+    "RK-6.4-191": {
+      "class": "writable",
+      "card": "RMK-1911"
+    },
+    "RK-6.4-193": {
+      "class": "writable",
+      "card": "RMK-1911"
+    },
+    "RK-6.4-194": {
+      "class": "writable",
+      "card": "RMK-1911"
+    },
+    "RK-6.4-201": {
+      "class": "step",
+      "card": "RMK-1911",
+      "note": "Needs a classifier fixture: scripted classifier answers behind the provided speak policy."
+    },
+    "RK-6.4-202": {
+      "class": "step",
+      "card": "RMK-1911",
+      "note": "Needs a classifier fixture: scripted classifier answers behind the provided speak policy."
+    },
+    "RK-6.4-203": {
+      "class": "step",
+      "card": "RMK-1911",
+      "note": "Needs a classifier fixture: scripted classifier answers behind the provided speak policy."
+    },
+    "RK-6.4-204": {
+      "class": "step",
+      "card": "RMK-1911",
+      "note": "Needs a step that chooses the provided LLM thinker over a scripted provider answering JSON."
+    },
+    "RK-6.4-205": {
+      "class": "phase6",
+      "card": "RMK-1911",
+      "note": "Media feature voice."
+    },
+    "RK-6.4-206": {
+      "class": "step",
+      "card": "RMK-1911",
+      "note": "Needs a stored cut record: an internal event from a channel bound as voice, written through the store calls; roomkit-rs reads no cut record yet."
+    },
+    "RK-6.4-207": {
+      "class": "step",
+      "card": "RMK-1911",
+      "note": "Needs a stored cut record: an internal event from a channel bound as voice, written through the store calls; roomkit-rs reads no cut record yet."
+    },
+    "RK-6.4-208": {
+      "class": "step",
+      "card": "RMK-1911",
+      "note": "Needs a stored cut record: an internal event from a channel bound as voice, written through the store calls; roomkit-rs reads no cut record yet."
+    },
+    "RK-6.4-209": {
+      "class": "step",
+      "card": "RMK-1911",
+      "note": "Needs a stored cut record: an internal event from a channel bound as voice, written through the store calls; roomkit-rs reads no cut record yet."
+    },
+    "RK-6.4-210": {
+      "class": "step",
+      "card": "RMK-1911",
+      "note": "Needs a stored cut record: an internal event from a channel bound as voice, written through the store calls; roomkit-rs reads no cut record yet."
+    },
+    "RK-6.4-211": {
+      "class": "step",
+      "card": "RMK-1911",
+      "note": "Needs a stored cut record: an internal event from a channel bound as voice, written through the store calls; roomkit-rs reads no cut record yet."
+    },
+    "RK-6.4-212": {
+      "class": "step",
+      "card": "RMK-1911",
+      "note": "Needs a stored cut record: an internal event from a channel bound as voice, written through the store calls; roomkit-rs reads no cut record yet."
+    },
+    "RK-6.4-213": {
+      "class": "step",
+      "card": "RMK-1911",
+      "note": "Needs a stored cut record: an internal event from a channel bound as voice, written through the store calls; roomkit-rs reads no cut record yet."
+    },
+    "RK-6.4-214": {
+      "class": "step",
+      "card": "RMK-1911",
+      "note": "Needs a stored cut record: an internal event from a channel bound as voice, written through the store calls; roomkit-rs reads no cut record yet."
+    },
+    "RK-6.4-215": {
+      "class": "phase6",
+      "card": "RMK-1911",
+      "note": "Media feature voice."
+    },
+    "RK-6.4-216": {
+      "class": "step",
+      "card": "RMK-1911",
+      "note": "Needs a stored cut record: an internal event from a channel bound as voice, written through the store calls; roomkit-rs reads no cut record yet."
+    },
+    "RK-6.4-217": {
+      "class": "step",
+      "card": "RMK-1911",
+      "note": "Needs a stored cut record: an internal event from a channel bound as voice, written through the store calls; roomkit-rs reads no cut record yet."
+    },
     "RK-8.1-008": {
       "class": "step",
       "card": "RMK-1912",

@@ -2037,7 +2037,7 @@ by a turn executor (Section 10.6), which may live in another process than the
 room's owner.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.4-002", "kind": "behavior", "applies": "§6.4 AI channel: the outline of what on_event() does, each step carried by its own contract below, in Section 6.7 and in Appendix A.9. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+<!-- rfc: {"id": "RK-6.4-002", "kind": "behavior", "applies": "§6.4 AI channel: the outline of what on_event() does, and the anatomy of a turn, a table naming the contract that carries each step; each step is carried by its own contract, below, in Sections 6.7, 9, 19.3, 20, 21, 24 and Appendix A.9. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **AI Channel:**
 
 An AI channel wraps an AI Provider (see Section 6.7). When `on_event()` is called:
@@ -2048,9 +2048,7 @@ An AI channel wraps an AI Provider (see Section 6.7). When `on_event()` is calle
 4. Run the turn's tool loop over the provider's structured stream (**One loop,
    streamed or not**, below).
 5. Return ChannelOutput with a response stream (Appendix A.9).
-<!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.4-048", "kind": "behavior", "applies": "§6.4 Anatomy of an AI turn: a table of pointers naming the section whose contract carries each step of a turn; it obliges nothing of its own. Enclosing capability conditions and §26 levels still apply."} -->
 **Anatomy of an AI turn.** Each step of a turn has its own contract; no stage
 abstraction sits on top of them:
 
