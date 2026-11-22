@@ -3489,6 +3489,7 @@
     },
     "RK-11.2-009": {
       "identity/a-challenge-is-delivered-and-the-message-held": "031cab6411c05a04652b68faf9cd2d863c09d1faa15e4c64967caa8120a549e9",
+      "identity/a-channel-that-names-its-senders-is-not-asked-about": "031cab6411c05a04652b68faf9cd2d863c09d1faa15e4c64967caa8120a549e9",
       "identity/a-rejection-blocks-the-message": "031cab6411c05a04652b68faf9cd2d863c09d1faa15e4c64967caa8120a549e9",
       "identity/a-resolver-past-its-timeout-reads-unknown": "031cab6411c05a04652b68faf9cd2d863c09d1faa15e4c64967caa8120a549e9",
       "identity/a-resolver-s-rejection-holds-the-message-no-hook-answers": "031cab6411c05a04652b68faf9cd2d863c09d1faa15e4c64967caa8120a549e9",
@@ -3509,6 +3510,7 @@
       "identity/a-challenge-runs-the-before-broadcast-hooks": "90caab0492def132f2363204e48c194faf8659d41d87c2675aec9fe84c41eae1"
     },
     "RK-11.2-013": {
+      "identity/a-channel-that-names-its-senders-is-not-asked-about": "4f26bbf30e738968780d4cad9b21380f87b9b2a952a8675d872fafe9f11e76be",
       "identity/a-rejection-blocks-the-message": "4f26bbf30e738968780d4cad9b21380f87b9b2a952a8675d872fafe9f11e76be",
       "identity/a-sender-the-room-identified-is-not-asked-about": "4f26bbf30e738968780d4cad9b21380f87b9b2a952a8675d872fafe9f11e76be"
     },
@@ -3632,7 +3634,6 @@
       "verification/a-completed-request-verifies-the-identity": "4ee14678f7368c23da07ecaf147bb0a51a96958759dd5218bf1dc3067d0588fe"
     },
     "RK-11.7.2-004": {
-      "verification/a-completed-request-verifies-the-identity": "bed1b5f2fb83a209106aa1850cb0be16c750050fde234441e60d74388daddc1b",
       "verification/a-failed-check-of-your-own-counts-against-the-request": "bed1b5f2fb83a209106aa1850cb0be16c750050fde234441e60d74388daddc1b",
       "verification/a-new-request-goes-out-once-the-first-expired-unanswered": "bed1b5f2fb83a209106aa1850cb0be16c750050fde234441e60d74388daddc1b",
       "verification/a-request-that-fails-while-verified-ends-the-verification": "bed1b5f2fb83a209106aa1850cb0be16c750050fde234441e60d74388daddc1b",
@@ -3640,12 +3641,15 @@
       "verification/the-last-wrong-secret-fails-the-request": "bed1b5f2fb83a209106aa1850cb0be16c750050fde234441e60d74388daddc1b"
     },
     "RK-11.7.2-005": {
-      "verification/a-request-takes-its-room-s-organization": "652fc1363f98511f84d80da4ba43e74c338f7cf1ee42ff1a49b2d95dcdd15ca3"
+      "verification/a-request-takes-its-room-s-organization": "652fc1363f98511f84d80da4ba43e74c338f7cf1ee42ff1a49b2d95dcdd15ca3",
+      "verification/organizations-are-kept-apart": "652fc1363f98511f84d80da4ba43e74c338f7cf1ee42ff1a49b2d95dcdd15ca3"
     },
     "RK-11.7.2-006": {
       "verification/a-code-sent-in-another-room-is-an-ordinary-message": "4418e188c01287779ffd532be56192c343daa357c91d9a774a69139ae71370b7",
       "verification/a-completed-request-verifies-the-identity": "4418e188c01287779ffd532be56192c343daa357c91d9a774a69139ae71370b7",
       "verification/a-hook-reads-whose-verification-to-ask-for": "4418e188c01287779ffd532be56192c343daa357c91d9a774a69139ae71370b7",
+      "verification/a-new-request-goes-out-once-the-first-expired-unanswered": "4418e188c01287779ffd532be56192c343daa357c91d9a774a69139ae71370b7",
+      "verification/a-request-that-expired-while-nothing-ran-reads-as-ended": "4418e188c01287779ffd532be56192c343daa357c91d9a774a69139ae71370b7",
       "verification/asking-a-verified-identity-again-keeps-it-verified": "4418e188c01287779ffd532be56192c343daa357c91d9a774a69139ae71370b7"
     },
     "RK-11.7.2-007": {
@@ -3654,9 +3658,11 @@
     "RK-11.7.2-008": {
       "verification/a-failed-check-of-your-own-counts-against-the-request": "c61467152e2efecabb6a9d663183e636f8ec4a82226ad8ffb34df0b2405cb0b4",
       "verification/a-new-request-cancels-the-open-one": "c61467152e2efecabb6a9d663183e636f8ec4a82226ad8ffb34df0b2405cb0b4",
+      "verification/a-revocation-ends-the-verification-and-its-open-request": "c61467152e2efecabb6a9d663183e636f8ec4a82226ad8ffb34df0b2405cb0b4",
       "verification/a-secret-is-checked-against-its-scrypt-hash": "c61467152e2efecabb6a9d663183e636f8ec4a82226ad8ffb34df0b2405cb0b4",
       "verification/an-unanswered-request-ends-when-it-expires": "c61467152e2efecabb6a9d663183e636f8ec4a82226ad8ffb34df0b2405cb0b4",
       "verification/an-unanswered-request-leaves-the-verification-in-force": "c61467152e2efecabb6a9d663183e636f8ec4a82226ad8ffb34df0b2405cb0b4",
+      "verification/revoking-a-pending-identity-kills-its-link": "c61467152e2efecabb6a9d663183e636f8ec4a82226ad8ffb34df0b2405cb0b4",
       "verification/the-last-wrong-secret-fails-the-request": "c61467152e2efecabb6a9d663183e636f8ec4a82226ad8ffb34df0b2405cb0b4"
     },
     "RK-11.7.2-009": {
@@ -3680,14 +3686,25 @@
       "verification/a-code-reply-is-consumed-and-verifies": "04dd6447015a3f85d6f88c5bd3090fc9406993741367e25f88de82814e193ead",
       "verification/a-code-request-is-completed-with-its-code": "04dd6447015a3f85d6f88c5bd3090fc9406993741367e25f88de82814e193ead",
       "verification/a-completed-request-verifies-the-identity": "04dd6447015a3f85d6f88c5bd3090fc9406993741367e25f88de82814e193ead",
+      "verification/a-link-s-release-is-answered-past-the-budget": "04dd6447015a3f85d6f88c5bd3090fc9406993741367e25f88de82814e193ead",
+      "verification/a-new-request-cancels-the-open-one": "04dd6447015a3f85d6f88c5bd3090fc9406993741367e25f88de82814e193ead",
+      "verification/a-secret-is-checked-against-its-scrypt-hash": "04dd6447015a3f85d6f88c5bd3090fc9406993741367e25f88de82814e193ead",
       "verification/a-verification-ends-when-its-time-runs-out": "04dd6447015a3f85d6f88c5bd3090fc9406993741367e25f88de82814e193ead"
     },
     "RK-11.7.3-002": {
+      "verification/a-code-reply-is-consumed-and-verifies": "cd79237217d299081cfcbe199e0bc9c67650c828a3a5bd85756628e39837726c",
+      "verification/a-code-reply-releases-the-held-message": "cd79237217d299081cfcbe199e0bc9c67650c828a3a5bd85756628e39837726c",
+      "verification/a-code-reply-s-release-is-answered-past-its-budget": "cd79237217d299081cfcbe199e0bc9c67650c828a3a5bd85756628e39837726c",
       "verification/a-code-sent-in-another-room-is-an-ordinary-message": "cd79237217d299081cfcbe199e0bc9c67650c828a3a5bd85756628e39837726c",
+      "verification/a-deferred-code-reply-returns-before-its-release": "cd79237217d299081cfcbe199e0bc9c67650c828a3a5bd85756628e39837726c",
+      "verification/a-held-message-is-answered-once-verified": "cd79237217d299081cfcbe199e0bc9c67650c828a3a5bd85756628e39837726c",
       "verification/a-hook-passes-an-unverified-sender-s-message-labelled": "cd79237217d299081cfcbe199e0bc9c67650c828a3a5bd85756628e39837726c",
       "verification/a-hook-past-its-timeout-leaves-the-message-held": "cd79237217d299081cfcbe199e0bc9c67650c828a3a5bd85756628e39837726c",
       "verification/a-hook-reads-whose-verification-to-ask-for": "cd79237217d299081cfcbe199e0bc9c67650c828a3a5bd85756628e39837726c",
       "verification/a-hook-s-rewrite-goes-on-with-its-pass": "cd79237217d299081cfcbe199e0bc9c67650c828a3a5bd85756628e39837726c",
+      "verification/a-link-s-release-is-answered-past-the-budget": "cd79237217d299081cfcbe199e0bc9c67650c828a3a5bd85756628e39837726c",
+      "verification/a-marker-a-sender-supplies-releases-nothing": "cd79237217d299081cfcbe199e0bc9c67650c828a3a5bd85756628e39837726c",
+      "verification/a-policy-can-keep-held-messages-held": "cd79237217d299081cfcbe199e0bc9c67650c828a3a5bd85756628e39837726c",
       "verification/a-policy-that-does-not-hold-only-labels": "cd79237217d299081cfcbe199e0bc9c67650c828a3a5bd85756628e39837726c",
       "verification/a-verification-hook-past-process-timeout-expires-its-message": "cd79237217d299081cfcbe199e0bc9c67650c828a3a5bd85756628e39837726c",
       "verification/a-verification-labels-only-its-organization-s-rooms": "cd79237217d299081cfcbe199e0bc9c67650c828a3a5bd85756628e39837726c",
@@ -3699,6 +3716,7 @@
     },
     "RK-11.7.3-004": {
       "verification/a-blocked-message-is-observed-by-no-hook": "175cd12628bce038273bef44b356b3f6f8c9c9c61dafad7f0be70fcee09ed4a9",
+      "verification/a-code-reply-is-consumed-and-verifies": "175cd12628bce038273bef44b356b3f6f8c9c9c61dafad7f0be70fcee09ed4a9",
       "verification/a-hook-blocks-an-unverified-sender-s-message-before-it-is-stored": "175cd12628bce038273bef44b356b3f6f8c9c9c61dafad7f0be70fcee09ed4a9",
       "verification/a-hook-passes-an-unverified-sender-s-message-labelled": "175cd12628bce038273bef44b356b3f6f8c9c9c61dafad7f0be70fcee09ed4a9",
       "verification/a-hook-past-its-timeout-leaves-the-message-held": "175cd12628bce038273bef44b356b3f6f8c9c9c61dafad7f0be70fcee09ed4a9",
@@ -3709,10 +3727,12 @@
       "verification/an-unverified-sender-s-message-is-held-from-the-agents": "175cd12628bce038273bef44b356b3f6f8c9c9c61dafad7f0be70fcee09ed4a9"
     },
     "RK-11.7.3-005": {
+      "verification/a-code-reply-is-consumed-and-verifies": "df75af36e78bc049773e1fb79f76526e67d4cf3fceb1f752cc3e4c9cd25c7df7",
       "verification/a-code-sent-in-another-room-is-an-ordinary-message": "df75af36e78bc049773e1fb79f76526e67d4cf3fceb1f752cc3e4c9cd25c7df7",
       "verification/a-hook-passes-an-unverified-sender-s-message-labelled": "df75af36e78bc049773e1fb79f76526e67d4cf3fceb1f752cc3e4c9cd25c7df7",
       "verification/a-hook-past-its-timeout-leaves-the-message-held": "df75af36e78bc049773e1fb79f76526e67d4cf3fceb1f752cc3e4c9cd25c7df7",
       "verification/a-hook-reads-whose-verification-to-ask-for": "df75af36e78bc049773e1fb79f76526e67d4cf3fceb1f752cc3e4c9cd25c7df7",
+      "verification/a-policy-can-keep-held-messages-held": "df75af36e78bc049773e1fb79f76526e67d4cf3fceb1f752cc3e4c9cd25c7df7",
       "verification/a-verification-labels-only-its-organization-s-rooms": "df75af36e78bc049773e1fb79f76526e67d4cf3fceb1f752cc3e4c9cd25c7df7",
       "verification/a-verified-sender-s-message-reaches-the-agents": "df75af36e78bc049773e1fb79f76526e67d4cf3fceb1f752cc3e4c9cd25c7df7",
       "verification/an-unverified-sender-s-message-is-held-from-the-agents": "df75af36e78bc049773e1fb79f76526e67d4cf3fceb1f752cc3e4c9cd25c7df7",
@@ -3723,10 +3743,12 @@
       "verification/holding-never-widens-what-a-message-reached": "71fa075419d4fc607af588a428b479b61b35ecc87a2310f56f01bd6714d732e8"
     },
     "RK-11.7.3-007": {
+      "verification/a-code-reply-is-consumed-and-verifies": "ef4a755d0b7339f567498ebcbaa9334e369aed2bf760dcf47a0ffa93afed4065",
       "verification/a-code-sent-in-another-room-is-an-ordinary-message": "ef4a755d0b7339f567498ebcbaa9334e369aed2bf760dcf47a0ffa93afed4065",
       "verification/a-hook-passes-an-unverified-sender-s-message-labelled": "ef4a755d0b7339f567498ebcbaa9334e369aed2bf760dcf47a0ffa93afed4065",
       "verification/a-hook-past-its-timeout-leaves-the-message-held": "ef4a755d0b7339f567498ebcbaa9334e369aed2bf760dcf47a0ffa93afed4065",
       "verification/a-hook-reads-whose-verification-to-ask-for": "ef4a755d0b7339f567498ebcbaa9334e369aed2bf760dcf47a0ffa93afed4065",
+      "verification/a-policy-can-keep-held-messages-held": "ef4a755d0b7339f567498ebcbaa9334e369aed2bf760dcf47a0ffa93afed4065",
       "verification/a-verification-labels-only-its-organization-s-rooms": "ef4a755d0b7339f567498ebcbaa9334e369aed2bf760dcf47a0ffa93afed4065",
       "verification/a-verified-sender-s-message-reaches-the-agents": "ef4a755d0b7339f567498ebcbaa9334e369aed2bf760dcf47a0ffa93afed4065",
       "verification/an-unverified-sender-s-message-is-held-from-the-agents": "ef4a755d0b7339f567498ebcbaa9334e369aed2bf760dcf47a0ffa93afed4065",
@@ -3757,7 +3779,8 @@
     },
     "RK-11.7.3-013": {
       "verification/a-kit-without-a-verification-policy-labels-nothing": "732f7f983a29cd5c3e43cfaf856e45f47ede1fb2b57e6914e6923aa488ef5e42",
-      "verification/a-policy-that-does-not-hold-only-labels": "732f7f983a29cd5c3e43cfaf856e45f47ede1fb2b57e6914e6923aa488ef5e42"
+      "verification/a-policy-that-does-not-hold-only-labels": "732f7f983a29cd5c3e43cfaf856e45f47ede1fb2b57e6914e6923aa488ef5e42",
+      "verification/an-unlabelled-event-has-no-sender-verification": "732f7f983a29cd5c3e43cfaf856e45f47ede1fb2b57e6914e6923aa488ef5e42"
     },
     "RK-11.7.3-015": {
       "verification/a-hook-reads-whose-verification-to-ask-for": "b8ca205f4381b09dd1c6013aaa0cd4b34fa770ad6f4f2236c46608ff4c6d2b96",
@@ -3778,6 +3801,7 @@
       "verification/a-code-reply-releases-the-held-message": "9f2da8e212ca17221dab6555ee1dd86c60b9197e31a4046fff3e858ee62ef244",
       "verification/a-code-reply-s-release-is-answered-past-its-budget": "9f2da8e212ca17221dab6555ee1dd86c60b9197e31a4046fff3e858ee62ef244",
       "verification/a-deferred-code-reply-returns-before-its-release": "9f2da8e212ca17221dab6555ee1dd86c60b9197e31a4046fff3e858ee62ef244",
+      "verification/a-held-message-cancelled-in-flight-is-released-with-no-answer": "9f2da8e212ca17221dab6555ee1dd86c60b9197e31a4046fff3e858ee62ef244",
       "verification/a-reply-of-other-digits-is-a-wrong-code": "9f2da8e212ca17221dab6555ee1dd86c60b9197e31a4046fff3e858ee62ef244"
     },
     "RK-11.7.4-003": {
@@ -3849,6 +3873,7 @@
       "verification/a-release-from-a-hook-that-allows-its-event-is-answered-first": "f4154c9ed2a488ce19c6da889c4350ace5f8259a55776b36e56b9901d19202a0",
       "verification/a-release-from-a-hook-that-closes-the-room-is-answered-by-no-agent": "f4154c9ed2a488ce19c6da889c4350ace5f8259a55776b36e56b9901d19202a0",
       "verification/a-release-whose-pass-goes-on-before-a-later-hook-closes-the-room-is-answered-by-no-agent": "f4154c9ed2a488ce19c6da889c4350ace5f8259a55776b36e56b9901d19202a0",
+      "verification/a-released-message-s-turn-reads-what-came-after-it": "f4154c9ed2a488ce19c6da889c4350ace5f8259a55776b36e56b9901d19202a0",
       "verification/a-scoped-cancel-reaches-its-organization-s-held-message": "f4154c9ed2a488ce19c6da889c4350ace5f8259a55776b36e56b9901d19202a0",
       "verification/an-adopted-held-message-is-named-until-its-release": "f4154c9ed2a488ce19c6da889c4350ace5f8259a55776b36e56b9901d19202a0",
       "verification/another-organization-s-cancel-reaches-no-held-message": "f4154c9ed2a488ce19c6da889c4350ace5f8259a55776b36e56b9901d19202a0",
@@ -3904,7 +3929,11 @@
       "verification/a-held-message-s-cancellation-is-written-on-its-mark": "08554544e82322fba3e0e97b071485127c64bd9dffccc8cd4b131d56231b5a79",
       "verification/a-release-during-the-held-message-s-own-delivery-is-named": "08554544e82322fba3e0e97b071485127c64bd9dffccc8cd4b131d56231b5a79",
       "verification/a-release-from-a-hook-keeps-its-answer-named": "08554544e82322fba3e0e97b071485127c64bd9dffccc8cd4b131d56231b5a79",
-      "verification/an-adopted-held-message-is-named-until-its-release": "08554544e82322fba3e0e97b071485127c64bd9dffccc8cd4b131d56231b5a79"
+      "verification/a-scoped-cancel-reaches-its-organization-s-held-message": "08554544e82322fba3e0e97b071485127c64bd9dffccc8cd4b131d56231b5a79",
+      "verification/an-adopted-held-message-is-named-until-its-release": "08554544e82322fba3e0e97b071485127c64bd9dffccc8cd4b131d56231b5a79",
+      "verification/only-the-last-released-message-s-cancellation-silences-the-release-earlier": "08554544e82322fba3e0e97b071485127c64bd9dffccc8cd4b131d56231b5a79",
+      "verification/only-the-last-released-message-s-cancellation-silences-the-release-last": "08554544e82322fba3e0e97b071485127c64bd9dffccc8cd4b131d56231b5a79",
+      "verification/the-handle-s-cancel-reaches-a-held-message-while-its-delivery-set-runs": "08554544e82322fba3e0e97b071485127c64bd9dffccc8cd4b131d56231b5a79"
     },
     "RK-11.7.6-015": {
       "verification/a-released-message-s-turn-reads-what-came-after-it": "1b62db97a107c372dfa2d642b56ea51b6bcc19ae31e262b0369e727c8d251a7c"
