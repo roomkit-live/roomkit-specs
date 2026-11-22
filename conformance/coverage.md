@@ -74,9 +74,9 @@ See [requirements.json](requirements.json) for exact clauses and applicability,
 | §7.4 Named Patterns | normative | 1 | 1 | 0 | 0 | 2 | 0 | 0 | 0 | 0 |
 | §7.5 Permission Rules | normative | 35 | 33 | 2 | 0 | 114 | 0 | 0 | 0 | 0 |
 | §8 Event System | informative | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| §8.1 Room Events | normative | 11 | 10 | 1 | 0 | 24 | 0 | 1 | 3 | 0 |
+| §8.1 Room Events | normative | 11 | 10 | 1 | 0 | 24 | 0 | 2 | 2 | 0 |
 | §8.2 Framework Events | normative | 63 | 63 | 0 | 0 | 93 | 0 | 0 | 10 | 15 |
-| §8.3 Event Chain Depth | normative | 46 | 43 | 3 | 0 | 78 | 0 | 8 | 0 | 7 |
+| §8.3 Event Chain Depth | normative | 46 | 43 | 3 | 0 | 78 | 0 | 7 | 1 | 7 |
 | §8.4 Realtime / Ephemeral Events | normative | 35 | 31 | 4 | 0 | 41 | 0 | 2 | 3 | 0 |
 | §8.5 Responses: What They Answer, and Whether They Were Consumed | normative | 22 | 21 | 1 | 0 | 4 | 0 | 5 | 0 | 1 |
 | §9 Hook System | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
@@ -319,7 +319,7 @@ Units [gaps.json](gaps.json) lists: a scenario can test each, and none cites it 
 | RK-8.1-008 | §8.1 | step | RMK-1912 | Needs a persistent store shared by two connections or processes. |
 | RK-8.1-009 | §8.1 | step | RMK-1912 | Needs an error name for a duplicate (room_id, index) in the runners' table. |
 | RK-8.1-012 | §8.1 | writable | RMK-1912 | Hooks read the inbound id it is committed with, and a reused id gets a fresh one. |
-| RK-8.1-013 | §8.1 | step | RMK-1912 | Needs a transport provider's parse. |
+| RK-8.1-013 | §8.1 | writable | RMK-1912 | process_webhook reaches it, but its scenario keeps the provider's id in external_id: suspect RMK-1913. |
 | RK-8.2-012 | §8.2 | step | RMK-1912 | Needs WebSocket connection registry steps; roomkit-rs lacks the helpers. |
 | RK-8.2-013 | §8.2 | step | RMK-1912 | Needs WebSocket connection registry steps; roomkit-rs lacks the helpers. |
 | RK-8.2-014 | §8.2 | step | RMK-1912 | Needs a scripted source provider; roomkit-rs lacks sources. |
@@ -350,7 +350,7 @@ Units [gaps.json](gaps.json) lists: a scenario can test each, and none cites it 
 | RK-8.3-016 | §8.3 | writable | RMK-1912 | A task a post-delivery hook body spawns calls at its own depth once the body is over. |
 | RK-8.3-018 | §8.3 | writable | RMK-1912 | A task a hook body spawns has the floor while the body runs, its own depth after. |
 | RK-8.3-019 | §8.3 | writable | RMK-1912 | A hook a turn executor fires carries its floor with the host verb it makes. |
-| RK-8.3-021 | §8.3 | writable | RMK-1912 | A task a framework event handler spawns calls at its own depth once the handler returned. |
+| RK-8.3-021 | §8.3 | step | RMK-1912 | Needs a framework-event handler reaction that spawns a task. |
 | RK-8.3-030 | §8.3 | writable | RMK-1912 | A non-intelligence channel's responses at the limit are stored BLOCKED. |
 | RK-8.3-031 | §8.3 | phase6 | RMK-1912 |  |
 | RK-8.3-032 | §8.3 | phase6 | RMK-1912 |  |
