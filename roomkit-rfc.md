@@ -7365,8 +7365,8 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
 ```
    │   └── CHALLENGE_SENT → the resolver has put the challenge itself:
    │       block processing with the resolver's message, else
-   │       identity_challenge_sent; no identity hook runs and nothing
-   │       is committed
+   │       identity_challenge_sent; neither identity trigger fires
+   │       (§11.2) and nothing is committed
 ```
 <!-- /rfc -->
 <!-- rfc: {"id": "RK-10.1-038", "kind": "behavior", "applies": "§10.1 step 5, with an identity resolver configured and a sender with an address left to resolve (§11.6): the participant the event names. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
@@ -10411,11 +10411,11 @@ IdentityResolver (interface)
 IdentityResult
 ├── status: IdentificationStatus            # IDENTIFIED, AMBIGUOUS, UNKNOWN, PENDING, CHALLENGE_SENT, REJECTED
 ├── identity: Identity | null               # Resolved identity (if IDENTIFIED)
-├── candidates: list<Identity>              # Candidate identities (if AMBIGUOUS)
+├── candidates: list<Identity>              # Candidate identities (if AMBIGUOUS or PENDING)
 ├── address: string | null                  # The address resolved; the sender's if unset
-├── channel_type: string | null             # Its channel type; the message's if unset
+├── channel_type: string | null             # Its channel type; the message's channel's if unset
 ├── challenge_type: string | null           # For CHALLENGE_SENT: its kind; not read
-└── message: string | null                  # For CHALLENGE_SENT and REJECTED: the block's reason
+└── message: string | null                  # For CHALLENGE_SENT and REJECTED: the block's reason, unless empty
 ```
 <!-- /rfc -->
 
@@ -10468,11 +10468,12 @@ Returns IdentityResult
       │
 ```
 <!-- /rfc -->
-<!-- rfc: {"id": "RK-11.2-023", "kind": "behavior", "applies": "§11.2 Resolution pipeline: a resolver's CHALLENGE_SENT result, the challenge put by the resolver itself, which no identity hook reads. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+<!-- rfc: {"id": "RK-11.2-023", "kind": "behavior", "applies": "§11.2 Resolution pipeline: a resolver's CHALLENGE_SENT result, the challenge put by the resolver itself, which fires neither identity trigger. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
       ├── CHALLENGE_SENT (the resolver put the challenge itself)
       │   └── Block the message with the resolver's message, else
-      │       identity_challenge_sent; no hook runs, nothing is committed
+      │       identity_challenge_sent; neither identity trigger fires,
+      │       nothing is committed
       │
 ```
 <!-- /rfc -->

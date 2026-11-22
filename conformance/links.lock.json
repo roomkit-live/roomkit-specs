@@ -328,9 +328,9 @@
       "identity/identity-hooks-run-in-order-on-the-events-they-filter": "6c56ff33ff12dae2a8231c08d59ea9dc2d3ac7f602175b3b09e2d3ef2f7f9add"
     },
     "RK-10.1-037": {
-      "identity/a-resolver-that-challenged-holds-the-message": "8961b93c691a0ab6c32f65a2add082e68ddb3dc88170d2816ea7b2bea6cb52a6",
-      "locks/a-challenged-message-carries-its-attach-s-failed-release": "8961b93c691a0ab6c32f65a2add082e68ddb3dc88170d2816ea7b2bea6cb52a6",
-      "locks/an-adopted-call-held-for-its-sender-carries-its-attach-s-failed-release": "8961b93c691a0ab6c32f65a2add082e68ddb3dc88170d2816ea7b2bea6cb52a6"
+      "identity/a-resolver-that-challenged-holds-the-message": "ff0bf89a377068fd0002af8c8cf9b03f0f295ed6cde7ddfb7ad6eb18a19aeedf",
+      "locks/a-challenged-message-carries-its-attach-s-failed-release": "ff0bf89a377068fd0002af8c8cf9b03f0f295ed6cde7ddfb7ad6eb18a19aeedf",
+      "locks/an-adopted-call-held-for-its-sender-carries-its-attach-s-failed-release": "ff0bf89a377068fd0002af8c8cf9b03f0f295ed6cde7ddfb7ad6eb18a19aeedf"
     },
     "RK-10.1-038": {
       "identity/a-member-the-host-left-pending-keeps-their-record": "ef30b30bc5ca33316bc7fd70ca60e659f4a4ad648a364d2a047aa11b058e1cda",
@@ -3464,11 +3464,11 @@
       "identity/an-identified-sender-joins-the-room": "83c3cc663df00e563822f4c4c8a897132e1c8440f71c5e362e335d8aa4344861"
     },
     "RK-11.1-002": {
-      "identity/a-resolver-s-rejection-holds-the-message-no-hook-answers": "d17c05ea63f43401501a5166d995d4dd47e47d6d527991d95fa7b0320ab64755",
-      "identity/a-resolver-that-challenged-holds-the-message": "d17c05ea63f43401501a5166d995d4dd47e47d6d527991d95fa7b0320ab64755",
-      "identity/an-ambiguous-sender-no-hook-names-is-pending": "d17c05ea63f43401501a5166d995d4dd47e47d6d527991d95fa7b0320ab64755",
-      "identity/an-identified-sender-joins-the-room": "d17c05ea63f43401501a5166d995d4dd47e47d6d527991d95fa7b0320ab64755",
-      "identity/the-identity-hooks-read-the-resolver-s-answer-completed": "d17c05ea63f43401501a5166d995d4dd47e47d6d527991d95fa7b0320ab64755"
+      "identity/a-resolver-s-rejection-holds-the-message-no-hook-answers": "543fd64838fdbbd60afbc0656d22f77b4bdfd2ae1cc912c97ee2230dd486f0ce",
+      "identity/a-resolver-that-challenged-holds-the-message": "543fd64838fdbbd60afbc0656d22f77b4bdfd2ae1cc912c97ee2230dd486f0ce",
+      "identity/an-ambiguous-sender-no-hook-names-is-pending": "543fd64838fdbbd60afbc0656d22f77b4bdfd2ae1cc912c97ee2230dd486f0ce",
+      "identity/an-identified-sender-joins-the-room": "543fd64838fdbbd60afbc0656d22f77b4bdfd2ae1cc912c97ee2230dd486f0ce",
+      "identity/the-identity-hooks-read-the-resolver-s-answer-completed": "543fd64838fdbbd60afbc0656d22f77b4bdfd2ae1cc912c97ee2230dd486f0ce"
     },
     "RK-11.2-002": {
       "identity/a-caller-s-message-under-the-framework-s-name-is-still-resolved": "610b411fcc71db85440c4d6d53e2e802299fa62cdce7f3717b2a552338865a56",
@@ -3576,9 +3576,9 @@
       "members/a-resolved-pending-sender-keeps-their-room": "2d29a23ab7565c4a60adbddc1ae03a8b1ea5c4506f8cf868d8dfe99a2cfc8cb5"
     },
     "RK-11.2-023": {
-      "identity/a-resolver-that-challenged-holds-the-message": "4fd597a8eae0c1246ea0a3c5003506fe3b2537a856f8c400167c294f70ad846a",
-      "locks/a-challenged-message-carries-its-attach-s-failed-release": "4fd597a8eae0c1246ea0a3c5003506fe3b2537a856f8c400167c294f70ad846a",
-      "locks/an-adopted-call-held-for-its-sender-carries-its-attach-s-failed-release": "4fd597a8eae0c1246ea0a3c5003506fe3b2537a856f8c400167c294f70ad846a"
+      "identity/a-resolver-that-challenged-holds-the-message": "be477511cbb55e060a1ce98c2778f3ccf5b6a386483402ddac11444545fb2374",
+      "locks/a-challenged-message-carries-its-attach-s-failed-release": "be477511cbb55e060a1ce98c2778f3ccf5b6a386483402ddac11444545fb2374",
+      "locks/an-adopted-call-held-for-its-sender-carries-its-attach-s-failed-release": "be477511cbb55e060a1ce98c2778f3ccf5b6a386483402ddac11444545fb2374"
     },
     "RK-11.3-002": {
       "identity/a-challenge-is-delivered-and-the-message-held": "d3ed54cf3922a2341aefa15ef7bdbd1715c7125c2155d76cfb717419062ea05b",
@@ -3589,6 +3589,7 @@
       "identity/a-challenge-is-delivered-and-the-message-held": "8b3f80fba3d583ed2c63959c34820567ef2ccc0dd99f88fe4ca4be13b59b2692",
       "identity/a-challenge-runs-the-before-broadcast-hooks": "8b3f80fba3d583ed2c63959c34820567ef2ccc0dd99f88fe4ca4be13b59b2692",
       "identity/a-rejection-blocks-the-message": "8b3f80fba3d583ed2c63959c34820567ef2ccc0dd99f88fe4ca4be13b59b2692",
+      "identity/a-resolver-s-pending-asks-the-ambiguous-identity-hooks": "8b3f80fba3d583ed2c63959c34820567ef2ccc0dd99f88fe4ca4be13b59b2692",
       "locks/an-adopted-message-held-for-its-sender-carries-its-challenge-s-failed-release": "8b3f80fba3d583ed2c63959c34820567ef2ccc0dd99f88fe4ca4be13b59b2692"
     },
     "RK-11.4-001": {
