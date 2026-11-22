@@ -386,6 +386,296 @@
       "card": "RMK-1929",
       "note": "Verify that an asynchronous Loop returns its instruction to the originating realtime voice session."
     },
+    "RK-19.7.5-016": {
+      "class": "writable",
+      "card": "RMK-1931",
+      "note": "Run the scripted decision at the default timeout without configuring a value and assert the reported five-second duration. The existing timeout scenario configures a different value."
+    },
+    "RK-19.7.5-020": {
+      "class": "phase6",
+      "card": "RMK-1931",
+      "note": "Exercise a discussion install over a realtime speech-to-speech binding. The existing shared refusal uses a conventional voice channel."
+    },
+    "RK-19.7.5-021": {
+      "class": "writable",
+      "card": "RMK-1931",
+      "note": "Install a discussion over an existing agent configured to think while listening and assert installation refusal."
+    },
+    "RK-19.7.5-030": {
+      "class": "writable",
+      "card": "RMK-1931",
+      "note": "Compare a framework-originated delivery with a person's input and verify it cannot enter the personal-message route."
+    },
+    "RK-19.7.5-037": {
+      "class": "step",
+      "card": "RMK-1931",
+      "note": "Configure two independently held committed-event memory notifications and compare parallel versus sequential completion."
+    },
+    "RK-19.7.5-052": {
+      "class": "writable",
+      "card": "RMK-1931",
+      "note": "Give one person and one agent the same valid handle and assert the agent wins without a personal outstanding question."
+    },
+    "RK-19.7.5-054": {
+      "class": "writable",
+      "card": "RMK-1931",
+      "note": "Deliver several distinct segments from one turn, all naming the same peer, and assert exactly one queued turn. Repeated names within one segment do not exercise the across-segments rule."
+    },
+    "RK-19.7.5-056": {
+      "class": "writable",
+      "card": "RMK-1931",
+      "note": "Cut or fail an agent after it commits an addressed segment. Assert the message and peer's turn remain, the speaker is not retried and a failure is reported if applicable."
+    },
+    "RK-19.7.5-058": {
+      "class": "writable",
+      "card": "RMK-1931",
+      "note": "Insert the previous speaker at the front while a different agent can speak and assert the other agent takes the next turn."
+    },
+    "RK-19.7.5-063": {
+      "class": "writable",
+      "card": "RMK-1931",
+      "note": "Insert two separate front-of-queue requests and control the active turn to assert the order in which those requests are served."
+    },
+    "RK-19.7.5-066": {
+      "class": "writable",
+      "card": "RMK-1931",
+      "note": "Disable the executor catalogue through the existing fixture, serve a declared agent and verify that its turn proceeds."
+    },
+    "RK-19.7.5-067": {
+      "class": "writable",
+      "card": "RMK-1931",
+      "note": "Post a finished discussion task targeted at an offline declared agent and verify the result is still committed."
+    },
+    "RK-19.7.5-071": {
+      "class": "writable",
+      "card": "RMK-1931",
+      "note": "Route an unaddressed personal message with one otherwise eligible everyone member or outstanding asker hidden/unreadable, and inspect the resulting queue."
+    },
+    "RK-19.7.5-075": {
+      "class": "writable",
+      "card": "RMK-1931",
+      "note": "Send an explicitly addressed and an unaddressed bot or framework delivery and verify back-of-queue placement versus no solicitation."
+    },
+    "RK-19.7.5-082": {
+      "class": "writable",
+      "card": "RMK-1931",
+      "note": "Set a speaking policy on a deferred discussion turn and inspect its SpeakTurn.recent against an event committed while waiting. The existing reviewed evidence is a native test only."
+    },
+    "RK-19.7.5-088": {
+      "class": "writable",
+      "card": "RMK-1931",
+      "note": "In an addressed-only room have a personal answer first omit then explicitly name the asking agent; inspect asked after each."
+    },
+    "RK-19.7.5-096": {
+      "class": "writable",
+      "card": "RMK-1931",
+      "note": "Enter a discussion turn from work near its reentry cap and compare the new turn's own ten-times-depth budget, including regeneration."
+    },
+    "RK-19.7.5-097": {
+      "class": "writable",
+      "card": "RMK-1931",
+      "note": "Ask again from an asynchronous hook, including via another process, and assert increasing inherited depths stop the loop."
+    },
+    "RK-19.7.5-104": {
+      "class": "writable",
+      "card": "RMK-1931",
+      "note": "Combine a listening speak policy with the discussion's own listening state and exercise both ways of silencing the same agent."
+    },
+    "RK-19.7.5-107": {
+      "class": "writable",
+      "card": "RMK-1931",
+      "note": "Resume a previously listening agent after intervening messages and inspect its next model history."
+    },
+    "RK-19.7.5-108": {
+      "class": "writable",
+      "card": "RMK-1931",
+      "note": "Install a speaking policy in a discussion, assert a normal turn invokes it, and assert a dedicated instruction bypasses it."
+    },
+    "RK-19.7.5-109": {
+      "class": "writable",
+      "card": "RMK-1931",
+      "note": "Set a silent speaking-policy decision in an installed discussion and assert no model call and a finished turn."
+    },
+    "RK-19.7.5-113": {
+      "class": "writable",
+      "card": "RMK-1931",
+      "note": "End a discussion generation without text and assert no stored response row and no transport delivery."
+    },
+    "RK-19.7.5-114": {
+      "class": "writable",
+      "card": "RMK-1931",
+      "note": "Set a small max_turns bound, produce a silent response and assert the turn still counts against the limit."
+    },
+    "RK-19.7.5-118": {
+      "class": "writable",
+      "card": "RMK-1931",
+      "note": "Supply custom rules with both placeholders and compare the substituted peer handle and configured silence token in actual turn notes."
+    },
+    "RK-19.7.5-126": {
+      "class": "writable",
+      "card": "RMK-1931",
+      "note": "Install from an older persisted discussion lacking handles and assert each agent is addressed by its channel ID."
+    },
+    "RK-19.7.5-130": {
+      "class": "writable",
+      "card": "RMK-1931",
+      "note": "Remove a stored discussion with no historical attached-agent list and assert every pre-existing agent remains bound."
+    },
+    "RK-19.7.5-136": {
+      "class": "writable",
+      "card": "RMK-1931",
+      "note": "Seed a retained queue with an expired lease, compare the holder and successor, and inspect renewal and takeover. An orderly close that clears the lease is a separate condition."
+    },
+    "RK-19.7.5-144": {
+      "class": "step",
+      "card": "RMK-1931",
+      "note": "Hold a post-mode task result before commit, inspect its persisted private record and verify it is absent from public room metadata."
+    },
+    "RK-19.7.5-156": {
+      "class": "writable",
+      "card": "RMK-1931",
+      "note": "Send an unaddressed personal message with all possible candidates ineligible and assert neither a dispatch call nor an agent turn."
+    },
+    "RK-19.7.5-161": {
+      "class": "writable",
+      "card": "RMK-1931",
+      "note": "Queue two undecided personal messages before releasing the policy and assert decision order matches commit order."
+    },
+    "RK-19.7.5-162": {
+      "class": "writable",
+      "card": "RMK-1931",
+      "note": "Queue an undecided message before the room reaches done or max_turns, then assert the waiting decision is discarded rather than applied."
+    },
+    "RK-19.7.5-163": {
+      "class": "writable",
+      "card": "RMK-1931",
+      "note": "Stop a deciding process and assert the next holder consumes the same still-pending message."
+    },
+    "RK-19.7.5-164": {
+      "class": "writable",
+      "card": "RMK-1931",
+      "note": "Queue seventeen undecided messages and observe the no-policy routing of the oldest with at most sixteen retained."
+    },
+    "RK-19.7.5-168": {
+      "class": "writable",
+      "card": "RMK-1931",
+      "note": "Let another process finish a decision after taking the lease and assert the stale answer produces no second report or application."
+    },
+    "RK-19.7.5-170": {
+      "class": "writable",
+      "card": "RMK-1931",
+      "note": "Dispatch to an agent whose own speak policy chooses silence and assert its policy is evaluated before generation."
+    },
+    "RK-19.7.5-171": {
+      "class": "step",
+      "card": "RMK-1931",
+      "note": "Exercise the built-in classifier through shared fixtures and inspect the batch of candidate questions with recent labelled messages, identity and outstanding asks."
+    },
+    "RK-19.7.5-172": {
+      "class": "step",
+      "card": "RMK-1931",
+      "note": "Drive the classifier dispatch adapter with known probabilities and assert threshold (default 0.5), descending order, maximum agents (default two) and empty selection."
+    },
+    "RK-19.7.5-173": {
+      "class": "step",
+      "card": "RMK-1931",
+      "note": "Inspect the built-in classifier adapter's returned per-channel probability map for every candidate. A scripted dispatch judgment is not this adapter."
+    },
+    "RK-19.7.5-174": {
+      "class": "step",
+      "card": "RMK-1931",
+      "note": "Inspect built-in classifier questions for regular and identity-free candidates, including custom handles."
+    },
+    "RK-19.7.5-176": {
+      "class": "writable",
+      "card": "RMK-1931",
+      "note": "Hold two workers and a discussion generation independently to verify work overlaps while foreground turns stay sequential."
+    },
+    "RK-19.7.5-178": {
+      "class": "writable",
+      "card": "RMK-1931",
+      "note": "While another agent holds the floor, finish a posted task, then verify its turn publishes without a model call, interruption or mention fan-out."
+    },
+    "RK-19.7.5-179": {
+      "class": "writable",
+      "card": "RMK-1931",
+      "note": "Start a background task inside an installed discussion and inspect the actual room task notes on a later agent turn."
+    },
+    "RK-19.7.5-180": {
+      "class": "writable",
+      "card": "RMK-1931",
+      "note": "Run a worker for an installed discussion and assert its child_room_id and separate conversation state, including a worker using an external agent."
+    },
+    "RK-19.7.5-181": {
+      "class": "writable",
+      "card": "RMK-1931",
+      "note": "End or uninstall the discussion while a relayed task is held and assert its result is preserved on the hook and StatusBus after the instruction is refused when over."
+    },
+    "RK-19.7.5-182": {
+      "class": "writable",
+      "card": "RMK-1931",
+      "note": "End a discussion with one post waiting and observe publication only after its running turn releases the floor."
+    },
+    "RK-19.7.5-183": {
+      "class": "writable",
+      "card": "RMK-1931",
+      "note": "Uninstall from a different process while a result is pending and assert the uninstaller's hooks run before agent bindings are removed."
+    },
+    "RK-19.7.5-185": {
+      "class": "writable",
+      "card": "RMK-1931",
+      "note": "Initiate uninstall while holding the room lock needed by a concurrent result post and assert the uninstaller completes that post."
+    },
+    "RK-19.7.5-186": {
+      "class": "writable",
+      "card": "RMK-1931",
+      "note": "Drive a competing post and uninstall of one retained result and verify a single committed message under the retained result ID."
+    },
+    "RK-19.7.5-187": {
+      "class": "writable",
+      "card": "RMK-1931",
+      "note": "Retain a result across a failed or closing post, restart and publish another message, then assert only uninstall posts the retained result after it."
+    },
+    "RK-19.7.5-188": {
+      "class": "writable",
+      "card": "RMK-1931",
+      "note": "Delete a previously committed but still retained result, then uninstall and assert one fresh post after its idempotency key disappears."
+    },
+    "RK-19.7.5-189": {
+      "class": "writable",
+      "card": "RMK-1931",
+      "note": "Run the same agent set in two discussion rooms, change listening/queue state in one and assert that the other room's state stays independent."
+    },
+    "RK-19.7.5-190": {
+      "class": "writable",
+      "card": "RMK-1931",
+      "note": "Ask an external agent operating inside a Discussion to enumerate its served external tools and verify no host room tool is added."
+    },
+    "RK-19.7.5-193": {
+      "class": "writable",
+      "card": "RMK-1931",
+      "note": "While an agent is waiting for a person's answer, send it an explicit request from a different agent and assert the request remains eligible."
+    },
+    "RK-19.7.5-194": {
+      "class": "writable",
+      "card": "RMK-1931",
+      "note": "Install a dispatch policy and emit an unaddressed ordinary agent message. Assert no policy call and no resulting agent turn."
+    },
+    "RK-19.7.5-195": {
+      "class": "writable",
+      "card": "RMK-1931",
+      "note": "Exercise two different event threads concurrently, asserting inherited reply threads, a shared discussion queue and whole-room history."
+    },
+    "RK-19.7.5-203": {
+      "class": "writable",
+      "card": "RMK-1931",
+      "note": "Start a background task during discussion, verify exactly one acknowledgement sentence and no further generation in that turn."
+    },
+    "RK-19.7.5-205": {
+      "class": "writable",
+      "card": "RMK-1931",
+      "note": "With a running task in an installed discussion, exercise cancellation through the agent tool and the host operation and assert the terminal task state."
+    },
     "RK-19.8-003": {
       "class": "step",
       "card": "RMK-1925",

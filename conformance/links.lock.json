@@ -5121,6 +5121,931 @@
       "orchestration/a-loop-whose-producer-is-cut-short-answers-nothing-and-says-why": "dc9f3664072dd993766b242af635f720b5276aa75621f2cd68d0724a1f10cde2",
       "orchestration/a-review-that-says-nothing-or-fails-approves-nothing": "dc9f3664072dd993766b242af635f720b5276aa75621f2cd68d0724a1f10cde2"
     },
+    "RK-19.7.5-005": {
+      "discussion/a-person-naming-an-agent-asks-that-agent-alone": "89a9d32d7674ce860da6871af4495884a7ef36ce1e394b1e4d46496082e2dc54",
+      "discussion/an-agent-naming-another-queues-it-once-its-turn-has-ended": "89a9d32d7674ce860da6871af4495884a7ef36ce1e394b1e4d46496082e2dc54",
+      "discussion/an-agent-s-message-outside-its-turn-queues-the-agent-it-names": "89a9d32d7674ce860da6871af4495884a7ef36ce1e394b1e4d46496082e2dc54",
+      "discussion/an-unaddressed-message-asks-everyone-one-at-a-time": "89a9d32d7674ce860da6871af4495884a7ef36ce1e394b1e4d46496082e2dc54",
+      "discussion/everyone-opens-in-the-host-s-order": "89a9d32d7674ce860da6871af4495884a7ef36ce1e394b1e4d46496082e2dc54"
+    },
+    "RK-19.7.5-006": {
+      "discussion/a-person-naming-an-agent-asks-that-agent-alone": "df65d7b6307bb50ce86f214b62bb4c5812a5edd3f455ffb042231e1edee06cb0",
+      "discussion/acp-copied-notes-header": "df65d7b6307bb50ce86f214b62bb4c5812a5edd3f455ffb042231e1edee06cb0",
+      "discussion/acp-dispatch-identity": "df65d7b6307bb50ce86f214b62bb4c5812a5edd3f455ffb042231e1edee06cb0",
+      "discussion/acp-hold-cancels-prompt": "df65d7b6307bb50ce86f214b62bb4c5812a5edd3f455ffb042231e1edee06cb0",
+      "discussion/acp-identity-presented-to-peer": "df65d7b6307bb50ce86f214b62bb4c5812a5edd3f455ffb042231e1edee06cb0",
+      "discussion/acp-public-handle": "df65d7b6307bb50ce86f214b62bb4c5812a5edd3f455ffb042231e1edee06cb0",
+      "discussion/acp-trusted-notes": "df65d7b6307bb50ce86f214b62bb4c5812a5edd3f455ffb042231e1edee06cb0",
+      "discussion/acp-trusted-notes-with-empty-request": "df65d7b6307bb50ce86f214b62bb4c5812a5edd3f455ffb042231e1edee06cb0"
+    },
+    "RK-19.7.5-007": {
+      "discussion/a-discussion-is-checked-when-built": "6ae152a6e91c43cbd66eeef62eaf6a3890011df65fe01cab41577c9cfe03f7cd",
+      "discussion/a-handle-is-the-host-s-else-the-channel-id-else-the-name": "6ae152a6e91c43cbd66eeef62eaf6a3890011df65fe01cab41577c9cfe03f7cd",
+      "discussion/an-agent-named-by-an-id-takes-the-name-its-channel-gives": "6ae152a6e91c43cbd66eeef62eaf6a3890011df65fe01cab41577c9cfe03f7cd",
+      "discussion/an-agent-named-by-an-id-that-is-no-handle-waits-for-the-install": "6ae152a6e91c43cbd66eeef62eaf6a3890011df65fe01cab41577c9cfe03f7cd",
+      "discussion/an-agent-with-a-name-keeps-its-channel-id-as-its-handle": "6ae152a6e91c43cbd66eeef62eaf6a3890011df65fe01cab41577c9cfe03f7cd",
+      "discussion/an-agent-without-a-handle-or-two-alike-is-refused-when-built": "6ae152a6e91c43cbd66eeef62eaf6a3890011df65fe01cab41577c9cfe03f7cd"
+    },
+    "RK-19.7.5-008": {
+      "discussion/an-unaddressed-message-asks-everyone-one-at-a-time": "7941233c9aa8f4c4f8bab955cc151515778e403c4fcbbd705d3ec21f42c55db4",
+      "discussion/with-addressed-only-an-unaddressed-message-asks-no-agent": "7941233c9aa8f4c4f8bab955cc151515778e403c4fcbbd705d3ec21f42c55db4"
+    },
+    "RK-19.7.5-009": {
+      "discussion/an-unaddressed-message-asks-everyone-one-at-a-time": "afa65504e50960296c193e14999490e0f0433a677078e5e1971af52a4b78de57",
+      "discussion/everyone-opens-in-the-host-s-order": "afa65504e50960296c193e14999490e0f0433a677078e5e1971af52a4b78de57",
+      "discussion/everyone-orders-and-bounds-the-candidates": "afa65504e50960296c193e14999490e0f0433a677078e5e1971af52a4b78de57"
+    },
+    "RK-19.7.5-010": {
+      "discussion/max-turns-ends-the-discussion-and-refuses-later-instructions": "2ef4002698235a6adf5ea3b3bbb53d60701c29d68054184ab5a2d74f9a39be31",
+      "discussion/the-last-turn-given-ends-the-discussion-at-once": "2ef4002698235a6adf5ea3b3bbb53d60701c29d68054184ab5a2d74f9a39be31"
+    },
+    "RK-19.7.5-011": {
+      "discussion/a-regenerated-discussion-turn-past-the-depth-limit-is-recorded-and-dropped": "04b51d41388351afd0cf83bd604a902fc4ebfedc1bfc42bb6c9ddf6e33ed03ab",
+      "discussion/the-depth-limit-stops-a-turn-once-and-a-person-resumes-it": "04b51d41388351afd0cf83bd604a902fc4ebfedc1bfc42bb6c9ddf6e33ed03ab",
+      "discussion/the-observation-of-a-turn-the-depth-limit-stops-is-stored-with-its-record": "04b51d41388351afd0cf83bd604a902fc4ebfedc1bfc42bb6c9ddf6e33ed03ab"
+    },
+    "RK-19.7.5-012": {
+      "discussion/a-done-discussion-decides-nothing": "2034221d944b967f0a362ef387fb18a198ed2c95279537ef0cbcefc9e9782c9e",
+      "discussion/done-ends-the-discussion-before-the-next-turn": "2034221d944b967f0a362ef387fb18a198ed2c95279537ef0cbcefc9e9782c9e"
+    },
+    "RK-19.7.5-013": {
+      "discussion/a-silence-after-a-tool-round-is-held-back-on-its-own": "b14085f274f6f1567207d995716e97581d0026e59e2e987cf574dab0db42253f",
+      "discussion/a-silent-agent-says-nothing-to-the-room": "b14085f274f6f1567207d995716e97581d0026e59e2e987cf574dab0db42253f",
+      "discussion/a-start-after-a-silent-round-is-held-then-released-whole": "b14085f274f6f1567207d995716e97581d0026e59e2e987cf574dab0db42253f",
+      "discussion/a-streamed-silence-never-reaches-a-live-transport": "b14085f274f6f1567207d995716e97581d0026e59e2e987cf574dab0db42253f"
+    },
+    "RK-19.7.5-014": {
+      "discussion/a-discussion-is-checked-when-built": "abedd86badad25f066d6301c05be7a1eede812b6bdd8586ec7261ef5fd5a3072",
+      "discussion/a-queued-turn-reads-the-room-when-it-starts": "abedd86badad25f066d6301c05be7a1eede812b6bdd8586ec7261ef5fd5a3072"
+    },
+    "RK-19.7.5-015": {
+      "discussion/a-decision-reports-the-message-candidates-and-cost": "4aebf9eebcef0395fa9f18ae91eef7324854c8e700938cf3432ceff9f5fc3356",
+      "discussion/a-dispatch-policy-does-not-go-with-addressed-only": "4aebf9eebcef0395fa9f18ae91eef7324854c8e700938cf3432ceff9f5fc3356",
+      "discussion/a-name-is-never-decided": "4aebf9eebcef0395fa9f18ae91eef7324854c8e700938cf3432ceff9f5fc3356",
+      "discussion/the-policy-picks-who-takes-an-unaddressed-message": "4aebf9eebcef0395fa9f18ae91eef7324854c8e700938cf3432ceff9f5fc3356"
+    },
+    "RK-19.7.5-017": {
+      "discussion/a-person-s-message-ends-the-wait-even-asking-no-one": "721720726e3bea97f3fa4a4cd9404539278d8709ea1db46b734d9f4662aba44a",
+      "discussion/a-regenerated-turn-runs-while-waiting-and-listening": "721720726e3bea97f3fa4a4cd9404539278d8709ea1db46b734d9f4662aba44a",
+      "discussion/an-agent-asking-a-person-is-answered-by-their-next-message": "721720726e3bea97f3fa4a4cd9404539278d8709ea1db46b734d9f4662aba44a",
+      "discussion/an-agent-that-only-listens-answers-only-a-person-naming-it": "721720726e3bea97f3fa4a4cd9404539278d8709ea1db46b734d9f4662aba44a",
+      "discussion/an-instruction-a-process-gone-held-is-dropped-at-the-install": "721720726e3bea97f3fa4a4cd9404539278d8709ea1db46b734d9f4662aba44a",
+      "discussion/an-offline-agent-s-turn-is-skipped-not-failed": "721720726e3bea97f3fa4a4cd9404539278d8709ea1db46b734d9f4662aba44a",
+      "discussion/listen-only-cuts-the-turn-its-agent-is-taking": "721720726e3bea97f3fa4a4cd9404539278d8709ea1db46b734d9f4662aba44a",
+      "discussion/listen-only-on-a-turn-given-but-not-started-cuts-it": "721720726e3bea97f3fa4a4cd9404539278d8709ea1db46b734d9f4662aba44a",
+      "discussion/max-turns-ends-the-discussion-and-refuses-later-instructions": "721720726e3bea97f3fa4a4cd9404539278d8709ea1db46b734d9f4662aba44a",
+      "discussion/speak-queue-changes-are-announced-in-order": "721720726e3bea97f3fa4a4cd9404539278d8709ea1db46b734d9f4662aba44a",
+      "discussion/the-last-turn-given-ends-the-discussion-at-once": "721720726e3bea97f3fa4a4cd9404539278d8709ea1db46b734d9f4662aba44a",
+      "discussion/uninstalling-forgets-the-queue-so-a-new-discussion-starts-fresh": "721720726e3bea97f3fa4a4cd9404539278d8709ea1db46b734d9f4662aba44a"
+    },
+    "RK-19.7.5-018": {
+      "discussion/a-room-with-another-intelligence-channel-is-refused": "458c31f9cadbe2c75ee9d97ec0afcd599985f51aa050acfe937cb4e6172a0cba"
+    },
+    "RK-19.7.5-019": {
+      "discussion/a-room-with-a-voice-channel-is-refused": "39acc20407b921fc054d8a9d93c30c71e8c94ef411e6fa2abedd5dbea7d6ab3d"
+    },
+    "RK-19.7.5-022": {
+      "discussion/a-room-holding-a-discussion-refuses-what-it-cannot-share": "5e1fd58e7b32658f61991a4794b4a227629bb635d847e810574beff88f4836a9"
+    },
+    "RK-19.7.5-023": {
+      "discussion/uninstalling-gives-the-room-back-to-its-policy": "b41c820a9a68bb63ec3d9080c5adfdcd5e545f407a17050ce0704c59e8b97d6a",
+      "discussion/uninstalling-in-one-process-ends-the-discussion-in-the-others": "b41c820a9a68bb63ec3d9080c5adfdcd5e545f407a17050ce0704c59e8b97d6a"
+    },
+    "RK-19.7.5-024": {
+      "discussion/a-process-that-only-follows-uninstalls-the-discussion-for-all": "69c4ebbc40533c375c8c608516407ec2dc8112019565d0ac6c39988397e191ab",
+      "discussion/a-room-moves-from-a-swarm-to-a-discussion-and-back": "69c4ebbc40533c375c8c608516407ec2dc8112019565d0ac6c39988397e191ab",
+      "discussion/uninstalling-forgets-the-queue-so-a-new-discussion-starts-fresh": "69c4ebbc40533c375c8c608516407ec2dc8112019565d0ac6c39988397e191ab",
+      "discussion/uninstalling-gives-the-room-back-to-its-policy": "69c4ebbc40533c375c8c608516407ec2dc8112019565d0ac6c39988397e191ab",
+      "discussion/uninstalling-in-one-process-ends-the-discussion-in-the-others": "69c4ebbc40533c375c8c608516407ec2dc8112019565d0ac6c39988397e191ab"
+    },
+    "RK-19.7.5-025": {
+      "discussion/a-process-that-stops-during-a-turn-records-its-end-and-keeps-the-queue": "a0c424fc95fc7d1bef5fb896a7d809fbffd36de98c2566e46b16035024930db5",
+      "discussion/uninstalling-cuts-the-turn-under-way": "a0c424fc95fc7d1bef5fb896a7d809fbffd36de98c2566e46b16035024930db5"
+    },
+    "RK-19.7.5-026": {
+      "discussion/a-process-changing-its-discussion-s-agents-keeps-the-queue-and-lets-the-agent-it-drops-go": "ecb1acf15460faf34985fd77bd3c01ea68ecee1c1910ab78972c20295bc448ba",
+      "discussion/a-process-whose-host-installed-the-old-agents-routes-by-the-new-ones-and-gives-no-turn": "ecb1acf15460faf34985fd77bd3c01ea68ecee1c1910ab78972c20295bc448ba",
+      "discussion/a-process-whose-install-another-replaced-is-current-again-once-it-installs": "ecb1acf15460faf34985fd77bd3c01ea68ecee1c1910ab78972c20295bc448ba",
+      "discussion/the-same-configuration-installed-by-another-process-keeps-both-current": "ecb1acf15460faf34985fd77bd3c01ea68ecee1c1910ab78972c20295bc448ba"
+    },
+    "RK-19.7.5-027": {
+      "discussion/a-process-changing-its-discussion-s-agents-keeps-the-queue-and-lets-the-agent-it-drops-go": "8da47d1e299c897aae8fdac52010cf6ba3fd32483037f8cb31ffca0bfc7c9c9d",
+      "discussion/what-a-process-held-when-another-install-replaced-its-own-is-not-kept": "8da47d1e299c897aae8fdac52010cf6ba3fd32483037f8cb31ffca0bfc7c9c9d"
+    },
+    "RK-19.7.5-028": {
+      "discussion/a-process-changing-its-discussion-s-agents-keeps-the-queue-and-lets-the-agent-it-drops-go": "93f206a996858a7dedbea0a291c2cd29671572cc2143910b5a21bb4ef5293ea0"
+    },
+    "RK-19.7.5-029": {
+      "discussion/a-person-naming-an-agent-asks-that-agent-alone": "2527c0e0b9edde6a95c22d2b29a8a2de0b35ba1fc04fc5e8b4ae130ecb2eb776",
+      "discussion/an-agent-asking-a-person-is-answered-by-their-next-message": "2527c0e0b9edde6a95c22d2b29a8a2de0b35ba1fc04fc5e8b4ae130ecb2eb776",
+      "discussion/an-unaddressed-message-asks-everyone-one-at-a-time": "2527c0e0b9edde6a95c22d2b29a8a2de0b35ba1fc04fc5e8b4ae130ecb2eb776"
+    },
+    "RK-19.7.5-031": {
+      "discussion/a-hook-s-injected-instruction-gives-no-turn": "48d188d18d5bddcd6bf8d7984fa431ec298d9621f42ae4d2392523deef4e8b00",
+      "discussion/a-process-that-did-not-install-it-follows-the-discussion": "48d188d18d5bddcd6bf8d7984fa431ec298d9621f42ae4d2392523deef4e8b00",
+      "discussion/a-room-that-stores-a-discussion-asks-no-agent-at-broadcast": "48d188d18d5bddcd6bf8d7984fa431ec298d9621f42ae4d2392523deef4e8b00",
+      "discussion/an-instruction-gives-its-agent-a-turn-taking-it-as-input": "48d188d18d5bddcd6bf8d7984fa431ec298d9621f42ae4d2392523deef4e8b00",
+      "discussion/an-instruction-to-an-agent-of-a-discussion-is-not-delivered": "48d188d18d5bddcd6bf8d7984fa431ec298d9621f42ae4d2392523deef4e8b00",
+      "discussion/an-instruction-to-several-agents-gives-each-its-turn": "48d188d18d5bddcd6bf8d7984fa431ec298d9621f42ae4d2392523deef4e8b00",
+      "discussion/an-unaddressed-message-asks-everyone-one-at-a-time": "48d188d18d5bddcd6bf8d7984fa431ec298d9621f42ae4d2392523deef4e8b00"
+    },
+    "RK-19.7.5-032": {
+      "discussion/a-custom-handle-queues-its-agent-and-its-id-names-nobody": "bac5af96d46d93100648709d7a64bfd649e9dceb0e2411cbb60ab2f05ea6d1ed",
+      "discussion/a-routed-first-message-in-a-process-that-follows-reads-handles": "bac5af96d46d93100648709d7a64bfd649e9dceb0e2411cbb60ab2f05ea6d1ed",
+      "discussion/acp-public-handle": "bac5af96d46d93100648709d7a64bfd649e9dceb0e2411cbb60ab2f05ea6d1ed",
+      "discussion/an-agent-naming-another-queues-it-once-its-turn-has-ended": "bac5af96d46d93100648709d7a64bfd649e9dceb0e2411cbb60ab2f05ea6d1ed",
+      "discussion/an-agent-s-message-outside-its-turn-queues-the-agent-it-names": "bac5af96d46d93100648709d7a64bfd649e9dceb0e2411cbb60ab2f05ea6d1ed",
+      "discussion/two-routed-first-messages-in-a-process-that-follows-read-handles": "bac5af96d46d93100648709d7a64bfd649e9dceb0e2411cbb60ab2f05ea6d1ed"
+    },
+    "RK-19.7.5-033": {
+      "discussion/a-hook-s-injected-instruction-gives-no-turn": "361dc5960d3bf28450a9c03d19c3a70192bbdd58d7848270f7838e49b53ccda7",
+      "discussion/a-message-the-persistence-policy-keeps-out-gives-no-turn": "361dc5960d3bf28450a9c03d19c3a70192bbdd58d7848270f7838e49b53ccda7",
+      "discussion/a-person-naming-an-agent-asks-that-agent-alone": "361dc5960d3bf28450a9c03d19c3a70192bbdd58d7848270f7838e49b53ccda7",
+      "discussion/a-silence-after-a-tool-round-is-held-back-on-its-own": "361dc5960d3bf28450a9c03d19c3a70192bbdd58d7848270f7838e49b53ccda7",
+      "discussion/a-silent-agent-says-nothing-to-the-room": "361dc5960d3bf28450a9c03d19c3a70192bbdd58d7848270f7838e49b53ccda7",
+      "discussion/a-streamed-silence-never-reaches-a-live-transport": "361dc5960d3bf28450a9c03d19c3a70192bbdd58d7848270f7838e49b53ccda7",
+      "discussion/an-instruction-gives-its-agent-a-turn-taking-it-as-input": "361dc5960d3bf28450a9c03d19c3a70192bbdd58d7848270f7838e49b53ccda7",
+      "discussion/an-instruction-to-several-agents-gives-each-its-turn": "361dc5960d3bf28450a9c03d19c3a70192bbdd58d7848270f7838e49b53ccda7",
+      "discussion/regeneration-after-removing-the-discussion-answer-keeps-its-addressee": "361dc5960d3bf28450a9c03d19c3a70192bbdd58d7848270f7838e49b53ccda7"
+    },
+    "RK-19.7.5-034": {
+      "discussion/a-discussion-installed-on-a-live-room-reads-its-history": "b35462f0d960b9d3527b2e13eaa824fb866a2d8acb6fc929319d85442741b9a1",
+      "discussion/a-name-a-binding-hides-the-message-from-queues-nobody": "b35462f0d960b9d3527b2e13eaa824fb866a2d8acb6fc929319d85442741b9a1",
+      "discussion/a-person-naming-an-agent-asks-that-agent-alone": "b35462f0d960b9d3527b2e13eaa824fb866a2d8acb6fc929319d85442741b9a1",
+      "discussion/a-queued-turn-reads-the-room-when-it-starts": "b35462f0d960b9d3527b2e13eaa824fb866a2d8acb6fc929319d85442741b9a1",
+      "discussion/a-room-that-stores-a-discussion-asks-no-agent-at-broadcast": "b35462f0d960b9d3527b2e13eaa824fb866a2d8acb6fc929319d85442741b9a1",
+      "discussion/an-agent-the-room-never-delivers-to-is-not-queued": "b35462f0d960b9d3527b2e13eaa824fb866a2d8acb6fc929319d85442741b9a1"
+    },
+    "RK-19.7.5-035": {
+      "discussion/an-agent-s-memory-learns-every-message-it-may-see": "97775c7adcf31eac185023f7863aabe10cc8eb233830e6e55681672f1f938ae3",
+      "discussion/an-agent-the-room-never-delivers-to-is-not-queued": "97775c7adcf31eac185023f7863aabe10cc8eb233830e6e55681672f1f938ae3",
+      "executors/a-committed-event-goes-to-one-executor-that-would-take-the-room-s-turns": "97775c7adcf31eac185023f7863aabe10cc8eb233830e6e55681672f1f938ae3",
+      "executors/a-committed-event-goes-to-the-executor-holding-the-room-s-state": "97775c7adcf31eac185023f7863aabe10cc8eb233830e6e55681672f1f938ae3",
+      "executors/a-committed-event-leaves-the-room-s-previous-turn-as-it-is": "97775c7adcf31eac185023f7863aabe10cc8eb233830e6e55681672f1f938ae3",
+      "executors/a-committed-event-no-executor-takes-is-dropped": "97775c7adcf31eac185023f7863aabe10cc8eb233830e6e55681672f1f938ae3",
+      "executors/a-committed-event-reaches-the-memory-before-its-agent-s-next-turn": "97775c7adcf31eac185023f7863aabe10cc8eb233830e6e55681672f1f938ae3"
+    },
+    "RK-19.7.5-036": {
+      "discussion/an-agent-s-memory-learns-every-message-it-may-see": "e8cfcd44f1a3935d9c43c29bc767bd9c92fcf7ae9021ebe1b145ba1f61a2235b",
+      "executors/a-committed-event-goes-to-the-executor-holding-the-room-s-state": "e8cfcd44f1a3935d9c43c29bc767bd9c92fcf7ae9021ebe1b145ba1f61a2235b",
+      "executors/a-committed-event-leaves-the-room-s-previous-turn-as-it-is": "e8cfcd44f1a3935d9c43c29bc767bd9c92fcf7ae9021ebe1b145ba1f61a2235b",
+      "executors/a-committed-event-reaches-the-memory-before-its-agent-s-next-turn": "e8cfcd44f1a3935d9c43c29bc767bd9c92fcf7ae9021ebe1b145ba1f61a2235b"
+    },
+    "RK-19.7.5-038": {
+      "executors/a-committed-event-no-executor-takes-is-dropped": "e51ef296ef1f94a47b4fe23b2f20c70aaa66d03bb4230a9b75b72ebdb70ff6ef"
+    },
+    "RK-19.7.5-039": {
+      "discussion/a-custom-handle-queues-its-agent-and-its-id-names-nobody": "fbd7504b4f11485a5f96b1296c1a39df08c4ab905beda44b6b0bad54254d6f00",
+      "discussion/a-person-naming-an-agent-asks-that-agent-alone": "fbd7504b4f11485a5f96b1296c1a39df08c4ab905beda44b6b0bad54254d6f00",
+      "discussion/a-routed-first-message-in-a-process-that-follows-reads-handles": "fbd7504b4f11485a5f96b1296c1a39df08c4ab905beda44b6b0bad54254d6f00",
+      "discussion/acp-public-handle": "fbd7504b4f11485a5f96b1296c1a39df08c4ab905beda44b6b0bad54254d6f00",
+      "discussion/an-agent-named-by-an-id-takes-the-name-its-channel-gives": "fbd7504b4f11485a5f96b1296c1a39df08c4ab905beda44b6b0bad54254d6f00",
+      "discussion/an-agent-naming-another-queues-it-once-its-turn-has-ended": "fbd7504b4f11485a5f96b1296c1a39df08c4ab905beda44b6b0bad54254d6f00",
+      "discussion/an-agent-s-message-outside-its-turn-queues-the-agent-it-names": "fbd7504b4f11485a5f96b1296c1a39df08c4ab905beda44b6b0bad54254d6f00",
+      "discussion/two-routed-first-messages-in-a-process-that-follows-read-handles": "fbd7504b4f11485a5f96b1296c1a39df08c4ab905beda44b6b0bad54254d6f00"
+    },
+    "RK-19.7.5-040": {
+      "discussion/an-agent-named-by-an-id-takes-the-name-its-channel-gives": "37cfb5308a50e3b5364aee846f62d6242e7045ca3a556f92b3203305c58bfa28",
+      "discussion/an-agent-naming-another-queues-it-once-its-turn-has-ended": "37cfb5308a50e3b5364aee846f62d6242e7045ca3a556f92b3203305c58bfa28"
+    },
+    "RK-19.7.5-041": {
+      "discussion/a-custom-handle-queues-its-agent-and-its-id-names-nobody": "ec42346a15293d1b2ae39e82b28172a31ed9661e03eaf80166574b6326782b95",
+      "discussion/a-handle-is-the-host-s-else-the-channel-id-else-the-name": "ec42346a15293d1b2ae39e82b28172a31ed9661e03eaf80166574b6326782b95",
+      "discussion/acp-public-handle": "ec42346a15293d1b2ae39e82b28172a31ed9661e03eaf80166574b6326782b95",
+      "discussion/an-agent-named-by-an-id-takes-the-name-its-channel-gives": "ec42346a15293d1b2ae39e82b28172a31ed9661e03eaf80166574b6326782b95",
+      "discussion/an-agent-named-by-an-id-that-is-no-handle-waits-for-the-install": "ec42346a15293d1b2ae39e82b28172a31ed9661e03eaf80166574b6326782b95",
+      "discussion/an-agent-with-a-name-keeps-its-channel-id-as-its-handle": "ec42346a15293d1b2ae39e82b28172a31ed9661e03eaf80166574b6326782b95"
+    },
+    "RK-19.7.5-042": {
+      "discussion/a-handle-is-the-host-s-else-the-channel-id-else-the-name": "0c3165cbcbe801eeae77f71788fe51157ba2f9005ab380da4e07d4957fc77161",
+      "discussion/an-agent-without-a-handle-or-two-alike-is-refused-when-built": "0c3165cbcbe801eeae77f71788fe51157ba2f9005ab380da4e07d4957fc77161"
+    },
+    "RK-19.7.5-043": {
+      "discussion/an-agent-named-by-an-id-that-is-no-handle-waits-for-the-install": "2c1e4c95cb1098cc834178b74a4992f3f87f1dae0fd41b8f47d3388bb4b6bbe6",
+      "discussion/an-agent-without-a-handle-or-two-alike-is-refused-when-built": "2c1e4c95cb1098cc834178b74a4992f3f87f1dae0fd41b8f47d3388bb4b6bbe6"
+    },
+    "RK-19.7.5-044": {
+      "discussion/a-custom-handle-queues-its-agent-and-its-id-names-nobody": "41362aedd9ecc73e74a8aeafe265b4f7dfa3a0c73d042455488863a540dab45c",
+      "discussion/a-process-that-follows-the-discussion-reads-handles": "41362aedd9ecc73e74a8aeafe265b4f7dfa3a0c73d042455488863a540dab45c",
+      "discussion/a-routed-first-message-in-a-process-that-follows-reads-handles": "41362aedd9ecc73e74a8aeafe265b4f7dfa3a0c73d042455488863a540dab45c",
+      "discussion/acp-public-handle": "41362aedd9ecc73e74a8aeafe265b4f7dfa3a0c73d042455488863a540dab45c",
+      "discussion/an-agent-named-by-an-id-takes-the-name-its-channel-gives": "41362aedd9ecc73e74a8aeafe265b4f7dfa3a0c73d042455488863a540dab45c",
+      "discussion/two-routed-first-messages-in-a-process-that-follows-read-handles": "41362aedd9ecc73e74a8aeafe265b4f7dfa3a0c73d042455488863a540dab45c"
+    },
+    "RK-19.7.5-046": {
+      "discussion/names-are-read-after-every-host-hook": "2273f68231cc8a0a890c5757407aeeda97af5c47ddb46bb54beab501d98830d0"
+    },
+    "RK-19.7.5-047": {
+      "discussion/a-custom-handle-queues-its-agent-and-its-id-names-nobody": "092588bfc1ae26c2d125560086871f50a7a0b50f5535d63745d68fefe15d43f0",
+      "discussion/a-person-naming-an-agent-asks-that-agent-alone": "092588bfc1ae26c2d125560086871f50a7a0b50f5535d63745d68fefe15d43f0",
+      "discussion/a-routed-first-message-in-a-process-that-follows-reads-handles": "092588bfc1ae26c2d125560086871f50a7a0b50f5535d63745d68fefe15d43f0",
+      "discussion/acp-public-handle": "092588bfc1ae26c2d125560086871f50a7a0b50f5535d63745d68fefe15d43f0",
+      "discussion/an-agent-named-by-an-id-takes-the-name-its-channel-gives": "092588bfc1ae26c2d125560086871f50a7a0b50f5535d63745d68fefe15d43f0",
+      "discussion/an-agent-naming-another-queues-it-once-its-turn-has-ended": "092588bfc1ae26c2d125560086871f50a7a0b50f5535d63745d68fefe15d43f0",
+      "discussion/an-agent-s-message-outside-its-turn-queues-the-agent-it-names": "092588bfc1ae26c2d125560086871f50a7a0b50f5535d63745d68fefe15d43f0",
+      "discussion/two-routed-first-messages-in-a-process-that-follows-read-handles": "092588bfc1ae26c2d125560086871f50a7a0b50f5535d63745d68fefe15d43f0"
+    },
+    "RK-19.7.5-048": {
+      "discussion/a-name-a-binding-hides-the-message-from-queues-nobody": "ab52dbbd3858fc07a0175d3b628fa0a9d689010d0b6bf60066d5383569daf513",
+      "discussion/an-agent-the-room-never-delivers-to-is-not-queued": "ab52dbbd3858fc07a0175d3b628fa0a9d689010d0b6bf60066d5383569daf513"
+    },
+    "RK-19.7.5-049": {
+      "discussion/a-person-named-like-a-handle-is-addressed-by-no-name": "01855c06e9c91b069bd36f8b3f8b0cbfe447e45a340f03218f9dfd60be3df1f6",
+      "discussion/a-person-s-message-ends-the-wait-even-asking-no-one": "01855c06e9c91b069bd36f8b3f8b0cbfe447e45a340f03218f9dfd60be3df1f6",
+      "discussion/an-agent-asking-a-person-is-answered-by-their-next-message": "01855c06e9c91b069bd36f8b3f8b0cbfe447e45a340f03218f9dfd60be3df1f6"
+    },
+    "RK-19.7.5-050": {
+      "discussion/a-person-named-like-a-handle-is-addressed-by-no-name": "e094295ceb29294e601c7eac4a15ee4344132df984e7688aa7a2c987d6b825d5",
+      "discussion/a-turn-s-notes-quote-a-ranked-label-whole": "e094295ceb29294e601c7eac4a15ee4344132df984e7688aa7a2c987d6b825d5",
+      "discussion/an-agent-asking-a-person-is-answered-by-their-next-message": "e094295ceb29294e601c7eac4a15ee4344132df984e7688aa7a2c987d6b825d5"
+    },
+    "RK-19.7.5-051": {
+      "discussion/a-person-named-like-a-handle-is-addressed-by-no-name": "f33a9ce9e6b5a1cbea3878e1e01131af4bf1626f0af29136830ea3424c962190"
+    },
+    "RK-19.7.5-053": {
+      "discussion/an-agent-naming-another-queues-it-once-its-turn-has-ended": "2f144cce534ffd749b0735977b92e1b45dc514c5ba2516beec5577423b90a19e"
+    },
+    "RK-19.7.5-055": {
+      "discussion/an-agent-naming-another-queues-it-once-its-turn-has-ended": "1f1564cd633072560c510ba46def5e421e5f81675c0486877eda1645716c8099",
+      "discussion/an-unaddressed-message-asks-everyone-one-at-a-time": "1f1564cd633072560c510ba46def5e421e5f81675c0486877eda1645716c8099",
+      "discussion/listen-only-cuts-the-turn-its-agent-is-taking": "1f1564cd633072560c510ba46def5e421e5f81675c0486877eda1645716c8099"
+    },
+    "RK-19.7.5-057": {
+      "discussion/a-regenerated-turn-runs-while-waiting-and-listening": "246244f23467c4bccb47f133f93c8d00f38aa6ed1d5ecdc8c99a254662311530",
+      "discussion/an-agent-that-only-listens-answers-only-a-person-naming-it": "246244f23467c4bccb47f133f93c8d00f38aa6ed1d5ecdc8c99a254662311530",
+      "discussion/an-unaddressed-message-asks-everyone-one-at-a-time": "246244f23467c4bccb47f133f93c8d00f38aa6ed1d5ecdc8c99a254662311530",
+      "discussion/everyone-opens-in-the-host-s-order": "246244f23467c4bccb47f133f93c8d00f38aa6ed1d5ecdc8c99a254662311530",
+      "discussion/regenerated-turns-run-before-ordinary-pending-turns": "246244f23467c4bccb47f133f93c8d00f38aa6ed1d5ecdc8c99a254662311530",
+      "discussion/talking-again-ends-a-wait-that-was-for-it": "246244f23467c4bccb47f133f93c8d00f38aa6ed1d5ecdc8c99a254662311530"
+    },
+    "RK-19.7.5-059": {
+      "discussion/a-regenerated-answer-is-a-discussion-turn-of-its-own": "18a4761d5a9fd865744a504086e907bdc7fdfca0d9e46aeeac0908bb36bc0bc9",
+      "discussion/an-instruction-gives-its-agent-a-turn-taking-it-as-input": "18a4761d5a9fd865744a504086e907bdc7fdfca0d9e46aeeac0908bb36bc0bc9",
+      "discussion/an-instruction-moves-the-turns-to-the-process-holding-it": "18a4761d5a9fd865744a504086e907bdc7fdfca0d9e46aeeac0908bb36bc0bc9",
+      "discussion/an-instruction-to-several-agents-gives-each-its-turn": "18a4761d5a9fd865744a504086e907bdc7fdfca0d9e46aeeac0908bb36bc0bc9",
+      "discussion/an-unaddressed-message-asks-everyone-one-at-a-time": "18a4761d5a9fd865744a504086e907bdc7fdfca0d9e46aeeac0908bb36bc0bc9",
+      "discussion/regenerated-turns-run-before-ordinary-pending-turns": "18a4761d5a9fd865744a504086e907bdc7fdfca0d9e46aeeac0908bb36bc0bc9",
+      "discussion/repeated-discussion-regenerations-before-the-turn-queue-it-once": "18a4761d5a9fd865744a504086e907bdc7fdfca0d9e46aeeac0908bb36bc0bc9"
+    },
+    "RK-19.7.5-060": {
+      "discussion/an-instruction-gives-its-agent-a-turn-taking-it-as-input": "cfe7cb037c4828c547fa03efa6124dc94ac6e1a41c1b43357d38d19fbf0e9ece",
+      "discussion/an-instruction-moves-the-turns-to-the-process-holding-it": "cfe7cb037c4828c547fa03efa6124dc94ac6e1a41c1b43357d38d19fbf0e9ece",
+      "discussion/an-instruction-past-the-depth-limit-is-dropped-and-reported": "cfe7cb037c4828c547fa03efa6124dc94ac6e1a41c1b43357d38d19fbf0e9ece",
+      "discussion/an-instruction-to-several-agents-gives-each-its-turn": "cfe7cb037c4828c547fa03efa6124dc94ac6e1a41c1b43357d38d19fbf0e9ece"
+    },
+    "RK-19.7.5-061": {
+      "discussion/a-discussion-regenerates-the-remaining-answerer-before-its-original-addressees": "d6f957c9e30f096867f61f1f90a0f128fd535052b496a24b746f60a7a7805db0",
+      "discussion/a-discussion-regeneration-carries-its-selection-lock-release-error": "d6f957c9e30f096867f61f1f90a0f128fd535052b496a24b746f60a7a7805db0",
+      "discussion/a-fresh-kit-queues-regeneration-in-the-stored-discussion": "d6f957c9e30f096867f61f1f90a0f128fd535052b496a24b746f60a7a7805db0",
+      "discussion/a-regenerated-answer-is-a-discussion-turn-of-its-own": "d6f957c9e30f096867f61f1f90a0f128fd535052b496a24b746f60a7a7805db0",
+      "discussion/a-regenerated-discussion-turn-past-the-depth-limit-is-recorded-and-dropped": "d6f957c9e30f096867f61f1f90a0f128fd535052b496a24b746f60a7a7805db0",
+      "discussion/discussion-regeneration-falls-back-to-addressed-only": "d6f957c9e30f096867f61f1f90a0f128fd535052b496a24b746f60a7a7805db0",
+      "discussion/discussion-regeneration-falls-back-to-empty-address": "d6f957c9e30f096867f61f1f90a0f128fd535052b496a24b746f60a7a7805db0",
+      "discussion/discussion-regeneration-falls-back-to-everyone": "d6f957c9e30f096867f61f1f90a0f128fd535052b496a24b746f60a7a7805db0",
+      "discussion/regenerated-turns-run-before-ordinary-pending-turns": "d6f957c9e30f096867f61f1f90a0f128fd535052b496a24b746f60a7a7805db0",
+      "discussion/regeneration-after-removing-the-discussion-answer-keeps-its-addressee": "d6f957c9e30f096867f61f1f90a0f128fd535052b496a24b746f60a7a7805db0",
+      "discussion/repeated-discussion-regenerations-before-the-turn-queue-it-once": "d6f957c9e30f096867f61f1f90a0f128fd535052b496a24b746f60a7a7805db0"
+    },
+    "RK-19.7.5-062": {
+      "discussion/a-person-s-message-ends-the-wait-even-asking-no-one": "9b5e15494880d6a63ae384c5d86276d9bda7aff81cc4dc3cfda27917873fc9d6",
+      "discussion/a-regenerated-turn-runs-while-waiting-and-listening": "9b5e15494880d6a63ae384c5d86276d9bda7aff81cc4dc3cfda27917873fc9d6"
+    },
+    "RK-19.7.5-064": {
+      "discussion/an-offline-agent-s-turn-is-skipped-not-failed": "504fc63691a97d64b5893f1e88e138a58b7d155f2400810ec1618c84f54c8946"
+    },
+    "RK-19.7.5-065": {
+      "discussion/an-offline-agent-s-turn-is-skipped-not-failed": "85555baf5b942cc8627a681e2d33eebd8d69bd976d03dd5c03af29a0f4a29089"
+    },
+    "RK-19.7.5-068": {
+      "discussion/a-pick-merged-with-a-later-message-answers-the-later-one": "de243c3a4a29990d492b4fb2ad0912889161b49f18d61a51f6344a958fc1f1cb",
+      "discussion/an-agent-naming-another-queues-it-once-its-turn-has-ended": "de243c3a4a29990d492b4fb2ad0912889161b49f18d61a51f6344a958fc1f1cb",
+      "discussion/an-agent-s-message-outside-its-turn-queues-the-agent-it-names": "de243c3a4a29990d492b4fb2ad0912889161b49f18d61a51f6344a958fc1f1cb",
+      "discussion/an-agent-that-only-listens-answers-only-a-person-naming-it": "de243c3a4a29990d492b4fb2ad0912889161b49f18d61a51f6344a958fc1f1cb",
+      "discussion/regenerated-turns-run-before-ordinary-pending-turns": "de243c3a4a29990d492b4fb2ad0912889161b49f18d61a51f6344a958fc1f1cb"
+    },
+    "RK-19.7.5-069": {
+      "discussion/a-process-that-stops-during-a-turn-records-its-end-and-keeps-the-queue": "6bd0f3eb519e46f945fc728f48736bfeda76c49298ab87a50d474aab9d2e1634"
+    },
+    "RK-19.7.5-070": {
+      "discussion/an-agent-asking-a-person-is-answered-by-their-next-message": "8060e23153ac865d42b222db8fc5ef5d969ac8cc91ce050707c30ed8d5254f35",
+      "discussion/an-unaddressed-message-asks-everyone-one-at-a-time": "8060e23153ac865d42b222db8fc5ef5d969ac8cc91ce050707c30ed8d5254f35",
+      "discussion/everyone-opens-in-the-host-s-order": "8060e23153ac865d42b222db8fc5ef5d969ac8cc91ce050707c30ed8d5254f35"
+    },
+    "RK-19.7.5-072": {
+      "discussion/an-agent-asking-a-person-is-answered-by-their-next-message": "a6c8859695e0e36e05ebc3932dfa6e3d2aef2d31f90cc2eb76075cecaaa0b4ed"
+    },
+    "RK-19.7.5-073": {
+      "discussion/a-message-after-an-agent-s-question-is-decided-knowing-who-waits": "87164e95d83ba68077b35bc81412233f365a9973768d9430ee07d2f416a8effc",
+      "discussion/the-policy-picks-who-takes-an-unaddressed-message": "87164e95d83ba68077b35bc81412233f365a9973768d9430ee07d2f416a8effc",
+      "discussion/undecided-a-message-after-a-question-goes-to-the-agent-that-asked": "87164e95d83ba68077b35bc81412233f365a9973768d9430ee07d2f416a8effc"
+    },
+    "RK-19.7.5-074": {
+      "discussion/a-person-named-like-a-handle-is-addressed-by-no-name": "b562614cbcc74854df49dcc6a237fcd5284c0133b5ceb52dfab929729b004536",
+      "discussion/a-person-s-message-ends-the-wait-even-asking-no-one": "b562614cbcc74854df49dcc6a237fcd5284c0133b5ceb52dfab929729b004536",
+      "discussion/discussion-regeneration-falls-back-to-empty-address": "b562614cbcc74854df49dcc6a237fcd5284c0133b5ceb52dfab929729b004536"
+    },
+    "RK-19.7.5-076": {
+      "discussion/a-hook-s-injected-instruction-gives-no-turn": "c724c76dcbfc27a07b20e24f5c60a8b32734c1a93f9cb8ca1f9636a95035c4b4"
+    },
+    "RK-19.7.5-077": {
+      "discussion/a-pick-merged-with-a-later-message-answers-the-later-one": "ad16570f8106e775d3d0cbe107cfad55215dc4e6c84f6583f211a52840947d00"
+    },
+    "RK-19.7.5-078": {
+      "discussion/an-unaddressed-message-asks-everyone-one-at-a-time": "2aee9169902fb360c3c7c5db255b38b735df1566998b8f0fb963d674c0c53695",
+      "discussion/everyone-opens-in-the-host-s-order": "2aee9169902fb360c3c7c5db255b38b735df1566998b8f0fb963d674c0c53695"
+    },
+    "RK-19.7.5-079": {
+      "discussion/with-addressed-only-an-unaddressed-message-asks-no-agent": "da674367af49cc0d5c71756865bf44b959ed7272b4ca1940225937a9eda7c2f7",
+      "executors/a-committed-event-leaves-the-room-s-previous-turn-as-it-is": "da674367af49cc0d5c71756865bf44b959ed7272b4ca1940225937a9eda7c2f7"
+    },
+    "RK-19.7.5-080": {
+      "discussion/a-discussion-installed-on-a-live-room-reads-its-history": "b4085580775cd7451def8ab1147b3e0d9f4040b6ea44f19225470e4614e4c7c6",
+      "discussion/a-queued-turn-reads-the-room-when-it-starts": "b4085580775cd7451def8ab1147b3e0d9f4040b6ea44f19225470e4614e4c7c6",
+      "discussion/a-turn-keeps-its-round-before-later-messages": "b4085580775cd7451def8ab1147b3e0d9f4040b6ea44f19225470e4614e4c7c6",
+      "discussion/a-turn-replays-its-round-with-no-later-message": "b4085580775cd7451def8ab1147b3e0d9f4040b6ea44f19225470e4614e4c7c6",
+      "memory/a-compacting-memory-never-summarizes-a-returned-current-input": "b4085580775cd7451def8ab1147b3e0d9f4040b6ea44f19225470e4614e4c7c6",
+      "memory/a-deferred-turn-compacts-only-the-history-before-its-input": "b4085580775cd7451def8ab1147b3e0d9f4040b6ea44f19225470e4614e4c7c6",
+      "memory/a-deferred-turn-keeps-compacting-after-an-overflow": "b4085580775cd7451def8ab1147b3e0d9f4040b6ea44f19225470e4614e4c7c6",
+      "memory/a-deferred-turn-keeps-its-input-through-two-overflows": "b4085580775cd7451def8ab1147b3e0d9f4040b6ea44f19225470e4614e4c7c6",
+      "memory/a-generation-hook-copy-keeps-identical-questions-in-place": "b4085580775cd7451def8ab1147b3e0d9f4040b6ea44f19225470e4614e4c7c6",
+      "memory/a-generation-hook-copy-keeps-the-deferred-input": "b4085580775cd7451def8ab1147b3e0d9f4040b6ea44f19225470e4614e4c7c6",
+      "memory/a-generation-hook-copy-keeps-the-input-after-an-overflow": "b4085580775cd7451def8ab1147b3e0d9f4040b6ea44f19225470e4614e4c7c6",
+      "memory/a-generation-hook-move-keeps-the-unique-deferred-input": "b4085580775cd7451def8ab1147b3e0d9f4040b6ea44f19225470e4614e4c7c6",
+      "memory/a-memory-summary-keeps-the-deferred-compaction-boundary": "b4085580775cd7451def8ab1147b3e0d9f4040b6ea44f19225470e4614e4c7c6",
+      "memory/a-queued-turn-keeps-its-question-out-of-compaction": "b4085580775cd7451def8ab1147b3e0d9f4040b6ea44f19225470e4614e4c7c6",
+      "memory/a-queued-turn-keeps-its-question-out-of-the-summary": "b4085580775cd7451def8ab1147b3e0d9f4040b6ea44f19225470e4614e4c7c6",
+      "memory/a-queued-turn-keeps-its-question-outside-the-window": "b4085580775cd7451def8ab1147b3e0d9f4040b6ea44f19225470e4614e4c7c6",
+      "memory/a-queued-turn-keeps-its-question-through-budget-trimming": "b4085580775cd7451def8ab1147b3e0d9f4040b6ea44f19225470e4614e4c7c6",
+      "memory/a-returned-current-input-reads-once-in-a-deferred-turn": "b4085580775cd7451def8ab1147b3e0d9f4040b6ea44f19225470e4614e4c7c6",
+      "memory/a-returned-current-input-survives-budget-trimming": "b4085580775cd7451def8ab1147b3e0d9f4040b6ea44f19225470e4614e4c7c6",
+      "memory/a-summarizing-memory-never-summarizes-a-returned-current-input": "b4085580775cd7451def8ab1147b3e0d9f4040b6ea44f19225470e4614e4c7c6"
+    },
+    "RK-19.7.5-081": {
+      "discussion/a-queued-turn-reads-the-room-when-it-starts": "996f052c256c2043156ef2b0b60d2728eed14e4764c2247573da239a36c109e8",
+      "discussion/a-turn-keeps-its-round-before-later-messages": "996f052c256c2043156ef2b0b60d2728eed14e4764c2247573da239a36c109e8",
+      "discussion/a-turn-replays-its-round-with-no-later-message": "996f052c256c2043156ef2b0b60d2728eed14e4764c2247573da239a36c109e8",
+      "memory/a-compacting-memory-never-summarizes-a-returned-current-input": "996f052c256c2043156ef2b0b60d2728eed14e4764c2247573da239a36c109e8",
+      "memory/a-deferred-turn-compacts-only-the-history-before-its-input": "996f052c256c2043156ef2b0b60d2728eed14e4764c2247573da239a36c109e8",
+      "memory/a-deferred-turn-keeps-compacting-after-an-overflow": "996f052c256c2043156ef2b0b60d2728eed14e4764c2247573da239a36c109e8",
+      "memory/a-deferred-turn-keeps-its-input-through-two-overflows": "996f052c256c2043156ef2b0b60d2728eed14e4764c2247573da239a36c109e8",
+      "memory/a-generation-hook-copy-keeps-identical-questions-in-place": "996f052c256c2043156ef2b0b60d2728eed14e4764c2247573da239a36c109e8",
+      "memory/a-generation-hook-copy-keeps-the-deferred-input": "996f052c256c2043156ef2b0b60d2728eed14e4764c2247573da239a36c109e8",
+      "memory/a-generation-hook-copy-keeps-the-input-after-an-overflow": "996f052c256c2043156ef2b0b60d2728eed14e4764c2247573da239a36c109e8",
+      "memory/a-memory-summary-keeps-the-deferred-compaction-boundary": "996f052c256c2043156ef2b0b60d2728eed14e4764c2247573da239a36c109e8",
+      "memory/a-queued-turn-keeps-its-question-out-of-compaction": "996f052c256c2043156ef2b0b60d2728eed14e4764c2247573da239a36c109e8",
+      "memory/a-queued-turn-keeps-its-question-out-of-the-summary": "996f052c256c2043156ef2b0b60d2728eed14e4764c2247573da239a36c109e8",
+      "memory/a-queued-turn-keeps-its-question-outside-the-window": "996f052c256c2043156ef2b0b60d2728eed14e4764c2247573da239a36c109e8",
+      "memory/a-queued-turn-keeps-its-question-through-budget-trimming": "996f052c256c2043156ef2b0b60d2728eed14e4764c2247573da239a36c109e8",
+      "memory/a-returned-current-input-reads-once-in-a-deferred-turn": "996f052c256c2043156ef2b0b60d2728eed14e4764c2247573da239a36c109e8",
+      "memory/a-returned-current-input-survives-budget-trimming": "996f052c256c2043156ef2b0b60d2728eed14e4764c2247573da239a36c109e8",
+      "memory/a-summarizing-memory-never-summarizes-a-returned-current-input": "996f052c256c2043156ef2b0b60d2728eed14e4764c2247573da239a36c109e8"
+    },
+    "RK-19.7.5-083": {
+      "discussion/a-queued-turn-reads-the-room-when-it-starts": "702d8ecf80de1bf4338260a94dae2d07760d6fa279e177036f11c788e3c7ae95",
+      "discussion/a-turn-keeps-its-round-before-later-messages": "702d8ecf80de1bf4338260a94dae2d07760d6fa279e177036f11c788e3c7ae95",
+      "discussion/a-turn-replays-its-round-with-no-later-message": "702d8ecf80de1bf4338260a94dae2d07760d6fa279e177036f11c788e3c7ae95",
+      "discussion/a-turn-s-notes-quote-a-ranked-label-whole": "702d8ecf80de1bf4338260a94dae2d07760d6fa279e177036f11c788e3c7ae95",
+      "memory/a-deferred-turn-compacts-only-the-history-before-its-input": "702d8ecf80de1bf4338260a94dae2d07760d6fa279e177036f11c788e3c7ae95",
+      "memory/a-deferred-turn-keeps-compacting-after-an-overflow": "702d8ecf80de1bf4338260a94dae2d07760d6fa279e177036f11c788e3c7ae95",
+      "memory/a-deferred-turn-keeps-its-input-through-two-overflows": "702d8ecf80de1bf4338260a94dae2d07760d6fa279e177036f11c788e3c7ae95",
+      "memory/a-generation-hook-copy-keeps-identical-questions-in-place": "702d8ecf80de1bf4338260a94dae2d07760d6fa279e177036f11c788e3c7ae95",
+      "memory/a-generation-hook-copy-keeps-the-deferred-input": "702d8ecf80de1bf4338260a94dae2d07760d6fa279e177036f11c788e3c7ae95",
+      "memory/a-generation-hook-copy-keeps-the-input-after-an-overflow": "702d8ecf80de1bf4338260a94dae2d07760d6fa279e177036f11c788e3c7ae95",
+      "memory/a-generation-hook-move-keeps-the-unique-deferred-input": "702d8ecf80de1bf4338260a94dae2d07760d6fa279e177036f11c788e3c7ae95",
+      "memory/a-hook-moving-indistinguishable-inputs-protects-its-context": "702d8ecf80de1bf4338260a94dae2d07760d6fa279e177036f11c788e3c7ae95",
+      "memory/a-memory-summary-keeps-the-deferred-compaction-boundary": "702d8ecf80de1bf4338260a94dae2d07760d6fa279e177036f11c788e3c7ae95",
+      "memory/a-queued-turn-keeps-its-question-out-of-compaction": "702d8ecf80de1bf4338260a94dae2d07760d6fa279e177036f11c788e3c7ae95",
+      "memory/a-queued-turn-keeps-its-question-out-of-the-summary": "702d8ecf80de1bf4338260a94dae2d07760d6fa279e177036f11c788e3c7ae95",
+      "memory/a-queued-turn-keeps-its-question-outside-the-window": "702d8ecf80de1bf4338260a94dae2d07760d6fa279e177036f11c788e3c7ae95",
+      "memory/a-queued-turn-keeps-its-question-through-budget-trimming": "702d8ecf80de1bf4338260a94dae2d07760d6fa279e177036f11c788e3c7ae95"
+    },
+    "RK-19.7.5-084": {
+      "discussion/acp-copied-notes-header": "78d32faff9099ecdd1743e44306bba6bb5d5b45c1bb376f64bf93d4bf0777cf5"
+    },
+    "RK-19.7.5-085": {
+      "discussion/a-queued-turn-reads-the-room-when-it-starts": "6256ff63fe45e698889ac0de24a17482f125ec8b3caabbbd17e5ada21d789e1b",
+      "discussion/a-regenerated-answer-is-a-discussion-turn-of-its-own": "6256ff63fe45e698889ac0de24a17482f125ec8b3caabbbd17e5ada21d789e1b",
+      "discussion/a-turn-keeps-its-round-before-later-messages": "6256ff63fe45e698889ac0de24a17482f125ec8b3caabbbd17e5ada21d789e1b",
+      "discussion/a-turn-replays-its-round-with-no-later-message": "6256ff63fe45e698889ac0de24a17482f125ec8b3caabbbd17e5ada21d789e1b"
+    },
+    "RK-19.7.5-086": {
+      "discussion/a-message-after-an-agent-s-question-is-decided-knowing-who-waits": "3aaf558e1e8ea0037c4091aec4c6cda6bfecddc318127fe167ef77a03c07d19d",
+      "discussion/a-person-named-like-a-handle-is-addressed-by-no-name": "3aaf558e1e8ea0037c4091aec4c6cda6bfecddc318127fe167ef77a03c07d19d",
+      "discussion/a-person-s-message-ends-the-wait-even-asking-no-one": "3aaf558e1e8ea0037c4091aec4c6cda6bfecddc318127fe167ef77a03c07d19d",
+      "discussion/an-agent-asking-a-person-is-answered-by-their-next-message": "3aaf558e1e8ea0037c4091aec4c6cda6bfecddc318127fe167ef77a03c07d19d"
+    },
+    "RK-19.7.5-087": {
+      "discussion/a-message-after-an-agent-s-question-is-decided-knowing-who-waits": "d1f3c15512e456d1356d333bad77b8efab983338d66a7fd8db272292b4e5c7c2",
+      "discussion/undecided-a-message-after-a-question-goes-to-the-agent-that-asked": "d1f3c15512e456d1356d333bad77b8efab983338d66a7fd8db272292b4e5c7c2"
+    },
+    "RK-19.7.5-089": {
+      "discussion/a-person-s-message-ends-the-wait-even-asking-no-one": "94f0a256d7e08acd9ef893215284fee2359795de7ac0359413be4f88cb31c92e",
+      "discussion/a-regenerated-turn-runs-while-waiting-and-listening": "94f0a256d7e08acd9ef893215284fee2359795de7ac0359413be4f88cb31c92e",
+      "discussion/an-agent-asking-a-person-is-answered-by-their-next-message": "94f0a256d7e08acd9ef893215284fee2359795de7ac0359413be4f88cb31c92e",
+      "discussion/an-agent-that-only-listens-answers-only-a-person-naming-it": "94f0a256d7e08acd9ef893215284fee2359795de7ac0359413be4f88cb31c92e",
+      "discussion/talking-again-ends-a-wait-that-was-for-it": "94f0a256d7e08acd9ef893215284fee2359795de7ac0359413be4f88cb31c92e",
+      "discussion/the-depth-limit-stops-a-turn-once-and-a-person-resumes-it": "94f0a256d7e08acd9ef893215284fee2359795de7ac0359413be4f88cb31c92e"
+    },
+    "RK-19.7.5-090": {
+      "discussion/a-person-s-message-ends-the-wait-even-asking-no-one": "acbc38610db7515168a294090636ab40133ba84cab1057dcc96f0cd0be669c6c",
+      "discussion/a-regenerated-turn-runs-while-waiting-and-listening": "acbc38610db7515168a294090636ab40133ba84cab1057dcc96f0cd0be669c6c",
+      "discussion/talking-again-ends-a-wait-that-was-for-it": "acbc38610db7515168a294090636ab40133ba84cab1057dcc96f0cd0be669c6c"
+    },
+    "RK-19.7.5-091": {
+      "discussion/an-empty-decision-asks-no-agent": "53965c91f5b8dcebc4db3d16ebedd165c5e10b63e16873b8f1dd813db380d568"
+    },
+    "RK-19.7.5-092": {
+      "discussion/a-regenerated-discussion-turn-past-the-depth-limit-is-recorded-and-dropped": "91470f4fc68177fcd8d5e6384395e27c3abcbcb1ae12258bf554fc39ba36ed5d",
+      "discussion/an-agent-naming-another-queues-it-once-its-turn-has-ended": "91470f4fc68177fcd8d5e6384395e27c3abcbcb1ae12258bf554fc39ba36ed5d",
+      "discussion/the-depth-limit-stops-a-turn-once-and-a-person-resumes-it": "91470f4fc68177fcd8d5e6384395e27c3abcbcb1ae12258bf554fc39ba36ed5d",
+      "discussion/the-observation-of-a-turn-the-depth-limit-stops-is-stored-with-its-record": "91470f4fc68177fcd8d5e6384395e27c3abcbcb1ae12258bf554fc39ba36ed5d"
+    },
+    "RK-19.7.5-093": {
+      "discussion/a-discussion-is-checked-when-built": "99f46ecfe061072a448113542f21efc2388a31c89a93c8bf516b03f62fb77c41",
+      "discussion/a-regenerated-discussion-turn-past-the-depth-limit-is-recorded-and-dropped": "99f46ecfe061072a448113542f21efc2388a31c89a93c8bf516b03f62fb77c41",
+      "discussion/a-stored-discussion-the-constructor-refuses-holds-no-room": "99f46ecfe061072a448113542f21efc2388a31c89a93c8bf516b03f62fb77c41",
+      "discussion/the-depth-limit-stops-a-turn-once-and-a-person-resumes-it": "99f46ecfe061072a448113542f21efc2388a31c89a93c8bf516b03f62fb77c41",
+      "discussion/the-observation-of-a-turn-the-depth-limit-stops-is-stored-with-its-record": "99f46ecfe061072a448113542f21efc2388a31c89a93c8bf516b03f62fb77c41"
+    },
+    "RK-19.7.5-094": {
+      "discussion/the-depth-limit-stops-a-turn-once-and-a-person-resumes-it": "625aacf121b89348e7929152838bea7ecbdf3c4e174cb738b43af6e1029ae926"
+    },
+    "RK-19.7.5-095": {
+      "discussion/the-depth-limit-stops-a-turn-once-and-a-person-resumes-it": "4fdafa9a85d379e91ec31a71c25ac239ed1698d3148ca08d899a036eb0df1142",
+      "discussion/the-observation-of-a-turn-the-depth-limit-stops-is-stored-with-its-record": "4fdafa9a85d379e91ec31a71c25ac239ed1698d3148ca08d899a036eb0df1142"
+    },
+    "RK-19.7.5-098": {
+      "discussion/a-regenerated-discussion-turn-past-the-depth-limit-is-recorded-and-dropped": "86828a5ac96d0c07ae84f8a5ff3a7b6f6029d4db5f227b4fae9b202f990d4bac",
+      "discussion/an-instruction-past-the-depth-limit-is-dropped-and-reported": "86828a5ac96d0c07ae84f8a5ff3a7b6f6029d4db5f227b4fae9b202f990d4bac"
+    },
+    "RK-19.7.5-100": {
+      "discussion/a-tenant-reads-no-discussion-of-another": "afde87374ee9cc4b30e4e8c4e5414f0d9ca62ee6e2d40d8b081b5fa15b432011",
+      "discussion/an-agent-that-only-listens-answers-only-a-person-naming-it": "afde87374ee9cc4b30e4e8c4e5414f0d9ca62ee6e2d40d8b081b5fa15b432011",
+      "discussion/listen-only-cuts-the-turn-its-agent-is-taking": "afde87374ee9cc4b30e4e8c4e5414f0d9ca62ee6e2d40d8b081b5fa15b432011",
+      "discussion/listen-only-on-a-turn-given-but-not-started-cuts-it": "afde87374ee9cc4b30e4e8c4e5414f0d9ca62ee6e2d40d8b081b5fa15b432011",
+      "discussion/talking-again-ends-a-wait-that-was-for-it": "afde87374ee9cc4b30e4e8c4e5414f0d9ca62ee6e2d40d8b081b5fa15b432011"
+    },
+    "RK-19.7.5-101": {
+      "discussion/an-agent-that-only-listens-answers-only-a-person-naming-it": "92a335732cc3c1ff07939468015ececf3a21f42ae9800781f89d94be569e3493",
+      "discussion/an-agent-that-only-listens-ignores-a-message-that-does-not-name-it": "92a335732cc3c1ff07939468015ececf3a21f42ae9800781f89d94be569e3493",
+      "discussion/talking-again-ends-a-wait-that-was-for-it": "92a335732cc3c1ff07939468015ececf3a21f42ae9800781f89d94be569e3493"
+    },
+    "RK-19.7.5-102": {
+      "discussion/an-agent-that-only-listens-answers-a-person-naming-it-in-another-process": "c70f1ab14acb34acc9e1993a48c3d1d6252376a3878022ebeba043a0dafb3bf7",
+      "discussion/an-agent-that-only-listens-answers-only-a-person-naming-it": "c70f1ab14acb34acc9e1993a48c3d1d6252376a3878022ebeba043a0dafb3bf7"
+    },
+    "RK-19.7.5-103": {
+      "discussion/an-agent-that-only-listens-answers-only-a-person-naming-it": "df06460f668479f5d3cfb5c2d912912b4327fbe2adf2e2631ee6a43b6a086d0b",
+      "discussion/talking-again-ends-a-wait-that-was-for-it": "df06460f668479f5d3cfb5c2d912912b4327fbe2adf2e2631ee6a43b6a086d0b"
+    },
+    "RK-19.7.5-105": {
+      "discussion/acp-hold-cancels-prompt": "38873c644d8358f6f09e539d7058df5174ded576eefc690042bc981ed6dd7484",
+      "discussion/listen-only-cuts-the-turn-its-agent-is-taking": "38873c644d8358f6f09e539d7058df5174ded576eefc690042bc981ed6dd7484"
+    },
+    "RK-19.7.5-106": {
+      "discussion/listen-only-on-a-turn-given-but-not-started-cuts-it": "2b55eea58a1b57862259bd75cc45d56d453083e7ff6d00fae7f694f5c696f51a"
+    },
+    "RK-19.7.5-110": {
+      "discussion/a-silence-after-a-tool-round-is-held-back-on-its-own": "07118dcfe7821ec69809b37db6381674d76fdd4e6f1ef728369a6443ead43f70",
+      "discussion/a-silent-agent-says-nothing-to-the-room": "07118dcfe7821ec69809b37db6381674d76fdd4e6f1ef728369a6443ead43f70",
+      "discussion/a-start-after-a-silent-round-is-held-then-released-whole": "07118dcfe7821ec69809b37db6381674d76fdd4e6f1ef728369a6443ead43f70",
+      "discussion/a-streamed-silence-never-reaches-a-live-transport": "07118dcfe7821ec69809b37db6381674d76fdd4e6f1ef728369a6443ead43f70"
+    },
+    "RK-19.7.5-111": {
+      "discussion/a-silence-after-a-tool-round-is-held-back-on-its-own": "b3eb431bfb718c419333c3a852c2bc34acd04a65019b2157e66b7d7a6a6bded3",
+      "discussion/a-silent-agent-says-nothing-to-the-room": "b3eb431bfb718c419333c3a852c2bc34acd04a65019b2157e66b7d7a6a6bded3",
+      "discussion/a-streamed-silence-never-reaches-a-live-transport": "b3eb431bfb718c419333c3a852c2bc34acd04a65019b2157e66b7d7a6a6bded3"
+    },
+    "RK-19.7.5-112": {
+      "discussion/a-silence-after-a-tool-round-is-held-back-on-its-own": "6303c15d60601b8944d10047c43e464aac3b957722aec8bc9fbbbeef2a2cbfea",
+      "discussion/a-start-after-a-silent-round-is-held-then-released-whole": "6303c15d60601b8944d10047c43e464aac3b957722aec8bc9fbbbeef2a2cbfea",
+      "discussion/a-streamed-silence-never-reaches-a-live-transport": "6303c15d60601b8944d10047c43e464aac3b957722aec8bc9fbbbeef2a2cbfea"
+    },
+    "RK-19.7.5-115": {
+      "discussion/a-queued-turn-reads-the-room-when-it-starts": "07571f42b725c199e620858312287cd333ec21ac00bc51f6b929d3097649ceec",
+      "discussion/a-turn-keeps-its-round-before-later-messages": "07571f42b725c199e620858312287cd333ec21ac00bc51f6b929d3097649ceec",
+      "discussion/acp-dispatch-identity": "07571f42b725c199e620858312287cd333ec21ac00bc51f6b929d3097649ceec",
+      "discussion/acp-hold-cancels-prompt": "07571f42b725c199e620858312287cd333ec21ac00bc51f6b929d3097649ceec",
+      "discussion/acp-identity-presented-to-peer": "07571f42b725c199e620858312287cd333ec21ac00bc51f6b929d3097649ceec",
+      "discussion/acp-public-handle": "07571f42b725c199e620858312287cd333ec21ac00bc51f6b929d3097649ceec",
+      "discussion/acp-trusted-notes": "07571f42b725c199e620858312287cd333ec21ac00bc51f6b929d3097649ceec",
+      "discussion/acp-trusted-notes-with-empty-request": "07571f42b725c199e620858312287cd333ec21ac00bc51f6b929d3097649ceec",
+      "memory/a-compacting-memory-never-summarizes-a-returned-current-input": "07571f42b725c199e620858312287cd333ec21ac00bc51f6b929d3097649ceec",
+      "memory/a-deferred-memory-reserves-discussion-notes": "07571f42b725c199e620858312287cd333ec21ac00bc51f6b929d3097649ceec",
+      "memory/a-deferred-turn-compacts-only-the-history-before-its-input": "07571f42b725c199e620858312287cd333ec21ac00bc51f6b929d3097649ceec",
+      "memory/a-deferred-turn-keeps-compacting-after-an-overflow": "07571f42b725c199e620858312287cd333ec21ac00bc51f6b929d3097649ceec",
+      "memory/a-deferred-turn-keeps-its-input-through-two-overflows": "07571f42b725c199e620858312287cd333ec21ac00bc51f6b929d3097649ceec",
+      "memory/a-generation-hook-copy-keeps-identical-questions-in-place": "07571f42b725c199e620858312287cd333ec21ac00bc51f6b929d3097649ceec",
+      "memory/a-generation-hook-copy-keeps-the-deferred-input": "07571f42b725c199e620858312287cd333ec21ac00bc51f6b929d3097649ceec",
+      "memory/a-generation-hook-copy-keeps-the-input-after-an-overflow": "07571f42b725c199e620858312287cd333ec21ac00bc51f6b929d3097649ceec",
+      "memory/a-generation-hook-move-keeps-the-unique-deferred-input": "07571f42b725c199e620858312287cd333ec21ac00bc51f6b929d3097649ceec",
+      "memory/a-hook-moving-and-rewriting-the-input-protects-its-context": "07571f42b725c199e620858312287cd333ec21ac00bc51f6b929d3097649ceec",
+      "memory/a-hook-moving-indistinguishable-inputs-protects-its-context": "07571f42b725c199e620858312287cd333ec21ac00bc51f6b929d3097649ceec",
+      "memory/a-hook-removing-the-deferred-input-protects-its-context": "07571f42b725c199e620858312287cd333ec21ac00bc51f6b929d3097649ceec",
+      "memory/a-hook-rewriting-the-deferred-input-protects-its-context": "07571f42b725c199e620858312287cd333ec21ac00bc51f6b929d3097649ceec",
+      "memory/a-memory-summary-keeps-the-deferred-compaction-boundary": "07571f42b725c199e620858312287cd333ec21ac00bc51f6b929d3097649ceec",
+      "memory/a-queued-turn-keeps-its-question-out-of-compaction": "07571f42b725c199e620858312287cd333ec21ac00bc51f6b929d3097649ceec",
+      "memory/a-queued-turn-keeps-its-question-out-of-the-summary": "07571f42b725c199e620858312287cd333ec21ac00bc51f6b929d3097649ceec",
+      "memory/a-queued-turn-keeps-its-question-outside-the-window": "07571f42b725c199e620858312287cd333ec21ac00bc51f6b929d3097649ceec",
+      "memory/a-queued-turn-keeps-its-question-through-budget-trimming": "07571f42b725c199e620858312287cd333ec21ac00bc51f6b929d3097649ceec",
+      "memory/a-returned-current-input-reads-once-in-a-deferred-turn": "07571f42b725c199e620858312287cd333ec21ac00bc51f6b929d3097649ceec",
+      "memory/a-returned-current-input-survives-budget-trimming": "07571f42b725c199e620858312287cd333ec21ac00bc51f6b929d3097649ceec",
+      "memory/a-summarizing-memory-never-summarizes-a-returned-current-input": "07571f42b725c199e620858312287cd333ec21ac00bc51f6b929d3097649ceec",
+      "memory/an-ambiguous-input-only-compacts-new-tool-results": "07571f42b725c199e620858312287cd333ec21ac00bc51f6b929d3097649ceec",
+      "memory/an-ambiguous-input-refuses-an-unsafe-compaction": "07571f42b725c199e620858312287cd333ec21ac00bc51f6b929d3097649ceec",
+      "memory/an-ambiguous-input-relieves-overflow-with-new-tool-results": "07571f42b725c199e620858312287cd333ec21ac00bc51f6b929d3097649ceec"
+    },
+    "RK-19.7.5-116": {
+      "discussion/a-person-named-like-a-handle-is-addressed-by-no-name": "692cbd4aff1e566bfda8e88037e2b66d42b98a11affc47ec1ed0bf8cc7b73ce3",
+      "discussion/a-queued-turn-reads-the-room-when-it-starts": "692cbd4aff1e566bfda8e88037e2b66d42b98a11affc47ec1ed0bf8cc7b73ce3",
+      "discussion/a-turn-keeps-its-round-before-later-messages": "692cbd4aff1e566bfda8e88037e2b66d42b98a11affc47ec1ed0bf8cc7b73ce3",
+      "memory/a-compacting-memory-never-summarizes-a-returned-current-input": "692cbd4aff1e566bfda8e88037e2b66d42b98a11affc47ec1ed0bf8cc7b73ce3",
+      "memory/a-deferred-memory-reserves-discussion-notes": "692cbd4aff1e566bfda8e88037e2b66d42b98a11affc47ec1ed0bf8cc7b73ce3",
+      "memory/a-deferred-turn-compacts-only-the-history-before-its-input": "692cbd4aff1e566bfda8e88037e2b66d42b98a11affc47ec1ed0bf8cc7b73ce3",
+      "memory/a-deferred-turn-keeps-compacting-after-an-overflow": "692cbd4aff1e566bfda8e88037e2b66d42b98a11affc47ec1ed0bf8cc7b73ce3",
+      "memory/a-deferred-turn-keeps-its-input-through-two-overflows": "692cbd4aff1e566bfda8e88037e2b66d42b98a11affc47ec1ed0bf8cc7b73ce3",
+      "memory/a-generation-hook-copy-keeps-identical-questions-in-place": "692cbd4aff1e566bfda8e88037e2b66d42b98a11affc47ec1ed0bf8cc7b73ce3",
+      "memory/a-generation-hook-copy-keeps-the-deferred-input": "692cbd4aff1e566bfda8e88037e2b66d42b98a11affc47ec1ed0bf8cc7b73ce3",
+      "memory/a-generation-hook-copy-keeps-the-input-after-an-overflow": "692cbd4aff1e566bfda8e88037e2b66d42b98a11affc47ec1ed0bf8cc7b73ce3",
+      "memory/a-generation-hook-move-keeps-the-unique-deferred-input": "692cbd4aff1e566bfda8e88037e2b66d42b98a11affc47ec1ed0bf8cc7b73ce3",
+      "memory/a-hook-moving-and-rewriting-the-input-protects-its-context": "692cbd4aff1e566bfda8e88037e2b66d42b98a11affc47ec1ed0bf8cc7b73ce3",
+      "memory/a-hook-moving-indistinguishable-inputs-protects-its-context": "692cbd4aff1e566bfda8e88037e2b66d42b98a11affc47ec1ed0bf8cc7b73ce3",
+      "memory/a-hook-removing-the-deferred-input-protects-its-context": "692cbd4aff1e566bfda8e88037e2b66d42b98a11affc47ec1ed0bf8cc7b73ce3",
+      "memory/a-hook-rewriting-the-deferred-input-protects-its-context": "692cbd4aff1e566bfda8e88037e2b66d42b98a11affc47ec1ed0bf8cc7b73ce3",
+      "memory/a-memory-summary-keeps-the-deferred-compaction-boundary": "692cbd4aff1e566bfda8e88037e2b66d42b98a11affc47ec1ed0bf8cc7b73ce3",
+      "memory/a-queued-turn-keeps-its-question-out-of-compaction": "692cbd4aff1e566bfda8e88037e2b66d42b98a11affc47ec1ed0bf8cc7b73ce3",
+      "memory/a-queued-turn-keeps-its-question-out-of-the-summary": "692cbd4aff1e566bfda8e88037e2b66d42b98a11affc47ec1ed0bf8cc7b73ce3",
+      "memory/a-queued-turn-keeps-its-question-outside-the-window": "692cbd4aff1e566bfda8e88037e2b66d42b98a11affc47ec1ed0bf8cc7b73ce3",
+      "memory/a-queued-turn-keeps-its-question-through-budget-trimming": "692cbd4aff1e566bfda8e88037e2b66d42b98a11affc47ec1ed0bf8cc7b73ce3",
+      "memory/a-returned-current-input-reads-once-in-a-deferred-turn": "692cbd4aff1e566bfda8e88037e2b66d42b98a11affc47ec1ed0bf8cc7b73ce3",
+      "memory/a-returned-current-input-survives-budget-trimming": "692cbd4aff1e566bfda8e88037e2b66d42b98a11affc47ec1ed0bf8cc7b73ce3",
+      "memory/a-summarizing-memory-never-summarizes-a-returned-current-input": "692cbd4aff1e566bfda8e88037e2b66d42b98a11affc47ec1ed0bf8cc7b73ce3",
+      "memory/an-ambiguous-input-only-compacts-new-tool-results": "692cbd4aff1e566bfda8e88037e2b66d42b98a11affc47ec1ed0bf8cc7b73ce3",
+      "memory/an-ambiguous-input-refuses-an-unsafe-compaction": "692cbd4aff1e566bfda8e88037e2b66d42b98a11affc47ec1ed0bf8cc7b73ce3",
+      "memory/an-ambiguous-input-relieves-overflow-with-new-tool-results": "692cbd4aff1e566bfda8e88037e2b66d42b98a11affc47ec1ed0bf8cc7b73ce3"
+    },
+    "RK-19.7.5-117": {
+      "discussion/a-queued-turn-reads-the-room-when-it-starts": "eb9897219bcb857f1312bfaf0776bb10559c1aecde8c9ab8d9ad712f59f813eb",
+      "discussion/a-turn-keeps-its-round-before-later-messages": "eb9897219bcb857f1312bfaf0776bb10559c1aecde8c9ab8d9ad712f59f813eb",
+      "discussion/a-turn-replays-its-round-with-no-later-message": "eb9897219bcb857f1312bfaf0776bb10559c1aecde8c9ab8d9ad712f59f813eb",
+      "discussion/a-turn-s-notes-quote-a-ranked-label-whole": "eb9897219bcb857f1312bfaf0776bb10559c1aecde8c9ab8d9ad712f59f813eb",
+      "memory/a-deferred-turn-compacts-only-the-history-before-its-input": "eb9897219bcb857f1312bfaf0776bb10559c1aecde8c9ab8d9ad712f59f813eb",
+      "memory/a-deferred-turn-keeps-compacting-after-an-overflow": "eb9897219bcb857f1312bfaf0776bb10559c1aecde8c9ab8d9ad712f59f813eb",
+      "memory/a-deferred-turn-keeps-its-input-through-two-overflows": "eb9897219bcb857f1312bfaf0776bb10559c1aecde8c9ab8d9ad712f59f813eb",
+      "memory/a-generation-hook-copy-keeps-identical-questions-in-place": "eb9897219bcb857f1312bfaf0776bb10559c1aecde8c9ab8d9ad712f59f813eb",
+      "memory/a-generation-hook-copy-keeps-the-deferred-input": "eb9897219bcb857f1312bfaf0776bb10559c1aecde8c9ab8d9ad712f59f813eb",
+      "memory/a-generation-hook-copy-keeps-the-input-after-an-overflow": "eb9897219bcb857f1312bfaf0776bb10559c1aecde8c9ab8d9ad712f59f813eb",
+      "memory/a-generation-hook-move-keeps-the-unique-deferred-input": "eb9897219bcb857f1312bfaf0776bb10559c1aecde8c9ab8d9ad712f59f813eb",
+      "memory/a-hook-moving-indistinguishable-inputs-protects-its-context": "eb9897219bcb857f1312bfaf0776bb10559c1aecde8c9ab8d9ad712f59f813eb",
+      "memory/a-memory-summary-keeps-the-deferred-compaction-boundary": "eb9897219bcb857f1312bfaf0776bb10559c1aecde8c9ab8d9ad712f59f813eb",
+      "memory/a-queued-turn-keeps-its-question-out-of-compaction": "eb9897219bcb857f1312bfaf0776bb10559c1aecde8c9ab8d9ad712f59f813eb",
+      "memory/a-queued-turn-keeps-its-question-out-of-the-summary": "eb9897219bcb857f1312bfaf0776bb10559c1aecde8c9ab8d9ad712f59f813eb",
+      "memory/a-queued-turn-keeps-its-question-outside-the-window": "eb9897219bcb857f1312bfaf0776bb10559c1aecde8c9ab8d9ad712f59f813eb",
+      "memory/a-queued-turn-keeps-its-question-through-budget-trimming": "eb9897219bcb857f1312bfaf0776bb10559c1aecde8c9ab8d9ad712f59f813eb"
+    },
+    "RK-19.7.5-119": {
+      "memory/a-deferred-turn-compacts-only-the-history-before-its-input": "a678e71c4a7412a8c99c505c19e16668b0af851a155cfa723c0eab7e1f41b4fd",
+      "memory/a-deferred-turn-keeps-compacting-after-an-overflow": "a678e71c4a7412a8c99c505c19e16668b0af851a155cfa723c0eab7e1f41b4fd",
+      "memory/a-deferred-turn-keeps-its-input-through-two-overflows": "a678e71c4a7412a8c99c505c19e16668b0af851a155cfa723c0eab7e1f41b4fd",
+      "memory/a-generation-hook-copy-keeps-identical-questions-in-place": "a678e71c4a7412a8c99c505c19e16668b0af851a155cfa723c0eab7e1f41b4fd",
+      "memory/a-generation-hook-copy-keeps-the-deferred-input": "a678e71c4a7412a8c99c505c19e16668b0af851a155cfa723c0eab7e1f41b4fd",
+      "memory/a-generation-hook-copy-keeps-the-input-after-an-overflow": "a678e71c4a7412a8c99c505c19e16668b0af851a155cfa723c0eab7e1f41b4fd",
+      "memory/a-generation-hook-move-keeps-the-unique-deferred-input": "a678e71c4a7412a8c99c505c19e16668b0af851a155cfa723c0eab7e1f41b4fd",
+      "memory/a-hook-moving-and-rewriting-the-input-protects-its-context": "a678e71c4a7412a8c99c505c19e16668b0af851a155cfa723c0eab7e1f41b4fd",
+      "memory/a-hook-moving-indistinguishable-inputs-protects-its-context": "a678e71c4a7412a8c99c505c19e16668b0af851a155cfa723c0eab7e1f41b4fd",
+      "memory/a-hook-removing-the-deferred-input-protects-its-context": "a678e71c4a7412a8c99c505c19e16668b0af851a155cfa723c0eab7e1f41b4fd",
+      "memory/a-hook-rewriting-the-deferred-input-protects-its-context": "a678e71c4a7412a8c99c505c19e16668b0af851a155cfa723c0eab7e1f41b4fd",
+      "memory/a-memory-summary-keeps-the-deferred-compaction-boundary": "a678e71c4a7412a8c99c505c19e16668b0af851a155cfa723c0eab7e1f41b4fd",
+      "memory/an-ambiguous-input-only-compacts-new-tool-results": "a678e71c4a7412a8c99c505c19e16668b0af851a155cfa723c0eab7e1f41b4fd",
+      "memory/an-ambiguous-input-refuses-an-unsafe-compaction": "a678e71c4a7412a8c99c505c19e16668b0af851a155cfa723c0eab7e1f41b4fd",
+      "memory/an-ambiguous-input-relieves-overflow-with-new-tool-results": "a678e71c4a7412a8c99c505c19e16668b0af851a155cfa723c0eab7e1f41b4fd"
+    },
+    "RK-19.7.5-120": {
+      "discussion/a-queued-turn-reads-the-room-when-it-starts": "7fd35a5f749a5a9075a6cb4308d7fbddc5a05e9b8f383c6c299ab0547a1eb8a2",
+      "discussion/a-turn-keeps-its-round-before-later-messages": "7fd35a5f749a5a9075a6cb4308d7fbddc5a05e9b8f383c6c299ab0547a1eb8a2",
+      "discussion/acp-identity-presented-to-peer": "7fd35a5f749a5a9075a6cb4308d7fbddc5a05e9b8f383c6c299ab0547a1eb8a2",
+      "memory/a-compacting-memory-never-summarizes-a-returned-current-input": "7fd35a5f749a5a9075a6cb4308d7fbddc5a05e9b8f383c6c299ab0547a1eb8a2",
+      "memory/a-deferred-memory-reserves-discussion-notes": "7fd35a5f749a5a9075a6cb4308d7fbddc5a05e9b8f383c6c299ab0547a1eb8a2",
+      "memory/a-deferred-turn-compacts-only-the-history-before-its-input": "7fd35a5f749a5a9075a6cb4308d7fbddc5a05e9b8f383c6c299ab0547a1eb8a2",
+      "memory/a-deferred-turn-keeps-compacting-after-an-overflow": "7fd35a5f749a5a9075a6cb4308d7fbddc5a05e9b8f383c6c299ab0547a1eb8a2",
+      "memory/a-deferred-turn-keeps-its-input-through-two-overflows": "7fd35a5f749a5a9075a6cb4308d7fbddc5a05e9b8f383c6c299ab0547a1eb8a2",
+      "memory/a-generation-hook-copy-keeps-identical-questions-in-place": "7fd35a5f749a5a9075a6cb4308d7fbddc5a05e9b8f383c6c299ab0547a1eb8a2",
+      "memory/a-generation-hook-copy-keeps-the-deferred-input": "7fd35a5f749a5a9075a6cb4308d7fbddc5a05e9b8f383c6c299ab0547a1eb8a2",
+      "memory/a-generation-hook-copy-keeps-the-input-after-an-overflow": "7fd35a5f749a5a9075a6cb4308d7fbddc5a05e9b8f383c6c299ab0547a1eb8a2",
+      "memory/a-generation-hook-move-keeps-the-unique-deferred-input": "7fd35a5f749a5a9075a6cb4308d7fbddc5a05e9b8f383c6c299ab0547a1eb8a2",
+      "memory/a-hook-moving-and-rewriting-the-input-protects-its-context": "7fd35a5f749a5a9075a6cb4308d7fbddc5a05e9b8f383c6c299ab0547a1eb8a2",
+      "memory/a-hook-moving-indistinguishable-inputs-protects-its-context": "7fd35a5f749a5a9075a6cb4308d7fbddc5a05e9b8f383c6c299ab0547a1eb8a2",
+      "memory/a-hook-removing-the-deferred-input-protects-its-context": "7fd35a5f749a5a9075a6cb4308d7fbddc5a05e9b8f383c6c299ab0547a1eb8a2",
+      "memory/a-hook-rewriting-the-deferred-input-protects-its-context": "7fd35a5f749a5a9075a6cb4308d7fbddc5a05e9b8f383c6c299ab0547a1eb8a2",
+      "memory/a-memory-summary-keeps-the-deferred-compaction-boundary": "7fd35a5f749a5a9075a6cb4308d7fbddc5a05e9b8f383c6c299ab0547a1eb8a2",
+      "memory/a-queued-turn-keeps-its-question-out-of-compaction": "7fd35a5f749a5a9075a6cb4308d7fbddc5a05e9b8f383c6c299ab0547a1eb8a2",
+      "memory/a-queued-turn-keeps-its-question-out-of-the-summary": "7fd35a5f749a5a9075a6cb4308d7fbddc5a05e9b8f383c6c299ab0547a1eb8a2",
+      "memory/a-queued-turn-keeps-its-question-outside-the-window": "7fd35a5f749a5a9075a6cb4308d7fbddc5a05e9b8f383c6c299ab0547a1eb8a2",
+      "memory/a-queued-turn-keeps-its-question-through-budget-trimming": "7fd35a5f749a5a9075a6cb4308d7fbddc5a05e9b8f383c6c299ab0547a1eb8a2",
+      "memory/a-returned-current-input-reads-once-in-a-deferred-turn": "7fd35a5f749a5a9075a6cb4308d7fbddc5a05e9b8f383c6c299ab0547a1eb8a2",
+      "memory/a-returned-current-input-survives-budget-trimming": "7fd35a5f749a5a9075a6cb4308d7fbddc5a05e9b8f383c6c299ab0547a1eb8a2",
+      "memory/a-summarizing-memory-never-summarizes-a-returned-current-input": "7fd35a5f749a5a9075a6cb4308d7fbddc5a05e9b8f383c6c299ab0547a1eb8a2",
+      "memory/an-ambiguous-input-only-compacts-new-tool-results": "7fd35a5f749a5a9075a6cb4308d7fbddc5a05e9b8f383c6c299ab0547a1eb8a2",
+      "memory/an-ambiguous-input-refuses-an-unsafe-compaction": "7fd35a5f749a5a9075a6cb4308d7fbddc5a05e9b8f383c6c299ab0547a1eb8a2",
+      "memory/an-ambiguous-input-relieves-overflow-with-new-tool-results": "7fd35a5f749a5a9075a6cb4308d7fbddc5a05e9b8f383c6c299ab0547a1eb8a2"
+    },
+    "RK-19.7.5-121": {
+      "discussion/a-done-discussion-decides-nothing": "39db043297ab9c6812a691df5525c1a78920d8d7fb245287a08f14d73af114fa",
+      "discussion/done-ends-the-discussion-before-the-next-turn": "39db043297ab9c6812a691df5525c1a78920d8d7fb245287a08f14d73af114fa"
+    },
+    "RK-19.7.5-122": {
+      "discussion/a-done-discussion-decides-nothing": "f97fbda58e42fa0a816545ecd3792a02e18e5adbf356b65ddfa04a441567a78d",
+      "discussion/done-ends-the-discussion-before-the-next-turn": "f97fbda58e42fa0a816545ecd3792a02e18e5adbf356b65ddfa04a441567a78d",
+      "discussion/max-turns-ends-the-discussion-and-refuses-later-instructions": "f97fbda58e42fa0a816545ecd3792a02e18e5adbf356b65ddfa04a441567a78d",
+      "discussion/the-last-turn-given-ends-the-discussion-at-once": "f97fbda58e42fa0a816545ecd3792a02e18e5adbf356b65ddfa04a441567a78d"
+    },
+    "RK-19.7.5-123": {
+      "discussion/a-stored-over-discussion-refuses-regeneration-on-the-first-call": "e21a5fb39a5cf323966352c6a0d783a92064ec2248105003c811c6963f17466d",
+      "discussion/an-instruction-to-a-discussion-that-is-over-is-blocked": "e21a5fb39a5cf323966352c6a0d783a92064ec2248105003c811c6963f17466d",
+      "discussion/discussion-regeneration-preserves-refusal-order-in-a-loaded-room": "e21a5fb39a5cf323966352c6a0d783a92064ec2248105003c811c6963f17466d",
+      "discussion/max-turns-ends-the-discussion-and-refuses-later-instructions": "e21a5fb39a5cf323966352c6a0d783a92064ec2248105003c811c6963f17466d"
+    },
+    "RK-19.7.5-124": {
+      "discussion/done-ends-the-discussion-before-the-next-turn": "a316603565a20c2aaccd93048306bea8cee5dc181f1cbf666c1a528f86fbff48",
+      "discussion/max-turns-ends-the-discussion-and-refuses-later-instructions": "a316603565a20c2aaccd93048306bea8cee5dc181f1cbf666c1a528f86fbff48",
+      "discussion/the-last-turn-given-ends-the-discussion-at-once": "a316603565a20c2aaccd93048306bea8cee5dc181f1cbf666c1a528f86fbff48"
+    },
+    "RK-19.7.5-125": {
+      "discussion/a-dispatched-message-stays-unaddressed": "febedb91d2ef65858d01e39cb57286b5e5a75a5c4e1af2fae76fd3341e869f6b",
+      "discussion/a-process-changing-its-discussion-s-agents-keeps-the-queue-and-lets-the-agent-it-drops-go": "febedb91d2ef65858d01e39cb57286b5e5a75a5c4e1af2fae76fd3341e869f6b",
+      "discussion/a-process-that-did-not-install-it-follows-the-discussion": "febedb91d2ef65858d01e39cb57286b5e5a75a5c4e1af2fae76fd3341e869f6b",
+      "discussion/a-process-that-follows-the-discussion-reads-handles": "febedb91d2ef65858d01e39cb57286b5e5a75a5c4e1af2fae76fd3341e869f6b",
+      "discussion/a-process-that-stops-during-a-turn-records-its-end-and-keeps-the-queue": "febedb91d2ef65858d01e39cb57286b5e5a75a5c4e1af2fae76fd3341e869f6b",
+      "discussion/a-process-whose-install-another-replaced-is-current-again-once-it-installs": "febedb91d2ef65858d01e39cb57286b5e5a75a5c4e1af2fae76fd3341e869f6b",
+      "discussion/a-quiet-follower-routes-host-calls-by-a-new-configuration": "febedb91d2ef65858d01e39cb57286b5e5a75a5c4e1af2fae76fd3341e869f6b",
+      "discussion/a-restarted-process-takes-the-discussion-back": "febedb91d2ef65858d01e39cb57286b5e5a75a5c4e1af2fae76fd3341e869f6b",
+      "discussion/uninstalling-forgets-the-queue-so-a-new-discussion-starts-fresh": "febedb91d2ef65858d01e39cb57286b5e5a75a5c4e1af2fae76fd3341e869f6b"
+    },
+    "RK-19.7.5-127": {
+      "discussion/a-process-that-did-not-install-it-follows-the-discussion": "aef4aa09a98379a74e334f4699050864eead888df01c9104a6e7ea77d832da96",
+      "discussion/a-process-that-follows-the-discussion-reads-handles": "aef4aa09a98379a74e334f4699050864eead888df01c9104a6e7ea77d832da96",
+      "discussion/a-process-whose-host-installed-the-old-agents-routes-by-the-new-ones-and-gives-no-turn": "aef4aa09a98379a74e334f4699050864eead888df01c9104a6e7ea77d832da96",
+      "discussion/a-process-whose-install-another-replaced-is-current-again-once-it-installs": "aef4aa09a98379a74e334f4699050864eead888df01c9104a6e7ea77d832da96",
+      "discussion/a-quiet-follower-routes-host-calls-by-a-new-configuration": "aef4aa09a98379a74e334f4699050864eead888df01c9104a6e7ea77d832da96",
+      "discussion/a-room-that-stores-a-discussion-asks-no-agent-at-broadcast": "aef4aa09a98379a74e334f4699050864eead888df01c9104a6e7ea77d832da96",
+      "discussion/a-routed-first-message-in-a-process-that-follows-reads-handles": "aef4aa09a98379a74e334f4699050864eead888df01c9104a6e7ea77d832da96",
+      "discussion/two-routed-first-messages-in-a-process-that-follows-read-handles": "aef4aa09a98379a74e334f4699050864eead888df01c9104a6e7ea77d832da96"
+    },
+    "RK-19.7.5-128": {
+      "discussion/a-process-changing-its-discussion-s-agents-keeps-the-queue-and-lets-the-agent-it-drops-go": "10f21ce17d44a495107968026f6c71598c81159fe753b96ffeefe72a1e08b5ff",
+      "discussion/a-process-that-did-not-install-it-follows-the-discussion": "10f21ce17d44a495107968026f6c71598c81159fe753b96ffeefe72a1e08b5ff",
+      "discussion/a-process-that-stops-during-a-turn-records-its-end-and-keeps-the-queue": "10f21ce17d44a495107968026f6c71598c81159fe753b96ffeefe72a1e08b5ff",
+      "discussion/a-restarted-process-takes-the-discussion-back": "10f21ce17d44a495107968026f6c71598c81159fe753b96ffeefe72a1e08b5ff"
+    },
+    "RK-19.7.5-129": {
+      "discussion/a-process-that-only-follows-uninstalls-the-discussion-for-all": "4168de3d0e0c0ef48a757ac9a6cd5d7569dfc419344ea82b01fbcbb53bb6117d",
+      "discussion/a-process-that-takes-a-discussion-over-detaches-what-the-first-install-attached": "4168de3d0e0c0ef48a757ac9a6cd5d7569dfc419344ea82b01fbcbb53bb6117d",
+      "discussion/an-uninstall-detaches-what-another-process-s-install-attached": "4168de3d0e0c0ef48a757ac9a6cd5d7569dfc419344ea82b01fbcbb53bb6117d",
+      "discussion/uninstalling-in-another-process-leaves-no-record-behind": "4168de3d0e0c0ef48a757ac9a6cd5d7569dfc419344ea82b01fbcbb53bb6117d",
+      "discussion/uninstalling-in-one-process-ends-the-discussion-in-the-others": "4168de3d0e0c0ef48a757ac9a6cd5d7569dfc419344ea82b01fbcbb53bb6117d"
+    },
+    "RK-19.7.5-131": {
+      "discussion/an-instruction-a-follower-takes-is-dropped": "a76af700f44a2ad2a5e3a0e7caa0c5afc8b7c71226fabdfa39f5af86b7928c79",
+      "discussion/an-instruction-reaching-a-process-whose-install-another-replaced-is-dropped": "a76af700f44a2ad2a5e3a0e7caa0c5afc8b7c71226fabdfa39f5af86b7928c79",
+      "discussion/what-a-process-held-when-another-install-replaced-its-own-is-not-kept": "a76af700f44a2ad2a5e3a0e7caa0c5afc8b7c71226fabdfa39f5af86b7928c79"
+    },
+    "RK-19.7.5-132": {
+      "discussion/a-process-changing-its-discussion-s-agents-keeps-the-queue-and-lets-the-agent-it-drops-go": "895fe2a101172404747eb28dc2db35a7a6ce20bfe319740c488576f4741ecd11",
+      "discussion/a-process-whose-host-installed-the-old-agents-routes-by-the-new-ones-and-gives-no-turn": "895fe2a101172404747eb28dc2db35a7a6ce20bfe319740c488576f4741ecd11",
+      "discussion/a-process-whose-install-another-replaced-is-current-again-once-it-installs": "895fe2a101172404747eb28dc2db35a7a6ce20bfe319740c488576f4741ecd11",
+      "discussion/what-a-process-held-when-another-install-replaced-its-own-is-not-kept": "895fe2a101172404747eb28dc2db35a7a6ce20bfe319740c488576f4741ecd11"
+    },
+    "RK-19.7.5-133": {
+      "discussion/a-process-that-installed-none-or-whose-discussion-went-is-not-current": "789dde495d529660ce8bb8d77f68632d9003a9c82e089a10f7b41de088725c79",
+      "discussion/a-process-whose-install-another-replaced-is-current-again-once-it-installs": "789dde495d529660ce8bb8d77f68632d9003a9c82e089a10f7b41de088725c79",
+      "discussion/a-room-of-another-organization-is-not-asked-about": "789dde495d529660ce8bb8d77f68632d9003a9c82e089a10f7b41de088725c79",
+      "discussion/an-install-another-process-replaced-is-not-current": "789dde495d529660ce8bb8d77f68632d9003a9c82e089a10f7b41de088725c79",
+      "discussion/an-install-right-after-another-process-uninstalled-is-the-room-s-strategy": "789dde495d529660ce8bb8d77f68632d9003a9c82e089a10f7b41de088725c79",
+      "discussion/the-kind-asked-about-is-the-kind-installed": "789dde495d529660ce8bb8d77f68632d9003a9c82e089a10f7b41de088725c79",
+      "discussion/the-same-configuration-installed-by-another-process-keeps-both-current": "789dde495d529660ce8bb8d77f68632d9003a9c82e089a10f7b41de088725c79"
+    },
+    "RK-19.7.5-135": {
+      "discussion/a-process-that-did-not-install-it-follows-the-discussion": "df206d04d3cbcc38d3774f626680768254ba833f5ee5741bd58b8325178652f2",
+      "discussion/a-process-that-stops-during-a-turn-records-its-end-and-keeps-the-queue": "df206d04d3cbcc38d3774f626680768254ba833f5ee5741bd58b8325178652f2",
+      "discussion/a-restarted-process-takes-the-discussion-back": "df206d04d3cbcc38d3774f626680768254ba833f5ee5741bd58b8325178652f2",
+      "discussion/an-instruction-moves-the-turns-to-the-process-holding-it": "df206d04d3cbcc38d3774f626680768254ba833f5ee5741bd58b8325178652f2",
+      "discussion/the-lease-holder-decides-what-a-follower-routed": "df206d04d3cbcc38d3774f626680768254ba833f5ee5741bd58b8325178652f2"
+    },
+    "RK-19.7.5-137": {
+      "discussion/a-process-that-did-not-install-it-follows-the-discussion": "5988ed0995e3c4220bff38da1b0fe3926bc694e7db9f87cebc9199cc85ae5365",
+      "discussion/a-quiet-follower-routes-host-calls-by-a-new-configuration": "5988ed0995e3c4220bff38da1b0fe3926bc694e7db9f87cebc9199cc85ae5365",
+      "discussion/an-agent-that-only-listens-answers-a-person-naming-it-in-another-process": "5988ed0995e3c4220bff38da1b0fe3926bc694e7db9f87cebc9199cc85ae5365",
+      "discussion/the-lease-holder-decides-what-a-follower-routed": "5988ed0995e3c4220bff38da1b0fe3926bc694e7db9f87cebc9199cc85ae5365"
+    },
+    "RK-19.7.5-138": {
+      "discussion/listen-only-on-a-turn-given-but-not-started-cuts-it": "1b23d6bf4fae2b46072ef4ce3cc681132bc440e37a955d6634a0d53679445eb5",
+      "discussion/speak-queue-changes-are-announced-in-order": "1b23d6bf4fae2b46072ef4ce3cc681132bc440e37a955d6634a0d53679445eb5"
+    },
+    "RK-19.7.5-139": {
+      "discussion/the-lease-holder-decides-what-a-follower-routed": "b5946f66d0ed987e99447627b0819a61fe63e663ee88f8127e775f15176c20f6"
+    },
+    "RK-19.7.5-140": {
+      "discussion/a-process-that-did-not-install-it-follows-the-discussion": "9543d483383b85f72433b2b53e0e97a5614fed706fcb1b195e6976f8602a674e",
+      "discussion/a-process-whose-host-installed-the-old-agents-routes-by-the-new-ones-and-gives-no-turn": "9543d483383b85f72433b2b53e0e97a5614fed706fcb1b195e6976f8602a674e",
+      "discussion/a-process-whose-install-another-replaced-is-current-again-once-it-installs": "9543d483383b85f72433b2b53e0e97a5614fed706fcb1b195e6976f8602a674e",
+      "discussion/a-restarted-process-takes-the-discussion-back": "9543d483383b85f72433b2b53e0e97a5614fed706fcb1b195e6976f8602a674e",
+      "discussion/a-room-that-stores-a-discussion-asks-no-agent-at-broadcast": "9543d483383b85f72433b2b53e0e97a5614fed706fcb1b195e6976f8602a674e"
+    },
+    "RK-19.7.5-141": {
+      "discussion/an-instruction-a-process-gone-held-is-dropped-at-the-install": "2fca921e862ece25815cdc64729a0cb98a4a46760e81b3a7fad6942db99b5962",
+      "discussion/an-instruction-moves-the-turns-to-the-process-holding-it": "2fca921e862ece25815cdc64729a0cb98a4a46760e81b3a7fad6942db99b5962"
+    },
+    "RK-19.7.5-142": {
+      "discussion/an-instruction-a-process-gone-held-is-dropped-at-the-install": "2c1a44cdbb9c862c76d1c0ea8bb263522f99d601c65e3b84af8e2c251b34930d",
+      "discussion/an-instruction-moves-the-turns-to-the-process-holding-it": "2c1a44cdbb9c862c76d1c0ea8bb263522f99d601c65e3b84af8e2c251b34930d"
+    },
+    "RK-19.7.5-143": {
+      "discussion/an-instruction-a-process-gone-held-is-dropped-at-the-install": "02b0faf69e58e3193b4a675338107969716eb70de41dfe69190d4c02e46c1b32",
+      "discussion/an-instruction-past-the-depth-limit-is-dropped-and-reported": "02b0faf69e58e3193b4a675338107969716eb70de41dfe69190d4c02e46c1b32",
+      "discussion/an-instruction-reaching-a-process-whose-install-another-replaced-is-dropped": "02b0faf69e58e3193b4a675338107969716eb70de41dfe69190d4c02e46c1b32",
+      "discussion/what-a-process-held-when-another-install-replaced-its-own-is-not-kept": "02b0faf69e58e3193b4a675338107969716eb70de41dfe69190d4c02e46c1b32"
+    },
+    "RK-19.7.5-145": {
+      "discussion/a-hook-s-injected-instruction-gives-no-turn": "926cae1cbb438f0c72ed785cfb2b72d77ca342d9b1529c1d57eef6ef61bd5569",
+      "discussion/a-message-deleted-while-queued-gives-no-turn": "926cae1cbb438f0c72ed785cfb2b72d77ca342d9b1529c1d57eef6ef61bd5569",
+      "discussion/a-name-a-binding-hides-the-message-from-queues-nobody": "926cae1cbb438f0c72ed785cfb2b72d77ca342d9b1529c1d57eef6ef61bd5569",
+      "discussion/a-person-s-message-ends-the-wait-even-asking-no-one": "926cae1cbb438f0c72ed785cfb2b72d77ca342d9b1529c1d57eef6ef61bd5569",
+      "discussion/a-process-changing-its-discussion-s-agents-keeps-the-queue-and-lets-the-agent-it-drops-go": "926cae1cbb438f0c72ed785cfb2b72d77ca342d9b1529c1d57eef6ef61bd5569",
+      "discussion/a-process-whose-install-another-replaced-is-current-again-once-it-installs": "926cae1cbb438f0c72ed785cfb2b72d77ca342d9b1529c1d57eef6ef61bd5569",
+      "discussion/a-regenerated-turn-runs-while-waiting-and-listening": "926cae1cbb438f0c72ed785cfb2b72d77ca342d9b1529c1d57eef6ef61bd5569",
+      "discussion/a-restarted-process-takes-the-discussion-back": "926cae1cbb438f0c72ed785cfb2b72d77ca342d9b1529c1d57eef6ef61bd5569",
+      "discussion/a-tenant-reads-no-discussion-of-another": "926cae1cbb438f0c72ed785cfb2b72d77ca342d9b1529c1d57eef6ef61bd5569",
+      "discussion/an-agent-asking-a-person-is-answered-by-their-next-message": "926cae1cbb438f0c72ed785cfb2b72d77ca342d9b1529c1d57eef6ef61bd5569",
+      "discussion/an-agent-that-only-listens-answers-a-person-naming-it-in-another-process": "926cae1cbb438f0c72ed785cfb2b72d77ca342d9b1529c1d57eef6ef61bd5569",
+      "discussion/an-agent-that-only-listens-answers-only-a-person-naming-it": "926cae1cbb438f0c72ed785cfb2b72d77ca342d9b1529c1d57eef6ef61bd5569",
+      "discussion/an-empty-decision-asks-no-agent": "926cae1cbb438f0c72ed785cfb2b72d77ca342d9b1529c1d57eef6ef61bd5569",
+      "discussion/an-instruction-a-process-gone-held-is-dropped-at-the-install": "926cae1cbb438f0c72ed785cfb2b72d77ca342d9b1529c1d57eef6ef61bd5569",
+      "discussion/an-instruction-moves-the-turns-to-the-process-holding-it": "926cae1cbb438f0c72ed785cfb2b72d77ca342d9b1529c1d57eef6ef61bd5569",
+      "discussion/an-instruction-past-the-depth-limit-is-dropped-and-reported": "926cae1cbb438f0c72ed785cfb2b72d77ca342d9b1529c1d57eef6ef61bd5569",
+      "discussion/an-instruction-reaching-a-process-whose-install-another-replaced-is-dropped": "926cae1cbb438f0c72ed785cfb2b72d77ca342d9b1529c1d57eef6ef61bd5569",
+      "discussion/an-instruction-to-an-unbound-agent-reports-it-unavailable": "926cae1cbb438f0c72ed785cfb2b72d77ca342d9b1529c1d57eef6ef61bd5569",
+      "discussion/an-instruction-to-several-agents-gives-each-its-turn": "926cae1cbb438f0c72ed785cfb2b72d77ca342d9b1529c1d57eef6ef61bd5569",
+      "discussion/listen-only-cuts-the-turn-its-agent-is-taking": "926cae1cbb438f0c72ed785cfb2b72d77ca342d9b1529c1d57eef6ef61bd5569",
+      "discussion/listen-only-on-a-turn-given-but-not-started-cuts-it": "926cae1cbb438f0c72ed785cfb2b72d77ca342d9b1529c1d57eef6ef61bd5569",
+      "discussion/max-turns-ends-the-discussion-and-refuses-later-instructions": "926cae1cbb438f0c72ed785cfb2b72d77ca342d9b1529c1d57eef6ef61bd5569",
+      "discussion/regenerated-turns-run-before-ordinary-pending-turns": "926cae1cbb438f0c72ed785cfb2b72d77ca342d9b1529c1d57eef6ef61bd5569",
+      "discussion/repeated-discussion-regenerations-before-the-turn-queue-it-once": "926cae1cbb438f0c72ed785cfb2b72d77ca342d9b1529c1d57eef6ef61bd5569",
+      "discussion/talking-again-ends-a-wait-that-was-for-it": "926cae1cbb438f0c72ed785cfb2b72d77ca342d9b1529c1d57eef6ef61bd5569",
+      "discussion/the-depth-limit-stops-a-turn-once-and-a-person-resumes-it": "926cae1cbb438f0c72ed785cfb2b72d77ca342d9b1529c1d57eef6ef61bd5569",
+      "discussion/the-last-turn-given-ends-the-discussion-at-once": "926cae1cbb438f0c72ed785cfb2b72d77ca342d9b1529c1d57eef6ef61bd5569",
+      "discussion/uninstalling-forgets-the-queue-so-a-new-discussion-starts-fresh": "926cae1cbb438f0c72ed785cfb2b72d77ca342d9b1529c1d57eef6ef61bd5569"
+    },
+    "RK-19.7.5-146": {
+      "discussion/a-hook-s-injected-instruction-gives-no-turn": "4f62b40da64240dc1c4002e850b61d84675713d89244957609f8b65296b7de59",
+      "discussion/an-instruction-a-process-gone-held-is-dropped-at-the-install": "4f62b40da64240dc1c4002e850b61d84675713d89244957609f8b65296b7de59",
+      "discussion/an-instruction-past-the-depth-limit-is-dropped-and-reported": "4f62b40da64240dc1c4002e850b61d84675713d89244957609f8b65296b7de59",
+      "discussion/an-instruction-reaching-a-process-whose-install-another-replaced-is-dropped": "4f62b40da64240dc1c4002e850b61d84675713d89244957609f8b65296b7de59",
+      "discussion/an-offline-agent-s-turn-is-skipped-not-failed": "4f62b40da64240dc1c4002e850b61d84675713d89244957609f8b65296b7de59",
+      "discussion/speak-queue-changes-are-announced-in-order": "4f62b40da64240dc1c4002e850b61d84675713d89244957609f8b65296b7de59",
+      "discussion/the-queue-says-who-a-decision-queued": "4f62b40da64240dc1c4002e850b61d84675713d89244957609f8b65296b7de59",
+      "discussion/what-a-process-held-when-another-install-replaced-its-own-is-not-kept": "4f62b40da64240dc1c4002e850b61d84675713d89244957609f8b65296b7de59"
+    },
+    "RK-19.7.5-147": {
+      "discussion/a-room-of-another-organization-is-not-asked-about": "2dea9033525fa809d33a2020b5eafa393247a86457e7de2c9f9c0e13a1df30e1",
+      "discussion/a-tenant-reads-no-discussion-of-another": "2dea9033525fa809d33a2020b5eafa393247a86457e7de2c9f9c0e13a1df30e1"
+    },
+    "RK-19.7.5-149": {
+      "discussion/a-process-that-did-not-install-it-follows-the-discussion": "18a659f709d724697c42e56f925939a87b57b79ea542c6465333bf71c38e3138",
+      "discussion/a-process-whose-host-installed-the-old-agents-routes-by-the-new-ones-and-gives-no-turn": "18a659f709d724697c42e56f925939a87b57b79ea542c6465333bf71c38e3138",
+      "discussion/a-process-whose-install-another-replaced-is-current-again-once-it-installs": "18a659f709d724697c42e56f925939a87b57b79ea542c6465333bf71c38e3138"
+    },
+    "RK-19.7.5-150": {
+      "discussion/a-decision-keeps-to-the-candidates-each-once": "36771f6fc40c35c729f9e376e93babe4d54be82cdea7bc40f96a86eecaef328e",
+      "discussion/a-decision-reports-the-message-candidates-and-cost": "36771f6fc40c35c729f9e376e93babe4d54be82cdea7bc40f96a86eecaef328e",
+      "discussion/a-dispatch-policy-does-not-go-with-addressed-only": "36771f6fc40c35c729f9e376e93babe4d54be82cdea7bc40f96a86eecaef328e",
+      "discussion/a-failing-policy-asks-every-candidate": "36771f6fc40c35c729f9e376e93babe4d54be82cdea7bc40f96a86eecaef328e",
+      "discussion/a-message-after-an-agent-s-question-is-decided-knowing-who-waits": "36771f6fc40c35c729f9e376e93babe4d54be82cdea7bc40f96a86eecaef328e",
+      "discussion/a-policy-past-its-bound-asks-every-candidate": "36771f6fc40c35c729f9e376e93babe4d54be82cdea7bc40f96a86eecaef328e",
+      "discussion/an-empty-decision-asks-no-agent": "36771f6fc40c35c729f9e376e93babe4d54be82cdea7bc40f96a86eecaef328e",
+      "discussion/the-agents-answer-in-the-order-decided": "36771f6fc40c35c729f9e376e93babe4d54be82cdea7bc40f96a86eecaef328e",
+      "discussion/the-lease-holder-decides-what-a-follower-routed": "36771f6fc40c35c729f9e376e93babe4d54be82cdea7bc40f96a86eecaef328e",
+      "discussion/the-policy-picks-who-takes-an-unaddressed-message": "36771f6fc40c35c729f9e376e93babe4d54be82cdea7bc40f96a86eecaef328e"
+    },
+    "RK-19.7.5-151": {
+      "discussion/an-agent-asking-a-person-is-answered-by-their-next-message": "e32b838f9dd12101f091f639bb7a7c8e568233128f6d8df51a4c039bfdd53da9",
+      "discussion/an-unaddressed-message-asks-everyone-one-at-a-time": "e32b838f9dd12101f091f639bb7a7c8e568233128f6d8df51a4c039bfdd53da9",
+      "discussion/everyone-opens-in-the-host-s-order": "e32b838f9dd12101f091f639bb7a7c8e568233128f6d8df51a4c039bfdd53da9"
+    },
+    "RK-19.7.5-152": {
+      "discussion/a-name-is-never-decided": "0bcb006189603ecea126e0d0227b7cbf8c43759b07657db69741624da3aeedab"
+    },
+    "RK-19.7.5-153": {
+      "discussion/a-dispatch-policy-does-not-go-with-addressed-only": "bac7d5e8f8cd2214d6fcc98490b3a367925007bd169600005831a1725350937c"
+    },
+    "RK-19.7.5-154": {
+      "discussion/a-name-is-never-decided": "751810191c4194c869a262fe298b4ae858d04d2a3b3b655aef4e0c820e498bc9"
+    },
+    "RK-19.7.5-155": {
+      "discussion/a-decision-keeps-to-the-candidates-each-once": "bb489a6de51721ccb28e5bb9593ad0832a7a24edb185c6f95cf1c2020fad5ccc",
+      "discussion/a-message-after-an-agent-s-question-is-decided-knowing-who-waits": "bb489a6de51721ccb28e5bb9593ad0832a7a24edb185c6f95cf1c2020fad5ccc",
+      "discussion/everyone-orders-and-bounds-the-candidates": "bb489a6de51721ccb28e5bb9593ad0832a7a24edb185c6f95cf1c2020fad5ccc",
+      "discussion/the-dispatch-policy-reads-agents-by-their-handles": "bb489a6de51721ccb28e5bb9593ad0832a7a24edb185c6f95cf1c2020fad5ccc"
+    },
+    "RK-19.7.5-157": {
+      "discussion/a-decision-keeps-to-the-candidates-each-once": "1fdc9ab66b9645158d1cb0531fa8e35bf38e643d7ca5797ed43c5736ba709ed6",
+      "discussion/the-agents-answer-in-the-order-decided": "1fdc9ab66b9645158d1cb0531fa8e35bf38e643d7ca5797ed43c5736ba709ed6",
+      "discussion/the-queue-says-who-a-decision-queued": "1fdc9ab66b9645158d1cb0531fa8e35bf38e643d7ca5797ed43c5736ba709ed6"
+    },
+    "RK-19.7.5-158": {
+      "discussion/an-empty-decision-asks-no-agent": "9b6bcca73db08e19157d877c92151e984ed183c86a8b31d90e509642993da947"
+    },
+    "RK-19.7.5-159": {
+      "discussion/the-recent-conversation-holds-what-a-candidate-may-read": "06e888c152da43d0903326f3878e2de2c74564f3cbbd9acf1f0c8248732f5cae",
+      "discussion/the-recent-conversation-withholds-what-a-delete-removed": "06e888c152da43d0903326f3878e2de2c74564f3cbbd9acf1f0c8248732f5cae"
+    },
+    "RK-19.7.5-160": {
+      "discussion/a-message-waiting-for-a-decision-keeps-its-place": "a0047ab0e203cbe49f979d47a9f358b47eb94521982fa16d67ee6f33a7699522",
+      "discussion/the-lease-holder-decides-what-a-follower-routed": "a0047ab0e203cbe49f979d47a9f358b47eb94521982fa16d67ee6f33a7699522"
+    },
+    "RK-19.7.5-165": {
+      "discussion/a-policy-past-its-bound-asks-every-candidate": "8f5e37da6fe4ef40f8350c089f6f5600a8fc76f8fd3cab624fa42ad27878ef64"
+    },
+    "RK-19.7.5-166": {
+      "discussion/a-failing-policy-asks-every-candidate": "2d51d27fb0a0ffb27ac13259aa1e30103f3915810c307cc50a64d902e185e06c",
+      "discussion/a-policy-past-its-bound-asks-every-candidate": "2d51d27fb0a0ffb27ac13259aa1e30103f3915810c307cc50a64d902e185e06c",
+      "discussion/undecided-a-message-after-a-question-goes-to-the-agent-that-asked": "2d51d27fb0a0ffb27ac13259aa1e30103f3915810c307cc50a64d902e185e06c"
+    },
+    "RK-19.7.5-167": {
+      "discussion/a-decision-reports-the-message-candidates-and-cost": "c8271a6ed170609107925a50c8fa783c6f87c5ea6b0254679e1062434d5dfd2c",
+      "discussion/a-failing-policy-asks-every-candidate": "c8271a6ed170609107925a50c8fa783c6f87c5ea6b0254679e1062434d5dfd2c",
+      "discussion/a-policy-past-its-bound-asks-every-candidate": "c8271a6ed170609107925a50c8fa783c6f87c5ea6b0254679e1062434d5dfd2c",
+      "discussion/undecided-a-message-after-a-question-goes-to-the-agent-that-asked": "c8271a6ed170609107925a50c8fa783c6f87c5ea6b0254679e1062434d5dfd2c"
+    },
+    "RK-19.7.5-169": {
+      "discussion/a-dispatched-message-stays-unaddressed": "7ea8a8cb132a49f00cf7abd87b091085665d18717c0e8944d9d16d3ff68d2246",
+      "discussion/acp-dispatch-identity": "7ea8a8cb132a49f00cf7abd87b091085665d18717c0e8944d9d16d3ff68d2246"
+    },
+    "RK-19.7.5-175": {
+      "tasks/a-background-task-names-its-agent-by-the-discussion-s-handle": "8233f7b3ad44013da9f548f635d78d65c0ec8d35283a6205c15b1b06b91d0233",
+      "tasks/a-background-tool-keeps-its-turns-name-before-a-post": "8233f7b3ad44013da9f548f635d78d65c0ec8d35283a6205c15b1b06b91d0233",
+      "tasks/a-background-tool-keeps-its-turns-name-before-a-relay": "8233f7b3ad44013da9f548f635d78d65c0ec8d35283a6205c15b1b06b91d0233"
+    },
+    "RK-19.7.5-177": {
+      "tasks/a-relayed-task-result-names-its-worker-by-the-discussion-handle": "2243e3af3c585765d7bc5197c66e37145752878b744d816e16199ba816a0f6fc"
+    },
+    "RK-19.7.5-191": {
+      "discussion/an-unaddressed-message-asks-everyone-one-at-a-time": "2ce78e3a4416537f1901c1f538368397898ded9e63614b4540f36815015b490e",
+      "discussion/everyone-opens-in-the-host-s-order": "2ce78e3a4416537f1901c1f538368397898ded9e63614b4540f36815015b490e",
+      "discussion/regenerated-turns-run-before-ordinary-pending-turns": "2ce78e3a4416537f1901c1f538368397898ded9e63614b4540f36815015b490e"
+    },
+    "RK-19.7.5-192": {
+      "discussion/a-silence-after-a-tool-round-is-held-back-on-its-own": "a4f0cdf0109cc57465def36e66024cae31cbb4c57b21970befd8b46fa95fa9e0",
+      "discussion/a-start-after-a-silent-round-is-held-then-released-whole": "a4f0cdf0109cc57465def36e66024cae31cbb4c57b21970befd8b46fa95fa9e0"
+    },
+    "RK-19.7.5-196": {
+      "discussion/a-room-moves-from-a-swarm-to-a-discussion-and-back": "cc9b4ace9fed8dd61e47a8a01a6fca41a1064f45bff420d4f738fb24158a0121",
+      "discussion/a-room-with-a-router-is-refused": "cc9b4ace9fed8dd61e47a8a01a6fca41a1064f45bff420d4f738fb24158a0121"
+    },
+    "RK-19.7.5-197": {
+      "discussion/a-process-that-never-read-the-room-claims-it-for-no-other-strategy": "2d2b3a7ec47e6f2482008ba6534a2a4e72ade15ad7847ddd154cbf3fd50bff99",
+      "discussion/a-room-moves-from-a-swarm-to-a-discussion-and-back": "2d2b3a7ec47e6f2482008ba6534a2a4e72ade15ad7847ddd154cbf3fd50bff99",
+      "discussion/a-router-cannot-be-installed-in-a-room-a-discussion-holds": "2d2b3a7ec47e6f2482008ba6534a2a4e72ade15ad7847ddd154cbf3fd50bff99"
+    },
+    "RK-19.7.5-198": {
+      "discussion/a-decision-keeps-to-the-candidates-each-once": "53571fef89943581833e9ec8358163763e6fc9f55d8e6ee9a5b04db205ee6a8d",
+      "discussion/a-decision-reports-the-message-candidates-and-cost": "53571fef89943581833e9ec8358163763e6fc9f55d8e6ee9a5b04db205ee6a8d",
+      "discussion/a-message-after-an-agent-s-question-is-decided-knowing-who-waits": "53571fef89943581833e9ec8358163763e6fc9f55d8e6ee9a5b04db205ee6a8d",
+      "discussion/acp-dispatch-identity": "53571fef89943581833e9ec8358163763e6fc9f55d8e6ee9a5b04db205ee6a8d",
+      "discussion/the-policy-picks-who-takes-an-unaddressed-message": "53571fef89943581833e9ec8358163763e6fc9f55d8e6ee9a5b04db205ee6a8d"
+    },
+    "RK-19.7.5-199": {
+      "discussion/a-decision-reports-the-message-candidates-and-cost": "62ba704e9327969bf7d2ba22293dd6380b6f8775fbc79384f091ac60c5fac397",
+      "discussion/a-message-after-an-agent-s-question-is-decided-knowing-who-waits": "62ba704e9327969bf7d2ba22293dd6380b6f8775fbc79384f091ac60c5fac397",
+      "discussion/a-person-named-like-an-agent-s-label-reads-as-a-participant-to-the-policy": "62ba704e9327969bf7d2ba22293dd6380b6f8775fbc79384f091ac60c5fac397",
+      "discussion/acp-dispatch-identity": "62ba704e9327969bf7d2ba22293dd6380b6f8775fbc79384f091ac60c5fac397",
+      "discussion/everyone-orders-and-bounds-the-candidates": "62ba704e9327969bf7d2ba22293dd6380b6f8775fbc79384f091ac60c5fac397",
+      "discussion/the-dispatch-policy-reads-agents-by-their-handles": "62ba704e9327969bf7d2ba22293dd6380b6f8775fbc79384f091ac60c5fac397",
+      "discussion/the-lease-holder-decides-what-a-follower-routed": "62ba704e9327969bf7d2ba22293dd6380b6f8775fbc79384f091ac60c5fac397",
+      "discussion/the-policy-picks-who-takes-an-unaddressed-message": "62ba704e9327969bf7d2ba22293dd6380b6f8775fbc79384f091ac60c5fac397",
+      "discussion/the-recent-conversation-holds-what-a-candidate-may-read": "62ba704e9327969bf7d2ba22293dd6380b6f8775fbc79384f091ac60c5fac397",
+      "discussion/the-recent-conversation-withholds-what-a-delete-removed": "62ba704e9327969bf7d2ba22293dd6380b6f8775fbc79384f091ac60c5fac397"
+    },
+    "RK-19.7.5-200": {
+      "discussion/a-decision-keeps-to-the-candidates-each-once": "7196210ed2f68bbe0c47e3da68014c69f81984c863c774f8e02e501f73fac9c9",
+      "discussion/acp-dispatch-identity": "7196210ed2f68bbe0c47e3da68014c69f81984c863c774f8e02e501f73fac9c9",
+      "discussion/everyone-orders-and-bounds-the-candidates": "7196210ed2f68bbe0c47e3da68014c69f81984c863c774f8e02e501f73fac9c9",
+      "discussion/identity-reaches-the-candidates": "7196210ed2f68bbe0c47e3da68014c69f81984c863c774f8e02e501f73fac9c9",
+      "discussion/the-dispatch-policy-reads-agents-by-their-handles": "7196210ed2f68bbe0c47e3da68014c69f81984c863c774f8e02e501f73fac9c9"
+    },
+    "RK-19.7.5-201": {
+      "discussion/a-decision-keeps-to-the-candidates-each-once": "4d4a2c3d4eb7b3a0a6919289d02d4771c5a56af7ca79ec0b81d056b37d43e7ff",
+      "discussion/a-decision-reports-the-message-candidates-and-cost": "4d4a2c3d4eb7b3a0a6919289d02d4771c5a56af7ca79ec0b81d056b37d43e7ff",
+      "discussion/a-failing-policy-asks-every-candidate": "4d4a2c3d4eb7b3a0a6919289d02d4771c5a56af7ca79ec0b81d056b37d43e7ff",
+      "discussion/a-policy-past-its-bound-asks-every-candidate": "4d4a2c3d4eb7b3a0a6919289d02d4771c5a56af7ca79ec0b81d056b37d43e7ff",
+      "discussion/undecided-a-message-after-a-question-goes-to-the-agent-that-asked": "4d4a2c3d4eb7b3a0a6919289d02d4771c5a56af7ca79ec0b81d056b37d43e7ff"
+    },
+    "RK-19.7.5-202": {
+      "discussion/max-turns-ends-the-discussion-and-refuses-later-instructions": "dd69f63dace2586f5616f55afc1381091035014012934e6b8bacfa696e346e7a",
+      "discussion/the-last-turn-given-ends-the-discussion-at-once": "dd69f63dace2586f5616f55afc1381091035014012934e6b8bacfa696e346e7a"
+    },
+    "RK-19.7.5-204": {
+      "tasks/a-background-task-names-its-agent-by-the-discussion-s-handle": "5e10525131d03c0390103eae52414b47b05e1aecaba2d5e50cf6ef80d17de00c"
+    },
     "RK-19.8-002": {
       "status/a-status-reaches-the-hooks-of-the-room-it-names": "0f73469f09d2fc0ba6d38ea917e2d53b7468e37acf55513f3a6df5af52db1cf0"
     },
