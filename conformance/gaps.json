@@ -244,7 +244,7 @@
     "RK-14.1-011": {
       "class": "writable",
       "card": "RMK-1976",
-      "note": "Six scenarios call store.patch_room_metadata, its merge and unset asserted only as setup; none makes them the subject, nor the null of an unknown room."
+      "note": "Six scenarios call store.patch_room_metadata as setup; three assert a patched key or an unset key's removal; none asserts a key outside the patch kept, unset applied first, nothing else written, or an unknown room's null."
     },
     "RK-14.1-012": {
       "class": "writable",
@@ -314,7 +314,7 @@
     "RK-14.1-041": {
       "class": "step",
       "card": "RMK-1976",
-      "note": "No store.get_binding step; the scenarios call store.add_binding only as setup."
+      "note": "No store.get_binding step; the kit's get_binding answers channel_not_bound, not the store's null, and no scenario asserts store.add_binding's result."
     },
     "RK-14.1-045": {
       "class": "step",
@@ -355,6 +355,11 @@
       "class": "step",
       "card": "RMK-1976",
       "note": "No store.get_event_count step."
+    },
+    "RK-14.1-072": {
+      "class": "writable",
+      "card": "RMK-1976",
+      "note": "The kit's list_bindings step can assert the order; the three binding-order scenarios read the context's order (RK-14.1-076), never list_bindings."
     },
     "RK-14.3-013": {
       "class": "writable",
