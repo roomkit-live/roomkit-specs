@@ -1820,7 +1820,7 @@ pre-room buffering.
 
 ### 6.1 Channel Interface
 
-<!-- rfc: {"id": "RK-6.1-001", "kind": "behavior", "applies": "§6.1 Channel Interface; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-6.1-003", "kind": "structural", "applies": "§6.1 Channel interface, which every channel implements: id, channel_type, category, direction, handle_inbound() (an external payload converted to a RoomEvent), deliver() (an event pushed to its recipient) and on_event() (a reaction to a room event, a no-op by default). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 All channels MUST implement the following interface:
 
 ```
@@ -1839,9 +1839,17 @@ Channel (interface)
 ├── on_event(event: RoomEvent, binding: ChannelBinding, context: RoomContext) → ChannelOutput
 │       # React to a room event (default: no-op)
 │
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-6.1-004", "kind": "behavior", "applies": "§6.1 Channel interface: supports_streaming_delivery, false by default, whether the channel accepts streaming text delivery. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── supports_streaming_delivery: bool (default false)
 │       # Whether this channel accepts streaming text delivery
 │
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-6.1-005", "kind": "behavior", "applies": "§6.1 Channel interface: deliver_stream() and what its stream yields, in order: the response's text as written, a thinking delta per reasoning chunk, what each generation used (its partial report first where the provider tells it, which a channel that shows none skips), each stored row of the response, and last how the turn's loop ended, before the response's failure. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── deliver_stream(text_stream, event, binding, context) → ChannelOutput
 │       # Deliver streaming text to this channel. The stream yields the
 │       # response's text as it is written, a thinking delta per chunk of
@@ -1852,27 +1860,55 @@ Channel (interface)
 │       # of the response once the store holds it (a text segment, a call's
 │       # start or end), and last how the turn's loop ended (Section 6.4),
 │       # before the response's failure when it fails
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-6.1-006", "kind": "behavior", "applies": "§6.1 Channel interface: deliver_stream()'s default, which accumulates the text and delivers it as one complete event through deliver(). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │       # Default: accumulate text, deliver as complete event via deliver()
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-6.1-007", "kind": "behavior", "applies": "§6.1 Channel interface: a deliver_stream() whose stream raises, which delivers what was accumulated, then propagates the failure (Section 12.2 step 13s). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │       # A stream that raises: deliver what was accumulated, then propagate
 │       # the failure (Section 12.2 step 13s)
 │
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-6.1-008", "kind": "behavior", "applies": "§6.1 Channel interface: deliver_cut(), the end of a stream a cut from outside ended while the channel read it: the event deliver_stream was handed, the cut text's stored row, or null when no row is the channel's, the row reaching the channel nowhere else. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── deliver_cut(event, row: RoomEvent | null, binding, context) → void
 │       # The end of a stream a cut from outside ended while this channel
 │       # read it (Section 12.2 step 13s): event the one deliver_stream was
 │       # handed, row the cut text's stored row, null when no row is the
 │       # channel's (a blank text, a hook's refusal, a row kept out or
 │       # narrowed away from it); the row reaches the channel nowhere else.
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-6.1-009", "kind": "behavior", "applies": "§6.1 Channel interface: a failure deliver_cut() raises, which is logged; deliver_cut() is a no-op by default. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │       # A failure it raises is logged. Default: no-op, as for a channel
 │       # that rendered what it was handed (a voice spoke it)
 │
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-6.1-010", "kind": "behavior", "applies": "§6.1 Channel interface: on_room_attached(), which establishes what the new binding claims exists (the conference SFU room is an example, Section 12.10.4) and starts the room afresh: an AI channel drops what it kept for an earlier attachment. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── on_room_attached(room_id: string, binding: ChannelBinding) → void
 │       # Establish what the new binding claims exists (a conference's SFU
 │       # room, Section 12.10.4), and start the room afresh: an AI channel
 │       # drops what it kept for an earlier attachment (Section 6.4).
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-6.1-011", "kind": "behavior", "applies": "§6.1 Channel interface: on_room_attached() awaited by the attach, under the room's lock, with the stored binding, before the attach's lifecycle record, ON_CHANNEL_ATTACHED and room_channel_attached; an inbound message's automatic attach (Section 10.1 step 2) calls it too. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │       # Awaited by the attach, under the room's lock, with the binding it
 │       # stored, before anything announces the attach: its lifecycle
 │       # record, ON_CHANNEL_ATTACHED, room_channel_attached. An inbound
 │       # message's automatic attach (Section 10.1 step 2) calls it too.
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-6.1-012", "kind": "behavior", "applies": "§6.1 Channel interface: an on_room_attached() that raises, which refuses the attach (the replaced binding put back or the binding removed, the call or the message failing with what the channel raised) and leaves cleared the revocation the attach cleared (Section 7.5 rule 7); an INTELLIGENCE channel's runs on its executor (Section 10.6.3), which logs what it raises and keeps the binding; a no-op by default. One unit: no sentence of the code block starts at a line. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │       # Raising refuses the attach: the binding it replaced is put back,
 │       # or the binding removed, and the call, or the message, fails with
 │       # what the channel raised. The channel's revocation the attach
@@ -1880,6 +1916,10 @@ Channel (interface)
 │       # channel's runs on its executor (Section 10.6.3), which logs what
 │       # it raises: its binding is kept. Default: no-op
 │
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-6.1-013", "kind": "behavior", "applies": "§6.1 Channel interface: on_room_detached(), which lets go of what on_room_attached established and of everything the channel keeps for the room (an AI channel's state, Section 6.4, 21.5 and 24.7; a realtime channel's too), awaited by the detach under the room's lock once the binding is removed and the detach recorded, before ON_CHANNEL_DETACHED and room_channel_detached; a channel no longer registered, or one the room does not bind, is not told. One unit: no sentence of the code block starts at a line. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── on_room_detached(room_id: string) → void
 │       # Let go of what on_room_attached established and of everything the
 │       # channel keeps for the room: an AI channel's thought, speak-policy
@@ -1893,51 +1933,103 @@ Channel (interface)
 │       # the binding is removed and the detach recorded, before
 │       # ON_CHANNEL_DETACHED and room_channel_detached. A channel no longer
 │       # registered is not told, nor is a channel the room does not bind.
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-6.1-014", "kind": "behavior", "applies": "§6.1 Channel interface: an on_room_detached() that raises, which undoes nothing (the detach announced, then the call failing with what the channel raised); an INTELLIGENCE channel's runs on its executor (Section 10.6.3), which logs what it raises, the detach not failing, and also calls it to drop a room's state a turn elsewhere made stale (Section 10.6.2); a no-op by default. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │       # Raising undoes nothing: the detach is announced, then the call
 │       # fails with what the channel raised. An INTELLIGENCE channel's runs
 │       # on its executor (Section 10.6.3), which logs what it raises, the
 │       # detach not failing, and also calls it to drop a room's state a
 │       # turn elsewhere made stale (Section 10.6.2). Default: no-op
 │
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-6.1-015", "kind": "behavior", "applies": "§6.1 Channel interface, voice and realtime (media features voice and realtime): connect_session(), which connects a voice session to a voice or realtime channel, a no-op for other channels. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── connect_session(session: VoiceSession, room_id: string, binding: ChannelBinding) → void
 │       # Connect a voice session to this channel (voice/realtime channels only)
 │       # Default: no-op for non-voice channels
 │
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-6.1-016", "kind": "behavior", "applies": "§6.1 Channel interface: provider_name, the provider or backend name for event attribution (EventSource.provider), by default the provider's name when it has one, else null. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── provider_name: string | null
 │       # Provider or backend name for event attribution (see EventSource.provider)
 │       # Default: provider.name if provider has a name attribute, else null
 │
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-6.1-017", "kind": "structural", "applies": "§6.1 Channel interface: capabilities(), the features the channel declares. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── capabilities() → ChannelCapabilities
 │       # Declare supported features
 │
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-6.1-026", "kind": "structural", "applies": "§6.1 Channel interface: info, the channel instance information of Section 5.9, read as an attribute like the other properties on any channel. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── info: map<string, any>
 │       # Channel instance information (Section 5.9), read as an attribute
 │       # like the other properties: code reading it on any channel gets
 │       # the map
 │
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-6.1-027", "kind": "structural", "applies": "§6.1 Channel interface: close(), which releases the channel's resources. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 └── close() → void
         # Release resources
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.1-002", "kind": "behavior", "applies": "§6.1 Channel Interface; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-6.1-018", "kind": "behavior", "applies": "§6.1 ChannelOutput: responded, false by default; only a channel that answered the event has its response_events re-enter. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **ChannelOutput:**
 
 ```
 ChannelOutput
 ├── responded: bool = false                 # The channel answered the event; only then
 │                                           # do its response_events re-enter
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-6.1-019", "kind": "behavior", "applies": "§6.1 ChannelOutput: response_events, the channel's response events, subject to permissions. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── response_events: list<RoomEvent>        # Response events (subject to permissions)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-6.1-020", "kind": "behavior", "applies": "§6.1 ChannelOutput: response_stream, exclusive of response_events: the framework pipes it to streaming-capable channels, and stores each segment as it is produced, delivering it to the others. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── response_stream: async_iterator<str>    # Streaming response (mutually exclusive with response_events)
 │       # When set, framework pipes stream to streaming-capable channels,
 │       # and stores each segment as it is produced, delivering it to the others.
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-6.1-021", "kind": "behavior", "applies": "§6.1 ChannelOutput: response_metadata, the turn's response-metadata record (Section 6.7), merged into each event stored from response_stream as that segment is stored; a buffered reply carries its final state in response_events. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── response_metadata: ResponseMetadata     # The turn's response-metadata record (Section 6.7),
 │       # merged into each event stored from response_stream as that segment
 │       # is stored; a buffered reply carries its final state in response_events
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-6.1-022", "kind": "structural", "applies": "§6.1 ChannelOutput: provider_result, a transport delivery's provider answer (Section 5.13). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── provider_result: ProviderResult | null  # A transport delivery's provider answer (Section 5.13)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-6.1-023", "kind": "behavior", "applies": "§6.1 ChannelOutput: tasks and observations, side effects that are always allowed. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── tasks: list<Task>                       # Side effects (always allowed)
 ├── observations: list<Observation>         # Side effects (always allowed)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-6.1-024", "kind": "behavior", "applies": "§6.1 ChannelOutput: metadata_updates, the room metadata to update (§10.1 step 15). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── metadata_updates: map<string, any>      # Room metadata to update (§10.1 step 15)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-6.1-025", "kind": "behavior", "applies": "§6.1 ChannelOutput: error, an error met while producing the output: the output is still used, and the error surfaces as a channel's raise does, ON_ERROR firing and InboundResult.error carrying it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 └── error: Exception | null                 # An error met while producing the output; the
         # output is still used, and the error surfaces as for a channel that
         # raised: ON_ERROR fires and InboundResult.error carries it
@@ -1946,7 +2038,7 @@ ChannelOutput
 
 ### 6.2 ChannelType
 
-<!-- rfc: {"id": "RK-6.2-001", "kind": "behavior", "applies": "§6.2 ChannelType; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-6.2-002", "kind": "structural", "applies": "§6.2 ChannelType table (its header), the rows SMS to WEBHOOK: the well-known transport names and their category. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 | Value | Category | Description |
 |---|---|---|
 | SMS | TRANSPORT | Short Message Service |
@@ -1959,37 +2051,41 @@ ChannelOutput
 | MESSENGER | TRANSPORT | Facebook Messenger |
 | TEAMS | TRANSPORT | Microsoft Teams |
 | WEBHOOK | TRANSPORT | Generic HTTP webhook |
-| VOICE | TRANSPORT | Voice channel (STT/TTS pipeline) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-6.2-003", "kind": "structural", "applies": "§6.2 ChannelType table, media rows (media features voice, realtime, video and conference): VOICE, REALTIME_VOICE, AUDIO_VIDEO, REALTIME_AUDIO_VIDEO, VIDEO and CONFERENCE, transports. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->VOICE | TRANSPORT | Voice channel (STT/TTS pipeline) |
 | REALTIME_VOICE | TRANSPORT | Speech-to-speech API (e.g., OpenAI Realtime, Gemini Live) |
 | AUDIO_VIDEO | TRANSPORT | Combined voice + video channel (STT/TTS pipeline + video) |
 | REALTIME_AUDIO_VIDEO | TRANSPORT | Combined speech-to-speech + video channel |
 | VIDEO | TRANSPORT | Video-only channel |
 | CONFERENCE | TRANSPORT | Multi-party SFU conference (audio + video + screen share) |
-| TELEGRAM | TRANSPORT | Telegram Bot API |
+| <!-- /rfc --><!-- rfc: {"id": "RK-6.2-004", "kind": "structural", "applies": "§6.2 ChannelType table, the rows TELEGRAM to SYSTEM, with the sentence that says SYSTEM marks what the framework writes itself: TELEGRAM, CLI, PUSH and HOST transports, AI an intelligence channel, SYSTEM the framework's own events with no category. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->TELEGRAM | TRANSPORT | Telegram Bot API |
 | CLI | TRANSPORT | Command-line interface (development/testing) |
 | PUSH | TRANSPORT | Push notification channel |
 | HOST | TRANSPORT | The host application's own voice in a room (§10.5) |
 | AI | INTELLIGENCE | AI/LLM agent |
 | SYSTEM | — | Framework-generated events |
 
-`SYSTEM` marks what the framework writes itself. What the application that
+`SYSTEM` marks what the framework writes itself. <!-- /rfc --><!-- rfc: {"id": "RK-6.2-005", "kind": "behavior", "applies": "§6.2: what the embedding application writes to a room's people comes from a HOST channel (§10.5), never a SYSTEM source. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->What the application that
 embeds it writes to a room's people is the host's own words, from a `HOST`
-channel (§10.5), never a `SYSTEM` source. A `HOST` channel is a transport
+channel (§10.5), never a `SYSTEM` source. <!-- /rfc --><!-- rfc: {"id": "RK-6.2-006", "kind": "behavior", "applies": "§6.2: a HOST channel is a transport only, and binding one as an intelligence channel is refused (§10.5). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A `HOST` channel is a transport
 only: binding one as an intelligence channel MUST be refused (§10.5).
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-6.2-007", "kind": "behavior", "applies": "§6.2: a channel type is an open name of lowercase ASCII letters, digits, _ and -, written as a plain string. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A channel type is an open name: lowercase ASCII letters, digits, `_` and `-`,
-written as a plain string (`sms`, `teams`). The table holds the well-known
+written as a plain string (`sms`, `teams`). <!-- /rfc --><!-- rfc: {"id": "RK-6.2-008", "kind": "behavior", "applies": "§6.2: the table's well-known names, which an implementation MAY extend; any other valid name is a type too, and a record naming it is read and written back as it is. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The table holds the well-known
 names, and an implementation MAY ship more (`discord`); any other valid name is
 a type too, so that an integrator's channel for a platform this document does
 not list (`slack`, `signal`) names its own type rather than a wrong one, and a
-record naming it is read and written back as it is. A name holding another
+record naming it is read and written back as it is. <!-- /rfc --><!-- rfc: {"id": "RK-6.2-009", "kind": "behavior", "applies": "§6.2: a channel type name holding a character outside the open-name grammar, which is refused. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A name holding another
 character MUST be refused.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-6.2-010", "kind": "behavior", "applies": "§6.2: what a type means for its channels is the channel's declaration of its addressing (§5.7, Appendix A), by default Appendix A's for a well-known name and as written with no recipient key for any other. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 What a type means for its channels, how their senders and recipients are
 addressed (§5.7, Appendix A), is the channel's declaration: a channel declares
 its addressing, by default the one Appendix A gives its well-known name, and
-for any other name addresses as written, with no recipient key. Everywhere
-else the type is a label: identity keys, hook filters, traces. `HOST` and
+for any other name addresses as written, with no recipient key. <!-- /rfc --><!-- rfc: {"id": "RK-6.2-012", "kind": "behavior", "applies": "§6.2: everywhere but its addressing, a channel type is a label (identity keys, hook filters, traces) and means nothing more. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Everywhere
+else the type is a label: identity keys, hook filters, traces. <!-- /rfc --><!-- rfc: {"id": "RK-6.2-011", "kind": "behavior", "applies": "§6.2: HOST and SYSTEM reserved: only a host channel claims HOST (§10.5), and registering a channel of type SYSTEM is refused. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`HOST` and
 `SYSTEM` are reserved: only a host channel claims `HOST` (§10.5), and `SYSTEM`
 names the framework's own records, so registering a channel of that type MUST
 be refused.
@@ -1997,9 +2093,9 @@ be refused.
 
 ### 6.3 Transport Channels
 
-<!-- rfc: {"id": "RK-6.3-001", "kind": "behavior", "applies": "§6.3 Transport Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-6.3-002", "kind": "structural", "applies": "§6.3 Transport channels (what they carry, folded in): every transport channel implements deliver(). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Transport channels carry messages between the framework and external systems or
-humans. They MUST implement `deliver()`. Common transport channels and their
+humans. They MUST implement `deliver()`. <!-- /rfc --><!-- rfc: {"id": "RK-6.3-003", "kind": "structural", "applies": "§6.3 reference capabilities table (its header), the rows SMS to WebSocket: the media types and key features an implementation's channel of that platform declares. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Common transport channels and their
 reference capabilities:
 
 | Channel | Media Types | Key Features |
@@ -2012,15 +2108,17 @@ reference capabilities:
 | Teams | TEXT, RICH | Threading, reactions, rich text, edit, delete |
 | RCS | TEXT, RICH, MEDIA | Buttons, cards, SMS fallback |
 | WebSocket | TEXT, RICH, MEDIA, AUDIO, VIDEO, LOCATION | All features, real-time, edit, delete |
-| Voice | AUDIO | Streaming audio, STT/TTS |
+| <!-- /rfc --><!-- rfc: {"id": "RK-6.3-004", "kind": "structural", "applies": "§6.3 reference capabilities table, media rows (media features voice and realtime): Voice and Realtime Voice. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Voice | AUDIO | Streaming audio, STT/TTS |
 | Realtime Voice | AUDIO | Speech-to-speech, tool calling |
-| Telegram | TEXT, RICH, MEDIA, AUDIO, VIDEO, LOCATION | Buttons, inline keyboards, edit, delete |
-| Audio/Video | AUDIO, VIDEO | Combined voice + video, STT/TTS + vision |
+| <!-- /rfc --><!-- rfc: {"id": "RK-6.3-005", "kind": "structural", "applies": "§6.3 reference capabilities table, the Telegram row: the media types and key features an implementation's Telegram channel declares. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Telegram | TEXT, RICH, MEDIA, AUDIO, VIDEO, LOCATION | Buttons, inline keyboards, edit, delete |
+| <!-- /rfc --><!-- rfc: {"id": "RK-6.3-006", "kind": "structural", "applies": "§6.3 reference capabilities table, media rows (media features voice, realtime, video and conference): Audio/Video, Realtime Audio/Video, Video and Conference. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Audio/Video | AUDIO, VIDEO | Combined voice + video, STT/TTS + vision |
 | Realtime Audio/Video | AUDIO, VIDEO | Speech-to-speech + video, tool calling |
 | Video | VIDEO | Video-only, vision provider integration |
 | Conference | AUDIO | Multi-party SFU, per-track STT, AI bot participant |
-| Webhook | TEXT, RICH | Generic HTTP POST |
+| <!-- /rfc --><!-- rfc: {"id": "RK-6.3-007", "kind": "structural", "applies": "§6.3 reference capabilities table, the Webhook row: the media types and key features an implementation's webhook channel declares. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Webhook | TEXT, RICH | Generic HTTP POST |
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-6.3-008", "kind": "behavior", "applies": "§6.3: each channel declares its maximum text length in its capabilities (max_length, Section 5.8), enforced as Section 6.6 says; each platform's figure belongs to the implementation's documentation. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Each channel declares its maximum text length in its capabilities
 (`max_length`, Section 5.8), enforced as Section 6.6 says; the figure each
 platform allows belongs to the implementation's documentation.
@@ -4040,7 +4138,7 @@ rule 13 says.
 
 ### 6.5 Source Providers
 
-<!-- rfc: {"id": "RK-6.5-001", "kind": "behavior", "applies": "§6.5 Source Providers; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-6.5-001", "kind": "structural", "applies": "§6.5 Source providers, where an implementation offers them (persistent connections that push inbound events, unlike webhook channels, folded in): the SourceProvider interface, id, status, start(emit), stop() and healthcheck(). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Source providers maintain **persistent connections** that push inbound events to
 the framework. This is distinct from webhook-based channels where the framework
 receives HTTP callbacks.
@@ -4061,7 +4159,7 @@ SourceProvider (interface)
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.5-002", "kind": "behavior", "applies": "§6.5 Source Providers; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-6.5-003", "kind": "structural", "applies": "§6.5 Source providers, where an implementation offers them: the SourceStatus enumeration (the table of example sources, informative, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **SourceStatus** enumeration: STOPPED, CONNECTING, CONNECTED, RECONNECTING, ERROR
 
 Examples of source providers:
@@ -4072,122 +4170,146 @@ Examples of source providers:
 | WebSocket | Client connection to an external WebSocket server |
 | SSE | Server-Sent Events stream from an HTTP endpoint |
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-6.5-004", "kind": "behavior", "applies": "§6.5 Source providers, where an implementation offers them: a source attached to the framework calls emit for each inbound message. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Sources are attached to the framework and MUST call the `emit` callback for
-each inbound message. The framework routes emitted messages through the standard
+each inbound message. <!-- /rfc --><!-- rfc: {"id": "RK-6.5-005", "kind": "behavior", "applies": "§6.5 Source providers, where an implementation offers them: the framework routes each emitted message through the standard inbound pipeline (Section 10.1). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The framework routes emitted messages through the standard
 inbound pipeline (Section 10.1).
 <!-- /rfc -->
 
 ### 6.6 Content Transcoding
 
-<!-- rfc: {"id": "RK-6.6-001", "kind": "behavior", "applies": "§6.6 Content Transcoding; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-6.6-005", "kind": "behavior", "applies": "§6.6 Content transcoding on broadcast: each target's media_types (Section 5.8) decides; a content of a category it names is delivered unchanged, one of a category it does not name is replaced by its text form per the table, and so is a file whose type or size the target does not take. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 When an event is broadcast to channels with different capabilities, the framework
 MUST transcode content to match each target channel's supported media types.
 The target's `media_types` (Section 5.8) decides: a content of a category it
 names is delivered unchanged, and one of a category it does not name is
 replaced by its text form, as the table below gives it; so is a file whose
-type or size the target does not take (Section 5.8). Text is the fallback
+type or size the target does not take (Section 5.8). <!-- /rfc --><!-- rfc: {"id": "RK-6.6-006", "kind": "behavior", "applies": "§6.6 Content transcoding: text is the fallback every channel takes whatever its media_types declares, a text unchanged and a rich text as its text form (the sentence's example is a voice channel that declares AUDIO alone). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Text is the fallback
 every channel takes, whatever its `media_types` declares: a voice channel
 that declares AUDIO alone receives a text unchanged and a rich text as its
 text form.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.6-002", "kind": "behavior", "applies": "§6.6 Content Transcoding; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-6.6-007", "kind": "behavior", "applies": "§6.6 Default transcoding rules (the table's header), the TextContent row: a text reaches any target unchanged. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Default transcoding rules:**
 
 | Source Content | Target | Transcoded To |
 |---|---|---|
 | TextContent | any | Unchanged |
-| RichContent | no RICH | TextContent (plain_text, else body unchanged) |
-| MediaContent | no MEDIA, or a type or a size the target does not take (Section 5.8) | TextContent ("[Media: {caption or filename or url}]"): the URL only when it is a link (`http`, `https`), else the media type; never a data URI or a reference |
-| AudioContent | no AUDIO | TextContent (the transcript, or "[Voice message: {url}]"): the URL only when it is a link, else the media type |
-| VideoContent | no VIDEO | TextContent ("[Video: {url}]"): the URL only when it is a link, else the media type |
-| LocationContent | no LOCATION | TextContent ("[Location: {label or address} ({latitude}, {longitude})]", or "[Location: ({latitude}, {longitude})]" with neither, e.g. "[Location: (45.5, -73.6)]") |
-| CompositeContent | any | Each part by its own row (below) |
-| TemplateContent | no TEMPLATE | TextContent (use body or "[Template: {template_id}]") |
-| EditContent | no edit support | TextContent ("Correction: {new text}") |
-| DeleteContent | no delete support | TextContent ("[Message deleted]") or SystemContent |
-| SystemContent | any | Unchanged |
-| ToolCallContent | any | Unchanged |
+| <!-- /rfc --><!-- rfc: {"id": "RK-6.6-008", "kind": "behavior", "applies": "§6.6 Default transcoding rules, the RichContent row: a target without RICH receives a TextContent of the plain_text, else the body unchanged. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->RichContent | no RICH | TextContent (plain_text, else body unchanged) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-6.6-009", "kind": "behavior", "applies": "§6.6 Default transcoding rules, the MediaContent row: a target without MEDIA, or that does not take the file's type or size, receives the media's label, a URL only when it is an http or https link, else the media type, never a data URI or a reference. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->MediaContent | no MEDIA, or a type or a size the target does not take (Section 5.8) | TextContent ("[Media: {caption or filename or url}]"): the URL only when it is a link (`http`, `https`), else the media type; never a data URI or a reference |
+| <!-- /rfc --><!-- rfc: {"id": "RK-6.6-010", "kind": "behavior", "applies": "§6.6 Default transcoding rules, the AudioContent row: a target without AUDIO receives the transcript, or the voice-message label, a URL only when it is a link, else the media type. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->AudioContent | no AUDIO | TextContent (the transcript, or "[Voice message: {url}]"): the URL only when it is a link, else the media type |
+| <!-- /rfc --><!-- rfc: {"id": "RK-6.6-011", "kind": "behavior", "applies": "§6.6 Default transcoding rules, the VideoContent row: a target without VIDEO receives the video label, a URL only when it is a link, else the media type. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->VideoContent | no VIDEO | TextContent ("[Video: {url}]"): the URL only when it is a link, else the media type |
+| <!-- /rfc --><!-- rfc: {"id": "RK-6.6-012", "kind": "behavior", "applies": "§6.6 Default transcoding rules, the LocationContent row: a target without LOCATION receives the location label, with its label or address when it has one. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->LocationContent | no LOCATION | TextContent ("[Location: {label or address} ({latitude}, {longitude})]", or "[Location: ({latitude}, {longitude})]" with neither, e.g. "[Location: (45.5, -73.6)]") |
+| <!-- /rfc --><!-- rfc: {"id": "RK-6.6-013", "kind": "behavior", "applies": "§6.6 Default transcoding rules, the CompositeContent row: a composite is transcoded part by part, each part by its own row. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->CompositeContent | any | Each part by its own row (below) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-6.6-014", "kind": "behavior", "applies": "§6.6 Default transcoding rules, the TemplateContent row: a target without TEMPLATE receives the template's body, or its template label. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->TemplateContent | no TEMPLATE | TextContent (use body or "[Template: {template_id}]") |
+| <!-- /rfc --><!-- rfc: {"id": "RK-6.6-015", "kind": "behavior", "applies": "§6.6 Default transcoding rules, the EditContent row: a target without edit support receives the correction text. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->EditContent | no edit support | TextContent ("Correction: {new text}") |
+| <!-- /rfc --><!-- rfc: {"id": "RK-6.6-016", "kind": "behavior", "applies": "§6.6 Default transcoding rules, the DeleteContent row: a target without delete support receives the deletion text or a SystemContent. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->DeleteContent | no delete support | TextContent ("[Message deleted]") or SystemContent |
+| <!-- /rfc --><!-- rfc: {"id": "RK-6.6-017", "kind": "behavior", "applies": "§6.6 Default transcoding rules, the SystemContent row: a system content reaches any target unchanged. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->SystemContent | any | Unchanged |
+| <!-- /rfc --><!-- rfc: {"id": "RK-6.6-018", "kind": "behavior", "applies": "§6.6 Default transcoding rules, the ToolCallContent row: a tool call content reaches any target unchanged. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ToolCallContent | any | Unchanged |
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-6.6-019", "kind": "behavior", "applies": "§6.6 Composite transcoding: no part is dropped; a part the target cannot carry becomes its text form. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A composite is transcoded part by part, each part by its own row, and no part
-is dropped: a part the target cannot carry becomes its text form. When every
+is dropped: a part the target cannot carry becomes its text form. <!-- /rfc --><!-- rfc: {"id": "RK-6.6-020", "kind": "behavior", "applies": "§6.6 Composite transcoding: a composite whose every part ends up a TextContent becomes one TextContent, its text form (the parts' texts joined in order by a newline, an empty one skipped). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->When every
 part ends up as a `TextContent`, the composite becomes one `TextContent`, its
 text form (below): the parts' texts joined in order by a newline, an empty
-one skipped, so that a channel that declares TEXT alone receives one message.
+one skipped, so that a channel that declares TEXT alone receives one message.<!-- /rfc --><!-- rfc: {"id": "RK-6.6-021", "kind": "behavior", "applies": "§6.6 Composite transcoding: any other composite keeps its transcoded parts, in order. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Otherwise the composite keeps its transcoded parts, in order.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.6-003", "kind": "behavior", "applies": "§6.6 Content Transcoding; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-6.6-022", "kind": "behavior", "applies": "§6.6 Text form: every content's one text, the text of the TextContent its row transcodes to, or for the rows delivered unchanged a TextContent's or SystemContent's body and the tool-call label of a ToolCallContent. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Text form.** Every content has a text form, the one text it reads as: for a
 row above that transcodes to a TextContent, the text of that TextContent; for
 the rows delivered unchanged, a TextContent's body, a SystemContent's body,
-and `[Tool call: {tool_name}]` for a ToolCallContent. A composite reads as
+and `[Tool call: {tool_name}]` for a ToolCallContent. <!-- /rfc --><!-- rfc: {"id": "RK-6.6-023", "kind": "behavior", "applies": "§6.6 Text form of a composite: its parts' text forms in order, joined by a newline, an empty one skipped. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A composite reads as
 its parts' text forms in order, joined by a newline, a part whose text form
-is empty skipped. An EditContent reads as "Correction: {the text form of its
+is empty skipped. <!-- /rfc --><!-- rfc: {"id": "RK-6.6-024", "kind": "behavior", "applies": "§6.6 Text form of an EditContent (the correction of its new content's text form) and of a DeleteContent (the deletion text), whatever a reader supports. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An EditContent reads as "Correction: {the text form of its
 new content}" and a DeleteContent as "[Message deleted]", whatever a reader
-supports. A number in a text form (a location's latitude and longitude) is
+supports. <!-- /rfc --><!-- rfc: {"id": "RK-6.6-025", "kind": "behavior", "applies": "§6.6 Text form: a number (a location's latitude and longitude) written as the shortest decimal that reads back as the same IEEE 754 binary64 value, at least one digit after the point, never an exponent (so that every implementation writes the same text, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A number in a text form (a location's latitude and longitude) is
 written in decimal, as the shortest decimal that reads back as the same IEEE
 754 binary64 value, with at least one digit after the point and never an
 exponent: 45 is `45.0`, 5e-05 is `0.00005`, and -73.6 is `-73.6`, so a
 location at latitude 45, longitude -73.6 reads "[Location: (45.0, -73.6)]".
 Every implementation then writes
 the same text, and an instruction's fingerprint over it agrees (§10.1.1
-step 6). Every reader of a content as text takes its text form, save the
+step 6). <!-- /rfc --><!-- rfc: {"id": "RK-6.6-026", "kind": "behavior", "applies": "§6.6 Text form: every reader of a content as text takes its text form, save the mentions §6.4 gives an author image and an empty event. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Every reader of a content as text takes its text form, save the
 mentions §6.4 gives an author image and an empty event: an instruction's
 fingerprint (§10.1.1 step 6), a turn's history and input read as text (§6.4),
 a reader outside a channel (below), a part a target cannot carry and a
 composite flattened to one text (above).
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-6.6-027", "kind": "behavior", "applies": "§6.6 Edits and deletes: a target whose capabilities support edits or deletes natively receives the EDIT or DELETE event without transcoding. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 When the target channel supports edits or deletes natively (i.e.,
 `capabilities.supports_edit` or `capabilities.supports_delete` is true), the
-framework MUST deliver the EDIT or DELETE event without transcoding. When the
+framework MUST deliver the EDIT or DELETE event without transcoding. <!-- /rfc --><!-- rfc: {"id": "RK-6.6-028", "kind": "behavior", "applies": "§6.6 Edits and deletes: a target that does not support the operation receives its fallback representation. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->When the
 target channel does NOT support the operation, the framework MUST transcode to
 the fallback representation shown above.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-6.6-029", "kind": "behavior", "applies": "§6.6 Text form outside a channel: a reader that takes a room's message as text outside a channel (a delegated task's brief, a speak classifier, a discussion's dispatch and its turns' notes, a scoring query, a memory's summary, an ACP agent's catch-up) reads its text form. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A reader that takes a room's message as text outside a channel (a delegated
 task's brief, a speak classifier, a discussion's dispatch and the notes of
 its turns, a scoring query, a memory's summary, an ACP agent's catch-up)
 reads its text form: its text, each media as its label above, a composite's
-parts in order. One that reads names in it (a discussion's addressing) or a
+parts in order. <!-- /rfc --><!-- rfc: {"id": "RK-6.6-030", "kind": "behavior", "applies": "§6.6 Text form outside a channel: a reader of names (a discussion's addressing) or of a search query (a memory's retrieval) reads the author's words alone, a media's caption included, never a file name or a type. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->One that reads names in it (a discussion's addressing) or a
 search query in it (a memory's retrieval) reads the author's words alone, a
 media's caption included, never a file name or a type: an agent named in a
 file name is not addressed.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.6-004", "kind": "behavior", "applies": "§6.6 Content Transcoding; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-6.6-031", "kind": "behavior", "applies": "§6.6 Max length enforcement: after transcoding, a target that declares max_length has its TextContent truncated to it: a text, a composite that became one text, or each text part of a composite that keeps its parts. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Max length enforcement:** After transcoding, if the target channel declares a
 `max_length`, the framework MUST truncate TextContent to that limit: a text,
 a composite that became one text, or each text part of a composite that
-keeps its parts. The limit counts Unicode code points, as an instruction's
+keeps its parts. <!-- /rfc --><!-- rfc: {"id": "RK-6.6-032", "kind": "behavior", "applies": "§6.6 Max length enforcement: the limit counts Unicode code points, and a cut never splits a code point. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The limit counts Unicode code points, as an instruction's
 length does (Section 10.1.1), and a cut MUST NOT split a code point (a UTF-8
-sequence, a UTF-16 surrogate pair). A cut text ends with `...`, three ASCII
+sequence, a UTF-16 surrogate pair). <!-- /rfc --><!-- rfc: {"id": "RK-6.6-033", "kind": "behavior", "applies": "§6.6 Max length enforcement: a cut text ends with three ASCII full stops, counted within the limit. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A cut text ends with `...`, three ASCII
 full stops counted within the limit, so that the reader sees the cut: with a
-limit of 8, "Thank you for calling" becomes "Thank...". A limit below 4 code
+limit of 8, "Thank you for calling" becomes "Thank...". <!-- /rfc --><!-- rfc: {"id": "RK-6.6-034", "kind": "behavior", "applies": "§6.6 Max length enforcement: a limit below 4 code points cuts without the marker. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A limit below 4 code
 points cuts without the marker: with a limit of 3, the same text becomes
-"Tha". The marker is not U+2026 (HORIZONTAL ELLIPSIS): outside the GSM 7-bit
+"Tha". <!-- /rfc --><!-- rfc: {"id": "RK-6.6-035", "kind": "behavior", "applies": "§6.6 Max length enforcement: the marker is never U+2026 (HORIZONTAL ELLIPSIS). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The marker is not U+2026 (HORIZONTAL ELLIPSIS): outside the GSM 7-bit
 alphabet, that character would turn an SMS into UCS-2.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-6.6-036", "kind": "behavior", "applies": "§6.6: a custom transcoding strategy an integrator provides. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 Implementations SHOULD allow integrators to provide a custom transcoding strategy.
 <!-- /rfc -->
 
 ### 6.7 Provider Abstraction
 
-<!-- rfc: {"id": "RK-6.7-001", "kind": "behavior", "applies": "§6.7 Provider Abstraction; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-6.7-018", "kind": "structural", "applies": "§6.7 Provider abstraction (channel type and provider separate concepts for every channel, AI included, folded in): the AIProvider interface's name and model_name. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Channel type and Provider are separate concepts. This applies to ALL channels,
 including AI.
-<!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.7-002", "kind": "behavior", "applies": "§6.7 Provider Abstraction; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **AI Provider interface:**
 
 ```
 AIProvider (interface)
 ├── name: string                            # Provider name (e.g., "acme")
 ├── model_name: string                      # Model identifier (e.g., "acme-large-2")
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-6.7-109", "kind": "behavior", "applies": "§6.7 AIProvider: supports_vision, false by default, whether image parts reach the model. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── supports_vision: bool (default false)   # Whether image parts reach the model
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-6.7-110", "kind": "behavior", "applies": "§6.7 AIProvider: supports_streaming, false by default, whether generate_stream is implemented. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── supports_streaming: bool (default false) # Whether generate_stream is implemented
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-6.7-111", "kind": "behavior", "applies": "§6.7 AIProvider: supports_structured_streaming, false by default, whether generate_structured_stream streams natively, else wrapping generate. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── supports_structured_streaming: bool (default false)
 │       # Whether generate_structured_stream streams natively (else it wraps generate)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-6.7-112", "kind": "structural", "applies": "§6.7 AIProvider: supports_response_schema and supports_response_schema_with_tools, false by default (their rules in the paragraphs below), context_window and generate(). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── supports_response_schema: bool (default false)
 │       # Whether generate honours AIContext.response_schema (see below)
 ├── supports_response_schema_with_tools: bool (default false)
@@ -4197,30 +4319,58 @@ AIProvider (interface)
 ├── generate(context: AIContext) → AIResponse
 │       # Answer the conversation the context carries
 │
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-6.7-019", "kind": "behavior", "applies": "§6.7 AIProvider: generate_stream(), text deltas as they arrive, which requires supports_streaming; it streams a turn without tools when the provider streams text alone (Section 6.4, One loop). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── generate_stream(context: AIContext) → async_iterator<string>
 │       # Yield text deltas as they arrive (requires supports_streaming = true)
 │       # Streams a turn without tools when the provider streams text alone
 │       # (Section 6.4, One loop)
 │
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-6.7-020", "kind": "behavior", "applies": "§6.7 AIProvider: generate_structured_stream(), thinking deltas, text deltas and tool calls, then one done event; a usage event before it tells what the generation used so far, which the done event's usage replaces and a generation cut before its end counts (§6.4). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── generate_structured_stream(context: AIContext) → async_iterator<StreamEvent>
 │       # Yield thinking deltas, text deltas and tool calls, then one done event;
 │       # a usage event before it tells what the generation used so far (the
 │       # input counters told as the stream starts), which the done event's
 │       # usage replaces and a generation cut before its end counts (§6.4)
 │
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-6.7-021", "kind": "structural", "applies": "§6.7 AIProvider: available_models(), the curated offline catalogue, which MAY be empty. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── available_models() → list<ModelInfo>
 │       # Curated offline catalogue (MAY be empty)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-6.7-022", "kind": "behavior", "applies": "§6.7 AIProvider: list_models(), the live catalogue, by default available_models(). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── list_models() → list<ModelInfo>
 │       # Live catalogue; default: available_models() (see Model listings below)
 │
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-6.7-023", "kind": "structural", "applies": "§6.7 AIProvider: close(), which releases connections. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 └── close() → void
         # Release connections
 
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-6.7-024", "kind": "structural", "applies": "§6.7 AIMessage: role, content (a text or a list of content parts) and metadata. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 AIMessage
 ├── role: string                            # "user", "assistant", "system", "tool"
 ├── content: string | list<AIContentPart>   # Text, image, tool call, tool result, thinking parts
 └── metadata: map<string, any>
 
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-6.7-025", "kind": "structural", "applies": "§6.7 AIContentPart, told apart by type: AITextPart, AIImagePart and AIToolCallPart and their fields. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 AIContentPart                               # One of these, told apart by type
 ├── AITextPart
 │   ├── type: string = "text"
@@ -4235,21 +4385,37 @@ AIContentPart                               # One of these, told apart by type
 │   ├── name: string
 │   ├── arguments: map<string, any>
 │   └── metadata: map<string, any>
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-6.7-026", "kind": "behavior", "applies": "§6.7 AIToolResultPart: tool_call_id, name, result and is_error, a failure or a refusal carried, never inferred. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── AIToolResultPart
 │   ├── type: string = "tool_result"
 │   ├── tool_call_id: string
 │   ├── name: string
 │   ├── result: string | list<AITextPart | AIImagePart>
 │   ├── is_error: bool (default false)      # A failure or a refusal, carried, never inferred
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-6.7-113", "kind": "behavior", "applies": "§6.7 AIToolResultPart: structured_content and outcome, never rendered to providers, and references, the tools the result makes callable (Section 6.4). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │   ├── structured_content: map<string, any> | null  # MCP structuredContent; never rendered to providers
 │   ├── outcome: string | null              # served, refused, failed, blocked, unserved or cancelled; never rendered to providers
 │   └── references: list<string>            # Tools the result makes callable (Section 6.4)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-6.7-027", "kind": "structural", "applies": "§6.7 AIThinkingPart: thinking, signature and redacted (a redacted block's opaque data, its thinking then empty). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 └── AIThinkingPart
     ├── type: string = "thinking"
     ├── thinking: string
     ├── signature: string | null
     └── redacted: string | null             # A redacted block's opaque data; thinking is then empty
 
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-6.7-028", "kind": "structural", "applies": "§6.7 AIContext: messages, system_prompt, temperature (0.7 by default), max_tokens (null defers to the provider's cap), thinking_budget, enable_thinking, reasoning_effort, tools and response_schema. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 AIContext
 ├── messages: list<AIMessage>               # The conversation to answer
 ├── system_prompt: string | null
@@ -4260,12 +4426,24 @@ AIContext
 ├── reasoning_effort: string | null
 ├── tools: list<AITool>                     # Functions the model may call
 ├── response_schema: map<string, any> | null  # JSON Schema of the answer, see below
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-6.7-029", "kind": "behavior", "applies": "§6.7 AIContext: room, the current room state, and target_capabilities and target_media_types, what every transport that sends shares (§4.2). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── room: RoomContext | null                # Current room state
 ├── target_capabilities: ChannelCapabilities | null  # What every transport that sends shares (§4.2)
 ├── target_media_types: list<ChannelMediaType>  # The media types every transport that sends shares (§4.2)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-6.7-030", "kind": "structural", "applies": "§6.7 AIContext: metadata and response_metadata, the turn's one record. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── metadata: map<string, any>
 └── response_metadata: ResponseMetadata     # The turn's one record, see below
 
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-6.7-031", "kind": "structural", "applies": "§6.7 AIResponse: content, thinking, thinking_signature, thinking_parts, finish_reason, usage, tool_calls, tasks, observations and metadata. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 AIResponse
 ├── content: string                         # Generated text
 ├── thinking: string | null                 # Reasoning the provider exposed
@@ -4280,92 +4458,92 @@ AIResponse
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.7-003", "kind": "behavior", "applies": "§6.7 Provider Abstraction; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-6.7-032", "kind": "behavior", "applies": "§6.7 Model listings: a live listing backfills from the curated catalogue what the vendor's endpoint leaves blank, but not its capabilities, an empty list meaning unknown. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Model listings.** A live listing backfills from the curated catalogue what
 the vendor's endpoint leaves blank (display name, context window, vision,
 price), but not its `capabilities`: a catalogue's tags MAY be internal routing
-flags, and an empty list means "unknown", never "none". A provider whose
+flags, and an empty list means "unknown", never "none". <!-- /rfc --><!-- rfc: {"id": "RK-6.7-033", "kind": "behavior", "applies": "§6.7 Model listings: a provider whose endpoint reports no model type taking the tags from a catalogue that holds public tags only. Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->A provider whose
 endpoint reports no model type at all MAY take the tags from its catalogue
-when that catalogue holds public tags only. A conversational
+when that catalogue holds public tags only. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-034", "kind": "behavior", "applies": "§6.7 Model listings: a conversational provider's listing that surfaces speech models tags them transcription or speech, from what the vendor reports, else from the model's name. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->A conversational
 provider's listing that surfaces speech models SHOULD tag them, as the image
 catalogue is tagged (Section 25.6): `transcription` for a speech-to-text model,
 `speech` for a text-to-speech one, from what the vendor reports or, failing
-that, from the model's name. A model that converses in audio is neither.
+that, from the model's name. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-035", "kind": "behavior", "applies": "§6.7 Model listings: a model that converses in audio is tagged neither transcription nor speech. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A model that converses in audio is neither.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.7-004", "kind": "behavior", "applies": "§6.7 Provider Abstraction; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-6.7-004", "kind": "behavior", "applies": "§6.7 The model that answered: metadata.model names the model the response names, the model asked for only when it names none, and a stream's done event names the same. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **The model that answered.** `metadata.model` names the model that answered,
 as the response names it (a dated snapshot, a router's pick), and the model
 asked for only when the response names none; a stream's done event names the
 same, so both modes report it alike.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.7-005", "kind": "behavior", "applies": "§6.7 Provider Abstraction; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-6.7-036", "kind": "behavior", "applies": "§6.7 Usage counters: input_tokens, output_tokens and the cache counters are disjoint (Section 25.5). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Usage counters.** `input_tokens`, `output_tokens` and the cache counters are
-disjoint, as in Section 25.5. A cache counter the vendor reports at zero is
+disjoint, as in Section 25.5. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-037", "kind": "behavior", "applies": "§6.7 Usage counters: a cache counter reported at zero is omitted on a text turn, as one not reported (an image's usage keeps a reported zero, Section 25.5). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A cache counter the vendor reports at zero is
 omitted, as one it does not report: on a text turn the two bill the same, and
 every provider reports them alike (an image's usage keeps a reported zero,
-Section 25.5). `output_tokens` counts every output token the
+Section 25.5). <!-- /rfc --><!-- rfc: {"id": "RK-6.7-038", "kind": "behavior", "applies": "§6.7 Usage counters: output_tokens counts every billed output token, the model's thinking included wherever the vendor reports it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`output_tokens` counts every output token the
 vendor bills, a model's thinking included, whether the vendor reports that
-thinking inside its completion count or beside it. `reasoning_tokens`, when a
+thinking inside its completion count or beside it. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-039", "kind": "behavior", "applies": "§6.7 Usage counters: reasoning_tokens, where a provider reports it, the thinking share of output_tokens, never added to the other counters nor priced again. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`reasoning_tokens`, when a
 provider reports it, is the thinking share of `output_tokens`: a detail, never
 added to the other counters nor priced a second time.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.7-006", "kind": "behavior", "applies": "§6.7 Provider Abstraction; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-6.7-040", "kind": "behavior", "applies": "§6.7 Reasoning written in the text, for a provider that reads the <think> convention (a server MAY write it, folded in): a block read as thinking only where it opens the generation, after nothing but spaces, tabs, line feeds and carriage returns, which stay the answer's text. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Reasoning written in the text (normative).** A Chat Completions server MAY
 write a model's reasoning in the answer's text, between `<think>` and
 `</think>`, rather than in a field beside it. A provider that reads that
 convention reads a block as `thinking` only where it opens the generation: the
 text starts with `<think>`, after nothing but spaces (U+0020), tabs (U+0009),
 line feeds (U+000A) and carriage returns (U+000D), which stay the answer's
-text. Any other character before the tag, another space or a byte order mark
-included, makes the text the answer whole. The block ends at its first
-`</think>`, and everything after it is the answer, a later `<think>` included.
+text. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-041", "kind": "behavior", "applies": "§6.7 Reasoning written in the text: any other character before the tag makes the text the answer whole. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Any other character before the tag, another space or a byte order mark
+included, makes the text the answer whole. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-042", "kind": "behavior", "applies": "§6.7 Reasoning written in the text: the block ends at its first closing tag, everything after it the answer. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The block ends at its first
+`</think>`, and everything after it is the answer, a later `<think>` included.<!-- /rfc --><!-- rfc: {"id": "RK-6.7-043", "kind": "behavior", "applies": "§6.7 Reasoning written in the text: a text that does not open with the tag is an answer, stored, delivered and sent back as written, never cut at its tag. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 `The parser reads the <think> tag. Everything after is lost.` is an answer,
-stored, delivered and sent back as written, never cut at its tag. A block the
+stored, delivered and sent back as written, never cut at its tag. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-044", "kind": "behavior", "applies": "§6.7 Reasoning written in the text: a block the response stopped before closing (the output cap) is reasoning to its end. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A block the
 response stopped before closing (the output cap) is reasoning to its end, never
-answer. Every round of a tool loop is a generation of its own, its block read
-as the first round's is. A tag cut across a stream's chunks reads as it does
-whole, and a response reads the same streamed or not. A reasoning field the
+answer. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-045", "kind": "behavior", "applies": "§6.7 Reasoning written in the text: each round of a tool loop is a generation of its own, its block read as the first round's. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Every round of a tool loop is a generation of its own, its block read
+as the first round's is. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-046", "kind": "behavior", "applies": "§6.7 Reasoning written in the text: a tag cut across a stream's chunks reads as it does whole, and a response reads the same streamed or not. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A tag cut across a stream's chunks reads as it does
+whole, and a response reads the same streamed or not. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-047", "kind": "behavior", "applies": "§6.7 Reasoning written in the text: a reasoning field the server sends beside the text changes none of this, both being the response's reasoning. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A reasoning field the
 server sends beside the text changes none of this: both are the response's
 reasoning.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.7-007", "kind": "behavior", "applies": "§6.7 Provider Abstraction; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-6.7-048", "kind": "behavior", "applies": "§6.7 Reasoning settings, the turn's (folded in): where a provider's configuration carries one under the same name, the provider prefers the turn's value, false included. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Reasoning settings.** `thinking_budget`, `enable_thinking` and
 `reasoning_effort` are the turn's. Where a provider's configuration carries one
 of them under the same name, the provider MUST prefer the turn's value, `false`
-included. A vendor setting of the provider's own (a named level, a switch of its
+included. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-049", "kind": "behavior", "applies": "§6.7 Reasoning settings: a vendor setting of the provider's own yields to the turn on what the turn states and supplies what it leaves unstated. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A vendor setting of the provider's own (a named level, a switch of its
 own) yields to the turn on what the turn
-states and supplies what it leaves unstated. Whether the model reasons is
+states and supplies what it leaves unstated. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-050", "kind": "behavior", "applies": "§6.7 Reasoning settings: whether the model reasons, stated by thinking_budget, else enable_thinking, a reasoning_effort of none stating off; how much, stated by reasoning_effort. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Whether the model reasons is
 stated by `thinking_budget` (`0` off, above `0` on), else by `enable_thinking`,
 and a `reasoning_effort` of `none` states off; how much it reasons is stated by
-`reasoning_effort`. Where the turn's settings come from several levels
+`reasoning_effort`. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-051", "kind": "behavior", "applies": "§6.7 Reasoning settings from several levels (Appendix A.9): an enable_thinking false at one level states off over a thinking_budget at a less specific one. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Where the turn's settings come from several levels
 (Appendix A.9, per-turn settings), an `enable_thinking: false` set at one level
-states off over a `thinking_budget` set at a less specific one. Where such a vendor setting names levels, a level the model
+states off over a `thinking_budget` set at a less specific one. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-052", "kind": "behavior", "applies": "§6.7 Reasoning settings, a vendor setting that names levels: a level the model does not take sent as the nearest it takes, left out where the provider cannot know them; a model that cannot stop reasoning sent its lowest level for off. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Where such a vendor setting names levels, a level the model
 does not take is sent as the nearest one it takes, and left out where the
 provider cannot know the levels the model takes; and a model that cannot stop
-reasoning is sent its lowest level where the turn states off. The provider
+reasoning is sent its lowest level where the turn states off. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-053", "kind": "behavior", "applies": "§6.7 Reasoning settings: the provider knows the levels and whether the model can stop reasoning from its model catalogue, or the levels from its configuration, never from the model's name. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The provider
 knows both from what its model catalogue declares of the model, or the levels
-from one its configuration already sets, never from the model's name. A
+from one its configuration already sets, never from the model's name. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-054", "kind": "behavior", "applies": "§6.7 Reasoning settings applied on a turn that declares tools as on one that does not, save for the cases RK-6.7-055 to 057 give. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
 provider MUST apply them on a turn that declares tools as on one that does not, save for the
-cases below. Where the vendor restricts what a turn with tools accepts (a vendor
+cases below. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-055", "kind": "behavior", "applies": "§6.7 Reasoning settings, a vendor that restricts what a turn with tools accepts: the value accepted, read from the model catalogue, never guessed from the model's name. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Where the vendor restricts what a turn with tools accepts (a vendor
 may take function tools only with reasoning off on some models), the provider
 sends the value accepted, read from
 what its model catalogue declares of the model, never guessed from the model's
-name. A provider MAY leave a setting out of a turn with tools where it cannot
+name. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-056", "kind": "behavior", "applies": "§6.7 Reasoning settings on a turn with tools: the two cases where a provider MAY leave a setting out (a model it cannot know behind its endpoint, without a configuration statement; reasoning it cannot pass back between tool rounds), which it documents, and never otherwise. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A provider MAY leave a setting out of a turn with tools where it cannot
 know the model behind its endpoint (a `base_url`, a deployment name, a proxy's
 alias) and its configuration does not state that the server takes the setting
 there, or where turning reasoning on would require passing the model's reasoning
 back from one tool round to the next in a form it does not produce; it documents
-that it does, and MUST NOT leave it out otherwise. Such a statement covers only
+that it does, and MUST NOT leave it out otherwise. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-057", "kind": "behavior", "applies": "§6.7 Reasoning settings: a configuration statement covers only what the catalogue does not declare; a provider that knows its vendor's rule refuses the statement. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Such a statement covers only
 what the catalogue does not declare: a model the catalogue declares is sent the
 value the catalogue says it accepts, and a provider that knows its vendor's rule
 refuses the statement in its configuration rather than ignore it.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.7-008", "kind": "behavior", "applies": "§6.7 Provider Abstraction; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-6.7-058", "kind": "behavior", "applies": "§6.7 Response metadata, one record per turn: AIContext.response_metadata created with the turn and shared by identity by every extension point of that turn (a memory provider, a BEFORE_AI_GENERATION hook, a tool handler or a BEFORE_TOOL_USE hook through current_response_metadata(), each of which MAY write it). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Response metadata is one record per turn.** `AIContext.response_metadata` is a
 dict-like mapping created with the turn and shared by identity by every
 extension point of that turn: a memory provider MAY write it while the context
@@ -4373,23 +4551,23 @@ is built, a `BEFORE_AI_GENERATION` hook MAY write it through
 `event.ai_context.response_metadata`, and a tool handler or a `BEFORE_TOOL_USE`
 hook MAY write it through `current_response_metadata()` (the hook runs under
 the call's turn, so a host counts the calls a turn started there, before any
-runs). The record a caller reads on `InboundResult.response_metadata` is the
+runs). <!-- /rfc --><!-- rfc: {"id": "RK-6.7-059", "kind": "behavior", "applies": "§6.7 Response metadata: the record a caller reads on InboundResult.response_metadata is the turn's, whether the turn answered, failed or was cut from outside. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The record a caller reads on `InboundResult.response_metadata` is the
 same one, whether the turn answered, failed or was cut from outside (a
-delivery's cancellation, the kit's close). The caller's copy alone also
+delivery's cancellation, the kit's close). <!-- /rfc --><!-- rfc: {"id": "RK-6.7-060", "kind": "behavior", "applies": "§6.7 Response metadata, the caller's copy alone: turns[channel_id] for each channel that replied to the caller's own event, streamed or not, with its loop_end_reason (an AI channel's; an ACP agent's stop reason) and the ai_usage its record carries. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The caller's copy alone also
 names how each channel that replied to the caller's own event ended, streamed
 or not, under `turns[channel_id]`: its `loop_end_reason` (an AI channel's;
 an ACP agent's stop reason, `interrupted` when its prompt never returned or
 failed after, `completed` once it returned on `end_turn`) and the `ai_usage`
 its record carries (an ACP agent's carries none), so a turn that produced no MESSAGE still tells its caller how
 it ended and two agents replying to one inbound never overwrite each other's
-end. An answer to an answer is no reply to the caller and has no entry, nor
-has an ACP turn never prompted (a transport that read nothing). `turns` is the
+end. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-061", "kind": "behavior", "applies": "§6.7 Response metadata: an answer to an answer, and an ACP turn never prompted, have no turns entry. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An answer to an answer is no reply to the caller and has no entry, nor
+has an ACP turn never prompted (a transport that read nothing). <!-- /rfc --><!-- rfc: {"id": "RK-6.7-062", "kind": "behavior", "applies": "§6.7 Response metadata: turns is the framework's key; a value a turn's hooks or tools write under it reaches neither the caller nor a MESSAGE. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`turns` is the
 framework's key: a value a turn's hooks or tools write under it is not
-carried to the caller, and never on a MESSAGE. Nor are a reply's
+carried to the caller, and never on a MESSAGE. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-063", "kind": "behavior", "applies": "§6.7 Response metadata, the caller's copy: no reply's loop_end_reason or ai_usage at its top; every other key of the reply's record is the caller's; a buffered reply's end and usage read off its record, else off its last MESSAGE that names one. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Nor are a reply's
 `loop_end_reason` and `ai_usage` at the top of the caller's copy, which reads
 them under `turns` alone; every other key of the reply's record is the
 caller's, and a buffered reply's end, with the usage beside it, is read off its
-record, else off the last of its MESSAGEs that names one. The framework MUST merge the record
+record, else off the last of its MESSAGEs that names one. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-064", "kind": "behavior", "applies": "§6.7 Response metadata merged into the metadata of every MESSAGE the turn produces, as the record stands when that event is created (how a host attributes a reply, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The framework MUST merge the record
 into the metadata of every MESSAGE event the turn produces, as the record
 stands when that event is created — a streamed segment persisted before a tool
 round carries what was known then, the final answer carries everything the
@@ -4397,19 +4575,21 @@ turn learned. It is how a host attributes to the reply what the turn read
 (cited sources, say) without a post-hoc rewrite of persisted events.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.7-009", "kind": "behavior", "applies": "§6.7 Provider Abstraction; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-6.7-065", "kind": "behavior", "applies": "§6.7 Response schema (a caller sets AIContext.response_schema, folded in): a provider whose supports_response_schema is true translates it into its native constrained output. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Response schema.** A caller that needs the answer in a known shape sets
 `AIContext.response_schema` to a JSON Schema. A provider whose
 `supports_response_schema` is true MUST translate it into its native
 constrained output, so that the `content` returned by `generate()` is one JSON
-document satisfying the schema. The implementation MUST check the document
+document satisfying the schema. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-066", "kind": "behavior", "applies": "§6.7 Response schema: the implementation checks the document against the schema before returning it, whatever the server claims (the portable subset is checkable without a library, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The implementation MUST check the document
 against the schema before returning it, whatever the server claims: a proxy may
 accept the constraint and route to an upstream that ignores it. The subset below
-is small enough to check without a JSON Schema library. `content` stays a
+is small enough to check without a JSON Schema library. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-067", "kind": "behavior", "applies": "§6.7 Response schema: content stays a string, a typed value being the caller's work. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`content` stays a
 string all the same, and turning it into a typed value is the caller's work.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-6.7-068", "kind": "behavior", "applies": "§6.7 Response schema: the schema stays within the portable subset. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The schema MUST stay within the portable subset below, the one every provider
-that supports response schemas accepts. An implementation whose language runs a
+that supports response schemas accepts. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-069", "kind": "behavior", "applies": "§6.7 Response schema outside the portable subset, refused before any provider call where the language checks as a context is built or a field assigned, else where the channel takes it, before the model is asked, or in the provider before any request for a schema written on a context. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An implementation whose language runs a
 check as a context is built or a field assigned MUST refuse a schema outside it
 there, before any provider is called; one whose language runs none MUST refuse
 it where the channel takes it (its own as the channel is built, a binding's as
@@ -4417,94 +4597,104 @@ the turn reads its settings), before the model is asked, and a schema written on
 a context by hand or by a `BEFORE_AI_GENERATION` hook in the provider, before
 any request.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-6.7-070", "kind": "behavior", "applies": "§6.7 Portable subset (the table's header), the type row: one of object, array, string, number, integer, boolean, as a single string. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 | Keyword | Rule |
 |---|---|
-| `type` | One of `object`, `array`, `string`, `number`, `integer`, `boolean`, as a single string. The root MUST be `object`. |
-| `properties` | REQUIRED on an object: a map from names to subschemas, possibly empty. |
-| `required` | REQUIRED on an object: every key of `properties`, each once. |
-| `additionalProperties` | REQUIRED on an object, and `false`. |
-| `items` | REQUIRED on an array: one subschema. |
-| `enum` | On a string only: a non-empty list of distinct strings. |
-| `title`, `description` | Allowed on any subschema, as strings: guidance for the model. |
+| `type` | One of `object`, `array`, `string`, `number`, `integer`, `boolean`, as a single string. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-114", "kind": "behavior", "applies": "§6.7 Portable subset, the type row: the schema's root an object. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The root MUST be `object`. |
+| <!-- /rfc --><!-- rfc: {"id": "RK-6.7-071", "kind": "behavior", "applies": "§6.7 Portable subset, the properties row: required on an object, possibly empty. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`properties` | REQUIRED on an object: a map from names to subschemas, possibly empty. |
+| <!-- /rfc --><!-- rfc: {"id": "RK-6.7-072", "kind": "behavior", "applies": "§6.7 Portable subset, the required row: required on an object, every key of properties once. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`required` | REQUIRED on an object: every key of `properties`, each once. |
+| <!-- /rfc --><!-- rfc: {"id": "RK-6.7-073", "kind": "behavior", "applies": "§6.7 Portable subset, the additionalProperties row: required on an object, and false. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`additionalProperties` | REQUIRED on an object, and `false`. |
+| <!-- /rfc --><!-- rfc: {"id": "RK-6.7-074", "kind": "behavior", "applies": "§6.7 Portable subset, the items row: required on an array, one subschema. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`items` | REQUIRED on an array: one subschema. |
+| <!-- /rfc --><!-- rfc: {"id": "RK-6.7-075", "kind": "behavior", "applies": "§6.7 Portable subset, the enum row: on a string only, a non-empty list of distinct strings. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`enum` | On a string only: a non-empty list of distinct strings. |
+| <!-- /rfc --><!-- rfc: {"id": "RK-6.7-076", "kind": "behavior", "applies": "§6.7 Portable subset, the title and description row: allowed on any subschema, as strings. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`title`, `description` | Allowed on any subschema, as strings: guidance for the model. |
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-6.7-077", "kind": "behavior", "applies": "§6.7 Portable subset: no other keyword is portable (why, and the agreed empty value of an answer that may be absent, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 No other keyword is portable. `null` and optional fields, `anyOf`, `$ref`, and
 numeric or string bounds each break on at least one provider. An answer that may
 be absent is a required field with an agreed empty value (an empty string, an
 empty list).
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-6.7-078", "kind": "behavior", "applies": "§6.7 Response schema: a provider never ignores a schema it cannot honour, and never returns text that does not answer it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A provider MUST NOT ignore a schema it cannot honour, and MUST NOT return text
-that does not answer it. `generate()` and the streaming methods raise a
+that does not answer it. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-079", "kind": "behavior", "applies": "§6.7 Response schema: generate() and the streaming methods raise a ResponseSchemaError, a ProviderError never retryable, with one of the table's reasons. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`generate()` and the streaming methods raise a
 `ResponseSchemaError`, a `ProviderError` that is never retryable, with one of
 these reasons:
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-6.7-080", "kind": "behavior", "applies": "§6.7 ResponseSchemaError reasons (the table's header), the unsupported row, raised before any request. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 | Reason | When |
 |---|---|
 | `unsupported` | `supports_response_schema` is false, or the context also carries `tools` and `supports_response_schema_with_tools` is false. Raised before any request is sent. |
-| `refusal` | The model declined to answer: a refusal field, a refusal or safety stop reason, or the prompt itself blocked before any answer. |
-| `truncated` | The answer was cut: a length or max-tokens stop reason, or the context window filling up mid-answer. |
-| `invalid_json` | The text is not a JSON document satisfying the schema: a server that accepted the constraint and did not apply it. |
+| <!-- /rfc --><!-- rfc: {"id": "RK-6.7-081", "kind": "behavior", "applies": "§6.7 ResponseSchemaError reasons, the refusal row. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`refusal` | The model declined to answer: a refusal field, a refusal or safety stop reason, or the prompt itself blocked before any answer. |
+| <!-- /rfc --><!-- rfc: {"id": "RK-6.7-082", "kind": "behavior", "applies": "§6.7 ResponseSchemaError reasons, the truncated row. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`truncated` | The answer was cut: a length or max-tokens stop reason, or the context window filling up mid-answer. |
+| <!-- /rfc --><!-- rfc: {"id": "RK-6.7-083", "kind": "behavior", "applies": "§6.7 ResponseSchemaError reasons, the invalid_json row. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`invalid_json` | The text is not a JSON document satisfying the schema: a server that accepted the constraint and did not apply it. |
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.7-010", "kind": "behavior", "applies": "§6.7 Provider Abstraction; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-6.7-084", "kind": "behavior", "applies": "§6.7 Streaming a constrained answer: generate_stream() and generate_structured_stream() carry the schema as generate() does (their text deltas provisional until the stream ends, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Streaming a constrained answer.** `generate_stream()` and
 `generate_structured_stream()` carry the schema like `generate()`. The text
 deltas are the document as it is written: partial JSON, provisional until the
-stream ends. The implementation MUST check the whole document, as `generate()`
+stream ends. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-085", "kind": "behavior", "applies": "§6.7 Streaming a constrained answer: the whole document checked before the final done event, the error raised instead of that event when the check fails. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The implementation MUST check the whole document, as `generate()`
 does, before it yields the final done event, and MUST raise the error above
-instead of that event when the check fails. A consumer MUST NOT act on the
+instead of that event when the check fails. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-086", "kind": "behavior", "applies": "§6.7 Streaming a constrained answer: a consumer does not act on the streamed text before the done event. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A consumer MUST NOT act on the
 streamed text before the done event, which is what marks it as a document
 satisfying the schema.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.7-011", "kind": "behavior", "applies": "§6.7 Provider Abstraction; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-6.7-087", "kind": "behavior", "applies": "§6.7 Tools in the same turn, where supports_response_schema_with_tools is true (folded in): a response that carries tool calls is a step of the tool loop and is not checked; the final answer is. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Tools in the same turn.** A context may carry `tools` and a schema together
 where `supports_response_schema_with_tools` is true. The model then either calls
 tools or answers in the schema: a response that carries tool calls is a step of
 the tool loop and is not checked, and the check applies to the answer that
-carries none, the final one. A provider whose constraint is a decoding grammar
+carries none, the final one. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-088", "kind": "behavior", "applies": "§6.7 Tools in the same turn: a provider whose constraint is a decoding grammar leaves supports_response_schema_with_tools false. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A provider whose constraint is a decoding grammar
 (it forces the output into the schema token by token) MUST leave that capability
 false: the grammar stops the model from calling a tool, and it writes a
 schema-valid answer in its place, invented rather than looked up, which no check
-can tell from a true one. A response that ended on a call the provider would
+can tell from a true one. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-089", "kind": "behavior", "applies": "§6.7 Tools in the same turn: a response that ended on a call the provider would not hand over is a step of the tool loop, not checked, with no document, saying so by its finish reason. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A response that ended on a call the provider would
 not hand over (a call it could not parse, or one to a tool the request did
 not enable) is a
 step of the tool loop as well, which tells the model and asks again (Section
 6.4): it is not checked, carries no document, and says so by that finish
 reason, which a caller of `generate()` outside the loop reads.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-6.7-090", "kind": "behavior", "applies": "§6.7 Tools in the same turn: supports_response_schema a provider default the host can override in the provider's configuration. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 Support depends on the model and, behind a custom base URL, on the
 server, so `supports_response_schema` is a provider default that an
-implementation SHOULD let the host override in the provider's configuration. A
+implementation SHOULD let the host override in the provider's configuration. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-091", "kind": "non_testable", "applies": "§6.7: a consumer that must run on any provider reads supports_response_schema and, where it is false, asks for JSON in the prompt; only the consumer keeps it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
 consumer that must run on any provider reads the property, and where it is false
 asks for JSON in the prompt and parses the answer itself.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.7-012", "kind": "behavior", "applies": "§6.7 Provider Abstraction; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-6.7-092", "kind": "behavior", "applies": "§6.7 Declaring tools: a provider declares each tool of the context in its vendor's format. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Declaring tools (normative).** A provider declares each tool of the context
-in its vendor's format. A tool without parameters (an absent or empty schema)
+in its vendor's format. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-093", "kind": "behavior", "applies": "§6.7 Declaring tools: a tool without parameters declared as an object schema with no properties, never an empty map, and a schema whose root has no type declared an object's. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A tool without parameters (an absent or empty schema)
 is declared as an object schema with no properties, which every vendor
 accepts, never as an empty map, and a schema whose root has no type is
 declared an object's, for every vendor: some vendors refuse it
-untyped. Vendors accept different tool names, so the
+untyped. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-094", "kind": "behavior", "applies": "§6.7 Declaring tools, tool names (checked in two places, folded in): a name no vendor accepts (empty, or with a character other than a letter, a digit, _, ., : or -) refused when the tool is defined. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Vendors accept different tool names, so the
 names are checked in two places:
 
 - An implementation refuses, when a tool is defined, a name no vendor accepts:
   an empty one, or one with a character other than a letter, a digit, `_`,
-  `.`, `:` or `-`. A loader of tools defined elsewhere (MCP) skips such a tool
-  with a warning and keeps the others.
+  `.`, `:` or `-`. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-095", "kind": "behavior", "applies": "§6.7 Declaring tools: a loader of tools defined elsewhere (MCP) skips a tool under such a name with a warning and keeps the others. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A loader of tools defined elsewhere (MCP) skips such a tool
+  with a warning and keeps the others.<!-- /rfc --><!-- rfc: {"id": "RK-6.7-096", "kind": "behavior", "applies": "§6.7 Declaring tools: each provider checks its vendor's name rule when it declares tools (an AI provider a turn's; the sentence also names a realtime provider's session), raising before the request an error naming the tool and the rule. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - Each provider checks its own vendor's rule when it declares tools, an AI
   provider a turn's, a realtime provider a session's (at connection and at
   every reconfiguration), and for a name its vendor refuses it raises, before
   the request, an error naming the tool and the rule, rather than letting the
   vendor reject the request mid-turn, or a realtime endpoint accept the
-  declaration and fail the call later, opaquely. Where a realtime endpoint
+  declaration and fail the call later, opaquely. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-097", "kind": "behavior", "applies": "§6.7 Declaring tools, realtime (media feature realtime): a realtime endpoint that hands the tools to another model checks that model's vendor's rule. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Where a realtime endpoint
   hands the tools to another model (a hosted reasoning backend, an agent's
-  think provider), the rule is that model's vendor's. A provider that cannot
+  think provider), the rule is that model's vendor's. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-098", "kind": "behavior", "applies": "§6.7 Declaring tools: a provider that cannot know its server's rule (behind a custom base URL, a vendor-compatible gateway included) checks none. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A provider that cannot
   know its server's rule (any server behind a custom base URL, a
   vendor-compatible gateway included) checks none: the server decides.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.7-013", "kind": "behavior", "applies": "§6.7 Provider Abstraction; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-6.7-013", "kind": "behavior", "applies": "§6.7 A tool result on the wire, rendered in the vendor's format: where that format has an error flag, a result whose call was refused, failed, blocked, served by nothing or cancelled carries it, the text the same either way. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **A tool result on the wire.** A provider renders each tool result as its
 vendor's format carries one. Where that format has an error flag on a result, a
 result whose call was
@@ -4512,7 +4702,7 @@ refused, failed, blocked, served by nothing or cancelled carries it; the text
 the model reads is the same either way.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.7-014", "kind": "behavior", "applies": "§6.7 Provider Abstraction; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-6.7-014", "kind": "behavior", "applies": "§6.7 A request the model cannot serve: where the provider's model catalogue says the model refuses function tools on the endpoint, or the endpoint does not serve it, the request fails before it is sent with a non-retryable error naming the model; behind a base URL the server decides. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **A request the model cannot serve.** Where a provider knows, from its model
 catalogue, that the model refuses function tools on the endpoint it calls, or
 that the endpoint does not serve the model at all, the request fails before it
@@ -4520,33 +4710,33 @@ is sent, with a non-retryable error naming the model. Behind a base URL the
 server decides.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.7-015", "kind": "behavior", "applies": "§6.7 Provider Abstraction; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-6.7-099", "kind": "behavior", "applies": "§6.7 A failed generation: a ProviderError whose retryable flag depends neither on the provider nor on the failure's form. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **What a failed generation reads as (normative).** A provider MUST raise a
 failure as a `ProviderError` whose `retryable` flag does not depend on the
-provider or on the form the server gave the failure. Its status is the one the
+provider or on the form the server gave the failure. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-100", "kind": "behavior", "applies": "§6.7 A failed generation: its status, the one the server described (the HTTP status, else the status or error type in the error's body). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Its status is the one the
 server described: the HTTP status of an error response, else the status or
 error type written in the error's body, as when a stream already answered 200
 carries an error event (an error type that stands for a status, an
-overload's, reads as that status). A status of 408, 409, 429 or any 5xx is retryable; any other
-status is final. Without a status, a lost connection (refused, reset or timed
+overload's, reads as that status). <!-- /rfc --><!-- rfc: {"id": "RK-6.7-101", "kind": "behavior", "applies": "§6.7 A failed generation: a status of 408, 409, 429 or any 5xx retryable, any other final. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A status of 408, 409, 429 or any 5xx is retryable; any other
+status is final. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-102", "kind": "behavior", "applies": "§6.7 A failed generation without a status: a lost connection retryable; an answer that could not be read final, never an empty success. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Without a status, a lost connection (refused, reset or timed
 out) is retryable, and an answer that could not be read is final: a body that
 is not the provider's format, such as a gateway's HTML page in place of JSON,
 including a stream that ends without one event, never reads as an empty
-success. A 200 whose body is an error object reads as the status it names. A
+success. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-103", "kind": "behavior", "applies": "§6.7 A failed generation: a 200 whose body is an error object reads as the status it names. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A 200 whose body is an error object reads as the status it names. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-104", "kind": "behavior", "applies": "§6.7 A failed generation: a status the provider's SDK drops makes the failure final; another failure without a status retryable only when its message names a retryable status, a rate limit or an overload, as whole words. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
 provider whose SDK drops a status it does not classify cannot read it, and
 its failure is final; any other failure without a status is retryable only
 when its message names a retryable status, a rate limit or an overload, as
-whole words. One exception is kept: a provider whose server reports with no status only a
+whole words. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-105", "kind": "behavior", "applies": "§6.7 A failed generation, the one exception: a provider whose server reports with no status only a stream it aborted reads that failure as a lost connection. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->One exception is kept: a provider whose server reports with no status only a
 stream it aborted (its template failed to parse the model's own output) reads
 that failure, a generation defect that a new sample may not repeat, as a lost
-connection. The failure's text, as a turn's error record, `ON_ERROR`
+connection. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-106", "kind": "behavior", "applies": "§6.7 A failed generation: the failure's text leads with the provider's name and its status, unless its message already names the provider as a word or names none, keeping the provider's own text. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The failure's text, as a turn's error record, `ON_ERROR`
 and a log line read it, leads with the provider's name and the status it
 answered, `acme (402): Payment required`, `acme: connection reset`,
 unless its message already names the provider as a word, in any case, or it
 names no provider; its message keeps the provider's own text.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.7-016", "kind": "behavior", "applies": "§6.7 Provider Abstraction; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-6.7-016", "kind": "structural", "applies": "§6.7 SMS provider interface, where an implementation offers SMS transports: send(), parse_webhook() and verify_signature(). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **SMS Provider interface:**
 
 ```
@@ -4557,7 +4747,7 @@ SMSProvider (interface)
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.7-017", "kind": "behavior", "applies": "§6.7 Provider Abstraction; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-6.7-107", "kind": "structural", "applies": "§6.7 Email provider interface, where an implementation offers email transports: send() and parse_inbound(). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Email Provider interface:**
 
 ```
@@ -4566,13 +4756,15 @@ EmailProvider (interface)
 └── parse_inbound(payload: map) → InboundMessage
 ```
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-6.7-108", "kind": "structural", "applies": "§6.7: similar provider interfaces for WhatsApp, Messenger, Teams, RCS, HTTP, voice (STT, TTS, media feature voice) and custom channel types. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 Implementations SHOULD define similar provider interfaces for WhatsApp, Messenger,
 Teams, RCS, HTTP, Voice (STT, TTS), and any custom channel types.
 <!-- /rfc -->
 
 ### 6.8 Classifiers
 
-<!-- rfc: {"id": "RK-6.8-001", "kind": "behavior", "applies": "§6.8 Classifiers; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-6.8-002", "kind": "behavior", "applies": "§6.8 Classifiers (what a classifier is and why a component asks one, folded in): support is optional. Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->
 A classifier answers narrow, typed questions about a state (a text, or
 structured data such as a turn with the conversation around it) with
 probabilities, not generated text. It is how a component asks for judgment where
@@ -4581,6 +4773,8 @@ without a generation: the component asks its questions together, in one call,
 and composes the answers in code, where each one stays visible and measurable.
 Support is OPTIONAL.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-6.8-003", "kind": "structural", "applies": "§6.8 Classifiers, where an implementation offers them: the Classifier interface (classify(), close()) and the YesNoQuestion, ChoiceQuestion (two options at least) and ScoreQuestion (ordered levels, two at least) questions. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 Classifier (interface)
 ├── classify(state: string | JSON, questions: map<string, Question>) → Answers
@@ -4599,6 +4793,10 @@ ScoreQuestion
 ├── instructions: string
 └── levels: list<string>                # Ordered levels, lowest first, each described; two at least
 
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-6.8-004", "kind": "structural", "applies": "§6.8 Classifiers, where an implementation offers them: the YesNoAnswer, ChoiceAnswer and ScoreAnswer answers (a score the expected level) and Answers, every question answered by name. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 YesNoAnswer
 └── probability: float                  # Of yes, in [0, 1]
 
@@ -4613,18 +4811,22 @@ ScoreAnswer
 Answers: map<string, Answer>            # By question name, every question answered
 ```
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-6.8-005", "kind": "behavior", "applies": "§6.8 Classifiers, where an implementation offers them: a classifier answers every question asked, or raises ClassifierError for what kept it from answering, its wait bounded. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A classifier answers every question it was asked, or raises `ClassifierError`
 for whatever kept it from answering (a refused request, an answer it cannot read,
-the end of its wait, which it bounds). It sends the questions' wording as the
-caller wrote it. An implementation says how far its probabilities can be
+the end of its wait, which it bounds). <!-- /rfc --><!-- rfc: {"id": "RK-6.8-006", "kind": "behavior", "applies": "§6.8 Classifiers, where an implementation offers them: the questions' wording sent as the caller wrote it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->It sends the questions' wording as the
+caller wrote it. <!-- /rfc --><!-- rfc: {"id": "RK-6.8-007", "kind": "behavior", "applies": "§6.8 Classifiers, where an implementation offers them: a trained classifier's probabilities are calibrated, a generative model asked for one answer gives the answer it chose probability 1, and an implementation documents how far its probabilities can be trusted. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An implementation says how far its probabilities can be
 trusted: a trained classifier's are calibrated; a generative model asked for one
-answer gives the answer it chose probability 1, and is documented as such.
+answer gives the answer it chose probability 1, and is documented as such.<!-- /rfc --><!-- rfc: {"id": "RK-6.8-008", "kind": "behavior", "applies": "§6.8 Classifiers, where an implementation offers them: close() releases what the classifier opened itself, a provider or client it was handed staying its owner's. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 `close()` releases what the classifier opened itself; a provider or a client it
 was handed stays its owner's.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-6.8-009", "kind": "behavior", "applies": "§6.8 Classifiers, where an implementation offers them: a classifier whose service reads a text alone sends a structured state as its JSON. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A classifier whose service reads a text alone sends a structured state as its
-JSON. A question the service declines to answer (a refusal) fails the call with
-`ClassifierError`, since a classifier answers every question or none. A speak
+JSON. <!-- /rfc --><!-- rfc: {"id": "RK-6.8-010", "kind": "behavior", "applies": "§6.8 Classifiers, where an implementation offers them: a question the service declines to answer fails the call with ClassifierError. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A question the service declines to answer (a refusal) fails the call with
+`ClassifierError`, since a classifier answers every question or none. <!-- /rfc --><!-- rfc: {"id": "RK-6.8-011", "kind": "non_testable", "applies": "§6.8 Classifiers (their consumers, a speak policy and a discussion's dispatch, folded in): the classifiers an implementation provides are listed in its documentation, each with how far its probabilities can be trusted; only the documentation keeps it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A speak
 policy built on judgments (Section 6.4) is a classifier's first consumer; a
 discussion's dispatch policy (Section 19.7.5) is another. The classifiers an
 implementation provides (a scripted mock, a classifier on any AI provider that
@@ -4632,11 +4834,13 @@ answers under a JSON schema, Section 6.7, classifiers on hosted or local
 decision models) are listed in its documentation, each with how far its
 probabilities can be trusted.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-6.8-012", "kind": "behavior", "applies": "§6.8 Classifiers, where an implementation offers one on a decision-model server: the model it was given sent with every call. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A classifier on a decision-model server, one it starts itself included, sends
-the model it was given with every call. A server does not always put the expected level in its `score`
+the model it was given with every call. <!-- /rfc --><!-- rfc: {"id": "RK-6.8-013", "kind": "behavior", "applies": "§6.8 Classifiers on a decision-model server: the score computed from the levels' probabilities when the server sends them. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A server does not always put the expected level in its `score`
 (one may put the likeliest level there), so such a classifier computes the
 score from the levels' probabilities when the server sends them, and a score
-means the same whichever server answered. A classifier that runs a decision
+means the same whichever server answered. <!-- /rfc --><!-- rfc: {"id": "RK-6.8-014", "kind": "behavior", "applies": "§6.8 Classifiers, where an implementation offers one that runs a decision model on the integrator's machine: downloaded and started at the first question, stopped by close(). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A classifier that runs a decision
 model on the integrator's machine downloads and starts it at the first
 question, and `close()` stops it.
 
