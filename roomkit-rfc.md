@@ -2728,89 +2728,89 @@ skipped, and a `played_ms` that is not a non-negative number reads as 0: a
 malformed record never fails the turns of the room it stays in.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.4-015", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-6.4-218", "kind": "behavior", "applies": "§6.4 Generation hooks: BEFORE_AI_GENERATION fires once per turn (purpose answer) and once per thinker call (purpose thought). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **What the generation hooks see:** `BEFORE_AI_GENERATION` fires once per turn
 (purpose `answer`), and once per thinker call (purpose `thought`, above, with
 the context the thinker would read, its tools never called), so a hook tells
-the agent's turn from its thinking. For a turn it fires
+the agent's turn from its thinking. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-219", "kind": "behavior", "applies": "§6.4 Generation hooks: a turn's BEFORE_AI_GENERATION event, its context, its trigger and its tools, the toolset the tool policy and skill gating leave. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->For a turn it fires
 with the context the turn starts from and the event the turn answers (`trigger`,
 Section 8.5), and its `tools` are the turn's toolset
-as the tool policy and skill gating leave it. Without Tool Search that is the
+as the tool policy and skill gating leave it. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-220", "kind": "behavior", "applies": "§6.4 Generation hooks: the tools a turn's hook is shown without Tool Search. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Without Tool Search that is the
 first round's declaration, the tool that reads back a large result aside
-(below). Under Tool Search it is the whole catalogue the
+(below). <!-- /rfc --><!-- rfc: {"id": "RK-6.4-221", "kind": "behavior", "applies": "§6.4 Generation hooks: the tools a turn's hook is shown under Tool Search, and what the first round declares of them. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Under Tool Search it is the whole catalogue the
 turn may reach, before Tool Search collapses it: the first round declares the
 pinned floor, the tools orchestration injected (Section 21.1), the tools the
 hook added and the discovery tools, all taken from what the hook left, and a
 tool `find_tools` reveals enters the declaration of the *next* round. A hook
 that sees only the first round's declaration cannot withdraw a deferred tool,
-which `find_tools` would then reveal.
+which `find_tools` would then reveal.<!-- /rfc --><!-- rfc: {"id": "RK-6.4-222", "kind": "behavior", "applies": "§6.4 Generation hooks: the toolset the hook leaves is the turn's, a tool it removes and a tool it adds or edits. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The toolset the hook leaves is the turn's: a tool it removes MUST NOT be
 declared at any later round of the turn, MUST NOT be named by `find_tools` or
 `list_tools` nor recovered at call time, and a call naming it MUST be refused,
 a tool the channel provides itself included; a tool it adds or edits stays as
 the hook left it, subject to the tool policy and skill gating, and a tool it
-adds is declared at every round of the turn, never deferred by Tool Search.
+adds is declared at every round of the turn, never deferred by Tool Search.<!-- /rfc --><!-- rfc: {"id": "RK-6.4-223", "kind": "behavior", "applies": "§6.4 Generation hooks: a tool the hook adds served by the channel's handler, a call to a tool it edited checked against its schema, and a tool the channel serves itself. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A tool it adds is served by the channel's tool handler, and a call to a tool
 it edited is checked against the schema it left (Section 21.1); a tool the
 channel serves itself keeps its own definition, the hook able to withdraw it,
-never to redefine it nor to add a tool under its name. A
-hook that withdraws a tool from the first round only has withdrawn nothing.
-A tool the hook adds is never named by `find_tools`, being declared already.
+never to redefine it nor to add a tool under its name. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-224", "kind": "behavior", "applies": "§6.4 Generation hooks under Tool Search: a hook that withdraws a tool from the first round only has withdrawn nothing. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
+hook that withdraws a tool from the first round only has withdrawn nothing.<!-- /rfc --><!-- rfc: {"id": "RK-6.4-400", "kind": "behavior", "applies": "§6.4 Generation hooks under Tool Search: a tool the hook adds is never named by find_tools. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+A tool the hook adds is never named by `find_tools`, being declared already.<!-- /rfc --><!-- rfc: {"id": "RK-6.4-225", "kind": "behavior", "applies": "§6.4 Toolset: a call names a tool the round declared, or one Tool Search recovers at call time. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Once the turn's toolset is resolved, a call MUST name a tool the round
 declared, an empty declaration included, or one Tool Search recovers from the
 turn's catalogue at call time: a round that declares nothing admits no other
-call. The channel's own tools are no exception: one the turn does not offer
+call. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-226", "kind": "behavior", "applies": "§6.4 Toolset: a tool of the channel's own that the turn does not offer, refused as an undeclared tool on every path. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The channel's own tools are no exception: one the turn does not offer
 (`find_tools` while Tool Search hides nothing, `run_skill_script` with no
-executor) is refused as any undeclared tool is, on every path (Section 12.4).
+executor) is refused as any undeclared tool is, on every path (Section 12.4).<!-- /rfc --><!-- rfc: {"id": "RK-6.4-227", "kind": "behavior", "applies": "§6.4 Skill activation: it counts only once its activate_skill call is served. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Likewise a skill activation (Section 24.4) counts only
 once its `activate_skill` call is served: an ON_TOOL_CALL BLOCK or a failure
-activates nothing, whatever the model read. So does a `find_tools` reveal, on
+activates nothing, whatever the model read. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-228", "kind": "behavior", "applies": "§6.4 find_tools reveal: a blocked or failed call, and a search that finds nothing, reveal nothing. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->So does a `find_tools` reveal, on
 every path: a BLOCK or a failure reveals nothing, not for the next round nor
 for a later turn, and a search that finds nothing reveals nothing, the reveal
-window left as it was. A served call reveals its matches whatever an
+window left as it was. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-229", "kind": "behavior", "applies": "§6.4 find_tools reveal: a served call reveals its matches whatever an ON_TOOL_CALL hook replaced its result with. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A served call reveals its matches whatever an
 ON_TOOL_CALL hook replaced its result with, as a served activation opens its
-gates. A realtime session declares what a served `find_tools` call revealed
+gates. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-230", "kind": "behavior", "applies": "§6.4 find_tools reveal, realtime (media feature realtime): when a realtime session declares what a served find_tools call revealed, and a reconfiguration while the call was judged. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A realtime session declares what a served `find_tools` call revealed
 once its result went out, its call id belonging to the connection a
 reconfiguration can replace, and declares nothing of it when a
 reconfiguration gave the session another catalogue while the call was judged:
-its matches were found in the catalogue that left. So for the tools an
+its matches were found in the catalogue that left. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-231", "kind": "behavior", "applies": "§6.4 Skill activation hint: the tools an activation's hint names are revealed as find_tools matches are (a realtime session's included), and an activation whose answer carries no hint reveals nothing and is refused. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->So for the tools an
 activation's hint names. An activation whose answer carries no hint (it
 finds no skill and no tool matches the name, or the skill exists but is
 unavailable) reveals nothing and is refused, as a reference or a script asked of a skill
-the registry does not offer is. A tool Tool Search recovers at call time joins the
+the registry does not offer is. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-232", "kind": "behavior", "applies": "§6.4 Tool Search: a tool recovered at call time joins the reveal window once it answered the call. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A tool Tool Search recovers at call time joins the
 reveal window only once the tool answered the call (served, failed, or its
 result withheld by an ON_TOOL_CALL hook), as the room's tool memory keeps any
-tool used. A tool the model called and that answered MUST remain declared for
+tool used. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-233", "kind": "behavior", "applies": "§6.4 Toolset: a tool the model called and that answered stays declared for the rest of the turn. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A tool the model called and that answered MUST remain declared for
 the rest of the turn, even after a later `find_tools` replaces the search
-window. A tool admitted by the catalogue, tool policy and skill gates whose
+window. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-234", "kind": "behavior", "applies": "§6.4 Toolset: a tool whose call was refused solely for invalid arguments is declared for the turn's next rounds. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A tool admitted by the catalogue, tool policy and skill gates whose
 call was refused solely because the model's arguments were invalid MUST also
 be declared for the turn's next rounds, so the provider can parse a corrected
-call against its schema. This declaration is not an executed call and MUST NOT
-enter the room's memory of tools used. Other refusals (an access gate,
+call against its schema. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-235", "kind": "behavior", "applies": "§6.4 Toolset: the declaration of a tool called with invalid arguments never enters the room's memory of tools used. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->This declaration is not an executed call and MUST NOT
+enter the room's memory of tools used. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-236", "kind": "behavior", "applies": "§6.4 Toolset: other refusals, and a call nothing served, reveal nothing and leave the round's other reveals. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Other refusals (an access gate,
 BEFORE_TOOL_USE, the handler's refusal), or a call nothing served, reveal
-nothing and leave every other reveal of the round as it was.
+nothing and leave every other reveal of the round as it was.<!-- /rfc --><!-- rfc: {"id": "RK-6.4-237", "kind": "behavior", "applies": "§6.4 Retention, realtime (media feature realtime): a reconfigurable realtime session retains a called tool for its current catalogue, publishes a needed schema after the call's result, and a call from an earlier catalogue reveals nothing into its replacement. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The same rule applies to a reconfigurable realtime session: retain a called
 tool for its current catalogue, publish a needed schema only after delivering
 the call's result, and discard retained names when the session ends or its
 catalogue is replaced. A call from an earlier catalogue MUST NOT reveal tools
-into its replacement. Search matches that have not been called still follow
-the search window; retention does not widen access or activate a skill.
+into its replacement. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-238", "kind": "behavior", "applies": "§6.4 Retention: search matches not called follow the search window, and retention widens no access and activates no skill. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Search matches that have not been called still follow
+the search window; retention does not widen access or activate a skill.<!-- /rfc --><!-- rfc: {"id": "RK-6.4-239", "kind": "behavior", "applies": "§6.4 declared_tools: ON_AI_RESPONSE carries the union of the turn's declarations, each tool with its definition and the reason it was visible. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 `ON_AI_RESPONSE` MUST therefore carry the turn's whole declaration as
 `declared_tools`: the union, over every generation round of the turn, of the
 tools the channel handed the provider, each with the name, description and
 parameters as declared and the reason it was visible (`always` when Tool Search
 did not gate it, `pinned`, `sticky` or `revealed` when it did, the earliest
-reason winning). The union is keyed by name in first-declaration order, one
+reason winning). <!-- /rfc --><!-- rfc: {"id": "RK-6.4-240", "kind": "behavior", "applies": "§6.4 declared_tools: keyed by name in first-declaration order, one entry per name. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The union is keyed by name in first-declaration order, one
 entry per name: the reveal window slides from one `find_tools` to the next, and
-a per-round rewrite would lose a tool revealed earlier in the same turn. A turn
+a per-round rewrite would lose a tool revealed earlier in the same turn. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-241", "kind": "behavior", "applies": "§6.4 declared_tools: a turn without Tool Search reports its single declaration, the declaration RoomKit made. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A turn
 that runs without Tool Search MUST report its single declaration through the
 same field, so a host has one reading whatever the turn's mode. The field
-reports the declaration RoomKit made, not the provider's wire form of it. An
+reports the declaration RoomKit made, not the provider's wire form of it. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-242", "kind": "behavior", "applies": "§6.4 declared_tools: empty for an intelligence channel whose toolset is not RoomKit's to declare (an external ACP agent). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An
 intelligence channel whose toolset is not RoomKit's to declare (an external ACP
 agent, below) leaves it empty.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.4-016", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-6.4-243", "kind": "behavior", "applies": "§6.4 Declaration from round to round: within a turn the declaration changes only where a tool must appear, in the toolset's order. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 **The declaration from round to round.** A provider that caches requests
 reads each one as a prefix, in the order tools, system prompt, messages, and a
 declaration that gains, loses or reorders a tool invalidates everything cached
@@ -2818,61 +2818,61 @@ after the tools, the history included: the next round is billed as if nothing
 were cached. Within a turn the declaration SHOULD therefore change only where
 a tool must appear, one `find_tools` reveals or one a skill activation opens
 (Section 24.4), and its order is the toolset's, the same from one turn to the
-next. The tool that reads back a large result (Section 21.5) is declared from
+next. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-244", "kind": "behavior", "applies": "§6.4 Declaration from round to round: the tool that reads back a large result, declared from the first round after the others, and when the generation hook sees it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The tool that reads back a large result (Section 21.5) is declared from
 the first round of any turn that declares a tool, after the others, so the
 declaration does not change when a result is stored; the generation hook sees
-it once the room holds a stored result, and may withdraw it then. A round the
+it once the room holds a stored result, and may withdraw it then. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-245", "kind": "behavior", "applies": "§6.4 Anti-loop guard, forced round: it keeps the round's declaration, runs none of its calls, and the turn ends force_stopped. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A round the
 implementation forces to
 answer, when an anti-loop guard stops a model that keeps repeating a refused
 call, keeps the round's declaration and tells the model that no further call
 will run: none of that round's calls runs, and the turn ends `force_stopped`.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.4-017", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-6.4-246", "kind": "behavior", "applies": "§6.4 Anti-loop guard: the third identical call of a turn refused before it runs, in words that say so, its outcome a refusal. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **The anti-loop guard.** A small model can re-issue one call round after round and
 burn the whole turn without answering. Within one turn, an implementation counts
 each call by its tool's name and its arguments, whatever the order of their keys,
 and refuses the third call with the same arguments before it runs, in words that
-say so, the outcome a refusal (Section 9.3). A tool the channel keeps for itself
+say so, the outcome a refusal (Section 9.3). <!-- /rfc --><!-- rfc: {"id": "RK-6.4-247", "kind": "behavior", "applies": "§6.4 Anti-loop guard: find_tools and list_tools refused at their second identical call, and those names under the channel's tool_search off. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A tool the channel keeps for itself
 that reads what cannot change within the turn (`find_tools`, `list_tools`) is
 refused at its second, whether or not a search hides anything; under the channel's
-own `tool_search` off, those names are any tool's. A call past its gate is counted
+own `tool_search` off, those names are any tool's. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-248", "kind": "behavior", "applies": "§6.4 Anti-loop guard: a call past its gate counted on the arguments it would run with. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A call past its gate is counted
 on the arguments it would run with, once repaired and once `BEFORE_TOOL_USE` left
-them. A call its gate refuses is counted on the arguments the model wrote, and past
-the limit the model reads the guard's words in place of the gate's. A model that
+them. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-249", "kind": "behavior", "applies": "§6.4 Anti-loop guard: a call its gate refuses counted on the model's arguments, and the guard's words in place of the gate's past the limit. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A call its gate refuses is counted on the arguments the model wrote, and past
+the limit the model reads the guard's words in place of the gate's. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-250", "kind": "behavior", "applies": "§6.4 Anti-loop guard: a model that re-issues a refused call three times past the limit is force-stopped. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A model that
 re-issues a refused call three times past the limit is force-stopped, the forced
-round above. A tool whose definition declares that its calls change what later
+round above. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-251", "kind": "behavior", "applies": "§6.4 Anti-loop guard: a served call of a changes_state tool starts the turn's counts again. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A tool whose definition declares that its calls change what later
 calls read (`changes_state`, false by default: a file edited, a row written)
 starts the turn's counts again once a call of it is served, the counts of identical
 answers below included, all but that call's own: a test rerun after each edit is
 no repeat, and the same edit made a third time is still refused when no other
 change came between (two changes made in turn start each other's counts again,
-and only the round limit, the loop's time bound or a budget ends them). A call of it that
-failed, was refused or was blocked starts nothing again. The guard's words tell the
+and only the round limit, the loop's time bound or a budget ends them). <!-- /rfc --><!-- rfc: {"id": "RK-6.4-252", "kind": "behavior", "applies": "§6.4 Anti-loop guard: a changes_state call that failed, was refused or was blocked starts nothing again. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A call of it that
+failed, was refused or was blocked starts nothing again. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-253", "kind": "behavior", "applies": "§6.4 Anti-loop guard: what the guard's words tell the model. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The guard's words tell the
 model to stop repeating the call; they do not ask it to answer now, which is the
-forced round's to ask.
+forced round's to ask.<!-- /rfc --><!-- rfc: {"id": "RK-6.4-254", "kind": "behavior", "applies": "§6.4 Settled answer: from the third identical answer of one tool in a turn, a note on what the model reads and on the call's row. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 A model that varies its arguments never reaches that limit, so the guard also tells
 it, and never refuses: from the third time one tool answers a call past its gate
 with the same text in a turn, what the model reads of it, and the call's row with
-it, carries a note saying the answer is settled, with how many times it came. The note
+it, carries a note saying the answer is settled, with how many times it came. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-255", "kind": "behavior", "applies": "§6.4 Settled answer: what the note compares, what the tool's observers read, and what is never noted. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The note
 compares what the call answered, a failure's words too; the tool's observers read
 its answer without the note, what a gate refused is never noted, nor is the guard's
 own refusal, and a result of parts a model that sees reads is not compared.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.4-018", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-6.4-256", "kind": "behavior", "applies": "§6.4 AFTER_TOOL_ROUND: after which rounds it fires, and when. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Between two rounds.** `AFTER_TOOL_ROUND` fires after each round in which the
 channel ran at least one call, once that round's results are in and before the
 next round is built: not after a round cancelled before its calls ran, nor after
-one whose calls were all served outside the channel. Its event carries the
+one whose calls were all served outside the channel. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-257", "kind": "behavior", "applies": "§6.4 AFTER_TOOL_ROUND: what its event carries. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Its event carries the
 round's index, its calls, the results the channel produced and the ones the
 provider served, each in the order of the calls, and the names of the turn's
 toolset as `BEFORE_AI_GENERATION` is shown it: what the tool policy and skill
 gating let the turn reach, Tool Search's whole catalogue included, nothing
 withdrawn. A hook reads the round whole and names what it withdraws: the
 calls of one round run concurrently, and a rule about them (one success among
-failures, say) is a rule about the round. A hook MAY withdraw tools for the
+failures, say) is a rule about the round. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-258", "kind": "behavior", "applies": "§6.4 AFTER_TOOL_ROUND: a hook's withdrawals, with every guarantee of a generation hook's, and the messages it adds after the round's results. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A hook MAY withdraw tools for the
 rest of the turn, any name whether the event lists it or not, with every
 guarantee of a withdrawal by `BEFORE_AI_GENERATION` above (never declared
 again, never named by `find_tools` or `list_tools` nor recovered, a call naming
@@ -2880,72 +2880,72 @@ it refused, a tool the channel provides itself included, never handed to an
 external handler), and MAY add messages the next round reads after the round's
 results. A withdrawal changes the declaration of the next round, the one
 exception this hook makes to the declaration staying the same, and costs what a
-changed declaration costs. A hook acts on the event it receives, in place: the
+changed declaration costs. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-259", "kind": "behavior", "applies": "§6.4 AFTER_TOOL_ROUND: a hook acts on its event in place, and a MODIFY that returns no event. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A hook acts on the event it receives, in place: the
 event a MODIFY returns is not read, but a MODIFY that returns none is an
-unusable result (Section 9.3). An implementation whose hooks receive a copy of
+unusable result (Section 9.3). <!-- /rfc --><!-- rfc: {"id": "RK-6.4-260", "kind": "behavior", "applies": "§6.4 AFTER_TOOL_ROUND, where an implementation's hooks receive a copy of their own: the event a MODIFY returns is read. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An implementation whose hooks receive a copy of
 their own rather than the event reads instead the withdrawals and messages of
-the event a MODIFY returns, to the same effect. A BLOCK stops the hooks after it, as on any
+the event a MODIFY returns, to the same effect. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-261", "kind": "behavior", "applies": "§6.4 AFTER_TOOL_ROUND: a BLOCK, and a hook that raises, times out or returns an unusable result. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A BLOCK stops the hooks after it, as on any
 SYNC trigger, and changes nothing of the round, which has run; a hook that
 raises, times out or returns an unusable result is skipped, or, registered
-fail-closed, stops the hooks after it. The hook belongs to a registered AI
+fail-closed, stops the hooks after it. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-262", "kind": "behavior", "applies": "§6.4 AFTER_TOOL_ROUND belongs to a registered AI channel's tool loop: a reasoning backend's agent and an external agent do not fire it (the sentence also names a realtime session). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The hook belongs to a registered AI
 channel's tool loop: a realtime session does not fire it, nor does a
 reasoning backend's agent (not a registered channel), nor an external agent
 that runs its own loop (Section 6.4, ACP).
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.4-019", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-6.4-263", "kind": "behavior", "applies": "§6.4 Tools of earlier turns: an AI channel's history carries its earlier turns' tool rounds at their place, as the turn sent them. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **The tools of earlier turns (normative).** An AI channel's history MUST carry
 the rounds of tool calls its own earlier turns made, each at its place in the
 conversation (after the turn's input, before its answer), the way the turn
 itself sent it: the assistant's message holding the text the model wrote with
 its calls, then the calls, then their results, as the tool messages the
 provider's API carries. A recall of them riding the turn's input instead
-reads to a model as something the participant asked, and models answer it. A
+reads to a model as something the participant asked, and models answer it. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-264", "kind": "behavior", "applies": "§6.4 Tools of earlier turns: a replayed call's arguments, as the model wrote them, under the model's id. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
 round replays what the model was given, as it was given:
 
 - the arguments it wrote, never a BEFORE_TOOL_USE rewrite of them, with its
   intent back among them while the agent asks for one (A call's intent,
-  above), under the id the model gave the call;
+  above), under the id the model gave the call;<!-- /rfc --><!-- rfc: {"id": "RK-6.4-265", "kind": "behavior", "applies": "§6.4 Tools of earlier turns: a replayed call's result, as the model read it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - the result it read, whole: an ON_TOOL_CALL rewrite, or an oversized
   result's placeholder while the room still stores what it points to
-  (Section 21.5); once it no longer does, the result's size alone.
+  (Section 21.5); once it no longer does, the result's size alone.<!-- /rfc --><!-- rfc: {"id": "RK-6.4-266", "kind": "behavior", "applies": "§6.4 Tools of earlier turns: every call its turn ended is replayed, never a call cancelled before it answered nor a refused call under an invalid name. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 Every call its turn ended is replayed, whatever its outcome or tool: a
 refusal, a call nothing served, a discovery or housekeeping call of the
 channel's own included; never a call cancelled before it answered, whose
 result no model read, nor a refused call under a name outside
 `[A-Za-z0-9_-]{1,128}`, which only a model's invented call carries and which
-a vendor would refuse in every later request. They are the channel's own only, read from its stored
+a vendor would refuse in every later request. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-267", "kind": "behavior", "applies": "§6.4 Tools of earlier turns: the channel's own only, read from its stored rows. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->They are the channel's own only, read from its stored
 rows (`TOOL_CALL_START`'s arguments and intent, `TOOL_CALL_END`'s result and
-outcome), so they outlive the executor. An
+outcome), so they outlive the executor. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-268", "kind": "behavior", "applies": "§6.4 Tools of earlier turns: an end row pairs with its turn's start row by id, first in, first out. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An
 end row pairs with the start row of its turn and id, first in, first out within
 a round of that turn, so that two calls under one id each read their own result;
-a call an earlier round left without its end stays without one. A turn
+a call an earlier round left without its end stays without one. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-269", "kind": "behavior", "applies": "§6.4 Tools of earlier turns: a turn with no store, or an unreadable one, goes without them. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A turn
 with no store to read, or whose store cannot be read, goes without them rather
-than failing.
+than failing.<!-- /rfc --><!-- rfc: {"id": "RK-6.4-270", "kind": "behavior", "applies": "§6.4 Tools of earlier turns: a round older than the history window is not replayed. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 A round older than the history window is not replayed: a history never opens
-on the assistant's calls. A discussion's turn, which reads its event at its
-place (Section 19.7.5), reads after it the rounds of the turns that followed.
+on the assistant's calls. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-271", "kind": "behavior", "applies": "§6.4 Tools of earlier turns: a discussion's turn reads after its event the rounds of the turns that followed. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A discussion's turn, which reads its event at its
+place (Section 19.7.5), reads after it the rounds of the turns that followed.<!-- /rfc --><!-- rfc: {"id": "RK-6.4-272", "kind": "behavior", "applies": "§6.4 Tools of earlier turns: a later turn's first request opens with what the previous turn's last request sent, but for what the room does not keep. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Nothing shortens a round from one turn to the next: a later turn's first
 request opens with what the previous turn's last request sent, then its
 answer, so that a provider that caches a prompt's prefix keeps the history
 (The prompt from turn to turn, below), but for what that request carried and
 the room does not keep: the notes that rode its input, a round's reasoning
-(Section 6.7). The history window, the memory's budget, which charges each
+(Section 6.7). <!-- /rfc --><!-- rfc: {"id": "RK-6.4-273", "kind": "behavior", "applies": "§6.4 Tools of earlier turns: what bounds the replayed rounds. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The history window, the memory's budget, which charges each
 round to the event it reads with (Section 20), and a compaction, once a
-provider refuses the context as too long (above), are what bound the rounds.
+provider refuses the context as too long (above), are what bound the rounds.<!-- /rfc --><!-- rfc: {"id": "RK-6.4-274", "kind": "behavior", "applies": "§6.4 Tools of earlier turns: an id the provider gave two calls is replayed as given. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 An id the provider gave two calls, in one turn or two, is replayed as given:
-the provider took it so. The instructions its earlier turns read
+the provider took it so. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-275", "kind": "behavior", "applies": "§6.4 Instructions of earlier turns: replayed at their place. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The instructions its earlier turns read
 are replayed the same way, at their place (Section 10.1.1, The instruction a
-turn read). A standalone turn replays none (Section 10.1.1), and the turn's
+turn read). <!-- /rfc --><!-- rfc: {"id": "RK-6.4-401", "kind": "behavior", "applies": "§6.4 Instructions of earlier turns: a standalone turn replays none, and the turn's footprint counts them. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A standalone turn replays none (Section 10.1.1), and the turn's
 footprint counts them (Section 20).
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.4-020", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-6.4-276", "kind": "behavior", "applies": "§6.4 Prompt from turn to turn: the system prompt stays the same from one turn to the next. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 **The prompt from turn to turn.** For the same reason, the system prompt SHOULD
 stay the same from one turn to the next: a system prompt that changes
-invalidates everything cached after it, the whole history included. What changes
+invalidates everything cached after it, the whole history included. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-277", "kind": "behavior", "applies": "§6.4 Turn notes: what changes between turns travels with the turn's input as notes, each passage set apart as data (the sentence also names what a vision provider last saw). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->What changes
 between turns as the conversation works travels with the turn's input instead,
 as notes: the room's plan, the room's background tasks and how far each got
 (Section 23.4), how speakers are named when the history window holds
@@ -2954,7 +2954,7 @@ when two people or more do (below; who is present changes as people come
 and go), how a cut answer
 reads while the window holds one (above, "A cut answer"), what a vision
 provider last saw (Section 12.8.7), and what a memory provider retrieved for this turn
-alone (Section 20.2), each passage set apart as data. The notes follow the
+alone (Section 20.2), each passage set apart as data. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-278", "kind": "behavior", "applies": "§6.4 Turn notes: their place, after the turn's input in the same message, after the last user message, or a message of their own. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The notes follow the
 turn's input (the participant's words, or the application's instruction) in the
 same message, marked as the channel's, asking for nothing; when the
 conversation does not end on such a
@@ -2963,7 +2963,7 @@ message when it is a user's, and are a message of their own otherwise. They
 come after the input, so what changes comes last and a provider that caches
 a prefix keeps the input in it;
 they are not a message of their own when the input is one, since a model whose
-chat format requires alternating roles would refuse two in a row. For a model
+chat format requires alternating roles would refuse two in a row. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-279", "kind": "behavior", "applies": "§6.4 Tool images: for a model that sees, the two latest images the channel's tool calls returned follow the notes in the turn's input, under a header. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->For a model
 that sees, the latest images the channel's own tool calls in the room returned
 (two, newest last) follow the notes in the same message, each after the call
 that returned it, under a header that sets them apart as data a tool returned,
@@ -2972,30 +2972,30 @@ hook's block joins. A replayed result says what an image showed in its tool's
 words, never what it looks like, and a follow-up about a picture needs the
 picture.
 They ride the turn's input, never an assistant's message, where several
-providers refuse an image. Only an image every vision provider takes is kept:
+providers refuse an image. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-280", "kind": "behavior", "applies": "§6.4 Tool images: only an inline PNG, JPEG, GIF or WebP data URI of 2,000,000 characters at most, from a live result, is kept. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Only an image every vision provider takes is kept:
 inline (a data URI, never a link, which may expire or be out of the vendor's
 reach), PNG, JPEG, GIF or WebP, its data URI 2,000,000 characters at most, its
 scheme and type read in any case, from a live result (never
-history rebuilt from the store). A turn that replayed them and whose content
+history rebuilt from the store). <!-- /rfc --><!-- rfc: {"id": "RK-6.4-281", "kind": "behavior", "applies": "§6.4 Tool images: after a turn whose content the provider refused, none of the room's tool images is replayed. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A turn that replayed them and whose content
 the provider refused replays none of the room's images after it: one the
-provider refused would fail every later turn. The content is refused when the
+provider refused would fail every later turn. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-282", "kind": "behavior", "applies": "§6.4 Content refused: the provider errors that count as a refusal of the content. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The content is refused when the
 turn's first request fails, before anything of it streamed, on a provider
 error that is not retryable and is no authentication, payment, permission,
 missing model or rate limit (HTTP 401, 402, 403, 404 or 429): a later round, or
-a stream already under way, shows the images were taken. These refusals a
+a stream already under way, shows the images were taken. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-283", "kind": "behavior", "applies": "§6.4 Content refused: refusals a provider makes before any request, for something other than the content, are none, and its error says so. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->These refusals a
 provider makes before any request, for something other than the content the
 request carries, are no refusal of the content, and its error says so: a
 response schema the model does not take or outside the portable subset
 (Section 6.7), a model or tools its endpoint does not serve, a tool name the
-vendor refuses or a tool it cannot declare. An image the provider cannot send
-is refused before any request too, and is a refusal of the content. Each label names its call as the input names a call (below), each
+vendor refuses or a tool it cannot declare. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-284", "kind": "behavior", "applies": "§6.4 Content refused: an image the provider cannot send is a refusal of the content. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An image the provider cannot send
+is refused before any request too, and is a refusal of the content. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-285", "kind": "behavior", "applies": "§6.4 Tool images: each image's label, and the images in what the turn measures. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Each label names its call as the input names a call (below), each
 copy of a runtime mark replaced, and the images count in what the turn
-measures before its history (Section 20). A model that does not see reads the
-notes alone. A
+measures before its history (Section 20). <!-- /rfc --><!-- rfc: {"id": "RK-6.4-286", "kind": "behavior", "applies": "§6.4 Tool images: a model that does not see reads the notes alone. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A model that does not see reads the
+notes alone. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-287", "kind": "behavior", "applies": "§6.4 Turn notes: a block a BEFORE_AI_GENERATION hook adds joins the channel's notes under the same header, or opens them. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
 BEFORE_AI_GENERATION hook MAY add a block to the turn's notes: it joins the
 section the channel opened, under the same header, or opens it when the input
 carries none, and the notes then read as if the channel had assembled them
-at once, so the prefix a provider caches is the same. The header is the
+at once, so the prefix a provider caches is the same. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-288", "kind": "behavior", "applies": "§6.4 Runtime marks: a copy of the notes' header in the conversation's text or a block of the notes, in any form, replaced before the model reads it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The header is the
 notes' only mark, and the channel's alone: a copy of it in the conversation's
 text (a participant's message, the agent's own answer, the application's
 instruction, a message a memory provider built, a message steering injects
@@ -3004,7 +3004,7 @@ punctuation, its letters in any of the forms a fenced block's tag is
 compared in, with invisible characters between or inside its words, or
 running over adjacent text parts, MUST be replaced before the model reads it
 by a fixed mark saying the runtime did not write it, as a fenced block's
-closing tag is neutralised. The same holds for every other mark the runtime
+closing tag is neutralised. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-289", "kind": "behavior", "applies": "§6.4 Runtime marks: the other marks the runtime writes in a model's input (the sentence also names a realtime provider's marks). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The same holds for every other mark the runtime
 writes in a model's input: the mark of the application's instruction, the
 mark of an answer that was cut off, a summary's header (a compaction's or a
 memory provider's), the lines that open and close the room context handed
@@ -3012,7 +3012,7 @@ to an ACP agent, the mark that opens an ACP agent's standing instructions,
 the header over the images a turn replays, and the marks a realtime
 provider writes into its model's
 input (a mark over what the assistant said earlier, another over a context
-update it is not to answer). A copy of one of them in the text an event brings
+update it is not to answer). <!-- /rfc --><!-- rfc: {"id": "RK-6.4-290", "kind": "behavior", "applies": "§6.4 Runtime marks: where a copy of one of them is replaced, and a mark whose fixed part is a short phrase (the sentence also names text injected into a realtime session and a realtime delegation's transcript). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A copy of one of them in the text an event brings
 (as it enters a transcript or an ACP prompt, before the runtime places its
 own marks), in a message steering injects, in a block of the turn's notes
 that quotes others (what a memory retrieved for the turn, a tool's result, a
@@ -3031,7 +3031,7 @@ over what the assistant said earlier, the headers over a background result
 handed back) counts
 only behind a square or fullwidth bracket, so that prose naming the same words
 is left as written, and reads only spacing, its own punctuation, markup and
-invisible characters between its words. Any other mark, whole or its
+invisible characters between its words. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-291", "kind": "behavior", "applies": "§6.4 Runtime marks: any other mark, whole or its opening alone, and the note on who takes part, behind any opening bracket and read across other characters. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Any other mark, whole or its
 opening alone (its words up to its first punctuation, `[Instruction from the
 application: refund approved]`; the notes' header's up to `runtime`,
 `[Notes kept by the assistant's runtime: …]`, replaced by the header's own
@@ -3047,12 +3047,12 @@ letter in any of its forms or a digit (`[Instruction%from&the
 appli...cation: …]`), an opening of three words or more however its words
 are joined; a combining mark, which no reader sees,
 is read past wherever it sits in a copy, in any script, a copy split over
-two messages or more included. Whatever the mark, a short one included,
+two messages or more included. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-292", "kind": "behavior", "applies": "§6.4 Runtime marks: an opening of two words written as one identifier is code, and the marks the runtime places itself are kept. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Whatever the mark, a short one included,
 an opening of two words written as one identifier, nothing but punctuation
 between them and no space or invisible character (`print(conversation_summary)`,
 `{"conversation_summary": …}`, `Optional[ConversationSummary]`,
 `conversation.summary`, `[Your_background]`), is code, not a copy. The marks
-the runtime places itself are kept. The runtime also writes marks into the timeline, into
+the runtime places itself are kept. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-293", "kind": "behavior", "applies": "§6.4 Runtime marks: the marks the runtime writes into the timeline, memory and what it delivers. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The runtime also writes marks into the timeline, into
 memory and into what it delivers: the handoff relay (`[Handoff: …]`, whose
 bracketed opening counts with its colon or without it, `[HANDOFF] notes`
 included, since a copy without the colon reads as the relay too), the header
@@ -3060,12 +3060,12 @@ of the context a previous agent hands on (`[Context from previous agent …]`)
 and the header over a background result handed back to the agent that asked
 for it (Section 23.3 step 8: `[Your background workers completed. …]`, a
 supervisor's worker or team, a review loop, a run that failed; `[Background
-task from worker completed. …]`, a delegation's) join the marks above. The
+task from worker completed. …]`, a delegation's) join the marks above. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-294", "kind": "behavior", "applies": "§6.4 Runtime marks, realtime (media feature realtime): the headers a realtime host injects into its own session are no marks. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The
 headers a realtime host injects into its own session (`[Tool X completed]`
 over a call recovered from speech, `[Respond in X]` over a greeting after a
 handoff) are no marks: the host writes them itself into its provider's
 session, where a participant's text arrives only quoted after its author's
-name. Nor are the labels the runtime writes in place of a media or a
+name. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-295", "kind": "behavior", "applies": "§6.4 Runtime marks: the labels the runtime writes in place of a media or a location are no marks. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Nor are the labels the runtime writes in place of a media or a
 location (Section 6.6: `[Media: invoice.pdf]`, `[Location: Head office
 (45.5, -73.6)]`), which a reader without the content reads in its place (a
 model, for a media that is no image and for a location; a channel without
@@ -3073,7 +3073,7 @@ media; an ACP agent's prompt): each stands inside its sender's own message
 and names what that sender gave (a caption, a file name, coordinates), so a
 participant's copy claims nothing more than that participant could send,
 where a mark speaks for the runtime or the application; a model reads it as
-written. Which text is the runtime's is a provenance, never a reading of the
+written. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-296", "kind": "behavior", "applies": "§6.4 Runtime marks: which text is the runtime's is a provenance, metadata.runtime_record. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Which text is the runtime's is a provenance, never a reading of the
 text: a record the runtime writes into the timeline that holds its marks
 (the handoff relay) carries `metadata.runtime_record`, which the inbound
 pipeline removes from what a sender supplies, and nothing else does: a
@@ -3089,38 +3089,38 @@ caller's, a delivery strategy never merges it with a request without it, and
 the agent's `instruction_read` row carries it, so the turn the hand-back
 opens and the later turns that replay it keep its header; the text a model
 wrote into any of them (a handoff's reason, a summary, a hand-back's task and
-worker output) is cleaned as it is written. A copy of a mark is replaced in every
+worker output) is cleaned as it is written. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-297", "kind": "behavior", "applies": "§6.4 Runtime marks: a copy replaced in every record and memory message without the key, and across consecutive unlabelled user messages. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A copy of a mark is replaced in every
 record and every memory message without it, the messages a host's memory
 provider builds included, and so is a copy that runs over consecutive user
 messages the runtime has not labelled (a memory's last message and the turn
 after it included), which an API may merge into one; a labelled message is
 strings after its author's label, which no copy runs out of, and is never
-cut, since a cut would take its label off. The replacement is the same on every turn, so
+cut, since a cut would take its label off. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-298", "kind": "behavior", "applies": "§6.4 Runtime marks: the replacement is the same on every turn, and the header the model reads is the channel's. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The replacement is the same on every turn, so
 the prefix a provider caches is the same, and the header the model reads is
 the one the channel placed, a paragraph of its own with a block after it:
 the block a hook adds joins the notes it marks, and a reader that separates
 the input from its notes cuts there (an input with images carries its notes
-in a text part of their own, which such a reader leaves out). The turn's own
+in a text part of their own, which such a reader leaves out). <!-- /rfc --><!-- rfc: {"id": "RK-6.4-299", "kind": "behavior", "applies": "§6.4 Runtime marks: the turn's own rounds and the rounds its history replays are not rewritten. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The turn's own
 rounds, and the earlier rounds its history replays, are not rewritten: what
 the agent writes between its tool calls, and a tool's result, which the tool
 role frames. Only a copy a hook writes into
-the messages itself is what both misread. An active
+the messages itself is what both misread. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-300", "kind": "behavior", "applies": "§6.4 Skill instructions: an active skill's instructions stay in the system prompt. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An active
 skill's instructions stay in the system prompt (Section 24.4): they change only
-when a skill is activated, and they are instructions, not notes. Those of a
+when a skill is activated, and they are instructions, not notes. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-402", "kind": "behavior", "applies": "§6.4 Skill instructions: those of a skill an MCP server serves ride in the system prompt as data, in a block of their own. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Those of a
 skill an MCP server serves ride there as data, in a block of their own
-(Section 24.7). A standalone
+(Section 24.7). <!-- /rfc --><!-- rfc: {"id": "RK-6.4-301", "kind": "behavior", "applies": "§6.4 Standalone turn: it carries none of the room's memories. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A standalone
 turn carries none of the room's memories (Section 10.1.1).
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.4-021", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-6.4-302", "kind": "behavior", "applies": "§6.4 Author images: a MediaContent reaches a model that sees as an image after its caption, at its place, in the history and the input. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Images an author sent.** A `MediaContent` an event brings (alone, or a part
 of a `CompositeContent`) reaches a model that sees as an image after its
 caption, at its place among the event's parts, with the words of the event,
-in the history and in the input alike.
+in the history and in the input alike.<!-- /rfc --><!-- rfc: {"id": "RK-6.4-303", "kind": "behavior", "applies": "§6.4 Author images: an image's URL, a data URI, a link or a reference. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Its URL is a data URI, which carries the image; a link (`http` or `https`),
 handed to the provider as it is; or a reference, `<scheme>://…` in a scheme
 the application chooses and RoomKit never interprets, naming a media the
-application holds. A scheme a reader fetches, opens or runs by itself,
+application holds. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-304", "kind": "behavior", "applies": "§6.4 Author images: a reference in a scheme a reader fetches, opens or runs by itself is refused when the content is built. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A scheme a reader fetches, opens or runs by itself,
 without the application, is refused when the content is built, whatever its
 case, alone or as one of the parts a compound scheme joins with `+`: the
 files on the machine, in an archive or on a share (`admin`, `afp`,
@@ -3136,7 +3136,7 @@ files on the machine, in an archive or on a share (`admin`, `afp`,
 through another protocol, a file or a descriptor (`async`, `bluray`,
 `cache`, `concat`, `concatf`, `crypto`, `fd`, `pipe`, `subfile`) and code to
 run (`expect`, `jar`, `javascript`, `php`, `vbscript`). `http` and `https`
-stand there for a compound scheme (`hls+http`); a link is no reference. A
+stand there for a compound scheme (`hls+http`); a link is no reference. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-305", "kind": "behavior", "applies": "§6.4 Author images: a URL without a scheme, a malformed scheme, and a reference a path reader could follow, refused. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
 URL without a scheme is refused too, and so is a scheme not written as an
 ASCII letter then ASCII letters, digits, `+`, `-` or `.`, and a reference a
 path reader could follow: a one-letter scheme, read as a drive; or one whose
@@ -3145,55 +3145,55 @@ byte sequence that is no UTF-8 reads as U+FFFD), holds an escape a fourth
 decoding would still change, a backslash, a control character (Unicode Cc),
 or a segment between `/`, `?` and `#` that is `..` once trimmed of Unicode
 White_Space, or starts with `~`, an ASCII letter and a colon (a drive), or a
-`/` only decoding writes. Some transports read a URL they are handed as a local
+`/` only decoding writes. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-306", "kind": "behavior", "applies": "§6.4 Author images: a transport never reads a reference as a local path. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Some transports read a URL they are handed as a local
 path, after decoding, trimming or joining it under a root, and a transport
-MUST NOT read a reference as one. An escape that leads nowhere
+MUST NOT read a reference as one. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-307", "kind": "behavior", "applies": "§6.4 Author images: what stays in a reference. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An escape that leads nowhere
 (`file%2Ename.png`), `a..b`, a space and an empty authority
 (`app:///photos/1`) stay in a reference, and so does an application's own
 scheme, compound or not, or a store the application reads with its own
-rights (`s3`, `gs`). A link's scheme and a data URI's are kept in
+rights (`s3`, `gs`). <!-- /rfc --><!-- rfc: {"id": "RK-6.4-308", "kind": "behavior", "applies": "§6.4 Author images: a link's and a data URI's scheme kept in lower case, a reference's as written. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A link's scheme and a data URI's are kept in
 lower case, whatever case they were written in, since that is the spelling
 every reader tests: a transport that fetches only `http://` and `https://` read
 `HTTP://../secret` as a path. A reference keeps its scheme as the application
-wrote it. A channel resolves a reference as it builds the turn, by asking the
+wrote it. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-309", "kind": "behavior", "applies": "§6.4 Author images: a channel resolves a reference through the framework's media_resolver as it builds the turn. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A channel resolves a reference as it builds the turn, by asking the
 application's media resolver for its bytes: an asynchronous callable
 `(media, room_id) → bytes | null` handed to the framework (`media_resolver`),
-which serves every AI channel registered on it. Any participant can write a
+which serves every AI channel registered on it. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-310", "kind": "non_testable", "applies": "§6.4 Author images: the application's media resolver answers only for a media the room may show (only the application keeps it). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Any participant can write a
 reference, so the resolver MUST answer only for a media the room it is asked
-for may show, and none otherwise. The store and every broadcast carry the
+for may show, and none otherwise. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-311", "kind": "behavior", "applies": "§6.4 Author images: the store and every broadcast carry the reference alone, no resolution is kept, and a transport channel is handed the reference. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The store and every broadcast carry the
 reference alone, never the bytes, and no resolution is kept from one turn to
 the next; a transport channel is handed the reference as it is, which the
-application resolves itself where that channel needs the media. An application
+application resolves itself where that channel needs the media. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-312", "kind": "behavior", "applies": "§6.4 Attached media, where the application gives a reader: the framework's attached_media reader serves every AI channel registered on it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An application
 may keep the media a message carries outside its content, in a record of its
 own beside the words; it names them to the channel through its attached-media
 reader: a callable `(event) → list of MediaContent` handed to the framework
-(`attached_media`), which serves every AI channel registered on it. A channel
+(`attached_media`), which serves every AI channel registered on it. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-313", "kind": "behavior", "applies": "§6.4 Attached media, where the application gives a reader: the events a channel reads through the reader, and those it does not. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A channel
 reads each event of the room through it, the history it gives its memory
 provider and the event it answers alike, an instruction (Section 10.1.1)
 and a deleted event, whose content is withheld (Section 10.3), excepted; for
 an instruction that stands alone, which reads none of the room (Section
-10.1.1 rule 7), it asks the reader of no event. The media the reader names
+10.1.1 rule 7), it asks the reader of no event. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-314", "kind": "behavior", "applies": "§6.4 Attached media, where the application gives a reader: the media it names follow the event's own content, in order, under every rule of an author's images. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The media the reader names
 follow the event's own content, in the order given, as the parts of a
 `CompositeContent` (a text without words gives them its place), and every
 rule of this paragraph and of Section 20 applies to them as to the event's
-own. The reader is asked again on every turn, so it
+own. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-315", "kind": "non_testable", "applies": "§6.4 Attached media: the application's reader names the same media for the same event, in the same order (only the application keeps it). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The reader is asked again on every turn, so it
 MUST name the same media for the same event, in the same order: an image is
 known by its event and its place among the parts, which is what a refusal
-records. A reader that fails names none for that event, never a failed turn.
-The store and every broadcast keep the event as it was stored. Per turn the channel sends the
+records. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-316", "kind": "behavior", "applies": "§6.4 Attached media, where the application gives a reader: a reader that fails names none for that event, never a failed turn. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A reader that fails names none for that event, never a failed turn.<!-- /rfc --><!-- rfc: {"id": "RK-6.4-317", "kind": "behavior", "applies": "§6.4 Attached media, where the application gives a reader: the store and every broadcast keep the event as it was stored. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+The store and every broadcast keep the event as it was stored. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-318", "kind": "behavior", "applies": "§6.4 Author images: the newest four sent per turn, history and input together, a bound max_author_images may change or remove. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Per turn the channel sends the
 newest images its authors sent, history and input counted together: four by
 default, a bound the channel's configuration MAY change or remove
-(`max_author_images`). Only an image every vision provider takes is sent: PNG,
+(`max_author_images`). <!-- /rfc --><!-- rfc: {"id": "RK-6.4-319", "kind": "behavior", "applies": "§6.4 Author images: only a PNG, JPEG, GIF or WebP image with data up to 5 MiB is sent, under the type it was read as. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Only an image every vision provider takes is sent: PNG,
 JPEG, GIF or WebP (`image/jpg` read as JPEG, case and parameters aside), with
 data, up to 5 MiB of it (5,242,880 bytes, a data URI's read off its base64's
 length, a resolved image's on its bytes), and it is sent under the type it was read as, its data
 URI's header included (a header that declares no type reads as the media's
-type, and goes as written): a provider refuses `image/jpg`. A data URI is
+type, and goes as written): a provider refuses `image/jpg`. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-320", "kind": "behavior", "applies": "§6.4 Author images: a data URI otherwise sent as written, and one its provider cannot read. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A data URI is
 otherwise sent as written, its header's parameters trimmed and in lower case:
 the form of its data
 (unpadded, URL-safe or wrapped base64) is the provider's to judge, and one its
 provider cannot read fails the turn before its request leaves, its images
-then refused as below. Anything else takes the image's place as a text mention, never a
+then refused as below. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-321", "kind": "behavior", "applies": "§6.4 Author images: what takes an image's place as a text mention. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Anything else takes the image's place as a text mention, never a
 failed turn: a media of another type reads as its transcoded form (Section
 6.6), save that one alone in its event without a caption reads, for a model
 that does not see, as what the channel's `describe_empty_event` says of the
@@ -3202,70 +3202,70 @@ shown because the model does not see images, so that the model says it cannot
 see it rather than answer as if it had; an image past the
 bound reads as an earlier image not shown; an image with no data or past the
 size, and a reference no resolver serves, that the resolver fails on or answers
-none for, reads as an image unavailable. Any other event whose content reads as
+none for, reads as an image unavailable. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-322", "kind": "behavior", "applies": "§6.4 Author images: an event whose content reads as nothing reads as describe_empty_event says of it, left out when it says nothing. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Any other event whose content reads as
 nothing (an empty text) reads as what `describe_empty_event` says of it, and is
 left out of the turn when it says nothing, a media alone in its event then
-reading as its transcoded form. An AI channel takes every media whatever its
+reading as its transcoded form. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-323", "kind": "behavior", "applies": "§6.4 AI channel capabilities: TEXT, RICH and MEDIA whatever its model sees. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An AI channel takes every media whatever its
 model sees (its capabilities name TEXT, RICH and MEDIA), so that the event it
-answers reads as the same event does in its history. The name a mention gives (the caption, else the
+answers reads as the same event does in its history. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-324", "kind": "behavior", "applies": "§6.4 Author images: a mention's name is quoted, and a mention never carries a data URI or a reference. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The name a mention gives (the caption, else the
 filename, else the type) is quoted (Section 6.4), and a mention never carries
-a data URI or a reference. A turn whose content the provider refused, as for
+a data URI or a reference. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-325", "kind": "behavior", "applies": "§6.4 Author images: a turn whose content the provider refused marks its author images refused, and later turns carry a mention in their place. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A turn whose content the provider refused, as for
 the images tools returned above, marks the author images its request carried,
 attached ones alike, refused in the room, and the turns after it carry in
 their place a mention that the model's provider refused the image, which takes
 no place among the newest images a turn sends: one the provider refused would
-fail every later turn while it stays in the window. The images
+fail every later turn while it stays in the window. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-326", "kind": "behavior", "applies": "§6.4 Author images: they count in what the turn measures, a media that is not an image as its mention. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The images
 an author sent count in what the turn measures (Section 20); a media that is
 not an image counts as its mention.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.4-022", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-6.4-327", "kind": "behavior", "applies": "§6.4 Compaction: a channel may compact a turn's context once and replay the call when a provider refuses it as too long. Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->
 **A turn compacted.** When a provider refuses a turn's context as too long, the
-channel MAY compact the context once and replay the call. A refusal reads as
+channel MAY compact the context once and replay the call. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-328", "kind": "behavior", "applies": "§6.4 Compaction, where an implementation compacts: what reads as a refusal of the context as too long. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A refusal reads as
 one when the provider classed it so, whatever its words, or, when it classed
 it neither way, when its words say so; one it classed as no such refusal is
-not compacted. A channel that compacts does so before any retry or fallback,
+not compacted. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-329", "kind": "behavior", "applies": "§6.4 Compaction, where an implementation compacts: before any retry or fallback, only while nothing of the answer reached the room, once per call. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A channel that compacts does so before any retry or fallback,
 only while nothing of the call's answer has reached the room (a replay would
 hand it twice), and once per call: a replay refused again is not compacted
-again. The turn's later rounds build on the compacted context, and a replay
-that answers refuses none of the author images the request carried. A
+again. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-330", "kind": "behavior", "applies": "§6.4 Compaction, where an implementation compacts: later rounds build on the compacted context, and a replay that answers refuses no author image. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The turn's later rounds build on the compacted context, and a replay
+that answers refuses none of the author images the request carried. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-331", "kind": "behavior", "applies": "§6.4 Compaction, where an implementation compacts: it keeps the turn's input, as the hooks left it, and its notes whole. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
 compaction keeps the turn's input, as the hooks before generation left it,
-and its notes whole. When the input falls in the older half of the messages,
+and its notes whole. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-332", "kind": "behavior", "applies": "§6.4 Compaction, where an implementation compacts: an input in the older half, the history before it summarized and long results of the rounds after it stored. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->When the input falls in the older half of the messages,
 it summarizes the history that precedes the input and shortens each result
 over 2000 characters of the tool rounds between the input and the end of the
 older half by storing it as a large result is (Section 21.5), so the model
 keeps a preview of at most 1000 characters and can read the rest back; a
 skill's instructions (Section 24.4), a page already read back and a result
-already stored stay as they are.
-Otherwise it summarizes the older half. Its summary opens with a mark of the
+already stored stay as they are.<!-- /rfc --><!-- rfc: {"id": "RK-6.4-333", "kind": "behavior", "applies": "§6.4 Compaction, where an implementation compacts: an input outside the older half, the older half summarized. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+Otherwise it summarizes the older half. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-334", "kind": "behavior", "applies": "§6.4 Compaction, where an implementation compacts: the summary's mark and lines. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Its summary opens with a mark of the
 runtime's, `[Context compacted — earlier conversation summary]`, then gives
-each summarized message a line, its role then its text quoted. It keeps every
+each summarized message a line, its role then its text quoted. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-335", "kind": "behavior", "applies": "§6.4 Compaction, where an implementation compacts: every call kept with its result, no part of a delimited block quoted, and when it fails the call. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->It keeps every
 tool call with its result, never quotes part of a delimited block, and fails
 the call rather than cut the input when it can neither summarize anything
 before the input nor store a result of those rounds, or when the context
-holds four messages or fewer. Text the runtime
+holds four messages or fewer. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-336", "kind": "behavior", "applies": "§6.4 Runtime text next to a user message joins that message. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Text the runtime
 places next to a user message (the turn's notes, a compaction's summary, a
 summary a memory provider returns) joins that message rather than forming a
 second user message in a row.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.4-023", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-6.4-337", "kind": "behavior", "applies": "§6.4 Compaction between rounds: what the channel hands its memory's compact after a round it ran a call in. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **The history compacted between two rounds.** After each round in which the
 channel ran at least one call, once `AFTER_TOOL_ROUND` has fired and before the
 next round is built, the channel hands its memory (Section 20.1, `compact`)
 the history the turn sends before its input, as the model reads it (before
 the message a discussion's turn answers, Section 19.7.5), and the token
-counters the round's generation reported, as its provider reported them. A
-memory that answers nothing, the default, leaves the turn as it is. A history
+counters the round's generation reported, as its provider reported them. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-338", "kind": "behavior", "applies": "§6.4 Compaction between rounds: a memory that answers nothing, the default, leaves the turn as it is. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
+memory that answers nothing, the default, leaves the turn as it is. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-339", "kind": "behavior", "applies": "§6.4 Compaction between rounds: a history the memory returns stands for the old one, the input and notes whole and long results before the last round stored. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A history
 it returns stands for the old one in the turn's later requests: the turn's
 input and its notes stay whole, and each result over 2000 characters of the
 turn's rounds before the last is stored as a compaction stores it (above),
-the last round's results, which the model has not read yet, left whole. A
+the last round's results, which the model has not read yet, left whole. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-340", "kind": "behavior", "applies": "§6.4 Compaction between rounds: a message of the returned history that is not the history's is text from outside. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
 message of the returned history that is not one of the history's is text from
 outside (below), a copy of a runtime mark in it replaced unless a memory of
 the runtime built it, and a user text the messages the memory wrote ahead of
-the history's own end on joins the user message after them. A memory that
-fails is logged, and the turn goes on as it was. This compaction answers no
+the history's own end on joins the user message after them. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-341", "kind": "behavior", "applies": "§6.4 Compaction between rounds: a memory that fails is logged, and the turn goes on. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A memory that
+fails is logged, and the turn goes on as it was. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-342", "kind": "behavior", "applies": "§6.4 Compaction between rounds: it answers no refusal, and a call it precedes keeps its compacted replay. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->This compaction answers no
 refusal: a call it precedes keeps its compacted replay.
 <!-- /rfc -->
 
@@ -3326,36 +3326,36 @@ provider it summarizes with (Section 20.3). Its owner closes it once nothing
 uses it, as a classifier's (Section 6.8).
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.4-024", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-6.4-343", "kind": "behavior", "applies": "§6.4 Generation retry: only while nothing of the answer has been handed on. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **A generation tried again.** A provider's error says whether another try may
 succeed (`retryable`). A channel with a retry policy (`retry_policy`, Section
 13.2) tries a generation again only while nothing of its answer has been
 handed on: a stream that handed text, a call or its end is never read again,
 by a retry, a compacted replay or another provider, since the room and the turn
-already hold what it handed. Reasoning is none of its answer, nor are a call's
+already hold what it handed. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-344", "kind": "behavior", "applies": "§6.4 Generation retry: reasoning and a call's fragments are none of the answer. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Reasoning is none of its answer, nor are a call's
 fragments: a stream that showed only those before it failed is read again as one
-that handed nothing. Its reasoning is left out of the round: the channel
+that handed nothing. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-345", "kind": "behavior", "applies": "§6.4 Generation retry: a failed try's reasoning is left out of the round. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Its reasoning is left out of the round: the channel
 rendering the stream and the thinking subscribers have read it, its window
 closed at the failure, and the round replays and reports only the reasoning of
-the try that answered. It tries again only an error worth another try,
+the try that answered. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-346", "kind": "behavior", "applies": "§6.4 Generation retry: only a retryable error, at most max_retries times, after the policy's delay, and none without a retry policy. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->It tries again only an error worth another try,
 at most `max_retries` times, waiting before each try
 `base_delay_seconds × exponential_base^n`, at most `max_delay_seconds`, `n`
-the number of retries already made; without a retry policy it makes none.
+the number of retries already made; without a retry policy it makes none.<!-- /rfc --><!-- rfc: {"id": "RK-6.4-347", "kind": "behavior", "applies": "§6.4 Generation retry: an error not worth another try fails the call at once. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 An error not worth another try fails the call at once, an overflow's
-compacted replay aside. A context
+compacted replay aside. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-348", "kind": "behavior", "applies": "§6.4 Generation retry: a compacted context is what later tries send, and a replay refused again keeps its tries. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A context
 compacted for its replay (above) is what the later tries send, and a replay
-refused again as worth another try keeps its tries. Once they are spent, at
+refused again as worth another try keeps its tries. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-349", "kind": "behavior", "applies": "§6.4 Generation retry: once tries are spent, the router's provider gets the request once, else the last error is the call's. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Once they are spent, at
 once without a retry policy, a channel with a router asks it which provider
 takes the generation (above); the provider it names gets the same request
 once, as that provider can take it (below, the tools it cannot hold), and its
 answer is the call's; without a router, or when it names none, the last error
-is the call's. A provider so named that fails before it handed anything,
+is the call's. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-350", "kind": "behavior", "applies": "§6.4 Generation retry: the error of a call whose router-named provider fails. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A provider so named that fails before it handed anything,
 reasoning alone included, leaves the last error of the provider whose retries
 were spent as the call's, its own error the cause; one that fails after is the
 call's error.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.4-025", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-6.4-351", "kind": "behavior", "applies": "§6.4 External text: every rendering that places text the runtime did not write keeps it in a frame it cannot leave. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Text from outside in a model's context (normative).** Text the runtime places
 in a model's context without having written it (a person's words or name, a
 worker's output or progress, a tool's result, a passage a memory retrieved, a
@@ -3363,7 +3363,7 @@ skill an MCP server serves, the instructions an MCP server publishes, a model's 
 the task a tool call asked for) can hold anything, a frame of the runtime's
 own included. Every rendering that places such text, present and future, MUST
 keep it in a frame it cannot leave, so that nothing it holds reads as written
-by the runtime:
+by the runtime:<!-- /rfc --><!-- rfc: {"id": "RK-6.4-352", "kind": "behavior", "applies": "§6.4 External text, block: a closing tag of the block's name in the text neutralised, in every form a model could read as one (the list of tags also names a realtime provider's context, a vision provider's and a speech model's transcript). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 - **a block**, set apart in a tag of its own (`<tool_result>`,
   `<worker_output>`, `<knowledge>`, `<conversation_summary>`, `<context>` for
@@ -3400,27 +3400,27 @@ by the runtime:
   it: `</previouﬆasks>`), one slash or more (an
   escaped one included) and the common look-alikes of the bracket and the
   slash, and with a mark after the name (`</tag.>`): a closing tag errs
-  toward what a model could read as one. An opening tag of that name, in the
+  toward what a model could read as one. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-353", "kind": "behavior", "applies": "§6.4 External text, block: an opening tag of the block's name neutralised too. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An opening tag of that name, in the
   same forms and spacing, its name ended by anything that does not continue
   it (the text's end included; `<tag-list>` and `<tag.v2>` are other tags),
   is neutralised as well, the rest of it kept as written, so no reader
-  tracking nesting reads the runtime's text after the block as data. A provider that rewrites a framed text before sending
+  tracking nesting reads the runtime's text after the block as data. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-354", "kind": "behavior", "applies": "§6.4 External text, block: a provider that rewrites a framed text replaces what it removes. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A provider that rewrites a framed text before sending
   it (a character its API refuses) MUST replace what it removes, never
-  delete it, so that it joins nothing the frame kept apart. A text cut short
+  delete it, so that it joins nothing the frame kept apart. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-355", "kind": "behavior", "applies": "§6.4 External text, block: a text cut short never leaves part of a block open. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A text cut short
   never leaves part of such a block open (it names the block instead, as a
-  compaction does);
+  compaction does);<!-- /rfc --><!-- rfc: {"id": "RK-6.4-356", "kind": "behavior", "applies": "§6.4 External text, quote: one line, bounded, between curly quotes, its double quote marks made single and its bidirectional controls dropped. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - or **a quote**, inline: on one line (each run of whitespace, line breaks
   included, one space), bounded, between `“` and `”`, every double quote mark
   the text holds (`"`, `“`, `”`, `„`, `«`, `»` and the like) made a single
   one, so that none is left to close the quote, and the bidirectional
   embeddings, overrides and isolates dropped, so that none shows the quote's
-  end reversed.
+  end reversed.<!-- /rfc --><!-- rfc: {"id": "RK-6.4-357", "kind": "behavior", "applies": "§6.4 External text: a tool's definition is not such text. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 A tool's definition (its name, its description and its parameters, those an
 MCP server lists included) is not such text: a request declares it among its
 tools, which the model's API keeps apart from the prompt, or a Tool Search
 tool hands it as its own result. It is its server's declaration, which the
-host chose to serve, and is bounded (Section 21.2).
+host chose to serve, and is bounded (Section 21.2).<!-- /rfc --><!-- rfc: {"id": "RK-6.4-358", "kind": "behavior", "applies": "§6.4 External text: what the runtime gives outside a frame, identifiers, known values, numbers and names kept to their characters. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 What the runtime gives outside both carries no text of its own: an identifier
 kept to an identifier's characters (letters with their marks, digits,
@@ -3429,7 +3429,7 @@ a number, or a person's name kept to a name's characters (letters with their
 marks, digits, spaces, `.`, `-`, `_`, `#`, apostrophes, a letter that reads
 as a colon or a double quote left out, a mark such as the Devanagari
 visarga included), on one line and bounded, as the
-`Name: ` prefix of a transcript gives it. When the history window holds
+`Name: ` prefix of a transcript gives it. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-359", "kind": "behavior", "applies": "§6.4 Speaker labels: with several speakers in the window, or two people or more taking part, each line of a participant's turn opens with the speaker's label. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->When the history window holds
 several speakers, counted by source (a participant, whichever channel
 reached them, else a sender on its channel, else the channel: two senders
 with no name on one channel are two speakers, one sender whose name changed
@@ -3441,13 +3441,13 @@ the speaker's name, or, for a turn whose speaker has no name, its channel as
 the room addresses it (`@sms1`; an agent of a discussion by its handle,
 `@Analyst`, which its turn's notes give too, Section 19.7.5), kept to an
 identifier's characters and never a participant's id, a form no name takes,
-so that a person named like an agent or a channel does not read as one.
+so that a person named like an agent or a channel does not read as one.<!-- /rfc --><!-- rfc: {"id": "RK-6.4-360", "kind": "behavior", "applies": "§6.4 Speaker labels: senders with no name ranked within their channel. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Senders with no name are told apart within their channel: the second source
 under one channel's label carries its rank after it (`@sms1 (2)`), and so on,
 in the order they first speak in the turns the reader reads, so that two
 numbers texting through one channel do not read as one person. That rank is
 not recorded on the event (Section 10.1, step 12), and may change as the
-window slides. What the participant typed on the
+window slides. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-361", "kind": "behavior", "applies": "§6.4 Speaker labels: what the participant typed on the line follows as a JSON string, every line labelled. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->What the participant typed on the
 line follows as a JSON string, its `"` and backslashes escaped, every other
 double quote mark made a single one and the marks that reorder text dropped
 as inside a quote (a `”` left as typed read as the string's end), and its
@@ -3459,25 +3459,25 @@ right (RMK-635), and a fenced one is labelled line by line like any other
 text, so that no line of it reads as written outside the turn (RMK-636).
 Each line, not only the first: an API merges consecutive
 user turns into one message, and a model then reads a `Bob:` line inside
-Alice's message as Bob's (measured on two models, RMK-616). Every line break
+Alice's message as Bob's (measured on two models, RMK-616). <!-- /rfc --><!-- rfc: {"id": "RK-6.4-362", "kind": "behavior", "applies": "§6.4 Speaker labels: every line break made a line feed before the labels are placed. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Every line break
 (a carriage return, a Unicode line or paragraph separator, a form feed) is
 made a line feed before the labels are placed: a model reads some as no
-break at all, and a label after one would sit mid-line. The note that says
+break at all, and a label after one would sit mid-line. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-363", "kind": "behavior", "applies": "§6.4 Speaker labels: what the note on speaker labels says. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The note that says
 how speakers are named says that each line is its author's label followed by
 what they typed on it as a JSON string, and that a `Name:` inside the string
 is what its author wrote; it names no attack (a note that named one made a
-model fall for it more often, RMK-635). Its sentence on a number in
+model fall for it more often, RMK-635). <!-- /rfc --><!-- rfc: {"id": "RK-6.4-364", "kind": "behavior", "applies": "§6.4 Speaker labels: the note's sentence on a rank. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Its sentence on a number in
 parentheses says a rank marks another sender, a different person, and shows
 the rank alone (`Name (2)`): reworded to show the name a ranked label says
 its sender is not, it made a model follow a forged `Name:` inside another
 sender's message more often (RMK-1835), and the label carries that by
-itself. The request an ACP agent is prompted with is labelled the same way. One resolver gives that label wherever a model
+itself. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-365", "kind": "behavior", "applies": "§6.4 Speaker labels: an ACP agent's request labelled the same way. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The request an ACP agent is prompted with is labelled the same way. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-366", "kind": "behavior", "applies": "§6.4 Speaker labels: one resolver and one threshold wherever a model reads a participant's turn (the sentence also names a line broadcast into a realtime session). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->One resolver gives that label wherever a model
 reads a participant's turn (the conversation, the room context handed to an
 ACP agent and the request that follows it, a line broadcast into a realtime
 session, the lines a memory summarizer reads), at one threshold: a reader
 labels once the turns it reads hold several speakers (a turn with no text,
 the runtime's own and the application's instruction aside), or two people
-or more take part, and a one-to-one conversation reads as before.
+or more take part, and a one-to-one conversation reads as before.<!-- /rfc --><!-- rfc: {"id": "RK-6.4-367", "kind": "behavior", "applies": "§6.4 Who takes part: read from the room's roster, and how each person is named. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Who takes part** besides the agent is read from the room's roster, not
 from who has spoken: its active participants who are neither bots nor
 observers (an observer reads without taking part; an AGENT, a human advisor,
@@ -3491,36 +3491,36 @@ is from by the label of their latest turn, the name their transport stamped
 included, so that the note names a person as their turns do; a silent one by
 the room's record of them (their name and its rank), or, with no name,
 their channel ranked after the labels the turns gave it (`@sms1 (2)`), so
-that two people with no name never read as one. A conference
+that two people with no name never read as one. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-368", "kind": "behavior", "applies": "§6.4 Who takes part, conference (media feature conference): a conference keeps the roster, an integration that carries several people through one stream writes it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A conference
 keeps the roster (Section 12.10.4); an integration that carries several
 people through one stream (a meeting bridged into one audio stream) writes
 it, a member per person present, and matches each voice to its person
 (Section 12.2.3). An agent that joins a meeting where one
 person speaks while others listen thus reads that person's first turn
-labelled, not as an anonymous user's. When two people or more take part,
+labelled, not as an anonymous user's. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-369", "kind": "behavior", "applies": "§6.4 Who takes part: the turn's notes name them, each name quoted. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->When two people or more take part,
 the turn's notes name them, each name in a quote (a participant may
 choose their name, and it must not read as the runtime's words), so the
 agent knows who is there before each has spoken and may address someone
-who has not said a word. It names twenty people at most, those whose turns
+who has not said a word. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-370", "kind": "behavior", "applies": "§6.4 Who takes part: the note names twenty people at most and counts the others. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->It names twenty people at most, those whose turns
 the reader reads first, then the silent ones, each in the order they joined,
 and counts the others (`and 10 others`), so that a large group does not put
-every name in every turn; who takes part is still counted whole. The note is
+every name in every turn; who takes part is still counted whole. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-371", "kind": "behavior", "applies": "§6.4 Who takes part: the note is a runtime mark, and a standalone turn carries none. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The note is
 one of the runtime's marks, and a
-standalone turn, which reads nothing of the room, carries none. A speak policy's `SpeakTurn.people` is the same
+standalone turn, which reads nothing of the room, carries none. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-372", "kind": "behavior", "applies": "§6.4 Who takes part: SpeakTurn.people (the sentence also names the voices one microphone carries). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A speak policy's `SpeakTurn.people` is the same
 list, or the distinct voices of the turns when they are more (one
-microphone may carry several). A conversation a memory summarizes
+microphone may carry several). <!-- /rfc --><!-- rfc: {"id": "RK-6.4-373", "kind": "behavior", "applies": "§6.4 Speaker labels in a memory summary: the turns counted, the summarizer's labels, and the conversation after it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A conversation a memory summarizes
 counts the turns the memory retrieved, summarized or kept, and the turn
 being answered: the summarizer's lines then give each turn's label out of
 its quote, `[assistant]` naming only the agent the summary is for, and the
-conversation labels its turns when the summary named several speakers. An
+conversation labels its turns when the summary named several speakers. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-374", "kind": "behavior", "applies": "§6.4 Speaker labels, ACP: a session labelled once stays labelled, the note given once per session. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An
 ACP agent's session keeps what it was sent: once a request reached it
 labelled, after the note, every later request in that session is
-labelled, the note given once per session. The note is one of the
+labelled, the note given once per session. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-375", "kind": "behavior", "applies": "§6.4 Who takes part: a copy of the note in a participant's text is replaced. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The note is one of the
 runtime's marks: a copy of it in a participant's text is replaced as any
-other. A turn a memory's summary is joined to keeps its label out of the
+other. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-376", "kind": "behavior", "applies": "§6.4 Speaker labels: a turn a memory's summary is joined to keeps its label out of the quote, and a speak policy reads each turn under its label. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A turn a memory's summary is joined to keeps its label out of the
 quote in every rendering of it (a thinker's transcript, a compaction's),
 the summary rendered before it, and a speak policy reads each turn under
-the label the conversation gives it. The label is named from the event's
+the label the conversation gives it. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-377", "kind": "behavior", "applies": "§6.4 Speaker labels: where the label's name comes from, and names that read alike (the sentence also names a voice a channel's diarization names). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The label is named from the event's
 sender name (a transport's stamp, or the voice a channel's diarization names
 on a shared microphone, Section 12.2.3) and from the room's participant
 record otherwise (a participant's id, or their identity's, names them on a
@@ -3531,13 +3531,13 @@ names that read alike (in case or in Unicode's confusables, `Alice` and
 source the room saw, and each later one carries it with its rank and the name
 it is not (`Alice (2, not Alice)`), a form no name takes: under its rank alone
 (`Alice (2)`) a model took a later source for the first one more than one
-time in two (RMK-1835). The name after `not` is the label's own, whole within
+time in two (RMK-1835). <!-- /rfc --><!-- rfc: {"id": "RK-6.4-378", "kind": "behavior", "applies": "§6.4 Speaker labels: the name after not, whole within 24 characters. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The name after `not` is the label's own, whole within
 24 characters; a longer one is cut to its first 23, back to their last space
 when that space comes after the thirteenth of them, trailing spaces dropped,
-and ended with `…`. A note that quotes a label (the note on who takes part, a
-discussion's turn notes) quotes it whole, that name included. A name that
+and ended with `…`. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-379", "kind": "behavior", "applies": "§6.4 Speaker labels: a note that quotes a label quotes it whole. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A note that quotes a label (the note on who takes part, a
+discussion's turn notes) quotes it whole, that name included. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-380", "kind": "behavior", "applies": "§6.4 Speaker labels: a name that reads like two others. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A name that
 reads like two others (`Ian`, like
-`Lan` and `ian`) ranks after both and renumbers neither. A name that reads
+`Lan` and `ian`) ranks after both and renumbers neither. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-381", "kind": "behavior", "applies": "§6.4 Speaker labels: a name that reads like an agent's or a user's label carries (a participant). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A name that reads
 like a label a model reads as one of its own turns or a summarizer as the
 agent's or a one-to-one user's (`You`, `you (in a separate session)`,
 `assistant`, `user`, in case and in Unicode's confusables) carries
@@ -3545,13 +3545,13 @@ agent's or a one-to-one user's (`You`, `you (in a separate session)`,
 (Section 23.3, step 4), where a memory summarizer reads the turns it
 summarizes (Section 20.3) and where a discussion's dispatch policy reads its
 speakers (Section 19.7.5), so that it reads as no label of an agent's own
-turns. The name and the rank
+turns. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-382", "kind": "behavior", "applies": "§6.4 Speaker labels: the name and the rank fixed when the turn enters the room and recorded on the event. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The name and the rank
 are fixed when the turn enters the room (Section 10.1, step 12) and recorded
 on the event, so every surface and every later prompt reads the same, and a
 participant renamed later keeps on their earlier turns the name they spoke
-under. A tool call the channel names in the turn's input (an image's label)
+under. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-383", "kind": "behavior", "applies": "§6.4 External text: a tool call the channel names in the turn's input. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A tool call the channel names in the turn's input (an image's label)
 names its tool and its arguments' keys as identifiers and quotes each text
-value. The
+value. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-384", "kind": "behavior", "applies": "§6.4 External text: the conversation keeps its author's role, and the runtime's renderings of it quote each message after its speaker's name (the sentences also name a realtime delegation's reasoning backend, a realtime session and a vision provider). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The
 conversation itself (a participant's message, the agent's own answers, the
 application's instruction) keeps its author's role and is not quoted beyond
 the line labels above, a copy of the turn's notes' header it holds replaced as
@@ -3565,60 +3565,60 @@ session, an orchestration strategy or a vision provider places in a model's
 context.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.4-026", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-6.4-385", "kind": "behavior", "applies": "§6.4 Deferred loading: a provider that can hold a tool declared but unseen receives the hidden and gated tools in that form, opened by reference. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 **A tool that has to appear.** A provider that can hold a tool declared but
 unseen (deferred loading, which keeps such a definition out of the cached
 prefix) SHOULD receive in that form, from the first round of the turn, what
 Tool Search hides and what a skill's gating keeps closed (Sections 21.1,
 24.2), and the result that opens such a tool (`find_tools` naming it,
 `activate_skill` unlocking it) makes it callable by reference instead of by a
-new declaration: the declaration then does not change within the turn at all.
+new declaration: the declaration then does not change within the turn at all.<!-- /rfc --><!-- rfc: {"id": "RK-6.4-386", "kind": "behavior", "applies": "§6.4 Deferred loading, where a provider holds tools unseen: the tools a result references. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A result references exactly the tools the declaration described above would
-show after the call it answers, and a result that fails references none. A
+show after the call it answers, and a result that fails references none. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-387", "kind": "behavior", "applies": "§6.4 Deferred loading, where a provider holds tools unseen: a call to a held tool no result referenced yet. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
 call to a held tool no result has referenced yet is recovered as a call to a
 tool Tool Search hides (Section 21.1), and its result references the tool
-itself. The tool policy still decides what is declared, hidden or not: a tool
+itself. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-388", "kind": "behavior", "applies": "§6.4 Deferred loading, where a provider holds tools unseen: the tool policy still decides what is declared, and a gated tool is refused until its skill is active. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The tool policy still decides what is declared, hidden or not: a tool
 it denies is never declared; a gated tool so declared is still refused until
-its skill is active. A tool held unseen is reported in `declared_tools` once a
+its skill is active. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-389", "kind": "behavior", "applies": "§6.4 Deferred loading, where a provider holds tools unseen: a held tool in declared_tools. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A tool held unseen is reported in `declared_tools` once a
 result has made it callable, with the reason it is visible then (`revealed`
-for one `find_tools` named). A provider without that capability keeps the
+for one `find_tools` named). <!-- /rfc --><!-- rfc: {"id": "RK-6.4-390", "kind": "behavior", "applies": "§6.4 Deferred loading: a provider without the capability, and a router's provider without it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A provider without that capability keeps the
 declaration described above; a provider a router hands a generation to
 without it receives the tools the turn made callable declared plainly and the
-held ones not at all. A
+held ones not at all. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-391", "kind": "behavior", "applies": "§6.4 Deferred loading, where a provider holds tools unseen: a compaction that summarizes a referencing result away declares the tools it referenced. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
 compaction that summarizes a referencing result away declares the tools it
-referenced from then on, since the reference was what made them callable.
+referenced from then on, since the reference was what made them callable.<!-- /rfc --><!-- rfc: {"id": "RK-6.4-392", "kind": "behavior", "applies": "§6.4 Deferred loading, where a provider holds tools unseen: the declaration is the room's, kept from one turn to the next. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 The declaration is the room's on such a provider, kept from one turn to the
 next: the tools shown at the first round of the room's first turn stay the
 tools shown, with the tools the channel never holds (its own, the tools
 orchestration injected, a tool a hook added; a tool the host pins is held
 while a skill's gating closes it), and every other tool the turn declares is
-held. A tool the turn would show beyond that declaration (one an earlier turn
+held. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-393", "kind": "behavior", "applies": "§6.4 Deferred loading, where a provider holds tools unseen: a tool beyond the room's declaration stays held, reopened by an exchange before the turn's input. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A tool the turn would show beyond that declaration (one an earlier turn
 made callable, revealed, used or unlocked, or one added since) stays held, and
 the turn reopens it with an exchange placed after the history and before its
 input: a `find_tools` call where Tool Search is active, otherwise an
 `activate_skill` call for each active skill that gates such a tool, answered as
 `activate_skill` answers a skill already active, each with a result that
-references the tools it reopens. A tool neither reaches is shown instead. The
+references the tools it reopens. A tool neither reaches is shown instead. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-394", "kind": "behavior", "applies": "§6.4 Deferred loading, where a provider holds tools unseen: the reopening exchange is the turn's context, never an event of the room. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The
 exchange is the turn's context, never an event of the room: it is not stored,
 not delivered, and not counted as a tool call, and a provider a router hands
 a generation to that cannot hold a tool receives the tools it reopens declared
-plainly, without the exchange. A standalone turn (Section 10.1.1) neither reads nor keeps the
-room's declaration, and reopens nothing. A tool the turn no longer shows (the
+plainly, without the exchange. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-395", "kind": "behavior", "applies": "§6.4 Deferred loading, where a provider holds tools unseen: a standalone turn neither reads nor keeps the room's declaration. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A standalone turn (Section 10.1.1) neither reads nor keeps the
+room's declaration, and reopens nothing. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-396", "kind": "behavior", "applies": "§6.4 Deferred loading, where a provider holds tools unseen: a tool the turn no longer shows, and a room whose declaration is not known. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A tool the turn no longer shows (the
 policy denies it, its skill closed) leaves the declaration, and a room whose
 declaration is not known (a new room, a restarted process) takes the one its
 turn would show and keeps it from then on.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.4-027", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-6.4-397", "kind": "behavior", "applies": "§6.4 One loop: every turn runs through one tool loop, a turn without tools included. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **One loop, streamed or not.** An AI channel runs every turn through one tool
 loop, whatever its provider streams and whether the turn carries tools: a
-turn without tools is a loop whose first round asks for none. A provider
+turn without tools is a loop whose first round asks for none. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-398", "kind": "behavior", "applies": "§6.4 One loop: the default structured stream over generate() hands the loop everything generate() returned. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A provider
 that does not stream its structured events is read through
 `generate_structured_stream`'s default, which wraps `generate()` and MUST
 hand the loop everything `generate()` returned: each thinking block with its
 signature, each call with its metadata (a thought signature among them), and
-the usage and metadata of the done event. A provider that streams text alone
+the usage and metadata of the done event. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-399", "kind": "behavior", "applies": "§6.4 One loop: a provider that streams text alone streams a turn without tools through generate_stream. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A provider that streams text alone
 streams a turn without tools through `generate_stream`. Every rule this
 section gives a turn therefore holds once, for every provider.
 <!-- /rfc -->

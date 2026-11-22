@@ -10905,11 +10905,6 @@
       "ai-context/unlimited-targets-retain-first-target-formats-non-streaming": "48b66d6c276a25e8affacb32e1ecd290cb76d18843c3baea08b2f740cdf56a3f",
       "ai-context/unlimited-targets-retain-first-target-formats-streaming": "48b66d6c276a25e8affacb32e1ecd290cb76d18843c3baea08b2f740cdf56a3f"
     },
-    "RK-6.4-025": {
-      "discussion/a-turn-s-notes-quote-a-ranked-label-whole": "ba0dd64da1c842ee9ec857f7dc2f1aa4f3c1772cf3c79ee1847d661b0a1744b9",
-      "memory/a-name-that-reads-like-an-earlier-sender-s-is-labelled-with-the-name-it-is-not": "ba0dd64da1c842ee9ec857f7dc2f1aa4f3c1772cf3c79ee1847d661b0a1744b9",
-      "memory/a-ranked-label-cuts-the-name-it-disclaims-to-24-characters": "ba0dd64da1c842ee9ec857f7dc2f1aa4f3c1772cf3c79ee1847d661b0a1744b9"
-    },
     "RK-6.4-036": {
       "steering/another-person-s-message-is-served-under-its-own-role-s-tools": "e084eaa0968591e0fae3821556e92e9518b19ff59dbc4f20228991c4f57043ba",
       "steering/another-person-s-message-waits-a-turn-of-its-own": "e084eaa0968591e0fae3821556e92e9518b19ff59dbc4f20228991c4f57043ba"
@@ -11753,6 +11748,15 @@
       "speaking/reattaching-starts-with-an-empty-thought-streaming": "65f8767e005d814b5e1a243113cdcb83065f8a76080be79b9c60f4ad1c8e71c1",
       "speaking/silence-thinks-without-a-new-request-non-streaming": "65f8767e005d814b5e1a243113cdcb83065f8a76080be79b9c60f4ad1c8e71c1",
       "speaking/silence-thinks-without-a-new-request-streaming": "65f8767e005d814b5e1a243113cdcb83065f8a76080be79b9c60f4ad1c8e71c1"
+    },
+    "RK-6.4-377": {
+      "memory/a-name-that-reads-like-an-earlier-sender-s-is-labelled-with-the-name-it-is-not": "ef0c8e50c4ed74ba1da6eb8a2ff5d36cc51bd1122fc4c04eb051f54d4a4f11b7"
+    },
+    "RK-6.4-378": {
+      "memory/a-ranked-label-cuts-the-name-it-disclaims-to-24-characters": "7b7a10bd84b2e939cf3a012f46afb296be6b4310daf78eba550827e054d50b2e"
+    },
+    "RK-6.4-379": {
+      "discussion/a-turn-s-notes-quote-a-ranked-label-whole": "5c2dda3acb71237ff810b66671a1fd78b51ed406de46165e3557312378226cd6"
     },
     "RK-7.1-002": {
       "permissions/all-source-access-and-mute-combinations": "09e15544fea0657bef56fbca15075385d6cd074a82f5f472f02ac5c31fb5fe92",
