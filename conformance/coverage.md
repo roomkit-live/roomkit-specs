@@ -15,299 +15,300 @@ Unmapped means no reviewed evidence link, not that no test exists. Candidate sce
 Execution receipts name their own RFC, corpus and implementation commits, backend and runtime.
 `recorded_pass` describes that receipt only; it certifies no conformance level.
 Unannotated keyword lines are a reading aid, not a complete list of implicit requirements.
+A decided gap is a unit gaps.json lists with its class and card: no scenario cites it yet, and the listing maps nothing.
 
 See [requirements.json](requirements.json) for exact clauses and applicability,
 [coverage.json](coverage.json) for each mapping and execution, and
 [evidence.json](evidence.json) for assertions, tests, review scope and remaining cases.
 
-| Section | Inventory review | Units | Unmapped | Partial mappings | Complete mappings | Candidate scenarios | Keyword lines to review |
-|---|---|---:|---:|---:|---:|---:|---:|
-| §0 Preface (Abstract and contents) | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §1 Conventions and Terminology | informative | 0 | 0 | 0 | 0 | 0 | 0 |
-| §1.1 Key Words | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §1.2 Definitions | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §1.3 Notation | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §1.4 Serialized Form | normative | 1 | 1 | 0 | 0 | 1 | 0 |
-| §2 Introduction | informative | 0 | 0 | 0 | 0 | 0 | 0 |
-| §2.1 Problem Statement | informative | 0 | 0 | 0 | 0 | 0 | 0 |
-| §2.2 Scope | normative | 3 | 3 | 0 | 0 | 0 | 0 |
-| §2.3 Design Philosophy | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §3 Architecture Overview | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §3.1 Layer Responsibilities | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §3.2 Key Separations | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §4 Core Concepts | informative | 0 | 0 | 0 | 0 | 0 | 0 |
-| §4.1 The Room | normative | 2 | 2 | 0 | 0 | 0 | 0 |
-| §4.2 The Channel | normative | 4 | 4 | 0 | 0 | 36 | 0 |
-| §4.3 The Event | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §4.4 The Participant | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §4.5 The Identity | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §4.6 Two Output Paths | normative | 2 | 2 | 0 | 0 | 0 | 0 |
-| §5 Data Models | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §5.1 Room | normative | 40 | 36 | 4 | 0 | 131 | 0 |
-| §5.2 RoomEvent | normative | 15 | 15 | 0 | 0 | 9 | 0 |
-| §5.3 Event Content | normative | 19 | 19 | 0 | 0 | 25 | 0 |
-| §5.4 Channel Data (Typed, Per-Channel) | normative | 3 | 3 | 0 | 0 | 1 | 0 |
-| §5.5 Participant | normative | 36 | 36 | 0 | 0 | 67 | 0 |
-| §5.6 Identity | normative | 7 | 7 | 0 | 0 | 7 | 0 |
-| §5.7 ChannelBinding | normative | 34 | 34 | 0 | 0 | 112 | 0 |
-| §5.8 ChannelCapabilities | normative | 7 | 7 | 0 | 0 | 35 | 0 |
-| §5.9 Three Levels of Channel Metadata | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §5.10 Task | normative | 2 | 2 | 0 | 0 | 1 | 0 |
-| §5.11 Observation | normative | 1 | 1 | 0 | 0 | 1 | 0 |
-| §5.12 Inbound Message | normative | 6 | 6 | 0 | 0 | 11 | 0 |
-| §5.13 Delivery Result | normative | 7 | 6 | 1 | 0 | 18 | 0 |
-| §5.14 Protocol Trace | normative | 5 | 5 | 0 | 0 | 1 | 0 |
-| §6 Channel System | informative | 0 | 0 | 0 | 0 | 0 | 0 |
-| §6.1 Channel Interface | normative | 2 | 2 | 0 | 0 | 44 | 0 |
-| §6.2 ChannelType | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §6.3 Transport Channels | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §6.4 Intelligence Channels | normative | 44 | 33 | 11 | 0 | 1275 | 0 |
-| §6.5 Source Providers | normative | 2 | 2 | 0 | 0 | 0 | 0 |
-| §6.6 Content Transcoding | normative | 4 | 4 | 0 | 0 | 17 | 0 |
-| §6.7 Provider Abstraction | normative | 17 | 15 | 2 | 0 | 105 | 0 |
-| §6.8 Classifiers | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §7 Permission Model | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §7.1 Access | normative | 4 | 3 | 1 | 0 | 2 | 0 |
-| §7.2 Muting | normative | 11 | 10 | 1 | 0 | 39 | 0 |
-| §7.3 Visibility | normative | 33 | 24 | 3 | 6 | 40 | 0 |
-| §7.4 Named Patterns | normative | 1 | 1 | 0 | 0 | 2 | 0 |
-| §7.5 Permission Rules | normative | 35 | 33 | 2 | 0 | 114 | 0 |
-| §8 Event System | informative | 0 | 0 | 0 | 0 | 0 | 0 |
-| §8.1 Room Events | normative | 3 | 2 | 1 | 0 | 24 | 0 |
-| §8.2 Framework Events | normative | 1 | 1 | 0 | 0 | 93 | 0 |
-| §8.3 Event Chain Depth | normative | 7 | 5 | 2 | 0 | 78 | 0 |
-| §8.4 Realtime / Ephemeral Events | normative | 3 | 0 | 3 | 0 | 41 | 0 |
-| §8.5 Responses: What They Answer, and Whether They Were Consumed | normative | 6 | 5 | 1 | 0 | 4 | 0 |
-| §9 Hook System | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §9.1 Hook Registration | normative | 21 | 20 | 1 | 0 | 49 | 0 |
-| §9.2 Hook Triggers | normative | 111 | 110 | 1 | 0 | 257 | 0 |
-| §9.3 Hook Execution Modes | normative | 105 | 93 | 12 | 0 | 509 | 0 |
-| §9.4 HookResult | normative | 35 | 31 | 3 | 1 | 97 | 0 |
-| §9.5 Hook Pipeline (BEFORE_BROADCAST) | normative | 1 | 1 | 0 | 0 | 6 | 0 |
-| §9.5.1 Off-lock checks (`needs_lock = false`) | normative | 70 | 70 | 0 | 0 | 135 | 0 |
-| §9.6 When to Use What | normative | 6 | 6 | 0 | 0 | 0 | 0 |
-| §10 Processing Pipelines | informative | 0 | 0 | 0 | 0 | 0 | 0 |
-| §10.1 Inbound Pipeline | normative | 136 | 133 | 3 | 0 | 482 | 0 |
-| §10.1.1 Instructions | normative | 47 | 46 | 1 | 0 | 72 | 0 |
-| §10.2 Broadcast Pipeline | normative | 17 | 14 | 3 | 0 | 69 | 0 |
-| §10.3 Edit and Delete Processing | normative | 63 | 62 | 1 | 0 | 69 | 0 |
-| §10.4 Inbound Room Routing | normative | 57 | 50 | 7 | 0 | 189 | 0 |
-| §10.5 Direct Event Injection | normative | 46 | 46 | 0 | 0 | 52 | 0 |
-| §10.6 Turn Execution | normative | 8 | 8 | 0 | 0 | 2 | 0 |
-| §10.6.1 Scope and the one path | normative | 14 | 14 | 0 | 0 | 10 | 0 |
-| §10.6.2 Channels on each side | normative | 39 | 35 | 4 | 0 | 49 | 0 |
-| §10.6.3 Messages | normative | 36 | 34 | 2 | 0 | 143 | 0 |
-| §10.6.4 The stream: pulled, never pushed | normative | 16 | 16 | 0 | 0 | 17 | 0 |
-| §10.6.5 What a turn asks of the owner | normative | 60 | 60 | 0 | 0 | 103 | 0 |
-| §10.6.6 Hooks | normative | 21 | 20 | 1 | 0 | 28 | 0 |
-| §10.6.7 Placement | normative | 33 | 32 | 1 | 0 | 49 | 0 |
-| §10.6.8 Liveness, cancellation and errors | normative | 45 | 43 | 2 | 0 | 54 | 0 |
-| §10.6.9 Telemetry and prerequisites | normative | 8 | 8 | 0 | 0 | 3 | 0 |
-| §11 Identity Resolution | informative | 0 | 0 | 0 | 0 | 2 | 0 |
-| §11.1 Identity Resolver Interface | normative | 2 | 2 | 0 | 0 | 2 | 0 |
-| §11.2 Resolution Pipeline | normative | 1 | 1 | 0 | 0 | 15 | 0 |
-| §11.3 Identity Hook Result | normative | 1 | 1 | 0 | 0 | 8 | 0 |
-| §11.4 Channel Type Filtering | normative | 1 | 1 | 0 | 0 | 1 | 0 |
-| §11.5 Timeout Handling | normative | 1 | 1 | 0 | 0 | 1 | 0 |
-| §11.6 Senders With Nothing To Resolve | normative | 1 | 1 | 0 | 0 | 11 | 0 |
-| §11.7 Identity Verification | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §11.7.1 State | normative | 1 | 1 | 0 | 0 | 3 | 0 |
-| §11.7.2 Requests | normative | 1 | 1 | 0 | 0 | 16 | 0 |
-| §11.7.3 Labels and holding | normative | 1 | 1 | 0 | 0 | 22 | 0 |
-| §11.7.4 Codes in the conversation | normative | 1 | 1 | 0 | 0 | 8 | 0 |
-| §11.7.5 The end of a verification | normative | 1 | 1 | 0 | 0 | 14 | 0 |
-| §11.7.6 Releasing held messages | normative | 1 | 1 | 0 | 0 | 34 | 0 |
-| §11.7.7 Security floor | normative | 1 | 1 | 0 | 0 | 9 | 0 |
-| §12 Voice and Realtime Media | informative | 0 | 0 | 0 | 0 | 0 | 0 |
-| §12.1 Architecture Overview | normative | 2 | 2 | 0 | 0 | 0 | 0 |
-| §12.2 Voice Channel (STT/TTS Pipeline) | normative | 16 | 16 | 0 | 0 | 88 | 0 |
-| §12.2.1 Packet Loss Handling (Lossy Transports) | normative | 4 | 4 | 0 | 0 | 0 | 0 |
-| §12.2.2 Conversation Context for TTS | normative | 8 | 8 | 0 | 0 | 0 | 0 |
-| §12.2.3 Speaker Attribution from STT | normative | 10 | 10 | 0 | 0 | 0 | 0 |
-| §12.2.4 Custom Voices | normative | 4 | 4 | 0 | 0 | 0 | 0 |
-| §12.3 Audio Processing Pipeline | normative | 6 | 6 | 0 | 0 | 0 | 0 |
-| §12.3.1 Pipeline Configuration | normative | 4 | 4 | 0 | 0 | 0 | 0 |
-| §12.3.2 Denoiser Provider | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §12.3.3 Resampler | normative | 2 | 2 | 0 | 0 | 0 | 0 |
-| §12.3.4 Echo Canceller (AEC) | normative | 4 | 4 | 0 | 0 | 0 | 0 |
-| §12.3.5 Automatic Gain Control (AGC) | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §12.3.6 DTMF Detector | normative | 3 | 3 | 0 | 0 | 0 | 0 |
-| §12.3.7 Audio Recorder | normative | 5 | 5 | 0 | 0 | 0 | 0 |
-| §12.3.8 VAD Provider | normative | 4 | 4 | 0 | 0 | 0 | 0 |
-| §12.3.9 Diarization Provider | normative | 2 | 2 | 0 | 0 | 0 | 0 |
-| §12.3.10 Audio Post-Processor | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §12.3.11 Audio Frame | normative | 2 | 2 | 0 | 0 | 0 | 0 |
-| §12.3.12 Turn Detector | normative | 6 | 6 | 0 | 0 | 1 | 0 |
-| §12.3.13 Interruption Strategy | normative | 8 | 8 | 0 | 0 | 0 | 0 |
-| §12.3.14 Pipeline Execution Flow | normative | 4 | 4 | 0 | 0 | 0 | 0 |
-| §12.3.15 Pipeline Debug Taps | normative | 7 | 7 | 0 | 0 | 0 | 0 |
-| §12.4 Realtime Voice Channel (Speech-to-Speech) | normative | 19 | 19 | 0 | 0 | 64 | 0 |
-| §12.4.1 Full-Duplex Providers and Reasoning Delegation | normative | 10 | 10 | 0 | 0 | 0 | 0 |
-| §12.4.2 Usage Reporting | normative | 3 | 3 | 0 | 0 | 0 | 0 |
-| §12.5 Voice Hooks | normative | 2 | 2 | 0 | 0 | 0 | 0 |
-| §12.6 Barge-In and Interruption Handling | normative | 3 | 3 | 0 | 0 | 0 | 0 |
-| §12.7 Audio Bridging | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §12.7.1 Design Principles | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §12.7.2 AudioBridge | normative | 4 | 4 | 0 | 0 | 0 | 0 |
-| §12.7.3 VoiceChannel Integration | normative | 6 | 6 | 0 | 0 | 0 | 0 |
-| §12.7.4 Sample Rate Handling | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §12.7.5 N-Party Mixing | normative | 3 | 3 | 0 | 0 | 0 | 0 |
-| §12.7.6 Hooks | normative | 3 | 3 | 0 | 0 | 0 | 0 |
-| §12.7.7 Capability Flag | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §12.7.8 Conformance | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §12.8 Video Pipeline | normative | 1 | 1 | 0 | 0 | 4 | 0 |
-| §12.8.1 Architecture Overview | normative | 2 | 2 | 0 | 0 | 0 | 0 |
-| §12.8.2 Video Data Models | normative | 4 | 4 | 0 | 0 | 0 | 0 |
-| §12.8.3 VideoBackend Interface | normative | 4 | 4 | 0 | 0 | 0 | 0 |
-| §12.8.4 Video Processing Pipeline | normative | 3 | 3 | 0 | 0 | 0 | 0 |
-| §12.8.5 Pipeline Stage Providers | normative | 6 | 6 | 0 | 0 | 0 | 0 |
-| §12.8.6 Overlay System | normative | 3 | 3 | 0 | 0 | 0 | 0 |
-| §12.8.7 VisionProvider | normative | 5 | 5 | 0 | 0 | 0 | 0 |
-| §12.8.8 AvatarProvider (Lip-Sync Video Generation) | normative | 2 | 2 | 0 | 0 | 0 | 0 |
-| §12.8.9 VideoBridge | normative | 2 | 2 | 0 | 0 | 0 | 0 |
-| §12.8.10 Video Recording | normative | 3 | 3 | 0 | 0 | 0 | 0 |
-| §12.8.11 Video Hooks | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §12.9 (Removed) | informative | 0 | 0 | 0 | 0 | 0 | 0 |
-| §12.10 Conference (SFU Orchestration) | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §12.10.1 Design Principles | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §12.10.2 Data Models | normative | 14 | 14 | 0 | 0 | 0 | 0 |
-| §12.10.3 ConferenceBackend Interface | normative | 14 | 14 | 0 | 0 | 0 | 0 |
-| §12.10.4 ConferenceChannel | normative | 16 | 15 | 1 | 0 | 24 | 0 |
-| §12.10.5 Multi-Party Interruption Policy | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §12.10.6 AI Participation Patterns | normative | 3 | 3 | 0 | 0 | 0 | 0 |
-| §12.10.7 Conference State Events | normative | 3 | 3 | 0 | 0 | 0 | 0 |
-| §12.10.8 Recording | normative | 5 | 5 | 0 | 0 | 0 | 0 |
-| §12.10.9 Cross-Channel Integration | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §12.10.10 Relationship to Audio Bridging (Section 12.7) | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §12.10.11 Conformance | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §12.10.12 Speech-to-Speech Composition | normative | 11 | 11 | 0 | 0 | 1 | 0 |
-| §12.11 Room Media Recording | normative | 7 | 7 | 0 | 0 | 2 | 0 |
-| §12.12 Capture Sources | normative | 7 | 7 | 0 | 0 | 0 | 0 |
-| §13 Resilience and Error Handling | informative | 0 | 0 | 0 | 0 | 0 | 0 |
-| §13.1 Circuit Breaker | normative | 3 | 3 | 0 | 0 | 0 | 0 |
-| §13.2 Retry Policy | normative | 1 | 1 | 0 | 0 | 1 | 0 |
-| §13.3 Rate Limiting | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §13.4 Idempotency | normative | 1 | 0 | 1 | 0 | 30 | 0 |
-| §13.5 Room-Level Locking | normative | 5 | 4 | 1 | 0 | 104 | 0 |
-| §13.6 Processing Timeout | normative | 2 | 1 | 1 | 0 | 78 | 0 |
-| §14 Storage Interface | informative | 0 | 0 | 0 | 0 | 0 | 0 |
-| §14.1 Conversation Store | normative | 5 | 3 | 2 | 0 | 41 | 0 |
-| §14.2 Required Implementations | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §14.3 Consistency Requirements | normative | 1 | 0 | 1 | 0 | 45 | 0 |
-| §14.4 Returned-Object Ownership | normative | 1 | 0 | 1 | 0 | 0 | 0 |
-| §15 Observability | informative | 0 | 0 | 0 | 0 | 0 | 0 |
-| §15.1 Logging | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §15.2 Log Levels | normative | 1 | 1 | 0 | 0 | 2 | 0 |
-| §15.3 Structured Log Context | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §15.4 Voice Pipeline Observability | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §15.5 Framework Events for Monitoring | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §15.6 Protocol Trace Infrastructure | normative | 6 | 6 | 0 | 0 | 0 | 0 |
-| §15.7 Telemetry Provider | normative | 3 | 3 | 0 | 0 | 0 | 0 |
-| §15.8 Audit System | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §15.8.1 Tool Auditing | normative | 6 | 6 | 0 | 0 | 2 | 0 |
-| §15.8.2 Session Auditing | normative | 7 | 7 | 0 | 0 | 1 | 0 |
-| §15.8.3 Audit Data Format | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §15.9 Feedback | normative | 1 | 1 | 0 | 0 | 2 | 0 |
-| §16 Integration Surfaces | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §16.1 REST API (OPTIONAL) | normative | 9 | 9 | 0 | 0 | 0 | 0 |
-| §16.2 MCP Server (OPTIONAL) | normative | 3 | 3 | 0 | 0 | 0 | 0 |
-| §16.3 Surface Independence | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §17 Security Considerations | informative | 0 | 0 | 0 | 0 | 0 | 0 |
-| §17.1 Input Validation | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §17.2 Multi-Tenant Isolation | normative | 1 | 0 | 1 | 0 | 106 | 0 |
-| §17.3 Sensitive Data | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §17.4 Rate Limiting | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §17.5 Chain Depth | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §17.6 Voice and Audio Security | normative | 7 | 7 | 0 | 0 | 0 | 0 |
-| §17.7 Conference Access Security | normative | 2 | 2 | 0 | 0 | 0 | 0 |
-| §17.8 Skill-Bundled Files | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §18 Design Principles | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §19 Multi-Agent Orchestration | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §19.1 Overview | normative | 2 | 2 | 0 | 0 | 31 | 0 |
-| §19.2 ConversationState | normative | 1 | 1 | 0 | 0 | 9 | 0 |
-| §19.3 Addressing | normative | 4 | 4 | 0 | 0 | 13 | 0 |
-| §19.3.1 Agent-sourced events | normative | 1 | 1 | 0 | 0 | 4 | 0 |
-| §19.3.2 Delivered versus solicited | normative | 2 | 1 | 1 | 0 | 37 | 0 |
-| §19.4 ConversationRouter | normative | 4 | 4 | 0 | 0 | 17 | 0 |
-| §19.5 ConversationPipeline | normative | 4 | 4 | 0 | 0 | 12 | 0 |
-| §19.6 HandoffHandler | normative | 8 | 8 | 0 | 0 | 32 | 0 |
-| §19.7 Orchestration Strategies | normative | 4 | 2 | 2 | 0 | 64 | 0 |
-| §19.7.1 Pipeline | normative | 1 | 1 | 0 | 0 | 12 | 0 |
-| §19.7.2 Swarm | normative | 1 | 1 | 0 | 0 | 1 | 0 |
-| §19.7.3 Supervisor | normative | 1 | 0 | 1 | 0 | 67 | 0 |
-| §19.7.4 Loop | normative | 1 | 1 | 0 | 0 | 16 | 0 |
-| §19.7.5 Discussion | normative | 4 | 3 | 1 | 0 | 180 | 0 |
-| §19.8 StatusBus | normative | 1 | 1 | 0 | 0 | 17 | 0 |
-| §20 Memory System | normative | 1 | 1 | 0 | 0 | 2 | 0 |
-| §20.1 MemoryProvider Interface | normative | 1 | 0 | 1 | 0 | 35 | 0 |
-| §20.2 MemoryResult | normative | 1 | 1 | 0 | 0 | 13 | 0 |
-| §20.3 Built-in Implementations | normative | 7 | 6 | 1 | 0 | 42 | 0 |
-| §21 Tool Access Control | informative | 0 | 0 | 0 | 0 | 0 | 0 |
-| §21.1 ToolPolicy | normative | 7 | 4 | 3 | 0 | 229 | 0 |
-| §21.2 MCP Tool Provider | normative | 2 | 0 | 2 | 0 | 57 | 0 |
-| §21.3 AI Steering Directives | normative | 3 | 3 | 0 | 0 | 25 | 0 |
-| §21.4 Tool Call Context | normative | 1 | 0 | 1 | 0 | 121 | 0 |
-| §21.5 Large Tool Results | normative | 1 | 1 | 0 | 0 | 26 | 0 |
-| §21.6 Tool Call Timeout | normative | 1 | 1 | 0 | 0 | 27 | 0 |
-| §22 Delivery Strategies | normative | 1 | 1 | 0 | 0 | 1 | 0 |
-| §22.1 DeliveryStrategy Interface | normative | 6 | 6 | 0 | 0 | 44 | 0 |
-| §22.2 Built-in Strategies | normative | 2 | 2 | 0 | 0 | 12 | 0 |
-| §22.3 Delivery Hooks | normative | 1 | 1 | 0 | 0 | 8 | 0 |
-| §23 Task Delegation | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §23.1 TaskRunner Interface | normative | 1 | 1 | 0 | 0 | 4 | 0 |
-| §23.2 DelegatedTask | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §23.3 Delegation Protocol | normative | 3 | 1 | 2 | 0 | 154 | 0 |
-| §23.4 Delegation Tools | normative | 2 | 1 | 1 | 0 | 49 | 0 |
-| §23.5 Delegation Hooks | normative | 1 | 0 | 1 | 0 | 5 | 0 |
-| §24 Skills Framework | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §24.1 Skill Definition | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §24.2 SkillMetadata | normative | 1 | 0 | 1 | 0 | 90 | 0 |
-| §24.3 SkillRegistry | normative | 1 | 0 | 1 | 0 | 115 | 0 |
-| §24.4 Activation Lifecycle | normative | 1 | 0 | 1 | 0 | 107 | 0 |
-| §24.5 Loading Failures | normative | 1 | 0 | 1 | 0 | 0 | 0 |
-| §24.6 Access to Bundled Files | normative | 1 | 0 | 1 | 0 | 36 | 0 |
-| §24.7 Skills Served over MCP | normative | 9 | 9 | 0 | 0 | 36 | 0 |
-| §25 Image Generation | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §25.1 A Surface of Its Own | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §25.2 ImageProvider | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §25.3 ImageResult | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §25.4 Editing | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §25.5 Usage Accounting | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §25.6 Model Catalogue | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §25.7 Non-Goals | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §26 Conformance Levels | informative | 0 | 0 | 0 | 0 | 0 | 0 |
-| §26.1 Level 0: Core (REQUIRED) | normative | 2 | 2 | 0 | 0 | 70 | 0 |
-| §26.2 Level 1: Transport (RECOMMENDED) | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §26.3 Level 2: Rich (OPTIONAL) | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §26.4 Level 3: Real-Time Media (OPTIONAL) | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §A Channel Reference | informative | 0 | 0 | 0 | 0 | 0 | 0 |
-| §A.1 SMS Channel | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §A.2 Email Channel | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §A.3 WhatsApp Channel | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §A.4 WhatsApp Personal Channel | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §A.5 Messenger Channel | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §A.6 Teams Channel | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §A.7 RCS Channel | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §A.8 WebSocket Channel | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §A.9 AI Channel | normative | 3 | 3 | 0 | 0 | 92 | 0 |
-| §A.9.1 ACP Agent Channel | normative | 1 | 0 | 1 | 0 | 120 | 0 |
-| §A.10 Voice Channel | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §A.11 Realtime Voice Channel | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §A.12 Video Channel | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §A.13 Telegram Channel | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §A.14 CLI Channel | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §A.14.1 Host Channel | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §A.15 Conference Channel | normative | 1 | 1 | 0 | 0 | 0 | 0 |
-| §B Complete Event Flow Examples | informative | 0 | 0 | 0 | 0 | 0 | 0 |
-| §B.1 Customer (SMS) + AI — Basic Conversation | informative | 0 | 0 | 0 | 0 | 1 | 0 |
-| §B.2 Sensitivity Scanning — Block and Inject | informative | 0 | 0 | 0 | 0 | 1 | 0 |
-| §B.3 Ambiguous Identity — Shared Family Phone | informative | 0 | 0 | 0 | 0 | 6 | 0 |
-| §B.4 AI ↔ AI Multi-Agent with Chain Depth | informative | 0 | 0 | 0 | 0 | 1 | 0 |
-| §B.5 Dynamic Channel Management — Advisor Joins | informative | 0 | 0 | 0 | 0 | 1 | 0 |
-| §B.6 Message Edit — Cross-Channel with Fallback | informative | 0 | 0 | 0 | 0 | 1 | 0 |
-| §B.7 Message Delete — Cross-Channel with Fallback | informative | 0 | 0 | 0 | 0 | 1 | 0 |
-| §B.8 SIP Call → Unified process_inbound with Protocol Traces | informative | 0 | 0 | 0 | 0 | 0 | 0 |
-| §B.9 Multi-Agent Pipeline — Triage → Specialist → Resolution | informative | 0 | 0 | 0 | 0 | 0 | 0 |
+| Section | Inventory review | Units | Unmapped | Partial mappings | Complete mappings | Candidate scenarios | Keyword lines to review | Decided writable | Decided step | Decided phase6 |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| §0 Preface (Abstract and contents) | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §1 Conventions and Terminology | informative | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §1.1 Key Words | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §1.2 Definitions | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §1.3 Notation | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §1.4 Serialized Form | normative | 1 | 1 | 0 | 0 | 1 | 0 | 0 | 0 | 0 |
+| §2 Introduction | informative | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §2.1 Problem Statement | informative | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §2.2 Scope | normative | 3 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §2.3 Design Philosophy | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §3 Architecture Overview | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §3.1 Layer Responsibilities | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §3.2 Key Separations | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §4 Core Concepts | informative | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §4.1 The Room | normative | 2 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §4.2 The Channel | normative | 4 | 4 | 0 | 0 | 36 | 0 | 0 | 0 | 0 |
+| §4.3 The Event | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §4.4 The Participant | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §4.5 The Identity | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §4.6 Two Output Paths | normative | 2 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §5 Data Models | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §5.1 Room | normative | 40 | 36 | 4 | 0 | 131 | 0 | 0 | 0 | 0 |
+| §5.2 RoomEvent | normative | 15 | 15 | 0 | 0 | 9 | 0 | 0 | 0 | 0 |
+| §5.3 Event Content | normative | 19 | 19 | 0 | 0 | 25 | 0 | 0 | 0 | 0 |
+| §5.4 Channel Data (Typed, Per-Channel) | normative | 3 | 3 | 0 | 0 | 1 | 0 | 0 | 0 | 0 |
+| §5.5 Participant | normative | 36 | 36 | 0 | 0 | 67 | 0 | 0 | 0 | 0 |
+| §5.6 Identity | normative | 7 | 7 | 0 | 0 | 7 | 0 | 0 | 0 | 0 |
+| §5.7 ChannelBinding | normative | 34 | 34 | 0 | 0 | 112 | 0 | 0 | 0 | 0 |
+| §5.8 ChannelCapabilities | normative | 7 | 7 | 0 | 0 | 35 | 0 | 0 | 0 | 0 |
+| §5.9 Three Levels of Channel Metadata | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §5.10 Task | normative | 2 | 2 | 0 | 0 | 1 | 0 | 0 | 0 | 0 |
+| §5.11 Observation | normative | 1 | 1 | 0 | 0 | 1 | 0 | 0 | 0 | 0 |
+| §5.12 Inbound Message | normative | 6 | 6 | 0 | 0 | 11 | 0 | 0 | 0 | 0 |
+| §5.13 Delivery Result | normative | 7 | 6 | 1 | 0 | 18 | 0 | 0 | 0 | 0 |
+| §5.14 Protocol Trace | normative | 5 | 5 | 0 | 0 | 1 | 0 | 0 | 0 | 0 |
+| §6 Channel System | informative | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §6.1 Channel Interface | normative | 2 | 2 | 0 | 0 | 44 | 0 | 0 | 0 | 0 |
+| §6.2 ChannelType | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §6.3 Transport Channels | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §6.4 Intelligence Channels | normative | 44 | 33 | 11 | 0 | 1275 | 0 | 0 | 0 | 0 |
+| §6.5 Source Providers | normative | 2 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §6.6 Content Transcoding | normative | 4 | 4 | 0 | 0 | 17 | 0 | 0 | 0 | 0 |
+| §6.7 Provider Abstraction | normative | 17 | 15 | 2 | 0 | 105 | 0 | 0 | 0 | 0 |
+| §6.8 Classifiers | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §7 Permission Model | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §7.1 Access | normative | 4 | 3 | 1 | 0 | 2 | 0 | 0 | 0 | 0 |
+| §7.2 Muting | normative | 11 | 10 | 1 | 0 | 39 | 0 | 0 | 0 | 0 |
+| §7.3 Visibility | normative | 33 | 24 | 3 | 6 | 40 | 0 | 0 | 0 | 0 |
+| §7.4 Named Patterns | normative | 1 | 1 | 0 | 0 | 2 | 0 | 0 | 0 | 0 |
+| §7.5 Permission Rules | normative | 35 | 33 | 2 | 0 | 114 | 0 | 0 | 0 | 0 |
+| §8 Event System | informative | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §8.1 Room Events | normative | 3 | 2 | 1 | 0 | 24 | 0 | 0 | 0 | 0 |
+| §8.2 Framework Events | normative | 1 | 1 | 0 | 0 | 93 | 0 | 0 | 0 | 0 |
+| §8.3 Event Chain Depth | normative | 7 | 5 | 2 | 0 | 78 | 0 | 0 | 0 | 0 |
+| §8.4 Realtime / Ephemeral Events | normative | 3 | 0 | 3 | 0 | 41 | 0 | 0 | 0 | 0 |
+| §8.5 Responses: What They Answer, and Whether They Were Consumed | normative | 6 | 5 | 1 | 0 | 4 | 0 | 0 | 0 | 0 |
+| §9 Hook System | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §9.1 Hook Registration | normative | 21 | 20 | 1 | 0 | 49 | 0 | 0 | 0 | 0 |
+| §9.2 Hook Triggers | normative | 111 | 110 | 1 | 0 | 257 | 0 | 0 | 0 | 0 |
+| §9.3 Hook Execution Modes | normative | 105 | 93 | 12 | 0 | 509 | 0 | 0 | 0 | 0 |
+| §9.4 HookResult | normative | 35 | 31 | 3 | 1 | 97 | 0 | 0 | 0 | 0 |
+| §9.5 Hook Pipeline (BEFORE_BROADCAST) | normative | 1 | 1 | 0 | 0 | 6 | 0 | 0 | 0 | 0 |
+| §9.5.1 Off-lock checks (`needs_lock = false`) | normative | 70 | 70 | 0 | 0 | 135 | 0 | 0 | 0 | 0 |
+| §9.6 When to Use What | normative | 6 | 6 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §10 Processing Pipelines | informative | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §10.1 Inbound Pipeline | normative | 136 | 133 | 3 | 0 | 482 | 0 | 0 | 0 | 0 |
+| §10.1.1 Instructions | normative | 47 | 46 | 1 | 0 | 72 | 0 | 0 | 0 | 0 |
+| §10.2 Broadcast Pipeline | normative | 17 | 14 | 3 | 0 | 69 | 0 | 0 | 0 | 0 |
+| §10.3 Edit and Delete Processing | normative | 63 | 62 | 1 | 0 | 69 | 0 | 0 | 0 | 0 |
+| §10.4 Inbound Room Routing | normative | 57 | 50 | 7 | 0 | 189 | 0 | 0 | 0 | 0 |
+| §10.5 Direct Event Injection | normative | 46 | 46 | 0 | 0 | 52 | 0 | 0 | 0 | 0 |
+| §10.6 Turn Execution | normative | 8 | 8 | 0 | 0 | 2 | 0 | 0 | 0 | 0 |
+| §10.6.1 Scope and the one path | normative | 14 | 14 | 0 | 0 | 10 | 0 | 0 | 0 | 0 |
+| §10.6.2 Channels on each side | normative | 39 | 35 | 4 | 0 | 49 | 0 | 0 | 0 | 0 |
+| §10.6.3 Messages | normative | 36 | 34 | 2 | 0 | 143 | 0 | 0 | 0 | 0 |
+| §10.6.4 The stream: pulled, never pushed | normative | 16 | 16 | 0 | 0 | 17 | 0 | 0 | 0 | 0 |
+| §10.6.5 What a turn asks of the owner | normative | 60 | 60 | 0 | 0 | 103 | 0 | 0 | 0 | 0 |
+| §10.6.6 Hooks | normative | 21 | 20 | 1 | 0 | 28 | 0 | 0 | 0 | 0 |
+| §10.6.7 Placement | normative | 33 | 32 | 1 | 0 | 49 | 0 | 0 | 0 | 0 |
+| §10.6.8 Liveness, cancellation and errors | normative | 45 | 43 | 2 | 0 | 54 | 0 | 0 | 0 | 0 |
+| §10.6.9 Telemetry and prerequisites | normative | 8 | 8 | 0 | 0 | 3 | 0 | 0 | 0 | 0 |
+| §11 Identity Resolution | informative | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 0 |
+| §11.1 Identity Resolver Interface | normative | 2 | 2 | 0 | 0 | 2 | 0 | 0 | 0 | 0 |
+| §11.2 Resolution Pipeline | normative | 1 | 1 | 0 | 0 | 15 | 0 | 0 | 0 | 0 |
+| §11.3 Identity Hook Result | normative | 1 | 1 | 0 | 0 | 8 | 0 | 0 | 0 | 0 |
+| §11.4 Channel Type Filtering | normative | 1 | 1 | 0 | 0 | 1 | 0 | 0 | 0 | 0 |
+| §11.5 Timeout Handling | normative | 1 | 1 | 0 | 0 | 1 | 0 | 0 | 0 | 0 |
+| §11.6 Senders With Nothing To Resolve | normative | 1 | 1 | 0 | 0 | 11 | 0 | 0 | 0 | 0 |
+| §11.7 Identity Verification | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §11.7.1 State | normative | 1 | 1 | 0 | 0 | 3 | 0 | 0 | 0 | 0 |
+| §11.7.2 Requests | normative | 1 | 1 | 0 | 0 | 16 | 0 | 0 | 0 | 0 |
+| §11.7.3 Labels and holding | normative | 1 | 1 | 0 | 0 | 22 | 0 | 0 | 0 | 0 |
+| §11.7.4 Codes in the conversation | normative | 1 | 1 | 0 | 0 | 8 | 0 | 0 | 0 | 0 |
+| §11.7.5 The end of a verification | normative | 1 | 1 | 0 | 0 | 14 | 0 | 0 | 0 | 0 |
+| §11.7.6 Releasing held messages | normative | 1 | 1 | 0 | 0 | 34 | 0 | 0 | 0 | 0 |
+| §11.7.7 Security floor | normative | 1 | 1 | 0 | 0 | 9 | 0 | 0 | 0 | 0 |
+| §12 Voice and Realtime Media | informative | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §12.1 Architecture Overview | normative | 2 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §12.2 Voice Channel (STT/TTS Pipeline) | normative | 16 | 16 | 0 | 0 | 88 | 0 | 0 | 0 | 0 |
+| §12.2.1 Packet Loss Handling (Lossy Transports) | normative | 4 | 4 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §12.2.2 Conversation Context for TTS | normative | 8 | 8 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §12.2.3 Speaker Attribution from STT | normative | 10 | 10 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §12.2.4 Custom Voices | normative | 4 | 4 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §12.3 Audio Processing Pipeline | normative | 6 | 6 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §12.3.1 Pipeline Configuration | normative | 4 | 4 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §12.3.2 Denoiser Provider | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §12.3.3 Resampler | normative | 2 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §12.3.4 Echo Canceller (AEC) | normative | 4 | 4 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §12.3.5 Automatic Gain Control (AGC) | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §12.3.6 DTMF Detector | normative | 3 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §12.3.7 Audio Recorder | normative | 5 | 5 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §12.3.8 VAD Provider | normative | 4 | 4 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §12.3.9 Diarization Provider | normative | 2 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §12.3.10 Audio Post-Processor | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §12.3.11 Audio Frame | normative | 2 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §12.3.12 Turn Detector | normative | 6 | 6 | 0 | 0 | 1 | 0 | 0 | 0 | 0 |
+| §12.3.13 Interruption Strategy | normative | 8 | 8 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §12.3.14 Pipeline Execution Flow | normative | 4 | 4 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §12.3.15 Pipeline Debug Taps | normative | 7 | 7 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §12.4 Realtime Voice Channel (Speech-to-Speech) | normative | 19 | 19 | 0 | 0 | 64 | 0 | 0 | 0 | 0 |
+| §12.4.1 Full-Duplex Providers and Reasoning Delegation | normative | 10 | 10 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §12.4.2 Usage Reporting | normative | 3 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §12.5 Voice Hooks | normative | 2 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §12.6 Barge-In and Interruption Handling | normative | 3 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §12.7 Audio Bridging | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §12.7.1 Design Principles | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §12.7.2 AudioBridge | normative | 4 | 4 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §12.7.3 VoiceChannel Integration | normative | 6 | 6 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §12.7.4 Sample Rate Handling | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §12.7.5 N-Party Mixing | normative | 3 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §12.7.6 Hooks | normative | 3 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §12.7.7 Capability Flag | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §12.7.8 Conformance | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §12.8 Video Pipeline | normative | 1 | 1 | 0 | 0 | 4 | 0 | 0 | 0 | 0 |
+| §12.8.1 Architecture Overview | normative | 2 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §12.8.2 Video Data Models | normative | 4 | 4 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §12.8.3 VideoBackend Interface | normative | 4 | 4 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §12.8.4 Video Processing Pipeline | normative | 3 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §12.8.5 Pipeline Stage Providers | normative | 6 | 6 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §12.8.6 Overlay System | normative | 3 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §12.8.7 VisionProvider | normative | 5 | 5 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §12.8.8 AvatarProvider (Lip-Sync Video Generation) | normative | 2 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §12.8.9 VideoBridge | normative | 2 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §12.8.10 Video Recording | normative | 3 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §12.8.11 Video Hooks | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §12.9 (Removed) | informative | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §12.10 Conference (SFU Orchestration) | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §12.10.1 Design Principles | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §12.10.2 Data Models | normative | 14 | 14 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §12.10.3 ConferenceBackend Interface | normative | 14 | 14 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §12.10.4 ConferenceChannel | normative | 16 | 15 | 1 | 0 | 24 | 0 | 0 | 0 | 0 |
+| §12.10.5 Multi-Party Interruption Policy | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §12.10.6 AI Participation Patterns | normative | 3 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §12.10.7 Conference State Events | normative | 3 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §12.10.8 Recording | normative | 5 | 5 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §12.10.9 Cross-Channel Integration | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §12.10.10 Relationship to Audio Bridging (Section 12.7) | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §12.10.11 Conformance | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §12.10.12 Speech-to-Speech Composition | normative | 11 | 11 | 0 | 0 | 1 | 0 | 0 | 0 | 0 |
+| §12.11 Room Media Recording | normative | 7 | 7 | 0 | 0 | 2 | 0 | 0 | 0 | 0 |
+| §12.12 Capture Sources | normative | 7 | 7 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §13 Resilience and Error Handling | informative | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §13.1 Circuit Breaker | normative | 3 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §13.2 Retry Policy | normative | 1 | 1 | 0 | 0 | 1 | 0 | 0 | 0 | 0 |
+| §13.3 Rate Limiting | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §13.4 Idempotency | normative | 1 | 0 | 1 | 0 | 30 | 0 | 0 | 0 | 0 |
+| §13.5 Room-Level Locking | normative | 5 | 4 | 1 | 0 | 104 | 0 | 0 | 0 | 0 |
+| §13.6 Processing Timeout | normative | 2 | 1 | 1 | 0 | 78 | 0 | 0 | 0 | 0 |
+| §14 Storage Interface | informative | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §14.1 Conversation Store | normative | 5 | 3 | 2 | 0 | 41 | 0 | 0 | 0 | 0 |
+| §14.2 Required Implementations | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §14.3 Consistency Requirements | normative | 1 | 0 | 1 | 0 | 45 | 0 | 0 | 0 | 0 |
+| §14.4 Returned-Object Ownership | normative | 1 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §15 Observability | informative | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §15.1 Logging | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §15.2 Log Levels | normative | 1 | 1 | 0 | 0 | 2 | 0 | 0 | 0 | 0 |
+| §15.3 Structured Log Context | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §15.4 Voice Pipeline Observability | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §15.5 Framework Events for Monitoring | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §15.6 Protocol Trace Infrastructure | normative | 6 | 6 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §15.7 Telemetry Provider | normative | 3 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §15.8 Audit System | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §15.8.1 Tool Auditing | normative | 6 | 6 | 0 | 0 | 2 | 0 | 0 | 0 | 0 |
+| §15.8.2 Session Auditing | normative | 7 | 7 | 0 | 0 | 1 | 0 | 0 | 0 | 0 |
+| §15.8.3 Audit Data Format | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §15.9 Feedback | normative | 1 | 1 | 0 | 0 | 2 | 0 | 0 | 0 | 0 |
+| §16 Integration Surfaces | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §16.1 REST API (OPTIONAL) | normative | 9 | 9 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §16.2 MCP Server (OPTIONAL) | normative | 3 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §16.3 Surface Independence | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §17 Security Considerations | informative | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §17.1 Input Validation | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §17.2 Multi-Tenant Isolation | normative | 1 | 0 | 1 | 0 | 106 | 0 | 0 | 0 | 0 |
+| §17.3 Sensitive Data | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §17.4 Rate Limiting | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §17.5 Chain Depth | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §17.6 Voice and Audio Security | normative | 7 | 7 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §17.7 Conference Access Security | normative | 2 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §17.8 Skill-Bundled Files | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §18 Design Principles | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §19 Multi-Agent Orchestration | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §19.1 Overview | normative | 2 | 2 | 0 | 0 | 31 | 0 | 0 | 0 | 0 |
+| §19.2 ConversationState | normative | 1 | 1 | 0 | 0 | 9 | 0 | 0 | 0 | 0 |
+| §19.3 Addressing | normative | 4 | 4 | 0 | 0 | 13 | 0 | 0 | 0 | 0 |
+| §19.3.1 Agent-sourced events | normative | 1 | 1 | 0 | 0 | 4 | 0 | 0 | 0 | 0 |
+| §19.3.2 Delivered versus solicited | normative | 2 | 1 | 1 | 0 | 37 | 0 | 0 | 0 | 0 |
+| §19.4 ConversationRouter | normative | 4 | 4 | 0 | 0 | 17 | 0 | 0 | 0 | 0 |
+| §19.5 ConversationPipeline | normative | 4 | 4 | 0 | 0 | 12 | 0 | 0 | 0 | 0 |
+| §19.6 HandoffHandler | normative | 8 | 8 | 0 | 0 | 32 | 0 | 0 | 0 | 0 |
+| §19.7 Orchestration Strategies | normative | 4 | 2 | 2 | 0 | 64 | 0 | 0 | 0 | 0 |
+| §19.7.1 Pipeline | normative | 1 | 1 | 0 | 0 | 12 | 0 | 0 | 0 | 0 |
+| §19.7.2 Swarm | normative | 1 | 1 | 0 | 0 | 1 | 0 | 0 | 0 | 0 |
+| §19.7.3 Supervisor | normative | 1 | 0 | 1 | 0 | 67 | 0 | 0 | 0 | 0 |
+| §19.7.4 Loop | normative | 1 | 1 | 0 | 0 | 16 | 0 | 0 | 0 | 0 |
+| §19.7.5 Discussion | normative | 4 | 3 | 1 | 0 | 180 | 0 | 0 | 0 | 0 |
+| §19.8 StatusBus | normative | 1 | 1 | 0 | 0 | 17 | 0 | 0 | 0 | 0 |
+| §20 Memory System | normative | 1 | 1 | 0 | 0 | 2 | 0 | 0 | 0 | 0 |
+| §20.1 MemoryProvider Interface | normative | 1 | 0 | 1 | 0 | 35 | 0 | 0 | 0 | 0 |
+| §20.2 MemoryResult | normative | 1 | 1 | 0 | 0 | 13 | 0 | 0 | 0 | 0 |
+| §20.3 Built-in Implementations | normative | 7 | 6 | 1 | 0 | 42 | 0 | 0 | 0 | 0 |
+| §21 Tool Access Control | informative | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §21.1 ToolPolicy | normative | 7 | 4 | 3 | 0 | 229 | 0 | 0 | 0 | 0 |
+| §21.2 MCP Tool Provider | normative | 2 | 0 | 2 | 0 | 57 | 0 | 0 | 0 | 0 |
+| §21.3 AI Steering Directives | normative | 3 | 3 | 0 | 0 | 25 | 0 | 0 | 0 | 0 |
+| §21.4 Tool Call Context | normative | 1 | 0 | 1 | 0 | 121 | 0 | 0 | 0 | 0 |
+| §21.5 Large Tool Results | normative | 1 | 1 | 0 | 0 | 26 | 0 | 0 | 0 | 0 |
+| §21.6 Tool Call Timeout | normative | 1 | 1 | 0 | 0 | 27 | 0 | 0 | 0 | 0 |
+| §22 Delivery Strategies | normative | 1 | 1 | 0 | 0 | 1 | 0 | 0 | 0 | 0 |
+| §22.1 DeliveryStrategy Interface | normative | 6 | 6 | 0 | 0 | 44 | 0 | 0 | 0 | 0 |
+| §22.2 Built-in Strategies | normative | 2 | 2 | 0 | 0 | 12 | 0 | 0 | 0 | 0 |
+| §22.3 Delivery Hooks | normative | 1 | 1 | 0 | 0 | 8 | 0 | 0 | 0 | 0 |
+| §23 Task Delegation | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §23.1 TaskRunner Interface | normative | 1 | 1 | 0 | 0 | 4 | 0 | 0 | 0 | 0 |
+| §23.2 DelegatedTask | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §23.3 Delegation Protocol | normative | 3 | 1 | 2 | 0 | 154 | 0 | 0 | 0 | 0 |
+| §23.4 Delegation Tools | normative | 2 | 1 | 1 | 0 | 49 | 0 | 0 | 0 | 0 |
+| §23.5 Delegation Hooks | normative | 1 | 0 | 1 | 0 | 5 | 0 | 0 | 0 | 0 |
+| §24 Skills Framework | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §24.1 Skill Definition | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §24.2 SkillMetadata | normative | 1 | 0 | 1 | 0 | 90 | 0 | 0 | 0 | 0 |
+| §24.3 SkillRegistry | normative | 1 | 0 | 1 | 0 | 115 | 0 | 0 | 0 | 0 |
+| §24.4 Activation Lifecycle | normative | 1 | 0 | 1 | 0 | 107 | 0 | 0 | 0 | 0 |
+| §24.5 Loading Failures | normative | 1 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §24.6 Access to Bundled Files | normative | 1 | 0 | 1 | 0 | 36 | 0 | 0 | 0 | 0 |
+| §24.7 Skills Served over MCP | normative | 9 | 9 | 0 | 0 | 36 | 0 | 0 | 0 | 0 |
+| §25 Image Generation | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §25.1 A Surface of Its Own | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §25.2 ImageProvider | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §25.3 ImageResult | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §25.4 Editing | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §25.5 Usage Accounting | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §25.6 Model Catalogue | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §25.7 Non-Goals | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §26 Conformance Levels | informative | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §26.1 Level 0: Core (REQUIRED) | normative | 2 | 2 | 0 | 0 | 70 | 0 | 0 | 0 | 0 |
+| §26.2 Level 1: Transport (RECOMMENDED) | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §26.3 Level 2: Rich (OPTIONAL) | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §26.4 Level 3: Real-Time Media (OPTIONAL) | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §A Channel Reference | informative | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §A.1 SMS Channel | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §A.2 Email Channel | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §A.3 WhatsApp Channel | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §A.4 WhatsApp Personal Channel | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §A.5 Messenger Channel | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §A.6 Teams Channel | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §A.7 RCS Channel | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §A.8 WebSocket Channel | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §A.9 AI Channel | normative | 3 | 3 | 0 | 0 | 92 | 0 | 0 | 0 | 0 |
+| §A.9.1 ACP Agent Channel | normative | 1 | 0 | 1 | 0 | 120 | 0 | 0 | 0 | 0 |
+| §A.10 Voice Channel | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §A.11 Realtime Voice Channel | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §A.12 Video Channel | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §A.13 Telegram Channel | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §A.14 CLI Channel | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §A.14.1 Host Channel | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §A.15 Conference Channel | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §B Complete Event Flow Examples | informative | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §B.1 Customer (SMS) + AI — Basic Conversation | informative | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 |
+| §B.2 Sensitivity Scanning — Block and Inject | informative | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 |
+| §B.3 Ambiguous Identity — Shared Family Phone | informative | 0 | 0 | 0 | 0 | 6 | 0 | 0 | 0 | 0 |
+| §B.4 AI ↔ AI Multi-Agent with Chain Depth | informative | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 |
+| §B.5 Dynamic Channel Management — Advisor Joins | informative | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 |
+| §B.6 Message Edit — Cross-Channel with Fallback | informative | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 |
+| §B.7 Message Delete — Cross-Channel with Fallback | informative | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 |
+| §B.8 SIP Call → Unified process_inbound with Protocol Traces | informative | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §B.9 Multi-Agent Pipeline — Triage → Specialist → Resolution | informative | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 
 ## Recorded executions
 

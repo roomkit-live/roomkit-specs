@@ -13,6 +13,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -22,6 +23,7 @@
       "review": "informative",
       "requirements": 0,
       "mapping": {},
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -33,6 +35,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -44,6 +47,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -55,6 +59,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -66,6 +71,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "rooms/the-delivery-cursor-follows-the-lane"
@@ -77,6 +83,7 @@
       "review": "informative",
       "requirements": 0,
       "mapping": {},
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -86,6 +93,7 @@
       "review": "informative",
       "requirements": 0,
       "mapping": {},
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -97,6 +105,7 @@
       "mapping": {
         "unmapped": 3
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -108,6 +117,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -119,6 +129,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -130,6 +141,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -141,6 +153,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -150,6 +163,7 @@
       "review": "informative",
       "requirements": 0,
       "mapping": {},
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -161,6 +175,7 @@
       "mapping": {
         "unmapped": 2
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -172,6 +187,7 @@
       "mapping": {
         "unmapped": 4
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "ai-context/a-disabled-target-still-supplies-capabilities-non-streaming",
@@ -220,6 +236,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -231,6 +248,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -242,6 +260,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -253,6 +272,7 @@
       "mapping": {
         "unmapped": 2
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -264,6 +284,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -276,6 +297,7 @@
         "mapped_partial": 4,
         "unmapped": 36
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "binding-update/a-binding-changes-in-a-room-of-any-status",
@@ -419,6 +441,7 @@
       "mapping": {
         "unmapped": 15
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "delivery/a-message-keyed-like-a-publication-stands-in-for-none",
@@ -440,6 +463,7 @@
       "mapping": {
         "unmapped": 19
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "edits/an-edit-s-new-content-counts-its-levels-in-the-edit-s-place",
@@ -477,6 +501,7 @@
       "mapping": {
         "unmapped": 3
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "inbound/channel-data-no-typed-structure-names-is-kept-as-a-map"
@@ -490,6 +515,7 @@
       "mapping": {
         "unmapped": 36
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "conference/a-call-reports-presence-without-changing-room-membership",
@@ -569,6 +595,7 @@
       "mapping": {
         "unmapped": 7
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "routing/a-sender-resolves-to-the-address-linked-in-the-channel-s-form",
@@ -588,6 +615,7 @@
       "mapping": {
         "unmapped": 34
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "broadcast/a-delivery-is-refused-alike-for-no-recipient-and-a-value-that-is-not-one",
@@ -712,6 +740,7 @@
       "mapping": {
         "unmapped": 7
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "ai-context/a-disabled-target-still-supplies-capabilities-non-streaming",
@@ -759,6 +788,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -770,6 +800,7 @@
       "mapping": {
         "unmapped": 2
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "tasks/the-kit-lists-a-room-s-tasks-by-status"
@@ -783,6 +814,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "host/a-turn-s-host-writes-its-room-s-metadata-status-and-observations"
@@ -796,6 +828,7 @@
       "mapping": {
         "unmapped": 6
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "injection/a-sent-event-keeps-its-answer-scope",
@@ -820,6 +853,7 @@
         "mapped_partial": 1,
         "unmapped": 6
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "delivery/a-retried-delivery-keeps-its-successful-provider-receipt",
@@ -850,6 +884,7 @@
       "mapping": {
         "unmapped": 5
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "media/an-emitted-protocol-trace-reaches-its-room-observer"
@@ -861,6 +896,7 @@
       "review": "informative",
       "requirements": 0,
       "mapping": {},
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -872,6 +908,7 @@
       "mapping": {
         "unmapped": 2
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "author-images/a-room-the-agent-joins-again-sends-a-refused-image-again",
@@ -928,6 +965,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -939,6 +977,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -951,6 +990,7 @@
         "mapped_partial": 11,
         "unmapped": 33
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "acp/a-copy-of-the-room-context-lines-is-replaced-and-the-runtime-s-are-kept",
@@ -2238,6 +2278,7 @@
       "mapping": {
         "unmapped": 2
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -2249,6 +2290,7 @@
       "mapping": {
         "unmapped": 4
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "ai-context/a-content-without-text-reads-in-later-history-as-its-turn-read-it",
@@ -2279,6 +2321,7 @@
         "mapped_partial": 2,
         "unmapped": 15
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "acp/tools-observer-turn-context",
@@ -2396,6 +2439,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -2407,6 +2451,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -2419,6 +2464,7 @@
         "mapped_partial": 1,
         "unmapped": 3
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "permissions/all-source-access-and-mute-combinations",
@@ -2434,6 +2480,7 @@
         "mapped_partial": 1,
         "unmapped": 10
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "appendix-b/b5-advisor-joins",
@@ -2487,6 +2534,7 @@
         "mapped_partial": 3,
         "unmapped": 24
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "addressing/an-address-does-not-show-an-event-its-visibility-hides",
@@ -2539,6 +2587,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "appendix-b/b5-advisor-joins",
@@ -2554,6 +2603,7 @@
         "mapped_partial": 2,
         "unmapped": 33
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "appendix-b/b2-block-and-inject",
@@ -2678,6 +2728,7 @@
       "review": "informative",
       "requirements": 0,
       "mapping": {},
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -2690,6 +2741,7 @@
         "mapped_partial": 1,
         "unmapped": 2
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "edits/a-hard-delete-leaves-the-index-it-took",
@@ -2726,6 +2778,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "appendix-b/b2-block-and-inject",
@@ -2832,6 +2885,7 @@
         "mapped_partial": 2,
         "unmapped": 5
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "acp/handler-before-tool-use-observer-after-turn-independent",
@@ -2922,6 +2976,7 @@
       "mapping": {
         "mapped_partial": 3
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "acp/notifications-binding-scope",
@@ -2976,6 +3031,7 @@
         "mapped_partial": 1,
         "unmapped": 5
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "discussion/an-agent-s-answer-typed-instruction-gives-no-turn",
@@ -2992,6 +3048,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -3004,6 +3061,7 @@
         "mapped_partial": 1,
         "unmapped": 20
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "hooks/a-channel-types-filter-does-not-silence-on-ai-thinking",
@@ -3066,6 +3124,7 @@
         "mapped_partial": 1,
         "unmapped": 110
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "acp/on-ai-response-reports-the-agents-answer",
@@ -3336,6 +3395,7 @@
         "mapped_partial": 12,
         "unmapped": 93
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "acp/a-finished-handler-turn-reports-its-complete-answer",
@@ -3859,6 +3919,7 @@
         "mapped_partial": 3,
         "unmapped": 31
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "appendix-b/b2-block-and-inject",
@@ -3968,6 +4029,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "executors/a-turn-apart-s-delegation-and-segments-fire-their-hooks-on-the-room-owner",
@@ -3986,6 +4048,7 @@
       "mapping": {
         "unmapped": 70
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "chain/a-first-post-past-the-reentry-budget-binds-nothing",
@@ -4133,6 +4196,7 @@
       "mapping": {
         "unmapped": 6
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -4142,6 +4206,7 @@
       "review": "informative",
       "requirements": 0,
       "mapping": {},
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -4154,6 +4219,7 @@
         "mapped_partial": 3,
         "unmapped": 133
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "appendix-b/b1-customer-and-ai",
@@ -4649,6 +4715,7 @@
         "mapped_partial": 1,
         "unmapped": 46
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "acp/an-instruction-is-prompted-under-the-runtime-s-mark",
@@ -4734,6 +4801,7 @@
         "mapped_partial": 3,
         "unmapped": 14
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "addressing/a-sender-s-interruption-marker-asks-its-agents",
@@ -4816,6 +4884,7 @@
         "mapped_partial": 1,
         "unmapped": 62
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "appendix-b/b6-edit-with-fallback",
@@ -4898,6 +4967,7 @@
         "mapped_partial": 7,
         "unmapped": 50
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "delivery/a-delivery-enters-the-room-as-the-framework-s-message",
@@ -5099,6 +5169,7 @@
       "mapping": {
         "unmapped": 46
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "ai-context/a-host-channel-narrows-nothing-an-agent-may-answer-with",
@@ -5163,6 +5234,7 @@
       "mapping": {
         "unmapped": 8
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "executors/a-turn-apart-s-answer-reaches-its-room-through-the-owner-alone",
@@ -5177,6 +5249,7 @@
       "mapping": {
         "unmapped": 14
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "executors/a-delegation-to-a-declared-worker-runs-on-its-executor",
@@ -5200,6 +5273,7 @@
         "mapped_partial": 4,
         "unmapped": 35
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "channel-call/a-call-is-scoped-to-the-room-s-organization",
@@ -5262,6 +5336,7 @@
         "mapped_partial": 2,
         "unmapped": 34
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "acp/config-agent-returned-value-is-kept",
@@ -5417,6 +5492,7 @@
       "mapping": {
         "unmapped": 16
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "delivery/a-cancel-joins-the-close-of-a-stream-nobody-read",
@@ -5446,6 +5522,7 @@
       "mapping": {
         "unmapped": 60
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "executor-close/a-turn-closing-the-kit-sees-its-close-return",
@@ -5562,6 +5639,7 @@
         "mapped_partial": 1,
         "unmapped": 20
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "executors/a-committed-event-goes-to-one-executor-that-would-take-the-room-s-turns",
@@ -5603,6 +5681,7 @@
         "mapped_partial": 1,
         "unmapped": 32
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "discussion/an-offline-agent-s-turn-is-skipped-not-failed",
@@ -5665,6 +5744,7 @@
         "mapped_partial": 2,
         "unmapped": 43
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "acp/steer-during-configuration",
@@ -5731,6 +5811,7 @@
       "mapping": {
         "unmapped": 8
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "executors/a-built-channel-parents-its-generation-to-the-owner-broadcast",
@@ -5744,6 +5825,7 @@
       "review": "informative",
       "requirements": 0,
       "mapping": {},
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "locks/an-adopted-message-held-for-its-sender-carries-its-challenge-s-failed-release",
@@ -5758,6 +5840,7 @@
       "mapping": {
         "unmapped": 2
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "identity/an-identified-sender-joins-the-room",
@@ -5772,6 +5855,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "identity/a-challenge-is-delivered-and-the-message-held",
@@ -5799,6 +5883,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "identity/a-challenge-is-delivered-and-the-message-held",
@@ -5819,6 +5904,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "identity/the-resolver-runs-for-the-configured-channel-types"
@@ -5832,6 +5918,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "identity/a-resolver-past-its-timeout-reads-unknown"
@@ -5845,6 +5932,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "identity/a-caller-s-message-under-the-framework-s-name-is-still-resolved",
@@ -5868,6 +5956,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -5879,6 +5968,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "store/a-verification-is-read-by-its-identity-within-its-organization",
@@ -5894,6 +5984,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "store/a-verification-request-is-read-by-its-id-and-rewritten-whole",
@@ -5922,6 +6013,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "verification/a-blocked-message-is-observed-by-no-hook",
@@ -5956,6 +6048,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "verification/a-code-reply-is-consumed-and-verifies",
@@ -5976,6 +6069,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "store/the-verifications-in-force-are-the-verified-with-an-expiry",
@@ -6002,6 +6096,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "verification/a-cancel-during-the-released-answer-cuts-it",
@@ -6048,6 +6143,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "store/a-verification-is-read-by-its-identity-within-its-organization",
@@ -6067,6 +6163,7 @@
       "review": "informative",
       "requirements": 0,
       "mapping": {},
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -6078,6 +6175,7 @@
       "mapping": {
         "unmapped": 2
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -6089,6 +6187,7 @@
       "mapping": {
         "unmapped": 16
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "delivery/a-key-cut-after-a-round-that-spoke-tells-its-caller-the-turn-s-end",
@@ -6189,6 +6288,7 @@
       "mapping": {
         "unmapped": 4
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -6200,6 +6300,7 @@
       "mapping": {
         "unmapped": 8
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -6211,6 +6312,7 @@
       "mapping": {
         "unmapped": 10
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -6222,6 +6324,7 @@
       "mapping": {
         "unmapped": 4
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -6233,6 +6336,7 @@
       "mapping": {
         "unmapped": 6
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -6244,6 +6348,7 @@
       "mapping": {
         "unmapped": 4
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -6255,6 +6360,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -6266,6 +6372,7 @@
       "mapping": {
         "unmapped": 2
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -6277,6 +6384,7 @@
       "mapping": {
         "unmapped": 4
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -6288,6 +6396,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -6299,6 +6408,7 @@
       "mapping": {
         "unmapped": 3
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -6310,6 +6420,7 @@
       "mapping": {
         "unmapped": 5
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -6321,6 +6432,7 @@
       "mapping": {
         "unmapped": 4
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -6332,6 +6444,7 @@
       "mapping": {
         "unmapped": 2
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -6343,6 +6456,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -6354,6 +6468,7 @@
       "mapping": {
         "unmapped": 2
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -6365,6 +6480,7 @@
       "mapping": {
         "unmapped": 6
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "memory/history-omits-only-responses-marked-superseded"
@@ -6378,6 +6494,7 @@
       "mapping": {
         "unmapped": 8
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -6389,6 +6506,7 @@
       "mapping": {
         "unmapped": 4
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -6400,6 +6518,7 @@
       "mapping": {
         "unmapped": 7
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -6411,6 +6530,7 @@
       "mapping": {
         "unmapped": 19
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "ai-external-handler/duplicate-pending-call-is-refused-before-its-cut-non-streaming",
@@ -6487,6 +6607,7 @@
       "mapping": {
         "unmapped": 10
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -6498,6 +6619,7 @@
       "mapping": {
         "unmapped": 3
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -6509,6 +6631,7 @@
       "mapping": {
         "unmapped": 2
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -6520,6 +6643,7 @@
       "mapping": {
         "unmapped": 3
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -6531,6 +6655,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -6542,6 +6667,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -6553,6 +6679,7 @@
       "mapping": {
         "unmapped": 4
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -6564,6 +6691,7 @@
       "mapping": {
         "unmapped": 6
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -6575,6 +6703,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -6586,6 +6715,7 @@
       "mapping": {
         "unmapped": 3
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -6597,6 +6727,7 @@
       "mapping": {
         "unmapped": 3
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -6608,6 +6739,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -6619,6 +6751,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -6630,6 +6763,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "video/a-frame-filter-reports-its-detection",
@@ -6646,6 +6780,7 @@
       "mapping": {
         "unmapped": 2
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -6657,6 +6792,7 @@
       "mapping": {
         "unmapped": 4
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -6668,6 +6804,7 @@
       "mapping": {
         "unmapped": 4
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -6679,6 +6816,7 @@
       "mapping": {
         "unmapped": 3
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -6690,6 +6828,7 @@
       "mapping": {
         "unmapped": 6
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -6701,6 +6840,7 @@
       "mapping": {
         "unmapped": 3
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -6712,6 +6852,7 @@
       "mapping": {
         "unmapped": 5
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -6723,6 +6864,7 @@
       "mapping": {
         "unmapped": 2
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -6734,6 +6876,7 @@
       "mapping": {
         "unmapped": 2
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -6745,6 +6888,7 @@
       "mapping": {
         "unmapped": 3
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -6756,6 +6900,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -6765,6 +6910,7 @@
       "review": "informative",
       "requirements": 0,
       "mapping": {},
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -6776,6 +6922,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -6787,6 +6934,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -6798,6 +6946,7 @@
       "mapping": {
         "unmapped": 14
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -6809,6 +6958,7 @@
       "mapping": {
         "unmapped": 14
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -6821,6 +6971,7 @@
         "mapped_partial": 1,
         "unmapped": 15
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "conference/a-call-reports-presence-without-changing-room-membership",
@@ -6857,6 +7008,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -6868,6 +7020,7 @@
       "mapping": {
         "unmapped": 3
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -6879,6 +7032,7 @@
       "mapping": {
         "unmapped": 3
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -6890,6 +7044,7 @@
       "mapping": {
         "unmapped": 5
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -6901,6 +7056,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -6912,6 +7068,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -6923,6 +7080,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -6934,6 +7092,7 @@
       "mapping": {
         "unmapped": 11
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "conference/a-conference-model-receives-the-gated-tool-result"
@@ -6947,6 +7106,7 @@
       "mapping": {
         "unmapped": 7
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "recording/a-recorder-joins-the-live-feed-after-consent",
@@ -6961,6 +7121,7 @@
       "mapping": {
         "unmapped": 7
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -6970,6 +7131,7 @@
       "review": "informative",
       "requirements": 0,
       "mapping": {},
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -6981,6 +7143,7 @@
       "mapping": {
         "unmapped": 3
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -6992,6 +7155,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "delivery/the-worker-retries-an-unavailable-destination"
@@ -7005,6 +7169,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -7016,6 +7181,7 @@
       "mapping": {
         "mapped_partial": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "delivery/a-keyed-delivery-is-one-publication",
@@ -7059,6 +7225,7 @@
         "mapped_partial": 1,
         "unmapped": 4
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "delivery/a-greeting-keeps-its-cursor-behind-its-held-delivery",
@@ -7176,6 +7343,7 @@
         "mapped_partial": 1,
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "delivery/a-call-a-parse-awaits-before-its-commit-ends-at-its-message-s-deadline",
@@ -7264,6 +7432,7 @@
       "review": "informative",
       "requirements": 0,
       "mapping": {},
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -7276,6 +7445,7 @@
         "mapped_partial": 2,
         "unmapped": 3
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "inbound/a-kit-s-inbound-rate-limit-refuses-a-channel-s-excess-messages",
@@ -7329,6 +7499,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -7340,6 +7511,7 @@
       "mapping": {
         "mapped_partial": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "delivery/a-retried-delivery-keeps-its-successful-provider-receipt",
@@ -7397,6 +7569,7 @@
       "mapping": {
         "mapped_partial": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -7406,6 +7579,7 @@
       "review": "informative",
       "requirements": 0,
       "mapping": {},
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -7417,6 +7591,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -7428,6 +7603,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "orchestration/a-loop-whose-producer-fails-hands-its-error-to-the-caller-reported-once",
@@ -7442,6 +7618,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -7453,6 +7630,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -7464,6 +7642,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -7475,6 +7654,7 @@
       "mapping": {
         "unmapped": 6
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -7486,6 +7666,7 @@
       "mapping": {
         "unmapped": 3
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -7497,6 +7678,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -7508,6 +7690,7 @@
       "mapping": {
         "unmapped": 6
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "orchestration/an-audited-answer-reaches-the-model-unchanged",
@@ -7522,6 +7705,7 @@
       "mapping": {
         "unmapped": 7
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "orchestration/a-session-auditor-records-the-sessions-and-the-tool-calls"
@@ -7535,6 +7719,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -7546,6 +7731,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "hooks/feedback-comes-once-the-on-feedback-hooks-have-ended",
@@ -7560,6 +7746,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -7571,6 +7758,7 @@
       "mapping": {
         "unmapped": 9
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -7582,6 +7770,7 @@
       "mapping": {
         "unmapped": 3
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -7593,6 +7782,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -7602,6 +7792,7 @@
       "review": "informative",
       "requirements": 0,
       "mapping": {},
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -7613,6 +7804,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -7624,6 +7816,7 @@
       "mapping": {
         "mapped_partial": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "addressing/set-agent-response-policy-stops-an-agent-s-answer-asking-the-others",
@@ -7742,6 +7935,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -7753,6 +7947,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -7764,6 +7959,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -7775,6 +7971,7 @@
       "mapping": {
         "unmapped": 7
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -7786,6 +7983,7 @@
       "mapping": {
         "unmapped": 2
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -7797,6 +7995,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -7808,6 +8007,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -7819,6 +8019,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -7830,6 +8031,7 @@
       "mapping": {
         "unmapped": 2
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "greeting/a-channel-unregistered-greets-no-more",
@@ -7873,6 +8075,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "orchestration/a-conversation-state-is-saved-only-in-a-room-the-store-holds",
@@ -7894,6 +8097,7 @@
       "mapping": {
         "unmapped": 4
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "addressing/a-sender-s-interruption-marker-asks-its-agents",
@@ -7919,6 +8123,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "addressing/set-agent-response-policy-stops-an-agent-s-answer-asking-the-others",
@@ -7936,6 +8141,7 @@
         "mapped_partial": 1,
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "acp/a-copy-of-the-room-context-lines-is-replaced-and-the-runtime-s-are-kept",
@@ -7985,6 +8191,7 @@
       "mapping": {
         "unmapped": 4
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "orchestration/a-conversation-pipeline-routes-each-phase-to-its-agent",
@@ -8014,6 +8221,7 @@
       "mapping": {
         "unmapped": 4
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "orchestration/a-conversation-pipeline-gives-each-agent-the-targets-it-can-reach",
@@ -8038,6 +8246,7 @@
       "mapping": {
         "unmapped": 8
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "orchestration/a-conversation-pipeline-gives-each-agent-the-targets-it-can-reach",
@@ -8083,6 +8292,7 @@
         "mapped_partial": 2,
         "unmapped": 2
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "discussion/a-discussion-installed-on-a-live-room-reads-its-history",
@@ -8159,6 +8369,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "orchestration/a-host-s-words-are-a-person-s-message-to-a-pipeline-s-routing",
@@ -8183,6 +8394,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "orchestration/an-inbound-after-a-handoff-to-a-human-asks-no-agent"
@@ -8196,6 +8408,7 @@
       "mapping": {
         "mapped_partial": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "executors/a-supervisor-s-passes-are-turns-of-its-agent-on-the-executor-hosting-it",
@@ -8275,6 +8488,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "orchestration/a-loop-leaves-its-producer-the-events-that-are-no-task",
@@ -8304,6 +8518,7 @@
         "mapped_partial": 1,
         "unmapped": 3
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "discussion/a-custom-handle-queues-its-agent-and-its-id-names-nobody",
@@ -8496,6 +8711,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "host/a-turn-s-host-acts-for-its-room-alone",
@@ -8525,6 +8741,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "executors/one-build-serving-two-rooms-reads-each-turn-s-room-alone",
@@ -8539,6 +8756,7 @@
       "mapping": {
         "mapped_partial": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "discussion/a-queued-turn-reads-the-room-when-it-starts",
@@ -8586,6 +8804,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "executors/a-committed-event-reaches-the-memory-before-its-agent-s-next-turn",
@@ -8612,6 +8831,7 @@
         "mapped_partial": 1,
         "unmapped": 6
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "instructions/a-memory-s-window-does-not-count-a-kept-instruction",
@@ -8664,6 +8884,7 @@
       "review": "informative",
       "requirements": 0,
       "mapping": {},
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -8676,6 +8897,7 @@
         "mapped_partial": 3,
         "unmapped": 4
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "ai-external-handler/read-stored-result-stays-local-non-streaming",
@@ -8917,6 +9139,7 @@
       "mapping": {
         "mapped_partial": 2
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "mcp-construction/direct-sse-discovery-empty-headers",
@@ -8986,6 +9209,7 @@
       "mapping": {
         "unmapped": 3
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "acp/steer-during-configuration",
@@ -9023,6 +9247,7 @@
       "mapping": {
         "mapped_partial": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "host-declared/admission-declare-after-close",
@@ -9156,6 +9381,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "ai-external-handler/read-stored-result-stays-local-non-streaming",
@@ -9194,6 +9420,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "executors/a-turn-apart-silent-while-its-tool-runs-past-the-heartbeat-timeout-is-kept",
@@ -9233,6 +9460,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "tasks/a-background-delegation-relays-its-result-to-the-notified-agent"
@@ -9246,6 +9474,7 @@
       "mapping": {
         "unmapped": 6
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "delivery/a-before-broadcast-refusal-is-reported-to-the-caller-and-after-deliver",
@@ -9302,6 +9531,7 @@
       "mapping": {
         "unmapped": 2
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "delivery/a-delivery-enters-the-room-as-the-framework-s-message",
@@ -9326,6 +9556,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "delivery/a-before-broadcast-refusal-is-reported-to-the-caller-and-after-deliver",
@@ -9346,6 +9577,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -9357,6 +9589,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "tasks/a-background-delegation-relays-its-result-to-the-notified-agent",
@@ -9373,6 +9606,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -9385,6 +9619,7 @@
         "mapped_partial": 2,
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "delivery/a-task-delegated-from-a-delivery-is-not-its-turn-work",
@@ -9552,6 +9787,7 @@
         "mapped_partial": 1,
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "executors/a-built-channel-reads-the-owner-s-task-in-the-model-input",
@@ -9613,6 +9849,7 @@
       "mapping": {
         "mapped_partial": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "tasks/a-delegation-whose-worker-fails-ends-failed",
@@ -9630,6 +9867,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -9641,6 +9879,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -9652,6 +9891,7 @@
       "mapping": {
         "mapped_partial": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "role-policy/activation-cannot-bypass-role-non-streaming",
@@ -9754,6 +9994,7 @@
       "mapping": {
         "mapped_partial": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "instructions/a-standalone-turn-keeps-the-agent-s-prompt-tools-and-skills",
@@ -9881,6 +10122,7 @@
       "mapping": {
         "mapped_partial": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "eviction/a-skill-s-instructions-are-never-stored",
@@ -10000,6 +10242,7 @@
       "mapping": {
         "mapped_partial": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -10011,6 +10254,7 @@
       "mapping": {
         "mapped_partial": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "role-policy/script-denied-non-streaming",
@@ -10059,6 +10303,7 @@
       "mapping": {
         "unmapped": 9
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "served-skills/execution-absent-approval",
@@ -10107,6 +10352,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -10118,6 +10364,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -10129,6 +10376,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -10140,6 +10388,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -10151,6 +10400,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -10162,6 +10412,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -10173,6 +10424,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -10184,6 +10436,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -10193,6 +10446,7 @@
       "review": "informative",
       "requirements": 0,
       "mapping": {},
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -10204,6 +10458,7 @@
       "mapping": {
         "unmapped": 2
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "appendix-b/b1-customer-and-ai",
@@ -10286,6 +10541,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -10297,6 +10553,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -10308,6 +10565,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -10317,6 +10575,7 @@
       "review": "informative",
       "requirements": 0,
       "mapping": {},
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -10328,6 +10587,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -10339,6 +10599,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -10350,6 +10611,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -10361,6 +10623,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -10372,6 +10635,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -10383,6 +10647,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -10394,6 +10659,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -10405,6 +10671,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -10416,6 +10683,7 @@
       "mapping": {
         "unmapped": 3
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "inbound/a-binding-s-cost-budget-on-an-unpriced-model-fails-the-turn",
@@ -10520,6 +10788,7 @@
       "mapping": {
         "mapped_partial": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "acp/a-finished-handler-turn-reports-its-complete-answer",
@@ -10652,6 +10921,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -10663,6 +10933,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -10674,6 +10945,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -10685,6 +10957,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -10696,6 +10969,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -10707,6 +10981,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -10718,6 +10993,7 @@
       "mapping": {
         "unmapped": 1
       },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -10727,6 +11003,7 @@
       "review": "informative",
       "requirements": 0,
       "mapping": {},
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -10736,6 +11013,7 @@
       "review": "informative",
       "requirements": 0,
       "mapping": {},
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "appendix-b/b1-customer-and-ai"
@@ -10747,6 +11025,7 @@
       "review": "informative",
       "requirements": 0,
       "mapping": {},
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "appendix-b/b2-block-and-inject"
@@ -10758,6 +11037,7 @@
       "review": "informative",
       "requirements": 0,
       "mapping": {},
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "members/a-resolved-pending-sender-keeps-their-room",
@@ -10774,6 +11054,7 @@
       "review": "informative",
       "requirements": 0,
       "mapping": {},
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "appendix-b/b4-agent-chain"
@@ -10785,6 +11066,7 @@
       "review": "informative",
       "requirements": 0,
       "mapping": {},
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "appendix-b/b5-advisor-joins"
@@ -10796,6 +11078,7 @@
       "review": "informative",
       "requirements": 0,
       "mapping": {},
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "appendix-b/b6-edit-with-fallback"
@@ -10807,6 +11090,7 @@
       "review": "informative",
       "requirements": 0,
       "mapping": {},
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "appendix-b/b7-delete-with-fallback"
@@ -10818,6 +11102,7 @@
       "review": "informative",
       "requirements": 0,
       "mapping": {},
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -10827,6 +11112,7 @@
       "review": "informative",
       "requirements": 0,
       "mapping": {},
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     }

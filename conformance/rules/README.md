@@ -14,34 +14,41 @@ proof: a scenario can cite a unit without covering all of it.
 - An outcome counts when its receipt ran the scenario's current text,
   whatever its RFC commit; the latest receipt recorded wins. Empty: no
   receipt ran it.
+- Scenario `untested`: [untested.json](../untested.json) gives the reason
+  no scenario can test the unit; `decided gap`: [gaps.json](../gaps.json)
+  lists it, with its class and card, until a scenario cites it; `—`: no
+  scenario cites it and neither file lists it.
+- Gaps: the `must` units a scenario can test that none cites and
+  `untested.json` gives no reason for, decided gaps included. Decided
+  writable, step and phase6: the units gaps.json lists, by class.
 
-| Section | Units | must | should | may | No level | Cited units | Citations | To reread |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|
-| [§0 Preface (Abstract and contents)](section-0.md) | 1 | 0 | 0 | 0 | 1 | 0 | 0 | 0 |
-| [§1 Conventions and Terminology](section-1.md) | 4 | 0 | 0 | 0 | 4 | 0 | 0 | 0 |
-| [§2 Introduction](section-2.md) | 4 | 0 | 0 | 0 | 4 | 0 | 0 | 0 |
-| [§3 Architecture Overview](section-3.md) | 3 | 0 | 0 | 0 | 3 | 0 | 0 | 0 |
-| [§4 Core Concepts](section-4.md) | 11 | 0 | 0 | 0 | 11 | 0 | 0 | 0 |
-| [§5 Data Models](section-5.md) | 184 | 171 | 9 | 4 | 0 | 169 | 675 | 0 |
-| [§6 Channel System](section-6.md) | 72 | 0 | 0 | 0 | 72 | 3 | 8 | 0 |
-| [§7 Permission Model](section-7.md) | 85 | 84 | 0 | 1 | 0 | 83 | 339 | 0 |
-| [§8 Event System](section-8.md) | 20 | 0 | 0 | 0 | 20 | 1 | 1 | 0 |
-| [§9 Hook System](section-9.md) | 350 | 343 | 3 | 4 | 0 | 333 | 1342 | 0 |
-| [§10 Processing Pipelines](section-10.md) | 646 | 626 | 7 | 13 | 0 | 588 | 2265 | 0 |
-| [§11 Identity Resolution](section-11.md) | 15 | 0 | 0 | 0 | 15 | 1 | 5 | 0 |
-| [§12 Voice and Realtime Media](section-12.md) | 284 | 0 | 0 | 0 | 284 | 1 | 1 | 0 |
-| [§13 Resilience and Error Handling](section-13.md) | 13 | 0 | 0 | 0 | 13 | 1 | 1 | 0 |
-| [§14 Storage Interface](section-14.md) | 8 | 0 | 0 | 0 | 8 | 0 | 0 | 0 |
-| [§15 Observability](section-15.md) | 30 | 0 | 0 | 0 | 30 | 0 | 0 | 0 |
-| [§16 Integration Surfaces](section-16.md) | 14 | 0 | 0 | 0 | 14 | 0 | 0 | 0 |
-| [§17 Security Considerations](section-17.md) | 15 | 0 | 0 | 0 | 15 | 0 | 0 | 0 |
-| [§18 Design Principles](section-18.md) | 1 | 0 | 0 | 0 | 1 | 0 | 0 | 0 |
-| [§19 Multi-Agent Orchestration](section-19.md) | 40 | 0 | 0 | 0 | 40 | 1 | 1 | 0 |
-| [§20 Memory System](section-20.md) | 10 | 0 | 0 | 0 | 10 | 0 | 0 | 0 |
-| [§21 Tool Access Control](section-21.md) | 15 | 0 | 0 | 0 | 15 | 2 | 9 | 0 |
-| [§22 Delivery Strategies](section-22.md) | 10 | 0 | 0 | 0 | 10 | 0 | 0 | 0 |
-| [§23 Task Delegation](section-23.md) | 9 | 0 | 0 | 0 | 9 | 1 | 1 | 0 |
-| [§24 Skills Framework](section-24.md) | 16 | 0 | 0 | 0 | 16 | 0 | 0 | 0 |
-| [§25 Image Generation](section-25.md) | 8 | 0 | 0 | 0 | 8 | 0 | 0 | 0 |
-| [§26 Conformance Levels](section-26.md) | 5 | 0 | 0 | 0 | 5 | 0 | 0 | 0 |
-| [Appendix A: Channel Reference](appendix-A.md) | 19 | 0 | 0 | 0 | 19 | 0 | 0 | 0 |
+| Section | Units | must | should | may | No level | Cited units | Citations | To reread | Gaps | Decided writable | Decided step | Decided phase6 |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| [§0 Preface (Abstract and contents)](section-0.md) | 1 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| [§1 Conventions and Terminology](section-1.md) | 4 | 0 | 0 | 0 | 4 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| [§2 Introduction](section-2.md) | 4 | 0 | 0 | 0 | 4 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| [§3 Architecture Overview](section-3.md) | 3 | 0 | 0 | 0 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| [§4 Core Concepts](section-4.md) | 11 | 0 | 0 | 0 | 11 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| [§5 Data Models](section-5.md) | 184 | 171 | 9 | 4 | 0 | 169 | 675 | 0 | 0 | 0 | 0 | 0 |
+| [§6 Channel System](section-6.md) | 72 | 0 | 0 | 0 | 72 | 3 | 8 | 0 | 0 | 0 | 0 | 0 |
+| [§7 Permission Model](section-7.md) | 85 | 84 | 0 | 1 | 0 | 83 | 339 | 0 | 0 | 0 | 0 | 0 |
+| [§8 Event System](section-8.md) | 20 | 0 | 0 | 0 | 20 | 1 | 1 | 0 | 0 | 0 | 0 | 0 |
+| [§9 Hook System](section-9.md) | 350 | 343 | 3 | 4 | 0 | 333 | 1342 | 0 | 0 | 0 | 0 | 0 |
+| [§10 Processing Pipelines](section-10.md) | 646 | 626 | 7 | 13 | 0 | 588 | 2265 | 0 | 0 | 0 | 0 | 0 |
+| [§11 Identity Resolution](section-11.md) | 15 | 0 | 0 | 0 | 15 | 1 | 5 | 0 | 0 | 0 | 0 | 0 |
+| [§12 Voice and Realtime Media](section-12.md) | 284 | 0 | 0 | 0 | 284 | 1 | 1 | 0 | 0 | 0 | 0 | 0 |
+| [§13 Resilience and Error Handling](section-13.md) | 13 | 0 | 0 | 0 | 13 | 1 | 1 | 0 | 0 | 0 | 0 | 0 |
+| [§14 Storage Interface](section-14.md) | 8 | 0 | 0 | 0 | 8 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| [§15 Observability](section-15.md) | 30 | 0 | 0 | 0 | 30 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| [§16 Integration Surfaces](section-16.md) | 14 | 0 | 0 | 0 | 14 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| [§17 Security Considerations](section-17.md) | 15 | 0 | 0 | 0 | 15 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| [§18 Design Principles](section-18.md) | 1 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| [§19 Multi-Agent Orchestration](section-19.md) | 40 | 0 | 0 | 0 | 40 | 1 | 1 | 0 | 0 | 0 | 0 | 0 |
+| [§20 Memory System](section-20.md) | 10 | 0 | 0 | 0 | 10 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| [§21 Tool Access Control](section-21.md) | 15 | 0 | 0 | 0 | 15 | 2 | 9 | 0 | 0 | 0 | 0 | 0 |
+| [§22 Delivery Strategies](section-22.md) | 10 | 0 | 0 | 0 | 10 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| [§23 Task Delegation](section-23.md) | 9 | 0 | 0 | 0 | 9 | 1 | 1 | 0 | 0 | 0 | 0 | 0 |
+| [§24 Skills Framework](section-24.md) | 16 | 0 | 0 | 0 | 16 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| [§25 Image Generation](section-25.md) | 8 | 0 | 0 | 0 | 8 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| [§26 Conformance Levels](section-26.md) | 5 | 0 | 0 | 0 | 5 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| [Appendix A: Channel Reference](appendix-A.md) | 19 | 0 | 0 | 0 | 19 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
