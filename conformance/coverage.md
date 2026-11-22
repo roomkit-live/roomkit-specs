@@ -290,7 +290,7 @@ See [requirements.json](requirements.json) for exact clauses and applicability,
 | §A.6 Teams Channel | normative | 6 | 6 | 0 | 0 | 0 | 0 | 0 | 4 | 0 |
 | §A.7 RCS Channel | normative | 5 | 5 | 0 | 0 | 0 | 0 | 0 | 4 | 0 |
 | §A.8 WebSocket Channel | normative | 8 | 8 | 0 | 0 | 0 | 0 | 0 | 8 | 0 |
-| §A.9 AI Channel | normative | 39 | 39 | 0 | 0 | 92 | 0 | 4 | 1 | 0 |
+| §A.9 AI Channel | normative | 39 | 39 | 0 | 0 | 92 | 0 | 3 | 1 | 0 |
 | §A.9.1 ACP Agent Channel | normative | 42 | 39 | 3 | 0 | 120 | 0 | 3 | 4 | 0 |
 | §A.10 Voice Channel | normative | 15 | 15 | 0 | 0 | 0 | 0 | 0 | 0 | 14 |
 | §A.11 Realtime Voice Channel | normative | 8 | 8 | 0 | 0 | 0 | 0 | 0 | 0 | 6 |
@@ -1123,7 +1123,6 @@ Units [gaps.json](gaps.json) lists: a scenario can test each, and none cites it 
 | RK-A.9-004 | §A.9 | writable | RMK-1961 | A scenario can read an AI channel binding's type, category, direction and media types through the bindings expectation. |
 | RK-A.9-005 | §A.9 | writable | RMK-1961 | A scenario can read an AI channel binding's capabilities (rich text, no edit, no delete) through the bindings expectation. |
 | RK-A.9-011 | §A.9 | step | RMK-1961 | No runner key sets tool_loop_timeout_seconds, and its 300-second default cannot be waited out under the suite's time rule. The audit's suspect on the configuration list is RMK-1962. |
-| RK-A.9-024 | §A.9 | writable | RMK-1961 | A scenario whose agent reads its own events (a read_write binding) shows it never answers what it wrote; greeting/another-agent-answers-a-greeting cannot, its agent's binding being write_only. |
 | RK-A.9-042 | §A.9 | writable | RMK-1961 | A schema turn on a channel given skills, on a model that takes a schema but not beside tools, fails unsupported; the skills and model capability keys exist. |
 | RK-A.9.1-003 | §A.9.1 | step | RMK-1961 | Needs a real stdio launch of an agent process, which the runners' scripted agents do not perform (as RK-6.4-486). |
 | RK-A.9.1-004 | §A.9.1 | step | RMK-1961 | Needs a real agent launch from an argument vector, which the runners' scripted agents do not perform. |

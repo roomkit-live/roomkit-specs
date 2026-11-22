@@ -10895,7 +10895,7 @@
       },
       "decided_gaps": {
         "step": 1,
-        "writable": 4
+        "writable": 3
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -41941,12 +41941,7 @@
       "id": "RK-A.9-024",
       "section": "A.9",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1961",
-        "note": "A scenario whose agent reads its own events (a read_write binding) shows it never answers what it wrote; greeting/another-agent-answers-a-greeting cannot, its agent's binding being write_only."
-      }
+      "links": []
     },
     {
       "id": "RK-A.9-025",

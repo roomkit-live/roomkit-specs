@@ -51,4 +51,4 @@ proof: a scenario can cite a unit without covering all of it.
 | [§24 Skills Framework](section-24.md) | 184 | 174 | 3 | 6 | 1 | 106 | 733 | 0 | 71 | 42 | 24 | 5 |
 | [§25 Image Generation](section-25.md) | 82 | 71 | 2 | 8 | 1 | 1 | 15 | 0 | 68 | 0 | 70 | 0 |
 | [§26 Conformance Levels](section-26.md) | 5 | 0 | 0 | 0 | 5 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| [Appendix A: Channel Reference](appendix-A.md) | 202 | 200 | 0 | 2 | 0 | 98 | 270 | 0 | 103 | 8 | 44 | 51 |
+| [Appendix A: Channel Reference](appendix-A.md) | 202 | 200 | 0 | 2 | 0 | 98 | 267 | 0 | 102 | 7 | 44 | 51 |
