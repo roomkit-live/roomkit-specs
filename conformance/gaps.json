@@ -1606,6 +1606,356 @@
       "card": "RMK-1922",
       "note": "Invoke the delegation tool itself without any current tool call and observe refusal. The delegate.handle step supplies a room explicitly and tests a different public API."
     },
+    "RK-25.1-002": {
+      "class": "step",
+      "card": "RMK-1934",
+      "note": "Inspect the image and chat provider contracts on an implementation that provides both, using a provider descriptor or independent adapter fixture. Rust currently has no image provider."
+    },
+    "RK-25.1-003": {
+      "class": "step",
+      "card": "RMK-1934",
+      "note": "Configure a conversational provider and a separately instrumented image provider with distinct vendor identifiers, credentials and instances, and observe independent calls."
+    },
+    "RK-25.1-004": {
+      "class": "step",
+      "card": "RMK-1934",
+      "note": "Run a conversational agent whose tool or host invokes a different image provider and check which provider actually serves each request."
+    },
+    "RK-25.1-005": {
+      "class": "step",
+      "card": "RMK-1934",
+      "note": "Inspect the declared public AIResponse.content type in each implementation and assert it is exclusively text. Native declarations specify str in Python and String in Rust. Existing response examples returning text cannot distinguish an additional allowed image type; the Python public API snapshot records parameter names without type annotations. No image generation call is necessary."
+    },
+    "RK-25.2-002": {
+      "class": "step",
+      "card": "RMK-1934",
+      "note": "Read the image provider's public name independently of the selected model."
+    },
+    "RK-25.2-003": {
+      "class": "step",
+      "card": "RMK-1934",
+      "note": "Read the provider's editing capability on configurations that do and do not accept references."
+    },
+    "RK-25.2-004": {
+      "class": "step",
+      "card": "RMK-1934",
+      "note": "List an image provider's model information without making a network request."
+    },
+    "RK-25.2-005": {
+      "class": "step",
+      "card": "RMK-1934",
+      "note": "Call the public generation operation with a prompt, size, requested count and references and inspect its image results."
+    },
+    "RK-25.2-006": {
+      "class": "step",
+      "card": "RMK-1934",
+      "note": "Close a constructed image provider and observe release of its instrumented resources."
+    },
+    "RK-25.2-007": {
+      "class": "step",
+      "card": "RMK-1934",
+      "note": "Drive an actual image provider against a scripted image endpoint, request a count and compare complete and short responses."
+    },
+    "RK-25.2-008": {
+      "class": "step",
+      "card": "RMK-1934",
+      "note": "Generate with a portable width-by-height value and with null, and compare the resulting requests and resolutions."
+    },
+    "RK-25.2-009": {
+      "class": "step",
+      "card": "RMK-1934",
+      "note": "Use a scripted native-geometry endpoint behind the provider and compare its request with the public pixel-size input."
+    },
+    "RK-25.2-010": {
+      "class": "step",
+      "card": "RMK-1934",
+      "note": "Request an exact size the selected provider cannot supply and inspect its error."
+    },
+    "RK-25.2-011": {
+      "class": "step",
+      "card": "RMK-1934",
+      "note": "Supply separately identifiable image results from a scripted endpoint and assert the requested batch returns distinct results."
+    },
+    "RK-25.2-012": {
+      "class": "step",
+      "card": "RMK-1934",
+      "note": "Gate individual image requests on a non-batching endpoint and observe multiple submissions before completing any one of them."
+    },
+    "RK-25.2-014": {
+      "class": "step",
+      "card": "RMK-1934",
+      "note": "Exercise native aspect ratio and tier separately from exact pixel size and inspect their actual encoding and effective settings."
+    },
+    "RK-25.2-015": {
+      "class": "step",
+      "card": "RMK-1934",
+      "note": "Feed an unsupported or incompatible option to a real provider and check its local failure and the endpoint's zero request count."
+    },
+    "RK-25.2-016": {
+      "class": "step",
+      "card": "RMK-1934",
+      "note": "Set a provider-level default, omit the corresponding request option and inspect its effective selection."
+    },
+    "RK-25.2-017": {
+      "class": "step",
+      "card": "RMK-1934",
+      "note": "Set conflicting provider and call-level option values and check which reaches the image request."
+    },
+    "RK-25.2-018": {
+      "class": "step",
+      "card": "RMK-1934",
+      "note": "Call an options-capable image provider using the original argument list and inspect its results."
+    },
+    "RK-25.2-019": {
+      "class": "step",
+      "card": "RMK-1934",
+      "note": "Invoke an editing provider with a mask and references and inspect the submitted materials."
+    },
+    "RK-25.2-020": {
+      "class": "step",
+      "card": "RMK-1934",
+      "note": "Return both available images and usage across failed image requests and read the preserved data from the error."
+    },
+    "RK-25.2-021": {
+      "class": "step",
+      "card": "RMK-1934",
+      "note": "Combine successful and failed vendor calls in one image request and inspect its raised partial outcome."
+    },
+    "RK-25.2-022": {
+      "class": "step",
+      "card": "RMK-1934",
+      "note": "Have a scripted endpoint lose a response after receiving the paid request and examine the public billing state."
+    },
+    "RK-25.2-023": {
+      "class": "step",
+      "card": "RMK-1934",
+      "note": "Drive the actual provider and SDK against a local endpoint that fails after receiving the request, then count attempted generations. Python tests/test_providers/test_openai_transport.py::test_a_generation_that_may_have_run_is_never_sent_again covers the landed retry change offline."
+    },
+    "RK-25.2-024": {
+      "class": "step",
+      "card": "RMK-1934",
+      "note": "Return each of HTTP 408, 409, 429 and 503 from a scripted image endpoint and observe the retryable status of the reported outcome."
+    },
+    "RK-25.2-025": {
+      "class": "step",
+      "card": "RMK-1934",
+      "note": "Return HTTP 500, 502 and 504 from a scripted image endpoint and inspect each final outcome."
+    },
+    "RK-25.2-026": {
+      "class": "step",
+      "card": "RMK-1934",
+      "note": "Inject failures before a connection can send an image request and read the provider's resulting retry classification."
+    },
+    "RK-25.2-027": {
+      "class": "step",
+      "card": "RMK-1934",
+      "note": "Inject a timeout and a dropped connection after the request reached an image endpoint, then read the final status."
+    },
+    "RK-25.2-028": {
+      "class": "step",
+      "card": "RMK-1934",
+      "note": "Return a generated image in an unusable form and inspect the final billed failure."
+    },
+    "RK-25.2-029": {
+      "class": "step",
+      "card": "RMK-1934",
+      "note": "Gate sibling image calls independently, fail one, and observe whether the remaining outcomes are collected."
+    },
+    "RK-25.2-030": {
+      "class": "step",
+      "card": "RMK-1934",
+      "note": "Cancel an in-flight image-provider call and inspect the caller's cancellation result."
+    },
+    "RK-25.2-031": {
+      "class": "step",
+      "card": "RMK-1934",
+      "note": "Observe the asynchronous progress callback across a completed image call and a sibling cancelled while still running."
+    },
+    "RK-25.2-032": {
+      "class": "step",
+      "card": "RMK-1934",
+      "note": "Select an image model and read the active model identifier from its provider."
+    },
+    "RK-25.3-002": {
+      "class": "step",
+      "card": "RMK-1934",
+      "note": "Read an ImageResult's encoded data and media type through a shared result or provider fixture."
+    },
+    "RK-25.3-003": {
+      "class": "step",
+      "card": "RMK-1934",
+      "note": "Obtain an ImageResult from the provider and validate its data URI. Supplying an existing URI to a chat input exercises its consumer only."
+    },
+    "RK-25.3-004": {
+      "class": "step",
+      "card": "RMK-1934",
+      "note": "Compare the MIME header of a result issued by the image provider with that result's mime_type field."
+    },
+    "RK-25.3-006": {
+      "class": "step",
+      "card": "RMK-1934",
+      "note": "Pass the URI from an actual image-generation result to a second generate call as an edit reference without conversion."
+    },
+    "RK-25.3-007": {
+      "class": "step",
+      "card": "RMK-1934",
+      "note": "Script a vendor response with a fetchable local URL, observe the fetch, and read the embedded encoded bytes in the eventual result."
+    },
+    "RK-25.3-008": {
+      "class": "step",
+      "card": "RMK-1934",
+      "note": "Omit the revised prompt from a scripted vendor result and read the corresponding null field."
+    },
+    "RK-25.3-009": {
+      "class": "step",
+      "card": "RMK-1934",
+      "note": "Use a distinctive input prompt, omit its revision from the vendor result, and check that the returned revision is not the input."
+    },
+    "RK-25.3-011": {
+      "class": "step",
+      "card": "RMK-1934",
+      "note": "Script one usage report for a multi-image batch and inspect the single report and its scope."
+    },
+    "RK-25.3-012": {
+      "class": "step",
+      "card": "RMK-1934",
+      "note": "Compare the measured batch usage with individual image results and assert that no per-image measurements are fabricated."
+    },
+    "RK-25.3-013": {
+      "class": "step",
+      "card": "RMK-1934",
+      "note": "Include an inline image in original vendor metadata and verify that the retained original metadata omits the payload."
+    },
+    "RK-25.3-014": {
+      "class": "step",
+      "card": "RMK-1934",
+      "note": "Seed vendor metadata with a harmless secret sentinel and check its omission from retained original metadata."
+    },
+    "RK-25.3-016": {
+      "class": "step",
+      "card": "RMK-1934",
+      "note": "Return a preview followed by a final image and compare their explicitly distinguishable representations."
+    },
+    "RK-25.3-017": {
+      "class": "step",
+      "card": "RMK-1934",
+      "note": "Observe progress while the simulated vendor still tracks the call and its billing state, and compare those states after notification."
+    },
+    "RK-25.3-018": {
+      "class": "step",
+      "card": "RMK-1934",
+      "note": "Fail the progress callback and inspect the scripted endpoint's generation count."
+    },
+    "RK-25.3-019": {
+      "class": "step",
+      "card": "RMK-1934",
+      "note": "Read the optional revised prompt from a constructed or returned ImageResult."
+    },
+    "RK-25.3-020": {
+      "class": "step",
+      "card": "RMK-1934",
+      "note": "Read the image-generation usage map on a returned ImageResult."
+    },
+    "RK-25.4-002": {
+      "class": "step",
+      "card": "RMK-1934",
+      "note": "Use the same generate entry point for prompt-only and reference-image calls and read the edited result."
+    },
+    "RK-25.4-003": {
+      "class": "step",
+      "card": "RMK-1934",
+      "note": "Exercise providers with one endpoint and with separate edit endpoints through the same public operation and compare the submitted image references."
+    },
+    "RK-25.4-004": {
+      "class": "step",
+      "card": "RMK-1934",
+      "note": "Select a nonediting image provider and read its advertised supports_editing value."
+    },
+    "RK-25.4-005": {
+      "class": "step",
+      "card": "RMK-1934",
+      "note": "Supply nonempty reference images to a provider that cannot edit and inspect its error and lack of prompt-only output."
+    },
+    "RK-25.4-008": {
+      "class": "step",
+      "card": "RMK-1934",
+      "note": "Configure an explicit storage choice on a stateful image provider and observe that disabling remote history is honoured."
+    },
+    "RK-25.4-011": {
+      "class": "step",
+      "card": "RMK-1934",
+      "note": "Exercise external-search grounding on compatible and incompatible image models and inspect admission and the request."
+    },
+    "RK-25.4-012": {
+      "class": "step",
+      "card": "RMK-1934",
+      "note": "Return citations and search-suggestion metadata from a grounded image model and read both through the provider."
+    },
+    "RK-25.5-002": {
+      "class": "step",
+      "card": "RMK-1934",
+      "note": "Generate an image using a scripted vendor report with separate text and image measurements and inspect the public usage report."
+    },
+    "RK-25.5-003": {
+      "class": "step",
+      "card": "RMK-1934",
+      "note": "Inspect the four integer text and image input and output counters on generation usage. Conversational usage fixtures provide preassembled counts."
+    },
+    "RK-25.5-004": {
+      "class": "step",
+      "card": "RMK-1934",
+      "note": "Feed a known vendor accounting breakdown and verify that no generation token appears in multiple reported categories."
+    },
+    "RK-25.5-005": {
+      "class": "step",
+      "card": "RMK-1934",
+      "note": "Script a vendor total containing an image subtotal and compare the normalized text counter with their difference."
+    },
+    "RK-25.5-006": {
+      "class": "step",
+      "card": "RMK-1934",
+      "note": "Compare a vendor report omitting one counter with a report explicitly setting that same counter to zero."
+    },
+    "RK-25.6-002": {
+      "class": "step",
+      "card": "RMK-1934",
+      "note": "Enumerate both actual catalogues on a provider offering image generation and compare their full model-ID sets."
+    },
+    "RK-25.6-003": {
+      "class": "step",
+      "card": "RMK-1934",
+      "note": "Request each actual catalogue separately and inspect the enumerations for mixed entries."
+    },
+    "RK-25.6-004": {
+      "class": "step",
+      "card": "RMK-1934",
+      "note": "Inspect the published capability tags of image catalogue entries."
+    },
+    "RK-25.6-006": {
+      "class": "step",
+      "card": "RMK-1934",
+      "note": "Read a model entry with an unspecified image capability alongside an entry with a known value and verify the former stays unknown."
+    },
+    "RK-25.7-002": {
+      "class": "step",
+      "card": "RMK-1934",
+      "note": "Observe an ordinary inbound and broadcast pass while an enabled image provider records whether it was invoked as a stage."
+    },
+    "RK-25.7-003": {
+      "class": "step",
+      "card": "RMK-1934",
+      "note": "Expose the implementation's complete public hook trigger vocabulary and compare it with the ordinary hooks. Scoped observed hook lists cannot establish the absence of a trigger."
+    },
+    "RK-25.7-004": {
+      "class": "step",
+      "card": "RMK-1934",
+      "note": "Invoke the actual image provider from a tool handler or application and assert its recorded generation request."
+    },
+    "RK-25.7-005": {
+      "class": "step",
+      "card": "RMK-1934",
+      "note": "Feed actual generated output through the public room integration path and observe inbound processing, delivery and visibility. Starting with a manually supplied image already on the ordinary route cannot detect a separate generation route."
+    },
     "RK-6.4-049": {
       "class": "writable",
       "card": "RMK-1911"

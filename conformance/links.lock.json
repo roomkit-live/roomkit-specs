@@ -8860,6 +8860,23 @@
       "tasks/an-inline-task-its-worker-s-round-cap-cut-fails-with-its-narration": "50b6c8766d22b68692c421781b1ff6cd2832cc46bf39a8e2758cc7a47e658ca4",
       "tasks/the-kit-cancels-a-background-task-once": "50b6c8766d22b68692c421781b1ff6cd2832cc46bf39a8e2758cc7a47e658ca4"
     },
+    "RK-25.3-005": {
+      "author-images/a-call-streamed-before-a-refusal-refuses-no-image": "4dc314b3d5c3cd79269599634829e3a475024c3e601b44f0f3cac18689239f36",
+      "author-images/a-context-overflow-nothing-can-relieve-refuses-the-images": "4dc314b3d5c3cd79269599634829e3a475024c3e601b44f0f3cac18689239f36",
+      "author-images/a-context-overflow-the-compaction-relieves-refuses-no-image": "4dc314b3d5c3cd79269599634829e3a475024c3e601b44f0f3cac18689239f36",
+      "author-images/a-data-uri-goes-as-written": "4dc314b3d5c3cd79269599634829e3a475024c3e601b44f0f3cac18689239f36",
+      "author-images/a-reference-a-path-reader-could-follow-is-refused": "4dc314b3d5c3cd79269599634829e3a475024c3e601b44f0f3cac18689239f36",
+      "author-images/a-room-the-agent-joins-again-sends-a-refused-image-again": "4dc314b3d5c3cd79269599634829e3a475024c3e601b44f0f3cac18689239f36",
+      "author-images/a-schema-the-model-does-not-take-refuses-no-image": "4dc314b3d5c3cd79269599634829e3a475024c3e601b44f0f3cac18689239f36",
+      "author-images/a-scheme-a-reader-fetches-is-no-reference": "4dc314b3d5c3cd79269599634829e3a475024c3e601b44f0f3cac18689239f36",
+      "author-images/a-text-held-on-a-first-try-refuses-no-image-when-its-retry-is-refused": "4dc314b3d5c3cd79269599634829e3a475024c3e601b44f0f3cac18689239f36",
+      "author-images/a-text-held-under-a-schema-before-a-refusal-refuses-no-image": "4dc314b3d5c3cd79269599634829e3a475024c3e601b44f0f3cac18689239f36",
+      "author-images/an-agent-attached-over-its-attachment-sends-a-refused-image-again": "4dc314b3d5c3cd79269599634829e3a475024c3e601b44f0f3cac18689239f36",
+      "author-images/an-image-goes-after-its-caption": "4dc314b3d5c3cd79269599634829e3a475024c3e601b44f0f3cac18689239f36",
+      "author-images/an-image-the-provider-refused-reads-as-refused-after": "4dc314b3d5c3cd79269599634829e3a475024c3e601b44f0f3cac18689239f36",
+      "author-images/the-author-s-image-comes-before-the-replayed-tool-images": "4dc314b3d5c3cd79269599634829e3a475024c3e601b44f0f3cac18689239f36",
+      "reasoning/a-generation-hook-reads-a-message-s-parts": "4dc314b3d5c3cd79269599634829e3a475024c3e601b44f0f3cac18689239f36"
+    },
     "RK-5-001": {
       "permissions/reserved-channel-ids-are-refused": "c094c4292b80e298a0a8b1d7ca12bbef2df681c42d9366621b73e01f8938495c"
     },
