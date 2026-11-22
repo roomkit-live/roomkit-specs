@@ -4348,17 +4348,8 @@
       "mcp-construction/direct-sse-discovery-empty-headers": "7b6045fe2924195a498848b0c3305e4c2de44432866d22cf3f3545522e592899",
       "mcp-construction/from-url-sse-discovery-empty-headers": "7b6045fe2924195a498848b0c3305e4c2de44432866d22cf3f3545522e592899",
       "mcp-host/listing-metadata": "7b6045fe2924195a498848b0c3305e4c2de44432866d22cf3f3545522e592899",
-      "mcp/a-bare-name-never-runs-on-a-server-the-policy-keeps-out": "7b6045fe2924195a498848b0c3305e4c2de44432866d22cf3f3545522e592899",
-      "mcp/a-bare-name-no-server-admits-is-served-by-nothing": "7b6045fe2924195a498848b0c3305e4c2de44432866d22cf3f3545522e592899",
-      "mcp/a-bare-name-runs-on-the-first-server-of-the-chain-that-serves-it": "7b6045fe2924195a498848b0c3305e4c2de44432866d22cf3f3545522e592899",
-      "mcp/a-bare-name-runs-only-on-the-server-the-policy-admits": "7b6045fe2924195a498848b0c3305e4c2de44432866d22cf3f3545522e592899",
-      "mcp/a-catalogue-of-aliases-holds-a-policy-that-names-a-server": "7b6045fe2924195a498848b0c3305e4c2de44432866d22cf3f3545522e592899",
-      "mcp/a-forwarding-handler-runs-no-bare-name-the-policy-keeps-off-its-server": "7b6045fe2924195a498848b0c3305e4c2de44432866d22cf3f3545522e592899",
-      "mcp/a-policy-that-names-no-server-leaves-a-bare-name-on-the-first-server": "7b6045fe2924195a498848b0c3305e4c2de44432866d22cf3f3545522e592899",
       "mcp/a-tool-description-reaches-the-model-as-the-server-wrote-it": "7b6045fe2924195a498848b0c3305e4c2de44432866d22cf3f3545522e592899",
-      "mcp/a-tool-listed-twice-is-declared-once": "7b6045fe2924195a498848b0c3305e4c2de44432866d22cf3f3545522e592899",
-      "mcp/an-is-error-result-is-a-failure-never-a-refusal-non-streaming": "7b6045fe2924195a498848b0c3305e4c2de44432866d22cf3f3545522e592899",
-      "mcp/an-is-error-result-is-a-failure-never-a-refusal-streaming": "7b6045fe2924195a498848b0c3305e4c2de44432866d22cf3f3545522e592899"
+      "mcp/a-tool-listed-twice-is-declared-once": "7b6045fe2924195a498848b0c3305e4c2de44432866d22cf3f3545522e592899"
     },
     "RK-21.2-004": {
       "mcp-construction/direct-sse-discovery-empty-headers": "2d93810cbefe129cd80d89c8b4dfffed550e615d1e237d6dbed15cd31783f001",
