@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "rfc_sha256": "f7c39f591c7e1d31f4b4626078cda2f01c5b410105afdd0dee738fc00779f590",
+  "rfc_sha256": "77e4a78eaaaa046abb5e11510f9c16f5c17e8bb9854954eb066919c859d4da39",
   "corpus_sha256": "3342c73755ecd7755711678240e455b6ae4ce67a9fd3640b72a4ec28f4141540",
   "python_commit": "1bb12d025296ee1c5f14b82267462fc4d13104a6",
   "scenario_count": 3403,
@@ -7517,12 +7517,15 @@
       "section": "14.1",
       "title": "Conversation Store",
       "review": "normative",
-      "requirements": 5,
+      "requirements": 72,
       "mapping": {
         "mapped_partial": 2,
-        "unmapped": 3
+        "unmapped": 70
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "step": 21,
+        "writable": 5
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "executors/a-turn-on-another-executor-whose-rows-the-store-fails-to-read-runs-without-them",
@@ -7573,9 +7576,9 @@
       "section": "14.2",
       "title": "Required Implementations",
       "review": "normative",
-      "requirements": 1,
+      "requirements": 2,
       "mapping": {
-        "unmapped": 1
+        "unmapped": 2
       },
       "decided_gaps": {},
       "unannotated_keyword_lines": [],
@@ -7585,11 +7588,15 @@
       "section": "14.3",
       "title": "Consistency Requirements",
       "review": "normative",
-      "requirements": 1,
+      "requirements": 31,
       "mapping": {
-        "mapped_partial": 1
+        "mapped_partial": 2,
+        "unmapped": 29
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "step": 2,
+        "writable": 3
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "delivery/a-retried-delivery-keeps-its-successful-provider-receipt",
@@ -7643,9 +7650,10 @@
       "section": "14.4",
       "title": "Returned-Object Ownership",
       "review": "normative",
-      "requirements": 1,
+      "requirements": 5,
       "mapping": {
-        "mapped_partial": 1
+        "mapped_partial": 1,
+        "unmapped": 4
       },
       "decided_gaps": {},
       "unannotated_keyword_lines": [],
@@ -30205,13 +30213,442 @@
       "links": []
     },
     {
-      "id": "RK-14.1-001",
+      "id": "RK-14.1-006",
       "section": "14.1",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-14.1-002",
+      "id": "RK-14.1-007",
+      "section": "14.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1976",
+        "note": "No error name for a refused duplicate room: README's error table has none, and neither runner maps the store's error."
+      }
+    },
+    {
+      "id": "RK-14.1-008",
+      "section": "14.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-14.1-009",
+      "section": "14.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-14.1-010",
+      "section": "14.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1976",
+        "note": "No store.update_room step: the whole-record write and what it keeps are not called directly."
+      }
+    },
+    {
+      "id": "RK-14.1-011",
+      "section": "14.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1976",
+        "note": "Six scenarios call store.patch_room_metadata as setup; three assert a patched key or an unset key's removal; none asserts a key outside the patch kept, unset applied first, nothing else written, or an unknown room's null."
+      }
+    },
+    {
+      "id": "RK-14.1-012",
+      "section": "14.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1976",
+        "note": "Suspect RMK-1975: both implementations, and the README's store.delete_room, return whether the store held the room; the scenarios asserting it are not cited."
+      }
+    },
+    {
+      "id": "RK-14.1-013",
+      "section": "14.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1976",
+        "note": "No store.list_rooms step."
+      }
+    },
+    {
+      "id": "RK-14.1-014",
+      "section": "14.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1976",
+        "note": "No store.find_rooms step."
+      }
+    },
+    {
+      "id": "RK-14.1-015",
+      "section": "14.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-14.1-016",
+      "section": "14.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-14.1-017",
+      "section": "14.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-14.1-018",
+      "section": "14.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1976",
+        "note": "No store.load_room_context step."
+      }
+    },
+    {
+      "id": "RK-14.1-019",
+      "section": "14.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1976",
+        "note": "No store.get_conversation step."
+      }
+    },
+    {
+      "id": "RK-14.1-020",
+      "section": "14.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-14.1-021",
+      "section": "14.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1976",
+        "note": "No store.get_delivered_index step; the room record's delivered_index, which §13.5's scenarios read, is the cursor, not this operation."
+      }
+    },
+    {
+      "id": "RK-14.1-022",
+      "section": "14.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1976",
+        "note": "No store.advance_delivered_index step."
+      }
+    },
+    {
+      "id": "RK-14.1-023",
+      "section": "14.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1976",
+        "note": "No store.get_private_state step."
+      }
+    },
+    {
+      "id": "RK-14.1-024",
+      "section": "14.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1976",
+        "note": "No store.set_private_state step."
+      }
+    },
+    {
+      "id": "RK-14.1-025",
+      "section": "14.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-14.1-026",
+      "section": "14.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1976",
+        "note": "No store.find_room_id_by_binding step: routing reaches it through the default router, whose scenarios cite §10.4."
+      }
+    },
+    {
+      "id": "RK-14.1-027",
+      "section": "14.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1976",
+        "note": "No store.find_room_id_by_participant step: routing reaches it through the default router, whose scenarios cite §10.4."
+      }
+    },
+    {
+      "id": "RK-14.1-028",
+      "section": "14.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1976",
+        "note": "No store step for the two room finders."
+      }
+    },
+    {
+      "id": "RK-14.1-029",
+      "section": "14.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-14.1-030",
+      "section": "14.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-14.1-031",
+      "section": "14.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-14.1-032",
+      "section": "14.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-14.1-033",
+      "section": "14.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-14.1-034",
+      "section": "14.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1976",
+        "note": "No store.get_event_count step."
+      }
+    },
+    {
+      "id": "RK-14.1-035",
+      "section": "14.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-14.1-036",
+      "section": "14.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-14.1-037",
+      "section": "14.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-14.1-038",
+      "section": "14.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-14.1-039",
+      "section": "14.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-14.1-040",
+      "section": "14.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-14.1-041",
+      "section": "14.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1976",
+        "note": "No store.get_binding step; the kit's get_binding answers channel_not_bound, not the store's null, and no scenario asserts store.add_binding's result."
+      }
+    },
+    {
+      "id": "RK-14.1-042",
+      "section": "14.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-14.1-043",
+      "section": "14.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-14.1-044",
+      "section": "14.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-14.1-045",
+      "section": "14.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1976",
+        "note": "No store.list_bindings step; the kit's list_bindings is the kit's read."
+      }
+    },
+    {
+      "id": "RK-14.1-046",
+      "section": "14.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-14.1-047",
+      "section": "14.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-14.1-048",
+      "section": "14.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1976",
+        "note": "No store.delete_participant or store.list_participants step."
+      }
+    },
+    {
+      "id": "RK-14.1-049",
+      "section": "14.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-14.1-050",
+      "section": "14.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-14.1-051",
+      "section": "14.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-14.1-052",
+      "section": "14.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1976",
+        "note": "Needs the kit holding a verification in force restarted over its store, the expiry timer re-armed; no scenario restarts that kit."
+      }
+    },
+    {
+      "id": "RK-14.1-053",
+      "section": "14.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-14.1-054",
+      "section": "14.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-14.1-055",
+      "section": "14.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-14.1-056",
+      "section": "14.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-14.1-057",
+      "section": "14.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-14.1-058",
+      "section": "14.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-14.1-059",
+      "section": "14.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-14.1-060",
+      "section": "14.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1976",
+        "note": "No store.add_observation or store.list_observations step."
+      }
+    },
+    {
+      "id": "RK-14.1-061",
       "section": "14.1",
       "mapping": "mapped_partial",
       "links": [
@@ -30227,19 +30664,116 @@
       ]
     },
     {
-      "id": "RK-14.1-003",
+      "id": "RK-14.1-062",
+      "section": "14.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1976",
+        "note": "store.get_timeline over more than 50 events with no limit, and with a limit of 0."
+      }
+    },
+    {
+      "id": "RK-14.1-063",
       "section": "14.1",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-14.1-004",
+      "id": "RK-14.1-064",
       "section": "14.1",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-14.1-005",
+      "id": "RK-14.1-065",
+      "section": "14.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-14.1-066",
+      "section": "14.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-14.1-067",
+      "section": "14.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-14.1-068",
+      "section": "14.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1976",
+        "note": "A refused message, then a hook of the next message whose recent_events holds the refused row."
+      }
+    },
+    {
+      "id": "RK-14.1-069",
+      "section": "14.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-14.1-070",
+      "section": "14.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1976",
+        "note": "No store.get_event_count step."
+      }
+    },
+    {
+      "id": "RK-14.1-071",
+      "section": "14.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1976",
+        "note": "No store.get_event_count step."
+      }
+    },
+    {
+      "id": "RK-14.1-072",
+      "section": "14.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1976",
+        "note": "The kit's list_bindings step can assert the order; the three binding-order scenarios read the context's order (RK-14.1-076), never list_bindings."
+      }
+    },
+    {
+      "id": "RK-14.1-073",
+      "section": "14.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-14.1-074",
+      "section": "14.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-14.1-075",
+      "section": "14.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-14.1-076",
       "section": "14.1",
       "mapping": "mapped_partial",
       "links": [
@@ -30255,13 +30789,37 @@
       ]
     },
     {
-      "id": "RK-14.2-001",
+      "id": "RK-14.1-077",
+      "section": "14.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-14.2-002",
       "section": "14.2",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-14.3-001",
+      "id": "RK-14.2-003",
+      "section": "14.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-14.3-002",
+      "section": "14.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-14.3-003",
+      "section": "14.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-14.3-004",
       "section": "14.3",
       "mapping": "mapped_partial",
       "links": [
@@ -30273,7 +30831,142 @@
             "The rest of the store consistency clause (other record updates, metadata merging and delivery-result ownership) keeps its own evidence. A commit failure, a slow store, and caller cancellation are specialized source/runtime tests. Shared scenarios alone cannot prove transaction isolation for every backend."
           ],
           "executions": []
-        },
+        }
+      ]
+    },
+    {
+      "id": "RK-14.3-005",
+      "section": "14.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-14.3-006",
+      "section": "14.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-14.3-007",
+      "section": "14.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-14.3-008",
+      "section": "14.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-14.3-009",
+      "section": "14.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-14.3-010",
+      "section": "14.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-14.3-011",
+      "section": "14.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-14.3-012",
+      "section": "14.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-14.3-013",
+      "section": "14.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1976",
+        "note": "store.update_event of an event the store lacks and store.add_participant into a room it lacks: refused, nothing written."
+      }
+    },
+    {
+      "id": "RK-14.3-014",
+      "section": "14.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-14.3-015",
+      "section": "14.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1976",
+        "note": "No error name for a refused duplicate room: README's error table has none, and neither runner maps the store's error."
+      }
+    },
+    {
+      "id": "RK-14.3-016",
+      "section": "14.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-14.3-017",
+      "section": "14.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-14.3-018",
+      "section": "14.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1976",
+        "note": "Needs a store.update_room step held against a concurrent commit."
+      }
+    },
+    {
+      "id": "RK-14.3-019",
+      "section": "14.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-14.3-020",
+      "section": "14.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1976",
+        "note": "Two concurrent store.patch_room_metadata calls on different keys, both keys standing."
+      }
+    },
+    {
+      "id": "RK-14.3-021",
+      "section": "14.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-14.3-022",
+      "section": "14.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-14.3-023",
+      "section": "14.3",
+      "mapping": "mapped_partial",
+      "links": [
         {
           "id": "storage-delivery-results-record",
           "scope": "Only record_delivery_results replaces a committed row’s results; stale event/target writes preserve them. PersistencePolicy defaults, inclusion and exclusion remain covered by native and shared proofs.",
@@ -30286,7 +30979,84 @@
       ]
     },
     {
-      "id": "RK-14.4-001",
+      "id": "RK-14.3-024",
+      "section": "14.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-14.3-025",
+      "section": "14.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1976",
+        "note": "The kit's commit_event of a record that brings delivery_results, read back with them; the store's own commit_event is shown by store/a-delivery-record-alone-writes-an-event-s-results."
+      }
+    },
+    {
+      "id": "RK-14.3-026",
+      "section": "14.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-14.3-027",
+      "section": "14.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-14.3-028",
+      "section": "14.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-14.3-029",
+      "section": "14.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-14.3-030",
+      "section": "14.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-14.3-031",
+      "section": "14.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-14.3-032",
+      "section": "14.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-14.4-002",
+      "section": "14.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-14.4-003",
+      "section": "14.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-14.4-004",
+      "section": "14.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-14.4-005",
       "section": "14.4",
       "mapping": "mapped_partial",
       "links": [
@@ -30300,6 +31070,12 @@
           "executions": []
         }
       ]
+    },
+    {
+      "id": "RK-14.4-006",
+      "section": "14.4",
+      "mapping": "unmapped",
+      "links": []
     },
     {
       "id": "RK-15.1-001",
