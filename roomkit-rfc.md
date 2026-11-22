@@ -21194,7 +21194,7 @@ context after the memory read is not measured.
 
 ### 21.1 ToolPolicy
 
-<!-- rfc: {"id": "RK-21.1-001", "kind": "behavior", "applies": "§21.1 ToolPolicy; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-21.1-001", "kind": "structural", "applies": "The ToolPolicy configuration supplied to an AI agent, including allow patterns, deny patterns and per-role overrides.", "level": "must"} -->
 A `ToolPolicy` controls which tools an AI agent can invoke:
 
 ```
@@ -21205,157 +21205,159 @@ ToolPolicy
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-21.1-002", "kind": "behavior", "applies": "§21.1 ToolPolicy; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-21.1-008", "kind": "behavior", "applies": "Applying a deny pattern even when the same tool is otherwise allowed.", "level": "must"} -->
 **Resolution rules:**
 
-1. If `deny` matches the tool name, the tool is DENIED (deny always wins).
+1. If `deny` matches the tool name, the tool is DENIED (deny always wins).<!-- /rfc --><!-- rfc: {"id": "RK-21.1-009", "kind": "behavior", "applies": "A nonempty tool allow list restricts access to names matching at least one allow pattern.", "level": "must"} -->
 2. If `allow` is non-empty and the tool name does NOT match any allow pattern,
-   the tool is DENIED (whitelist mode).
+   the tool is DENIED (whitelist mode).<!-- /rfc --><!-- rfc: {"id": "RK-21.1-010", "kind": "behavior", "applies": "Default access when no deny or nonmatching allow rule applies.", "level": "must"} -->
 3. Otherwise, the tool is ALLOWED.
 
-Glob patterns support `*` (any characters) and `?` (single character). Every other character stands for itself, and a pattern holding `[` or `]` MUST be refused where it is configured: a rule written as a character class (`rm_[a-z]*`) read as written would cover none of the names it was written for, and a deny rule or a skill's gate would open. The same holds for a skill's `allowed_tools` and `requires` (Section 24.2).
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-21.1-011", "kind": "behavior", "applies": "Star and question mark wildcards in configured tool patterns.", "level": "must"} -->
+Glob patterns support `*` (any characters) and `?` (single character). <!-- /rfc --><!-- rfc: {"id": "RK-21.1-012", "kind": "behavior", "applies": "Literal matching outside the supported glob wildcards.", "level": "must"} -->Every other character stands for itself, <!-- /rfc --><!-- rfc: {"id": "RK-21.1-013", "kind": "behavior", "applies": "Rejecting reserved brackets in a tool policy when patterns are configured.", "level": "must"} -->and a pattern holding `[` or `]` MUST be refused where it is configured: a rule written as a character class (`rm_[a-z]*`) read as written would cover none of the names it was written for, and a deny rule or a skill's gate would open. <!-- /rfc --><!-- rfc: {"id": "RK-21.1-014", "kind": "behavior", "applies": "Applying the pattern rules to skill tool gates and prerequisites.", "level": "must"} -->The same holds for a skill's `allowed_tools` and `requires` (Section 24.2).
 Example: `allow: ["search_*", "get_*"]` permits all search and get tools.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-21.1-003", "kind": "behavior", "applies": "§21.1 ToolPolicy; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-21.1-015", "kind": "behavior", "applies": "The channel applies tool policy to declarations and execution across tool origins.", "level": "must"} -->
 **Tools the channel provides.** A channel MUST apply its policy to every tool
-it declares to the model or executes, the tools it injects itself included,
+it declares to the model or executes, the tools it injects itself included,<!-- /rfc --><!-- rfc: {"id": "RK-21.1-016", "kind": "behavior", "applies": "The channel-owned read and discovery tools that remain callable irrespective of tool policy.", "level": "must"} -->
 with one exception: the tools that only read or unlock and never act —
 `activate_skill` and `read_skill_reference` (Section 24), `read_stored_result`
 (Section 21.5), `find_tools` and `list_tools` (Tool Search). Without them a
 skill could not be activated nor a deferred tool found, so they stay declared
-and callable whatever the policy says. The exemption covers the tool the
+and callable whatever the policy says. <!-- /rfc --><!-- rfc: {"id": "RK-21.1-017", "kind": "behavior", "applies": "An exemption requires exact channel ownership and the exact name; other origins and prefix matches remain governed.", "level": "must"} -->The exemption covers the tool the
 channel serves itself under one of these exact names, and nothing else: it
 MUST NOT extend to a name that merely shares a prefix, nor to a tool of the
 host, of an MCP server, of orchestration or of a hook that carries one of
-these names, which the policy governs like any other. A channel that serves
-none of them (a conference) exempts nothing, and neither does a door through
+these names, which the policy governs like any other. <!-- /rfc --><!-- rfc: {"id": "RK-21.1-018", "kind": "behavior", "applies": "Conference feature: a conference without channel-owned reader tools grants no exemption.", "level": "must"} -->A channel that serves
+none of them (a conference) exempts nothing, <!-- /rfc --><!-- rfc: {"id": "RK-21.1-019", "kind": "behavior", "applies": "Realtime voice feature: reasoning and spoken-recovery entry points that serve no channel-owned readers grant no exemptions.", "level": "must"} -->and neither does a door through
 which the channel serves none of its own tools (a reasoning backend's calls,
 a call recovered from speech): the exemption is read door by door, the same
-for the policy and for skill gating. Every other tool the
+for the policy and for skill gating. <!-- /rfc --><!-- rfc: {"id": "RK-21.1-020", "kind": "behavior", "applies": "The policy governs acting tools injected by the channel, including sandbox, script and planning.", "level": "must"} -->Every other tool the
 channel injects — sandbox commands (`sandbox_*`), `run_skill_script`,
 `plan_tasks` — is subject to the policy like a host tool: a host that wants
-them allows them. The same names, and only them, are exempt from skill gating
-(Section 24.2). A transport that only carries a call to another tool (the
+them allows them. <!-- /rfc --><!-- rfc: {"id": "RK-21.1-021", "kind": "behavior", "applies": "The channel-owned reader exemption from skill gating uses the same exact names.", "level": "must"} -->The same names, and only them, are exempt from skill gating
+(Section 24.2). <!-- /rfc --><!-- rfc: {"id": "RK-21.1-022", "kind": "behavior", "applies": "Realtime feature: a fixed-declaration tool-search transport is available in the handler catalogue while the named underlying tool is checked.", "level": "must"} -->A transport that only carries a call to another tool (the
 `call_tool` of Tool Search on a provider whose declarations are fixed for the
 session) is exempt the same way: it stays declared and is among the names a
 handler reads (Section 21.4), and the policy applies to the tool it names, at
-the gate, once the call is unwrapped. A provider's native tool, which has no
+the gate, once the call is unwrapped. <!-- /rfc --><!-- rfc: {"id": "RK-21.1-023", "kind": "behavior", "applies": "Nameless provider-native tools remain declared and outside tool search and policy matching.", "level": "must"} -->A provider's native tool, which has no
 name (`{"google_search": {}}`), stays declared: a policy names the tools it
-governs, and Tool Search neither hides nor lists a tool it cannot name. A
+governs, and Tool Search neither hides nor lists a tool it cannot name. <!-- /rfc --><!-- rfc: {"id": "RK-21.1-024", "kind": "behavior", "applies": "Applying policy and skill gates to both the called alias and the tool's underlying name.", "level": "must"} -->A
 call under an alias a handler serves as another tool (an MCP tool called
 `mcp__<server>__<tool>`, which the MCP handler runs as `<tool>`) is judged under
 both names, by the policy and by skill gating: refused when either is, so no
-tool runs under an alias that its own name is refused. A policy names a server
+tool runs under an alias that its own name is refused. <!-- /rfc --><!-- rfc: {"id": "RK-21.1-025", "kind": "behavior", "applies": "When every MCP provider is labelled, the policy can admit or exclude a particular server's alias.", "level": "must"} -->A policy names a server
 through its aliases, which run on the server they name when every provider of
 the chain is labelled (Section 21.2): `deny: ["mcp__archive__*"]` keeps that
 server out, and `allow: ["mcp__crm__*", "delete_records"]` admits one tool of
-one server, both names passing. A call under a bare name names no server: a
+one server, both names passing. <!-- /rfc --><!-- rfc: {"id": "RK-21.1-026", "kind": "behavior", "applies": "Routing a bare MCP name through labelled providers admitted by the call's policy.", "level": "must"} -->A call under a bare name names no server: a
 labelled provider serves it unless the policy names its server to keep it out
 (Section 21.2), so it runs on the first server of the chain the policy does
 not keep out, and on none when the policy keeps out every server that has it;
-a policy that names no server leaves it on the first server that has it. The
+a policy that names no server leaves it on the first server that has it. <!-- /rfc --><!-- rfc: {"id": "RK-21.1-027", "kind": "behavior", "applies": "The declaration filter and execution guard apply the same policy rule.", "level": "must"} -->The
 declaration filter and the execution guard MUST apply one rule, so a tool the
 model is offered is a tool it may call.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-21.1-004", "kind": "behavior", "applies": "§21.1 ToolPolicy; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-21.1-028", "kind": "behavior", "applies": "Consistent refusal precedence and messages in a text AI turn.", "level": "must"} -->
 **One refusal per cause.** A call is refused in the same order and with the
-same text for the same cause on every door: an AI channel's turn, a reasoning
-backend's (Section 12.4.1), a realtime session, a conference. The order is: a
+same text for the same cause on every door: an AI channel's turn, <!-- /rfc --><!-- rfc: {"id": "RK-21.1-029", "kind": "behavior", "applies": "Realtime feature: a reasoning backend uses the common refusal order and messages.", "level": "must"} -->a reasoning
+backend's (Section 12.4.1), <!-- /rfc --><!-- rfc: {"id": "RK-21.1-030", "kind": "behavior", "applies": "Realtime feature: applying the shared refusal precedence and messages on a realtime session.", "level": "must"} -->a realtime session, <!-- /rfc --><!-- rfc: {"id": "RK-21.1-075", "kind": "behavior", "applies": "Conference feature: applying the shared refusal precedence and messages to a conference tool call.", "level": "must"} -->a conference. <!-- /rfc --><!-- rfc: {"id": "RK-21.1-031", "kind": "behavior", "applies": "Refusal precedence from interruption and withdrawal through declaration, access, arguments and the before-use hook.", "level": "must"} -->The order is: a
 call cut short, a tool withdrawn for the turn, the declared check, the policy,
 skill gating, the arguments, then BEFORE_TOOL_USE, so a tool refused for
-access never has its arguments read. The arguments' check is a first gate,
+access never has its arguments read. <!-- /rfc --><!-- rfc: {"id": "RK-21.1-032", "kind": "behavior", "applies": "The first argument gate reports a required name absent from the call.", "level": "must"} -->The arguments' check is a first gate,
 not a validator: a name the schema's `required` lists that the call lacks
-reads `missing required argument '<arg>'`; a top-level argument whose
+reads `missing required argument '<arg>'`; <!-- /rfc --><!-- rfc: {"id": "RK-21.1-033", "kind": "behavior", "applies": "Primitive top-level type mismatches report the offending argument and its declared type.", "level": "must"} -->a top-level argument whose
 property declares a primitive `type` (`string`, `boolean`, `integer`,
 `number`, `object`, `array`, `null`) of another type reads `argument '<arg>'
-must be of type <type>`; and on a schema that closes itself
+must be of type <type>`; <!-- /rfc --><!-- rfc: {"id": "RK-21.1-034", "kind": "behavior", "applies": "Unknown arguments on a closed schema report its sorted accepted names, including an empty set.", "level": "must"} -->and on a schema that closes itself
 (`additionalProperties: false`) with `properties`, an argument it does not
 declare reads `unknown argument '<arg>' (this tool accepts: <names>)`, the
 declared names sorted and joined by `, ` (`none` when it declares none), so
-the model can correct the call; an open schema passes it. The check names
+the model can correct the call; <!-- /rfc --><!-- rfc: {"id": "RK-21.1-035", "kind": "behavior", "applies": "The first argument gate allows undeclared properties on an open schema.", "level": "must"} -->an open schema passes it. <!-- /rfc --><!-- rfc: {"id": "RK-21.1-036", "kind": "behavior", "applies": "Combining all first-gate reasons for model or rewritten arguments, in the specified groups and order.", "level": "must"} -->The check names
 in one text every argument that does not fit among those it reads, the
 model's once repaired and a BEFORE_TOOL_USE hook's as it left them, its
 reasons joined by `; `: the required names the call lacks, each once, in
 the order `required` lists them, then the
 arguments a closed schema does not declare, then each argument of another
-type, both in the call's order. Several names the call lacks read as one
+type, both in the call's order. <!-- /rfc --><!-- rfc: {"id": "RK-21.1-037", "kind": "behavior", "applies": "Grouping several missing or unknown argument names into a single reason of each kind.", "level": "must"} -->Several names the call lacks read as one
 reason, `missing required arguments '<a>', '<b>'`, as several undeclared
 arguments do, `unknown arguments '<a>', '<b>' (this tool accepts: <names>)`:
-a model that renamed an argument reads the name it lacks beside its own.
+a model that renamed an argument reads the name it lacks beside its own.<!-- /rfc --><!-- rfc: {"id": "RK-21.1-038", "kind": "behavior", "applies": "The first argument gate does not perform nested or general JSON Schema validation.", "level": "must"} -->
 Nothing deeper
-(nested objects, `$ref`, `anyOf`, `format`, `pattern`) is checked. Arguments
+(nested objects, `$ref`, `anyOf`, `format`, `pattern`) is checked. <!-- /rfc --><!-- rfc: {"id": "RK-21.1-039", "kind": "behavior", "applies": "Prefix of an argument error for the model's original call.", "level": "must"} -->Arguments
 that do not fit the declared schema read `Invalid arguments for '<name>':
-<why>`; arguments a
+<why>`; <!-- /rfc --><!-- rfc: {"id": "RK-21.1-040", "kind": "behavior", "applies": "Prefix of an argument error after a before-use hook edits or replaces arguments.", "level": "must"} -->arguments a
 BEFORE_TOOL_USE hook left that do not fit it, whether it returned them or
-edited them in place, read `Invalid rewritten arguments for '<name>': <why>`. A tool the policy denies reads `Tool
-'<name>' is not permitted by the agent's tool policy.`; a tool a skill keeps
+edited them in place, read `Invalid rewritten arguments for '<name>': <why>`. <!-- /rfc --><!-- rfc: {"id": "RK-21.1-041", "kind": "behavior", "applies": "The reason returned for a tool denied by policy.", "level": "must"} -->A tool the policy denies reads `Tool
+'<name>' is not permitted by the agent's tool policy.`; <!-- /rfc --><!-- rfc: {"id": "RK-21.1-042", "kind": "behavior", "applies": "The activation hint returned for a skill-gated tool on a channel that can activate the skill.", "level": "must"} -->a tool a skill keeps
 closed reads `Tool '<name>' is gated by a skill. Activate the skill first using
-activate_skill.` (a reasoning backend, which cannot activate one, reads that
-the conversation has not activated it); a name the turn or session does not
-carry reads `Tool '<name>' is not declared.`, and under Tool Search, on a text
-turn as on a realtime session, its `call_tool` transport and its `list_tools`
-included, that no tool by that name exists, with the hint to search. A tool
+activate_skill.` <!-- /rfc --><!-- rfc: {"id": "RK-21.1-043", "kind": "behavior", "applies": "Realtime feature: wording of a reasoning backend's skill gate when it cannot activate a skill.", "level": "must"} -->(a reasoning backend, which cannot activate one, reads that
+the conversation has not activated it); <!-- /rfc --><!-- rfc: {"id": "RK-21.1-044", "kind": "behavior", "applies": "The undeclared-tool refusal outside Tool Search.", "level": "must"} -->a name the turn or session does not
+carry reads `Tool '<name>' is not declared.`, <!-- /rfc --><!-- rfc: {"id": "RK-21.1-045", "kind": "behavior", "applies": "Search hint for unknown tool names when Tool Search is enabled on text turns.", "level": "must"} -->and under Tool Search, on a text
+turn <!-- /rfc --><!-- rfc: {"id": "RK-21.1-046", "kind": "behavior", "applies": "Realtime feature: unknown names in a Tool Search session, including transport and inventory calls.", "level": "must"} -->as on a realtime session, its `call_tool` transport and its `list_tools`
+included, that no tool by that name exists, with the hint to search. <!-- /rfc --><!-- rfc: {"id": "RK-21.1-047", "kind": "behavior", "applies": "The policy reason prevails when the same tool is also gated by a skill.", "level": "must"} -->A tool
 the policy denies and a skill gates reads the policy's text: activating the
-skill would not let it through. A tool of the turn's
+skill would not let it through. <!-- /rfc --><!-- rfc: {"id": "RK-21.1-048", "kind": "behavior", "applies": "A tool in the catalogue but omitted from declarations for access gets its actual refusal cause.", "level": "must"} -->A tool of the turn's
 catalogue that a round did not declare because the policy denies it or a skill
 keeps it closed is refused with that cause's text, not as undeclared: the
-model learns to activate a skill rather than to give up. A reasoning backend's
+model learns to activate a skill rather than to give up. <!-- /rfc --><!-- rfc: {"id": "RK-21.1-049", "kind": "behavior", "applies": "Realtime feature: the delegated reasoning model sees admitted tools and the channel supplies exclusion reasons.", "level": "must"} -->A reasoning backend's
 model is offered only the session tools it may call; a call it makes to one
 it was not offered reads the session's cause, which the channel hands the
-backend with the catalogue (`unavailable`). Both are read when the channel
+backend with the catalogue (`unavailable`). <!-- /rfc --><!-- rfc: {"id": "RK-21.1-050", "kind": "behavior", "applies": "Realtime feature: reading the current session role and room agent within the delegation's bound, with spoken fallback on failure.", "level": "must"} -->Both are read when the channel
 hands the delegation to the backend, with the participant's role and the
 room's agent as they stand then, as the gate reads them at each call, and
 inside the delegation's bound: a read that fails is answered by the spoken
-fallback. A role changed during the session holds for the catalogue of the
+fallback. <!-- /rfc --><!-- rfc: {"id": "RK-21.1-051", "kind": "behavior", "applies": "Realtime feature: a queued delegation keeps its handed-over snapshot while each call uses the role then current.", "level": "must"} -->A role changed during the session holds for the catalogue of the
 delegations handed over after it; one a backend queues behind another keeps
 what was read when it was handed over, its calls judged at the gate as the
 role stands.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-21.1-005", "kind": "behavior", "applies": "§21.1 ToolPolicy; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-21.1-052", "kind": "behavior", "applies": "One definition is declared and served for a tool's name within a room.", "level": "must"} -->
 **One tool per name.** A name is served by one tool in a room, and declared
 with that tool's definition: a tool declared under a name with one schema and
 served by another would have the model call the one's schema on the other's
-server. A name the channel serves itself is declared with the channel's
-definition only. The channel MUST refuse, when it is given, a tool under a
+server. <!-- /rfc --><!-- rfc: {"id": "RK-21.1-053", "kind": "behavior", "applies": "A channel-owned tool retains its own declaration.", "level": "must"} -->A name the channel serves itself is declared with the channel's
+definition only. <!-- /rfc --><!-- rfc: {"id": "RK-21.1-054", "kind": "behavior", "applies": "Refusing a conflicting host tool at construction, with its name in the error.", "level": "must"} -->The channel MUST refuse, when it is given, a tool under a
 name it already has for the same room, naming the tool: a host tool at
 construction under a name the channel serves or under a name another host tool
-already carries (two tool servers exposing the same name), and a tool
+already carries (two tool servers exposing the same name), <!-- /rfc --><!-- rfc: {"id": "RK-21.1-055", "kind": "behavior", "applies": "Refusing a conflicting orchestration installation in the same room and isolating independent rooms.", "level": "must"} -->and a tool
 orchestration sets up over the host's, over the channel's, or over another
 setup's for the same room (a setup for one room does not collide with another
-room's; the same strategy installed again for a room replaces its own). A tool
+room's; <!-- /rfc --><!-- rfc: {"id": "RK-21.1-056", "kind": "behavior", "applies": "Reinstalling a strategy in its room replaces its own installation.", "level": "must"} -->the same strategy installed again for a room replaces its own). <!-- /rfc --><!-- rfc: {"id": "RK-21.1-057", "kind": "behavior", "applies": "Late binding, configuration or hook tools that collide with reserved declarations are omitted and named in a warning.", "level": "must"} -->A tool
 that arrives with the turn (a binding's or a config provider's tools, a
 generation hook's) comes too late to be refused: under a name the channel or a
-setup already serves it MUST NOT be declared, and a warning names it, unless it
+setup already serves it MUST NOT be declared, and a warning names it, <!-- /rfc --><!-- rfc: {"id": "RK-21.1-058", "kind": "behavior", "applies": "Realtime feature: accepting a setup's own late declarations in a per-agent pipeline session.", "level": "must"} -->unless it
 is that setup's own declaration (a realtime pipeline gives each agent's
-session its own handoff and tools this way, Section 19.5); a name it gives
-twice is declared once, with the later definition. No name is
-declared twice in one round: a provider rejects a duplicate name.
+session its own handoff and tools this way, Section 19.5); <!-- /rfc --><!-- rfc: {"id": "RK-21.1-059", "kind": "behavior", "applies": "The later definition wins for duplicate names supplied by a turn.", "level": "must"} -->a name it gives
+twice is declared once, with the later definition. <!-- /rfc --><!-- rfc: {"id": "RK-21.1-060", "kind": "behavior", "applies": "Uniqueness of each tool name in a round's provider declarations.", "level": "must"} -->No name is
+declared twice in one round: a provider rejects a duplicate name.<!-- /rfc --><!-- rfc: {"id": "RK-21.1-061", "kind": "behavior", "applies": "Both discovery tools omit denied and skill-gated tool names.", "level": "must"} -->
 `find_tools` and `list_tools` MUST NOT name a tool the policy denies or a skill
 gates: a name the model can never call is a false promise and discloses what
-the policy hides. `list_tools` is the inventory: it lists every other tool the
+the policy hides. <!-- /rfc --><!-- rfc: {"id": "RK-21.1-062", "kind": "behavior", "applies": "Inventory of callable declared and hidden tools, excluding its own discovery tools and including a declared result reader.", "level": "must"} -->`list_tools` is the inventory: it lists every other tool the
 turn or the session can call, declared or hidden, its discovery tools aside,
 the re-read of a stored result included once a round declares it, on every
-path. `find_tools` names what Tool Search hides only, and its related
+path. <!-- /rfc --><!-- rfc: {"id": "RK-21.1-063", "kind": "behavior", "applies": "Search and its related names include only tools hidden by Tool Search.", "level": "must"} -->`find_tools` names what Tool Search hides only, and its related
 names (a match's family) exclude what it never returns.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-21.1-006", "kind": "behavior", "applies": "§21.1 ToolPolicy; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-21.1-064", "kind": "behavior", "applies": "Orchestration tools stay declared when Tool Search hides a large catalogue.", "level": "must"} -->
 **Tools orchestration injects stay declared.** When Tool Search hides a large
 catalogue behind its discovery tools, a tool that orchestration injects on an
 agent or a channel (the handoff tool, a delegation tool, a delegation's result
 tool, a strategy's tools; Sections 19 and 23) MUST stay declared as a pinned
-tool does, and MUST NOT count toward the catalogue whose size decides whether
-Tool Search hides it. The tool policy and skill gating still apply to it; Tool
-Search does not: `find_tools` does not name it, being declared already, and
+tool does, <!-- /rfc --><!-- rfc: {"id": "RK-21.1-065", "kind": "behavior", "applies": "Excluding orchestration tools from the catalogue size that enables hiding.", "level": "must"} -->and MUST NOT count toward the catalogue whose size decides whether
+Tool Search hides it. <!-- /rfc --><!-- rfc: {"id": "RK-21.1-066", "kind": "behavior", "applies": "Applying policy and skill gating to tools injected by orchestration.", "level": "must"} -->The tool policy and skill gating still apply to it; Tool
+Search does not: <!-- /rfc --><!-- rfc: {"id": "RK-21.1-067", "kind": "behavior", "applies": "Omitting already-declared orchestration tools from discovery.", "level": "must"} -->`find_tools` does not name it, being declared already, <!-- /rfc --><!-- rfc: {"id": "RK-21.1-068", "kind": "behavior", "applies": "The always declaration reason for orchestration tools.", "level": "must"} -->and
 the declaration reports it as `always` (Section 6.4, `declared_tools`). The
 agent is told to call these tools, often that it must: a tool it would first
 have to find is a tool it does not call.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-21.1-007", "kind": "behavior", "applies": "§21.1 ToolPolicy; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-21.1-069", "kind": "structural", "applies": "RoleOverride's non-null allow and deny lists, empty defaults, and the supported override modes.", "level": "must"} -->
 **RoleOverride:**
 
 ```
@@ -21365,23 +21367,29 @@ RoleOverride
 └── mode: "restrict" | "replace"            # Narrow the base or replace it entirely
 ```
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-21.1-070", "kind": "behavior", "applies": "Resolving the role of the waking sender on its source channel.", "level": "must"} -->
 The role an override is chosen by is the role of the participant the waking
-event's sender is on its channel (Section 5.5); a sender who names no
+event's sender is on its channel (Section 5.5); <!-- /rfc --><!-- rfc: {"id": "RK-21.1-071", "kind": "behavior", "applies": "Using the base tool policy without a matching participant on the source channel.", "level": "must"} -->a sender who names no
 participant there has no role, and the base rules apply.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-21.1-072", "kind": "behavior", "applies": "Restrict mode adds the override's deny patterns to those of the base.", "level": "must"} -->
 When `mode` is `"restrict"`, the override narrows the base policy: its deny
-patterns are added to the base's, and its allow patterns constrain alongside
+patterns are added to the base's, <!-- /rfc --><!-- rfc: {"id": "RK-21.1-073", "kind": "behavior", "applies": "Restrict mode intersects the two nonempty allow lists and never grants additional access.", "level": "must"} -->and its allow patterns constrain alongside
 the base's, so a tool must match both allow lists (each when non-empty). A
-restricting override can take access away, never grant it. When `"replace"`,
+restricting override can take access away, never grant it. <!-- /rfc --><!-- rfc: {"id": "RK-21.1-074", "kind": "behavior", "applies": "Replace mode substitutes the role's entire tool policy for the base.", "level": "must"} -->When `"replace"`,
 the override completely replaces the base.
 <!-- /rfc -->
 
 ### 21.2 MCP Tool Provider
 
-<!-- rfc: {"id": "RK-21.2-001", "kind": "behavior", "applies": "§21.2 MCP Tool Provider; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-21.2-003", "kind": "behavior", "applies": "Recommended support for loading tools through an MCP provider.", "level": "should"} -->
 Implementations SHOULD support loading tools from MCP (Model Context Protocol)
 servers via an `MCPToolProvider`:
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-21.2-004", "kind": "structural", "applies": "The MCP provider interface for remote URLs or local subprocesses, its configuration, discovery, tools and host-facing operations.", "level": "must"} -->
 ```
 MCPToolProvider
 ├── server: one of
@@ -21399,125 +21407,139 @@ MCPToolProvider
 └── request(method, params) → object        # A request the provider does not model
 ```
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-21.2-005", "kind": "behavior", "applies": "Where stdio MCP is supported, starting on connection and stopping on disconnection.", "level": "must"} -->
 A server named by `command` is started when the provider connects and MUST be
-stopped when it disconnects. Its arguments MUST be passed as a list, never
-through a shell. A connection that fails part-way MUST release what it had
-opened, the server process included, before the error is reported. Connecting
+stopped when it disconnects. <!-- /rfc --><!-- rfc: {"id": "RK-21.2-006", "kind": "behavior", "applies": "Where stdio MCP is supported, passing command arguments as a list without a shell.", "level": "must"} -->Its arguments MUST be passed as a list, never
+through a shell. <!-- /rfc --><!-- rfc: {"id": "RK-21.2-007", "kind": "behavior", "applies": "Releasing resources opened during a partially established connection, including a local server.", "level": "must"} -->A connection that fails part-way MUST release what it had
+opened, the server process included, before the error is reported. <!-- /rfc --><!-- rfc: {"id": "RK-21.2-008", "kind": "behavior", "applies": "One connection deadline covers start, handshake and listing; expiry cleans up the local or remote connection.", "level": "must"} -->Connecting
 to a server is bounded by `connect_timeout`, the handshake and the listing
 together, and a command's start with them: past it a started server is
 stopped, a remote one's connection closed and its session deleted, and the
 connection fails with a timeout, so a server that never answers does not
-hold its host. A started server's stop gives it a grace to exit once its
+hold its host. <!-- /rfc --><!-- rfc: {"id": "RK-21.2-009", "kind": "behavior", "applies": "Stdio shutdown escalates after the grace following input closure.", "level": "must"} -->A started server's stop gives it a grace to exit once its
 input is closed (2 seconds in the reference implementation), then terminates
 it, then kills it.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-21.2-010", "kind": "behavior", "applies": "Rejecting invalid remote MCP URLs at provider construction.", "level": "must"} -->
 A provider given a `url` MUST be refused at construction when the URL is not
 HTTP(S), names no host, or carries credentials (which every log and proxy of
-the URL would see: a credential goes in a header) or a fragment, and when a
+the URL would see: a credential goes in a header) or a fragment, <!-- /rfc --><!-- rfc: {"id": "RK-21.2-011", "kind": "behavior", "applies": "Rejecting transport-owned, invalid or excessive MCP request headers at construction.", "level": "must"} -->and when a
 header it is given is one its transport writes itself (HTTP's framing, the
 content it accepts and sends, MCP's `mcp-*` negotiation), is not a valid
 header, or exceeds the bounds of the reference implementation (32 headers,
 8192 bytes a value).
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-21.2-012", "kind": "behavior", "applies": "Validating a host-assigned server label and keeping the provider's identity independent of handshake metadata.", "level": "must"} -->
 `label` is the host's name for the server, never the name the server gives
 itself: an identifier (letters, digits, `_`, `.`, `-`, at most 64 characters)
 that holds no `__` and does not end with `_`, either of which would make an
 alias read another server; a provider given any other label MUST be refused at
-construction. A labelled provider's tool handler serves an MCP alias
+construction. <!-- /rfc --><!-- rfc: {"id": "RK-21.2-013", "kind": "behavior", "applies": "Serving a labelled MCP alias only on its named provider, with normal chain fallthrough.", "level": "must"} -->A labelled provider's tool handler serves an MCP alias
 `mcp__<server>__<tool>` (Section 21.1) only when `<server>` is its label: an
 alias naming another server is not served by it (Section 21.4), and the next
-handler of a chain takes it. A provider without a label serves an alias
+handler of a chain takes it. <!-- /rfc --><!-- rfc: {"id": "RK-21.2-014", "kind": "behavior", "applies": "An unlabelled provider accepts an alias naming any server.", "level": "must"} -->A provider without a label serves an alias
 whatever server it names, so an alias runs on the server it names whatever the
-order of the chain only when every provider of the chain is labelled. A
+order of the chain only when every provider of the chain is labelled. <!-- /rfc --><!-- rfc: {"id": "RK-21.2-015", "kind": "behavior", "applies": "Filtering bare-name dispatch by the labelled provider's alias under the call policy.", "level": "must"} -->A
 labelled provider serves a tool called by its bare name unless the tool policy
 of the call names its server to keep it out: a deny pattern covers its alias
 `mcp__<label>__<tool>`, or the policy's allow patterns name aliases (one of
-them starts with `mcp__`) and none covers it. It then declines the call, so
+them starts with `mcp__`) and none covers it. <!-- /rfc --><!-- rfc: {"id": "RK-21.2-016", "kind": "behavior", "applies": "Bare-name dispatch continues to the first provider its policy admits, or none when all are excluded.", "level": "must"} -->It then declines the call, so
 that the next handler of the chain takes it: a bare name runs on the first
 server of the chain the policy does not keep out, and on none when it keeps
-out every server that has it. An allow list of bare names alone names no
-server and keeps none out. Each door that judges a call under a policy (an AI
-channel's turn, a realtime voice session and the agent a reasoning backend
-drives for it, a conference) hands that judgement to the handlers the call
-runs (Section 21.4). A host that composes several servers SHOULD label each.
+out every server that has it. <!-- /rfc --><!-- rfc: {"id": "RK-21.2-017", "kind": "behavior", "applies": "Bare-only allow patterns impose no server restriction.", "level": "must"} -->An allow list of bare names alone names no
+server and keeps none out. <!-- /rfc --><!-- rfc: {"id": "RK-21.2-018", "kind": "behavior", "applies": "A text AI turn supplies its effective call policy to the tool handlers.", "level": "must"} -->Each door that judges a call under a policy (an AI
+channel's turn, <!-- /rfc --><!-- rfc: {"id": "RK-21.2-019", "kind": "behavior", "applies": "Realtime feature: the voice session and its reasoning agent supply the effective policy to tool handlers.", "level": "must"} -->a realtime voice session and the agent a reasoning backend
+drives for it, <!-- /rfc --><!-- rfc: {"id": "RK-21.2-055", "kind": "behavior", "applies": "Conference feature: supplying the effective access policy to the handlers for each conference call.", "level": "must"} -->a conference) hands that judgement to the handlers the call
+runs (Section 21.4). <!-- /rfc --><!-- rfc: {"id": "RK-21.2-020", "kind": "non_testable", "applies": "Recommended server labelling by a host that composes multiple providers.", "level": "should"} -->A host that composes several servers SHOULD label each.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-21.2-021", "kind": "behavior", "applies": "Discovering tools once at connection and following every valid page cursor.", "level": "must"} -->
 A provider lists the server's tools once, when it connects, following the
-listing's cursor across every page, and keeps the output schema each tool was
-listed with. A listed tool is its server's declaration: its name, its
+listing's cursor across every page, <!-- /rfc --><!-- rfc: {"id": "RK-21.2-022", "kind": "behavior", "applies": "Retaining the output schema from each tool's discovery entry.", "level": "must"} -->and keeps the output schema each tool was
+listed with. <!-- /rfc --><!-- rfc: {"id": "RK-21.2-023", "kind": "behavior", "applies": "Passing the server's declared name, description and parameters through provider declarations, outside the runtime prompt.", "level": "must"} -->A listed tool is its server's declaration: its name, its
 description and its parameters reach the model as the server wrote them,
 among the tools a request declares, which the model's API keeps apart from the
-prompt, and not in a text of the runtime, so they are not framed (Section 6.4).
+prompt, and not in a text of the runtime, so they are not framed (Section 6.4).<!-- /rfc --><!-- rfc: {"id": "RK-21.2-024", "kind": "behavior", "applies": "Bounding the size and number of MCP tool declarations.", "level": "should"} -->
 A provider SHOULD bound them, so that a server cannot fill the model's request
-with them: the reference implementation cuts a description past 4,096
+with them: <!-- /rfc --><!-- rfc: {"id": "RK-21.2-025", "kind": "behavior", "applies": "Reference discovery limits on name, description, parameter schema, and number of entries, with server warnings.", "level": "must"} -->the reference implementation cuts a description past 4,096
 characters at a word, leaves out a tool whose name is past 128 characters or
 whose parameters' schema, serialized, is past 32 KiB, and keeps 512 tools of a
-listing at most, each with a warning naming the server. A name the listing
+listing at most, each with a warning naming the server. <!-- /rfc --><!-- rfc: {"id": "RK-21.2-026", "kind": "behavior", "applies": "The first of duplicate discovered tool names wins and the others are reported.", "level": "must"} -->A name the listing
 gives twice keeps its first definition, the others left out with a warning
-(Section 21.1, One tool per name). A listing that pages on without bringing anything new (an empty
+(Section 21.1, One tool per name). <!-- /rfc --><!-- rfc: {"id": "RK-21.2-027", "kind": "behavior", "applies": "Ending a stalled, repeated or over-bound page sequence with a server warning.", "level": "must"} -->A listing that pages on without bringing anything new (an empty
 page that still carries a cursor, a cursor handed out twice) or past a bound
 of pages ends there, with a warning naming the server: a server that pages
-forever MUST NOT hold the connection open. With `discover` false it connects
+forever MUST NOT hold the connection open. <!-- /rfc --><!-- rfc: {"id": "RK-21.2-028", "kind": "behavior", "applies": "Connecting without discovery leaves the tool list empty and skips per-call result validation.", "level": "must"} -->With `discover` false it connects
 without listing: `tools()` is empty and no call is validated, for a host that
-only reads the server's resources. A `call` MUST NOT list the server's tools
-again. A tool listed with an output schema has a successful result's
+only reads the server's resources. <!-- /rfc --><!-- rfc: {"id": "RK-21.2-029", "kind": "behavior", "applies": "Tool calls use the saved catalogue without relisting.", "level": "must"} -->A `call` MUST NOT list the server's tools
+again. <!-- /rfc --><!-- rfc: {"id": "RK-21.2-030", "kind": "behavior", "applies": "Validating successful structured output against its discovered schema and marking invalid or absent output as failure.", "level": "must"} -->A tool listed with an output schema has a successful result's
 structured content validated against that schema, and a result that breaks it
 (or carries none) fails the call: the tool ran, so the call is failed, not
-refused (Section 9.3). A tool the listing did not name is called as it is,
+refused (Section 9.3). <!-- /rfc --><!-- rfc: {"id": "RK-21.2-031", "kind": "behavior", "applies": "Calling an unnamed tool without output-schema validation.", "level": "must"} -->A tool the listing did not name is called as it is,
 without validation. Listing again on each call of an unnamed tool
 costs the whole catalogue every time, and a gateway that serves tools per
 caller never names them to the connection that calls them.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-21.2-032", "kind": "behavior", "applies": "The local tool policy also applies to tools supplied by MCP.", "level": "must"} -->
 MCP tools are subject to the same `ToolPolicy` as local tools.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-21.2-002", "kind": "behavior", "applies": "§21.2 MCP Tool Provider; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-21.2-033", "kind": "behavior", "applies": "Accepting optional server instructions published at handshake.", "level": "must"} -->
 **Server instructions.** A server MAY publish, when it connects, how a model
-should use its tools (the `instructions` of its handshake result). A provider
+should use its tools (the `instructions` of its handshake result). <!-- /rfc --><!-- rfc: {"id": "RK-21.2-034", "kind": "behavior", "applies": "Retaining instructions or null and server identity from the negotiated handshake or discovery response.", "level": "must"} -->A provider
 keeps them (`instructions`, null when the server published none) with what the
 server said of itself (`server_info`: its name, its version), from the handshake
 the connection made: a client that negotiates the newer protocol's discovery
-reads them from that result instead. A channel that composes a model's system
-prompt (an AI channel, the agent a reasoning backend drives (Section
+reads them from that result instead. <!-- /rfc --><!-- rfc: {"id": "RK-21.2-035", "kind": "behavior", "applies": "Host-supplied MCP instructions for an AI channel's composed system prompt.", "level": "should"} -->A channel that composes a model's system
+prompt (an AI channel, <!-- /rfc --><!-- rfc: {"id": "RK-21.2-036", "kind": "behavior", "applies": "Realtime feature: host-supplied MCP instructions on a reasoning agent or realtime tool-enabled channel.", "level": "should"} -->the agent a reasoning backend drives (Section
 12.4.1), a realtime voice channel whose provider takes tools) SHOULD take,
 from its host, the instructions of the servers whose tools it
-serves, each under the host's label for the server: an identifier, never the
+serves, <!-- /rfc --><!-- rfc: {"id": "RK-21.2-037", "kind": "behavior", "applies": "Refusing an invalid host label when configuring instructions for a channel.", "level": "must"} -->each under the host's label for the server: an identifier, never the
 name the server gives itself, and a label that is not one fails the channel's
-construction. The channel MUST add them to every system prompt it composes,
+construction. <!-- /rfc --><!-- rfc: {"id": "RK-21.2-038", "kind": "behavior", "applies": "Ordering MCP instructions after the effective system prompt and before skill preambles on every composed turn.", "level": "must"} -->The channel MUST add them to every system prompt it composes,
 after its own prompt (or the one a binding or a turn's configuration sets for
-the room) and before the skills' preambles (Section 24). The same on every
+the room) and before the skills' preambles (Section 24). <!-- /rfc --><!-- rfc: {"id": "RK-21.2-039", "kind": "behavior", "applies": "Server instructions remain in the cached prefix across Tool Search, eviction and compaction.", "level": "must"} -->The same on every
 turn, they stay in the prefix a provider caches (Section 6.4); they are not
 tools, so Tool Search does not hide them; and no eviction or compaction reaches
-them. They are text from outside (Section 6.4): each server's sits in a
+them. <!-- /rfc --><!-- rfc: {"id": "RK-21.2-040", "kind": "behavior", "applies": "Framing each server's instructions with the host label and the proper authority boundary.", "level": "must"} -->They are text from outside (Section 6.4): each server's sits in a
 `<server_instructions>` block under a line naming its label, the whole under a
 heading saying that they are their servers' content, which does not outrank the
-system's or the user's instructions and grants no permission. A server's text
-past 8192 characters is cut, with a warning naming the server. A server the
+system's or the user's instructions and grants no permission. <!-- /rfc --><!-- rfc: {"id": "RK-21.2-041", "kind": "behavior", "applies": "Truncation of server instructions with a server-specific warning.", "level": "must"} -->A server's text
+past 8192 characters is cut, with a warning naming the server. <!-- /rfc --><!-- rfc: {"id": "RK-21.2-042", "kind": "behavior", "applies": "Omitting unnamed or empty server instructions.", "level": "must"} -->A server the
 host does not name, or names with no text, adds nothing: that is how a host
-keeps a server's instructions out of the prompt. A realtime pipeline serves
-the channel's, never an agent's (Section 19.5). A conference's realtime bot
+keeps a server's instructions out of the prompt. <!-- /rfc --><!-- rfc: {"id": "RK-21.2-043", "kind": "behavior", "applies": "Realtime feature: a pipeline uses its channel's instructions.", "level": "must"} -->A realtime pipeline serves
+the channel's, never an agent's (Section 19.5). <!-- /rfc --><!-- rfc: {"id": "RK-21.2-044", "kind": "behavior", "applies": "Conference feature: sending the host prompt unchanged without channel-added MCP instructions.", "level": "must"} -->A conference's realtime bot
 sends the prompt its host wrote as it is (Section 12.10): the channel adds
 nothing to it, the servers' instructions included.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-21.2-045", "kind": "behavior", "applies": "Exposing server extensions, including the empty default, for an MCP skill source.", "level": "must"} -->
 A provider also carries what the skills a server serves need (Section 24.7)
 and no more: the extensions the server declared when it connected
-(`server_extensions`, empty for a server that declared none), `read_resource`,
+(`server_extensions`, empty for a server that declared none), <!-- /rfc --><!-- rfc: {"id": "RK-21.2-046", "kind": "behavior", "applies": "Reading an MCP resource and passing through an unmodelled request and response.", "level": "must"} -->`read_resource`,
 and `request`, which sends a request the provider does not model and returns
-its result as the server sent it. The skills rely on nothing else the
+its result as the server sent it. <!-- /rfc --><!-- rfc: {"id": "RK-21.2-047", "kind": "behavior", "applies": "MCP-served skills obtain identity and verified content from the registry independently of transport session state.", "level": "must"} -->The skills rely on nothing else the
 connection holds: a skill's identity, the entry it was loaded from and the
 content verified are the registry's, so a transport without a session
 serves them alike.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-21.2-048", "kind": "behavior", "applies": "Rendering direct MCP call results as text, resource text or a short binary/resource note.", "level": "must"} -->
 `call` returns a string whatever the server sent: a text as itself, a text
 resource as its text, and what is not text (an image, audio, a blob
 resource, a link to a resource) as the short note below, never its encoding
-nor an object's printing. The tool handler a provider
+nor an object's printing. <!-- /rfc --><!-- rfc: {"id": "RK-21.2-049", "kind": "behavior", "applies": "Passing decodable PNG, JPEG, GIF and WebP from an MCP tool handler to an image-capable model.", "level": "should"} -->The tool handler a provider
 hands to an AI channel SHOULD instead hand an image the server returns to the
 model as an image, when it is in a format vision vendors accept (PNG, JPEG,
-GIF, WebP) and its payload decodes. Binary content the model cannot take (an
+GIF, WebP) and its payload decodes. <!-- /rfc --><!-- rfc: {"id": "RK-21.2-050", "kind": "behavior", "applies": "Substituting a short note for binary or rejected image payloads.", "level": "should"} -->Binary content the model cannot take (an
 image in another format or with a corrupt payload, audio, a blob resource)
 SHOULD reach it as a short note naming what was left out, never as its
 encoding: base64 read as text is noise the model pays for, and a bad image
-fails the whole request at the vendor. The reference implementation's note
+fails the whole request at the vendor. <!-- /rfc --><!-- rfc: {"id": "RK-21.2-051", "kind": "behavior", "applies": "The reference omission note's sanitized, bounded media type, content kind and defaults.", "level": "must"} -->The reference implementation's note
 names the content's kind and its media type (`[image content (image/png)
 not shown to the model]`), the type kept to the characters a media type
 has, at most 64, so that it carries no text of the server's; for a type the
@@ -21525,61 +21547,67 @@ server did not name, `image/png` for an image, `audio` for audio, `binary`
 for a resource, `unknown` for a link and for a kind of content it does not
 know (`[other content (unknown) not shown to the model]`).
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-21.2-052", "kind": "behavior", "applies": "Bounding a model-visible MCP tool result that contains images.", "level": "should"} -->
 A result the model sees an image of SHOULD be bounded, so that a server
-cannot fill the model's request with it. The reference implementation holds
+cannot fill the model's request with it. <!-- /rfc --><!-- rfc: {"id": "RK-21.2-053", "kind": "behavior", "applies": "Reference text truncation and omission notes in a model-visible result with images.", "level": "must"} -->The reference implementation holds
 its texts within 100,000 characters in all, the text past the bound cut,
 with a note saying how long it was when the note fits, and the texts after
-it left out, and shows the model at most four of its images within 5 MiB of
+it left out, <!-- /rfc --><!-- rfc: {"id": "RK-21.2-054", "kind": "behavior", "applies": "Reference image count and aggregate data URL budget, with an omission note charged as text.", "level": "must"} -->and shows the model at most four of its images within 5 MiB of
 data URL in all; each image past either reaches the model as its note,
 which counts as a text.
 <!-- /rfc -->
 
 ### 21.3 AI Steering Directives
 
-<!-- rfc: {"id": "RK-21.3-001", "kind": "behavior", "applies": "§21.3 AI Steering Directives; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-21.3-004", "kind": "behavior", "applies": "A Cancel directive aborts the current generation immediately as the table specifies.", "level": "must"} -->
 Steering directives allow dynamic mid-conversation control of AI behavior.
 They are injected into the AI generation context:
 
 | Directive | Effect |
 |---|---|
 | Cancel | Abort the current generation immediately |
-| UpdateSystemPrompt | Append additional instructions to the system prompt |
-| InjectMessage | Add a synthetic user or assistant message to the conversation history, a copy of the turn's notes' header or of another runtime mark it holds replaced (Section 6.4) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-21.3-005", "kind": "behavior", "applies": "UpdateSystemPrompt appends the supplied instructions to the system prompt.", "level": "must"} -->UpdateSystemPrompt | Append additional instructions to the system prompt |
+| <!-- /rfc --><!-- rfc: {"id": "RK-21.3-006", "kind": "behavior", "applies": "An injected user or assistant message enters history with copied runtime marks replaced.", "level": "must"} -->InjectMessage | Add a synthetic user or assistant message to the conversation history, a copy of the turn's notes' header or of another runtime mark it holds replaced (Section 6.4) |
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-21.3-007", "kind": "behavior", "applies": "Cancelling at the tool announcement boundary prevents any announced handler from running.", "level": "must"} -->
 A Cancel ends the turn at the first point the loop reaches, and a round's
 tools are one such point: a Cancel that arrives after the model's last event
-of a round, while its calls are announced but before they run, MUST stop them.
+of a round, while its calls are announced but before they run, MUST stop them.<!-- /rfc --><!-- rfc: {"id": "RK-21.3-008", "kind": "behavior", "applies": "Closing every announced tool row as failed on a boundary cancellation, for every provider.", "level": "must"} -->
 None of them runs, and each announced call ends with `status = failed`, so no
 start row stays pending. The loop honours the same points for every provider.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-21.3-002", "kind": "behavior", "applies": "§21.3 AI Steering Directives; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-21.3-009", "kind": "behavior", "applies": "Reading directives before a round and again when the model has answered.", "level": "must"} -->
 **The answer is a stop too.** A loop reads its directives before each round
-and once the model has answered. An `InjectMessage` that came while the model
+and once the model has answered. <!-- /rfc --><!-- rfc: {"id": "RK-21.3-010", "kind": "behavior", "applies": "A message arriving during an answer causes another round in the same turn after that answer.", "level": "must"} -->An `InjectMessage` that came while the model
 wrote its answer MUST be read: the same turn asks the model again, the answer
-then the message in its conversation, one round more. Once the loop has read
+then the message in its conversation, one round more. <!-- /rfc --><!-- rfc: {"id": "RK-21.3-011", "kind": "behavior", "applies": "Closing reachability after the last directive read, subject to cancellation ending the loop first.", "level": "must"} -->Once the loop has read
 its directives for the last time it MUST NOT be reached any more, so a
 directive the host is told reached a loop is one that loop reads, unless a
 `Cancel` ends the loop first: what it had not read then stays unread
 (Section 6.4, *A message for the running turn*).
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-21.3-003", "kind": "behavior", "applies": "§21.3 AI Steering Directives; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-21.3-012", "kind": "behavior", "applies": "Direct channel steering requires exactly one selector, before any loop is reached.", "level": "must"} -->
 **Which loop a directive reaches.** One AI channel object serves every room it
 is bound to, so its running tool loops can belong to several rooms' turns at
 once. A host steering the channel itself names exactly one of the loop, the
 room or the turn a directive is for: one that names none, or several, MUST be
 refused before any loop is reached, since the channel's most recent loop may
-be another person's turn in another room. A `Cancel` addressed to a room or a
-turn MUST reach every loop of it, any other directive addressed to a room or
-a turn MUST reach its most recent loop, and a directive addressed to a room
-MUST NOT reach a loop of another room. A loop is reachable once its turn has
+be another person's turn in another room. <!-- /rfc --><!-- rfc: {"id": "RK-21.3-013", "kind": "behavior", "applies": "Room- or turn-directed cancellation reaches all the addressed loops.", "level": "must"} -->A `Cancel` addressed to a room or a
+turn MUST reach every loop of it, <!-- /rfc --><!-- rfc: {"id": "RK-21.3-014", "kind": "behavior", "applies": "Other room- or turn-directed steering reaches the most recent addressed loop.", "level": "must"} -->any other directive addressed to a room or
+a turn MUST reach its most recent loop, <!-- /rfc --><!-- rfc: {"id": "RK-21.3-015", "kind": "behavior", "applies": "Room steering cannot affect a different room.", "level": "must"} -->and a directive addressed to a room
+MUST NOT reach a loop of another room. <!-- /rfc --><!-- rfc: {"id": "RK-21.3-016", "kind": "behavior", "applies": "Reachability starts with the turn; callers are told the number of reached loops.", "level": "must"} -->A loop is reachable once its turn has
 started; a directive that comes before reaches nothing, and the host is told
-how many loops it reached. To stop the turns one message starts, whether they have started or
+how many loops it reached. <!-- /rfc --><!-- rfc: {"id": "RK-21.3-017", "kind": "behavior", "applies": "Cancelling one message's delivery by handle or key isolates that message's started and pending turns.", "level": "must"} -->To stop the turns one message starts, whether they have started or
 not, a host cancels that message's delivery (§10.1, *Explicit delivery
 cancellation*), by its handle or its `delivery_key`, rather than steering its
 room: the room's other turns go on.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-21.3-018", "kind": "behavior", "applies": "The room owner steers the turns it started via the backend and returns the sum reached.", "level": "must"} -->
 The loops of a room's turns run on turn executors (Section 10.6): the host
 steers them through the room's owner, which always takes the room and, to reach
 one turn, that turn of the room. The owner resolves the turns a directive reaches
@@ -21594,58 +21622,64 @@ events.
 
 ### 21.4 Tool Call Context
 
-<!-- rfc: {"id": "RK-21.4-001", "kind": "behavior", "applies": "§21.4 Tool Call Context; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-21.4-002", "kind": "behavior", "applies": "Tool handlers can return text and content parts, including typed mappings.", "level": "must"} -->
 **What a handler returns (normative).** A tool handler answers with text or
 with a list of content parts (text and images, Section 21.5), which it MAY give
-as mappings naming their type. A mapping counts as a part only when it has
+as mappings naming their type. <!-- /rfc --><!-- rfc: {"id": "RK-21.4-003", "kind": "behavior", "applies": "A mapping is a content part only when it has the exact part shape.", "level": "must"} -->A mapping counts as a part only when it has
 exactly a part's shape (a text part's type and text, an image part's type and
 image fields): one that carries a `type` key among other data is a value, and
-reading it as a part would drop the rest. Any other value it returns (a
+reading it as a part would drop the rest. <!-- /rfc --><!-- rfc: {"id": "RK-21.4-004", "kind": "behavior", "applies": "JSON serialization of ordinary handler values, preserving mapping order.", "level": "must"} -->Any other value it returns (a
 mapping, a list of values, a number, a null) MUST reach the model as its JSON
 serialization, a mapping's members in the order the handler gave them, the
-same on every channel, and a result a SYNC ON_TOOL_CALL hook supplies in its
-place (Section 9.3) is read the same way. A value outside the contract MUST NOT
-fail the turn, nor reach the model as a language's own printing of it. A
-handler that declines a call SHOULD say so as a refusal, which carries the
-failure marker (Section 9.3); a body it returns instead is read by its own
-convention (Section 15.8.1). A handler says a tool is not its to serve by
+same on every channel, <!-- /rfc --><!-- rfc: {"id": "RK-21.4-005", "kind": "behavior", "applies": "Applying the same result conversion to replacements provided by synchronous ON_TOOL_CALL hooks.", "level": "must"} -->and a result a SYNC ON_TOOL_CALL hook supplies in its
+place (Section 9.3) is read the same way. <!-- /rfc --><!-- rfc: {"id": "RK-21.4-006", "kind": "behavior", "applies": "Handling a value outside the result contract without failing the turn or printing a language object.", "level": "must"} -->A value outside the contract MUST NOT
+fail the turn, nor reach the model as a language's own printing of it. <!-- /rfc --><!-- rfc: {"id": "RK-21.4-007", "kind": "non_testable", "applies": "How an application handler is advised to express a refusal rather than returning an ordinary body.", "level": "should"} -->A
+handler that declines a call SHOULD say so as a refusal, <!-- /rfc --><!-- rfc: {"id": "RK-21.4-041", "kind": "behavior", "applies": "A refusal returned by a tool handler carries the failure marker delivered to the model.", "level": "must"} -->which carries the
+failure marker (Section 9.3); <!-- /rfc --><!-- rfc: {"id": "RK-21.4-042", "kind": "behavior", "applies": "A handler returning an ordinary body has that body classified by the tool result convention in §15.8.1.", "level": "must"} -->a body it returns instead is read by its own
+convention (Section 15.8.1). <!-- /rfc --><!-- rfc: {"id": "RK-21.4-008", "kind": "behavior", "applies": "Fallthrough of a composition on the unserved signal, including the single legacy text-envelope adapter.", "level": "must"} -->A handler says a tool is not its to serve by
 raising the implementation's unserved signal (`UnservedToolCallError`), so
 that a composition of handlers passes the call on and the channel reads the
 call as served by nothing; the text envelope an earlier convention returned
 (`{"error": "Unknown tool: …"}`) is still read as that signal, from a
-handler's answer only, by one adapter. A call whose handlers all decline it
-was served by nothing (Section 9.3), on every channel and every entry of one:
-a conference's calls and the calls a speech-to-speech channel recovers from
+handler's answer only, by one adapter. <!-- /rfc --><!-- rfc: {"id": "RK-21.4-009", "kind": "behavior", "applies": "Outcomes of a text call that no handler serves.", "level": "must"} -->A call whose handlers all decline it
+was served by nothing (Section 9.3), on every channel and every entry of one:<!-- /rfc --><!-- rfc: {"id": "RK-21.4-010", "kind": "behavior", "applies": "Conference feature: interpreting unserved conference calls as on the function-calling path.", "level": "must"} -->
+a conference's calls <!-- /rfc --><!-- rfc: {"id": "RK-21.4-043", "kind": "behavior", "applies": "Realtime feature: interpreting unserved tool calls recovered from speech as on the function-calling path.", "level": "must"} -->and the calls a speech-to-speech channel recovers from
 speech read it as the function-calling path does.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-21.4-011", "kind": "structural", "applies": "Tool-handler invocation takes only the name and arguments.", "level": "must"} -->
 A tool handler is called with the tool's name and arguments and nothing else.
 One AI channel object serves every room and every speaker it is bound to, so
 whatever a handler captured when it was built describes whoever attached the
-channel, not the turn now running. An implementation MUST therefore expose the
+channel, not the turn now running. <!-- /rfc --><!-- rfc: {"id": "RK-21.4-012", "kind": "behavior", "applies": "A per-call turn context follows the async call chain and can be read without changing handler signatures.", "level": "must"} -->An implementation MUST therefore expose the
 turn to the handler through a per-call context that follows the async call
 chain (a contextvar, in Python), readable at any depth without a signature
-change, and MUST answer with the empty value outside a tool call so a host
-keeps its own fallback there (a direct call); `current_turn_host()` alone also
-answers inside a hook a turn executor fires while a turn runs (§10.6.5). A realtime channel
+change, <!-- /rfc --><!-- rfc: {"id": "RK-21.4-013", "kind": "behavior", "applies": "The per-call accessors outside a tool call return their empty values.", "level": "must"} -->and MUST answer with the empty value outside a tool call so a host
+keeps its own fallback there (a direct call); <!-- /rfc --><!-- rfc: {"id": "RK-21.4-014", "kind": "behavior", "applies": "The running turn host is also available within an executor-fired hook.", "level": "must"} -->`current_turn_host()` alone also
+answers inside a hook a turn executor fires while a turn runs (§10.6.5). <!-- /rfc --><!-- rfc: {"id": "RK-21.4-015", "kind": "behavior", "applies": "Realtime feature: binding tool context to the session room and participant around a call.", "level": "must"} -->A realtime channel
 serving a tool call (§12) MUST install the same context around the handler,
 with the session's room and participant as the turn's room and actor, so one
 handler answers the same questions on both paths. The context carries at
 least:
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-21.4-016", "kind": "behavior", "applies": "The current_tool_room_id accessor names the turn's room.", "level": "must"} -->
 | Accessor | Answers |
 |---|---|
 | `current_tool_room_id()` | The id of the room the turn belongs to |
-| `current_tool_room()` | The `Room` of the turn itself: the object the store loaded when the turn began, the same one the turn's `RoomContext.room` holds for its hooks, memory provider and config provider; on a realtime tool call, which runs no turn, the room as loaded for that call |
-| `current_tool_actor_id()` | The participant id of the event that woke the channel this round: the id identity resolution gave its sender when it gave one (Section 11), else the id the message came under, which is `system`, the framework's own sender (Section 10.4), for a message the framework writes under that sender (a `deliver()`) as for one under that name in a room its host names; empty when the event names no participant (one the host commits itself without naming one, another agent's answer, a task's brief to its worker), and when the sender's id is a participant's the room reached through other channels only (Section 5.5), whom it would otherwise name. An empty actor does not single out the host, since a sender's message can read so too: a gate compares the value with the id it expects |
-| `current_tool_allowed_names()` | Every tool name the turn resolved, and every tool a round declared beyond it (the re-read of a stored result), nothing withdrawn, that its tool policy admits for its actor, so a call is validated against the live toolset rather than an attach-time snapshot: a tool the policy denies is left out on every door, since the gate refuses it before any handler, while a tool a skill keeps closed stays in; on a realtime door, every tool the session declares (its catalogue, what orchestration set up, the channel's own) that its policy admits, and none when the session declares no catalogue: it names no list, and its gate, policy included, still judges each call |
-| `current_tool_requester()` | Who asked: the label the conversation gives the author of the event the turn answers when it labels its speakers (Section 6.4: several speak, or two people or more take part), the label a task the turn delegates is headed with (§19.7); empty in a one-to-one conversation, for an instruction or a turn with no author, and outside a turn. It names a speaker; it authenticates no one |
-| `current_tool_call()` | The per-call record: the call's id, its channel, and the structured-result reverse channel |
-| `current_response_metadata()` | The turn's one response-metadata record (§6.7); empty where no turn will merge it (a realtime tool call) |
-| `current_turn_host()` | The turn's `TurnHost` (§10.6.5), the only way a host tool or a hook an executor fires writes to a room; inside a hook a turn fires it is bound to the turn's room; between turns it is empty while the implementation carries no host call outside a turn's link; empty anywhere else |
+| <!-- /rfc --><!-- rfc: {"id": "RK-21.4-017", "kind": "behavior", "applies": "The handler reads the Room object shared with its turn's hooks, memory and configuration.", "level": "must"} -->`current_tool_room()` | The `Room` of the turn itself: the object the store loaded when the turn began, the same one the turn's `RoomContext.room` holds for its hooks, memory provider and config provider; <!-- /rfc --><!-- rfc: {"id": "RK-21.4-018", "kind": "behavior", "applies": "Realtime feature: the current tool room accessor returns the room loaded for a call without a turn.", "level": "must"} -->on a realtime tool call, which runs no turn, the room as loaded for that call |
+| <!-- /rfc --><!-- rfc: {"id": "RK-21.4-019", "kind": "behavior", "applies": "Resolving the waking sender to the channel's participant ID or the sender ID.", "level": "must"} -->`current_tool_actor_id()` | The participant id of the event that woke the channel this round: the id identity resolution gave its sender when it gave one (Section 11), else the id the message came under, <!-- /rfc --><!-- rfc: {"id": "RK-21.4-020", "kind": "behavior", "applies": "The actor of a framework message or a sender named system in a host-named room.", "level": "must"} -->which is `system`, the framework's own sender (Section 10.4), for a message the framework writes under that sender (a `deliver()`) as for one under that name in a room its host names; <!-- /rfc --><!-- rfc: {"id": "RK-21.4-021", "kind": "behavior", "applies": "The empty actor when no participant is named or when a participant is known only on a different channel.", "level": "must"} -->empty when the event names no participant (one the host commits itself without naming one, another agent's answer, a task's brief to its worker), and when the sender's id is a participant's the room reached through other channels only (Section 5.5), whom it would otherwise name. An empty actor does not single out the host, since a sender's message can read so too: a gate compares the value with the id it expects |
+| <!-- /rfc --><!-- rfc: {"id": "RK-21.4-022", "kind": "behavior", "applies": "A text turn's live tool names include resolved and newly declared tools, exclude withdrawals and policy denials, and retain skill-gated tools.", "level": "must"} -->`current_tool_allowed_names()` | Every tool name the turn resolved, and every tool a round declared beyond it (the re-read of a stored result), nothing withdrawn, that its tool policy admits for its actor, so a call is validated against the live toolset rather than an attach-time snapshot: a tool the policy denies is left out on every door, since the gate refuses it before any handler, while a tool a skill keeps closed stays in; <!-- /rfc --><!-- rfc: {"id": "RK-21.4-023", "kind": "behavior", "applies": "Realtime feature: the session's admitted catalogue, including an empty name set without a catalogue.", "level": "must"} -->on a realtime door, every tool the session declares (its catalogue, what orchestration set up, the channel's own) that its policy admits, and none when the session declares no catalogue: it names no list, and its gate, policy included, still judges each call |
+| <!-- /rfc --><!-- rfc: {"id": "RK-21.4-024", "kind": "behavior", "applies": "The waking author's conversation label, with its empty cases for one-to-one, instructions, authorless events and outside a turn.", "level": "must"} -->`current_tool_requester()` | Who asked: the label the conversation gives the author of the event the turn answers when it labels its speakers (Section 6.4: several speak, or two people or more take part), the label a task the turn delegates is headed with (§19.7); empty in a one-to-one conversation, for an instruction or a turn with no author, and outside a turn. It names a speaker; it authenticates no one |
+| <!-- /rfc --><!-- rfc: {"id": "RK-21.4-025", "kind": "behavior", "applies": "The active tool-call ID, channel and structured-result reverse channel.", "level": "must"} -->`current_tool_call()` | The per-call record: the call's id, its channel, and the structured-result reverse channel |
+| <!-- /rfc --><!-- rfc: {"id": "RK-21.4-026", "kind": "behavior", "applies": "The current turn's shared response-metadata record.", "level": "must"} -->`current_response_metadata()` | The turn's one response-metadata record (§6.7); <!-- /rfc --><!-- rfc: {"id": "RK-21.4-027", "kind": "behavior", "applies": "Realtime feature: absence of response metadata where no turn will merge it.", "level": "must"} -->empty where no turn will merge it (a realtime tool call) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-21.4-028", "kind": "behavior", "applies": "Access to the current room-bound turn host from tools and executor-fired hooks with the documented outside-turn boundary.", "level": "must"} -->`current_turn_host()` | The turn's `TurnHost` (§10.6.5), the only way a host tool or a hook an executor fires writes to a room; inside a hook a turn fires it is bound to the turn's room; between turns it is empty while the implementation carries no host call outside a turn's link; empty anywhere else |
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-21.4-029", "kind": "behavior", "applies": "A text call's chain depth is the depth of the turn's response.", "level": "must"} -->
 The context also carries the turn's chain depth: the depth of the response
-the turn produces (§8.3), on a realtime tool call the depth of the assistant's
-answer (§12.4). A result delivered later on the turn's behalf reads it there
+the turn produces (§8.3), <!-- /rfc --><!-- rfc: {"id": "RK-21.4-030", "kind": "behavior", "applies": "Realtime feature: a tool call's depth is the assistant answer's depth.", "level": "must"} -->on a realtime tool call the depth of the assistant's
+answer (§12.4). <!-- /rfc --><!-- rfc: {"id": "RK-21.4-031", "kind": "behavior", "applies": "Carrying a turn's actor and chain depth into later work, including the empty outside-turn default.", "level": "must"} -->A result delivered later on the turn's behalf reads it there
 (Section 23.3); outside a turn it is 0. It is readable as
 `current_tool_chain_depth()`, the turn over or not: a host that hands the
 turn's work to another context (a task outside the turn, another process)
@@ -21653,28 +21687,30 @@ reads it there with the actor, and runs that work under both, so what the work
 sends continues the turn's chain (§8.3) as it would have from the turn's own
 context.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-21.4-032", "kind": "behavior", "applies": "Actor, room and toolset identify the turn without authenticating the actor or authorizing an organization.", "level": "must"} -->
 Two rules bind the values that name the turn (the room and its id, the actor,
 the toolset); the response-metadata record and the per-call record are the
 turn's write channels, described in §6.7 and above. **They name the turn; they
 do not authenticate it.** The actor is the id the waking event carries, a room
 `Participant.id` where the room holds one for it, and reads back
 the same whether the sender is identified, pending or unknown, and the room's
-organization is a fact of the room, not a grant: a handler that reaches a
+organization is a fact of the room, not a grant: <!-- /rfc --><!-- rfc: {"id": "RK-21.4-033", "kind": "non_testable", "applies": "A host handler resolves the participant and applies its own access rule to person or tenant data.", "level": "must"} -->a handler that reaches a
 person's or a tenant's data resolves the participant (§11) and applies the
-host's own rule before acting. **The `Room` is the room as the store loaded it
+host's own rule before acting. <!-- /rfc --><!-- rfc: {"id": "RK-21.4-034", "kind": "behavior", "applies": "The room snapshot shared within a turn on one side of the backend; owner and executor have separate copies.", "level": "must"} -->**The `Room` is the room as the store loaded it
 when the turn began**, shared by reference with `RoomContext.room` and so with
 every hook, provider and channel of the turn on its side of the turn backend
-(Section 10.6): the owner and the executor each hold their own copy. A patch written to the store
-during the turn is not in it: a handler whose decision depends on the turn's
-own writes re-reads the room. A handler MUST NOT mutate the object: a room
+(Section 10.6): the owner and the executor each hold their own copy. <!-- /rfc --><!-- rfc: {"id": "RK-21.4-035", "kind": "behavior", "applies": "A store patch during a turn is absent from that turn's original snapshot.", "level": "must"} -->A patch written to the store
+during the turn is not in it: <!-- /rfc --><!-- rfc: {"id": "RK-21.4-036", "kind": "non_testable", "applies": "Host handlers depending on their writes re-read the room.", "level": "must"} -->a handler whose decision depends on the turn's
+own writes re-reads the room. <!-- /rfc --><!-- rfc: {"id": "RK-21.4-037", "kind": "non_testable", "applies": "Host handlers must leave the shared Room object unmodified and use store operations for changes.", "level": "must"} -->A handler MUST NOT mutate the object: a room
 changes through the store, and a write on the shared object would be read by
 the rest of the turn (the agent-response policy, the delivery plan) as if the
-room had changed. On a path that runs no turn, a realtime tool call, the
+room had changed. <!-- /rfc --><!-- rfc: {"id": "RK-21.4-038", "kind": "behavior", "applies": "Realtime feature: loading a room once for a call, sharing with a gate context only when one exists.", "level": "must"} -->On a path that runs no turn, a realtime tool call, the
 `Room` is the one the store loaded for that call: shared with the
 pre-execution gate's context when a hook made the channel build one, read once
 for the call otherwise, and shared with nothing else, since no turn's
-`RoomContext` exists there; `current_response_metadata()` MUST answer the
-empty value on that path, because no MESSAGE event will carry the record. A
+`RoomContext` exists there; <!-- /rfc --><!-- rfc: {"id": "RK-21.4-039", "kind": "behavior", "applies": "Realtime feature: the response metadata accessor is empty on a path without a turn.", "level": "must"} -->`current_response_metadata()` MUST answer the
+empty value on that path, because no MESSAGE event will carry the record. <!-- /rfc --><!-- rfc: {"id": "RK-21.4-040", "kind": "behavior", "applies": "Successive rounds inherit the same room and actor from their turn.", "level": "must"} -->A
 tool loop the implementation starts under a turn MUST
 inherit the turn's context, so a handler called on any round of the loop reads
 the same room and actor as on the first.
@@ -21682,7 +21718,7 @@ the same room and actor as on the first.
 
 ### 21.5 Large Tool Results
 
-<!-- rfc: {"id": "RK-21.5-001", "kind": "behavior", "applies": "§21.5 Large Tool Results; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-21.5-002", "kind": "behavior", "applies": "When a large-result bound is offered, it covers all model-visible outcomes on every round, including errors, refusals and overrides.", "level": "must"} -->
 An implementation that bounds large tool results (stores the full text and
 gives the model a bounded preview with a way to read the rest back) MUST
 apply the bound to every outcome the model reads: a handler's result, a
@@ -21691,79 +21727,87 @@ covers the success path only leaves the others unbounded, and an error page
 or a rewritten result costs the same as the result it stands for, on every
 round of the tool loop that carries it.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-21.5-003", "kind": "behavior", "applies": "Bounding a preview by characters, including a result consisting of one long line.", "level": "must"} -->
 - The preview MUST be bounded in characters, not only in lines: one long line
-  would otherwise carry the whole result.
+  would otherwise carry the whole result.<!-- /rfc --><!-- rfc: {"id": "RK-21.5-004", "kind": "behavior", "applies": "Bounding text in content parts while retaining their images.", "level": "must"} -->
 - A result made of content parts has its text bounded and its images kept in
-  place.
+  place.<!-- /rfc --><!-- rfc: {"id": "RK-21.5-005", "kind": "behavior", "applies": "Fallback text for a model without image support and the corresponding view exposed to ON_TOOL_CALL.", "level": "must"} -->
 - A model that cannot take images MUST be given the text of a content-part
   result, its parts one per line, each image an `[image]` mark; its
-  ON_TOOL_CALL hooks read that text, as the model does.
+  ON_TOOL_CALL hooks read that text, as the model does.<!-- /rfc --><!-- rfc: {"id": "RK-21.5-006", "kind": "behavior", "applies": "Reading the whole handler result in ON_TOOL_CALL before storing and bounding the rewritten model copy.", "level": "must"} -->
 - The bound applies to the model's copy, and it runs after ON_TOOL_CALL: the
   hook receives the handler's whole result (as text for a model that cannot
   take images), and what it returns (the result,
   or its override) is what is bounded and stored. Everything the model can
   read back has then passed through the hook, so a hook that redacts covers
   the full text; bounding first would let the model page the raw text back
-  from the store. A refusal observer receives the raw message.
-- An active skill's instructions are exempt (Section 24.4).
-- The read-back MAY search a stored result: given a text on one line, it
+  from the store. <!-- /rfc --><!-- rfc: {"id": "RK-21.5-007", "kind": "behavior", "applies": "A refusal observer receives the unmodified refusal message.", "level": "must"} -->A refusal observer receives the raw message.<!-- /rfc --><!-- rfc: {"id": "RK-21.5-008", "kind": "behavior", "applies": "Exemption of active skill instructions from large-result eviction.", "level": "must"} -->
+- An active skill's instructions are exempt (Section 24.4).<!-- /rfc --><!-- rfc: {"id": "RK-21.5-009", "kind": "behavior", "applies": "Optional text-search interface for reading back a stored result.", "level": "may"} -->
+- The read-back MAY search a stored result: <!-- /rfc --><!-- rfc: {"id": "RK-21.5-010", "kind": "behavior", "applies": "Where stored-result search is offered, case-insensitive matching on numbered lines with bounded surrounding context.", "level": "must"} -->given a text on one line, it
   returns the lines of the result as stored that contain it, case aside, with
   the lines around them and their numbers, bounded as a page is, a line longer
-  than its share of the page cut around the match. A search reads every line
+  than its share of the page cut around the match. <!-- /rfc --><!-- rfc: {"id": "RK-21.5-011", "kind": "behavior", "applies": "Where stored-result search is offered, searching whole lines, reporting absence and identifying truncated matches.", "level": "must"} -->A search reads every line
   whole, so one that finds nothing says the text is absent from the result,
   which a page read never can; its answer says when it holds only part of the
-  matches. The text is matched as it is, never as a pattern the implementation
-  would run: a model-supplied pattern could stall the process.
-- What the model can read back SHOULD stay readable while its room works.
+  matches. <!-- /rfc --><!-- rfc: {"id": "RK-21.5-012", "kind": "behavior", "applies": "Where stored-result search is offered, treating a model-provided query as literal text.", "level": "must"} -->The text is matched as it is, never as a pattern the implementation
+  would run: a model-supplied pattern could stall the process.<!-- /rfc --><!-- rfc: {"id": "RK-21.5-013", "kind": "behavior", "applies": "Continued readability of stored model results while their room is active.", "level": "should"} -->
+- What the model can read back SHOULD stay readable while its room works.<!-- /rfc --><!-- rfc: {"id": "RK-21.5-014", "kind": "behavior", "applies": "Per-room result capacity and preferential global eviction from the room holding the most.", "level": "must"} -->
   The store's capacity is counted per room, and a bound the whole store
   needs for memory MUST take from the room holding the most first, so a room
-  holding few results keeps them while other rooms evict; a result read back
-  counts as in use. A stored result's id MUST NOT be given to another result
+  holding few results keeps them while other rooms evict; <!-- /rfc --><!-- rfc: {"id": "RK-21.5-015", "kind": "behavior", "applies": "Accessing a stored result counts as use.", "level": "must"} -->a result read back
+  counts as in use. <!-- /rfc --><!-- rfc: {"id": "RK-21.5-016", "kind": "behavior", "applies": "A referenced result ID cannot be reassigned to a later result, including reuse of a call ID.", "level": "must"} -->A stored result's id MUST NOT be given to another result
   while a context can still name it, so a call id reused in a later turn, or
-  an id whose result left the store, reads nothing it did not store. A
+  an id whose result left the store, reads nothing it did not store. <!-- /rfc --><!-- rfc: {"id": "RK-21.5-017", "kind": "behavior", "applies": "Persisted history cannot offer read-back IDs that the store no longer holds after restart.", "level": "must"} -->A
   summary rebuilt from persisted history (after a restart) MUST NOT offer an
   id the store no longer holds.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-21.5-018", "kind": "behavior", "applies": "Persisting, broadcasting and routing tool-end events through hooks.", "level": "must"} -->
 The event that records a tool call's outcome (`TOOL_CALL_END`) is persisted,
-broadcast and handed to the event pipeline's hooks. It SHOULD NOT carry a
+broadcast and handed to the event pipeline's hooks. <!-- /rfc --><!-- rfc: {"id": "RK-21.5-019", "kind": "behavior", "applies": "Bounding images in all representations of a tool-end event, identifying omitted images.", "level": "should"} -->It SHOULD NOT carry a
 result's images without bound, whatever shape the result takes (content
 parts, or JSON such as an ACP agent's output) and in its structured copy as
 much as in the result: an implementation keeps them up to a size and states
-each one it leaves out. The bound is on the event only; the model's
+each one it leaves out. <!-- /rfc --><!-- rfc: {"id": "RK-21.5-020", "kind": "behavior", "applies": "Event-specific image bounds leave the model copy intact.", "level": "must"} -->The bound is on the event only; the model's
 copy keeps every image.
 <!-- /rfc -->
 
 ### 21.6 Tool Call Timeout
 
-<!-- rfc: {"id": "RK-21.6-001", "kind": "behavior", "applies": "§21.6 Tool Call Timeout; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-21.6-002", "kind": "behavior", "applies": "Applying a common handler-wait bound in the text AI tool loop.", "level": "must"} -->
 A handler that never answers holds its turn for good: the model waits on the
 call, and nothing else in the room's turn can proceed. An implementation MUST
 therefore bound every wait on a tool handler's answer, on every path a call
-takes (the tool loop of an AI channel, every entry of a speech-to-speech
-channel, a conference's calls), through one rule:
+takes (the tool loop of an AI channel, <!-- /rfc --><!-- rfc: {"id": "RK-21.6-003", "kind": "behavior", "applies": "Realtime feature: applying the same tool timeout to every speech-to-speech entry.", "level": "must"} -->every entry of a speech-to-speech
+channel, <!-- /rfc --><!-- rfc: {"id": "RK-21.6-004", "kind": "behavior", "applies": "Conference feature: applying the same tool timeout to conference handlers.", "level": "must"} -->a conference's calls), through one rule:
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-21.6-005", "kind": "behavior", "applies": "Configuring a channel default and a per-name override, either of which may be unbounded.", "level": "must"} -->
 - A channel has a default bound per call, and a bound per tool name that
-  overrides it; either MAY be absent, meaning no bound. The default SHOULD be
-  short where a person waits in silence (speech-to-speech, conference) and MAY
-  be longer for text.
+  overrides it; either MAY be absent, meaning no bound. <!-- /rfc --><!-- rfc: {"id": "RK-21.6-006", "kind": "behavior", "applies": "Realtime feature: a short default tool timeout is recommended where a person waits in silence.", "level": "should"} -->The default SHOULD be
+  short where a person waits in silence (speech-to-speech, <!-- /rfc --><!-- rfc: {"id": "RK-21.6-017", "kind": "behavior", "applies": "Conference feature: a short default tool timeout is recommended where a person waits in silence.", "level": "should"} -->conference) <!-- /rfc --><!-- rfc: {"id": "RK-21.6-007", "kind": "behavior", "applies": "A text channel may use a longer default timeout.", "level": "may"} -->and MAY
+  be longer for text.<!-- /rfc --><!-- rfc: {"id": "RK-21.6-008", "kind": "behavior", "applies": "Per-turn configured tool bounds override the channel's for that turn alone.", "level": "must"} -->
 - A turn whose tools come from the channel's per-turn configuration (Appendix
   A.9) MAY be given bounds per tool name with them, which override the
   channel's for that turn alone: a tool the turn declares may be one the
-  channel was never built with, and its bound travels with it and its handler.
+  channel was never built with, and its bound travels with it and its handler.<!-- /rfc --><!-- rfc: {"id": "RK-21.6-009", "kind": "behavior", "applies": "Subsequent turns revert to their own configuration or the channel's defaults.", "level": "must"} -->
   The next turn reads the channel's bounds unless its own configuration gives
-  others. A bound that is not positive fails the turn before its model is
-  asked.
+  others. <!-- /rfc --><!-- rfc: {"id": "RK-21.6-010", "kind": "behavior", "applies": "Refusing nonpositive per-turn tool bounds before model invocation.", "level": "must"} -->A bound that is not positive fails the turn before its model is
+  asked.<!-- /rfc --><!-- rfc: {"id": "RK-21.6-011", "kind": "behavior", "applies": "Tools with their own timeout or intentional waiting boundary are exempt from the channel default.", "level": "must"} -->
 - A tool that keeps a bound of its own is not subject to the channel's default:
   one that waits on another agent or on a person by design (a delegation, an
   orchestration strategy's tool, a human-input tool), or a command run under
-  its own timeout (a sandbox command). A bound set for its name still applies.
+  its own timeout (a sandbox command). <!-- /rfc --><!-- rfc: {"id": "RK-21.6-012", "kind": "behavior", "applies": "A named override still applies to tools exempt from the channel default.", "level": "must"} -->A bound set for its name still applies.<!-- /rfc --><!-- rfc: {"id": "RK-21.6-013", "kind": "behavior", "applies": "A host tool installed for an agent by orchestration is bound like other host tools.", "level": "must"} -->
   A tool an orchestration strategy installs for an agent to serve (a pipeline
-  agent's own tool) is the host's and is bounded like any other.
+  agent's own tool) is the host's and is bounded like any other.<!-- /rfc --><!-- rfc: {"id": "RK-21.6-014", "kind": "behavior", "applies": "Cancelling the handler on timeout and reporting a failed call to the model and observers.", "level": "must"} -->
 - When the bound expires, the handler MUST be cancelled, and the call fails as a
   call whose handler raised (Section 9.3): the model reads the failure and the
-  error's class, the observers the detail. A timeout the handler raises itself is
+  error's class, the observers the detail. <!-- /rfc --><!-- rfc: {"id": "RK-21.6-015", "kind": "behavior", "applies": "A timeout raised by a handler is reported as that handler's own failure.", "level": "must"} -->A timeout the handler raises itself is
   that handler's failure, not an expired bound.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-21.6-016", "kind": "behavior", "applies": "Independence of handler-call timeouts and the turn deadline between rounds.", "level": "must"} -->
 The bound is per call, not per turn: a turn's own deadline still applies
 between rounds.
 

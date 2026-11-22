@@ -1329,39 +1329,39 @@
     },
     {
       "section": "21.1",
-      "sha256": "9258c1adf18671a9a3d791149d7d20c2b4c9df08f5e2d5d39d1b2ddecafcfa8e",
+      "sha256": "5e4bba4939cfed26ad08b2c7f269646b618c9ef4ae3aaf12577cd3314280de61",
       "classification": "normative",
-      "review": "Source inventory: ToolPolicy. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage. The RoleOverride table now explicitly uses non-null empty-default lists, matching the approved Python/Rust construction witnesses; the independent review covers this narrow correction and preserves the remaining source inventory without granting turn-role coverage. RK-21.1-004 now says that the arguments' check names every argument that does not fit in one text and in which order, as both implementations do (RMK-1848, tools/every-argument-that-does-not-fit-is-named); the review covers this sentence and preserves the remaining source inventory."
+      "review": "Tool policy is reviewed separately for the configuration, glob and role resolution, channel ownership, declaration and dispatch, refusal order and messages, collisions and search. Realtime and conference entry points are scoped explicitly."
     },
     {
       "section": "21.2",
-      "sha256": "f89bd581565163a9dfb85d43275c0ed0da9d6476a3eb559c8cde8dc53f8baf74",
+      "sha256": "426f525c0642d116ccff959650e412e499d74297f4f543375ff41f7b4f0197a2",
       "classification": "normative",
-      "review": "Source inventory: MCP Tool Provider. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "The MCP support recommendation, provider interface, connection lifecycle, configuration, alias routing, bounded discovery, schema checks, server instructions, host requests and rendering of results have separate units. Prompt-composing text, realtime and conference paths retain their own conditions."
     },
     {
       "section": "21.3",
-      "sha256": "14227bcbc4dcbe84a860535e35385c61d58f8bc565ac61f9cf3937ab2731436e",
+      "sha256": "4d8046a77bbf28ebe7a347c1de380597f55a0a8f8831dc7105ea1fde09d2c632",
       "classification": "normative",
-      "review": "Source inventory: AI Steering Directives. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "The directive table is split by effect. Distinct units then cover the announcement and answer boundaries, when a loop is reachable, selectors, isolation and the room owner's routing and result."
     },
     {
       "section": "21.4",
-      "sha256": "e1c798c576590b29b06ef0b2c50d86bd30200c003bcc6d9a8b312d94846ec67e",
+      "sha256": "7ad6b98eb386a1c6d06a0cd63ea65a0f811e6dc4fcf1d4d11eba9ca415504a6f",
       "classification": "normative",
-      "review": "Source inventory: Tool Call Context. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Separate units cover return values, refusal and unserved conventions, context binding, each accessor's public value, room snapshots, background propagation and the obligations of the host. Realtime call context and the conference route are distinguished."
     },
     {
       "section": "21.5",
-      "sha256": "0f87a5da3a8130c941f39544c252e381d2ae28d91218fbe2058df8486dfaf84e",
+      "sha256": "0dfc4f0b54740e6bf7a89a5dc200bf4441c7c15e97ee4532af34c8496fd3e76b",
       "classification": "normative",
-      "review": "Source inventory: Large Tool Results. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Large-result behavior is reviewed at the model, hook, storage and event boundaries. Read-back search permission and conditional behavior have separate levels, as do persistent IDs and model-versus-event image retention."
     },
     {
       "section": "21.6",
-      "sha256": "d8a930cb23a075cd066ffe8fbfddf4c91c59cdce79d981ad3d5ba1ca1207268d",
+      "sha256": "94928a7d8ac720a99a463253e03a1172ff1eabbc18b7210d21bf87923feb6e53",
       "classification": "normative",
-      "review": "Source inventory: Tool Call Timeout. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "The timeout rule distinguishes text, speech and conference paths, defaults and named overrides, per-turn changes, intentional waits, cancellation and the separate turn deadline."
     },
     {
       "section": "22",
