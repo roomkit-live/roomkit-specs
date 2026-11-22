@@ -33,9 +33,9 @@
     },
     {
       "section": "1.4",
-      "sha256": "0d4fad1972d077b901fe2c307f7dc014a13b4fb840d8ccb022b0535ab7d65a4e",
+      "sha256": "196adec5dd566e1d5611a7426acf5ed424d0c4fb9c4a10eae346ce8c619ff18f",
       "classification": "normative",
-      "review": "Source inventory: Serialized Form. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Serialized Form, split to one obligation per unit (RMK-1960). The opening sentences make JSON the form of what implementations exchange (RK-1.4-002); a store's own representation is a may (RK-1.4-003). The rules give a unit per sentence: a record, a map and a list with the sentence that introduces the rules; a writer's null fields; a reader's absent fields; lowercase enumeration values; enumeration-keyed maps; content tagged by type; nested content and other unions; bytes in base64; datetimes in UTC; no datetime without an offset, which a reader may read as UTC. Every unit carries its level, must but RK-1.4-003."
     },
     {
       "section": "2",
@@ -975,39 +975,39 @@
     },
     {
       "section": "13.1",
-      "sha256": "1663384a301cd9bdf3e58d42ad4b46d67236cfcdd359ddf826bea9bd05260e00",
+      "sha256": "999529369f4e736d7ceb687da75388e9bbe965ad1fede7344cfad6757ebccc00",
       "classification": "normative",
-      "review": "Source inventory: Circuit Breaker. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Circuit Breaker, split to one obligation per unit (RMK-1960). A breaker per channel is should (RK-13.1-001); what a breaker does is must where an implementation keeps one: each state row (the header with the CLOSED row), each transition, the recipient-less refusal that opens none, and circuit_breaker_opened. Every unit carries its level."
     },
     {
       "section": "13.2",
-      "sha256": "0b77b6e8c5ccb7fa4fe1f67ad9d74884e569df725233d70a7a2120a25c343e60",
+      "sha256": "b69229a7d2cb543be4e7dbacc779ccb70b79996fb6693ddf82dd4bf6d828c6ad",
       "classification": "normative",
-      "review": "Source inventory: Retry Policy. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Retry Policy, split to one obligation per unit (RMK-1960): the RetryPolicy model (structural), the delay formula, the policy set per binding, an error that says whether it may be retried, and the retryable_errors rule for any other error. Every unit carries its level, must."
     },
     {
       "section": "13.3",
-      "sha256": "a7d02f96b0a999c6c737016ff053f4be4fa0088c10ea59219584278dd38d9131",
+      "sha256": "1eb5a02d7531bc9394682a6d56d4515e22c6f80167568132ac43aa9fcf4be972",
       "classification": "normative",
-      "review": "Source inventory: Rate Limiting. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Rate Limiting, split to one obligation per unit (RMK-1960): the RateLimit model (structural), the rate a limit sets, the token bucket (should), and a delivery a binding's limit holds back queued, the kit's inbound limit refusing instead. Every unit carries its level."
     },
     {
       "section": "13.4",
-      "sha256": "59cc19fba2913ebc697394f0cc277871fe06c02154cfc72ba2759b177b57b6ab",
+      "sha256": "fa4fe16b7821d176086f5fbded80fce0376e542e23d6b4e42aaf8526fb58cd03",
       "classification": "normative",
-      "review": "Source inventory: Idempotency. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Idempotency, split to one obligation per unit (RMK-1960): a unit per sentence of the opening paragraph (a key's scope, with the sentence on where keys come from; the events that carry a key; a posted task result's key; a record outside the pipeline never a replay; a proactive delivery's key; a blank key), the replay check and its three steps as one procedure, the reentry budget for an injected replay and for a message past it, a key removed by a hard delete, a delivered replay's original result (with the paragraph on why it is not refused), a blocked replay's, the store's lookup by key (should) and a store that can only answer seen (may). Every unit carries its level."
     },
     {
       "section": "13.5",
-      "sha256": "1e7690246ced9f69e4781173741e09390bb79364996a44d4c452000f282ba460",
+      "sha256": "83127f0123c9f236f77133bb9f50b5bd3b0120e66b80b95e67d6c3e7ccb82d4e",
       "classification": "normative",
-      "review": "Source inventory: Room-Level Locking. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Room-Level Locking, split to one obligation per unit (RMK-1960): per-room serialization (RK-13.5-001, kept); a unit per sentence of the serialization scope (the external I/O rule should), the RoomLockManager interface (structural); a failed release (what it leaves, how it is reported, logged, the cascade going on, the next section asking again) and the lock's reentrancy; the key spaces; the deployment's duty when a store is shared, non_testable, the sentences on when an in-memory manager suffices folded in, and the distributed manager and its warning (should); a unit per sentence of the delivery lanes across processes, the bounded-loss clause and the outbox pointer folded into their neighbours. Every unit carries its level."
     },
     {
       "section": "13.6",
-      "sha256": "bcf2e329e5c2b7cd9545ecf596611e97a981c001fa9abc61257d2e972b17a59a",
+      "sha256": "b143a2bb0239d7e9532e0e31a99fc3a36454088899ce6e2053ddc22efaa9d0ad",
       "classification": "normative",
-      "review": "Source inventory: Processing Timeout. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Processing Timeout, split to one obligation per unit (RMK-1960): a configurable process_timeout (should), with the sentence that defines it relative to the commit point; a unit per sentence of the pre-commit phase, its label folded into the first; the commit point's two rules; a unit per sentence of the post-commit phase (broadcast_partial_failure should); a unit per sentence of a caller that stops waiting and of a regeneration; the delivery outbox (may) and what its state applies to where offered. Every unit carries its level."
     },
     {
       "section": "14",
@@ -1527,9 +1527,9 @@
     },
     {
       "section": "26.1",
-      "sha256": "745b52e3c9e784a33d40e98f1beab9fa0f9577c3e20f00818dff5641d8c09bd1",
+      "sha256": "3047433f85f0ae915081205dc5e6b4cf4b28946c7d471c2268875d0893419069",
       "classification": "normative",
-      "review": "Source inventory: Level 0: Core (REQUIRED). Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Level 0: Core (REQUIRED), split to one obligation per unit (RMK-1960). The feature list, a list of pointers to the sections that own each feature, is folded with the rule of triggers and framework events into RK-26.1-003, which also says a higher level's feature owes its own section's; each row of the table is a unit, the header with the first row. Every unit carries its level, must."
     },
     {
       "section": "26.2",

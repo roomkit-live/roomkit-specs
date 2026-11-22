@@ -152,37 +152,37 @@ serialized form is lowercase (Section 1.4). Field names use snake_case.
 
 ### 1.4 Serialized Form
 
-<!-- rfc: {"id": "RK-1.4-001", "kind": "behavior", "applies": "§1.4 Serialized Form; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-1.4-002", "kind": "behavior", "applies": "§1.4: the one serialized form, JSON, of what implementations exchange (the turn messages of Section 10.6.3, logs, conformance fixtures, a room's export). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The records this document defines have one serialized form, JSON
 ([RFC 8259](https://www.rfc-editor.org/rfc/rfc8259)). What implementations
 exchange is written in this form (the turn messages of Section 10.6.3, logs,
 conformance fixtures, a room's export), so that two implementations can read
-each other's data and share conformance scenarios. The form binds what is
+each other's data and share conformance scenarios.<!-- /rfc --> <!-- rfc: {"id": "RK-1.4-003", "kind": "behavior", "applies": "§1.4: a store's own representation of what it persists, which the serialized form does not bind; this document defines no common database schema. Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->The form binds what is
 exchanged, not how a store persists it: a store MAY keep a representation of
 its own (columns, an encoding of its choice), and two implementations sharing
 one database would need a common schema, which this document does not
-define. Implementations MUST serialize a record as follows:
+define.<!-- /rfc --> <!-- rfc: {"id": "RK-1.4-004", "kind": "behavior", "applies": "§1.4 serialized form, with the sentence that introduces its rules: a record as a JSON object of its fields under the names this document writes, a map as a JSON object, a list as a JSON array. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Implementations MUST serialize a record as follows:
 
 - A record is a JSON object whose members are its fields, named as this
-  document writes them. A `map` is a JSON object and a `list` a JSON array.
-- A writer writes every field of a record, a null one as `null`. A reader
-  takes a field that is absent as its default.
+  document writes them. A `map` is a JSON object and a `list` a JSON array.<!-- /rfc --><!-- rfc: {"id": "RK-1.4-005", "kind": "behavior", "applies": "§1.4 serialized form: a writer writes every field of a record, a null one as null. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+- A writer writes every field of a record, a null one as `null`.<!-- /rfc --> <!-- rfc: {"id": "RK-1.4-006", "kind": "behavior", "applies": "§1.4 serialized form: a reader takes an absent field as its default. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A reader
+  takes a field that is absent as its default.<!-- /rfc --><!-- rfc: {"id": "RK-1.4-007", "kind": "behavior", "applies": "§1.4 serialized form: an enumeration value written in lowercase snake_case. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - An enumeration value is written in lowercase snake_case: `ACTIVE` is
-  `"active"`, `READ_WRITE` is `"read_write"`. A map keyed by an enumeration
+  `"active"`, `READ_WRITE` is `"read_write"`.<!-- /rfc --> <!-- rfc: {"id": "RK-1.4-008", "kind": "behavior", "applies": "§1.4 serialized form: a map keyed by an enumeration (an Identity's channel_addresses) writes each key as the value's serialized form. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A map keyed by an enumeration
   (an Identity's `channel_addresses`, Section 5.6) writes each key as the
-  value's serialized form: `{"sms": ["+15551234"]}`.
+  value's serialized form: `{"sms": ["+15551234"]}`.<!-- /rfc --><!-- rfc: {"id": "RK-1.4-009", "kind": "behavior", "applies": "§1.4 serialized form: event content as an object whose type member names its content type with Section 5.3's names, beside that type's fields. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - Event content (Section 5.3) is an object whose `type` member names its
   content type, with the names Section 5.3 gives, beside the fields of that
-  type: `{"type": "text", "body": "Hello", "language": "en"}`. Content held in
+  type: `{"type": "text", "body": "Hello", "language": "en"}`.<!-- /rfc --> <!-- rfc: {"id": "RK-1.4-010", "kind": "behavior", "applies": "§1.4 serialized form: content held in other content (a composite's part, an edit's new content) and every other union this document defines, tagged by a type member that names the member it holds. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Content held in
   other content, a composite's part or an edit's new content, is tagged the
   same way, and so is every other union this document defines: its `type`
   member names the member it holds, as the union's definition names it (a
-  frame of Section 10.6.3 carries `"type": "heartbeat"` beside its fields).
+  frame of Section 10.6.3 carries `"type": "heartbeat"` beside its fields).<!-- /rfc --><!-- rfc: {"id": "RK-1.4-011", "kind": "behavior", "applies": "§1.4 serialized form: a bytes value as a base64 string (RFC 4648, Section 4). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - A `bytes` value is a string in base64
-  ([RFC 4648](https://www.rfc-editor.org/rfc/rfc4648), Section 4).
+  ([RFC 4648](https://www.rfc-editor.org/rfc/rfc4648), Section 4).<!-- /rfc --><!-- rfc: {"id": "RK-1.4-012", "kind": "behavior", "applies": "§1.4 serialized form: a datetime as an RFC 3339 string written in UTC. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - A `datetime` is a string in the form of
   [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339), written in UTC:
-  `"2026-10-22T14:03:07.250Z"`. A value without an offset MUST NOT be
+  `"2026-10-22T14:03:07.250Z"`.<!-- /rfc --> <!-- rfc: {"id": "RK-1.4-013", "kind": "behavior", "applies": "§1.4 serialized form: a datetime without an offset is never written; a reader may read one as UTC. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A value without an offset MUST NOT be
   written; a reader MAY read one as UTC.
 
 <!-- /rfc -->
@@ -17788,39 +17788,41 @@ intended rather than filter it.
 
 ### 13.1 Circuit Breaker
 
-<!-- rfc: {"id": "RK-13.1-001", "kind": "behavior", "applies": "§13.1 Circuit Breaker; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-13.1-001", "kind": "behavior", "applies": "§13.1: a circuit breaker associated with each channel. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 Each channel SHOULD have an associated circuit breaker to prevent cascading
 failures.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-13.1-002", "kind": "behavior", "applies": "§13.1 Circuit Breaker; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-13.1-004", "kind": "behavior", "applies": "§13.1 circuit breaker, where an implementation keeps one (§13.1 makes it a SHOULD): the states table (its header) and the CLOSED row, in which deliveries proceed. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **States:**
 
 | State | Behavior |
 |---|---|
 | CLOSED | Normal operation — deliveries proceed |
-| OPEN | Fail-fast — deliveries immediately return error |
-| HALF_OPEN | Probe — allow one delivery to test recovery |
+| <!-- /rfc --><!-- rfc: {"id": "RK-13.1-005", "kind": "behavior", "applies": "§13.1 circuit breaker, where an implementation keeps one (§13.1 makes it a SHOULD): the OPEN row, in which a delivery returns an error at once. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->OPEN | Fail-fast — deliveries immediately return error |
+| <!-- /rfc --><!-- rfc: {"id": "RK-13.1-006", "kind": "behavior", "applies": "§13.1 circuit breaker, where an implementation keeps one (§13.1 makes it a SHOULD): the HALF_OPEN row, in which one delivery is let through to test recovery. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->HALF_OPEN | Probe — allow one delivery to test recovery |
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-13.1-003", "kind": "behavior", "applies": "§13.1 Circuit Breaker; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-13.1-007", "kind": "behavior", "applies": "§13.1 circuit breaker, where an implementation keeps one (§13.1 makes it a SHOULD): CLOSED to OPEN after N consecutive delivery failures, N configurable. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Transitions:**
 
-- CLOSED → OPEN: After N consecutive delivery failures (configurable). A
+- CLOSED → OPEN: After N consecutive delivery failures (configurable).<!-- /rfc --> <!-- rfc: {"id": "RK-13.1-008", "kind": "behavior", "applies": "§13.1 circuit breaker, where an implementation keeps one (§13.1 makes it a SHOULD): a delivery refused before any send because its binding names no recipient (§10.2 step 3d) is not one of the failures that open it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
   delivery refused before any send because its binding names no recipient
   (§10.2 step 3d) is not one: it says nothing about the provider, and the
-  breaker is shared by every room on the channel.
-- OPEN → HALF_OPEN: After a configurable cooldown period.
-- HALF_OPEN → CLOSED: Probe delivery succeeds.
+  breaker is shared by every room on the channel.<!-- /rfc --><!-- rfc: {"id": "RK-13.1-009", "kind": "behavior", "applies": "§13.1 circuit breaker, where an implementation keeps one (§13.1 makes it a SHOULD): OPEN to HALF_OPEN after a configurable cooldown. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+- OPEN → HALF_OPEN: After a configurable cooldown period.<!-- /rfc --><!-- rfc: {"id": "RK-13.1-010", "kind": "behavior", "applies": "§13.1 circuit breaker, where an implementation keeps one (§13.1 makes it a SHOULD): HALF_OPEN to CLOSED when the probe delivery succeeds. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+- HALF_OPEN → CLOSED: Probe delivery succeeds.<!-- /rfc --><!-- rfc: {"id": "RK-13.1-011", "kind": "behavior", "applies": "§13.1 circuit breaker, where an implementation keeps one (§13.1 makes it a SHOULD): HALF_OPEN to OPEN when the probe delivery fails. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - HALF_OPEN → OPEN: Probe delivery fails.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-13.1-012", "kind": "behavior", "applies": "§13.1 circuit breaker, where an implementation keeps one (§13.1 makes it a SHOULD): the circuit_breaker_opened framework event when a breaker opens. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 When a circuit breaker opens, implementations MUST emit a `circuit_breaker_opened`
 framework event.
 <!-- /rfc -->
 
 ### 13.2 Retry Policy
 
-<!-- rfc: {"id": "RK-13.2-001", "kind": "behavior", "applies": "§13.2 Retry Policy; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-13.2-002", "kind": "structural", "applies": "§13.2: the RetryPolicy model, its fields and the default of exponential_base (2.0). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 RetryPolicy
 ├── max_retries: int                        # Maximum retry attempts
@@ -17829,56 +17831,64 @@ RetryPolicy
 ├── max_delay_seconds: float                # Maximum delay cap
 └── retryable_errors: list<string> | null   # Exception type names eligible for retry
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-13.2-003", "kind": "behavior", "applies": "§13.2: the delay before each retry of a delivery under a binding's retry policy. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Retry delay formula: `delay = min(base_delay * exponential_base ^ attempt, max_delay)`
+<!-- /rfc -->
 
-Retry policies are configured per-channel-binding. An error that says whether
+<!-- rfc: {"id": "RK-13.2-004", "kind": "behavior", "applies": "§13.2: a retry policy is set on a channel binding. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+Retry policies are configured per-channel-binding.<!-- /rfc --> <!-- rfc: {"id": "RK-13.2-005", "kind": "behavior", "applies": "§13.2: a delivery error that says whether it may be retried (a DeliveryError's retryable, a provider error's own) is believed whatever the policy names, a permanent refusal never replayed with the backoff. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An error that says whether
 it may be retried (a DeliveryError's `retryable`, a provider error's own) is
 believed, whatever the policy names: a permanent refusal is not replayed with
-the full backoff. Another error is retried when `retryable_errors` is null, or
+the full backoff.<!-- /rfc --> <!-- rfc: {"id": "RK-13.2-006", "kind": "behavior", "applies": "§13.2: a delivery error that does not say whether it may be retried, retried when retryable_errors is null or names its type or a type it derives from, otherwise failed on its first attempt. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Another error is retried when `retryable_errors` is null, or
 when the list names its type or a type it derives from; any other error fails
 on its first attempt.
 <!-- /rfc -->
 
 ### 13.3 Rate Limiting
 
-<!-- rfc: {"id": "RK-13.3-001", "kind": "behavior", "applies": "§13.3 Rate Limiting; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-13.3-002", "kind": "structural", "applies": "§13.3: the RateLimit model, three optional bounds, each greater than zero. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 RateLimit
 ├── max_per_second: float | null            # Maximum events per second, > 0
 ├── max_per_minute: float | null            # Maximum events per minute, > 0
 └── max_per_hour: float | null              # Maximum events per hour, > 0
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-13.3-003", "kind": "behavior", "applies": "§13.3: the rate a RateLimit sets, from its first bound set; with none set, no limit. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The rate is the first of `max_per_second`, `max_per_minute` / 60 and
-`max_per_hour` / 3600 that is set; with none set, deliveries are not limited.
+`max_per_hour` / 3600 that is set; with none set, deliveries are not limited.<!-- /rfc --><!-- rfc: {"id": "RK-13.3-004", "kind": "behavior", "applies": "§13.3: a token bucket, and the reference bucket's capacity (one second of the rate, at least one delivery). Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 Implementations SHOULD use a token bucket algorithm; the reference one holds
-one second of the rate, and at least one delivery. When rate-limited by a
+one second of the rate, and at least one delivery.<!-- /rfc --> <!-- rfc: {"id": "RK-13.3-005", "kind": "behavior", "applies": "§13.3: a delivery a binding's rate limit holds back is queued, not dropped; the kit's inbound rate limit refuses a message instead (§10.1 step 1). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->When rate-limited by a
 binding's limit, deliveries MUST be queued (not dropped); the kit's inbound
 rate limit refuses a message instead (§10.1 step 1).
 <!-- /rfc -->
 
 ### 13.4 Idempotency
 
-<!-- rfc: {"id": "RK-13.4-001", "kind": "behavior", "applies": "§13.4 Idempotency; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-13.4-002", "kind": "behavior", "applies": "§13.4: an idempotency key is unique per room and per source channel, so the same key on two channels of one room names two messages; with the sentence on where keys come from. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 An idempotency key is unique per room and per source channel. Keys usually
 come from providers (an SMS message id, an email Message-ID), and two
-channels of one room may carry the same key for two different messages. An
+channels of one room may carry the same key for two different messages.<!-- /rfc --> <!-- rfc: {"id": "RK-13.4-003", "kind": "behavior", "applies": "§13.4: the events that carry a key (an inbound message, a directly injected event, a record committed outside the pipeline); the pipeline clears it on the responses it commits (§8.5) and on the events a hook injects (§9.4). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An
 inbound message, an event injected directly and a record committed outside
 the pipeline (§10.5) are the events that carry a key: the pipeline clears it
-on the responses it commits (§8.5) and on the events a hook injects (§9.4).
+on the responses it commits (§8.5) and on the events a hook injects (§9.4).<!-- /rfc --><!-- rfc: {"id": "RK-13.4-004", "kind": "behavior", "applies": "§13.4: a task's posted result carries the id it was taken under to be posted (Section 19.7.5 rule 19) as its key, so a second commit of it is a replay. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A task's posted result (Section 23.3) carries a key the framework sets: the
 id it was taken under to be posted (Section 19.7.5 rule 19), not the id of
 the message it commits, so a second commit of it, by another process or by
-its holder, is a replay.
-A record committed outside the pipeline is never a replay (§14.3). A
+its holder, is a replay.<!-- /rfc --><!-- rfc: {"id": "RK-13.4-005", "kind": "behavior", "applies": "§13.4: a record committed outside the pipeline is never a replay (§14.3). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+A record committed outside the pipeline is never a replay (§14.3).<!-- /rfc --> <!-- rfc: {"id": "RK-13.4-006", "kind": "behavior", "applies": "§13.4: a proactive delivery's key, the application's, names one publication in the room whatever transport carries it (§22.1), stored in a namespace no message's key enters (§5.2). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
 proactive delivery's key is the
 application's and names one publication in the room, whatever transport
 carries it (§22.1); it is stored in a namespace the pipeline reserves, which
-no message's key enters (§5.2). A blank key, empty or whitespace only, is no
+no message's key enters (§5.2).<!-- /rfc --> <!-- rfc: {"id": "RK-13.4-007", "kind": "behavior", "applies": "§13.4: a blank key (empty or whitespace only) is no key, save at deliver(), which refuses it (§22.1). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A blank key, empty or whitespace only, is no
 key: a message or an event that carries one is processed and stored as one
 that carries none, save at `deliver()`, which refuses it (§22.1).
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-13.4-008", "kind": "behavior", "applies": "§13.4: the replay check of an inbound message or a directly injected event that carries a key, under the room lock and against the same source channel: a replay returns the original result without reprocessing, a new key is processed and recorded. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 If an InboundMessage or a directly injected event carries an
 `idempotency_key`, the framework MUST:
 
@@ -17886,28 +17896,34 @@ If an InboundMessage or a directly injected event carries an
    same source channel with that key.
 2. If it does → return the original result without reprocessing.
 3. If not → process normally and record the key.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-13.4-009", "kind": "behavior", "applies": "§13.4: a directly injected event's key read before the reentry budget (§8.3): its replay is no new pass, draws nothing on the budget and returns the original result even past it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A directly injected event's key is read before anything is drawn on the
 reentry budget (§8.3): its replay is no new pass, draws nothing on the budget
 of the cascade that made it, and returns the original result even past that
-budget. A message past the budget is refused first thing, its key unread,
+budget.<!-- /rfc --> <!-- rfc: {"id": "RK-13.4-010", "kind": "behavior", "applies": "§13.4: a message past the reentry budget refused first thing, its key unread, nothing stored (§10.1 step 1, §9.5.1). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A message past the budget is refused first thing, its key unread,
 nothing stored (§10.1 step 1, §9.5.1 Past the cap).
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-13.4-011", "kind": "behavior", "applies": "§13.4: a key is retained with its event; a hard delete (§10.3) removes it, and a retry of that message is processed anew. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A key is retained with its event: a hard delete (§10.3) removes it with the
 event it named, and a retry of that message is then processed anew.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-13.4-012", "kind": "behavior", "applies": "§13.4: the original result of a replayed message the room delivered, its committed event; with the paragraph on why a replay is not reported as refused. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The point of step 2 is that a sender retries because it never observed the
 first answer, not because it wants the message delivered twice. Reporting the
 redelivery as refused conflates "you already said this" with "this was not
 accepted", and leaves the sender unable to learn the event it committed.
 
 The original result is the result the first delivery produced. A message the
-room delivered returns its committed event. A message the room blocked returns
+room delivered returns its committed event.<!-- /rfc --> <!-- rfc: {"id": "RK-13.4-013", "kind": "behavior", "applies": "§13.4: the original result of a replayed message the room blocked, a blocked result carrying the record stored BLOCKED, its reason the record's blocked_by. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A message the room blocked returns
 a blocked result carrying the record stored `BLOCKED` (§10.1 steps 10, 11),
 with the record's `blocked_by` as its reason: the hook's own reason is not
-stored. A ConversationStore resolves the event from the key it recorded at
+stored.<!-- /rfc --> <!-- rfc: {"id": "RK-13.4-014", "kind": "behavior", "applies": "§13.4: a store resolves a replay's event from the key recorded at commit (get_event_by_idempotency_key, §14.1), the key stored so it can be read back. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->A ConversationStore resolves the event from the key it recorded at
 commit (`get_event_by_idempotency_key`, §14.1); the key SHOULD therefore be
-stored so it can be read back, not merely tested for presence. A store that
+stored so it can be read back, not merely tested for presence.<!-- /rfc --> <!-- rfc: {"id": "RK-13.4-015", "kind": "behavior", "applies": "§13.4: a store that can only answer \"seen\" returning a blocked result carrying the reason instead. Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->A store that
 can only answer "seen" MAY return a blocked result carrying the reason
 instead — a degraded but conforming answer, since the MUST that matters,
 *without reprocessing*, holds either way.
@@ -17915,29 +17931,31 @@ instead — a degraded but conforming answer, since the MUST that matters,
 
 ### 13.5 Room-Level Locking
 
-<!-- rfc: {"id": "RK-13.5-001", "kind": "behavior", "applies": "§13.5 Room-Level Locking; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-13.5-001", "kind": "behavior", "applies": "§13.5: the event processing of a room serialized by a locking mechanism that prevents concurrent processing of events in the same room. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 All event processing within a room MUST be serialized. Implementations MUST
 provide a locking mechanism that prevents concurrent processing of events in
 the same room.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-13.5-002", "kind": "behavior", "applies": "§13.5 Room-Level Locking; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-13.5-006", "kind": "behavior", "applies": "§13.5: the room lock covers the locked pre-commit section, the commit point and broadcast planning (§10.1 steps 6 to 12). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Serialization scope.** The room lock MUST cover the locked pre-commit
 section, the commit point, and broadcast planning (§10.1 steps 6–12):
 everything that reads room state to decide, assigns the index, writes the
-timeline, or resolves the delivery set. A streamed response's rows are the
-exception (§4, §9.5.1): their hooks and their commit run without the lock.
+timeline, or resolves the delivery set.<!-- /rfc --> <!-- rfc: {"id": "RK-13.5-007", "kind": "behavior", "applies": "§13.5: a streamed response's rows, whose hooks and commit run without the room lock (§9.5.1). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A streamed response's rows are the
+exception (§4, §9.5.1): their hooks and their commit run without the lock.<!-- /rfc --><!-- rfc: {"id": "RK-13.5-008", "kind": "behavior", "applies": "§13.5: external delivery execution, not required under the room lock, preserves per-room order (the delivery lane, §10.2). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 External delivery execution (§10.2 step 3) is NOT required to run under the
 room lock — it MUST preserve per-room order
-(the delivery lane, §10.2), which holding the lock trivially satisfies.
+(the delivery lane, §10.2), which holding the lock trivially satisfies.<!-- /rfc --><!-- rfc: {"id": "RK-13.5-009", "kind": "behavior", "applies": "§13.5: no external I/O (provider calls, AI generation) within the room's critical section. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 Implementations SHOULD NOT extend the room's critical section with external
 I/O (provider calls, AI generation): under a distributed lock manager, lock
 tenure is what serializes the whole deployment, and every await spent under
-the lock is paid by every other worker waiting on that room. A
+the lock is paid by every other worker waiting on that room.<!-- /rfc --> <!-- rfc: {"id": "RK-13.5-010", "kind": "behavior", "applies": "§13.5: a BEFORE_BROADCAST hook registered with needs_lock = false runs off the room lock, ordered by the room's admission ticket (§9.5.1). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
 `BEFORE_BROADCAST` check that reads only the event is the hook-side case of
 that I/O: registered with `needs_lock = false`, it runs off the lock, ordered
 by the room's admission ticket instead (§9.5.1).
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-13.5-011", "kind": "structural", "applies": "§13.5: the RoomLockManager interface, acquire(room_id) and release(lock). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 RoomLockManager (interface)
 ├── acquire(room_id) → lock
@@ -17945,105 +17963,109 @@ RoomLockManager (interface)
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-13.5-003", "kind": "behavior", "applies": "§13.5 Room-Level Locking; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-13.5-012", "kind": "behavior", "applies": "§13.5: a failed release of the room lock changes nothing the locked section decided or wrote (a committed event, a refusal, the planned delivery); with the sentence on why a release can fail. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **A release that fails.** `release` can fail: a distributed lock manager can
 lose its connection, or find its lease already expired. A failed release
 MUST NOT change anything the locked section decided or wrote: an event it committed
 stays committed, a refusal it decided stays a refusal, and the delivery it
-planned executes. The operation reports what it did. An inbound result
+planned executes.<!-- /rfc --> <!-- rfc: {"id": "RK-13.5-013", "kind": "behavior", "applies": "§13.5: a failed release reported by its operation, on an inbound result as its error when no earlier error was met, an earlier failure staying the one reported (§10.1). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The operation reports what it did. An inbound result
 carries the failure as its `error` when no earlier error was met (§10.1); a
-failure met before the release stays the one reported. A lifecycle change
+failure met before the release stays the one reported.<!-- /rfc --> <!-- rfc: {"id": "RK-13.5-014", "kind": "behavior", "applies": "§13.5: a lifecycle change, and a direct injection whose result is the committed event (§10.5), log a failed release. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A lifecycle change
 logs it, as does a direct injection, whose result is the committed event
-(§10.5). The cascade goes on. The lock manager owns what a failed release
+(§10.5).<!-- /rfc --> <!-- rfc: {"id": "RK-13.5-015", "kind": "behavior", "applies": "§13.5: the cascade goes on after a failed release. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The cascade goes on.<!-- /rfc --> <!-- rfc: {"id": "RK-13.5-016", "kind": "behavior", "applies": "§13.5: the lock manager owns what a failed release leaves behind, and the next locked section asks it for the lock again. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The lock manager owns what a failed release
 leaves behind, and the next locked section asks it for the lock again.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-13.5-017", "kind": "behavior", "applies": "§13.5: the room lock is reentrant within one execution context (a task and the tasks it awaits as its own). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The room lock MUST be reentrant within one execution context (a task and the
 tasks it awaits as its own): code that holds it may call an operation that
 takes it again, as a host serialising its own changes of a room does (Section
 19.7), and as a tool handler does where an implementation runs delivery under
-the room lock (§10.2). Under delivery lanes a turn holds no lock, and a tool
-handler's call into its room is a new arrival (§9.5.1). A hook's body lends
+the room lock (§10.2).<!-- /rfc --> <!-- rfc: {"id": "RK-13.5-018", "kind": "behavior", "applies": "§13.5: under delivery lanes a turn holds no lock, and a tool handler's call into its room is a new arrival (§9.5.1). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Under delivery lanes a turn holds no lock, and a tool
+handler's call into its room is a new arrival (§9.5.1).<!-- /rfc --> <!-- rfc: {"id": "RK-13.5-019", "kind": "behavior", "applies": "§13.5: a hook's body lends its section's lock only while it runs: a task it spawned takes the lock again while the body runs, and as any later caller once the body has returned (§9.5.1). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A hook's body lends
 the lock its section holds only while the body runs: a task the body spawned,
 awaited or not, takes the lock again while the body runs, and once the body
 has returned it takes it as any later caller does, though the section still
 holds it (§9.5.1).
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-13.5-004", "kind": "behavior", "applies": "§13.5 Room-Level Locking; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-13.5-020", "kind": "behavior", "applies": "§13.5 key spaces: the framework's locks of other kinds than a room's (a delivery claim, a verification lock) never share a key with a room's lock. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Key spaces.** The framework's locks of other kinds than a room's (a room's
 delivery claim, an identity's verification lock, §11.7) never share a key with
-a room's lock, whatever a room id reads. An in-memory lock manager keeps each
-kind in a map of its own, shared by the kits sharing the manager. A manager
+a room's lock, whatever a room id reads.<!-- /rfc --> <!-- rfc: {"id": "RK-13.5-021", "kind": "behavior", "applies": "§13.5 key spaces: an in-memory lock manager keeps each kind of lock in a map of its own, shared by the kits sharing the manager. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An in-memory lock manager keeps each
+kind in a map of its own, shared by the kits sharing the manager.<!-- /rfc --> <!-- rfc: {"id": "RK-13.5-022", "kind": "behavior", "applies": "§13.5 key spaces: a lock manager shared across processes leads the other kinds' keys with a NUL character; a room id holding one is refused by create_room and by the taking of the room lock, with the implementation's value error, before anything is written. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A manager
 shared across processes holds them among its rooms' keys, each led by a NUL
 character; a room id holds no NUL character: `create_room` refuses one, and so
 does the framework's taking of a room's lock, with the implementation's value
 error, before it asks the manager, wherever the id came from (a room written to
-the store straight, a router's answer), so that nothing is written. A room's
+the store straight, a router's answer), so that nothing is written.<!-- /rfc --> <!-- rfc: {"id": "RK-13.5-023", "kind": "behavior", "applies": "§13.5 key spaces: a room's lock keeps the room id, so lock_manager.locked(room_id) holds the lock the framework holds. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A room's
 lock keeps its id: `lock_manager.locked(room_id)` holds the lock the framework
 holds.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-13.5-024", "kind": "non_testable", "applies": "§13.5: a deployment whose persistent store is shared by several processes uses a distributed lock manager or storage-layer atomicity; with the sentences on when an in-memory lock manager suffices. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 For single-process deployments, an in-memory lock manager (per-room async mutex)
 is sufficient. When a persistent store is shared across multiple processes an
 in-memory lock manager is **NOT** sufficient — per-process locks do not
 coordinate, so concurrent writers on the same room can interleave. Such
 deployments MUST either use a distributed lock manager (e.g. Redis or a
 PostgreSQL advisory lock) or rely on storage-layer atomicity for the operations
-that require it (index assignment, §8.1). Implementations SHOULD ship at least
+that require it (index assignment, §8.1).<!-- /rfc --> <!-- rfc: {"id": "RK-13.5-025", "kind": "behavior", "applies": "§13.5: an implementation ships a distributed lock manager, and detects a shared persistent store under an in-memory lock manager, warning or refusing at initialization. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->Implementations SHOULD ship at least
 one distributed lock manager, and SHOULD detect the unsafe combination of a
 shared persistent store with an in-memory lock manager and warn (or refuse) at
 initialization.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-13.5-005", "kind": "behavior", "applies": "§13.5 Room-Level Locking; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-13.5-026", "kind": "behavior", "applies": "§13.5 delivery lanes across processes: a process holds a lane per room it delivers in, which runs only the delivery sets its own process planned. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Delivery lanes across processes.** A process holds a delivery lane per room
 it delivers in, and a lane runs only the delivery sets its own process
-planned, since a plan holds live channels. When several processes share a
+planned, since a plan holds live channels.<!-- /rfc --> <!-- rfc: {"id": "RK-13.5-027", "kind": "behavior", "applies": "§13.5 delivery lanes across processes: the room's delivery cursor, delivered_index (§5.1), the highest index whose delivery set has run, -1 before any. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->When several processes share a
 store, the room's delivery cursor orders them: `delivered_index` (§5.1), the
-highest index whose delivery set has run, `-1` before any. A lane runs the set
+highest index whose delivery set has run, `-1` before any.<!-- /rfc --> <!-- rfc: {"id": "RK-13.5-028", "kind": "behavior", "applies": "§13.5 delivery lanes across processes: a lane runs the set of the index after the cursor, then advances the cursor by one, a compare-and-set in the store (advance_delivered_index, §14.1). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A lane runs the set
 of the index after the cursor, then advances the cursor by one, a
 compare-and-set in the store (`advance_delivered_index`, §14.1) that succeeds
-only from the index before. A cursor write the store fails changes nothing
+only from the index before.<!-- /rfc --> <!-- rfc: {"id": "RK-13.5-029", "kind": "behavior", "applies": "§13.5 delivery lanes across processes: a cursor write the store fails changes nothing the set did, and the lane goes on past that index. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A cursor write the store fails changes nothing
 the set did: it is logged, the set's aftermath runs (§10.1 steps 15 and 16),
 its call is not cancelled, and the lane takes the cursor as past that index,
 so that its own next set runs at once and skips nothing; it writes the cursor
 again, from the index the store holds, one index at a time, when it next
-moves it. Until then another process's lane waits on that index as on any
+moves it.<!-- /rfc --> <!-- rfc: {"id": "RK-13.5-030", "kind": "behavior", "applies": "§13.5 delivery lanes across processes: another process's lane waits on an index whose cursor write failed as on any hole; a store or claim failure after a set ran leaves the set as it ran. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Until then another process's lane waits on that index as on any
 hole, and skips it past `gap_timeout`; a store or claim failure after a set
-ran leaves the set as it ran too. The sets of one room run under its delivery claim,
+ran leaves the set as it ran too.<!-- /rfc --> <!-- rfc: {"id": "RK-13.5-031", "kind": "behavior", "applies": "§13.5 delivery lanes across processes: a room's sets run under its delivery claim, a lock held apart from the room lock, never together with it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The sets of one room run under its delivery claim,
 a lock of the room's lock manager held apart from the room lock, so that one
 event's set completes before the next one's begins across the deployment; a
-lane never holds the claim and the room lock together. Every committed index
+lane never holds the claim and the room lock together.<!-- /rfc --> <!-- rfc: {"id": "RK-13.5-032", "kind": "behavior", "applies": "§13.5 delivery lanes across processes: every committed index reaches the lane of the process that committed it once, an index with no delivery set advancing the cursor and running nothing. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Every committed index
 reaches the lane of the process that committed it once: an index with no
 delivery set (a record stored `BLOCKED`, a lifecycle record, §5.1, a record
 committed outside the pipeline, §10.5) advances the cursor at its turn and
-runs nothing. An instruction's set, which has no index, runs once the cursor
-has reached the latest index committed before it (§10.1.1). When the store
+runs nothing.<!-- /rfc --> <!-- rfc: {"id": "RK-13.5-033", "kind": "behavior", "applies": "§13.5 delivery lanes across processes: an instruction's set runs once the cursor has reached the latest index committed before it (§10.1.1). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An instruction's set, which has no index, runs once the cursor
+has reached the latest index committed before it (§10.1.1).<!-- /rfc --> <!-- rfc: {"id": "RK-13.5-034", "kind": "behavior", "applies": "§13.5 delivery lanes across processes: an instruction's set whose read of the latest index the store fails runs behind its own process's sets under the claim, the failure on its call's error (§10.1.1 rule 5). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->When the store
 fails the read of that latest index, the set runs behind the sets its own
 process placed before it, under the room's delivery claim, waiting for no
 other process's index, and the failure is reported on its call's `error` once
-the set has run (§10.1.1 rule 5). A committed index
+the set has run (§10.1.1 rule 5).<!-- /rfc --> <!-- rfc: {"id": "RK-13.5-035", "kind": "behavior", "applies": "§13.5 delivery lanes across processes: a committed index whose set no lane runs, forced past after gap_timeout (default 30 s) with no lane holding the claim, emitting delivery_skipped. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A committed index
 whose set no lane runs (its process stopped between the commit and the
 delivery) holds the cursor: a lane that has waited on it for `gap_timeout`
 (default 30 s) while no lane held the claim forces the cursor past it and
-emits `delivery_skipped` with the indexes skipped (§8.2). The loss is bounded
+emits `delivery_skipped` with the indexes skipped (§8.2).<!-- /rfc --> <!-- rfc: {"id": "RK-13.5-036", "kind": "behavior", "applies": "§13.5 delivery lanes across processes: a lane that finds its own set skipped drops it; with the clause on the bounded loss. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The loss is bounded
 to what was in flight and observable, and the room never wedges; a lane that
 finds its own set skipped drops it, since running it then would break the
-room's order. The cursor of a room the store no longer holds reads `-1`, and
+room's order.<!-- /rfc --> <!-- rfc: {"id": "RK-13.5-037", "kind": "behavior", "applies": "§13.5 delivery lanes across processes: the cursor of a room the store no longer holds reads -1 and no lane moves or skips it; each set held for that room takes its turn and finds the room gone. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The cursor of a room the store no longer holds reads `-1`, and
 no lane moves or skips it any more: a lane gives every set it holds for that
 room its turn, in its own order, with an index or without, and their runs find
-the room gone (a rerun is refused, §5.1). A room created again under the id of
+the room gone (a rerun is refused, §5.1).<!-- /rfc --> <!-- rfc: {"id": "RK-13.5-038", "kind": "behavior", "applies": "§13.5 delivery lanes across processes: a room created again under the id of a room deleted while its sets ran is another room, whose cursor the deleted room's sets neither move nor skip. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A room created again under the id of
 a room deleted while its sets ran is another room, told apart by its
 `created_at`, which no write changes once the room is created: the deleted
 room's sets are those of a room the store no longer holds, and move or skip
 none of the new room's cursor, unless the room is deleted and created again
-between a lane's read of the room and its write of the cursor. Nor does
+between a lane's read of the room and its write of the cursor.<!-- /rfc --> <!-- rfc: {"id": "RK-13.5-039", "kind": "behavior", "applies": "§13.5 delivery lanes across processes: nothing of a deleted room's sets reaches the room created again: their answers, streamed rows and refused records are refused as in a room gone, as a waiting regeneration is; a stream not yet read is closed unread. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Nor does
 anything of those sets reach the new room: an answer to one, each row its
 stream writes once the room is gone (each refused before its hooks, the first
 included), and the record of an answer or a turn it refuses (§8.3) are
 refused as in a room gone, `room_refused_event` naming no status (§5.1,
 §8.2), as is a regeneration waiting in the deleted room's lane; a stream not
 yet read is instead closed unread, with no `room_refused_event`, and its call
-returns its result with no error (§13.6). Nor are the side effects of a set
+returns its result with no error (§13.6).<!-- /rfc --> <!-- rfc: {"id": "RK-13.5-040", "kind": "behavior", "applies": "§13.5 delivery lanes across processes: the side effects of a set whose room is gone are not written, nor ON_TASK_CREATED fired; a room read the store fails writes them; with the pointer to a durable outbox (§13.6). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Nor are the side effects of a set
 whose room is gone, deleted or created again under its id, written (§10.1
 step 15, a set the lane drops included): the set reads its room before it
 writes them and, finding it gone, writes none, its event's hooks' included,
@@ -18055,60 +18077,60 @@ into recovery is a separate capability (§13.6).
 
 ### 13.6 Processing Timeout
 
-<!-- rfc: {"id": "RK-13.6-001", "kind": "behavior", "applies": "§13.6 Processing Timeout; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-13.6-003", "kind": "behavior", "applies": "§13.6: a configurable process_timeout, whose semantics are defined relative to the commit point (§10.1 step 12). Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 Implementations SHOULD support a configurable `process_timeout`. Its semantics
 are defined **relative to the commit point** (§10.1 step 12) — the atomic
-transaction that stores the event as DELIVERED and updates the room counters:
+transaction that stores the event as DELIVERED and updates the room counters:<!-- /rfc --><!-- rfc: {"id": "RK-13.6-004", "kind": "behavior", "applies": "§13.6 processing timeout, pre-commit phase (§10.1 steps 1 to 11): the phase decides only and writes nothing durable of the inbound event; the BLOCKED record steps 10 and 11 owe is committed after it, outside process_timeout. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 - **Pre-commit phase** (§10.1 steps 1–11: routing, with the identity it
   reads, the router and step 2's waits for the room lock; context build,
   identity resolution, BEFORE_BROADCAST hooks, write-permission check, index
   assignment). This phase decides only and performs no durable write of the
   inbound event: the BLOCKED record that steps 10–11 owe is committed once
-  the phase has ended, outside `process_timeout`, as the step 12 commit is.
+  the phase has ended, outside `process_timeout`, as the step 12 commit is.<!-- /rfc --><!-- rfc: {"id": "RK-13.6-005", "kind": "behavior", "applies": "§13.6 processing timeout, pre-commit phase (§10.1 steps 1 to 11): where an implementation supports process_timeout (§13.6 makes it a SHOULD), process_timeout bounds the phase as one deadline from the call's start to its decision, a hanging router or lock included. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
   `process_timeout` MUST bound this phase, as one deadline from the call's
   start to its decision: a router or a lock that hangs holds the caller no
-  longer than the bound. On expiry the implementation MUST abort **before**
+  longer than the bound.<!-- /rfc --> <!-- rfc: {"id": "RK-13.6-006", "kind": "behavior", "applies": "§13.6 processing timeout, pre-commit phase (§10.1 steps 1 to 11): where an implementation supports process_timeout (§13.6 makes it a SHOULD), on expiry, the call aborts before the commit point with no durable state: the hooks' injected events, tasks and observations are dropped, and the next event takes the index never consumed. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->On expiry the implementation MUST abort **before**
   the commit point, leaving no partial durable state: the injected events,
   tasks and observations of the hooks that ran are dropped with the event,
-  and the room's next event takes the index it never consumed. It returns
+  and the room's next event takes the index it never consumed.<!-- /rfc --> <!-- rfc: {"id": "RK-13.6-007", "kind": "behavior", "applies": "§13.6 processing timeout, pre-commit phase (§10.1 steps 1 to 11): where an implementation supports process_timeout (§13.6 makes it a SHOULD), the result of an expired call, blocked with reason process_timeout; a direct injection raises instead (§10.5). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->It returns
   `InboundResult(blocked=true, reason=process_timeout)` (direct injection,
-  whose result is the committed event, raises instead, §10.5). The event MUST
-  NOT appear in the timeline. A room step 2 creates is completed whatever
+  whose result is the committed event, raises instead, §10.5).<!-- /rfc --> <!-- rfc: {"id": "RK-13.6-008", "kind": "behavior", "applies": "§13.6 processing timeout, pre-commit phase (§10.1 steps 1 to 11): where an implementation supports process_timeout (§13.6 makes it a SHOULD), an expired call's event never appears in the timeline. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The event MUST
+  NOT appear in the timeline.<!-- /rfc --> <!-- rfc: {"id": "RK-13.6-009", "kind": "behavior", "applies": "§13.6 processing timeout, pre-commit phase (§10.1 steps 1 to 11): where an implementation supports process_timeout (§13.6 makes it a SHOULD), a room step 2 creates is completed whatever the deadline and kept when the event times out; step 2's attach or routed-sender record in a room that exists, its deadline bounding only its wait for the room lock. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A room step 2 creates is completed whatever
   the deadline (its creation, its ON_ROOM_CREATED hooks, each within its own
   timeout, and its attach), and stays when the event times out next: it is
   the room's state, not the event's; so is step 2's attach or record of a
   routed sender in a room that exists, whose deadline bounds its wait for
-  the room lock only. A code reply's attempt at step 5b (§11.7.4) is a write
+  the room lock only.<!-- /rfc --> <!-- rfc: {"id": "RK-13.6-010", "kind": "behavior", "applies": "§13.6 processing timeout, pre-commit phase (§10.1 steps 1 to 11): where an implementation supports process_timeout (§13.6 makes it a SHOULD) and provides identity verification (Section 11.7), a code reply's attempt at step 5b and its completion run whatever the deadline, their timeouts their own; step 5b's read and ON_VERIFICATION_REQUIRED hooks keep the deadline. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A code reply's attempt at step 5b (§11.7.4) is a write
   too, made whatever the deadline, and so is what its completion runs, the
   release and its answer (§11.7.6): the call returns `verification_code` once
   they are over (a deferred call, at once, §11.7.6), and a timeout they raise
   is their own failure, never `process_timeout`; step 5b's read of the
   sender's verification and its ON_VERIFICATION_REQUIRED hooks keep the
-  deadline. A hook's own timeout reached before the deadline is the hook's
+  deadline.<!-- /rfc --> <!-- rfc: {"id": "RK-13.6-011", "kind": "behavior", "applies": "§13.6 processing timeout, pre-commit phase (§10.1 steps 1 to 11): where an implementation supports process_timeout (§13.6 makes it a SHOULD), a hook's own timeout reached before the deadline is the hook's (hook_timeout, §9.3); a deadline reached first drops the hook, never reported as its failure. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A hook's own timeout reached before the deadline is the hook's
   (`hook_timeout`, then the fail-open or fail-closed rule of §9.3); a
   deadline reached first is the call's: the hook is dropped, and nothing
-  reports it as the hook's failure.
+  reports it as the hook's failure.<!-- /rfc --><!-- rfc: {"id": "RK-13.6-012", "kind": "behavior", "applies": "§13.6 processing timeout, commit point (§10.1 step 12): where an implementation supports process_timeout (§13.6 makes it a SHOULD), process_timeout never cancels, blocks or re-marks a committed event. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 - **Commit point** (§10.1 step 12). Once the DELIVERED transaction has
   committed, the event is authoritative. `process_timeout` MUST NOT cancel,
-  block, or re-mark it. An implementation MUST NOT wrap the commit and the
+  block, or re-mark it.<!-- /rfc --> <!-- rfc: {"id": "RK-13.6-013", "kind": "behavior", "applies": "§13.6 processing timeout, commit point: where an implementation supports process_timeout (§13.6 makes it a SHOULD), the commit and the broadcast never one cancellable unit whose expiry could report a committed event as blocked or failed. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An implementation MUST NOT wrap the commit and the
   subsequent broadcast in a single cancellable unit whose expiry could leave a
-  committed event reported as blocked/failed.
+  committed event reported as blocked/failed.<!-- /rfc --><!-- rfc: {"id": "RK-13.6-014", "kind": "behavior", "applies": "§13.6 processing timeout, post-commit phase (§10.1 steps 14 to 17): slowness there never invalidates the committed event. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 - **Post-commit phase** (§10.1 steps 14–17: delivery-lane execution,
   reentry passes, side effects, async hooks). Slowness here MUST NOT
-  invalidate the committed event.
+  invalidate the committed event.<!-- /rfc --><!-- rfc: {"id": "RK-13.6-015", "kind": "behavior", "applies": "§13.6 processing timeout, post-commit phase (§10.1 steps 14 to 17): each delivery call is bounded by its transport's or provider's own timeout, the framework adding none; failures are reported per channel by delivery_failed, never by the source event's status or the result. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
   Each external delivery call is bounded by its transport channel's or
   provider's own timeout (the framework adds none around `deliver()` or
   `on_event()`; a turn's heartbeat tells a lost executor from a slow turn,
   §10.6.8), and failures are reported per channel via `delivery_failed`
   framework events — never by changing the source event's status or the
-  returned result to blocked/failed.
+  returned result to blocked/failed.<!-- /rfc --><!-- rfc: {"id": "RK-13.6-016", "kind": "behavior", "applies": "§13.6 processing timeout, post-commit phase (§10.1 steps 14 to 17): a degraded broadcast surfaces as broadcast_partial_failure, the source event staying DELIVERED. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
   A degraded broadcast SHOULD surface as `broadcast_partial_failure`, with the
-  source event remaining DELIVERED. A cascade that a failure stops runs no
+  source event remaining DELIVERED.<!-- /rfc --> <!-- rfc: {"id": "RK-13.6-017", "kind": "behavior", "applies": "§13.6 processing timeout, post-commit phase (§10.1 steps 14 to 17): a cascade a failure stops runs no further pass but delivers every event it committed. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A cascade that a failure stops runs no
   further pass, but still delivers every event it committed, an entry nested
-  under its lock included: an event stored is delivered.
+  under its lock included: an event stored is delivered.<!-- /rfc --><!-- rfc: {"id": "RK-13.6-018", "kind": "behavior", "applies": "§13.6 processing timeout, post-commit phase (§10.1 steps 14 to 17): which failure is the call's error: the first met, only when no earlier error was; a side effect the store fails to write is logged, never the error. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
   A failure of this phase is reported on the caller's result `error`
   (§10.1, InboundResult), the first one met, and only when no earlier error
   was (a failed release of the room lock, §13.5): the first turn of the
@@ -18116,15 +18138,15 @@ transaction that stores the event as DELIVERED and updates the room counters:
   §9.2), a stream the caller reads that raised, and a failure of the
   cascade's own work (a delivery set's execution, a response's commit
   pass); a side effect the store fails to write is logged and never the
-  call's `error` (§10.1 step 15). The result's `event` stays the committed
-  event, or the instruction its pass decided (§10.1.1). The caller of
+  call's `error` (§10.1 step 15).<!-- /rfc --> <!-- rfc: {"id": "RK-13.6-019", "kind": "behavior", "applies": "§13.6 processing timeout, post-commit phase (§10.1 steps 14 to 17): the result's event stays the committed event, or the instruction its pass decided (§10.1.1). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The result's `event` stays the committed
+  event, or the instruction its pass decided (§10.1.1).<!-- /rfc --> <!-- rfc: {"id": "RK-13.6-020", "kind": "behavior", "applies": "§13.6 processing timeout, post-commit phase (§10.1 steps 14 to 17): who reads that error: the caller of process_inbound() on its result or completion handle, and the caller of a regeneration; a direct injection reports none of it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The caller of
   `process_inbound()` reads it on its result, waiting or through the
   completion handle of a detached call (§10.1 step 18), and so does the
   caller of a regeneration; a direct injection, whose result is the
   committed event (§10.5), reports none of it.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-13.6-002", "kind": "behavior", "applies": "§13.6 Processing Timeout; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-13.6-021", "kind": "behavior", "applies": "§13.6, a caller that stops waiting: a decided call's delivery runs whether or not its caller waits, unless the kit's close has started, and a cancellation carried from the caller stops the cascade's turns, never its delivery. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **A caller that stops waiting.** A caller may stop waiting for its call (a
 cancelled task, a client gone, an outer timeout of its own). Once the call is
 decided (its event committed, a `BLOCKED` record included, or its instruction
@@ -18134,36 +18156,40 @@ every event it committed is delivered, unless the kit's close has started
 its placement in an idle lane on, is cut once the close's grace is over), and
 a cancellation the implementation carries from the caller to the call stops
 the cascade's turns, as an explicit cancellation does, never its delivery
-(§10.1). A caller gone before the
+(§10.1).<!-- /rfc --> <!-- rfc: {"id": "RK-13.6-022", "kind": "behavior", "applies": "§13.6, a caller that stops waiting: a caller gone before the decision makes the call expire as a passed process_timeout does, without the process_timeout event, and what it holds is released. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A caller gone before the
 decision makes the call expire as a passed `process_timeout` does, without
 the `process_timeout` framework event, since no deadline passed: nothing more
 of the trigger is written, the injected events, tasks and observations of the
 hooks that ran are dropped with it, and what the call holds (its ticket, the
 room lock) is released, the lock only once a call its locked hook's task
-nested is over or cut at the call's deadline (§9.5.1). Every event already
+nested is over or cut at the call's deadline (§9.5.1).<!-- /rfc --> <!-- rfc: {"id": "RK-13.6-023", "kind": "behavior", "applies": "§13.6, a caller that stops waiting: every event already committed is delivered all the same, the trigger's and an adopted call's, unless the kit's close has started. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Every event already
 committed is delivered all the
 same, unless the kit's close has started (§12.10.4): the trigger's, when a
 commit in flight wrote it, which decides the call, and the event of a call it
-adopted (§9.5.1). A call it adopted that its work waits for and that has not
+adopted (§9.5.1).<!-- /rfc --> <!-- rfc: {"id": "RK-13.6-024", "kind": "behavior", "applies": "§13.6, a caller that stops waiting: an adopted call its work waits for that has not committed ends with that work, nothing of it stored, but for a call its locked hook's task nested (§9.5.1). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A call it adopted that its work waits for and that has not
 committed ends with that work, nothing of it stored, but for a call its locked
-hook's task nested, which goes on as above (§9.5.1). A room step 2 creates is
+hook's task nested, which goes on as above (§9.5.1).<!-- /rfc --> <!-- rfc: {"id": "RK-13.6-025", "kind": "behavior", "applies": "§13.6, a caller that stops waiting: a room step 2 creates is completed whatever becomes of its caller, as are, where an implementation provides identity verification (Section 11.7), a code reply's attempt at step 5b and its completion (§11.7.4). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A room step 2 creates is
 completed whatever becomes of its caller, as it is whatever the deadline, and
 so are a code reply's attempt at step 5b and what its completion runs, the
 release and its answer (§11.7.4).
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-13.6-026", "kind": "behavior", "applies": "§13.6, a regeneration: where an implementation supports process_timeout (§13.6 makes it a SHOULD), process_timeout bounds its wait for the room lock and its choice of the event to replay, never its broadcast. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A regeneration re-broadcasts an event already committed, so it has no commit
 point of its own: `process_timeout` bounds its wait for the room lock and its
 choice of the event to replay, and MUST NOT bound the broadcast, which runs in
-the room's delivery lane off the lock like any post-commit phase (§13.5). On
+the room's delivery lane off the lock like any post-commit phase (§13.5).<!-- /rfc --> <!-- rfc: {"id": "RK-13.6-027", "kind": "behavior", "applies": "§13.6, a regeneration: where an implementation supports process_timeout (§13.6 makes it a SHOULD), on expiry, a blocked result with reason process_timeout and the process_timeout event with operation regenerate. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->On
 expiry it returns `InboundResult(blocked=true, reason=process_timeout)` and
-emits `process_timeout` with `operation = regenerate`. The room's status is
+emits `process_timeout` with `operation = regenerate`.<!-- /rfc --> <!-- rfc: {"id": "RK-13.6-028", "kind": "behavior", "applies": "§13.6, a regeneration: the room's status read again when the lane takes it, a room closed meanwhile refusing it before the agent runs (room_closed, room_refused_event). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The room's status is
 read again when the lane takes the regeneration: a room closed while it waited
 refuses it as at its start (§5.1), before the agent runs, with
 `InboundResult(blocked=true, reason=room_closed)` and `room_refused_event`.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-13.6-029", "kind": "behavior", "applies": "§13.6: an explicit PENDING to COMMITTED or FAILED delivery state with an outbox and the recovery of events left PENDING. Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->
 Implementations MAY additionally model outbound delivery with an explicit
 `PENDING → COMMITTED | FAILED` state and an outbox, plus recovery of events
-left PENDING, so that a crash between commit and delivery is recoverable. Such
+left PENDING, so that a crash between commit and delivery is recoverable.<!-- /rfc --> <!-- rfc: {"id": "RK-13.6-030", "kind": "behavior", "applies": "§13.6, where an implementation offers a delivery outbox: its state applies to the delivery, never to the committed timeline event. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Such
 a state applies to **delivery**, not to the committed timeline event.
 
 <!-- /rfc -->
@@ -24218,7 +24244,7 @@ parts) and avatar synthesis (Section 12) are outside this section.
 
 ### 26.1 Level 0: Core (REQUIRED)
 
-<!-- rfc: {"id": "RK-26.1-001", "kind": "behavior", "applies": "§26.1 Level 0: Core (REQUIRED); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-26.1-003", "kind": "behavior", "applies": "§26.1: what a Level 0 implementation supports, the features listed (each owned by its section) and the hook triggers and framework events the table names for each step or operation; a feature of a higher level, or one no level lists, owes its own section's, only where an implementation provides it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A conforming implementation MUST support:
 
 - Room model with lifecycle (ACTIVE, PAUSED, CLOSED, ARCHIVED), including
@@ -24250,9 +24276,7 @@ A conforming implementation MUST support:
 - Event addressing: `RoomEvent.addressed_to`, honoured when set (Section 19.3)
 - Turn backend with its in-memory implementation and the kit's own executor:
   every turn through its serialized messages (Section 10.6)
-<!-- /rfc -->
 
-<!-- rfc: {"id": "RK-26.1-002", "kind": "behavior", "applies": "§26.1 Level 0: Core (REQUIRED); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Triggers and framework events.** A Level 0 implementation MUST fire each
 hook trigger, and emit each framework event, that the table below names for a
 step or an operation, whenever that step or operation runs. The table is
@@ -24265,29 +24289,31 @@ identity verification (Level 2) ON_VERIFICATION_REQUIRED at step 5b and the
 other triggers of Section 11.7, and an AI channel (Level 1) the triggers of
 its turn (Section 6.4). Section 8.2 says which level or feature owes each
 framework event.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-26.1-004", "kind": "behavior", "applies": "§26.1 Level 0 table of hook triggers and framework events, its header and the row of a room created, by the integrator or at §10.1 step 2: ON_ROOM_CREATED and room_created. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 | Step or operation | Hook triggers | Framework events |
 |---|---|---|
 | A room created, by the integrator or at §10.1 step 2 | ON_ROOM_CREATED | room_created |
-| §10.1 step 2: a room created for a channel other than VOICE and REALTIME_VOICE | ON_SESSION_STARTED | session_started |
-| A channel attached to a room, by the integrator or at §10.1 step 2 | ON_CHANNEL_ATTACHED | room_channel_attached |
-| A channel detached from a room | ON_CHANNEL_DETACHED | room_channel_detached |
-| A channel muted or unmuted in a room (§7.2) | ON_CHANNEL_MUTED, ON_CHANNEL_UNMUTED | — |
-| A channel registered with the framework, or unregistered | — | channel_registered, channel_unregistered |
-| A room transitioned to PAUSED (§5.1) | ON_ROOM_PAUSED | room_paused, when its inactivity timer paused it |
-| A room transitioned to CLOSED | ON_ROOM_CLOSED | room_closed |
-| A room transitioned to ARCHIVED | — | room_archived |
-| An event the room's status refuses (§5.1, §10.1 steps 6 and 9a) | — | room_refused_event |
-| §10.1 steps 5a and 9 | BEFORE_BROADCAST | hook_error |
-| §10.1 steps 10 and 11 | — | event_blocked |
-| §10.1 steps 10, 11 and 15: a task stored | ON_TASK_CREATED | — |
-| §10.2 step 3c: a record the chain depth limit stores (§8.3) | — | chain_depth_exceeded |
-| §10.2 step 3c: a turn that failed or returned an error (§6.1, §10.6.8) | ON_ERROR | — |
-| §10.2 steps 3c and 3d: a target's `on_event()` or `deliver()`; a solicited intelligence channel no longer registered (§10.2 step 3) | — | delivery_succeeded, delivery_failed, broadcast_partial_failure |
-| §10.1 step 16 | AFTER_BROADCAST | — |
-| §10.1 step 17 | — | event_processed |
-| §10.3: an EDIT or a DELETE committed; a direct `update_event()` or `delete_event()` | ON_EVENT_UPDATED, ON_EVENT_DELETED | — |
-| A hook that exceeds its timeout (§9.1) | — | hook_timeout |
+| <!-- /rfc --><!-- rfc: {"id": "RK-26.1-005", "kind": "behavior", "applies": "§26.1 Level 0 table of hook triggers and framework events, the row of a room §10.1 step 2 creates for a channel other than VOICE and REALTIME_VOICE: ON_SESSION_STARTED and session_started. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->§10.1 step 2: a room created for a channel other than VOICE and REALTIME_VOICE | ON_SESSION_STARTED | session_started |
+| <!-- /rfc --><!-- rfc: {"id": "RK-26.1-006", "kind": "behavior", "applies": "§26.1 Level 0 table of hook triggers and framework events, the row of a channel attached, by the integrator or at §10.1 step 2: ON_CHANNEL_ATTACHED and room_channel_attached. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A channel attached to a room, by the integrator or at §10.1 step 2 | ON_CHANNEL_ATTACHED | room_channel_attached |
+| <!-- /rfc --><!-- rfc: {"id": "RK-26.1-007", "kind": "behavior", "applies": "§26.1 Level 0 table of hook triggers and framework events, the row of a channel detached: ON_CHANNEL_DETACHED and room_channel_detached. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A channel detached from a room | ON_CHANNEL_DETACHED | room_channel_detached |
+| <!-- /rfc --><!-- rfc: {"id": "RK-26.1-008", "kind": "behavior", "applies": "§26.1 Level 0 table of hook triggers and framework events, the row of a channel muted or unmuted (§7.2): ON_CHANNEL_MUTED and ON_CHANNEL_UNMUTED. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A channel muted or unmuted in a room (§7.2) | ON_CHANNEL_MUTED, ON_CHANNEL_UNMUTED | — |
+| <!-- /rfc --><!-- rfc: {"id": "RK-26.1-009", "kind": "behavior", "applies": "§26.1 Level 0 table of hook triggers and framework events, the row of a channel registered or unregistered: channel_registered and channel_unregistered. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A channel registered with the framework, or unregistered | — | channel_registered, channel_unregistered |
+| <!-- /rfc --><!-- rfc: {"id": "RK-26.1-010", "kind": "behavior", "applies": "§26.1 Level 0 table of hook triggers and framework events, the row of a room transitioned to PAUSED (§5.1): ON_ROOM_PAUSED, and room_paused when its inactivity timer paused it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A room transitioned to PAUSED (§5.1) | ON_ROOM_PAUSED | room_paused, when its inactivity timer paused it |
+| <!-- /rfc --><!-- rfc: {"id": "RK-26.1-011", "kind": "behavior", "applies": "§26.1 Level 0 table of hook triggers and framework events, the row of a room transitioned to CLOSED: ON_ROOM_CLOSED and room_closed. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A room transitioned to CLOSED | ON_ROOM_CLOSED | room_closed |
+| <!-- /rfc --><!-- rfc: {"id": "RK-26.1-012", "kind": "behavior", "applies": "§26.1 Level 0 table of hook triggers and framework events, the row of a room transitioned to ARCHIVED: room_archived. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A room transitioned to ARCHIVED | — | room_archived |
+| <!-- /rfc --><!-- rfc: {"id": "RK-26.1-013", "kind": "behavior", "applies": "§26.1 Level 0 table of hook triggers and framework events, the row of an event the room's status refuses (§5.1, §10.1 steps 6 and 9a): room_refused_event. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An event the room's status refuses (§5.1, §10.1 steps 6 and 9a) | — | room_refused_event |
+| <!-- /rfc --><!-- rfc: {"id": "RK-26.1-014", "kind": "behavior", "applies": "§26.1 Level 0 table of hook triggers and framework events, the row of §10.1 steps 5a and 9: BEFORE_BROADCAST and hook_error. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->§10.1 steps 5a and 9 | BEFORE_BROADCAST | hook_error |
+| <!-- /rfc --><!-- rfc: {"id": "RK-26.1-015", "kind": "behavior", "applies": "§26.1 Level 0 table of hook triggers and framework events, the row of §10.1 steps 10 and 11: event_blocked. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->§10.1 steps 10 and 11 | — | event_blocked |
+| <!-- /rfc --><!-- rfc: {"id": "RK-26.1-016", "kind": "behavior", "applies": "§26.1 Level 0 table of hook triggers and framework events, the row of a task stored at §10.1 steps 10, 11 and 15: ON_TASK_CREATED. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->§10.1 steps 10, 11 and 15: a task stored | ON_TASK_CREATED | — |
+| <!-- /rfc --><!-- rfc: {"id": "RK-26.1-017", "kind": "behavior", "applies": "§26.1 Level 0 table of hook triggers and framework events, the row of a record the chain depth limit stores at §10.2 step 3c (§8.3): chain_depth_exceeded. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->§10.2 step 3c: a record the chain depth limit stores (§8.3) | — | chain_depth_exceeded |
+| <!-- /rfc --><!-- rfc: {"id": "RK-26.1-018", "kind": "behavior", "applies": "§26.1 Level 0 table of hook triggers and framework events, the row of a turn that failed or returned an error at §10.2 step 3c (§6.1, §10.6.8): ON_ERROR. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->§10.2 step 3c: a turn that failed or returned an error (§6.1, §10.6.8) | ON_ERROR | — |
+| <!-- /rfc --><!-- rfc: {"id": "RK-26.1-019", "kind": "behavior", "applies": "§26.1 Level 0 table of hook triggers and framework events, the row of a target's on_event() or deliver() at §10.2 steps 3c and 3d, and of a solicited intelligence channel no longer registered: delivery_succeeded, delivery_failed and broadcast_partial_failure. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->§10.2 steps 3c and 3d: a target's `on_event()` or `deliver()`; a solicited intelligence channel no longer registered (§10.2 step 3) | — | delivery_succeeded, delivery_failed, broadcast_partial_failure |
+| <!-- /rfc --><!-- rfc: {"id": "RK-26.1-020", "kind": "behavior", "applies": "§26.1 Level 0 table of hook triggers and framework events, the row of §10.1 step 16: AFTER_BROADCAST. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->§10.1 step 16 | AFTER_BROADCAST | — |
+| <!-- /rfc --><!-- rfc: {"id": "RK-26.1-021", "kind": "behavior", "applies": "§26.1 Level 0 table of hook triggers and framework events, the row of §10.1 step 17: event_processed. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->§10.1 step 17 | — | event_processed |
+| <!-- /rfc --><!-- rfc: {"id": "RK-26.1-022", "kind": "behavior", "applies": "§26.1 Level 0 table of hook triggers and framework events, the row of an EDIT or a DELETE committed, or a direct update_event() or delete_event() (§10.3): ON_EVENT_UPDATED and ON_EVENT_DELETED. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->§10.3: an EDIT or a DELETE committed; a direct `update_event()` or `delete_event()` | ON_EVENT_UPDATED, ON_EVENT_DELETED | — |
+| <!-- /rfc --><!-- rfc: {"id": "RK-26.1-023", "kind": "behavior", "applies": "§26.1 Level 0 table of hook triggers and framework events, the row of a hook that exceeds its timeout (§9.1): hook_timeout. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A hook that exceeds its timeout (§9.1) | — | hook_timeout |
 <!-- /rfc -->
 
 ### 26.2 Level 1: Transport (RECOMMENDED)
