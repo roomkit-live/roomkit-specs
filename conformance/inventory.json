@@ -1155,7 +1155,7 @@
     },
     {
       "section": "17.2",
-      "sha256": "32f8dd80e153eea57e3d87384da51d47f77dcf61b32013a5e4b6e335df144d9b",
+      "sha256": "d5b5535a7ef88e5babd9e489c81ab671e787f2e7ad7660147ac3b6819d2f4738",
       "classification": "normative",
       "review": "Source inventory: Multi-Tenant Isolation, split to one obligation per unit (RMK-1984): room operations isolated per organization, the item scoping a room by its organization_id folded in; identity resolution scoped; a child room in its parent room's organization; the door to a room's media and its unscoped call (media); a deleted room's hooks, subscriptions and turns, one unit per sentence, the creation-mark sentence one unit; the unscoped call and the call acting for an organization; every room operation naming its organization, the not-found rule, the locked call checked before due timers, the lockless call read before its first effect; the connection registry that reads no room, one unit per sentence; the calls that name no organization by design, one unit per list item, the lead-in folded into the first, the deprecated media calls (media). All must. Every unit carries its level."
     },
@@ -1179,19 +1179,19 @@
     },
     {
       "section": "17.6",
-      "sha256": "93f9a9ea2112aa3e03d3cb3e6815eb61b8b99599e6e7c3c3a5b07444d30ab4bd",
+      "sha256": "f42c2f61e82d8a76da6d2d61ff1df977b3d8bb4e89bec4f3eaa06498e827950b",
       "classification": "normative",
       "review": "Source inventory: Voice and Audio Security (media), split to one obligation per unit (RMK-1984): recording consent (a consent mechanism, must; ON_RECORDING_STARTED before capture and consent modes, should); audio data handling (encryption at rest, configurable encryption, the settings every recording configuration carries and the recorders that fail closed, must; encrypted transport and the documentation of the providers that receive audio, non_testable should; voice metadata under the room's policies, must); TTS conversation context, one unit per sentence; custom voices; provenance of synthesized audio; DTMF redaction; voice model privacy. Bold lead-ins and descriptive sentences are folded into the unit they introduce; documentation duties and duties only an integrator or a vendor keeps are non_testable. Every unit carries its level."
     },
     {
       "section": "17.7",
-      "sha256": "f58cc71556cd780c16db62483aac4400c924bb630ac0f419c9c23aef4dcbfc0b",
+      "sha256": "c6c53896a8c8a3e36bae5578f36dca2dfa6a1a235f90044efa9126cccd5a174d",
       "classification": "normative",
-      "review": "Source inventory: Conference Access Security (media), split to one obligation per unit (RMK-1984): tokens minted per participant with least privilege, with the lead-in (should); ConferenceGrants' permissive defaults, narrowing RECOMMENDED (should); short-lived tokens never logged (must); moderation operations reachable through integrator code only (non_testable, must); bot disclosure: presence, identity and hidden status observable as in force on the session, active STT, vision or recording observable, ON_CONFERENCE_PARTICIPANT_JOINED for every human participant (must), with the disclosure preamble folded; the integrator's duty across a reported discontinuity (non_testable, must); the documentation of that responsibility, with the closing note (non_testable, should). Every unit carries its level."
+      "review": "Source inventory: Conference Access Security (media), split to one obligation per unit (RMK-1984): tokens minted per participant with least privilege, with the lead-in (should); ConferenceGrants' permissive defaults, narrowing RECOMMENDED to the integrator (must, the implementation's default); short-lived tokens never logged (must); moderation operations reachable through integrator code only (non_testable, must); bot disclosure: presence, identity and hidden status observable as in force on the session, active STT, vision or recording observable, ON_CONFERENCE_PARTICIPANT_JOINED for every human participant (must), with the disclosure preamble folded; the integrator's duty across a reported discontinuity (non_testable, must); the documentation of that responsibility, with the closing note (non_testable, should). Every unit carries its level."
     },
     {
       "section": "17.8",
-      "sha256": "d67b1f9b29f73502cd604540331baf1df65f65f7b7e3dfff42e43a2f74211a00",
+      "sha256": "b6547d9fb437c8f3083295c0e6ec24210637c61f31aa2c25df03e7afaa7fd3dc",
       "classification": "normative",
       "review": "Source inventory: Skill-Bundled Files, split to one obligation per unit (RMK-1984): resolution confined by resolving and checking containment, with the item on the untrusted-input boundary folded; a checked file read through its open file and SKILL.md inside its skill; the same containment for script execution; a served skill as text from outside whatever its digests; its files from its server and its entry alone; its scripts, allowed_tools and code-running tools under the host's approval. All must. Every unit carries its level."
     },

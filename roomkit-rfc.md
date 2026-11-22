@@ -19565,11 +19565,11 @@ should live in the integration surface layer.
   regeneration and a feedback, before any
   hook runs, anything is queued or drawn from a reentry budget, a turn starts
   or is steered, or a room is created; an update or a delete is a no-op that
-  fires nothing, and a task's cancel cancels nothing. <!-- /rfc --><!-- rfc: {"id": "RK-17.2-015", "kind": "behavior", "applies": "§17.2 Multi-Tenant Isolation: a call that takes the room lock checks the room as the lock finds it, before its due timer transitions are applied, writing nothing in it; those transitions fall due all the same, and the room's next own call or its timer check applies them at the instant each fell due (§5.1).", "level": "must"} -->A call that takes the
+  fires nothing, and a task's cancel cancels nothing. <!-- /rfc --><!-- rfc: {"id": "RK-17.2-015", "kind": "behavior", "applies": "§17.2 Multi-Tenant Isolation: a call that takes the room lock checks the room's organization as the lock finds it, before its due timer transitions are applied, so it writes nothing in a room that is not the caller's, those transitions included; they fall due all the same, and the room's next own call or its timer check applies them at the instant each fell due (§5.1).", "level": "must"} -->A call that takes the
   room lock checks the room as the lock finds it, before its due timer
   transitions are applied, so nothing is written in it, those transitions
   included: they fall due all the same, and the room's next own call or the
-  check of its timers applies them at the instant each fell due (§5.1). <!-- /rfc --><!-- rfc: {"id": "RK-17.2-016", "kind": "behavior", "applies": "§17.2 Multi-Tenant Isolation: a call that takes no lock (a delivery, a publication, a steer) reads the room before its first effect; a room's organization never changes while it exists.", "level": "must"} -->A call
+  check of its timers applies them at the instant each fell due (§5.1). <!-- /rfc --><!-- rfc: {"id": "RK-17.2-016", "kind": "behavior", "applies": "§17.2 Multi-Tenant Isolation: a call that takes no lock (a delivery, a publication, a steer) checks the room's organization before its first effect, so it has none in a room that is not the caller's; a room's organization never changes while it exists, so that read holds.", "level": "must"} -->A call
   that takes no lock (a delivery, a publication, a steer) reads the room
   before its first effect; a room's organization never changes while it
   exists, so that read holds.<!-- /rfc --><!-- rfc: {"id": "RK-17.2-017", "kind": "behavior", "applies": "§17.2 Multi-Tenant Isolation: where an implementation offers a transport whose connection registry reads no room (the WebSocket channel, Appendix A.8): each connection held for the organization it was registered for, or for none.", "level": "must"} -->
@@ -19667,8 +19667,8 @@ should live in the integration surface layer.
   12.3.7), the room media recorder (Section 12.11) and conference recording
   (Section 12.10.8) fail closed when neither is set, a recording of video
   alone included; the session video recorder (Section 12.8.10) applies them
-  when they are set.<!-- /rfc --><!-- rfc: {"id": "RK-17.6-015", "kind": "non_testable", "applies": "§17.6 Voice and Audio Security, where an implementation offers voice (media: voice): audio streams in transit over an encrypted transport (TLS, SRTP, DTLS), as the deployment configures its transports.", "level": "should"} -->
-- Audio streams in transit SHOULD use encrypted transport (TLS, SRTP, DTLS).<!-- /rfc --><!-- rfc: {"id": "RK-17.6-016", "kind": "non_testable", "applies": "§17.6 Voice and Audio Security, where an implementation offers voice (media: voice): documentation of the providers that receive audio data, and provider selection configurable for data residency; with the sentence that says STT and TTS calls send audio out.", "level": "should"} -->
+  when they are set.<!-- /rfc --><!-- rfc: {"id": "RK-17.6-015", "kind": "non_testable", "applies": "§17.6 Voice and Audio Security, where an implementation offers voice (media: voice): audio streams in transit carried over an encrypted transport (TLS, SRTP, DTLS); shown by the transports an implementation offers and a deployment uses, not by a scenario.", "level": "should"} -->
+- Audio streams in transit SHOULD use encrypted transport (TLS, SRTP, DTLS).<!-- /rfc --><!-- rfc: {"id": "RK-17.6-016", "kind": "non_testable", "applies": "§17.6 Voice and Audio Security, where an implementation offers voice (media: voice): documentation of the providers that receive audio data, and the integrator's choice of provider configurable for data residency requirements; with the sentence that says STT and TTS calls send audio out.", "level": "should"} -->
 - STT and TTS provider calls transmit audio to external services.
   Implementations SHOULD document which providers receive audio data and
   SHOULD support configurable provider selection based on data residency
@@ -19756,7 +19756,7 @@ should live in the integration surface layer.
 ConferenceAccess tokens are credentials:
 
 - Tokens SHOULD be minted per participant with least-privilege grants
-  (e.g., hidden observers receive subscribe-only grants). <!-- /rfc --><!-- rfc: {"id": "RK-17.7-004", "kind": "structural", "applies": "§17.7 Conference Access Security, where an implementation offers conference (media: conference): ConferenceGrants defaults to permissive values; narrowing them per participant is the integrator's call, RECOMMENDED wherever a role does not publish.", "level": "should"} -->ConferenceGrants
+  (e.g., hidden observers receive subscribe-only grants). <!-- /rfc --><!-- rfc: {"id": "RK-17.7-004", "kind": "structural", "applies": "§17.7 Conference Access Security, where an implementation offers conference (media: conference): ConferenceGrants defaults to permissive values; narrowing them per participant is the integrator's call, RECOMMENDED to the integrator wherever a role does not publish, so the unit's level is the implementation's default's.", "level": "must"} -->ConferenceGrants
   (Section 12.10.2) defaults to permissive values so that the common case
   works unconfigured; narrowing them for a given participant is the
   integrator's call, and is RECOMMENDED wherever a role does not need to
@@ -19811,12 +19811,12 @@ to decide it.
   its name again, and a skill's `SKILL.md` MUST resolve to a regular file
   inside the skill's directory (Section 24.6).<!-- /rfc --><!-- rfc: {"id": "RK-17.8-004", "kind": "behavior", "applies": "§17.8 Skill-Bundled Files: the same containment applied to script execution, including where execution policy is delegated to the integrator.", "level": "must"} -->
 - The same containment MUST apply to script execution, including where
-  execution policy is delegated to the integrator.<!-- /rfc --><!-- rfc: {"id": "RK-17.8-005", "kind": "behavior", "applies": "§17.8 Skill-Bundled Files: where an implementation serves MCP skills (Section 24.7): such a skill is text from outside (Section 6.4) whatever its digests say; a digest the same server supplies proves its content consistent with its entry, never trustworthy.", "level": "must"} -->
+  execution policy is delegated to the integrator.<!-- /rfc --><!-- rfc: {"id": "RK-17.8-005", "kind": "behavior", "applies": "§17.8 Skill-Bundled Files, where an implementation reads skills an MCP server serves (Section 24.7): such a skill is text from outside (Section 6.4) whatever its digests say; a digest the same server supplies proves its content consistent with its entry, never trustworthy.", "level": "must"} -->
 - A skill an MCP server serves is text from outside (Section 6.4) whatever
   its digests say: a digest the same server supplies proves its content
-  consistent with its entry, never trustworthy.<!-- /rfc --><!-- rfc: {"id": "RK-17.8-006", "kind": "behavior", "applies": "§17.8 Skill-Bundled Files: where an implementation serves MCP skills (Section 24.7): such a skill's files are read only from the server that serves it, and only those its entry lists.", "level": "must"} -->
+  consistent with its entry, never trustworthy.<!-- /rfc --><!-- rfc: {"id": "RK-17.8-006", "kind": "behavior", "applies": "§17.8 Skill-Bundled Files, where an implementation reads skills an MCP server serves (Section 24.7): such a skill's files are read only from the server that serves it, and only those its entry lists.", "level": "must"} -->
 - Such a skill's files are read only from the server that serves it, and
-  only those its entry lists. <!-- /rfc --><!-- rfc: {"id": "RK-17.8-007", "kind": "behavior", "applies": "§17.8 Skill-Bundled Files: where an implementation serves MCP skills (Section 24.7): such a skill's scripts never run through run_skill_script, its allowed_tools grants nothing, and while it is active a tool that runs code is served only with the host's approval of that skill (Section 24.7).", "level": "must"} -->Its scripts never run through
+  only those its entry lists. <!-- /rfc --><!-- rfc: {"id": "RK-17.8-007", "kind": "behavior", "applies": "§17.8 Skill-Bundled Files, where an implementation reads skills an MCP server serves (Section 24.7): such a skill's scripts never run through run_skill_script, its allowed_tools grants nothing, and while it is active a tool that runs code is served only with the host's approval of that skill (Section 24.7).", "level": "must"} -->Its scripts never run through
   `run_skill_script`, its `allowed_tools` grants nothing, and while it is
   active a tool that runs code is served only with the host's approval of
   that skill (Section 24.7).

@@ -571,6 +571,16 @@
       "card": "RMK-1986",
       "note": "The deprecated connect_voice(), connect_video() and bind_voice_session(), which name no organization."
     },
+    "RK-17.3-002": {
+      "class": "step",
+      "card": "RMK-1986",
+      "note": "Neither implementation offers configurable redaction or encryption of raw_payload at rest, so no step configures one."
+    },
+    "RK-17.4-001": {
+      "class": "step",
+      "card": "RMK-1986",
+      "note": "Neither implementation offers per-organization rate limits, so no step configures one."
+    },
     "RK-17.6-010": {
       "class": "phase6",
       "card": "RMK-1986",
@@ -689,12 +699,17 @@
     "RK-17.8-002": {
       "class": "step",
       "card": "RMK-1986",
-      "note": "No fixture puts a skill's directory on disk, so no path that resolves outside it can be staged; the in-memory traversal scenarios refuse a name only."
+      "note": "The skills fixture writes each skill to a directory, but no step stages a name that resolves outside it only once resolved (a symlink); the traversal scenarios refuse a parent segment by its name."
     },
     "RK-17.8-003": {
       "class": "step",
       "card": "RMK-1986",
-      "note": "No fixture puts a skill's directory on disk: neither a file swapped after its check nor a SKILL.md that resolves outside its skill can be staged."
+      "note": "No step swaps a skill file between its check and its read, or makes a skill's SKILL.md resolve outside its directory."
+    },
+    "RK-17.8-004": {
+      "class": "step",
+      "card": "RMK-1986",
+      "note": "No step stages a script name that resolves outside its skill only once resolved; the traversal scenarios refuse a parent segment by its name before the integrator's executor runs."
     },
     "RK-19.1-004": {
       "class": "phase6",

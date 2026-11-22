@@ -4798,6 +4798,11 @@
       "hooks/feedback-comes-once-the-on-feedback-hooks-have-ended": "7f5d0e93a03f787d6baa6c22cf8cc8410f12ab725ad9ac7ebe1dfedab97a0515",
       "observations/feedback-is-an-observation-the-hooks-observe": "7f5d0e93a03f787d6baa6c22cf8cc8410f12ab725ad9ac7ebe1dfedab97a0515"
     },
+    "RK-17.1-002": {
+      "inbound/a-composite-of-five-levels-is-taken-and-one-of-six-refused": "b75bb4eeecca342869a3e756ff91cf292a83123d489978a290f2b28373d08321",
+      "injection/a-message-on-the-host-channel-is-refused-before-anything-is-read": "b75bb4eeecca342869a3e756ff91cf292a83123d489978a290f2b28373d08321",
+      "routing/a-message-holding-six-composite-levels-opens-no-room": "b75bb4eeecca342869a3e756ff91cf292a83123d489978a290f2b28373d08321"
+    },
     "RK-17.2-002": {
       "tenancy/another-organization-s-room-is-not-found": "a5d6465c1baa671ad73c40a7e22951e68fe03d99003e86fd29013b4f305a2695",
       "tenancy/routing-stays-within-the-organization": "a5d6465c1baa671ad73c40a7e22951e68fe03d99003e86fd29013b4f305a2695",
@@ -4852,7 +4857,6 @@
     "RK-17.2-011": {
       "greeting/no-room-to-greet": "f79a992dd1e7cf72b8d5dd29dcbadde31691f03e46e398e9e147237f369e53ee",
       "kit-executor/activation-obeys-room-organization": "f79a992dd1e7cf72b8d5dd29dcbadde31691f03e46e398e9e147237f369e53ee",
-      "local-presence/tenant-none": "f79a992dd1e7cf72b8d5dd29dcbadde31691f03e46e398e9e147237f369e53ee",
       "rooms/public-reads-remain-available-in-every-status": "f79a992dd1e7cf72b8d5dd29dcbadde31691f03e46e398e9e147237f369e53ee",
       "tenancy/another-organization-s-room-hooks-stand": "f79a992dd1e7cf72b8d5dd29dcbadde31691f03e46e398e9e147237f369e53ee",
       "verification/a-request-takes-its-room-s-organization": "f79a992dd1e7cf72b8d5dd29dcbadde31691f03e46e398e9e147237f369e53ee"
@@ -4899,6 +4903,8 @@
       "rooms/due-timers-run-before-explicit-transitions": "739f7953e0f3927007284ec52cf5737bb98a76f4b90e9f257bd476870718bc9a",
       "rooms/public-reads-remain-available-in-every-status": "739f7953e0f3927007284ec52cf5737bb98a76f4b90e9f257bd476870718bc9a",
       "rooms/transitions-with-the-owning-organization": "739f7953e0f3927007284ec52cf5737bb98a76f4b90e9f257bd476870718bc9a",
+      "routing/an-explicit-room-bypasses-the-custom-router": "739f7953e0f3927007284ec52cf5737bb98a76f4b90e9f257bd476870718bc9a",
+      "steering/a-steer-reaches-the-room-it-names-alone": "739f7953e0f3927007284ec52cf5737bb98a76f4b90e9f257bd476870718bc9a",
       "store/the-kit-marks-and-reads-a-room-s-markers-for-its-organization": "739f7953e0f3927007284ec52cf5737bb98a76f4b90e9f257bd476870718bc9a",
       "tasks/start-task-runs-an-agent-s-work-in-the-background": "739f7953e0f3927007284ec52cf5737bb98a76f4b90e9f257bd476870718bc9a",
       "tasks/the-kit-cancels-a-background-task-once": "739f7953e0f3927007284ec52cf5737bb98a76f4b90e9f257bd476870718bc9a",
@@ -4940,11 +4946,11 @@
       "verification/a-request-takes-its-room-s-organization": "38f590e479a330c1fa59c0b3545c2ee277d1b9218be8129a74ea2282a1d8dbb9"
     },
     "RK-17.2-015": {
-      "rooms/a-timer-check-scopes-before-applying-due-transitions": "8a63613bd6481cfa22fdc147c456cb32f599aa1121b38792b7d3e73b6b5fee10",
-      "rooms/transitions-scope-before-due-timers": "8a63613bd6481cfa22fdc147c456cb32f599aa1121b38792b7d3e73b6b5fee10"
+      "rooms/a-timer-check-scopes-before-applying-due-transitions": "486c87ebafd7269cd05255203c952532e515e51d3fc582392df0d1ffc19d4ca1",
+      "rooms/transitions-scope-before-due-timers": "486c87ebafd7269cd05255203c952532e515e51d3fc582392df0d1ffc19d4ca1"
     },
     "RK-17.2-016": {
-      "delivery/a-delivery-for-another-organization-finds-no-room": "8bcc2d96f72edde99d28ab7172084b373ef7b8d09a71a6f7eef751d9f8e45f6a"
+      "delivery/a-delivery-for-another-organization-finds-no-room": "8e9b04fde80c8efce562a62496977465d8804e074591694115824f69daa1166d"
     },
     "RK-17.2-024": {
       "input-request/organization-scope-stream": "df2db821bc2d7f335e5ca92333909175f696345bf534dd89ff621ce6a808d507",
@@ -4959,7 +4965,10 @@
     },
     "RK-17.5-001": {
       "appendix-b/b4-agent-chain": "e68d2d1a4e9aac41d130aca0975125c64858a59023e3c540aa8dbe57cde9e3c5",
-      "chain/a-post-continues-the-chain-it-names": "e68d2d1a4e9aac41d130aca0975125c64858a59023e3c540aa8dbe57cde9e3c5"
+      "chain/a-post-continues-the-chain-it-names": "e68d2d1a4e9aac41d130aca0975125c64858a59023e3c540aa8dbe57cde9e3c5",
+      "discussion/the-depth-limit-stops-a-turn-once-and-a-person-resumes-it": "e68d2d1a4e9aac41d130aca0975125c64858a59023e3c540aa8dbe57cde9e3c5",
+      "host/a-chain-of-turns-sending-through-their-host-stops-at-the-depth-limit": "e68d2d1a4e9aac41d130aca0975125c64858a59023e3c540aa8dbe57cde9e3c5",
+      "tasks/a-delegation-cycle-ends-at-max-chain-depth": "e68d2d1a4e9aac41d130aca0975125c64858a59023e3c540aa8dbe57cde9e3c5"
     },
     "RK-17.6-008": {
       "recording/a-recorder-joins-the-live-feed-after-consent": "2aded13f970c310016fedc75996906a0148140cf53a5e850a7f7de54a671de7f"
@@ -4970,26 +4979,22 @@
     "RK-17.7-009": {
       "conference/a-call-reports-presence-without-changing-room-membership": "ea7e6d0bec934386da126546e983715647ac19849b3075ed688483b31ae4f580"
     },
-    "RK-17.8-004": {
-      "skill-scripts/traversal-non-streaming": "79fdd538d08da69da7d48efd11ecdc1f7b329eb15caa7126ea2a0898efdec9cb",
-      "skill-scripts/traversal-streaming": "79fdd538d08da69da7d48efd11ecdc1f7b329eb15caa7126ea2a0898efdec9cb"
-    },
     "RK-17.8-005": {
-      "served-skills/text-activation-keeps-server-content-apart": "5a9fb39deb978e010ac7375b3a7ea52bccdad00347f158cc03c273abcb6f848b",
-      "served-skills/text-reference-carries-its-origin": "5a9fb39deb978e010ac7375b3a7ea52bccdad00347f158cc03c273abcb6f848b",
-      "served-skills/text-repeated-activation-acknowledges-server-content": "5a9fb39deb978e010ac7375b3a7ea52bccdad00347f158cc03c273abcb6f848b"
+      "served-skills/text-activation-keeps-server-content-apart": "de81010b701c8aa7ee868097e30940133fc05409d315ac00d084c374f7d81c63",
+      "served-skills/text-reference-carries-its-origin": "de81010b701c8aa7ee868097e30940133fc05409d315ac00d084c374f7d81c63",
+      "served-skills/text-repeated-activation-acknowledges-server-content": "de81010b701c8aa7ee868097e30940133fc05409d315ac00d084c374f7d81c63"
     },
     "RK-17.8-006": {
-      "served-skills/text-reference-carries-its-origin": "f4258bc4e488e17503a24c772fce3135af178b3c0a50b0d9c27d84658fb11795",
-      "served-skills/verified-files-and-shared-cache": "f4258bc4e488e17503a24c772fce3135af178b3c0a50b0d9c27d84658fb11795"
+      "served-skills/text-reference-carries-its-origin": "4180dd5b7fcd7189886023f23743b5db3a5d5f3f61dae3934d9cfb67dfd48e04",
+      "served-skills/verified-files-and-shared-cache": "4180dd5b7fcd7189886023f23743b5db3a5d5f3f61dae3934d9cfb67dfd48e04"
     },
     "RK-17.8-007": {
-      "served-skills/execution-absent-approval": "0c11c87633cd1352c699fb36372db02f6b358fe93ca5d4a7fc5d1a5b1b6d856f",
-      "served-skills/execution-approved-approval": "0c11c87633cd1352c699fb36372db02f6b358fe93ca5d4a7fc5d1a5b1b6d856f",
-      "served-skills/execution-failed-approval": "0c11c87633cd1352c699fb36372db02f6b358fe93ca5d4a7fc5d1a5b1b6d856f",
-      "served-skills/execution-refused-approval": "0c11c87633cd1352c699fb36372db02f6b358fe93ca5d4a7fc5d1a5b1b6d856f",
-      "served-skills/listing-reads-no-content-or-tool-grant": "0c11c87633cd1352c699fb36372db02f6b358fe93ca5d4a7fc5d1a5b1b6d856f",
-      "served-skills/verified-files-and-shared-cache": "0c11c87633cd1352c699fb36372db02f6b358fe93ca5d4a7fc5d1a5b1b6d856f"
+      "served-skills/execution-absent-approval": "8b22521e392f91d52b8221b8f58394912bf3c008031b4eff2d057977c0c91fbf",
+      "served-skills/execution-approved-approval": "8b22521e392f91d52b8221b8f58394912bf3c008031b4eff2d057977c0c91fbf",
+      "served-skills/execution-failed-approval": "8b22521e392f91d52b8221b8f58394912bf3c008031b4eff2d057977c0c91fbf",
+      "served-skills/execution-refused-approval": "8b22521e392f91d52b8221b8f58394912bf3c008031b4eff2d057977c0c91fbf",
+      "served-skills/listing-reads-no-content-or-tool-grant": "8b22521e392f91d52b8221b8f58394912bf3c008031b4eff2d057977c0c91fbf",
+      "served-skills/verified-files-and-shared-cache": "8b22521e392f91d52b8221b8f58394912bf3c008031b4eff2d057977c0c91fbf"
     },
     "RK-19.1-003": {
       "orchestration/an-agent-s-turn-prompt-ends-with-its-identity": "08c0adf0888830c833b83db7a45546853257829a2e4d660b13f82b4889dc112b"
