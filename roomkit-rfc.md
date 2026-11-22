@@ -2028,16 +2028,16 @@ platform allows belongs to the implementation's documentation.
 
 ### 6.4 Intelligence Channels
 
-<!-- rfc: {"id": "RK-6.4-001", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-6.4-045", "kind": "structural", "applies": "§6.4 Intelligence channels: the on_event() entry every intelligence channel implements. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Intelligence channels process events and produce responses or insights. They
-MUST implement `on_event()`. They do NOT deliver to external systems — the
-framework routes their output through the normal event pipeline. Each call of
+MUST implement `on_event()`. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-046", "kind": "behavior", "applies": "§6.4 Intelligence channels: their output, routed through the normal event pipeline and delivered to no external system by the channel. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->They do NOT deliver to external systems — the
+framework routes their output through the normal event pipeline. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-047", "kind": "behavior", "applies": "§6.4 Intelligence channels: each call of on_event() as a turn run through the turn backend by a turn executor (§10.6), in the owner's process or another. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Each call of
 an intelligence channel's `on_event()` is a turn, run through the turn backend
 by a turn executor (Section 10.6), which may live in another process than the
 room's owner.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.4-002", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-6.4-002", "kind": "behavior", "applies": "§6.4 AI channel: the outline of what on_event() does, each step carried by its own contract below, in Section 6.7 and in Appendix A.9. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **AI Channel:**
 
 An AI channel wraps an AI Provider (see Section 6.7). When `on_event()` is called:
@@ -2050,7 +2050,7 @@ An AI channel wraps an AI Provider (see Section 6.7). When `on_event()` is calle
 5. Return ChannelOutput with a response stream (Appendix A.9).
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.4-003", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-6.4-048", "kind": "behavior", "applies": "§6.4 Anatomy of an AI turn: a table of pointers naming the section whose contract carries each step of a turn; it obliges nothing of its own. Enclosing capability conditions and §26 levels still apply."} -->
 **Anatomy of an AI turn.** Each step of a turn has its own contract; no stage
 abstraction sits on top of them:
 
@@ -2064,79 +2064,83 @@ abstraction sits on top of them:
 | Generation and tool calls | The provider's structured stream and the one tool loop (below, Section 6.7); `BEFORE_TOOL_USE`, `ON_TOOL_CALL`, `AFTER_TOOL_ROUND` (Section 9.3) |
 | What goes out | `BEFORE_BROADCAST` on each stored segment of a streamed response (Section 9.5) |
 | Observing the turn | `ON_AI_RESPONSE` (Section 9.2) |
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.4-049", "kind": "behavior", "applies": "§6.4 AI channel: a streamed segment once delivered, which no check of the whole answer takes back. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A check of the whole answer before anything is sent is only possible on a
 turn that is not streamed: a streamed segment, once delivered, is not taken
 back.
+<!-- /rfc -->
 
-The AI channel MUST skip events originating from itself to prevent infinite loops.
+<!-- rfc: {"id": "RK-6.4-050", "kind": "behavior", "applies": "§6.4 AI channel: an event originating from the channel itself. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+The AI channel MUST skip events originating from itself to prevent infinite loops.<!-- /rfc --><!-- rfc: {"id": "RK-6.4-051", "kind": "behavior", "applies": "§6.4 AI channel: the event types that open a turn (MESSAGE, INSTRUCTION), and an event of any other type, whatever strategy takes the agent's turns (§19.7). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 It takes a turn on a MESSAGE or an INSTRUCTION only. An event of any other
 type (a SYSTEM notice, a REACTION, a PARTICIPANT_JOINED, a tool-call row)
 opens no turn, whatever strategy takes the agent's turns (Section 19.7): it
 is submitted to no speak policy, is not handed to a running turn, and goes to
 the agent's memory as any event the channel is given, a tool-call row aside.
 An application that wants an agent to react to a notice sends it an
-instruction (Section 10.1.1). An edit or a delete opens no turn either
+instruction (Section 10.1.1). <!-- /rfc --><!-- rfc: {"id": "RK-6.4-052", "kind": "behavior", "applies": "§6.4 AI channel: an edit or a delete (§10.3). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An edit or a delete opens no turn either
 (Section 10.3).
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.4-004", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-6.4-004", "kind": "behavior", "applies": "§6.4 AI channel, capability-aware generation: the target transport channel's capabilities, handed to the model at generation time. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Capability-aware generation:** The framework MUST provide the target transport
 channel's capabilities to the AI at generation time, NOT post-process the output.
 This allows the AI to tailor its response (e.g., short text for SMS, rich for Email).
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.4-005", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-6.4-053", "kind": "behavior", "applies": "§6.4 AI channel, answer text events (TEXT_DELTA) where an implementation offers them: off by default, published only when the host turns them on. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Answer text events:** `AIChannel` MAY project the text of its answer onto
 the realtime bus as `TEXT_DELTA` while it is written, and does so only when
 the host turns it on: it is off by default. It serves the code that delegated
 a task (§23.3), whose agent's text, collected for its result, reaches no
-transport: the live pipe to transports (§10.2) reaches only bound ones. Turned
+transport: the live pipe to transports (§10.2) reaches only bound ones. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-054", "kind": "behavior", "applies": "§6.4 AI channel, answer text events turned on: the coalescing window and each event's fields. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Turned
 on, the channel publishes the text coalesced on a window (a time and a size),
 each event carrying `text`, `round` (the model round the text belongs to) and
-`channel_id`. A round's buffered text MUST be published before that round's
+`channel_id`. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-055", "kind": "behavior", "applies": "§6.4 AI channel, answer text events turned on: a round's buffered text against that round's tool-call events and its end. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A round's buffered text MUST be published before that round's
 tool-call events and at its end, so an observer reads text and calls in the
 order they came; joined in order, a turn's `TEXT_DELTA` texts are its answer's
 text, every round's, where a delegated task's result holds the last segment
-only. `BEFORE_BROADCAST` (§9.5) judges the message a room stores, never this
+only. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-056", "kind": "behavior", "applies": "§6.4 AI channel, answer text events turned on: the turns whose TEXT_DELTA the owner publishes, a delegated task's trace only, which BEFORE_BROADCAST does not judge. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`BEFORE_BROADCAST` (§9.5) judges the message a room stores, never this
 stream. The owner MUST therefore publish a turn's `TEXT_DELTA` only when the
 turn's reader commits its rows as a delegated task's trace, without crossing
-`BEFORE_BROADCAST` (§23.3 step 5). It drops every other turn's (an answer in a
+`BEFORE_BROADCAST` (§23.3 step 5). <!-- /rfc --><!-- rfc: {"id": "RK-6.4-057", "kind": "behavior", "applies": "§6.4 AI channel, answer text events turned on: every other turn's TEXT_DELTA, one published after its turn, and an executor outside a turn. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->It drops every other turn's (an answer in a
 room, in a child room a transport is shared into, or to another channel's
 message in a child room) and one published after its turn; an executor
-publishes none outside a turn. The reader says so before its first read, so
+publishes none outside a turn. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-058", "kind": "behavior", "applies": "§6.4 AI channel, answer text events turned on: when the reader says its turn is a delegated trace, and what a subscriber then reads (§10.6.4). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The reader says so before its first read, so
 before any of the turn's text is produced (§10.6.4). A subscriber thus reads
 no answer text a hook judges, only the trace's; a delegation cut short may
 store less of it than was published, the text its executor read ahead of the
-reader (§10.6.4). Like every ephemeral of a turn, it also reaches no one the
+reader (§10.6.4). <!-- /rfc --><!-- rfc: {"id": "RK-6.4-059", "kind": "behavior", "applies": "§6.4 AI channel, answer text events turned on: their audience (§8.4) and their persistence. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Like every ephemeral of a turn, it also reaches no one the
 answer would not reach (§8.4), and it is never persisted: the trace's stored
-messages remain the answer. Turned off, the channel publishes no `TEXT_DELTA`,
+messages remain the answer. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-060", "kind": "behavior", "applies": "§6.4 AI channel, answer text events turned off. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Turned off, the channel publishes no `TEXT_DELTA`,
 and its window has no effect.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.4-006", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-6.4-061", "kind": "behavior", "applies": "§6.4 Tool-call composition events: a provider whose structured stream exposes tool-call argument fragments. Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->
 **Tool-call composition events:** A provider whose structured stream exposes
 tool-call argument fragments MAY yield `StreamToolCallDelta` before the complete
-`StreamToolCall`. `AIChannel` SHOULD project those fragments onto the realtime bus
+`StreamToolCall`. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-062", "kind": "behavior", "applies": "§6.4 Tool-call composition events: the TOOL_CALL_DELTA frames AIChannel projects (a SHOULD) and the argument content they never carry. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`AIChannel` SHOULD project those fragments onto the realtime bus
 as `TOOL_CALL_DELTA`, carrying the call id, name and cumulative argument character
-count, but MUST NOT carry the argument content. Each composition attempt that
+count, but MUST NOT carry the argument content. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-063", "kind": "behavior", "applies": "§6.4 Tool-call composition events: a composition attempt that published a non-terminal frame. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Each composition attempt that
 published a non-terminal frame MUST publish one terminal frame with an empty
-`tool_calls` list before that attempt ends. This includes successful completion,
+`tool_calls` list before that attempt ends. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-064", "kind": "behavior", "applies": "§6.4 Tool-call composition events: each way an attempt ends, retry and fallback included, and the counts across attempts. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->This includes successful completion,
 cancellation, provider failure, retry and fallback: a retry closes the abandoned
 attempt before the replacement attempt starts, so cumulative counts MUST NOT span
-two attempts. The complete `StreamToolCall` remains the unit of execution and
-persistence; composition events are ephemeral and MUST NOT be persisted.
+two attempts. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-065", "kind": "behavior", "applies": "§6.4 Tool-call composition events: what is executed and persisted, and composition events. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The complete `StreamToolCall` remains the unit of execution and
+persistence; composition events are ephemeral and MUST NOT be persisted.<!-- /rfc --><!-- rfc: {"id": "RK-6.4-066", "kind": "behavior", "applies": "§6.4 Tool-call events: the status the ephemeral TOOL_CALL_END carries. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The ephemeral `TOOL_CALL_END` MUST carry each call's `status`, `completed` or
 `failed`, as the stored `TOOL_CALL_END` does: a call refused, failed, blocked,
 served by nothing or cancelled ends `failed`, so a live surface does not read
-the outcome out of the result preview. The stored `TOOL_CALL_END` also carries
+the outcome out of the result preview. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-067", "kind": "behavior", "applies": "§6.4 Tool-call events: the outcome the stored TOOL_CALL_END carries (§9.3). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The stored `TOOL_CALL_END` also carries
 the call's `outcome`, the way it ended as the channel determined it (Section
-9.3): `served`, `refused`, `failed`, `blocked`, `unserved` or `cancelled`. A
+9.3): `served`, `refused`, `failed`, `blocked`, `unserved` or `cancelled`. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-068", "kind": "behavior", "applies": "§6.4 Tool-call events: a reader that rebuilds earlier turns' tool calls from the store, an AI channel's history among them. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
 reader that rebuilds what earlier turns did from the store, as an AI
 channel's history does with its earlier tool calls (Section 6.4), reads that
 outcome rather than inferring it from the body: it keeps the calls the live
 tool memory keeps (served, failed, blocked; never a refusal, a call nothing
-served or one cancelled). A row stored without it is read by its `status`.
+served or one cancelled). <!-- /rfc --><!-- rfc: {"id": "RK-6.4-069", "kind": "behavior", "applies": "§6.4 Tool-call events: a stored TOOL_CALL_END with no outcome, read back from the store. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A row stored without it is read by its `status`.<!-- /rfc --><!-- rfc: {"id": "RK-6.4-070", "kind": "behavior", "applies": "§6.4 Tool-call events: the ephemeral tool-call events of a call that has an intent (A call's intent, below, names TOOL_CALL_START and TOOL_CALL_END). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Both ephemeral events carry a call's `intent` beside its id when it has one
 (A call's intent, below).
 <!-- /rfc -->
@@ -2162,77 +2166,81 @@ calls' text (§8.4). A turn whose owner is lost
 (§10.6.8) publishes nothing more: no owner is left to publish it.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.4-007", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-6.4-071", "kind": "behavior", "applies": "§6.4 Reasoning: a provider whose reasoning comes in blocks, each with its own signature, and what it hands the loop. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **What a provider hands the loop of its reasoning (normative).** A provider
 whose reasoning comes in blocks, each with its own signature, hands
 the loop every block as it received it, each `StreamThinkingDelta` naming its
 `block`: an `AIThinkingPart` carries the block's `thinking` and `signature`,
-or, for a block the vendor redacted, its opaque `redacted` data. Such a vendor
+or, for a block the vendor redacted, its opaque `redacted` data. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-072", "kind": "behavior", "applies": "§6.4 Reasoning: the tool loop's replay of a round's signed blocks. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Such a vendor
 wants the blocks back as it sent them (it refuses a round whose blocks changed
 in number, and a block without its signature), so the tool loop replays a
 round's blocks one by one, in the order and at the place they came in relative
-to the round's calls and stretches of text. A block the response cut before
+to the round's calls and stretches of text. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-073", "kind": "behavior", "applies": "§6.4 Reasoning: a block cut before its signature, or without one. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A block the response cut before
 its signature is not replayed, nor is a block without one at all: that is
 another vendor's reasoning, a round a provider a router hands a generation
 to (below) receives from the provider before it, which the vendor refuses and
-the round does without. A vendor that refuses, in the current turn, a call
+the round does without. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-074", "kind": "behavior", "applies": "§6.4 Reasoning: a vendor that refuses, in the current turn, a call without its own signature, and an earlier turn's round. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A vendor that refuses, in the current turn, a call
 without its own signature receives such a round of
 that turn, none of whose calls carries one, as text: what it said, each call,
 then each result with the images it carries, the one form it takes for calls
 it did not make. An earlier turn's round, which it does not check, keeps its
-form. A provider whose reasoning has no blocks hands
-one block per round, replayed first. Two readers cannot know where blocks
+form. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-075", "kind": "behavior", "applies": "§6.4 Reasoning: a provider whose reasoning has no blocks. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A provider whose reasoning has no blocks hands
+one block per round, replayed first. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-076", "kind": "behavior", "applies": "§6.4 Reasoning: a caller of generate() and a turn under a response schema, which cannot know where blocks came. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Two readers cannot know where blocks
 came, and replay them first, then the text, then the calls: a caller of
 `generate()`, since a response does not say where its blocks came, and a turn
 under a response schema, whose text is held until it is checked.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.4-077", "kind": "behavior", "applies": "§6.4 Reasoning: where a provider renders a replayed round's reasoning. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A provider MUST render a replayed round's reasoning where its vendor reads it,
 and nowhere else: in the field the vendor reads it in, on the rounds and the
-answers it reads it on. A vendor that refuses a round of the turn in progress
+answers it reads it on. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-078", "kind": "behavior", "applies": "§6.4 Reasoning: a vendor that refuses a tool-calling round of the turn in progress without its reasoning field. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A vendor that refuses a round of the turn in progress
 that called tools without its reasoning field (save, for one, a round whose
 call ids it issued itself a moment ago) receives that field on every round
 that called tools, and an answer's reasoning in it too: a round with no
 reasoning, as every round of an earlier turn is, carries the field empty, or a
 single space where an empty one reads as missing (a gateway's code may read it
-so). A vendor that reads its reasoning back without refusing a round that
+so). <!-- /rfc --><!-- rfc: {"id": "RK-6.4-079", "kind": "behavior", "applies": "§6.4 Reasoning: a vendor that reads its reasoning back without refusing a round that lacks it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A vendor that reads its reasoning back without refusing a round that
 lacks it receives the field on a round or an answer that reasoned, and nothing
-on one that did not. The configuration of a provider for generic Chat
+on one that did not. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-080", "kind": "behavior", "applies": "§6.4 Reasoning: a provider for generic Chat Completions servers whose configuration names the field a server reads (thinking_field), the integrator's choice. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The configuration of a provider for generic Chat
 Completions servers MAY name the field a server reads (`thinking_field`), for a
 server whose documentation asks for its reasoning back: a round or an answer
-that reasoned then carries it there, and one that did not carries nothing. A provider cannot tell whether a server takes the field, and strict
+that reasoned then carries it there, and one that did not carries nothing. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-081", "kind": "behavior", "applies": "§6.4 Reasoning: a provider for generic Chat Completions servers whose configuration names no field. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A provider cannot tell whether a server takes the field, and strict
 servers refuse one they do not know, so nothing is sent unless it is named; a
 provider that already sends reasoning where its vendor reads it takes no such
-option. A Chat Completions request to any other server
+option. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-082", "kind": "behavior", "applies": "§6.4 Reasoning: a Chat Completions request to a server no provider or configuration renders reasoning for. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A Chat Completions request to any other server
 carries no reasoning, in no form: a `<think>` block in a message's text is read
-as words the model said, and a server's prompt cache does not survive it. A
+as words the model said, and a server's prompt cache does not survive it. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-083", "kind": "behavior", "applies": "§6.4 Reasoning: a round or an answer whose reasoning the request does not carry and that said nothing else. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
 round that only reasoned and called goes back with no text, and an answer that
-only reasoned with an empty one. Only the request loses it: the round keeps its
+only reasoned with an empty one. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-084", "kind": "behavior", "applies": "§6.4 Reasoning: a round whose reasoning the request does not carry, as hooks and stream readers read it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Only the request loses it: the round keeps its
 reasoning for what reads a round (a `BEFORE_AI_GENERATION` hook, a reader of the
 stream), and the reasoning block that opens a model's output is still read out
 of its text (Section 6.7).
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.4-085", "kind": "behavior", "applies": "§6.4 Reasoning: the rendering the provider an integrator builds gives, behind a custom base URL too. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The vendor's rendering is the integrator's choice, made by the provider it
 builds, and it holds behind a custom base URL: a vendor's weights served by a
 generic server get their reasoning back through that vendor's provider, given
 that server's URL, or through a generic provider whose configuration names the
-field, and none through a generic provider that does not. Whatever the provider, the reasoning goes back for as long as its turn lasts,
+field, and none through a generic provider that does not. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-086", "kind": "behavior", "applies": "§6.4 Reasoning: how long a round's reasoning goes back, whatever the provider. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Whatever the provider, the reasoning goes back for as long as its turn lasts,
 and a later turn reads none.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.4-008", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-6.4-087", "kind": "behavior", "applies": "§6.4 Provider calls: a call a provider hands the loop, streamed or not. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **What a provider hands the loop for a call (normative).** Every provider,
-streamed or not, hands the loop the same thing for the same call. Each call of
+streamed or not, hands the loop the same thing for the same call. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-088", "kind": "behavior", "applies": "§6.4 Provider calls: a call's id within its response, minted by the provider when the server issues none or the same one twice. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Each call of
 a response carries an id no other call of that response carries: a provider
 whose server issues none, or the same one twice, MUST mint one, since results,
-eviction and cancellation all find a call by its id. Two calls stay two calls,
+eviction and cancellation all find a call by its id. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-089", "kind": "behavior", "applies": "§6.4 Provider calls: two calls, a re-emission and an identical later copy. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Two calls stay two calls,
 whatever stream index or arguments they share; a call the provider receives
 twice (a re-emission carrying what the first lacked) stays one, and only a
 call the wire cannot tell from such a re-emission (an identical call
 in a later chunk, one copy or both without an id) is folded into the first,
-which keeps what either copy carries (its id, its thought signature). A call's
+which keeps what either copy carries (its id, its thought signature). <!-- /rfc --><!-- rfc: {"id": "RK-6.4-090", "kind": "behavior", "applies": "§6.4 Provider calls: a call's arguments as the loop receives them. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A call's
 arguments reach the loop as a mapping and never as an error: no arguments
 (nothing, or JSON `null`) are `{}`, and arguments that do not parse to an
-object (invalid JSON, an array, a fragment) are kept whole under `raw`. A
+object (invalid JSON, an array, a fragment) are kept whole under `raw`. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-091", "kind": "behavior", "applies": "§6.4 Provider calls: the stop reasons that mark a response cut short, read alike by every provider. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
 response is cut short when it ran out of room (the output cap, or the context
 window filling up mid-answer), when a content filter or a refusal stopped it,
 or when its stream ended without a stop reason, under any provider's word for
@@ -2240,29 +2248,29 @@ each (`length`, `max_tokens`, `MAX_TOKENS`, `model_context_window_exceeded`,
 `model_length`, `content_filter`, `refusal`, and `error` where it ends a
 generation that failed):
 every provider reads one such set,
-so none runs a call another provider refuses. Only the last call of a response
+so none runs a call another provider refuses. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-092", "kind": "behavior", "applies": "§6.4 Provider calls: the calls of a response cut short that are not its last. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Only the last call of a response
 can be cut: a call another call followed was closed by it, and runs when its
-arguments read, the response cut over its successor or not. Under a response
+arguments read, the response cut over its successor or not. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-093", "kind": "behavior", "applies": "§6.4 Provider calls: the last call of a response cut short, and the argument text that shows it whole. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Under a response
 cut short, only argument text that arrived and reads shows the last call's
 arguments whole: a call with no argument text yet, or known only through a parse
 of what arrived (a vendor SDK reads a fragment leniently), does not read either.
 Nothing under a cut is no evidence of no arguments (a vendor may send no stop
-for the block it cuts, often before its first argument chunk). Such a call
+for the block it cuts, often before its first argument chunk). <!-- /rfc --><!-- rfc: {"id": "RK-6.4-094", "kind": "behavior", "applies": "§6.4 Provider calls: a call marked partial, which no tool loop runs (an AI channel's or a reasoning backend's; the sentence also binds a realtime channel, Section 12.4). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Such a call
 is marked partial, whatever the provider and whatever stop reason the response
 gave, and a tool loop, the AI channel's or a reasoning backend's,
 MUST NOT run it, nor may a realtime channel, whose provider hands such
 arguments as the model's text rather than a mapping (Section 12.4): no tool
-does anything useful with `raw`. A realtime provider applies the same rule
+does anything useful with `raw`. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-095", "kind": "behavior", "applies": "§6.4 Provider calls, realtime (media feature realtime): a realtime provider whose wire tells a cut, and one whose wire does not. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A realtime provider applies the same rule
 where its wire tells a cut: a call whose item the response cut (an item whose
 status says it is incomplete, whether the output cap or a cancel ended the
 response) runs only when its argument text arrived and
 reads, and is otherwise handed on marked cut, so the model reads that its
 call was cut off; such a provider hands a call on once its item says whether
 it was cut (a wire may say that a call's arguments are done before it gives
-the item's status). A provider whose wire carries no sign of a cut reads none. The model reads that nothing
+the item's status). A provider whose wire carries no sign of a cut reads none. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-096", "kind": "behavior", "applies": "§6.4 Provider calls: what the model reads of a call that did not run, cut or unreadable. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The model reads that nothing
 ran, and why: its call was cut when the response was cut short, so it can
 call again, with less if the response ran out of room; its arguments could
-not be read otherwise, so it can call again with valid ones. A response the provider ended
+not be read otherwise, so it can call again with valid ones. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-097", "kind": "behavior", "applies": "§6.4 Provider calls: a response the provider ended because it could not parse or would not take the model's call, within the bound of an empty round. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A response the provider ended
 because it could not parse the model's call, or would not take it (a call to
 a tool the request did not enable), carries
 no call at all: the tool loop MUST tell
@@ -2270,126 +2278,130 @@ the model that its call did not run and why (its call could not be read, or
 the tool is not in the request: calling it again would end the same way),
 within the bound it gives an empty
 round, on any round and whatever text the round said, and a turn whose bound
-runs out ends cut short (`empty_response`), never `completed`. A round that ran
+runs out ends cut short (`empty_response`), never `completed`. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-098", "kind": "behavior", "applies": "§6.4 Provider calls: a round that ran out of room before any answer after a tool round. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A round that ran
 out of room before any answer after a tool round ends the turn `truncated`
 and is not tried again, since the same room runs out again: the output cap
 and the context window alike, read by the same rule as a response schema's
 `truncated` (Section 6.7).
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.4-009", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-6.4-099", "kind": "behavior", "applies": "§6.4 Call intents: the option an implementation may offer to ask the model for a sentence with each call. Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->
 **A call's intent (normative).** An AI channel MAY ask its model to write,
 with each call, one short sentence for the person saying what the call does,
 so that a surface can show the agent's work ("Je recherche les fichiers texte
-du projet.") rather than a tool's name and raw arguments. The option is the
+du projet.") rather than a tool's name and raw arguments. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-100", "kind": "behavior", "applies": "§6.4 Call intents where an implementation offers them: the agent's option (tool_call_intents), off by default, and an agent with it off. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The option is the
 agent's (`tool_call_intents`), off by default; off, nothing below applies and
 schemas, arguments, events and rows are the same as without it. On:
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.4-101", "kind": "behavior", "applies": "§6.4 Call intents on: the property each tool schema of a request is shown with. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - **What the model is shown.** Each tool schema a request declares carries
   one optional string property more, `_roomkit_intent`, which asks for that
-  sentence in the language of the conversation. It is added to the request's
+  sentence in the language of the conversation. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-102", "kind": "behavior", "applies": "§6.4 Call intents on: the request's copy of a schema and the tool's own schema. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->It is added to the request's
   copy only: the tools' own schemas, which a call's arguments are checked
   against, a hook reads and a turn reports as declared, stay as their tools
-  declared them. A schema that already declares `_roomkit_intent`, or is no
-  object schema, is shown as it is, and the implementation logs it. With the
+  declared them. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-103", "kind": "behavior", "applies": "§6.4 Call intents on: a schema that already declares _roomkit_intent, or is no object schema. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A schema that already declares `_roomkit_intent`, or is no
+  object schema, is shown as it is, and the implementation logs it. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-104", "kind": "behavior", "applies": "§6.4 Call intents on, with tool_call_intents_required on: the shown schema's required list. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->With the
   agent's `tool_call_intents_required` on (off by default), the property is
   listed in the shown schema's `required` too, for a model that leaves
   optional properties out; a schema whose `required` is no list is shown as
-  it is. The requirement asks the model and refuses no call: a call that
-  comes without the property runs, with no intent. The agent's
+  it is. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-105", "kind": "behavior", "applies": "§6.4 Call intents on, with tool_call_intents_required on: a call that comes without the property. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The requirement asks the model and refuses no call: a call that
+  comes without the property runs, with no intent. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-106", "kind": "behavior", "applies": "§6.4 Call intents on, with tool_call_intents_only: the tools whose schemas carry the property. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The agent's
   `tool_call_intents_only`, a list of tool names (absent by default, which
   asks every tool), limits the property to the tools it names: the others'
   schemas are shown as their tools declared them, and a host renders those
-  calls from their arguments. The list limits what is shown, not what is read:
-  a call to any tool is treated as below.
+  calls from their arguments. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-107", "kind": "behavior", "applies": "§6.4 Call intents on, with tool_call_intents_only: a call to a tool the list does not name. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The list limits what is shown, not what is read:
+  a call to any tool is treated as below.<!-- /rfc --><!-- rfc: {"id": "RK-6.4-108", "kind": "behavior", "applies": "§6.4 Call intents on: where the loop takes the property out of a served call's arguments. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - **Where it is taken.** At the one point a complete call enters the loop,
   before its start row, its `TOOL_CALL_START` and its gate, the property is
   removed from the arguments of a call the loop serves, whatever its value,
-  and its value becomes the call's `intent`. A tool whose own schema declares
+  and its value becomes the call's `intent`. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-109", "kind": "behavior", "applies": "§6.4 Call intents on: a tool whose own schema declares the property, and a call marked partial. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A tool whose own schema declares
   the property keeps it as its argument and its call has no intent; a call
-  whose arguments do not read (marked partial) is left as it is. So the
+  whose arguments do not read (marked partial) is left as it is. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-110", "kind": "behavior", "applies": "§6.4 Call intents on: the arguments the handler, BEFORE_TOOL_USE, the policy and the schema check see. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->So the
   handler, `BEFORE_TOOL_USE`, the policy and the schema check see the tool's
   arguments only, and a closed schema (`additionalProperties: false`) does
-  not refuse the call over the property. A model that drops the property's
+  not refuse the call over the property. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-111", "kind": "behavior", "applies": "§6.4 Call intents on: roomkit_intent, the property written without its leading underscore. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A model that drops the property's
   leading underscore writes `roomkit_intent`: it is taken the same way, and
   removed with the property when both come, the property's value being the
   intent, unless the tool's own schema declares `roomkit_intent`, which then
-  stays its argument.
+  stays its argument.<!-- /rfc --><!-- rfc: {"id": "RK-6.4-112", "kind": "behavior", "applies": "§6.4 Call intents on: the value that makes an intent, and its normalization. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - **What it becomes.** Only a string is an intent. Each control character
   (general category Cc) becomes a space, the bidirectional formatting
   characters (U+061C, U+200E, U+200F, U+202A to U+202E, U+2066 to U+2069) are
   removed, each run of white space (Unicode White_Space) becomes one space,
   and the text is trimmed, cut at 200 characters (Unicode scalar values) and
   trimmed again. Absent, null, not a string or empty after this, the call has
-  no intent. An intent never fails a call, never changes its outcome, and is
-  never interpreted as markup or code.
+  no intent. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-113", "kind": "behavior", "applies": "§6.4 Call intents on: what an intent never does to its call. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An intent never fails a call, never changes its outcome, and is
+  never interpreted as markup or code.<!-- /rfc --><!-- rfc: {"id": "RK-6.4-114", "kind": "behavior", "applies": "§6.4 Call intents on: where an intent rides, and a call without one. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - **Where it rides.** On the call, on every report of it (`BEFORE_TOOL_USE`,
   `ON_TOOL_CALL`, a refusal, a cut call, Section 9.3), on the ephemeral
   `TOOL_CALL_START` and `TOOL_CALL_END` beside each call's id, on both stored
   rows (`ToolCallContent.intent`, Section 5.3) and on a turn's stream items
   across processes (Section 10.6.4); each carries it only when the call has
   one: a payload, a row or a frame of a call without one has no `intent`
-  key, and a reader takes a row with no `intent` key as a call without one.
-  Calls under one id in one round keep their own (Section 12.4).
+  key, and a reader takes a row with no `intent` key as a call without one.<!-- /rfc --><!-- rfc: {"id": "RK-6.4-115", "kind": "behavior", "applies": "§6.4 Call intents on: calls under one id in one round. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+  Calls under one id in one round keep their own (Section 12.4).<!-- /rfc --><!-- rfc: {"id": "RK-6.4-116", "kind": "behavior", "applies": "§6.4 Call intents: what the model reads back of a call's intent, with the option on and off. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - **What the model reads back.** A replay shows the model its call with its
   intent, as normalized, back in `_roomkit_intent` among its arguments (a
   value that made no intent is not replayed), in the turn's next rounds and
   in later turns (The tools of earlier turns, below) while the option is
-  on; off, a later turn replays the arguments alone. A
-  `BEFORE_TOOL_USE` rewrite never reaches the model's history, as without it.
+  on; off, a later turn replays the arguments alone. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-117", "kind": "behavior", "applies": "§6.4 Call intents on: a BEFORE_TOOL_USE rewrite and the model's history. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
+  `BEFORE_TOOL_USE` rewrite never reaches the model's history, as without it.<!-- /rfc --><!-- rfc: {"id": "RK-6.4-118", "kind": "behavior", "applies": "§6.4 Call intents on: what an intent grants, what an approval shows of the call, and the call's states and outcomes. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - **What it is not.** Display text the model wrote: it grants nothing, it is
   not what an approval shows of the call (its arguments are), and it says
-  nothing of what the call did; states and outcomes stay the engine's. A hook
-  cannot change it.
+  nothing of what the call did; states and outcomes stay the engine's. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-119", "kind": "behavior", "applies": "§6.4 Call intents on: a hook and a call's intent. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A hook
+  cannot change it.<!-- /rfc --><!-- rfc: {"id": "RK-6.4-120", "kind": "behavior", "applies": "§6.4 Call intents: the calls they do not apply to, an external agent's (ACP) and a provider-served call's (the sentence also names a realtime session's own calls, Section 12.4). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - **Where it does not apply.** A realtime session's own calls (Section
   12.4), an external agent's calls (Section 6.4, ACP) and the calls a
   provider serves itself carry no intent: their schemas are not the
-  channel's to show. An agent with the option that a realtime session
+  channel's to show. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-121", "kind": "behavior", "applies": "§6.4 Call intents, realtime (media feature realtime): an agent with the option that a realtime session delegates to (Section 12.4.1). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An agent with the option that a realtime session
   delegates to takes the property out of its calls' arguments in its own
   loop, but its calls are reported through the session's door, whose
   reports carry no intent (Section 12.4.1).
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.4-010", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-6.4-122", "kind": "behavior", "applies": "§6.4 Continuation policy, the integrator's choice: what the policy is given and answers. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **An answer that did not act.** An AI channel MAY carry a continuation policy:
 given the text a round ended on, the instruction that makes the model go on, or
 nothing when the answer stands (a host's recognizer of an announced action, "I
-will check that", say). The loop consults it only for a round that ended
+will check that", say). <!-- /rfc --><!-- rfc: {"id": "RK-6.4-123", "kind": "behavior", "applies": "§6.4 Continuation policy: the rounds the loop consults it on. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The loop consults it only for a round that ended
 naturally, with text and without a call: not cut short (Section 6.4 above), not
 a call it could not parse, not a refusal, and with a tool declared, since going
-on means acting. Every provider's word for a natural stop counts alike (`stop`,
+on means acting. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-124", "kind": "behavior", "applies": "§6.4 Continuation policy: the stop reasons that count as a natural stop, read alike by every provider. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Every provider's word for a natural stop counts alike (`stop`,
 `end_turn`, `stop_sequence`, `STOP`), and only those: a truncation, a filter, a
-refusal or a stream that ended without saying why is never one. The policy shares the bound of an empty round, and the loop keeps
+refusal or a stream that ended without saying why is never one. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-125", "kind": "behavior", "applies": "§6.4 Continuation policy: its bound, shared with an empty round's, and the loop's guards. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The policy shares the bound of an empty round, and the loop keeps
 its guards: no continuation after a cancellation or a force-stop, nor past the
-turn's deadline or budget. A continuation hands the next round the text as the
+turn's deadline or budget. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-126", "kind": "behavior", "applies": "§6.4 Continuation policy: what a continuation hands the next round, and the round's segment already sent. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A continuation hands the next round the text as the
 assistant's message, then the instruction as the user's; the text already
-reached the room as the round's segment and is neither repeated nor withdrawn.
+reached the room as the round's segment and is neither repeated nor withdrawn.<!-- /rfc --><!-- rfc: {"id": "RK-6.4-127", "kind": "behavior", "applies": "§6.4 AI channel: a round the loop tries again (an empty one, one whose call could not be parsed, one the policy continues) and its segment. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Any round the loop tries again (an empty one, one whose call could not be
 parsed, one the policy continues) ends its segment there, as a call's start
-does, so the next round's text never runs on from it. A segment whose text is
+does, so the next round's text never runs on from it. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-128", "kind": "behavior", "applies": "§6.4 AI channel: a streamed response segment whose text is blank, empty or whitespace only. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A segment whose text is
 blank, empty or whitespace only (a reasoning model's line break before its
 call), says nothing: no row is stored, no channel is delivered it, a channel
 that buffers the stream reads it as no text, and `ON_AI_RESPONSE`'s segments
 leave it out; the stream's reader still reads its deltas, and the record it
-would have carried goes to the turn's last message, else its last row. A turn
+would have carried goes to the turn's last message, else its last row. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-129", "kind": "behavior", "applies": "§6.4 Continuation policy: a turn whose policy still asks once the bound has run out. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A turn
 whose policy still asks once the bound has run out ends `unfinished`, never
 `completed`: the loop reaches its end (its end marker, `ON_AI_RESPONSE`), and
 running out of the bound never raises out of the loop.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.4-011", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-6.4-130", "kind": "behavior", "applies": "§6.4 Speak policy, the integrator's choice: the events the channel would answer, each decided speak, offer or silent. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Whether the agent speaks.** An AI channel MAY carry a speak policy, which
 decides on every event the channel would answer whether the agent speaks now,
 offers to, or stays silent: an agent in a conversation with several people, or
-listening to one who thinks aloud, does not answer every turn. An instruction
+listening to one who thinks aloud, does not answer every turn. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-131", "kind": "behavior", "applies": "§6.4 Speak policy: an instruction (§10.1.1), a delegated task's hand-back among them. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An instruction
 (Section 10.1.1), a delegated task's hand-back (Section 23.3) among them, is not
-submitted to it: the application asked for that turn. The channel consults the
+submitted to it: the application asked for that turn. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-132", "kind": "behavior", "applies": "§6.4 Speak policy: when the channel consults it in a turn. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The channel consults the
 policy once per event, after building the turn's context and before
-`BEFORE_AI_GENERATION`. The recent events a policy reads are those the channel
+`BEFORE_AI_GENERATION`. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-133", "kind": "behavior", "applies": "§6.4 Speak policy: the recent events a policy reads, and an event withheld from the channel at delivery (§7.5 rule 8). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The recent events a policy reads are those the channel
 may know, as its context has them (Section 7.5 rule 8): a policy may hand them
 to a classifier outside, and an event withheld from the channel at delivery
 MUST NOT reach it that way.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.4-134", "kind": "structural", "applies": "§6.4 Speak policy: the SpeakPolicy interface, the SpeakTurn it decides and the SpeakDecision it returns. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 SpeakPolicy (interface)
 ├── decide(turn: SpeakTurn) → SpeakDecision
@@ -2412,57 +2424,67 @@ SpeakDecision
 ├── notes: list<string> = []            # Blocks the turn's notes carry when the agent speaks or offers
 └── final: bool = false                 # A silence the agent's thought will not change (below); only on `silent`
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.4-135", "kind": "behavior", "applies": "§6.4 Speak policy: a speak decision. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - `speak` runs the turn as without a policy; the decision's notes join the
-  turn's notes (below) before `BEFORE_AI_GENERATION`, which sees them.
+  turn's notes (below) before `BEFORE_AI_GENERATION`, which sees them.<!-- /rfc --><!-- rfc: {"id": "RK-6.4-136", "kind": "behavior", "applies": "§6.4 Speak policy: an offer decision. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - `offer` runs the turn with one more block: offer, in one short sentence, what
-  the agent could add, without giving it.
+  the agent could add, without giving it.<!-- /rfc --><!-- rfc: {"id": "RK-6.4-137", "kind": "behavior", "applies": "§6.4 Speak policy: a silent decision and the turn it does not run. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - `silent` runs no turn: no generation, `BEFORE_AI_GENERATION` does not fire,
-  nothing is delivered and no answer names the event (Section 8.5). The event
+  nothing is delivered and no answer names the event (Section 8.5). <!-- /rfc --><!-- rfc: {"id": "RK-6.4-138", "kind": "behavior", "applies": "§6.4 Speak policy: the event of a silent decision, as the room stores it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The event
   is stored as any event is: the conversation is the agent's memory whether it
   spoke or not.
+<!-- /rfc -->
 
-The channel bounds the wait for a decision (2 s by default). A policy that
+<!-- rfc: {"id": "RK-6.4-139", "kind": "behavior", "applies": "§6.4 Speak policy: the bound on the wait for a decision. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+The channel bounds the wait for a decision (2 s by default). <!-- /rfc --><!-- rfc: {"id": "RK-6.4-140", "kind": "behavior", "applies": "§6.4 Speak policy: a policy that fails or does not decide in time. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A policy that
 fails or does not decide in time does not silence the agent: the channel logs
 it and runs the turn as without a policy, and the decision it reports is
-`speak` with the reason `fallback`. Every decision fires `ON_SPEAK_DECISION`
+`speak` with the reason `fallback`. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-141", "kind": "behavior", "applies": "§6.4 Speak policy: ON_SPEAK_DECISION and what it carries for every decision. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Every decision fires `ON_SPEAK_DECISION`
 with the event, the channel and the decision, how long the policy took to
 decide (the bound, when it did not decide in time), whether it was asked
 again once the agent thought, the thought it was decided with and whether the
 decision is late (below), so that what an agent left unanswered, why, and what
-deciding cost can be followed and measured without wrapping the policy. A
+deciding cost can be followed and measured without wrapping the policy. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-142", "kind": "behavior", "applies": "§6.4 Speak policy: a channel without a policy, and a policy that always speaks. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
 channel without a policy answers every message and instruction but an edit
 or a delete, which opens no turn and is submitted to no policy (Section
 10.3), and decides nothing; a policy that always speaks reports each
-decision, a baseline to measure another against. A turn the
+decision, a baseline to measure another against. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-143", "kind": "behavior", "applies": "§6.4 Speak policy: a turn the channel's strategy takes in a room (§19.7), and a discussion's turn in answer to a message (§19.7.5). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A turn the
 channel's strategy takes in a room (Section 19.7) is not submitted to it
 either, save a turn a discussion gives in answer to a message (Section
 19.7.5): that one is the agent's own answer to the room, and is submitted to
-it. The agent's identity is the policy's own: a policy that judges whether
+it. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-144", "kind": "behavior", "applies": "§6.4 Speak policy: the agent's identity, which the policy holds from when it is made. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The agent's identity is the policy's own: a policy that judges whether
 the agent was addressed is told its name when it is made.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.4-145", "kind": "behavior", "applies": "§6.4 Speak policy: the decision the SYNC hooks of ON_SPEAK_DECISION leave, MODIFY and BLOCK. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The channel acts on the decision its `ON_SPEAK_DECISION` hooks leave, as on
 any SYNC trigger's payload (Section 9.3). Its SYNC hooks run in order before
 the channel acts: a MODIFY replaces the decision with the one its payload
 carries, and a BLOCK leaves the agent silent, with the reason `blocked by
-<hook>` (`hook_error:<hook>` for the failure of a fail-closed hook). Only the
+<hook>` (`hook_error:<hook>` for the failure of a fail-closed hook). <!-- /rfc --><!-- rfc: {"id": "RK-6.4-146", "kind": "behavior", "applies": "§6.4 Speak policy: what the channel reads off a MODIFY's payload. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Only the
 decision is read off a MODIFY's payload: the event decided on, the room and
-the channel stay the channel's. Its ASYNC hooks then observe the decision that
-stands. An application so takes in code an action the decision calls for,
+the channel stay the channel's. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-147", "kind": "behavior", "applies": "§6.4 Speak policy: the ASYNC hooks of ON_SPEAK_DECISION. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Its ASYNC hooks then observe the decision that
+stands. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-148", "kind": "behavior", "applies": "§6.4 Speak policy: an offer a hook takes as a raised hand, and the turn's notes once the agent is given the floor. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An application so takes in code an action the decision calls for,
 rather than leaving it to the model: an offer becomes a raised hand and a
 silence, and once the agent is given the floor its turn's notes say what it
-raised its hand for. The trigger is fail-open: a hook that fails changes
+raised its hand for. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-149", "kind": "behavior", "applies": "§6.4 Speak policy: a hook of ON_SPEAK_DECISION that fails, and a room whose hook context cannot be built. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The trigger is fail-open: a hook that fails changes
 nothing, and a room whose hook context cannot be built keeps the policy's
 decision, unless a hook registered there fails closed, which leaves the agent
-silent as that hook's own failure would. A silence a hook leaves is thought
+silent as that hook's own failure would. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-150", "kind": "behavior", "applies": "§6.4 Speak policy: a silence a hook leaves, and the thinker. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A silence a hook leaves is thought
 about as any other (rule 1 below).
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.4-151", "kind": "behavior", "applies": "§6.4 Speak policy: the people a SpeakTurn names. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The people are those who take part besides the agent (*Who takes part*,
 below), or, when more, the distinct speakers named in the recent events: one
-microphone is one participant but may carry several diarized voices. A
+microphone is one participant but may carry several diarized voices. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-152", "kind": "behavior", "applies": "§6.4 Speak policy: how a speaker is named in a SpeakTurn. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
 speaker is named as the turn's context names speakers: the name the sender's
 transport stamped on the event, else the participant's display name.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.4-153", "kind": "behavior", "applies": "§6.4 Classifier speak policy, where RoomKit provides it (Section 6.8): its one call and its composition, in order. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 RoomKit provides a policy built on a classifier (Section 6.8). It asks narrow
 questions about the turn, in one call, over the turn's text, the recent turns
 named by speaker (the agent's own under its name) and the people, and composes
@@ -2475,36 +2497,40 @@ the answers in code, in this order:
    something tentatively, or asked anything when one person talks with it;
 4. offer when the speaker only wonders whether the agent could help;
 5. silent otherwise.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.4-154", "kind": "behavior", "applies": "§6.4 Classifier speak policy: what its questions count as a speaker who has not finished. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A speaker has not finished when the turn ends cut off or says they are not
 done: a hesitation inside a turn whose last sentence is complete, or saying
-one does not know, is no unfinished turn. A turn about the agent said to
+one does not know, is no unfinished turn. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-155", "kind": "behavior", "applies": "§6.4 Classifier speak policy: what its questions count as addressing the agent. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A turn about the agent said to
 someone else, or asking someone else to tell or explain something to it, does
-not address it: that person speaks next. Asking the agent whether it is ready
+not address it: that person speaks next. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-156", "kind": "behavior", "applies": "§6.4 Classifier speak policy: what its questions count as a request for quiet. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Asking the agent whether it is ready
 to listen expects an answer, and is no request for quiet.
+<!-- /rfc -->
 
-Each judgment is reported with the decision. Its questions can be replaced by
-name, and its composition by an implementation of its own. Told the languages
+<!-- rfc: {"id": "RK-6.4-157", "kind": "behavior", "applies": "§6.4 Classifier speak policy: the judgments reported with its decision. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+Each judgment is reported with the decision. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-158", "kind": "behavior", "applies": "§6.4 Classifier speak policy: its questions and its composition, replaceable. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Its questions can be replaced by
+name, and its composition by an implementation of its own. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-159", "kind": "behavior", "applies": "§6.4 Classifier speak policy told the languages the agent answers in. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Told the languages
 the agent answers in, it also judges the language the speaker speaks, over
 their recent turns, so that one misheard word does not switch it, and its
-decision's notes say which language to answer in. A classifier that fails
+decision's notes say which language to answer in. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-160", "kind": "behavior", "applies": "§6.4 Classifier speak policy: a classifier that fails. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A classifier that fails
 falls back as any policy does: the agent speaks, unless the room listens
 (below).
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.4-012", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-6.4-161", "kind": "behavior", "applies": "§6.4 Classifier speak policy: a request to stay quiet as a state of the room, kept per room in memory, and the channel's forget_room on a room it joins or leaves. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Staying quiet when asked.** A request to stay quiet or only listen from now
 on is a state of the room, not a judgment remade on every turn: re-judged from
 the recent turns, it faded as they passed, and was lost once it left them. The
 classifier policy keeps it per room, in memory as the thought is (rule 6
 below): the channel has the policy forget a room it joins or leaves
-(`forget_room`), so a room that reuses an id inherits no request. It is set
+(`forget_room`), so a room that reuses an id inherits no request. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-162", "kind": "behavior", "applies": "§6.4 Classifier speak policy: the turn that sets the listening state. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->It is set
 when a turn asks the agent to stay quiet or only listen until told otherwise:
-that turn is silent, and final. The classifier reads the request with every
+that turn is silent, and final. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-163", "kind": "behavior", "applies": "§6.4 Classifier speak policy: what the classifier reads and is asked while a request to stay quiet stands. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The classifier reads the request with every
 turn, with who made it and bounded as any text from outside, so that each
 judgment is made knowing it, and is asked, instead of that request, whether
 the turn puts a question or a request to the agent itself and whether it lets
-the agent talk again. While the room listens:
+the agent talk again. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-164", "kind": "behavior", "applies": "§6.4 Classifier speak policy while the room listens: a turn not put to the agent. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->While the room listens:
 
 - the agent is silent, and the decision is final (below), unless what it
   has in mind answers or corrects the turn as surely as the policy's
@@ -2512,54 +2538,60 @@ the agent talk again. While the room listens:
   postpones it nor asks for quiet, and no question put to someone else waits
   for them: the agent then offers, asking for the floor without taking it
   (an application may show it as a raised hand), and the room goes on
-  listening;
+  listening;<!-- /rfc --><!-- rfc: {"id": "RK-6.4-165", "kind": "behavior", "applies": "§6.4 Classifier speak policy while the room listens: a question or a request put to the agent and addressing it directly. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - a question or a request put to the agent and addressing it directly (its
   name, or "you") is answered, and the room goes on listening: answering one
   question does not lift a request to stay quiet; a speaker who has not
-  finished, postpones it or asks for quiet is not answered;
+  finished, postpones it or asks for quiet is not answered;<!-- /rfc --><!-- rfc: {"id": "RK-6.4-166", "kind": "behavior", "applies": "§6.4 Classifier speak policy while the room listens: a turn that lets the agent talk again. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - a turn that lets the agent talk again ends the state, and is decided as
-  without it;
+  without it;<!-- /rfc --><!-- rfc: {"id": "RK-6.4-167", "kind": "behavior", "applies": "§6.4 Classifier speak policy while the room listens: a turn the policy cannot judge. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - a turn the policy cannot judge (no text, a classifier that fails) is silent:
   falling back to speaking would break the request.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.4-168", "kind": "behavior", "applies": "§6.4 Classifier speak policy: a turn whose classifier call another turn's change of state overlaps. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A turn is decided as it was judged: when another turn of the room starts or
 ends the state during the classifier call, the answers to the questions asked
-decide it. A conversation with one person does not make every request the
+decide it. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-169", "kind": "behavior", "applies": "§6.4 Classifier speak policy while the room listens: a conversation with one person. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A conversation with one person does not make every request the
 agent's while the room listens: a question said aside and one put to the agent
-read alike without the address. A cut answer is not resumed. Each decision
+read alike without the address. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-170", "kind": "behavior", "applies": "§6.4 Classifier speak policy while the room listens: a cut answer. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A cut answer is not resumed. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-171", "kind": "behavior", "applies": "§6.4 Classifier speak policy while the room listens: the judgment each decision reports. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Each decision
 made while the room listens reports it among its judgments (`listening`).
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.4-172", "kind": "behavior", "applies": "§6.4 Answer-only speak policy, where RoomKit provides it: an event whose speaker it does not answer, or whom the room does not name. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 RoomKit also provides a policy that answers only some people, around any
 other: an agent that listens to everyone in the room (a television, a
 meeting it assists one person in) but answers only them. An event whose
 speaker, as `speakers` names them, is not one of them is decided `silent`
 with the reason `only listened to`, final, without asking the policy it wraps, and
-so is an event whose speaker the room does not name. The people it passes on
+so is an event whose speaker the room does not name. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-173", "kind": "behavior", "applies": "§6.4 Answer-only speak policy: the people it passes on to the policy it wraps. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The people it passes on
 are only those it answers, the speaker among them even when no participant
 record names them so (a microphone's record and the voice its transport
 stamps), so that a voice only listened to never makes a conversation with one
-person a group one. An event so left silent is stored, and thought about, as
-any other: the agent hears it. A speaker is matched by the name the room gives
+person a group one. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-174", "kind": "behavior", "applies": "§6.4 Answer-only speak policy: an event it leaves silent, as the room stores it and the thinker reads it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An event so left silent is stored, and thought about, as
+any other: the agent hears it. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-175", "kind": "behavior", "applies": "§6.4 Answer-only speak policy: how a speaker is matched. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A speaker is matched by the name the room gives
 them, kept to a name's characters as the room keeps it and ignoring case: this
 chooses whom the agent answers, it is not an access control.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.4-013", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-6.4-176", "kind": "behavior", "applies": "§6.4 Thinker, the integrator's choice on a channel that has a speak policy: what a thinker is. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **What the agent thinks.** An AI channel that has a speak policy MAY also
 carry a thinker: what the agent thinks while it listens, its answer, when it is
-silent, to "what are you thinking about?". The thought is neither memory (the
+silent, to "what are you thinking about?". <!-- /rfc --><!-- rfc: {"id": "RK-6.4-177", "kind": "behavior", "applies": "§6.4 Thinker: what a thought is and what it is about. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The thought is neither memory (the
 room's history is, Section 20) nor a summary: what the agent makes of what is
 said, what it would say if given the turn, and whether that cannot wait. It is
 about what the agent hears: what is being talked about, what the speaker is
 doing (asking, telling, thinking aloud, talking to someone else, reading
 something), and what the agent makes of it, the people named; never about the
-agent itself (what it said or did, whether it should speak, how it is seen).
+agent itself (what it said or did, whether it should speak, how it is seen).<!-- /rfc --><!-- rfc: {"id": "RK-6.4-178", "kind": "behavior", "applies": "§6.4 Thinker: what a thought holds of what the agent would say. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 What it would say holds only what it would say to the people about what is
-being discussed: never a rule for itself, nor what it does not know. When the
+being discussed: never a rule for itself, nor what it does not know. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-179", "kind": "behavior", "applies": "§6.4 Thinker: a thought when the topic changes. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->When the
 topic changes, the thought starts again from the new one, keeping of the
 previous only what still concerns it: a thought rewritten from itself on every
 call drifts into its own concerns.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.4-180", "kind": "structural", "applies": "§6.4 Thinker: the Thought it returns and the Thinker interface. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 Thought
 ├── text: string = ""                   # What the agent thinks, in the first person
@@ -2569,76 +2601,80 @@ Thought
 Thinker (interface)
 └── think(previous: Thought, context: AIContext) → Thought
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.4-181", "kind": "behavior", "applies": "§6.4 Thinker, rule 1: the events it runs on. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 1. The thinker runs only on events the policy left silent: a turn the agent
-   answers waits for no thought. The channel builds the event's context as for
+   answers waits for no thought. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-182", "kind": "behavior", "applies": "§6.4 Thinker, rule 1: the context the channel builds for it and passes through BEFORE_AI_GENERATION with the purpose thought. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The channel builds the event's context as for
    an answer (the agent's own prompt, the conversation it may know), every
    speaker named, the one person of a one-to-one conversation included (an
    answer's context leaves that conversation unlabelled), passes it
    through `BEFORE_AI_GENERATION` with the purpose `thought`, and hands what the
-   hooks left to the thinker with the previous thought. A hook that blocks it
-   keeps the previous thought. A thinker MUST NOT reach a model with a context
+   hooks left to the thinker with the previous thought. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-183", "kind": "behavior", "applies": "§6.4 Thinker, rule 1: a BEFORE_AI_GENERATION hook that blocks the thought. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A hook that blocks it
+   keeps the previous thought. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-184", "kind": "behavior", "applies": "§6.4 Thinker, rule 1: the context a thinker reaches a model with. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A thinker MUST NOT reach a model with a context
    that hook did not see: whatever an application keeps from a model there
-   (consent, redaction, a budget) holds for the thought too.
+   (consent, redaction, a budget) holds for the thought too.<!-- /rfc --><!-- rfc: {"id": "RK-6.4-185", "kind": "behavior", "applies": "§6.4 Thinker, rule 2: thinker calls per room, and events that arrive during a call. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 2. One thinker call runs at a time per room. Events that arrive during a call
-   are thought about in the next one, from the latest context; none is queued.
-3. The channel waits for that thought up to a bound (1.5 s by default). When
+   are thought about in the next one, from the latest context; none is queued.<!-- /rfc --><!-- rfc: {"id": "RK-6.4-186", "kind": "behavior", "applies": "§6.4 Thinker, rule 3: the bound on the wait for a thought. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+3. The channel waits for that thought up to a bound (1.5 s by default). <!-- /rfc --><!-- rfc: {"id": "RK-6.4-187", "kind": "behavior", "applies": "§6.4 Thinker, rule 3: a thought that comes back in time with something to say. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->When
    it comes back in time with something to say, the policy is asked again on
    the same event, with the thought: the agent may raise its hand on a turn it
-   first listened to. Each decision fires `ON_SPEAK_DECISION`. A decision the
+   first listened to. Each decision fires `ON_SPEAK_DECISION`. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-188", "kind": "behavior", "applies": "§6.4 Thinker, rule 3: a decision the policy marks final. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A decision the
    policy marks final is a silence no thought changes now (a room that
    listens, a voice only listened to): the thinker thinks, and the channel
-   does not wait for it, so the next turn is not held back.
+   does not wait for it, so the next turn is not held back.<!-- /rfc --><!-- rfc: {"id": "RK-6.4-189", "kind": "behavior", "applies": "§6.4 Thinker, rule 3: a thought that comes back after its event was decided, while no later event was given to the thinker. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
    A thought that comes back after its event was decided (past the bound, or
    on a final decision) with something to say, while no later event was given
    to the thinker, is decided late: the policy is asked again on that event
-   with it, and the decision fires `ON_SPEAK_DECISION` marked late. No turn
+   with it, and the decision fires `ON_SPEAK_DECISION` marked late. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-190", "kind": "behavior", "applies": "§6.4 Thinker, rule 3: a late decision and the turn it does not run. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->No turn
    runs on a late decision, whatever it says: the event's turn is over, and
    the conversation may have moved on. Its hooks act on it (raise a hand, or
-   deliver an instruction for the agent to speak, Section 10.1.1). A later
+   deliver an instruction for the agent to speak, Section 10.1.1). <!-- /rfc --><!-- rfc: {"id": "RK-6.4-191", "kind": "behavior", "applies": "§6.4 Thinker, rule 3: a thought a later event reads. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A later
    event reads the thought itself, and no late decision is owed to the
-   earlier one.
+   earlier one.<!-- /rfc --><!-- rfc: {"id": "RK-6.4-192", "kind": "behavior", "applies": "§6.4 Thinker, rule 4: the thought when the agent speaks or offers on an event submitted to the policy. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 4. When the agent speaks or offers on an event submitted to the policy, the
    turn's notes carry its thought, and what it wanted to say is then empty: it
-   is said, or offered. A thinker call running meanwhile does not bring it
+   is said, or offered. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-193", "kind": "behavior", "applies": "§6.4 Thinker, rule 4: a thinker call running meanwhile, or on a context taken while one of the agent's turns ran. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A thinker call running meanwhile does not bring it
    back, nor does one on a context taken while one of the agent's turns ran
-   in the room: what it would say is that answer, not in its context yet. An
-   instruction carries no thought and empties nothing. The thought is
+   in the room: what it would say is that answer, not in its context yet. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-194", "kind": "behavior", "applies": "§6.4 Thinker, rule 4: an instruction and the thought. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An
+   instruction carries no thought and empties nothing. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-195", "kind": "behavior", "applies": "§6.4 Thinker, rule 4: the thought in the turn's notes. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The thought is
    a model's reading of what people said, so whatever they said can reach it:
    the notes MUST carry it quoted (as any text from outside, below), bounded,
    and named as information to weigh, not as the runtime's instructions.
-   Asked what it is thinking, the agent answers with it.
-5. A thinker that fails, or the end of its wait, keeps the previous thought.
+   Asked what it is thinking, the agent answers with it.<!-- /rfc --><!-- rfc: {"id": "RK-6.4-196", "kind": "behavior", "applies": "§6.4 Thinker, rule 5: a thinker that fails, or the end of its wait. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+5. A thinker that fails, or the end of its wait, keeps the previous thought.<!-- /rfc --><!-- rfc: {"id": "RK-6.4-197", "kind": "behavior", "applies": "§6.4 Thinker, rule 6: where the thought lives, a restart, and a room the channel is attached to or detached from. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 6. The thought is the channel's, per room, in memory: it is not stored, and a
    restart starts from an empty thought, as does a room the channel is
    attached to or detached from, so that a room reusing an id never inherits
    another conversation's thought.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.4-198", "kind": "behavior", "applies": "§6.4 Thinker: ON_THOUGHT and what it carries for a new thought. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Every new thought fires `ON_THOUGHT` with the room, the channel and the thought,
 the one it replaces, and how long the thinker call that brought it took; a
 thought emptied because the agent spoke (rule 4) came from no call and carries
-no duration. A call that fails or brings back the same thought fires nothing.
-A policy reads it in `SpeakTurn.thought`. The classifier policy then also
+no duration. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-199", "kind": "behavior", "applies": "§6.4 Thinker: a call that fails or brings back the same thought. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A call that fails or brings back the same thought fires nothing.<!-- /rfc --><!-- rfc: {"id": "RK-6.4-200", "kind": "behavior", "applies": "§6.4 Thinker: the thought a speak policy reads. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+A policy reads it in `SpeakTurn.thought`. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-201", "kind": "behavior", "applies": "§6.4 Classifier speak policy with a thinker: what it also judges of the thought. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The classifier policy then also
 judges whether what the agent wants to say answers a question or a need still
 open at the turn (asked in it, or before it and answered by no one since, the
 agent included), or corrects or warns about what the turn says, and whether a
 question put to someone other than the agent still waits for that person's
-first try (they have not answered it, said they do not know, nor given up).
+first try (they have not answered it, said they do not know, nor given up).<!-- /rfc --><!-- rfc: {"id": "RK-6.4-202", "kind": "behavior", "applies": "§6.4 Classifier speak policy with a thinker: speaking or offering on the thought, and its proactivity. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Only wondered about and knowing the answer, the agent speaks rather than
 offers; not addressed, it offers when that judgment reaches the policy's
 proactivity (0.5 by default, lower is more eager), half of it when the thought
-is urgent, never on urgency alone. Unless the thought is urgent, a question
+is urgent, never on urgency alone. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-203", "kind": "behavior", "applies": "§6.4 Classifier speak policy with a thinker: a question that waits for someone else, and a question put to everyone. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Unless the thought is urgent, a question
 that waits for someone else is theirs to answer first: wondered about, the
 agent offers rather than speaks, and not addressed, it stays silent. A
-question put to everyone waits for no one.
+question put to everyone waits for no one.<!-- /rfc --><!-- rfc: {"id": "RK-6.4-204", "kind": "behavior", "applies": "§6.4 Thinker, where RoomKit provides one: the thinker on an AI provider that answers under a JSON schema, and a mock. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 RoomKit provides a thinker on any AI provider that answers under a JSON schema
 (Section 6.7), whose instructions the application can replace, and a mock.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.4-014", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-6.4-205", "kind": "behavior", "applies": "§6.4 Cut answer, voice (media feature voice): the record a barge-in (§12.3.13) leaves in the room. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **A cut answer.** When the agent's answer is cut off by a barge-in (Section
-12.3.13), the room holds a record of it that names the answer. The AI channel
+12.3.13), the room holds a record of it that names the answer. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-206", "kind": "structural", "applies": "§6.4 Cut answer: the CutReply the AI channel reads of the record. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The AI channel
 uses it twice:
 
 ```
@@ -2647,43 +2683,49 @@ CutReply
 ├── played_ms: int                      # How much of it played before the cut
 └── at: datetime                        # When it was cut
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.4-207", "kind": "behavior", "applies": "§6.4 Cut answer: the mark after a cut answer in the context of the agent's next turn. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - In the context the agent's next turn reads, that answer is followed by a
   mark that says when it was cut and quotes how far the person heard it
   (`[The person cut you off during this answer, 5.7 s in: they heard it up to
-  “…” and not the rest.]`), rather than reading as an answer heard whole. The
+  “…” and not the rest.]`), rather than reading as an answer heard whole. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-208", "kind": "behavior", "applies": "§6.4 Cut answer: the AI channel's estimate of how far the person heard. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->The
   quote is the AI channel's estimate, and it SHOULD end early rather than
-  late: a model told the person heard words they did not goes on past them.
+  late: a model told the person heard words they did not goes on past them.<!-- /rfc --><!-- rfc: {"id": "RK-6.4-209", "kind": "behavior", "applies": "§6.4 Cut answer, where RoomKit estimates the quote: the words taken with no word timed by the TTS, and too little played. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
   With no word timed by the TTS, RoomKit takes the words by their letters at
   the share of the answer's audio that played, less two words, or at 11
   letters a second when that share is unknown; with too little played to
-  quote, the mark says the person heard little or none of it. The words are
+  quote, the mark says the person heard little or none of it. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-210", "kind": "behavior", "applies": "§6.4 Cut answer: the quoted words in the mark. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The words are
   the agent's, which a participant may have led it to say: they MUST be
   given as a quote (below, "Text from outside in a model's context"), a copy
   of a runtime mark in them replaced; a long quote keeps its end, where the
-  person stopped hearing. While the history window holds a cut answer, the
+  person stopped hearing. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-211", "kind": "behavior", "applies": "§6.4 Cut answer: the turn's notes while the history window holds a cut answer. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->While the history window holds a cut answer, the
   turn's notes say how one reads, and
   that an answer of the agent's without the mark was heard to its end:
   without it, a model asked whether it was cut off answers for the last cut
-  it reads, however many whole answers followed it.
+  it reads, however many whole answers followed it.<!-- /rfc --><!-- rfc: {"id": "RK-6.4-212", "kind": "behavior", "applies": "§6.4 Cut answer: SpeakTurn.cut. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - A speak policy reads it in `SpeakTurn.cut` when the event came after the cut
-  and the agent has not answered since. The classifier policy then also judges
+  and the agent has not answered since. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-213", "kind": "behavior", "applies": "§6.4 Classifier speak policy with a cut answer: what it also judges. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The classifier policy then also judges
   whether the turn leaves the agent free to go on (an acknowledgement, a
   thanks, a short reaction, talking over it by accident) or wants the turn (a
-  question, a request, a correction, asking it to stop). Free to go on, and
+  question, a request, a correction, asking it to stop). <!-- /rfc --><!-- rfc: {"id": "RK-6.4-214", "kind": "behavior", "applies": "§6.4 Classifier speak policy with a cut answer: a turn that leaves the agent free to go on. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Free to go on, and
   not asked for quiet nor talking over an unfinished speaker, the agent speaks
   with the reason `resume after cut`, its notes asking it to go on from where it
   was cut without repeating what was heard.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.4-215", "kind": "behavior", "applies": "§6.4 Cut answer, voice (media feature voice): what the record keeps, and where the quote is estimated. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The record does not guess which part of the answer was heard: it keeps the
 text handed to speech, how long it played, and the share of its audio when
 that is known. The quote above is estimated where the model reads it.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.4-216", "kind": "behavior", "applies": "§6.4 Cut answer: the records that count, written by a voice channel of the room. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Only a record a voice channel of the room wrote counts: `internal`, with no
 participant, its source a channel bound to the room as voice, and
 `interrupted` exactly `true`. Event metadata is anyone's to write, and a
 record taken at its word would put a sender's text in the agent's mouth as
-its own. A record whose `answer_responds_to` is neither a string nor absent is
+its own. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-217", "kind": "behavior", "applies": "§6.4 Cut answer: a malformed record. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A record whose `answer_responds_to` is neither a string nor absent is
 skipped, and a `played_ms` that is not a non-negative number reads as 0: a
 malformed record never fails the turns of the room it stays in.
 <!-- /rfc -->

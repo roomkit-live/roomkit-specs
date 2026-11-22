@@ -237,9 +237,9 @@
     },
     {
       "section": "6.4",
-      "sha256": "1f0ee950e012da084b6a681fb698bf1c12c9aa32d55c7b00290e625602239506",
+      "sha256": "80bc5f68f6379fd708b0d7766adb415fa2468c64214b5946f67920af6e283d25",
       "classification": "normative",
-      "review": "Source inventory: Intelligence Channels. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage. Reviewed the added deferred-input association and protected-context clause against shared hook scenarios and native mutation/tool tests; existing source units are unchanged."
+      "review": "Source inventory: Intelligence Channels. Units RK-6.4-001 to RK-6.4-014 are split to one obligation per unit (RMK-1907): RK-6.4-002, the AI channel's outline of one procedure, and RK-6.4-004 keep their ids; the others are retired for RK-6.4-045 to RK-6.4-217. Each unit keeps its conditions, exceptions, rationale and examples, and a sentence that holds several consequences of one rule stays whole. The SpeakPolicy, Thought and CutReply interface blocks each stay one structural unit; the classifier policy's composition list stays with the paragraph it ends. RK-6.4-048, the anatomy table of an AI turn, only names the section whose contract carries each step: it holds no obligation and keeps no level. Every other unit of that range carries its level. The realtime and voice parts stand as their own units naming the media feature (RK-6.4-095, RK-6.4-121, RK-6.4-205, RK-6.4-215); RK-6.4-094 and RK-6.4-120 name a realtime case inside a sentence that binds the text channel too, and stay text units. Units RK-6.4-015 onward are not yet split, and keep this description: Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage. Reviewed the added deferred-input association and protected-context clause against shared hook scenarios and native mutation/tool tests; existing source units are unchanged."
     },
     {
       "section": "6.5",
