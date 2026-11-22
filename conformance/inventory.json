@@ -309,33 +309,33 @@
     },
     {
       "section": "8.1",
-      "sha256": "c15cae9e3f996acb89d9aac9ec1afc7f8a3540f65fa6ff270d08cde5932aa832",
+      "sha256": "1cd03b648f56c600798b29d416c2c5fbf6219b5cbd4f2cd57a2f958d28cea8f1",
       "classification": "normative",
-      "review": "Source inventory: Room Events. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Room Events, split to one obligation per unit (RMK-1904). RK-8.1-001 keeps the room event's storage with an increasing index; the sequential indexing list gives a unit per item, the atomic item split between assignment within a room (RK-8.1-007) and a store shared across processes (RK-8.1-008); the event ids paragraph gives the pipeline's id, when each event takes it, where a provider's identifier goes and the record outside the pipeline. RK-8.1-010, which says what the index serves, holds no obligation and has no level. Every other unit carries its level, must."
     },
     {
       "section": "8.2",
-      "sha256": "441636f1fd5ef7a28430cd9c8ac687c511e57c1f2b6a34042e87c2973dfb4055",
+      "sha256": "9960b9b5e6e1c3851a479e1895785b1d3fe718cf8bc6e0f5e5c0563da40a3dbc",
       "classification": "normative",
-      "review": "Source inventory: Framework Events. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Framework Events, split to one obligation per unit (RMK-1904). Framework events are never stored (RK-8.2-002); each row of the table is a unit, the header with the first row, its applicability naming the feature that owes it from the section's list; the voice, recording, video and conference rows are media units. The emission rule with its list of features is one unit (RK-8.2-060), and room_refused_event's data shape gives a unit per member. The session_started, identity_timeout and tool call rows keep their media part, which a row cannot split. Every unit carries its level, must."
     },
     {
       "section": "8.3",
-      "sha256": "4441bed40b43faf6054a5aacc24c770f14fb4f747cc8e23ece245a6ec810c721",
+      "sha256": "206dc35c23b7788d2509ba0345a08179d17e91c3253b06f0ba223b6d0196fb3c",
       "classification": "normative",
-      "review": "Source inventory: Event Chain Depth. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Event Chain Depth, split to one obligation per unit (RMK-1904). RK-8.3-001, which defines an event chain, holds no obligation and has no level. The depth tracking list gives a unit per item and per floor (turn, tool call outside a turn, hook bodies, handlers of framework events, and where each floor ends); the at-the-limit rules, the reentry cap and the hook calls of a cascade a unit per sentence, the record stored at the limit a unit per member; the requirements list a unit per obligation. The realtime voice, conference and TTS parts that stand in sentences of their own are media units (RK-8.3-012, 031 to 034, 046, 047); the speech-to-speech paths named inside a sentence stay in their unit. RK-8.3-004 stays one unit. Every other unit carries its level, must."
     },
     {
       "section": "8.4",
-      "sha256": "fe3d73d5a7e7c60cc95542d71111ec3cbf1433ffbabdada018a02e51c57e6e94",
+      "sha256": "60cb0d0eb230e9f6d1dcb354a2ad3066d9b12222851b10e8475152e28eb2e8ce",
       "classification": "normative",
-      "review": "Source inventory: Realtime / Ephemeral Events. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage. Reviewed the ACP subscriber tool-text option and the existing source units surrounding it. Reviewed the separately enabled planner publication against its streaming and non-streaming scenarios. RK-8.4-002 also specifies each publication of a directly wired text prompt, with the triggering answer scope and the current room incarnation and binding."
+      "review": "Source inventory: Realtime / Ephemeral Events, split to one obligation per unit (RMK-1904). The code block is split between the RealtimeBackend interface and EphemeralEvent by closing and reopening its fence (two fence lines added, no word changed); each is a structural unit, as is the list of types. The framework's publications, the subscription's order, the in-memory backend, room creation marks, reasoning, tool-call, ACP and planner publications give a unit per sentence, a consequence kept with the rule it follows. The SHOULD for an in-memory backend is should. A turn's ephemerals give the owner's rule, a directly wired executor's procedure with its exception, and the framework events left unaffected; no hook judges them, and their text follows the host's options. Every unit carries its level."
     },
     {
       "section": "8.5",
-      "sha256": "5f8479b1122a177113a9948e9cb21cc36a37d2ed6d0da0d50a35763a7d58a03e",
+      "sha256": "c8d144b0e4e3da7695b2c37b629e05732e7a23e8af945ab152e7a0a211d5ae80",
       "classification": "normative",
-      "review": "Source inventory: Responses: What They Answer, and Whether They Were Consumed. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Responses: What They Answer, and Whether They Were Consumed, split to one obligation per unit (RMK-1904). RK-8.5-001, the rationale, and RK-8.5-006, consumption, which is Planned and recorded by no implementation, hold no obligation and have no level. What a response answers, who it comes from, where it may go and what the turn is told give a unit per sentence, a consequence kept with its rule; the speech-to-speech exemption is a media unit (RK-8.5-013). Every other unit carries its level, must."
     },
     {
       "section": "9",

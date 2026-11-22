@@ -4899,113 +4899,117 @@ Implementations MUST enforce these rules:
 
 ### 8.1 Room Events
 
-<!-- rfc: {"id": "RK-8.1-001", "kind": "behavior", "applies": "§8.1 Room Events; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-8.1-001", "kind": "behavior", "applies": "§8.1: a room event, stored in its room's timeline with an index that increases within the room. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Room events are stored in the room's timeline. They have a sequential `index`
 that is monotonically increasing within each room.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-8.1-002", "kind": "behavior", "applies": "§8.1 Room Events; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-8.1-004", "kind": "behavior", "applies": "§8.1 sequential indexing: the index of a room's first event. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Sequential indexing requirements:**
 
-- The `index` MUST start at 0 for the first event in a room.
+- The `index` MUST start at 0 for the first event in a room.<!-- /rfc --><!-- rfc: {"id": "RK-8.1-005", "kind": "behavior", "applies": "§8.1 sequential indexing: the index each event takes, the room's event_count, given out once; a hard delete's gaps (§14.3). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - Each event MUST take the room's `event_count` as its index, so indexes
   are given out consecutively and never again; a hard delete leaves the
-  gaps it makes (§14.3).
+  gaps it makes (§14.3).<!-- /rfc --><!-- rfc: {"id": "RK-8.1-006", "kind": "behavior", "applies": "§8.1 sequential indexing: the room's latest_index (§5.1), with and without events. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - The room's `latest_index` (§5.1) is the highest index committed in it, and
-  MUST be `null` while the room has no event.
+  MUST be `null` while the room has no event.<!-- /rfc --><!-- rfc: {"id": "RK-8.1-007", "kind": "behavior", "applies": "§8.1 sequential indexing: index assignment within a room, concurrent commits included. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - The `index` MUST be assigned atomically per room. A room-level lock (§13.5)
   serializes assignment within a single process; it is **NOT** sufficient when a
   persistent store is shared across processes (e.g. a load-balanced deployment),
-  because per-process locks do not coordinate. Such a store MUST make index
+  because per-process locks do not coordinate. <!-- /rfc --><!-- rfc: {"id": "RK-8.1-008", "kind": "behavior", "applies": "§8.1 sequential indexing: a persistent store shared across processes (e.g. a load-balanced deployment). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Such a store MUST make index
   assignment authoritative at the storage layer: a `UNIQUE(room_id, index)`
   constraint, with the index computed and the event inserted in a **single
   storage transaction**, so concurrent writers serialize on the store rather
-  than on an in-process lock.
+  than on an in-process lock.<!-- /rfc --><!-- rfc: {"id": "RK-8.1-009", "kind": "behavior", "applies": "§8.1 sequential indexing: a store handed an event whose (room_id, index) it already holds. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - A duplicate `(room_id, index)` MUST be rejected by the store (the constraint
-  violation surfaced to the caller), never silently persisted.
+  violation surfaced to the caller), never silently persisted.<!-- /rfc --><!-- rfc: {"id": "RK-8.1-010", "kind": "behavior", "applies": "§8.1 sequential indexing: informative, what the index serves; a hard delete's gaps are RK-8.1-005's. Enclosing capability conditions and §26 levels still apply."} -->
 - The `index` enables pagination, read horizon tracking, and gap detection;
   a hard delete's gaps are expected (§14.3).
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-8.1-003", "kind": "behavior", "applies": "§8.1 Room Events; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-8.1-011", "kind": "behavior", "applies": "§8.1 event ids: every event the pipeline commits, whatever id a channel or a hook built it with. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Event ids.** The pipeline MUST give every event it commits its `id`, whatever id
-a channel or a hook built the event with. An inbound event takes its id at
+a channel or a hook built the event with. <!-- /rfc --><!-- rfc: {"id": "RK-8.1-012", "kind": "behavior", "applies": "§8.1 event ids: when an inbound event, a response, a hook's injected event and a direct injection (§10.5) take their ids, and what identity resolution and hooks read. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An inbound event takes its id at
 §10.1 step 4, when the receiving channel builds it, so identity resolution and
 hooks read the id it is committed with; a response event, an event a hook
 injects and an event injected directly (§10.5) each take a fresh id as their
 pass begins. A channel or a hook that reuses an id (the trigger's, a constant,
 one from its provider) therefore never makes two events share one, and
-`responds_to` and every read or write by id name one event. A provider's own
-identifier belongs in `source.provider_message_id`. A record committed outside
+`responds_to` and every read or write by id name one event. <!-- /rfc --><!-- rfc: {"id": "RK-8.1-013", "kind": "behavior", "applies": "§8.1 event ids: where a channel puts its provider's own identifier for an event. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A provider's own
+identifier belongs in `source.provider_message_id`. <!-- /rfc --><!-- rfc: {"id": "RK-8.1-014", "kind": "behavior", "applies": "§8.1 event ids: a record committed outside the pipeline (§10.5). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A record committed outside
 the pipeline (§10.5) keeps the id its caller gives it.
 <!-- /rfc -->
 
 ### 8.2 Framework Events
 
-<!-- rfc: {"id": "RK-8.2-001", "kind": "behavior", "applies": "§8.2 Framework Events; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-8.2-002", "kind": "behavior", "applies": "§8.2: framework events, published to subscribers and never stored in a room's timeline. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Framework events are global lifecycle notifications published to subscribers.
 They are NOT stored in any room timeline.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-8.2-003", "kind": "behavior", "applies": "§8.2 framework event table (its header), the room_created row: when room_created is emitted and the data it carries; owed by Level 0 (§8.2's list of features). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 | Event | When | Data |
 |---|---|---|
 | room_created | New room created | room_id |
-| room_paused | Room transitioned to PAUSED by its inactivity timer | room_id, reason (`timer`) |
-| room_closed | Room transitioned to CLOSED | room_id; reason (`timer`) when its close timer closed it (§5.1) |
-| room_archived | Room transitioned to ARCHIVED | room_id |
-| room_refused_event | A room whose status refuses new events turned one away (§5.1) | room_id, event_id, status, operation, event_type |
-| channel_registered | Channel registered with framework | channel_id, channel_type |
-| channel_unregistered | Channel unregistered | channel_id, channel_type |
-| room_channel_attached | Channel attached to a room | room_id, channel_id, access, visibility |
-| room_channel_detached | Channel detached from a room | room_id, channel_id |
-| channel_connected | WebSocket connection registered for a room | channel_id, room_id, connection_id |
-| channel_disconnected | WebSocket connection unregistered | channel_id, connection_id |
-| source_connected | Source provider connected | channel_id, source_name |
-| source_disconnected | Source provider disconnected | channel_id, source_name |
-| source_attached | Source provider attached to its channel | channel_id, source_name |
-| source_detached | Source provider detached from its channel | channel_id, source_name |
-| source_error | A source provider's run failed | channel_id, source_name, error, attempt |
-| source_exhausted | Source provider given up after its last restart attempt | channel_id, source_name, attempts, last_error |
-| event_processed | An event that entered through the inbound pipeline or direct injection (§10.5) finished its delivery set and its `AFTER_BROADCAST` hooks; not emitted for the events its processing produced (responses, streamed rows, hook-injected events) | room_id, event_id |
-| event_blocked | Event blocked by a hook, or by a source that cannot write or has no binding in the room (§7.5 rule 2); a chain-depth record emits `chain_depth_exceeded` instead | room_id, event_id, channel_id (the event's source), reason, blocked_by |
-| process_timeout | The pre-commit phase exceeded `process_timeout` (§13.6) | room_id (null when the deadline passed while the message was routed), channel_id (expired before the room lock) or event_id (under it), timeout; `operation = regenerate` for a regeneration, which carries neither `channel_id` nor `event_id` |
-| delivery_succeeded | A transport channel's `deliver()` succeeded, for an event that entered through the inbound pipeline or direct injection (§10.5); a response's deliveries are not reported | room_id, event_id, channel_id |
-| delivery_failed | A target's `on_event()` or `deliver()` failed (`deliver()` after its retries), or an intelligence channel the event solicits was not called because it is no longer registered (§10.2 step 3, error `channel_not_registered`), for the same events as `delivery_succeeded` | room_id, event_id, channel_id, error |
-| broadcast_partial_failure | `delivery_failed` was emitted for at least one of an event's targets; the event stays DELIVERED (§13.6) | room_id, event_id, failed, total, errors (channel_id → error) |
-| delivery_skipped | A room's delivery lane passed over committed indexes whose delivery never came (left, for example, by a process that crashed before delivering them) after waiting `gap_timeout` (default 30 s) | room_id, from_index, to_index |
-| identity_resolved | The inbound pipeline ended with an identity for the sender, found by the resolver or supplied by a hook | room_id, channel_id, event_id, identity_id, display_name, status (the resolution's status) |
-| identity_timeout | Identity resolution timed out, for an inbound sender or a conference participant | room_id, channel_id, timeout (seconds) |
-| verification_requested | A verification request was opened (§11.7.2) | identity_id, request_id, room_id, channel_id, method, expires_at |
-| verification_completed | A verification request completed (§11.7.2) | identity_id, request_id, room_id, channel_id, method, expires_at |
-| verification_ended | A verification or a request ended: expired, revoked, failed, cancelled (§11.7.5) | identity_id, request_id (for a request), reason |
-| chain_depth_exceeded | Event blocked by chain depth limit | room_id, event_id, channel_id, data.chain_depth, data.max_chain_depth |
-| session_started | `ON_SESSION_STARTED` fired (§9.2): a voice session started, or the inbound pipeline auto-created a room for a text channel | room_id; session_id, channel_id (voice) or channel_id, channel_type (text) |
-| before_ai_generation | `BEFORE_AI_GENERATION` decided on an AI turn (allowed when no hook ran) | room_id, channel_id, allowed, blocked_by |
-| ai_response | An AI channel's turn completed (`ON_AI_RESPONSE`) | room_id, channel_id, tool_calls_count, latency_ms, streaming |
-| before_tool_use | `BEFORE_TOOL_USE` decided on a tool call | room_id, channel_id, tool_name, tool_call_id, allowed, reason |
-| tool_call | A tool call was reported (§9.3), whatever its outcome | room_id, channel_id, tool_name, tool_call_id, channel_type; is_error, cancelled, refused, refused_but_ran when true |
-| user_input_required | A tool call asked for the user's input; `ON_USER_INPUT_REQUIRED` decided (allowed when no hook ran) | room_id, channel_id, pending_id, tool_name, tool_call_id, allowed, reason |
-| feedback | Feedback submitted for a room or a response (`ON_FEEDBACK`) | room_id, channel_id, event_id, dimension, rating |
-| status_posted | An entry was posted to the StatusBus | ts, agent_id, action, status, detail, metadata |
-| hook_error | A `BEFORE_BROADCAST` SYNC hook failed: it raised, timed out or returned an unusable result, off the lock as it ran (§10.1 step 5a, §9.5.1) or at an event's commit gate (step 9) | room_id, event_id, hook, error |
-| hook_timeout | A hook, SYNC or ASYNC, exceeded its timeout | room_id, hook_name, trigger, timeout (seconds) |
-| circuit_breaker_opened | Channel circuit breaker tripped | channel_id, state (`open`) |
-| circuit_breaker_closed | Channel circuit breaker recovered: a call succeeded after it tripped | channel_id, state (`closed`) |
-| voice_session_started | Voice session transitioned to ACTIVE | session_id, room_id, channel_id |
-| voice_session_ended | Voice session transitioned to ENDED | session_id, room_id, channel_id |
-| recording_started | A recording started: a voice session's audio, a room's media (Section 12.11) or a conference track (Section 12.10) | room_id, id; session_id (voice); scope = `room` (room); channel_id, track_id, participant_id (conference track) |
-| recording_stopped | A recording stopped, its result available | room_id, id, duration_seconds; session_id (voice); scope = `room`, url (room); channel_id, track_id, participant_id, url, size_bytes (conference track) |
-| stt_error | STT transcription failed | session_id, provider, error |
-| tts_error | A session's TTS synthesis or its playback failed | session_id, provider, error |
-| voice_session_ready | Voice session audio path is live and ready | session_id, room_id, channel_id, participant_id |
-| video_session_started | Video session started | room_id, session_id, channel_id |
-| video_session_ended | Video session ended | room_id, session_id, channel_id |
-| video_vision_result | A vision provider analysed a video session's frame | room_id, session_id, channel_id, description, labels, confidence, text, faces (count), elapsed_ms |
-| conference_started | Bot connection to the conference is live | room_id, channel_id, bot_session_id |
-| conference_ended | Bot left the conference | room_id, channel_id, bot_session_id, duration_ms |
-| conference_participant_joined | Participant joined the media session | room_id, channel_id, participant_id |
-| conference_participant_left | Participant left the media session | room_id, channel_id, participant_id |
-| conference_bot_grants_changed | A connected bot session's effective grants changed (Section 12.10.4) | room_id, channel_id, bot_session_id, hidden |
+| <!-- /rfc --><!-- rfc: {"id": "RK-8.2-004", "kind": "behavior", "applies": "§8.2 framework event table, the room_paused row: when room_paused is emitted and the data it carries; owed by Level 0 (§8.2's list of features). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->room_paused | Room transitioned to PAUSED by its inactivity timer | room_id, reason (`timer`) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-8.2-005", "kind": "behavior", "applies": "§8.2 framework event table, the room_closed row: when room_closed is emitted and the data it carries; owed by Level 0 (§8.2's list of features). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->room_closed | Room transitioned to CLOSED | room_id; reason (`timer`) when its close timer closed it (§5.1) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-8.2-006", "kind": "behavior", "applies": "§8.2 framework event table, the room_archived row: when room_archived is emitted and the data it carries; owed by Level 0 (§8.2's list of features). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->room_archived | Room transitioned to ARCHIVED | room_id |
+| <!-- /rfc --><!-- rfc: {"id": "RK-8.2-007", "kind": "behavior", "applies": "§8.2 framework event table, the room_refused_event row: when room_refused_event is emitted and the data it carries; owed by Level 0 (§8.2's list of features). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->room_refused_event | A room whose status refuses new events turned one away (§5.1) | room_id, event_id, status, operation, event_type |
+| <!-- /rfc --><!-- rfc: {"id": "RK-8.2-008", "kind": "behavior", "applies": "§8.2 framework event table, the channel_registered row: when channel_registered is emitted and the data it carries; owed by Level 0 (§8.2's list of features). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->channel_registered | Channel registered with framework | channel_id, channel_type |
+| <!-- /rfc --><!-- rfc: {"id": "RK-8.2-009", "kind": "behavior", "applies": "§8.2 framework event table, the channel_unregistered row: when channel_unregistered is emitted and the data it carries; owed by Level 0 (§8.2's list of features). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->channel_unregistered | Channel unregistered | channel_id, channel_type |
+| <!-- /rfc --><!-- rfc: {"id": "RK-8.2-010", "kind": "behavior", "applies": "§8.2 framework event table, the room_channel_attached row: when room_channel_attached is emitted and the data it carries; owed by Level 0 (§8.2's list of features). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->room_channel_attached | Channel attached to a room | room_id, channel_id, access, visibility |
+| <!-- /rfc --><!-- rfc: {"id": "RK-8.2-011", "kind": "behavior", "applies": "§8.2 framework event table, the room_channel_detached row: when room_channel_detached is emitted and the data it carries; owed by Level 0 (§8.2's list of features). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->room_channel_detached | Channel detached from a room | room_id, channel_id |
+| <!-- /rfc --><!-- rfc: {"id": "RK-8.2-012", "kind": "behavior", "applies": "§8.2 framework event table, the channel_connected row: when channel_connected is emitted and the data it carries; owed by WebSocket connections (Level 1, Appendix A.8) (§8.2's list of features). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->channel_connected | WebSocket connection registered for a room | channel_id, room_id, connection_id |
+| <!-- /rfc --><!-- rfc: {"id": "RK-8.2-013", "kind": "behavior", "applies": "§8.2 framework event table, the channel_disconnected row: when channel_disconnected is emitted and the data it carries; owed by WebSocket connections (Level 1, Appendix A.8) (§8.2's list of features). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->channel_disconnected | WebSocket connection unregistered | channel_id, connection_id |
+| <!-- /rfc --><!-- rfc: {"id": "RK-8.2-014", "kind": "behavior", "applies": "§8.2 framework event table, the source_connected row: when source_connected is emitted and the data it carries; owed by event sources (Level 2, Section 6.5) (§8.2's list of features). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->source_connected | Source provider connected | channel_id, source_name |
+| <!-- /rfc --><!-- rfc: {"id": "RK-8.2-015", "kind": "behavior", "applies": "§8.2 framework event table, the source_disconnected row: when source_disconnected is emitted and the data it carries; owed by event sources (Level 2, Section 6.5) (§8.2's list of features). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->source_disconnected | Source provider disconnected | channel_id, source_name |
+| <!-- /rfc --><!-- rfc: {"id": "RK-8.2-016", "kind": "behavior", "applies": "§8.2 framework event table, the source_attached row: when source_attached is emitted and the data it carries; owed by event sources (Level 2, Section 6.5) (§8.2's list of features). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->source_attached | Source provider attached to its channel | channel_id, source_name |
+| <!-- /rfc --><!-- rfc: {"id": "RK-8.2-017", "kind": "behavior", "applies": "§8.2 framework event table, the source_detached row: when source_detached is emitted and the data it carries; owed by event sources (Level 2, Section 6.5) (§8.2's list of features). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->source_detached | Source provider detached from its channel | channel_id, source_name |
+| <!-- /rfc --><!-- rfc: {"id": "RK-8.2-018", "kind": "behavior", "applies": "§8.2 framework event table, the source_error row: when source_error is emitted and the data it carries; owed by event sources (Level 2, Section 6.5) (§8.2's list of features). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->source_error | A source provider's run failed | channel_id, source_name, error, attempt |
+| <!-- /rfc --><!-- rfc: {"id": "RK-8.2-019", "kind": "behavior", "applies": "§8.2 framework event table, the source_exhausted row: when source_exhausted is emitted and the data it carries; owed by event sources (Level 2, Section 6.5) (§8.2's list of features). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->source_exhausted | Source provider given up after its last restart attempt | channel_id, source_name, attempts, last_error |
+| <!-- /rfc --><!-- rfc: {"id": "RK-8.2-020", "kind": "behavior", "applies": "§8.2 framework event table, the event_processed row: when event_processed is emitted and the data it carries; owed by Level 0 (§8.2's list of features). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->event_processed | An event that entered through the inbound pipeline or direct injection (§10.5) finished its delivery set and its `AFTER_BROADCAST` hooks; not emitted for the events its processing produced (responses, streamed rows, hook-injected events) | room_id, event_id |
+| <!-- /rfc --><!-- rfc: {"id": "RK-8.2-021", "kind": "behavior", "applies": "§8.2 framework event table, the event_blocked row: when event_blocked is emitted and the data it carries; owed by Level 0 (§8.2's list of features). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->event_blocked | Event blocked by a hook, or by a source that cannot write or has no binding in the room (§7.5 rule 2); a chain-depth record emits `chain_depth_exceeded` instead | room_id, event_id, channel_id (the event's source), reason, blocked_by |
+| <!-- /rfc --><!-- rfc: {"id": "RK-8.2-022", "kind": "behavior", "applies": "§8.2 framework event table, the process_timeout row: when process_timeout is emitted and the data it carries; owed by the processing timeout (Section 13.6) (§8.2's list of features). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->process_timeout | The pre-commit phase exceeded `process_timeout` (§13.6) | room_id (null when the deadline passed while the message was routed), channel_id (expired before the room lock) or event_id (under it), timeout; `operation = regenerate` for a regeneration, which carries neither `channel_id` nor `event_id` |
+| <!-- /rfc --><!-- rfc: {"id": "RK-8.2-023", "kind": "behavior", "applies": "§8.2 framework event table, the delivery_succeeded row: when delivery_succeeded is emitted and the data it carries; owed by Level 0 (§8.2's list of features). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->delivery_succeeded | A transport channel's `deliver()` succeeded, for an event that entered through the inbound pipeline or direct injection (§10.5); a response's deliveries are not reported | room_id, event_id, channel_id |
+| <!-- /rfc --><!-- rfc: {"id": "RK-8.2-024", "kind": "behavior", "applies": "§8.2 framework event table, the delivery_failed row: when delivery_failed is emitted and the data it carries; owed by Level 0 (§8.2's list of features). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->delivery_failed | A target's `on_event()` or `deliver()` failed (`deliver()` after its retries), or an intelligence channel the event solicits was not called because it is no longer registered (§10.2 step 3, error `channel_not_registered`), for the same events as `delivery_succeeded` | room_id, event_id, channel_id, error |
+| <!-- /rfc --><!-- rfc: {"id": "RK-8.2-025", "kind": "behavior", "applies": "§8.2 framework event table, the broadcast_partial_failure row: when broadcast_partial_failure is emitted and the data it carries; owed by Level 0 (§8.2's list of features). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->broadcast_partial_failure | `delivery_failed` was emitted for at least one of an event's targets; the event stays DELIVERED (§13.6) | room_id, event_id, failed, total, errors (channel_id → error) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-8.2-026", "kind": "behavior", "applies": "§8.2 framework event table, the delivery_skipped row: when delivery_skipped is emitted and the data it carries; owed by delivery lanes across processes (a store shared by several processes, Section 13.5) (§8.2's list of features). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->delivery_skipped | A room's delivery lane passed over committed indexes whose delivery never came (left, for example, by a process that crashed before delivering them) after waiting `gap_timeout` (default 30 s) | room_id, from_index, to_index |
+| <!-- /rfc --><!-- rfc: {"id": "RK-8.2-027", "kind": "behavior", "applies": "§8.2 framework event table, the identity_resolved row: when identity_resolved is emitted and the data it carries; owed by identity resolution (Level 1) (§8.2's list of features). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->identity_resolved | The inbound pipeline ended with an identity for the sender, found by the resolver or supplied by a hook | room_id, channel_id, event_id, identity_id, display_name, status (the resolution's status) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-8.2-028", "kind": "behavior", "applies": "§8.2 framework event table, the identity_timeout row: when identity_timeout is emitted and the data it carries; owed by identity resolution (Level 1); a conference participant's timeout is the conference feature's (Level 3, media) (§8.2's list of features). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->identity_timeout | Identity resolution timed out, for an inbound sender or a conference participant | room_id, channel_id, timeout (seconds) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-8.2-029", "kind": "behavior", "applies": "§8.2 framework event table, the verification_requested row: when verification_requested is emitted and the data it carries; owed by identity verification (Level 2, Section 11.7) (§8.2's list of features). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->verification_requested | A verification request was opened (§11.7.2) | identity_id, request_id, room_id, channel_id, method, expires_at |
+| <!-- /rfc --><!-- rfc: {"id": "RK-8.2-030", "kind": "behavior", "applies": "§8.2 framework event table, the verification_completed row: when verification_completed is emitted and the data it carries; owed by identity verification (Level 2, Section 11.7) (§8.2's list of features). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->verification_completed | A verification request completed (§11.7.2) | identity_id, request_id, room_id, channel_id, method, expires_at |
+| <!-- /rfc --><!-- rfc: {"id": "RK-8.2-031", "kind": "behavior", "applies": "§8.2 framework event table, the verification_ended row: when verification_ended is emitted and the data it carries; owed by identity verification (Level 2, Section 11.7) (§8.2's list of features). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->verification_ended | A verification or a request ended: expired, revoked, failed, cancelled (§11.7.5) | identity_id, request_id (for a request), reason |
+| <!-- /rfc --><!-- rfc: {"id": "RK-8.2-032", "kind": "behavior", "applies": "§8.2 framework event table, the chain_depth_exceeded row: when chain_depth_exceeded is emitted and the data it carries; owed by Level 0 (§8.2's list of features). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->chain_depth_exceeded | Event blocked by chain depth limit | room_id, event_id, channel_id, data.chain_depth, data.max_chain_depth |
+| <!-- /rfc --><!-- rfc: {"id": "RK-8.2-033", "kind": "behavior", "applies": "§8.2 framework event table, the session_started row: when session_started is emitted and the data it carries; owed by Level 0 for a room the inbound pipeline creates for a text channel; a voice session's is the voice feature's (Level 3, media) (§8.2's list of features). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->session_started | `ON_SESSION_STARTED` fired (§9.2): a voice session started, or the inbound pipeline auto-created a room for a text channel | room_id; session_id, channel_id (voice) or channel_id, channel_type (text) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-8.2-034", "kind": "behavior", "applies": "§8.2 framework event table, the before_ai_generation row: when before_ai_generation is emitted and the data it carries; owed by the AI channel (Level 1) (§8.2's list of features). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->before_ai_generation | `BEFORE_AI_GENERATION` decided on an AI turn (allowed when no hook ran) | room_id, channel_id, allowed, blocked_by |
+| <!-- /rfc --><!-- rfc: {"id": "RK-8.2-035", "kind": "behavior", "applies": "§8.2 framework event table, the ai_response row: when ai_response is emitted and the data it carries; owed by the AI channel (Level 1) (§8.2's list of features). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ai_response | An AI channel's turn completed (`ON_AI_RESPONSE`) | room_id, channel_id, tool_calls_count, latency_ms, streaming |
+| <!-- /rfc --><!-- rfc: {"id": "RK-8.2-036", "kind": "behavior", "applies": "§8.2 framework event table, the before_tool_use row: when before_tool_use is emitted and the data it carries; owed by tool calls (Section 9.3: an AI channel's, Level 1; a speech-to-speech channel's or a conference's, Level 3, media) (§8.2's list of features). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->before_tool_use | `BEFORE_TOOL_USE` decided on a tool call | room_id, channel_id, tool_name, tool_call_id, allowed, reason |
+| <!-- /rfc --><!-- rfc: {"id": "RK-8.2-037", "kind": "behavior", "applies": "§8.2 framework event table, the tool_call row: when tool_call is emitted and the data it carries; owed by tool calls (Section 9.3: an AI channel's, Level 1; a speech-to-speech channel's or a conference's, Level 3, media) (§8.2's list of features). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->tool_call | A tool call was reported (§9.3), whatever its outcome | room_id, channel_id, tool_name, tool_call_id, channel_type; is_error, cancelled, refused, refused_but_ran when true |
+| <!-- /rfc --><!-- rfc: {"id": "RK-8.2-038", "kind": "behavior", "applies": "§8.2 framework event table, the user_input_required row: when user_input_required is emitted and the data it carries; owed by tool calls (Section 9.3: an AI channel's, Level 1; a speech-to-speech channel's or a conference's, Level 3, media) (§8.2's list of features). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->user_input_required | A tool call asked for the user's input; `ON_USER_INPUT_REQUIRED` decided (allowed when no hook ran) | room_id, channel_id, pending_id, tool_name, tool_call_id, allowed, reason |
+| <!-- /rfc --><!-- rfc: {"id": "RK-8.2-039", "kind": "behavior", "applies": "§8.2 framework event table, the feedback row: when feedback is emitted and the data it carries; owed by feedback (submit_feedback, Section 15.9) (§8.2's list of features). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->feedback | Feedback submitted for a room or a response (`ON_FEEDBACK`) | room_id, channel_id, event_id, dimension, rating |
+| <!-- /rfc --><!-- rfc: {"id": "RK-8.2-040", "kind": "behavior", "applies": "§8.2 framework event table, the status_posted row: when status_posted is emitted and the data it carries; owed by the StatusBus (Level 2, Section 19.8) (§8.2's list of features). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->status_posted | An entry was posted to the StatusBus | ts, agent_id, action, status, detail, metadata |
+| <!-- /rfc --><!-- rfc: {"id": "RK-8.2-041", "kind": "behavior", "applies": "§8.2 framework event table, the hook_error row: when hook_error is emitted and the data it carries; owed by Level 0 (§8.2's list of features). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->hook_error | A `BEFORE_BROADCAST` SYNC hook failed: it raised, timed out or returned an unusable result, off the lock as it ran (§10.1 step 5a, §9.5.1) or at an event's commit gate (step 9) | room_id, event_id, hook, error |
+| <!-- /rfc --><!-- rfc: {"id": "RK-8.2-042", "kind": "behavior", "applies": "§8.2 framework event table, the hook_timeout row: when hook_timeout is emitted and the data it carries; owed by Level 0 (§8.2's list of features). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->hook_timeout | A hook, SYNC or ASYNC, exceeded its timeout | room_id, hook_name, trigger, timeout (seconds) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-8.2-043", "kind": "behavior", "applies": "§8.2 framework event table, the circuit_breaker_opened row: when circuit_breaker_opened is emitted and the data it carries; owed by the circuit breaker (Level 1, Section 13.1) (§8.2's list of features). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->circuit_breaker_opened | Channel circuit breaker tripped | channel_id, state (`open`) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-8.2-044", "kind": "behavior", "applies": "§8.2 framework event table, the circuit_breaker_closed row: when circuit_breaker_closed is emitted and the data it carries; owed by the circuit breaker (Level 1, Section 13.1) (§8.2's list of features). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->circuit_breaker_closed | Channel circuit breaker recovered: a call succeeded after it tripped | channel_id, state (`closed`) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-8.2-045", "kind": "behavior", "applies": "§8.2 framework event table, the voice_session_started row: when voice_session_started is emitted and the data it carries; owed by voice (Level 3, Section 12; media) (§8.2's list of features). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->voice_session_started | Voice session transitioned to ACTIVE | session_id, room_id, channel_id |
+| <!-- /rfc --><!-- rfc: {"id": "RK-8.2-046", "kind": "behavior", "applies": "§8.2 framework event table, the voice_session_ended row: when voice_session_ended is emitted and the data it carries; owed by voice (Level 3, Section 12; media) (§8.2's list of features). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->voice_session_ended | Voice session transitioned to ENDED | session_id, room_id, channel_id |
+| <!-- /rfc --><!-- rfc: {"id": "RK-8.2-047", "kind": "behavior", "applies": "§8.2 framework event table, the recording_started row: when recording_started is emitted and the data it carries; owed by recording (Level 3: a voice session's, a room's media or a conference track's; media) (§8.2's list of features). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->recording_started | A recording started: a voice session's audio, a room's media (Section 12.11) or a conference track (Section 12.10) | room_id, id; session_id (voice); scope = `room` (room); channel_id, track_id, participant_id (conference track) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-8.2-048", "kind": "behavior", "applies": "§8.2 framework event table, the recording_stopped row: when recording_stopped is emitted and the data it carries; owed by recording (Level 3: a voice session's, a room's media or a conference track's; media) (§8.2's list of features). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->recording_stopped | A recording stopped, its result available | room_id, id, duration_seconds; session_id (voice); scope = `room`, url (room); channel_id, track_id, participant_id, url, size_bytes (conference track) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-8.2-049", "kind": "behavior", "applies": "§8.2 framework event table, the stt_error row: when stt_error is emitted and the data it carries; owed by voice (Level 3, Section 12; media) (§8.2's list of features). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->stt_error | STT transcription failed | session_id, provider, error |
+| <!-- /rfc --><!-- rfc: {"id": "RK-8.2-050", "kind": "behavior", "applies": "§8.2 framework event table, the tts_error row: when tts_error is emitted and the data it carries; owed by voice (Level 3, Section 12; media) (§8.2's list of features). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->tts_error | A session's TTS synthesis or its playback failed | session_id, provider, error |
+| <!-- /rfc --><!-- rfc: {"id": "RK-8.2-051", "kind": "behavior", "applies": "§8.2 framework event table, the voice_session_ready row: when voice_session_ready is emitted and the data it carries; owed by voice (Level 3, Section 12; media) (§8.2's list of features). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->voice_session_ready | Voice session audio path is live and ready | session_id, room_id, channel_id, participant_id |
+| <!-- /rfc --><!-- rfc: {"id": "RK-8.2-052", "kind": "behavior", "applies": "§8.2 framework event table, the video_session_started row: when video_session_started is emitted and the data it carries; owed by video (Level 3, Section 12.8; media) (§8.2's list of features). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->video_session_started | Video session started | room_id, session_id, channel_id |
+| <!-- /rfc --><!-- rfc: {"id": "RK-8.2-053", "kind": "behavior", "applies": "§8.2 framework event table, the video_session_ended row: when video_session_ended is emitted and the data it carries; owed by video (Level 3, Section 12.8; media) (§8.2's list of features). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->video_session_ended | Video session ended | room_id, session_id, channel_id |
+| <!-- /rfc --><!-- rfc: {"id": "RK-8.2-054", "kind": "behavior", "applies": "§8.2 framework event table, the video_vision_result row: when video_vision_result is emitted and the data it carries; owed by video (Level 3, Section 12.8; media) (§8.2's list of features). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->video_vision_result | A vision provider analysed a video session's frame | room_id, session_id, channel_id, description, labels, confidence, text, faces (count), elapsed_ms |
+| <!-- /rfc --><!-- rfc: {"id": "RK-8.2-055", "kind": "behavior", "applies": "§8.2 framework event table, the conference_started row: when conference_started is emitted and the data it carries; owed by the conference (Level 3, Section 12.10; media) (§8.2's list of features). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->conference_started | Bot connection to the conference is live | room_id, channel_id, bot_session_id |
+| <!-- /rfc --><!-- rfc: {"id": "RK-8.2-056", "kind": "behavior", "applies": "§8.2 framework event table, the conference_ended row: when conference_ended is emitted and the data it carries; owed by the conference (Level 3, Section 12.10; media) (§8.2's list of features). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->conference_ended | Bot left the conference | room_id, channel_id, bot_session_id, duration_ms |
+| <!-- /rfc --><!-- rfc: {"id": "RK-8.2-057", "kind": "behavior", "applies": "§8.2 framework event table, the conference_participant_joined row: when conference_participant_joined is emitted and the data it carries; owed by the conference (Level 3, Section 12.10; media) (§8.2's list of features). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->conference_participant_joined | Participant joined the media session | room_id, channel_id, participant_id |
+| <!-- /rfc --><!-- rfc: {"id": "RK-8.2-058", "kind": "behavior", "applies": "§8.2 framework event table, the conference_participant_left row: when conference_participant_left is emitted and the data it carries; owed by the conference (Level 3, Section 12.10; media) (§8.2's list of features). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->conference_participant_left | Participant left the media session | room_id, channel_id, participant_id |
+| <!-- /rfc --><!-- rfc: {"id": "RK-8.2-059", "kind": "behavior", "applies": "§8.2 framework event table, the conference_bot_grants_changed row: when conference_bot_grants_changed is emitted and the data it carries; owed by the conference (Level 3, Section 12.10; media) (§8.2's list of features). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->conference_bot_grants_changed | A connected bot session's effective grants changed (Section 12.10.4) | room_id, channel_id, bot_session_id, hidden |
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-8.2-060", "kind": "behavior", "applies": "§8.2: which rows of the framework event table an implementation owes, Level 0's always and a feature's when it provides that feature. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 An implementation MUST emit each event of this table for the features it
 provides: the rows of a feature are owed only by an implementation that
 provides it. Each row is owed by Level 0 or by one feature:
@@ -5054,20 +5058,24 @@ provides it. Each row is owed by Level 0 or by one feature:
 Integrators subscribe to framework events for monitoring and integration
 purposes.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-8.2-061", "kind": "behavior", "applies": "§8.2 room_refused_event data: one shape whichever path refused, and its status. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 `room_refused_event` carries one `data` shape whichever path refused, so a
 subscriber reads it without knowing which one did:
 
 - `status` — the room status that refused (`closed` or `archived`); null only
-  when the room no longer exists.
+  when the room no longer exists.<!-- /rfc --><!-- rfc: {"id": "RK-8.2-062", "kind": "behavior", "applies": "§8.2 room_refused_event data: its operation, by the path that met the status gate. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - `operation` — the path that met the gate: `inbound` for a message or a direct
   injection refused at §10.1 step 6 or 9a; `reentry` for the framework's own
   re-injection, which is a response, a hook's injected event, or a record
   stored in place of a turn or a response the room refuses (an agent not asked
   at the chain-depth limit, a response or an injected event past the reentry
-  budget, §8.3); `regenerate` for a regeneration of the last answer.
+  budget, §8.3); `regenerate` for a regeneration of the last answer.<!-- /rfc --><!-- rfc: {"id": "RK-8.2-063", "kind": "behavior", "applies": "§8.2 room_refused_event data: its event_type. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - `event_type` — the type of the refused event; null when a regenerate had
   nothing to replay.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-8.2-064", "kind": "behavior", "applies": "§8.2 room_refused_event data: its event_id, a refused event's or, for a regenerate, the message it would have replayed. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 `event_id` is the refused event's id — an id that names nothing in the store,
 since a refused event is never appended — or, for a regenerate, the message it
 would have replayed, null when nothing qualified.
@@ -5075,16 +5083,16 @@ would have replayed, null when nothing qualified.
 
 ### 8.3 Event Chain Depth
 
-<!-- rfc: {"id": "RK-8.3-001", "kind": "behavior", "applies": "§8.3 Event Chain Depth; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-8.3-001", "kind": "behavior", "applies": "§8.3: informative, what an event chain is; the units of §8.3 that follow carry its rules. Enclosing capability conditions and §26 levels still apply."} -->
 When a channel produces a response event (e.g., AI responds to a message),
 that response may trigger further responses from other channels. This creates
 an event chain.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-8.3-002", "kind": "behavior", "applies": "§8.3 Event Chain Depth; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-8.3-008", "kind": "behavior", "applies": "§8.3 chain depth tracking: an event from external inbound (human messages, webhooks). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Chain depth tracking:**
 
-- Events from external inbound (human messages, webhooks) have `chain_depth = 0`.
+- Events from external inbound (human messages, webhooks) have `chain_depth = 0`.<!-- /rfc --><!-- rfc: {"id": "RK-8.3-009", "kind": "behavior", "applies": "§8.3 chain depth tracking: an event a channel produces in answer to another, on every path the item lists; a speech-to-speech provider's transcription (Section 12.4) is the voice feature's (media). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - An event a channel produces in answer to another carries that event's
   `chain_depth + 1`, whichever path produces it: a buffered response, each
   row of a streamed one (text segments and tool-call rows), the assistant
@@ -5092,22 +5100,22 @@ an event chain.
   orchestration strategy returns for a turn (Section 19.7), the turn a
   discussion gives in answer to the event it answers (Section 19.7.5), and a
   result delivered back to the room for a turn that delegated (Section 23.3). A path
-  that restarts the count at 0 opens a chain the limit never reaches.
+  that restarts the count at 0 opens a chain the limit never reaches.<!-- /rfc --><!-- rfc: {"id": "RK-8.3-010", "kind": "behavior", "applies": "§8.3 chain depth tracking: an event a hook injects (§9.4). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - An event a hook injects keeps the `chain_depth` of the event whose hooks
-  injected it (§9.4).
+  injected it (§9.4).<!-- /rfc --><!-- rfc: {"id": "RK-8.3-011", "kind": "behavior", "applies": "§8.3 chain depth tracking: a call into a room made within a turn while it runs (its tool handlers, TurnHost verbs, its own code). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - A call into a room made within a turn while it runs (its tool handlers, its
   `TurnHost` verbs, its own code calling the framework) is at least as deep
   as the response depth of the deepest turn it runs within: the event it
   injects or the message it hands in takes that depth when its own is lower
   (§9.5.1, §10.6.5), so that an agent that injects into its room at each
-  turn, through any channel, stops at the limit as its answers do. So is a
+  turn, through any channel, stops at the limit as its answers do. <!-- /rfc --><!-- rfc: {"id": "RK-8.3-012", "kind": "behavior", "applies": "§8.3 chain depth tracking: a call made while a tool call outside a turn runs, a realtime or a conference tool call (§12.4, §21.4); the realtime voice and conference features (Level 3, media). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->So is a
   call made while a tool call outside a turn runs (a realtime or a conference
-  tool call, §12.4, §21.4), at least as deep as the answer that issued it.
+  tool call, §12.4, §21.4), at least as deep as the answer that issued it.<!-- /rfc --><!-- rfc: {"id": "RK-8.3-013", "kind": "behavior", "applies": "§8.3 chain depth tracking: work a turn or a tool call began (a task it spawned) that calls once it is over; the exceptions are the next items'. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
   Once the turn or the tool call is over, the floor is gone: work it began (a
   task it spawned) calls as a new arrival with the depth of its own event, 0
   for a message it creates (§9.5.1). The body of a hook it fired that runs
   asynchronously, and a handler of a framework event a turn's work emits,
-  are the exceptions: each keeps the floor for as long as it runs (below).
+  are the exceptions: each keeps the floor for as long as it runs (below).<!-- /rfc --><!-- rfc: {"id": "RK-8.3-014", "kind": "behavior", "applies": "§8.3 chain depth tracking: a call into a room made from the body of an ASYNC hook a cascade fires once an event's delivery set has run (AFTER_BROADCAST, ON_EVENT_UPDATED, ON_EVENT_DELETED, an ASYNC observer of a once-per-event SYNC trigger). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - A call into a room made from the body of an ASYNC hook a cascade fires once
   an event's delivery set has run (§10.1 step 16's `AFTER_BROADCAST` hooks, a
   change's `ON_EVENT_UPDATED` and `ON_EVENT_DELETED` hooks, §10.3; and an
@@ -5118,9 +5126,9 @@ an event chain.
   for later carries that depth), and a regeneration it asks for (§10.3) take
   that depth when their own is lower, so that a hook that asks an agent again
   after each of its answers stops at the limit, a discussion's `max_depth`
-  included (Section 19.7.5 rule 11). A direct change's own triggers run within
-  it, under the same floor. Once the body is over, the floor is gone, as a
-  turn's is.
+  included (Section 19.7.5 rule 11). <!-- /rfc --><!-- rfc: {"id": "RK-8.3-015", "kind": "behavior", "applies": "§8.3 chain depth tracking: the triggers a direct change (update_event, delete_event) fires, made from such a hook body. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A direct change's own triggers run within
+  it, under the same floor. <!-- /rfc --><!-- rfc: {"id": "RK-8.3-016", "kind": "behavior", "applies": "§8.3 chain depth tracking: calls made once such a hook body is over. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Once the body is over, the floor is gone, as a
+  turn's is.<!-- /rfc --><!-- rfc: {"id": "RK-8.3-017", "kind": "behavior", "applies": "§8.3 chain depth tracking: a call into a room made from the body of any hook run asynchronously (an ASYNC hook, a SYNC hook on an ASYNC trigger), for as long as the body runs; the speech-to-speech and tool-call-outside-a-turn work it names is the realtime voice and conference features' (media). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - A call into a room made from the body of any hook run asynchronously (an
   ASYNC hook, and a hook registered SYNC on an ASYNC trigger, §9.2) is at
   least as deep as the work that fired the hook was when its trigger fired:
@@ -5130,12 +5138,12 @@ an event chain.
   the body runs, that work over or not, so that a hook on a turn's trigger
   (`BEFORE_AI_GENERATION`, `ON_AI_RESPONSE`), whose event carries no depth of
   its own, that tells the agent something from its body at each turn stops at
-  the limit. A task the body starts, awaited or not, has that floor while the
+  the limit. <!-- /rfc --><!-- rfc: {"id": "RK-8.3-018", "kind": "behavior", "applies": "§8.3 chain depth tracking: a task the body of a hook run asynchronously starts, awaited or not, while the body runs and once it has returned. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A task the body starts, awaited or not, has that floor while the
   body runs; once the body has returned, the task's calls are at the depth of
   their own event (§9.5.1), whether the work that fired the hook, or the other
   hooks of the same trigger, still run or not: a hook that relaunches an agent
-  on a new chain (a quality gate) does so from such a task. A hook a turn
-  executor fires carries its floor with the verb it makes (§10.6.5).
+  on a new chain (a quality gate) does so from such a task. <!-- /rfc --><!-- rfc: {"id": "RK-8.3-019", "kind": "behavior", "applies": "§8.3 chain depth tracking: a hook a turn executor fires (§10.6.5) and the verb it makes. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A hook a turn
+  executor fires carries its floor with the verb it makes (§10.6.5).<!-- /rfc --><!-- rfc: {"id": "RK-8.3-020", "kind": "behavior", "applies": "§8.3 chain depth tracking: a handler of a framework event a turn's work emits (§10.6.3), during the turn or once it is over. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - A handler of a framework event a turn's work emits (§8.2, §10.6.3:
   `before_ai_generation`, `before_tool_use`, `tool_call`,
   `user_input_required`, `ai_response`, `hook_timeout`), during the turn
@@ -5146,55 +5154,59 @@ an event chain.
   the agent something at each of its answers (an `ai_response` handler
   that posts) stops at the limit as the hook does, an `ai_response` that
   ASYNC `ON_AI_RESPONSE` hooks slower than the turn delay past its end
-  included. The floor is each handler's own: a task one starts calls at
+  included. <!-- /rfc --><!-- rfc: {"id": "RK-8.3-021", "kind": "behavior", "applies": "§8.3 chain depth tracking: a task such a handler starts, once the handler has returned. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The floor is each handler's own: a task one starts calls at
   the depth of its own event once that handler has returned, whether the
   event's other handlers still run or not.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-8.3-003", "kind": "behavior", "applies": "§8.3 Event Chain Depth; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-8.3-022", "kind": "behavior", "applies": "§8.3 at the limit: an intelligence channel an event solicits (Section 19.3) when the event's chain_depth + 1 >= max_chain_depth, streaming or not. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **At the limit.** When an event's `chain_depth + 1 >= max_chain_depth`, an
 intelligence channel it solicits (Section 19.3) MUST NOT be asked to act:
 its `on_event()` is not called, so no model is called and no tool runs,
 whether the channel streams or not. The limit exists to stop what a runaway
-chain *does*, not only what it says. In place of the response, the
+chain *does*, not only what it says. <!-- /rfc --><!-- rfc: {"id": "RK-8.3-023", "kind": "behavior", "applies": "§8.3 at the limit: the record stored for each channel not asked, its type, status and blocked_by. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->In place of the response, the
 implementation MUST store one record per channel not asked:
 
 - a MESSAGE event, with `status = BLOCKED` and
-  `blocked_by = "event_chain_depth_limit"`;
+  `blocked_by = "event_chain_depth_limit"`;<!-- /rfc --><!-- rfc: {"id": "RK-8.3-024", "kind": "behavior", "applies": "§8.3 at the limit: the record's source, direction and content. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - the channel not asked as its source, with direction OUTBOUND like a
-  response, and empty text as its content;
+  response, and empty text as its content;<!-- /rfc --><!-- rfc: {"id": "RK-8.3-025", "kind": "behavior", "applies": "§8.3 at the limit: the record's visibility (§7.3). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - as its visibility, the one the response would have been committed with
-  (§7.3);
+  (§7.3);<!-- /rfc --><!-- rfc: {"id": "RK-8.3-026", "kind": "behavior", "applies": "§8.3 at the limit: the record's chain_depth and responds_to (§8.5). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - as `chain_depth`, the depth the response would have had, and as
-  `responds_to` the trigger, which the response would have answered (§8.5);
+  `responds_to` the trigger, which the response would have answered (§8.5);<!-- /rfc --><!-- rfc: {"id": "RK-8.3-027", "kind": "behavior", "applies": "§8.3 at the limit: the observation stored with the record. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - its own observation, of category `event_chain_depth_exceeded`, whose
   metadata holds `chain_depth` (the depth the response would have had),
-  `max_chain_depth` and `source_channel` (the channel not asked);
+  `max_chain_depth` and `source_channel` (the channel not asked);<!-- /rfc --><!-- rfc: {"id": "RK-8.3-028", "kind": "behavior", "applies": "§8.3 at the limit: the framework event emitted with the record. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - a `chain_depth_exceeded` framework event.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-8.3-029", "kind": "behavior", "applies": "§8.3 at the limit: an event no agent answers (tool-call rows, activity records, an event of a type that opens no turn, an edit or a delete). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 An event no agent answers gets no record: a tool-call row
 (`TOOL_CALL_START`, `TOOL_CALL_END`), an activity record, and any event
-of a type that opens no turn, or an edit or a delete (Section 6.4). Response events a channel other
+of a type that opens no turn, or an edit or a delete (Section 6.4). <!-- /rfc --><!-- rfc: {"id": "RK-8.3-030", "kind": "behavior", "applies": "§8.3 at the limit: response events a channel other than an intelligence one returns at the limit. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Response events a channel other
 than an intelligence one returns at the limit are stored BLOCKED with the
 same `blocked_by`.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-8.3-031", "kind": "behavior", "applies": "§8.3 at the limit: a transport hosting a model (a realtime voice channel, a conference with a realtime model, §12.4), whatever brings the text; the realtime voice and conference features (Level 3, media). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A transport hosting a model (a realtime voice channel, a conference with a
 realtime model plugged in, §12.4) is an agent too (§9.4), and at the limit
 it MUST NOT be asked either: a text injected into the model's session at a
 depth whose `chain_depth + 1 >= max_chain_depth` enters it silently, which
 takes it into its context and asks no answer, whatever brings it: a
 broadcast, a delivery (`deliver()`, §22), a pipeline's handoff greeting, or
-a direct injection. A text injected directly from a turn, a tool call or a
+a direct injection. <!-- /rfc --><!-- rfc: {"id": "RK-8.3-032", "kind": "behavior", "applies": "§8.3 at the limit: a text injected directly into a model's session from a turn, a tool call or a hook's body; the realtime voice and conference features (Level 3, media). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A text injected directly from a turn, a tool call or a
 hook's body is at least as deep as that work, whatever depth the caller
-names, as a delivery's is (above). It leaves no record: the model
+names, as a delivery's is (above). <!-- /rfc --><!-- rfc: {"id": "RK-8.3-033", "kind": "behavior", "applies": "§8.3 at the limit: what a model's session leaves at the limit, and the observer loop it ends; the realtime voice and conference features (Level 3, media). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->It leaves no record: the model
 answers what it heard last (§12.4), not one event. A loop of a tool call's
 observer posting into the room, the model answering the post and calling
-again then ends at the limit, as one between two agents does. The depth of
+again then ends at the limit, as one between two agents does. <!-- /rfc --><!-- rfc: {"id": "RK-8.3-034", "kind": "behavior", "applies": "§8.3 at the limit: the depth of a realtime or conference tool call; the realtime voice and conference features (Level 3, media). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The depth of
 a realtime or conference tool call is that of the model's answer when the
 call arrives.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-8.3-004", "kind": "behavior", "applies": "§8.3 Event Chain Depth; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-8.3-004", "kind": "behavior", "applies": "§8.3 below the limit: a buffered or streamed response a pass started (the trigger's delivery set, a reentry pass, the delivery of a streamed segment). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Below the limit, a response that was started is read.** A buffered
 response's events re-enter (§10.1 step 14), and a streamed response is
 consumed to its end, whichever pass started it: the trigger's delivery set,
@@ -5203,7 +5215,7 @@ and then discarded costs its model call and runs its tools, with nothing of
 it in the room.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-8.3-005", "kind": "behavior", "applies": "§8.3 Event Chain Depth; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-8.3-035", "kind": "behavior", "applies": "§8.3 reentry cap: the passes that draw on one cascade's reentry budget, and its size. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Reentry cap.** The responses one cascade re-enters (the answers to one
 inbound or directly injected event, one regeneration or one delegated run) and
 the events its hooks inject (§9.4) share a reentry budget of `10 ×
@@ -5215,13 +5227,13 @@ body, a handler its check's report awaits (`hook_error`, `hook_timeout`) or
 the parse does for the cascade's event, and the calls its deliveries and turns
 make into the room (a routed message once routing has placed it there), and
 those that create a room, routed or named, charged once before the room is
-created, with the cascades those calls start. A message is charged once,
-wherever routing places it. A buffered response past the budget does not
+created, with the cascades those calls start. <!-- /rfc --><!-- rfc: {"id": "RK-8.3-036", "kind": "behavior", "applies": "§8.3 reentry cap: a message the room's work hands in, routed or named. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A message is charged once,
+wherever routing places it. <!-- /rfc --><!-- rfc: {"id": "RK-8.3-037", "kind": "behavior", "applies": "§8.3 reentry cap: a buffered response, a chained stream and an injected event past the budget. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A buffered response past the budget does not
 re-enter, a chained stream past it is closed unread, so nothing is
 generated, and an injected event past it is not committed as a pass, so its
-hooks never run. Each is stored `BLOCKED` with `blocked_by =
+hooks never run. <!-- /rfc --><!-- rfc: {"id": "RK-8.3-038", "kind": "behavior", "applies": "§8.3 reentry cap: the record stored for what the budget stops, and the framework events it emits. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Each is stored `BLOCKED` with `blocked_by =
 "reentry_loop_cap"`, and with the visibility its pass would have committed
-it with (§7.3); none emits `chain_depth_exceeded` nor `event_blocked`. A
+it with (§7.3); none emits `chain_depth_exceeded` nor `event_blocked`. <!-- /rfc --><!-- rfc: {"id": "RK-8.3-039", "kind": "behavior", "applies": "§8.3 reentry cap: a message past the budget, named, naming a room the store does not hold, or routed (§9.5.1, Past the cap). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
 message past it is refused with no event, nothing of it stored (`reason =
 reentry_loop_cap`): one that names its room first thing at §10.1 step 1;
 one naming a room the store does not hold at step 2, before creating it;
@@ -5230,7 +5242,7 @@ the work delivers in, after the locked check, what routing wrote kept
 (§9.5.1, Past the cap).
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-8.3-006", "kind": "behavior", "applies": "§8.3 Event Chain Depth; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-8.3-040", "kind": "behavior", "applies": "§8.3 the hook calls of a cascade: the counter of the ASYNC hook calls a cascade fires once an event's delivery set has run, and of its observers of once-per-event SYNC triggers; its size and sharing. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **The hook calls of a cascade.** Apart from its passes, each cascade MUST
 count the calls of the ASYNC hooks it fires once an event's delivery set has
 run (§10.1 step 16's `AFTER_BROADCAST` hooks, a change's `ON_EVENT_UPDATED`
@@ -5238,29 +5250,29 @@ and `ON_EVENT_DELETED` hooks, §10.3) and of those its work fires on a SYNC
 trigger once per event, which observe the payload the chain left (§9.2), all
 its hooks together on one counter of
 the same size, `10 × max_chain_depth`, shared by reference with the cascades
-those calls start as the passes are. While a hook's body runs, each call it
+those calls start as the passes are. <!-- /rfc --><!-- rfc: {"id": "RK-8.3-041", "kind": "behavior", "applies": "§8.3 the hook calls of a cascade: what a hook body's calls into its room and its direct changes draw. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->While a hook's body runs, each call it
 makes into its room draws one hook call as it starts, a message that creates
 a room included, and so does each direct `update_event()`, `delete_event()`
 or regeneration it makes there (§10.3): a hook that sends or changes on every
 event stops at the cap, and a hook that posts once per event draws one hook
 call per event, a notice blocked only past `10 × max_chain_depth` calls of all
-the cascade's hooks together. Its calls draw no pass, and the cascade's passes
+the cascade's hooks together. <!-- /rfc --><!-- rfc: {"id": "RK-8.3-042", "kind": "behavior", "applies": "§8.3 the hook calls of a cascade: the hook calls and the passes, two budgets. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Its calls draw no pass, and the cascade's passes
 draw no hook call, so a hook's notices cost the agents no answer and the
 answers block no notice below the cap. The counter bounds the loops that
 solicit no agent; a hook that asks an agent again after each of its answers
-ends at the depth limit first (above). Past its hook calls, a hook's direct
+ends at the depth limit first (above). <!-- /rfc --><!-- rfc: {"id": "RK-8.3-043", "kind": "behavior", "applies": "§8.3 the hook calls of a cascade: a hook's direct injection, message and direct change past the hook calls. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Past its hook calls, a hook's direct
 injection is stored `BLOCKED` with `reentry_loop_cap` and its message refused,
 as past the passes (above), and a direct change raises a reentry-loop-cap
-error, nothing of it written (§10.3). Work a hook's body starts (a task it
+error, nothing of it written (§10.3). <!-- /rfc --><!-- rfc: {"id": "RK-8.3-044", "kind": "behavior", "applies": "§8.3 the hook calls of a cascade: work a hook's body starts and does not wait for, calling once the body has returned. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Work a hook's body starts (a task it
 spawns, and does not wait for) that calls once the body has returned is work
 of its own: at the depth of its own event, and on a budget of its own once
-the room's delivery the hook was fired within, if any, is over (§9.5.1). The
+the room's delivery the hook was fired within, if any, is over (§9.5.1). <!-- /rfc --><!-- rfc: {"id": "RK-8.3-045", "kind": "behavior", "applies": "§8.3 the hook calls of a cascade: the observers of a trigger that fires per tool call (BEFORE_TOOL_USE, ON_TOOL_CALL, AFTER_TOOL_ROUND, ON_USER_INPUT_REQUIRED). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The
 observers of a
 trigger that fires per tool call (`BEFORE_TOOL_USE`, `ON_TOOL_CALL`,
 `AFTER_TOOL_ROUND`, `ON_USER_INPUT_REQUIRED`), which a turn may fire hundreds
 of times, are not the cascade's work: they run as a task the turn's work
 starts does, so a post they make while the turn's delivery runs draws one of
-the cascade's passes and a direct change draws nothing. The body of every
+the cascade's passes and a direct change draws nothing. <!-- /rfc --><!-- rfc: {"id": "RK-8.3-046", "kind": "behavior", "applies": "§8.3 the hook calls of a cascade: the depth of hooks on a realtime or conference tool call, on a speech-to-speech model's words or delegation (§12.4, §12.4.1), and on BEFORE_TTS and AFTER_TTS (§12.2); the voice, realtime voice and conference features (Level 3, media). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The body of every
 hook run asynchronously sends at least as deep as the work that fired it was when its trigger
 fired, for as long as the body runs, that work over or not (§8.3): an
 observer of a tool call outside a turn (a realtime or a conference tool
@@ -5274,33 +5286,35 @@ started), which its SYNC hooks run at too, the user's words opening
 a chain; and a hook on what a voice agent built from speech to text, an
 agent and text to speech says (`BEFORE_TTS`, on each sentence of a streamed
 reply too, and `AFTER_TTS`, §12.2, on a voice channel and a conference's
-voice lane) at least as deep as the answer it speaks, its SYNC hooks too.
+voice lane) at least as deep as the answer it speaks, its SYNC hooks too.<!-- /rfc --><!-- rfc: {"id": "RK-8.3-047", "kind": "behavior", "applies": "§8.3 the hook calls of a cascade: work started while a voice reply's audio plays; the voice features (Level 3, media). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The floor covers those hooks, not the playback: work started while the
 audio plays keeps its own depth. A hook that tells an agent or a model
 something from its body at each of its answers, by a post or an injection,
 then ends at the limit.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-8.3-007", "kind": "behavior", "applies": "§8.3 Event Chain Depth; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-8.3-048", "kind": "behavior", "applies": "§8.3 requirements: max_chain_depth, its configuration and its default. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Requirements:**
 
-- Implementations MUST support a configurable `max_chain_depth` (default: 5).
+- Implementations MUST support a configurable `max_chain_depth` (default: 5).<!-- /rfc --><!-- rfc: {"id": "RK-8.3-049", "kind": "behavior", "applies": "§8.3 requirements: a discussion's max_depth (Section 19.7.5) for the turns it gives and the events they produce. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
   A discussion's `max_depth` takes its place for the turns the discussion
   gives and the events they produce (Section 19.7.5), and cannot be disabled
-  either (Section 17.5).
+  either (Section 17.5).<!-- /rfc --><!-- rfc: {"id": "RK-8.3-050", "kind": "behavior", "applies": "§8.3 requirements: blocked records, whichever path broadcast the trigger, a regeneration included. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - Blocked records MUST still be stored in the timeline (for audit), whichever
-  path broadcast the trigger, a regeneration included.
+  path broadcast the trigger, a regeneration included.<!-- /rfc --><!-- rfc: {"id": "RK-8.3-051", "kind": "behavior", "applies": "§8.3 requirements: the side effects of a channel whose response events were blocked. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - A channel that was not asked has no side effects to collect. Side effects
-  of a channel whose response events were blocked MUST still be collected.
+  of a channel whose response events were blocked MUST still be collected.<!-- /rfc --><!-- rfc: {"id": "RK-8.3-052", "kind": "behavior", "applies": "§8.3 requirements: the chain_depth_exceeded framework event for each blocked record. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - A framework event `chain_depth_exceeded` MUST be emitted for each record.
 <!-- /rfc -->
 
 ### 8.4 Realtime / Ephemeral Events
 
-<!-- rfc: {"id": "RK-8.4-001", "kind": "behavior", "applies": "§8.4 Realtime / Ephemeral Events; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-8.4-004", "kind": "behavior", "applies": "§8.4: ephemeral events (typing, presence), published in real time and never stored in the timeline. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Some events (typing indicators, presence changes) are ephemeral — they are
 published in real-time but not stored in the timeline.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-8.4-005", "kind": "structural", "applies": "§8.4 RealtimeBackend interface: the operations a realtime backend offers and what they return. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 RealtimeBackend (interface)
 ├── publish(channel: string, event: EphemeralEvent) → void
@@ -5311,7 +5325,11 @@ RealtimeBackend (interface)
 ├── publish_to_room(room_id, event) → void      # the channel room:<room_id>
 ├── subscribe_to_room(room_id, callback) → string
 └── close() → void                   # ends every subscription
+```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-8.4-006", "kind": "structural", "applies": "§8.4 EphemeralEvent: the fields of an ephemeral event and their defaults. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 EphemeralEvent
 ├── room_id, type, user_id
 ├── id                               # fresh by default
@@ -5321,86 +5339,100 @@ EphemeralEvent
 └── room_created_at | null           # the creation mark of its room
 ```
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-8.4-007", "kind": "structural", "applies": "§8.4 EphemeralEvent: the values of its type. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 `type` is one of `typing_start`, `typing_stop`, `presence_online`,
 `presence_away`, `presence_offline`, `read_receipt`, `reaction`,
 `tool_call_delta`, `tool_call_start`, `tool_call_end`, `thinking_start`,
-`thinking_delta`, `thinking_end`, `text_delta` and `custom`. The
+`thinking_delta`, `thinking_end`, `text_delta` and `custom`. <!-- /rfc --><!-- rfc: {"id": "RK-8.4-008", "kind": "behavior", "applies": "§8.4: the framework's own publications (typing, presence, read receipt, reaction, a channel's tool calls), their form and their audience (§17.2). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The
 framework's own publications follow the same form: a typing indicator, a
 presence (`online`, `away` and `offline` each its type, any other status a
 `custom` event carrying it under `data.status`), a read receipt
 (`data.event_id`), a reaction (`data.target_event_id`, `emoji`, `action`)
 and a channel's tool calls (`data.tool_calls`, `channel_id`, and
 `duration_ms` for an end that ran its calls), each published to the room's
-subscribers for the organization the call names (§17.2). A subscription hands its events to its
+subscribers for the organization the call names (§17.2). <!-- /rfc --><!-- rfc: {"id": "RK-8.4-009", "kind": "behavior", "applies": "§8.4: a subscription's callback, the order it reads events in, and a callback that fails. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A subscription hands its events to its
 callback in order, one at a time; a callback that fails is logged and the
-subscription goes on. The in-memory backend holds a bounded queue per
+subscription goes on. <!-- /rfc --><!-- rfc: {"id": "RK-8.4-010", "kind": "behavior", "applies": "§8.4: the in-memory realtime backend, its queue per subscription and its close; where an implementation offers it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The in-memory backend holds a bounded queue per
 subscription, the oldest event dropped past it, one event per id; a
 publication after its close reaches no one.
 
-A subscription ends with its room (§17.2). The kit's publications carry the
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-8.4-011", "kind": "behavior", "applies": "§8.4: a subscription and its room's end (§17.2). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+A subscription ends with its room (§17.2). <!-- /rfc --><!-- rfc: {"id": "RK-8.4-012", "kind": "behavior", "applies": "§8.4 room creation marks: the room_created_at a kit's publication carries, by who publishes. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The kit's publications carry the
 creation mark of their room (`room_created_at`, the room's `created_at`):
 one that names no organization reads the room for it, a turn's names the
 room its turn ran in, whichever room holds the id when it is published,
 and a channel's publication outside a turn names the room the kit's last
-turn or channel call of the id ran in, else the room the store holds.
+turn or channel call of the id ran in, else the room the store holds.<!-- /rfc --><!-- rfc: {"id": "RK-8.4-013", "kind": "behavior", "applies": "§8.4 room creation marks: a subscription made through the kit while a room held its id, and an event of another mark. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A subscription made through the kit (`subscribe_room()`) keeps the mark of
 the room it read, and its callback reads no event of another mark: the
 room created again under a deleted room's id, in this process or another,
-reaches none of the deleted room's subscriptions. One made while no room
+reaches none of the deleted room's subscriptions. <!-- /rfc --><!-- rfc: {"id": "RK-8.4-014", "kind": "behavior", "applies": "§8.4 room creation marks: a subscription made through the kit while no room held its id. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->One made while no room
 held the id is the room's that holds the id when it reads its first event
 carrying a mark, read once from the store; an event of a room gone before
-it is not read. An event that carries no mark, published on the backend
-directly, reaches every subscription of the id. The kit that creates a
+it is not read. <!-- /rfc --><!-- rfc: {"id": "RK-8.4-015", "kind": "behavior", "applies": "§8.4 room creation marks: an event that carries no mark, published on the backend directly. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An event that carries no mark, published on the backend
+directly, reaches every subscription of the id. <!-- /rfc --><!-- rfc: {"id": "RK-8.4-016", "kind": "behavior", "applies": "§8.4 room creation marks: a kit that creates a room under the id of a room the store deleted, and the subscriptions made through it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The kit that creates a
 room under the id of a room the store deleted also ends the subscriptions
 made through it for the deleted room, and keeps those made while no room
 held the id.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-8.4-017", "kind": "behavior", "applies": "§8.4 reasoning ephemerals: the types a channel's reasoning is published as, where a block opens and closes, and ON_AI_THINKING (§9.2). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A channel's reasoning is published as `thinking_start`, `thinking_delta` and
 `thinking_end`. A block opens with its first non-empty piece and closes with
 the answer's text, the end of the generation, a failure or a stop,
 `thinking_end` carrying that block alone; `ON_AI_THINKING` fires once per
-block as it closes, its `thinking` the block's whole text (§9.2). Each carries
-`data.thinking_length`, `data.round` and `data.channel_id`. The reasoning
+block as it closes, its `thinking` the block's whole text (§9.2). <!-- /rfc --><!-- rfc: {"id": "RK-8.4-018", "kind": "behavior", "applies": "§8.4 reasoning ephemerals: the data each carries. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Each carries
+`data.thinking_length`, `data.round` and `data.channel_id`. <!-- /rfc --><!-- rfc: {"id": "RK-8.4-019", "kind": "behavior", "applies": "§8.4 reasoning ephemerals: the reasoning's text, by publish_thinking_text. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The reasoning
 repeats what the model read, and a subscriber is not a bound channel, so its
 text is opt-in: `data.thinking`, at most 1000 characters, is present only for a
-channel built with `publish_thinking_text` (false by default). Deltas batch by
+channel built with `publish_thinking_text` (false by default). <!-- /rfc --><!-- rfc: {"id": "RK-8.4-020", "kind": "behavior", "applies": "§8.4 reasoning ephemerals: how deltas batch (thinking_coalesce_ms, thinking_coalesce_chars). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Deltas batch by
 `thinking_coalesce_ms` (80) and `thinking_coalesce_chars` (256), a batch past
-1000 characters going in several, 0 ms publishing each piece. What a turn
+1000 characters going in several, 0 ms publishing each piece. <!-- /rfc --><!-- rfc: {"id": "RK-8.4-021", "kind": "behavior", "applies": "§8.4: a slow or stuck realtime backend and the turn that publishes on it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->What a turn
 publishes never stops the turn: a slow or stuck backend delays only its own
 events.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-8.4-022", "kind": "behavior", "applies": "§8.4 tool-call ephemerals: the types an AI channel's tool calls are published as, and when. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 An AI channel's tool calls are published as `tool_call_start` before they
 run and `tool_call_end` once they ended, with `duration_ms` once their calls
-ran, and as `tool_call_delta` while a call is composed (§6.4). Each call reads its `id`,
+ran, and as `tool_call_delta` while a call is composed (§6.4). <!-- /rfc --><!-- rfc: {"id": "RK-8.4-023", "kind": "behavior", "applies": "§8.4 tool-call ephemerals: what each call reads on them (§6.4). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Each call reads its `id`,
 its `name`, its `intent` when it has one (§6.4) and, at its end, its
-`status`. A call's arguments and its result repeat what the turn's rows
+`status`. <!-- /rfc --><!-- rfc: {"id": "RK-8.4-024", "kind": "behavior", "applies": "§8.4 tool-call ephemerals: a call's arguments and result, by publish_tool_call_text. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A call's arguments and its result repeat what the turn's rows
 carry, which a `BEFORE_BROADCAST` hook judges and an ephemeral escapes, so
 they are opt-in: `arguments` on a start and `result`, at most 500
 characters, on an end, present only for a channel built with
 `publish_tool_call_text` (false by default).
 
-An ACP channel applies the same option to its room subscribers. Its start
-carries the call ID and name. Its end carries the ID, name, terminal status
-and elapsed duration, including when the channel closes an unfinished call.
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-8.4-025", "kind": "behavior", "applies": "§8.4 ACP tool-call ephemerals: an ACP channel's room subscribers and publish_tool_call_text. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+An ACP channel applies the same option to its room subscribers. <!-- /rfc --><!-- rfc: {"id": "RK-8.4-026", "kind": "behavior", "applies": "§8.4 ACP tool-call ephemerals: what an ACP channel's start carries. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Its start
+carries the call ID and name. <!-- /rfc --><!-- rfc: {"id": "RK-8.4-027", "kind": "behavior", "applies": "§8.4 ACP tool-call ephemerals: what an ACP channel's end carries, an unfinished call the channel closes included. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Its end carries the ID, name, terminal status
+and elapsed duration, including when the channel closes an unfinished call.<!-- /rfc --><!-- rfc: {"id": "RK-8.4-028", "kind": "behavior", "applies": "§8.4 ACP tool-call ephemerals: the call name an ACP channel publishes, with either setting. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The name follows the latest title the ACP agent supplied. A title containing
-a path or other text is visible as the call name with either setting.
+a path or other text is visible as the call name with either setting.<!-- /rfc --><!-- rfc: {"id": "RK-8.4-029", "kind": "behavior", "applies": "§8.4 ACP tool-call ephemerals: the arguments and the result preview, by publish_tool_call_text. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Only an opted-in start includes the arguments, and only an opted-in end
-includes the result preview (at most 500 characters). Intermediate ACP tool
+includes the result preview (at most 500 characters). <!-- /rfc --><!-- rfc: {"id": "RK-8.4-030", "kind": "behavior", "applies": "§8.4 ACP tool-call ephemerals: intermediate tool progress, by publish_tool_call_text. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Intermediate ACP tool
 progress includes only `sessionUpdate`, `toolCallId`, `status` and `kind`
-when present. With the option enabled, it carries the full ACP update.
+when present. With the option enabled, it carries the full ACP update.<!-- /rfc --><!-- rfc: {"id": "RK-8.4-031", "kind": "behavior", "applies": "§8.4 ACP tool-call ephemerals: tool-call stream markers, stored rows and reports to tool hooks, whatever publish_tool_call_text says. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Tool-call stream markers, stored rows and reports to tool hooks keep their
 ordinary contents.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-8.4-032", "kind": "behavior", "applies": "§8.4: an AI channel whose planner the host enables, and a successful plan_tasks update. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 When the host enables an AI channel's planner, a successful `plan_tasks`
 update publishes that channel's updated plan for the room, including its task
 titles, in the `plan_updated` custom event. The `publish_tool_call_text` option controls
 the tool notifications independently of this planner update.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-8.4-033", "kind": "behavior", "applies": "§8.4: the realtime backends an implementation provides, for single-process deployments. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 Implementations SHOULD provide at least an in-memory realtime backend for
 single-process deployments.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-8.4-002", "kind": "behavior", "applies": "§8.4 Realtime / Ephemeral Events; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-8.4-034", "kind": "behavior", "applies": "§8.4: the owner's publication of a turn's ephemerals (its reasoning, tool calls, any other its channel or hooks publish while it runs, and what work it began publishes after it ends, §10.6.3), at each publish. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **A turn's ephemerals reach no one its answer would not reach.** What a turn
 publishes live (its reasoning, its tool calls' arguments and results, any
 other ephemeral its channel or hooks publish while it runs, and what work it
@@ -5415,20 +5447,20 @@ narrowed during the turn, or after it while work it began still publishes,
 stops its ephemerals from that publish on. Otherwise the owner publishes none
 of them: an agent whose answers are scoped to a
 supervisor, an internal agent, or one the room keeps from writing shows no
-live activity to the room's subscribers. A text channel wired by an executor and called directly with a room event
+live activity to the room's subscribers. <!-- /rfc --><!-- rfc: {"id": "RK-8.4-035", "kind": "behavior", "applies": "§8.4: a text channel wired by an executor and called directly with a room event, without an owner-issued turn, at each publication; a session notification while no prompt is active. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A text channel wired by an executor and called directly with a room event
 MUST enforce the same audience for that prompt, including work it starts.
 Without an owner-issued turn, the executor MUST check the triggering event's
 answer scope and the current binding for that incarnation of the room at
 each publication. If it cannot establish write access to the whole room,
 it MUST withhold the publication. A session notification made while no
-prompt is active retains its outside-turn semantics (§10.6.3).
+prompt is active retains its outside-turn semantics (§10.6.3).<!-- /rfc --><!-- rfc: {"id": "RK-8.4-036", "kind": "behavior", "applies": "§8.4: framework events (§8.2) of a turn whose ephemerals the audience rule withholds. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Framework events (§8.2) are not ephemerals and are unaffected.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-8.4-003", "kind": "behavior", "applies": "§8.4 Realtime / Ephemeral Events; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-8.4-037", "kind": "behavior", "applies": "§8.4: BEFORE_BROADCAST (§9.5) and what a turn publishes live. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **No hook judges a turn's ephemerals.** `BEFORE_BROADCAST` (§9.5) runs on the
 event the room stores; what a turn publishes live is neither blocked nor
-modified by it. The text of an AI or ACP channel's reasoning and its tool calls'
+modified by it. <!-- /rfc --><!-- rfc: {"id": "RK-8.4-038", "kind": "behavior", "applies": "§8.4: the text an AI or ACP channel's ephemerals carry (reasoning, tool calls' arguments and results, TEXT_DELTA), by the host's options, and a hook's later decision. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The text of an AI or ACP channel's reasoning and its tool calls'
 arguments and results on `tool_call_start` and `tool_call_end` are published
 only for a channel the host builds to publish them (`publish_thinking_text`,
 `publish_tool_call_text`), and then as they are produced, whatever a hook
@@ -5440,7 +5472,7 @@ a delegated task's trace, whose rows no hook judges either.
 
 ### 8.5 Responses: What They Answer, and Whether They Were Consumed
 
-<!-- rfc: {"id": "RK-8.5-001", "kind": "behavior", "applies": "§8.5 Responses: What They Answer, and Whether They Were Consumed; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-8.5-001", "kind": "behavior", "applies": "§8.5: informative, why an answer names the event it answers; the rules are in the units of §8.5 that follow, consumption is Planned. Enclosing capability conditions and §26 levels still apply."} -->
 An intelligence channel answers events: a participant's message, an
 instruction (Section 10.1.1), a delegated task's hand-back (Section 23.3).
 Several answers can be under way in one room at once: the room lock does not
@@ -5450,84 +5482,84 @@ other requests stand: answered or being answered. Whether each answer reached
 the person it was delivered to is its consumption (Planned, below).
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-8.5-002", "kind": "behavior", "applies": "§8.5 Responses: What They Answer, and Whether They Were Consumed; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-8.5-007", "kind": "behavior", "applies": "§8.5 what a response answers: every event an intelligence channel produces for a turn (each message, streamed segment and tool row). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **What a response answers.** Every event an intelligence channel produces for a
 turn (each message, streamed segment and tool row of it) MUST carry
-`responds_to`: the id of the event that triggered the turn. An instruction is
+`responds_to`: the id of the event that triggered the turn. <!-- /rfc --><!-- rfc: {"id": "RK-8.5-008", "kind": "behavior", "applies": "§8.5 what a response answers: an answer to an instruction (Section 10.1.1). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An instruction is
 never stored, but it has an id, which its hooks see; an answer to it carries
-that id. An event that answers no event (an inbound message, a system event, a
-greeting) has `responds_to = null`. A turn the channel runs again for the same
-event carries the same `responds_to`. A buffered answer a channel already
-named keeps its name. The pair (`source.channel_id`, `responds_to`) names one
+that id. <!-- /rfc --><!-- rfc: {"id": "RK-8.5-009", "kind": "behavior", "applies": "§8.5 what a response answers: an event that answers no event (an inbound message, a system event, a greeting). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An event that answers no event (an inbound message, a system event, a
+greeting) has `responds_to = null`. <!-- /rfc --><!-- rfc: {"id": "RK-8.5-010", "kind": "behavior", "applies": "§8.5 what a response answers: a turn the channel runs again for the same event. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A turn the channel runs again for the same
+event carries the same `responds_to`. <!-- /rfc --><!-- rfc: {"id": "RK-8.5-011", "kind": "behavior", "applies": "§8.5 what a response answers: a buffered answer whose channel already named the event it answers. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A buffered answer a channel already
+named keeps its name. <!-- /rfc --><!-- rfc: {"id": "RK-8.5-012", "kind": "behavior", "applies": "§8.5 what a response answers: the pair that names one channel's answer to one event, and parent_event_id (§10.1 step 8). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The pair (`source.channel_id`, `responds_to`) names one
 channel's answer to one event. `parent_event_id` is unrelated: it places an
 event in an in-app thread, whose root it names once §10.1 step 8 has rooted
-it. A
+it. <!-- /rfc --><!-- rfc: {"id": "RK-8.5-013", "kind": "behavior", "applies": "§8.5 what a response answers: a speech-to-speech channel's answers (Section 12.4), not bound by the rule yet (Planned); the realtime voice feature (Level 3, media). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
 speech-to-speech channel (Section 12.4) is not bound by this yet: its answer to
 the user's speech starts before that speech's transcript is committed, so there
 is no event to name, and its answers carry `responds_to = null` (Planned).
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-8.5-003", "kind": "behavior", "applies": "§8.5 Responses: What They Answer, and Whether They Were Consumed; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-8.5-014", "kind": "behavior", "applies": "§8.5 who a response comes from: the source, room, chain_depth, responds_to and idempotency key the pipeline writes on every response event, buffered or a stream's row. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Who a response comes from.** The responder is the source of every response
 event it returns, buffered or as the rows of its stream. On each one the
 pipeline MUST write its `source` (the responder's channel id and channel type,
 with direction OUTBOUND), its room, its `chain_depth` (the trigger's plus one,
 §8.3) and, unless the channel named the event it answers, its `responds_to`;
-it clears its idempotency key (§13.4). A response typed `INSTRUCTION` does not
+it clears its idempotency key (§13.4). <!-- /rfc --><!-- rfc: {"id": "RK-8.5-015", "kind": "behavior", "applies": "§8.5 who a response comes from: a response typed INSTRUCTION, and its channel's other responses. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A response typed `INSTRUCTION` does not
 re-enter: it is dropped with a warning, and its channel's other responses
 re-enter as usual, since only the application issues instructions (§10.1.1)
 and one agent's answer would otherwise direct another in the application's
-name; an agent that wants another to act addresses its answer (§19.3.1). A
+name; an agent that wants another to act addresses its answer (§19.3.1). <!-- /rfc --><!-- rfc: {"id": "RK-8.5-016", "kind": "behavior", "applies": "§8.5 who a response comes from: a response that claims another source. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
 response that claims another source gets a fresh one, the responder's (its
 channel id and channel type, OUTBOUND), keeping nothing of the source it
 claimed, and the implementation logs a warning: the write check reads the
 source's binding (§7.5 rule 2), and a response committed under another
 channel's name would be checked against that channel's, while another
 channel's provider message id could be acted on by a native edit or delete
-(§10.3). A response under its own source keeps the fields its channel wrote
-(its participant, its provider, its raw payload, its provider message id). The
+(§10.3). <!-- /rfc --><!-- rfc: {"id": "RK-8.5-017", "kind": "behavior", "applies": "§8.5 who a response comes from: a response under its own source, and the fields its channel wrote. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A response under its own source keeps the fields its channel wrote
+(its participant, its provider, its raw payload, its provider message id). <!-- /rfc --><!-- rfc: {"id": "RK-8.5-018", "kind": "behavior", "applies": "§8.5 who a response comes from: a response's verification (§5.2, §11.7). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The
 pipeline clears `verification` on every response: it is a received sender's
-(§5.2, §11.7), and a response is no message received. A response, or a row of
+(§5.2, §11.7), and a response is no message received. <!-- /rfc --><!-- rfc: {"id": "RK-8.5-019", "kind": "behavior", "applies": "§8.5 who a response comes from: a response or a stream's row that carries the visibility internal (§7.3). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A response, or a row of
 a stream, that carries the visibility `internal`, which only the framework
 writes (§7.3), is committed with `none`, and the implementation logs a
 warning: it is stored and reaches no channel, as its channel asked, without
 the mark of the framework's own records.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-8.5-004", "kind": "behavior", "applies": "§8.5 Responses: What They Answer, and Whether They Were Consumed; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-8.5-020", "kind": "behavior", "applies": "§8.5 where a response may go: the cascade a message's or a direct injection's response_visibility (§5.12, §10.5) scopes, every response and record in it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Where a response may go.** The `response_visibility` of a message (§5.12),
 or of a direct injection (§10.5), scopes its whole cascade: each response to
 its event, or to the instruction it is (§10.1.1), and each answer to such a
 response at any depth, every channel's, a transport's included, each row of a
 stream, and the records stored in place of one past the chain-depth limit or
-the reentry budget (§8.3). It binds that cascade only: work that leaves it is
-a new cascade, which the scope does not follow (§5.12). As it writes a
+the reentry budget (§8.3). <!-- /rfc --><!-- rfc: {"id": "RK-8.5-021", "kind": "behavior", "applies": "§8.5 where a response may go: work that leaves the cascade (§5.12). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->It binds that cascade only: work that leaves it is
+a new cascade, which the scope does not follow (§5.12). <!-- /rfc --><!-- rfc: {"id": "RK-8.5-022", "kind": "behavior", "applies": "§8.5 where a response may go: the visibility a channel gives a response, intersected with the cascade's scope as the source is written (§7.3, §10.1 step 12). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->As it writes a
 response's source, the pipeline MUST intersect the visibility the channel
 gave the response with that scope (§7.3), a listed channel's category read
 from the room's bindings as the delivery plan that asked the channel read
 them (§10.1 step 12): the scope narrows what the channel gave, never widens
-it. The response carries the scope as its own `response_visibility` (§5.2),
+it. <!-- /rfc --><!-- rfc: {"id": "RK-8.5-023", "kind": "behavior", "applies": "§8.5 where a response may go: the response_visibility a response carries (§5.2), and a channel's internal. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The response carries the scope as its own `response_visibility` (§5.2),
 intersected with any its channel gave it, so that what answers the response
 stays within both; a channel's `internal` reads as `none`, as a hook's does
-(§9.4), since only the framework writes `internal` (§7.3). A response MUST
+(§9.4), since only the framework writes `internal` (§7.3). <!-- /rfc --><!-- rfc: {"id": "RK-8.5-024", "kind": "behavior", "applies": "§8.5 where a response may go: the visibility a response's hooks leave (§9.4). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A response MUST
 NOT be visible beyond its cascade's scope: its hooks may change its
 visibility (§9.4), and once they are over the pipeline MUST intersect the
-visibility they left with the scope again. The
-commit then narrows the response to its source binding's (§7.3). Only a null
+visibility they left with the scope again. <!-- /rfc --><!-- rfc: {"id": "RK-8.5-025", "kind": "behavior", "applies": "§8.5 where a response may go: the commit and the response's source binding (§7.3). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The
+commit then narrows the response to its source binding's (§7.3). <!-- /rfc --><!-- rfc: {"id": "RK-8.5-026", "kind": "behavior", "applies": "§8.5 where a response may go: a null, an empty and a stray response_visibility (§7.3). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Only a null
 `response_visibility` restricts nothing: an empty one is refused at the
 doors, and one that reaches an event any other way reads as `none` (§7.3).
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-8.5-005", "kind": "behavior", "applies": "§8.5 Responses: What They Answer, and Whether They Were Consumed; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-8.5-027", "kind": "behavior", "applies": "§8.5 what the turn is told: BEFORE_AI_GENERATION and the event the turn answers. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **What the turn is told.** `BEFORE_AI_GENERATION` receives, with the turn's
 context, the event the turn answers (`trigger`), so a hook can tell the model
-what this turn answers, and that another answer in the room is under way. A
+what this turn answers, and that another answer in the room is under way. <!-- /rfc --><!-- rfc: {"id": "RK-8.5-028", "kind": "behavior", "applies": "§8.5 what the turn is told: a stand-in an orchestration strategy hands a turn in place of the event it answers (Section 19.7). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
 stand-in an orchestration strategy hands a turn in place of the event it
 answers (a supervisor's workers' results, Section 19.7) names that event in its
 own `responds_to`, which is what the turn's answer names.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-8.5-006", "kind": "behavior", "applies": "§8.5 Responses: What They Answer, and Whether They Were Consumed; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-8.5-006", "kind": "behavior", "applies": "§8.5 consumption: Planned, which no implementation records yet; the voice, read receipt and conference parts it describes are media. Enclosing capability conditions and §26 levels still apply."} -->
 **Consumption (Planned).** No implementation records consumption yet: a
 RoomEvent carries no `consumption`, and `ON_CONSUMPTION` does not fire. This
 paragraph is what it will be. A response is delivered to channels (Section
