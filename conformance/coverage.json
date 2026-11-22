@@ -1,9 +1,9 @@
 {
   "version": 1,
-  "rfc_sha256": "54314e69fcee0fa3188b32a5b05d1d540035825d8084570fd292d11d23299f77",
-  "corpus_sha256": "6ff6af89d86a7453d415946a33b349ba061150f1a388b6c626f374da58fe6e8b",
+  "rfc_sha256": "e4e2ba83cd6fdb5c676c112ee9f309c0c331bdfeee2229bbf84d9d2a02d5ecb4",
+  "corpus_sha256": "360fd517be6e4d5f85083d34d4ab6299cfa85c12375ded52ea7fbdb2b5bfb8a1",
   "python_commit": "1bb12d025296ee1c5f14b82267462fc4d13104a6",
-  "scenario_count": 3390,
+  "scenario_count": 3391,
   "sections": [
     {
       "section": "0",
@@ -4383,6 +4383,7 @@
         "identity/a-pending-sender-cannot-take-an-identity-s-record",
         "identity/a-rejection-blocks-the-message",
         "identity/a-resolver-past-its-timeout-reads-unknown",
+        "identity/a-resolver-s-pending-asks-the-ambiguous-identity-hooks",
         "identity/a-resolver-s-rejection-holds-the-message-no-hook-answers",
         "identity/a-resolver-that-challenged-holds-the-message",
         "identity/a-sender-s-own-record-names-them-on-its-channel",
@@ -5874,9 +5875,9 @@
       "section": "11.2",
       "title": "Resolution Pipeline",
       "review": "normative",
-      "requirements": 21,
+      "requirements": 22,
       "mapping": {
-        "unmapped": 21
+        "unmapped": 22
       },
       "decided_gaps": {
         "writable": 1
@@ -5888,6 +5889,7 @@
         "identity/a-member-the-host-left-pending-keeps-their-record",
         "identity/a-pending-sender-cannot-take-an-identity-s-record",
         "identity/a-rejection-blocks-the-message",
+        "identity/a-resolver-s-pending-asks-the-ambiguous-identity-hooks",
         "identity/a-resolver-s-rejection-holds-the-message-no-hook-answers",
         "identity/a-resolver-that-challenged-holds-the-message",
         "identity/an-ambiguous-sender-no-hook-names-is-pending",
@@ -27049,6 +27051,12 @@
     },
     {
       "id": "RK-11.2-008",
+      "section": "11.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.2-023",
       "section": "11.2",
       "mapping": "unmapped",
       "links": []
