@@ -129,7 +129,7 @@
     "RK-13.2-002": {
       "class": "writable",
       "card": "RMK-1965",
-      "note": "store.update_binding sets a binding's retry_policy, whose fields and exponential_base default a retried delivery shows."
+      "note": "store.update_binding sets a binding's retry_policy, whose fields and exponential_base default the call's result or a bindings expectation reads."
     },
     "RK-13.2-003": {
       "class": "step",

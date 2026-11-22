@@ -4171,8 +4171,7 @@
       "rooms/a-hook-that-closes-the-room-refuses-its-event": "9e5549b01aad803657ac032df5f41ac43094377f5ab3961f2518ff3f7717c1de"
     },
     "RK-13.5-023": {
-      "reentrancy/a-call-under-a-lock-the-host-holds-commits-what-its-hooks-inject-once-the-host-released-it": "4a4715ed6b246b0b68e34a8ac0c88b04be73dcfcb4ad3ed1a95e7e8a07c1cee7",
-      "reentrancy/each-call-under-a-lock-the-host-holds-draws-on-a-budget-of-its-own": "4a4715ed6b246b0b68e34a8ac0c88b04be73dcfcb4ad3ed1a95e7e8a07c1cee7"
+      "reentrancy/a-call-under-a-lock-the-host-holds-commits-what-its-hooks-inject-once-the-host-released-it": "4a4715ed6b246b0b68e34a8ac0c88b04be73dcfcb4ad3ed1a95e7e8a07c1cee7"
     },
     "RK-13.5-026": {
       "locks/a-set-waiting-on-another-process-s-index-takes-its-turn-once-its-room-is-deleted": "3629538108415adaaf39a424495759954d3993de3b6efa8c69c2c59aea3ab3a6",
@@ -4256,6 +4255,7 @@
     },
     "RK-13.6-007": {
       "delivery/a-call-a-parse-awaits-before-its-commit-ends-at-its-message-s-deadline": "643c5e54caa2601375ea430678c092b5af0ae5725bb358b756150d108a0efa0e",
+      "delivery/a-call-adopted-after-the-decision-ends-at-its-own-deadline": "643c5e54caa2601375ea430678c092b5af0ae5725bb358b756150d108a0efa0e",
       "delivery/a-cancelled-call-refused-past-its-timeout-reports-the-refusal": "643c5e54caa2601375ea430678c092b5af0ae5725bb358b756150d108a0efa0e",
       "delivery/a-deferred-adopted-call-before-its-commit-ends-at-its-adopter-s-deadline": "643c5e54caa2601375ea430678c092b5af0ae5725bb358b756150d108a0efa0e",
       "delivery/a-deferred-call-refused-under-the-lock-does-not-wait-for-its-adopted-call": "643c5e54caa2601375ea430678c092b5af0ae5725bb358b756150d108a0efa0e",
@@ -4289,16 +4289,31 @@
     },
     "RK-13.6-008": {
       "delivery/a-call-a-parse-awaits-before-its-commit-ends-at-its-message-s-deadline": "510ba0961ff0b0a5b3c04fb0917d431cf81b982e1c7eced7ad6ece03dc618158",
+      "delivery/a-call-adopted-after-the-decision-ends-at-its-own-deadline": "510ba0961ff0b0a5b3c04fb0917d431cf81b982e1c7eced7ad6ece03dc618158",
       "delivery/a-cancelled-call-refused-past-its-timeout-reports-the-refusal": "510ba0961ff0b0a5b3c04fb0917d431cf81b982e1c7eced7ad6ece03dc618158",
       "delivery/a-deferred-adopted-call-before-its-commit-ends-at-its-adopter-s-deadline": "510ba0961ff0b0a5b3c04fb0917d431cf81b982e1c7eced7ad6ece03dc618158",
+      "delivery/a-deferred-call-refused-under-the-lock-does-not-wait-for-its-adopted-call": "510ba0961ff0b0a5b3c04fb0917d431cf81b982e1c7eced7ad6ece03dc618158",
+      "delivery/a-hook-waiting-on-an-adopted-call-whose-answer-sends-into-the-room-ends-at-the-timeout": "510ba0961ff0b0a5b3c04fb0917d431cf81b982e1c7eced7ad6ece03dc618158",
       "delivery/a-nested-call-before-its-commit-ends-at-its-caller-s-deadline": "510ba0961ff0b0a5b3c04fb0917d431cf81b982e1c7eced7ad6ece03dc618158",
+      "delivery/an-adopted-call-cut-by-its-key-past-its-adopter-s-deadline": "510ba0961ff0b0a5b3c04fb0917d431cf81b982e1c7eced7ad6ece03dc618158",
+      "delivery/an-adopted-call-cut-past-its-adopter-s-deadline": "510ba0961ff0b0a5b3c04fb0917d431cf81b982e1c7eced7ad6ece03dc618158",
+      "delivery/an-adopted-call-past-the-budget-before-its-commit-ends-at-its-adopter-s-deadline": "510ba0961ff0b0a5b3c04fb0917d431cf81b982e1c7eced7ad6ece03dc618158",
+      "delivery/an-adopted-call-read-at-its-adopter-s-deadline-commits-its-answer": "510ba0961ff0b0a5b3c04fb0917d431cf81b982e1c7eced7ad6ece03dc618158",
       "delivery/an-adopted-call-read-past-its-adopter-s-deadline-holds-no-other-room": "510ba0961ff0b0a5b3c04fb0917d431cf81b982e1c7eced7ad6ece03dc618158",
+      "delivery/an-adopted-call-read-when-its-adopter-s-deadline-passes-under-the-lock": "510ba0961ff0b0a5b3c04fb0917d431cf81b982e1c7eced7ad6ece03dc618158",
+      "delivery/an-adopted-call-s-answer-outlives-a-deadline-passed-under-the-lock": "510ba0961ff0b0a5b3c04fb0917d431cf81b982e1c7eced7ad6ece03dc618158",
       "delivery/an-awaited-adopted-call-before-its-commit-ends-at-its-adopter-s-deadline": "510ba0961ff0b0a5b3c04fb0917d431cf81b982e1c7eced7ad6ece03dc618158",
+      "delivery/the-key-of-a-call-refused-at-its-deadline-names-no-delivery": "510ba0961ff0b0a5b3c04fb0917d431cf81b982e1c7eced7ad6ece03dc618158",
+      "greeting/a-greeting-read-past-process-timeout-expires-its-message": "510ba0961ff0b0a5b3c04fb0917d431cf81b982e1c7eced7ad6ece03dc618158",
       "greeting/a-session-hook-past-process-timeout-expires-its-message": "510ba0961ff0b0a5b3c04fb0917d431cf81b982e1c7eced7ad6ece03dc618158",
       "hooks/a-timeout-drops-already-collected-injections": "510ba0961ff0b0a5b3c04fb0917d431cf81b982e1c7eced7ad6ece03dc618158",
+      "hooks/a-wait-for-an-admission-ticket-counts-against-process-timeout": "510ba0961ff0b0a5b3c04fb0917d431cf81b982e1c7eced7ad6ece03dc618158",
+      "idempotency/a-precommit-timeout-reserves-neither-key-nor-index": "510ba0961ff0b0a5b3c04fb0917d431cf81b982e1c7eced7ad6ece03dc618158",
       "locks/a-call-refused-at-its-deadline-carries-its-attach-s-failed-release": "510ba0961ff0b0a5b3c04fb0917d431cf81b982e1c7eced7ad6ece03dc618158",
       "locks/a-call-refused-at-its-deadline-carries-its-lock-s-failed-release": "510ba0961ff0b0a5b3c04fb0917d431cf81b982e1c7eced7ad6ece03dc618158",
+      "locks/a-deferred-call-refused-at-its-deadline-beside-an-adopted-call-carries-its-lock-s-failed-release": "510ba0961ff0b0a5b3c04fb0917d431cf81b982e1c7eced7ad6ece03dc618158",
       "locks/a-deferred-call-refused-at-its-deadline-carries-its-lock-s-failed-release": "510ba0961ff0b0a5b3c04fb0917d431cf81b982e1c7eced7ad6ece03dc618158",
+      "reentrancy/a-call-an-off-lock-hook-s-task-makes-outlives-the-event-refused-at-its-deadline": "510ba0961ff0b0a5b3c04fb0917d431cf81b982e1c7eced7ad6ece03dc618158",
       "resilience/a-committed-event-stays-delivered-past-process-timeout": "510ba0961ff0b0a5b3c04fb0917d431cf81b982e1c7eced7ad6ece03dc618158",
       "resilience/process-timeout-covers-the-inbound-parser": "510ba0961ff0b0a5b3c04fb0917d431cf81b982e1c7eced7ad6ece03dc618158",
       "resilience/process-timeout-stores-nothing": "510ba0961ff0b0a5b3c04fb0917d431cf81b982e1c7eced7ad6ece03dc618158",
