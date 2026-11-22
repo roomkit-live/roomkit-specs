@@ -1,4 +1,257 @@
 {
   "version": 1,
-  "units": {}
+  "units": {
+    "RK-8.1-008": {
+      "class": "step",
+      "card": "RMK-1912",
+      "note": "Needs a persistent store shared by two connections or processes."
+    },
+    "RK-8.1-009": {
+      "class": "step",
+      "card": "RMK-1912",
+      "note": "Needs an error name for a duplicate (room_id, index) in the runners' table."
+    },
+    "RK-8.1-012": {
+      "class": "writable",
+      "card": "RMK-1912",
+      "note": "Hooks read the inbound id it is committed with, and a reused id gets a fresh one."
+    },
+    "RK-8.1-013": {
+      "class": "step",
+      "card": "RMK-1912",
+      "note": "Needs a transport provider's parse."
+    },
+    "RK-8.2-012": {
+      "class": "step",
+      "card": "RMK-1912",
+      "note": "Needs WebSocket connection registry steps; roomkit-rs lacks the helpers."
+    },
+    "RK-8.2-013": {
+      "class": "step",
+      "card": "RMK-1912",
+      "note": "Needs WebSocket connection registry steps; roomkit-rs lacks the helpers."
+    },
+    "RK-8.2-014": {
+      "class": "step",
+      "card": "RMK-1912",
+      "note": "Needs a scripted source provider; roomkit-rs lacks sources."
+    },
+    "RK-8.2-015": {
+      "class": "step",
+      "card": "RMK-1912",
+      "note": "Needs a scripted source provider; roomkit-rs lacks sources."
+    },
+    "RK-8.2-016": {
+      "class": "step",
+      "card": "RMK-1912",
+      "note": "Needs a scripted source provider; roomkit-rs lacks sources."
+    },
+    "RK-8.2-017": {
+      "class": "step",
+      "card": "RMK-1912",
+      "note": "Needs a scripted source provider; roomkit-rs lacks sources."
+    },
+    "RK-8.2-018": {
+      "class": "step",
+      "card": "RMK-1912",
+      "note": "Needs a scripted source provider; roomkit-rs lacks sources."
+    },
+    "RK-8.2-019": {
+      "class": "step",
+      "card": "RMK-1912",
+      "note": "Needs a scripted source provider; roomkit-rs lacks sources."
+    },
+    "RK-8.2-043": {
+      "class": "step",
+      "card": "RMK-1912",
+      "note": "Needs a circuit breaker on a scripted transport."
+    },
+    "RK-8.2-044": {
+      "class": "step",
+      "card": "RMK-1912",
+      "note": "Needs a circuit breaker on a scripted transport."
+    },
+    "RK-8.2-045": {
+      "class": "phase6",
+      "card": "RMK-1912"
+    },
+    "RK-8.2-046": {
+      "class": "phase6",
+      "card": "RMK-1912"
+    },
+    "RK-8.2-047": {
+      "class": "phase6",
+      "card": "RMK-1912"
+    },
+    "RK-8.2-048": {
+      "class": "phase6",
+      "card": "RMK-1912"
+    },
+    "RK-8.2-049": {
+      "class": "phase6",
+      "card": "RMK-1912"
+    },
+    "RK-8.2-050": {
+      "class": "phase6",
+      "card": "RMK-1912"
+    },
+    "RK-8.2-051": {
+      "class": "phase6",
+      "card": "RMK-1912"
+    },
+    "RK-8.2-052": {
+      "class": "phase6",
+      "card": "RMK-1912"
+    },
+    "RK-8.2-053": {
+      "class": "phase6",
+      "card": "RMK-1912"
+    },
+    "RK-8.2-054": {
+      "class": "phase6",
+      "card": "RMK-1912"
+    },
+    "RK-8.2-055": {
+      "class": "phase6",
+      "card": "RMK-1912"
+    },
+    "RK-8.2-056": {
+      "class": "phase6",
+      "card": "RMK-1912"
+    },
+    "RK-8.2-057": {
+      "class": "phase6",
+      "card": "RMK-1912"
+    },
+    "RK-8.2-058": {
+      "class": "phase6",
+      "card": "RMK-1912"
+    },
+    "RK-8.2-059": {
+      "class": "phase6",
+      "card": "RMK-1912"
+    },
+    "RK-8.3-012": {
+      "class": "phase6",
+      "card": "RMK-1912"
+    },
+    "RK-8.3-015": {
+      "class": "writable",
+      "card": "RMK-1912",
+      "note": "An ASYNC body's direct change fires triggers whose hooks send under the same floor."
+    },
+    "RK-8.3-016": {
+      "class": "writable",
+      "card": "RMK-1912",
+      "note": "A task a post-delivery hook body spawns calls at its own depth once the body is over."
+    },
+    "RK-8.3-018": {
+      "class": "writable",
+      "card": "RMK-1912",
+      "note": "A task a hook body spawns has the floor while the body runs, its own depth after."
+    },
+    "RK-8.3-019": {
+      "class": "writable",
+      "card": "RMK-1912",
+      "note": "A hook a turn executor fires carries its floor with the host verb it makes."
+    },
+    "RK-8.3-021": {
+      "class": "writable",
+      "card": "RMK-1912",
+      "note": "A task a framework event handler spawns calls at its own depth once the handler returned."
+    },
+    "RK-8.3-030": {
+      "class": "writable",
+      "card": "RMK-1912",
+      "note": "A non-intelligence channel's responses at the limit are stored BLOCKED."
+    },
+    "RK-8.3-031": {
+      "class": "phase6",
+      "card": "RMK-1912"
+    },
+    "RK-8.3-032": {
+      "class": "phase6",
+      "card": "RMK-1912"
+    },
+    "RK-8.3-033": {
+      "class": "phase6",
+      "card": "RMK-1912"
+    },
+    "RK-8.3-034": {
+      "class": "phase6",
+      "card": "RMK-1912"
+    },
+    "RK-8.3-044": {
+      "class": "writable",
+      "card": "RMK-1912",
+      "note": "Work a hook body spawns has its own depth and, once the delivery is over, its own budget."
+    },
+    "RK-8.3-046": {
+      "class": "phase6",
+      "card": "RMK-1912"
+    },
+    "RK-8.3-047": {
+      "class": "phase6",
+      "card": "RMK-1912"
+    },
+    "RK-8.3-051": {
+      "class": "writable",
+      "card": "RMK-1912",
+      "note": "A channel whose responses are blocked at the limit still has its side effects collected."
+    },
+    "RK-8.4-010": {
+      "class": "step",
+      "card": "RMK-1912",
+      "note": "Needs the in-memory realtime backend's options (its queue bound)."
+    },
+    "RK-8.4-014": {
+      "class": "writable",
+      "card": "RMK-1912",
+      "note": "A subscription made while no room held the id reads the room created under it."
+    },
+    "RK-8.4-015": {
+      "class": "step",
+      "card": "RMK-1912",
+      "note": "Needs a step that publishes on the backend directly, with no creation mark."
+    },
+    "RK-8.4-021": {
+      "class": "step",
+      "card": "RMK-1912",
+      "note": "Needs a slow or stuck realtime backend."
+    },
+    "RK-8.4-036": {
+      "class": "writable",
+      "card": "RMK-1912",
+      "note": "A turn whose ephemerals are withheld still emits its framework events."
+    },
+    "RK-8.5-011": {
+      "class": "writable",
+      "card": "RMK-1912",
+      "note": "A buffered answer whose channel named responds_to keeps it."
+    },
+    "RK-8.5-013": {
+      "class": "phase6",
+      "card": "RMK-1912"
+    },
+    "RK-8.5-016": {
+      "class": "writable",
+      "card": "RMK-1912",
+      "note": "A response that claims another source gets the responder's."
+    },
+    "RK-8.5-017": {
+      "class": "writable",
+      "card": "RMK-1912",
+      "note": "A response under its own source keeps the fields its channel wrote."
+    },
+    "RK-8.5-018": {
+      "class": "writable",
+      "card": "RMK-1912",
+      "note": "A verified sender's message is answered with verification cleared."
+    },
+    "RK-8.5-021": {
+      "class": "writable",
+      "card": "RMK-1912",
+      "note": "Work that leaves a scoped cascade is not scoped."
+    }
+  }
 }

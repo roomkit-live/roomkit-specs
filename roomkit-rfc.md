@@ -4920,9 +4920,9 @@ that is monotonically increasing within each room.
   assignment authoritative at the storage layer: a `UNIQUE(room_id, index)`
   constraint, with the index computed and the event inserted in a **single
   storage transaction**, so concurrent writers serialize on the store rather
-  than on an in-process lock.<!-- /rfc --><!-- rfc: {"id": "RK-8.1-009", "kind": "behavior", "applies": "§8.1 sequential indexing: a store handed an event whose (room_id, index) it already holds. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+  than on an in-process lock.<!-- /rfc --><!-- rfc: {"id": "RK-8.1-009", "kind": "behavior", "applies": "§8.1 sequential indexing: a store handed an event whose (room_id, index) it already holds; the list's last item, what the index serves, is informative. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - A duplicate `(room_id, index)` MUST be rejected by the store (the constraint
-  violation surfaced to the caller), never silently persisted.<!-- /rfc --><!-- rfc: {"id": "RK-8.1-010", "kind": "behavior", "applies": "§8.1 sequential indexing: informative, what the index serves; a hard delete's gaps are RK-8.1-005's. Enclosing capability conditions and §26 levels still apply."} -->
+  violation surfaced to the caller), never silently persisted.
 - The `index` enables pagination, read horizon tracking, and gap detection;
   a hard delete's gaps are expected (§14.3).
 <!-- /rfc -->
@@ -5083,13 +5083,11 @@ would have replayed, null when nothing qualified.
 
 ### 8.3 Event Chain Depth
 
-<!-- rfc: {"id": "RK-8.3-001", "kind": "behavior", "applies": "§8.3: informative, what an event chain is; the units of §8.3 that follow carry its rules. Enclosing capability conditions and §26 levels still apply."} -->
+<!-- rfc: {"id": "RK-8.3-008", "kind": "behavior", "applies": "§8.3: what an event chain is (informative), and the chain depth tracking of an event from external inbound (human messages, webhooks). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 When a channel produces a response event (e.g., AI responds to a message),
 that response may trigger further responses from other channels. This creates
 an event chain.
-<!-- /rfc -->
 
-<!-- rfc: {"id": "RK-8.3-008", "kind": "behavior", "applies": "§8.3 chain depth tracking: an event from external inbound (human messages, webhooks). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Chain depth tracking:**
 
 - Events from external inbound (human messages, webhooks) have `chain_depth = 0`.<!-- /rfc --><!-- rfc: {"id": "RK-8.3-009", "kind": "behavior", "applies": "§8.3 chain depth tracking: an event a channel produces in answer to another, on every path the item lists; a speech-to-speech provider's transcription (Section 12.4) is the voice feature's (media). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
@@ -5472,7 +5470,7 @@ a delegated task's trace, whose rows no hook judges either.
 
 ### 8.5 Responses: What They Answer, and Whether They Were Consumed
 
-<!-- rfc: {"id": "RK-8.5-001", "kind": "behavior", "applies": "§8.5: informative, why an answer names the event it answers; the rules are in the units of §8.5 that follow, consumption is Planned. Enclosing capability conditions and §26 levels still apply."} -->
+<!-- rfc: {"id": "RK-8.5-007", "kind": "behavior", "applies": "§8.5: why an answer names the event it answers (informative), and what a response answers: every event an intelligence channel produces for a turn (each message, streamed segment and tool row). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 An intelligence channel answers events: a participant's message, an
 instruction (Section 10.1.1), a delegated task's hand-back (Section 23.3).
 Several answers can be under way in one room at once: the room lock does not
@@ -5480,9 +5478,7 @@ cover generation (Section 13.5). An answer therefore says which event it
 answers, so a host can tell each turn what it answers and where the room's
 other requests stand: answered or being answered. Whether each answer reached
 the person it was delivered to is its consumption (Planned, below).
-<!-- /rfc -->
 
-<!-- rfc: {"id": "RK-8.5-007", "kind": "behavior", "applies": "§8.5 what a response answers: every event an intelligence channel produces for a turn (each message, streamed segment and tool row). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **What a response answers.** Every event an intelligence channel produces for a
 turn (each message, streamed segment and tool row of it) MUST carry
 `responds_to`: the id of the event that triggered the turn. <!-- /rfc --><!-- rfc: {"id": "RK-8.5-008", "kind": "behavior", "applies": "§8.5 what a response answers: an answer to an instruction (Section 10.1.1). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An instruction is
@@ -5553,13 +5549,11 @@ doors, and one that reaches an event any other way reads as `none` (§7.3).
 <!-- rfc: {"id": "RK-8.5-027", "kind": "behavior", "applies": "§8.5 what the turn is told: BEFORE_AI_GENERATION and the event the turn answers. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **What the turn is told.** `BEFORE_AI_GENERATION` receives, with the turn's
 context, the event the turn answers (`trigger`), so a hook can tell the model
-what this turn answers, and that another answer in the room is under way. <!-- /rfc --><!-- rfc: {"id": "RK-8.5-028", "kind": "behavior", "applies": "§8.5 what the turn is told: a stand-in an orchestration strategy hands a turn in place of the event it answers (Section 19.7). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
+what this turn answers, and that another answer in the room is under way. <!-- /rfc --><!-- rfc: {"id": "RK-8.5-028", "kind": "behavior", "applies": "§8.5 what the turn is told: a stand-in an orchestration strategy hands a turn in place of the event it answers (Section 19.7); the consumption paragraph that follows is Planned, recorded by no implementation, and obliges nothing yet (its voice, read receipt and conference parts are media). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
 stand-in an orchestration strategy hands a turn in place of the event it
 answers (a supervisor's workers' results, Section 19.7) names that event in its
 own `responds_to`, which is what the turn's answer names.
-<!-- /rfc -->
 
-<!-- rfc: {"id": "RK-8.5-006", "kind": "behavior", "applies": "§8.5 consumption: Planned, which no implementation records yet; the voice, read receipt and conference parts it describes are media. Enclosing capability conditions and §26 levels still apply."} -->
 **Consumption (Planned).** No implementation records consumption yet: a
 RoomEvent carries no `consumption`, and `ON_CONSUMPTION` does not fire. This
 paragraph is what it will be. A response is delivered to channels (Section

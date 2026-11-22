@@ -309,9 +309,9 @@
     },
     {
       "section": "8.1",
-      "sha256": "1cd03b648f56c600798b29d416c2c5fbf6219b5cbd4f2cd57a2f958d28cea8f1",
+      "sha256": "45b11def3ce6681c76987970933edae1727be89589543163784e17f94f0855b4",
       "classification": "normative",
-      "review": "Source inventory: Room Events, split to one obligation per unit (RMK-1904). RK-8.1-001 keeps the room event's storage with an increasing index; the sequential indexing list gives a unit per item, the atomic item split between assignment within a room (RK-8.1-007) and a store shared across processes (RK-8.1-008); the event ids paragraph gives the pipeline's id, when each event takes it, where a provider's identifier goes and the record outside the pipeline. RK-8.1-010, which says what the index serves, holds no obligation and has no level. Every other unit carries its level, must."
+      "review": "Source inventory: Room Events, split to one obligation per unit (RMK-1904). RK-8.1-001 keeps the room event's storage with an increasing index; the sequential indexing list gives a unit per item, the atomic item split between assignment within a room (RK-8.1-007) and a store shared across processes (RK-8.1-008); the event ids paragraph gives the pipeline's id, when each event takes it, where a provider's identifier goes and the record outside the pipeline. The list's last item, what the index serves, holds no obligation and is folded into RK-8.1-009 (RK-8.1-010 retired). Every unit carries its level, must."
     },
     {
       "section": "8.2",
@@ -321,9 +321,9 @@
     },
     {
       "section": "8.3",
-      "sha256": "e55b4f19b4cc23df65c96b80b6989975828f30cbcca63159f469bea152ad61fb",
+      "sha256": "8ff971ec3bf2ea444e78e891c2542bbfb26e628508aceb70ee80df684659ed55",
       "classification": "normative",
-      "review": "Source inventory: Event Chain Depth, split to one obligation per unit (RMK-1904). RK-8.3-001, which defines an event chain, holds no obligation and has no level. The depth tracking list gives a unit per item and per floor (turn, tool call outside a turn, hook bodies, handlers of framework events, and where each floor ends); the at-the-limit rules, the reentry cap and the hook calls of a cascade a unit per sentence, the record stored at the limit a unit per member; the requirements list a unit per obligation. The realtime voice, conference and TTS parts that stand in sentences of their own are media units (RK-8.3-012, 031 to 034, 046, 047); the speech-to-speech paths named inside a sentence stay in their unit. RK-8.3-004 stays one unit. Every other unit carries its level, must."
+      "review": "Source inventory: Event Chain Depth, split to one obligation per unit (RMK-1904). The definition of an event chain, which holds no obligation, is folded into RK-8.3-008 (RK-8.3-001 retired). The depth tracking list gives a unit per item and per floor (turn, tool call outside a turn, hook bodies, handlers of framework events, and where each floor ends); the at-the-limit rules, the reentry cap and the hook calls of a cascade a unit per sentence, the record stored at the limit a unit per member; the requirements list a unit per obligation. The realtime voice, conference and TTS parts that stand in sentences of their own are media units (RK-8.3-012, 031 to 034, 046, 047); the speech-to-speech paths named inside a sentence stay in their unit. RK-8.3-004 stays one unit. Every unit carries its level, must."
     },
     {
       "section": "8.4",
@@ -333,9 +333,9 @@
     },
     {
       "section": "8.5",
-      "sha256": "c8d144b0e4e3da7695b2c37b629e05732e7a23e8af945ab152e7a0a211d5ae80",
+      "sha256": "b70ba1c8ff8d2ded07b29bf62d749108652dafba90a7759e76fec0d839d1d455",
       "classification": "normative",
-      "review": "Source inventory: Responses: What They Answer, and Whether They Were Consumed, split to one obligation per unit (RMK-1904). RK-8.5-001, the rationale, and RK-8.5-006, consumption, which is Planned and recorded by no implementation, hold no obligation and have no level. What a response answers, who it comes from, where it may go and what the turn is told give a unit per sentence, a consequence kept with its rule; the speech-to-speech exemption is a media unit (RK-8.5-013). Every other unit carries its level, must."
+      "review": "Source inventory: Responses: What They Answer, and Whether They Were Consumed, split to one obligation per unit (RMK-1904). The rationale, which holds no obligation, is folded into RK-8.5-007, and consumption, Planned and recorded by no implementation, into RK-8.5-028 (RK-8.5-001 and RK-8.5-006 retired). What a response answers, who it comes from, where it may go and what the turn is told give a unit per sentence, a consequence kept with its rule; the speech-to-speech exemption is a media unit (RK-8.5-013). Every unit carries its level, must."
     },
     {
       "section": "9",
