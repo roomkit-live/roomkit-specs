@@ -2683,6 +2683,191 @@
       "card": "RMK-1911",
       "note": "A scenario can store the cut record through the store calls (a binding and an internal event of a voice channel) on Python today; roomkit-rs reads no cut record, so the scenario needs a requires_features name in both runners' feature tables (decision D1), which lot T-1 does not add."
     },
+    "RK-6.4-224": {
+      "class": "writable",
+      "card": "RMK-1940",
+      "note": "A hook under Tool Search that removes a tool from the first round's declaration only, the tool still found and declared."
+    },
+    "RK-6.4-230": {
+      "class": "phase6",
+      "card": "RMK-1940",
+      "note": "Media feature realtime."
+    },
+    "RK-6.4-237": {
+      "class": "phase6",
+      "card": "RMK-1940",
+      "note": "Media feature realtime."
+    },
+    "RK-6.4-242": {
+      "class": "writable",
+      "card": "RMK-1940",
+      "note": "An ACP agent's turn under an ON_AI_RESPONSE hook, its declared_tools empty."
+    },
+    "RK-6.4-259": {
+      "class": "step",
+      "card": "RMK-1940",
+      "note": "Needs a scripted AFTER_TOOL_ROUND hook whose MODIFY returns no event, in both runners."
+    },
+    "RK-6.4-262": {
+      "class": "writable",
+      "card": "RMK-1940",
+      "note": "An ACP agent's turn with an AFTER_TOOL_ROUND hook registered, the hook never called; a reasoning backend's agent needs the realtime feature."
+    },
+    "RK-6.4-264": {
+      "class": "writable",
+      "card": "RMK-1940",
+      "note": "A later turn after a BEFORE_TOOL_USE rewrite, its replayed call holding the model's arguments."
+    },
+    "RK-6.4-265": {
+      "class": "writable",
+      "card": "RMK-1940",
+      "note": "A later turn after an ON_TOOL_CALL rewrite or an evicted result, its replayed result the one the model read."
+    },
+    "RK-6.4-270": {
+      "class": "writable",
+      "card": "RMK-1940",
+      "note": "A history window shorter than the turns, the round before it not replayed."
+    },
+    "RK-6.4-284": {
+      "class": "step",
+      "card": "RMK-1940",
+      "note": "Needs a scripted model that refuses an image before any request leaves, in both runners."
+    },
+    "RK-6.4-287": {
+      "class": "step",
+      "card": "RMK-1940",
+      "note": "Needs a scripted BEFORE_AI_GENERATION hook that adds a block to the turn's notes, in both runners."
+    },
+    "RK-6.4-294": {
+      "class": "phase6",
+      "card": "RMK-1940",
+      "note": "Media feature realtime."
+    },
+    "RK-6.4-298": {
+      "class": "writable",
+      "card": "RMK-1940",
+      "note": "Two turns over one participant's copy of a mark, the same replacement in both requests."
+    },
+    "RK-6.4-299": {
+      "class": "writable",
+      "card": "RMK-1940",
+      "note": "A tool's result and the agent's text between calls holding a mark's words, replayed as written."
+    },
+    "RK-6.4-301": {
+      "class": "writable",
+      "card": "RMK-1940",
+      "note": "A standalone instruction's turn on an agent with a memory provider, no memory in its request."
+    },
+    "RK-6.4-306": {
+      "class": "step",
+      "card": "RMK-1940",
+      "note": "Needs a scripted transport provider that opens a string as a local path, in both runners, and a requires_features name such as transport_provider (decision D1)."
+    },
+    "RK-6.4-316": {
+      "class": "step",
+      "card": "RMK-1940",
+      "note": "Needs an attached-media reader that fails, in both runners."
+    },
+    "RK-6.4-326": {
+      "class": "writable",
+      "card": "RMK-1940",
+      "note": "A memory budget counting an author's image and a media's mention."
+    },
+    "RK-6.4-342": {
+      "class": "writable",
+      "card": "RMK-1940",
+      "note": "A memory compaction between rounds, then an overflow, the call's compacted replay kept."
+    },
+    "RK-6.4-354": {
+      "class": "step",
+      "card": "RMK-1940",
+      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+    },
+    "RK-6.4-355": {
+      "class": "writable",
+      "card": "RMK-1940",
+      "note": "A text cut short through a block, naming the block instead."
+    },
+    "RK-6.4-357": {
+      "class": "writable",
+      "card": "RMK-1940",
+      "note": "A tool whose description holds a block tag, declared as written and never framed."
+    },
+    "RK-6.4-362": {
+      "class": "writable",
+      "card": "RMK-1940",
+      "note": "A participant's message with a carriage return and a Unicode line separator, each line labelled."
+    },
+    "RK-6.4-365": {
+      "class": "writable",
+      "card": "RMK-1940",
+      "note": "An ACP agent's request from two participants, each line labelled."
+    },
+    "RK-6.4-366": {
+      "class": "writable",
+      "card": "RMK-1940",
+      "note": "One room read by the conversation and an ACP agent, the same labels at the same threshold."
+    },
+    "RK-6.4-368": {
+      "class": "phase6",
+      "card": "RMK-1940",
+      "note": "Media feature conference."
+    },
+    "RK-6.4-372": {
+      "class": "writable",
+      "card": "RMK-1940",
+      "note": "SpeakTurn.people in a speak policy's snapshot with two people taking part."
+    },
+    "RK-6.4-374": {
+      "class": "writable",
+      "card": "RMK-1940",
+      "note": "Two requests in one ACP session, the second labelled and the note given once."
+    },
+    "RK-6.4-376": {
+      "class": "writable",
+      "card": "RMK-1940",
+      "note": "A memory summary joined to a labelled turn, its label out of the quote in the compaction's rendering."
+    },
+    "RK-6.4-380": {
+      "class": "writable",
+      "card": "RMK-1940",
+      "note": "Three senders, one name reading like the two others, ranked after both."
+    },
+    "RK-6.4-382": {
+      "class": "writable",
+      "card": "RMK-1940",
+      "note": "A participant renamed after a turn, the earlier turn keeping its recorded name."
+    },
+    "RK-6.4-391": {
+      "class": "writable",
+      "card": "RMK-1940",
+      "note": "A deferred-loading model and a compaction that summarizes a referencing result away."
+    },
+    "RK-6.4-394": {
+      "class": "writable",
+      "card": "RMK-1940",
+      "note": "A reopening exchange under a deferred-loading model, absent from the timeline and the tool counts."
+    },
+    "RK-6.4-395": {
+      "class": "writable",
+      "card": "RMK-1940",
+      "note": "A standalone instruction's turn under a deferred-loading model, no reopening and no room declaration kept."
+    },
+    "RK-6.4-396": {
+      "class": "writable",
+      "card": "RMK-1940",
+      "note": "A deferred-loading room whose tool a policy denies on a later turn, and a room with no known declaration."
+    },
+    "RK-6.4-399": {
+      "class": "step",
+      "card": "RMK-1940",
+      "note": "Needs a scripted model that streams text alone (generate_stream), in both runners."
+    },
+    "RK-6.4-401": {
+      "class": "writable",
+      "card": "RMK-1940",
+      "note": "A standalone instruction's turn in a room whose earlier turns read instructions, none replayed."
+    },
     "RK-8.1-008": {
       "class": "step",
       "card": "RMK-1912",
