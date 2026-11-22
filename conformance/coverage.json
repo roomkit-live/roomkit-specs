@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "rfc_sha256": "86b9cb693232fbbb52f5d469826f5afd35232729b480448ad8d4ff431b851501",
+  "rfc_sha256": "84f02af8355d3332edb01972c3cd2da55cdfc3f51355f6a2360ed4c15a33f146",
   "corpus_sha256": "3342c73755ecd7755711678240e455b6ae4ce67a9fd3640b72a4ec28f4141540",
   "python_commit": "1bb12d025296ee1c5f14b82267462fc4d13104a6",
   "scenario_count": 3403,
@@ -904,11 +904,14 @@
       "section": "6.1",
       "title": "Channel Interface",
       "review": "normative",
-      "requirements": 2,
+      "requirements": 25,
       "mapping": {
-        "unmapped": 2
+        "unmapped": 25
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "step": 4,
+        "writable": 1
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "author-images/a-room-the-agent-joins-again-sends-a-refused-image-again",
@@ -961,11 +964,15 @@
       "section": "6.2",
       "title": "ChannelType",
       "review": "normative",
-      "requirements": 1,
+      "requirements": 11,
       "mapping": {
-        "unmapped": 1
+        "unmapped": 11
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "phase6": 1,
+        "step": 1,
+        "writable": 4
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -973,11 +980,14 @@
       "section": "6.3",
       "title": "Transport Channels",
       "review": "normative",
-      "requirements": 1,
+      "requirements": 7,
       "mapping": {
-        "unmapped": 1
+        "unmapped": 7
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "phase6": 2,
+        "step": 3
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -2279,11 +2289,13 @@
       "section": "6.5",
       "title": "Source Providers",
       "review": "normative",
-      "requirements": 2,
+      "requirements": 4,
       "mapping": {
-        "unmapped": 2
+        "unmapped": 4
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "step": 4
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -2291,11 +2303,14 @@
       "section": "6.6",
       "title": "Content Transcoding",
       "review": "normative",
-      "requirements": 4,
+      "requirements": 32,
       "mapping": {
-        "unmapped": 4
+        "unmapped": 32
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "step": 1,
+        "writable": 8
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "ai-context/a-content-without-text-reads-in-later-history-as-its-turn-read-it",
@@ -2321,12 +2336,16 @@
       "section": "6.7",
       "title": "Provider Abstraction",
       "review": "normative",
-      "requirements": 17,
+      "requirements": 101,
       "mapping": {
-        "mapped_partial": 2,
-        "unmapped": 15
+        "mapped_partial": 4,
+        "unmapped": 97
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "phase6": 1,
+        "step": 48,
+        "writable": 13
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "acp/tools-observer-turn-context",
@@ -2440,11 +2459,13 @@
       "section": "6.8",
       "title": "Classifiers",
       "review": "normative",
-      "requirements": 1,
+      "requirements": 13,
       "mapping": {
-        "unmapped": 1
+        "unmapped": 13
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "step": 11
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -12603,25 +12624,339 @@
       "links": []
     },
     {
-      "id": "RK-6.1-001",
+      "id": "RK-6.1-003",
       "section": "6.1",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-6.1-002",
+      "id": "RK-6.1-004",
       "section": "6.1",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-6.2-001",
+      "id": "RK-6.1-005",
+      "section": "6.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.1-006",
+      "section": "6.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1955",
+        "note": "Needs a scripted streaming channel that keeps deliver_stream's default, which the runners' streaming channels replace with their own reader."
+      }
+    },
+    {
+      "id": "RK-6.1-007",
+      "section": "6.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1955",
+        "note": "Needs a scripted streaming channel that keeps deliver_stream's default and a stream that raises, which the runners' streaming channels replace with their own reader."
+      }
+    },
+    {
+      "id": "RK-6.1-008",
+      "section": "6.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.1-009",
+      "section": "6.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1955",
+        "note": "Needs a deliver_cut reaction that raises on the scripted streaming channel."
+      }
+    },
+    {
+      "id": "RK-6.1-010",
+      "section": "6.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.1-011",
+      "section": "6.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.1-012",
+      "section": "6.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.1-013",
+      "section": "6.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.1-014",
+      "section": "6.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.1-015",
+      "section": "6.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.1-016",
+      "section": "6.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1955",
+        "note": "Needs a channel built on a provider whose name the event source carries; scripted channels have no provider (feature name transport_provider proposed)."
+      }
+    },
+    {
+      "id": "RK-6.1-017",
+      "section": "6.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.1-026",
+      "section": "6.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.1-027",
+      "section": "6.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.1-018",
+      "section": "6.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1955",
+        "note": "agent.direct_prompt reads the responded flag: a channel that does not answer, its response events not re-entering."
+      }
+    },
+    {
+      "id": "RK-6.1-019",
+      "section": "6.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.1-020",
+      "section": "6.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.1-021",
+      "section": "6.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.1-022",
+      "section": "6.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.1-023",
+      "section": "6.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.1-024",
+      "section": "6.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.1-025",
+      "section": "6.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.2-002",
       "section": "6.2",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-6.3-001",
+      "id": "RK-6.2-003",
+      "section": "6.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1955",
+        "note": "The media rows of the ChannelType table: VOICE, REALTIME_VOICE, AUDIO_VIDEO, REALTIME_AUDIO_VIDEO, VIDEO, CONFERENCE (media features voice, realtime, video, conference)."
+      }
+    },
+    {
+      "id": "RK-6.2-004",
+      "section": "6.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.2-005",
+      "section": "6.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.2-006",
+      "section": "6.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.2-007",
+      "section": "6.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1955",
+        "note": "A scripted channel whose type uses digits, _ and - is stored and read back as that plain string."
+      }
+    },
+    {
+      "id": "RK-6.2-008",
+      "section": "6.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1955",
+        "note": "A scripted channel of a type the table does not list (slack) is registered, and an event naming it reads back as written."
+      }
+    },
+    {
+      "id": "RK-6.2-009",
+      "section": "6.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1955",
+        "note": "register_channel with a type outside the grammar: the Rust runner fails building the scripted channel instead of reporting the refusal as an outcome."
+      }
+    },
+    {
+      "id": "RK-6.2-010",
+      "section": "6.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.2-012",
+      "section": "6.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1955",
+        "note": "A hook filtered on a channel type the table does not list (channel_types) fires for that type's events."
+      }
+    },
+    {
+      "id": "RK-6.2-011",
+      "section": "6.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1955",
+        "note": "register_channel of a scripted channel of type system is refused."
+      }
+    },
+    {
+      "id": "RK-6.3-002",
+      "section": "6.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.3-003",
+      "section": "6.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1955",
+        "note": "Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed."
+      }
+    },
+    {
+      "id": "RK-6.3-004",
+      "section": "6.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1955",
+        "note": "Voice and Realtime Voice reference capabilities (media features voice and realtime)."
+      }
+    },
+    {
+      "id": "RK-6.3-005",
+      "section": "6.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1955",
+        "note": "Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed. The audit's suspect on the Telegram row is RMK-1954."
+      }
+    },
+    {
+      "id": "RK-6.3-006",
+      "section": "6.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1955",
+        "note": "Audio/Video, Realtime Audio/Video, Video and Conference reference capabilities (media features voice, realtime, video, conference)."
+      }
+    },
+    {
+      "id": "RK-6.3-007",
+      "section": "6.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1955",
+        "note": "Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed."
+      }
+    },
+    {
+      "id": "RK-6.3-008",
       "section": "6.3",
       "mapping": "unmapped",
       "links": []
@@ -16607,46 +16942,388 @@
       "id": "RK-6.5-001",
       "section": "6.5",
       "mapping": "unmapped",
-      "links": []
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1955",
+        "note": "Needs a scripted source provider in both runners; roomkit-rs has no sources (tier 1b), feature name source_provider proposed."
+      }
     },
     {
-      "id": "RK-6.5-002",
+      "id": "RK-6.5-003",
       "section": "6.5",
       "mapping": "unmapped",
-      "links": []
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1955",
+        "note": "Needs a scripted source provider in both runners; roomkit-rs has no sources (tier 1b), feature name source_provider proposed."
+      }
     },
     {
-      "id": "RK-6.6-001",
+      "id": "RK-6.5-004",
+      "section": "6.5",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1955",
+        "note": "Needs a scripted source provider in both runners; roomkit-rs has no sources (tier 1b), feature name source_provider proposed."
+      }
+    },
+    {
+      "id": "RK-6.5-005",
+      "section": "6.5",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1955",
+        "note": "Needs a scripted source provider in both runners; roomkit-rs has no sources (tier 1b), feature name source_provider proposed."
+      }
+    },
+    {
+      "id": "RK-6.6-005",
       "section": "6.6",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-6.6-002",
+      "id": "RK-6.6-006",
+      "section": "6.6",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1955",
+        "note": "A text reaches a scripted channel whose media_types name no TEXT (location alone) unchanged, and a rich text as its plain text."
+      }
+    },
+    {
+      "id": "RK-6.6-007",
+      "section": "6.6",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1955",
+        "note": "A text reaches a rich, a media and a text-only transport unchanged."
+      }
+    },
+    {
+      "id": "RK-6.6-008",
       "section": "6.6",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-6.6-003",
+      "id": "RK-6.6-009",
       "section": "6.6",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-6.6-004",
+      "id": "RK-6.6-010",
       "section": "6.6",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-6.7-001",
+      "id": "RK-6.6-011",
+      "section": "6.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.6-012",
+      "section": "6.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.6-013",
+      "section": "6.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.6-014",
+      "section": "6.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.6-015",
+      "section": "6.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.6-016",
+      "section": "6.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.6-017",
+      "section": "6.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.6-018",
+      "section": "6.6",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1955",
+        "note": "A tool call content reaches a text-only transport unchanged."
+      }
+    },
+    {
+      "id": "RK-6.6-019",
+      "section": "6.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.6-020",
+      "section": "6.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.6-021",
+      "section": "6.6",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1955",
+        "note": "A composite of a text and a media reaches a channel that carries MEDIA as its parts, in order."
+      }
+    },
+    {
+      "id": "RK-6.6-022",
+      "section": "6.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.6-023",
+      "section": "6.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.6-024",
+      "section": "6.6",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1955",
+        "note": "An edit's and a delete's text form as a reader reads it, whatever the reader supports."
+      }
+    },
+    {
+      "id": "RK-6.6-025",
+      "section": "6.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.6-026",
+      "section": "6.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.6-027",
+      "section": "6.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.6-028",
+      "section": "6.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.6-029",
+      "section": "6.6",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1955",
+        "note": "A media or a location in a delegated task's brief, a memory's summary or a discussion's dispatch reads as its label."
+      }
+    },
+    {
+      "id": "RK-6.6-030",
+      "section": "6.6",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1955",
+        "note": "An agent named only in a media's file name is not addressed by a discussion."
+      }
+    },
+    {
+      "id": "RK-6.6-031",
+      "section": "6.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.6-032",
+      "section": "6.6",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1955",
+        "note": "A text of multi-byte characters past max_length is cut on a code point."
+      }
+    },
+    {
+      "id": "RK-6.6-033",
+      "section": "6.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.6-034",
+      "section": "6.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.6-035",
+      "section": "6.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.6-036",
+      "section": "6.6",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1955",
+        "note": "Needs a step that installs an integrator's transcoding strategy; neither implementation exposes one (suspect RMK-1952)."
+      }
+    },
+    {
+      "id": "RK-6.7-018",
       "section": "6.7",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-6.7-002",
+      "id": "RK-6.7-109",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.7-110",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1955",
+        "note": "Needs a scripted model that streams text only (generate_stream), in both runners."
+      }
+    },
+    {
+      "id": "RK-6.7-111",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.7-112",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.7-019",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1955",
+        "note": "Needs a scripted model that streams text only (generate_stream), in both runners."
+      }
+    },
+    {
+      "id": "RK-6.7-020",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.7-021",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1955",
+        "note": "Needs a step that lists a provider's models."
+      }
+    },
+    {
+      "id": "RK-6.7-022",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1955",
+        "note": "Needs a step that lists a provider's models."
+      }
+    },
+    {
+      "id": "RK-6.7-023",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1955",
+        "note": "model.fails_once_closed observes a scripted model's close; a provider releasing its real connections needs the provider wire fixture."
+      }
+    },
+    {
+      "id": "RK-6.7-024",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.7-025",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.7-026",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.7-113",
       "section": "6.7",
       "mapping": "mapped_partial",
       "links": [
@@ -16660,19 +17337,25 @@
             "Native Rust and specialized Python execution logs are retained separately; this link creates no scenario, backend or runtime execution receipt."
           ],
           "executions": []
-        },
-        {
-          "id": "phase4-ai-provider-room-context",
-          "scope": "AIContext room snapshots and outgoing target capability metadata, including empty targets, selection, intersections and preservation through hooks and interleaved tool rounds.",
-          "coverage": "partial",
-          "missing": [
-            "The broad provider-interface unit remains partial; served-call markers and unrelated vendor/provider methods are outside this slice.",
-            "Capability fields are metadata only; this slice proves no media or realtime delivery.",
-            "The shared interleaving assertions do not claim all recent_events or author_register values; the native full-snapshot test supplies that separate evidence.",
-            "Native Rust executions are retained separately and create no backend/runtime execution receipt in this inventory."
-          ],
-          "executions": []
-        },
+        }
+      ],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1955",
+        "note": "model.chat_dialect records the requests in the vendor's format: a tool result's structured_content and outcome are not in them."
+      }
+    },
+    {
+      "id": "RK-6.7-027",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.7-028",
+      "section": "6.7",
+      "mapping": "mapped_partial",
+      "links": [
         {
           "id": "phase4-extract-tools-definitions",
           "scope": "The public extract_tools helper projects ordered tool definitions and a mixed schema/object channel sends their observed fields to its provider.",
@@ -16689,37 +17372,325 @@
       ]
     },
     {
-      "id": "RK-6.7-003",
+      "id": "RK-6.7-029",
+      "section": "6.7",
+      "mapping": "mapped_partial",
+      "links": [
+        {
+          "id": "phase4-ai-provider-room-context",
+          "scope": "AIContext room snapshots and outgoing target capability metadata, including empty targets, selection, intersections and preservation through hooks and interleaved tool rounds.",
+          "coverage": "partial",
+          "missing": [
+            "The broad provider-interface unit remains partial; served-call markers and unrelated vendor/provider methods are outside this slice.",
+            "Capability fields are metadata only; this slice proves no media or realtime delivery.",
+            "The shared interleaving assertions do not claim all recent_events or author_register values; the native full-snapshot test supplies that separate evidence.",
+            "Native Rust executions are retained separately and create no backend/runtime execution receipt in this inventory."
+          ],
+          "executions": []
+        }
+      ]
+    },
+    {
+      "id": "RK-6.7-030",
       "section": "6.7",
       "mapping": "unmapped",
       "links": []
+    },
+    {
+      "id": "RK-6.7-031",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.7-032",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1955",
+        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+      }
+    },
+    {
+      "id": "RK-6.7-033",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.7-034",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1955",
+        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+      }
+    },
+    {
+      "id": "RK-6.7-035",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1955",
+        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+      }
     },
     {
       "id": "RK-6.7-004",
       "section": "6.7",
       "mapping": "unmapped",
-      "links": []
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1955",
+        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+      }
     },
     {
-      "id": "RK-6.7-005",
+      "id": "RK-6.7-036",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1955",
+        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+      }
+    },
+    {
+      "id": "RK-6.7-037",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1955",
+        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+      }
+    },
+    {
+      "id": "RK-6.7-038",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1955",
+        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+      }
+    },
+    {
+      "id": "RK-6.7-039",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1955",
+        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+      }
+    },
+    {
+      "id": "RK-6.7-040",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1955",
+        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+      }
+    },
+    {
+      "id": "RK-6.7-041",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1955",
+        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+      }
+    },
+    {
+      "id": "RK-6.7-042",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1955",
+        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+      }
+    },
+    {
+      "id": "RK-6.7-043",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1955",
+        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+      }
+    },
+    {
+      "id": "RK-6.7-044",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1955",
+        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+      }
+    },
+    {
+      "id": "RK-6.7-045",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1955",
+        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+      }
+    },
+    {
+      "id": "RK-6.7-046",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1955",
+        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+      }
+    },
+    {
+      "id": "RK-6.7-047",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1955",
+        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+      }
+    },
+    {
+      "id": "RK-6.7-048",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1955",
+        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+      }
+    },
+    {
+      "id": "RK-6.7-049",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1955",
+        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+      }
+    },
+    {
+      "id": "RK-6.7-050",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1955",
+        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+      }
+    },
+    {
+      "id": "RK-6.7-051",
       "section": "6.7",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-6.7-006",
+      "id": "RK-6.7-052",
       "section": "6.7",
       "mapping": "unmapped",
-      "links": []
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1955",
+        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+      }
     },
     {
-      "id": "RK-6.7-007",
+      "id": "RK-6.7-053",
       "section": "6.7",
       "mapping": "unmapped",
-      "links": []
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1955",
+        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+      }
     },
     {
-      "id": "RK-6.7-008",
+      "id": "RK-6.7-054",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1955",
+        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+      }
+    },
+    {
+      "id": "RK-6.7-055",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1955",
+        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+      }
+    },
+    {
+      "id": "RK-6.7-056",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1955",
+        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+      }
+    },
+    {
+      "id": "RK-6.7-057",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1955",
+        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+      }
+    },
+    {
+      "id": "RK-6.7-058",
       "section": "6.7",
       "mapping": "mapped_partial",
       "links": [
@@ -16737,43 +17708,452 @@
       ]
     },
     {
-      "id": "RK-6.7-009",
+      "id": "RK-6.7-059",
       "section": "6.7",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-6.7-010",
+      "id": "RK-6.7-060",
       "section": "6.7",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-6.7-011",
+      "id": "RK-6.7-061",
       "section": "6.7",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-6.7-012",
+      "id": "RK-6.7-062",
       "section": "6.7",
       "mapping": "unmapped",
       "links": []
+    },
+    {
+      "id": "RK-6.7-063",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.7-064",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.7-065",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1955",
+        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+      }
+    },
+    {
+      "id": "RK-6.7-066",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.7-067",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.7-068",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.7-069",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.7-070",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1955",
+        "note": "A binding's schema whose type is a list, or a type outside the six, fails the turn before its model is asked."
+      }
+    },
+    {
+      "id": "RK-6.7-114",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.7-071",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1955",
+        "note": "A binding's schema whose object lacks properties fails the turn before its model is asked."
+      }
+    },
+    {
+      "id": "RK-6.7-072",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1955",
+        "note": "A binding's schema whose required list misses a property fails the turn before its model is asked."
+      }
+    },
+    {
+      "id": "RK-6.7-073",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1955",
+        "note": "A binding's schema whose object allows additional properties fails the turn before its model is asked."
+      }
+    },
+    {
+      "id": "RK-6.7-074",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1955",
+        "note": "A binding's schema with an array lacking items fails the turn before its model is asked."
+      }
+    },
+    {
+      "id": "RK-6.7-075",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1955",
+        "note": "A binding's schema with an enum on a number, or an empty enum, fails the turn before its model is asked."
+      }
+    },
+    {
+      "id": "RK-6.7-076",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1955",
+        "note": "A binding's schema whose subschemas carry a title and a description is taken."
+      }
+    },
+    {
+      "id": "RK-6.7-077",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1955",
+        "note": "A binding's schema using anyOf or a bound fails the turn before its model is asked."
+      }
+    },
+    {
+      "id": "RK-6.7-078",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.7-079",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1955",
+        "note": "A schema turn whose model takes no schema, under a retry policy, is not retried."
+      }
+    },
+    {
+      "id": "RK-6.7-080",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.7-081",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1955",
+        "note": "Under model.response_schema a round whose finish_reason is refusal is refused; a vendor's refusal field and a prompt blocked before any answer stay with the provider wire fixture."
+      }
+    },
+    {
+      "id": "RK-6.7-082",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1955",
+        "note": "Under model.response_schema a round that ran out of room is truncated; a vendor's own stop reasons and a context window filling up stay with the provider wire fixture."
+      }
+    },
+    {
+      "id": "RK-6.7-083",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.7-084",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.7-085",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.7-086",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.7-087",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.7-088",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1955",
+        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+      }
+    },
+    {
+      "id": "RK-6.7-089",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.7-090",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1955",
+        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+      }
+    },
+    {
+      "id": "RK-6.7-091",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.7-092",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1955",
+        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+      }
+    },
+    {
+      "id": "RK-6.7-093",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1955",
+        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+      }
+    },
+    {
+      "id": "RK-6.7-094",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1955",
+        "note": "A tool name is refused when the tool is defined, before any step: needs a step that defines a tool and reads the refusal."
+      }
+    },
+    {
+      "id": "RK-6.7-095",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.7-096",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1955",
+        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+      }
+    },
+    {
+      "id": "RK-6.7-097",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1955",
+        "note": "A realtime endpoint that hands the tools to another model checks that model's vendor's rule (media feature realtime)."
+      }
+    },
+    {
+      "id": "RK-6.7-098",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1955",
+        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+      }
     },
     {
       "id": "RK-6.7-013",
       "section": "6.7",
       "mapping": "unmapped",
-      "links": []
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1955",
+        "note": "model.chat_dialect anthropic records the vendor's messages: a refused or failed call's tool_result carries is_error, a served one does not; another vendor's format needs the provider wire fixture."
+      }
     },
     {
       "id": "RK-6.7-014",
       "section": "6.7",
       "mapping": "unmapped",
-      "links": []
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1955",
+        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+      }
     },
     {
-      "id": "RK-6.7-015",
+      "id": "RK-6.7-099",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1955",
+        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+      }
+    },
+    {
+      "id": "RK-6.7-100",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1955",
+        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+      }
+    },
+    {
+      "id": "RK-6.7-101",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1955",
+        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+      }
+    },
+    {
+      "id": "RK-6.7-102",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1955",
+        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+      }
+    },
+    {
+      "id": "RK-6.7-103",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1955",
+        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+      }
+    },
+    {
+      "id": "RK-6.7-104",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1955",
+        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+      }
+    },
+    {
+      "id": "RK-6.7-105",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1955",
+        "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+      }
+    },
+    {
+      "id": "RK-6.7-106",
       "section": "6.7",
       "mapping": "unmapped",
       "links": []
@@ -16782,19 +18162,162 @@
       "id": "RK-6.7-016",
       "section": "6.7",
       "mapping": "unmapped",
-      "links": []
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1955",
+        "note": "Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed. Python's SMSProvider.send takes from_ as optional, as RMK-1953 records for email."
+      }
     },
     {
-      "id": "RK-6.7-017",
+      "id": "RK-6.7-107",
+      "section": "6.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1955",
+        "note": "Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed. The audit's suspect on send()'s from is RMK-1953."
+      }
+    },
+    {
+      "id": "RK-6.7-108",
       "section": "6.7",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-6.8-001",
+      "id": "RK-6.8-002",
       "section": "6.8",
       "mapping": "unmapped",
       "links": []
+    },
+    {
+      "id": "RK-6.8-003",
+      "section": "6.8",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1955",
+        "note": "Needs a step that asks a classifier its questions (a scripted or mock classifier) in both runners; feature name classifier_dispatch proposed."
+      }
+    },
+    {
+      "id": "RK-6.8-004",
+      "section": "6.8",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1955",
+        "note": "Needs a step that asks a classifier its questions (a scripted or mock classifier) in both runners; feature name classifier_dispatch proposed."
+      }
+    },
+    {
+      "id": "RK-6.8-005",
+      "section": "6.8",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1955",
+        "note": "Needs a step that asks a classifier its questions (a scripted or mock classifier) in both runners; feature name classifier_dispatch proposed."
+      }
+    },
+    {
+      "id": "RK-6.8-006",
+      "section": "6.8",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1955",
+        "note": "Needs a step that asks a classifier its questions (a scripted or mock classifier) in both runners; feature name classifier_dispatch proposed."
+      }
+    },
+    {
+      "id": "RK-6.8-007",
+      "section": "6.8",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1955",
+        "note": "Needs a step that asks a classifier its questions (a scripted or mock classifier) in both runners; feature name classifier_dispatch proposed."
+      }
+    },
+    {
+      "id": "RK-6.8-008",
+      "section": "6.8",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1955",
+        "note": "Needs a step that asks a classifier its questions (a scripted or mock classifier) in both runners; feature name classifier_dispatch proposed."
+      }
+    },
+    {
+      "id": "RK-6.8-009",
+      "section": "6.8",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1955",
+        "note": "Needs a step that asks a classifier its questions (a scripted or mock classifier) in both runners; feature name classifier_dispatch proposed."
+      }
+    },
+    {
+      "id": "RK-6.8-010",
+      "section": "6.8",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1955",
+        "note": "Needs a step that asks a classifier its questions (a scripted or mock classifier) in both runners; feature name classifier_dispatch proposed."
+      }
+    },
+    {
+      "id": "RK-6.8-011",
+      "section": "6.8",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.8-012",
+      "section": "6.8",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1955",
+        "note": "Needs a scripted decision-model server behind a classifier in both runners; roomkit-rs has no decision-model classifier, feature name classifier_dispatch proposed."
+      }
+    },
+    {
+      "id": "RK-6.8-013",
+      "section": "6.8",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1955",
+        "note": "Needs a scripted decision-model server behind a classifier in both runners; roomkit-rs has no decision-model classifier, feature name classifier_dispatch proposed."
+      }
+    },
+    {
+      "id": "RK-6.8-014",
+      "section": "6.8",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1955",
+        "note": "Needs a scripted decision-model server behind a classifier in both runners; roomkit-rs has no decision-model classifier, feature name classifier_dispatch proposed."
+      }
     },
     {
       "id": "RK-7-001",
