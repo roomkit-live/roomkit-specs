@@ -39,8 +39,8 @@ proof: a scenario can cite a unit without covering all of it.
 | [§12 Voice and Realtime Media](section-12.md) | 284 | 0 | 0 | 0 | 284 | 1 | 1 | 0 | 0 | 0 | 0 | 0 |
 | [§13 Resilience and Error Handling](section-13.md) | 97 | 88 | 7 | 2 | 0 | 58 | 255 | 0 | 29 | 16 | 15 | 0 |
 | [§14 Storage Interface](section-14.md) | 110 | 107 | 1 | 2 | 0 | 69 | 146 | 0 | 31 | 8 | 23 | 0 |
-| [§15 Observability](section-15.md) | 30 | 0 | 0 | 0 | 30 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| [§16 Integration Surfaces](section-16.md) | 14 | 0 | 0 | 0 | 14 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| [§15 Observability](section-15.md) | 71 | 58 | 11 | 1 | 1 | 35 | 59 | 0 | 19 | 3 | 11 | 11 |
+| [§16 Integration Surfaces](section-16.md) | 12 | 4 | 8 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | [§17 Security Considerations](section-17.md) | 15 | 0 | 0 | 0 | 15 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | [§18 Design Principles](section-18.md) | 1 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | [§19 Multi-Agent Orchestration](section-19.md) | 567 | 560 | 3 | 3 | 1 | 417 | 1826 | 0 | 141 | 69 | 20 | 52 |

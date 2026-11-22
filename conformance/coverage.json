@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "rfc_sha256": "77e4a78eaaaa046abb5e11510f9c16f5c17e8bb9854954eb066919c859d4da39",
+  "rfc_sha256": "da2de27e35ef4a316c80c7110d16bbcb16036b6a9e083bc80405fb1fc956c125",
   "corpus_sha256": "3342c73755ecd7755711678240e455b6ae4ce67a9fd3640b72a4ec28f4141540",
   "python_commit": "1bb12d025296ee1c5f14b82267462fc4d13104a6",
   "scenario_count": 3403,
@@ -7673,9 +7673,9 @@
       "section": "15.1",
       "title": "Logging",
       "review": "normative",
-      "requirements": 1,
+      "requirements": 2,
       "mapping": {
-        "unmapped": 1
+        "unmapped": 2
       },
       "decided_gaps": {},
       "unannotated_keyword_lines": [],
@@ -7685,9 +7685,9 @@
       "section": "15.2",
       "title": "Log Levels",
       "review": "normative",
-      "requirements": 1,
+      "requirements": 3,
       "mapping": {
-        "unmapped": 1
+        "unmapped": 3
       },
       "decided_gaps": {},
       "unannotated_keyword_lines": [],
@@ -7712,11 +7712,13 @@
       "section": "15.4",
       "title": "Voice Pipeline Observability",
       "review": "normative",
-      "requirements": 1,
+      "requirements": 3,
       "mapping": {
-        "unmapped": 1
+        "unmapped": 3
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "phase6": 3
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -7736,11 +7738,15 @@
       "section": "15.6",
       "title": "Protocol Trace Infrastructure",
       "review": "normative",
-      "requirements": 6,
+      "requirements": 15,
       "mapping": {
-        "unmapped": 6
+        "unmapped": 15
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "phase6": 5,
+        "step": 3,
+        "writable": 2
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -7748,11 +7754,13 @@
       "section": "15.7",
       "title": "Telemetry Provider",
       "review": "normative",
-      "requirements": 3,
+      "requirements": 8,
       "mapping": {
-        "unmapped": 3
+        "unmapped": 8
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "step": 2
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -7772,11 +7780,14 @@
       "section": "15.8.1",
       "title": "Tool Auditing",
       "review": "normative",
-      "requirements": 6,
+      "requirements": 18,
       "mapping": {
-        "unmapped": 6
+        "unmapped": 18
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "step": 2,
+        "writable": 1
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "orchestration/an-audited-answer-reaches-the-model-unchanged",
@@ -7787,11 +7798,14 @@
       "section": "15.8.2",
       "title": "Session Auditing",
       "review": "normative",
-      "requirements": 7,
+      "requirements": 11,
       "mapping": {
-        "unmapped": 7
+        "unmapped": 11
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "phase6": 3,
+        "step": 1
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "orchestration/a-session-auditor-records-the-sessions-and-the-tool-calls"
@@ -7801,11 +7815,13 @@
       "section": "15.8.3",
       "title": "Audit Data Format",
       "review": "normative",
-      "requirements": 1,
+      "requirements": 4,
       "mapping": {
-        "unmapped": 1
+        "unmapped": 4
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "step": 3
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -7813,9 +7829,9 @@
       "section": "15.9",
       "title": "Feedback",
       "review": "normative",
-      "requirements": 1,
+      "requirements": 4,
       "mapping": {
-        "unmapped": 1
+        "unmapped": 4
       },
       "decided_gaps": {},
       "unannotated_keyword_lines": [],
@@ -7840,9 +7856,9 @@
       "section": "16.1",
       "title": "REST API (OPTIONAL)",
       "review": "normative",
-      "requirements": 9,
+      "requirements": 8,
       "mapping": {
-        "unmapped": 9
+        "unmapped": 8
       },
       "decided_gaps": {},
       "unannotated_keyword_lines": [],
@@ -7852,9 +7868,9 @@
       "section": "16.2",
       "title": "MCP Server (OPTIONAL)",
       "review": "normative",
-      "requirements": 3,
+      "requirements": 2,
       "mapping": {
-        "unmapped": 3
+        "unmapped": 2
       },
       "decided_gaps": {},
       "unannotated_keyword_lines": [],
@@ -31078,13 +31094,31 @@
       "links": []
     },
     {
-      "id": "RK-15.1-001",
+      "id": "RK-15.1-002",
       "section": "15.1",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-15.2-001",
+      "id": "RK-15.1-003",
+      "section": "15.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-15.2-002",
+      "section": "15.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-15.2-003",
+      "section": "15.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-15.2-004",
       "section": "15.2",
       "mapping": "unmapped",
       "links": []
@@ -31096,10 +31130,37 @@
       "links": []
     },
     {
-      "id": "RK-15.4-001",
+      "id": "RK-15.4-002",
       "section": "15.4",
       "mapping": "unmapped",
-      "links": []
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1979",
+        "note": "The voice pipeline's metrics; suspect RMK-1977."
+      }
+    },
+    {
+      "id": "RK-15.4-003",
+      "section": "15.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1979",
+        "note": "The RECOMMENDED voice metric names: Python emits two of the seventeen as named and its other voice metrics under other names, roomkit-rs has no voice; suspect RMK-1977."
+      }
+    },
+    {
+      "id": "RK-15.4-004",
+      "section": "15.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1979",
+        "note": "The voice pipeline logger and its context fields; suspect RMK-1977."
+      }
     },
     {
       "id": "RK-15.5-001",
@@ -31108,25 +31169,119 @@
       "links": []
     },
     {
-      "id": "RK-15.6-001",
+      "id": "RK-15.6-007",
+      "section": "15.6",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1979",
+        "note": "Traces a channel's transport protocol emits: Python's SIP voice backends are the only emitters, roomkit-rs has no protocol trace, and neither has an SMTP transport."
+      }
+    },
+    {
+      "id": "RK-15.6-008",
       "section": "15.6",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-15.6-002",
+      "id": "RK-15.6-009",
       "section": "15.6",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-15.6-003",
+      "id": "RK-15.6-010",
+      "section": "15.6",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1979",
+        "note": "Needs a trace callback registered with on_trace and a protocols filter, which no runner step registers."
+      }
+    },
+    {
+      "id": "RK-15.6-011",
+      "section": "15.6",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1979",
+        "note": "Needs a channel's trace_enabled read, which no runner step reads."
+      }
+    },
+    {
+      "id": "RK-15.6-012",
+      "section": "15.6",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1979",
+        "note": "A trace naming only a session, on a channel that resolves no session, reaches no room's hook (requires protocol_trace)."
+      }
+    },
+    {
+      "id": "RK-15.6-013",
       "section": "15.6",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-15.6-004",
+      "id": "RK-15.6-014",
+      "section": "15.6",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1979",
+        "note": "Needs sync and async trace callbacks registered with on_trace, which no runner step registers."
+      }
+    },
+    {
+      "id": "RK-15.6-015",
+      "section": "15.6",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1979",
+        "note": "A voice or realtime voice channel bridging its backend's or transport's traces."
+      }
+    },
+    {
+      "id": "RK-15.6-016",
+      "section": "15.6",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1979",
+        "note": "The voice trace bridge activated once trace_enabled becomes true."
+      }
+    },
+    {
+      "id": "RK-15.6-017",
+      "section": "15.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-15.6-018",
+      "section": "15.6",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1979",
+        "note": "The session-binding fallback, which a voice channel resolves."
+      }
+    },
+    {
+      "id": "RK-15.6-019",
       "section": "15.6",
       "mapping": "unmapped",
       "links": []
@@ -31135,13 +31290,23 @@
       "id": "RK-15.6-005",
       "section": "15.6",
       "mapping": "unmapped",
-      "links": []
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1979",
+        "note": "A trace emitted for a room not yet created reaches ON_PROTOCOL_TRACE once create_room and attach_channel make it (requires protocol_trace)."
+      }
     },
     {
       "id": "RK-15.6-006",
       "section": "15.6",
       "mapping": "unmapped",
-      "links": []
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1979",
+        "note": "A SIP voice backend's traces."
+      }
     },
     {
       "id": "RK-15.7-001",
@@ -31150,13 +31315,53 @@
       "links": []
     },
     {
-      "id": "RK-15.7-002",
+      "id": "RK-15.7-004",
       "section": "15.7",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-15.7-003",
+      "id": "RK-15.7-005",
+      "section": "15.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-15.7-006",
+      "section": "15.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-15.7-007",
+      "section": "15.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-15.7-008",
+      "section": "15.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1979",
+        "note": "Needs a store's delivery cursor spans in telemetry.spans, whose kinds hold no store span."
+      }
+    },
+    {
+      "id": "RK-15.7-009",
+      "section": "15.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1979",
+        "note": "Needs the inbound and delivery spans, which carry the addresses and the provider error, and a span's error_message: telemetry.spans has neither kind and returns no attribute or error."
+      }
+    },
+    {
+      "id": "RK-15.7-010",
       "section": "15.7",
       "mapping": "unmapped",
       "links": []
@@ -31168,22 +31373,68 @@
       "links": []
     },
     {
-      "id": "RK-15.8.1-001",
+      "id": "RK-15.8.1-007",
       "section": "15.8.1",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-15.8.1-002",
+      "id": "RK-15.8.1-008",
       "section": "15.8.1",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-15.8.1-003",
+      "id": "RK-15.8.1-009",
+      "section": "15.8.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1979",
+        "note": "An audited tool cancelled because its turn ended, by a steer cancel directive or the kit's close, is recorded cancelled."
+      }
+    },
+    {
+      "id": "RK-15.8.1-010",
       "section": "15.8.1",
       "mapping": "unmapped",
       "links": []
+    },
+    {
+      "id": "RK-15.8.1-011",
+      "section": "15.8.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-15.8.1-012",
+      "section": "15.8.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-15.8.1-013",
+      "section": "15.8.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-15.8.1-014",
+      "section": "15.8.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-15.8.1-015",
+      "section": "15.8.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1979",
+        "note": "Needs an audited producer of the implementation's own, such as an MCP tool's isError result; the runners wrap scripted tools only."
+      }
     },
     {
       "id": "RK-15.8.1-004",
@@ -31192,34 +31443,119 @@
       "links": []
     },
     {
-      "id": "RK-15.8.1-005",
+      "id": "RK-15.8.1-016",
       "section": "15.8.1",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-15.8.1-006",
+      "id": "RK-15.8.1-017",
       "section": "15.8.1",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-15.8.2-001",
+      "id": "RK-15.8.1-018",
+      "section": "15.8.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-15.8.1-019",
+      "section": "15.8.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-15.8.1-020",
+      "section": "15.8.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-15.8.1-021",
+      "section": "15.8.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-15.8.1-022",
+      "section": "15.8.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-15.8.1-023",
+      "section": "15.8.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1979",
+        "note": "Needs a ToolAuditor of the scenario's own handed to audit_tool_handler."
+      }
+    },
+    {
+      "id": "RK-15.8.2-008",
       "section": "15.8.2",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-15.8.2-002",
+      "id": "RK-15.8.2-009",
+      "section": "15.8.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1979",
+        "note": "The speech entry, recorded on ON_TRANSCRIPTION."
+      }
+    },
+    {
+      "id": "RK-15.8.2-010",
       "section": "15.8.2",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-15.8.2-003",
+      "id": "RK-15.8.2-011",
+      "section": "15.8.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1979",
+        "note": "The vision entry, recorded on ON_VISION_RESULT."
+      }
+    },
+    {
+      "id": "RK-15.8.2-012",
+      "section": "15.8.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1979",
+        "note": "The barge_in entry, recorded on ON_BARGE_IN."
+      }
+    },
+    {
+      "id": "RK-15.8.2-013",
       "section": "15.8.2",
       "mapping": "unmapped",
       "links": []
+    },
+    {
+      "id": "RK-15.8.2-014",
+      "section": "15.8.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1979",
+        "note": "Needs a step that records an application's own entry on the session auditor."
+      }
     },
     {
       "id": "RK-15.8.2-004",
@@ -31246,13 +31582,64 @@
       "links": []
     },
     {
-      "id": "RK-15.8.3-001",
+      "id": "RK-15.8.3-002",
       "section": "15.8.3",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-15.9-001",
+      "id": "RK-15.8.3-005",
+      "section": "15.8.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1979",
+        "note": "Needs an auditor file that holds lines before the run, so that a scenario sees them kept."
+      }
+    },
+    {
+      "id": "RK-15.8.3-003",
+      "section": "15.8.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1979",
+        "note": "Needs an auditor whose file's parent directories do not exist yet."
+      }
+    },
+    {
+      "id": "RK-15.8.3-004",
+      "section": "15.8.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1979",
+        "note": "Needs an auditor whose file write fails."
+      }
+    },
+    {
+      "id": "RK-15.9-002",
+      "section": "15.9",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-15.9-003",
+      "section": "15.9",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-15.9-004",
+      "section": "15.9",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-15.9-005",
       "section": "15.9",
       "mapping": "unmapped",
       "links": []
@@ -31264,13 +31651,7 @@
       "links": []
     },
     {
-      "id": "RK-16.1-001",
-      "section": "16.1",
-      "mapping": "unmapped",
-      "links": []
-    },
-    {
-      "id": "RK-16.1-002",
+      "id": "RK-16.1-010",
       "section": "16.1",
       "mapping": "unmapped",
       "links": []
@@ -31318,13 +31699,7 @@
       "links": []
     },
     {
-      "id": "RK-16.2-001",
-      "section": "16.2",
-      "mapping": "unmapped",
-      "links": []
-    },
-    {
-      "id": "RK-16.2-002",
+      "id": "RK-16.2-004",
       "section": "16.2",
       "mapping": "unmapped",
       "links": []
