@@ -2129,11 +2129,11 @@ published a non-terminal frame MUST publish one terminal frame with an empty
 cancellation, provider failure, retry and fallback: a retry closes the abandoned
 attempt before the replacement attempt starts, so cumulative counts MUST NOT span
 two attempts. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-065", "kind": "behavior", "applies": "§6.4 Tool-call composition events: what is executed and persisted, and composition events. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The complete `StreamToolCall` remains the unit of execution and
-persistence; composition events are ephemeral and MUST NOT be persisted.<!-- /rfc --><!-- rfc: {"id": "RK-6.4-066", "kind": "behavior", "applies": "§6.4 Tool-call events: the status the ephemeral TOOL_CALL_END carries. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+persistence; composition events are ephemeral and MUST NOT be persisted.<!-- /rfc --><!-- rfc: {"id": "RK-6.4-066", "kind": "behavior", "applies": "§6.4 Tool-call events of an AI channel: the status the ephemeral TOOL_CALL_END carries. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The ephemeral `TOOL_CALL_END` MUST carry each call's `status`, `completed` or
 `failed`, as the stored `TOOL_CALL_END` does: a call refused, failed, blocked,
 served by nothing or cancelled ends `failed`, so a live surface does not read
-the outcome out of the result preview. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-067", "kind": "behavior", "applies": "§6.4 Tool-call events: the outcome the stored TOOL_CALL_END carries (§9.3). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The stored `TOOL_CALL_END` also carries
+the outcome out of the result preview. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-067", "kind": "behavior", "applies": "§6.4 Tool-call events of an AI channel: the outcome the stored TOOL_CALL_END carries (§9.3). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The stored `TOOL_CALL_END` also carries
 the call's `outcome`, the way it ended as the channel determined it (Section
 9.3): `served`, `refused`, `failed`, `blocked`, `unserved` or `cancelled`. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-068", "kind": "behavior", "applies": "§6.4 Tool-call events: a reader that rebuilds earlier turns' tool calls from the store, an AI channel's history among them. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
 reader that rebuilds what earlier turns did from the store, as an AI
@@ -2499,12 +2499,12 @@ the answers in code, in this order:
 5. silent otherwise.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.4-154", "kind": "behavior", "applies": "§6.4 Classifier speak policy: what its questions count as a speaker who has not finished. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+<!-- rfc: {"id": "RK-6.4-154", "kind": "non_testable", "applies": "§6.4 Classifier speak policy: what its questions count as a speaker who has not finished, which is the wording of the questions it asks a model, shown by a review of that wording or by a live model. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A speaker has not finished when the turn ends cut off or says they are not
 done: a hesitation inside a turn whose last sentence is complete, or saying
-one does not know, is no unfinished turn. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-155", "kind": "behavior", "applies": "§6.4 Classifier speak policy: what its questions count as addressing the agent. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A turn about the agent said to
+one does not know, is no unfinished turn. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-155", "kind": "non_testable", "applies": "§6.4 Classifier speak policy: what its questions count as addressing the agent, which is the wording of the questions it asks a model, shown by a review of that wording or by a live model. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A turn about the agent said to
 someone else, or asking someone else to tell or explain something to it, does
-not address it: that person speaks next. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-156", "kind": "behavior", "applies": "§6.4 Classifier speak policy: what its questions count as a request for quiet. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Asking the agent whether it is ready
+not address it: that person speaks next. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-156", "kind": "non_testable", "applies": "§6.4 Classifier speak policy: what its questions count as a request for quiet, which is the wording of the questions it asks a model, shown by a review of that wording or by a live model. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Asking the agent whether it is ready
 to listen expects an answer, and is no request for quiet.
 <!-- /rfc -->
 
@@ -2577,15 +2577,15 @@ chooses whom the agent answers, it is not an access control.
 <!-- rfc: {"id": "RK-6.4-176", "kind": "behavior", "applies": "§6.4 Thinker, the integrator's choice on a channel that has a speak policy: what a thinker is. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **What the agent thinks.** An AI channel that has a speak policy MAY also
 carry a thinker: what the agent thinks while it listens, its answer, when it is
-silent, to "what are you thinking about?". <!-- /rfc --><!-- rfc: {"id": "RK-6.4-177", "kind": "behavior", "applies": "§6.4 Thinker: what a thought is and what it is about. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The thought is neither memory (the
+silent, to "what are you thinking about?". <!-- /rfc --><!-- rfc: {"id": "RK-6.4-177", "kind": "non_testable", "applies": "§6.4 Thinker: what a thought is and what it is about, which is what a model writes under the thinker's instructions, shown by a review of those instructions or by a live model. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The thought is neither memory (the
 room's history is, Section 20) nor a summary: what the agent makes of what is
 said, what it would say if given the turn, and whether that cannot wait. It is
 about what the agent hears: what is being talked about, what the speaker is
 doing (asking, telling, thinking aloud, talking to someone else, reading
 something), and what the agent makes of it, the people named; never about the
-agent itself (what it said or did, whether it should speak, how it is seen).<!-- /rfc --><!-- rfc: {"id": "RK-6.4-178", "kind": "behavior", "applies": "§6.4 Thinker: what a thought holds of what the agent would say. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+agent itself (what it said or did, whether it should speak, how it is seen).<!-- /rfc --><!-- rfc: {"id": "RK-6.4-178", "kind": "non_testable", "applies": "§6.4 Thinker: what a thought holds of what the agent would say, which is what a model writes under the thinker's instructions, shown by a review of those instructions or by a live model. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 What it would say holds only what it would say to the people about what is
-being discussed: never a rule for itself, nor what it does not know. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-179", "kind": "behavior", "applies": "§6.4 Thinker: a thought when the topic changes. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->When the
+being discussed: never a rule for itself, nor what it does not know. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-179", "kind": "non_testable", "applies": "§6.4 Thinker: a thought when the topic changes, which is what a model writes under the thinker's instructions, shown by a review of those instructions or by a live model. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->When the
 topic changes, the thought starts again from the new one, keeping of the
 previous only what still concerns it: a thought rewritten from itself on every
 call drifts into its own concerns.
