@@ -1263,9 +1263,9 @@
     },
     {
       "section": "19.7.1",
-      "sha256": "6154b07df3bc5f177abc434e3b62bf672cbc2135777d251f7573c8b4f85ad13d",
+      "sha256": "2dcf266bccefd8bbf6deed952751c8a6f2baf36407db4b3486d3dcf938c0d432",
       "classification": "normative",
-      "review": "Pipeline routing, entry state, hook registration and the named voice channel are separated. The optional voice greeting and the refusal of a realtime voice channel have their own conditions."
+      "review": "Pipeline routing, entry state, hook registration and the named voice channel are separated. The host-selected voice greeting and the refusal of a realtime voice channel have their own conditions."
     },
     {
       "section": "19.7.2",
@@ -1275,13 +1275,13 @@
     },
     {
       "section": "19.7.3",
-      "sha256": "42a8b701938cd7c55c3c1b6a6489e86f56d22b6653d31dcea042c98892616af4",
+      "sha256": "4e0b94fac0108924ec4432baa41db83f941226e584142575503e44926d373171",
       "classification": "normative",
       "review": "Supervisor execution separates team, child, status, timeout and cancellation behavior from optional parallelism, room/session hand-back, worker tool naming and formulation turns."
     },
     {
       "section": "19.7.4",
-      "sha256": "02aff135154df8b269210604f62a23221d184d696637f75d8834b9ef773cc5e0",
+      "sha256": "1a8a625dc449675e8f82d67156f762a5ec1151a73f84ed578dbbdb46c590b228",
       "classification": "normative",
       "review": "Loop handling distinguishes the producer, structured reviewer verdicts, generation errors, realtime voice hand-backs, parallel reviews and framework shutdown."
     },

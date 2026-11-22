@@ -20201,7 +20201,7 @@ priority -100.
 <!-- /rfc -->
 <!-- rfc: {"id": "RK-19.7.1-009", "kind": "behavior", "applies": "Voice feature: a named voice channel uses the pipeline agents' voices as its voice map.", "level": "must"} -->
 On a voice channel the strategy names, the agents' voices are the channel's
-voice map, <!-- /rfc --><!-- rfc: {"id": "RK-19.7.1-010", "kind": "behavior", "applies": "Voice feature: a pipeline handoff may greet using the newly active agent.", "level": "may"} -->and a handoff in a room the strategy runs MAY greet with the
+voice map, <!-- /rfc --><!-- rfc: {"id": "RK-19.7.1-010", "kind": "behavior", "applies": "Voice feature: a room-installed pipeline configured to greet on handoff greets with its newly active agent.", "level": "must"} -->and a handoff in a room the strategy runs MAY greet with the
 agent it made active <!-- /rfc --><!-- rfc: {"id": "RK-19.7.1-011", "kind": "behavior", "applies": "Voice feature: a greeting provided by a pipeline handoff follows the farewell and uses only the calling room's hooks.", "level": "must"} -->(a farewell spoken first), through hooks of that room
 only. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.1-012", "kind": "behavior", "applies": "Realtime voice feature: a room-installed pipeline refuses a realtime voice channel.", "level": "must"} -->A realtime voice channel is refused: its sessions' configuration and
 the handoff it serves are the channel's, for every room, as
@@ -20258,8 +20258,8 @@ it, <!-- /rfc --><!-- rfc: {"id": "RK-19.7.3-011", "kind": "behavior", "applies"
 `max_result_chars`, <!-- /rfc --><!-- rfc: {"id": "RK-19.7.3-012", "kind": "behavior", "applies": "A background supervisor instruction stays private.", "level": "must"} -->never published as a participant's message. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.3-013", "kind": "behavior", "applies": "A background pipeline failure returns a generic failure instruction using the reasoning backend's fallback, excluding the error.", "level": "must"} -->A background pipeline that fails before its results (a delegation
 that raised) hands its failure back the same way: an instruction that the
 work could not be completed, carrying the reasoning backend's fallback text
-(Section 12.4.1) and never the error's message, <!-- /rfc --><!-- rfc: {"id": "RK-19.7.3-014", "kind": "behavior", "applies": "The background failure's own error is logged and sent to the status bus.", "level": "must"} -->which goes to the logs
-(Section 9.3) and the status bus (Section 19.8). The supervisor told the user
+(Section 12.4.1) and never the error's message, <!-- /rfc --><!-- rfc: {"id": "RK-19.7.3-014", "kind": "behavior", "applies": "A background supervisor pipeline logs the original failure.", "level": "must"} -->which goes to the logs
+(Section 9.3) <!-- /rfc --><!-- rfc: {"id": "RK-19.7.3-056", "kind": "behavior", "applies": "A background supervisor pipeline publishes its failure to the status bus.", "level": "must"} -->and the status bus (Section 19.8). The supervisor told the user
 results would follow;
 it is told they will not, <!-- /rfc --><!-- rfc: {"id": "RK-19.7.3-015", "kind": "behavior", "applies": "An inline pipeline that raises returns its error to its dispatching caller.", "level": "must"} -->as the dispatching caller of a pipeline run within
 the turn reads its error. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.3-016", "kind": "behavior", "applies": "Realtime voice feature: background dispatch admits one run per room across voice channels.", "level": "must"} -->A strategy's background tool serves one run per room
@@ -20396,17 +20396,17 @@ as a participant's message. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.4-021", "kind
 loop ended; for a producer's task that failed, that it failed and the cut
 that ended its turn, never with the task's error. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.4-022", "kind": "behavior", "applies": "Realtime voice feature: an exception produces a generic reasoning-fallback instruction excluding the exception message.", "level": "must"} -->A loop that raised hands
 back that the work could not be completed, carrying the reasoning backend's
-fallback text (Section 12.4.1) and never the error's message, <!-- /rfc --><!-- rfc: {"id": "RK-19.7.4-023", "kind": "behavior", "applies": "A background Loop exception's message is recorded in the logs and status bus.", "level": "must"} -->which goes to
-the logs (Section 9.3) and the status bus (Section 19.8), as a supervisor's
-background pipeline does (Section 19.7.3), <!-- /rfc --><!-- rfc: {"id": "RK-19.7.4-024", "kind": "behavior", "applies": "Realtime voice feature: a room has one asynchronous Loop and the originating session receives its outcome.", "level": "must"} -->one loop per room and in the session that
-made the call. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.4-025", "kind": "behavior", "applies": "A Loop releases its room before handing back the outcome so the model may dispatch another.", "level": "must"} -->The room is free for a new loop before the outcome is handed
-back: the model's turn on it may start one. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.4-026", "kind": "behavior", "applies": "A stopped producer task results in a failed terminal Loop status.", "level": "must"} -->A loop its producer's task
-stopped posts its terminal status entry as `failed`. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.4-027", "kind": "behavior", "applies": "Loop producer and reviewer tasks have no per-task timeout, and each receives pending then one terminal status however it ends.", "level": "must"} -->The producer and the
+fallback text (Section 12.4.1) and never the error's message, <!-- /rfc --><!-- rfc: {"id": "RK-19.7.4-023", "kind": "behavior", "applies": "Voice feature: an asynchronous Loop logs the original exception.", "level": "must"} -->which goes to
+the logs (Section 9.3) <!-- /rfc --><!-- rfc: {"id": "RK-19.7.4-030", "kind": "behavior", "applies": "Voice feature: an asynchronous Loop exposes the original failure on the status bus.", "level": "must"} -->and the status bus (Section 19.8), as a supervisor's
+background pipeline does (Section 19.7.3), <!-- /rfc --><!-- rfc: {"id": "RK-19.7.4-024", "kind": "behavior", "applies": "Voice feature: a room admits one asynchronous Loop at a time.", "level": "must"} -->one loop per room <!-- /rfc --><!-- rfc: {"id": "RK-19.7.4-031", "kind": "behavior", "applies": "Voice feature: the asynchronous Loop sends its hand-back to the calling session.", "level": "must"} -->and in the session that
+made the call. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.4-025", "kind": "behavior", "applies": "Voice feature: an asynchronous Loop releases its room before handing back the outcome so the model may dispatch another.", "level": "must"} -->The room is free for a new loop before the outcome is handed
+back: the model's turn on it may start one. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.4-026", "kind": "behavior", "applies": "Voice feature: a stopped producer task results in a failed terminal status for its asynchronous Loop.", "level": "must"} -->A loop its producer's task
+stopped posts its terminal status entry as `failed`. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.4-027", "kind": "behavior", "applies": "Loop producer and reviewer tasks are delegated without a per-task timeout.", "level": "must"} -->The producer and the
 reviewers are delegated as a supervisor's workers are (Section 19.7.3),
-without a per-task bound: each is posted `pending`, then one terminal entry
+without a per-task bound: <!-- /rfc --><!-- rfc: {"id": "RK-19.7.4-032", "kind": "behavior", "applies": "Loop producer and reviewer tasks each receive a pending entry and one terminal entry however the delegation ends.", "level": "must"} -->each is posted `pending`, then one terminal entry
 however its delegation ends. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.4-028", "kind": "behavior", "applies": "A raised parallel review fails the Loop without waiting and other reviews are cut, each with its terminal entry.", "level": "must"} -->Parallel reviews end as a parallel team does:
 a review that raises fails the loop without waiting for the others, which
-are cut, each posting its terminal entry. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.4-029", "kind": "behavior", "applies": "An asynchronous Loop ends with framework shutdown under the background-run cleanup rules.", "level": "must"} -->An asynchronous loop ends with
+are cut, each posting its terminal entry. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.4-029", "kind": "behavior", "applies": "Voice feature: an asynchronous Loop ends with framework shutdown under the supervisor background-run cleanup rules.", "level": "must"} -->An asynchronous loop ends with
 the framework as a supervisor's background run does.
 <!-- /rfc -->
 
