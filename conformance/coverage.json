@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "rfc_sha256": "9c862aa3b5effe1b750fc9c6fd7ae901d6d714a4ffae2cd8abd27451f34048d8",
+  "rfc_sha256": "86b9cb693232fbbb52f5d469826f5afd35232729b480448ad8d4ff431b851501",
   "corpus_sha256": "3342c73755ecd7755711678240e455b6ae4ce67a9fd3640b72a4ec28f4141540",
   "python_commit": "1bb12d025296ee1c5f14b82267462fc4d13104a6",
   "scenario_count": 3403,
@@ -5874,11 +5874,13 @@
       "section": "11.2",
       "title": "Resolution Pipeline",
       "review": "normative",
-      "requirements": 1,
+      "requirements": 21,
       "mapping": {
-        "unmapped": 1
+        "unmapped": 21
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "writable": 1
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "identity/a-challenge-is-delivered-and-the-message-held",
@@ -5902,9 +5904,9 @@
       "section": "11.3",
       "title": "Identity Hook Result",
       "review": "normative",
-      "requirements": 1,
+      "requirements": 3,
       "mapping": {
-        "unmapped": 1
+        "unmapped": 3
       },
       "decided_gaps": {},
       "unannotated_keyword_lines": [],
@@ -5937,9 +5939,9 @@
       "section": "11.5",
       "title": "Timeout Handling",
       "review": "normative",
-      "requirements": 1,
+      "requirements": 3,
       "mapping": {
-        "unmapped": 1
+        "unmapped": 3
       },
       "decided_gaps": {},
       "unannotated_keyword_lines": [],
@@ -5951,11 +5953,14 @@
       "section": "11.6",
       "title": "Senders With Nothing To Resolve",
       "review": "normative",
-      "requirements": 1,
+      "requirements": 13,
       "mapping": {
-        "unmapped": 1
+        "unmapped": 13
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "phase6": 1,
+        "step": 3
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "identity/a-caller-s-message-under-the-framework-s-name-is-still-resolved",
@@ -5979,7 +5984,9 @@
       "mapping": {
         "unmapped": 1
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "writable": 1
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -5987,9 +5994,9 @@
       "section": "11.7.1",
       "title": "State",
       "review": "normative",
-      "requirements": 1,
+      "requirements": 3,
       "mapping": {
-        "unmapped": 1
+        "unmapped": 3
       },
       "decided_gaps": {},
       "unannotated_keyword_lines": [],
@@ -6003,9 +6010,9 @@
       "section": "11.7.2",
       "title": "Requests",
       "review": "normative",
-      "requirements": 1,
+      "requirements": 11,
       "mapping": {
-        "unmapped": 1
+        "unmapped": 11
       },
       "decided_gaps": {},
       "unannotated_keyword_lines": [],
@@ -6032,11 +6039,14 @@
       "section": "11.7.3",
       "title": "Labels and holding",
       "review": "normative",
-      "requirements": 1,
+      "requirements": 19,
       "mapping": {
-        "unmapped": 1
+        "unmapped": 19
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "phase6": 1,
+        "writable": 1
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "verification/a-blocked-message-is-observed-by-no-hook",
@@ -6067,9 +6077,9 @@
       "section": "11.7.4",
       "title": "Codes in the conversation",
       "review": "normative",
-      "requirements": 1,
+      "requirements": 5,
       "mapping": {
-        "unmapped": 1
+        "unmapped": 5
       },
       "decided_gaps": {},
       "unannotated_keyword_lines": [],
@@ -6088,9 +6098,9 @@
       "section": "11.7.5",
       "title": "The end of a verification",
       "review": "normative",
-      "requirements": 1,
+      "requirements": 3,
       "mapping": {
-        "unmapped": 1
+        "unmapped": 3
       },
       "decided_gaps": {},
       "unannotated_keyword_lines": [],
@@ -6115,11 +6125,13 @@
       "section": "11.7.6",
       "title": "Releasing held messages",
       "review": "normative",
-      "requirements": 1,
+      "requirements": 15,
       "mapping": {
-        "unmapped": 1
+        "unmapped": 15
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "writable": 2
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "verification/a-cancel-during-the-released-answer-cuts-it",
@@ -6162,11 +6174,13 @@
       "section": "11.7.7",
       "title": "Security floor",
       "review": "normative",
-      "requirements": 1,
+      "requirements": 9,
       "mapping": {
-        "unmapped": 1
+        "unmapped": 9
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "step": 1
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "store/a-verification-is-read-by-its-identity-within-its-organization",
@@ -24462,13 +24476,150 @@
       "links": []
     },
     {
-      "id": "RK-11.2-001",
+      "id": "RK-11.2-002",
       "section": "11.2",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-11.3-001",
+      "id": "RK-11.2-003",
+      "section": "11.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.2-004",
+      "section": "11.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.2-005",
+      "section": "11.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.2-006",
+      "section": "11.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.2-007",
+      "section": "11.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.2-008",
+      "section": "11.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.2-009",
+      "section": "11.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.2-010",
+      "section": "11.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.2-011",
+      "section": "11.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.2-012",
+      "section": "11.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.2-013",
+      "section": "11.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.2-014",
+      "section": "11.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.2-015",
+      "section": "11.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.2-016",
+      "section": "11.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.2-017",
+      "section": "11.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1942",
+        "note": "An identity hook that answers a status its trigger does not act on, as AMBIGUOUS on ON_IDENTITY_UNKNOWN, is read as null."
+      }
+    },
+    {
+      "id": "RK-11.2-018",
+      "section": "11.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.2-019",
+      "section": "11.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.2-020",
+      "section": "11.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.2-021",
+      "section": "11.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.2-022",
+      "section": "11.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.3-002",
+      "section": "11.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.3-003",
+      "section": "11.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.3-004",
       "section": "11.3",
       "mapping": "unmapped",
       "links": []
@@ -24480,13 +24631,117 @@
       "links": []
     },
     {
-      "id": "RK-11.5-001",
+      "id": "RK-11.5-002",
       "section": "11.5",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-11.6-001",
+      "id": "RK-11.5-003",
+      "section": "11.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.5-004",
+      "section": "11.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.6-002",
+      "section": "11.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.6-003",
+      "section": "11.6",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1942",
+        "note": "A conference's utterances, under the identity their track was published under, are never put to the resolver (media feature conference)."
+      }
+    },
+    {
+      "id": "RK-11.6-004",
+      "section": "11.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.6-005",
+      "section": "11.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.6-006",
+      "section": "11.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.6-007",
+      "section": "11.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.6-008",
+      "section": "11.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.6-009",
+      "section": "11.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.6-010",
+      "section": "11.6",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1942",
+        "note": "Needs one of the implementation's own wire channels in the runners, which build scripted channels only (feature name transport_provider proposed)."
+      }
+    },
+    {
+      "id": "RK-11.6-011",
+      "section": "11.6",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1942",
+        "note": "Needs the implementation's interactive terminal channel in the runners; roomkit-rs has none, and no feature name is proposed for it."
+      }
+    },
+    {
+      "id": "RK-11.6-012",
+      "section": "11.6",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1942",
+        "note": "Needs one of the implementation's channels whose sender_id the integrator supplies, a WebSocket or HTTP one, in the runners (feature name websocket_channel proposed)."
+      }
+    },
+    {
+      "id": "RK-11.6-013",
+      "section": "11.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.6-014",
       "section": "11.6",
       "mapping": "unmapped",
       "links": []
@@ -24495,46 +24750,424 @@
       "id": "RK-11.7-001",
       "section": "11.7",
       "mapping": "unmapped",
-      "links": []
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1942",
+        "note": "An unknown or pending sender under a verification policy: no label, no hold and no ON_VERIFICATION_REQUIRED."
+      }
     },
     {
-      "id": "RK-11.7.1-001",
+      "id": "RK-11.7.1-002",
       "section": "11.7.1",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-11.7.2-001",
+      "id": "RK-11.7.1-003",
+      "section": "11.7.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.7.1-004",
+      "section": "11.7.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.7.2-002",
       "section": "11.7.2",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-11.7.3-001",
+      "id": "RK-11.7.2-003",
+      "section": "11.7.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.7.2-004",
+      "section": "11.7.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.7.2-005",
+      "section": "11.7.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.7.2-006",
+      "section": "11.7.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.7.2-007",
+      "section": "11.7.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.7.2-008",
+      "section": "11.7.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.7.2-009",
+      "section": "11.7.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.7.2-010",
+      "section": "11.7.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.7.2-011",
+      "section": "11.7.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.7.2-012",
+      "section": "11.7.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.7.3-002",
       "section": "11.7.3",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-11.7.4-001",
+      "id": "RK-11.7.3-003",
+      "section": "11.7.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1942",
+        "note": "An IDENTIFIED participant's id arriving through a channel it was never resolved on: the event carries no verification."
+      }
+    },
+    {
+      "id": "RK-11.7.3-004",
+      "section": "11.7.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.7.3-005",
+      "section": "11.7.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.7.3-006",
+      "section": "11.7.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.7.3-007",
+      "section": "11.7.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.7.3-008",
+      "section": "11.7.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.7.3-009",
+      "section": "11.7.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.7.3-010",
+      "section": "11.7.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.7.3-011",
+      "section": "11.7.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.7.3-012",
+      "section": "11.7.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.7.3-013",
+      "section": "11.7.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.7.3-014",
+      "section": "11.7.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.7.3-015",
+      "section": "11.7.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.7.3-016",
+      "section": "11.7.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.7.3-017",
+      "section": "11.7.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.7.3-018",
+      "section": "11.7.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.7.3-019",
+      "section": "11.7.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-1942",
+        "note": "A speech-to-speech session's transcript is neither labelled nor held (media feature realtime)."
+      }
+    },
+    {
+      "id": "RK-11.7.3-020",
+      "section": "11.7.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.7.4-002",
       "section": "11.7.4",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-11.7.5-001",
+      "id": "RK-11.7.4-003",
+      "section": "11.7.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.7.4-004",
+      "section": "11.7.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.7.4-005",
+      "section": "11.7.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.7.4-006",
+      "section": "11.7.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.7.5-002",
       "section": "11.7.5",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-11.7.6-001",
+      "id": "RK-11.7.5-003",
+      "section": "11.7.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.7.5-004",
+      "section": "11.7.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.7.6-002",
       "section": "11.7.6",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-11.7.7-001",
+      "id": "RK-11.7.6-003",
+      "section": "11.7.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.7.6-004",
+      "section": "11.7.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.7.6-005",
+      "section": "11.7.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.7.6-006",
+      "section": "11.7.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.7.6-007",
+      "section": "11.7.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.7.6-008",
+      "section": "11.7.6",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1942",
+        "note": "A deferred code reply sent from a hook's locked section has its released message answered after that hook's work is delivered."
+      }
+    },
+    {
+      "id": "RK-11.7.6-009",
+      "section": "11.7.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.7.6-010",
+      "section": "11.7.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.7.6-011",
+      "section": "11.7.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.7.6-012",
+      "section": "11.7.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.7.6-013",
+      "section": "11.7.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.7.6-014",
+      "section": "11.7.6",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1942",
+        "note": "A completion handle's cancel (delivery.cancel) reaches a held message while its delivery set runs, and nothing once it ran."
+      }
+    },
+    {
+      "id": "RK-11.7.6-015",
+      "section": "11.7.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.7.6-016",
+      "section": "11.7.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.7.7-002",
+      "section": "11.7.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.7.7-003",
+      "section": "11.7.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.7.7-004",
+      "section": "11.7.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.7.7-005",
+      "section": "11.7.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.7.7-006",
+      "section": "11.7.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.7.7-007",
+      "section": "11.7.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1942",
+        "note": "Two attempts at a request's last one count once: racing them needs a gate inside a verification transition."
+      }
+    },
+    {
+      "id": "RK-11.7.7-008",
+      "section": "11.7.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.7.7-009",
+      "section": "11.7.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-11.7.7-010",
       "section": "11.7.7",
       "mapping": "unmapped",
       "links": []
