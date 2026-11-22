@@ -19470,8 +19470,8 @@
     },
     {
       "id": "acp-room-directories",
-      "requirement": "RK-A.9.1-001",
-      "clause_sha256": "676d50af70b75f6e4feccf615b6d21631c9b987f7574049cc81858bcc0704c9e",
+      "requirement": "RK-A.9.1-013",
+      "clause_sha256": "72bb3ec484e659b1316cef8bfd5489d5eeb3da0e0d13d4f4d9af387f109ec1d1",
       "coverage": "partial",
       "scope": "Additional absolute directories are declared on room sessions opened for a prompt or by a host call, retained across rooms, reconnects and authorized rebuilds. Omission and an empty list omit the wire field. Absolute cwd and directories normalize redundant separators, dot segments and trailing slashes, retain exactly two leading POSIX slashes and do not resolve parent segments.",
       "assertions": [
@@ -19857,7 +19857,7 @@
     },
     {
       "id": "acp-active-turn-thought-mapping",
-      "requirement": "RK-A.9.1-001",
+      "requirement": "RK-A.9.1-022",
       "scope": "Agent thought chunks in active room turns: full stream markers and completed response thinking; empty/non-text chunks ignored; private default and explicit Unicode-bounded preview; no separate persisted thought message.",
       "assertions": [
         {
@@ -19978,7 +19978,7 @@
         "Callbacks outside an active turn and standalone session handling are not covered.",
         "This link does not claim generic thinking-block segmentation, ON_AI_THINKING or coalescing from RK-8.4-001."
       ],
-      "clause_sha256": "676d50af70b75f6e4feccf615b6d21631c9b987f7574049cc81858bcc0704c9e",
+      "clause_sha256": "3acd9ee4cc3976d9316e66680bb10ded508c97637e0f0365f689cf12f54485e7",
       "coverage": "partial",
       "tests": [],
       "review": "Independent full review reads the Python source tests, shared scenarios, RFC and Rust port together. A baseline Rust run fails on the missing marker, report thought and ephemeral events. Review found the preview case did not enable publication; it now enables the actual option and asserts its 1000-character Unicode preview, full 1001-character marker/report and length. Python passes before Rust. Rust passes on one and four workers."
@@ -20150,7 +20150,7 @@
     },
     {
       "id": "acp-active-tool-markers-and-response",
-      "requirement": "RK-A.9.1-001",
+      "requirement": "RK-A.9.1-023",
       "scope": "Active room tools: merged updates, stream markers, raw/display results, bounded text previews and response segmentation/counts. Scenarios asserting subscriber previews explicitly enable tool text.",
       "assertions": [
         {
@@ -20312,7 +20312,7 @@
         "Permissions, plans, CUSTOM progress, usage and standalone sessions retain separate contracts.",
         "These shared cases do not establish binary bounds; the two source/native bound tests are recorded separately."
       ],
-      "clause_sha256": "676d50af70b75f6e4feccf615b6d21631c9b987f7574049cc81858bcc0704c9e",
+      "clause_sha256": "62b856407f6fab5346ca21870e52ae828ea41fb0c889d06cca9baefc0270a636",
       "coverage": "partial",
       "tests": [],
       "review": "Full independent review read Python source tests, scenarios, RFC and Rust. Missing tool output first failed on Rust, then passed after the port. Review additionally reproduced unbounded binary rows/errors and a stale hook room context; fixes have separate red/green evidence. Final gate and receipt status is recorded separately, not inferred from this review statement."
