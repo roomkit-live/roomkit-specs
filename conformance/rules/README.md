@@ -25,7 +25,7 @@ proof: a scenario can cite a unit without covering all of it.
 | Section | Units | must | should | may | No level | Cited units | Citations | To reread | Gaps | Decided writable | Decided step | Decided phase6 |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 | [§0 Preface (Abstract and contents)](section-0.md) | 1 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| [§1 Conventions and Terminology](section-1.md) | 4 | 0 | 0 | 0 | 4 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| [§1 Conventions and Terminology](section-1.md) | 15 | 11 | 0 | 1 | 3 | 6 | 7 | 0 | 4 | 0 | 4 | 0 |
 | [§2 Introduction](section-2.md) | 4 | 0 | 0 | 0 | 4 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | [§3 Architecture Overview](section-3.md) | 3 | 0 | 0 | 0 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | [§4 Core Concepts](section-4.md) | 11 | 0 | 0 | 0 | 11 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
@@ -37,7 +37,7 @@ proof: a scenario can cite a unit without covering all of it.
 | [§10 Processing Pipelines](section-10.md) | 646 | 626 | 7 | 13 | 0 | 588 | 2266 | 0 | 0 | 0 | 0 | 0 |
 | [§11 Identity Resolution](section-11.md) | 109 | 107 | 2 | 0 | 0 | 90 | 369 | 0 | 11 | 5 | 4 | 2 |
 | [§12 Voice and Realtime Media](section-12.md) | 284 | 0 | 0 | 0 | 284 | 1 | 1 | 0 | 0 | 0 | 0 | 0 |
-| [§13 Resilience and Error Handling](section-13.md) | 13 | 0 | 0 | 0 | 13 | 1 | 1 | 0 | 0 | 0 | 0 | 0 |
+| [§13 Resilience and Error Handling](section-13.md) | 97 | 88 | 7 | 2 | 0 | 58 | 255 | 0 | 29 | 16 | 15 | 0 |
 | [§14 Storage Interface](section-14.md) | 8 | 0 | 0 | 0 | 8 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | [§15 Observability](section-15.md) | 30 | 0 | 0 | 0 | 30 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | [§16 Integration Surfaces](section-16.md) | 14 | 0 | 0 | 0 | 14 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
@@ -50,5 +50,5 @@ proof: a scenario can cite a unit without covering all of it.
 | [§23 Task Delegation](section-23.md) | 196 | 194 | 1 | 0 | 1 | 159 | 550 | 0 | 33 | 8 | 18 | 7 |
 | [§24 Skills Framework](section-24.md) | 184 | 174 | 3 | 6 | 1 | 106 | 733 | 0 | 71 | 42 | 24 | 5 |
 | [§25 Image Generation](section-25.md) | 82 | 71 | 2 | 8 | 1 | 1 | 15 | 0 | 68 | 0 | 70 | 0 |
-| [§26 Conformance Levels](section-26.md) | 5 | 0 | 0 | 0 | 5 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| [§26 Conformance Levels](section-26.md) | 24 | 21 | 0 | 0 | 3 | 20 | 229 | 0 | 0 | 0 | 0 | 0 |
 | [Appendix A: Channel Reference](appendix-A.md) | 202 | 200 | 0 | 2 | 0 | 98 | 267 | 0 | 102 | 7 | 44 | 51 |

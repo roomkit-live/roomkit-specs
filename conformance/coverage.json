@@ -67,11 +67,13 @@
       "section": "1.4",
       "title": "Serialized Form",
       "review": "normative",
-      "requirements": 1,
+      "requirements": 12,
       "mapping": {
-        "unmapped": 1
+        "unmapped": 12
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "step": 4
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "rooms/the-delivery-cursor-follows-the-lane"
@@ -7197,11 +7199,13 @@
       "section": "13.1",
       "title": "Circuit Breaker",
       "review": "normative",
-      "requirements": 3,
+      "requirements": 10,
       "mapping": {
-        "unmapped": 3
+        "unmapped": 10
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "step": 10
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -7209,11 +7213,14 @@
       "section": "13.2",
       "title": "Retry Policy",
       "review": "normative",
-      "requirements": 1,
+      "requirements": 5,
       "mapping": {
-        "unmapped": 1
+        "unmapped": 5
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "step": 2,
+        "writable": 2
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "delivery/the-worker-retries-an-unavailable-destination"
@@ -7223,11 +7230,14 @@
       "section": "13.3",
       "title": "Rate Limiting",
       "review": "normative",
-      "requirements": 1,
+      "requirements": 4,
       "mapping": {
-        "unmapped": 1
+        "unmapped": 4
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "step": 1,
+        "writable": 3
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -7235,11 +7245,15 @@
       "section": "13.4",
       "title": "Idempotency",
       "review": "normative",
-      "requirements": 1,
+      "requirements": 14,
       "mapping": {
-        "mapped_partial": 1
+        "mapped_partial": 1,
+        "unmapped": 13
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "step": 1,
+        "writable": 1
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "delivery/a-keyed-delivery-is-one-publication",
@@ -7278,12 +7292,15 @@
       "section": "13.5",
       "title": "Room-Level Locking",
       "review": "normative",
-      "requirements": 5,
+      "requirements": 36,
       "mapping": {
         "mapped_partial": 1,
-        "unmapped": 4
+        "unmapped": 35
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "step": 1,
+        "writable": 6
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "delivery/a-greeting-keeps-its-cursor-behind-its-held-delivery",
@@ -7396,12 +7413,14 @@
       "section": "13.6",
       "title": "Processing Timeout",
       "review": "normative",
-      "requirements": 2,
+      "requirements": 28,
       "mapping": {
         "mapped_partial": 1,
-        "unmapped": 1
+        "unmapped": 27
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "writable": 4
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "delivery/a-call-a-parse-awaits-before-its-commit-ends-at-its-message-s-deadline",
@@ -10648,9 +10667,9 @@
       "section": "26.1",
       "title": "Level 0: Core (REQUIRED)",
       "review": "normative",
-      "requirements": 2,
+      "requirements": 21,
       "mapping": {
-        "unmapped": 2
+        "unmapped": 21
       },
       "decided_gaps": {},
       "unannotated_keyword_lines": [],
@@ -11374,10 +11393,96 @@
       "links": []
     },
     {
-      "id": "RK-1.4-001",
+      "id": "RK-1.4-002",
       "section": "1.4",
       "mapping": "unmapped",
       "links": []
+    },
+    {
+      "id": "RK-1.4-003",
+      "section": "1.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-1.4-004",
+      "section": "1.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-1.4-005",
+      "section": "1.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1965",
+        "note": "The matcher reads an absent member as null, so a null field written cannot be told from one left out."
+      }
+    },
+    {
+      "id": "RK-1.4-006",
+      "section": "1.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-1.4-007",
+      "section": "1.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-1.4-008",
+      "section": "1.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-1.4-009",
+      "section": "1.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-1.4-010",
+      "section": "1.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-1.4-011",
+      "section": "1.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1965",
+        "note": "No record a shared step reads holds a bytes field outside protocol traces and media frames."
+      }
+    },
+    {
+      "id": "RK-1.4-012",
+      "section": "1.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1965",
+        "note": "The runners rewrite every instant to @n before matching, so a datetime's UTC form is not compared as written."
+      }
+    },
+    {
+      "id": "RK-1.4-013",
+      "section": "1.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1965",
+        "note": "The runners rewrite every instant to @n before matching, so the offset a datetime is written with is not compared."
+      }
     },
     {
       "id": "RK-2.2-001",
@@ -29336,34 +29441,249 @@
       "id": "RK-13.1-001",
       "section": "13.1",
       "mapping": "unmapped",
-      "links": []
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1965",
+        "note": "Needs a channel's circuit breaker observable in the runners, which record no circuit_breaker_opened and expose no breaker state."
+      }
     },
     {
-      "id": "RK-13.1-002",
+      "id": "RK-13.1-004",
       "section": "13.1",
       "mapping": "unmapped",
-      "links": []
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1965",
+        "note": "Needs a channel's breaker state observable in the runners."
+      }
     },
     {
-      "id": "RK-13.1-003",
+      "id": "RK-13.1-005",
       "section": "13.1",
       "mapping": "unmapped",
-      "links": []
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1965",
+        "note": "Needs failing deliveries counted by a channel's breaker and the open breaker's fail-fast observable in the runners."
+      }
     },
     {
-      "id": "RK-13.2-001",
+      "id": "RK-13.1-006",
+      "section": "13.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1965",
+        "note": "Needs the half-open breaker's probe observable in the runners, and a cooldown a scenario can wait out."
+      }
+    },
+    {
+      "id": "RK-13.1-007",
+      "section": "13.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1965",
+        "note": "Needs a breaker observable in the runners and its threshold set by the scenario, which both implementations fix at 5 (suspect RMK-1964)."
+      }
+    },
+    {
+      "id": "RK-13.1-008",
+      "section": "13.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1965",
+        "note": "Needs a breaker observable in the runners, to show a recipient-less refusal counts as no failure."
+      }
+    },
+    {
+      "id": "RK-13.1-009",
+      "section": "13.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1965",
+        "note": "Needs a breaker observable in the runners and its cooldown set by the scenario, which both implementations fix at 60 s (suspect RMK-1964)."
+      }
+    },
+    {
+      "id": "RK-13.1-010",
+      "section": "13.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1965",
+        "note": "Needs a breaker observable in the runners and a cooldown a scenario can wait out."
+      }
+    },
+    {
+      "id": "RK-13.1-011",
+      "section": "13.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1965",
+        "note": "Needs a breaker observable in the runners and a cooldown a scenario can wait out."
+      }
+    },
+    {
+      "id": "RK-13.1-012",
+      "section": "13.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1965",
+        "note": "Needs circuit_breaker_opened among the framework events the runners record."
+      }
+    },
+    {
+      "id": "RK-13.2-002",
+      "section": "13.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1965",
+        "note": "store.update_binding sets a binding's retry_policy, whose fields and exponential_base default the call's result or a bindings expectation reads."
+      }
+    },
+    {
+      "id": "RK-13.2-003",
+      "section": "13.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1965",
+        "note": "Needs a scripted clock to read the delay before each retry; the runners only see that a retry happened."
+      }
+    },
+    {
+      "id": "RK-13.2-004",
       "section": "13.2",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-13.3-001",
+      "id": "RK-13.2-005",
+      "section": "13.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1965",
+        "note": "A binding with a retry_policy whose transport refuses with retryable false (a scripted refuse) is attempted once, whatever the policy names."
+      }
+    },
+    {
+      "id": "RK-13.2-006",
+      "section": "13.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1965",
+        "note": "Needs delivery errors of named types and a subtype in the runners, which script a refusal or a failure message only."
+      }
+    },
+    {
+      "id": "RK-13.3-002",
       "section": "13.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1965",
+        "note": "store.update_binding sets a binding's rate_limit with its three bounds."
+      }
+    },
+    {
+      "id": "RK-13.3-003",
+      "section": "13.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1965",
+        "note": "store.update_binding sets a binding's rate_limit, whose first bound set gives the rate, none set no limit."
+      }
+    },
+    {
+      "id": "RK-13.3-004",
+      "section": "13.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1965",
+        "note": "Needs a scripted clock to count the deliveries a full bucket lets through at once and its refill."
+      }
+    },
+    {
+      "id": "RK-13.3-005",
+      "section": "13.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1965",
+        "note": "Deliveries past a binding's rate_limit set by store.update_binding are queued and delivered, none dropped."
+      }
+    },
+    {
+      "id": "RK-13.4-002",
+      "section": "13.4",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-13.4-001",
+      "id": "RK-13.4-003",
+      "section": "13.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-13.4-004",
+      "section": "13.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1965",
+        "note": "Needs a step that makes a task's posted result commit a second time, by another process or by its holder."
+      }
+    },
+    {
+      "id": "RK-13.4-005",
+      "section": "13.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-13.4-006",
+      "section": "13.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-13.4-007",
+      "section": "13.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-13.4-008",
       "section": "13.4",
       "mapping": "mapped_partial",
       "links": [
@@ -29379,19 +29699,107 @@
       ]
     },
     {
+      "id": "RK-13.4-009",
+      "section": "13.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-13.4-010",
+      "section": "13.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1965",
+        "note": "A keyed message past the reentry budget, whose key the room holds, is refused with nothing stored, never answered as a replay."
+      }
+    },
+    {
+      "id": "RK-13.4-011",
+      "section": "13.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-13.4-012",
+      "section": "13.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-13.4-013",
+      "section": "13.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-13.4-014",
+      "section": "13.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-13.4-015",
+      "section": "13.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
       "id": "RK-13.5-001",
       "section": "13.5",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-13.5-002",
+      "id": "RK-13.5-006",
       "section": "13.5",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-13.5-003",
+      "id": "RK-13.5-007",
+      "section": "13.5",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1965",
+        "note": "While a streamed row's BEFORE_BROADCAST hook is held, another message takes the room lock and commits."
+      }
+    },
+    {
+      "id": "RK-13.5-008",
+      "section": "13.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-13.5-009",
+      "section": "13.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-13.5-010",
+      "section": "13.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-13.5-011",
+      "section": "13.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-13.5-012",
+      "section": "13.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-13.5-013",
       "section": "13.5",
       "mapping": "mapped_partial",
       "links": [
@@ -29407,19 +29815,216 @@
       ]
     },
     {
-      "id": "RK-13.5-004",
+      "id": "RK-13.5-014",
       "section": "13.5",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-13.5-005",
+      "id": "RK-13.5-015",
       "section": "13.5",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-13.6-001",
+      "id": "RK-13.5-016",
+      "section": "13.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-13.5-017",
+      "section": "13.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-13.5-018",
+      "section": "13.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-13.5-019",
+      "section": "13.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-13.5-020",
+      "section": "13.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-13.5-021",
+      "section": "13.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-13.5-022",
+      "section": "13.5",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1965",
+        "note": "create_room with a room id holding a NUL character is refused invalid_argument, nothing written."
+      }
+    },
+    {
+      "id": "RK-13.5-023",
+      "section": "13.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-13.5-024",
+      "section": "13.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-13.5-025",
+      "section": "13.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-13.5-026",
+      "section": "13.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-13.5-027",
+      "section": "13.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-13.5-028",
+      "section": "13.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-13.5-029",
+      "section": "13.5",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1965",
+        "note": "A store_fault on advance_delivered_index: the set's aftermath runs, its call is not cancelled, and the lane's next set runs at once."
+      }
+    },
+    {
+      "id": "RK-13.5-030",
+      "section": "13.5",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1965",
+        "note": "With processes, another process's lane waits on an index whose cursor write failed and skips it past delivery_gap_timeout_ms."
+      }
+    },
+    {
+      "id": "RK-13.5-031",
+      "section": "13.5",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-1965",
+        "note": "Needs the lock manager's holds observable, to show a lane never holds the delivery claim and the room lock together."
+      }
+    },
+    {
+      "id": "RK-13.5-032",
+      "section": "13.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-13.5-033",
+      "section": "13.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-13.5-034",
+      "section": "13.5",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1965",
+        "note": "A store_fault on the latest-index read of an instruction's set: the set runs behind its own process's sets and its call carries the failure."
+      }
+    },
+    {
+      "id": "RK-13.5-035",
+      "section": "13.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-13.5-036",
+      "section": "13.5",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1965",
+        "note": "With processes and delivery_gap_timeout_ms, a lane whose held set another process skipped drops it."
+      }
+    },
+    {
+      "id": "RK-13.5-037",
+      "section": "13.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-13.5-038",
+      "section": "13.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-13.5-039",
+      "section": "13.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-13.5-040",
+      "section": "13.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-13.6-003",
+      "section": "13.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-13.6-004",
+      "section": "13.6",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1965",
+        "note": "A hook's BLOCK whose record commit a store_fault gate holds past process_timeout: the BLOCKED record is still committed."
+      }
+    },
+    {
+      "id": "RK-13.6-005",
       "section": "13.6",
       "mapping": "mapped_partial",
       "links": [
@@ -29435,7 +30040,166 @@
       ]
     },
     {
-      "id": "RK-13.6-002",
+      "id": "RK-13.6-006",
+      "section": "13.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-13.6-007",
+      "section": "13.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-13.6-008",
+      "section": "13.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-13.6-009",
+      "section": "13.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-13.6-010",
+      "section": "13.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-13.6-011",
+      "section": "13.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-13.6-012",
+      "section": "13.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-13.6-013",
+      "section": "13.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-13.6-014",
+      "section": "13.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-13.6-015",
+      "section": "13.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-13.6-016",
+      "section": "13.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-13.6-017",
+      "section": "13.6",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1965",
+        "note": "A cascade stopped by a failed turn still delivers every event it committed, a nested one included."
+      }
+    },
+    {
+      "id": "RK-13.6-018",
+      "section": "13.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-13.6-019",
+      "section": "13.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-13.6-020",
+      "section": "13.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-13.6-021",
+      "section": "13.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-13.6-022",
+      "section": "13.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-13.6-023",
+      "section": "13.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-13.6-024",
+      "section": "13.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-13.6-025",
+      "section": "13.6",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1965",
+        "note": "A caller that leaves (the cancel step) while step 2 creates its room: the room, its hooks and its attach are completed."
+      }
+    },
+    {
+      "id": "RK-13.6-026",
+      "section": "13.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-13.6-027",
+      "section": "13.6",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-1965",
+        "note": "A regeneration waiting for the room lock past process_timeout: blocked process_timeout and the process_timeout event with operation regenerate."
+      }
+    },
+    {
+      "id": "RK-13.6-028",
+      "section": "13.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-13.6-029",
+      "section": "13.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-13.6-030",
       "section": "13.6",
       "mapping": "unmapped",
       "links": []
@@ -41356,13 +42120,127 @@
       }
     },
     {
-      "id": "RK-26.1-001",
+      "id": "RK-26.1-003",
       "section": "26.1",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-26.1-002",
+      "id": "RK-26.1-004",
+      "section": "26.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-26.1-005",
+      "section": "26.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-26.1-006",
+      "section": "26.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-26.1-007",
+      "section": "26.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-26.1-008",
+      "section": "26.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-26.1-009",
+      "section": "26.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-26.1-010",
+      "section": "26.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-26.1-011",
+      "section": "26.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-26.1-012",
+      "section": "26.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-26.1-013",
+      "section": "26.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-26.1-014",
+      "section": "26.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-26.1-015",
+      "section": "26.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-26.1-016",
+      "section": "26.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-26.1-017",
+      "section": "26.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-26.1-018",
+      "section": "26.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-26.1-019",
+      "section": "26.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-26.1-020",
+      "section": "26.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-26.1-021",
+      "section": "26.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-26.1-022",
+      "section": "26.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-26.1-023",
       "section": "26.1",
       "mapping": "unmapped",
       "links": []
