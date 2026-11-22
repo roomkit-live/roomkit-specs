@@ -1,6 +1,26 @@
 {
   "version": 1,
   "units": {
+    "RK-1.4-005": {
+      "class": "step",
+      "card": "RMK-1965",
+      "note": "The matcher reads an absent member as null, so a null field written cannot be told from one left out."
+    },
+    "RK-1.4-011": {
+      "class": "step",
+      "card": "RMK-1965",
+      "note": "No record a shared step reads holds a bytes field outside protocol traces and media frames."
+    },
+    "RK-1.4-012": {
+      "class": "step",
+      "card": "RMK-1965",
+      "note": "The runners rewrite every instant to @n before matching, so a datetime's UTC form is not compared as written."
+    },
+    "RK-1.4-013": {
+      "class": "step",
+      "card": "RMK-1965",
+      "note": "The runners rewrite every instant to @n before matching, so the offset a datetime is written with is not compared."
+    },
     "RK-11.2-017": {
       "class": "writable",
       "card": "RMK-1942",
@@ -55,6 +75,161 @@
       "class": "step",
       "card": "RMK-1942",
       "note": "Two attempts at a request's last one count once: racing them needs a gate inside a verification transition."
+    },
+    "RK-13.1-001": {
+      "class": "step",
+      "card": "RMK-1965",
+      "note": "Needs a channel's circuit breaker observable in the runners, which record no circuit_breaker_opened and expose no breaker state."
+    },
+    "RK-13.1-004": {
+      "class": "step",
+      "card": "RMK-1965",
+      "note": "Needs a channel's breaker state observable in the runners."
+    },
+    "RK-13.1-005": {
+      "class": "step",
+      "card": "RMK-1965",
+      "note": "Needs failing deliveries counted by a channel's breaker and the open breaker's fail-fast observable in the runners."
+    },
+    "RK-13.1-006": {
+      "class": "step",
+      "card": "RMK-1965",
+      "note": "Needs the half-open breaker's probe observable in the runners, and a cooldown a scenario can wait out."
+    },
+    "RK-13.1-007": {
+      "class": "step",
+      "card": "RMK-1965",
+      "note": "Needs a breaker observable in the runners and its threshold set by the scenario, which both implementations fix at 5 (suspect RMK-1964)."
+    },
+    "RK-13.1-008": {
+      "class": "step",
+      "card": "RMK-1965",
+      "note": "Needs a breaker observable in the runners, to show a recipient-less refusal counts as no failure."
+    },
+    "RK-13.1-009": {
+      "class": "step",
+      "card": "RMK-1965",
+      "note": "Needs a breaker observable in the runners and its cooldown set by the scenario, which both implementations fix at 60 s (suspect RMK-1964)."
+    },
+    "RK-13.1-010": {
+      "class": "step",
+      "card": "RMK-1965",
+      "note": "Needs a breaker observable in the runners and a cooldown a scenario can wait out."
+    },
+    "RK-13.1-011": {
+      "class": "step",
+      "card": "RMK-1965",
+      "note": "Needs a breaker observable in the runners and a cooldown a scenario can wait out."
+    },
+    "RK-13.1-012": {
+      "class": "step",
+      "card": "RMK-1965",
+      "note": "Needs circuit_breaker_opened among the framework events the runners record."
+    },
+    "RK-13.2-002": {
+      "class": "writable",
+      "card": "RMK-1965",
+      "note": "store.update_binding sets a binding's retry_policy, whose fields and exponential_base default a retried delivery shows."
+    },
+    "RK-13.2-003": {
+      "class": "step",
+      "card": "RMK-1965",
+      "note": "Needs a scripted clock to read the delay before each retry; the runners only see that a retry happened."
+    },
+    "RK-13.2-005": {
+      "class": "writable",
+      "card": "RMK-1965",
+      "note": "A binding with a retry_policy whose transport refuses with retryable false (a scripted refuse) is attempted once, whatever the policy names."
+    },
+    "RK-13.2-006": {
+      "class": "step",
+      "card": "RMK-1965",
+      "note": "Needs delivery errors of named types and a subtype in the runners, which script a refusal or a failure message only."
+    },
+    "RK-13.3-002": {
+      "class": "writable",
+      "card": "RMK-1965",
+      "note": "store.update_binding sets a binding's rate_limit with its three bounds."
+    },
+    "RK-13.3-003": {
+      "class": "writable",
+      "card": "RMK-1965",
+      "note": "store.update_binding sets a binding's rate_limit, whose first bound set gives the rate, none set no limit."
+    },
+    "RK-13.3-004": {
+      "class": "step",
+      "card": "RMK-1965",
+      "note": "Needs a scripted clock to count the deliveries a full bucket lets through at once and its refill."
+    },
+    "RK-13.3-005": {
+      "class": "writable",
+      "card": "RMK-1965",
+      "note": "Deliveries past a binding's rate_limit set by store.update_binding are queued and delivered, none dropped."
+    },
+    "RK-13.4-004": {
+      "class": "step",
+      "card": "RMK-1965",
+      "note": "Needs a step that makes a task's posted result commit a second time, by another process or by its holder."
+    },
+    "RK-13.4-010": {
+      "class": "writable",
+      "card": "RMK-1965",
+      "note": "A keyed message past the reentry budget, whose key the room holds, is refused with nothing stored, never answered as a replay."
+    },
+    "RK-13.5-007": {
+      "class": "writable",
+      "card": "RMK-1965",
+      "note": "While a streamed row's BEFORE_BROADCAST hook is held, another message takes the room lock and commits."
+    },
+    "RK-13.5-022": {
+      "class": "writable",
+      "card": "RMK-1965",
+      "note": "create_room with a room id holding a NUL character is refused invalid_argument, nothing written."
+    },
+    "RK-13.5-029": {
+      "class": "writable",
+      "card": "RMK-1965",
+      "note": "A store_fault on advance_delivered_index: the set's aftermath runs, its call is not cancelled, and the lane's next set runs at once."
+    },
+    "RK-13.5-030": {
+      "class": "writable",
+      "card": "RMK-1965",
+      "note": "With processes, another process's lane waits on an index whose cursor write failed and skips it past delivery_gap_timeout_ms."
+    },
+    "RK-13.5-031": {
+      "class": "step",
+      "card": "RMK-1965",
+      "note": "Needs the lock manager's holds observable, to show a lane never holds the delivery claim and the room lock together."
+    },
+    "RK-13.5-034": {
+      "class": "writable",
+      "card": "RMK-1965",
+      "note": "A store_fault on the latest-index read of an instruction's set: the set runs behind its own process's sets and its call carries the failure."
+    },
+    "RK-13.5-036": {
+      "class": "writable",
+      "card": "RMK-1965",
+      "note": "With processes and delivery_gap_timeout_ms, a lane whose held set another process skipped drops it."
+    },
+    "RK-13.6-004": {
+      "class": "writable",
+      "card": "RMK-1965",
+      "note": "A hook's BLOCK whose record commit a store_fault gate holds past process_timeout: the BLOCKED record is still committed."
+    },
+    "RK-13.6-017": {
+      "class": "writable",
+      "card": "RMK-1965",
+      "note": "A cascade stopped by a failed turn still delivers every event it committed, a nested one included."
+    },
+    "RK-13.6-025": {
+      "class": "writable",
+      "card": "RMK-1965",
+      "note": "A caller that leaves (the cancel step) while step 2 creates its room: the room, its hooks and its attach are completed."
+    },
+    "RK-13.6-027": {
+      "class": "writable",
+      "card": "RMK-1965",
+      "note": "A regeneration waiting for the room lock past process_timeout: blocked process_timeout and the process_timeout event with operation regenerate."
     },
     "RK-19.1-004": {
       "class": "phase6",
