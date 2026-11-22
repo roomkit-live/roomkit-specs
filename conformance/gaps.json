@@ -4275,11 +4275,6 @@
       "card": "RMK-1961",
       "note": "No runner key sets tool_loop_timeout_seconds, and its 300-second default cannot be waited out under the suite's time rule. The audit's suspect on the configuration list is RMK-1962."
     },
-    "RK-A.9-024": {
-      "class": "writable",
-      "card": "RMK-1961",
-      "note": "A scenario whose agent reads its own events (a read_write binding) shows it never answers what it wrote; greeting/another-agent-answers-a-greeting cannot, its agent's binding being write_only."
-    },
     "RK-A.9-042": {
       "class": "writable",
       "card": "RMK-1961",

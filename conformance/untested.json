@@ -81,6 +81,7 @@
     "RK-9.2-085": "ON_VIDEO_TRACK_REMOVED is Planned: no implementation emits it yet, so no runner can observe it fire; its scenario comes with the capability.",
     "RK-9.3-111": "What a request object keeps exposing after settlement is a property of the language object the human-input handler returns: no step of a scenario holds that object, and the public reader (input_request) answers null once a request is settled.",
     "RK-9.3-116": "Giving a human-input handler as a plain tool handler is the integrator's wiring, which no step of a scenario makes: the implementation then serves an ordinary tool call, which the tool-call units cover.",
-    "RK-9.4-009": "A MODIFY payload of another type than its trigger expects cannot be returned through a typed hook callback, and no scripted hook returns one (README, Reactions): the check is each implementation's own test, never a shared scenario's."
+    "RK-9.4-009": "A MODIFY payload of another type than its trigger expects cannot be returned through a typed hook callback, and no scripted hook returns one (README, Reactions): the check is each implementation's own test, never a shared scenario's.",
+    "RK-A.9-024": "The framework never hands a channel its own events (Section 7.5 rule 5, RK-7.5-021), so a scenario passes whether the AI channel skips its own events or not and cannot observe the channel's own skip. Python's tests/test_channels/test_ai.py::TestAIChannel::test_skips_own_events and roomkit-rs's crates/roomkit-ai/tests/speaking_admission/bounds.rs (changes_notices_and_own_messages_consult_neither_policy_nor_thinker) hand the channel its own message and assert that no model is asked."
   }
 }

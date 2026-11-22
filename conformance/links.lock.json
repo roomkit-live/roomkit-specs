@@ -18929,14 +18929,11 @@
     },
     "RK-A.13-005": {
       "routing/a-chat-id-written-as-an-integer-is-recorded-as-a-string": "5d0257652dfeb944343ebbe52296d814820315bdab47e0e7ebc60f7e8843d396",
-      "routing/a-chat-key-holding-no-chat-is-no-chat": "5d0257652dfeb944343ebbe52296d814820315bdab47e0e7ebc60f7e8843d396",
       "routing/a-chat-message-without-its-chat-has-no-address": "5d0257652dfeb944343ebbe52296d814820315bdab47e0e7ebc60f7e8843d396",
       "routing/each-channel-type-writes-its-addresses-in-its-own-form-under-its-own-keys": "5d0257652dfeb944343ebbe52296d814820315bdab47e0e7ebc60f7e8843d396"
     },
     "RK-A.13-006": {
       "routing/a-chat-id-written-as-an-integer-is-recorded-as-a-string": "3021172583608e355a88e330d5b84f97fc2cd56231b6086292b3d079728e1d73",
-      "routing/a-chat-key-holding-no-chat-is-no-chat": "3021172583608e355a88e330d5b84f97fc2cd56231b6086292b3d079728e1d73",
-      "routing/a-chat-message-without-its-chat-has-no-address": "3021172583608e355a88e330d5b84f97fc2cd56231b6086292b3d079728e1d73",
       "routing/each-channel-type-writes-its-addresses-in-its-own-form-under-its-own-keys": "3021172583608e355a88e330d5b84f97fc2cd56231b6086292b3d079728e1d73"
     },
     "RK-A.14.1-002": {
