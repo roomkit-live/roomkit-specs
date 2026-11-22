@@ -7664,9 +7664,17 @@
           }
         },
         "finish_reason": {
-          "type": [
-            "string",
-            "null"
+          "description": "Why the round ended, in the provider contract's one vocabulary (RFC \u00a76.7); null for no reason.",
+          "enum": [
+            "stop",
+            "tool_calls",
+            "length",
+            "content_filter",
+            "refusal",
+            "malformed_call",
+            "unexpected_call",
+            "error",
+            null
           ]
         },
         "usage": {

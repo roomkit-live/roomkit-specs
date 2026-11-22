@@ -561,7 +561,10 @@ scripted.
   build, as its script is.
 - `model.rounds`: the model's answer to the agent's n-th generation of the
   run is its n-th round: `text` (default empty), `calls`, `finish_reason`
-  (default `tool_calls` when it calls, else `stop`) and `usage`, counters
+  (default `tool_calls` when it calls, else `stop`; a word of the provider
+  contract's one vocabulary, §6.7: `stop`, `tool_calls`, `length`,
+  `content_filter`, `refusal`, `malformed_call`, `unexpected_call` or
+  `error`, null for none, any other refused) and `usage`, counters
   the turn's record sums (§6.4, The turn's record). `usage_at_start`:
   counters the model tells as its stream starts, before its gate and
   anything it writes, as a provider that tells its input then does (§6.4,
@@ -570,7 +573,8 @@ scripted.
   once the model writes the call, as References read it: the id of the
   task a step labelled `<label>` delegated), and `cut` when the response was
   cut short over its arguments, which never arrived whole: the round's last
-  call, under a `finish_reason` that cuts calls (§6.4). A generation past
+  call, under a `finish_reason` that cuts calls (`length`, `content_filter`,
+  `refusal`, `error` or null, §6.4). A generation past
   the last round fails the turn. `deltas` writes the round's text in those
   pieces, in place of `text`: the model waits between two, so a reader is
   handed each apart (deltas yielded without waiting may cross as one,
@@ -611,7 +615,7 @@ scripted.
   request it cannot take under a schema is refused before it is made
   (`unsupported`), and no request is kept; a round that calls no tool, and
   does not end on a call its provider could not hand over, is checked: a
-  `finish_reason` of `refusal` is refused, one that ran out of room is
+  `finish_reason` of `refusal` is refused, one of `length` is
   `truncated`, any other text not the JSON document the schema asks for is
   `invalid_json`, a streamed round's check coming before its done event,
   which the error replaces; a `fallback_model` takes them too. `model.pricing`: the

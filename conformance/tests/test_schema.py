@@ -520,6 +520,29 @@ class SchemaTests(unittest.TestCase):
                 hook["reactions"][1]["do"][0]["call"] = call
                 self.assertEqual(validator.is_valid(scenario), valid)
 
+    def test_a_round_ends_on_a_stop_reason_of_the_contract_and_never_a_vendor_s(self) -> None:
+        validator = Draft202012Validator(json.loads((ROOT / "scenario.schema.json").read_text()))
+        fixture = ROOT / "scenarios/tools/a-malformed-call-is-told-and-tried-again-on-the-first-round.json"
+        for finish_reason, valid in (
+            ("stop", True),
+            ("tool_calls", True),
+            ("length", True),
+            ("content_filter", True),
+            ("refusal", True),
+            ("malformed_call", True),
+            ("unexpected_call", True),
+            ("error", True),
+            (None, True),
+            ("end_turn", False),
+            ("MAX_TOKENS", False),
+            ("MALFORMED_FUNCTION_CALL", False),
+            ("Stop", False),
+        ):
+            with self.subTest(finish_reason=finish_reason):
+                scenario = json.loads(fixture.read_text())
+                scenario["setup"]["channels"][1]["model"]["rounds"][0]["finish_reason"] = finish_reason
+                self.assertEqual(validator.is_valid(scenario), valid)
+
     def test_a_chat_dialect_states_the_core_s_options_and_names_no_vendor(self) -> None:
         validator = Draft202012Validator(json.loads((ROOT / "scenario.schema.json").read_text()))
         fixture = ROOT / "scenarios/reasoning/a-named-thinking-field-carries-a-round-s-reasoning.json"
