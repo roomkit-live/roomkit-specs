@@ -231,6 +231,156 @@
       "card": "RMK-1965",
       "note": "A regeneration waiting for the room lock past process_timeout: blocked process_timeout and the process_timeout event with operation regenerate."
     },
+    "RK-14.1-007": {
+      "class": "writable",
+      "card": "RMK-1976",
+      "note": "store.create_room under an id the store holds: refused, the room it holds unchanged."
+    },
+    "RK-14.1-010": {
+      "class": "step",
+      "card": "RMK-1976",
+      "note": "No store.update_room step: the whole-record write and what it keeps are not called directly."
+    },
+    "RK-14.1-011": {
+      "class": "writable",
+      "card": "RMK-1976",
+      "note": "Six scenarios call store.patch_room_metadata as a mechanism only; none asserts the merge, unset's keys removed first, nothing else written or an unknown room's null."
+    },
+    "RK-14.1-012": {
+      "class": "writable",
+      "card": "RMK-1976",
+      "note": "Suspect RMK-1975: both implementations, and the README's store.delete_room, return whether the store held the room; the scenarios asserting it are not cited."
+    },
+    "RK-14.1-013": {
+      "class": "step",
+      "card": "RMK-1976",
+      "note": "No store.list_rooms step."
+    },
+    "RK-14.1-014": {
+      "class": "step",
+      "card": "RMK-1976",
+      "note": "No store.find_rooms step."
+    },
+    "RK-14.1-018": {
+      "class": "step",
+      "card": "RMK-1976",
+      "note": "No store.load_room_context step."
+    },
+    "RK-14.1-019": {
+      "class": "step",
+      "card": "RMK-1976",
+      "note": "No store.get_conversation step."
+    },
+    "RK-14.1-021": {
+      "class": "step",
+      "card": "RMK-1976",
+      "note": "No store.get_delivered_index step; the room record's delivered_index, which §13.5's scenarios read, is the cursor, not this operation."
+    },
+    "RK-14.1-022": {
+      "class": "step",
+      "card": "RMK-1976",
+      "note": "No store.advance_delivered_index step."
+    },
+    "RK-14.1-023": {
+      "class": "step",
+      "card": "RMK-1976",
+      "note": "No store.get_private_state step."
+    },
+    "RK-14.1-024": {
+      "class": "step",
+      "card": "RMK-1976",
+      "note": "No store.set_private_state step."
+    },
+    "RK-14.1-026": {
+      "class": "step",
+      "card": "RMK-1976",
+      "note": "No store.find_room_id_by_binding step: routing reaches it through the default router, whose scenarios cite §10.4."
+    },
+    "RK-14.1-027": {
+      "class": "step",
+      "card": "RMK-1976",
+      "note": "No store.find_room_id_by_participant step: routing reaches it through the default router, whose scenarios cite §10.4."
+    },
+    "RK-14.1-028": {
+      "class": "step",
+      "card": "RMK-1976",
+      "note": "No store step for the two room finders."
+    },
+    "RK-14.1-034": {
+      "class": "step",
+      "card": "RMK-1976",
+      "note": "No store.get_event_count step."
+    },
+    "RK-14.1-045": {
+      "class": "step",
+      "card": "RMK-1976",
+      "note": "No store.list_bindings step; the kit's list_bindings is the kit's read."
+    },
+    "RK-14.1-048": {
+      "class": "step",
+      "card": "RMK-1976",
+      "note": "No store.delete_participant or store.list_participants step."
+    },
+    "RK-14.1-052": {
+      "class": "step",
+      "card": "RMK-1976",
+      "note": "Needs the kit holding a verification in force restarted over its store, the expiry timer re-armed; no scenario restarts that kit."
+    },
+    "RK-14.1-060": {
+      "class": "step",
+      "card": "RMK-1976",
+      "note": "No store.add_observation or store.list_observations step."
+    },
+    "RK-14.1-062": {
+      "class": "writable",
+      "card": "RMK-1976",
+      "note": "store.get_timeline over more than 50 events with no limit, and with a limit of 0."
+    },
+    "RK-14.1-068": {
+      "class": "writable",
+      "card": "RMK-1976",
+      "note": "A refused message, then a hook of the next message whose recent_events holds the refused row."
+    },
+    "RK-14.1-070": {
+      "class": "step",
+      "card": "RMK-1976",
+      "note": "No store.get_event_count step."
+    },
+    "RK-14.1-071": {
+      "class": "step",
+      "card": "RMK-1976",
+      "note": "No store.get_event_count step."
+    },
+    "RK-14.1-076": {
+      "class": "step",
+      "card": "RMK-1976",
+      "note": "No store.load_room_context step, and no fixture reopens a durable store."
+    },
+    "RK-14.3-013": {
+      "class": "writable",
+      "card": "RMK-1976",
+      "note": "store.update_event of an event the store lacks and store.add_participant into a room it lacks: refused, nothing written."
+    },
+    "RK-14.3-015": {
+      "class": "writable",
+      "card": "RMK-1976",
+      "note": "store.create_room under an id the store holds: refused, the room it holds unchanged."
+    },
+    "RK-14.3-018": {
+      "class": "step",
+      "card": "RMK-1976",
+      "note": "Needs a store.update_room step held against a concurrent commit."
+    },
+    "RK-14.3-020": {
+      "class": "writable",
+      "card": "RMK-1976",
+      "note": "Two concurrent store.patch_room_metadata calls on different keys, both keys standing."
+    },
+    "RK-14.3-025": {
+      "class": "writable",
+      "card": "RMK-1976",
+      "note": "A commit_event record that brings delivery_results, read back with them."
+    },
     "RK-19.1-004": {
       "class": "phase6",
       "card": "RMK-1925",
