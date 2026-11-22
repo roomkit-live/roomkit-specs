@@ -1185,7 +1185,7 @@
     },
     {
       "section": "17.7",
-      "sha256": "c6c53896a8c8a3e36bae5578f36dca2dfa6a1a235f90044efa9126cccd5a174d",
+      "sha256": "770205d1d53c9d59e0a363f314b266badf3e7c39383fca19674fa58645d59e7b",
       "classification": "normative",
       "review": "Source inventory: Conference Access Security (media), split to one obligation per unit (RMK-1984): tokens minted per participant with least privilege, with the lead-in (should); ConferenceGrants' permissive defaults, narrowing RECOMMENDED to the integrator (must, the implementation's default); short-lived tokens never logged (must); moderation operations reachable through integrator code only (non_testable, must); bot disclosure: presence, identity and hidden status observable as in force on the session, active STT, vision or recording observable, ON_CONFERENCE_PARTICIPANT_JOINED for every human participant (must), with the disclosure preamble folded; the integrator's duty across a reported discontinuity (non_testable, must); the documentation of that responsibility, with the closing note (non_testable, should). Every unit carries its level."
     },

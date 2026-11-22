@@ -19756,7 +19756,7 @@ should live in the integration surface layer.
 ConferenceAccess tokens are credentials:
 
 - Tokens SHOULD be minted per participant with least-privilege grants
-  (e.g., hidden observers receive subscribe-only grants). <!-- /rfc --><!-- rfc: {"id": "RK-17.7-004", "kind": "structural", "applies": "§17.7 Conference Access Security, where an implementation offers conference (media: conference): ConferenceGrants defaults to permissive values; narrowing them per participant is the integrator's call, RECOMMENDED to the integrator wherever a role does not publish, so the unit's level is the implementation's default's.", "level": "must"} -->ConferenceGrants
+  (e.g., hidden observers receive subscribe-only grants). <!-- /rfc --><!-- rfc: {"id": "RK-17.7-004", "kind": "structural", "applies": "§17.7 Conference Access Security, where an implementation offers conference (media: conference): ConferenceGrants defaults to permissive values; narrowing them per participant is the integrator's call, RECOMMENDED to the integrator wherever a role does not publish.", "level": "must"} -->ConferenceGrants
   (Section 12.10.2) defaults to permissive values so that the common case
   works unconfigured; narrowing them for a given participant is the
   integrator's call, and is RECOMMENDED wherever a role does not need to
