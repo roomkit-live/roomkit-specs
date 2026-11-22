@@ -1287,9 +1287,9 @@
     },
     {
       "section": "19.7.5",
-      "sha256": "701513b4aad2e7ab9bdba2acc2f86bdee8475951f29bd98854dcdbd8f7a4f642",
+      "sha256": "cc71eef5ecefbbc170e7003eabf9dbe8b3314255928671cfbf2aa22207021549",
       "classification": "normative",
-      "review": "Source inventory: Discussion. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "The Discussion and SpeakQueue models and each of the nineteen rules are reviewed at their individual boundaries. Units distinguish entering and leaving the discussion, agent and human addressing, turn and depth control, queue and lease persistence, turn context, silent and listening agents, dispatch and its classifier adapter, and the lifecycle of background work. The final block records existing behavior alongside future scope, with the Level 2 pointer folded under this heading."
     },
     {
       "section": "19.8",

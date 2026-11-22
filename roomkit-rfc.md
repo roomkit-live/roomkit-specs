@@ -20412,7 +20412,7 @@ the framework as a supervisor's background run does.
 
 #### 19.7.5 Discussion
 
-<!-- rfc: {"id": "RK-19.7.5-001", "kind": "behavior", "applies": "§19.7.5 Discussion; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-19.7.5-005", "kind": "behavior", "applies": "A text Discussion lets people and agents address one another without a fixed flow and gives one agent a turn at a time.", "level": "must"} -->
 Several agents and one or more people hold one conversation in a room. Any
 agent may address any other, a person may address any agent, and no flow is
 fixed in advance: who speaks next follows from who was addressed. One agent
@@ -20433,27 +20433,71 @@ others answered, and every answer solicits the others again (Section 19.3.1).
 `ADDRESSED_ONLY` stops the dogpile by stopping the agents from answering each
 other at all. A discussion keeps them talking and takes the turns itself.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-19.7.5-006", "kind": "behavior", "applies": "A text discussion supports AI channels, Agents and external ACP agent channels.", "level": "must"} -->
 This version covers text: AI channels (Section 6.4), Agents among them, and
 external agents (ACP agent channels, Section 6.4), in rooms whose people
 write. Its terms are those of Section 6.4, which speaks
 for text and voice alike, so that voice can join it without renaming
 anything (see "Left out").
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-19.7.5-007", "kind": "structural", "applies": "A Discussion is configured with its agents, optional derived or supplied handles and optional names of people.", "level": "must"} -->
 ```
 Discussion
 ├── agents: list<AIChannel | ACPChannel>      # The agents of the discussion: AI channels (Agents among them) and external agents
 ├── handles: map<channel_id, string> | null   # The name each agent is addressed by (rule 4; null or absent: derived)
 ├── people: set<string> | null                # Names agents address people by (null: the room's people, §6.4)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-19.7.5-008", "kind": "structural", "applies": "A discussion defaults to allowing a person's unaddressed message to ask agents.", "level": "must"} -->
+```
 ├── addressed_only: bool (default false)      # A person's message asks only the agents it names (rule 8)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-19.7.5-009", "kind": "structural", "applies": "The host may order the agents asked by default, with all agents used when the list is absent.", "level": "must"} -->
+```
 ├── everyone: list<channel_id> | null         # Asked, in this order, by a person's message that answers no one (null: all agents)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-19.7.5-010", "kind": "structural", "applies": "The optional lifetime turn limit is separate from the depth limit and is unbounded when absent.", "level": "must"} -->
+```
 ├── max_turns: int | null                     # Turns given in the room's lifetime (null: no bound but max_depth)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-19.7.5-011", "kind": "structural", "applies": "A discussion without an explicit depth limit uses the kit's maximum chain depth.", "level": "must"} -->
+```
 ├── max_depth: int | null                     # The depth limit of its turns (null: the kit's max_chain_depth)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-19.7.5-012", "kind": "structural", "applies": "A host may supply a per-room completion predicate.", "level": "must"} -->
+```
 ├── done: function(room_id) → bool | null     # The discussion is over once it holds
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-19.7.5-013", "kind": "structural", "applies": "The default silence token is (silent).", "level": "must"} -->
+```
 ├── silent_token: string (default "(silent)") # The answer of an agent that stays silent
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-19.7.5-014", "kind": "structural", "applies": "The host may supply the discussion's rules for turn notes or use the default.", "level": "must"} -->
+```
 ├── rules: string | null                      # How the room works, as each turn's notes give it (rule 14; null: the default)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-19.7.5-015", "kind": "structural", "applies": "A discussion accepts an optional policy for unaddressed messages.", "level": "must"} -->
+```
 ├── dispatch: DispatchPolicy | null           # Picks who takes a person's message that names no agent (rule 18)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-19.7.5-016", "kind": "structural", "applies": "The configured deadline for a dispatch decision defaults to five seconds.", "level": "must"} -->
+```
 └── dispatch_timeout: float (default 5 s)     # How long a decision may take (rule 18)
 
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-19.7.5-017", "kind": "structural", "applies": "A room's readable SpeakQueue identifies its current speaker, queue order, listeners, outstanding questions, waiting state and completion.", "level": "must"} -->
+```
 SpeakQueue (one per room, readable by the host)
 ├── speaking: channel_id | null               # The agent whose turn runs now
 ├── queue: list<channel_id>                   # Agents owed a turn, in the order they get it
@@ -20464,165 +20508,165 @@ SpeakQueue (one per room, readable by the host)
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-19.7.5-002", "kind": "behavior", "applies": "§19.7.5 Discussion; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-19.7.5-018", "kind": "behavior", "applies": "Installing a discussion requires its agents to be the room's only intelligence channels.", "level": "must"} -->
 **Normative rules:**
 
 1. **The room is the discussion's.** The intelligence channels the room binds
    are the discussion's `agents`, and no other: the install refuses a room
-   that binds another intelligence channel, a voice or realtime channel
-   (Section 12), an agent that thinks while it listens (Section 6.4), or that
-   has a router or another strategy installed; while the discussion is
-   installed, binding such a channel to the room and installing a router or
+   that binds another intelligence channel, <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-019", "kind": "behavior", "applies": "Voice feature: a text discussion refuses installation in a room already binding a conventional voice channel.", "level": "must"} -->a voice <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-020", "kind": "behavior", "applies": "Realtime feature: a text discussion refuses installation in a room already binding a realtime channel.", "level": "must"} -->or realtime channel
+   (Section 12), <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-021", "kind": "behavior", "applies": "Discussion installation refuses a room containing an agent that thinks while listening.", "level": "must"} -->an agent that thinks while it listens (Section 6.4), <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-196", "kind": "behavior", "applies": "Discussion installation refuses a room with a router or another strategy.", "level": "must"} -->or that
+   has a router or another strategy installed; <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-022", "kind": "behavior", "applies": "While a discussion is installed, binding an incompatible voice channel, realtime channel or listening thinker to the room is refused.", "level": "must"} -->while the discussion is
+   installed, binding such a channel to the room <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-197", "kind": "behavior", "applies": "A room with an installed discussion refuses a router or another strategy.", "level": "must"} -->and installing a router or
    another strategy in it are refused. One rule decides who speaks, never two:
    the supervisor a router always solicits (Section 19.4 step 4) has no place
-   in a discussion. The room's `agent_response_policy` plays no part while the
+   in a discussion. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-023", "kind": "behavior", "applies": "The discussion supersedes the room's policy until uninstall, when the prior response policy applies immediately.", "level": "must"} -->The room's `agent_response_policy` plays no part while the
    discussion is installed; uninstalling it (Section 19.7, one strategy per
-   room) gives the room back to its policy at once and forgets the
+   room) gives the room back to its policy at once <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-024", "kind": "behavior", "applies": "Uninstall forgets the queue and discussion state so a later installation starts fresh.", "level": "must"} -->and forgets the
    discussion (its queue, who only listens, what agents asked people, the
    turns given, whether it was over), so a discussion installed later starts
-   fresh. The turn running when it is uninstalled is cut, as listening only
+   fresh. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-025", "kind": "behavior", "applies": "Uninstall cuts the active turn in its serving process without recording an end in the forgotten queue; shutdown keeps the queue and records the end.", "level": "must"} -->The turn running when it is uninstalled is cut, as listening only
    cuts it (rule 12), in whichever process gives it (rule 16), and nothing of
    its end is recorded in the forgotten queue; a process that stops (rule 16)
-   records it, its queue being kept.
+   records it, its queue being kept.<!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-026", "kind": "behavior", "applies": "Reinstallation updates configuration while preserving queue state, turn counts, completion and a retained agent's running turn.", "level": "must"} -->
 
    Installing a discussion in a room that holds one, in any process (Section
    19.7), replaces its configuration and keeps the rest: the queue, who only
    listens, what agents asked people, the turns given, whether it is over,
-   and the running turn of an agent it keeps. An agent it no longer holds
+   and the running turn of an agent it keeps. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-027", "kind": "behavior", "applies": "Replacing the configuration removes a dropped agent's queue entry, reports its dropped instruction and cancels its running turn.", "level": "must"} -->An agent it no longer holds
    leaves the queue (an instruction it was owed is reported dropped, rule 16),
-   its running turn is cut as listening only cuts it (rule 12), and it is
+   its running turn is cut as listening only cuts it (rule 12), <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-028", "kind": "behavior", "applies": "A removed agent originally bound by the discussion is detached; a foreign pre-existing binding prevents replacement.", "level": "must"} -->and it is
    unbound when an install of the discussion bound it; an agent bound
    otherwise is an intelligence channel the room cannot keep, and the install
-   is refused, as above.
+   is refused, as above.<!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-029", "kind": "behavior", "applies": "A non-bot, non-observer participant sending via a transport counts as a person, as does an unrecorded sender using a transport.", "level": "must"} -->
 2. **People.** A person is a participant of the room that is neither a bot
    nor an observer, the roles Section 6.4 leaves out of who takes part; a
    person's message is an event such a participant sent through a transport
    channel, or one a transport channel brought in with no participant record
-   behind it (a room whose people the host never recorded still has people). A
+   behind it (a room whose people the host never recorded still has people). <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-030", "kind": "behavior", "applies": "A framework delivery through a transport is treated as another sender's event.", "level": "must"} -->A
    delivery (Section 22), which a transport brings in from the framework's
    own sender, is no person's message: it is an event from another sender
-   (rule 8).
+   (rule 8).<!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-031", "kind": "behavior", "applies": "Broadcast does not solicit agents; the strategy gives later turns to the agents the event asked for.", "level": "must"} -->
 3. **The strategy takes the turns.** No event solicits an agent at broadcast
    (Section 10.2, solicitation): the strategy queues the agents an event asks
-   for and gives each its turn later (rule 7). The address keeps its meaning
+   for and gives each its turn later (rule 7). <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-032", "kind": "behavior", "applies": "Only the agents named in an explicit address are solicited and the committed event retains the address.", "level": "must"} -->The address keeps its meaning
    (Section 19.3): only the channels it names are asked to act, it is stored
-   with the event, and what changes is *when* they act. Transports receive
-   every event as before (Section 19.3 rule 1). An agent is not delivered an
+   with the event, and what changes is *when* they act. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-033", "kind": "behavior", "applies": "Discussion preserves ordinary transport delivery.", "level": "must"} -->Transports receive
+   every event as before (Section 19.3 rule 1). <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-034", "kind": "behavior", "applies": "Broadcast skips agents, and their own turns read the room through the reader's visibility boundary.", "level": "must"} -->An agent is not delivered an
    event at broadcast, as no channel left unsolicited is (Section 19.3.2); a
    turn reads the room when it starts (rule 9), filtered by what visibility
-   lets the agent see (Section 7.5 rule 8). Its memory provider (Section 20)
+   lets the agent see (Section 7.5 rule 8). <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-035", "kind": "behavior", "applies": "On commit, the executor for each agent's room memory receives every visible and readable message except the agent's own, even when it took no turn.", "level": "must"} -->Its memory provider (Section 20)
    is still handed every message the agent may see (visibility and access,
    rule 4), the agent's own excepted, as the message is committed, as a room
    with no discussion hands it, through the turn backend to the executor that
    holds the agent's state for the room (`committed_event`, §10.6.3): a provider that learns as messages arrive (an
    index, a summary) learns the whole conversation, not only the messages
-   that asked for the agent. The turn that answers a message does not hand it
-   again. Every agent's memory is handed it at once, so the commit waits for
-   the slowest memory, not for the sum of them; an agent offline (rule 7) is
-   handed nothing, as no executor would take it.
+   that asked for the agent. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-036", "kind": "behavior", "applies": "Answering a committed message does not deliver it to the same agent's memory a second time.", "level": "must"} -->The turn that answers a message does not hand it
+   again. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-037", "kind": "behavior", "applies": "Per-agent memory notifications run concurrently so the commit waits only for the slowest memory.", "level": "must"} -->Every agent's memory is handed it at once, so the commit waits for
+   the slowest memory, not for the sum of them; <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-038", "kind": "behavior", "applies": "A discussion's committed-message memory notification skips agents with no available executor.", "level": "must"} -->an agent offline (rule 7) is
+   handed nothing, as no executor would take it.<!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-039", "kind": "behavior", "applies": "An agent's answer and a person's message address agents by their handles, with @all naming all agents.", "level": "must"} -->
 4. **Names.** An agent's answer and a person's message address agents by
    naming them: `@` followed by an agent's handle; `@all` names every
-   agent. A name starts the text or follows a character that is neither a
+   agent. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-040", "kind": "behavior", "applies": "Parse mentions at the specified character boundary, using the longest identifier, excluding final dots and matching case-insensitively.", "level": "must"} -->A name starts the text or follows a character that is neither a
    letter, a digit, `_` nor `@`; it is the longest run of the characters an
    identifier holds (letters of any script, digits, `_`, `-`, `.`) that
-   follows, a final `.` excepted, and it matches a handle ignoring case.
+   follows, a final `.` excepted, and it matches a handle ignoring case.<!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-041", "kind": "behavior", "applies": "Resolve a handle from the host mapping, then a valid channel ID, then the agent's identity name reduced to identifier characters.", "level": "must"} -->
    Each agent has one **handle**, the name the room addresses it by: the
    one `handles` gives it; else its channel id, when the channel id is a
    handle; else its `name` (an Agent's identity, Section 19.1, or an
    external agent's, Section 6.4) kept to a name's characters (`Research
-   Desk` gives `ResearchDesk`), when that is a handle. A handle is a run of
+   Desk` gives `ResearchDesk`), when that is a handle. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-042", "kind": "behavior", "applies": "A handle is a valid unchanged identifier of at most 32 characters, without a trailing dot, and cannot be all.", "level": "must"} -->A handle is a run of
    those characters, at most 32 of them, with no final `.`, that an
    identifier keeps as it is (the transcript labels the agent's turns with
    it, Section 6.4: `dev-` and `a--b` are none), and is not `all`. A channel id such as `agent:3f2a…` cannot be one (`@agent:3f2a`
    reads as `@agent`), and a 36-character identifier is no name for a model
-   to copy or a person to read: an agent named `Analyst` is addressed as `@Analyst`.
+   to copy or a person to read: an agent named `Analyst` is addressed as `@Analyst`.<!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-043", "kind": "behavior", "applies": "Reject missing, invalid or case-colliding handles and explicit handles for agents outside the discussion.", "level": "must"} -->
    The discussion is refused at construction when an agent has no handle,
    when `handles` gives one that is not a handle or names a channel that is
    not one of its agents, and when two agents' handles read alike ignoring
-   case. A channel id that is not its agent's handle is no name: the
-   address a name sets, the queue and every hook keep channel ids. A host
+   case. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-044", "kind": "behavior", "applies": "A channel ID different from its handle cannot address the agent by name; stored addresses, queue entries and hooks use channel IDs.", "level": "must"} -->A channel id that is not its agent's handle is no name: the
+   address a name sets, the queue and every hook keep channel ids. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-045", "kind": "non_testable", "applies": "The host is responsible for avoiding a handle that collides with another channel's label in the room.", "level": "must"} -->A host
    names no handle after another channel of the room: a sender with no name
-   on that channel would carry the same label (Section 6.4). Names are read in
+   on that channel would carry the same label (Section 6.4). <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-046", "kind": "behavior", "applies": "Parse names from the text actually committed after before-broadcast hooks, excluding tool material, reasoning, fenced code and quoted lines.", "level": "must"} -->Names are read in
    the text the event commits with, once its `BEFORE_BROADCAST` hooks have
    run (Section 10.1): never in a tool's arguments or result, an agent's
-   reasoning, a fenced code block or a quoted line. They set the event's
+   reasoning, a fenced code block or a quoted line. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-047", "kind": "behavior", "applies": "Combine parsed mentions and a supplied transport address in mention order, excluding the speaker and unknown names.", "level": "must"} -->They set the event's
    `addressed_to`, the speaker left out, in the order named, alongside an
    address a transport set; a name that is no agent of the room addresses
-   nobody. A name queues an agent only when the event's visibility includes
+   nobody. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-048", "kind": "behavior", "applies": "A named agent is queued only when its access and the intersection of event and source-binding visibility let it read the event.", "level": "must"} -->A name queues an agent only when the event's visibility includes
    it and its access lets it read the event (Section 7.5): a name is no way
    around visibility; the visibility is the one the event carries, its own
-   intersected with its source binding's at commit (Section 7.3). A person's
+   intersected with its source binding's at commit (Section 7.3). <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-049", "kind": "behavior", "applies": "Mentioning a person records who was asked and does not solicit an intelligence channel.", "level": "must"} -->A person's
    name addresses no intelligence channel: it records that the agent asked
-   that person (rule 10). The names people are addressed by are those of the
+   that person (rule 10). <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-050", "kind": "behavior", "applies": "Eligible person names derive from the transcript labels and optional host people list, using identifiers up to 32 characters without truncation.", "level": "must"} -->The names people are addressed by are those of the
    room's people as the transcript labels them (Section 6.4: a participant's
    name, a transport's stamp, else the channel of a sender with no name), only
    those `people` lists when it is set, kept to an identifier's characters and
    at most 32 of them: a longer name addresses nobody, never cut short, since
-   a cut name could be another person's whole one. What is recorded is the
+   a cut name could be another person's whole one. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-051", "kind": "behavior", "applies": "Record a unique transcript person label; ambiguous normalized names and ranked look-alike labels address no one.", "level": "must"} -->What is recorded is the
    person as the transcript labels them, and only when one person answers to
    the name: a name two people answer to (`Alice Martin`, `AliceMartin`)
    records no one, and a look-alike's ranked label (`Alice (2, not Alice)`,
-   Section 6.4) is addressed by no name. Where a person's name and an agent's handle read
+   Section 6.4) is addressed by no name. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-052", "kind": "behavior", "applies": "When a person and an agent share a name, the agent's handle wins.", "level": "must"} -->Where a person's name and an agent's handle read
    alike, the name is the agent's. This is the mechanism Section 19.3.1 leaves
-   open: an agent MAY address another agent.
+   open: an agent MAY address another agent.<!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-053", "kind": "behavior", "applies": "Each committed event retains its own mentions. The turn queues names only after it ends and only from delivered events.", "level": "must"} -->
 5. **A turn queues each agent once.** Each event a turn commits carries its
    own names when it is committed (Section 19.3 rule 4). The queue takes them
    when the turn has ended, from the turn's delivered events only: an event a
    hook blocked, the depth limit stopped or the source's access withheld
-   queues nobody, and an agent named in three segments of one turn is queued
-   once.
+   queues nobody, <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-054", "kind": "behavior", "applies": "Multiple mentions of one agent across the turn's segments queue that agent once.", "level": "must"} -->and an agent named in three segments of one turn is queued
+   once.<!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-055", "kind": "behavior", "applies": "A discussion turn ends after all its events commit, including a failed or cut-short turn.", "level": "must"} -->
 6. **A turn's end.** A turn has ended once every event it produced is
    committed. A turn that fails, or that a round cap, a deadline, a budget or
-   a `Cancel` cuts short, has ended too: the events it committed before the
+   a `Cancel` cuts short, has ended too: <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-056", "kind": "behavior", "applies": "After a cut, committed events and their queued addressees remain, the agent is not retried for that turn and a failure follows ordinary reporting.", "level": "must"} -->the events it committed before the
    cut stay in the room and queue whom they name, the agent is not queued
    again for that turn, and a failure is reported as any turn's is (Section
-   9.3).
+   9.3).<!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-057", "kind": "behavior", "applies": "When the running turn ends, give the first queued agent a turn that its listening state and depth allow.", "level": "must"} -->
 7. **One turn at a time.** The strategy gives the next turn once the current
    one has ended. It goes to the first agent of the queue that can take it:
    one that does not only listen, or whose turn rule 12 lets it take while it
-   listens, and whose turn stays within the depth limit (rule 11). The agent
+   listens, and whose turn stays within the depth limit (rule 11). <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-058", "kind": "behavior", "applies": "A recently speaking agent cannot take the next turn while another queued agent can, even when a person put it first.", "level": "must"} -->The agent
    whose turn just ended does not take the next one while another agent of the
    queue can, a person's message that put it first included: an agent that
    asks a person at every turn would otherwise keep the turns from the agents
-   it waits on. Every turn an agent of the room takes goes through the queue.
+   it waits on. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-059", "kind": "behavior", "applies": "Every turn an agent takes in a discussion passes through its room queue.", "level": "must"} -->Every turn an agent of the room takes goes through the queue.<!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-060", "kind": "behavior", "applies": "Queue a dedicated instruction turn at the front for each addressed agent, using the instruction as its input.", "level": "must"} -->
    An instruction addressed to agents (Section 10.1.1) queues each of them at
    the front for a turn of its own, which takes the instruction as its input
-   (rule 16). A regenerated answer queues at the front, for a turn of its own,
+   (rule 16). <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-061", "kind": "behavior", "applies": "Queue regenerated turns at the front for the original answerers or original requested agents when no answer remains, once per agent and event.", "level": "must"} -->A regenerated answer queues at the front, for a turn of its own,
    each agent that answered the event (each agent the event asked for, when
-   no answer to it is left), once per agent and event. Such a turn is given
+   no answer to it is left), once per agent and event. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-062", "kind": "behavior", "applies": "Dedicated instruction and regeneration turns run despite waiting, listening or the immediately preceding speaker.", "level": "must"} -->Such a turn is given
    even while the discussion waits for a person (rule 10), to an agent that
-   only listens, and to the agent whose turn just ended. Requests that put
-   agents at the front are served in the order they came.
+   only listens, and to the agent whose turn just ended. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-063", "kind": "behavior", "applies": "Dedicated turns inserted at the front run in request order.", "level": "must"} -->Requests that put
+   agents at the front are served in the order they came.<!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-064", "kind": "behavior", "applies": "At its turn, an offline declared agent is dequeued and announced skipped, and its pending instruction is dropped.", "level": "must"} -->
    An agent offline when its turn comes, one held by its declaration that no
    executor online covers in the room (§10.6.7), is not given it, rather than
    given a turn that fails with `no_executor` at each message: its entry
    leaves the queue and the skip is announced (rule 17), then an instruction
-   it was to take is dropped. Whether it is offline is read as the turn
+   it was to take is dropped. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-065", "kind": "behavior", "applies": "Read executor coverage when the turn is due, allowing a newly online agent to take turns again.", "level": "must"} -->Whether it is offline is read as the turn
    comes, not from a list read earlier, which may miss an executor started
-   since. Once an executor covers it, it takes its turns again. A
+   since. Once an executor covers it, it takes its turns again. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-066", "kind": "behavior", "applies": "When the backend cannot list executors, still give the turn.", "level": "must"} -->A
    turn backend that does not list its executors tells nothing, and the turn
-   is given; a task's result to post (rule 19) is posted whatever the agent's
-   presence.
+   is given; <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-067", "kind": "behavior", "applies": "Posted task results proceed independently of the agent's executor presence.", "level": "must"} -->a task's result to post (rule 19) is posted whatever the agent's
+   presence.<!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-068", "kind": "behavior", "applies": "Agent requests queue agents at the back or merge into an existing place so one pending turn answers multiple requests.", "level": "must"} -->
 8. **The queue.** An agent an agent names is queued at the back, or keeps its
    place when already queued: the request merges into its pending turn, one
-   turn for every event that asked for it. A person's message puts the agents
-   it addresses at the front of the queue, in the order addressed. A person's
+   turn for every event that asked for it. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-069", "kind": "behavior", "applies": "A person's explicitly addressed agents go to the front in address order.", "level": "must"} -->A person's message puts the agents
+   it addresses at the front of the queue, in the order addressed. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-070", "kind": "behavior", "applies": "An unaddressed personal reply goes to the agents that asked that person in question order, else to everyone in host order.", "level": "must"} -->A person's
    message with no address (`addressed_to` null, and no name read in it)
    answers the agents that asked that person (`asked`), and puts them at the
    front in the order they asked; when none asked, it puts `everyone` there,
-   in their order; each only when the message's visibility includes it and its
-   access lets it read the message (rule 4). The message is routed so before
-   rule 10 clears what was asked. With a dispatch policy, such a message is
+   in their order; <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-071", "kind": "behavior", "applies": "Automatic routing to outstanding askers and everyone still requires each agent's access and visibility.", "level": "must"} -->each only when the message's visibility includes it and its
+   access lets it read the message (rule 4). <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-072", "kind": "behavior", "applies": "Route a person's answer using outstanding questions before clearing them.", "level": "must"} -->The message is routed so before
+   rule 10 clears what was asked. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-073", "kind": "behavior", "applies": "A dispatch policy replaces automatic asker and everyone selection for an unaddressed person's message.", "level": "must"} -->With a dispatch policy, such a message is
    left to the policy instead, whether agents asked that person or not
-   (rule 18). A message whose address is empty, or that
-   names only people, asks no agent (Section 19.3 rule 3). An event from any
+   (rule 18). <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-074", "kind": "behavior", "applies": "An empty address or a message naming only people asks no agent.", "level": "must"} -->A message whose address is empty, or that
+   names only people, asks no agent (Section 19.3 rule 3). <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-075", "kind": "behavior", "applies": "Other senders queue explicitly addressed agents at the back and otherwise ask no agent.", "level": "must"} -->An event from any
    other sender (a bot, a webhook, a delivery, Section 22) queues the agents
-   its address names, at the back; with no address it asks no agent. An
-   event a hook injects asks no agent, whatever its address (Section 9.4). A
+   its address names, at the back; with no address it asks no agent. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-076", "kind": "behavior", "applies": "A hook-injected event solicits no discussion agent regardless of its address.", "level": "must"} -->An
+   event a hook injects asks no agent, whatever its address (Section 9.4). <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-077", "kind": "behavior", "applies": "A merged turn answers the latest personal request if present, otherwise the latest requesting event.", "level": "must"} -->A
    merged turn answers the latest person's message among the events that asked
-   for it, else the latest of them. The order of `everyone` is the host's, so
+   for it, else the latest of them. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-078", "kind": "behavior", "applies": "The everyone order is the host's and is not rotated by the discussion.", "level": "must"} -->The order of `everyone` is the host's, so
    the agent that should open (the one that looks at the facts before the
-   others act) comes first; the discussion does not rotate it. With
+   others act) comes first; the discussion does not rotate it. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-079", "kind": "behavior", "applies": "In addressed-only mode a person's message solicits only its explicit agents, including when an outstanding asker would otherwise answer.", "level": "must"} -->With
    `addressed_only`, a person's message asks only the agents it addresses, as
    `ADDRESSED_ONLY` asks only the channels an event names (Section 19.3.1):
    one that names nobody asks no agent, the agents that asked a person
@@ -20631,219 +20675,223 @@ SpeakQueue (one per room, readable by the host)
    wants agents to judge for themselves whether an unaddressed message is for
    them leaves `addressed_only` off and gives them a speak policy (Section
    6.4), or gives the discussion a dispatch policy, which judges once for the
-   room (rule 18).
+   room (rule 18).<!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-080", "kind": "behavior", "applies": "A message turn replays the answered event for one agent under the room lock and on the delivery lane, building the context at turn start.", "level": "must"} -->
 9. **A turn reads the room as it is.** A turn a message asked for is a rerun
    of the event it answers, planned for that one agent under the room lock and
    run in the room's delivery lane, as a regeneration re-broadcasts an event
    already committed (Section 13.6): its context is built when the turn
-   starts, so what was said while the agent waited is in it. The event it
+   starts, so what was said while the agent waited is in it. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-081", "kind": "behavior", "applies": "Use the answered event as current_event and keep it at its original position relative to later history.", "level": "must"} -->The event it
    answers is passed as the turn's `current_event` and keeps its place in the
-   history, before what came after it (Section 20.1), and a speak policy reads
+   history, before what came after it (Section 20.1), <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-082", "kind": "behavior", "applies": "The speaking policy's SpeakTurn.recent includes the visible conversation through turn start.", "level": "must"} -->and a speak policy reads
    the conversation up to the turn's start in `SpeakTurn.recent` (Section
-   6.4). The turn's notes say which event the turn answers (its author's label
-   and a quote of it, Section 6.4) and every speaker that asked for it. An
+   6.4). <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-083", "kind": "behavior", "applies": "Turn notes identify the answered event by quoted words and author label, and name all speakers who requested the turn.", "level": "must"} -->The turn's notes say which event the turn answers (its author's label
+   and a quote of it, Section 6.4) and every speaker that asked for it. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-084", "kind": "behavior", "applies": "An external agent receives the history it missed together with the answered event as its request.", "level": "must"} -->An
    external agent, whose session keeps its own history, is sent what it has
-   not read yet and the event it answers as its request (Section 6.4). A turn is never given by publishing a message or an
+   not read yet and the event it answers as its request (Section 6.4). <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-085", "kind": "behavior", "applies": "Giving a discussion turn publishes no synthetic request message or instruction into the room.", "level": "must"} -->A turn is never given by publishing a message or an
    instruction in the room for the agent to answer, which a model reads as a
-   third party's words and may rightly refuse to obey.
+   third party's words and may rightly refuse to obey.<!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-086", "kind": "behavior", "applies": "An agent's personal question records the agent and transcript label; a reply clears only that person's outstanding requests after routing.", "level": "must"} -->
 10. **Asking a person, waiting for one.** When an agent names a person, the
     discussion owes that person an answer (`asked` records the agent and the
     person as the transcript labels them, rule 4), and a person's message,
     once routed (rule 8), clears what was asked of them: of that label alone,
     so a sender who takes another's name (ranked apart, Section 6.4) answers
-    for nobody else. With a dispatch policy, the policy judges whether the
-    message answers them (rule 18); what was asked is cleared all the same. With `addressed_only`, only a message that names the
-    agent clears what it asked. When no agent of the queue can take a turn,
+    for nobody else. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-087", "kind": "behavior", "applies": "Dispatch may choose whether a reply answers the askers, but the person's outstanding requests are still cleared.", "level": "must"} -->With a dispatch policy, the policy judges whether the
+    message answers them (rule 18); what was asked is cleared all the same. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-088", "kind": "behavior", "applies": "In addressed-only mode only a message naming the asking agent clears that agent's question.", "level": "must"} -->With `addressed_only`, only a message that names the
+    agent clears what it asked. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-089", "kind": "behavior", "applies": "No eligible turn plus a known person and an outstanding question, listening agent or depth stop sets waiting.", "level": "must"} -->When no agent of the queue can take a turn,
     the discussion waits for a person's message, its `waiting` reading true,
     if the room has a person to wait for (one of its participants is, or a
     person's message reached it) and it owes a person an answer, an agent of
-    the queue only listens, or the depth limit stopped the next turn. Until a
+    the queue only listens, or the depth limit stopped the next turn. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-090", "kind": "behavior", "applies": "Waiting suspends ordinary turns until a person writes or its cause clears, while dedicated instruction and regeneration turns can proceed.", "level": "must"} -->Until a
     person writes, whatever the message asks, or the cause of the wait is gone
     (the agent it waited on talks again), it gives no turn but those of rule 7
-    (an instruction, a regenerated answer). With no person in the room, or
+    (an instruction, a regenerated answer). <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-091", "kind": "behavior", "applies": "With no person or no cause to wait, the discussion becomes idle and a later request can restart it.", "level": "must"} -->With no person in the room, or
     nothing to wait for, a discussion that can give no turn is idle, not over:
-    the next event that asks for a turn opens it again.
+    the next event that asks for a turn opens it again.<!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-092", "kind": "behavior", "applies": "Discussion responses have the triggering event's depth plus one, and an ordinary person's message opens a chain at depth zero.", "level": "must"} -->
 11. **Depth.** A turn the strategy gives answers an event (rules 8 and 9) and
     carries its `chain_depth + 1` (Section 8.3). A person's message is at
-    depth 0, so each one opens a chain. `max_depth` takes the place of
+    depth 0, so each one opens a chain. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-093", "kind": "behavior", "applies": "A discussion's configured maximum depth replaces the kit limit for turns and their events and cannot be disabled.", "level": "must"} -->`max_depth` takes the place of
     `max_chain_depth` for the turns the discussion gives and the events they
-    produce, and cannot be disabled (Section 17.5). It bounds how far a chain
+    produce, and cannot be disabled (Section 17.5). <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-094", "kind": "behavior", "applies": "The depth limit bounds hops rather than the number of peers answering one trigger.", "level": "must"} -->It bounds how far a chain
     of agent turns reaches from a person's message (four hops with the default
     of 5), not how many turns follow it, since several agents a person's
-    message asks for each answer at depth 1. A turn the limit stops is not
+    message asks for each answer at depth 1. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-095", "kind": "behavior", "applies": "Report a depth-blocked ordinary turn once, keep the agent pending and answer the next shallower request that reaches it.", "level": "must"} -->A turn the limit stops is not
     given and is recorded once as Section 8.3 says; its agent stays queued,
     and its turn answers the next event that asks for it within the limit: a
     person's message, which opens a new chain, or a request from a shallower
-    one (rule 8). Each turn has a reentry budget of its own, `10 × max_depth`
+    one (rule 8). <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-096", "kind": "behavior", "applies": "Each discussion turn, including regeneration, receives its own budget of ten times max_depth independent of the caller.", "level": "must"} -->Each turn has a reentry budget of its own, `10 × max_depth`
     passes (Section 8.3), whoever asked for it, a regeneration included: the
     budget of the work a call is made from does not follow it into the
-    discussion's queue. Its depth does: a message, a post or a regeneration
+    discussion's queue. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-097", "kind": "behavior", "applies": "Async hook requests and regenerations retain their inherited depth, including when another process gives the discussion turn.", "level": "must"} -->Its depth does: a message, a post or a regeneration
     an ASYNC hook's body makes stands at least one deeper than the event the
     hook runs for (Section 8.3), and the turn that answers it at that depth,
     so `max_depth` ends a hook that asks an agent again after each of its
-    answers, in every process that gives the discussion's turns. A turn of
+    answers, in every process that gives the discussion's turns. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-098", "kind": "behavior", "applies": "A dedicated instruction over depth is dropped and announced without a stored event; a regenerated turn over depth is recorded once and dropped.", "level": "must"} -->A turn of
     its own (rule 7)
     past the limit does not wait: an instruction's is dropped and reported as
     dropped (rule 16), there being no stored event to record it against; a
-    regenerated answer's is recorded once and dropped. An autonomous
+    regenerated answer's is recorded once and dropped. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-099", "kind": "non_testable", "applies": "The host of an autonomous discussion must choose a depth limit sufficient for its intended work.", "level": "must"} -->An autonomous
     discussion, with no person to open a new chain, needs a `max_depth` that
-    lets its work through.
+    lets its work through.<!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-100", "kind": "behavior", "applies": "Discussion provides the host operations listen_only and talk_again for a room and set of channel IDs.", "level": "must"} -->
 12. **Listening only.** An implementation that provides Discussion MUST
     provide `listen_only(room_id, channel_ids)` and `talk_again(room_id,
     channel_ids)` for the host, which binds them to what a person does (a
-    console's "@sre hold on", "@sre you can carry on"). The discussion keeps
+    console's "@sre hold on", "@sre you can carry on"). <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-101", "kind": "behavior", "applies": "A listening agent keeps its pending place and cannot take an ordinary agent-requested turn.", "level": "must"} -->The discussion keeps
     the state, and it means what the listening state of Section 6.4 means: an
     agent that only listens keeps its place in the queue and takes no turn an
-    agent's message asks for; a person's message that names it gives it one
+    agent's message asks for; <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-102", "kind": "behavior", "applies": "A person's direct address grants a listening agent one turn without resuming it; unaddressed automatic routing grants none.", "level": "must"} -->a person's message that names it gives it one
     turn, and it goes on listening (one that names nobody, routed to
-    `everyone` or to the agents that asked that person, gives it none);
-    `talk_again` ends the state. An agent
-    whose speak policy also listens (Section 6.4) is silenced by either.
+    `everyone` or to the agents that asked that person, gives it none);<!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-103", "kind": "behavior", "applies": "The host resumes a listening agent with talk_again.", "level": "must"} -->
+    `talk_again` ends the state. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-104", "kind": "behavior", "applies": "A listening decision by either the discussion or the speaking policy silences the agent.", "level": "must"} -->An agent
+    whose speak policy also listens (Section 6.4) is silenced by either.<!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-105", "kind": "behavior", "applies": "Starting listen-only during a turn cancels that agent's turn and preserves already committed work.", "level": "must"} -->
     Setting the state on the agent whose turn runs cuts that turn, as a
     `Cancel` steering directive does (Section 21.3), or, for an external
     agent, as its channel's cancellation does (Section 6.4): what the turn committed
-    stays in the room; a turn given but not running yet, which no `Cancel`
-    reaches, is abandoned before it runs. Talking again, its next turn reads
-    the whole room (rule 9).
+    stays in the room; <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-106", "kind": "behavior", "applies": "A turn allocated before listen-only but not started is abandoned before execution.", "level": "must"} -->a turn given but not running yet, which no `Cancel`
+    reaches, is abandoned before it runs. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-107", "kind": "behavior", "applies": "A resumed agent's next turn reads the room's full available history.", "level": "must"} -->Talking again, its next turn reads
+    the whole room (rule 9).<!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-108", "kind": "behavior", "applies": "A message-requested turn consults the agent's speaking policy; a dedicated instruction bypasses it.", "level": "must"} -->
 13. **Staying silent.** A turn a message asked for is submitted to the agent's
     speak policy, when it has one, as any event the agent would answer
-    (Section 6.4); an instruction's turn is not, as Section 6.4 says. A
-    `silent` decision runs no generation and ends the turn. Without a policy,
+    (Section 6.4); an instruction's turn is not, as Section 6.4 says. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-109", "kind": "behavior", "applies": "A silent speaking-policy decision ends the turn without calling generation.", "level": "must"} -->A
+    `silent` decision runs no generation and ends the turn. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-110", "kind": "behavior", "applies": "Whole-row silence tokens are matched ignoring case, surrounding whitespace, a final period and optional token brackets; a turn of only silent rows is silent.", "level": "must"} -->Without a policy,
     or when the policy lets it speak, the model may stay silent itself: a text
     row of the turn whose only text is `silent_token`, ignoring case,
     surrounding whitespace, a final period and the brackets around the token
     if it has some, says nothing; a turn whose text rows all say nothing
-    stayed silent. Its row is stored with `status = BLOCKED` and `blocked_by =
-    "discussion_silent"`, read for no name and delivered nowhere: the start of
+    stayed silent. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-111", "kind": "behavior", "applies": "A silent token row is stored blocked as discussion_silent, produces no mentions and reaches no recipient.", "level": "must"} -->Its row is stored with `status = BLOCKED` and `blocked_by =
+    "discussion_silent"`, read for no name and delivered nowhere: <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-112", "kind": "behavior", "applies": "Buffer the start of streamed text until it cannot still be the silent token.", "level": "must"} -->the start of
     a streamed answer is held back until its text can no longer be the token,
-    since a streamed segment once delivered is not taken back (Section 6.4). A
-    turn that ends with no text produces no row and says nothing too. A silent
-    turn counts as a turn (rules 7 and 15).
+    since a streamed segment once delivered is not taken back (Section 6.4). <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-113", "kind": "behavior", "applies": "A generation ending with no text stores no row and stays silent.", "level": "must"} -->A
+    turn that ends with no text produces no row and says nothing too. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-114", "kind": "behavior", "applies": "A silent discussion turn consumes one of the room's allotted turns.", "level": "must"} -->A silent
+    turn counts as a turn (rules 7 and 15).<!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-115", "kind": "behavior", "applies": "Runtime notes name the agent and all peers by handle and give identity names, roles and descriptions where available.", "level": "must"} -->
 14. **What a turn knows.** Each turn's notes (Section 6.4) carry, as the
     runtime's own block and not a participant's words: the agent's own
     handle, the other agents of the room by their handles, with the `name`,
     `role` and `description` of those
     that carry an identity (Agents, Section 19.1, and external agents given
-    one, Section 6.4); the people the agent may address, by the
-    names rule 4 gives them; which event the turn answers and who asked for
+    one, Section 6.4); <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-116", "kind": "behavior", "applies": "Runtime notes name the people the agent can address using the room's transcript labels.", "level": "must"} -->the people the agent may address, by the
+    names rule 4 gives them; <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-117", "kind": "behavior", "applies": "Runtime notes identify the answered event and requesting speakers, quoting the person's label and words.", "level": "must"} -->which event the turn answers and who asked for
     it, a person's label and their words quoted (Section 6.4); and how the
-    room works. That last part is the host's `rules` when the discussion has
+    room works. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-118", "kind": "behavior", "applies": "Host-supplied discussion rules substitute another agent's @handle and the configured silence token.", "level": "must"} -->That last part is the host's `rules` when the discussion has
     them, `{handle}` in them standing for another agent's handle with its `@`
-    (an example the agent can follow) and `{silent}` for the silence token;
+    (an example the agent can follow) and `{silent}` for the silence token;<!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-119", "kind": "behavior", "applies": "Default turn instructions explain who acts next, handle syntax, an unaddressed reply and the silence token.", "level": "must"} -->
     without them, it is the default, which tells the agent to end its
     message with the handle of the agent that must act next, says that a
     name without `@` reaches nobody and a message that names nobody wakes
-    nobody, and gives the silence token for when it has nothing to add.
+    nobody, and gives the silence token for when it has nothing to add.<!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-120", "kind": "behavior", "applies": "Room context in the runtime notes stays under discussion control and the one-speaker statement uses the current agent's handle.", "level": "must"} -->
     The rest of the notes, what the turn knows of the room, is the
     discussion's alone. That one agent speaks at a time is stated with the
-    agent's own handle.
+    agent's own handle.<!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-121", "kind": "behavior", "applies": "A discussion is over when done holds on the check before a turn is given.", "level": "must"} -->
 15. **The end.** The discussion is over once `done` holds, checked before each
-    turn is given, or once `max_turns` turns were given in the room, from the
-    moment the last of them is given. It gives no further turn and drops its
-    queue; an instruction addressed to an agent afterwards, and a regenerated
+    turn is given, <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-202", "kind": "behavior", "applies": "A discussion reaches its turn limit from the moment its final allowed turn is given.", "level": "must"} -->or once `max_turns` turns were given in the room, from the
+    moment the last of them is given. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-122", "kind": "behavior", "applies": "An ended discussion gives no more turns and drops its queue.", "level": "must"} -->It gives no further turn and drops its
+    queue; <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-123", "kind": "behavior", "applies": "Later instructions and regenerations are blocked with discussion_over.", "level": "must"} -->an instruction addressed to an agent afterwards, and a regenerated
     answer asked for afterwards, are refused, their result blocked with the
-    reason `discussion_over`; a turn running then ends as it would; the room's later
+    reason `discussion_over`; <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-124", "kind": "behavior", "applies": "A turn already running may finish normally; later room events still commit and reach recipients without soliciting agents.", "level": "must"} -->a turn running then ends as it would; the room's later
     events are stored and delivered with no agent asked. `done` is the host's:
     a mission's state, a person's word, a budget. A host that wants the agents
-    to answer again uninstalls the discussion (rule 1).
+    to answer again uninstalls the discussion (rule 1).<!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-125", "kind": "behavior", "applies": "Installation persists the discussion's configuration and speak queue with the room.", "level": "must"} -->
 16. **Its state, across processes.** Installing a discussion stores it with the
     room, as `ConversationState` is (Section 19.2): its configuration (the
     agents' channel ids and their handles, `people`, `addressed_only`, `everyone`, `max_turns`,
     `max_depth`, `silent_token`, `rules`, whether it has a dispatch policy, and the
     agents its installs attached to the room) and its
-    speak queue; a configuration stored without handles addresses each
-    agent by its channel id. Every process that
+    speak queue; <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-126", "kind": "behavior", "applies": "Older configurations missing handles use the channel ID as each agent's handle.", "level": "must"} -->a configuration stored without handles addresses each
+    agent by its channel id. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-127", "kind": "behavior", "applies": "All processes follow the stored discussion's queue and addressing rules and reload another process's configuration replacement.", "level": "must"} -->Every process that
     serves the room follows the stored discussion, whether or not its host
     installed it there: it asks no agent at broadcast (rule 3), and reads
     names and queues (rules 4, 5, 8, 10) by the stored configuration, read
-    again once another process replaced it (rule 1). Every
+    again once another process replaced it (rule 1). <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-128", "kind": "behavior", "applies": "The room lock serializes queue changes; one queue and its lifetime turn count survive restart.", "level": "must"} -->Every
     change of the queue is read and written under the room lock (Section
     13.5), so the processes that serve one room keep one queue, and the queue
-    and the count of turns given outlive a restart. Uninstalling, in any
+    and the count of turns given outlive a restart. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-129", "kind": "behavior", "applies": "A follower can uninstall globally, post held task results, then detach agents installed by the discussion.", "level": "must"} -->Uninstalling, in any
     process, one that only follows the discussion included, ends it in all of
     them, posts the task results the discussion took and has not committed
-    (rule 19), then unbinds the agents its installs attached (a configuration
-    stored without them names none). A process that gives no turn, because it only
+    (rule 19), then unbinds the agents its installs attached <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-130", "kind": "behavior", "applies": "An older stored discussion lacking the list of attached agents detaches none on uninstall.", "level": "must"} -->(a configuration
+    stored without them names none). <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-131", "kind": "behavior", "applies": "A following or mismatched process immediately drops and reports instructions and posts task results instead of holding them.", "level": "must"} -->A process that gives no turn, because it only
     follows the discussion or its host installed another configuration, keeps
     no instruction and no task result for a turn: it reports the instruction
-    dropped and posts the result at once.
+    dropped and posts the result at once.<!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-132", "kind": "behavior", "applies": "Only an installer matching the persisted configuration may give turns; a stale installer yields its lease until reconfigured.", "level": "must"} -->
 
     A process where the host installed the discussion may give its turns
     while the configuration its host installed is the stored one: a process
     whose host installed another (the stored one was replaced elsewhere) gives
-    up the lease and only follows, until its host installs the stored one.
+    up the lease and only follows, until its host installs the stored one.<!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-133", "kind": "behavior", "applies": "The host can ask whether its installed discussion matches the stored configuration.", "level": "must"} -->
     `room_strategy_is_current(room_id, Discussion)` (Section 19.7) is how
-    the host learns it. A host that finds it false installs the
+    the host learns it. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-134", "kind": "non_testable", "applies": "A host reinstalls a noncurrent discussion only while its own state still calls for that discussion.", "level": "must"} -->A host that finds it false installs the
     configuration it wants again while its own state still wants the
     discussion, so that a room no longer waits on a process that replaced it
     and stopped; it does not reinstall a discussion its own state no longer
-    wants, which would bring back one another process uninstalled. One
+    wants, which would bring back one another process uninstalled. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-135", "kind": "behavior", "applies": "A single process gives turns under a stored lease with expiration, defaulting to fifteen seconds.", "level": "must"} -->One
     process at a time gives the turns: the one that holds the room's
     **lease**, stored with
-    the queue with the time it expires (15 s by default). It gives the turns,
+    the queue with the time it expires (15 s by default). <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-136", "kind": "behavior", "applies": "The lease holder renews while active; another matching installer takes over after expiry and treats the stopped holder's running turn as ended.", "level": "must"} -->It gives the turns,
     renews the lease while it holds it, and another process that installed
     the discussion takes it once it has expired: a process that stopped gives
-    up its turns that way, and its running turn has ended (rule 6). A process
+    up its turns that way, and its running turn has ended (rule 6). <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-137", "kind": "behavior", "applies": "The holder rereads the shared queue at least once per second for another process's queued turn or change to its current turn.", "level": "must"} -->A process
     that queues a turn without holding the lease makes it known through the
     stored queue, which the holder reads again at least once a second; a
     change that concerns the running turn (its agent set to listen only, rule
-    12) reaches the holder the same way. `speaking` is stored with the lease
-    and names the holder's running turn. `done` is the host's and is checked
+    12) reaches the holder the same way. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-138", "kind": "behavior", "applies": "Persist the lease holder's active speaker with the lease.", "level": "must"} -->`speaking` is stored with the lease
+    and names the holder's running turn. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-139", "kind": "behavior", "applies": "The lease holder evaluates the host's done predicate and dispatch policy.", "level": "must"} -->`done` is the host's and is checked
     by the process holding the lease, which asks its dispatch policy too
-    (rule 18). A process that only follows the
+    (rule 18). <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-140", "kind": "behavior", "applies": "Followers never give turns; messages remain queued when no live installer can serve them.", "level": "must"} -->A process that only follows the
     discussion never gives a turn: with no process that installed it alive,
-    messages are queued and wait.
+    messages are queued and wait.<!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-141", "kind": "behavior", "applies": "Retain instructions only in the receiving process's memory and identify that process in the queue entry.", "level": "must"} -->
 
     A queued turn's instruction is kept in memory only, by the process that
     received it, as an instruction is stored nowhere (Section 10.1.1). Its
-    entry names that process. When the turn comes and the holder is another
+    entry names that process. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-142", "kind": "behavior", "applies": "Transfer the lease to the instruction's owner when needed; drop the instruction after one lease period without takeover.", "level": "must"} -->When the turn comes and the holder is another
     process, the holder hands the lease over; an instruction whose process
-    does not take the lease within one lease period is dropped. An
+    does not take the lease within one lease period is dropped. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-143", "kind": "behavior", "applies": "Report a queued instruction dropped on completion, uninstall or owner shutdown through ON_SPEAK_QUEUE.", "level": "must"} -->An
     instruction the discussion drops (it is over, uninstalled, or its process
-    stopped) is reported through `ON_SPEAK_QUEUE` as dropped.
+    stopped) is reported through `ON_SPEAK_QUEUE` as dropped.<!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-144", "kind": "behavior", "applies": "A posted result gets an owner-named queue entry and persists privately with its ID, agent, depth and message until commit, outside publicly readable room metadata.", "level": "must"} -->
     A task's result to post (rule 19) is queued as an instruction is, its
     entry naming its holder; unlike an instruction, it is also kept, from when
     the discussion takes it until it is committed, with the room's private
     state (Section 14.1): its id, agent, chain depth and the message it posts,
     apart from the room's metadata, which a reader of the room gets whether or
     not the posted message's visibility (Section 7.3), or a hook that blocks
-    it, would show it to them.
-17. **Following the queue.** The host reads a room's `SpeakQueue` at any time,
+    it, would show it to them.<!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-145", "kind": "behavior", "applies": "The host may read the room's SpeakQueue at any time.", "level": "must"} -->
+17. **Following the queue.** The host reads a room's `SpeakQueue` at any time,<!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-146", "kind": "behavior", "applies": "Every queue transition fires ON_SPEAK_QUEUE with the room, resulting queue, and the corresponding change kind.", "level": "must"} -->
     and each change of it fires `ON_SPEAK_QUEUE` (Section 9) with the room,
     the queue as it now is and what changed: an agent queued, a turn given or
     ended, a turn skipped as its agent is offline (rule 7), a queued
     instruction dropped, an agent listening only or talking
     again, the discussion waiting for a person or no longer waiting, the
-    discussion over. The host's calls take the organization a room belongs to
-    (Section 17.2): a room of another organization holds no discussion for it. A console
+    discussion over. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-147", "kind": "behavior", "applies": "Host discussion operations are scoped to the room's organization and report no discussion to a different organization.", "level": "must"} -->The host's calls take the organization a room belongs to
+    (Section 17.2): a room of another organization holds no discussion for it. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-148", "kind": "non_testable", "applies": "A host console follows the queue, reads agent identities and bindings, and displays and parses handles consistently with discussion addressing.", "level": "must"} -->A console
     that shows who speaks, who is next, who only listens and whether the
     discussion waits for a person follows it, and draws the room's agents from
     the room's intelligence bindings and the agents' identity (Section 19.1),
     each shown and named by its handle (rule 4): a command that names an
     agent reads the name as rule 4 does, and the queue's channel ids are
-    shown as handles.
+    shown as handles.<!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-149", "kind": "behavior", "applies": "A person's message returns after commit and broadcast without waiting for queued answers, which are absent from its immediate result.", "level": "must"} -->
     A person's message returns once committed and broadcast, with no agent's
     answer in its result (Section 10.1 step 18): the answers come in the turns
-    that follow, as a regenerated answer the discussion queued does.
+    that follow, as a regenerated answer the discussion queued does.<!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-150", "kind": "behavior", "applies": "Hosts may provide a dispatch policy that chooses which agents take an unaddressed person's message and their order, including none.", "level": "must"} -->
 18. **Who takes an unaddressed message.** A discussion MAY carry a dispatch
     policy, which decides, for a person's message with no address and no
     name (rule 8), which agents take it and in which order, or that none
-    does. Without one, rule 8 gives that message to the agents that asked
+    does. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-151", "kind": "behavior", "applies": "With no dispatch policy an unaddressed message goes to the person's outstanding askers, otherwise to everyone.", "level": "must"} -->Without one, rule 8 gives that message to the agents that asked
     that person, else to `everyone`: a room where every agent is asked every
     remark spends turns on agents with nothing to add (each says nothing,
     rule 13, but its turn runs), the agent that should answer may come
     third, and an agent that asked the person a question takes the person's
     next message even when it answers nothing of it (a request for another
-    agent, a thanks). The policy is asked for that message only: a message
+    agent, a thanks). <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-152", "kind": "behavior", "applies": "Explicit addresses, names of agents and names of people bypass dispatch.", "level": "must"} -->The policy is asked for that message only: a message
     with an address, or that names an agent or only people, is routed as
-    rule 8 says, and a discussion with `addressed_only`, where a message that
-    names nobody asks no agent, takes no dispatch policy. A name stays the
-    person's word: no policy overrides it.
+    rule 8 says, <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-153", "kind": "behavior", "applies": "An addressed-only discussion refuses a dispatch policy.", "level": "must"} -->and a discussion with `addressed_only`, where a message that
+    names nobody asks no agent, takes no dispatch policy. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-154", "kind": "behavior", "applies": "A dispatch decision cannot override a name explicitly given by the person.", "level": "must"} -->A name stays the
+    person's word: no policy overrides it.<!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-198", "kind": "structural", "applies": "The dispatch policy takes a DispatchTurn and returns a DispatchDecision.", "level": "must"} -->
 
     ```
     DispatchPolicy (interface)
     └── decide(turn: DispatchTurn) → DispatchDecision
 
+    ```
+    <!-- /rfc -->
+    <!-- rfc: {"id": "RK-19.7.5-199", "kind": "structural", "applies": "A DispatchTurn carries the room, event, visible history, speakers, candidates and outstanding asks.", "level": "must"} -->
+    ```
     DispatchTurn
     ├── room_id: string
     ├── event: RoomEvent                    # The person's message
@@ -20852,6 +20900,10 @@ SpeakQueue (one per room, readable by the host)
     ├── candidates: list<DispatchCandidate> # The agents it may pick: those that asked the author first, then `everyone`'s order
     └── asked: list<channel_id>             # The candidates that asked the message's author and wait for the answer (rule 10)
 
+    ```
+    <!-- /rfc -->
+    <!-- rfc: {"id": "RK-19.7.5-200", "kind": "structural", "applies": "A DispatchCandidate carries channel ID, agent identity fields and the room's handle.", "level": "must"} -->
+    ```
     DispatchCandidate
     ├── channel_id: string
     ├── name: string | null                 # An Agent's identity (Section 19.1), as a turn's notes give it (rule 14)
@@ -20859,145 +20911,151 @@ SpeakQueue (one per room, readable by the host)
     ├── description: string | null
     └── handle: string | null               # The name the room addresses it by (rule 4); null: its channel id
 
+    ```
+    <!-- /rfc -->
+    <!-- rfc: {"id": "RK-19.7.5-201", "kind": "structural", "applies": "A DispatchDecision carries ordered agent IDs with a reason and judgments that default to empty.", "level": "must"} -->
+    ```
     DispatchDecision
     ├── agents: list<channel_id>            # Who takes the message, in the order they answer; empty: no agent
     ├── reason: string = ""                 # Why, in a few words, for logs and hooks
     └── judgments: map<string, float> = {}  # What the policy weighed, by name
     ```
 
+    <!-- /rfc -->
+    <!-- rfc: {"id": "RK-19.7.5-155", "kind": "behavior", "applies": "Candidate order is the person's outstanding askers followed by everyone, excluding invisible, unreadable and listening agents.", "level": "must"} -->
     The candidates are the agents that asked that person, in the order they
     asked, then `everyone`, in its order, less the agents the message does
     not reach (its visibility and their access, rule 4) and those that only
-    listen, which an unaddressed message gives no turn (rule 12). With no
-    candidate, the policy is not asked and no agent is. The agents a decision
+    listen, which an unaddressed message gives no turn (rule 12). <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-156", "kind": "behavior", "applies": "With no eligible candidate, neither the dispatch policy nor any agent is asked.", "level": "must"} -->With no
+    candidate, the policy is not asked and no agent is. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-157", "kind": "behavior", "applies": "Dispatch queues selected agents at the front in decision order and excludes unknown, ineligible and duplicate IDs.", "level": "must"} -->The agents a decision
     names are put at the front of the queue in its order, as rule 8 puts
     `everyone`; one that is not a candidate, or named twice, is left out, so a
-    policy is no way around visibility or the listening state. An empty
+    policy is no way around visibility or the listening state. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-158", "kind": "behavior", "applies": "An empty dispatch decision preserves storage and transport delivery, queues no agent and leaves the discussion idle.", "level": "must"} -->An empty
     decision asks no agent: the message is stored and delivered, and the
-    discussion goes idle (rule 10). The recent events a policy reads are
+    discussion goes idle (rule 10). <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-159", "kind": "behavior", "applies": "History exposed to dispatch includes only events visible to at least one eligible candidate.", "level": "must"} -->The recent events a policy reads are
     those a candidate may read: a policy may hand them to a classifier
-    outside, and an event no candidate may read MUST NOT reach it that way.
+    outside, and an event no candidate may read MUST NOT reach it that way.<!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-160", "kind": "behavior", "applies": "The lease holder decides each waiting message once off the room lock, before giving the next turn.", "level": "must"} -->
 
     The decision is the room's, taken once per message, off the room lock, by
     the process holding the lease (rule 16): routing the message leaves it
     waiting for a decision in the stored queue, with the candidates it
     reaches, and the holder decides it before it gives another turn, so the
     agents a person's message asks for still come before the agents queued
-    after it. Messages waiting are decided in the order they were committed;
-    once the discussion is over, they are dropped with its queue (rule 15),
+    after it. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-161", "kind": "behavior", "applies": "Pending dispatch decisions are processed in message commit order.", "level": "must"} -->Messages waiting are decided in the order they were committed;<!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-162", "kind": "behavior", "applies": "Ending a discussion discards messages still waiting for dispatch.", "level": "must"} -->
+    once the discussion is over, they are dropped with its queue (rule 15),<!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-163", "kind": "behavior", "applies": "A stopped decision maker leaves its pending message for the next holder.", "level": "must"} -->
     and a process that stops while it decides leaves the message waiting for
-    the next holder. At most 16 messages wait: past them, the oldest asks
+    the next holder. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-164", "kind": "behavior", "applies": "Bound the undecided queue to sixteen and route the oldest excess message with the no-policy fallback.", "level": "must"} -->At most 16 messages wait: past them, the oldest asks
     what it asks with no policy (below), undecided, so a room with no holder
-    alive keeps a bounded queue. The discussion bounds
-    the wait for a decision (`dispatch_timeout`, 5 s by default). A policy
+    alive keeps a bounded queue. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-165", "kind": "behavior", "applies": "Apply dispatch_timeout to each decision, using five seconds by default.", "level": "must"} -->The discussion bounds
+    the wait for a decision (`dispatch_timeout`, 5 s by default). <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-166", "kind": "behavior", "applies": "On failure, timeout, unreadable decisions or an absent holder policy, route to the candidate askers or all candidates and report fallback.", "level": "must"} -->A policy
     that fails, does not decide in time or returns no readable decision does
     not silence the room: the message asks what it asks with no policy, the
     candidates that asked its author, else every candidate, and the decision
     reported names them with the reason `fallback`; so does a process
     holding the lease whose host gave it no policy, and any failure in
-    deciding.
+    deciding.<!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-167", "kind": "behavior", "applies": "Applied decisions fire ON_DISPATCH_DECISION with the room, event, eligible candidates, decision and elapsed time, capped to the deadline on timeout.", "level": "must"} -->
 
     Every decision applied fires `ON_DISPATCH_DECISION` with the room, the
     message, the candidates, the decision and how long the policy took (the
     bound, when it did not decide in time), so who took what, why and at
-    what cost can be followed and measured without wrapping the policy. A
+    what cost can be followed and measured without wrapping the policy. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-168", "kind": "behavior", "applies": "A competing stale decision is neither applied nor reported, so a committed message has one decision notification.", "level": "must"} -->A
     decision on a message another process decided first (it took the lease
     over meanwhile) is neither applied nor reported: each message is
-    reported once. The decision is
+    reported once. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-169", "kind": "behavior", "applies": "Dispatch leaves the original address null; regeneration with no answer uses everyone and does not redispatch.", "level": "must"} -->The decision is
     not stored with the message: its `addressed_to` stays null, and a
     regenerated answer to it with no answer left asks `everyone` (rule 7),
-    not a new decision. An agent picked still answers through its speak
-    policy, when it has one (rule 13).
+    not a new decision. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-170", "kind": "behavior", "applies": "A dispatched agent still passes through its own speaking policy.", "level": "must"} -->An agent picked still answers through its speak
+    policy, when it has one (rule 13).<!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-171", "kind": "behavior", "applies": "The built-in classifier dispatch policy asks all candidate yes/no questions together with identities, speaker-labelled conversation and waiting-agent context.", "level": "must"} -->
 
     RoomKit provides a policy built on a classifier (Section 6.8). It asks one
     yes/no question per candidate, all in one call: whether that agent should
     take the message, given what each agent's identity says it does, over the
     message, its speaker and the recent conversation named by speaker; an
     agent that waits for the speaker's answer is marked as such, so that it
-    is picked when the message answers it and not otherwise. The
+    is picked when the message answers it and not otherwise. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-172", "kind": "behavior", "applies": "The classifier policy selects qualifying candidates in probability order, using threshold 0.5 and a two-agent cap by default and nobody below threshold.", "level": "must"} -->The
     candidates whose probability reaches a threshold (0.5 by default) take it,
     likeliest first, at most a number of them (2 by default); with none
-    reaching it, no agent takes it (thanks, small talk). Each candidate's
-    probability is reported with the decision, under its channel id. Each
+    reaching it, no agent takes it (thanks, small talk). <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-173", "kind": "behavior", "applies": "The classifier policy includes each candidate's probability in the decision's judgments under its channel ID.", "level": "must"} -->Each candidate's
+    probability is reported with the decision, under its channel id. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-174", "kind": "behavior", "applies": "The classifier policy presents candidates by handle and judges an agent with no identity by its handle alone.", "level": "must"} -->Each
     candidate is presented to the classifier by its handle, the name the
     conversation it reads uses for it; an agent with no identity is judged
-    by its handle alone.
+    by its handle alone.<!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-175", "kind": "behavior", "applies": "An agent given the background tool can start its long work as a task off the discussion floor.", "level": "must"} -->
 
 19. **Talking and working.** A turn talks; long work runs as a task (Section
     23), off the floor. An agent given the background tool (Section 23.4)
-    starts one and says once, in a sentence, that the work is under way, and
-    its turn ends there; the host starts one for an agent with `start_task`,
-    and a person through what the host gives them. Tasks run in parallel with
+    starts one <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-203", "kind": "behavior", "applies": "A discussion agent starting background work acknowledges it in a single sentence and ends its turn.", "level": "must"} -->and says once, in a sentence, that the work is under way, and
+    its turn ends there; <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-204", "kind": "behavior", "applies": "The host can start a discussion task for an agent and can expose this operation to a person.", "level": "must"} -->the host starts one for an agent with `start_task`,
+    and a person through what the host gives them. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-176", "kind": "behavior", "applies": "Tasks run alongside one another and discussion turns while the floor gives one turn at a time.", "level": "must"} -->Tasks run in parallel with
     the discussion's turns and with one another, and the floor stays one turn
     at a time: a question asked while a task runs is answered in its turn, not
-    after the task. A task's result comes back as its hand-back, an
+    after the task. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-177", "kind": "behavior", "applies": "Relay results, including failure and cancellation, enter as dedicated instructions to the notified agents at the front in arrival order.", "level": "must"} -->A task's result comes back as its hand-back, an
     instruction addressed to the agent the task is for, which the discussion
     queues at the front for a turn of its own (rule 7), results served in the
     order they come; a task cancelled or failed says so the same way (Section
-    23.3). A posted result (`hand_back = "post"`) takes the same place, and
+    23.3). <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-178", "kind": "behavior", "applies": "A result in post mode takes the same queue position but publishes the agent's message without generation, interrupting a turn or soliciting mentions.", "level": "must"} -->A posted result (`hand_back = "post"`) takes the same place, and
     its turn posts it as the agent's message without running the agent's
     model: it never cuts a turn under way, and the names it carries ask no
-    one, its worker having written it outside the room. Each turn's notes list
+    one, its worker having written it outside the room. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-179", "kind": "behavior", "applies": "A discussion turn exposes the room's tasks in its notes so the agent can answer progress questions.", "level": "must"} -->Each turn's notes list
     the room's tasks (Section 23.4), so an agent asked how a task goes answers
-    from them, and `cancel_task` or the host's `cancel_task(task_id)` stops
-    one. A worker runs in its own child room, outside the discussion, so an
+    from them, <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-205", "kind": "behavior", "applies": "An agent or the host can cancel an existing discussion task.", "level": "must"} -->and `cancel_task` or the host's `cancel_task(task_id)` stops
+    one. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-180", "kind": "behavior", "applies": "Workers run in separate child rooms outside the discussion and may be hosted by an external agent.", "level": "must"} -->A worker runs in its own child room, outside the discussion, so an
     agent of the discussion may work through any intelligence channel, an
-    external agent among them. A task outlives an uninstalled or ended
+    external agent among them. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-181", "kind": "behavior", "applies": "Tasks outlive uninstall and completion; an ended discussion refuses a relayed instruction and preserves the result in its completion hook and StatusBus.", "level": "must"} -->A task outlives an uninstalled or ended
     discussion: a relayed hand-back is then an instruction like any other,
     refused once the discussion is over (rule 15), its result kept on
-    `ON_TASK_COMPLETED` and the StatusBus; a posted result, which asks no
+    `ON_TASK_COMPLETED` and the StatusBus; <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-182", "kind": "behavior", "applies": "Pending posted results still publish once the floor is free after discussion completion or uninstall.", "level": "must"} -->a posted result, which asks no
     turn, is posted once no turn runs, one queued when the discussion ends or
-    is uninstalled included.
+    is uninstalled included.<!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-183", "kind": "behavior", "applies": "Before detaching agents an uninstaller posts every retained uncommitted result through that process's hooks, including results being committed elsewhere.", "level": "must"} -->
 
     Uninstalling, in any process, posts every result the discussion took and
     has not committed, whichever process holds it and whether it is queued,
     waits for the floor or is being committed, before it unbinds the agents
     its installs attached: a posted result is the agent's message, committed
     through its binding (Section 23.3) and through the hooks of the process
-    that uninstalls, so every process serving a room registers the same hooks.
+    that uninstalls, <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-184", "kind": "non_testable", "applies": "The host is responsible for registering consistent hooks in every process that serves the room.", "level": "must"} -->so every process serving a room registers the same hooks.<!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-185", "kind": "behavior", "applies": "An uninstaller already holding the room lock posts the result without waiting for a competing commit.", "level": "must"} -->
     It waits for no commit under way: a host that uninstalls while it holds
     the room lock, which that commit needs, has the result posted by the
-    uninstall itself. A result's idempotency key is the id the discussion took
+    uninstall itself. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-186", "kind": "behavior", "applies": "Use the retained result ID as the idempotency key so a later holder or in-flight commit replays without duplicating the message.", "level": "must"} -->A result's idempotency key is the id the discussion took
     it under, not the id of the message it commits (Section 13.4): the post
     that comes second, the holder's own once it learns of the uninstall (its
     agent detached by then included) or the commit under way once the lock is
-    released, is a replay and stores nothing. A result a closing process did
+    released, is a replay and stores nothing. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-187", "kind": "behavior", "applies": "Closing or failed posting keeps the result private until the next uninstall, which posts it after later room events.", "level": "must"} -->A result a closing process did
     not post, or whose post failed, stays kept, and nothing posts it before
     the next uninstall, not the process that gives the next turn nor a
     restarted process that installs the discussion again: it then comes after
     the room's later messages, and a discussion never uninstalled never posts
-    it. One committed but still kept, whose message was deleted for good
+    it. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-188", "kind": "behavior", "applies": "If a retained previously committed result was permanently deleted, uninstall can post it again once its key has gone.", "level": "must"} -->One committed but still kept, whose message was deleted for good
     meanwhile (Section 10.3), is posted again, its key gone with it.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-19.7.5-189", "kind": "behavior", "applies": "Each room's speak queue and listening state are isolated even when it uses the same agents as another room.", "level": "must"} -->
 The rules of Section 19.7 for a strategy in several rooms hold: the speak
 queue and who only listens are the room's, and the same agents may hold a
 discussion in another room with a speak queue of its own.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-19.7.5-003", "kind": "behavior", "applies": "§19.7.5 Discussion; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-19.7.5-190", "kind": "behavior", "applies": "Discussion keeps external agents' tools local to the external agent; this version wires no room tools into them. Voice and realtime are outside this text discussion.", "level": "must"} -->
 **Left out of this version.** Voice: a turn would end when its playback
 ends, which no event reports yet; a person speaking names no one with `@`;
 an agent's written names would be spoken. Realtime channels, whose turns run
 outside the room's queue, and agents that think while they listen, which
 need every event without a turn. The room's tools for an external agent:
 its tools are its own (its workspace, what its agent accepts), and this
-version wires none of the room's into it. One turn at a time: work that does not need the
+version wires none of the room's into it. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-191", "kind": "behavior", "applies": "Tasks may run off the floor but the discussion never runs agents' turns in parallel.", "level": "must"} -->One turn at a time: work that does not need the
 floor runs as tasks (rule 19), but turns themselves never run in parallel,
-each reading a room the others' answers would have changed. The text an agent writes between tool rounds still
+each reading a room the others' answers would have changed. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-192", "kind": "behavior", "applies": "Inter-round text reaches the room as messages while its mentions wait until turn end.", "level": "must"} -->The text an agent writes between tool rounds still
 reaches the room as messages; only the names they carry wait for the turn's
 end. An approval a person gives for one production change is a tool's
-concern (Section 21), and a mission's shared state is the host's (`done`).
+concern (Section 21), and a mission's shared state is the host's (`done`).<!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-193", "kind": "behavior", "applies": "An agent waiting for a person remains eligible for a new explicit request by another agent.", "level": "must"} -->
 An agent that asked a person may still be named by another agent before the
-person answers. A dispatch policy decides for a person's message only: an
-agent's message that names nobody still asks no agent. Threads (`parent_event_id`): an agent's answer already stays
+person answers. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-194", "kind": "behavior", "applies": "Dispatch does not solicit agents on an unaddressed agent-authored message.", "level": "must"} -->A dispatch policy decides for a person's message only: an
+agent's message that names nobody still asks no agent. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.5-195", "kind": "behavior", "applies": "Answers retain their event thread but all threads currently share one room queue and give turns whole-room context.", "level": "must"} -->Threads (`parent_event_id`): an agent's answer already stays
 in the thread of the event it answers, but this version keeps one queue for
 the room and gives every turn the whole room; a later version makes each
 thread a conversation of its own (its own queue and chains, a turn reading
 its thread with the room before it as background, an agent taking one turn
 at a time across the room).
-<!-- /rfc -->
 
-<!-- rfc: {"id": "RK-19.7.5-004", "kind": "behavior", "applies": "§19.7.5 Discussion; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Conformance.** Level 2, with the rest of Section 19.
 <!-- /rfc -->
 
