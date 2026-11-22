@@ -15853,7 +15853,7 @@
       "response-schema/tools-beside-a-schema-fail-where-the-model-cannot-take-both": "dfc5189bbd89a7d4fdb57020bc423c87a3b020f2b96ccce963dbf0afecedfed8"
     },
     "RK-6.7-081": {
-      "response-schema/a-refusal-under-a-schema-fails-the-turn-refused": "3906c61d257781b0ca2df1552430a60bc148456e92d248f1d42db88e12c01f37"
+      "response-schema/a-refusal-under-a-schema-fails-the-turn-refused": "05b1c6a278ca283c1caa5b420439efd1282766b3e289fdaaf299421c132bcbd1"
     },
     "RK-6.7-082": {
       "response-schema/an-answer-cut-for-room-under-a-schema-fails-truncated": "b637c8589efa1e2d85c0868b8f1befaa02a4d07b396061d2c412b6501db20b49"

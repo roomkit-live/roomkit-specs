@@ -4565,7 +4565,7 @@ these reasons:
 | Reason | When |
 |---|---|
 | `unsupported` | `supports_response_schema` is false, or the context also carries `tools` and `supports_response_schema_with_tools` is false. Raised before any request is sent. |
-| <!-- /rfc --><!-- rfc: {"id": "RK-6.7-081", "kind": "behavior", "applies": "§6.7 ResponseSchemaError reasons, the refusal row. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`refusal` | The model declined to answer: a refusal its provider reports, such as a response that ended on the stop reason `refusal`. |
+| <!-- /rfc --><!-- rfc: {"id": "RK-6.7-081", "kind": "behavior", "applies": "§6.7 ResponseSchemaError reasons, the refusal row. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`refusal` | The model declined to answer: a refusal its provider reports, the stop reason `refusal` or `content_filter` among them. |
 | <!-- /rfc --><!-- rfc: {"id": "RK-6.7-082", "kind": "behavior", "applies": "§6.7 ResponseSchemaError reasons, the truncated row. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`truncated` | The answer was cut: the stop reason `length`, its output cap or the context window filling up mid-answer. |
 | <!-- /rfc --><!-- rfc: {"id": "RK-6.7-083", "kind": "behavior", "applies": "§6.7 ResponseSchemaError reasons, the invalid_json row. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`invalid_json` | The text is not a JSON document satisfying the schema: a server that accepted the constraint and did not apply it. |
 <!-- /rfc -->
