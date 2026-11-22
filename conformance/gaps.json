@@ -2923,6 +2923,131 @@
       "card": "RMK-1940",
       "note": "A standalone instruction's turn in a room whose earlier turns read instructions, none replayed."
     },
+    "RK-6.4-404": {
+      "class": "step",
+      "card": "RMK-1951",
+      "note": "Needs a provider wire fixture: a scripted HTTP server behind a vendor-compatible provider, in both runners."
+    },
+    "RK-6.4-407": {
+      "class": "writable",
+      "card": "RMK-1951",
+      "note": "A turn cut short after a round, whose deliveries show no round text delivered twice and nothing of an earlier turn."
+    },
+    "RK-6.4-423": {
+      "class": "step",
+      "card": "RMK-1951",
+      "note": "Needs telemetry.spans to report a span's status and what it carries; it reports name and ids only."
+    },
+    "RK-6.4-424": {
+      "class": "step",
+      "card": "RMK-1951",
+      "note": "Needs telemetry.spans to report a span's status; it reports name and ids only."
+    },
+    "RK-6.4-432": {
+      "class": "writable",
+      "card": "RMK-1951",
+      "note": "A store fault on the record's update (store_faults), the turn's outcome standing."
+    },
+    "RK-6.4-446": {
+      "class": "writable",
+      "card": "RMK-1951",
+      "note": "Two serialized turns of one agent in a room, the first's answer delivered while the second waits its place."
+    },
+    "RK-6.4-449": {
+      "class": "writable",
+      "card": "RMK-1951",
+      "note": "A serialized agent detached from the room while its second turn waits: that turn never starts."
+    },
+    "RK-6.4-450": {
+      "class": "writable",
+      "card": "RMK-1951",
+      "note": "A muted serialized agent's turns run as each event comes, their answers not delivered."
+    },
+    "RK-6.4-451": {
+      "class": "writable",
+      "card": "RMK-1951",
+      "note": "A tool of a serialized agent's turn that sends a message into its own room asking the same agent: the call returns, and the answer comes after the turn."
+    },
+    "RK-6.4-452": {
+      "class": "writable",
+      "card": "RMK-1951",
+      "note": "A strategy that takes a serialized agent's turns orders its generations itself, none waiting."
+    },
+    "RK-6.4-453": {
+      "class": "step",
+      "card": "RMK-1951",
+      "note": "Needs two processes, each handed a delivery of the same room."
+    },
+    "RK-6.4-456": {
+      "class": "step",
+      "card": "RMK-1951",
+      "note": "Needs a channel that declares it steers its room turns without serializing them, registered in both runners."
+    },
+    "RK-6.4-458": {
+      "class": "writable",
+      "card": "RMK-1951",
+      "note": "Steering with two people under one sender id, or two senders signing one name: neither is the running turn's author."
+    },
+    "RK-6.4-461": {
+      "class": "writable",
+      "card": "RMK-1951",
+      "note": "Steering with no running turn, or several, of the channel in the room: the message waits a turn of its own."
+    },
+    "RK-6.4-485": {
+      "class": "writable",
+      "card": "RMK-1951",
+      "note": "The scripted agent answers initialize with another protocol version (acp.agent.initialize.protocol_version): the channel fails clearly."
+    },
+    "RK-6.4-486": {
+      "class": "step",
+      "card": "RMK-1951",
+      "note": "Needs a real stdio launch of an ACP agent command in both runners."
+    },
+    "RK-6.4-488": {
+      "class": "writable",
+      "card": "RMK-1951",
+      "note": "An ACP agent channel hosted on a turn executor (setup.executors): its sessions stay that executor's, and the room's turns are placed there."
+    },
+    "RK-6.4-495": {
+      "class": "writable",
+      "card": "RMK-1951",
+      "note": "A mode the scripted ACP agent switches to itself is not set on the Room's next session."
+    },
+    "RK-6.4-513": {
+      "class": "writable",
+      "card": "RMK-1951",
+      "note": "An ACP discussion turn sends only what the agent has not read, up to its start, and its notes name the event and who asked."
+    },
+    "RK-6.4-515": {
+      "class": "writable",
+      "card": "RMK-1951",
+      "note": "A silent ACP discussion answer is held back and blocked as rule 13 says."
+    },
+    "RK-6.4-516": {
+      "class": "step",
+      "card": "RMK-1951",
+      "note": "Needs a channel spec that gives both a provider and a router, or neither, and a step that expects its build to fail."
+    },
+    "RK-6.4-518": {
+      "class": "writable",
+      "card": "RMK-1951",
+      "note": "A thinker's thought on a channel with a router asks the router as a turn's start does."
+    },
+    "RK-6.4-519": {
+      "class": "writable",
+      "card": "RMK-1951",
+      "note": "A router that names no provider at a turn's start fails the turn."
+    },
+    "RK-6.4-523": {
+      "class": "writable",
+      "card": "RMK-1951",
+      "note": "A loop run inside another channel's turn asks its own channel for its provider."
+    },
+    "RK-6.4-525": {
+      "class": "step",
+      "card": "RMK-1951",
+      "note": "Needs a step that reads a channel's provider and provider_name."
+    },
     "RK-8.1-008": {
       "class": "step",
       "card": "RMK-1912",
