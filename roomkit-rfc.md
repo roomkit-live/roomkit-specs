@@ -22145,32 +22145,42 @@ back to the parent conversation.
 
 ### 23.1 TaskRunner Interface
 
-<!-- rfc: {"id": "RK-23.1-001", "kind": "behavior", "applies": "§23.1 TaskRunner Interface; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-23.1-002", "kind": "structural", "applies": "The asynchronous task execution operation of the TaskRunner interface, named run in the diagram.", "level": "must"} -->
 ```
 TaskRunner (interface)
 ├── run(task: DelegatedTask) → void
 │       # Execute the task asynchronously
 │
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-23.1-008", "kind": "structural", "applies": "The TaskRunner interface offers cancellation of one task and returns a boolean.", "level": "must"} -->
+```
 ├── cancel(task_id: string) → bool
 │       # Cancel one task; it ends cancelled
 │
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-23.1-009", "kind": "structural", "applies": "Closing a TaskRunner cancels in-flight tasks and releases resources.", "level": "must"} -->
+```
 └── close() → void
         # Cancel in-flight tasks and release resources
 ```
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-23.1-003", "kind": "behavior", "applies": "Implementations provide an in-memory runner for single-process deployments.", "level": "must"} -->
 Implementations MUST provide an `InMemoryTaskRunner` for single-process
-deployments. A runner ends each task exactly once, through the completion it
+deployments. <!-- /rfc --><!-- rfc: {"id": "RK-23.1-004", "kind": "behavior", "applies": "The runner invokes its completion exactly once, reporting the task's completed, failed or cancelled outcome.", "level": "must"} -->A runner ends each task exactly once, through the completion it
 was handed: completed or failed once its work ran (failed when its run raised
 outside its turn's outcome), `cancelled` when `cancel` or `close` cut it (even
-before it ran). A `run` that raises has not taken the task: the delegation
-ends it failed (Section 23.3), and the runner MUST NOT end it too. That completion MUST run to its end
-even if the caller of `cancel` is cancelled meanwhile, and a task whose work
+before it ran). <!-- /rfc --><!-- rfc: {"id": "RK-23.1-005", "kind": "behavior", "applies": "Delegation completes an unaccepted task as failed and the rejecting runner does not complete it a second time.", "level": "must"} -->A `run` that raises has not taken the task: the delegation
+ends it failed (Section 23.3), and the runner MUST NOT end it too. <!-- /rfc --><!-- rfc: {"id": "RK-23.1-006", "kind": "behavior", "applies": "Task completion survives cancellation of the caller of cancel.", "level": "must"} -->That completion MUST run to its end
+even if the caller of `cancel` is cancelled meanwhile, <!-- /rfc --><!-- rfc: {"id": "RK-23.1-007", "kind": "behavior", "applies": "A late cancellation preserves the result of work already run.", "level": "must"} -->and a task whose work
 already ran when `cancel` arrives ends as it stands.
 <!-- /rfc -->
 
 ### 23.2 DelegatedTask
 
-<!-- rfc: {"id": "RK-23.2-001", "kind": "structural", "applies": "§23.2 DelegatedTask; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-23.2-002", "kind": "structural", "applies": "The DelegatedTask model exposes the task, worker and room identifiers, instruction, status and optional result.", "level": "must"} -->
 ```
 DelegatedTask
 ├── id: string                              # Unique task identifier
@@ -22181,27 +22191,51 @@ DelegatedTask
 ├── status: TaskStatus = PENDING            # PENDING, IN_PROGRESS, COMPLETED, FAILED, CANCELLED
 └── result: DelegatedTaskResult | null      # Set when the task ends
 
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-23.2-003", "kind": "structural", "applies": "The DelegatedTaskResult model identifies the task, parent, child and worker and defaults a result's status to completed.", "level": "must"} -->
+```
 DelegatedTaskResult
 ├── task_id: string
 ├── parent_room_id: string
 ├── child_room_id: string
 ├── agent_id: string
 ├── status: TaskStatus = COMPLETED
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-23.2-004", "kind": "behavior", "applies": "The result carries the worker's answer or remaining narration after a cut.", "level": "must"} -->
+```
 ├── output: string | null                   # The worker's answer; a worker cut short keeps its narration
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-23.2-005", "kind": "behavior", "applies": "The result carries its failure message or the outside cancellation's designated error text.", "level": "must"} -->
+```
 ├── error: string | null                    # Error message (on failure); "cancelled" for a task cancelled from outside
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-23.2-006", "kind": "behavior", "applies": "A failed result retains the original exception and type only in memory.", "level": "must"} -->
+```
 ├── exception: error | null                 # The failure itself, its type kept; held in memory, never serialized
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-23.2-007", "kind": "structural", "applies": "The result duration defaults to zero milliseconds.", "level": "must"} -->
+```
 ├── duration_ms: float = 0
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-23.2-008", "kind": "structural", "applies": "Result metadata includes the actual worker end and turn record where applicable.", "level": "must"} -->
+```
 └── metadata: map<string, any>              # loop_end_reason when a cut or a failed turn ended the worker; turns: the worker's turn record (§6.4)
 ```
 <!-- /rfc -->
 
 ### 23.3 Delegation Protocol
 
-<!-- rfc: {"id": "RK-23.3-001", "kind": "behavior", "applies": "§23.3 Delegation Protocol; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-23.3-004", "kind": "structural", "applies": "The public delegation operation accepts the parameters and defaults in its signature.", "level": "must"} -->
 When `delegate(room_id, agent_id, task, notify, context = null, post_status = true,
 brief = null, conversation = 0, hand_back = "relay", max_result_chars = 4000,
 require_structured_result = false, max_result_retries = 3, result_tool = null)` is
-called:
+called:<!-- /rfc --><!-- rfc: {"id": "RK-23.3-005", "kind": "behavior", "applies": "A delegation creates a child room linked to its parent in the parent's organization, with the same tenant-scoped lookup and context.", "level": "must"} -->
 
 1. Create a **child room** linked to the parent room, in the parent room's
    organization (Section 17.2). A tool, a hook or a provider acting in the
@@ -22209,70 +22243,70 @@ called:
    in the parent; a child room without one would have the task's work, and
    the parent's messages the description carries (step 4), run outside any
    tenant. A read scoped to the parent's organization finds the child room,
-   and one scoped to another does not.
+   and one scoped to another does not.<!-- /rfc --><!-- rfc: {"id": "RK-23.3-006", "kind": "behavior", "applies": "The child room exposes the caller's context to host hooks and tools as task_context.", "level": "must"} -->
    The child room's metadata keeps the caller's `context` as `task_context`,
-   for the host's hooks and tools. No model reads it, so a host's data (a
+   for the host's hooks and tools. <!-- /rfc --><!-- rfc: {"id": "RK-23.3-007", "kind": "behavior", "applies": "Raw host task_context is excluded from model input. Model-supplied delegate_task context is input from that model.", "level": "must"} -->No model reads it, so a host's data (a
    requester's address) reaches no vendor through it: what the worker should
    read goes in the `task` or the `brief`. On a `delegate_task` call (Section
-   23.4) a model wrote it: a hook that reads it reads a model's text.
-2. Attach the specified agent as an INTELLIGENCE channel in the child room.
+   23.4) a model wrote it: a hook that reads it reads a model's text.<!-- /rfc --><!-- rfc: {"id": "RK-23.3-008", "kind": "behavior", "applies": "Attach the delegated agent as an intelligence channel of the child room.", "level": "must"} -->
+2. Attach the specified agent as an INTELLIGENCE channel in the child room.<!-- /rfc --><!-- rfc: {"id": "RK-23.3-009", "kind": "behavior", "applies": "A requested shared channel retains the permissions of its parent binding.", "level": "must"} -->
 3. Share the channels the caller names from the parent, each with its
-   parent binding's permissions (§7.5 rule 6).
+   parent binding's permissions (§7.5 rule 6).<!-- /rfc --><!-- rfc: {"id": "RK-23.3-010", "kind": "behavior", "applies": "The child receives the task as a system message visible only to its intelligence channels.", "level": "must"} -->
 4. Inject the task description in the child room as a message from the
    runtime (its source the `system` channel), visible to the child room's
    intelligence channels only, which a worker answers (Section 6.4). The
    task description is the delegating side's instruction to the worker, not
-   a message for the people behind a transport: a shared transport MUST NOT receive it, nor the
-   re-prompt a result tool sends after a turn that ended without its call.
+   a message for the people behind a transport: <!-- /rfc --><!-- rfc: {"id": "RK-23.3-011", "kind": "behavior", "applies": "Neither the description nor a result-tool reminder is delivered to a shared transport.", "level": "must"} -->a shared transport MUST NOT receive it, nor the
+   re-prompt a result tool sends after a turn that ended without its call.<!-- /rfc --><!-- rfc: {"id": "RK-23.3-012", "kind": "behavior", "applies": "A supplied brief replaces the worker description and stays in the child. Parent records label the task with the original request.", "level": "must"} -->
    The description is the `brief` when one is given, else the `task`: the
    `task` is what was asked, as the delegating side wrote it, the label the
    hand-back (step 8), the StatusBus and the turn's notes name the task by;
    the `brief` is what the worker is told, which may say more (how to work,
-   what to report) and never reaches the parent room. With `conversation`
+   what to report) and never reaches the parent room. <!-- /rfc --><!-- rfc: {"id": "RK-23.3-013", "kind": "behavior", "applies": "A conversation excerpt contains at most the requested messages readable under the notified channel's access.", "level": "must"} -->With `conversation`
    above 0, the description also carries the parent room's last
    `conversation` messages that the notified channel may read (§7.5 rule 1, its
-   access included: a channel that does not read is handed none),
+   access included: a channel that does not read is handed none),<!-- /rfc --><!-- rfc: {"id": "RK-23.3-014", "kind": "behavior", "applies": "A conversation excerpt preserves order, author labels and the external-data quotation applied before JSON encoding.", "level": "must"} -->
    oldest first, each under the label the transcript gives its author and
    quoted as Section 6.4 quotes a text from outside, read for the block's tags
    before it is written as JSON, set apart as data: a
    worker asked to look into what the room is talking about reads what was
-   said, which its child room, new and empty, does not hold.
+   said, which its child room, new and empty, does not hold.<!-- /rfc --><!-- rfc: {"id": "RK-23.3-015", "kind": "behavior", "applies": "A child without shared transports retains its private trace and delivers the worker's answer to nobody.", "level": "must"} -->
 5. The agent processes the task and generates a response. When no transport
    is shared into the child room, nobody is delivered the response, and the
    child room keeps the agent's trace (tool calls and text), written as any
-   streamed turn's rows are (Section 12.2 step 13s), a buffered answer's rows
+   streamed turn's rows are (Section 12.2 step 13s), <!-- /rfc --><!-- rfc: {"id": "RK-23.3-016", "kind": "behavior", "applies": "Private buffered responses retain the responder, parent link and depth, clear the idempotency key and omit instructions.", "level": "must"} -->a buffered answer's rows
    as the pipeline writes a response (§8.5: the responder's, one deeper than
    the description and answering it, with no idempotency key, an instruction
-   among them dropped), but committed without
-   crossing `BEFORE_BROADCAST` or a delivery lane: a TOOL_CALL_END keeps the
-   call's structured copy, and a delegation cancelled or failed while a call
+   among them dropped), <!-- /rfc --><!-- rfc: {"id": "RK-23.3-017", "kind": "behavior", "applies": "A private child trace bypasses BEFORE_BROADCAST and the delivery lane.", "level": "must"} -->but committed without
+   crossing `BEFORE_BROADCAST` or a delivery lane: <!-- /rfc --><!-- rfc: {"id": "RK-23.3-018", "kind": "behavior", "applies": "The worker's private tool-end row retains the structured copy.", "level": "must"} -->a TOOL_CALL_END keeps the
+   call's structured copy, <!-- /rfc --><!-- rfc: {"id": "RK-23.3-019", "kind": "behavior", "applies": "Interrupted or failed private work closes an outstanding tool call as failed.", "level": "must"} -->and a delegation cancelled or failed while a call
    runs closes that call with `status = failed`, so no start row stays
-   pending. The trace's text is the only answer text whose `TEXT_DELTA` is
-   published while it is written (§6.4). When a transport is shared, the
+   pending. <!-- /rfc --><!-- rfc: {"id": "RK-23.3-020", "kind": "behavior", "applies": "Only worker trace text produces TEXT_DELTA while it is written.", "level": "must"} -->The trace's text is the only answer text whose `TEXT_DELTA` is
+   published while it is written (§6.4). <!-- /rfc --><!-- rfc: {"id": "RK-23.3-021", "kind": "behavior", "applies": "With a shared transport every response row passes through BEFORE_BROADCAST, write access and the child delivery lane; the resulting stored rows form the trace.", "level": "must"} -->When a transport is shared, the
    response is committed as a
    room's response is (§10.1 steps 9 to 14, §7.5 rule 2): each row, buffered
    or streamed, crosses `BEFORE_BROADCAST` and the agent's right to write and
    rides the child room's delivery lane, so the shared transport receives the
    agent's answers as its binding's access and the agent binding's visibility
-   allow, and the rows the room stored are the trace. Either way the child
+   allow, and the rows the room stored are the trace. <!-- /rfc --><!-- rfc: {"id": "RK-23.3-022", "kind": "behavior", "applies": "Both child execution paths enforce the chain depth limit, leaving the required record, observation and notification.", "level": "must"} -->Either way the child
    room is a room: an agent whose answer would reach `max_chain_depth` is not
    asked, its record and its observation stored there and
-   `chain_depth_exceeded` emitted (§8.3), and the room metadata updates the
+   `chain_depth_exceeded` emitted (§8.3), <!-- /rfc --><!-- rfc: {"id": "RK-23.3-023", "kind": "behavior", "applies": "A child's room metadata applies agent updates and drops framework-reserved keys.", "level": "must"} -->and the room metadata updates the
    agents return are written as a room's are, a key only the framework
-   writes dropped (§10.1 step 15). What the agents return beside their
+   writes dropped (§10.1 step 15). <!-- /rfc --><!-- rfc: {"id": "RK-23.3-024", "kind": "behavior", "applies": "Child side effects precede answer commitment in order: tasks and observations, then locked metadata updates, then ON_TASK_CREATED.", "level": "must"} -->What the agents return beside their
    answers is stored before the answers are committed, either way: their
    tasks and observations, then their room metadata updates under the room
    lock, behind a call that holds it; then the stored tasks'
-   `ON_TASK_CREATED` is fired.
+   `ON_TASK_CREATED` is fired.<!-- /rfc --><!-- rfc: {"id": "RK-23.3-025", "kind": "behavior", "applies": "The task result is the answer retained in the child, including rewrites and blocks on shared delivery.", "level": "must"} -->
 6. Collect the agent's response as the task result: the answer the child
    room kept. With a shared transport, that is what the hooks decided — a
    rewrite holds for the result as for the delivery, and an answer the gate
-   refused is no answer. A result the agent submits through a result tool
+   refused is no answer. <!-- /rfc --><!-- rfc: {"id": "RK-23.3-026", "kind": "behavior", "applies": "An agent's own successful result-tool call from the child trace supplies a result after ON_TOOL_CALL, including an MCP-served call.", "level": "must"} -->A result the agent submits through a result tool
    is read from the child room's trace, wherever the call was served (the
    agent's tool loop or an MCP server), once ON_TOOL_CALL has judged it: it
-   is the agent's own call that ended served. A refused, failed or blocked
+   is the agent's own call that ended served. <!-- /rfc --><!-- rfc: {"id": "RK-23.3-027", "kind": "behavior", "applies": "Refused, failed, blocked or foreign-channel result calls cannot supply a task result.", "level": "must"} -->A refused, failed or blocked
    call is no result, and neither is a call of another channel shared into
-   the child room.
+   the child room.<!-- /rfc --><!-- rfc: {"id": "RK-23.3-028", "kind": "behavior", "applies": "An incomplete worker turn fails the task and retains its actual reason and last narration in the result and completion event, including ACP and both transport paths.", "level": "must"} -->
    A turn that did not complete (it ended for any reason but `completed`:
    its round cap, deadline or budget cut it, a stop cancelled it, its answer
    was cut or never came; an ACP agent's prompt stopped on any reason but
@@ -22281,258 +22315,266 @@ called:
    narration and its metadata the `loop_end_reason` (an ACP agent's stop
    reason, or `interrupted`), which `ON_TASK_COMPLETED` carries too, whether
    the turn streamed or not, wrote text or none, and whether a transport is
-   shared. The answer and how its turn ended are read off the same agent:
+   shared. <!-- /rfc --><!-- rfc: {"id": "RK-23.3-029", "kind": "behavior", "applies": "The answer and end are taken from the delegated agent's own record or last message.", "level": "must"} -->The answer and how its turn ended are read off the same agent:
    its turn's record, else its last message, never another agent's that
-   answered in the child room.
+   answered in the child room.<!-- /rfc --><!-- rfc: {"id": "RK-23.3-030", "kind": "behavior", "applies": "A failure after generation starts preserves its error text, narration and recorded end in the task and hook and logs it as that error.", "level": "must"} -->
    A turn that failed after it began (the provider's error once a round ran,
    an ACP agent's prompt that raised) fails the task with that error, the
    task's error being the error's own text, and the task still carries what
    the child room's record holds of the turn: its `loop_end_reason` (`error`,
    an ACP agent's `interrupted`) in its metadata and on `ON_TASK_COMPLETED`,
-   its narration as its output; the failure is logged as its error is. A
+   its narration as its output; the failure is logged as its error is. <!-- /rfc --><!-- rfc: {"id": "RK-23.3-031", "kind": "behavior", "applies": "One ON_ERROR in the child distinguishes generation from stream errors at the required depth.", "level": "must"} -->A
    delegated agent's turn that raises, or whose stream fails, fires
    `ON_ERROR` once in the child room, as a room's turn does, one deeper than
    the description: `generation` for a raise, `streaming` for a stream,
-   whether a transport is shared or not. The
+   whether a transport is shared or not. <!-- /rfc --><!-- rfc: {"id": "RK-23.3-032", "kind": "behavior", "applies": "A failing agent's end is independent of other agents in the child room.", "level": "must"} -->The
    end is the failing agent's own: with several agents in the child room, one
-   agent's failure never carries another's end. The task is its delegated
+   agent's failure never carries another's end. <!-- /rfc --><!-- rfc: {"id": "RK-23.3-033", "kind": "behavior", "applies": "A helper's failure is reported in the child but leaves the task outcome to the delegated agent.", "level": "must"} -->The task is its delegated
    agent's: the failed turn of another agent of the child room (a helper or a
    responder shared into it) does not fail the task, which ends as its agent's
    turn did, and stays that agent's turn in the child room, `ON_ERROR`
-   firing there as for any room's turn. A failure of the delegated agent's
+   firing there as for any room's turn. <!-- /rfc --><!-- rfc: {"id": "RK-23.3-034", "kind": "behavior", "applies": "Only a reported failure of the delegated worker sets error_reported and prevents duplicate reporting.", "level": "must"} -->A failure of the delegated agent's
    turn, reported there, marks the task's metadata `error_reported`, so that
    whoever reads the task hands it on without reporting it again; a turn cut
-   short is no reported failure.
+   short is no reported failure.<!-- /rfc --><!-- rfc: {"id": "RK-23.3-035", "kind": "behavior", "applies": "Task metadata carries the worker's actual keyed turn record and usage, taking the latest reprompted turn.", "level": "must"} -->
    Whatever ended the turn, the task's metadata carries the turn's record
    under `turns`, keyed by the agent, as a room turn's caller reads it
    (Section 6.4): how it ended and its `ai_usage`, the last turn's when a
-   result tool re-prompted the agent. A failed task keeps the failure itself
+   result tool re-prompted the agent. <!-- /rfc --><!-- rfc: {"id": "RK-23.3-036", "kind": "behavior", "applies": "A failed task preserves its original exception and type for a caller that propagates it.", "level": "must"} -->A failed task keeps the failure itself
    (`exception`), its type unchanged, so a caller that hands it on raises
-   what the turn raised.
+   what the turn raised.<!-- /rfc --><!-- rfc: {"id": "RK-23.3-037", "kind": "behavior", "applies": "A result submitted before interruption or failure counts and an incomplete turn without one is not reprompted.", "level": "must"} -->
    A result the agent submitted through a result tool before the cut or the
-   failure still counts; without one, the task fails without a re-prompt.
+   failure still counts; without one, the task fails without a re-prompt.<!-- /rfc --><!-- rfc: {"id": "RK-23.3-038", "kind": "behavior", "applies": "Consumers receive no work from a failed task even if the result keeps narration.", "level": "must"} -->
    What reads a task's work (an orchestration strategy, the notified agent)
-   reads none from a failed task, its output whatever it keeps.
-7. Fire `ON_TASK_COMPLETED` hook in the parent room.
+   reads none from a failed task, its output whatever it keeps.<!-- /rfc --><!-- rfc: {"id": "RK-23.3-039", "kind": "behavior", "applies": "The parent receives ON_TASK_COMPLETED.", "level": "must"} -->
+7. Fire `ON_TASK_COMPLETED` hook in the parent room.<!-- /rfc --><!-- rfc: {"id": "RK-23.3-040", "kind": "behavior", "applies": "A notified result uses the framework's proactive delivery strategy, hooks and backend.", "level": "must"} -->
 8. If `notify` is set, hand the result back through `deliver()` (§22) with
    the framework's delivery strategy, so `BEFORE_DELIVER`, `AFTER_DELIVER` and
-   the delivery backend apply to it as to any proactive delivery, and with
-   `instruction = true` when `notify` names an intelligence channel or a
-   channel that hosts a realtime model. `notify` names who is told: an
+   the delivery backend apply to it as to any proactive delivery, <!-- /rfc --><!-- rfc: {"id": "RK-23.3-041", "kind": "behavior", "applies": "The hand-back is an instruction for a notified intelligence channel.", "level": "must"} -->and with
+   `instruction = true` when `notify` names an intelligence channel <!-- /rfc --><!-- rfc: {"id": "RK-23.3-042", "kind": "behavior", "applies": "Realtime feature: a hand-back for a realtime-model channel uses an instruction.", "level": "must"} -->or a
+   channel that hosts a realtime model. <!-- /rfc --><!-- rfc: {"id": "RK-23.3-043", "kind": "behavior", "applies": "An intelligence recipient receives an instruction addressed by channel through its room's transport.", "level": "must"} -->`notify` names who is told: an
    intelligence channel receives it addressed to it, through the room's
-   transport (§10.1.1); a channel that
-   hosts a realtime model (a realtime voice or audio-video channel, a
+   transport (§10.1.1); <!-- /rfc --><!-- rfc: {"id": "RK-23.3-044", "kind": "behavior", "applies": "Realtime feature: the model receives the system-intent hand-back by injection into the delegating session or the sole session outside a call.", "level": "must"} -->a channel that
+   hosts a realtime model (a realtime voice <!-- /rfc --><!-- rfc: {"id": "RK-23.3-045", "kind": "behavior", "applies": "Video feature: an audio-video realtime model receives a private system-intent hand-back addressed to the originating session or sole session.", "level": "must"} -->or audio-video channel, a<!-- /rfc --><!-- rfc: {"id": "RK-23.3-046", "kind": "behavior", "applies": "Conference feature: private system-intent hand-back addresses the delegating session or the sole conference session outside a call.", "level": "must"} -->
    conference with a realtime model plugged in), injected with the `system`
    intent (§12.4) into the session whose tool call delegated, read from the
    tool call context (Section 21.4), or its one session for a delegation
    made outside a call; nothing of it is published to the room's other
-   channels.
+   channels.<!-- /rfc --><!-- rfc: {"id": "RK-23.3-047", "kind": "behavior", "applies": "An ordinary transport receives channel-addressed delivery with instruction false.", "level": "must"} -->
    Another transport has no model to direct and receives it as an ordinary
-   delivery through it (`channel_id = notify`, `instruction = false`). The
+   delivery through it (`channel_id = notify`, `instruction = false`). <!-- /rfc --><!-- rfc: {"id": "RK-23.3-048", "kind": "behavior", "applies": "Delivered worker output is bounded and delimited as external data.", "level": "must"} -->The
    delivered content carries the result, bounded and delimited, presented as the worker's output rather than as an
-   instruction. The bound is `max_result_chars` characters of the output, past which it is cut and its cut marked;
-   a host whose agents need more of a worker's answer raises it, and a value below 1 is invalid. A task that
+   instruction. <!-- /rfc --><!-- rfc: {"id": "RK-23.3-049", "kind": "behavior", "applies": "Apply the host's positive character limit to worker output and mark truncation.", "level": "must"} -->The bound is `max_result_chars` characters of the output, past which it is cut and its cut marked;
+   a host whose agents need more of a worker's answer raises it, and a value below 1 is invalid. <!-- /rfc --><!-- rfc: {"id": "RK-23.3-050", "kind": "behavior", "applies": "A relayed failed or cancelled task identifies its status without exposing its error or remaining output.", "level": "must"} -->A task that
    did not complete says it failed or was
    cancelled, without its error (§9.3), whatever output or error text it
-   left. It names the task as the delegating agent wrote it (`task`, quoted
+   left. <!-- /rfc --><!-- rfc: {"id": "RK-23.3-051", "kind": "behavior", "applies": "Relay identifies the quoted original request and sanitized worker identifier.", "level": "must"} -->It names the task as the delegating agent wrote it (`task`, quoted
    as Section 6.4 quotes a text from outside), and the worker by its id kept
    to an identifier's characters, so the notified agent says the result for
-   what was asked, not for what the conversation moved on to meanwhile.
+   what was asked, not for what the conversation moved on to meanwhile.<!-- /rfc --><!-- rfc: {"id": "RK-23.3-052", "kind": "behavior", "applies": "An intelligence relay includes the result-only instruction in the language of the conversation.", "level": "must"} -->
    Delivered to an intelligence channel, whose hand-back opens a turn of its
    own, it also says, after the result, that the turn gives that result
    only, another of the agent's replies taking care of whatever else was
    said, in the language the conversation is in rather than the result's:
    the turn reads the room's last messages, and one that answered them too
    repeated what another turn was saying, and a worker's result written in
-   English was said in English to a conversation in French. A channel that
+   English was said in English to a conversation in French. <!-- /rfc --><!-- rfc: {"id": "RK-23.3-053", "kind": "behavior", "applies": "Realtime feature: the result-only instruction is omitted from a realtime model injection.", "level": "must"} -->A channel that
    hosts a realtime model gets no such line: its injection may open no turn
    of its own (a silent one, an intent its provider keeps as a standing
    instruction), where the line would tell the reply to the person's next
-   question not to answer it. A transport's delivery carries none either. Only a completed task with
-   nothing to say is not handed back.
+   question not to answer it. <!-- /rfc --><!-- rfc: {"id": "RK-23.3-054", "kind": "behavior", "applies": "An ordinary transport receives no result-only instruction.", "level": "must"} -->A transport's delivery carries none either. <!-- /rfc --><!-- rfc: {"id": "RK-23.3-055", "kind": "behavior", "applies": "Suppress the relay for an empty completed result.", "level": "must"} -->Only a completed task with
+   nothing to say is not handed back.<!-- /rfc --><!-- rfc: {"id": "RK-23.3-056", "kind": "behavior", "applies": "Hand-back delivery metadata includes task ID, worker, status and bounded original request.", "level": "must"} -->
    The delivery carries the task in its metadata, `task_id`, `agent_id` (the
    worker), `task_status` and `task` (what was asked, bounded), whichever
    channel it reaches, so a hook that sees it (`BEFORE_BROADCAST`,
    `BEFORE_DELIVER`) tells a task's result from any other instruction and
-   names the task without reading its text.
+   names the task without reading its text.<!-- /rfc --><!-- rfc: {"id": "RK-23.3-057", "kind": "behavior", "applies": "A relayed instruction is stored as the addressed AI's private history record.", "level": "must"} -->
    An instruction is not stored as the room's: the AI channel it directs
    keeps it as its own record (§10.1.1, The instruction a turn read), so the
    result reads in that agent's later turns where its turn read it, in no
-   other agent's history, and the room's readers find it there. The
+   other agent's history, and the room's readers find it there. <!-- /rfc --><!-- rfc: {"id": "RK-23.3-058", "kind": "behavior", "applies": "A relay preserves the room's configured system prompt.", "level": "must"} -->The
    result is never written into the room's stored configuration (the
    system prompt of a binding), which would replace the notified agent's
-   own and hand a worker's output the system role for every turn after. A
+   own and hand a worker's output the system role for every turn after. <!-- /rfc --><!-- rfc: {"id": "RK-23.3-059", "kind": "behavior", "applies": "Failed hand-back is logged and the completion hook still carries the result.", "level": "must"} -->A
    hand-back that is not delivered (refused by a hook, a room without
-   transport) is logged; `ON_TASK_COMPLETED` still carries the result. The
+   transport) is logged; `ON_TASK_COMPLETED` still carries the result. <!-- /rfc --><!-- rfc: {"id": "RK-23.3-060", "kind": "behavior", "applies": "Delegation hand-back propagates the delegating response's chain depth and enforces the depth limit across cycles.", "level": "must"} -->The
    delivered event carries the chain depth of the response whose turn
    delegated (the depth of that turn's trigger plus one, read from the tool
    call context, Section 21.4), so a cycle of delegation, result and
-   delegation again ends at `max_chain_depth` (§8.3) like any chain. A
-   delegation made outside a tool call delivers at 0.
+   delegation again ends at `max_chain_depth` (§8.3) like any chain. <!-- /rfc --><!-- rfc: {"id": "RK-23.3-061", "kind": "behavior", "applies": "A hand-back for a delegation outside a tool call has depth zero.", "level": "must"} -->A
+   delegation made outside a tool call delivers at 0.<!-- /rfc --><!-- rfc: {"id": "RK-23.3-062", "kind": "behavior", "applies": "Relay is the default and gives the notified agent its own turn to express the result in context.", "level": "must"} -->
    `hand_back` says how the result reaches the room. `relay`, the default,
    is the hand-back above: the notified agent is told, and says the result
    in a turn of its own, in the conversation's words and with what the room
-   said meanwhile. `post` publishes the result to the parent room as it
+   said meanwhile. <!-- /rfc --><!-- rfc: {"id": "RK-23.3-063", "kind": "behavior", "applies": "Post publishes the worker's result unchanged as a message of the notified agent without another model turn.", "level": "must"} -->`post` publishes the result to the parent room as it
    is, as a message of the notified agent, without a turn of its model: the
    result reaches the room at once and as the worker wrote it, where a
-   relayed one waits the length of a turn and comes back rewritten. Which
+   relayed one waits the length of a turn and comes back rewritten. <!-- /rfc --><!-- rfc: {"id": "RK-23.3-064", "kind": "non_testable", "applies": "The host chooses the hand-back mode suited to its conversation and worker output.", "level": "must"} -->Which
    one fits is the host's call, by context: a result to put in the
    conversation's words is relayed; a long or exact one (an analysis, a
-   list, a diff), or one a slow model would hold, is posted. `post`
+   list, a diff), or one a slow model would hold, is posted. <!-- /rfc --><!-- rfc: {"id": "RK-23.3-065", "kind": "behavior", "applies": "Post requires an attached intelligence channel as notify and rejects invalid recipients at delegation time.", "level": "must"} -->`post`
    requires `notify` to name an intelligence channel attached to the
    parent room; a delegation that names another channel with `post` is
-   refused when called. The message names the task (`task`, quoted as
+   refused when called. <!-- /rfc --><!-- rfc: {"id": "RK-23.3-066", "kind": "behavior", "applies": "Post identifies and quotes the task before the result.", "level": "must"} -->The message names the task (`task`, quoted as
    Section 6.4 quotes a text from outside) before the result, so the room
-   tells what it answers; a task that did not complete posts that it failed
-   or was cancelled, without its error (§9.3); a completed task with
+   tells what it answers; <!-- /rfc --><!-- rfc: {"id": "RK-23.3-067", "kind": "behavior", "applies": "An unsuccessful post reports failure or cancellation without the error text.", "level": "must"} -->a task that did not complete posts that it failed
+   or was cancelled, without its error (§9.3); <!-- /rfc --><!-- rfc: {"id": "RK-23.3-068", "kind": "behavior", "applies": "Post suppresses an empty successful result and a task cancelled by its own notified agent.", "level": "must"} -->a completed task with
    nothing to say posts nothing, and a task the agent cancelled itself
-   posts nothing either. The message is committed as the notified agent's
+   posts nothing either. <!-- /rfc --><!-- rfc: {"id": "RK-23.3-069", "kind": "behavior", "applies": "Posted results pass the sender's gate, access and visibility and enter the room's shared history.", "level": "must"} -->The message is committed as the notified agent's
    response is (§10.1 steps 9 to 14): it crosses `BEFORE_BROADCAST` and the
    agent's right to write, is stored, and reaches the room's channels as
    the agent binding's visibility allows, so later turns, of every agent,
    read it in the history, where a relayed result lives only in the answer
-   its turn gave. It carries the task in its metadata as the relayed
+   its turn gave. <!-- /rfc --><!-- rfc: {"id": "RK-23.3-070", "kind": "behavior", "applies": "A posted result carries the task metadata, inherited chain depth and the task's result ID as its idempotency key.", "level": "must"} -->It carries the task in its metadata as the relayed
    delivery does, the chain depth that delivery would carry and, unlike a
    response, whose key the pipeline clears (§13.4), an idempotency key the
    framework sets: the id the result was taken under.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-23.3-002", "kind": "behavior", "applies": "§23.3 Delegation Protocol; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-23.3-071", "kind": "behavior", "applies": "Only an inline delegation honours require_structured_result; a background run ignores it and a TurnHost refuses it.", "level": "must"} -->
 **A structured result.** With `require_structured_result`, which only an
 inline delegation (`wait`) honours, a background one running without it and
-a `TurnHost`'s refusing it (Section 10.6.5), the agent hands its work back by calling a result tool, `result_tool` or
-`submit_result` by default (status, summary, data, deliverables, reason). The
+a `TurnHost`'s refusing it (Section 10.6.5), <!-- /rfc --><!-- rfc: {"id": "RK-23.3-072", "kind": "behavior", "applies": "The inline worker submits its result through the requested tool or the default submit_result.", "level": "must"} -->the agent hands its work back by calling a result tool, `result_tool` or
+`submit_result` by default (status, summary, data, deliverables, reason). <!-- /rfc --><!-- rfc: {"id": "RK-23.3-073", "kind": "behavior", "applies": "The owner serves the result tool in the child alone and acknowledges a submission as received.", "level": "must"} -->The
 tool is served in the child room alone, by the owner (Section 10.6.5): the
 same agent delegated from another room never sees it, and it answers the call
-`{"status": "received"}`. Served by the owner, the call ends the agent's
+`{"status": "received"}`. <!-- /rfc --><!-- rfc: {"id": "RK-23.3-074", "kind": "behavior", "applies": "An owner-served submission completes the turn after its full round.", "level": "must"} -->Served by the owner, the call ends the agent's
 turn `completed` after its round, whose other calls run too: the model is
-asked nothing more, unless that round gives it something to read, a message
+asked nothing more, <!-- /rfc --><!-- rfc: {"id": "RK-23.3-075", "kind": "behavior", "applies": "A post-round message or steering directive can continue a submission round, while a steered Cancel cancels it.", "level": "must"} -->unless that round gives it something to read, a message
 an AFTER_TOOL_ROUND hook adds or a directive steered in (Section 21.3), a
-steered Cancel then ending the turn `cancelled`. A call an ON_TOOL_CALL hook
-blocks is no result, and the turn goes on; a result tool an MCP server
+steered Cancel then ending the turn `cancelled`. <!-- /rfc --><!-- rfc: {"id": "RK-23.3-076", "kind": "behavior", "applies": "A blocked submission supplies no result and its turn continues.", "level": "must"} -->A call an ON_TOOL_CALL hook
+blocks is no result, and the turn goes on; <!-- /rfc --><!-- rfc: {"id": "RK-23.3-077", "kind": "behavior", "applies": "A prefixed MCP submission is read from the trace without ending the turn.", "level": "must"} -->a result tool an MCP server
 serves under its prefix is read from the trace as step 6 says, and does not
-end the turn. The result is read from the room's trace as step 6
-says, and the task's output is its payload, normalized, as JSON. A turn that
+end the turn. <!-- /rfc --><!-- rfc: {"id": "RK-23.3-078", "kind": "behavior", "applies": "The structured task output is the normalized submitted JSON payload in the room's trace.", "level": "must"} -->The result is read from the room's trace as step 6
+says, and the task's output is its payload, normalized, as JSON. <!-- /rfc --><!-- rfc: {"id": "RK-23.3-079", "kind": "behavior", "applies": "Missing submission triggers an intelligence-only system reminder, up to the configured retry limit.", "level": "must"} -->A turn that
 ends without the call is re-prompted with the tool's reminder, a system
-message only intelligence reads (step 4), up to `max_result_retries` times;
+message only intelligence reads (step 4), up to `max_result_retries` times;<!-- /rfc --><!-- rfc: {"id": "RK-23.3-080", "kind": "behavior", "applies": "Exhausted retries yield the tool's missing-result payload with attempt count, role fallback and last output.", "level": "must"} -->
 once they are spent the output is the tool's missing payload, for
 `submit_result` `{"status": "failed", "by": "orchestration", "reason":
 "no_structured_result_after_<n>_attempts", "role", "last_output"}`, `n` the
 turns run, `role` the agent's role, else its description, else its id, and
-`last_output` its last text. The task still completes: the payload says the
-mechanism failed. A channel whose turns do not take the owner's tools is not
+`last_output` its last text. <!-- /rfc --><!-- rfc: {"id": "RK-23.3-081", "kind": "behavior", "applies": "A task with a missing-result payload completes while the payload reports the mechanism's failure.", "level": "must"} -->The task still completes: the payload says the
+mechanism failed. <!-- /rfc --><!-- rfc: {"id": "RK-23.3-082", "kind": "behavior", "applies": "A channel unable to receive owner tools uses its text result without being offered a result tool.", "level": "must"} -->A channel whose turns do not take the owner's tools is not
 given the tool, and its result is its text.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-23.3-083", "kind": "behavior", "applies": "An external cancellation ends the inline or background task once as cancelled without output, including during setup and before work.", "level": "must"} -->
 A task cancelled from outside (its caller's timeout, the framework's
 `cancel_task(task_id)`, the task runner's `cancel` or `close`, the framework's
 own `close()`, even before it ran or while its delegation was still being set
 up) ends once, as any task does, whether it ran inline or in the background:
-`cancelled`, with no output. A task whose worker's turn had begun carries it
+`cancelled`, with no output. <!-- /rfc --><!-- rfc: {"id": "RK-23.3-084", "kind": "behavior", "applies": "Cancellation retains only a worker turn already begun, recording its cancelled end.", "level": "must"} -->A task whose worker's turn had begun carries it
 under `turns` (step 6), its end `cancelled`, as a room turn's caller reads a
 read cancelled from outside (Section 6.4); one cut before its turn began
-carries none. The framework holds an inline task as it holds
+carries none. <!-- /rfc --><!-- rfc: {"id": "RK-23.3-085", "kind": "behavior", "applies": "Framework close cancels and waits for inline and background task completion before releasing the store.", "level": "must"} -->The framework holds an inline task as it holds
 the background ones, so its `close()` cuts it and waits for its end, its
 completion included (step 7, and step 8 for a background task), before it
-releases the store. Its completion callback is the framework's running work
+releases the store. <!-- /rfc --><!-- rfc: {"id": "RK-23.3-086", "kind": "behavior", "applies": "During close a task's completion callback is granted the grace, then cut and, after unwind, abandoned and logged if it persists.", "level": "must"} -->Its completion callback is the framework's running work
 (Section 12.10.4): given the close's grace, then cut, and one that ignores
-its cut is abandoned once the unwind ran out and named in the log. A task
+its cut is abandoned once the unwind ran out and named in the log. <!-- /rfc --><!-- rfc: {"id": "RK-23.3-087", "kind": "behavior", "applies": "A delegation announced just as close begins ends cancelled before running.", "level": "must"} -->A task
 its delegation announced as the close began ends the same way, before it
-runs. Steps 7 and 8 still run, to their end though the task is being
+runs. <!-- /rfc --><!-- rfc: {"id": "RK-23.3-088", "kind": "behavior", "applies": "Completion and hand-back survive cancellation within the close budget before propagating the cancellation.", "level": "must"} -->Steps 7 and 8 still run, to their end though the task is being
 cancelled (the completion callback within the close's grace when the
 framework closes, then cut), and a notified agent is told the task was
-cancelled; then the cancellation goes on. The one exception is
+cancelled; then the cancellation goes on. <!-- /rfc --><!-- rfc: {"id": "RK-23.3-089", "kind": "behavior", "applies": "Suppress a cancellation hand-back to the agent whose own cancel_task already answered.", "level": "must"} -->The one exception is
 an agent that cancelled the task itself (its `cancel_task` call, Section
 23.4): the tool's answer has told it, and step 8 hands it nothing, or it
-would say the cancellation twice. A step 8 whose notified agent's turn fails leaves the log line to
+would say the cancellation twice. <!-- /rfc --><!-- rfc: {"id": "RK-23.3-090", "kind": "behavior", "applies": "A failing recipient logs the turn failure at its own level and notes the undelivered result below it.", "level": "must"} -->A step 8 whose notified agent's turn fails leaves the log line to
 that turn's failure, with its cause and at its level, and notes the result
-not delivered below it. A framework that is closing starts no turn: step 8 is skipped and
-logged, step 7 still runs. A step 8 already under way when the framework
+not delivered below it. <!-- /rfc --><!-- rfc: {"id": "RK-23.3-091", "kind": "behavior", "applies": "Framework close skips and logs unstarted hand-backs but still executes the completion hook.", "level": "must"} -->A framework that is closing starts no turn: step 8 is skipped and
+logged, step 7 still runs. <!-- /rfc --><!-- rfc: {"id": "RK-23.3-092", "kind": "behavior", "applies": "Close cancels a running hand-back, retains its partial cancelled response, and permits completion and waiters to finish.", "level": "must"} -->A step 8 already under way when the framework
 closes is cut with it, as a strategy's background run's hand-back is: the
 turn it started is cancelled, what it had produced kept as a cancelled
 response (Section 12.2 step 13s) and nothing more stored, and the task's
 completion callback (within the close's grace, then cut) and its waiters
-still run. A task whose work already ran when the
-cancellation arrives ends as it stands. A delegation's span ends with its
+still run. <!-- /rfc --><!-- rfc: {"id": "RK-23.3-093", "kind": "behavior", "applies": "A late cancellation preserves already finished work.", "level": "must"} -->A task whose work already ran when the
+cancellation arrives ends as it stands. <!-- /rfc --><!-- rfc: {"id": "RK-23.3-094", "kind": "behavior", "applies": "Delegation span status follows the task's completed, failed or cancelled outcome.", "level": "must"} -->A delegation's span ends with its
 task's status: `ok` completed, `error` failed, `cancelled` cancelled.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-23.3-095", "kind": "behavior", "applies": "An announced task rejected by its runner or failing outside its turn still ends failed exactly once.", "level": "must"} -->
 A task announced (its `ON_TASK_DELEGATED` fired) that would otherwise never
 reach its end ends `failed`, once, as a task that ran does: one its task
 runner refused to take (its `submit` raised), and one whose run raised
 outside its turn's outcome (an error computing its result, an exception that
-is not the turn's own). Step 7 runs, its end is posted on the StatusBus, its
+is not the turn's own). <!-- /rfc --><!-- rfc: {"id": "RK-23.3-096", "kind": "behavior", "applies": "An announced pre-run failure finalizes the completion hook, bus, child metadata, callback, waiters and error span.", "level": "must"} -->Step 7 runs, its end is posted on the StatusBus, its
 child room is marked, its completion callback and its waiters run, and its
-span ends `error`, so no reader shows it running. The caller of an inline
+span ends `error`, so no reader shows it running. <!-- /rfc --><!-- rfc: {"id": "RK-23.3-097", "kind": "behavior", "applies": "An inline or runner-refused delegation raises to its caller without notification; a background run failure notifies its recipient.", "level": "must"} -->The caller of an inline
 delegation, or of one its runner refused, receives the error and step 8
 hands nothing back; a background task whose run raised has no caller left,
-and its notified channel is told it failed, as for any failed task. A
+and its notified channel is told it failed, as for any failed task. <!-- /rfc --><!-- rfc: {"id": "RK-23.3-098", "kind": "behavior", "applies": "A pre-announcement preparation error or cancellation propagates to its caller.", "level": "must"} -->A
 delegation that fails or is cancelled before its task is announced (the
 parent room's context unreadable as the announcement is built, or a shared
 channel's attachment interrupted) raises the error or cancellation to its
-caller. Nothing reports the end of a task never announced: no
+caller. <!-- /rfc --><!-- rfc: {"id": "RK-23.3-099", "kind": "behavior", "applies": "An unannounced preparation emits no completion, status, callback or hand-back.", "level": "must"} -->Nothing reports the end of a task never announced: no
 `ON_TASK_COMPLETED`, no end on the StatusBus, no completion callback and no
-hand-back. The worker's turn MUST NOT start.
+hand-back. <!-- /rfc --><!-- rfc: {"id": "RK-23.3-100", "kind": "behavior", "applies": "Unannounced work must never start the worker turn.", "level": "must"} -->The worker's turn MUST NOT start.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-23.3-101", "kind": "behavior", "applies": "Preserve the partially prepared child's data and mark its task cancelled or failed with a null result.", "level": "must"} -->
 If preparation already created its child room, the framework MUST keep that
 room, its bindings, history and other metadata, and mark its `task_status`
-`failed` or `cancelled`, respectively, with `task_result = null`. It MUST
+`failed` or `cancelled`, respectively, with `task_result = null`. <!-- /rfc --><!-- rfc: {"id": "RK-23.3-102", "kind": "behavior", "applies": "Cleanup must neither create a child just to record an end nor change a child of another task.", "level": "must"} -->It MUST
 NOT create a room just to record this end, or mark a room whose `task_id`
-belongs to another task. A creation already under way can finish after its
+belongs to another task. <!-- /rfc --><!-- rfc: {"id": "RK-23.3-103", "kind": "behavior", "applies": "Wait for an in-progress child creation's store write before cleanup without extending its hooks.", "level": "must"} -->A creation already under way can finish after its
 caller stops waiting: its store write MUST be awaited before this cleanup
-reads the child, without prolonging the creation's hooks. The terminal write
+reads the child, without prolonging the creation's hooks. <!-- /rfc --><!-- rfc: {"id": "RK-23.3-104", "kind": "behavior", "applies": "Terminal preparation cleanup survives repeated cancellation and is tracked within close grace and unwind.", "level": "must"} -->The terminal write
 survives further caller cancellation and is
 tracked by the framework's close, within its grace and unwind budgets
-(Section 12.10.4). A failure to read or mark the child is logged and MUST NOT
+(Section 12.10.4). <!-- /rfc --><!-- rfc: {"id": "RK-23.3-105", "kind": "behavior", "applies": "Log cleanup failure and preserve the original preparation failure and unannounced state.", "level": "must"} -->A failure to read or mark the child is logged and MUST NOT
 replace the preparation's original error or cancellation; it does not turn
 the preparation into an announced task.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-23.3-106", "kind": "behavior", "applies": "On announcement publish pending on the StatusBus using the worker ID and bounded task text.", "level": "must"} -->
 A delegation is followed on the framework's StatusBus (Section 19.8), so an
 agent or a host sees a task while it runs. Once its child room is ready, when
 `ON_TASK_DELEGATED` fires, it posts `pending` under the worker's `agent_id`,
-action `task`, its detail the task, bounded. Once it ends, when
+action `task`, its detail the task, bounded. <!-- /rfc --><!-- rfc: {"id": "RK-23.3-107", "kind": "behavior", "applies": "On completion publish the bounded result, retaining the whole truncated result in metadata.", "level": "must"} -->Once it ends, when
 `ON_TASK_COMPLETED` fires, it posts `completed`, its detail the result,
 bounded, with the whole result in `metadata.result` when the detail was cut
-(Section 19.8), or `failed` for a task that failed or was cancelled, its detail
-saying which and never the error's text (Section 9.3). Both entries carry in
+(Section 19.8), <!-- /rfc --><!-- rfc: {"id": "RK-23.3-108", "kind": "behavior", "applies": "Failed and cancelled terminal bus entries use failed status, identify the task outcome and withhold the error.", "level": "must"} -->or `failed` for a task that failed or was cancelled, its detail
+saying which and never the error's text (Section 9.3). <!-- /rfc --><!-- rfc: {"id": "RK-23.3-109", "kind": "behavior", "applies": "Pending and terminal bus entries identify the parent, task and child; the terminal one adds status and duration.", "level": "must"} -->Both entries carry in
 their metadata `room_id`, the parent room, `task_id` and `child_room_id`; the
-terminal one adds `task_status` and `duration_ms`. A caller that follows its
+terminal one adds `task_status` and `duration_ms`. <!-- /rfc --><!-- rfc: {"id": "RK-23.3-110", "kind": "behavior", "applies": "post_status false suppresses delegation bus entries for a caller that manages its own status.", "level": "must"} -->A caller that follows its
 tasks on the bus itself (an orchestration strategy's worker run, Section
 19.7.3) delegates with `post_status = false`, and the delegation posts
 nothing, so a task never shows twice.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-23.3-003", "kind": "behavior", "applies": "§23.3 Delegation Protocol; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-23.3-111", "kind": "behavior", "applies": "A running task may provide a progress update through the framework.", "level": "must"} -->
 **Progress.** A task MAY say how far it got while it runs ("12/30 s", "3
-sources of 5"). The child room's metadata names its task (`task_id`, beside
-`parent_room_id` and `task_agent_id`), so a tool the worker calls in that room
+sources of 5"). <!-- /rfc --><!-- rfc: {"id": "RK-23.3-112", "kind": "behavior", "applies": "The child stores task, parent and worker IDs to identify the running task.", "level": "must"} -->The child room's metadata names its task (`task_id`, beside
+`parent_room_id` and `task_agent_id`), <!-- /rfc --><!-- rfc: {"id": "RK-23.3-113", "kind": "behavior", "applies": "Publish bounded progress through the tool context, as an info entry by the worker with standard task metadata.", "level": "must"} -->so a tool the worker calls in that room
 posts its task's progress with `post_task_progress(kit, detail)`, read from the
 tool call context (Section 21.4): an `info` entry under the worker's
 `agent_id`, action `task`, its detail the progress, bounded, with the same
-metadata as the task's other entries. It returns whether it posted: a call
-outside a task's child room posts nothing. A progress entry does not end the
+metadata as the task's other entries. <!-- /rfc --><!-- rfc: {"id": "RK-23.3-114", "kind": "behavior", "applies": "Report whether progress was posted and post nothing from outside a task's child room.", "level": "must"} -->It returns whether it posted: a call
+outside a task's child room posts nothing. <!-- /rfc --><!-- rfc: {"id": "RK-23.3-115", "kind": "behavior", "applies": "The bus tracks current progress separately and never reopens a completed task on later progress.", "level": "must"} -->A progress entry does not end the
 task: a reader of the bus keeps the latest progress of a task apart from its
 status, and a task that ended stays ended whatever progress follows.
 <!-- /rfc -->
 
 ### 23.4 Delegation Tools
 
-<!-- rfc: {"id": "RK-23.4-001", "kind": "behavior", "applies": "§23.4 Delegation Tools; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
-Implementations SHOULD provide helpers for AI-driven delegation:
+<!-- rfc: {"id": "RK-23.4-003", "kind": "behavior", "applies": "Recommended helper APIs for model-driven delegation.", "level": "should"} -->
+Implementations SHOULD provide helpers for AI-driven delegation:<!-- /rfc --><!-- rfc: {"id": "RK-23.4-004", "kind": "behavior", "applies": "A delegation tool definition lists the available target agents with their descriptions.", "level": "must"} -->
 
 - `build_delegate_tool(agents)` — Creates an AI tool definition that lets
   an agent delegate work to other agents. The `agents` parameter lists
-  available delegation targets with descriptions.
+  available delegation targets with descriptions.<!-- /rfc --><!-- rfc: {"id": "RK-23.4-005", "kind": "behavior", "applies": "Setting up an AI channel wires delegation wherever that channel serves.", "level": "must"} -->
 
 - `setup_delegation(agent, handler, tool)` — Wires the delegation tool into
   an AI channel, connecting it to the TaskRunner. It takes no room: the tool
-  is declared wherever the agent serves. `tool` (default null) replaces the
-  default definition; setting it up twice on a channel is refused. A tool
+  is declared wherever the agent serves. <!-- /rfc --><!-- rfc: {"id": "RK-23.4-006", "kind": "behavior", "applies": "An optional tool definition replaces the default; duplicate installation on the same channel is refused.", "level": "must"} -->`tool` (default null) replaces the
+  default definition; setting it up twice on a channel is refused. <!-- /rfc --><!-- rfc: {"id": "RK-23.4-007", "kind": "behavior", "applies": "A model's delegation is restricted to the declared target list; a malformed target list is refused.", "level": "must"} -->A tool
   built from a list of agents holds the model to it: a call naming another is
   answered with an error and starts nothing, since a list a model can ignore
-  holds nothing; a tool whose list of agents is no list is refused. A host's own
-  call on the handler is not held to it.
+  holds nothing; a tool whose list of agents is no list is refused. <!-- /rfc --><!-- rfc: {"id": "RK-23.4-008", "kind": "behavior", "applies": "Direct host calls on the handler are unrestricted by the model's target list.", "level": "must"} -->A host's own
+  call on the handler is not held to it.<!-- /rfc --><!-- rfc: {"id": "RK-23.4-009", "kind": "behavior", "applies": "Realtime feature: the realtime setup helper declares delegation on its voice sessions.", "level": "must"} -->
 
 - `setup_realtime_delegation(channel, handler, tool)` — The same for a
-  realtime voice channel, whose sessions declare the tool.
+  realtime voice channel, whose sessions declare the tool.<!-- /rfc --><!-- rfc: {"id": "RK-23.4-010", "kind": "structural", "applies": "DelegateHandler configuration, defaults and supported delegate_task arguments.", "level": "must"} -->
 
 - `delegate_task` — The tool those helpers serve, through a handler
   (`DelegateHandler(kit, notify = null, default_share_channels = null,
@@ -22540,52 +22582,52 @@ Implementations SHOULD provide helpers for AI-driven delegation:
   max_conversation = 0, max_result_chars = 4000, wait_in_task_rooms = false)`).
   Its arguments are
   `agent` and `task`, then `context` and `share_channels`, and `conversation`
-  when the handler allows it. A `task` that is no text, or a `share_channels` that
+  when the handler allows it. <!-- /rfc --><!-- rfc: {"id": "RK-23.4-011", "kind": "behavior", "applies": "Reject invalid task and sharing-list values without starting work; a non-text agent names no channel.", "level": "must"} -->A `task` that is no text, or a `share_channels` that
   is no list, is refused, nothing made, and an `agent` that is no text names no
-  channel of the kit (a model may send them whatever the tool declares); in the
+  channel of the kit (a model may send them whatever the tool declares); <!-- /rfc --><!-- rfc: {"id": "RK-23.4-012", "kind": "behavior", "applies": "Share only text channel names, defaulting to the host's channel list for no or empty list.", "level": "must"} -->in the
   list, only a text names a channel, and none or an empty list is the handler's
-  `default_share_channels`. A call delegates (Section 23.3) with the `task` as its
+  `default_share_channels`. <!-- /rfc --><!-- rfc: {"id": "RK-23.4-013", "kind": "behavior", "applies": "Preserve the original task and notify the configured recipient or the agent making the call.", "level": "must"} -->A call delegates (Section 23.3) with the `task` as its
   model wrote it, the label the parent room's records name the task by, and
-  notifies the handler's `notify`, or else the agent that called. The worker
+  notifies the handler's `notify`, or else the agent that called. <!-- /rfc --><!-- rfc: {"id": "RK-23.4-014", "kind": "behavior", "applies": "Assemble separate external-data blocks after the task when there is additional material.", "level": "must"} -->The worker
   reads the call's `brief`: the `task`, then each of the following that the call
-  has, in a block of its own as Section 6.4 sets a text from outside apart.
+  has, in a block of its own as Section 6.4 sets a text from outside apart.<!-- /rfc --><!-- rfc: {"id": "RK-23.4-015", "kind": "behavior", "applies": "Frame the original model task before appended material, or leave the task itself as the instruction when no blocks follow.", "level": "must"} -->
   Once one of them follows it, the `task`, which the model wrote too, is set
   apart as well, in `<task>` under the line `Your task, as the delegating agent
   wrote it:`, so that it cannot read as the block after it; with none of them
   the call has no brief, and the worker reads the `task` as it is, its whole
-  instruction:
+  instruction:<!-- /rfc --><!-- rfc: {"id": "RK-23.4-016", "kind": "behavior", "applies": "The language model's context is single-line serialized JSON in the task_context block, with preserved key order and a character bound.", "level": "must"} -->
 
   1. `context`, which a model wrote and which may hold what a tool returned, in
      `<task_context>`, as JSON on one line (separators `, ` and
-     `: `, its keys in their order), bounded at 4,000 characters. Each of its
+     `: `, its keys in their order), bounded at 4,000 characters. <!-- /rfc --><!-- rfc: {"id": "RK-23.4-017", "kind": "behavior", "applies": "Normalize text and keys and handle block tags before the context is encoded.", "level": "must"} -->Each of its
      strings, an object's keys included, has every double quote mark but `"` made
      a single one and the marks that reorder text dropped, as a quote has (Section
      6.4), and is read for the block's tags, before it is written as JSON, which
-     would hide a line break or a slash as an escape. A value that is no object, which
+     would hide a line break or a slash as an escape. <!-- /rfc --><!-- rfc: {"id": "RK-23.4-018", "kind": "behavior", "applies": "Wrap non-object context, distinguish empty from zero and false, and retain the context in child metadata.", "level": "must"} -->A value that is no object, which
      a model may send, is kept under `context`; null, an empty string, an empty
      list and an empty object are none, and `0` and `false` are values. The
-     child room's `task_context` holds it.
+     child room's `task_context` holds it.<!-- /rfc --><!-- rfc: {"id": "RK-23.4-019", "kind": "behavior", "applies": "Where a cache is configured, the previous_tasks block holds the worker's latest three distinct completed requests under its encoding, ordering and size bounds.", "level": "must"} -->
   2. The agent's previous tasks of the room, with a cache, in
      `<previous_tasks>`: what its last three completed tasks asked, newest first,
      each once, each a JSON string on its line, bounded at 600 characters, read
      for the block's tags as `context` is, which `task_context` also holds as
-     `previous_tasks`. Another agent's tasks stay out: they may quote what this
+     `previous_tasks`. <!-- /rfc --><!-- rfc: {"id": "RK-23.4-020", "kind": "behavior", "applies": "Previous-task context excludes other agents' work while admitting tasks inserted by the host.", "level": "must"} -->Another agent's tasks stay out: they may quote what this
      one may not read. A task the host itself wrote into the cache is any
-     agent's.
+     agent's.<!-- /rfc --><!-- rfc: {"id": "RK-23.4-021", "kind": "behavior", "applies": "Share only conversation messages readable by both the calling agent and the notification recipient.", "level": "must"} -->
   3. The room's last `conversation` messages, as Section 23.3 step 4 gives them
      but those both the agent that called and the notified channel may read: a
      model chooses what it hands over, and hands over nothing it may not read
      itself (§7.5 rule 1), and the worker's result goes back to the notified
-     channel.
+     channel.<!-- /rfc --><!-- rfc: {"id": "RK-23.4-022", "kind": "behavior", "applies": "A shared intelligence channel suppresses reconstructed history and previous tasks, including when shared by default.", "level": "must"} -->
 
   An intelligence channel shared into the child room, the host's
   `default_share_channels` included, stops 2 and 3, what the framework rebuilds:
   it reads the description, and may read less than the agent that called (§7.5
-  rule 8). It does not stop `context`, which the model wrote in this call as it
-  wrote the `task` that channel reads too. A shared transport stops nothing.
+  rule 8). <!-- /rfc --><!-- rfc: {"id": "RK-23.4-023", "kind": "behavior", "applies": "Sharing intelligence permits the model's own context; sharing a transport suppresses none of the brief blocks.", "level": "must"} -->It does not stop `context`, which the model wrote in this call as it
+  wrote the `task` that channel reads too. A shared transport stops nothing.<!-- /rfc --><!-- rfc: {"id": "RK-23.4-024", "kind": "behavior", "applies": "The same host-configured relay length applies to every agent served by this handler.", "level": "must"} -->
 
   `max_result_chars` is the bound of each result its delegations relay (§23.3
-  step 8): the host's too, and the same whichever agent the call names.
+  step 8): the host's too, and the same whichever agent the call names.<!-- /rfc --><!-- rfc: {"id": "RK-23.4-025", "kind": "behavior", "applies": "The host may select inline execution in task children for model and direct handler calls, returning the bounded outcome receipt.", "level": "must"} -->
 
   `wait_in_task_rooms` is the host's too. With it, a call made from a task's
   room (a child room the framework made for a delegated task, whose metadata
@@ -22593,159 +22635,161 @@ Implementations SHOULD provide helpers for AI-driven delegation:
   handler itself, delegates inline (Section 23.3): the call answers once the
   task ended, with the task's receipt, its `status` the status the task ended
   with, and its `result`, the task's work bounded by `max_result_chars` as a
-  relayed result is (empty for a task that failed). The task runs within the
+  relayed result is (empty for a task that failed). <!-- /rfc --><!-- rfc: {"id": "RK-23.4-026", "kind": "behavior", "applies": "An inline delegation inherits its worker's lifetime, so cancelling that worker cuts the nested task.", "level": "must"} -->The task runs within the
   call: one a worker's turn made ends with that turn, so cancelling the worker's
-  task cancels it, and the worker is not asked again. Without it, and from any
+  task cancels it, and the worker is not asked again. <!-- /rfc --><!-- rfc: {"id": "RK-23.4-027", "kind": "behavior", "applies": "Outside a qualifying child or without the option the handler returns immediately with a background receipt.", "level": "must"} -->Without it, and from any
   other room with it, a call starts a background task and answers with its
-  receipt, and a worker's own task may end before that result comes back.
+  receipt, and a worker's own task may end before that result comes back.<!-- /rfc --><!-- rfc: {"id": "RK-23.4-028", "kind": "behavior", "applies": "The host controls whether conversation can be shared; a zero bound removes the argument and all handover.", "level": "must"} -->
 
   `max_conversation` is the host's, since the model chooses the worker, which
   may be another vendor's or hold another workspace. With 0, the tool declares
   no `conversation` argument, whatever definition the host gave it, and nothing
-  is handed over. Above 0, it declares one bounded by it, and the handler holds
+  is handed over. <!-- /rfc --><!-- rfc: {"id": "RK-23.4-029", "kind": "behavior", "applies": "A positive bound caps the declaration and clamps every call; negative or non-integer values contribute no messages.", "level": "must"} -->Above 0, it declares one bounded by it, and the handler holds
   every call to it whatever the tool declares: a larger value reads as the
   maximum; a negative one, or one JSON Schema does not read as an integer (`1.0`
-  is one), as none.
+  is one), as none.<!-- /rfc --><!-- rfc: {"id": "RK-23.4-030", "kind": "behavior", "applies": "Cache completed work from its ending for the configured TTL, subject to the reference limit on run duration.", "level": "must"} -->
 
   A cache (RoomKit: `CompletedTaskCache(ttl_seconds = 300)`) keeps a completed
   task for its time to live, once its end is known (RoomKit: a task running past
-  600 s is not kept). It answers a repeat
+  600 s is not kept). <!-- /rfc --><!-- rfc: {"id": "RK-23.4-031", "kind": "behavior", "applies": "A cache hit returns its completed receipt, result and cache marker and starts no work.", "level": "must"} -->It answers a repeat
   with what its task returned, the task's receipt with its `result`,
-  `status = completed` and `from_cache = true`, and starts nothing. A repeat is
+  `status = completed` and `from_cache = true`, and starts nothing. <!-- /rfc --><!-- rfc: {"id": "RK-23.4-032", "kind": "behavior", "applies": "Match cache entries by calling agent, worker, room, normalized task and equivalent context, with no conversation and only for completed work.", "level": "must"} -->A repeat is
   a call by the same agent to the same worker in the same room with the same
   `task` (its case and outer spaces aside) and the same `context` (the order of
   its keys aside), asking for no conversation, of a task that completed: another
   `context` is other work, a task that failed or was cancelled runs again, and
   another agent's call runs, what the first's task returned possibly holding what
-  that agent passed or may read. A task the host itself wrote into the cache
-  answers any agent, the latest of that and the agent's own when both are kept. A
+  that agent passed or may read. <!-- /rfc --><!-- rfc: {"id": "RK-23.4-033", "kind": "behavior", "applies": "Host-inserted results are shared and the latest of host and caller-specific entries wins.", "level": "must"} -->A task the host itself wrote into the cache
+  answers any agent, the latest of that and the agent's own when both are kept. <!-- /rfc --><!-- rfc: {"id": "RK-23.4-034", "kind": "behavior", "applies": "Requests including conversation always run and supply no reusable result, but count as previous tasks.", "level": "must"} -->A
   call asking
   for the conversation always runs, and what it returned answers no later call,
   since it holds for the room as it stood; its task still counts among the agent's
-  previous tasks. With `serialize_per_room`, a room's calls delegate one at a
-  time.
+  previous tasks. <!-- /rfc --><!-- rfc: {"id": "RK-23.4-035", "kind": "behavior", "applies": "A handler configured to serialize starts only one delegation at a time per room.", "level": "must"} -->With `serialize_per_room`, a room's calls delegate one at a
+  time.<!-- /rfc --><!-- rfc: {"id": "RK-23.4-036", "kind": "behavior", "applies": "The status tool may be installed independently of delegation helpers and reads task entries for the calling room.", "level": "must"} -->
 
 - `task_status` — A tool an agent can be given on its own, independently of
   the delegation helpers. It answers with the tasks posted on the StatusBus for
-  the room of the call, read from the tool call context (Section 21.4): those
+  the room of the call, read from the tool call context (Section 21.4): <!-- /rfc --><!-- rfc: {"id": "RK-23.4-037", "kind": "behavior", "applies": "Status includes the latest entry per running or ended task, with the worker's discussion handle where applicable.", "level": "must"} -->those
   running and those ended, the latest entry of each, with its worker (named
   by its handle when it is an agent of the room's discussion, Section 19.7.5
   rule 4, as the worker's brief, the tool's answer that starts a task, the
-  relayed result and the tasks' block of a turn's notes name it), the task,
+  relayed result and the tasks' block of a turn's notes name it), <!-- /rfc --><!-- rfc: {"id": "RK-23.4-038", "kind": "behavior", "applies": "Status includes the original task, outcome, latest progress and time, and result or failure.", "level": "must"} -->the task,
   its status, its latest progress and when it was posted (Section 23.3), its
-  whole result (Section 19.8) or that it failed, and when it was posted; a
-  `task_id` argument narrows the answer to one task. It reads the bus for that
-  room only: one room's tasks never show in another. A tool reply that tells
+  whole result (Section 19.8) or that it failed, and when it was posted; <!-- /rfc --><!-- rfc: {"id": "RK-23.4-039", "kind": "behavior", "applies": "Supplying task_id filters status to one task.", "level": "must"} -->a
+  `task_id` argument narrows the answer to one task. <!-- /rfc --><!-- rfc: {"id": "RK-23.4-040", "kind": "behavior", "applies": "Task-status results are confined to the calling room.", "level": "must"} -->It reads the bus for that
+  room only: one room's tasks never show in another. <!-- /rfc --><!-- rfc: {"id": "RK-23.4-041", "kind": "behavior", "applies": "A dispatch receipt names task_status only when the agent has that tool.", "level": "must"} -->A tool reply that tells
   its agent to follow the work (a strategy's background dispatch, Section
-  19.7.3) names `task_status` only when the agent was given it.
+  19.7.3) names `task_status` only when the agent was given it.<!-- /rfc --><!-- rfc: {"id": "RK-23.4-042", "kind": "behavior", "applies": "A host can set up the background-work tool for an agent with the task as its argument.", "level": "must"} -->
 
 - `work_in_background` — A tool an agent of a room is given
   (`setup_background(agent, worker = null, hand_back = "relay")`), to start
   long work as a task and free its turn: going through many records, files or
   traces, an analysis of several tool calls. Its argument is `task`, what to
-  do and report. The task is the calling agent's own, and runs on that
+  do and report. <!-- /rfc --><!-- rfc: {"id": "RK-23.4-043", "kind": "behavior", "applies": "A background task belongs to the caller and uses its configured intelligence worker or the caller itself.", "level": "must"} -->The task is the calling agent's own, and runs on that
   agent's worker: the agent itself, unless its background was set up with
   another (any intelligence channel the kit holds, another agent or an
-  external agent among them, Section 6.4). A model never starts a task for
+  external agent among them, Section 6.4). <!-- /rfc --><!-- rfc: {"id": "RK-23.4-044", "kind": "behavior", "applies": "A model cannot choose another agent as task owner; direct host start_task may choose the target.", "level": "must"} -->A model never starts a task for
   another agent, whose worker may hold more than it does (a workspace, its
   tools) and in whose name the result would come back: it asks that agent by
-  name, and only the host's `start_task` reaches any agent. It is handed
+  name, and only the host's `start_task` reaches any agent. <!-- /rfc --><!-- rfc: {"id": "RK-23.4-045", "kind": "behavior", "applies": "Use recent conversation, notify the calling agent and retain the host-selected post or relay mode.", "level": "must"} -->It is handed
   the room's last messages (`conversation`, RoomKit: 12), and its result goes
   back to the calling agent (`notify`), as any delegation's (Section 23.3),
   relayed or posted as the setup's `hand_back` says: the host's choice for
-  that agent's tasks, never the model's. Its worker's brief sets the task
+  that agent's tasks, never the model's. <!-- /rfc --><!-- rfc: {"id": "RK-23.4-046", "kind": "behavior", "applies": "Frame a background task before runtime instructions and conversation, including a task submitted by the host or a person.", "level": "must"} -->Its worker's brief sets the task
   apart in `<task>` under the line `Your task, as it was asked:`, before the
   runtime's text that says how to work and where the findings go, and before
   those messages, so that the task cannot read as either (Section 6.4); a
-  task the host's `start_task` or a person gives is set apart the same way.
+  task the host's `start_task` or a person gives is set apart the same way.<!-- /rfc --><!-- rfc: {"id": "RK-23.4-047", "kind": "behavior", "applies": "Return the task ID immediately with the acknowledge-once and end-turn instruction.", "level": "must"} -->
   The tool answers at once, with the
   task's id, and tells the agent to say once, in a sentence, that the work is
-  under way (before the call or after it, never both) and to end its turn. A
+  under way (before the call or after it, never both) and to end its turn. <!-- /rfc --><!-- rfc: {"id": "RK-23.4-048", "kind": "behavior", "applies": "Reject work_in_background calls made in the child room of a task.", "level": "must"} -->A
   call from a task's child room is refused: a worker does its work and starts
-  no task of its own. The host starts the same
+  no task of its own. <!-- /rfc --><!-- rfc: {"id": "RK-23.4-049", "kind": "behavior", "applies": "Direct start_task runs outside a tool call, defaults a null or empty mode from the setup and validates explicit relay or post.", "level": "must"} -->The host starts the same
   task with `start_task(room_id, agent_id, task, hand_back = null)`, a
   delegation made outside a tool call whose `hand_back` is the agent's setup's
   when null or an empty string; a non-empty value overrides it and MUST be
-  `"relay"` or `"post"`. A person starts one through whatever the host gives them (a
+  `"relay"` or `"post"`. <!-- /rfc --><!-- rfc: {"id": "RK-23.4-050", "kind": "non_testable", "applies": "The host chooses the entry point by which a person starts a task, and the agent or host judges which work to background.", "level": "must"} -->A person starts one through whatever the host gives them (a
   console's `/task`). Whether work is long is the agent's judgment through its
   tool or the host's: a model may keep long work in its own turn whatever its
-  tool says, and a host whose agents do so starts their tasks itself.
+  tool says, and a host whose agents do so starts their tasks itself.<!-- /rfc --><!-- rfc: {"id": "RK-23.4-051", "kind": "behavior", "applies": "The independent cancel_task tool cancels a task of the calling room by ID.", "level": "must"} -->
 
 - `cancel_task` — A tool an agent can be given on its own, as `task_status`,
   so that a request the person changed or dropped stops its work. It cancels
   one task of the room of the call, named by its `task_id` (from the
   delegation's answer or `task_status`): a task still running ends
-  `cancelled`, as any task cancelled from outside does (Section 23.3). It
+  `cancelled`, as any task cancelled from outside does (Section 23.3). <!-- /rfc --><!-- rfc: {"id": "RK-23.4-052", "kind": "behavior", "applies": "The tool cannot cancel a different room's task or an unposted strategy-managed task.", "level": "must"} -->It
   reaches only the tasks the bus lists for that room: a call never cancels
   another room's task, nor one a strategy runs without posting it
-  (`post_status = false`), which that strategy follows itself. It answers
+  (`post_status = false`), which that strategy follows itself. <!-- /rfc --><!-- rfc: {"id": "RK-23.4-053", "kind": "behavior", "applies": "Report cancelled, already ended, unknown or still running with the applicable reason, respecting inline and strategy-managed work.", "level": "must"} -->It answers
   that the task was cancelled, that it had already ended (with its status),
   that the room has no such task, or, for a task of the room it may not
   cancel, that it is still running and why: an inline delegation runs inside
   the turn that asked for it and ends with it; a task a strategy runs without
   posting it is the strategy's to follow, which the host may cancel when it
-  runs in the background. Calls that cancel one task at once cancel it once,
+  runs in the background. <!-- /rfc --><!-- rfc: {"id": "RK-23.4-054", "kind": "behavior", "applies": "Concurrent agent or host cancellations perform one cancellation and all eligible agent callers are told directly without hand-back.", "level": "must"} -->Calls that cancel one task at once cancel it once,
   the host's `cancel_task(task_id)` among them: each is answered that it was
   cancelled, and none of the agents that made them is handed the
-  cancellation back. A call made while such a cancel's end is still being
+  cancellation back. <!-- /rfc --><!-- rfc: {"id": "RK-23.4-055", "kind": "behavior", "applies": "An eligible join before the completion chooses the hand-back is a cancellation; after that decision or another outcome the tool reports ended.", "level": "must"} -->A call made while such a cancel's end is still being
   completed, the task ended `cancelled` but whom its end is handed back to
   not yet decided, is one of them when it could have cancelled the task
   running; made once that is decided, or on a task that ended otherwise, it
-  is answered that the task ended. A task the bus lists ended is
+  is answered that the task ended. <!-- /rfc --><!-- rfc: {"id": "RK-23.4-056", "kind": "behavior", "applies": "A terminal status already visible on the bus is returned as recorded.", "level": "must"} -->A task the bus lists ended is
   answered as the bus lists it, as `task_status` reads it: nothing is left to
-  act on. Whether a
+  act on. <!-- /rfc --><!-- rfc: {"id": "RK-23.4-057", "kind": "behavior", "applies": "A running bus entry never establishes framework or room ownership.", "level": "must"} -->Whether a
   task the bus lists running is the room's is what the framework knows of the
   tasks it runs for each room, never what the bus lists: a task of another
   room, one the framework never ran, or one another framework runs for the
-  room on a bus they share, is no task of the room there. One it ran for the
+  room on a bus they share, is no task of the room there. <!-- /rfc --><!-- rfc: {"id": "RK-23.4-058", "kind": "behavior", "applies": "Recognize a task that really ended despite delayed bus state, with distinct inline and runner completion boundaries.", "level": "must"} -->One it ran for the
   room and that ended is answered ended, with its status, even before the bus
   shows that end: an inline task from its completion's start, before its
   hooks run, and a background task from its runner's handing over of its
   end, a call meanwhile waiting for that (RoomKit keeps the latest 1024
-  ended, all rooms together). Past that bound, a task that ended while the
+  ended, all rooms together). <!-- /rfc --><!-- rfc: {"id": "RK-23.4-059", "kind": "behavior", "applies": "Once outside the shared bounded history, a formerly running stale bus entry identifies no local task.", "level": "must"} -->Past that bound, a task that ended while the
   bus still lists its line running (a bus that lags behind its end) reads as
   no task of the room: the bound is the same for every room, and what a room
   is answered depends on how many tasks ended elsewhere, never on what they
   were.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-23.4-002", "kind": "behavior", "applies": "§23.4 Delegation Tools; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-23.4-060", "kind": "behavior", "applies": "A text turn includes recent task notes from its room's bus, with worker, task, elapsed time, progress and terminal status.", "level": "must"} -->
 **The room's tasks in the turn's notes.** An AI channel's turn reads the
 room's tasks without a tool call: when the StatusBus lists tasks for the room
 of the turn, the channel's notes (Section 6.4) carry the latest of them
 (RoomKit: 6), each with its worker and what was asked, then either how long it
 has run, its latest progress with how long ago it was posted, and that no
-result has come back yet, so none of its data may be given, or how it ended.
+result has come back yet, so none of its data may be given, or how it ended.<!-- /rfc --><!-- rfc: {"id": "RK-23.4-061", "kind": "behavior", "applies": "Notes direct the agent to answer progress when asked and disclose no result early or through the notes.", "level": "must"} -->
 The notes say that each task's progress is the latest its worker gave, to
 answer from without a tool call when asked how far a task got, to speak of a
 running task only when asked, and to give nothing of its result before it
 comes back; a result itself comes back by its hand-back, never through the
-notes. What was asked and the progress are a
+notes. <!-- /rfc --><!-- rfc: {"id": "RK-23.4-062", "kind": "behavior", "applies": "Quote and bound task and progress as untrusted one-line data.", "level": "must"} -->What was asked and the progress are a
 worker's text: each is quoted as Section 6.4 quotes a text from outside (on
-one line, bounded, between marks it cannot close), set apart as data. What
+one line, bounded, between marks it cannot close), set apart as data. <!-- /rfc --><!-- rfc: {"id": "RK-23.4-063", "kind": "behavior", "applies": "Sanitize the worker identifier and restrict the displayed end states.", "level": "must"} -->What
 the notes give unquoted carries no text of its own: a worker's name keeps to an
 identifier's characters, and a task's ending is `completed`, `failed`,
-`cancelled`, or else `ended`. The notes are read
+`cancelled`, or else `ended`. <!-- /rfc --><!-- rfc: {"id": "RK-23.4-064", "kind": "behavior", "applies": "Read current task notes anew at turn construction and persist none of them.", "level": "must"} -->The notes are read
 from the bus as the turn is built, and nothing is stored: a task the bus no
-longer lists is no longer in them. A standalone turn carries none (Section
-10.1.1), and a realtime session, which builds no turn, carries none either.
+longer lists is no longer in them. <!-- /rfc --><!-- rfc: {"id": "RK-23.4-065", "kind": "behavior", "applies": "A standalone turn has no task notes.", "level": "must"} -->A standalone turn carries none (Section
+10.1.1), <!-- /rfc --><!-- rfc: {"id": "RK-23.4-066", "kind": "behavior", "applies": "Realtime feature: a session without a turn has no task notes.", "level": "must"} -->and a realtime session, which builds no turn, carries none either.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-23.4-067", "kind": "behavior", "applies": "A delegation tool uses the calling room from context across setup origins and nested workers.", "level": "must"} -->
 A delegation tool, whichever helper wired it (a supervisor's per-worker and
 strategy tools included), delegates from the room of the call, read from the
 tool call context (Section 21.4), as a handoff does (Section 19.6): the child
 room's parent is the room that issued the call, never the room the tool was
 wired in. A worker delegating in turn runs in its own child room, so its
-delegation hangs off that room. A call made outside a tool call MUST be
+delegation hangs off that room. <!-- /rfc --><!-- rfc: {"id": "RK-23.4-068", "kind": "behavior", "applies": "Refuse a delegation tool invocation outside a tool call.", "level": "must"} -->A call made outside a tool call MUST be
 refused.
 <!-- /rfc -->
 
 ### 23.5 Delegation Hooks
 
-<!-- rfc: {"id": "RK-23.5-001", "kind": "behavior", "applies": "§23.5 Delegation Hooks; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-23.5-002", "kind": "behavior", "applies": "ON_TASK_DELEGATED runs asynchronously when the task and its child are initialized.", "level": "must"} -->
 | Hook | Execution | When |
 |---|---|---|
 | ON_TASK_DELEGATED | ASYNC | Task created and child room initialized |
-| ON_TASK_COMPLETED | ASYNC | Task ended: completed with its result, failed with its error, or cancelled |
+| <!-- /rfc --><!-- rfc: {"id": "RK-23.5-003", "kind": "behavior", "applies": "ON_TASK_COMPLETED runs asynchronously for each task's end with the completed, failed or cancelled result.", "level": "must"} -->ON_TASK_COMPLETED | ASYNC | Task ended: completed with its result, failed with its error, or cancelled |
 
 <!-- /rfc -->
 ---

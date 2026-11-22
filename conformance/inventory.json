@@ -1391,37 +1391,37 @@
       "section": "23",
       "sha256": "5771e97cd43c1401d4bd7df672a53f0ff03c6bb4fc457e203d7d7fe7c1763a49",
       "classification": "normative",
-      "review": "Source inventory: Task Delegation. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "The overview describes the purpose of delegated child rooms. It is the only unit in this heading and has no independent obligation."
     },
     {
       "section": "23.1",
-      "sha256": "61d597ead491a6f44db49ca3880bb6c034d0987f7f6cac17ce4c89c95000d390",
+      "sha256": "c223fb69d08d48ba4942a032b63ac74e99214b52c7bd17eafe665e097449ff28",
       "classification": "normative",
-      "review": "Source inventory: TaskRunner Interface. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "The interface distinguishes running, cancelling and closing. Separate units cover the in-memory runner, exactly-once completion, submission failures and cancellation timing."
     },
     {
       "section": "23.2",
-      "sha256": "48ce3c63d8c7b46e06230e91fa10e13f5d3c5329cbab3510225122b2bb5fc7a0",
+      "sha256": "056a8de935544dda9b88dbe44cd900852fee0683b389634a9225b70185220dc7",
       "classification": "normative",
-      "review": "Source inventory: DelegatedTask. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "DelegatedTask and DelegatedTaskResult have separate model units. Result fields distinguish output, error, native exception retention, duration and worker metadata."
     },
     {
       "section": "23.3",
-      "sha256": "a6fcf25bbe7763220a4c4b9aba500d487441c97538bb0247259ecef2f71968b7",
+      "sha256": "1cdf86581167f26bae7bb7151c1d565d25d5ef9b5260a82d8172ce743d79a1c6",
       "classification": "normative",
-      "review": "Source inventory: Delegation Protocol. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage. Reviewed preparation cleanup against paired Python/Rust code, public scenarios and cancellation/store/shutdown tests; existing structured-result and announced-task contracts retained."
+      "review": "The protocol separates child preparation, visibility, trace, worker outcome and reads, hand-back modes, structured results, cancellation, pre-announcement failures, bus state and progress. Voice, video and conference hand-backs have distinct applicability."
     },
     {
       "section": "23.4",
-      "sha256": "297608d7bf6067e2aa98abe30d3ab9914676f3b4d1b1f68e3f22a4090c78ddae",
+      "sha256": "57f4e4bc083bcd0b214d2f05d8517f75a640fc5f6c3bdc1c91bb70186f4e6bc6",
       "classification": "normative",
-      "review": "Reviewed the complete delegation-tools section after adding DelegateHandler's wait_in_task_rooms (RMK-1621), from the Python and Rust behavior its two task scenarios prove. The start_task fallback, the setup default and the explicit modes remain unchanged; the mixed source units retain their existing boundaries. Coverage remains scoped to reviewed assertions, not the whole section."
+      "review": "Delegation helpers, argument handling, sharing and quoting, cache and waiting, status, background work and cancellation are individually scoped. Task notes and room-context requirements distinguish normal text turns, standalone turns and realtime sessions."
     },
     {
       "section": "23.5",
-      "sha256": "22c7d59abde4f9f3570afa6ae5ee7816085226b4f32c7fac0c3f8678d26f6c74",
+      "sha256": "5a570110c79ee34e6ee24d494d1338d472667ce362738df5a6c434056f8e642c",
       "classification": "normative",
-      "review": "Source inventory: Delegation Hooks. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "One unit covers each asynchronous hook, with its timing and applicable terminal states."
     },
     {
       "section": "24",
