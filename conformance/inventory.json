@@ -903,9 +903,9 @@
     },
     {
       "section": "12.10.4",
-      "sha256": "8365c83f58f687e41ed12f161cbb96e66c63ff616b3dc1a76b0d1f39b5ca3c6d",
+      "sha256": "b91bcbf64b22fe75d93dea2b118431d38c01dedca83daba62e50700153efa3b7",
       "classification": "normative",
-      "review": "Source inventory: ConferenceChannel. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: ConferenceChannel. Its unit Closing and shared state (RK-12.10.4-005) is split to one obligation per unit (RMK-2005, lot P6-0a), every one must: the conference channel's close, the conference feature (RK-12.10.4-019 to 029: no unbounded wait, the media plane's order and budgets, one shutdown, exact-once departures, abandoned operations, the conditions of a success, a session left raised by name); the framework's close, a core rule this section holds (RK-12.10.4-030 to 080: a channel's failed close, the store and lock manager released after their operations, the sealing, steps 1 to 4 one unit per sentence, abandoned work, the result of each call the close cuts, the one shutdown, a close from the framework's own work). Lead-ins and rationale are folded into the unit they introduce. The section's other units keep the source inventory, with no level, until lot P6-T11 splits them: complete source blocks are retained; split a block before claiming narrower complete coverage."
     },
     {
       "section": "12.10.5",

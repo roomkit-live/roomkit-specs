@@ -16068,37 +16068,41 @@ AIChannel answers itself — a feedback loop the chain depth limit (Section
 8.3) would only bound, not prevent.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.10.4-005", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.10.4-019", "kind": "behavior", "applies": "§12.10.4 Closing and shared state: a conference channel's close (the conference feature): the channel's close() waits without bound on nothing it does not own; the lead-in on the store and the lock manager, which the framework releases after the channels close, folded in. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Closing and shared state (normative):** a conference channel's bookkeeping
 lives in resources it does not own — the conversation store and the room lock
 manager belong to the framework, which releases them after the channels
 close. That order faces both ways, and each direction carries an obligation.
 
 The channel's: `close()` MUST NOT wait without bound on anything the channel
-does not own. Its own media plane comes first — admission closed, playbacks
+does not own. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-020", "kind": "behavior", "applies": "§12.10.4 Closing and shared state: a conference channel's close (the conference feature): its own media plane first (admission, playbacks, the bot, the backend) under bounded budgets; each media call cancelled past its budget, given a bounded grace to unwind, then abandoned and reported. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Its own media plane comes first — admission closed, playbacks
 stopped, the bot out of the conference, the backend closed — under bounded
 budgets throughout, and the media calls are no exception: `leave()`, the
 backend's own close and a lane's recogniser all end in code the channel
 does not own, so each is cancelled past its budget, given a bounded grace
-to unwind, and then abandoned and reported rather than waited for again.
+to unwind, and then abandoned and reported rather than waited for again.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-021", "kind": "behavior", "applies": "§12.10.4 Closing and shared state: a conference channel's close (the conference feature): nothing an abandoned call was using is freed on its account, and the bookkeeping past the budgets is not waited for; the rationale on the framework closing channels in sequence folded in. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Nothing an abandoned call was using is freed on its account, and past the
 budgets the bookkeeping is not the channel's to wait for either. The
 framework closes channels in sequence, so a channel waiting without bound
 is not spending its own time: it is holding every channel behind it in its
 conference, which is the failure the budgets exist to prevent.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.4-022", "kind": "behavior", "applies": "§12.10.4 Closing and shared state: a conference channel's close (the conference feature): a close() that overlaps another joins the one shutdown running; a cancelled caller cancels only its own wait. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 There is one logical shutdown per channel. A `close()` that overlaps
 another MUST join the shutdown already running rather than start a second:
 concurrent callers await one shared attempt, and a caller being cancelled
 cancels only its own wait — never the shutdown, whose steps the other
-callers and the channel's own invariants still depend on. Once the
+callers and the channel's own invariants still depend on. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-023", "kind": "behavior", "applies": "§12.10.4 Closing and shared state: a conference channel's close (the conference feature): the shutdown's terminal result answers every later close(): a return after a success, the same failure after a failure; the note that a close is no retry folded in. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Once the
 shutdown reaches its terminal result, that result is the channel's answer
 for good: after a success, later calls MUST return immediately; after a
 failure, later calls MUST reproduce the same terminal failure rather than
 run the steps again. `close()` is a report of what the one shutdown
 achieved, not a retry of it — retrying what failed (removing a session an
 SFU refuses to release) is the operator's task the failure names.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.4-024", "kind": "behavior", "applies": "§12.10.4 Closing and shared state: a conference channel's close (the conference feature): one leave() in flight per session, whatever path asks for it: a path finding one running joins it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Departures are exact-once. A session has at most one `leave()` in flight,
 whatever path asked for it — a detach, an abandoned join, the channel's
 close: a path that finds a departure already running MUST join that
@@ -16106,38 +16110,46 @@ attempt instead of issuing a second `leave()` for the same session. Two
 concurrent `leave()` calls for one session ask the backend to remove a
 participant twice, and whichever answer arrives second is about a session
 that no longer exists.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.4-025", "kind": "behavior", "applies": "§12.10.4 Closing and shared state: a conference channel's close (the conference feature): every resource an operation the shutdown abandons holds stays open until the operation ends, then is closed off the shutdown's clock. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 An operation the shutdown abandons keeps what it was using. Every
 resource an abandoned operation holds — the backend under a `leave()`
 that swallowed its cancellation, the pipeline and recogniser under a
 lane's recogniser call, the recorder under a finalisation — MUST stay
 open until the operation has genuinely ended, however long past the
-budget that is; the resource is closed then, off the shutdown's clock.
+budget that is; the resource is closed then, off the shutdown's clock.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-026", "kind": "behavior", "applies": "§12.10.4 Closing and shared state: a conference channel's close (the conference feature): the current close() does not wait for such a resource: it reports it retained and fails. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The current `close()` does not wait for it: the resource is reported as
 retained and the close fails explicitly, because a close that neither
 freed a resource nor said so has misreported the channel's state.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.4-027", "kind": "behavior", "applies": "§12.10.4 Closing and shared state: a conference channel's close (the conference feature): the four conditions of a successful close; a close missing one fails. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A close has succeeded only when all of the following hold: no session
 remains on the channel's books; no operation the channel admitted is
 still running; every resource the channel owns is closed; and every
 failure met along the way was surfaced in the close's result rather than
 in a log alone. A close missing any of these MUST fail, whatever its
 steps individually reported.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.4-028", "kind": "behavior", "applies": "§12.10.4 Closing and shared state: a conference channel's close (the conference feature): a session still on the channel's books once every step ran is raised by name at the very end of close(). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Failing to remove a session is failing to close. A session still on the
 channel's books when every step has run — a `leave()` the SFU refused, or
 one a budget had to cancel — MUST be raised, by name, at the very end of
 `close()`, not summarised into a log: a close that returns cleanly while a
 bot may still be listening to a meeting misstates the one thing the roster
-exists to answer. The channel goes on reporting the session, and removing
-it is an operator's task. For the same reason a channel whose `close()` fails MUST NOT
+exists to answer. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-029", "kind": "behavior", "applies": "§12.10.4 Closing and shared state: a conference channel's close (the conference feature): the channel goes on reporting a session its close could not remove. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The channel goes on reporting the session, and removing
+it is an operator's task. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-030", "kind": "behavior", "applies": "§12.10.4 Closing and shared state: the framework's close, a core rule this section holds, not the conference feature's: the framework closing its channels in sequence, any channel: one whose close() fails holds none after it back, is not reported as a success, and its failure is surfaced once the shutdown ran to completion. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->For the same reason a channel whose `close()` fails MUST NOT
 prevent the channels after it from closing — and MUST NOT be reported as
 a success either. The failure is surfaced to the caller once the shutdown
 has run to completion: a channel that failed to close may still be
 holding its media — a bot possibly still in a meeting, listening — and a
 shutdown that returns cleanly over that turns a logged error into an
 operational and disclosure risk.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.4-031", "kind": "behavior", "applies": "§12.10.4 Closing and shared state: the framework's close, a core rule this section holds, not the conference feature's: the store and the lock manager are not released while an operation issued through them is in flight, within the close's last unwind; the wait comes after every channel closed and released its media. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The framework's: `close()` MUST NOT release the store or the lock manager
 while an operation issued through them is still in flight, within the close's
 last unwind (below). An operation a shared resource has been given cannot be
@@ -16145,11 +16157,13 @@ taken back, and releasing the resource underneath it does not stop the work —
 it arranges a failure for a write that was already accepted. So the wait for
 such operations belongs to the owner of the resources, and it comes after
 every channel has closed and every channel's media is released, where a slow
-store costs the shutdown its latency and nothing else. It is bounded all the
+store costs the shutdown its latency and nothing else. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-032", "kind": "behavior", "applies": "§12.10.4 Closing and shared state: the framework's close, a core rule this section holds, not the conference feature's: an operation still running once that unwind ran out is named in the log, and the resources are released under it, its write failing. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->It is bounded all the
 same, since the close is: an operation still running once that unwind ran
 out MUST be named in the log, and the resources are released under it, its
 write failing.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.4-033", "kind": "behavior", "applies": "§12.10.4 Closing and shared state: the framework's close, a core rule this section holds, not the conference feature's: the operations that wait covers (those the framework and its channels start of their own accord); work resuming once the resources are sealed is refused with an error naming the shutdown. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Two boundaries keep that promise finite. It covers the operations the
 framework and its channels start of their own accord — participant
 callbacks, roster bookkeeping, announcements — which never suspend in
@@ -16161,7 +16175,9 @@ suspended somewhere the shutdown could not see — a callback parked in a
 backend past every closing budget — and that resumes afterwards MUST be
 refused with an error naming the shutdown, never run against a resource
 being released.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.4-034", "kind": "behavior", "applies": "§12.10.4 Closing and shared state: the framework's close, a core rule this section holds, not the conference feature's: the order's lead-in and step 1, admission: the three classes of calls, whoever makes them; a read is answered during the close and after it while the store is open. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The framework's close runs in this order, from the moment `close()` starts:
 
 1. **Admission stops at once.** From then on, the framework's calls fall in
@@ -16171,127 +16187,135 @@ The framework's close runs in this order, from the moment `close()` starts:
    - A read (a room, its timeline, its bindings, its members, its tasks and
      observations, its read markers, a verification, a source's health, a registered channel,
      a room's strategy) MUST be answered, during the close and after it
-     while the store is open. Once the framework has closed the store, it
+     while the store is open. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-035", "kind": "behavior", "applies": "§12.10.4 Closing and shared state: the framework's close, a core rule this section holds, not the conference feature's: step 1: a read once the framework closed the store is refused with KitClosedError, never the store's own error; a store the integrator owns stays open and answers. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Once the framework has closed the store, it
      MUST refuse a read with an error naming the close (`KitClosedError`),
      never the store's own; a store the integrator owns (a pool it handed
-     in) stays open, and answers. Work a read starts (a source's health
-     check) is no read.
+     in) stays open, and answers. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-036", "kind": "behavior", "applies": "§12.10.4 Closing and shared state: the framework's close, a core rule this section holds, not the conference feature's: step 1: work a read starts (a source's health check) is no read. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Work a read starts (a source's health
+     check) is no read.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-037", "kind": "behavior", "applies": "§12.10.4 Closing and shared state: the framework's close, a core rule this section holds, not the conference feature's: step 1: a teardown call returns doing nothing. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
    - A teardown call (a delivery's or a task's cancellation, a session's
      disconnection, leaving a session, unsubscribing from a room or a
      connection from a room) MUST return doing nothing: the close tears
-     down what it would.
+     down what it would.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-038", "kind": "behavior", "applies": "§12.10.4 Closing and shared state: the framework's close, a core rule this section holds, not the conference feature's: step 1: every other call, by the integrator or the framework's own work, is refused with KitClosedError. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
    - Every other call MUST be refused with `KitClosedError`: one that writes
      or delivers (a message, an injection, a record, a room's or a binding's
      change, a delegation, a regeneration, a publication), and any other (a
      steer, a transcription, a synthesis, a channel's registration, a hook's,
-     a connection's subscription to a room). A channel's own doors refuse
+     a connection's subscription to a room). <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-039", "kind": "behavior", "applies": "§12.10.4 Closing and shared state: the framework's close, a core rule this section holds, not the conference feature's: step 1: a channel's own doors (a realtime session's start and a conference participant's arrival, media examples) and entering a closed framework's context again refuse the same way. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A channel's own doors refuse
      the same way (a realtime session's start, a participant's arrival in a
      conference, which is no failure to log), and so does entering a closed
-     framework's context again.
+     framework's context again.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-040", "kind": "behavior", "applies": "§12.10.4 Closing and shared state: the framework's close, a core rule this section holds, not the conference feature's: step 2: every delivery queued in a room's lane behind another is dropped, never executed. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 2. **What has not started MUST be cut at once.** Every delivery queued in a
    room's lane behind another (one the lane runs, or one ahead of it in
-   index order, §10.2) is dropped, never executed (§10.1). A delivery placed
+   index order, §10.2) is dropped, never executed (§10.1). <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-041", "kind": "behavior", "applies": "§12.10.4 Closing and shared state: the framework's close, a core rule this section holds, not the conference feature's: step 2: a delivery placed while its lane was idle is not dropped, and gets the grace as running work. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A delivery placed
    in its lane while the lane was idle, sending no set and holding none
    queued, runs from its placement until one placed after it comes ahead of
    it: the close MUST NOT drop it, whether or not the lane has taken it yet,
-   whatever the store, and it gets the grace as running work (step 4). A
+   whatever the store, and it gets the grace as running work (step 4). <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-042", "kind": "behavior", "applies": "§12.10.4 Closing and shared state: the framework's close, a core rule this section holds, not the conference feature's: step 2: an answer placed while a set's AFTER_BROADCAST hooks or its responses' passes run (a channel's response, a send from an AFTER_BROADCAST hook) runs from its placement. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
    set sends until its targets have answered; its `AFTER_BROADCAST` hooks
    and its responses' passes come after and leave the lane idle, so an
    answer placed meanwhile (a channel's response, a send from an
-   `AFTER_BROADCAST` hook) runs from its placement. An ASYNC
+   `AFTER_BROADCAST` hook) runs from its placement. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-043", "kind": "behavior", "applies": "§12.10.4 Closing and shared state: the framework's close, a core rule this section holds, not the conference feature's: step 2: an ASYNC BEFORE_BROADCAST observer that closes the framework finds its event's delivery placed: delivered when the lane was idle, dropped when queued behind another. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An ASYNC
    `BEFORE_BROADCAST` observer that closes the framework thus finds its
    event's delivery placed (§10.1 step 13): delivered when the lane was
-   idle, dropped when queued behind another. A call waiting for its room's
+   idle, dropped when queued behind another. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-044", "kind": "behavior", "applies": "§12.10.4 Closing and shared state: the framework's close, a core rule this section holds, not the conference feature's: step 2: a call waiting for its room's lock, the framework's background runs (§19.7) and its verification timers (§11.7.5) are cut at once. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A call waiting for its room's
    lock is cut, nothing of it stored; the framework's background runs
-   (§19.7) and its verification timers (§11.7.5) are cut.
+   (§19.7) and its verification timers (§11.7.5) are cut.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-045", "kind": "behavior", "applies": "§12.10.4 Closing and shared state: the framework's close, a core rule this section holds, not the conference feature's: step 3: a model turn under way is cut at once, its stream and its tool calls, its cascade cancelled with the reason kit_closed. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 3. **A model turn under way MUST be cut at once**, its stream and its tool
    calls: its cascade is cancelled with the reason `kit_closed` (§10.6.8).
-   The text it streamed is stored marked cancelled and an open tool call
+   <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-046", "kind": "behavior", "applies": "§12.10.4 Closing and shared state: the framework's close, a core rule this section holds, not the conference feature's: step 3: the cut turn's streamed text is stored marked cancelled, and an open tool call gets its end row, failed, error kit_closed. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The text it streamed is stored marked cancelled and an open tool call
    gets its end row, `failed`, error `kit_closed` (§12.2 step 13s), so the
-   history stays valid. The turn a `close()` is called from (a tool's call)
+   history stays valid. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-047", "kind": "behavior", "applies": "§12.10.4 Closing and shared state: the framework's close, a core rule this section holds, not the conference feature's: step 3: the turn a close() is called from is cut, but for the call that awaits close(), which runs on: its end row stored before the store is released, what the turn does after refused as the close's own failure. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The turn a `close()` is called from (a tool's call)
    is cut the same way, but for the call that awaits `close()` itself, which
    runs on: its open call's end row is stored before the store is released,
    and what the turn does once the call returned is refused, as a failure
-   that is the close's own, never logged as an error. A call that awaits a
+   that is the close's own, never logged as an error. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-048", "kind": "behavior", "applies": "§12.10.4 Closing and shared state: the framework's close, a core rule this section holds, not the conference feature's: step 3: a call that awaits a close it started on a task of its own is cut with its turn, and the close runs on. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A call that awaits a
    close it started on a task of its own is cut with its turn, and the close
-   runs on.
+   runs on.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-049", "kind": "behavior", "applies": "§12.10.4 Closing and shared state: the framework's close, a core rule this section holds, not the conference feature's: step 4: the rest of the running work gets one grace, close_grace (5 seconds by default), from the close's start. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 4. **The rest of the running work MUST get one grace**, the framework's
    `close_grace` (5 seconds by default) from the close's start: a hook, a
    store write past a call's decision (§13.6), a
    room change, a transport send, a call still running its hooks before its
    commit, the framework's own steps that wait on integrator code (a
    source's stop, a delegation's completion callback, §23.3), and the
-   handlers a channel runs for a session's start or end. The framework's
+   handlers a channel runs for a session's start or end. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-050", "kind": "behavior", "applies": "§12.10.4 Closing and shared state: the framework's close, a core rule this section holds, not the conference feature's: step 4: the framework's own steps run side by side within the grace; every source's task is cut whatever its stop does, and no source is restarted once the close started. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The framework's
    own steps run side by side within that grace, so a slow one holds no
    other back; every source's task is cut whatever its stop does, and no
-   source is restarted once the close started. A call that commits within
+   source is restarted once the close started. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-051", "kind": "behavior", "applies": "§12.10.4 Closing and shared state: the framework's close, a core rule this section holds, not the conference feature's: step 4: a call that commits within the grace is stored and its delivery dropped, its delivery results empty. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A call that commits within
    the grace is stored and its delivery dropped, its lane idle or not: once
    the close started, no delivery takes a place in a lane, so it is
-   delivered to no one, its delivery results empty. What is left then MUST
+   delivered to no one, its delivery results empty. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-052", "kind": "behavior", "applies": "§12.10.4 Closing and shared state: the framework's close, a core rule this section holds, not the conference feature's: step 4: what is left once the grace is over is cut and given at most 1 second to unwind; a lane's round stops at the entry it runs. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->What is left then MUST
    be cut, and given at most 1 second to unwind; a lane's round stops at
-   the entry it runs. Then the turn backend closes, one of the framework's
+   the entry it runs. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-053", "kind": "behavior", "applies": "§12.10.4 Closing and shared state: the framework's close, a core rule this section holds, not the conference feature's: step 4: then the turn backend closes, its turns cut and waited for on its own budget, then the channels close. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Then the turn backend closes, one of the framework's
    own backends: its turns
    and the calls they made are cut and waited for on its own budget (one
    unwind for the turns its executor runs in the owner's process and their
    calls; across processes, then one cancel bound for its backend's close,
    §10.6.8; what it still runs then named with the rest); then the
-   channels close, as above. What their
+   channels close, as above. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-054", "kind": "behavior", "applies": "§12.10.4 Closing and shared state: the framework's close, a core rule this section holds, not the conference feature's: step 4: what the channels' closes start is cut at once, with the same unwind, within which the store's and the lock manager's operations are waited for. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->What their
    closes start MUST be cut at once, with the same unwind, within which the
    operations the store and the lock manager already have are waited for
-   (above). The store, the lock manager and the status bus are then
+   (above). <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-055", "kind": "behavior", "applies": "§12.10.4 Closing and shared state: the framework's close, a core rule this section holds, not the conference feature's: step 4: the store, the lock manager and the status bus are then released; a connection pool the store or the lock manager opened itself is closed within a bound. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The store, the lock manager and the status bus are then
    released; the framework's close closes a connection pool the store or
    the lock manager opened itself within a bound, its connections still in
    use then terminated (their own close, called by their owner, waits for
    them: only the framework's close bounds it, so a lock held is never
-   given to another holder by a close its owner called).
+   given to another holder by a close its owner called).<!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-056", "kind": "behavior", "applies": "§12.10.4 Closing and shared state: the framework's close, a core rule this section holds, not the conference feature's: step 4: the close's whole bound: the grace, the turn backend's budget, the channels' and the other backends' closes, and at most two unwinds of 1 second. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
    The close takes the grace, plus the turn backend's budget, plus the
    channels' and the framework's other backends' closes, each on its own
    budget, plus at most two unwinds of 1 second, which only work that
    ignores its cancellation spends.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.4-057", "kind": "behavior", "applies": "§12.10.4 Closing and shared state: the framework's close, a core rule this section holds, not the conference feature's: nothing is written or delivered after close() returns by work that honours its cut. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Nothing is written or delivered after `close()` returns by work that honours
-its cut. Work that ignores it past its unwind is abandoned: the framework
+its cut. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-058", "kind": "behavior", "applies": "§12.10.4 Closing and shared state: the framework's close, a core rule this section holds, not the conference feature's: work ignoring its cut past its unwind is abandoned and named in one log line. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Work that ignores it past its unwind is abandoned: the framework
 MUST name it in its log, in one line once its last unwind ran out, each task
-by the work it runs (a source's stop, a turn). A store the framework closed then refuses its
+by the work it runs (a source's stop, a turn). <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-059", "kind": "behavior", "applies": "§12.10.4 Closing and shared state: the framework's close, a core rule this section holds, not the conference feature's: what abandoned work writes afterwards: a store the framework closed refuses it, a store that stays open takes it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A store the framework closed then refuses its
 writes; a store that stays open (an in-memory one, a pool the integrator
 handed in) takes them; a send it still makes is its channel's own act, not
 the framework's.
+<!-- /rfc -->
 
-Every call the close cuts MUST return one result. Its cancellation reason is
+<!-- rfc: {"id": "RK-12.10.4-060", "kind": "behavior", "applies": "§12.10.4 Closing and shared state: the framework's close, a core rule this section holds, not the conference feature's: every call the close cuts returns one result. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+Every call the close cuts MUST return one result. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-061", "kind": "behavior", "applies": "§12.10.4 Closing and shared state: the framework's close, a core rule this section holds, not the conference feature's: a cut call's cancellation reason is kit_closed, whatever its place in its lane. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Its cancellation reason is
 `kit_closed` (§10.1, step 18), whatever the call's place: the delivery a
-lane runs and the ones queued behind it alike, never a reason by position.
+lane runs and the ones queued behind it alike, never a reason by position.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-062", "kind": "behavior", "applies": "§12.10.4 Closing and shared state: the framework's close, a core rule this section holds, not the conference feature's: a cut call's result carries the answers already stored and each target's delivery: a target delivered keeps its result, a send cut past the grace or ignoring its cut is failed, code kit_closed, retryable. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 It carries the answers already stored and each target's delivery: a target
 already delivered keeps its result, and a send cut once the grace ran out,
 or one that ignored its cut, is `failed`, code `kit_closed`, retryable
-(§5.13). A call under way when the close starts reads `kit_closed` even when
+(§5.13). <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-063", "kind": "behavior", "applies": "§12.10.4 Closing and shared state: the framework's close, a core rule this section holds, not the conference feature's: a call under way as the close starts reads kit_closed even when its sends end within the grace, its delivery results saying what was delivered. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A call under way when the close starts reads `kit_closed` even when
 its sends end within the grace; its delivery results say what was
-delivered. A detached call's completion handle (step 18) waits for its
-delivery set to end or be cut, then reports it. A call cut before its commit
+delivered. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-064", "kind": "behavior", "applies": "§12.10.4 Closing and shared state: the framework's close, a core rule this section holds, not the conference feature's: a detached call's completion handle waits for its delivery set to end or be cut, then reports it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A detached call's completion handle (step 18) waits for its
+delivery set to end or be cut, then reports it. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-065", "kind": "behavior", "applies": "§12.10.4 Closing and shared state: the framework's close, a core rule this section holds, not the conference feature's: a call cut before its commit stores nothing: the inbound path and a regeneration return a refusal (blocked, kit_closed), direct injection and a record's commit raise KitClosedError. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A call cut before its commit
 stores nothing: the inbound path and a regeneration return a refusal
 (`blocked`, reason `kit_closed`), and direct injection and a record's
-commit, whose result has no place for one, raise `KitClosedError`. A call
+commit, whose result has no place for one, raise `KitClosedError`. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-066", "kind": "behavior", "applies": "§12.10.4 Closing and shared state: the framework's close, a core rule this section holds, not the conference feature's: a call cut once its commit had started reads its event back by its id, once its writes unwound and within its unwind. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A call
 cut once its commit had started MUST read its event back by its id, once
-its writes unwound and within its unwind. When it is stored, the inbound
+its writes unwound and within its unwind. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-067", "kind": "behavior", "applies": "§12.10.4 Closing and shared state: the framework's close, a core rule this section holds, not the conference feature's: a cut call whose event is stored returns it: the inbound path with the reason kit_closed, direct injection, a record's commit and a host's post the stored event, never a refusal. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->When it is stored, the inbound
 path returns it as its event with the cancellation reason `kit_closed` (a
 `BLOCKED` record blocked by its hooks' reason, as it would read uncut), and
 direct injection, a record's commit and a host's post return the stored
-event: never a refusal. When it is not stored, the call stores nothing. The
+event: never a refusal. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-068", "kind": "behavior", "applies": "§12.10.4 Closing and shared state: the framework's close, a core rule this section holds, not the conference feature's: a cut call whose event is not stored stores nothing; a write completed after its writes unwound, or a read-back that fails or runs out (logged as a warning), leaves it reported as not stored. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->When it is not stored, the call stores nothing. The
 limit: a store that completes the write after the call's writes unwound, or
 a read-back that fails or runs out (which the framework MUST log as a
 warning), leaves the call reported as not stored.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.4-069", "kind": "behavior", "applies": "§12.10.4 Closing and shared state: the framework's close, a core rule this section holds, not the conference feature's: the framework's one shutdown: a close() that overlaps another joins it, and a cancelled caller cancels only its own wait. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The framework has one shutdown too, held to the channel's rule above. A
 `close()` that overlaps another MUST join the shutdown already running:
 concurrent callers await one shared attempt, and a caller being cancelled
 (a timeout around it, its task cancelled) cancels only its own wait, never
 the shutdown, which still closes every channel and releases the shared
-resources. Once the shutdown reaches its terminal result, that result
+resources. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-070", "kind": "behavior", "applies": "§12.10.4 Closing and shared state: the framework's close, a core rule this section holds, not the conference feature's: the shutdown's terminal result answers every later close(): a return after a success, the same failure after a failure, never a second run of the steps. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Once the shutdown reaches its terminal result, that result
 answers every later call: a return after a success, the same failure after
 a failure (a channel that failed to close), never a second run of the
-steps. A shutdown cut itself, as when a process cancels every task as it
+steps. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-071", "kind": "behavior", "applies": "§12.10.4 Closing and shared state: the framework's close, a core rule this section holds, not the conference feature's: a later caller after a shutdown cut itself gets ShutdownCancelledError. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A shutdown cut itself, as when a process cancels every task as it
 ends, is no cancellation of a later caller: that caller gets an error
 saying the shutdown did not finish (`ShutdownCancelledError`).
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.4-072", "kind": "behavior", "applies": "§12.10.4 Closing and shared state: the framework's close, a core rule this section holds, not the conference feature's: a close() called from the framework's own work neither waits for that work nor cuts it: the shutdown spares it, closes everything else, and the call returns once it ended. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A `close()` called from the framework's own work (a hook's body, a tool's
 call, a background run, the aftermath of a delivery, a session's teardown)
 MUST NOT wait for that work nor cut it: the work cannot move on before the
@@ -16299,28 +16323,28 @@ call returns, so waiting for it waits for itself, and cutting it cuts the
 call. The shutdown spares the work the call runs under, with the delivery
 lane, the teardown or the task that carries it; it closes and releases
 everything else as usual, the call returns once it has ended, and the work
-spared ends on its own. A model turn the call runs in is the exception
+spared ends on its own. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-073", "kind": "behavior", "applies": "§12.10.4 Closing and shared state: the framework's close, a core rule this section holds, not the conference feature's: the exception, a model turn the call runs in: cut as every turn is, the call awaiting close() spared, its end for its owner not waiting for that call. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A model turn the call runs in is the exception
 (step 3): it is cut as every turn is, the call that awaits `close()` itself
 spared, and its end for its owner does not wait for that call; a call that
-awaits a close it started on a task of its own is cut with its turn. The rule holds for every caller,
+awaits a close it started on a task of its own is cut with its turn. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-074", "kind": "behavior", "applies": "§12.10.4 Closing and shared state: the framework's close, a core rule this section holds, not the conference feature's: that rule holds for the caller that started the shutdown and one that joined it, whatever marks the work as the caller's (its task, the work it runs under, its turn; a realtime call's handler and a conference activity, media examples). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The rule holds for every caller,
 the one that started the shutdown or one that joined it, and by whatever
 marks the work as the caller's: the task it runs as, the work it runs
 under, the turn it runs in (§10.6.5), the realtime call its handler serves
-(§12.4), the conference activity or participant callback it runs inside.
+(§12.4), the conference activity or participant callback it runs inside.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-075", "kind": "behavior", "applies": "§12.10.4 Closing and shared state: the framework's close, a core rule this section holds, not the conference feature's: a joining caller's work: what the shutdown already waits for stops being waited for, what it has not reached yet is spared when reached. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Work the
 shutdown already waits for when its caller joins stops being waited for,
-and work it has not reached yet is spared when reached. A caller whose work
+and work it has not reached yet is spared when reached. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-076", "kind": "behavior", "applies": "§12.10.4 Closing and shared state: the framework's close, a core rule this section holds, not the conference feature's: a caller whose work the close already cut is spared from its join on, its work neither cut again nor waited for. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A caller whose work
 the close already cut (a tool whose turn it cut, closing the framework in
 its cleanup) is spared from its join on: its work is neither cut again nor
-waited for. A spared delivery lane is neither waited for nor cut; the
+waited for. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-077", "kind": "behavior", "applies": "§12.10.4 Closing and shared state: the framework's close, a core rule this section holds, not the conference feature's: a spared delivery lane is neither waited for nor cut; the deliveries queued behind its own are dropped, and the one placed while it was idle once the grace is over. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A spared delivery lane is neither waited for nor cut; the
 deliveries queued behind its own are dropped, as every queued delivery is,
 and so is the one it holds placed while it was idle (step 2), once the grace
-is over: the lane could run it only after the store is released. A delivery
+is over: the lane could run it only after the store is released. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-078", "kind": "behavior", "applies": "§12.10.4 Closing and shared state: the framework's close, a core rule this section holds, not the conference feature's: a delivery the closing work itself placed, still held in its room's lane, is dropped as the close starts, whether or not that lane is spared. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A delivery
 the closing work itself placed, which its room's lane still holds (an
 `AFTER_BROADCAST` hook that sends, then closes the framework), is dropped as
-the close starts, whether or not that lane is spared. An ASYNC hook's
+the close starts, whether or not that lane is spared. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-079", "kind": "behavior", "applies": "§12.10.4 Closing and shared state: the framework's close, a core rule this section holds, not the conference feature's: an ASYNC hook's observer is not the work that fired it: a close() it calls waits for that work and cuts it as any other. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An ASYNC hook's
 observer is not the work that fired it, which does not wait for it: a
-`close()` it calls waits for that work and cuts it as any other.
+`close()` it calls waits for that work and cuts it as any other.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-080", "kind": "behavior", "applies": "§12.10.4 Closing and shared state: the framework's close, a core rule this section holds, not the conference feature's: a close() called from the shutdown's own work returns at once. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A `close()` called from the shutdown's own work (a hook it fires as it
 closes) returns at once.
 <!-- /rfc -->
