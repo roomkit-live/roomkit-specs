@@ -7006,12 +7006,15 @@
       "section": "12.10.4",
       "title": "ConferenceChannel",
       "review": "normative",
-      "requirements": 16,
+      "requirements": 77,
       "mapping": {
-        "mapped_partial": 1,
-        "unmapped": 15
+        "mapped_partial": 3,
+        "unmapped": 74
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "step": 27,
+        "writable": 12
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "conference/a-call-reports-presence-without-changing-room-membership",
@@ -37410,125 +37413,175 @@
       "links": []
     },
     {
-      "id": "RK-12.10.4-005",
+      "id": "RK-12.10.4-019",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2007",
+        "note": "step: conference.fault: a backend call held past its budget as the channel closes."
+      }
+    },
+    {
+      "id": "RK-12.10.4-020",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2007",
+        "note": "step: conference.read, conference.fault: the order of the backend calls a close makes, one of them held past its budget."
+      }
+    },
+    {
+      "id": "RK-12.10.4-021",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2007",
+        "note": "step: conference.fault, conference.read: a call abandoned past its budget, and what the close frees on its account."
+      }
+    },
+    {
+      "id": "RK-12.10.4-022",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2007",
+        "note": "step: conference.fault: two closes of one conference channel overlapping, the first one held, then cancelled."
+      }
+    },
+    {
+      "id": "RK-12.10.4-023",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2007",
+        "note": "step: conference.fault: a close the backend fails, then a later close of the same channel."
+      }
+    },
+    {
+      "id": "RK-12.10.4-024",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2007",
+        "note": "step: conference.read, conference.fault: a detach and a close asking for one session's departure at once."
+      }
+    },
+    {
+      "id": "RK-12.10.4-025",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2007",
+        "note": "step: conference.fault, conference.read: a backend call that swallows its cancellation, and when its resource is closed."
+      }
+    },
+    {
+      "id": "RK-12.10.4-026",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2007",
+        "note": "step: conference.fault: a close that abandons a call reports the resource it retains and fails."
+      }
+    },
+    {
+      "id": "RK-12.10.4-027",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2007",
+        "note": "step: conference.fault: a close one of whose four conditions does not hold fails."
+      }
+    },
+    {
+      "id": "RK-12.10.4-028",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2007",
+        "note": "step: conference.fault: a leave() the backend refuses, raised by name at the end of the close."
+      }
+    },
+    {
+      "id": "RK-12.10.4-029",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2007",
+        "note": "step: conference.fault, conference.read: the session a failed close left, still reported by the channel."
+      }
+    },
+    {
+      "id": "RK-12.10.4-030",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2007",
+        "note": "step: a channel whose close fails: the channels after it still closed, the kit's close failing once its shutdown ran."
+      }
+    },
+    {
+      "id": "RK-12.10.4-031",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2007",
+        "note": "step: conference.fault: a channel's roster write held in the store as the channels close."
+      }
+    },
+    {
+      "id": "RK-12.10.4-032",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2007",
+        "note": "step: conference.fault: a channel's store write held past the close's last unwind; its log line is no step's to read."
+      }
+    },
+    {
+      "id": "RK-12.10.4-033",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2007",
+        "note": "step: conference.fault: a participant callback parked in the backend past every closing budget, resuming after the close."
+      }
+    },
+    {
+      "id": "RK-12.10.4-034",
       "section": "12.10.4",
       "mapping": "mapped_partial",
       "links": [
-        {
-          "id": "core-shutdown-admission",
-          "scope": "Public operation admission and delivery-key cancellation during and after the kit close; an already-entered nested scope read under a locked hook keeps its parent grace.",
-          "coverage": "partial",
-          "missing": [
-            "The rest of the shutdown matrix still needs assertion-by-assertion audit: retained delivery and cursor holes, stubborn cleanup, delegation and callbacks, streaming partial responses and adapter-specific resources.",
-            "Previously deferred status-bus and failed delivery-record boundaries remain deferred by their maintainer decisions; this scenario proves none of them."
-          ],
-          "executions": [
-            {
-              "execution": "python-postgres-scenarios-651ae82-postgres",
-              "implementation": "python",
-              "commit": "651ae82c198066cc771ad2fcfdc6995fdad25c99",
-              "backend": "postgres",
-              "runtime": "asyncio",
-              "state": "incomplete"
-            },
-            {
-              "execution": "python-redis-turns-651ae82-memory-redis-turns",
-              "implementation": "python",
-              "commit": "651ae82c198066cc771ad2fcfdc6995fdad25c99",
-              "backend": "memory+redis-turns",
-              "runtime": "asyncio",
-              "state": "incomplete"
-            },
-            {
-              "execution": "python-redis-turns-651ae82-sqlite-redis-turns",
-              "implementation": "python",
-              "commit": "651ae82c198066cc771ad2fcfdc6995fdad25c99",
-              "backend": "sqlite+redis-turns",
-              "runtime": "asyncio",
-              "state": "incomplete"
-            },
-            {
-              "execution": "python-rule-links-651ae82-memory",
-              "implementation": "python",
-              "commit": "651ae82c198066cc771ad2fcfdc6995fdad25c99",
-              "backend": "memory",
-              "runtime": "asyncio",
-              "state": "incomplete"
-            },
-            {
-              "execution": "python-rule-links-651ae82-sqlite",
-              "implementation": "python",
-              "commit": "651ae82c198066cc771ad2fcfdc6995fdad25c99",
-              "backend": "sqlite",
-              "runtime": "asyncio",
-              "state": "incomplete"
-            },
-            {
-              "execution": "rust-8f49956-memory-current-thread",
-              "implementation": "rust",
-              "commit": "8f499568980516accf7c06f6110bdb4c451342b7",
-              "backend": "memory",
-              "runtime": "current_thread",
-              "state": "incomplete"
-            },
-            {
-              "execution": "rust-8f49956-memory-multi-thread-4",
-              "implementation": "rust",
-              "commit": "8f499568980516accf7c06f6110bdb4c451342b7",
-              "backend": "memory",
-              "runtime": "multi_thread_4",
-              "state": "incomplete"
-            },
-            {
-              "execution": "rust-8f49956-sqlite-current-thread",
-              "implementation": "rust",
-              "commit": "8f499568980516accf7c06f6110bdb4c451342b7",
-              "backend": "sqlite",
-              "runtime": "current_thread",
-              "state": "incomplete"
-            },
-            {
-              "execution": "rust-8f49956-postgres-current-thread",
-              "implementation": "rust",
-              "commit": "8f499568980516accf7c06f6110bdb4c451342b7",
-              "backend": "postgres",
-              "runtime": "current_thread",
-              "state": "incomplete"
-            },
-            {
-              "execution": "rust-8f49956-memory-redis-executors-current-thread",
-              "implementation": "rust",
-              "commit": "8f499568980516accf7c06f6110bdb4c451342b7",
-              "backend": "memory+redis-executors",
-              "runtime": "current_thread",
-              "state": "incomplete"
-            },
-            {
-              "execution": "rust-8f49956-memory-redis-executors-multi-thread-4",
-              "implementation": "rust",
-              "commit": "8f499568980516accf7c06f6110bdb4c451342b7",
-              "backend": "memory+redis-executors",
-              "runtime": "multi_thread_4",
-              "state": "incomplete"
-            },
-            {
-              "execution": "rust-8f49956-sqlite-redis-executors-current-thread",
-              "implementation": "rust",
-              "commit": "8f499568980516accf7c06f6110bdb4c451342b7",
-              "backend": "sqlite+redis-executors",
-              "runtime": "current_thread",
-              "state": "incomplete"
-            },
-            {
-              "execution": "rust-8f49956-postgres-redis-executors-current-thread",
-              "implementation": "rust",
-              "commit": "8f499568980516accf7c06f6110bdb4c451342b7",
-              "backend": "postgres+redis-executors",
-              "runtime": "current_thread",
-              "state": "incomplete"
-            }
-          ]
-        },
         {
           "id": "core-shutdown-boundaries",
           "scope": "Open-store reads, late status and observer admission; native cursor placement and unfinished call results. Local core shutdown only.",
@@ -37643,14 +37696,49 @@
               "state": "incomplete"
             }
           ]
-        },
+        }
+      ]
+    },
+    {
+      "id": "RK-12.10.4-035",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2007",
+        "note": "step: a store the kit closes in every backend: the memory store stays open after the close, so a read answers there."
+      }
+    },
+    {
+      "id": "RK-12.10.4-036",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2007",
+        "note": "step: a scripted source (source_provider) whose health check a read starts once the close started."
+      }
+    },
+    {
+      "id": "RK-12.10.4-037",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.10.4-038",
+      "section": "12.10.4",
+      "mapping": "mapped_partial",
+      "links": [
         {
-          "id": "core-shutdown-answers",
-          "scope": "Answers placed during delivery aftermath: an answer observer closes, or its sender closes while the answer is explicitly retained. Local core shutdown only.",
+          "id": "core-shutdown-admission",
+          "scope": "Public operation admission and delivery-key cancellation during and after the kit close; an already-entered nested scope read under a locked hook keeps its parent grace.",
           "coverage": "partial",
           "missing": [
-            "Commit-before-observer ordering, held writes, work added during close, post-cut cleanup and streamed hand-back composition remain in the shutdown annex.",
-            "Media, service-backed and remote-executor variants are not credited by local native witnesses; existing maintainer deferrals remain explicit."
+            "The rest of the shutdown matrix still needs assertion-by-assertion audit: retained delivery and cursor holes, stubborn cleanup, delegation and callbacks, streaming partial responses and adapter-specific resources.",
+            "Previously deferred status-bus and failed delivery-record boundaries remain deferred by their maintainer decisions; this scenario proves none of them."
           ],
           "executions": [
             {
@@ -37850,6 +37938,484 @@
           ]
         }
       ]
+    },
+    {
+      "id": "RK-12.10.4-039",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2007",
+        "note": "step: a realtime session's start and a conference participant's arrival after the close; entering a closed kit's context again is Python's async with."
+      }
+    },
+    {
+      "id": "RK-12.10.4-040",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.10.4-041",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.10.4-042",
+      "section": "12.10.4",
+      "mapping": "mapped_partial",
+      "links": [
+        {
+          "id": "core-shutdown-answers",
+          "scope": "Answers placed during delivery aftermath: an answer observer closes, or its sender closes while the answer is explicitly retained. Local core shutdown only.",
+          "coverage": "partial",
+          "missing": [
+            "Commit-before-observer ordering, held writes, work added during close, post-cut cleanup and streamed hand-back composition remain in the shutdown annex.",
+            "Media, service-backed and remote-executor variants are not credited by local native witnesses; existing maintainer deferrals remain explicit."
+          ],
+          "executions": [
+            {
+              "execution": "python-postgres-scenarios-651ae82-postgres",
+              "implementation": "python",
+              "commit": "651ae82c198066cc771ad2fcfdc6995fdad25c99",
+              "backend": "postgres",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-redis-turns-651ae82-memory-redis-turns",
+              "implementation": "python",
+              "commit": "651ae82c198066cc771ad2fcfdc6995fdad25c99",
+              "backend": "memory+redis-turns",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-redis-turns-651ae82-sqlite-redis-turns",
+              "implementation": "python",
+              "commit": "651ae82c198066cc771ad2fcfdc6995fdad25c99",
+              "backend": "sqlite+redis-turns",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-rule-links-651ae82-memory",
+              "implementation": "python",
+              "commit": "651ae82c198066cc771ad2fcfdc6995fdad25c99",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-rule-links-651ae82-sqlite",
+              "implementation": "python",
+              "commit": "651ae82c198066cc771ad2fcfdc6995fdad25c99",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-8f49956-memory-current-thread",
+              "implementation": "rust",
+              "commit": "8f499568980516accf7c06f6110bdb4c451342b7",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-8f49956-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "8f499568980516accf7c06f6110bdb4c451342b7",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-8f49956-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "8f499568980516accf7c06f6110bdb4c451342b7",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-8f49956-postgres-current-thread",
+              "implementation": "rust",
+              "commit": "8f499568980516accf7c06f6110bdb4c451342b7",
+              "backend": "postgres",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-8f49956-memory-redis-executors-current-thread",
+              "implementation": "rust",
+              "commit": "8f499568980516accf7c06f6110bdb4c451342b7",
+              "backend": "memory+redis-executors",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-8f49956-memory-redis-executors-multi-thread-4",
+              "implementation": "rust",
+              "commit": "8f499568980516accf7c06f6110bdb4c451342b7",
+              "backend": "memory+redis-executors",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-8f49956-sqlite-redis-executors-current-thread",
+              "implementation": "rust",
+              "commit": "8f499568980516accf7c06f6110bdb4c451342b7",
+              "backend": "sqlite+redis-executors",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-8f49956-postgres-redis-executors-current-thread",
+              "implementation": "rust",
+              "commit": "8f499568980516accf7c06f6110bdb4c451342b7",
+              "backend": "postgres+redis-executors",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "RK-12.10.4-043",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.10.4-044",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-2007",
+        "note": "A call waiting for its room's lock (wait_for_lock) as the close starts, cut at once with nothing stored."
+      }
+    },
+    {
+      "id": "RK-12.10.4-045",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.10.4-046",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-2007",
+        "note": "A tool call held at its gate as the close starts: its end row failed, error kit_closed."
+      }
+    },
+    {
+      "id": "RK-12.10.4-047",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.10.4-048",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2007",
+        "note": "step: a turn's call that starts the kit's close on a task of its own."
+      }
+    },
+    {
+      "id": "RK-12.10.4-049",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.10.4-050",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2007",
+        "note": "step: a scripted source (source_provider) whose stop is held as the close runs."
+      }
+    },
+    {
+      "id": "RK-12.10.4-051",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-2007",
+        "note": "A call held in a BEFORE_BROADCAST hook as the close starts and let go within the grace: stored, delivered to no one."
+      }
+    },
+    {
+      "id": "RK-12.10.4-052",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.10.4-053",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.10.4-054",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2007",
+        "note": "step: a channel whose close starts work, which the close cuts at once."
+      }
+    },
+    {
+      "id": "RK-12.10.4-055",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.10.4-056",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2007",
+        "note": "step: work that ignores its cancellation, to bound the close's two unwinds."
+      }
+    },
+    {
+      "id": "RK-12.10.4-057",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.10.4-058",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.10.4-059",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2007",
+        "note": "step: work that ignores its cancellation and writes once the close returned."
+      }
+    },
+    {
+      "id": "RK-12.10.4-060",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.10.4-061",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.10.4-062",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.10.4-063",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.10.4-064",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.10.4-065",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-2007",
+        "note": "A call waiting for its room's lock as the close starts: blocked, reason kit_closed, nothing stored; a send_event refused the same way raises kit_closed."
+      }
+    },
+    {
+      "id": "RK-12.10.4-066",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-2007",
+        "note": "A commit held at a store_fault gate once its write landed, cut past a short close_grace_ms: its event read back by its id."
+      }
+    },
+    {
+      "id": "RK-12.10.4-067",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-2007",
+        "note": "A commit held at a store_fault gate once its write landed, cut past a short close_grace_ms: the inbound path returns the stored event, reason kit_closed."
+      }
+    },
+    {
+      "id": "RK-12.10.4-068",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-2007",
+        "note": "A cut commit whose read-back a store_fault fails: the call reported as not stored."
+      }
+    },
+    {
+      "id": "RK-12.10.4-069",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-2007",
+        "note": "Two closes in the background while a send holds, the first cancelled: the second returns once the shutdown ends, the send delivered."
+      }
+    },
+    {
+      "id": "RK-12.10.4-070",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-2007",
+        "note": "A second close after a successful one returns null; the failure half needs a channel whose close fails."
+      }
+    },
+    {
+      "id": "RK-12.10.4-071",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2007",
+        "note": "step: an error name for ShutdownCancelledError, and a step that cuts the shutdown itself."
+      }
+    },
+    {
+      "id": "RK-12.10.4-072",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.10.4-073",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2007",
+        "note": "step: a tool whose call closes the kit (a scripted tool runs no step)."
+      }
+    },
+    {
+      "id": "RK-12.10.4-074",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.10.4-075",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-2007",
+        "note": "A hook held at its gate within the close's grace, which then closes the kit itself: the shutdown stops waiting for it."
+      }
+    },
+    {
+      "id": "RK-12.10.4-076",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2007",
+        "note": "step: a tool whose cleanup closes the kit after the close cut its turn."
+      }
+    },
+    {
+      "id": "RK-12.10.4-077",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-2007",
+        "note": "A close from an agent's turn in a room's lane, a delivery queued behind it: that delivery dropped, kit_closed."
+      }
+    },
+    {
+      "id": "RK-12.10.4-078",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-2007",
+        "note": "An AFTER_BROADCAST hook that sends, then closes the kit: its send dropped."
+      }
+    },
+    {
+      "id": "RK-12.10.4-079",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.10.4-080",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2007",
+        "note": "step: a channel whose close calls the kit's close."
+      }
     },
     {
       "id": "RK-12.10.4-006",
