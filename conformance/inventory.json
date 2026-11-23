@@ -609,9 +609,9 @@
     },
     {
       "section": "12.2.3",
-      "sha256": "81c4bb49d1105222217a6701ea381caab53902f8a8818a86f0f1abfa00dec639",
+      "sha256": "24d5c0a0789fd5ebbcf8a18d8a39553a2264db87fcea970c3eac9a1a6c4a0a07",
       "classification": "normative",
-      "review": "Source inventory: Speaker Attribution from STT, split to one obligation per unit, each with its level (RMK-2022). RK-12.2.3-011, the refusal by a channel lacking the three parts, the introduction and the status note folded in; RK-12.2.3-012 to 017, what any STT provider must do with labels and segments (016, partial segments, may), 013, an unattributed speaker reported as null, its vendor spellings the provider's own (decision D2, RMK-2080); RK-12.2.3-018 to 041, revisions, the refusals, stream lifetime (022, should), the route into the room and the speaker-change event; RK-12.2.3-009, with the pipeline stage; RK-12.2.3-042 to 051, the opt-in naming from the pipeline stage (042, the option itself, may). Every unit carries its level."
+      "review": "Source inventory: Speaker Attribution from STT, split to one obligation per unit, each with its level (RMK-2022). RK-12.2.3-011, the refusal by a channel lacking the three parts, the introduction and the status note folded in; RK-12.2.3-012 to 017, what any STT provider must do with labels and segments (016, partial segments, may), 013, an unattributed speaker reported as null, its vendor spellings the provider's own (decision D2, RMK-2080); RK-12.2.3-018 to 041, revisions, the refusals, stream lifetime (022, should), the route into the room and the speaker-change event; RK-12.2.3-009, with the pipeline stage; RK-12.2.3-042 to 051, the opt-in naming from the pipeline stage (042, the option itself, may; 047, a null or empty speaker_id as nobody since RMK-2080). Every unit carries its level."
     },
     {
       "section": "12.2.4",
@@ -677,7 +677,7 @@
       "section": "12.3.9",
       "sha256": "78568b3ba2a3b5c72431c7ca6ff6d3b3660dc70ddd60c17b63192405ba1d99e9",
       "classification": "normative",
-      "review": "Source inventory: Diarization Provider, split to one obligation per unit, each with its level (RMK-2027): RK-12.3.9-003 to 009, the DiarizationProvider interface (its purpose folded in), DiarizationResult, the ON_SPEAKER_CHANGE hook on a change, an unattributed result (a null or empty speaker_id, the provider's own spellings no longer listed, D2, RMK-2080) being no change, that result still reaching the frame, the speaker label as the provider's, and mapping labels to participants, the integrator's (non_testable). Every unit carries its level."
+      "review": "Source inventory: Diarization Provider, split to one obligation per unit, each with its level (RMK-2027): RK-12.3.9-003 to 009, the DiarizationProvider interface (its purpose folded in), DiarizationResult (its speaker_id string | null since RMK-2080), the ON_SPEAKER_CHANGE hook on a change, an unattributed result (a null or empty speaker_id, the provider's own spellings no longer listed, D2, RMK-2080) being no change, that result still reaching the frame, the speaker label as the provider's, and mapping labels to participants, the integrator's (non_testable). Every unit carries its level."
     },
     {
       "section": "12.3.10",
@@ -893,7 +893,7 @@
       "section": "12.10.2",
       "sha256": "2299c9e890585713bbf529cf18f2e41ede3094b2a6ffb9f2c91566b98fb44891",
       "classification": "normative",
-      "review": "Source inventory: Data Models, split to one obligation per unit, each with its level (RMK-2068): the TrackKind, ConferenceTrack, ConferenceParticipant, ConferenceGrants, ConferenceAccess, BotSession and ConferenceCapability shapes (structural), each followed by the rules its prose states (the track's room, the provider attributes surfaced, the three asserted_metadata rules, the screen-share sound grant and kind, access opacity, joined_at's default, timezone and settling); participant identity correlation at its rules and sentences; resolution of the participant the framework did not name, provenance, the participant record's attribute key, provenance and bound, an arrival as no inbound message, and E2EE's per-conference request and media-access alternatives, one unit per sentence. RK-12.10.2-001 and 013 kept; RK-12.10.2-015 to 057 new; RK-12.10.2-058, a backend's own address keys read before the generic ones, added when that knowledge left the framework (D2, RMK-2080), and EGRESS_RECORDING out of 013 with the egress mode. Rationale is folded into the unit it explains. Every unit carries its level."
+      "review": "Source inventory: Data Models, split to one obligation per unit, each with its level (RMK-2068): the TrackKind, ConferenceTrack, ConferenceParticipant, ConferenceGrants, ConferenceAccess, BotSession and ConferenceCapability shapes (structural), each followed by the rules its prose states (the track's room, the provider attributes surfaced, the three asserted_metadata rules, the screen-share sound grant and kind, access opacity, joined_at's default, timezone and settling); participant identity correlation at its rules and sentences; resolution of the participant the framework did not name, provenance, the participant record's attribute key, provenance and bound, an arrival as no inbound message, and E2EE's per-conference request and media-access alternatives, one unit per sentence. RK-12.10.2-001 and 013 kept; RK-12.10.2-015 to 057 new; RK-12.10.2-058, a backend's own address keys read before the generic ones, added when that knowledge left the framework (D2, RMK-2080), and EGRESS_RECORDING out of 013, and egress recording out of 056's list of what E2EE makes unavailable, with the egress mode. Rationale is folded into the unit it explains. Every unit carries its level."
     },
     {
       "section": "12.10.3",

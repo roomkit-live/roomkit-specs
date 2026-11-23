@@ -2079,7 +2079,7 @@
     "RK-12.2.3-047": {
       "class": "step",
       "card": "RMK-2023",
-      "note": "step: voice.open pipeline naming option (S5b), voice diarization speakers with a null speaker_id: a voice attributed to nobody heard the longest; the message carries no label and sender_name \"Unknown speaker\"."
+      "note": "step: voice.open pipeline naming option (S5b), voice diarization speakers with a null or empty speaker_id: a voice attributed to nobody heard the longest; the message carries no label and sender_name \"Unknown speaker\"."
     },
     "RK-12.2.3-048": {
       "class": "step",
