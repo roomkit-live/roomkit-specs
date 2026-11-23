@@ -271,6 +271,151 @@
       "card": "RMK-2007",
       "note": "step: a channel whose close calls the kit's close."
     },
+    "RK-12.2-017": {
+      "class": "step",
+      "card": "RMK-2008",
+      "note": "step: voice stage trace (S3): no voice.open key sets the resampler, AEC, AGC, denoiser or recorder, and voice.read reports no stage a frame went through."
+    },
+    "RK-12.2-021": {
+      "class": "step",
+      "card": "RMK-2008",
+      "note": "step: voice TTS options (S7): no voice.open key sets a TTS that consumes context, and voice.read reports no recorded turn."
+    },
+    "RK-12.2-023": {
+      "class": "writable",
+      "card": "RMK-2008",
+      "note": "An AI channel with a whole response in the room a voice channel is opened in: a BEFORE_TTS hook and voice.read's synthesized texts show the delivered response spoken."
+    },
+    "RK-12.2-024": {
+      "class": "step",
+      "card": "RMK-2008",
+      "note": "step: interruption configuration and max_sentences (S1): no voice.open key sets a sentence budget."
+    },
+    "RK-12.2-025": {
+      "class": "step",
+      "card": "RMK-2008",
+      "note": "step: voice TTS options, a failing synthesis (S7): no voice.open key makes a session's synthesis or playback fail."
+    },
+    "RK-12.2-030": {
+      "class": "writable",
+      "card": "RMK-2008",
+      "note": "voice.open with several participants, voice.stream and voice.barge_in on one: voice.read gives each session every sentence; a session whose TTS fails needs step S7."
+    },
+    "RK-12.2-031": {
+      "class": "step",
+      "card": "RMK-2008",
+      "note": "step: interruption configuration and max_sentences (S1): no voice.open key sets a sentence budget."
+    },
+    "RK-12.2-036": {
+      "class": "writable",
+      "card": "RMK-2008",
+      "note": "voice.stream with an AFTER_TTS hook shows the text the session was sent, as BEFORE_TTS left it; the budget and failing-session cases need steps S1 and S7."
+    },
+    "RK-12.2-037": {
+      "class": "step",
+      "card": "RMK-2008",
+      "note": "step: voice.play and a gate holding a streamed reply mid-way (S12); say() cutting a playback is writable with voice.say and the playback gate."
+    },
+    "RK-12.2-038": {
+      "class": "step",
+      "card": "RMK-2008",
+      "note": "step: voice stage trace (S3): no voice.open key sets post-processors, a recorder or a resampler on the outbound path."
+    },
+    "RK-12.2-039": {
+      "class": "step",
+      "card": "RMK-2008",
+      "note": "step: voice stage trace with the AEC reference read (S3): no step reads where feed_reference is called."
+    },
+    "RK-12.2-041": {
+      "class": "step",
+      "card": "RMK-2008",
+      "note": "step: voice TTS options (S7): no voice.open key sets a TTS that consumes context."
+    },
+    "RK-12.4-022": {
+      "class": "writable",
+      "card": "RMK-2008",
+      "note": "realtime.end while a realtime.tool_call waits at its handler's gate: the call is reported once, cancelled; the channel's close and a conference's detach or unplug need steps S9 and conference detach."
+    },
+    "RK-12.4-023": {
+      "class": "step",
+      "card": "RMK-2008",
+      "note": "step: handler script actions (S9): no scripted handler ends its session, detaches its room or closes its channel or the kit."
+    },
+    "RK-12.4-024": {
+      "class": "step",
+      "card": "RMK-2008",
+      "note": "step: handler script actions (S9): a handler that ends its session from a task of its own."
+    },
+    "RK-12.4-025": {
+      "class": "step",
+      "card": "RMK-2008",
+      "note": "step: handler script actions (S9) and a scripted reasoning backend (S10) whose delegation holds the sparing call."
+    },
+    "RK-12.4-026": {
+      "class": "step",
+      "card": "RMK-2008",
+      "note": "step: an agent as a scripted reasoning backend (S10), whose AI channel's close cuts its turn."
+    },
+    "RK-12.4-027": {
+      "class": "step",
+      "card": "RMK-2008",
+      "note": "step: handler script actions (S9): a spared handler still running when its channel closes."
+    },
+    "RK-12.4-028": {
+      "class": "step",
+      "card": "RMK-2008",
+      "note": "step: handler script actions (S9): a handler that closes the kit."
+    },
+    "RK-12.4-029": {
+      "class": "step",
+      "card": "RMK-2008",
+      "note": "step: realtime.start with a connect gate or failure (S5)."
+    },
+    "RK-12.4-030": {
+      "class": "step",
+      "card": "RMK-2008",
+      "note": "step: realtime.read extensions with the observation order (S8): a report held while an ending arrives."
+    },
+    "RK-12.4-031": {
+      "class": "writable",
+      "card": "RMK-2008",
+      "note": "Two realtime.tool_call steps under one call_id while the first handler waits at its gate, then a third once its result went out: realtime.read and the reports show one result per call."
+    },
+    "RK-12.4-037": {
+      "class": "writable",
+      "card": "RMK-2008",
+      "note": "realtime.tool_call with an empty call_id, which Python reads as no id: one report, refused, and nothing in realtime.read's results."
+    },
+    "RK-12.4-038": {
+      "class": "step",
+      "card": "RMK-2008",
+      "note": "step: realtime.transcribe (S2) for the wait on the transcription, and Tool Search on a realtime channel (S7) for the call_tool transport; the ended session's part is writable."
+    },
+    "RK-12.4-040": {
+      "class": "writable",
+      "card": "RMK-2008",
+      "note": "realtime.tool_call with an empty name, which Python reads as no tool: refused before the gate and answered under its id."
+    },
+    "RK-12.4-044": {
+      "class": "step",
+      "card": "RMK-2008",
+      "note": "step: realtime.audio, a read of the audio input (S4): no step shows the input muted while a call runs."
+    },
+    "RK-12.4-046": {
+      "class": "step",
+      "card": "RMK-2008",
+      "note": "step: realtime.transcribe, a call recovered from the assistant's text (S2)."
+    },
+    "RK-12.4-047": {
+      "class": "step",
+      "card": "RMK-2008",
+      "note": "step: realtime.transcribe, a call recovered from the assistant's text (S2)."
+    },
+    "RK-12.4-048": {
+      "class": "step",
+      "card": "RMK-2008",
+      "note": "step: realtime.transcribe, a call recovered from the assistant's text (S2)."
+    },
     "RK-13.1-001": {
       "class": "step",
       "card": "RMK-1965",
