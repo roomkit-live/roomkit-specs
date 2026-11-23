@@ -111,6 +111,11 @@
       "card": "RMK-2076",
       "note": "step: conference.open options (tts and realtime) refused, and conference.plug of either onto the other refused."
     },
+    "RK-12.10.12-013": {
+      "class": "step",
+      "card": "RMK-2076",
+      "note": "step: conference.open options: tools with no handler refused, a human-input tool served before tool_handler, tool_timeout_seconds and tool_timeouts bounding a held handler; the record's shape and defaults are pinned by Python's public API snapshot (ConferenceRealtimeConfig)."
+    },
     "RK-12.10.12-014": {
       "class": "step",
       "card": "RMK-2076",
@@ -174,7 +179,7 @@
     "RK-12.10.12-029": {
       "class": "writable",
       "card": "RMK-2076",
-      "note": "conference.open with tools, a send_event that connects the model, then deliver to the conference: an on_realtime_text_injected hook fires."
+      "note": "conference.open with tools, a send_event that connects the model, then deliver to the conference: on_realtime_text_injected fires for the broadcast's injection, then for the delivery's (probed green); the hook's role and session also cover RK-12.10.12-026 in part."
     },
     "RK-12.10.12-030": {
       "class": "step",
@@ -289,7 +294,7 @@
     "RK-12.10.12-053": {
       "class": "writable",
       "card": "RMK-2076",
-      "note": "conference.tool_call naming an undeclared tool (refused before the handler), and a before_tool_use hook that blocks or edits the arguments; the ToolPolicy half needs a tool_policy option on conference.open."
+      "note": "conference.tool_call naming an undeclared tool (refused before the handler), and a before_tool_use hook that blocks or edits the arguments (probed green); the ToolPolicy check needs a tool_policy option on conference.open, and schema validation a declared schema, the runner declaring every tool with an empty object schema."
     },
     "RK-12.10.12-055": {
       "class": "step",
@@ -299,7 +304,7 @@
     "RK-12.10.12-056": {
       "class": "writable",
       "card": "RMK-2076",
-      "note": "conference.open with a tool whose handler result exceeds the bound of Section 21.5: the provider receives it truncated."
+      "note": "conference.open with a tool whose handler result exceeds the implementation's bound (Section 21.5 fixes no number; Python's is 16,384 characters): the provider receives it truncated (probed green with 20,013 characters)."
     },
     "RK-12.10.12-057": {
       "class": "step",
@@ -976,6 +981,11 @@
       "card": "RMK-2076",
       "note": "step: conference.fault: a mint whose backend call ignores its cancellation and returns after the detach: no credential returned."
     },
+    "RK-12.10.4-143": {
+      "class": "step",
+      "card": "RMK-2076",
+      "note": "step: conference.mint, conference.fault: a mint whose backend call outlives the detach's deadline; the refusal says it is no revocation (Python says so in its log and in the refusal's message, src/roomkit/channels/_conference_access.py)."
+    },
     "RK-12.10.4-144": {
       "class": "step",
       "card": "RMK-2076",
@@ -1382,9 +1392,9 @@
       "note": "conference.open, conference.join, conference.publish, then conference.mute, conference.unmute, conference.active_speaker and conference.connection_quality: the timeline holds no event for them."
     },
     "RK-12.10.7-007": {
-      "class": "step",
+      "class": "writable",
       "card": "RMK-2076",
-      "note": "step: conference ephemeral events in the subscribers expectation, after subscribe_room."
+      "note": "subscribe_room, then conference.mute, conference.unmute, conference.active_speaker and conference.connection_quality: the subscribers expectation reads the four ephemeral events; red on Python, which publishes none, and §8.4's type list names none (suspect RMK-2078)."
     },
     "RK-12.10.7-008": {
       "class": "step",
@@ -1551,12 +1561,7 @@
       "card": "RMK-2076",
       "note": "step: conference.feed, a websocket binding: the transcription delivered to it."
     },
-    "RK-12.10.9-003": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.open options (tts), send_event from a websocket binding, conference.read: the message published on the bot track."
-    },
-    "RK-12.10.9-006": {
+    "RK-12.10.9-005": {
       "class": "step",
       "card": "RMK-2076",
       "note": "step: conference.join metadata (an asserted caller number), a scripted identity resolver: the number resolved on arrival."
