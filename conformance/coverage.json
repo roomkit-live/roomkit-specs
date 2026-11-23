@@ -7239,11 +7239,14 @@
       "section": "12.11",
       "title": "Room Media Recording",
       "review": "normative",
-      "requirements": 7,
+      "requirements": 52,
       "mapping": {
-        "unmapped": 7
+        "unmapped": 52
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "step": 18,
+        "writable": 6
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "recording/a-recorder-joins-the-live-feed-after-consent",
@@ -7254,11 +7257,13 @@
       "section": "12.12",
       "title": "Capture Sources",
       "review": "normative",
-      "requirements": 7,
+      "requirements": 25,
       "mapping": {
-        "unmapped": 7
+        "unmapped": 25
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "step": 3
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -35142,88 +35147,601 @@
       "links": []
     },
     {
-      "id": "RK-12.11-001",
+      "id": "RK-12.11-008",
       "section": "12.11",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.11-002",
+      "id": "RK-12.11-009",
       "section": "12.11",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.11-003",
+      "id": "RK-12.11-010",
       "section": "12.11",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.11-004",
+      "id": "RK-12.11-011",
       "section": "12.11",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.11-005",
+      "id": "RK-12.11-012",
       "section": "12.11",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.11-006",
+      "id": "RK-12.11-013",
+      "section": "12.11",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2066",
+        "note": "step: create_room with recorders (R1): the bound recorders start before the room is written, all or nothing."
+      }
+    },
+    {
+      "id": "RK-12.11-014",
+      "section": "12.11",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2066",
+        "note": "step: create_room with recorders (R1), one a scripted recorder that refuses its start (R2): the recordings already started for the room are stopped."
+      }
+    },
+    {
+      "id": "RK-12.11-015",
+      "section": "12.11",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2066",
+        "note": "step: create_room with recorders (R1), one refusing its start (R2): create_room fails with the refusal and get_room finds no room."
+      }
+    },
+    {
+      "id": "RK-12.11-016",
+      "section": "12.11",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2066",
+        "note": "step: create_room with recorders (R1) and a store_fault on create_room: the recordings started for the room are stopped."
+      }
+    },
+    {
+      "id": "RK-12.11-017",
+      "section": "12.11",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2066",
+        "note": "step: create_room with recorders (R1) on an id a recording room already holds: that room's recorder still receives its feed."
+      }
+    },
+    {
+      "id": "RK-12.11-018",
+      "section": "12.11",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2066",
+        "note": "step: create_room with recorders (R1): ON_RECORDING_STARTED fires for each once the room exists, and the recorder reads nothing before a track is added."
+      }
+    },
+    {
+      "id": "RK-12.11-019",
+      "section": "12.11",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-2066",
+        "note": "recording.start on a missing room and on a closed one (close_room first): room_not_found and room_closed, no ON_RECORDING_STARTED; another organization's room also needs the recording calls forwarding organization_id, which the Python runner drops."
+      }
+    },
+    {
+      "id": "RK-12.11-020",
+      "section": "12.11",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2066",
+        "note": "step: recording.start with several recorders, one a scripted recorder that refuses its start (R2): none is started and no ON_RECORDING_STARTED fires."
+      }
+    },
+    {
+      "id": "RK-12.11-021",
       "section": "12.11",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.11-007",
+      "id": "RK-12.11-022",
       "section": "12.11",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.12-001",
+      "id": "RK-12.11-023",
+      "section": "12.11",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.11-024",
+      "section": "12.11",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-2066",
+        "note": "recording.start, then voice.open joining a participant to the room and voice.feed: recording.read shows the session's frames; the join's scope is not shown."
+      }
+    },
+    {
+      "id": "RK-12.11-025",
+      "section": "12.11",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-2066",
+        "note": "voice.open before recording.start, then voice.feed: recording.read shows none of the session's frames; joining again needs voice.leave (V5)."
+      }
+    },
+    {
+      "id": "RK-12.11-026",
+      "section": "12.11",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2066",
+        "note": "step: restart_process, and the recording calls naming kit, an argument README does not give them: recording.start on the restarted process announces ON_RECORDING_STARTED again (a second start on one kit shows no restart)."
+      }
+    },
+    {
+      "id": "RK-12.11-027",
+      "section": "12.11",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.11-028",
+      "section": "12.11",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.11-029",
+      "section": "12.11",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.11-030",
+      "section": "12.11",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2066",
+        "note": "step: the recording calls forwarding organization_id, which the Python runner drops: recording.stop naming another organization is refused and the recorder keeps receiving its feed."
+      }
+    },
+    {
+      "id": "RK-12.11-031",
+      "section": "12.11",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-2066",
+        "note": "recording.start, store.delete_room, then recording.stop: the recording's result is returned."
+      }
+    },
+    {
+      "id": "RK-12.11-032",
+      "section": "12.11",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2066",
+        "note": "step: the recording calls forwarding organization_id, which the Python runner drops: recording.stop naming another organization fails with room_not_found."
+      }
+    },
+    {
+      "id": "RK-12.11-033",
+      "section": "12.11",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-2066",
+        "note": "recording.stop on a room never created, or deleted with store.delete_room while recording nothing: room_not_found."
+      }
+    },
+    {
+      "id": "RK-12.11-034",
+      "section": "12.11",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2066",
+        "note": "step: the recording calls forwarding organization_id, which the Python runner drops: after store.delete_room, recording.stop naming another organization is refused and the recorder keeps receiving its feed."
+      }
+    },
+    {
+      "id": "RK-12.11-035",
+      "section": "12.11",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.11-036",
+      "section": "12.11",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2066",
+        "note": "step: recording.list (R3) and the recording calls forwarding organization_id, which the Python runner drops: listing a room's recordings and recording.track naming another organization are refused, a gone room's recordings listed and fed for their own."
+      }
+    },
+    {
+      "id": "RK-12.11-037",
+      "section": "12.11",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.11-038",
+      "section": "12.11",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2066",
+        "note": "step: the description of the tracks a recorder was told (R4): a voice session's track names its participant_id."
+      }
+    },
+    {
+      "id": "RK-12.11-039",
+      "section": "12.11",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.11-040",
+      "section": "12.11",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.11-041",
+      "section": "12.11",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.11-042",
+      "section": "12.11",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.11-043",
+      "section": "12.11",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.11-044",
+      "section": "12.11",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.11-045",
+      "section": "12.11",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.11-046",
+      "section": "12.11",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.11-047",
+      "section": "12.11",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.11-048",
+      "section": "12.11",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.11-049",
+      "section": "12.11",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.11-050",
+      "section": "12.11",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.11-051",
+      "section": "12.11",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-2066",
+        "note": "two recording.feed calls on one track: recording.read shows both chunks in order; that the calls never overlap is shown by native tests of the conference writer only, and room recorders run inline (RMK-2065)."
+      }
+    },
+    {
+      "id": "RK-12.11-052",
+      "section": "12.11",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.11-053",
+      "section": "12.11",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.11-054",
+      "section": "12.11",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2066",
+        "note": "step: conference.open with recording and a recorder whose calls a gate holds (LINK-P6U-3: conference.open options, recording.read per conference track): with the recorder's stop held, detach_channel ends and the bot leaves; room recordings are unbounded (RMK-2065)."
+      }
+    },
+    {
+      "id": "RK-12.11-055",
+      "section": "12.11",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2066",
+        "note": "step: conference.open with recording and a recorder whose calls a gate holds (LINK-P6U-3: conference.open options, recording.read per conference track): with the finalization held past its budget, ON_RECORDING_STOPPED gives that track no url and the channel's close names the recording unfinished."
+      }
+    },
+    {
+      "id": "RK-12.11-056",
+      "section": "12.11",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.11-057",
+      "section": "12.11",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2066",
+        "note": "step: conference.open with recording and a recorder whose calls a gate holds (LINK-P6U-3: conference.open options, recording.read per conference track), and a read of the recorder's calls: close() is not called while a held call runs."
+      }
+    },
+    {
+      "id": "RK-12.11-058",
+      "section": "12.11",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2066",
+        "note": "step: conference.open with recording and a recorder whose calls a gate holds (LINK-P6U-3: conference.open options, recording.read per conference track): the bot leaves before the wait to release the recorder ends."
+      }
+    },
+    {
+      "id": "RK-12.11-059",
+      "section": "12.11",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2066",
+        "note": "step: conference.open with recording and a recorder whose calls a gate holds (LINK-P6U-3: conference.open options, recording.read per conference track): with a call held past the release wait, the recorder is not closed and the channel's close fails naming it."
+      }
+    },
+    {
+      "id": "RK-12.12-008",
       "section": "12.12",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.12-002",
+      "id": "RK-12.12-009",
       "section": "12.12",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.12-003",
+      "id": "RK-12.12-010",
       "section": "12.12",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.12-004",
+      "id": "RK-12.12-011",
       "section": "12.12",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.12-005",
+      "id": "RK-12.12-012",
       "section": "12.12",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.12-006",
+      "id": "RK-12.12-013",
       "section": "12.12",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.12-007",
+      "id": "RK-12.12-014",
       "section": "12.12",
       "mapping": "unmapped",
       "links": []
+    },
+    {
+      "id": "RK-12.12-015",
+      "section": "12.12",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.12-016",
+      "section": "12.12",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.12-017",
+      "section": "12.12",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.12-018",
+      "section": "12.12",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.12-019",
+      "section": "12.12",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.12-020",
+      "section": "12.12",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.12-021",
+      "section": "12.12",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.12-022",
+      "section": "12.12",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.12-023",
+      "section": "12.12",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.12-024",
+      "section": "12.12",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.12-025",
+      "section": "12.12",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.12-026",
+      "section": "12.12",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.12-027",
+      "section": "12.12",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.12-028",
+      "section": "12.12",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.12-029",
+      "section": "12.12",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.12-030",
+      "section": "12.12",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2066",
+        "note": "step: a scripted capture source and a transport that subscribes with the mark passed in realtime.start's metadata (CS1, feature capture_source proposed), and the audio the provider receives (S4): the frames captured from the mark reach the provider after the handshake, ahead of the live ones."
+      }
+    },
+    {
+      "id": "RK-12.12-031",
+      "section": "12.12",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2066",
+        "note": "step: CS1 and S4, with a realtime start whose handshake fails (S5): no replayed frame reaches the provider."
+      }
+    },
+    {
+      "id": "RK-12.12-032",
+      "section": "12.12",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2066",
+        "note": "step: CS1 and S4: the frames captured from the mark, the wake word's included, reach the provider whole."
+      }
     },
     {
       "id": "RK-13.1-001",
