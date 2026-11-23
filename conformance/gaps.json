@@ -1619,7 +1619,7 @@
     "RK-12.7.1-004": {
       "class": "writable",
       "card": "RMK-2054",
-      "note": "voice.open with bridge, transcripts, a vad script and a blocking ON_TRANSCRIPTION hook: the speaker's frames still reach the other participant."
+      "note": "voice.open with bridge, transcripts, a vad script and an ON_TRANSCRIPTION hook whose result is block: the speaker's frames still reach the other participant."
     },
     "RK-12.7.1-005": {
       "class": "writable",
@@ -1667,9 +1667,9 @@
       "note": "step: an outbound stage or recorder tap in voice.open (V4), visible on the bridged frame."
     },
     "RK-12.7.3-008": {
-      "class": "step",
+      "class": "writable",
       "card": "RMK-2054",
-      "note": "step: a held STT recognition (no audit family): frames keep reaching the other participant while the transcription waits."
+      "note": "voice.open with bridge, transcripts and a vad script: an ON_TRANSCRIPTION hook held at a gate leaves the frames reaching the listener, and a BEFORE_BRIDGE_AUDIO hook held at a gate leaves ON_TRANSCRIPTION firing."
     },
     "RK-12.7.3-010": {
       "class": "step",
@@ -1812,9 +1812,9 @@
       "note": "voice.open with bridge, transcripts and a vad script: ON_TRANSCRIPTION fires for the bridged speech."
     },
     "RK-12.7.6-010": {
-      "class": "step",
+      "class": "writable",
       "card": "RMK-2054",
-      "note": "step: a pipeline recorder in voice.open (V4): ON_RECORDING_STARTED and ON_RECORDING_STOPPED fire and the recording holds the bridged audio."
+      "note": "recording.start on the room, then voice.open with bridge: ON_RECORDING_STARTED and ON_RECORDING_STOPPED fire and recording.read holds the bridged speaker's frames; the pipeline recorder needs step V4."
     },
     "RK-12.7.6-011": {
       "class": "writable",
@@ -1822,9 +1822,9 @@
       "note": "voice.open with bridge and an on_session_started hook: the hook fires for each joined participant."
     },
     "RK-12.7.6-012": {
-      "class": "step",
+      "class": "writable",
       "card": "RMK-2054",
-      "note": "step: a bridge hook held at a gate while the next frame is fed (no audit family): frames forwarded in order (suspect RMK-2050)."
+      "note": "voice.open with bridge and a before_bridge_audio reaction held at a gate (gate, voice.feed in the background, wait_for, open): a frame fed while the first is held is forwarded after it; red on Python, which forwards the later frame first (suspect RMK-2050)."
     },
     "RK-12.7.6-013": {
       "class": "phase6",

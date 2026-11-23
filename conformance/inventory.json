@@ -759,7 +759,7 @@
     },
     {
       "section": "12.7.2",
-      "sha256": "8811cb1c139b1d543c8168a5150d15cf901e3b3608f6543512b2649b0d8ab857",
+      "sha256": "a206f938aa0c134b727abd75e9acd218fe95e7daf3b46a593ea61eef511d7705",
       "classification": "normative",
       "review": "Source inventory: AudioBridge, split to one obligation per unit, each with its level (RMK-2048): RK-12.7.2-005, the AudioBridge interface (structural); RK-12.7.2-006 to 008, the AudioBridgeConfig fields enabled, max_participants and mixing_strategy with their defaults (structural; the config block is cut at its fields by closing and reopening its fence, four bare fence lines); RK-12.7.2-009 to 011, session management (join and leave, grouping by room_id, forwarding at once); RK-12.7.2-012 to 014, audio forwarding (to every other session, the forward and the mix strategies); RK-12.7.2-004, thread safety. Every unit carries its level."
     },

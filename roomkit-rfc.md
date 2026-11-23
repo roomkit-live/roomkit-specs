@@ -14731,7 +14731,7 @@ each participant a mix of everyone else's audio (excluding their own, to
 prevent echo).
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.7.2-004", "kind": "behavior", "applies": "§12.7.2 AudioBridge, the voice feature (audio bridging), thread safety: forward() is called from audio callback threads, and every bridge operation is thread-safe. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+<!-- rfc: {"id": "RK-12.7.2-004", "kind": "behavior", "applies": "§12.7.2 AudioBridge, the voice feature (audio bridging), thread safety: every bridge operation is thread-safe (forward() being called from audio callback threads, in the context of on_audio_received: the calling context, informative, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Thread safety:** `forward()` is called from audio callback threads (same
 context as `on_audio_received`). All bridge operations MUST be thread-safe.
 <!-- /rfc -->
