@@ -1,0 +1,148 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "delivery/an-observer-s-close-cuts-the-send-of-the-work-that-fired-it",
+  "title": "An ASYNC observer that closes the kit does not spare the work that fired it: that work's send gets the grace, then is cut, failed kit_closed",
+  "rules": [
+    "§12.10.4"
+  ],
+  "requirements": [
+    "RK-12.10.4-079"
+  ],
+  "notes": "Python: tests/test_kit_close_doors.py::test_a_close_from_a_hook_cuts_another_call_s_send_under_way, here with the observer of One's own BEFORE_BROADCAST. The observer holds at its gate until One's send holds at a gate no step opens; let go, it closes the kit. The close waits for One's send for its grace (100 ms, which no successful work races), then cuts it: One's call reports the send failed, kit_closed, and the observer's close returns null.",
+  "setup": {
+    "kit": {
+      "close_grace_ms": 100
+    },
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms"
+      },
+      {
+        "id": "ws",
+        "type": "websocket",
+        "deliver": [
+          {
+            "when": {
+              "text": "One"
+            },
+            "gate": "sending"
+          }
+        ]
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          },
+          {
+            "channel_id": "ws"
+          }
+        ]
+      }
+    ],
+    "hooks": [
+      {
+        "name": "quit",
+        "trigger": "before_broadcast",
+        "execution": "async",
+        "reactions": [
+          {
+            "when": {
+              "text": "One"
+            },
+            "gate": "go",
+            "do": [
+              {
+                "call": "close",
+                "as": "closed"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "u",
+        "content": {
+          "type": "text",
+          "body": "One"
+        }
+      },
+      "background": true,
+      "as": "one"
+    },
+    {
+      "wait_for": "sending"
+    },
+    {
+      "wait_for": "go"
+    },
+    {
+      "open": "go"
+    },
+    {
+      "await": "one",
+      "expect": {
+        "result": {
+          "event": {
+            "content": {
+              "body": "One"
+            }
+          },
+          "cancellation_reason": "kit_closed",
+          "delivery_results": {
+            "ws": {
+              "status": "failed",
+              "error": {
+                "code": "kit_closed",
+                "retryable": true
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "idle": true
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": [
+        {
+          "content": {
+            "body": "One"
+          }
+        }
+      ]
+    },
+    "deliveries": {
+      "room-1": {
+        "ws": [
+          {
+            "content": {
+              "body": "One"
+            }
+          }
+        ]
+      }
+    },
+    "actions": {
+      "closed": [
+        {
+          "result": null
+        }
+      ]
+    }
+  }
+}
