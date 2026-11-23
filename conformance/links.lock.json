@@ -4131,6 +4131,21 @@
     "RK-12.10.4-074": {
       "executor-close/a-turn-closing-the-kit-sees-its-close-return": "9b8694f4c448abdf6ded61184817a9ae0f0bcb81215a1a78617c9417e4040231"
     },
+    "RK-12.11-021": {
+      "recording/a-recorder-joins-the-live-feed-after-consent": "aaf543dd04a03870fc2083caa63bc44c528100ce4c7084855377c41bf762556d"
+    },
+    "RK-12.11-022": {
+      "recording/a-recorder-joins-the-live-feed-after-consent": "7ba6dd7a3dec301acdc1221f32f1185fcae25aa6e101eada8e3c6ad9bc8b1698"
+    },
+    "RK-12.11-023": {
+      "recording/a-recorder-joins-the-live-feed-after-consent": "dff7d51a483501be258848929b5aa04ccc6d90a6195b32e9fd1afb3753cc2c25"
+    },
+    "RK-12.11-028": {
+      "recording/a-stopped-recorder-announces-its-file": "3863212fb691eb5835b14b631351259be7788a69864d717a63eb15982eed2068"
+    },
+    "RK-12.11-029": {
+      "recording/a-stopped-recorder-announces-its-file": "c301ec17cc04f9c65291cdf6e5329e8884bc6c2d7a1c46528b5fb3960f411644"
+    },
     "RK-12.2-018": {
       "voice/speech-edges-bracket-an-utterance": "81c71c90e131e0946b2c512a4df125e6f3e9ffb4bbc9977d05fe1b553e5a37a1"
     },
