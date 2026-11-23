@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "rfc_sha256": "d5cf4e406885374c4c6110bdcd3c57e5e180e59480f6bba21db3c3fdd0d3d8f7",
+  "rfc_sha256": "8ab233ede0b6d31b15a8197985fe7a16ac6f20ee8da6007c2533b516875183e0",
   "corpus_sha256": "b6be90365c506d3356efc99c81d6387592780678f23506e174c78dae3ca578be",
   "python_commit": "651ae82c198066cc771ad2fcfdc6995fdad25c99",
   "scenario_count": 3393,
@@ -6361,7 +6361,7 @@
       },
       "decided_gaps": {
         "phase6": 1,
-        "step": 32,
+        "step": 31,
         "writable": 1
       },
       "unannotated_keyword_lines": [],
@@ -6609,12 +6609,12 @@
       "section": "12.4",
       "title": "Realtime Voice Channel (Speech-to-Speech)",
       "review": "normative",
-      "requirements": 112,
+      "requirements": 102,
       "mapping": {
-        "unmapped": 112
+        "unmapped": 102
       },
       "decided_gaps": {
-        "step": 52,
+        "step": 43,
         "writable": 12
       },
       "unannotated_keyword_lines": [],
@@ -6689,12 +6689,12 @@
       "section": "12.4.1",
       "title": "Full-Duplex Providers and Reasoning Delegation",
       "review": "normative",
-      "requirements": 75,
+      "requirements": 74,
       "mapping": {
-        "unmapped": 75
+        "unmapped": 74
       },
       "decided_gaps": {
-        "step": 45,
+        "step": 44,
         "writable": 1
       },
       "unannotated_keyword_lines": [],
@@ -6916,12 +6916,12 @@
       "section": "12.8.3",
       "title": "VideoBackend Interface",
       "review": "normative",
-      "requirements": 12,
+      "requirements": 10,
       "mapping": {
-        "unmapped": 12
+        "unmapped": 10
       },
       "decided_gaps": {
-        "step": 7
+        "step": 5
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
@@ -7077,12 +7077,12 @@
       "section": "12.10.2",
       "title": "Data Models",
       "review": "normative",
-      "requirements": 45,
+      "requirements": 46,
       "mapping": {
-        "unmapped": 45
+        "unmapped": 46
       },
       "decided_gaps": {
-        "step": 25,
+        "step": 26,
         "writable": 1
       },
       "unannotated_keyword_lines": [],
@@ -7192,12 +7192,12 @@
       "section": "12.10.8",
       "title": "Recording",
       "review": "normative",
-      "requirements": 33,
+      "requirements": 29,
       "mapping": {
-        "unmapped": 33
+        "unmapped": 29
       },
       "decided_gaps": {
-        "step": 25
+        "step": 23
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
@@ -11328,7 +11328,6 @@
       },
       "decided_gaps": {
         "phase6": 3,
-        "step": 1,
         "writable": 2
       },
       "unannotated_keyword_lines": [],
@@ -28267,12 +28266,7 @@
       "id": "RK-12.2.3-013",
       "section": "12.2.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2023",
-        "note": "vendor wire: leaves the RFC in P6-V (D2)"
-      }
+      "links": []
     },
     {
       "id": "RK-12.2.3-014",
@@ -28626,7 +28620,7 @@
       "gap": {
         "class": "step",
         "card": "RMK-2023",
-        "note": "step: voice.open pipeline naming option (S5b): a stage result unknown heard the longest; the message carries no label and sender_name \"Unknown speaker\"."
+        "note": "step: voice.open pipeline naming option (S5b), voice diarization speakers with a null speaker_id: a voice attributed to nobody heard the longest; the message carries no label and sender_name \"Unknown speaker\"."
       }
     },
     {
@@ -29513,7 +29507,7 @@
       "gap": {
         "class": "step",
         "card": "RMK-2034",
-        "note": "vendor wire: leaves the RFC in P6-V (D2)"
+        "note": "step: voice diarization speakers with a null speaker_id, which the scenario format takes only as a string: no ON_SPEAKER_CHANGE, the last speaker kept."
       }
     },
     {
@@ -31140,94 +31134,6 @@
       }
     },
     {
-      "id": "RK-12.4-082",
-      "section": "12.4",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2045",
-        "note": "vendor wire: leaves the RFC in P6-V (D2)"
-      }
-    },
-    {
-      "id": "RK-12.4-083",
-      "section": "12.4",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2045",
-        "note": "vendor wire: leaves the RFC in P6-V (D2)"
-      }
-    },
-    {
-      "id": "RK-12.4-084",
-      "section": "12.4",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2045",
-        "note": "vendor wire: leaves the RFC in P6-V (D2)"
-      }
-    },
-    {
-      "id": "RK-12.4-085",
-      "section": "12.4",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2045",
-        "note": "vendor wire: leaves the RFC in P6-V (D2)"
-      }
-    },
-    {
-      "id": "RK-12.4-086",
-      "section": "12.4",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2045",
-        "note": "vendor wire: leaves the RFC in P6-V (D2)"
-      }
-    },
-    {
-      "id": "RK-12.4-087",
-      "section": "12.4",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2045",
-        "note": "vendor wire: leaves the RFC in P6-V (D2)"
-      }
-    },
-    {
-      "id": "RK-12.4-088",
-      "section": "12.4",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2045",
-        "note": "vendor wire: leaves the RFC in P6-V (D2)"
-      }
-    },
-    {
-      "id": "RK-12.4-089",
-      "section": "12.4",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2045",
-        "note": "vendor wire: leaves the RFC in P6-V (D2)"
-      }
-    },
-    {
       "id": "RK-12.4-090",
       "section": "12.4",
       "mapping": "unmapped",
@@ -31374,23 +31280,6 @@
     },
     {
       "id": "RK-12.4-110",
-      "section": "12.4",
-      "mapping": "unmapped",
-      "links": []
-    },
-    {
-      "id": "RK-12.4-111",
-      "section": "12.4",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2045",
-        "note": "vendor wire: leaves the RFC in P6-V (D2)"
-      }
-    },
-    {
-      "id": "RK-12.4-112",
       "section": "12.4",
       "mapping": "unmapped",
       "links": []
@@ -31607,17 +31496,6 @@
       "section": "12.4.1",
       "mapping": "unmapped",
       "links": []
-    },
-    {
-      "id": "RK-12.4.1-016",
-      "section": "12.4.1",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2049",
-        "note": "vendor wire: leaves the RFC in P6-V (D2)"
-      }
     },
     {
       "id": "RK-12.4.1-017",
@@ -33463,28 +33341,6 @@
       "links": []
     },
     {
-      "id": "RK-12.8.3-005",
-      "section": "12.8.3",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2062",
-        "note": "named backend: leaves the RFC in P6-V (D8)"
-      }
-    },
-    {
-      "id": "RK-12.8.3-006",
-      "section": "12.8.3",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2062",
-        "note": "named backend: leaves the RFC in P6-V (D8)"
-      }
-    },
-    {
       "id": "RK-12.8.3-003",
       "section": "12.8.3",
       "mapping": "unmapped",
@@ -34395,6 +34251,17 @@
         "class": "step",
         "card": "RMK-2070",
         "note": "step: conference.open options (identity_address_keys), conference.join metadata: keys an integrator configures read in place of the defaults; the documented keys are by review."
+      }
+    },
+    {
+      "id": "RK-12.10.2-058",
+      "section": "12.10.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2070",
+        "note": "step: conference.open on a backend that declares address_keys, conference.join metadata: the backend's key read before a generic one, and a key no backend declares read by none."
       }
     },
     {
@@ -37391,29 +37258,6 @@
       }
     },
     {
-      "id": "RK-12.10.8-009",
-      "section": "12.10.8",
-      "mapping": "unmapped",
-      "links": []
-    },
-    {
-      "id": "RK-12.10.8-010",
-      "section": "12.10.8",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "planned feature: P6-V proposes to remove it"
-      }
-    },
-    {
-      "id": "RK-12.10.8-011",
-      "section": "12.10.8",
-      "mapping": "unmapped",
-      "links": []
-    },
-    {
       "id": "RK-12.10.8-012",
       "section": "12.10.8",
       "mapping": "unmapped",
@@ -37655,17 +37499,6 @@
         "class": "step",
         "card": "RMK-2076",
         "note": "step: conference.publish with no frame, recording.read per conference track: no recording, no hook."
-      }
-    },
-    {
-      "id": "RK-12.10.8-036",
-      "section": "12.10.8",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "planned feature: P6-V proposes to remove it"
       }
     },
     {
@@ -54077,12 +53910,7 @@
       "id": "RK-A.12-014",
       "section": "A.12",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1961",
-        "note": "named backend: leaves the RFC in P6-V (D8)"
-      }
+      "links": []
     },
     {
       "id": "RK-A.12-015",
