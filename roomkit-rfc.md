@@ -17666,9 +17666,9 @@ Implementations that support conferencing MUST:
   configuration on E2EE conferences (Section 12.10.2).
 - Expose bot presence, `hidden` status, and whether STT/vision/recording is
   active, so integrators can satisfy their own disclosure obligations
-  (Section 17.7). The specification mandates no disclosure policy.
+  (Section 17.7). The specification mandates no disclosure policy.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.11-003", "kind": "behavior", "applies": "§12.10.11 Conformance, the conference feature: an implementation supports vision analysis on VIDEO and SCREEN_SHARE tracks, a Planned feature of §12.10.4 (the remaining SHOULD, MAY and speech-to-speech checklists, which restate obligations stated, levelled and counted in §12.10.4, §12.10.5, §12.10.7, §12.10.8, §12.10.9, §12.10.12 and §12.4, folded in and not counted twice). Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 
-Implementations SHOULD:<!-- /rfc --><!-- rfc: {"id": "RK-12.10.11-003", "kind": "behavior", "applies": "§12.10.11 Conformance, the conference feature: an implementation supports vision analysis on VIDEO and SCREEN_SHARE tracks, Planned (§12.10.4 Per-track video lanes) (the remaining SHOULD, MAY and speech-to-speech checklists, which restate obligations stated, levelled and counted in §12.10.4, §12.10.5, §12.10.7, §12.10.8, §12.10.9, §12.10.12 and §12.4, folded in and not counted twice). Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
+Implementations SHOULD:
 
 - Support vision analysis on VIDEO and SCREEN_SHARE tracks.
 - Surface active speaker and connection quality as ephemeral events.

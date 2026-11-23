@@ -945,7 +945,7 @@
     },
     {
       "section": "12.10.11",
-      "sha256": "e01ff577dbbe5221ca88293c395c57063f662844e0b4017a9e201fdf12b0009c",
+      "sha256": "868ab040a52bd5395fb529fcd5ff9cbc4765f504279fbf63f6c85b21da5975fa",
       "classification": "normative",
       "review": "Source inventory: Conformance, split to one obligation per unit, each with its level (RMK-2075): RK-12.10.11-002, a may, conference support as OPTIONAL within Conformance Level 3 (the MUST checklist folded in); RK-12.10.11-003, a should, vision analysis on video and screen-share tracks, Planned (the remaining checklists folded in). The folded checklists restate obligations stated, levelled and counted in §12.10.1 to §12.10.12, §12.4 and §17.7, and are not counted twice. Every unit carries its level."
     },
