@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "rfc_sha256": "8ab233ede0b6d31b15a8197985fe7a16ac6f20ee8da6007c2533b516875183e0",
+  "rfc_sha256": "ccc83193aa643c7c3d6d4cad79d81fc5cc52dec5d544de7cb06a44d953e00c9d",
   "sections": [
     {
       "section": "0",
@@ -826,7 +826,7 @@
       "section": "12.2.3",
       "title": "Speaker Attribution from STT",
       "line": 11770,
-      "sha256": "81c4bb49d1105222217a6701ea381caab53902f8a8818a86f0f1abfa00dec639",
+      "sha256": "56a1596daea0f2c37b720a586c3ca0cb2f193cd2fbb6439765721d7f4465a3af",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
     },
@@ -26649,12 +26649,12 @@
     {
       "id": "RK-12.2.3-047",
       "kind": "behavior",
-      "applies": "§12.2.3 From the pipeline stage, step 2, the voice feature, where an implementation offers the option: a result attributing the audio to nobody (a null speaker_id) counts as a null speaker, and heard the longest gives the transcript sender_name \"Unknown speaker\". Enclosing capability conditions and §26 levels still apply.",
+      "applies": "§12.2.3 From the pipeline stage, step 2, the voice feature, where an implementation offers the option: a result attributing the audio to nobody (a null or empty speaker_id) counts as a null speaker, and heard the longest gives the transcript sender_name \"Unknown speaker\". Enclosing capability conditions and §26 levels still apply.",
       "level": "must",
       "section": "12.2.3",
       "line": 11906,
-      "text": "A\n   result that attributes the audio to nobody (a null `speaker_id`) counts as\n   a null speaker; if heard the longest, the transcript's `sender_name` is\n   `\"Unknown speaker\"`.",
-      "sha256": "51e9cd5d46490d8f6558e414048269e4711cbad8266fdcd90c82b7c6e8d16797"
+      "text": "A\n   result that attributes the audio to nobody (a null or empty `speaker_id`)\n   counts as a null speaker; if heard the longest, the transcript's\n   `sender_name` is `\"Unknown speaker\"`.",
+      "sha256": "b238f41e823fde36a0a0b8dc4226b7360a6abab7848f1adefc77cb9817dc94b4"
     },
     {
       "id": "RK-12.2.3-048",

@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "rfc_sha256": "8ab233ede0b6d31b15a8197985fe7a16ac6f20ee8da6007c2533b516875183e0",
+  "rfc_sha256": "ccc83193aa643c7c3d6d4cad79d81fc5cc52dec5d544de7cb06a44d953e00c9d",
   "corpus_sha256": "b6be90365c506d3356efc99c81d6387592780678f23506e174c78dae3ca578be",
   "python_commit": "651ae82c198066cc771ad2fcfdc6995fdad25c99",
   "scenario_count": 3393,
@@ -28620,7 +28620,7 @@
       "gap": {
         "class": "step",
         "card": "RMK-2023",
-        "note": "step: voice.open pipeline naming option (S5b), voice diarization speakers with a null speaker_id: a voice attributed to nobody heard the longest; the message carries no label and sender_name \"Unknown speaker\"."
+        "note": "step: voice.open pipeline naming option (S5b), voice diarization speakers with a null or empty speaker_id: a voice attributed to nobody heard the longest; the message carries no label and sender_name \"Unknown speaker\"."
       }
     },
     {
