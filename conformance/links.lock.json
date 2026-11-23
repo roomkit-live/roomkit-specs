@@ -4064,14 +4064,16 @@
       "ai-external-handler/close-during-decision-drains-cancelled-report-streaming": "d66f43d8082aacd698839bdb0a6de37c2926a642e9c2814d15fd8f89f369b504",
       "delivery/a-delivery-whose-turn-the-closing-owner-gave-up-counts-its-cleanup-done": "d66f43d8082aacd698839bdb0a6de37c2926a642e9c2814d15fd8f89f369b504",
       "delivery/a-turn-still-open-once-the-close-s-grace-is-over-is-given-up": "d66f43d8082aacd698839bdb0a6de37c2926a642e9c2814d15fd8f89f369b504",
+      "delivery/a-turn-the-close-cuts-leaves-no-outcome-and-the-set-s-failure-is-recorded": "d66f43d8082aacd698839bdb0a6de37c2926a642e9c2814d15fd8f89f369b504",
       "delivery/a-turn-whose-end-is-owed-as-the-kit-closes-stays-incomplete": "d66f43d8082aacd698839bdb0a6de37c2926a642e9c2814d15fd8f89f369b504"
     },
     "RK-12.10.4-047": {
       "executor-close/a-turn-closing-the-kit-sees-its-close-return": "a4deeede0ac974192d9a7919cbad956479b83b7561d8c0652b0ca7692a2d0cd1"
     },
     "RK-12.10.4-049": {
+      "delivery/a-closing-kit-refuses-new-operations-and-ignores-cancellation": "0cc7a640d3b9c2632bc241a0c3cb659f24463101b6c7071d488548fccb775d46",
       "delivery/a-delivery-whose-turn-the-closing-owner-gave-up-counts-its-cleanup-done": "0cc7a640d3b9c2632bc241a0c3cb659f24463101b6c7071d488548fccb775d46",
-      "delivery/a-turn-still-open-once-the-close-s-grace-is-over-is-given-up": "0cc7a640d3b9c2632bc241a0c3cb659f24463101b6c7071d488548fccb775d46"
+      "delivery/an-observer-refused-during-close-starts-no-due-room-timer": "0cc7a640d3b9c2632bc241a0c3cb659f24463101b6c7071d488548fccb775d46"
     },
     "RK-12.10.4-052": {
       "delivery/a-delivery-whose-turn-the-closing-owner-gave-up-counts-its-cleanup-done": "b233a9f0b482327a9c3887fa884280e0e45c34144213ef29cd379ad11695b861",
@@ -4079,7 +4081,9 @@
     },
     "RK-12.10.4-053": {
       "delivery/a-delivery-whose-turn-the-closing-owner-gave-up-counts-its-cleanup-done": "62aa7995d752e0b6fbf278947a4d326460e0b51bb0fc24be60b8dd7fd88a95b2",
-      "delivery/a-turn-still-open-once-the-close-s-grace-is-over-is-given-up": "62aa7995d752e0b6fbf278947a4d326460e0b51bb0fc24be60b8dd7fd88a95b2"
+      "delivery/a-turn-still-open-once-the-close-s-grace-is-over-is-given-up": "62aa7995d752e0b6fbf278947a4d326460e0b51bb0fc24be60b8dd7fd88a95b2",
+      "skill-scripts/close-without-registry-non-streaming": "62aa7995d752e0b6fbf278947a4d326460e0b51bb0fc24be60b8dd7fd88a95b2",
+      "skill-scripts/close-without-registry-streaming": "62aa7995d752e0b6fbf278947a4d326460e0b51bb0fc24be60b8dd7fd88a95b2"
     },
     "RK-12.10.4-055": {
       "status/a-status-posted-after-close-starts-no-room-hook": "86a4339ec36561c153f87a4f4bb96b86784b2617763de37336ec3e4ecb7a2571"
@@ -4112,17 +4116,20 @@
       "delivery/a-turn-the-close-cuts-leaves-no-outcome-and-the-set-s-failure-is-recorded": "db471fa2f23cc407178988cd7e33706405a50d1324fa245fb8be04fcada03927"
     },
     "RK-12.10.4-064": {
-      "delivery/a-deferred-event-s-wait-after-the-close-reads-its-own-end": "d5a56e161aa4570b11459fa7c7106a2f6d8b7e54974ecf21c56c4aea797dfa8a"
+      "delivery/a-closing-kit-refuses-new-operations-and-ignores-cancellation": "d5a56e161aa4570b11459fa7c7106a2f6d8b7e54974ecf21c56c4aea797dfa8a",
+      "delivery/a-deferred-event-s-wait-after-the-close-reads-its-own-end": "d5a56e161aa4570b11459fa7c7106a2f6d8b7e54974ecf21c56c4aea797dfa8a",
+      "delivery/a-delivery-whose-turn-the-closing-owner-gave-up-counts-its-cleanup-done": "d5a56e161aa4570b11459fa7c7106a2f6d8b7e54974ecf21c56c4aea797dfa8a"
     },
     "RK-12.10.4-072": {
+      "delivery/an-answer-from-after-broadcast-gets-grace-when-its-observer-closes-the-kit": "972543a916fe12b2c79cd141b5532114414af9f73f9fa862e749a4fdece2be13",
+      "delivery/an-answer-from-response-gets-grace-when-its-observer-closes-the-kit": "972543a916fe12b2c79cd141b5532114414af9f73f9fa862e749a4fdece2be13",
       "executor-close/a-turn-closing-the-kit-sees-its-close-return": "972543a916fe12b2c79cd141b5532114414af9f73f9fa862e749a4fdece2be13"
+    },
+    "RK-12.10.4-073": {
+      "executor-close/a-turn-closing-the-kit-sees-its-close-return": "9ff7b5eacf30337f5de23713c772f23515b443ed2fd49018be2a6107b54da578"
     },
     "RK-12.10.4-074": {
       "executor-close/a-turn-closing-the-kit-sees-its-close-return": "9b8694f4c448abdf6ded61184817a9ae0f0bcb81215a1a78617c9417e4040231"
-    },
-    "RK-12.10.4-079": {
-      "delivery/an-answer-from-after-broadcast-gets-grace-when-its-observer-closes-the-kit": "ce1e75b06a83f2e539072dd7ef8bbd2eb727c659e27b73814e35413f391c79a9",
-      "delivery/an-answer-from-response-gets-grace-when-its-observer-closes-the-kit": "ce1e75b06a83f2e539072dd7ef8bbd2eb727c659e27b73814e35413f391c79a9"
     },
     "RK-13.2-004": {
       "delivery/a-retried-delivery-keeps-its-successful-provider-receipt": "8504abca107b13da520b70284632b270c3d86c86a32db7cb46bd3f96555880da"

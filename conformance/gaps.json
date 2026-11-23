@@ -197,9 +197,9 @@
       "note": "step: a channel whose close starts work, which the close cuts at once."
     },
     "RK-12.10.4-056": {
-      "class": "step",
+      "class": "phase6",
       "card": "RMK-2007",
-      "note": "step: work that ignores its cancellation, to bound the close's two unwinds."
+      "note": "measurement: the close's whole duration bound (the grace, the turn backend's budget, the closes, at most two unwinds of 1 second); no step reads elapsed time."
     },
     "RK-12.10.4-059": {
       "class": "step",
@@ -241,11 +241,6 @@
       "card": "RMK-2007",
       "note": "step: an error name for ShutdownCancelledError, and a step that cuts the shutdown itself."
     },
-    "RK-12.10.4-073": {
-      "class": "step",
-      "card": "RMK-2007",
-      "note": "step: a tool whose call closes the kit (a scripted tool runs no step)."
-    },
     "RK-12.10.4-075": {
       "class": "writable",
       "card": "RMK-2007",
@@ -265,6 +260,11 @@
       "class": "writable",
       "card": "RMK-2007",
       "note": "An AFTER_BROADCAST hook that sends, then closes the kit: its send dropped."
+    },
+    "RK-12.10.4-079": {
+      "class": "writable",
+      "card": "RMK-2007",
+      "note": "An ASYNC hook's observer that closes the kit while the work that fired it holds its send at a gate past a short close_grace_ms: that send failed, code kit_closed."
     },
     "RK-12.10.4-080": {
       "class": "step",
