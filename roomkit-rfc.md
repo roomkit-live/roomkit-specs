@@ -11262,7 +11262,7 @@ calls `synthesize_dialogue()`: dialogue is produced by the integrator, and
 enters a room as any other audio.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.2-016", "kind": "behavior", "applies": "§12.2 Voice Channel (STT/TTS Pipeline); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.2-017", "kind": "behavior", "applies": "§12.2 Audio processing flow, the voice feature, steps 1 to 3: a client's audio reaches the VoiceBackend, whose raw frames go through the audio pipeline in the stage order §12.3 states, DTMF detection in parallel from the resampled stream and the recorder after the resampler. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Audio processing flow:**
 
 ```
@@ -11271,27 +11271,63 @@ enters a room as any other audio.
 3. Pipeline: [Resampler] → [AEC] → [AGC] → [Denoiser] → [VAD] → [Diarization]
    (DTMF detection runs in parallel from resampled stream)
    (Recorder captures inbound after resampler)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.2-018", "kind": "behavior", "applies": "§12.2 Audio processing flow, the voice feature, step 4: ON_SPEECH_END fires when the VAD detects the end of speech. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 4. VAD detects speech end → ON_SPEECH_END hook fires
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.2-019", "kind": "behavior", "applies": "§12.2 Audio processing flow, the voice feature, step 5: the STT transcribes the captured audio into a TranscriptionResult. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 5. STT transcribes captured audio → TranscriptionResult
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.2-020", "kind": "behavior", "applies": "§12.2 Audio processing flow, the voice feature, step 6: ON_TRANSCRIPTION fires on the transcription, which it may modify. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 6. Fire ON_TRANSCRIPTION hook (can modify transcript)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.2-021", "kind": "behavior", "applies": "§12.2 Audio processing flow, the voice feature, step 6a: when the TTS consumes context, the user turn is recorded (§12.2.2). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 6a. If the TTS consumes context → record the user turn (Section 12.2.2)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.2-022", "kind": "behavior", "applies": "§12.2 Audio processing flow, the voice feature, step 7: with a TurnDetector, the turn is evaluated: a complete turn creates a RoomEvent, an incomplete one accumulates and waits for the next speech. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 7. If TurnDetector configured → evaluate turn completion
    ├── Complete → Create RoomEvent
    └── Incomplete → accumulate, wait for next speech
 
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.2-023", "kind": "behavior", "applies": "§12.2 Audio processing flow, the voice feature, standard path, steps 8 to 11: a text response delivered to the voice channel through deliver(), after the room's ordinary routing and broadcast, fires BEFORE_TTS and is synthesized into an AudioChunk stream. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 --- Standard path (non-streaming) ---
 8. Route through normal inbound pipeline
 9. Room broadcasts → AI or other channels respond
 10. Response event arrives at Voice channel via deliver()
 11. If TextContent → Fire BEFORE_TTS hook → TTS synthesizes → AudioChunk stream
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.2-024", "kind": "behavior", "applies": "§12.2 Audio processing flow, the voice feature, standard path, step 11: with a sentence budget (12s.e), the first sentences of a text delivered whole, a response or any text the channel speaks of a room event, are spoken up to the budget, cut by the streamed path's sentence rule; the response was stored whole before it reached the channel. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
     (with a sentence budget, 12s.e, the first sentences of a text delivered
      whole, a response or any text the channel speaks of a room event, are
      spoken up to it, cut by the same sentence rule as the streamed path; the
      response was stored whole before it reached the channel)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.2-025", "kind": "behavior", "applies": "§12.2 Audio processing flow, the voice feature, standard path, step 11: each session plays in parallel; a session whose synthesis or playback fails is reported as tts_error once its playback is released, and AFTER_TTS fires only when a session was served. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
     (each session plays in parallel; a session whose synthesis or playback fails
      is reported as `tts_error` once its playback is released, and AFTER_TTS fires
      only when a session was served)
 
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.2-026", "kind": "behavior", "applies": "§12.2 Streaming AI → TTS path, steps 8s to 11s, the framework's and not the voice feature's (counted with the core): when an AI channel answers with a response stream, the text of its turn's tool loop (§6.4), the framework finds its streaming targets once the room is read, asking each transport the answer reaches whether it streams in that room (supports_streaming_delivery_for, supports_streaming_delivery by default), and delivers the answer whole to one that does not. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 --- Streaming AI → TTS path (framework-native, when AIProvider supports streaming) ---
 8s. Route through normal inbound pipeline → Room broadcasts to AIChannel
 9s. AIChannel.on_event() returns ChannelOutput(response_stream=…), the text of the
@@ -11300,6 +11336,10 @@ enters a room as any other audio.
 11s. Framework finds streaming delivery targets: once the room is read, each transport the answer
      reaches is asked whether it streams in that room (supports_streaming_delivery_for(room_id),
      supports_streaming_delivery by default); one that does not is delivered the answer whole
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.2-027", "kind": "behavior", "applies": "§12.2 Streaming AI → TTS path, step 12s.a, the voice feature: the sentence splitter of VoiceChannel.deliver_stream() yields at sentence boundaries (min_chunk_chars against short fragments) and at the end of each text segment (§6.4), what the segment holds going out before the call runs; a span a streaming text filter removes stays open across a call. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 12s. Framework pipes stream → VoiceChannel.deliver_stream():
      a. Sentence splitter buffers tokens → yields at sentence boundaries (.!?)
         (min_chunk_chars threshold prevents very short TTS fragments), and at
@@ -11311,6 +11351,10 @@ enters a room as any other audio.
         text filter lets out there the text it has decided to speak; a span it
         removes (an `[internal]` block), opened before the call, stays open
         across it, so its text is never spoken, whichever segment closes it.
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.2-028", "kind": "behavior", "applies": "§12.2 Streaming AI → TTS path, step 12s.b, the voice feature: BEFORE_TTS runs on each sentence before synthesis, once for all sessions: a MODIFY replaces the sentence, a BLOCK drops it, a hook that fails drops it (fail-closed, §9.3), a sentence redacted to an empty string is not synthesized, and the hook sees the sentence after any text filter. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
      b. BEFORE_TTS runs on each sentence before the TTS reads it, once for all
         sessions: the sentence is the hook's payload, a MODIFY replaces it, a
         BLOCK drops it, and the next sentence is judged on its own. The
@@ -11321,14 +11365,26 @@ enters a room as any other audio.
         the TTS would read it, after any text filter (a streaming filter works
         on the tokens, before the splitter) — where the standard path runs the
         hook before the filter.
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.2-029", "kind": "behavior", "applies": "§12.2 Streaming AI → TTS path, step 12s.c, the voice feature: the sentences go to tts.synthesize_stream_input(), which yields an AudioChunk stream; the latencies given (~200 ms TTFB, ~500-800 ms to first audio) are informative and oblige nothing. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
      c. tts.synthesize_stream_input(sentences) → AudioChunk stream (~200ms TTS TTFB)
         First audio reaches speaker ~500-800ms after speech end (vs ~2-3s standard)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.2-030", "kind": "behavior", "applies": "§12.2 Streaming AI → TTS path, step 12s.d, the voice feature: with several sessions on the binding, the stream is read once and every session receives every sentence in parallel, pulled at the fastest session's pace; a session that stops early does not cut the others off; a session whose TTS fails is reported as tts_error and is not the response's failure, which takes step 13s once every session has stopped. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
      d. Several sessions on the binding: the stream is read once and every session
         receives every sentence, in parallel. The stream is pulled at the pace of
         the fastest session; a session that stops early (barge-in, transport error,
         its TTS failing) does not cut the others off. A session whose TTS fails is
         reported as `tts_error`; its failure is not the response's, which takes
         step 13s once every session has stopped (no `ON_ERROR`, no replay).
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.2-031", "kind": "behavior", "applies": "§12.2 Streaming AI → TTS path, step 12s.e, the voice feature: with a sentence budget (max_sentences), once the budget is said a reply that goes on stops as when every session stops early (step 13s): the sentence over the budget is not synthesized, the stream is closed, the text read so far is stored cancelled and the turn reports no response; a reply of exactly the budget is not cut, and say() has no budget. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
      e. With a sentence budget (the channel's `max_sentences`), the sentences
         BEFORE_TTS left are counted. Once the budget is said, a reply that
         goes on (a word, a tool call, another round) stops there, as when
@@ -11341,7 +11397,15 @@ enters a room as any other audio.
         reports no response (`ON_AI_RESPONSE`), as any turn its reader
         stopped. A reply of exactly the budget is not cut. The application's
         own text (`say()`) has no budget.
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.2-032", "kind": "behavior", "applies": "§12.2 Streaming AI → TTS path, step 13s, the framework's and not the voice feature's (counted with the core): a response stream read to its end: the framework accumulates its full text and stores it as the AI response event. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 13s. Framework accumulates full text from stream → stores AI response event
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.2-033", "kind": "behavior", "applies": "§12.2 Streaming AI → TTS path, step 13s Interrupted, the framework's and not the voice feature's (counted with the core): a stream its reader stops before its end, or a turn cut from outside or by the kit's close: the response stream is closed, the text its reader was handed is stored with metadata.cancelled true, the turn records cancelled as its caller and a delegation read it, a delegated turn fails, its tool calls are closed (a running one let finish, an announced one never run, a running one aborted by a cut from outside), a TOOL_CALL_END written once the stream carries no rows goes to every channel, and the streaming channel is handed the cut row through deliver_cut. Its MAY lets an implementation store all of it at the cut; its last sentence, flush_partial_tts = false, is the voice channel's. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
      Interrupted: when deliver_stream() returns before the stream is exhausted,
      for any reason (typically every session of 12s.d stopped early), the
      framework MUST close the response stream (no further token is generated and
@@ -11386,6 +11450,10 @@ enters a room as any other audio.
      one a hook refused, kept out or narrowed away from it; it never
      receives the row as an ordinary delivery. With `flush_partial_tts = false` the sessions keep reading, so the
      stream runs to its end and nothing is cancelled.
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.2-034", "kind": "behavior", "applies": "§12.2 Streaming AI → TTS path, step 13s Failed, the framework's and not the voice feature's (counted with the core): a response stream that raises: the text already produced is stored as the AI response event, not cancelled, every open call is closed failed, ON_ERROR fires and the failure is returned to the caller (a held task's cut that finds it pending wins, §23.3); the streaming channel received that text through the stream and is never delivered it again; a channel that buffers delivers what it buffered; a failure of the streaming channel itself sends the text as an ordinary event to every channel. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
      Failed: when the response stream raises (its provider fails mid-response),
      the framework MUST store the text already produced as the AI response event
      (a blank text is no row, Section 6.4), not marked cancelled, close every call still open with `status = failed`,
@@ -11401,11 +11469,19 @@ enters a room as any other audio.
      the response's: what it was handed may not all have been rendered, so the
      text goes out as an ordinary event to every channel, the streaming one
      included.
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.2-035", "kind": "behavior", "applies": "§12.2 Streaming AI → TTS path, step 14s, the framework's and not the voice feature's (counted with the core): the stored event goes to the channels that did not stream it, never again to one that received the streamed content, whether the response completed or failed; a row committed once the target may no longer read the response is delivered as its plan says (§7.5 rule 2). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 14s. Framework re-broadcasts complete event to non-streaming channels (exclude_delivery
      skips channels that already received streaming content, whether the
      response completed or failed; a row committed once the target may no
      longer read the response is delivered as its plan says, Section 7.5
      rule 2)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.2-036", "kind": "behavior", "applies": "§12.2 Streaming AI → TTS path, step 15s, the voice feature: AFTER_TTS fires with the text the sessions were sent, as BEFORE_TTS left it or as far as the budget let it through, else the whole streamed text with its segments apart, and the final transcript carries the same; it does not fire when every sentence was dropped or no session was served; a failed response is spoken to the end of its text before the failure propagates. Step 16s, which follows, is Planned and obliges nothing yet. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 15s. Fire AFTER_TTS hook with the text the sessions were sent: the sentences as
      BEFORE_TTS left them (12s.b) when a hook changed or dropped one, or as many
      as the budget let through when it ended the reply (12s.e), the whole
@@ -11422,6 +11498,10 @@ enters a room as any other audio.
      records `partial` (Section 12.3.13), and a response superseded before any
      audio records `unconsumed` (Section 12.2).
 
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.2-037", "kind": "behavior", "applies": "§12.2 One playback at a time, the voice feature: a response waits for the playback under way in its session, then plays, several waiting ones in turn, each whole; a playback sent whole whose echo still drains is taken over, not cancelled; say() and play() do not wait and cut the playback under way (ON_TTS_CANCELLED, reason new_tts); a response cuts a play(); a play() is measured as a response is. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 One playback at a time: a response that reaches a session while another plays
 there (a background task's result relayed as the agent finishes a sentence,
 Section 23.4) waits until that playback has been sent whole, then plays. The
@@ -11441,17 +11521,35 @@ wait: it cuts the playback under way (`ON_TTS_CANCELLED`, reason `new_tts`),
 and its playback is measured as a response's is, so a cut reports, and the
 session's played audio counts, what was heard of it.
 
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.2-038", "kind": "behavior", "applies": "§12.2 Common outbound path, step 12, the voice feature: the AudioChunk stream goes through the post-processors, the recorder and the resampler to the transport; a stage that needs fixed-size AudioFrames buffers and re-chunks the variable-size chunks itself. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 --- Common outbound path ---
 12. AudioChunk stream → [PostProcessors] → [Recorder] → [Resampler] → Transport
     (TTS emits variable-size AudioChunks; pipeline stages that require fixed-size
      AudioFrames MUST buffer and re-chunk the stream internally)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.2-039", "kind": "behavior", "applies": "§12.2 Common outbound path, step 13, the voice feature: the AEC reference is fed at playback time by the transport (local hardware), or in the outbound path by the pipeline (network transports), as §12.3.4 says. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 13. AEC reference: Transport feeds AEC.feed_reference() at playback time (local hw)
     or pipeline feeds it in the outbound path (network transports) — see 12.3.4
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.2-040", "kind": "behavior", "applies": "§12.2 Common outbound path, step 14, the voice feature: a detected barge-in is answered as the InterruptionConfig says. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 14. If barge-in detected → InterruptionConfig determines response
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.2-041", "kind": "behavior", "applies": "§12.2 Common outbound path, step 15, the voice feature: when the TTS consumes context, the assistant turn is recorded once playback ends or is cancelled (§12.2.2). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 15. If the TTS consumes context → record the assistant turn once playback ends
     or is cancelled (Section 12.2.2)
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.2-042", "kind": "structural", "applies": "§12.2, the paragraph after the audio processing flow, the voice feature: a summary of the streaming path (steps 8s to 14s, the framework's), whose own rule is that the VoiceChannel stays a pure transport holding no AIProvider reference. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The streaming path flows through the framework's normal routing infrastructure.
 AIChannel returns a streaming handle, the framework pipes it to streaming-capable
 transport channels, accumulates the full text, stores the complete event, and
@@ -13484,7 +13582,7 @@ which they exist to operate; `run_skill_script` acts, and is gated like any
 other tool.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.4-009", "kind": "behavior", "applies": "§12.4 Realtime Voice Channel (Speech-to-Speech); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.4-020", "kind": "behavior", "applies": "§12.4 One call, one outcome, the realtime feature: whatever its door (the provider's function call, a call recovered from speech, a reasoning backend's call, a conference's call), every realtime tool call is served by the same steps in order: the gate, the serving inside the tool call context of §21.4 at the chain depth of the answer that issued it, ON_TOOL_CALL, the bound of §21.5 (a tool's complete schema read by name aside), the delivery and the report. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **One call, one outcome (normative).** Every realtime tool call, whatever
 door it came through (the provider's function call, a call recovered from
 speech, a reasoning backend's call, a conference's call), is served by the
@@ -13495,91 +13593,93 @@ Section 21.5, which covers the results of Tool Search and of reading a
 skill's references as it covers a handler's, a tool's complete schema read
 by name aside, since the model needs it whole to call the tool (a refusal, a
 BLOCK or a hook's replacement in its place is bounded as any result); the
-delivery; the report. A
+delivery; the report.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-021", "kind": "behavior", "applies": "§12.4 One call, one outcome, the realtime feature: a call's result is delivered once and its outcome reported once; a reconfiguration that fails once the result went out sends no second one, and a cancellation that arrives after the result was delivered is not reported. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
 call's result is delivered once and its outcome reported once: a
 reconfiguration that fails once the result went out sends no second one, and
-a cancellation that arrives after the result was delivered is not reported.
+a cancellation that arrives after the result was delivered is not reported.<!-- /rfc --><!-- rfc: {"id": "RK-12.4-022", "kind": "behavior", "applies": "§12.4 One call, one outcome, the realtime feature: a call an ending interrupts is reported once, as cancelled; the endings are the session's end, the channel's close, and on a conference a detach or the unplug of its realtime provider. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A call an ending interrupts is reported once, as cancelled. The endings are
 the session's end, the channel's close, and on a conference a detach or the
-unplug of its realtime provider. A call whose own handler caused the ending
+unplug of its realtime provider.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-023", "kind": "behavior", "applies": "§12.4 One call, one outcome, the realtime feature: a call whose own handler caused the ending (a hang-up tool ending its session, detaching its room, unplugging the provider, closing its channel or the framework) is not interrupted, on every host and door, a reasoning backend's included: it runs on and reports its own outcome, while the other calls the ending reaches are interrupted. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A call whose own handler caused the ending
 (a hang-up tool ending its session, detaching its room, unplugging the
 provider, closing its channel or the framework) is not interrupted, on every
 host and every door, a reasoning backend's included: it runs on and reports
-its own outcome, while the other calls the ending reaches are interrupted.
+its own outcome, while the other calls the ending reaches are interrupted.<!-- /rfc --><!-- rfc: {"id": "RK-12.4-024", "kind": "behavior", "applies": "§12.4 One call, one outcome, the realtime feature: the call that caused an ending is known by the call context the ending runs in, which every task its handler starts inherits, not by the task that runs the ending; that context lasts until the call's outcome is delivered and reported. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The call that caused an ending is known by the call context the ending runs
 in, which every task its handler starts inherits, not by the task that runs
 the ending; the context lasts until the call's outcome is delivered and
-reported. A handler that ends its session through a task of its own, awaited
+reported.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-025", "kind": "behavior", "applies": "§12.4 One call, one outcome, the realtime feature: a handler that ends its session through a task of its own, or a close that runs in a task of its own, still spares its call and the backend delegation that holds it; the backend's other calls the ending reaches are interrupted and answered to it as cancelled, and the delegation ends once the sparing call returns, no further round run. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A handler that ends its session through a task of its own, awaited
 or not, and a close that runs in a task of its own, still spare it, and the
 task that holds it (a backend's delegation) with it while the call runs: the
 backend's other calls the ending reaches are interrupted, each answered to the
 backend as cancelled, and once the sparing call returns on the session its
-ending closed, the delegation ends with it, no further round run. An AI
+ending closed, the delegation ends with it, no further round run.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-026", "kind": "behavior", "applies": "§12.4 One call, one outcome, the realtime feature: an AI channel's close that cuts the turns holding such a call (a backend's agent) spares it as a session's ending does. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An AI
 channel's close that cuts the turns holding such a call (a backend's agent)
-spares it the same way. A spared call still running when its
+spares it the same way.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-027", "kind": "behavior", "applies": "§12.4 One call, one outcome, the realtime feature: a spared call still running when its channel closes is waited for within the close's bound, then interrupted and reported once, as cancelled; nothing of it outlives the close. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A spared call still running when its
 channel closes is waited for within the close's bound, then interrupted and
-reported once, as cancelled; nothing of it outlives the close. A handler that
+reported once, as cancelled; nothing of it outlives the close.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-028", "kind": "behavior", "applies": "§12.4 One call, one outcome, the realtime feature: a handler that closes the framework itself runs on once the framework is gone; its outcome reaches no hook, and is logged. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A handler that
 closes the framework itself finishes once the framework is gone: it runs on,
-but its outcome reaches no hook, and is logged. A start that fails is a session's end for
-the calls the provider issued while it was pending, up to its disconnection.
+but its outcome reaches no hook, and is logged.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-029", "kind": "behavior", "applies": "§12.4 One call, one outcome, the realtime feature: a start that fails is a session's end for the calls the provider issued while it was pending, up to its disconnection. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A start that fails is a session's end for
+the calls the provider issued while it was pending, up to its disconnection.<!-- /rfc --><!-- rfc: {"id": "RK-12.4-030", "kind": "behavior", "applies": "§12.4 One call, one outcome, the realtime feature: a report under way when an ending arrives (a call's refusal, or the cancellation of a call the provider abandoned) is still made with the outcome already decided: a refusal is reported refused whether or not its body went out, an abandoned call cancelled. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A report under way when an ending arrives (a call's refusal, or the
 cancellation of a call the provider abandoned) is still made, with the outcome
 already decided: a refusal is reported refused, whether or not its body went
-out, and an abandoned call cancelled (Section 9.3). An id names its call until the call's result goes out or
+out, and an abandoned call cancelled (Section 9.3).<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-031", "kind": "behavior", "applies": "§12.4 One call, one outcome, the realtime feature: an id names its call until the call's result goes out or the provider abandons the call: a second call under it before then is refused, reported once and sends nothing, the first running on; a call under it afterwards is a new call, to the channel and to the provider alike, with its own answer. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An id names its call until the call's result goes out or
 the provider abandons the call: a second call under it before then is refused and reported once, and sends
 nothing, since the id's one result is the first call's, which runs on; a call
 under it after then is a new call, to the channel and to the provider alike,
-and gets its own answer while the first finishes its report. A provider frees
+and gets its own answer while the first finishes its report.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-032", "kind": "behavior", "applies": "§12.4 One call, one outcome, the realtime feature's provider contract, what any realtime provider must do: a provider frees an id when it sends the call's result, at the step the channel counts the call delivered, before anything can yield in between. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A provider frees
 the id when it sends the result, at the step the channel counts the call
 delivered, before anything can yield in between: a call issued meanwhile is
-otherwise new to the one and a duplicate to the other, and is never answered. A
+otherwise new to the one and a duplicate to the other, and is never answered.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-033", "kind": "behavior", "applies": "§12.4 One call, one outcome, the realtime feature: a call the provider abandons frees its id at the step the provider reports it (the provider's part is its provider contract); the channel frees it there too, before the handler it interrupts has finished, sends nothing for that call afterwards, and answers a call issued under the id meanwhile as a new call. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
 call the provider abandons (the model discarded it, a reconnect orphaned it,
 the provider's wait on it timed out, the connection ended) frees its id the
 same way, at the step the provider reports it: the channel frees it there too,
 before the handler it interrupts has finished, sends nothing for that call
-afterwards, and answers a call issued under the id meanwhile as a new call. A
+afterwards, and answers a call issued under the id meanwhile as a new call.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-034", "kind": "behavior", "applies": "§12.4 One call, one outcome, the realtime feature's provider contract, what any realtime provider must do: a provider holds the ids it issued in one book, freed by the result or the abandonment, and drops with a log a result submitted for an id it does not hold, abandoned, never issued or issued by a connection that is gone, whoever submits it; an abandoned call is reported once. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
 provider holds the ids it issued in one book, freed by the result or the
 abandonment, and drops, with a log, a result submitted for an id it does not
 hold, abandoned, never issued, or issued by a connection that is gone:
 nothing goes out for it, whoever submits it (an application calling the
-provider directly included), and an abandoned call is reported once. A
+provider directly included), and an abandoned call is reported once.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-035", "kind": "behavior", "applies": "§12.4 One call, one outcome, the realtime feature: a session connected again under the same id abandons the calls its previous connection issued. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
 session connected again under the same id abandons the calls its previous
-connection issued. A
+connection issued.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-036", "kind": "behavior", "applies": "§12.4 One call, one outcome, the realtime feature: a call orphaned by a reconnect its own handler caused runs on and frees its id at that step: the new connection never issued it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
 call a reconnect its own handler caused orphans, which runs on, frees its id
-at that step as well: the new connection never issued it. A call that came without
+at that step as well: the new connection never issued it.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-037", "kind": "behavior", "applies": "§12.4 One call, one outcome, the realtime feature: a call that came without an id is refused and reported once, with nothing sent. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A call that came without
 an id is refused and reported once the same way, with nothing sent, since no
-result can name it. Such a refusal takes the path of any call: the session's
+result can name it.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-038", "kind": "behavior", "applies": "§12.4 One call, one outcome, the realtime feature: the refusal of a call that came without an id takes the path of any call: the session's end read first (a call on an ended session is reported cancelled), a call_tool transport unwrapped so the report names the tool it carries, and the wait for the transcription that precedes it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Such a refusal takes the path of any call: the session's
 end is read first (a call on an ended session is reported cancelled), a
 `call_tool` transport is unwrapped so the report names the tool it carries,
-and it waits for the transcription that precedes it. A text turn holds its
+and it waits for the transcription that precedes it.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-039", "kind": "behavior", "applies": "§12.4 One call, one outcome: a text turn's calls by id, a text turn's rule and not the realtime feature's (counted with the core): a second call of a round under an id the first holds is refused with the same words and reported as a call of its own, the first keeping its report and its end row its own arguments; one the provider already ran under such an id is reported as a call of its own with the outcome the provider gave it; a call under an id an earlier round used is a new call. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A text turn holds its
 round's calls by id the same way: a second call of a round under an id the
 first holds is refused with the same words and reported as a call of its own,
 the first keeping its report and its end row its own arguments; one the
 provider already ran under such an id is reported as a call of its own with
 the outcome the provider gave it, and a call under an id an earlier round used
-is a new call. A call that named no tool
-is refused before the gate, as an unreadable one, and answered under its id. A
+is a new call.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-040", "kind": "behavior", "applies": "§12.4 One call, one outcome, the realtime feature: a call that named no tool is refused before the gate, as an unreadable call, and answered under its id. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A call that named no tool
+is refused before the gate, as an unreadable one, and answered under its id.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-041", "kind": "behavior", "applies": "§12.4 One call, one outcome, the realtime feature's provider contract, what any realtime provider must do: a provider hands every call the model makes to the channel, a call with no id, one under an id in flight, one the output cap cut and one to a tool the channel never declared included; the channel decides it, and no provider or vendor SDK answers it in the channel's place. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
 provider hands every call the model makes to the channel, these, a call the
 output cap cut and a call to a tool the channel never declared included: the
 channel decides it, and no provider or vendor SDK answers it in the channel's
-place. The id a provider hands on is the service's, never a key of the call's
+place.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-042", "kind": "behavior", "applies": "§12.4 One call, one outcome, the realtime feature's provider contract, what any realtime provider must do: the id a provider hands on is the service's, never a key of the call's arguments; a vendor SDK that folds the id into the arguments is patched so the service's id stands and the model's key stays an argument. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The id a provider hands on is the service's, never a key of the call's
 arguments: a vendor SDK that folds the id into the arguments, where a key the
 model wrote can replace it, is patched so the service's id stands and the
-model's key stays an argument, judged as any (Section 9.3). A provider books a call as
+model's key stays an argument, judged as any (Section 9.3).<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-043", "kind": "behavior", "applies": "§12.4 One call, one outcome, the realtime feature's provider contract, what any realtime provider must do: a provider books a call as awaiting its result only when the channel can answer it; a call refused with nothing sent never holds the response, or the provider's continuation after it, open. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A provider books a call as
 awaiting its result only when the channel can answer it: a call refused with
 nothing sent MUST NOT hold the response, or the provider's continuation after
-it, open on a result that never comes. A channel that mutes the
+it, open on a result that never comes.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-044", "kind": "behavior", "applies": "§12.4 One call, one outcome, the realtime feature: a channel that mutes the input while one of the provider's tool calls runs keeps it muted until the last such call ends; a call recovered from speech or a backend's call mutes nothing. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A channel that mutes the
 input while one of the provider's tool calls runs keeps it muted until the
 last such call ends; a call recovered from speech or a backend's call mutes
 nothing, the user's input being no answer to it.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.4-045", "kind": "behavior", "applies": "§12.4 One call, one outcome, the realtime feature: the permission to recover, besides the provider's function calls, a tool call the model emitted as assistant text. Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->
 An implementation MAY additionally recover a tool call the model emitted as
-assistant *text* rather than through the provider's function calling API. Such a
+assistant *text* rather than through the provider's function calling API.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-046", "kind": "behavior", "applies": "§12.4 One call, one outcome, the realtime feature, where an implementation recovers a tool call the model emitted as assistant text: the recovered call passes the same gate as a function call. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Such a
 recovered call MUST pass the same gate — its arguments are reconstructed from
-free text and are therefore less trustworthy than a function call's, not more.
+free text and are therefore less trustworthy than a function call's, not more.<!-- /rfc --><!-- rfc: {"id": "RK-12.4-047", "kind": "behavior", "applies": "§12.4 One call, one outcome, the realtime feature, where an implementation recovers a tool call the model emitted as assistant text: the call's outcome, result or refusal, is returned as injected context, not as a tool result. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Its outcome, result or refusal, MUST be returned as injected context rather than
 as a tool result, because the model issued no call and has no pending response
-to close. The result it returns is set apart as a tool's result
+to close.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-048", "kind": "behavior", "applies": "§12.4 One call, one outcome, the realtime feature, where an implementation recovers a tool call the model emitted as assistant text: the result it returns is set apart as a tool's result (<tool_result>, §6.4), data the tool returned, never the runtime's own words. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The result it returns is set apart as a tool's result
 (`<tool_result>`, Section 6.4): it is data the tool returned, never the
 runtime's own words.
 <!-- /rfc -->
