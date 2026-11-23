@@ -15688,47 +15688,47 @@ recording, and cross-channel integration.
 
 #### 12.10.1 Design Principles
 
-<!-- rfc: {"id": "RK-12.10.1-001", "kind": "behavior", "applies": "§12.10.1 Design Principles; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.10.1-002", "kind": "behavior", "applies": "§12.10.1 Design Principles, principle 1 (RoomKit orchestrates; the SFU transports), the conference feature: RoomKit never sits in the media path between human participants, per-packet routing between them (codecs, simulcast layers, bandwidth estimation, retransmission) being the SFU's; the scale boundary the in-process AudioBridge cannot cross, informative Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 1. **RoomKit orchestrates; the SFU transports.** Per-packet media routing
    between human participants — codec negotiation, simulcast layer
    selection, bandwidth estimation, NACK/PLI retransmission — is the SFU's
    responsibility. RoomKit MUST NOT sit in the media path between human
    participants. This is the scale boundary that the in-process AudioBridge
-   (Section 12.7) cannot cross.
+   (Section 12.7) cannot cross.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.1-003", "kind": "behavior", "applies": "§12.10.1 Design Principles, principle 2 (the conference is the room), the conference feature: each conference maps 1:1 to a Room Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
-2. **The conference is the room.** Each conference maps 1:1 to a Room.
-   Conference participants are Room participants. Transcriptions are
-   RoomEvents. Hooks, permissions, and cross-channel broadcast apply with
-   no conference-specific exceptions.
+2. **The conference is the room.** Each conference maps 1:1 to a Room.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.1-004", "kind": "behavior", "applies": "§12.10.1 Design Principles, principle 2 (the conference is the room), the conference feature: the conference's participants are the Room's participants Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+   Conference participants are Room participants. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.1-005", "kind": "behavior", "applies": "§12.10.1 Design Principles, principle 2 (the conference is the room), the conference feature: transcriptions are RoomEvents of the room Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Transcriptions are
+   RoomEvents. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.1-006", "kind": "behavior", "applies": "§12.10.1 Design Principles, principle 2 (the conference is the room), the conference feature: hooks, permissions and cross-channel broadcast apply to the conference's events with no conference-specific exception Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Hooks, permissions, and cross-channel broadcast apply with
+   no conference-specific exceptions.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.1-007", "kind": "behavior", "applies": "§12.10.1 Design Principles, principle 3 (human clients connect directly to the SFU), the conference feature: RoomKit mints the clients' access credentials and observes participant lifecycle through backend events, never proxying client signalling or media; client SDKs are provider-specific and out of scope, informative Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 3. **Human clients connect directly to the SFU.** RoomKit mints access
    credentials (Section 12.10.3) and observes participant lifecycle through
    backend events; it never proxies client signaling or media. Client-side
    SDKs are provider-specific and out of scope for this specification —
-   switching SFU providers implies switching the integrator's client SDK.
+   switching SFU providers implies switching the integrator's client SDK.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.1-008", "kind": "behavior", "applies": "§12.10.1 Design Principles, principle 4 (RoomKit joins as a bot participant), the conference feature: the framework's media access goes through one server-side bot connection per conference: subscribed tracks feed its pipelines (STT, vision, recording) and the AI's TTS output is published as a single bot track the SFU distributes Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 4. **RoomKit joins as a bot participant.** The framework's media access
    goes through one server-side connection per conference: subscribed
    tracks feed the audio/video pipelines (STT, vision, recording), and the
    AI's TTS output is published as a single bot track that the SFU
-   distributes to everyone.
+   distributes to everyone.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.1-009", "kind": "behavior", "applies": "§12.10.1 Design Principles, principle 5 (tracks are the unit of media identity), the conference feature: every media stream carries the identity of its publishing participant Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 5. **Tracks are the unit of media identity.** Every media stream carries
-   the identity of its publishing participant. Speaker attribution comes
+   the identity of its publishing participant. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.1-010", "kind": "behavior", "applies": "§12.10.1 Design Principles, principle 5 (tracks are the unit of media identity), the conference feature: speaker attribution comes from track identity, so neither diarization nor server-side AEC is needed (clients cancel their own echo and the SFU never mixes audio, informative) Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Speaker attribution comes
    from track identity, so diarization is unnecessary. Server-side AEC is
    likewise unnecessary: clients perform their own echo cancellation and
-   the SFU never mixes audio.
+   the SFU never mixes audio.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.1-011", "kind": "behavior", "applies": "§12.10.1 Design Principles, principle 6 (the backend boundary), the conference feature: the ConferenceBackend delivers decoded PCM audio and raw or encoded video frames, and mints credentials the framework never inspects Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 6. **The backend boundary is decoded frames and opaque credentials.** The
    ConferenceBackend delivers decoded PCM audio and raw (or encoded) video
-   frames, and mints credentials the framework never inspects. SDP, ICE,
+   frames, and mints credentials the framework never inspects. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.1-012", "kind": "behavior", "applies": "§12.10.1 Design Principles, principle 6 (the backend boundary), the conference feature: SDP, ICE, codecs, simulcast layers and bitrates appear in no framework interface Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->SDP, ICE,
    codecs, simulcast layers, and bitrates do not appear in any framework
    interface.
 <!-- /rfc -->
 
 #### 12.10.2 Data Models
 
-<!-- rfc: {"id": "RK-12.10.2-001", "kind": "behavior", "applies": "§12.10.2 Data Models; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.10.2-001", "kind": "structural", "applies": "§12.10.2 TrackKind, the conference feature: the TrackKind enumeration AUDIO (microphone audio, or the sound of a screen share), VIDEO (camera video) and SCREEN_SHARE (screen-share video) Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **TrackKind** enumeration:
 
 | Value | Description |
@@ -15738,7 +15738,7 @@ recording, and cross-channel integration.
 | SCREEN_SHARE | Screen share video |
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.10.2-002", "kind": "behavior", "applies": "§12.10.2 Data Models; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.10.2-015", "kind": "structural", "applies": "§12.10.2 ConferenceTrack, the conference feature: a published media stream and its fields, id (backend-scoped, stable), room_id (the owning conference room), participant_id (the publisher), kind (a TrackKind), muted (false by default) and metadata (provider-specific) Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **ConferenceTrack** — a single published media stream:
 
 ```
@@ -15750,14 +15750,16 @@ ConferenceTrack
 ├── muted: bool = false
 └── metadata: map<string, any>          # Provider-specific (sid, source, ...)
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.2-016", "kind": "behavior", "applies": "§12.10.2 ConferenceTrack, the conference feature: every ConferenceTrack a backend emits carries the room it belongs to (why: one backend serves many rooms and the frame callbacks carry only a track, informative) Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 `room_id` is what makes the frame callbacks routable: a single
 ConferenceBackend instance serves many rooms, and `on_track_audio` /
 `on_track_video` carry only a ConferenceTrack. Every ConferenceTrack a
 backend emits MUST carry the room it belongs to.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.10.2-003", "kind": "behavior", "applies": "§12.10.2 Data Models; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.10.2-017", "kind": "structural", "applies": "§12.10.2 ConferenceParticipant, the conference feature: a participant's media presence and its fields, participant_id, display_name (presentation, never identity, or null), connected_at, tracks, metadata (the provider's participant attributes) and asserted_metadata (the subset the SFU asserts, or null) Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **ConferenceParticipant** — a participant's media presence:
 
 ```
@@ -15769,7 +15771,9 @@ ConferenceParticipant
 ├── metadata: map<string, any>                  # Provider-supplied participant attributes
 └── asserted_metadata: map<string, any> | null  # The subset the SFU itself asserts
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.2-018", "kind": "behavior", "applies": "§12.10.2 ConferenceParticipant, the conference feature: a backend surfaces the provider's own participant attributes in metadata (why: for a participant the framework did not name they hold the resolvable address identity resolution consumes, such as a dial-in's caller number, informative) Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A backend MUST surface the provider's own participant attributes in
 `metadata`. This is not decoration: for a participant the framework did not
 name, those attributes are where the resolvable address lives — a PSTN
@@ -15779,7 +15783,7 @@ them leaves the framework with an opaque identifier and no way to connect
 the caller to a known Identity.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.10.2-004", "kind": "behavior", "applies": "§12.10.2 Data Models; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.10.2-019", "kind": "behavior", "applies": "§12.10.2 Where those attributes came from, the conference feature: asserted_metadata is the subset of metadata the SFU itself asserts; a backend places an attribute there only when the SFU or a server-side call established its value (the SIP trunk, an authenticated admission, its own API), never a value a client supplied at join, directly or through a token it was free to populate, whatever its key; the lead-in on the two kinds of attribute one map carries folded in Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Where those attributes came from (normative).** `metadata` says what the
 provider surfaced; it does not say who put it there. On most SFUs one
 attribute map carries two very different things: facts the server
@@ -15796,12 +15800,12 @@ subset of `metadata` the SFU itself asserts. Therefore:
    value was established by the SFU or by a server-side call: the SIP trunk,
    the admission it authenticated, its own API. Values a client supplied at
    join — directly, or through a token it was free to populate — MUST NOT
-   appear there, whatever their key.
+   appear there, whatever their key.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.2-020", "kind": "behavior", "applies": "§12.10.2 Where those attributes came from, the conference feature: a backend that cannot tell SFU-established values from client-supplied ones leaves asserted_metadata null rather than filling it with everything it has Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 2. A backend that cannot tell the two apart MUST leave `asserted_metadata`
    null rather than fill it with everything it has. Null is a statement —
    "this backend does not distinguish" — and a consumer can act on it. A
    guess is indistinguishable from an assertion, and it is the assertion
-   that decisions get made on.
+   that decisions get made on.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.2-021", "kind": "behavior", "applies": "§12.10.2 Where those attributes came from, the conference feature: an empty asserted_metadata says the backend distinguishes and the SFU asserts nothing about the participant; the closing pointer to where each set is consumed folded in Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 3. An empty map is the other statement: this backend distinguishes, and the
    SFU asserts nothing about this participant.
 
@@ -15811,7 +15815,7 @@ them — for identity resolution, under *Resolving the participant the
 framework did not name* below.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.10.2-005", "kind": "behavior", "applies": "§12.10.2 Data Models; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.10.2-022", "kind": "structural", "applies": "§12.10.2 ConferenceGrants, the conference feature: the least-privilege permissions encoded into access and their defaults, publish_audio, publish_video, publish_screen_share and subscribe true, moderate (mute or remove others), hidden (invisible observer) and publish_screen_share_audio false Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **ConferenceGrants** — least-privilege permissions encoded into access:
 
 ```
@@ -15824,7 +15828,9 @@ ConferenceGrants
 ├── hidden: bool = false                # Invisible observer (bots, monitors)
 └── publish_screen_share_audio: bool = false  # The sound of a screen share
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.2-023", "kind": "behavior", "applies": "§12.10.2 ConferenceGrants, the conference feature: a backend grants the audio source beside a screen share only through publish_screen_share_audio, never through publish_audio or publish_screen_share, and the two screen-share fields are independent, neither implying the other; the field's definition and why it alone of the publish rights defaults to false folded in Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 `publish_screen_share_audio` covers the audio track a client publishes
 beside a screen share — a browser tab or a whole screen shared with its
 sound — which SFUs carry as a source of its own. It is the one publish
@@ -15834,13 +15840,13 @@ carrying the right, so grants written without it in mind stay exactly as
 narrow as they read. A backend MUST grant that source only through this
 field — never as part of `publish_audio` or `publish_screen_share` — and
 the two screen-share fields are independent: a share without sound needs
-only `publish_screen_share`, and granting one never implies the other.
+only `publish_screen_share`, and granting one never implies the other.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.2-024", "kind": "behavior", "applies": "§12.10.2 ConferenceGrants, the conference feature: a screen share's published sound is a track of kind AUDIO, which the framework transcribes and records like any other audio track, attributed to the participant sharing Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Once published, the sound is a track of kind AUDIO: a separate right, not
 a separate kind, so the framework transcribes and records it like any
 other audio track, attributed to the participant sharing.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.10.2-006", "kind": "behavior", "applies": "§12.10.2 Data Models; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.10.2-025", "kind": "structural", "applies": "§12.10.2 ConferenceAccess, the conference feature: the credentials a human client joins with and their fields, url (the endpoint the client connects to), token (provider-specific), expires_at or null, and provider_data Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **ConferenceAccess** — credentials for a human client to join:
 
 ```
@@ -15850,41 +15856,43 @@ ConferenceAccess
 ├── expires_at: datetime | null
 └── provider_data: map<string, any>     # Additional provider-specific fields
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.2-026", "kind": "behavior", "applies": "§12.10.2 ConferenceAccess, the conference feature: the framework treats ConferenceAccess as opaque, the backend minting it, the integrator handing it to the client and the provider's SDK consuming it; framework code depends on nothing of its structure beyond its fields Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The framework treats ConferenceAccess as **opaque**: the backend mints it,
 the integrator returns it to the client application (e.g., via the REST
 surface), and the provider's client SDK consumes it. Framework code MUST
 NOT depend on its internal structure beyond the fields above.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.10.2-007", "kind": "behavior", "applies": "§12.10.2 Data Models; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.10.2-027", "kind": "behavior", "applies": "§12.10.2 Participant identity correlation, rule 1, the conference feature: the framework passes the Room Participant.id (§5.5) as mint_access()'s participant_id; the lead-in on attribution resting on one participant_id across the backend boundary folded in Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Participant identity correlation (normative).** Every attribution
 guarantee in this section — transcription RoomEvents, Participant records,
 interruption allowlists — depends on `participant_id` meaning the same
 thing on both sides of the backend boundary. Therefore:
 
 1. The framework MUST pass the Room `Participant.id` (Section 5.5) as the
-   `participant_id` argument to `mint_access()`.
+   `participant_id` argument to `mint_access()`.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.2-028", "kind": "behavior", "applies": "§12.10.2 Participant identity correlation, rule 2, the conference feature: for a participant that joined with minted access, the backend surfaces that same value as ConferenceParticipant.participant_id and ConferenceTrack.participant_id, a backend whose SFU cannot carry a caller-supplied identity keeping the mapping internally and translating at the boundary Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 2. For a participant that joined with minted access, the backend MUST
    surface that same value as `ConferenceParticipant.participant_id` and as
    `ConferenceTrack.participant_id`. A backend whose SFU cannot carry a
    caller-supplied identity MUST maintain the mapping internally and
-   translate at the boundary.
+   translate at the boundary.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.2-029", "kind": "behavior", "applies": "§12.10.2 Participant identity correlation, rule 3, the conference feature: for a participant the framework did not mint (a SIP or PSTN dial-in, an out-of-band admission), the backend surfaces its own identity, stable for that connection's lifetime, and populates metadata with the provider's participant attributes Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 3. For a participant the framework did not mint — SIP/PSTN dial-in
    (Section 12.10.9), or admission arranged out of band — the backend MUST
    surface its own stable identity for the lifetime of that participant's
    connection, and MUST populate `metadata` with the provider's participant
-   attributes. The channel MUST then create a Participant with that
+   attributes. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.2-030", "kind": "behavior", "applies": "§12.10.2 Participant identity correlation, rule 3, the conference feature: the channel creates a Participant with that identity as external_id and identification UNKNOWN, and passes any resolvable address the SFU asserts, a caller number above all, to identity resolution (§11) rather than resolving on the opaque identity alone Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The channel MUST then create a Participant with that
    identity as `external_id` and `identification: UNKNOWN`, and MUST pass
    any resolvable address the SFU asserts — a caller number above all — to
    identity resolution (Section 11) rather than resolving on the opaque
-   identity alone. A phone participant joining a conference SHOULD reach
-   the same Identity it would have reached over the SMS or Voice channel.
+   identity alone. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.2-031", "kind": "behavior", "applies": "§12.10.2 Participant identity correlation, rule 3, the conference feature: a phone participant joining a conference reaches the same Identity it would have reached over the SMS or Voice channel Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->A phone participant joining a conference SHOULD reach
+   the same Identity it would have reached over the SMS or Voice channel.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.2-032", "kind": "behavior", "applies": "§12.10.2 Participant identity correlation, rule 4, the conference feature: an identity is never reused across participants within a room's lifetime Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 4. Identities MUST NOT be reused across participants within a room's
    lifetime.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.10.2-008", "kind": "behavior", "applies": "§12.10.2 Data Models; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.10.2-033", "kind": "behavior", "applies": "§12.10.2 Resolving the participant the framework did not name, the conference feature: resolution runs when the participant arrives, not when it first speaks, so a participant that never speaks is resolved too; the lead-in folded in Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Resolving the participant the framework did not name.** Rule 3 says the
 address must reach identity resolution; when it does so, and what becomes of
 the answer, decide whether the rest of the section still holds.
@@ -15895,7 +15903,9 @@ word, and one that stays unidentified until it does is unidentified to every
 hook, roster read and disclosure obligation in the meantime — which is the
 opposite of what rule 3 exists for. It also means resolution runs for a
 participant that never speaks at all.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.2-034", "kind": "behavior", "applies": "§12.10.2 Resolving the participant the framework did not name, the conference feature: the answer is recorded on the Participant rule 3 created, whose id stays the backend's identity, the resolved Identity carried by identity_id (and display_name); the participant is never re-keyed to the Identity's own id (why: one human would sit under two identifiers in one room, informative) Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The answer MUST be recorded on the Participant rule 3 created, whose `id`
 remains the backend's identity: the resolved Identity is carried by
 `identity_id` (and `display_name`), and the participant MUST NOT be re-keyed
@@ -15905,19 +15915,21 @@ while the recording's `RecordingTrack.participant_id` (Section 12.10.8), the
 interruption allowlist (Section 12.10.5) and the roster stayed on the
 backend's identity, leaving one human under two identifiers in one room. One
 participant record, one identifier, an Identity linked to it.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.2-035", "kind": "behavior", "applies": "§12.10.2 Resolving the participant the framework did not name, the conference feature: an implementation documents the participant-attribute keys it reads as a resolvable address, and should let an integrator override them (the SHOULD of the same sentence) Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 What counts as a resolvable address is provider-specific, so an
 implementation MUST document the participant-attribute keys it reads and
 SHOULD let an integrator override them — a provider whose key is not on the
-list is a configuration matter, not a reason to fork the framework. The
+list is a configuration matter, not a reason to fork the framework. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.2-036", "kind": "behavior", "applies": "§12.10.2 Resolving the participant the framework did not name, the conference feature: keys carrying the trunk or destination number a caller dialled (sip.trunkPhoneNumber and equivalents, an example) are never taken for the caller's address Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The
 number a caller *dialled* is not the caller: keys carrying the trunk or
 destination number (`sip.trunkPhoneNumber` and equivalents) MUST NOT be
-taken for the caller's address. Where no resolvable address is found, the
+taken for the caller's address. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.2-037", "kind": "behavior", "applies": "§12.10.2 Resolving the participant the framework did not name, the conference feature: where no resolvable address is found, the channel leaves the participant UNKNOWN rather than resolving on the opaque identity Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Where no resolvable address is found, the
 channel MUST leave the participant `UNKNOWN` rather than resolving on the
 opaque identity, which is the case rule 3 rules out.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.10.2-009", "kind": "behavior", "applies": "§12.10.2 Data Models; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.10.2-038", "kind": "behavior", "applies": "§12.10.2 An address is only as good as its provenance, the conference feature: an implementation resolves identity only on addresses found in asserted_metadata, never on an attribute the backend did not assert (why: a client's own attribute is a claim about itself, informative) Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **An address is only as good as its provenance.** Which key carries the
 address is the second question; the first is who put the value there. An
 attribute a participant's own client supplied is a claim about itself: a
@@ -15926,27 +15938,31 @@ whatever Identity that number belongs to — someone else's — and the
 Participant then carries the victim's `identity_id`, on the record every
 later attribution reads. Therefore an implementation MUST resolve identity
 only on addresses found in `asserted_metadata`, and MUST NOT take an
-attribute the backend did not assert for an address. A null
+attribute the backend did not assert for an address. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.2-039", "kind": "behavior", "applies": "§12.10.2 An address is only as good as its provenance, the conference feature: a null asserted_metadata yields no resolvable address, and the participants of a backend that does not distinguish stay UNKNOWN Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A null
 `asserted_metadata` asserts nothing: a backend that does not distinguish
 (preceding subsection, point 2) yields no resolvable address at all, and its
 participants stay `UNKNOWN`.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.2-040", "kind": "behavior", "applies": "§12.10.2 An address is only as good as its provenance, the conference feature: provenance outranks specificity, an asserted attribute on a generic key believed over an unasserted one on the provider's own key Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Provenance outranks specificity. An asserted attribute on a generic key is
 believed over an unasserted one on the provider's own key, because the
 attacker chooses the key and never the provenance.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.2-041", "kind": "behavior", "applies": "§12.10.2 An address is only as good as its provenance, the conference feature: an integrator with its own reason to trust unasserted attributes may widen the default, and an implementation offers that as configuration rather than leave forking as the only route Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 This is a default, not a prohibition. An integrator whose deployment has its
 own reason to trust unasserted attributes — a closed client fleet, a backend
 whose provenance the integrator establishes elsewhere — MAY widen it, and an
 implementation SHOULD offer that as configuration rather than leave forking
-as the only route. What an implementation MUST NOT do is widen it silently:
-the safe reading is the one that holds unconfigured. Where an implementation
+as the only route. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.2-042", "kind": "behavior", "applies": "§12.10.2 An address is only as good as its provenance, the conference feature: an implementation never widens the default silently, the safe reading being the one that holds unconfigured Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->What an implementation MUST NOT do is widen it silently:
+the safe reading is the one that holds unconfigured. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.2-043", "kind": "behavior", "applies": "§12.10.2 An address is only as good as its provenance, where an implementation carries the provider's attributes into resolution as context, the conference feature: the attributes it did not vouch for stay distinguishable from those it did Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Where an implementation
 carries the provider's attributes into resolution as context, the ones it
 did not vouch for MUST remain distinguishable from the ones it did, so that
 a resolver reading them does so knowingly.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.10.2-010", "kind": "behavior", "applies": "§12.10.2 Data Models; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.10.2-044", "kind": "behavior", "applies": "§12.10.2 What the Participant record keeps of them, where an implementation records provider attributes on a Participant, the conference feature: it keeps them under a single dedicated key, not merged flat, so no provider attribute overwrites a field the integrator put there; the lead-in folded in Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **What the Participant record keeps of them.** Provider attributes are worth
 persisting — they are how an integrator finds out that a participant dialled
 in, on what trunk, under which SIP call id. But a Participant's `metadata`
@@ -15955,30 +15971,30 @@ strangers write into it. An implementation that records provider attributes
 on a Participant MUST therefore:
 
 - keep them under a single dedicated key rather than merged flat, so that no
-  provider attribute can overwrite a field the integrator put there;
+  provider attribute can overwrite a field the integrator put there;<!-- /rfc --><!-- rfc: {"id": "RK-12.10.2-045", "kind": "behavior", "applies": "§12.10.2 What the Participant record keeps of them, where an implementation records provider attributes on a Participant, the conference feature: the record keeps the provenance split (asserted or not) intact, so what an identity was founded on stays auditable Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - keep the provenance split of the preceding subsection intact in the
   record, so that what an identity was founded on remains auditable after
-  the fact;
+  the fact;<!-- /rfc --><!-- rfc: {"id": "RK-12.10.2-046", "kind": "behavior", "applies": "§12.10.2 What the Participant record keeps of them, where an implementation records provider attributes on a Participant, the conference feature: what is persisted is bounded, in the number of attributes and the size of each Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - bound what is persisted — the number of attributes and the size of each —
   since on a conference open to dial-in, their content is chosen by whoever
   connects.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.10.2-011", "kind": "behavior", "applies": "§12.10.2 Data Models; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.10.2-047", "kind": "behavior", "applies": "§12.10.2 An arrival is not an inbound message, the conference feature: a participant's arrival fires no ON_IDENTITY_* hook and runs no challenge or rejection flow, which belong to the inbound pipeline its first utterance reaches normally Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **An arrival is not an inbound message**, and the parts of Section 11 that
 act on one do not apply to it: there is nothing to hold, nothing to reject and
 nowhere to inject a challenge, so an arrival MUST NOT fire the
 `ON_IDENTITY_*` hooks or run the challenge and rejection flows — those
 belong to the inbound pipeline, and the participant's first utterance
-reaches it normally. An AMBIGUOUS or PENDING result SHOULD be recorded as a
+reaches it normally. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.2-048", "kind": "behavior", "applies": "§12.10.2 An arrival is not an inbound message, the conference feature: an AMBIGUOUS or PENDING result should be recorded as a pending identification carrying its candidates (the SHOULD of the sentence), and an UNKNOWN, REJECTED or CHALLENGE_SENT result leaves the participant UNKNOWN Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An AMBIGUOUS or PENDING result SHOULD be recorded as a
 pending identification carrying its candidates; UNKNOWN, REJECTED and
-CHALLENGE_SENT leave the participant `UNKNOWN`. Section 11.5 applies to the
+CHALLENGE_SENT leave the participant `UNKNOWN`. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.2-049", "kind": "behavior", "applies": "§12.10.2 An arrival is not an inbound message, the conference feature: §11.5 applies to the arrival's resolution: on timeout the result is UNKNOWN, identity_timeout is emitted and the participant joins regardless Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Section 11.5 applies to the
 call: on timeout the implementation MUST treat the result as UNKNOWN, emit
-`identity_timeout`, and let the participant join regardless. A resolver that
+`identity_timeout`, and let the participant join regardless. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.2-050", "kind": "behavior", "applies": "§12.10.2 An arrival is not an inbound message, the conference feature: a resolver that raises never keeps a participant out of the conference Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A resolver that
 raises MUST NOT keep a participant out of the conference.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.10.2-012", "kind": "behavior", "applies": "§12.10.2 Data Models; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.10.2-051", "kind": "structural", "applies": "§12.10.2 BotSession, the conference feature: the framework's own connection to a conference and its fields, id, room_id, identity (its display identity in the conference), joined_at (when the bot connected) and metadata Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **BotSession** — the framework's own connection to a conference:
 
 ```
@@ -15989,20 +16005,22 @@ BotSession
 ├── joined_at: datetime                 # When the bot connected; MUST be timezone-aware
 └── metadata: map<string, any>
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.2-052", "kind": "behavior", "applies": "§12.10.2 BotSession, the conference feature: conference_ended's duration_ms (§8.2) is measured from the session's joined_at Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 `joined_at` is what `conference_ended`'s `duration_ms` is measured from
-(Section 8.2). It defaults to the moment the session is constructed, which
+(Section 8.2). <!-- /rfc --><!-- rfc: {"id": "RK-12.10.2-053", "kind": "behavior", "applies": "§12.10.2 BotSession, the conference feature: joined_at defaults to the moment the session is constructed, when a backend builds the one join_as_bot() returns, and a backend holding a more accurate figure the SFU reports should set it instead (the SHOULD of the same sentence) Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->It defaults to the moment the session is constructed, which
 is when a backend builds the one it returns from `join_as_bot()`; a backend
 holding a more accurate figure — one the SFU reports — SHOULD set it
-instead. It MUST be timezone-aware: a naive value cannot be subtracted from
+instead. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.2-054", "kind": "behavior", "applies": "§12.10.2 BotSession, the conference feature: joined_at is timezone-aware (why: a naive value fails in the teardown and costs the conference its end announcement, informative) Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->It MUST be timezone-aware: a naive value cannot be subtracted from
 an aware clock, and the failure surfaces during teardown where it costs the
-conference its end announcement rather than the duration alone.
+conference its end announcement rather than the duration alone.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.2-055", "kind": "behavior", "applies": "§12.10.2 BotSession, the conference feature: an implementation settles joined_at's timezone when the session is recorded, so a backend's omission is reported at its boundary rather than raised from the teardown Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 Implementations SHOULD settle the timezone when the session is recorded, so
 that a backend's omission is reported at the boundary it came from rather
 than raised from the teardown.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.10.2-013", "kind": "behavior", "applies": "§12.10.2 Data Models; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.10.2-013", "kind": "structural", "applies": "§12.10.2 ConferenceCapability, the conference feature: the conference backend's capability flags SCREEN_SHARE, EGRESS_RECORDING, SIP_GATEWAY, ACTIVE_SPEAKER, CONNECTION_QUALITY, VIDEO_PUBLISH, REMOTE_UNMUTE, BOT_GRANT_UPDATE and E2EE and what each declares; why REMOTE_UNMUTE and BOT_GRANT_UPDATE are capabilities (muting always available, unmuting not; changing a connected session's grants in place, LiveKit's UpdateParticipant an informative example, with the re-join fallback §12.10.4 specifies), informative Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **ConferenceCapability** flags:
 
 | Flag | Description |
@@ -16032,7 +16050,7 @@ What the capability buys is continuity — a re-permission with the
 session, its subscriptions and the event bridge intact.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.10.2-014", "kind": "behavior", "applies": "§12.10.2 Data Models; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.10.2-056", "kind": "behavior", "applies": "§12.10.2 E2EE and framework media access, the conference feature: whether a conference uses E2EE is per-conference state, requested through the channel's e2ee field (§12.10.4) and passed to ensure_room(); setting it on a backend without the E2EE capability raises a configuration error; why E2EE constrains what the framework can do (ciphertext to the bot) and the capability flag stating only support, folded in Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **E2EE and framework media access (normative).** E2EE is the one
 capability that constrains rather than extends what the framework can do:
 when it is active, the bot receives ciphertext it cannot decode, so STT
@@ -16043,7 +16061,7 @@ The flag above states only that a backend *supports* E2EE. Whether a given
 conference *uses* it is per-conference state, requested through the
 channel's `e2ee` field (Section 12.10.4) and passed to `ensure_room()`;
 setting it on a backend without the E2EE capability MUST raise a
-configuration error. An implementation offering E2EE MUST then do one of:
+configuration error. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.2-057", "kind": "behavior", "applies": "§12.10.2 E2EE and framework media access, where an implementation offers E2EE, the conference feature: it either admits the bot as a key holder so subscribed tracks decode, or runs the conference without framework media intelligence and raises a configuration error when STT, vision or recording is configured on a channel with e2ee set; never delivers undecodable frames to a lane silently Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An implementation offering E2EE MUST then do one of:
 
 - admit the bot as a key holder in the conference's key exchange, so
   subscribed tracks decode normally; or
@@ -16056,16 +16074,24 @@ Silently delivering undecodable frames to a lane is NOT conforming.
 
 #### 12.10.3 ConferenceBackend Interface
 
-<!-- rfc: {"id": "RK-12.10.3-001", "kind": "structural", "applies": "§12.10.3 ConferenceBackend Interface; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.10.3-015", "kind": "structural", "applies": "§12.10.3 ConferenceBackend Interface, the conference feature: the ConferenceBackend interface's name property (the backend identifier) and its capabilities (a ConferenceCapability), with the heading of its control plane Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 ConferenceBackend (interface)
 ├── name: string (property)             # Backend identifier
 ├── capabilities: ConferenceCapability
 │
 │   # Control plane:
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.10.3-016", "kind": "behavior", "applies": "§12.10.3 ConferenceBackend Interface, the conference feature: ensure_room(room_id, metadata?, e2ee?) is idempotent, creating the conference room only when absent; its e2ee, false by default, requests E2EE (§12.10.2) Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── ensure_room(room_id, metadata?, e2ee?) → void
 │       # Idempotent: create the conference room if absent; e2ee
 │       # (default false) requests E2EE (Section 12.10.2)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.10.3-017", "kind": "structural", "applies": "§12.10.3 ConferenceBackend Interface, the conference feature: the rest of the control plane, close_room, mint_access(room_id, participant_id, grants, display_name?, attributes?) returning ConferenceAccess, list_participants, remove_participant, mute_track (moderation) and unmute_track, and the bot participant's join_as_bot(room_id, identity, grants) returning BotSession, leave, update_bot_grants, subscribe_track, unsubscribe_track, publish_audio (an AudioChunk) and stop_playback (barge-in); the REMOTE_UNMUTE, BOT_GRANT_UPDATE and barge-in notes restate RK-12.10.3-060, 046 and 035 Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── close_room(room_id) → void
 ├── mint_access(room_id, participant_id, grants, display_name?, attributes?) → ConferenceAccess
 ├── list_participants(room_id) → list<ConferenceParticipant>
@@ -16081,7 +16107,15 @@ ConferenceBackend (interface)
 ├── unsubscribe_track(bot, track_id) → void
 ├── publish_audio(bot, chunk: AudioChunk) → void
 ├── stop_playback(bot) → void                      # Barge-in: discard queued bot audio
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.10.3-018", "kind": "behavior", "applies": "§12.10.3 ConferenceBackend Interface, the conference feature: publish_video(bot, frame), a VideoFrame, requires the VIDEO_PUBLISH capability Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── publish_video(bot, frame: VideoFrame) → void   # Requires VIDEO_PUBLISH
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.10.3-019", "kind": "structural", "applies": "§12.10.3 ConferenceBackend Interface, the conference feature: the callbacks on_participant_joined, on_participant_left, on_track_published, on_track_unpublished, on_track_muted and on_track_unmuted (each with the room and the participant or track), on_track_audio (track, AudioFrame), on_track_video (track, VideoFrame), on_active_speaker_changed, on_connection_quality, on_bot_session_ended (session, reason), and close() Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │
 │   # Callbacks:
 ├── on_participant_joined(callback)     # (room_id, ConferenceParticipant)
@@ -16099,7 +16133,7 @@ ConferenceBackend (interface)
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.10.3-002", "kind": "behavior", "applies": "§12.10.3 ConferenceBackend Interface; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.10.3-020", "kind": "behavior", "applies": "§12.10.3 Presence is observable only through a connection, the conference feature: a channel never depends on presence reported for a room no bot session is connected to for anything correctness rests on, the first join above all (§12.10.4); the lead-in folded in: the participant, track, audio and speaker callbacks describe a conference a bot session is connected to, a backend owing none of them before the first join_as_bot() or between a reported end and a re-join, and one with a server-side view may report such presence Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Presence is observable only through a connection (normative):** the
 participant, track, audio and speaker callbacks describe a conference that
 a bot session of this backend is connected to. Before the first
@@ -16112,7 +16146,9 @@ but a channel MUST NOT depend on such reports for anything correctness
 rests on, the first join above all (Section 12.10.4): a channel whose only
 bootstrap is a presence callback waits on an event that only the join it
 is waiting to make would let the backend observe.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.3-021", "kind": "behavior", "applies": "§12.10.3 Presence is observable only through a connection, the conference feature: on join_as_bot() a backend catches the channel up, delivering through the ordinary joined and published callbacks every participant in the room and every track published that it has not already reported; what ended before the join is not recoverable, informative Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 What a newly joined session is owed is the present, not the past. A lazily
 joining bot enters a meeting already underway, and the participants and
 tracks it finds there may never have been reported — there was no
@@ -16127,13 +16163,13 @@ the join — an arrival that left again, a track unpublished — is not
 recoverable, exactly as across a reported discontinuity.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.10.3-003", "kind": "behavior", "applies": "§12.10.3 ConferenceBackend Interface; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.10.3-022", "kind": "behavior", "applies": "§12.10.3 The bot's own connection, the conference feature: a backend that observes the SFU end the bot's session without a leave() reports it through on_bot_session_ended, naming the session and a human-readable reason, forgets the session (a later leave() for it a no-op) and accepts no further media call for it Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **The bot's own connection (normative):** an SFU can end the bot's session
 without a `leave()` — the connection drops, a moderator evicts the bot, the
 room is deleted under it. A backend that observes such an end MUST report
 it through `on_bot_session_ended`, naming the session and a human-readable
 reason, MUST forget the session (a later `leave()` for it is a no-op), and
-MUST NOT accept further media calls for it. The channel MUST treat the
+MUST NOT accept further media calls for it. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.3-023", "kind": "behavior", "applies": "§12.10.3 The bot's own connection, the conference feature: the channel treats the report as the session's end in fact: the session comes off the books (bot_present answering no), conference_ended is announced, its lanes are closed and its recordings finalized, and the next need re-joins lazily; why, and the backend that cannot observe the loss, informative Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The channel MUST treat the
 report as the session's end in fact: the session comes off the books —
 `bot_present` stops answering yes for a connection that is gone —
 `conference_ended` is announced, the session's lanes are closed and its
@@ -16142,31 +16178,37 @@ first one did. Without this report a dropped bot is a session the channel
 reports present forever and a conference that has silently lost its
 transcription; a backend that genuinely cannot observe the loss has
 nothing to report, and inherits that failure mode knowingly.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.3-024", "kind": "behavior", "applies": "§12.10.3 The bot's own connection, the conference feature: a backend never drops a participant or track lifecycle event silently: past the bound it keeps, it ends the session with a reason naming the loss; the report as the exit for a session whose view can no longer be trusted, folded in Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The report is also the honest exit for a session whose *view* of the
 conference can no longer be trusted — an event bridge that overflowed, a
 state divergence the backend detects. A backend MUST NOT drop a
 participant or track lifecycle event silently: past whatever bound it
-keeps, it ends the session with a reason naming the loss instead. When
+keeps, it ends the session with a reason naming the loss instead. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.3-025", "kind": "behavior", "applies": "§12.10.3 The bot's own connection, the conference feature: when the session being ended still has a live connection, the end is not reported until the backend has disconnected it; a session whose disconnect cannot be completed is kept, registered, reported present and refusing a replacement, and a later leave() retries Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->When
 the session being ended still has a live connection — an overflow is not
 a dropped link — the end MUST NOT be reported until the backend has
 actually disconnected it: the report empties the registry and seats a
 re-joined replacement, and issued early it puts two bots in one meeting.
 A session whose disconnect cannot be completed is kept — registered,
 reported present, refusing a replacement — and a later `leave()` retries.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.3-026", "kind": "behavior", "applies": "§12.10.3 The bot's own connection, the conference feature: at a reported discontinuity the events queued and undelivered are discarded, counted and named in the reason, and the re-join's catch-up announces the conference's current state; what happened entirely inside the outage window is not recoverable, informative Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Such an end is a **reported discontinuity**, and this specification is
 explicit about what it does and does not recover. The events queued and
 undelivered at the end are discarded, counted, and named in the reason;
 the re-join's catch-up announces the conference's *current* state. What
 happened entirely inside the outage window — a participant who joined
 and left while the consumer was stalled — is not recoverable, by the
-catch-up or by anything else. The per-participant lifecycle obligations
+catch-up or by anything else. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.3-027", "kind": "non_testable", "applies": "§12.10.3 The bot's own connection, the conference feature: the per-participant lifecycle obligations apply to the events the backend delivered; across a reported discontinuity, an implementation with disclosure or admission obligations (§17.7) treats the window as unaccounted, not as observed and empty, the reason string its signal; the integrator's to keep, as RK-17.7-010 Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The per-participant lifecycle obligations
 of this section apply to the events the backend delivered; across a
 reported discontinuity, an implementation with disclosure or admission
 obligations (Section 17.7) MUST treat the window as *unaccounted* rather
 than as observed-and-empty — the reason string is the signal to do so.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.3-028", "kind": "behavior", "applies": "§12.10.3 The bot's own connection, the conference feature: a channel attempts a bounded, backed-off re-join after any reported end while the room remains attached and collecting (why: no backend event can produce the lazy join's next need, informative) Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 A channel SHOULD attempt a bounded, backed-off re-join after any
 reported end while the room remains attached and collecting — the ended
 session was what received the frames and events, so no backend event can
@@ -16174,19 +16216,19 @@ produce the lazy join's "next need"; a later mint or delivery could, but
 mid-meeting there may never be another of either.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.10.3-004", "kind": "behavior", "applies": "§12.10.3 ConferenceBackend Interface; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.10.3-029", "kind": "behavior", "applies": "§12.10.3 Frame delivery requirements, the conference feature: on_track_audio delivers decoded PCM as AudioFrames with a declared sample rate, the backend owning decoding (Opus, etc., examples) Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Frame delivery requirements:**
 
 - `on_track_audio` MUST deliver decoded PCM as AudioFrames with a declared
-  sample rate. The backend owns decoding (Opus, etc.).
-- `on_track_video` SHOULD deliver raw frames. Backends MAY deliver encoded
+  sample rate. The backend owns decoding (Opus, etc.).<!-- /rfc --><!-- rfc: {"id": "RK-12.10.3-030", "kind": "behavior", "applies": "§12.10.3 Frame delivery requirements, the conference feature: on_track_video delivers raw frames Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
+- `on_track_video` SHOULD deliver raw frames. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.3-031", "kind": "behavior", "applies": "§12.10.3 Frame delivery requirements, where a backend delivers encoded video frames (its choice), the conference feature: the channel's VideoPipeline decoder stage (§12.8.4) applies to them, reusing the is_encoded mechanic Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Backends MAY deliver encoded
   frames; the channel's VideoPipeline decoder stage (Section 12.8.4) then
-  applies, reusing the existing `is_encoded` mechanic.
+  applies, reusing the existing `is_encoded` mechanic.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.3-032", "kind": "behavior", "applies": "§12.10.3 Frame delivery requirements, the conference feature: every frame is attributable, the ConferenceTrack passed with it carrying the publishing participant_id and room_id Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - Frames MUST be attributable: the ConferenceTrack passed with each frame
   carries the publishing `participant_id` and `room_id`.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.10.3-005", "kind": "behavior", "applies": "§12.10.3 ConferenceBackend Interface; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.10.3-033", "kind": "behavior", "applies": "§12.10.3 Frame publishing requirements, the conference feature: publish_audio takes an AudioChunk (§12.3.11) of decoded PCM, and a conference backend rejects a chunk that is not PCM rather than forwarding it to the SFU Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Frame publishing requirements:**
 
 - `publish_audio` takes an AudioChunk (Section 12.3.11) — the outbound stream
@@ -16194,7 +16236,7 @@ mid-meeting there may never be another of either.
   its own encoding in `format`, and a conference backend MUST reject a chunk
   that is not PCM rather than forwarding it to the SFU: encoding belongs to the
   backend, and a caller choosing the wire format would defeat the abstraction
-  boundary below.
+  boundary below.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.3-034", "kind": "behavior", "applies": "§12.10.3 Frame publishing requirements, the conference feature: publish_video takes a raw VideoFrame (is_raw true), the backend owning encoding, and a backend never requires the framework to supply an encoded VideoChunk, so bot-video producers emit raw frames; why inbound tolerates encoded frames and outbound does not, informative Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - `publish_video` takes a **raw** VideoFrame (`is_raw` true). The backend
   owns encoding, symmetrically with the decoding it owns on the inbound
   side. A backend MUST NOT require the framework to supply an encoded
@@ -16211,36 +16253,36 @@ outbound frame requires choosing a codec the SFU will accept before any
 frame exists.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.10.3-006", "kind": "behavior", "applies": "§12.10.3 ConferenceBackend Interface; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.10.3-035", "kind": "behavior", "applies": "§12.10.3 Stopping playback, the conference feature: on stop_playback() a backend immediately discards the bot-track audio it accepted through publish_audio() and has not yet delivered for playout; the call as the barge-in gesture, folded in Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Stopping playback (normative):** `stop_playback()` is the barge-in
 gesture — the one call that says the room asked for silence *now*, rather
 than at the end of whatever the transport has buffered. A participant who
 cut the bot off is not asking for the queue to finish playing.
 
 - A backend MUST immediately discard the bot-track audio it has accepted
-  through `publish_audio()` but not yet delivered for playout. Audio that
+  through `publish_audio()` but not yet delivered for playout. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.3-036", "kind": "behavior", "applies": "§12.10.3 Stopping playback, the conference feature: a backend that queues bot audio locally keeps that queue small enough that the residue after a stop still reads as responsive; audio already in the SFU or at clients is beyond recall, informative Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->Audio that
   has already left the backend — buffered in the SFU or at clients — is
   beyond recall; a backend that queues locally SHOULD keep that queue
-  small enough that the residue still reads as responsive.
+  small enough that the residue still reads as responsive.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.3-037", "kind": "behavior", "applies": "§12.10.3 Stopping playback, the conference feature: a stop does not end the utterance, is_final staying the only boundary (§12.10.4): the backend accepts the closing chunk after the stop Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - The call does NOT end the utterance. `is_final` remains the only
   boundary (Section 12.10.4): the closing chunk still follows, and a
   backend MUST accept it after the stop rather than treating the stop as
-  having closed the utterance itself.
+  having closed the utterance itself.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.3-038", "kind": "behavior", "applies": "§12.10.3 Stopping playback, the conference feature: the bot's track stays usable after a stop, the next utterance publishing normally Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - The bot's track MUST remain usable: the next utterance publishes
-  normally.
+  normally.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.3-039", "kind": "behavior", "applies": "§12.10.3 Stopping playback, the conference feature: a stop for a session the backend no longer holds (left, evicted, dropped) is a no-op, not an error, unlike publish_audio, which refuses media for such a session Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - A stop for a session the backend no longer holds — left, evicted,
   dropped — is a no-op, not an error: the silence the call asks for is
   already true of a session that is gone. This is deliberately unlike
   `publish_audio`, which refuses media for a session that is out; a
   refusal there protects a track from writes, and there is no track left
-  to protect.
+  to protect.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.3-040", "kind": "behavior", "applies": "§12.10.3 Stopping playback, the conference feature: stop_playback needs no capability flag: every backend discards at least what it still holds, and one that holds nothing simply returns Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - There is deliberately no capability flag for this call. Every backend
   can discard at least what it still holds, and one that holds nothing —
   publishing synchronously into the SFU — simply returns. What varies
   between backends is the residue, not the meaning of the call.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.10.3-007", "kind": "behavior", "applies": "§12.10.3 ConferenceBackend Interface; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.10.3-007", "kind": "behavior", "applies": "§12.10.3 Mute transitions, the conference feature: a backend able to observe a track's muted state change keeps ConferenceTrack.muted true to the publisher's state, and should report each transition through on_track_muted or on_track_unmuted with the record already updated (the SHOULD of the same sentence); the transitions as presence, observable only through a connection, informative Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Mute transitions (normative):** `ConferenceTrack.muted` is the
 publisher's own state, and a backend able to observe it change MUST keep
 the record true to it and SHOULD report each transition through
@@ -16252,23 +16294,25 @@ and they are subject to the same rule as every other callback here:
 observable only through a connection.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.10.3-008", "kind": "behavior", "applies": "§12.10.3 ConferenceBackend Interface; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.10.3-041", "kind": "behavior", "applies": "§12.10.3 Track subscription, the conference feature: the framework's subscription set is authoritative, subscribe_track() and unsubscribe_track() being the only way the bot starts or stops receiving a track's frames, and a backend never delivers on_track_audio or on_track_video for a track the bot has not subscribed to Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Track subscription:** the framework's subscription set is authoritative.
 `subscribe_track()` / `unsubscribe_track()` are the only mechanism by which
 the bot begins or stops receiving a track's frames, and a backend MUST NOT
 deliver `on_track_audio` / `on_track_video` for a track the bot has not
-subscribed to. Backends whose SDK auto-subscribes by default MUST disable
+subscribed to. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.3-042", "kind": "behavior", "applies": "§12.10.3 Track subscription, the conference feature: a backend whose SDK auto-subscribes by default disables that for the bot session; the pointer to the channel's subscription policy (§12.10.4) folded in Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Backends whose SDK auto-subscribes by default MUST disable
 that behaviour for the bot session. The channel's subscription policy is
 specified in Section 12.10.4.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.10.3-009", "kind": "behavior", "applies": "§12.10.3 ConferenceBackend Interface; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.10.3-043", "kind": "behavior", "applies": "§12.10.3 Bot grants, the conference feature: a backend applies the ConferenceGrants join_as_bot() is given to the bot session rather than assuming full permissions (why: the bot's permissions vary by participation pattern, informative) Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Bot grants:** `join_as_bot()` takes ConferenceGrants like `mint_access()`
 does, because the bot's own permissions vary by AI participation pattern
 (Section 12.10.6): a speaking bot needs `publish_audio`, an Observer bot is
 `subscribe`-only with `hidden` set. A backend MUST apply them to the bot
 session rather than assuming full permissions.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.3-044", "kind": "behavior", "applies": "§12.10.3 Bot grants, where an implementation derives the bot's grants, the conference feature: it derives every one of them, subscribe included, a channel with nothing to consume the tracks subscribing to none Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 Where the permissive ConferenceGrants defaults are right for humans — whose
 needs the framework cannot know — they are wrong for the bot, whose
 behaviour the framework configured and therefore knows. An implementation
@@ -16276,43 +16320,47 @@ that derives the bot's grants SHOULD derive every one of them, `subscribe`
 included: a channel with nothing to consume the tracks it would receive
 subscribes to none (**Selective subscription**), and the grant is then
 permission to receive every participant's media for nobody to read.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.3-045", "kind": "behavior", "applies": "§12.10.3 Bot grants, with the BOT_GRANT_UPDATE capability, the conference feature: update_bot_grants() replaces a connected session's grants in place, the same session and connection, its subscriptions and callbacks undisturbed Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 With BOT_GRANT_UPDATE, `update_bot_grants()` replaces a connected
 session's grants in place: same session, same connection, subscriptions
 and callbacks undisturbed — the SFU changes what the session may do,
 which is what lets a hot-plugged voice speak without a re-join (Section
-12.10.4, **Hot-plugging intelligence**). Calling it on a backend without
+12.10.4, **Hot-plugging intelligence**). <!-- /rfc --><!-- rfc: {"id": "RK-12.10.3-046", "kind": "behavior", "applies": "§12.10.3 Bot grants, the conference feature: update_bot_grants() on a backend without BOT_GRANT_UPDATE raises a configuration error rather than failing silently or appearing to succeed Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Calling it on a backend without
 the capability MUST raise a configuration error rather than fail silently
-or appear to succeed — the `unmute_track()` rule, for the same reason. A
+or appear to succeed — the `unmute_track()` rule, for the same reason. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.3-047", "kind": "behavior", "applies": "§12.10.3 Bot grants, the conference feature: a backend treats the grants update_bot_grants() is given as the session's whole grant set, not a delta Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
 backend MUST treat the grants it is given as the session's whole grant
 set, not a delta.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.3-048", "kind": "behavior", "applies": "§12.10.3 Bot grants, the conference feature: a backend delivers a session's hidden-to-visible transition to the clients already connected, announcing the participant to them as newly joined Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 `hidden` rides the grant set like every other field, and its two
 directions are not equals. A backend SHOULD deliver a session's
 hidden-to-visible transition to the clients already connected —
 announcing the participant to them as newly joined is the
-behaviour the channel's reveal path leans on (Section 12.10.4). No
+behaviour the channel's reveal path leans on (Section 12.10.4). <!-- /rfc --><!-- rfc: {"id": "RK-12.10.3-049", "kind": "behavior", "applies": "§12.10.3 Bot grants, the conference feature: the channel never asks a backend to retract a participant its SFU already announced; a visible-to-hidden transition replaces the session instead (§12.10.4) Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->No
 backend is expected to retract a participant its SFU already announced:
 there is no interface for un-telling a client, so the channel never
 asks — a visible-to-hidden transition replaces the session instead
 (Section 12.10.4).
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.10.3-010", "kind": "behavior", "applies": "§12.10.3 ConferenceBackend Interface; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.10.3-050", "kind": "behavior", "applies": "§12.10.3 Display names, the conference feature: mint_access() may be given the participant's display_name, and a channel with a roster passes the one on record Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 **Display names:** `mint_access()` MAY be given the participant's
-`display_name`, and a channel with a roster SHOULD pass the one on record.
+`display_name`, and a channel with a roster SHOULD pass the one on record.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.3-051", "kind": "behavior", "applies": "§12.10.3 Display names, the conference feature: a display name is presentation, never identity, attribution riding participant_id alone, and a backend never lets a name stand in for it Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 It is presentation, never identity: attribution rides `participant_id`
-alone, and a backend MUST NOT let a name stand in for it. A backend
+alone, and a backend MUST NOT let a name stand in for it. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.3-052", "kind": "behavior", "applies": "§12.10.3 Display names, the conference feature: a backend carries the name into the credential, so the SFU's clients render the participant as the room named it, and reports it back on ConferenceParticipant.display_name Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->A backend
 SHOULD carry the name into the credential so the SFU's own clients render
 the participant as the room named them, and SHOULD report it back on
-`ConferenceParticipant.display_name`. A channel SHOULD use a reported
+`ConferenceParticipant.display_name`. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.3-053", "kind": "behavior", "applies": "§12.10.3 Display names, the conference feature: a channel uses a reported name to fill a roster record that has none, never to overwrite one the integrator set, which returns names to a roster rebuilt from the join's catch-up after a restart Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->A channel SHOULD use a reported
 name to fill a roster record that has none — never to overwrite one the
 integrator set — which is what returns names to a roster rebuilt from the
 join's catch-up after a restart (Section 12.10.4 step 1): the credential
 outlives the process that minted it, and the name rides the credential.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.10.3-011", "kind": "behavior", "applies": "§12.10.3 ConferenceBackend Interface; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.10.3-054", "kind": "behavior", "applies": "§12.10.3 Participant attributes, the conference feature: mint_access() may be given attributes, string keys to string values; a backend whose SFU carries per-participant attributes should put them in the credential and surfaces whatever the SFU then reports on ConferenceParticipant.metadata, one whose SFU carries none ignoring them; why the attributes exist, informative Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Participant attributes:** `mint_access()` MAY be given `attributes`, a
 map of string keys to string values the caller wants carried on the
 participant it is admitting. It exists because the identity is otherwise
@@ -16325,7 +16373,9 @@ them in the credential and MUST surface whatever the SFU then reports on
 `ConferenceParticipant.metadata`, by the same reading as any other
 attribute. One whose SFU carries none ignores them; nothing downstream
 depends on their arrival.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.3-055", "kind": "behavior", "applies": "§12.10.3 Participant attributes, the conference feature: an attribute is surfaced, not vouched for: a backend never places it in asserted_metadata merely because it rode a credential that backend minted, and one that cannot establish the value independently leaves it unasserted (point 1 of §12.10.2's rules governing unchanged) Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 They are surfaced, not vouched for. A backend MUST NOT place an attribute
 in `asserted_metadata` merely because it rode a credential that backend
 minted: the deployment may issue other credentials, and an SFU that lets
@@ -16335,43 +16385,47 @@ Section 12.10.2 governs unchanged,
 and an implementation that cannot establish the value independently MUST
 leave it unasserted — where it can be read and rendered, but cannot found
 an identity.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.3-056", "kind": "behavior", "applies": "§12.10.3 Participant attributes, the conference feature: what is minted is the caller's decision, per mint: a channel never derives attributes of its own from what it knows about the participant Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 What is minted is the caller's decision, per mint. A channel MUST NOT
 derive attributes of its own from what it knows about the participant —
 an `identity_id` a channel added unasked would publish the platform
 identity of everyone in the room to every peer of a conference that may
-be pseudonymous. And a channel MUST bound what it accepts to emit by
+be pseudonymous. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.3-057", "kind": "behavior", "applies": "§12.10.3 Participant attributes, the conference feature: a channel bounds the attributes it accepts to emit by what it would accept to persist (§12.10.2, provider attributes) Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->And a channel MUST bound what it accepts to emit by
 what it would accept to persist (Section 12.10.2, provider attributes):
 emitting what the same implementation would refuse to store is a
-credential whose contents cannot survive the round trip. Refusing is
+credential whose contents cannot survive the round trip. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.3-058", "kind": "behavior", "applies": "§12.10.3 Participant attributes, the conference feature: refusing attributes past that bound is recommended over truncating them, the caller being the integrator, the one party that can be told Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->Refusing is
 RECOMMENDED over truncating here — the caller is the integrator, which
 is the one party in this exchange that can be told.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.10.3-012", "kind": "behavior", "applies": "§12.10.3 ConferenceBackend Interface; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
-**Moderation:** `mute_track()` is always available. `unmute_track()` requires
+<!-- rfc: {"id": "RK-12.10.3-059", "kind": "behavior", "applies": "§12.10.3 Moderation, the conference feature: mute_track() is always available, needing no capability Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+**Moderation:** `mute_track()` is always available. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.3-060", "kind": "behavior", "applies": "§12.10.3 Moderation, the conference feature: unmute_track() requires the REMOTE_UNMUTE capability, and on a backend without it raises a configuration error rather than failing silently or appearing to succeed Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`unmute_track()` requires
 the REMOTE_UNMUTE capability; calling it on a backend without that
 capability MUST raise a configuration error rather than failing silently or
-appearing to succeed. Implementations MUST NOT assume the two operations
+appearing to succeed. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.3-061", "kind": "behavior", "applies": "§12.10.3 Moderation, the conference feature: implementations never assume mute and unmute are symmetric, and should surface the asymmetry to the integrator (the SHOULD of the same sentence) Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Implementations MUST NOT assume the two operations
 are symmetric, and SHOULD surface the asymmetry to the integrator — a
 moderation UI that offers unmute against a backend that refuses it is a
 worse outcome than one that never offers it.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.10.3-013", "kind": "behavior", "applies": "§12.10.3 ConferenceBackend Interface; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.10.3-013", "kind": "behavior", "applies": "§12.10.3 Abstraction boundary, the conference feature: a backend requires neither the integrator nor the framework to handle SDP negotiation, ICE, codec selection, simulcast or SVC layer control, or bitrate management, all internal to the SFU and its client SDKs Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Abstraction boundary (normative):** the interface deliberately omits SDP
 negotiation, ICE, codec selection, simulcast/SVC layer control, and bitrate
 management. A backend MUST NOT require the integrator or the framework to
 handle any of these; they are internal to the SFU and its client SDKs.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.10.3-014", "kind": "behavior", "applies": "§12.10.3 ConferenceBackend Interface; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.10.3-062", "kind": "structural", "applies": "§12.10.3 Required implementations, the conference feature: the required MockConferenceBackend, for unit testing with scripted participant and track event sequences Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Required implementations:**
 
 | Backend | Purpose |
 |---|---|
 | MockConferenceBackend | Unit testing with scripted participant/track event sequences |
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.3-063", "kind": "structural", "applies": "§12.10.3 Required implementations, the conference feature: an implementation may provide backends for any SFU whose server API can satisfy the interface (LiveKit, Janus and Daily, informative examples) Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->
 Implementations MAY provide backends for any SFU whose server API can
 satisfy this interface (e.g., LiveKit, Janus, Daily — informative).
 <!-- /rfc -->
