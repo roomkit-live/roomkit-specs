@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "rfc_sha256": "300683492d6d77bf45f955fe5bec692f4c36ca4e9f2aff2758261689358346d8",
+  "rfc_sha256": "8c850fc38f96005af75f639e6036f0066bf4df786def39a5080649bd5c2fd471",
   "corpus_sha256": "b6be90365c506d3356efc99c81d6387592780678f23506e174c78dae3ca578be",
   "python_commit": "651ae82c198066cc771ad2fcfdc6995fdad25c99",
   "scenario_count": 3393,
@@ -6689,11 +6689,14 @@
       "section": "12.4.1",
       "title": "Full-Duplex Providers and Reasoning Delegation",
       "review": "normative",
-      "requirements": 10,
+      "requirements": 75,
       "mapping": {
-        "unmapped": 10
+        "unmapped": 75
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "step": 45,
+        "writable": 1
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -6701,11 +6704,13 @@
       "section": "12.4.2",
       "title": "Usage Reporting",
       "review": "normative",
-      "requirements": 3,
+      "requirements": 12,
       "mapping": {
-        "unmapped": 3
+        "unmapped": 12
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "step": 8
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -31525,79 +31530,793 @@
       }
     },
     {
-      "id": "RK-12.4.1-001",
+      "id": "RK-12.4.1-011",
       "section": "12.4.1",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.4.1-002",
+      "id": "RK-12.4.1-012",
       "section": "12.4.1",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.4.1-003",
+      "id": "RK-12.4.1-013",
+      "section": "12.4.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2049",
+        "note": "step: a scripted ReasoningBackend (S10) whose run delegates a task (§23)."
+      }
+    },
+    {
+      "id": "RK-12.4.1-014",
       "section": "12.4.1",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.4.1-004",
+      "id": "RK-12.4.1-015",
       "section": "12.4.1",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.4.1-005",
+      "id": "RK-12.4.1-016",
+      "section": "12.4.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2049",
+        "note": "vendor wire: leaves the RFC in P6-V (D2)"
+      }
+    },
+    {
+      "id": "RK-12.4.1-017",
       "section": "12.4.1",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.4.1-006",
+      "id": "RK-12.4.1-018",
+      "section": "12.4.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2049",
+        "note": "step: the provider's full_duplex trait in realtime.start, realtime.speech, and a read of the interrupt and truncate calls (S1, S3, S8)."
+      }
+    },
+    {
+      "id": "RK-12.4.1-019",
       "section": "12.4.1",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.4.1-007",
+      "id": "RK-12.4.1-020",
+      "section": "12.4.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2049",
+        "note": "step: realtime.response with the model's response start, and an observation of the host's idleness (S11); its scope is suspect RMK-2056."
+      }
+    },
+    {
+      "id": "RK-12.4.1-021",
+      "section": "12.4.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2049",
+        "note": "step: realtime.response with a response start, audible assistant audio or a partial assistant transcript on a full-duplex provider, and an observation of the host's idleness (S11, S1); its scope is suspect RMK-2056."
+      }
+    },
+    {
+      "id": "RK-12.4.1-022",
+      "section": "12.4.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2049",
+        "note": "step: realtime.response scripted to start before the send of the output returns, and an observation of the host's idleness (S11); its scope is suspect RMK-2056."
+      }
+    },
+    {
+      "id": "RK-12.4.1-023",
+      "section": "12.4.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2049",
+        "note": "step: an output the provider fails to take, and an observation of the host's idleness (S11); its scope is suspect RMK-2056."
+      }
+    },
+    {
+      "id": "RK-12.4.1-024",
+      "section": "12.4.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2049",
+        "note": "step: realtime.response and the idleness of a conference with a realtime model beside the realtime voice channel's (S11); its scope is suspect RMK-2056."
+      }
+    },
+    {
+      "id": "RK-12.4.1-025",
+      "section": "12.4.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2049",
+        "note": "step: the provider's full_duplex trait in realtime.start, realtime.speech, a transport barge-in, and a read of the interrupt and truncate calls and of the transport's audio (S1, S3, S4, S8)."
+      }
+    },
+    {
+      "id": "RK-12.4.1-026",
       "section": "12.4.1",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.4.1-008",
+      "id": "RK-12.4.1-027",
+      "section": "12.4.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2049",
+        "note": "step: the provider's full_duplex trait in realtime.start and realtime.speech, with an on_barge_in hook (S1, S3)."
+      }
+    },
+    {
+      "id": "RK-12.4.1-028",
+      "section": "12.4.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2049",
+        "note": "step: an audio pipeline on the realtime channel spec, realtime.audio and the provider's full_duplex trait (S13, S4, S1)."
+      }
+    },
+    {
+      "id": "RK-12.4.1-029",
+      "section": "12.4.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2049",
+        "note": "step: a pipeline VAD on the realtime channel spec, the provider's full_duplex trait, and a read of the activity signals and interrupt calls (S13, S1, S8)."
+      }
+    },
+    {
+      "id": "RK-12.4.1-030",
       "section": "12.4.1",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.4.1-009",
+      "id": "RK-12.4.1-031",
       "section": "12.4.1",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.4.1-010",
+      "id": "RK-12.4.1-032",
+      "section": "12.4.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2049",
+        "note": "step: paced provider audio with silence in realtime.audio, and a read of the pipeline recorder (S4)."
+      }
+    },
+    {
+      "id": "RK-12.4.1-033",
       "section": "12.4.1",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.4.2-001",
+      "id": "RK-12.4.1-034",
+      "section": "12.4.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2049",
+        "note": "step: the provider's supports_mid_session_reconfigure trait in realtime.start, with a handoff or a skill activation on the realtime room (S1); its scope is suspect RMK-2056."
+      }
+    },
+    {
+      "id": "RK-12.4.1-035",
+      "section": "12.4.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.4.1-036",
+      "section": "12.4.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.4.1-037",
+      "section": "12.4.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.4.1-038",
+      "section": "12.4.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.4.1-039",
+      "section": "12.4.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.4.1-085",
+      "section": "12.4.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.4.1-040",
+      "section": "12.4.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.4.1-041",
+      "section": "12.4.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.4.1-042",
+      "section": "12.4.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-2049",
+        "note": "realtime.delegate with target hosted, then realtime.tool_call: the call passes the gate, ON_TOOL_CALL fires and realtime.read shows the result submitted; that the provider surfaces its backend's calls is its own (D2)."
+      }
+    },
+    {
+      "id": "RK-12.4.1-043",
+      "section": "12.4.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.4.1-044",
+      "section": "12.4.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.4.1-045",
+      "section": "12.4.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.4.1-046",
+      "section": "12.4.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.4.1-047",
+      "section": "12.4.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2049",
+        "note": "step: a scripted ReasoningBackend whose outputs realtime.read shows (S10, S8); realtime/a-reasoning-error-reaches-the-room only reaches a failing backend on its way to ON_ERROR."
+      }
+    },
+    {
+      "id": "RK-12.4.1-048",
+      "section": "12.4.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.4.1-049",
+      "section": "12.4.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2049",
+        "note": "step: a scripted ReasoningBackend that records each request it receives (S10)."
+      }
+    },
+    {
+      "id": "RK-12.4.1-050",
+      "section": "12.4.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2049",
+        "note": "step: a scripted ReasoningBackend whose execute_tool_call reads a refused, a failed and a served call (S10)."
+      }
+    },
+    {
+      "id": "RK-12.4.1-051",
+      "section": "12.4.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.4.1-052",
+      "section": "12.4.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2049",
+        "note": "step: realtime.transcribe for both roles and a scripted ReasoningBackend that records its requests (S2, S10)."
+      }
+    },
+    {
+      "id": "RK-12.4.1-053",
+      "section": "12.4.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2049",
+        "note": "step: a scripted ReasoningBackend that yields outputs in steps, and a read of the delegation outputs submitted to the provider (S10, S8)."
+      }
+    },
+    {
+      "id": "RK-12.4.1-054",
+      "section": "12.4.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2049",
+        "note": "step: realtime.transcribe and a scripted ReasoningBackend, with a read of the room's stored events (S2, S10)."
+      }
+    },
+    {
+      "id": "RK-12.4.1-055",
+      "section": "12.4.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2049",
+        "note": "step: a conference with a realtime model, its transcriptions and a scripted ReasoningBackend that records its requests (S2, S10)."
+      }
+    },
+    {
+      "id": "RK-12.4.1-056",
+      "section": "12.4.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2049",
+        "note": "step: a scripted ReasoningBackend that yields nothing, fails or hangs past the run's bound, and a read of the delegation outputs (S10, S8)."
+      }
+    },
+    {
+      "id": "RK-12.4.1-057",
+      "section": "12.4.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.4.1-058",
+      "section": "12.4.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2049",
+        "note": "step: an agent as the ReasoningBackend whose turn its round cap, deadline or budget cuts, and a backend that hangs past the run's bound, with an on_error hook (S10)."
+      }
+    },
+    {
+      "id": "RK-12.4.1-059",
+      "section": "12.4.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.4.1-060",
+      "section": "12.4.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2049",
+        "note": "step: a scripted ReasoningBackend whose execute_tool runs a call through the realtime spec's tool_policy, BEFORE_TOOL_USE, ON_TOOL_CALL and result truncation (S10, S7)."
+      }
+    },
+    {
+      "id": "RK-12.4.1-061",
+      "section": "12.4.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2049",
+        "note": "step: an agent as the ReasoningBackend whose model calls a tool, with the channel's handler and hooks observed (S10)."
+      }
+    },
+    {
+      "id": "RK-12.4.1-062",
+      "section": "12.4.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2049",
+        "note": "step: a scripted ReasoningBackend that reads execute_tool_call's outcome for a refused and a failed call (S10)."
+      }
+    },
+    {
+      "id": "RK-12.4.1-063",
+      "section": "12.4.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2049",
+        "note": "step: an agent as the ReasoningBackend whose model calls a refused tool and reads it refused (S10)."
+      }
+    },
+    {
+      "id": "RK-12.4.1-064",
+      "section": "12.4.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2049",
+        "note": "step: an agent as the ReasoningBackend, its scripted model answering with an unparseable call or nothing (S10)."
+      }
+    },
+    {
+      "id": "RK-12.4.1-065",
+      "section": "12.4.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2049",
+        "note": "step: an agent as the ReasoningBackend, its scripted model calling a tool with arguments that do not read (S10)."
+      }
+    },
+    {
+      "id": "RK-12.4.1-066",
+      "section": "12.4.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2049",
+        "note": "step: an agent as the ReasoningBackend whose loop ends a call before the gate, with an on_tool_call hook (S10)."
+      }
+    },
+    {
+      "id": "RK-12.4.1-067",
+      "section": "12.4.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2049",
+        "note": "step: an agent as the ReasoningBackend whose provider serves a provider-side tool, with an on_tool_call hook (S10)."
+      }
+    },
+    {
+      "id": "RK-12.4.1-068",
+      "section": "12.4.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2049",
+        "note": "step: an agent as the ReasoningBackend, its model's call ids and a call without one, and the ids on_tool_call reads (S10)."
+      }
+    },
+    {
+      "id": "RK-12.4.1-069",
+      "section": "12.4.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2049",
+        "note": "step: an agent as the ReasoningBackend whose turn does not complete, and a read of the delegation outputs (S10, S8)."
+      }
+    },
+    {
+      "id": "RK-12.4.1-070",
+      "section": "12.4.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2049",
+        "note": "step: a scripted ReasoningBackend that hangs in a call past the run's bound, with an on_tool_call hook (S10)."
+      }
+    },
+    {
+      "id": "RK-12.4.1-071",
+      "section": "12.4.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2049",
+        "note": "step: an agent as the ReasoningBackend, its settings, turn budget and catalogue read on its turn (S10)."
+      }
+    },
+    {
+      "id": "RK-12.4.1-072",
+      "section": "12.4.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2049",
+        "note": "step: an agent as the ReasoningBackend with call bounds of its own, and a tool that waits past them (S10)."
+      }
+    },
+    {
+      "id": "RK-12.4.1-073",
+      "section": "12.4.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2049",
+        "note": "step: an agent as the ReasoningBackend whose loop re-reads a stored result (S10)."
+      }
+    },
+    {
+      "id": "RK-12.4.1-074",
+      "section": "12.4.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2049",
+        "note": "step: an agent with tools of its own, or registered with a kit, given as the ReasoningBackend in setup (S10)."
+      }
+    },
+    {
+      "id": "RK-12.4.1-075",
+      "section": "12.4.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2049",
+        "note": "step: an agent as the ReasoningBackend and a session tool under a name it serves, at construction and at configure (S10)."
+      }
+    },
+    {
+      "id": "RK-12.4.1-076",
+      "section": "12.4.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2049",
+        "note": "step: an agent as the ReasoningBackend and a session or room tool under a name it serves that arrives after start (S10)."
+      }
+    },
+    {
+      "id": "RK-12.4.1-077",
+      "section": "12.4.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2049",
+        "note": "step: an agent as the ReasoningBackend with a tool_policy and role overrides, and the session participant's role (S10)."
+      }
+    },
+    {
+      "id": "RK-12.4.1-078",
+      "section": "12.4.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2049",
+        "note": "step: an agent as the ReasoningBackend whose tool_policy denies a call, with an on_tool_call hook (S10)."
+      }
+    },
+    {
+      "id": "RK-12.4.1-079",
+      "section": "12.4.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2049",
+        "note": "step: an agent as the ReasoningBackend whose delegation is cut with a call unanswered, then a second delegation (S10)."
+      }
+    },
+    {
+      "id": "RK-12.4.1-080",
+      "section": "12.4.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2049",
+        "note": "step: an agent as the ReasoningBackend and two delegations of one session, the second reading the first's work (S10)."
+      }
+    },
+    {
+      "id": "RK-12.4.1-081",
+      "section": "12.4.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2049",
+        "note": "step: an agent as the ReasoningBackend (S10), and the voice session's span among the kinds telemetry.spans reads."
+      }
+    },
+    {
+      "id": "RK-12.4.1-082",
+      "section": "12.4.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.4.1-083",
+      "section": "12.4.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.4.1-084",
+      "section": "12.4.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.4.2-004",
+      "section": "12.4.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2049",
+        "note": "step: realtime.usage, a report the provider records on the session, and last_usage in realtime.read (S12, S8)."
+      }
+    },
+    {
+      "id": "RK-12.4.2-005",
+      "section": "12.4.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2049",
+        "note": "step: realtime.usage with a token-billed report, and last_usage in realtime.read (S12, S8)."
+      }
+    },
+    {
+      "id": "RK-12.4.2-006",
+      "section": "12.4.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2049",
+        "note": "step: realtime.usage with the provider's own keys beside the totals, and last_usage in realtime.read (S12, S8)."
+      }
+    },
+    {
+      "id": "RK-12.4.2-007",
       "section": "12.4.2",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.4.2-002",
+      "id": "RK-12.4.2-008",
+      "section": "12.4.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2049",
+        "note": "step: realtime.usage and an on_usage callback whose calls a read shows (S12)."
+      }
+    },
+    {
+      "id": "RK-12.4.2-009",
       "section": "12.4.2",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.4.2-003",
+      "id": "RK-12.4.2-010",
+      "section": "12.4.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2049",
+        "note": "step: two reports by realtime.usage, and last_usage in realtime.read (S12, S8); the full-duplex provider writes single keys into the snapshot (suspect RMK-2055)."
+      }
+    },
+    {
+      "id": "RK-12.4.2-015",
+      "section": "12.4.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2049",
+        "note": "step: realtime.usage, a turn's end by realtime.response, and last_usage in realtime.read (S12, S11, S8); Python clears it only when telemetry opens a turn span (suspect RMK-2055)."
+      }
+    },
+    {
+      "id": "RK-12.4.2-011",
+      "section": "12.4.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2049",
+        "note": "step: realtime.usage with an on_usage callback held at a gate, the session still served meanwhile (S12)."
+      }
+    },
+    {
+      "id": "RK-12.4.2-012",
+      "section": "12.4.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2049",
+        "note": "step: realtime.usage with an on_usage callback that fails, and a read of the session after it (S12)."
+      }
+    },
+    {
+      "id": "RK-12.4.2-013",
+      "section": "12.4.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.4.2-014",
       "section": "12.4.2",
       "mapping": "unmapped",
       "links": []
