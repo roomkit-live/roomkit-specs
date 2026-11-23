@@ -130,7 +130,6 @@ interpreted as described in [RFC 2119](https://www.rfc-editor.org/rfc/rfc2119).
 | **Conference** | A multi-party real-time media session (audio, video, screen share) attached to a Room, whose media plane is owned by an external SFU. |
 | **Track** | A single media stream (audio, video, or screen share) published by a conference participant. The unit of media identity in a conference. |
 | **Bot Participant** | The framework's own server-side connection to a conference, used to subscribe to tracks (STT, vision, recording) and publish media (TTS, avatar). |
-| **Egress** | Server-side media export performed by the SFU (e.g., conference recording), as opposed to framework-side recording. |
 <!-- /rfc -->
 
 ### 1.3 Notation
@@ -11786,10 +11785,10 @@ diarizing STT at construction, in every mode, with an error that says so.
 <!-- rfc: {"id": "RK-12.2.3-012", "kind": "behavior", "applies": "§12.2.3 Labels, the voice feature, what any STT provider must do: a speaker label is assigned by the provider, opaque, and stable within one STT stream and only there. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Labels.** A speaker label is assigned by the provider, is opaque, and is
 stable within one STT stream and only there: two streams may give one voice
-different labels, and one label to different voices.<!-- /rfc --> <!-- rfc: {"id": "RK-12.2.3-013", "kind": "behavior", "applies": "§12.2.3 Labels, the voice feature, what any STT provider must do: labels reported as strings, and a speaker the provider could not attribute reported as null, whatever the vendor spells it (the spellings listed are a vendor's wire). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A provider MUST report
+different labels, and one label to different voices.<!-- /rfc --> <!-- rfc: {"id": "RK-12.2.3-013", "kind": "behavior", "applies": "§12.2.3 Labels, the voice feature, what any STT provider must do: labels reported as strings, and a speaker the provider could not attribute reported as null, whatever its vendor spells it, the framework knowing no vendor's spelling. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A provider MUST report
 labels as strings (a vendor's integer `0` becomes `"0"`) and MUST report a
-speaker it could not attribute as null, whatever the vendor spells it
-(`UU`, `PENDING`, `unknown` in any case, or empty).<!-- /rfc --> <!-- rfc: {"id": "RK-12.2.3-014", "kind": "behavior", "applies": "§12.2.3 Labels, the voice feature, what any STT provider must do: no label the vendor did not send, and none carried over from another turn. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A provider MUST NOT invent a label the
+speaker it could not attribute as null, whatever its vendor spells it: the
+framework knows no vendor's spelling.<!-- /rfc --> <!-- rfc: {"id": "RK-12.2.3-014", "kind": "behavior", "applies": "§12.2.3 Labels, the voice feature, what any STT provider must do: no label the vendor did not send, and none carried over from another turn. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A provider MUST NOT invent a label the
 vendor did not send, nor carry one over from another turn.
 <!-- /rfc -->
 
@@ -11904,9 +11903,9 @@ construction without a diarization stage, and in batch mode. With it:
    pipeline runs its VAD before its diarization stage, and a stage may
    identify only on the `SPEECH_END` frame, so a channel that reads the stage
    when `SPEECH_END` fires MUST wait until that frame has been through it.<!-- /rfc --><!-- rfc: {"id": "RK-12.2.3-046", "kind": "behavior", "applies": "§12.2.3 From the pipeline stage, step 2, the voice feature, where an implementation offers the option: the stage's speaker_id normalised as an STT label (Labels). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
-2. The stage's `speaker_id` is normalised as an STT label (*Labels*).<!-- /rfc --> <!-- rfc: {"id": "RK-12.2.3-047", "kind": "behavior", "applies": "§12.2.3 From the pipeline stage, step 2, the voice feature, where an implementation offers the option: a result attributing the audio to nobody (unknown) counts as a null speaker, and heard the longest gives the transcript sender_name \"Unknown speaker\". Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
-   result that attributes the audio to nobody (`unknown`) counts as a null
-   speaker; if heard the longest, the transcript's `sender_name` is
+2. The stage's `speaker_id` is normalised as an STT label (*Labels*).<!-- /rfc --> <!-- rfc: {"id": "RK-12.2.3-047", "kind": "behavior", "applies": "§12.2.3 From the pipeline stage, step 2, the voice feature, where an implementation offers the option: a result attributing the audio to nobody (a null speaker_id) counts as a null speaker, and heard the longest gives the transcript sender_name \"Unknown speaker\". Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
+   result that attributes the audio to nobody (a null `speaker_id`) counts as
+   a null speaker; if heard the longest, the transcript's `sender_name` is
    `"Unknown speaker"`.<!-- /rfc --> <!-- rfc: {"id": "RK-12.2.3-048", "kind": "behavior", "applies": "§12.2.3 From the pipeline stage, step 2, the voice feature, where an implementation offers the option: a transcript over which the stage gave no result carries no speaker. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A transcript over which the stage gave no result
    carries no speaker, as without the option.<!-- /rfc --><!-- rfc: {"id": "RK-12.2.3-049", "kind": "behavior", "applies": "§12.2.3 From the pipeline stage, step 3, the voice feature, where an implementation offers the option: the stage keeps its labels for the whole session, the epoch 0. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 3. The stage keeps its labels for the whole session, so the epoch is 0.<!-- /rfc --><!-- rfc: {"id": "RK-12.2.3-050", "kind": "behavior", "applies": "§12.2.3 From the pipeline stage, step 4, the voice feature, where an implementation offers the option: the transcript reaches the room as one message, as Into the room sets it, ON_TRANSCRIPTION carrying the speaker and free to rename it or name its participant, the message carrying speaker_label, speaker_epoch and sender_name. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
@@ -12766,10 +12765,11 @@ DiarizationProvider (interface)
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.3.9-004", "kind": "structural", "applies": "§12.3.9 DiarizationResult, the voice feature: its fields, the speaker label, a confidence and whether the speaker is new. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+<!-- rfc: {"id": "RK-12.3.9-004", "kind": "structural", "applies": "§12.3.9 DiarizationResult, the voice feature: its fields, the speaker label (null for a voice attributed to nobody), a confidence and whether the speaker is new. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 DiarizationResult
-├── speaker_id: string                       # Identified speaker label
+├── speaker_id: string | null                # Identified speaker label; null
+│                                            # for a voice attributed to nobody
 ├── confidence: float | null                 # Identification confidence [0.0, 1.0]
 └── is_new_speaker: bool                     # True if this speaker was not previously seen
 ```
@@ -12777,9 +12777,9 @@ DiarizationResult
 
 <!-- rfc: {"id": "RK-12.3.9-005", "kind": "behavior", "applies": "§12.3.9 Diarization Provider, the voice feature: a speaker change the diarization stage detects fires the ON_SPEAKER_CHANGE hook. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 When diarization detects a speaker change, the framework MUST fire the
-ON_SPEAKER_CHANGE hook (Section 9.2). <!-- /rfc --><!-- rfc: {"id": "RK-12.3.9-006", "kind": "behavior", "applies": "§12.3.9 Diarization Provider, the voice feature: a result whose speaker_id the label rule of §12.2.3 reads as unattributed (UU, PENDING, unknown in any case, or empty) is no speaker: it fires no hook and leaves the last speaker unchanged. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A result that attributes the audio to
-nobody — a `speaker_id` the label rule of Section 12.2.3 reads as unattributed
-(`UU`, `PENDING`, `unknown` in any case, or empty) — is not a speaker, as for an STT label: it
+ON_SPEAKER_CHANGE hook (Section 9.2). <!-- /rfc --><!-- rfc: {"id": "RK-12.3.9-006", "kind": "behavior", "applies": "§12.3.9 Diarization Provider, the voice feature: a result whose speaker_id is null or empty, the provider reporting its own spelling of nobody as null, is no speaker: it fires no hook and leaves the last speaker unchanged. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A result that attributes the audio to
+nobody — a null or empty `speaker_id`, the provider reporting its own spelling
+of nobody as null (Section 12.2.3) — is not a speaker, as for an STT label: it
 neither fires the hook nor resets the last speaker, so a stretch the stage
 could not match between two stretches of one voice is no change. <!-- /rfc --><!-- rfc: {"id": "RK-12.3.9-007", "kind": "behavior", "applies": "§12.3.9 Diarization Provider, the voice feature: an unattributed result still reaches the frame, where a channel naming speakers from the stage counts it (§12.2.3). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The result
 still reaches the frame, where a channel naming speakers from the stage counts
@@ -15855,7 +15855,9 @@ participant record, one identifier, an Identity linked to it.
 What counts as a resolvable address is provider-specific, so an
 implementation MUST document the participant-attribute keys it reads and
 SHOULD let an integrator override them — a provider whose key is not on the
-list is a configuration matter, not a reason to fork the framework. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.2-036", "kind": "behavior", "applies": "§12.10.2 Resolving the participant the framework did not name, the conference feature: keys carrying the trunk or destination number a caller dialled (sip.trunkPhoneNumber and equivalents, an example) are never taken for the caller's address. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The
+list is a configuration matter, not a reason to fork the framework. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.2-058", "kind": "behavior", "applies": "§12.10.2 Resolving the participant the framework did not name, the conference feature: a backend names the keys its own provider uses for a caller's address (address_keys), and a channel whose integrator configured none reads them before its generic keys, which name no provider's. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A backend names the keys its own provider uses
+(`address_keys`, Section 12.10.3), and a channel whose integrator configured
+none reads them before its generic keys, which name no provider's. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.2-036", "kind": "behavior", "applies": "§12.10.2 Resolving the participant the framework did not name, the conference feature: keys carrying the trunk or destination number a caller dialled (sip.trunkPhoneNumber and equivalents, an example) are never taken for the caller's address. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The
 number a caller *dialled* is not the caller: keys carrying the trunk or
 destination number (`sip.trunkPhoneNumber` and equivalents) MUST NOT be
 taken for the caller's address. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.2-037", "kind": "behavior", "applies": "§12.10.2 Resolving the participant the framework did not name, the conference feature: where no resolvable address is found, the channel leaves the participant UNKNOWN rather than resolving on the opaque identity. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Where no resolvable address is found, the
@@ -15954,13 +15956,12 @@ that a backend's omission is reported at the boundary it came from rather
 than raised from the teardown.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.10.2-013", "kind": "structural", "applies": "§12.10.2 ConferenceCapability, the conference feature: the conference backend's capability flags SCREEN_SHARE, EGRESS_RECORDING, SIP_GATEWAY, ACTIVE_SPEAKER, CONNECTION_QUALITY, VIDEO_PUBLISH, REMOTE_UNMUTE, BOT_GRANT_UPDATE and E2EE and what each declares; why REMOTE_UNMUTE and BOT_GRANT_UPDATE are capabilities (muting always available, unmuting not; changing a connected session's grants in place, LiveKit's UpdateParticipant an informative example, with the re-join fallback §12.10.4 specifies), informative. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+<!-- rfc: {"id": "RK-12.10.2-013", "kind": "structural", "applies": "§12.10.2 ConferenceCapability, the conference feature: the conference backend's capability flags SCREEN_SHARE, SIP_GATEWAY, ACTIVE_SPEAKER, CONNECTION_QUALITY, VIDEO_PUBLISH, REMOTE_UNMUTE, BOT_GRANT_UPDATE and E2EE and what each declares; why REMOTE_UNMUTE and BOT_GRANT_UPDATE are capabilities (muting always available, unmuting not; changing a connected session's grants in place, LiveKit's UpdateParticipant an informative example, with the re-join fallback §12.10.4 specifies), informative. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **ConferenceCapability** flags:
 
 | Flag | Description |
 |---|---|
 | SCREEN_SHARE | Separate screen-share tracks |
-| EGRESS_RECORDING | Server-side (SFU) recording/export |
 | SIP_GATEWAY | PSTN/SIP participants can dial into the conference |
 | ACTIVE_SPEAKER | Dominant-speaker change events |
 | CONNECTION_QUALITY | Per-participant quality reports |
@@ -15988,8 +15989,7 @@ session, its subscriptions and the event bridge intact.
 **E2EE and framework media access (normative).** E2EE is the one
 capability that constrains rather than extends what the framework can do:
 when it is active, the bot receives ciphertext it cannot decode, so STT
-lanes, vision analysis, framework recording, and SFU egress recording all
-become unavailable.
+lanes, vision analysis and framework recording all become unavailable.
 
 The flag above states only that a backend *supports* E2EE. Whether a given
 conference *uses* it is per-conference state, requested through the
@@ -16008,11 +16008,13 @@ Silently delivering undecodable frames to a lane is NOT conforming.
 
 #### 12.10.3 ConferenceBackend Interface
 
-<!-- rfc: {"id": "RK-12.10.3-015", "kind": "structural", "applies": "§12.10.3 ConferenceBackend Interface, the conference feature: the ConferenceBackend interface's name property (the backend identifier) and its capabilities (a ConferenceCapability), with the heading of its control plane. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+<!-- rfc: {"id": "RK-12.10.3-015", "kind": "structural", "applies": "§12.10.3 ConferenceBackend Interface, the conference feature: the ConferenceBackend interface's name property (the backend identifier), its capabilities (a ConferenceCapability) and its address_keys property (its provider's keys for a caller's address, empty by default), with the heading of its control plane. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 ConferenceBackend (interface)
 ├── name: string (property)             # Backend identifier
 ├── capabilities: ConferenceCapability
+├── address_keys: list<string> (property) # Its provider's keys for a caller's
+│                                       # address (Section 12.10.2); default empty
 │
 │   # Control plane:
 ```
@@ -17346,46 +17348,25 @@ the only ordering guarantee available in that case.
 
 #### 12.10.8 Recording
 
-<!-- rfc: {"id": "RK-12.10.8-006", "kind": "structural", "applies": "§12.10.8 Recording, the conference feature with the recording feature: the ConferenceRecordingConfig record: mode framework or egress (framework by default), storage, format (wav for audio, mp4 for composed video by default), metadata, encryption (handed to each track's recording) and storage_encrypted_at_rest (false by default). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+<!-- rfc: {"id": "RK-12.10.8-006", "kind": "structural", "applies": "§12.10.8 Recording, the conference feature with the recording feature: the ConferenceRecordingConfig record: storage, format (wav by default), metadata, encryption (handed to each track's recording) and storage_encrypted_at_rest (false by default). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 ConferenceRecordingConfig
-├── mode: "framework" | "egress" = "framework"
 ├── storage: string                     # Integrator-defined identifier
-├── format: string (default "wav" for audio, "mp4" for composed video)
+├── format: string = "wav"
 ├── metadata: map<string, any>
 ├── encryption: RecordingEncryption | null   # Section 12.3.7, handed to each track's recording
 └── storage_encrypted_at_rest: bool = false
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.10.8-007", "kind": "behavior", "applies": "§12.10.8 Recording, the conference feature with the recording feature: framework mode, the default, records the bot-subscribed tracks through the room media recorder interface of Section 12.11, one recording per track, with no backend capability and against MockConferenceBackend. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
-- **framework** (default) — bot-subscribed tracks are recorded through the
-  room media recorder interface (Section 12.11), one recording per track.
-  This is the path that always works: it needs no
-  backend capability, it functions against MockConferenceBackend, and the
-  recording is written wherever the implementation writes it, which matters
-  where data residency is constrained. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.8-008", "kind": "behavior", "applies": "§12.10.8 Recording, the conference feature with the recording feature: recording audio tracks already subscribed for STT adds no media subscription. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Since audio tracks are already
-  subscribed for STT (Section 12.10.4), recording them adds a file write and
-  no additional media subscription.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.8-009", "kind": "behavior", "applies": "§12.10.8 Recording, the conference feature with the recording feature: egress mode is OPTIONAL: recording delegated to the SFU, requiring EGRESS_RECORDING. Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->
-- **egress** (OPTIONAL) — recording is delegated to the SFU, and requires
-  EGRESS_RECORDING. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.8-010", "kind": "behavior", "applies": "§12.10.8 Recording, the conference feature with the recording feature: configuring egress on a backend without EGRESS_RECORDING raises a configuration error (why egress exists, a composed video recording, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Configuring it on a backend without the capability MUST
-  raise a configuration error. This mode exists for one reason: a
-  **composed** video recording — grid or active-speaker layout — cannot be
-  produced by the framework without subscribing every video track, decoding
-  all of them, compositing and re-encoding, which is exactly the media-plane
-  work Section 12.10.1 forbids. Delegating it is the only conforming way to
-  obtain it.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.8-011", "kind": "behavior", "applies": "§12.10.8 Recording, the conference feature with the recording feature: an implementation documents that switching between framework and egress modes is not a transparent configuration change (egress promising no result contract, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
-
-Egress carries **no unified result contract**. The framework does not
-promise a RecordingResult or `ON_RECORDING_STOPPED` for a delegated
-recording: the SFU announces completion out of band — typically a webhook to
-an endpoint the framework does not host — and reaching back into that flow
-would require either provider-specific payloads inside the backend interface
-or polling the SFU's job API. An integrator that opts into egress collects
-its output through the provider's own mechanism. Switching between the two
-modes is therefore not a transparent configuration change, and
-implementations SHOULD document it as such.
-<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.10.8-007", "kind": "behavior", "applies": "§12.10.8 Recording, the conference feature with the recording feature: the framework records the bot-subscribed tracks through the room media recorder interface of Section 12.11, one recording per track, with no backend capability and against MockConferenceBackend. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+The framework records the bot-subscribed tracks through the room media
+recorder interface (Section 12.11), one recording per track. It needs no
+backend capability, it functions against MockConferenceBackend, and the
+recording is written wherever the implementation writes it, which matters
+where data residency is constrained. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.8-008", "kind": "behavior", "applies": "§12.10.8 Recording, the conference feature with the recording feature: recording audio tracks already subscribed for STT adds no media subscription. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Since audio tracks are already
+subscribed for STT (Section 12.10.4), recording them adds a file write and
+no additional media subscription.<!-- /rfc -->
 
 <!-- rfc: {"id": "RK-12.10.8-012", "kind": "behavior", "applies": "§12.10.8 Recording, the conference feature with the recording feature, framework mode: conference recording binds to MediaRecorder (Section 12.11), addressed by track, never to AudioRecorder or VideoRecorder, which stay unchanged. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Recorder mapping.** AudioRecorder (Section 12.3.7) and VideoRecorder
@@ -17483,18 +17464,19 @@ track, and the participant publishing it as Section 12.10.2 resolved it.<!-- /rf
 Both hooks are ASYNC — a recording already written is a fact, not a decision,
 and nothing about it is a hook's to block. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.8-035", "kind": "behavior", "applies": "§12.10.8 Recording, the conference feature with the recording feature, Reporting the result: a track subscribed but never published on reports nothing: the recording opens on the first frame. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A track subscribed but never
 published on reports nothing at all: the recording opens on the first frame,
-so silence produces no file and no pair of hooks describing one. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.8-036", "kind": "behavior", "applies": "§12.10.8 Recording, the conference feature with the recording feature, Reporting the result: egress mode fires neither hook. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Egress mode
-fires neither, for the reason given above — it promises no result contract.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.8-037", "kind": "behavior", "applies": "§12.10.8 Recording, the conference feature with the recording feature, Reporting the result: a recorder may write one file per track or mux several; the framework guarantees attribution, not file layout. Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->
+so silence produces no file and no pair of hooks describing one. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.8-037", "kind": "behavior", "applies": "§12.10.8 Recording, the conference feature with the recording feature, Reporting the result: a recorder may write one file per track or mux several; the framework guarantees attribution, not file layout. Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->
 
 How many files come out is the recorder implementation's decision: the
 framework guarantees attribution, not file layout. A recorder MAY write one
 file per track or mux several — it is handed the tracks separately and
-attributed, so either remains open to it.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.8-038", "kind": "behavior", "applies": "§12.10.8 Recording, the conference feature with the recording feature, Reporting the result, where an implementation records video tracks: they take the same per-track shape, RecordingTrack.kind distinguishing them, never a composed recording. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+attributed, so either remains open to it.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.8-038", "kind": "behavior", "applies": "§12.10.8 Recording, the conference feature with the recording feature, Reporting the result, where an implementation records video tracks: they take the same per-track shape, RecordingTrack.kind distinguishing them, never a composed recording, which is the SFU's own feature outside the framework (§12.10.1). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 Video tracks take the same shape where an implementation records them
 (`RecordingTrack.kind` distinguishes them), which is per-track and therefore
-never a composed recording. A grid or active-speaker layout stays egress
-territory, for the reason given above.
+never a composed recording. A grid or active-speaker layout would mean
+subscribing, decoding, compositing and re-encoding every video track, the
+media-plane work Section 12.10.1 forbids: it is the SFU's own feature,
+outside the framework.
 <!-- /rfc -->
 
 #### 12.10.9 Cross-Channel Integration
@@ -17606,9 +17588,7 @@ Implementations SHOULD:
 
 - Support vision analysis on VIDEO and SCREEN_SHARE tracks.
 - Surface active speaker and connection quality as ephemeral events.
-- Record conferences through the framework recorder path by default,
-  treating SFU egress as an optional delegation with no result contract
-  (Section 12.10.8).
+- Record conferences through the framework recorder path (Section 12.10.8).
 - Report each framework-mode recording where it opens and where it ends —
   its result, its track and its participant — rather than leaving the
   integrator to find the files (Section 12.10.8).
@@ -25068,8 +25048,8 @@ A Level 3 implementation MAY additionally support audio and/or video real-time m
 - Multi-party interruption policy (ConferenceInterruptionConfig)
 - Participant lifecycle integration (conference events create/update
   Participant records)
-- Optional: vision on tracks (Planned), egress recording delegation, SIP gateway
-  interop, bot video publication (avatar), speech-to-speech composition
+- Optional: vision on tracks (Planned), SIP gateway interop, bot video
+  publication (avatar), speech-to-speech composition
 
 A provider counts whether it ships with the implementation or as a separate
 package built on its provider interface.

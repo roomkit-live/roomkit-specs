@@ -456,6 +456,11 @@
       "card": "RMK-2070",
       "note": "step: conference.open options (e2ee with stt or recording): refused as a configuration error."
     },
+    "RK-12.10.2-058": {
+      "class": "step",
+      "card": "RMK-2070",
+      "note": "step: conference.open on a backend that declares address_keys, conference.join metadata: the backend's key read before a generic one, and a key no backend declares read by none."
+    },
     "RK-12.10.3-020": {
       "class": "step",
       "card": "RMK-2070",
@@ -1446,11 +1451,6 @@
       "card": "RMK-2076",
       "note": "step: conference.open options (stt, recording, recorder), conference.read: one subscribe_track() per track."
     },
-    "RK-12.10.8-010": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "planned feature: P6-V proposes to remove it"
-    },
     "RK-12.10.8-013": {
       "class": "step",
       "card": "RMK-2076",
@@ -1550,11 +1550,6 @@
       "class": "step",
       "card": "RMK-2076",
       "note": "step: conference.publish with no frame, recording.read per conference track: no recording, no hook."
-    },
-    "RK-12.10.8-036": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "planned feature: P6-V proposes to remove it"
     },
     "RK-12.10.9-002": {
       "class": "step",
@@ -1946,11 +1941,6 @@
       "card": "RMK-2023",
       "note": "step: voice.open STT options (S5): a diarizing STT with the speakers script; the transcript carries the STT's label, and the stage's ON_SPEAKER_CHANGE still fires with source pipeline."
     },
-    "RK-12.2.3-013": {
-      "class": "step",
-      "card": "RMK-2023",
-      "note": "vendor wire: leaves the RFC in P6-V (D2)"
-    },
     "RK-12.2.3-018": {
       "class": "step",
       "card": "RMK-2023",
@@ -2089,7 +2079,7 @@
     "RK-12.2.3-047": {
       "class": "step",
       "card": "RMK-2023",
-      "note": "step: voice.open pipeline naming option (S5b): a stage result unknown heard the longest; the message carries no label and sender_name \"Unknown speaker\"."
+      "note": "step: voice.open pipeline naming option (S5b), voice diarization speakers with a null speaker_id: a voice attributed to nobody heard the longest; the message carries no label and sender_name \"Unknown speaker\"."
     },
     "RK-12.2.3-048": {
       "class": "step",
@@ -2644,7 +2634,7 @@
     "RK-12.3.9-006": {
       "class": "step",
       "card": "RMK-2034",
-      "note": "vendor wire: leaves the RFC in P6-V (D2)"
+      "note": "step: voice diarization speakers with a null speaker_id, which the scenario format takes only as a string: no ON_SPEAKER_CHANGE, the last speaker kept."
     },
     "RK-12.3.9-007": {
       "class": "step",

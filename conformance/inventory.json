@@ -21,9 +21,9 @@
     },
     {
       "section": "1.2",
-      "sha256": "e3324c2f9b127418045e15e1c79a289149eb79e452059340f42dab8f2be83e60",
+      "sha256": "44316ab0730727166af6bb6f5aa81cdad896619c2e243650c3a6ed0025c3f41f",
       "classification": "normative",
-      "review": "Source inventory: Definitions. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Definitions. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage. The Egress entry left with the egress recording mode (RMK-2080)."
     },
     {
       "section": "1.3",
@@ -609,9 +609,9 @@
     },
     {
       "section": "12.2.3",
-      "sha256": "b19acaeb08102e2d4854be419b752637512d8f79f684e46b82f399424d452307",
+      "sha256": "81c4bb49d1105222217a6701ea381caab53902f8a8818a86f0f1abfa00dec639",
       "classification": "normative",
-      "review": "Source inventory: Speaker Attribution from STT, split to one obligation per unit, each with its level (RMK-2022). RK-12.2.3-011, the refusal by a channel lacking the three parts, the introduction and the status note folded in; RK-12.2.3-012 to 017, what any STT provider must do with labels and segments (016, partial segments, may), 013 holding the vendor spellings of an unattributed speaker; RK-12.2.3-018 to 041, revisions, the refusals, stream lifetime (022, should), the route into the room and the speaker-change event; RK-12.2.3-009, with the pipeline stage; RK-12.2.3-042 to 051, the opt-in naming from the pipeline stage (042, the option itself, may). Every unit carries its level."
+      "review": "Source inventory: Speaker Attribution from STT, split to one obligation per unit, each with its level (RMK-2022). RK-12.2.3-011, the refusal by a channel lacking the three parts, the introduction and the status note folded in; RK-12.2.3-012 to 017, what any STT provider must do with labels and segments (016, partial segments, may), 013, an unattributed speaker reported as null, its vendor spellings the provider's own (decision D2, RMK-2080); RK-12.2.3-018 to 041, revisions, the refusals, stream lifetime (022, should), the route into the room and the speaker-change event; RK-12.2.3-009, with the pipeline stage; RK-12.2.3-042 to 051, the opt-in naming from the pipeline stage (042, the option itself, may). Every unit carries its level."
     },
     {
       "section": "12.2.4",
@@ -675,9 +675,9 @@
     },
     {
       "section": "12.3.9",
-      "sha256": "a7adebc01d3c039a3f12dfb8248168e7f3a37ebf6ede8c9ec6bdfb107447b09d",
+      "sha256": "78568b3ba2a3b5c72431c7ca6ff6d3b3660dc70ddd60c17b63192405ba1d99e9",
       "classification": "normative",
-      "review": "Source inventory: Diarization Provider, split to one obligation per unit, each with its level (RMK-2027): RK-12.3.9-003 to 009, the DiarizationProvider interface (its purpose folded in), DiarizationResult, the ON_SPEAKER_CHANGE hook on a change, an unattributed result being no change, that result still reaching the frame, the speaker label as the provider's, and mapping labels to participants, the integrator's (non_testable). Every unit carries its level."
+      "review": "Source inventory: Diarization Provider, split to one obligation per unit, each with its level (RMK-2027): RK-12.3.9-003 to 009, the DiarizationProvider interface (its purpose folded in), DiarizationResult, the ON_SPEAKER_CHANGE hook on a change, an unattributed result (a null or empty speaker_id, the provider's own spellings no longer listed, D2, RMK-2080) being no change, that result still reaching the frame, the speaker label as the provider's, and mapping labels to participants, the integrator's (non_testable). Every unit carries its level."
     },
     {
       "section": "12.3.10",
@@ -891,15 +891,15 @@
     },
     {
       "section": "12.10.2",
-      "sha256": "200f24c9d36d70dbd62af7658a2c90f72751736e4335b669aa7345600ef9807d",
+      "sha256": "2299c9e890585713bbf529cf18f2e41ede3094b2a6ffb9f2c91566b98fb44891",
       "classification": "normative",
-      "review": "Source inventory: Data Models, split to one obligation per unit, each with its level (RMK-2068): the TrackKind, ConferenceTrack, ConferenceParticipant, ConferenceGrants, ConferenceAccess, BotSession and ConferenceCapability shapes (structural), each followed by the rules its prose states (the track's room, the provider attributes surfaced, the three asserted_metadata rules, the screen-share sound grant and kind, access opacity, joined_at's default, timezone and settling); participant identity correlation at its rules and sentences; resolution of the participant the framework did not name, provenance, the participant record's attribute key, provenance and bound, an arrival as no inbound message, and E2EE's per-conference request and media-access alternatives, one unit per sentence. RK-12.10.2-001 and 013 kept; RK-12.10.2-015 to 057 new. Rationale is folded into the unit it explains. Every unit carries its level."
+      "review": "Source inventory: Data Models, split to one obligation per unit, each with its level (RMK-2068): the TrackKind, ConferenceTrack, ConferenceParticipant, ConferenceGrants, ConferenceAccess, BotSession and ConferenceCapability shapes (structural), each followed by the rules its prose states (the track's room, the provider attributes surfaced, the three asserted_metadata rules, the screen-share sound grant and kind, access opacity, joined_at's default, timezone and settling); participant identity correlation at its rules and sentences; resolution of the participant the framework did not name, provenance, the participant record's attribute key, provenance and bound, an arrival as no inbound message, and E2EE's per-conference request and media-access alternatives, one unit per sentence. RK-12.10.2-001 and 013 kept; RK-12.10.2-015 to 057 new; RK-12.10.2-058, a backend's own address keys read before the generic ones, added when that knowledge left the framework (D2, RMK-2080), and EGRESS_RECORDING out of 013 with the egress mode. Rationale is folded into the unit it explains. Every unit carries its level."
     },
     {
       "section": "12.10.3",
-      "sha256": "337c760dbc6711addab3ee192740bfe5b856e535143c257b0fb4d64708b187c1",
+      "sha256": "8680b32e3478bd2dce16174893bdf46989779e3affc4135d5f6ee6f8e579d376",
       "classification": "normative",
-      "review": "Source inventory: ConferenceBackend Interface, split to one obligation per unit, each with its level (RMK-2068): the interface block cut at ensure_room (idempotent) and publish_video (requires VIDEO_PUBLISH) by closing and reopening its fence (eight bare fence lines), its other members kept as structural units; presence through a connection and the join's catch-up; the bot's own connection (the backend's report, the channel's handling, no silent drop, report after disconnect, a session whose disconnect fails kept, the discontinuity, the integrator's unaccounted window as non_testable, the re-join); frame delivery and publishing; stopping playback; mute transitions; track subscription; bot grants; display names; participant attributes (a backend whose SFU carries none ignoring them in a unit of its own); moderation; the abstraction boundary; the required MockConferenceBackend and the permitted further SFU backends (may). RK-12.10.3-007 and 013 kept; RK-12.10.3-015 to 065 new. Rationale is folded into the unit it explains. Every unit carries its level."
+      "review": "Source inventory: ConferenceBackend Interface, split to one obligation per unit, each with its level (RMK-2068): the interface block cut at ensure_room (idempotent) and publish_video (requires VIDEO_PUBLISH) by closing and reopening its fence (eight bare fence lines), its other members kept as structural units; presence through a connection and the join's catch-up; the bot's own connection (the backend's report, the channel's handling, no silent drop, report after disconnect, a session whose disconnect fails kept, the discontinuity, the integrator's unaccounted window as non_testable, the re-join); frame delivery and publishing; stopping playback; mute transitions; track subscription; bot grants; display names; participant attributes (a backend whose SFU carries none ignoring them in a unit of its own); moderation; the abstraction boundary; the required MockConferenceBackend and the permitted further SFU backends (may). RK-12.10.3-007 and 013 kept; RK-12.10.3-015 to 065 new; 015 lists address_keys since RMK-2080. Rationale is folded into the unit it explains. Every unit carries its level."
     },
     {
       "section": "12.10.4",
@@ -927,9 +927,9 @@
     },
     {
       "section": "12.10.8",
-      "sha256": "4560c0c6545abbc6025b5c01b5d27fbe8219464fb2940a818f2ef95d8ef8851c",
+      "sha256": "2dfaa0d8efebdd03803bbc0e179f0e167ad9753da2bd846c4ef4b88ebd399a17",
       "classification": "normative",
-      "review": "Source inventory: Recording, split to one obligation per unit, each with its level (RMK-2075): RK-12.10.8-006, ConferenceRecordingConfig (structural); RK-12.10.8-007 to 011, framework mode, no added subscription, egress as OPTIONAL (a may), its configuration error, and documenting the switch as a should (no result contract folded in); RK-12.10.8-012 to 018, the recorder mapping and the six framework-mode duties; RK-12.10.8-019 to 021, a frame in another format; RK-12.10.8-022 to 029, writing off the callback, the bound, documented and exposed, the flush within a budget and its loss; RK-12.10.8-030 to 038, the result, its report as a should, per track, the attribution, ASYNC hooks, silence, egress firing neither, file layout as a may, video tracks where recorded. Every unit carries its level."
+      "review": "Source inventory: Recording, split to one obligation per unit, each with its level (RMK-2075): RK-12.10.8-006, ConferenceRecordingConfig (structural, no mode since RMK-2080); RK-12.10.8-007 and 008, the framework's recording and no added subscription; 009 to 011 (egress as OPTIONAL, its configuration error, documenting the switch) and 036 (egress firing neither hook) retired with the egress mode, the maintainer's decision of 2026-11-23 (RMK-2080), 038 saying why a composed recording stays the SFU's; RK-12.10.8-012 to 018, the recorder mapping and the six framework-mode duties; RK-12.10.8-019 to 021, a frame in another format; RK-12.10.8-022 to 029, writing off the callback, the bound, documented and exposed, the flush within a budget and its loss; RK-12.10.8-030 to 038, the result, its report as a should, per track, the attribution, ASYNC hooks, silence, file layout as a may, video tracks where recorded. Every unit carries its level."
     },
     {
       "section": "12.10.9",
@@ -945,9 +945,9 @@
     },
     {
       "section": "12.10.11",
-      "sha256": "868ab040a52bd5395fb529fcd5ff9cbc4765f504279fbf63f6c85b21da5975fa",
+      "sha256": "7daeb6492054c0b25320c35a4042336debb27418cf2041f9eb85a7cff9486d80",
       "classification": "normative",
-      "review": "Source inventory: Conformance, split to one obligation per unit, each with its level (RMK-2075): RK-12.10.11-002, a may, conference support as OPTIONAL within Conformance Level 3 (the MUST checklist folded in); RK-12.10.11-003, a should, vision analysis on video and screen-share tracks, Planned (the remaining checklists folded in). The folded checklists restate obligations stated, levelled and counted in §12.10.1 to §12.10.12, §12.4 and §17.7, and are not counted twice. Every unit carries its level."
+      "review": "Source inventory: Conformance, split to one obligation per unit, each with its level (RMK-2075): RK-12.10.11-002, a may, conference support as OPTIONAL within Conformance Level 3 (the MUST checklist folded in); RK-12.10.11-003, a should, vision analysis on video and screen-share tracks, Planned (the remaining checklists folded in). The folded checklists restate obligations stated, levelled and counted in §12.10.1 to §12.10.12, §12.4 and §17.7, and are not counted twice; the egress delegation left the checklist with the mode (RMK-2080). Every unit carries its level."
     },
     {
       "section": "12.10.12",
@@ -1545,9 +1545,9 @@
     },
     {
       "section": "26.4",
-      "sha256": "c9705952870b69e9bede6871174b87023f76f0630cb7e1da9dd44c15e7e83da0",
+      "sha256": "1821cbb9a778c4e764fb6034053dc1ed07d7016b45fddc44523175f48fb397e4",
       "classification": "normative",
-      "review": "Source inventory: Level 3: Real-Time Media (OPTIONAL). Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage. Vendor cleanup (RMK-1991, decision D6): a provider counts for the level whether it ships with the implementation or as a separate package built on its provider interface."
+      "review": "Source inventory: Level 3: Real-Time Media (OPTIONAL). Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage. Vendor cleanup (RMK-1991, decision D6): a provider counts for the level whether it ships with the implementation or as a separate package built on its provider interface. Egress recording delegation left the optional list with the mode (RMK-2080)."
     },
     {
       "section": "A",
