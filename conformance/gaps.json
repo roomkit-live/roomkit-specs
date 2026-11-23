@@ -1814,7 +1814,7 @@
     "RK-12.7.6-010": {
       "class": "writable",
       "card": "RMK-2054",
-      "note": "recording.start on the room, then voice.open with bridge: ON_RECORDING_STARTED and ON_RECORDING_STOPPED fire and recording.read holds the bridged speaker's frames; the pipeline recorder needs step V4."
+      "note": "recording.start on the room, then voice.open with bridge, then a second recorder started while the bridge runs and recording.stop: ON_RECORDING_STARTED and ON_RECORDING_STOPPED fire in bridge mode and recording.read holds the bridged speaker's frames; the pipeline recorder needs step V4."
     },
     "RK-12.7.6-011": {
       "class": "writable",
@@ -1824,7 +1824,7 @@
     "RK-12.7.6-012": {
       "class": "writable",
       "card": "RMK-2054",
-      "note": "voice.open with bridge and a before_bridge_audio reaction held at a gate (gate, voice.feed in the background, wait_for, open): a frame fed while the first is held is forwarded after it; red on Python, which forwards the later frame first (suspect RMK-2050)."
+      "note": "voice.open with bridge and a before_bridge_audio reaction held at a gate (gate, wait_for, open): two voice.feed calls run in the background and awaited after the gate opens, the frame fed while the first is held is forwarded after it; red on Python, which forwards the later frame first (suspect RMK-2050)."
     },
     "RK-12.7.6-013": {
       "class": "phase6",
