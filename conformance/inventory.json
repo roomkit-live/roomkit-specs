@@ -807,69 +807,69 @@
     },
     {
       "section": "12.8.1",
-      "sha256": "5de4ecae6e32e09063b17d09665512d94c1c47803afbc8958230c19898b32da6",
+      "sha256": "0f857770c06ffab1daafc5ff752466c3372fedfc703f73f236c868a69d5b0e03",
       "classification": "normative",
-      "review": "Source inventory: Architecture Overview. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Architecture Overview, split to one obligation per unit, each with its level (RMK-2057): RK-12.8.1-003 to 005, the three video channel variants, one per row of the table (structural): VideoChannel, standalone (the architecture diagram folded in), AudioVideoChannel on VoiceChannel, RealtimeAudioVideoChannel on RealtimeVoiceChannel. Every unit carries its level."
     },
     {
       "section": "12.8.2",
-      "sha256": "7643b04b316fc98ba5d5b981968d312297ad1dd51ebebd267932ad4dcbf916ea",
+      "sha256": "a17638cd8d747c1b20270e64f5e70847367b4f7e7acc4a996d9e7f4b10a72bd0",
       "classification": "normative",
-      "review": "Source inventory: Video Data Models. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Video Data Models, split to one obligation per unit, each with its level (RMK-2057): RK-12.8.2-005, the VideoFrame fields (structural), and RK-12.8.2-006, its derived is_encoded and is_raw (the model block is cut before them by closing and reopening its fence, two bare fence lines); RK-12.8.2-002 to 004 kept, VideoChunk, VideoSession and the VideoCapability flags (structural). Every unit carries its level."
     },
     {
       "section": "12.8.3",
-      "sha256": "25f628ce1fe6d043feaa9b17155c00116ddda31b0c7500bfd8c47ef77e95b486",
+      "sha256": "2e6a1ce227d021e9f73d01a3fd2d4f72daf45d439278e8d764df9ebd5821df81",
       "classification": "normative",
-      "review": "Source inventory: VideoBackend Interface. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: VideoBackend Interface, split to one obligation per unit, each with its level (RMK-2057): RK-12.8.3-001 kept, the VideoBackend interface (structural); RK-12.8.3-005 and 006, the required LocalVideoBackend and ScreenCaptureBackend, one per table row (structural; named backends, decision D8); RK-12.8.3-003 kept, further backends as a may; RK-12.8.3-007 to 014, combined audio/video backends (a voice backend whose calls may carry video, no object implementing both interfaces, the AudioVideoBackend interface, the call's lifecycle, the video facet's sessions and callbacks, video never starting on its own, the facet creating no session, the audio/video channel's hooks). Every unit carries its level."
     },
     {
       "section": "12.8.4",
-      "sha256": "6eddd567c5564f117e1504eedb01d18680dd2caac7dff6f4bec315efceaab3ba",
+      "sha256": "beeab6f24f0543e491fee39dcc722e8a442f54802f3e720feb0d3d1f89fe5253",
       "classification": "normative",
-      "review": "Source inventory: Video Processing Pipeline. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Video Processing Pipeline, split to one obligation per unit, each with its level (RMK-2057): RK-12.8.4-001 kept, VideoPipelineConfig (structural); RK-12.8.4-004 to 008, the VideoPipeline orchestrator (process_inbound's procedure, process_vision, drain_events, update_filter_context, reset and close; the block cut at its members by closing and reopening its fence, eight bare fence lines); RK-12.8.4-009 to 014, the inbound processing flow (the four stages, the vision analysis, the filter context it updates, the ON_VISION_RESULT hook, the AI channels' context, the recorder tap; ten bare fence lines). Every unit carries its level."
     },
     {
       "section": "12.8.5",
-      "sha256": "8afad5b278b96cb3a74912c28f0ca2def7b8739f81200d521f7392e6c69bb321",
+      "sha256": "1050f01ea161aa57b9a6d62e81d15f9a0847cef0ae62f34b87d2c7f067e4fb9f",
       "classification": "normative",
-      "review": "Source inventory: Pipeline Stage Providers. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Pipeline Stage Providers, split to one obligation per unit, each with its level (RMK-2057): RK-12.8.5-001 to 003 kept, the decoder, resizer and encoder interfaces (structural); RK-12.8.5-008 to 010, the transform interface, pixels changed and dimensions kept, transforms chained in order; RK-12.8.5-011 to 013, the filter interface, a filter that may replace a frame, the FilterContext it receives; RK-12.8.5-006 kept, FilterContext (structural). Every unit carries its level."
     },
     {
       "section": "12.8.6",
-      "sha256": "434d229f2417798d2e25cd320f2e14d8047d2801fab58f8da0a83deb0b090735",
+      "sha256": "61a83a9f6b15e9adf19c22a98c2c2955a086ab4eaf9d8b2f45c7d311393a84df",
       "classification": "normative",
-      "review": "Source inventory: Overlay System. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Overlay System, split to one obligation per unit, each with its level (RMK-2057): RK-12.8.6-001 and 002 kept, Overlay and OverlayPosition (structural); RK-12.8.6-004 to 006, the OverlayRenderer interface, the four renderers, the overlay filter stage. Every unit carries its level."
     },
     {
       "section": "12.8.7",
-      "sha256": "9f0983d29dd812f37c65bdc11a2d27fa0b16202bc9f40ad7ce1b053c6422b657",
+      "sha256": "8256169842010931da5cd809d6c6aa68ccbe9515ef40da3a60e80605fbb7d90d",
       "classification": "normative",
-      "review": "Source inventory: VisionProvider. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: VisionProvider, split to one obligation per unit, each with its level (RMK-2057): RK-12.8.7-001 kept, the VisionProvider interface (structural); RK-12.8.7-007 to 010, the response schema (the rules of §6.7, a provider that supports it, one that does not, the consumer that passes one); RK-12.8.7-003 and 004 kept, VisionResult and FaceDetection (structural); RK-12.8.7-011 to 017, the AI integration (no wiring, the turn's notes and never the prompt or the binding, the <vision> block of the latest result, none in a standalone turn, the result ending with its session, the realtime silent injection, setup_video_vision deprecated). Every unit carries its level."
     },
     {
       "section": "12.8.8",
-      "sha256": "45b3c87bf206d806f3134f9cef9153a5100a1af1e2cd6a141cfc729bcda35101",
+      "sha256": "690e81a68d23f0c5e1342498049c4c367a67d7e5cd6f8a188f999bb37bac6209",
       "classification": "normative",
-      "review": "Source inventory: AvatarProvider (Lip-Sync Video Generation). Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: AvatarProvider (Lip-Sync Video Generation), split to one obligation per unit, each with its level (RMK-2057): RK-12.8.8-001 kept, the AvatarProvider interface (structural); RK-12.8.8-003 and 004, the synchronous and asynchronous delivery modes; RK-12.8.8-005 and 006, the avatar wired as an outbound audio tap of AudioVideoChannel, its frames encoded and sent through the video backend. Every unit carries its level."
     },
     {
       "section": "12.8.9",
-      "sha256": "d62a2113124423e1482554c285611e6ed44877c8d93c61940fda6b03e5fc58de",
+      "sha256": "f3005c9903236962cbeccab50b7be5d3f7ab9f0016c6ab7bb9fc9b64a34ed28c",
       "classification": "normative",
-      "review": "Source inventory: VideoBridge. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: VideoBridge, split to one obligation per unit, each with its level (RMK-2057): RK-12.8.9-003, frames forwarded between the sessions of a room; RK-12.8.9-004 to 007, the VideoBridgeConfig fields enabled, max_participants, forwarding_strategy and keyframe_interval_s with their defaults (structural; the config block cut at its fields by closing and reopening its fence, six bare fence lines); RK-12.8.9-008, the VideoBridge interface (structural); RK-12.8.9-009 to 013, the key behaviours, one per list item (keyframe buffering for late joiners, periodic PLI, delta frame gating, thread safety, the BEFORE_BRIDGE_VIDEO hook). Every unit carries its level."
     },
     {
       "section": "12.8.10",
-      "sha256": "b8c1e8aec75d3373063ff9ed215aac868ed266e828e71f811273e474875afa80",
+      "sha256": "24fd0d06bfd82b980df00815fcc15da2359ceef75667d53e58eef6bd119ff5d2",
       "classification": "normative",
-      "review": "Source inventory: Video Recording. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Video Recording, split to one obligation per unit, each with its level (RMK-2057): RK-12.8.10-005, VideoRecordingConfig (structural); RK-12.8.10-006 to 010, the session recorder's encryption (applied when set and not required, encryption at stop and close, an unencryptable file deleted, storage encrypted at rest, the configuration error and the refused recording that fails the join); RK-12.8.10-011, the VideoRecorder interface (structural); RK-12.8.10-002 kept, VideoRecordingResult (structural); RK-12.8.10-004 kept, the scope (the recorder of one session; a conference records through §12.11). Every unit carries its level."
     },
     {
       "section": "12.8.11",
-      "sha256": "2832adc61bd3fe4d0ab6d2604ab7f6a5068cc3508c53c8ef228c7d6311504b43",
+      "sha256": "ac1c3b2bdde89135beed779c5835a4f196de877f5b4efe06a8c94ce766bf4bb8",
       "classification": "normative",
-      "review": "Source inventory: Video Hooks. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Video Hooks, split to one obligation per unit, each with its level (RMK-2057): RK-12.8.11-002 to 010, one unit per row of the hooks table, the two Planned track rows included. Every unit carries its level."
     },
     {
       "section": "12.9",

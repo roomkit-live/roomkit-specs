@@ -14988,7 +14988,7 @@ as audio.
 
 #### 12.8.1 Architecture Overview
 
-<!-- rfc: {"id": "RK-12.8.1-001", "kind": "behavior", "applies": "§12.8.1 Architecture Overview; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.8.1-003", "kind": "structural", "applies": "§12.8.1 Architecture Overview, the video feature: VideoChannel, a standalone channel with no base channel, carries video only, with vision analysis (the architecture diagram, from the backend through the pipeline's decode, resize, transform and filter stages to the vision provider, with the recorder, the bridge and the AI integration, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 ┌────────┐     ┌──────────────────────────────────────┐     ┌────────────┐
 │ Video  │────→│          Video Pipeline               │────→│   Vision   │
@@ -15004,21 +15004,19 @@ as audio.
                          │(forward) │
                          └──────────┘
 ```
-<!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.8.1-002", "kind": "behavior", "applies": "§12.8.1 Architecture Overview; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Three video channel variants:**
 
 | Channel | Base Class | Purpose |
 |---|---|---|
 | VideoChannel | (standalone) | Video-only with vision analysis |
-| AudioVideoChannel | VoiceChannel | Combined STT/TTS + video pipeline + avatar |
-| RealtimeAudioVideoChannel | RealtimeVoiceChannel | Speech-to-speech + video |
+| <!-- /rfc --><!-- rfc: {"id": "RK-12.8.1-004", "kind": "structural", "applies": "§12.8.1 Architecture Overview, the video feature with the voice feature: AudioVideoChannel is built on VoiceChannel and combines its STT and TTS with the video pipeline and an avatar. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->AudioVideoChannel | VoiceChannel | Combined STT/TTS + video pipeline + avatar |
+| <!-- /rfc --><!-- rfc: {"id": "RK-12.8.1-005", "kind": "structural", "applies": "§12.8.1 Architecture Overview, the video feature with the realtime feature: RealtimeAudioVideoChannel is built on RealtimeVoiceChannel and adds video to its speech-to-speech session. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->RealtimeAudioVideoChannel | RealtimeVoiceChannel | Speech-to-speech + video |
 <!-- /rfc -->
 
 #### 12.8.2 Video Data Models
 
-<!-- rfc: {"id": "RK-12.8.2-001", "kind": "behavior", "applies": "§12.8.2 Video Data Models; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.8.2-005", "kind": "structural", "applies": "§12.8.2 VideoFrame, the video feature: the inbound video frame and its fields, data (encoded NAL units or raw pixels), codec (h264, vp8, vp9 or av1 encoded; raw_rgb24, raw_bgr24, raw_yuv420p or raw_nv12 raw), width and height in pixels, timestamp_ms relative to the session's start, keyframe, a sequence increasing monotonically per session, and the metadata the pipeline stages accumulate. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **VideoFrame** — inbound video frame:
 
 ```
@@ -15032,12 +15030,16 @@ VideoFrame
 ├── sequence: int                           # Monotonically increasing per session
 ├── metadata: map<string, any>              # Accumulated by pipeline stages
 │
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.8.2-006", "kind": "behavior", "applies": "§12.8.2 VideoFrame, the video feature: the derived is_encoded is true when the codec is h264, vp8, vp9 or av1, and the derived is_raw when it is one of the raw codecs (raw_rgb24, raw_bgr24 and the others). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── is_encoded: bool (derived)              # True when codec in {h264, vp8, vp9, av1}
 └── is_raw: bool (derived)                  # True when codec in {raw_rgb24, raw_bgr24, ...}
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.8.2-002", "kind": "behavior", "applies": "§12.8.2 Video Data Models; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.8.2-002", "kind": "structural", "applies": "§12.8.2 VideoChunk, the video feature: the outbound encoded video type and its fields, its codec h264, vp8, vp9 or av1 only, with is_final marking the end of the stream. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **VideoChunk** — outbound encoded video:
 
 ```
@@ -15052,7 +15054,7 @@ VideoChunk
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.8.2-003", "kind": "behavior", "applies": "§12.8.2 Video Data Models; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.8.2-003", "kind": "structural", "applies": "§12.8.2 VideoSession, the video feature: the active video connection and its fields, its state a VideoSessionState going CONNECTING, ACTIVE, PAUSED, ENDED, and provider_session_id the backend's own identifier or null. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **VideoSession** — active video connection:
 
 ```
@@ -15068,7 +15070,7 @@ VideoSession
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.8.2-004", "kind": "behavior", "applies": "§12.8.2 Video Data Models; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.8.2-004", "kind": "structural", "applies": "§12.8.2 VideoCapability, the video feature: the video backend's capability flags SIMULCAST, SVC, SCREEN_SHARE, RECORDING and BANDWIDTH_ESTIMATION and what each declares. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **VideoCapability** flags:
 
 | Flag | Description |
@@ -15082,7 +15084,7 @@ VideoSession
 
 #### 12.8.3 VideoBackend Interface
 
-<!-- rfc: {"id": "RK-12.8.3-001", "kind": "structural", "applies": "§12.8.3 VideoBackend Interface; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.8.3-001", "kind": "structural", "applies": "§12.8.3 VideoBackend Interface, the video feature: the VideoBackend interface, its name, the session lifecycle (connect, accept, disconnect, get_session, list_sessions), the video transport (send_video, send_video_sync for callbacks, request_keyframe for keyframe recovery, set_video_passthrough for bridge mode), the callbacks on_video_received, on_session_ready and on_client_disconnected, its capabilities and close(). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 VideoBackend (interface)
 ├── name: string (property)                 # Backend identifier
@@ -15110,48 +15112,54 @@ VideoBackend (interface)
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.8.3-002", "kind": "behavior", "applies": "§12.8.3 VideoBackend Interface; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.8.3-005", "kind": "structural", "applies": "§12.8.3 Required implementations, the video feature: the required LocalVideoBackend, over a local camera, for development and testing. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Required implementations:**
 
 | Backend | Transport | Use Case |
 |---|---|---|
 | LocalVideoBackend | Local camera | Development, testing |
-| ScreenCaptureBackend | Screen capture | Screen sharing, monitoring |
+| <!-- /rfc --><!-- rfc: {"id": "RK-12.8.3-006", "kind": "structural", "applies": "§12.8.3 Required implementations, the video feature: the required ScreenCaptureBackend, over screen capture, for screen sharing and monitoring. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ScreenCaptureBackend | Screen capture | Screen sharing, monitoring |
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.8.3-003", "kind": "behavior", "applies": "§12.8.3 VideoBackend Interface; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.8.3-003", "kind": "structural", "applies": "§12.8.3 Optional backends, the video feature: an implementation may provide further video backends, for WebRTC, RTP, SIP video or WebSocket transport (examples). Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->
 **Optional backends:**
 
 Implementations MAY provide additional backends for WebRTC,
 RTP, SIP video, or WebSocket transport.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.8.3-004", "kind": "behavior", "applies": "§12.8.3 VideoBackend Interface; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.8.3-007", "kind": "structural", "applies": "§12.8.3 Combined audio/video backends, the video feature with the voice feature: a transport carrying a call's audio and video together is a voice backend (§12.2) whose calls may carry video (the SIP, RTP and WebRTC transports in parentheses are examples). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Combined audio/video backends.** A transport that carries a call's audio
 and video together (a SIP INVITE with an `m=video` line, RTP with a parallel
 video stream, a WebRTC connection with both tracks) is a voice backend
-(Section 12.2) whose calls may carry video. One object MUST NOT implement
+(Section 12.2) whose calls may carry video. <!-- /rfc --><!-- rfc: {"id": "RK-12.8.3-008", "kind": "structural", "applies": "§12.8.3 Combined audio/video backends, the video feature with the voice feature: no object implements both VoiceBackend and VideoBackend (why: their lifecycle methods share names and differ in meaning, so a channel registering its voice callbacks would be served the video ones, informative). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->One object MUST NOT implement
 both VoiceBackend and VideoBackend: their lifecycle methods share names and
 differ in meaning (`on_session_ready` is the audio path live for one, the
 video path for the other), so a channel registering its voice callbacks
 would be served the video ones, or none.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.8.3-009", "kind": "structural", "applies": "§12.8.3 Combined audio/video backends, the video feature with the voice feature: the AudioVideoBackend interface, a VoiceBackend whose video property is the VideoBackend serving the video of its calls. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 AudioVideoBackend (interface, a VoiceBackend)
 └── video: VideoBackend (property)          # The video of its calls
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.8.3-010", "kind": "behavior", "applies": "§12.8.3 Combined audio/video backends, the video feature with the voice feature: the call is the voice session, and the backend's own lifecycle is the voice backend's, on_session_ready when a call's audio path is live and on_client_disconnected when the call ends, for every call, with or without video. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The call is the voice session, and the backend's own lifecycle is the voice
 backend's: `on_session_ready` when a call's audio path is live and
 `on_client_disconnected` when the call ends, for every call, with or without
-video. The video of a call is served by the `video` facet, whose sessions
+video. <!-- /rfc --><!-- rfc: {"id": "RK-12.8.3-011", "kind": "behavior", "applies": "§12.8.3 Combined audio/video backends, the video feature with the voice feature: a call's video is served by the video facet, whose sessions carry the call's session id; the facet's on_session_ready fires when the video path of a call that negotiated video is live, and its on_client_disconnected when that video ends, which is when the call ends. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The video of a call is served by the `video` facet, whose sessions
 carry the call's session id: its `on_session_ready` fires when the call's
 video path is live, for a call that negotiated video only, and its
-`on_client_disconnected` when that video ends, which is when its call ends.
+`on_client_disconnected` when that video ends, which is when its call ends.<!-- /rfc --><!-- rfc: {"id": "RK-12.8.3-012", "kind": "behavior", "applies": "§12.8.3 Combined audio/video backends, the video feature with the voice feature: a call's video never starts or stops on its own; a call without video stays an audio-only call. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Video never starts or stops on its own: a call without video stays an
-audio-only call. The facet creates no session (`connect` is not supported;
+audio-only call. <!-- /rfc --><!-- rfc: {"id": "RK-12.8.3-013", "kind": "behavior", "applies": "§12.8.3 Combined audio/video backends, the video feature with the voice feature: the video facet creates no session (connect is not supported, calls coming from the transport), and its disconnect ends the call. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The facet creates no session (`connect` is not supported;
 calls come from the transport), and its `disconnect` ends the call.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.8.3-014", "kind": "behavior", "applies": "§12.8.3 Combined audio/video backends, the video feature with the voice feature: AudioVideoChannel reports ON_SESSION_STARTED for the call, and ON_VIDEO_SESSION_STARTED and ON_VIDEO_SESSION_ENDED for its video, each once and the video ones only for a call with video, ON_VIDEO_SESSION_STARTED once the session is both bound and its video path live, whichever comes last, and ON_VIDEO_SESSION_ENDED only after it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 An audio/video channel (AudioVideoChannel) reports `ON_SESSION_STARTED`
 for the call, and `ON_VIDEO_SESSION_STARTED` and `ON_VIDEO_SESSION_ENDED`
 for its video, each once: the video ones only for a call with video,
@@ -15161,7 +15169,7 @@ path live, whichever comes last, and `ON_VIDEO_SESSION_ENDED` only after it.
 
 #### 12.8.4 Video Processing Pipeline
 
-<!-- rfc: {"id": "RK-12.8.4-001", "kind": "behavior", "applies": "§12.8.4 Video Processing Pipeline; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.8.4-001", "kind": "structural", "applies": "§12.8.4 Video Processing Pipeline, the video feature: VideoPipelineConfig and its ordered stages, an optional decoder (encoded to raw_rgb24), an optional resizer, the chained transforms and filters, an optional vision provider for periodic analysis, an optional recorder and its recording_config. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The video pipeline processes inbound frames through ordered stages:
 
 ```
@@ -15176,7 +15184,7 @@ VideoPipelineConfig
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.8.4-002", "kind": "behavior", "applies": "§12.8.4 Video Processing Pipeline; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.8.4-004", "kind": "behavior", "applies": "§12.8.4 VideoPipeline, the video feature: process_inbound() processes a frame synchronously, decoding it if it is encoded, resizing it if it is raw and a resizer is configured, then running the chained transforms and the chained filters with their FilterContext, and returns the processed frame, or null for a dropped one. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **VideoPipeline** orchestrator:
 
 ```
@@ -15189,21 +15197,37 @@ VideoPipeline
 │       # 4. Filters (chained, with FilterContext)
 │       # Returns processed frame or null (dropped)
 │
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.8.4-005", "kind": "behavior", "applies": "§12.8.4 VideoPipeline, the video feature: process_vision() runs the vision analysis asynchronously, throttled by vision_interval_ms, and returns its VisionResult or null. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── process_vision(session_id, frame) → VisionResult | null
 │       # Async vision analysis (throttled by vision_interval_ms)
 │
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.8.4-006", "kind": "behavior", "applies": "§12.8.4 VideoPipeline, the video feature: drain_events() collects the events the filters emitted for a session, for the hooks to dispatch. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── drain_events(session_id) → list<FilterEvent>
 │       # Collect filter events for hook dispatch
 │
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.8.4-007", "kind": "behavior", "applies": "§12.8.4 VideoPipeline, the video feature: update_filter_context() brings a vision result into the session's active filter contexts. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── update_filter_context(session_id, result) → void
 │       # Sync vision results to active filter contexts
 │
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.8.4-008", "kind": "structural", "applies": "§12.8.4 VideoPipeline, the video feature: its reset(session_id) and close(). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── reset(session_id) → void
 └── close() → void
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.8.4-003", "kind": "behavior", "applies": "§12.8.4 Video Processing Pipeline; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.8.4-009", "kind": "behavior", "applies": "§12.8.4 Inbound processing flow, the video feature: a frame the backend emits goes through the decoder if it is encoded (to raw_rgb24), the resizer if it is raw, each transform in turn, then each filter in turn with its FilterContext, a filter returning the frame or a replacement (the stage examples informative). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Inbound processing flow:**
 
 ```
@@ -15225,19 +15249,39 @@ Backend emits VideoFrame
   │       filter(frame, context) → frame or replacement
   │     (censor, watermark, object detection, face detection)
   │
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.8.4-010", "kind": "behavior", "applies": "§12.8.4 Inbound processing flow, the video feature: the vision analysis runs asynchronously and periodically, the VisionProvider's analyze_frame() turning a frame into a VisionResult. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
   ├─ Vision Analysis (async, periodic)
   │     VisionProvider.analyze_frame(frame) → VisionResult
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.8.4-011", "kind": "behavior", "applies": "§12.8.4 Inbound processing flow, the video feature: a vision result updates the FilterContext the filters read for the frames that follow. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
   │     Updates FilterContext for subsequent frames
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.8.4-012", "kind": "behavior", "applies": "§12.8.4 Inbound processing flow, the video feature: a vision result fires the ON_VISION_RESULT hook. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
   │     Fires ON_VISION_RESULT hook
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.8.4-013", "kind": "behavior", "applies": "§12.8.4 Inbound processing flow, the video feature: a vision result's description is brought into the context of the room's AI channels (§12.8.7). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
   │     Injects description into AI channel context
   │
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.8.4-014", "kind": "behavior", "applies": "§12.8.4 Inbound processing flow, the video feature: while a session is recorded, its frames are tapped to the recorder. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
   └─ Recorder tap (if recording active)
 ```
 <!-- /rfc -->
 
 #### 12.8.5 Pipeline Stage Providers
 
-<!-- rfc: {"id": "RK-12.8.5-001", "kind": "behavior", "applies": "§12.8.5 Pipeline Stage Providers; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.8.5-001", "kind": "structural", "applies": "§12.8.5 VideoDecoderProvider, the video feature: the decoder stage's interface, name, decode() of an encoded frame into a raw one or null, reset() and close(). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **VideoDecoderProvider:**
 
 ```
@@ -15249,7 +15293,7 @@ VideoDecoderProvider (interface)
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.8.5-002", "kind": "behavior", "applies": "§12.8.5 Pipeline Stage Providers; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.8.5-002", "kind": "structural", "applies": "§12.8.5 VideoResizerProvider, the video feature: the resizer stage's interface, name, resize() and close(). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **VideoResizerProvider:**
 
 ```
@@ -15260,7 +15304,7 @@ VideoResizerProvider (interface)
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.8.5-003", "kind": "behavior", "applies": "§12.8.5 Pipeline Stage Providers; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.8.5-003", "kind": "structural", "applies": "§12.8.5 VideoEncoderProvider, the video feature: the encoder's interface, name, encode() of a raw frame into encoded NAL units, flush() draining the buffered frames, reset() and close(). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **VideoEncoderProvider:**
 
 ```
@@ -15273,7 +15317,7 @@ VideoEncoderProvider (interface)
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.8.5-004", "kind": "behavior", "applies": "§12.8.5 Pipeline Stage Providers; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.8.5-008", "kind": "structural", "applies": "§12.8.5 VideoTransformProvider, the video feature: the transform stage's interface, name, transform(), reset() and close(). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **VideoTransformProvider:**
 
 ```
@@ -15283,12 +15327,14 @@ VideoTransformProvider (interface)
 ├── reset() → void
 └── close() → void
 ```
+<!-- /rfc -->
 
-Transforms modify pixels without changing frame dimensions. Multiple
+<!-- rfc: {"id": "RK-12.8.5-009", "kind": "behavior", "applies": "§12.8.5 VideoTransformProvider, the video feature: a transform modifies a frame's pixels and keeps its dimensions. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+Transforms modify pixels without changing frame dimensions. <!-- /rfc --><!-- rfc: {"id": "RK-12.8.5-010", "kind": "behavior", "applies": "§12.8.5 VideoTransformProvider, the video feature: several transforms run chained, in their configured order (the examples, grayscale, blur and colour effects, informative). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Multiple
 transforms are chained in order. Example: grayscale, blur, color effects.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.8.5-005", "kind": "behavior", "applies": "§12.8.5 Pipeline Stage Providers; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.8.5-011", "kind": "structural", "applies": "§12.8.5 VideoFilterProvider, the video feature: the filter stage's interface, name, filter() of a frame with its FilterContext, reset() and close(). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **VideoFilterProvider:**
 
 ```
@@ -15298,12 +15344,14 @@ VideoFilterProvider (interface)
 ├── reset() → void
 └── close() → void
 ```
+<!-- /rfc -->
 
-Filters inspect frames (using vision context) and MAY replace them.
+<!-- rfc: {"id": "RK-12.8.5-012", "kind": "behavior", "applies": "§12.8.5 VideoFilterProvider, the video feature: a filter inspects a frame, using the vision context, and may replace it (the filter's choice, which the pipeline honours by passing the replacement on). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+Filters inspect frames (using vision context) and MAY replace them.<!-- /rfc --><!-- rfc: {"id": "RK-12.8.5-013", "kind": "behavior", "applies": "§12.8.5 VideoFilterProvider, the video feature: a filter receives a FilterContext holding the latest vision analysis results. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 They receive a `FilterContext` with the latest vision analysis results.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.8.5-006", "kind": "behavior", "applies": "§12.8.5 Pipeline Stage Providers; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.8.5-006", "kind": "structural", "applies": "§12.8.5 FilterContext, the video feature: its fields, session_id, last_vision_result updated by the vision analysis, labels_detected flattened from it, censoring, metadata, and the events the filters emit for the hooks. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **FilterContext:**
 
 ```
@@ -15319,7 +15367,7 @@ FilterContext
 
 #### 12.8.6 Overlay System
 
-<!-- rfc: {"id": "RK-12.8.6-001", "kind": "behavior", "applies": "§12.8.6 Overlay System; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.8.6-001", "kind": "structural", "applies": "§12.8.6 Overlay System, the video feature: an Overlay rendered over the frames and its fields, id, content, overlay_type (text, image, rich or subtitle), position, x and y (0 by default, for CUSTOM), z_order (0 by default, higher on top), opacity (1.0 by default, 0.0 to 1.0), style and version (0 by default, for cache invalidation). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Overlays render text, images, and rich content on top of video frames:
 
 ```
@@ -15337,13 +15385,13 @@ Overlay
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.8.6-002", "kind": "behavior", "applies": "§12.8.6 Overlay System; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.8.6-002", "kind": "structural", "applies": "§12.8.6 Overlay System, the video feature: the OverlayPosition values, the nine predefined positions from TOP_LEFT to BOTTOM_RIGHT and CUSTOM. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **OverlayPosition** enumeration: TOP_LEFT, TOP_CENTER, TOP_RIGHT,
 CENTER_LEFT, CENTER, CENTER_RIGHT, BOTTOM_LEFT, BOTTOM_CENTER,
 BOTTOM_RIGHT, CUSTOM.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.8.6-003", "kind": "behavior", "applies": "§12.8.6 Overlay System; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.8.6-004", "kind": "structural", "applies": "§12.8.6 OverlayRenderer, the video feature: the renderer interface, overlay_type, render() onto a canvas, invalidate_cache() and clear_cache(). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **OverlayRenderer** (interface):
 
 ```
@@ -15353,15 +15401,17 @@ OverlayRenderer (interface)
 ├── invalidate_cache(overlay_id) → void
 └── clear_cache() → void
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.8.6-005", "kind": "structural", "applies": "§12.8.6 OverlayRenderer, the video feature: the renderers TextOverlayRenderer, ImageOverlayRenderer, RichOverlayRenderer and SubtitleOverlayRenderer. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Implementations: TextOverlayRenderer, ImageOverlayRenderer,
-RichOverlayRenderer, SubtitleOverlayRenderer. The `OverlayFilterProvider`
+RichOverlayRenderer, SubtitleOverlayRenderer. <!-- /rfc --><!-- rfc: {"id": "RK-12.8.6-006", "kind": "behavior", "applies": "§12.8.6 OverlayRenderer, the video feature: the OverlayFilterProvider applies the overlays to the frames as a filter stage of the pipeline. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The `OverlayFilterProvider`
 applies overlays to frames as a pipeline filter stage.
 <!-- /rfc -->
 
 #### 12.8.7 VisionProvider
 
-<!-- rfc: {"id": "RK-12.8.7-001", "kind": "behavior", "applies": "§12.8.7 VisionProvider; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.8.7-001", "kind": "structural", "applies": "§12.8.7 VisionProvider, the video feature: the VisionProvider interface, name, analyze_frame() of one frame with an optional prompt and response_schema, analyze_stream() at a configurable interval, supports_streaming, supports_response_schema (false by default), warmup() and close(). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Vision providers analyze video frames and produce structured results:
 
 ```
@@ -15380,18 +15430,18 @@ VisionProvider (interface)
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.8.7-002", "kind": "behavior", "applies": "§12.8.7 VisionProvider; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.8.7-007", "kind": "behavior", "applies": "§12.8.7 Response schema, the video feature: a response_schema given to analyze_frame (the caller's choice, which the provider honours) follows the rules of §6.7, the same portable subset and the same ResponseSchemaError reasons. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Response schema.** `analyze_frame` MAY take a `response_schema`, under the
 rules of Section 6.7: the same portable subset, and the same
-`ResponseSchemaError` reasons. When the provider's `supports_response_schema`
+`ResponseSchemaError` reasons. <!-- /rfc --><!-- rfc: {"id": "RK-12.8.7-008", "kind": "behavior", "applies": "§12.8.7 Response schema, the video feature: a provider whose supports_response_schema is true returns as its description one JSON document satisfying the schema, checked before it is returned. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->When the provider's `supports_response_schema`
 is true, the `description` it returns is one JSON document satisfying the
-schema, checked before it is returned; when it is false, a call carrying a
-schema is refused before any request. A consumer that locates or extracts
+schema, checked before it is returned; <!-- /rfc --><!-- rfc: {"id": "RK-12.8.7-009", "kind": "behavior", "applies": "§12.8.7 Response schema, the video feature: a provider whose supports_response_schema is false refuses a call carrying a schema before any request. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->when it is false, a call carrying a
+schema is refused before any request. <!-- /rfc --><!-- rfc: {"id": "RK-12.8.7-010", "kind": "behavior", "applies": "§12.8.7 Response schema, the video feature: a consumer that locates or extracts something in a frame passes a schema where the provider supports one, instead of repairing free text. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A consumer that locates or extracts
 something in a frame passes a schema where the provider supports one, instead
 of repairing free text.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.8.7-003", "kind": "behavior", "applies": "§12.8.7 VisionProvider; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.8.7-003", "kind": "structural", "applies": "§12.8.7 VisionResult, the video feature: its fields, description, labels, confidence (0.0 to 1.0), faces, the text read (OCR) or null, and metadata. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **VisionResult:**
 
 ```
@@ -15405,7 +15455,7 @@ VisionResult
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.8.7-004", "kind": "behavior", "applies": "§12.8.7 VisionProvider; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.8.7-004", "kind": "structural", "applies": "§12.8.7 FaceDetection, the video feature: its fields, the bounding box x, y, width and height, confidence, and an optional label. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **FaceDetection:**
 
 ```
@@ -15419,25 +15469,25 @@ FaceDetection
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.8.7-006", "kind": "behavior", "applies": "§12.8.7 VisionProvider; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.8.7-011", "kind": "behavior", "applies": "§12.8.7 AI integration, the video feature: what a vision provider saw reaches the room's AI channels with no wiring. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **AI integration:** what a vision provider saw reaches a room's AI channels
-with no wiring. It changes from one result to the next, so it rides the turn's
+with no wiring. <!-- /rfc --><!-- rfc: {"id": "RK-12.8.7-012", "kind": "behavior", "applies": "§12.8.7 AI integration, the video feature: what a vision provider saw rides the turn's notes, never the system prompt, and is not written into the room's binding: state of the turn, not configuration of the room (§6.4). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->It changes from one result to the next, so it rides the turn's
 notes, not the system prompt, and is not written into the room's binding: it
-is state of the turn, not configuration of the room (Section 6.4). An AI
+is state of the turn, not configuration of the room (Section 6.4). <!-- /rfc --><!-- rfc: {"id": "RK-12.8.7-013", "kind": "behavior", "applies": "§12.8.7 AI integration, the video feature: an AI channel's turn carries, as a <vision> block (§6.4), the latest result a video channel attached to its room produced, whichever video channel, its description, objects detected and text read set apart as data that cannot close the block. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An AI
 channel's turn carries the latest result a video channel attached to its room
 produced, whichever video channel, as a `<vision>` block (Section 6.4): the
 description, the objects detected and the text read in the frame are what a
-model or the camera saw, data that cannot close its block. A standalone turn
-(Section 10.1.1) carries none. The result belongs to the video session that
-produced it: once that session ends, no turn reads it. A realtime session that
-is given what the camera sees takes the same block as a silent injection.
+model or the camera saw, data that cannot close its block. <!-- /rfc --><!-- rfc: {"id": "RK-12.8.7-014", "kind": "behavior", "applies": "§12.8.7 AI integration, the video feature: a standalone turn (§10.1.1) carries no vision block. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A standalone turn
+(Section 10.1.1) carries none. <!-- /rfc --><!-- rfc: {"id": "RK-12.8.7-015", "kind": "behavior", "applies": "§12.8.7 AI integration, the video feature: a vision result belongs to the video session that produced it; once that session ends, no turn reads it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The result belongs to the video session that
+produced it: once that session ends, no turn reads it. <!-- /rfc --><!-- rfc: {"id": "RK-12.8.7-016", "kind": "behavior", "applies": "§12.8.7 AI integration, the video feature with the realtime feature: a realtime session given what the camera sees takes the same <vision> block, as a silent injection. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A realtime session that
+is given what the camera sees takes the same block as a silent injection.<!-- /rfc --><!-- rfc: {"id": "RK-12.8.7-017", "kind": "behavior", "applies": "§12.8.7 AI integration, the video feature: setup_video_vision, which wrote the result into one AI channel's system prompt, is deprecated and writes nothing. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 `setup_video_vision`, which wrote the result into one AI channel's system
 prompt, is deprecated and writes nothing.
 <!-- /rfc -->
 
 #### 12.8.8 AvatarProvider (Lip-Sync Video Generation)
 
-<!-- rfc: {"id": "RK-12.8.8-001", "kind": "behavior", "applies": "§12.8.8 AvatarProvider (Lip-Sync Video Generation); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.8.8-001", "kind": "structural", "applies": "§12.8.8 AvatarProvider, the video feature: the AvatarProvider interface, name, fps, is_async, start() with a reference face image, feed_audio() returning the generated frames (at once in synchronous mode, an empty list in asynchronous mode, the frames then coming through on_video()), on_video(), end_turn(), get_idle_frame(), flush(), stop() and close(). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Avatar providers generate lip-synced video from TTS audio:
 
 ```
@@ -15463,31 +15513,48 @@ AvatarProvider (interface)
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.8.8-002", "kind": "behavior", "applies": "§12.8.8 AvatarProvider (Lip-Sync Video Generation); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.8.8-003", "kind": "behavior", "applies": "§12.8.8 Two delivery modes, the video feature: a synchronous avatar provider returns its frames from feed_audio() at once (local models, an example). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Two delivery modes:**
-- **Synchronous** (local models): `feed_audio()` returns frames immediately.
+- **Synchronous** (local models): `feed_audio()` returns frames immediately.<!-- /rfc --><!-- rfc: {"id": "RK-12.8.8-004", "kind": "behavior", "applies": "§12.8.8 Two delivery modes, the video feature: an asynchronous avatar provider returns an empty list from feed_audio(), its frames arriving through the on_video() callback (cloud APIs, an example). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - **Asynchronous** (cloud APIs): `feed_audio()` returns empty list; frames
-  arrive via the `on_video()` callback.
+  arrive via the `on_video()` callback.<!-- /rfc -->
 
-In AudioVideoChannel, the avatar is wired as an outbound audio tap.
+<!-- rfc: {"id": "RK-12.8.8-005", "kind": "behavior", "applies": "§12.8.8 Two delivery modes, the video feature with the voice feature: in AudioVideoChannel, the avatar is wired as an outbound audio tap. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+In AudioVideoChannel, the avatar is wired as an outbound audio tap.<!-- /rfc --><!-- rfc: {"id": "RK-12.8.8-006", "kind": "behavior", "applies": "§12.8.8 Two delivery modes, the video feature with the voice feature: in AudioVideoChannel, the TTS audio chunks are fed to the avatar, and the video frames it produces are encoded and sent through the video backend. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 TTS audio chunks are fed to the avatar, and the resulting video frames are
 encoded and sent via the video backend.
 <!-- /rfc -->
 
 #### 12.8.9 VideoBridge
 
-<!-- rfc: {"id": "RK-12.8.9-001", "kind": "behavior", "applies": "§12.8.9 VideoBridge; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.8.9-003", "kind": "behavior", "applies": "§12.8.9 VideoBridge, the video feature: the bridge forwards the video frames of a session to the other sessions of the same room (as the AudioBridge does audio, informative). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The VideoBridge forwards video frames between sessions in the same room,
 mirroring the AudioBridge pattern:
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.8.9-004", "kind": "structural", "applies": "§12.8.9 VideoBridgeConfig, the video feature: the enabled field, true by default; the bridge forwards only while it is enabled. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 VideoBridgeConfig
 ├── enabled: bool (default true)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.8.9-005", "kind": "structural", "applies": "§12.8.9 VideoBridgeConfig, the video feature: the max_participants field, 10 by default; a room bridges at most that many sessions. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── max_participants: int (default 10)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.8.9-006", "kind": "structural", "applies": "§12.8.9 VideoBridgeConfig, the video feature: the forwarding_strategy field, forward: each frame is forwarded directly. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── forwarding_strategy: "forward"          # Direct frame forwarding
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.8.9-007", "kind": "structural", "applies": "§12.8.9 VideoBridgeConfig, the video feature: the keyframe_interval_s field, 5.0 seconds by default: the interval between the bridge's keyframe (PLI) requests. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 └── keyframe_interval_s: float (default 5.0)  # PLI request interval
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.8.9-008", "kind": "structural", "applies": "§12.8.9 VideoBridge, the video feature: the VideoBridge interface, add_session, remove_session, forward() to every other session of the room, set_frame_filter() (an optional filter before forwarding, which can drop a frame), set_frame_processor() (an optional processor per target), get_participant_count, get_bridged_sessions and close(). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 VideoBridge
 ├── add_session(session, room_id, backend) → void
@@ -15501,19 +15568,19 @@ VideoBridge
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.8.9-002", "kind": "behavior", "applies": "§12.8.9 VideoBridge; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.8.9-009", "kind": "behavior", "applies": "§12.8.9 VideoBridge key behaviours, the video feature: the bridge buffers a keyframe for a session that joins late. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Key behaviors:**
-- Keyframe buffering for late joiners.
-- Periodic PLI (Picture Loss Indication) requests to ensure keyframe delivery.
+- Keyframe buffering for late joiners.<!-- /rfc --><!-- rfc: {"id": "RK-12.8.9-010", "kind": "behavior", "applies": "§12.8.9 VideoBridge key behaviours, the video feature: the bridge requests keyframes (PLI) periodically, so that keyframes keep being delivered. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+- Periodic PLI (Picture Loss Indication) requests to ensure keyframe delivery.<!-- /rfc --><!-- rfc: {"id": "RK-12.8.9-011", "kind": "behavior", "applies": "§12.8.9 VideoBridge key behaviours, the video feature: the bridge forwards no delta frame to a new session before a keyframe. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - Delta frame gating — waits for a keyframe before forwarding delta frames
-  to a new session.
-- Thread-safe session registration and removal.
+  to a new session.<!-- /rfc --><!-- rfc: {"id": "RK-12.8.9-012", "kind": "behavior", "applies": "§12.8.9 VideoBridge key behaviours, the video feature: registering and removing sessions is thread-safe. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+- Thread-safe session registration and removal.<!-- /rfc --><!-- rfc: {"id": "RK-12.8.9-013", "kind": "behavior", "applies": "§12.8.9 VideoBridge key behaviours, the video feature: the BEFORE_BRIDGE_VIDEO hook runs synchronously before a frame is forwarded, and can block the frame or modify it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - `BEFORE_BRIDGE_VIDEO` sync hook fires before forwarding (can block/modify).
 <!-- /rfc -->
 
 #### 12.8.10 Video Recording
 
-<!-- rfc: {"id": "RK-12.8.10-001", "kind": "behavior", "applies": "§12.8.10 Video Recording; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.8.10-005", "kind": "structural", "applies": "§12.8.10 Video Recording, the video feature: VideoRecordingConfig and its fields, storage (the output directory), format (mp4 by default), codec (auto by default), fps (15.0 by default), metadata, encryption (none by default, §17.6) and storage_encrypted_at_rest (false by default, the integrator's statement that the storage encrypts). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 VideoRecordingConfig
 ├── storage: string                         # Output directory
@@ -15524,20 +15591,24 @@ VideoRecordingConfig
 ├── encryption: RecordingEncryption | null  # Encrypts finished files (Section 17.6)
 └── storage_encrypted_at_rest: bool = false # Integrator's statement: storage encrypts
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.8.10-006", "kind": "behavior", "applies": "§12.8.10 Video Recording, the video feature: the session video recorder applies encryption and storage_encrypted_at_rest when they are set, and starts without them; with neither, the file is stored as written. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The session video recorder applies `encryption` and
 `storage_encrypted_at_rest` when they are set and does not refuse to start
-without them: with neither, the file is stored as written. With `encryption`,
+without them: with neither, the file is stored as written. <!-- /rfc --><!-- rfc: {"id": "RK-12.8.10-007", "kind": "behavior", "applies": "§12.8.10 Video Recording, the video feature, with encryption: the recorder hands each finished file to encrypt_file() (§12.3.7), at stop() and at close() for a recording still open, also when flushing or closing the file failed, and stop() reports the path it returns as url, with metadata[\"encryption\"] naming the cipher. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->With `encryption`,
 it hands each finished file to `encrypt_file()` (Section 12.3.7), at `stop()`
 and at `close()` for a recording still open, also when flushing or closing the
 file failed, and `stop()` reports the path it returns as `url`, with
-`metadata["encryption"]` naming the cipher; a file the cipher cannot encrypt
-MUST be deleted rather than kept in the clear. With
+`metadata["encryption"]` naming the cipher; <!-- /rfc --><!-- rfc: {"id": "RK-12.8.10-008", "kind": "behavior", "applies": "§12.8.10 Video Recording, the video feature, with encryption: a file the cipher cannot encrypt is deleted rather than kept in the clear. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->a file the cipher cannot encrypt
+MUST be deleted rather than kept in the clear. <!-- /rfc --><!-- rfc: {"id": "RK-12.8.10-009", "kind": "behavior", "applies": "§12.8.10 Video Recording, the video feature: with storage_encrypted_at_rest true and no encryption, the file stays as written and metadata[\"encryption\"] is \"storage\". Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->With
 `storage_encrypted_at_rest = true` and no `encryption`, the file stays as
-written and `metadata["encryption"]` is `"storage"`. A `storage` containing
+written and `metadata["encryption"]` is `"storage"`. <!-- /rfc --><!-- rfc: {"id": "RK-12.8.10-010", "kind": "behavior", "applies": "§12.8.10 Video Recording, the video feature: a storage containing .. is a configuration error (§12.3.7), and a recording the recorder refuses to start fails the session's join before the session is bound. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A `storage` containing
 `..` is a configuration error (Section 12.3.7), and a recording the recorder
 refuses to start fails the session's join before the session is bound.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.8.10-011", "kind": "structural", "applies": "§12.8.10 Video Recording, the video feature: the VideoRecorder interface, name, start() of a session's recording with its config, stop() returning a VideoRecordingResult, tap_frame() feeding it a frame, reset() and close(). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 VideoRecorder (interface)
 ├── name: string (property)
@@ -15549,7 +15620,7 @@ VideoRecorder (interface)
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.8.10-002", "kind": "behavior", "applies": "§12.8.10 Video Recording; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.8.10-002", "kind": "structural", "applies": "§12.8.10 VideoRecordingResult, the video feature: its fields, id, url (a file path or a URL), duration_seconds, frame_count, format, size_bytes and metadata. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **VideoRecordingResult:**
 
 ```
@@ -15564,7 +15635,7 @@ VideoRecordingResult
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.8.10-004", "kind": "behavior", "applies": "§12.8.10 Video Recording; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.8.10-004", "kind": "behavior", "applies": "§12.8.10 Scope, the video feature: the session video recorder records the one session it is handed; a conference, which publishes attributed video tracks and no session, records them through §12.11 instead (§12.10.8). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Scope.** Like the audio recorder, this one records a session's video and is
 handed one — a conference publishes N attributed video tracks and no session,
 and records them through Section 12.11 instead (Section 12.10.8).
@@ -15572,18 +15643,18 @@ and records them through Section 12.11 instead (Section 12.10.8).
 
 #### 12.8.11 Video Hooks
 
-<!-- rfc: {"id": "RK-12.8.11-001", "kind": "behavior", "applies": "§12.8.11 Video Hooks; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.8.11-002", "kind": "behavior", "applies": "§12.8.11 Video Hooks table, the video feature, the ON_VIDEO_SESSION_STARTED row: the hook fires, ASYNC, when a video session becomes active. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 | Hook | Execution | When |
 |---|---|---|
 | ON_VIDEO_SESSION_STARTED | ASYNC | Video session became active |
-| ON_VIDEO_SESSION_ENDED | ASYNC | Video session ended |
-| ON_VIDEO_TRACK_ADDED | ASYNC | Video track added to session (Planned, Section 9.2) |
-| ON_VIDEO_TRACK_REMOVED | ASYNC | Video track removed from session (Planned, Section 9.2) |
-| ON_VISION_RESULT | SYNC | VisionProvider returned an analysis result — can block or modify it |
-| ON_VIDEO_DETECTION | ASYNC | Filter emitted a detection event (object, face, etc.) |
-| ON_SCREEN_SHARE_STARTED | ASYNC | Screen sharing started; fired by the conference channel only, not by a video channel (Section 12.10.4) |
-| ON_SCREEN_SHARE_STOPPED | ASYNC | Screen sharing stopped; fired by the conference channel only, not by a video channel (Section 12.10.4) |
-| BEFORE_BRIDGE_VIDEO | SYNC | Before frame forwarded via bridge — can block |
+| <!-- /rfc --><!-- rfc: {"id": "RK-12.8.11-003", "kind": "behavior", "applies": "§12.8.11 Video Hooks table, the video feature, the ON_VIDEO_SESSION_ENDED row: the hook fires, ASYNC, when a video session ends. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_VIDEO_SESSION_ENDED | ASYNC | Video session ended |
+| <!-- /rfc --><!-- rfc: {"id": "RK-12.8.11-004", "kind": "behavior", "applies": "§12.8.11 Video Hooks table, the video feature, the ON_VIDEO_TRACK_ADDED row: the hook fires, ASYNC, when a video track is added to a session; Planned (§9.2): normative intent for an implementation that provides the capability, which no implementation emits yet. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_VIDEO_TRACK_ADDED | ASYNC | Video track added to session (Planned, Section 9.2) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-12.8.11-005", "kind": "behavior", "applies": "§12.8.11 Video Hooks table, the video feature, the ON_VIDEO_TRACK_REMOVED row: the hook fires, ASYNC, when a video track is removed from a session; Planned (§9.2): normative intent for an implementation that provides the capability, which no implementation emits yet. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_VIDEO_TRACK_REMOVED | ASYNC | Video track removed from session (Planned, Section 9.2) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-12.8.11-006", "kind": "behavior", "applies": "§12.8.11 Video Hooks table, the video feature, the ON_VISION_RESULT row: the hook runs SYNC when the vision provider returns an analysis result, and can block it or modify it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_VISION_RESULT | SYNC | VisionProvider returned an analysis result — can block or modify it |
+| <!-- /rfc --><!-- rfc: {"id": "RK-12.8.11-007", "kind": "behavior", "applies": "§12.8.11 Video Hooks table, the video feature, the ON_VIDEO_DETECTION row: the hook fires, ASYNC, when a filter emits a detection event (an object, a face and so on). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_VIDEO_DETECTION | ASYNC | Filter emitted a detection event (object, face, etc.) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-12.8.11-008", "kind": "behavior", "applies": "§12.8.11 Video Hooks table, the video feature, the ON_SCREEN_SHARE_STARTED row: the hook fires, ASYNC, when screen sharing starts, from the conference channel only, never from a video channel (§12.10.4). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_SCREEN_SHARE_STARTED | ASYNC | Screen sharing started; fired by the conference channel only, not by a video channel (Section 12.10.4) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-12.8.11-009", "kind": "behavior", "applies": "§12.8.11 Video Hooks table, the video feature, the ON_SCREEN_SHARE_STOPPED row: the hook fires, ASYNC, when screen sharing stops, from the conference channel only, never from a video channel (§12.10.4). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_SCREEN_SHARE_STOPPED | ASYNC | Screen sharing stopped; fired by the conference channel only, not by a video channel (Section 12.10.4) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-12.8.11-010", "kind": "behavior", "applies": "§12.8.11 Video Hooks table, the video feature, the BEFORE_BRIDGE_VIDEO row: the hook runs SYNC before a frame is forwarded through the bridge, and can block it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->BEFORE_BRIDGE_VIDEO | SYNC | Before frame forwarded via bridge — can block |
 <!-- /rfc -->
 
 ### 12.9 (Removed)
