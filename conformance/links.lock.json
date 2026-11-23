@@ -4241,6 +4241,40 @@
     "RK-12.2.3-041": {
       "voice/diarization-reports-a-new-speaker": "365c51edf8417c1cafa21e0b59d389c8ace248bcfcb85951812459589b19d003"
     },
+    "RK-12.3.12-004": {
+      "voice/a-turn-waits-for-its-last-fragment": "a47e66c81702a2b1490ba95f377ce1aeb1d9003bfd679f4e62389db59729ff4b"
+    },
+    "RK-12.3.12-012": {
+      "voice/a-turn-waits-for-its-last-fragment": "48922766e7814709fbcb0bc60605116a6b31131ebd46af9033ae84fcc8e7ee18"
+    },
+    "RK-12.3.12-020": {
+      "memory/history-omits-only-responses-marked-superseded": "7137ffe38f1bd607990c0d7393773ce15b7784ffff27bb7c9395895050da0aec"
+    },
+    "RK-12.3.12-021": {
+      "voice/the-transcription-hook-replaces-the-routed-words": "ccf43c5f86f1e687170f61dee11fc738c6f962cebfefdd018616a9c854c8ea41"
+    },
+    "RK-12.3.13-007": {
+      "voice/a-transport-barge-in-cancels-active-playback": "9b595ef7923df914b70a8b22724f7492e9976c5943f3e2ac1d04c826bac2805a"
+    },
+    "RK-12.3.13-011": {
+      "voice/a-backchannel-leaves-the-reply-playing": "06c720db201a0fb45b7a1c7b133d100b8910d712f2d0699d75a9e5b2f7ef2b12"
+    },
+    "RK-12.3.13-023": {
+      "voice/a-backchannel-leaves-the-reply-playing": "5df2f294597cd25ec73ceb5b983eec40c26d81aa4f3819ec1a8b57b70eef0c4f"
+    },
+    "RK-12.3.14-013": {
+      "voice/a-detected-tone-reaches-the-dtmf-hook": "5434cb7b63e67c08c4d02686386e2fdad53c34e4fabf543feac1a6856d89b407"
+    },
+    "RK-12.3.14-017": {
+      "voice/a-turn-waits-for-its-last-fragment": "6373ab5a854a4d4323623c27e8363d3c05469da0b9ce387ae0b33fb328109cc1",
+      "voice/speech-edges-bracket-an-utterance": "6373ab5a854a4d4323623c27e8363d3c05469da0b9ce387ae0b33fb328109cc1",
+      "voice/the-transcription-hook-replaces-the-routed-words": "6373ab5a854a4d4323623c27e8363d3c05469da0b9ce387ae0b33fb328109cc1",
+      "voice/vad-reports-a-silence": "6373ab5a854a4d4323623c27e8363d3c05469da0b9ce387ae0b33fb328109cc1",
+      "voice/vad-reports-its-measured-level": "6373ab5a854a4d4323623c27e8363d3c05469da0b9ce387ae0b33fb328109cc1"
+    },
+    "RK-12.3.14-018": {
+      "voice/diarization-reports-a-new-speaker": "9300759b3d10a857b3e488b07a2b6a95f3f9efe4fb4437d63cc63508dc58a819"
+    },
     "RK-12.3.6-005": {
       "voice/a-detected-tone-reaches-the-dtmf-hook": "a41ee5b0d3b0a83baeb7cf7b4b78709b496cc5280f016878e36446d72cdd7f44"
     },
@@ -4348,6 +4382,109 @@
     "RK-12.4-118": {
       "realtime/a-handler-reconnects-through-its-child": "17a76f486f659d828db2fb563f45190e33b8aa09c3a87a3e5eea2cfa1106b023",
       "realtime/a-late-cancellation-leaves-the-served-call-alone": "17a76f486f659d828db2fb563f45190e33b8aa09c3a87a3e5eea2cfa1106b023"
+    },
+    "RK-12.5-003": {
+      "voice/speech-edges-bracket-an-utterance": "bef87d14c2ce4b5d2203ba08d1e822d3155f5d022289c160c0d58629e5a9fcb9"
+    },
+    "RK-12.5-004": {
+      "voice/speech-edges-bracket-an-utterance": "578f38026ce29b56f57a58893f0e5aad4ea5a3f956cd15b59d3b50c9fb02babd"
+    },
+    "RK-12.5-005": {
+      "voice/a-failed-transcription-hook-withholds-the-utterance": "a8b7fb3a51e69ed271fa455ee6f6ac396859ca9e926ab7db4da2b925c7a61f59",
+      "voice/the-transcription-hook-replaces-the-routed-words": "a8b7fb3a51e69ed271fa455ee6f6ac396859ca9e926ab7db4da2b925c7a61f59"
+    },
+    "RK-12.5-006": {
+      "voice/a-streamed-reply-checks-each-sentence-before-synthesis": "e271899868281a920d3dfe558492ae6a657aa07760a578d52c767b9b2c3709e7"
+    },
+    "RK-12.5-007": {
+      "voice/synthesis-reports-the-text-after-it-is-spoken": "7707f63791e9eb30df673e3268be04e86dc9ddf9d074f3bc9425084b7c634197"
+    },
+    "RK-12.5-008": {
+      "voice/a-transport-barge-in-cancels-active-playback": "9d9829f4182cf8192dd939774636489f9c9b8aced46aad79dff4270132394663"
+    },
+    "RK-12.5-009": {
+      "voice/a-transport-barge-in-cancels-active-playback": "31d47f39a8721c73a630e28a0acbecac8b3292e02e4347aa35f6ddc90251758d"
+    },
+    "RK-12.5-010": {
+      "voice/partial-speech-is-observed-before-its-final": "1253288f02350e0e177329c365b188c410c0e16a9d0ad923bef11da7015b2f7a",
+      "voice/streamed-recognition-reports-a-partial": "1253288f02350e0e177329c365b188c410c0e16a9d0ad923bef11da7015b2f7a"
+    },
+    "RK-12.5-011": {
+      "voice/vad-reports-a-silence": "4ad118e3b2de1b71cb18abf8f3a4d250031b5673b7645a72232ca7c2b86fd4bc"
+    },
+    "RK-12.5-012": {
+      "voice/vad-reports-its-measured-level": "519d2e821d60000216e2466e8b7b8570dd429ac3f910f55d9f4a7d1d640874a8"
+    },
+    "RK-12.5-013": {
+      "voice/input-frames-report-an-audio-level": "10dcc900d98d6976abaa728e73a47dd614308238304ce21e0f4389f524abce36"
+    },
+    "RK-12.5-014": {
+      "voice/outbound-speech-reports-an-audio-level": "3c27fca8f589809c36b208b0ba3dcf507b81c93d72fb3f0a40fe099a02e28298"
+    },
+    "RK-12.5-015": {
+      "voice/diarization-reports-a-new-speaker": "3e1b3d301492a14b55a19d899c40fbba9f393a720a9924a9c0c0d99815bef860"
+    },
+    "RK-12.5-016": {
+      "voice/a-detected-tone-reaches-the-dtmf-hook": "c60a4246e3033d2c426621ed1d6857cb3d5e8098298265f80dcc1b7cb7da0037"
+    },
+    "RK-12.5-017": {
+      "voice/a-turn-waits-for-its-last-fragment": "5d6ab767b5cc6500640e128498e87e07e6d79641e183842bde540e444ae04785"
+    },
+    "RK-12.5-018": {
+      "voice/a-turn-waits-for-its-last-fragment": "3aefdaaf6ba2173c29bfa007812519c8052cfa6ed302d427cf3fadb18cc74cc0"
+    },
+    "RK-12.5-019": {
+      "voice/a-backchannel-leaves-the-reply-playing": "ac950c6271785f05f758e1907194a68a92a4dc78bdea4a4df0aaadd0e3237e2c"
+    },
+    "RK-12.5-020": {
+      "greeting/a-session-started-hook-holds-no-message": "52ff6bee0d28cd5915215a6d25f39039d4bf95f7d430d2731af8b9a5688d8d5f"
+    },
+    "RK-12.5-021": {
+      "recording/a-recorder-joins-the-live-feed-after-consent": "f34308651975c062cd3b9b11a5e4a2222f5f9b0d56d54c57cfd7d993e0d005e4"
+    },
+    "RK-12.5-022": {
+      "recording/a-stopped-recorder-announces-its-file": "66421ee95b2ae672f4605cb49fd84a09a2d9a956bd18f0988cdaf7da7f18ef15"
+    },
+    "RK-12.5-023": {
+      "conference/a-conference-model-receives-the-gated-tool-result": "c89f2b1e256cc334781c0dd257e8aec866fd60bb08944e9132a87361a94de70c"
+    },
+    "RK-12.5-024": {
+      "realtime/an-abandoned-call-interrupts-its-handler": "be2f18b33b462808a0496b2356b3b3baa0843abae1e17602613a89961af61d4b"
+    },
+    "RK-12.5-025": {
+      "realtime/a-session-takes-its-instruction-directly": "4c8eaa66898c56a08f0756de43f8562d67106037e97879b51943486860ff1f7f"
+    },
+    "RK-12.5-026": {
+      "realtime/a-hosted-delegation-reaches-its-room": "54e8cbbdb1fdd4e28cfdd8f0917c60018f94e3d458068ff77b9fa96fcaf435bd"
+    },
+    "RK-12.5-027": {
+      "media/an-emitted-protocol-trace-reaches-its-room-observer": "8ea25cfcd7dccf4d27663a4dc0301bc76a9965136c9bda1d3e13f2471d2119aa"
+    },
+    "RK-12.5-028": {
+      "voice/a-bridge-forwards-only-the-frame-the-hook-admits": "2c20d95a44fd00c261e652c2ceb1ca810105247f9e7250fc61f9852061b75539"
+    },
+    "RK-12.5-029": {
+      "voice/input-frames-report-an-audio-level": "cf2f25ca101f3d0eb9ac34f9de14adebbf1174ac99b6b716fe0d62cae8401ac3",
+      "voice/outbound-speech-reports-an-audio-level": "cf2f25ca101f3d0eb9ac34f9de14adebbf1174ac99b6b716fe0d62cae8401ac3"
+    },
+    "RK-12.5-031": {
+      "voice/input-frames-report-an-audio-level": "9b2b0201e0ec16eeb702f3220b5758f22ea1ec70e83025bd0773088517320ea3",
+      "voice/outbound-speech-reports-an-audio-level": "9b2b0201e0ec16eeb702f3220b5758f22ea1ec70e83025bd0773088517320ea3"
+    },
+    "RK-12.6-004": {
+      "voice/a-transport-barge-in-cancels-active-playback": "bf10bbf85e97352ca5f34054793c2a7e25b3f07496efc154b25fc25bb9cacc1c"
+    },
+    "RK-12.6-005": {
+      "voice/a-transport-barge-in-cancels-active-playback": "a0af278bfb58ccaaf185b5f3e43114aa44bc1df9c83b57137f5e46c69fd84070"
+    },
+    "RK-12.6-009": {
+      "voice/a-transport-barge-in-cancels-active-playback": "59b19804eb54e47e202d3df46fd667193c65bedf670094a51ca1458b80551cec"
+    },
+    "RK-12.6-011": {
+      "voice/a-backchannel-leaves-the-reply-playing": "fec00330aa49a6cb4c3a07cf6243ed93a283cd6fecdae41bc960b90d1a53422c"
+    },
+    "RK-12.6-014": {
+      "voice/a-transport-barge-in-cancels-active-playback": "fcf8d159fb72aec4dd8f323beef863e3d113b51b5a969b09066569ea7b1b08c0"
     },
     "RK-13.2-004": {
       "delivery/a-retried-delivery-keeps-its-successful-provider-receipt": "8504abca107b13da520b70284632b270c3d86c86a32db7cb46bd3f96555880da"
