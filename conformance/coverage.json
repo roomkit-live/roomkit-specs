@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "rfc_sha256": "8c850fc38f96005af75f639e6036f0066bf4df786def39a5080649bd5c2fd471",
+  "rfc_sha256": "73ed31c5bc659b55d9ae58c50c9a69c6199bc21e8b848af214d633fe61a3b265",
   "corpus_sha256": "b6be90365c506d3356efc99c81d6387592780678f23506e174c78dae3ca578be",
   "python_commit": "651ae82c198066cc771ad2fcfdc6995fdad25c99",
   "scenario_count": 3393,
@@ -6892,9 +6892,9 @@
       "section": "12.8.1",
       "title": "Architecture Overview",
       "review": "normative",
-      "requirements": 2,
+      "requirements": 3,
       "mapping": {
-        "unmapped": 2
+        "unmapped": 3
       },
       "decided_gaps": {},
       "unannotated_keyword_lines": [],
@@ -6903,66 +6903,6 @@
     {
       "section": "12.8.2",
       "title": "Video Data Models",
-      "review": "normative",
-      "requirements": 4,
-      "mapping": {
-        "unmapped": 4
-      },
-      "decided_gaps": {},
-      "unannotated_keyword_lines": [],
-      "candidate_scenarios": []
-    },
-    {
-      "section": "12.8.3",
-      "title": "VideoBackend Interface",
-      "review": "normative",
-      "requirements": 4,
-      "mapping": {
-        "unmapped": 4
-      },
-      "decided_gaps": {},
-      "unannotated_keyword_lines": [],
-      "candidate_scenarios": []
-    },
-    {
-      "section": "12.8.4",
-      "title": "Video Processing Pipeline",
-      "review": "normative",
-      "requirements": 3,
-      "mapping": {
-        "unmapped": 3
-      },
-      "decided_gaps": {},
-      "unannotated_keyword_lines": [],
-      "candidate_scenarios": []
-    },
-    {
-      "section": "12.8.5",
-      "title": "Pipeline Stage Providers",
-      "review": "normative",
-      "requirements": 6,
-      "mapping": {
-        "unmapped": 6
-      },
-      "decided_gaps": {},
-      "unannotated_keyword_lines": [],
-      "candidate_scenarios": []
-    },
-    {
-      "section": "12.8.6",
-      "title": "Overlay System",
-      "review": "normative",
-      "requirements": 3,
-      "mapping": {
-        "unmapped": 3
-      },
-      "decided_gaps": {},
-      "unannotated_keyword_lines": [],
-      "candidate_scenarios": []
-    },
-    {
-      "section": "12.8.7",
-      "title": "VisionProvider",
       "review": "normative",
       "requirements": 5,
       "mapping": {
@@ -6973,14 +6913,86 @@
       "candidate_scenarios": []
     },
     {
+      "section": "12.8.3",
+      "title": "VideoBackend Interface",
+      "review": "normative",
+      "requirements": 12,
+      "mapping": {
+        "unmapped": 12
+      },
+      "decided_gaps": {
+        "step": 7
+      },
+      "unannotated_keyword_lines": [],
+      "candidate_scenarios": []
+    },
+    {
+      "section": "12.8.4",
+      "title": "Video Processing Pipeline",
+      "review": "normative",
+      "requirements": 12,
+      "mapping": {
+        "unmapped": 12
+      },
+      "decided_gaps": {
+        "step": 4,
+        "writable": 1
+      },
+      "unannotated_keyword_lines": [],
+      "candidate_scenarios": []
+    },
+    {
+      "section": "12.8.5",
+      "title": "Pipeline Stage Providers",
+      "review": "normative",
+      "requirements": 10,
+      "mapping": {
+        "unmapped": 10
+      },
+      "decided_gaps": {
+        "step": 3
+      },
+      "unannotated_keyword_lines": [],
+      "candidate_scenarios": []
+    },
+    {
+      "section": "12.8.6",
+      "title": "Overlay System",
+      "review": "normative",
+      "requirements": 5,
+      "mapping": {
+        "unmapped": 5
+      },
+      "decided_gaps": {},
+      "unannotated_keyword_lines": [],
+      "candidate_scenarios": []
+    },
+    {
+      "section": "12.8.7",
+      "title": "VisionProvider",
+      "review": "normative",
+      "requirements": 14,
+      "mapping": {
+        "unmapped": 14
+      },
+      "decided_gaps": {
+        "step": 1,
+        "writable": 5
+      },
+      "unannotated_keyword_lines": [],
+      "candidate_scenarios": []
+    },
+    {
       "section": "12.8.8",
       "title": "AvatarProvider (Lip-Sync Video Generation)",
       "review": "normative",
-      "requirements": 2,
+      "requirements": 5,
       "mapping": {
-        "unmapped": 2
+        "unmapped": 5
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "step": 2
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -6988,11 +7000,14 @@
       "section": "12.8.9",
       "title": "VideoBridge",
       "review": "normative",
-      "requirements": 2,
+      "requirements": 11,
       "mapping": {
-        "unmapped": 2
+        "unmapped": 11
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "step": 6,
+        "writable": 1
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -7000,11 +7015,13 @@
       "section": "12.8.10",
       "title": "Video Recording",
       "review": "normative",
-      "requirements": 3,
+      "requirements": 9,
       "mapping": {
-        "unmapped": 3
+        "unmapped": 9
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "step": 1
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -7012,9 +7029,9 @@
       "section": "12.8.11",
       "title": "Video Hooks",
       "review": "normative",
-      "requirements": 1,
+      "requirements": 9,
       "mapping": {
-        "unmapped": 1
+        "unmapped": 9
       },
       "decided_gaps": {},
       "unannotated_keyword_lines": [],
@@ -33365,19 +33382,31 @@
       "links": []
     },
     {
-      "id": "RK-12.8.1-001",
+      "id": "RK-12.8.1-003",
       "section": "12.8.1",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.8.1-002",
+      "id": "RK-12.8.1-004",
       "section": "12.8.1",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.8.2-001",
+      "id": "RK-12.8.1-005",
+      "section": "12.8.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.8.2-005",
+      "section": "12.8.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.8.2-006",
       "section": "12.8.2",
       "mapping": "unmapped",
       "links": []
@@ -33407,10 +33436,26 @@
       "links": []
     },
     {
-      "id": "RK-12.8.3-002",
+      "id": "RK-12.8.3-005",
       "section": "12.8.3",
       "mapping": "unmapped",
-      "links": []
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2062",
+        "note": "named backend: leaves the RFC in P6-V (D8)"
+      }
+    },
+    {
+      "id": "RK-12.8.3-006",
+      "section": "12.8.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2062",
+        "note": "named backend: leaves the RFC in P6-V (D8)"
+      }
     },
     {
       "id": "RK-12.8.3-003",
@@ -33419,10 +33464,77 @@
       "links": []
     },
     {
-      "id": "RK-12.8.3-004",
+      "id": "RK-12.8.3-007",
       "section": "12.8.3",
       "mapping": "unmapped",
       "links": []
+    },
+    {
+      "id": "RK-12.8.3-008",
+      "section": "12.8.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.8.3-009",
+      "section": "12.8.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.8.3-010",
+      "section": "12.8.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2062",
+        "note": "step: av.open, an audio/video channel over a scripted combined backend (VI4): every call, with or without video, reports its start and its end through the voice lifecycle."
+      }
+    },
+    {
+      "id": "RK-12.8.3-011",
+      "section": "12.8.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2062",
+        "note": "step: av.open, an audio/video channel over a scripted combined backend (VI4): a call that negotiated video reports its video session under the call's id, ready once its video path is live and ended with the call."
+      }
+    },
+    {
+      "id": "RK-12.8.3-012",
+      "section": "12.8.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2062",
+        "note": "step: av.open, an audio/video channel over a scripted combined backend (VI4): a call without video never reports a video session."
+      }
+    },
+    {
+      "id": "RK-12.8.3-013",
+      "section": "12.8.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2062",
+        "note": "step: av.open, an audio/video channel over a scripted combined backend (VI4): disconnecting the video facet ends the call, and the facet's connect is refused."
+      }
+    },
+    {
+      "id": "RK-12.8.3-014",
+      "section": "12.8.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2062",
+        "note": "step: av.open, an audio/video channel over a scripted combined backend (VI4): ON_SESSION_STARTED for the call, ON_VIDEO_SESSION_STARTED once the session is bound and its video live, whichever comes last, and ON_VIDEO_SESSION_ENDED after it, each once, the video ones only for a call with video."
+      }
     },
     {
       "id": "RK-12.8.4-001",
@@ -33431,16 +33543,95 @@
       "links": []
     },
     {
-      "id": "RK-12.8.4-002",
+      "id": "RK-12.8.4-004",
       "section": "12.8.4",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.8.4-003",
+      "id": "RK-12.8.4-005",
+      "section": "12.8.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2062",
+        "note": "step: a pipeline vision provider and vision_interval_ms on video.open (VI1; the runners analyse every frame): a frame inside the interval is not analysed."
+      }
+    },
+    {
+      "id": "RK-12.8.4-006",
       "section": "12.8.4",
       "mapping": "unmapped",
       "links": []
+    },
+    {
+      "id": "RK-12.8.4-007",
+      "section": "12.8.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2062",
+        "note": "step: a scripted filter that reads its FilterContext on video.open (VI1): after a vision result, the filter's context holds it."
+      }
+    },
+    {
+      "id": "RK-12.8.4-008",
+      "section": "12.8.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.8.4-009",
+      "section": "12.8.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.8.4-010",
+      "section": "12.8.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.8.4-011",
+      "section": "12.8.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2062",
+        "note": "step: a scripted filter that reads its FilterContext on video.open (VI1): the frame after a vision result sees it in last_vision_result and labels_detected."
+      }
+    },
+    {
+      "id": "RK-12.8.4-012",
+      "section": "12.8.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.8.4-013",
+      "section": "12.8.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-2062",
+        "note": "video.open with vision and a scripted agent attached to the same room: after a frame, the agent's next turn reads the description as a <vision> block (models)."
+      }
+    },
+    {
+      "id": "RK-12.8.4-014",
+      "section": "12.8.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2062",
+        "note": "step: video.open with a scripted session recorder and a read of its result (VI3): every frame of a recorded session reaches the recorder."
+      }
     },
     {
       "id": "RK-12.8.5-001",
@@ -33461,16 +33652,55 @@
       "links": []
     },
     {
-      "id": "RK-12.8.5-004",
+      "id": "RK-12.8.5-008",
       "section": "12.8.5",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.8.5-005",
+      "id": "RK-12.8.5-009",
       "section": "12.8.5",
       "mapping": "unmapped",
       "links": []
+    },
+    {
+      "id": "RK-12.8.5-010",
+      "section": "12.8.5",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2062",
+        "note": "step: scripted transforms on video.open (VI1): two transforms run in their configured order on each frame."
+      }
+    },
+    {
+      "id": "RK-12.8.5-011",
+      "section": "12.8.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.8.5-012",
+      "section": "12.8.5",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2062",
+        "note": "step: a scripted filter that replaces the frame on video.open (VI1): the replacement is what the bridge and the vision provider receive."
+      }
+    },
+    {
+      "id": "RK-12.8.5-013",
+      "section": "12.8.5",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2062",
+        "note": "step: a scripted filter that reads its FilterContext on video.open (VI1): it holds the latest vision result."
+      }
     },
     {
       "id": "RK-12.8.5-006",
@@ -33491,7 +33721,19 @@
       "links": []
     },
     {
-      "id": "RK-12.8.6-003",
+      "id": "RK-12.8.6-004",
+      "section": "12.8.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.8.6-005",
+      "section": "12.8.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.8.6-006",
       "section": "12.8.6",
       "mapping": "unmapped",
       "links": []
@@ -33503,7 +33745,25 @@
       "links": []
     },
     {
-      "id": "RK-12.8.7-002",
+      "id": "RK-12.8.7-007",
+      "section": "12.8.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.8.7-008",
+      "section": "12.8.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.8.7-009",
+      "section": "12.8.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.8.7-010",
       "section": "12.8.7",
       "mapping": "unmapped",
       "links": []
@@ -33521,7 +33781,73 @@
       "links": []
     },
     {
-      "id": "RK-12.8.7-006",
+      "id": "RK-12.8.7-011",
+      "section": "12.8.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-2062",
+        "note": "video.open with vision and a scripted agent attached to the same room and no wiring step: the agent's turn after a frame reads the vision result (models)."
+      }
+    },
+    {
+      "id": "RK-12.8.7-012",
+      "section": "12.8.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-2062",
+        "note": "video.open with vision and a scripted agent attached to the same room: after a frame, the turn's system_prompt (models) and the room's binding (get_binding) are unchanged; the result rides the turn's notes."
+      }
+    },
+    {
+      "id": "RK-12.8.7-013",
+      "section": "12.8.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-2062",
+        "note": "two video channels with vision on one room and a scripted agent: the turn reads the latest result as one <vision> block, its description, labels and text, and a text that tries to close the block stays inside it; in Python a result with no description reaches no turn (suspect RMK-2063)."
+      }
+    },
+    {
+      "id": "RK-12.8.7-014",
+      "section": "12.8.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-2062",
+        "note": "video.open with vision and a scripted agent attached to the same room, a frame, then send_event with standalone on that room: the standalone turn's request carries no vision block."
+      }
+    },
+    {
+      "id": "RK-12.8.7-015",
+      "section": "12.8.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-2062",
+        "note": "video.open with vision and a scripted agent attached to the same room, a frame, then video.disconnect: the agent's next turn reads no vision block."
+      }
+    },
+    {
+      "id": "RK-12.8.7-016",
+      "section": "12.8.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2062",
+        "note": "step: a realtime session given the video channel's vision results (Python's setup_realtime_vision), with video.open and realtime.start: realtime.read shows the <vision> block as a silent injection (requires video and realtime)."
+      }
+    },
+    {
+      "id": "RK-12.8.7-017",
       "section": "12.8.7",
       "mapping": "unmapped",
       "links": []
@@ -33533,25 +33859,183 @@
       "links": []
     },
     {
-      "id": "RK-12.8.8-002",
+      "id": "RK-12.8.8-003",
       "section": "12.8.8",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.8.9-001",
+      "id": "RK-12.8.8-004",
+      "section": "12.8.8",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.8.8-005",
+      "section": "12.8.8",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2062",
+        "note": "step: av.open with a scripted avatar (VI4): the TTS audio of a reply reaches the avatar's feed_audio()."
+      }
+    },
+    {
+      "id": "RK-12.8.8-006",
+      "section": "12.8.8",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2062",
+        "note": "step: av.open with a scripted avatar and a read of the video sent (VI4): the avatar's frames are encoded and sent through the video backend."
+      }
+    },
+    {
+      "id": "RK-12.8.9-003",
       "section": "12.8.9",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.8.9-002",
+      "id": "RK-12.8.9-004",
+      "section": "12.8.9",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2062",
+        "note": "step: video.open bridge as a config object (the runners take a boolean): enabled false forwards nothing."
+      }
+    },
+    {
+      "id": "RK-12.8.9-005",
+      "section": "12.8.9",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2062",
+        "note": "step: video.open bridge as a config object (the runners take a boolean): a session past max_participants is not bridged, the refusal observable."
+      }
+    },
+    {
+      "id": "RK-12.8.9-006",
+      "section": "12.8.9",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-2062",
+        "note": "video.open with bridge and three participants: a frame fed by one reaches both others unchanged, one send per target (the default forward strategy)."
+      }
+    },
+    {
+      "id": "RK-12.8.9-007",
+      "section": "12.8.9",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2062",
+        "note": "step: a read of the keyframe requests (PLI) the bridged sessions' backend received (VI2): one request per keyframe_interval_s."
+      }
+    },
+    {
+      "id": "RK-12.8.9-008",
       "section": "12.8.9",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.8.10-001",
+      "id": "RK-12.8.9-009",
+      "section": "12.8.9",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2062",
+        "note": "step: a late joiner on video.open with a read of what it receives (VI2): the joining session receives the source's buffered keyframe on join, before the source sends a new one (suspect RMK-2058)."
+      }
+    },
+    {
+      "id": "RK-12.8.9-010",
+      "section": "12.8.9",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2062",
+        "note": "step: a read of the keyframe requests (PLI) the bridged sessions' backend received (VI2): the bridge requests keyframes periodically."
+      }
+    },
+    {
+      "id": "RK-12.8.9-011",
+      "section": "12.8.9",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2062",
+        "note": "step: the keyframe flag on video.frame (VI2; the runners send keyframes only): a new session receives no delta frame before a keyframe (suspect RMK-2059)."
+      }
+    },
+    {
+      "id": "RK-12.8.9-012",
+      "section": "12.8.9",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.8.9-013",
+      "section": "12.8.9",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.8.10-005",
+      "section": "12.8.10",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.8.10-006",
+      "section": "12.8.10",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.8.10-007",
+      "section": "12.8.10",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.8.10-008",
+      "section": "12.8.10",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.8.10-009",
+      "section": "12.8.10",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.8.10-010",
+      "section": "12.8.10",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2062",
+        "note": "step: video.open with a scripted session recorder that refuses to start (VI3): the join fails and the session is never bound, ON_VIDEO_SESSION_STARTED never firing. The .. half is the file recorders' (validate_storage_path, src/roomkit/video/recorder/base.py, which no runner reaches), proven by tests/test_video_recording.py::TestVideoChannelRecordingFailures::test_a_refused_recording_refuses_the_session_before_binding_it with the storage a/../b."
+      }
+    },
+    {
+      "id": "RK-12.8.10-011",
       "section": "12.8.10",
       "mapping": "unmapped",
       "links": []
@@ -33569,7 +34053,55 @@
       "links": []
     },
     {
-      "id": "RK-12.8.11-001",
+      "id": "RK-12.8.11-002",
+      "section": "12.8.11",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.8.11-003",
+      "section": "12.8.11",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.8.11-004",
+      "section": "12.8.11",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.8.11-005",
+      "section": "12.8.11",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.8.11-006",
+      "section": "12.8.11",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.8.11-007",
+      "section": "12.8.11",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.8.11-008",
+      "section": "12.8.11",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.8.11-009",
+      "section": "12.8.11",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.8.11-010",
       "section": "12.8.11",
       "mapping": "unmapped",
       "links": []
