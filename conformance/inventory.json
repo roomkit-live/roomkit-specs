@@ -609,7 +609,7 @@
     },
     {
       "section": "12.2.3",
-      "sha256": "24d5c0a0789fd5ebbcf8a18d8a39553a2264db87fcea970c3eac9a1a6c4a0a07",
+      "sha256": "56a1596daea0f2c37b720a586c3ca0cb2f193cd2fbb6439765721d7f4465a3af",
       "classification": "normative",
       "review": "Source inventory: Speaker Attribution from STT, split to one obligation per unit, each with its level (RMK-2022). RK-12.2.3-011, the refusal by a channel lacking the three parts, the introduction and the status note folded in; RK-12.2.3-012 to 017, what any STT provider must do with labels and segments (016, partial segments, may), 013, an unattributed speaker reported as null, its vendor spellings the provider's own (decision D2, RMK-2080); RK-12.2.3-018 to 041, revisions, the refusals, stream lifetime (022, should), the route into the room and the speaker-change event; RK-12.2.3-009, with the pipeline stage; RK-12.2.3-042 to 051, the opt-in naming from the pipeline stage (042, the option itself, may; 047, a null or empty speaker_id as nobody since RMK-2080). Every unit carries its level."
     },
