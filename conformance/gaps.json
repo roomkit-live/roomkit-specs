@@ -514,7 +514,7 @@
     "RK-12.2.2-028": {
       "class": "step",
       "card": "RMK-2023",
-      "note": "step: voice.end (S4) and voice.open TTS options (S7): a session unbound or ended; voice.read shows release_context called with its id (what the provider then drops is a provider's contract, tested on providers roomkit still holds)."
+      "note": "step: voice.end (S4) and voice.open TTS options (S7): a session unbound or ended; voice.read shows release_context called with its id (what the provider then drops is a provider's contract, tested by tests/voice/tts/test_elevenlabs_stitching.py::TestProvider::test_release_forgets_the_ids and tests/voice/tts/test_vui_session.py::TestRelease::test_release_empties_the_cache)."
     },
     "RK-12.2.3-009": {
       "class": "step",

@@ -615,7 +615,7 @@
     },
     {
       "section": "12.2.4",
-      "sha256": "680e322b666f9504e6f09d9d80d60ba06d750210cb52a21820459c833bce0cc9",
+      "sha256": "0583fe4ae1b510fefae029218073c43b0e780e3fe3d2e42ffdaa6e6e6a256a4e",
       "classification": "normative",
       "review": "Source inventory: Custom Voices, split to one obligation per unit, each with its level (RMK-2022). RK-12.2.4-005 and 006, the VoiceLibrary interface and the CustomVoice record (structural), the introduction folded in and the block cut at its blank line by closing and reopening its fence; RK-12.2.4-002, the kinds; RK-12.2.4-007 to 011, the storage modes; RK-12.2.4-012 to 016, consent (012 structural, 013 should, 016 the integrator's obligation for reference audio, non_testable). What any voice library must do is a unit of its own. Every unit carries its level."
     },
