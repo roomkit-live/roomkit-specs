@@ -753,51 +753,51 @@
     },
     {
       "section": "12.7.1",
-      "sha256": "502536084759dd832ad473b8e4109a5df44c6b82fff3e1f3021cea2252605b5e",
+      "sha256": "6ebcd4cde4db9880256d49e2cd1995c6e06908e70f3c9c645cf97bbee67963db",
       "classification": "normative",
-      "review": "Source inventory: Design Principles. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Design Principles, split to one obligation per unit, each with its level (RMK-2048): RK-12.7.1-002 to 004, principle 1 (the bridge beside the STT/TTS path, an STT still running, the two paths independent); RK-12.7.1-005, principle 2 (a bridged frame never a RoomEvent, its latency rationale folded in); RK-12.7.1-006 and 007, principle 3 (the inbound and the outbound pipeline); RK-12.7.1-008, principle 4 (one concrete AudioBridge, structural, its rationale folded in). Every unit carries its level."
     },
     {
       "section": "12.7.2",
-      "sha256": "541a6cbedcc45657cfe102853cec18511cbe98dd40b93c9655b27cda54f01873",
+      "sha256": "8811cb1c139b1d543c8168a5150d15cf901e3b3608f6543512b2649b0d8ab857",
       "classification": "normative",
-      "review": "Source inventory: AudioBridge. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: AudioBridge, split to one obligation per unit, each with its level (RMK-2048): RK-12.7.2-005, the AudioBridge interface (structural); RK-12.7.2-006 to 008, the AudioBridgeConfig fields enabled, max_participants and mixing_strategy with their defaults (structural; the config block is cut at its fields by closing and reopening its fence, four bare fence lines); RK-12.7.2-009 to 011, session management (join and leave, grouping by room_id, forwarding at once); RK-12.7.2-012 to 014, audio forwarding (to every other session, the forward and the mix strategies); RK-12.7.2-004, thread safety. Every unit carries its level."
     },
     {
       "section": "12.7.3",
-      "sha256": "c5d68df848abe07b88ec9a296daed01f6ab5dd6fe30e187c9a0bb1b357369c21",
+      "sha256": "ce596dd6c53c8cf5d40b800d9baecf036d87174b6e19d6964e8c5e1614c59e42",
       "classification": "normative",
-      "review": "Source inventory: VoiceChannel Integration. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: VoiceChannel Integration, split to one obligation per unit, each with its level (RMK-2048): RK-12.7.3-001, the bridge parameter; RK-12.7.3-007 and 008, the inbound flow (the processed frame fed to forward() beside VAD/STT, the two paths in parallel); RK-12.7.3-003, the outbound flow through the outbound pipeline; RK-12.7.3-009 to 011, the session lifecycle (bind, unbind, no session state in the bridge); RK-12.7.3-012 to 015, the rows of the STT/TTS interaction table; RK-12.7.3-016 and 017, bridge and TTS together (both sent, the backend handling concurrent sends); RK-12.7.3-018, several transports as a may, and RK-12.7.3-019 to 028, add_backend where offered (one unit per sentence of its block and list). Every unit carries its level."
     },
     {
       "section": "12.7.4",
-      "sha256": "3778bfbfaa046ad550abd4622478d898c9395de7b88585790fc98dd2eb5ceb76",
+      "sha256": "a11ba20716514aa9218d9cb81381bf3ffe38e516dc0ba3d69fbbc7ce7dfdaf69",
       "classification": "normative",
-      "review": "Source inventory: Sample Rate Handling. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Sample Rate Handling, split to one obligation per unit, each with its level (RMK-2048): RK-12.7.4-002, conversion to the target session's rate by the outbound resampler (the permission of different rates folded in); RK-12.7.4-003, per-session rate tracking and per-target resampling, a should. Every unit carries its level."
     },
     {
       "section": "12.7.5",
-      "sha256": "991c5ffd4d952fae11a54e777abb3d2126afe22979a4f10c0cd6911fe5fb23d4",
+      "sha256": "8df402e33591b5b522f9c6197f7ca8a7600267cd1af4d66580cc92559fa542a1",
       "classification": "normative",
-      "review": "Source inventory: N-Party Mixing. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: N-Party Mixing, split to one obligation per unit, each with its level (RMK-2048): RK-12.7.5-001, each participant hears the others and not itself; RK-12.7.5-004 to 007, the mixing algorithm (collect and sum, clipping protection, the recommended headroom scaling as a should, conversion and forwarding); RK-12.7.5-008 and 009, silence handling (a missing frame is silence; no silence-only mix forwarded, a should). Every unit carries its level."
     },
     {
       "section": "12.7.6",
-      "sha256": "778809c586d584839aeb06eb291bf3fbb4d69cb533169fe88800cad0518c7fe8",
+      "sha256": "06863bc11ab9484a204fe8b40e6242a644a69359c1b107c16fe4a75c48e35d86",
       "classification": "normative",
-      "review": "Source inventory: Hooks. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Hooks, split to one obligation per unit, each with its level (RMK-2048): RK-12.7.6-001, the BEFORE_BRIDGE_AUDIO row of the hooks table; RK-12.7.6-004 to 007, the hook per frame, its payload, block and modify; RK-12.7.6-008 to 011, the existing hooks that still fire in bridge mode, one per list item; RK-12.7.6-012 to 014, the note (a SYNC hook in the audio callback path, handlers under 1 ms, no long-running operation as the integrator's non_testable). Every unit carries its level."
     },
     {
       "section": "12.7.7",
-      "sha256": "5cf61bfb25030c9476b62d6293bac94df30167b0109bf0a72fa09b05b48a7c40",
+      "sha256": "696408b4d1b6afa0b67125c9c63cb2be054d7ed213e9994d37ac421775d873b4",
       "classification": "normative",
-      "review": "Source inventory: Capability Flag. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Capability Flag, split to one obligation per unit, each with its level (RMK-2048): RK-12.7.7-002, the NATIVE_BRIDGE flag (structural); RK-12.7.7-003, delegation to a native bridge as a may, its trade-off folded in; RK-12.7.7-004, lifecycle hooks and fallback where an implementation bridges natively. Every unit carries its level."
     },
     {
       "section": "12.7.8",
-      "sha256": "68d16c3f11a64c33881d17f8e5e7728f11b08900952931b5ed71f43c51d8482e",
+      "sha256": "ba18c09b5f99c19ecd0f3fe86fefd6acccb5b5988bc2d5e1997ecd65627b94bc",
       "classification": "normative",
-      "review": "Source inventory: Conformance. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Conformance, split to one obligation per unit, each with its level (RMK-2048): RK-12.7.8-002, audio bridging OPTIONAL at Level 3 (may); RK-12.7.8-003 to 007, the five MUST items where an implementation supports audio bridging; RK-12.7.8-008 to 010, the three SHOULD items. Every unit carries its level."
     },
     {
       "section": "12.8",

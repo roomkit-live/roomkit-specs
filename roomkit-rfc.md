@@ -14651,22 +14651,22 @@ multi-party conferencing.
 
 #### 12.7.1 Design Principles
 
-<!-- rfc: {"id": "RK-12.7.1-001", "kind": "behavior", "applies": "§12.7.1 Design Principles; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.7.1-002", "kind": "behavior", "applies": "§12.7.1 Design Principles, the voice feature (audio bridging), principle 1: bridge mode adds a direct audio forwarding path beside the STT/TTS path and replaces neither. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 1. **Audio bridging is a parallel path, not a replacement.** Bridge mode adds
-   a direct audio forwarding path alongside the existing STT/TTS path.
+   a direct audio forwarding path alongside the existing STT/TTS path.<!-- /rfc --><!-- rfc: {"id": "RK-12.7.1-003", "kind": "behavior", "applies": "§12.7.1 Design Principles, the voice feature (audio bridging), principle 1: an STT configured on a bridged channel still runs beside the bridge, for transcription, recording or AI monitoring (the integrator's choice, which the implementation honours). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
    STT MAY still run concurrently for transcription, recording, or AI
-   monitoring. The two paths are independent.
+   monitoring. <!-- /rfc --><!-- rfc: {"id": "RK-12.7.1-004", "kind": "behavior", "applies": "§12.7.1 Design Principles, the voice feature (audio bridging), principle 1: the bridge path and the STT path are independent of each other. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The two paths are independent.<!-- /rfc --><!-- rfc: {"id": "RK-12.7.1-005", "kind": "behavior", "applies": "§12.7.1 Design Principles, the voice feature (audio bridging), principle 2: a bridged frame never becomes a RoomEvent, no event being stored or broadcast for it; it flows from the inbound pipeline's output to the outbound pipeline's input (the latency rationale, informative, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 2. **Audio bypasses the RoomEvent broadcast system.** Real-time audio at 50
    frames/second cannot traverse the async hook pipeline, store, and
    broadcast loop without unacceptable latency. Bridged audio flows directly
    from inbound pipeline output to outbound pipeline input, never becoming a
-   RoomEvent.
+   RoomEvent.<!-- /rfc --><!-- rfc: {"id": "RK-12.7.1-006", "kind": "behavior", "applies": "§12.7.1 Design Principles, the voice feature (audio bridging), principle 3: inbound audio passes through the full inbound pipeline (resampler, AEC, AGC, denoiser) before it is forwarded. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 3. **Pipeline stages still apply.** Inbound audio passes through the full
-   pipeline (resampler, AEC, AGC, denoiser) before being forwarded.
+   pipeline (resampler, AEC, AGC, denoiser) before being forwarded.<!-- /rfc --><!-- rfc: {"id": "RK-12.7.1-007", "kind": "behavior", "applies": "§12.7.1 Design Principles, the voice feature (audio bridging), principle 3: outbound bridged audio passes through the outbound pipeline (resampler, recorder tap, AEC reference feeding) before it reaches the transport. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
    Outbound bridged audio passes through the outbound pipeline (resampler,
-   recorder tap, AEC reference feeding) before reaching the transport.
+   recorder tap, AEC reference feeding) before reaching the transport.<!-- /rfc --><!-- rfc: {"id": "RK-12.7.1-008", "kind": "structural", "applies": "§12.7.1 Design Principles, the voice feature (audio bridging), principle 4: the bridge is one concrete AudioBridge component, not an ABC, direct forwarding and N-party mixing being configuration options on it (the rationale, informative, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 4. **The bridge is a concrete component, not an ABC.** Unlike STT/TTS/VAD
    providers, there are no genuinely different "bridge implementations" to
@@ -14676,7 +14676,7 @@ multi-party conferencing.
 
 #### 12.7.2 AudioBridge
 
-<!-- rfc: {"id": "RK-12.7.2-001", "kind": "structural", "applies": "§12.7.2 AudioBridge; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.7.2-005", "kind": "structural", "applies": "§12.7.2 AudioBridge, the voice feature (audio bridging): the AudioBridge interface, add_session, remove_session, forward and close (forward's two strategies are RK-12.7.2-013 and RK-12.7.2-014). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 AudioBridge
 ├── config: AudioBridgeConfig
@@ -14692,11 +14692,21 @@ AudioBridge
 └── close() → void
         # Clean up all sessions
 ```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.7.2-006", "kind": "structural", "applies": "§12.7.2 AudioBridgeConfig, the voice feature (audio bridging): the enabled field, true by default; the bridge forwards only while it is enabled. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 ```
 AudioBridgeConfig
 ├── enabled: bool = true
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.7.2-007", "kind": "structural", "applies": "§12.7.2 AudioBridgeConfig, the voice feature (audio bridging): the max_participants field, 10 by default; a room bridges at most that many sessions. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── max_participants: int = 10         # Maximum sessions per room
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.7.2-008", "kind": "structural", "applies": "§12.7.2 AudioBridgeConfig, the voice feature (audio bridging): the mixing_strategy field, forward by default; forward sends each frame unmixed to every other session, one send per source per target with more than two sessions, and mix mixes the parties additively with clipping protection. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 └── mixing_strategy: "forward" | "mix" = "forward"
         # "forward": direct forwarding; each frame is sent unmixed to every
         #   other session (N>2: one send per source per target)
@@ -14704,31 +14714,31 @@ AudioBridgeConfig
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.7.2-002", "kind": "behavior", "applies": "§12.7.2 AudioBridge; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.7.2-009", "kind": "behavior", "applies": "§12.7.2 AudioBridge, the voice feature (audio bridging), session management: a session is added to the bridge as its participant joins the room and removed as the participant leaves. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Session management:** Sessions are added and removed as participants join and
-leave the room. The bridge tracks sessions grouped by `room_id`. When a session
+leave the room. <!-- /rfc --><!-- rfc: {"id": "RK-12.7.2-010", "kind": "behavior", "applies": "§12.7.2 AudioBridge, the voice feature (audio bridging), session management: the bridge tracks its sessions grouped by room_id, so that sessions of different rooms are not bridged together. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The bridge tracks sessions grouped by `room_id`. <!-- /rfc --><!-- rfc: {"id": "RK-12.7.2-011", "kind": "behavior", "applies": "§12.7.2 AudioBridge, the voice feature (audio bridging), session management: when a session is added to a room that already holds bridged sessions, forwarding between them begins at once. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->When a session
 is added and the room already has other bridged sessions, audio forwarding
 begins immediately.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.7.2-003", "kind": "behavior", "applies": "§12.7.2 AudioBridge; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.7.2-012", "kind": "behavior", "applies": "§12.7.2 AudioBridge, the voice feature (audio bridging), audio forwarding: a frame forward() receives from one session is sent to every other session of the same room through VoiceBackend.send_audio_sync(). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Audio forwarding:** When `forward()` is called with an audio frame from
 session A, the bridge sends that frame to all other sessions in the same room
-via `VoiceBackend.send_audio_sync()`. For the `"forward"` strategy, this is a
-direct send of the frame to each other session. For the `"mix"` strategy
+via `VoiceBackend.send_audio_sync()`. <!-- /rfc --><!-- rfc: {"id": "RK-12.7.2-013", "kind": "behavior", "applies": "§12.7.2 AudioBridge, the voice feature (audio bridging), audio forwarding, the forward strategy: each other session is sent the frame itself, unmixed. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->For the `"forward"` strategy, this is a
+direct send of the frame to each other session. <!-- /rfc --><!-- rfc: {"id": "RK-12.7.2-014", "kind": "behavior", "applies": "§12.7.2 AudioBridge, the voice feature (audio bridging), audio forwarding, the mix strategy (N-party): each participant is sent a mix of the audio of every other active session, its own excluded. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->For the `"mix"` strategy
 (N-party), the bridge MUST mix audio from all other active sessions and send
 each participant a mix of everyone else's audio (excluding their own, to
 prevent echo).
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.7.2-004", "kind": "behavior", "applies": "§12.7.2 AudioBridge; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.7.2-004", "kind": "behavior", "applies": "§12.7.2 AudioBridge, the voice feature (audio bridging), thread safety: forward() is called from audio callback threads, and every bridge operation is thread-safe. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Thread safety:** `forward()` is called from audio callback threads (same
 context as `on_audio_received`). All bridge operations MUST be thread-safe.
 <!-- /rfc -->
 
 #### 12.7.3 VoiceChannel Integration
 
-<!-- rfc: {"id": "RK-12.7.3-001", "kind": "behavior", "applies": "§12.7.3 VoiceChannel Integration; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.7.3-001", "kind": "behavior", "applies": "§12.7.3 VoiceChannel Integration, the voice feature (audio bridging): VoiceChannel takes an optional bridge parameter, true for the AudioBridgeConfig defaults or an AudioBridgeConfig, and bridges its sessions when given one (the constructor example, with an STT for transcription beside the bridge, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 VoiceChannel gains an optional `bridge` parameter:
 
 ```python
@@ -14743,7 +14753,7 @@ VoiceChannel(
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.7.3-002", "kind": "behavior", "applies": "§12.7.3 VoiceChannel Integration; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.7.3-007", "kind": "behavior", "applies": "§12.7.3 VoiceChannel Integration, the voice feature (audio bridging), the inbound flow with the bridge enabled: the VoiceChannel feeds each frame leaving the inbound pipeline to AudioBridge.forward(), in addition to the VAD/STT path (the flow diagram folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Inbound audio flow with bridge enabled:**
 
 ```
@@ -14754,11 +14764,11 @@ Backend → on_audio_received → Pipeline inbound chain
 
 When bridge mode is enabled and audio exits the inbound pipeline, the
 VoiceChannel MUST feed the processed frame to `AudioBridge.forward()` in
-addition to the normal VAD/STT path. The bridge path and the STT path
+addition to the normal VAD/STT path. <!-- /rfc --><!-- rfc: {"id": "RK-12.7.3-008", "kind": "behavior", "applies": "§12.7.3 VoiceChannel Integration, the voice feature (audio bridging), the inbound flow with the bridge enabled: the bridge path and the STT path run in parallel, neither blocking the other. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The bridge path and the STT path
 operate in parallel — neither blocks the other.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.7.3-003", "kind": "behavior", "applies": "§12.7.3 VoiceChannel Integration; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.7.3-003", "kind": "behavior", "applies": "§12.7.3 VoiceChannel Integration, the voice feature (audio bridging), the outbound bridged flow: audio bridged to a session passes through the outbound pipeline (recorder tap, AEC reference, resampler) before it reaches the transport (the flow diagram and the rationale folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Outbound bridged audio flow:**
 
 ```
@@ -14771,39 +14781,43 @@ before reaching the transport. This ensures recording captures both sides
 and AEC reference is fed correctly.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.7.3-004", "kind": "behavior", "applies": "§12.7.3 VoiceChannel Integration; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.7.3-009", "kind": "behavior", "applies": "§12.7.3 VoiceChannel Integration, the voice feature (audio bridging), session lifecycle with the bridge enabled: bind_session() registers the session with the AudioBridge through add_session(). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Session lifecycle:**
 
 - When `bind_session()` is called with bridge enabled, the VoiceChannel
-  MUST register the session with the AudioBridge via `add_session()`.
+  MUST register the session with the AudioBridge via `add_session()`.<!-- /rfc --><!-- rfc: {"id": "RK-12.7.3-010", "kind": "behavior", "applies": "§12.7.3 VoiceChannel Integration, the voice feature (audio bridging), session lifecycle with the bridge enabled: unbind_session() removes the session from the AudioBridge through remove_session(). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - When `unbind_session()` is called, the VoiceChannel MUST remove the
-  session via `remove_session()`.
+  session via `remove_session()`.<!-- /rfc --><!-- rfc: {"id": "RK-12.7.3-011", "kind": "behavior", "applies": "§12.7.3 VoiceChannel Integration, the voice feature (audio bridging), session lifecycle: the bridge manages no session state transition, which VoiceBackend and VoiceChannel keep. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - The bridge does NOT manage session state transitions — that remains the
   responsibility of VoiceBackend and VoiceChannel.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.7.3-005", "kind": "behavior", "applies": "§12.7.3 VoiceChannel Integration; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.7.3-012", "kind": "behavior", "applies": "§12.7.3 Interaction with STT/TTS table, the voice feature (audio bridging), the row bridge=True, stt=None, tts=None: a pure audio bridge, human to human only. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Interaction with STT/TTS:**
 
 | Configuration | Behavior |
 |---|---|
 | `bridge=True, stt=None, tts=None` | Pure audio bridge — human-to-human only |
-| `bridge=True, stt=provider` | Bridge + live transcription (for recording, compliance, AI monitoring) |
-| `bridge=True, stt=provider, tts=provider` | Bridge + AI can speak into the call via `say()` (TTS audio mixed with bridge audio) |
-| `bridge=False` (default) | Current behavior — STT/TTS pipeline only |
+| <!-- /rfc --><!-- rfc: {"id": "RK-12.7.3-013", "kind": "behavior", "applies": "§12.7.3 Interaction with STT/TTS table, the voice feature (audio bridging), the row bridge=True, stt=provider: the bridge with a live transcription of the bridged speech. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`bridge=True, stt=provider` | Bridge + live transcription (for recording, compliance, AI monitoring) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-12.7.3-014", "kind": "behavior", "applies": "§12.7.3 Interaction with STT/TTS table, the voice feature (audio bridging), the row bridge=True, stt=provider, tts=provider: the bridge, and the AI speaking into the call through say(), its TTS audio mixed with the bridged audio. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`bridge=True, stt=provider, tts=provider` | Bridge + AI can speak into the call via `say()` (TTS audio mixed with bridge audio) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-12.7.3-015", "kind": "behavior", "applies": "§12.7.3 Interaction with STT/TTS table, the voice feature (audio bridging), the row bridge=False, the default: no bridge, the STT/TTS pipeline only. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`bridge=False` (default) | Current behavior — STT/TTS pipeline only |
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.7.3-016", "kind": "behavior", "applies": "§12.7.3 Interaction with STT/TTS, the voice feature (audio bridging), bridge and TTS both active: the session is sent both the TTS audio of AI responses and the audio bridged from the other participants, the bridge suppressing no TTS. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 When both bridge and TTS are active, TTS audio from AI responses and bridged
 audio from other participants are both sent to the session. The bridge does NOT
-suppress TTS — both audio streams coexist. If audio mixing is needed (e.g.,
+suppress TTS — both audio streams coexist. <!-- /rfc --><!-- rfc: {"id": "RK-12.7.3-017", "kind": "behavior", "applies": "§12.7.3 Interaction with STT/TTS, the voice feature (audio bridging), bridge and TTS both active: where the two streams overlap, the voice backend handles concurrent send_audio() (TTS) and send_audio_sync() (bridge) calls for the session, what any voice backend must do. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->If audio mixing is needed (e.g.,
 AI speaking while another participant is speaking), the backend handles
 concurrent `send_audio()` (TTS) and `send_audio_sync()` (bridge) calls.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.7.3-006", "kind": "behavior", "applies": "§12.7.3 VoiceChannel Integration; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.7.3-018", "kind": "behavior", "applies": "§12.7.3 Several transports on one channel, the voice feature (audio bridging): one VoiceChannel may serve sessions from more than one VoiceBackend, a permission to the implementation (SIP callers beside WebRTC participants, informative, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->
 **Several transports on one channel.** A bridged room often mixes transports:
 phone callers on SIP and browser participants on WebRTC. One VoiceChannel MAY
 serve sessions from more than one VoiceBackend:
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.7.3-019", "kind": "behavior", "applies": "§12.7.3 Several transports on one channel, the voice feature (audio bridging), where an implementation offers VoiceChannel.add_backend: an added transport's inbound audio enters the channel's inbound pipeline, its session-ready and client-disconnected signals drive the channel's session lifecycle, and its barge-in detection and out-of-band DTMF reach the channel, as for the backend given at construction. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 VoiceChannel.add_backend(backend) → void
         # Register an additional transport. Its inbound audio enters the
@@ -14814,63 +14828,65 @@ VoiceChannel.add_backend(backend) → void
         # construction.
 ```
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.7.3-020", "kind": "behavior", "applies": "§12.7.3 Several transports on one channel, the voice feature (audio bridging), where an implementation offers VoiceChannel.add_backend: the channel has been constructed with a backend, the pipeline being built once for that primary backend's capabilities and every added transport's audio going through it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - The channel MUST have been constructed with a backend: the pipeline is built
   once, for that primary backend's capabilities, and every added transport's
-  audio goes through it.
-- A session belongs to exactly one backend. `bind_session(…, backend=)` names
+  audio goes through it.<!-- /rfc --><!-- rfc: {"id": "RK-12.7.3-021", "kind": "behavior", "applies": "§12.7.3 Several transports on one channel, the voice feature (audio bridging), where an implementation offers VoiceChannel.add_backend: a session belongs to exactly one backend. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+- A session belongs to exactly one backend. <!-- /rfc --><!-- rfc: {"id": "RK-12.7.3-022", "kind": "behavior", "applies": "§12.7.3 Several transports on one channel, the voice feature (audio bridging), where an implementation offers VoiceChannel.add_backend: bind_session(…, backend=) names the session's backend; without it, the channel asks each added backend whether it holds the session (get_session) and falls back to the primary backend. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`bind_session(…, backend=)` names
   it; without it, the channel asks each added backend whether it holds the
-  session (`get_session`) and falls back to the primary backend. A session
-  joined on a pull-model backend is started listening on that backend.
+  session (`get_session`) and falls back to the primary backend. <!-- /rfc --><!-- rfc: {"id": "RK-12.7.3-023", "kind": "behavior", "applies": "§12.7.3 Several transports on one channel, the voice feature (audio bridging), where an implementation offers VoiceChannel.add_backend: a session joined on a pull-model backend is started listening on that backend. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A session
+  joined on a pull-model backend is started listening on that backend.<!-- /rfc --><!-- rfc: {"id": "RK-12.7.3-024", "kind": "behavior", "applies": "§12.7.3 Several transports on one channel, the voice feature (audio bridging), where an implementation offers VoiceChannel.add_backend: everything addressed to one session (bridged audio, TTS audio, assistant transcriptions, the playback cancel of an interruption, DTMF, the disconnect when it leaves) goes through that session's own backend. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - Everything addressed to one session — bridged audio, TTS audio, assistant
   transcriptions, the playback cancel of an interruption, DTMF, and the
   disconnect when the session leaves — MUST go through that session's own
-  backend.
-- A response delivered to the room reaches the sessions of every backend. What
+  backend.<!-- /rfc --><!-- rfc: {"id": "RK-12.7.3-025", "kind": "behavior", "applies": "§12.7.3 Several transports on one channel, the voice feature (audio bridging), where an implementation offers VoiceChannel.add_backend: a response delivered to the room reaches the sessions of every backend. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+- A response delivered to the room reaches the sessions of every backend. <!-- /rfc --><!-- rfc: {"id": "RK-12.7.3-026", "kind": "behavior", "applies": "§12.7.3 Several transports on one channel, the voice feature (audio bridging), where an implementation offers VoiceChannel.add_backend: what a backend's capabilities decide for one session (INTERRUPTION for a playback that can be cancelled, NATIVE_AEC for an echo cancelled at the transport) is read on that session's own backend. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->What
   a backend's capabilities decide for one session — whether its playback can
   be cancelled (`INTERRUPTION`), whether its echo is cancelled at the
-  transport (`NATIVE_AEC`) — is read on that session's own backend.
-- Adding a backend already served is a no-op. Closing the channel closes the
+  transport (`NATIVE_AEC`) — is read on that session's own backend.<!-- /rfc --><!-- rfc: {"id": "RK-12.7.3-027", "kind": "behavior", "applies": "§12.7.3 Several transports on one channel, the voice feature (audio bridging), where an implementation offers VoiceChannel.add_backend: adding a backend the channel already serves is a no-op. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+- Adding a backend already served is a no-op. <!-- /rfc --><!-- rfc: {"id": "RK-12.7.3-028", "kind": "behavior", "applies": "§12.7.3 Several transports on one channel, the voice feature (audio bridging), where an implementation offers VoiceChannel.add_backend: closing the channel closes the added backends with the primary one. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Closing the channel closes the
   added backends with the primary one.
 <!-- /rfc -->
 
 #### 12.7.4 Sample Rate Handling
 
-<!-- rfc: {"id": "RK-12.7.4-001", "kind": "behavior", "applies": "§12.7.4 Sample Rate Handling; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.7.4-002", "kind": "behavior", "applies": "§12.7.4 Sample Rate Handling, the voice feature (audio bridging): audio forwarded between sessions of different sample rates is converted to the target session's native rate by the outbound pipeline's resampler (sessions may have different rates; the SIP and WebRTC rates are examples). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Voice sessions MAY have different sample rates (e.g., SIP at 8kHz, WebRTC at
 48kHz). When forwarding audio between sessions with different rates, the
 outbound pipeline's resampler MUST convert the audio to the target session's
-native rate. Implementations SHOULD track each session's sample rate at
+native rate. <!-- /rfc --><!-- rfc: {"id": "RK-12.7.4-003", "kind": "behavior", "applies": "§12.7.4 Sample Rate Handling, the voice feature (audio bridging): the implementation tracks each session's sample rate when the session registers and resamples per target in the outbound path. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->Implementations SHOULD track each session's sample rate at
 registration time and apply resampling per-target in the outbound path.
 <!-- /rfc -->
 
 #### 12.7.5 N-Party Mixing
 
-<!-- rfc: {"id": "RK-12.7.5-001", "kind": "behavior", "applies": "§12.7.5 N-Party Mixing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.7.5-001", "kind": "behavior", "applies": "§12.7.5 N-Party Mixing, the voice feature (audio bridging), the mix strategy: each participant hears all the others and not itself. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 With the `"mix"` strategy, the bridge MUST mix audio so each participant hears
 all others but not themselves.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.7.5-002", "kind": "behavior", "applies": "§12.7.5 N-Party Mixing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.7.5-004", "kind": "behavior", "applies": "§12.7.5 Mixing algorithm, the voice feature (audio bridging), the mix strategy, steps 1 and 2: the mix for each target session sums the PCM samples of the frames of all the other sessions, as signed 16-bit integers promoted to 32 bits so that the sum does not overflow. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Mixing algorithm (additive with clipping protection):**
 
 1. For each target session T, collect audio frames from all other sessions.
 2. Sum PCM samples (as signed 16-bit integers promoted to 32-bit to prevent
-   overflow).
+   overflow).<!-- /rfc --><!-- rfc: {"id": "RK-12.7.5-005", "kind": "behavior", "applies": "§12.7.5 Mixing algorithm, the voice feature (audio bridging), the mix strategy, step 3: the sum gets soft clipping or normalization against distortion, at the simplest a clamp to [-32768, 32767]. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 3. Apply soft clipping or normalization to prevent distortion:
-   - Simple: clamp to [-32768, 32767]
-   - Recommended: apply headroom scaling (e.g., divide by sqrt(N-1))
+   - Simple: clamp to [-32768, 32767]<!-- /rfc --><!-- rfc: {"id": "RK-12.7.5-006", "kind": "behavior", "applies": "§12.7.5 Mixing algorithm, the voice feature (audio bridging), the mix strategy, step 3: the recommended protection is headroom scaling (dividing by sqrt(N-1) is an example). Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
+   - Recommended: apply headroom scaling (e.g., divide by sqrt(N-1))<!-- /rfc --><!-- rfc: {"id": "RK-12.7.5-007", "kind": "behavior", "applies": "§12.7.5 Mixing algorithm, the voice feature (audio bridging), the mix strategy, step 4: the mix is converted back to 16-bit PCM and forwarded to the target session. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 4. Convert back to 16-bit PCM and forward to session T.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.7.5-003", "kind": "behavior", "applies": "§12.7.5 N-Party Mixing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.7.5-008", "kind": "behavior", "applies": "§12.7.5 Silence handling, the voice feature (audio bridging), the mix strategy: a session with no audio frame in the current mixing window contributes silence (zero samples). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Silence handling:** If a session has no audio frame available in the current
-mixing window, it contributes silence (zero samples). The bridge SHOULD NOT
+mixing window, it contributes silence (zero samples). <!-- /rfc --><!-- rfc: {"id": "RK-12.7.5-009", "kind": "behavior", "applies": "§12.7.5 Silence handling, the voice feature (audio bridging), the mix strategy: the bridge does not forward a mix made only of silence. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->The bridge SHOULD NOT
 forward silence-only mixes to save bandwidth.
 <!-- /rfc -->
 
 #### 12.7.6 Hooks
 
-<!-- rfc: {"id": "RK-12.7.6-001", "kind": "behavior", "applies": "§12.7.6 Hooks; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.7.6-001", "kind": "behavior", "applies": "§12.7.6 Hooks table, the voice feature (audio bridging), the BEFORE_BRIDGE_AUDIO row: the hook audio bridging adds, SYNC, fired by the AudioBridge to filter or modify audio before forwarding (gain and muting are examples; the hooks it reuses are RK-12.7.6-008 to RK-12.7.6-011). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Audio bridging introduces one new hook and reuses existing hooks:
 
 | Hook | Type | Use Case | Source |
@@ -14878,40 +14894,44 @@ Audio bridging introduces one new hook and reuses existing hooks:
 | BEFORE_BRIDGE_AUDIO | SYNC | Filter or modify audio before forwarding (e.g., gain, muting) | AudioBridge |
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.7.6-002", "kind": "behavior", "applies": "§12.7.6 Hooks; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.7.6-004", "kind": "behavior", "applies": "§12.7.6 Hooks, the voice feature (audio bridging), BEFORE_BRIDGE_AUDIO: it fires for each frame before that frame is forwarded to the other sessions. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **BEFORE_BRIDGE_AUDIO** fires for each frame before it is forwarded to other
-sessions. The hook receives the audio frame and context (source session,
-target room). Returning `HookResult.block()` drops the frame (effectively
-muting the speaker for that frame). Returning a modified frame applies the
+sessions. <!-- /rfc --><!-- rfc: {"id": "RK-12.7.6-005", "kind": "behavior", "applies": "§12.7.6 Hooks, the voice feature (audio bridging), BEFORE_BRIDGE_AUDIO: the hook receives the audio frame and its context, the source session and the target room. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The hook receives the audio frame and context (source session,
+target room). <!-- /rfc --><!-- rfc: {"id": "RK-12.7.6-006", "kind": "behavior", "applies": "§12.7.6 Hooks, the voice feature (audio bridging), BEFORE_BRIDGE_AUDIO: a HookResult.block() drops the frame, muting the speaker for that frame. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Returning `HookResult.block()` drops the frame (effectively
+muting the speaker for that frame). <!-- /rfc --><!-- rfc: {"id": "RK-12.7.6-007", "kind": "behavior", "applies": "§12.7.6 Hooks, the voice feature (audio bridging), BEFORE_BRIDGE_AUDIO: a modified frame the hook returns is applied before forwarding. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Returning a modified frame applies the
 modification before forwarding.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.7.6-008", "kind": "behavior", "applies": "§12.7.6 Hooks, the voice feature (audio bridging), existing hooks in bridge mode: ON_SPEECH_START and ON_SPEECH_END fire, VAD still running on bridged audio. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Existing hooks that fire normally during bridge mode:
-- `ON_SPEECH_START`, `ON_SPEECH_END` — VAD still runs on bridged audio
-- `ON_TRANSCRIPTION` — if STT is configured
-- `ON_RECORDING_STARTED`, `ON_RECORDING_STOPPED` — recorder captures bridge audio
+- `ON_SPEECH_START`, `ON_SPEECH_END` — VAD still runs on bridged audio<!-- /rfc --><!-- rfc: {"id": "RK-12.7.6-009", "kind": "behavior", "applies": "§12.7.6 Hooks, the voice feature (audio bridging), existing hooks in bridge mode: ON_TRANSCRIPTION fires where an STT is configured. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+- `ON_TRANSCRIPTION` — if STT is configured<!-- /rfc --><!-- rfc: {"id": "RK-12.7.6-010", "kind": "behavior", "applies": "§12.7.6 Hooks, the voice feature (audio bridging), existing hooks in bridge mode: ON_RECORDING_STARTED and ON_RECORDING_STOPPED fire, the recorder capturing bridged audio. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+- `ON_RECORDING_STARTED`, `ON_RECORDING_STOPPED` — recorder captures bridge audio<!-- /rfc --><!-- rfc: {"id": "RK-12.7.6-011", "kind": "behavior", "applies": "§12.7.6 Hooks, the voice feature (audio bridging), existing hooks in bridge mode: ON_SESSION_STARTED fires, the session lifecycle unchanged. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - `ON_SESSION_STARTED` — session lifecycle unchanged
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.7.6-003", "kind": "behavior", "applies": "§12.7.6 Hooks; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.7.6-012", "kind": "behavior", "applies": "§12.7.6 Hooks, the voice feature (audio bridging), BEFORE_BRIDGE_AUDIO: a SYNC hook that runs in the audio callback path. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Note:** BEFORE_BRIDGE_AUDIO is a SYNC hook that runs in the audio callback
-path. Implementations MUST ensure hook handlers complete quickly (< 1ms) to
-avoid audio glitches. Long-running operations MUST NOT be performed in this
+path. <!-- /rfc --><!-- rfc: {"id": "RK-12.7.6-013", "kind": "behavior", "applies": "§12.7.6 Hooks, the voice feature (audio bridging), BEFORE_BRIDGE_AUDIO: implementations ensure its handlers complete quickly, under 1 ms, to avoid audio glitches. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Implementations MUST ensure hook handlers complete quickly (< 1ms) to
+avoid audio glitches. <!-- /rfc --><!-- rfc: {"id": "RK-12.7.6-014", "kind": "non_testable", "applies": "§12.7.6 Hooks, the voice feature (audio bridging), BEFORE_BRIDGE_AUDIO: a handler performs no long-running operation, which binds the integrator who writes it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Long-running operations MUST NOT be performed in this
 hook.
 <!-- /rfc -->
 
 #### 12.7.7 Capability Flag
 
-<!-- rfc: {"id": "RK-12.7.7-001", "kind": "behavior", "applies": "§12.7.7 Capability Flag; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.7.7-002", "kind": "structural", "applies": "§12.7.7 Capability Flag, the voice feature (audio bridging): the VoiceCapability.NATIVE_BRIDGE flag, which a VoiceBackend declares when it can bridge audio at the transport level (RTP relay and SIP re-INVITE for direct media are examples). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 VoiceCapability.NATIVE_BRIDGE
 ```
 
 When a VoiceBackend declares `NATIVE_BRIDGE`, it can bridge audio at the
-transport level (e.g., RTP relay, SIP re-INVITE for direct media). The
+transport level (e.g., RTP relay, SIP re-INVITE for direct media). <!-- /rfc --><!-- rfc: {"id": "RK-12.7.7-003", "kind": "behavior", "applies": "§12.7.7 Capability Flag, the voice feature (audio bridging), a backend that declares NATIVE_BRIDGE: the VoiceChannel may delegate bridging to it instead of using the AudioBridge, a permission to the implementation (lower latency and CPU use, the pipeline stages bypassed: informative, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->The
 VoiceChannel MAY delegate bridging to the backend instead of using the
 AudioBridge when this capability is present. Native bridging provides lower
 latency and reduced CPU usage but bypasses pipeline stages.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.7.7-004", "kind": "behavior", "applies": "§12.7.7 Capability Flag, the voice feature (audio bridging), where an implementation bridges natively: it still fires the session lifecycle hooks, and falls back to the AudioBridge when pipeline processing (recording, AEC, transcription) is required (two obligations of one sentence). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Implementations that use native bridging MUST still fire session lifecycle
 hooks and MUST support fallback to AudioBridge when pipeline processing
 (recording, AEC, transcription) is required.
@@ -14919,20 +14939,24 @@ hooks and MUST support fallback to AudioBridge when pipeline processing
 
 #### 12.7.8 Conformance
 
-<!-- rfc: {"id": "RK-12.7.8-001", "kind": "behavior", "applies": "§12.7.8 Conformance; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.7.8-002", "kind": "behavior", "applies": "§12.7.8 Conformance, the voice feature (audio bridging): audio bridging is part of Conformance Level 3 (Real-Time Media) and is OPTIONAL. Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->
 Audio bridging is part of **Conformance Level 3 (Real-Time Media)** and is
 OPTIONAL.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.7.8-003", "kind": "behavior", "applies": "§12.7.8 Conformance, where an implementation supports audio bridging (the voice feature): it forwards post-pipeline audio frames between the sessions of one room. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Implementations that support audio bridging MUST:
-- Forward post-pipeline audio frames between sessions in the same room.
-- Support at least 2-party direct forwarding.
-- Apply outbound pipeline processing to bridged audio.
-- Register/unregister sessions on bind/unbind.
+- Forward post-pipeline audio frames between sessions in the same room.<!-- /rfc --><!-- rfc: {"id": "RK-12.7.8-004", "kind": "behavior", "applies": "§12.7.8 Conformance, where an implementation supports audio bridging (the voice feature): it supports at least 2-party direct forwarding. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+- Support at least 2-party direct forwarding.<!-- /rfc --><!-- rfc: {"id": "RK-12.7.8-005", "kind": "behavior", "applies": "§12.7.8 Conformance, where an implementation supports audio bridging (the voice feature): it applies outbound pipeline processing to bridged audio. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+- Apply outbound pipeline processing to bridged audio.<!-- /rfc --><!-- rfc: {"id": "RK-12.7.8-006", "kind": "behavior", "applies": "§12.7.8 Conformance, where an implementation supports audio bridging (the voice feature): it registers a session on bind and unregisters it on unbind. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+- Register/unregister sessions on bind/unbind.<!-- /rfc --><!-- rfc: {"id": "RK-12.7.8-007", "kind": "behavior", "applies": "§12.7.8 Conformance, where an implementation supports audio bridging (the voice feature): forward() operates thread-safely. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - Ensure thread-safe operation of `forward()`.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.7.8-008", "kind": "behavior", "applies": "§12.7.8 Conformance, where an implementation supports audio bridging (the voice feature): it supports N-party mixing for rooms with more than 2 voice sessions. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 Implementations SHOULD:
-- Support N-party mixing for rooms with more than 2 voice sessions.
-- Handle cross-rate bridging via the outbound resampler.
+- Support N-party mixing for rooms with more than 2 voice sessions.<!-- /rfc --><!-- rfc: {"id": "RK-12.7.8-009", "kind": "behavior", "applies": "§12.7.8 Conformance, where an implementation supports audio bridging (the voice feature): it handles cross-rate bridging through the outbound resampler. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
+- Handle cross-rate bridging via the outbound resampler.<!-- /rfc --><!-- rfc: {"id": "RK-12.7.8-010", "kind": "behavior", "applies": "§12.7.8 Conformance, where an implementation supports audio bridging (the voice feature): it supports the bridge and an STT operating at the same time. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 - Support concurrent bridge + STT operation.
 <!-- /rfc -->
 
