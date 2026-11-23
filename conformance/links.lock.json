@@ -4534,6 +4534,48 @@
     "RK-12.7.8-006": {
       "voice/a-bridge-forwards-only-the-frame-the-hook-admits": "1e544e5c1512e8f1e1825076d0c50fe620b9eeec3792dd3d3bc57e90f8990bde"
     },
+    "RK-12.8.11-002": {
+      "video/a-video-session-announces-its-start-and-end": "59c79af19203eabdc51797d53b2baa460d9b058463f2352ef98c1ff026b8994b"
+    },
+    "RK-12.8.11-003": {
+      "video/a-video-session-announces-its-start-and-end": "64dfa20da77ba17081be8d613df295c4d3ec25039be6d28649549184518b8647"
+    },
+    "RK-12.8.11-006": {
+      "video/a-vision-hook-controls-the-result-that-is-published": "cc76a8ce56ae5ad136cf6e473d1dd3213139a0d0452e39f5ae73fa2ca0d5eeff"
+    },
+    "RK-12.8.11-007": {
+      "video/a-frame-filter-reports-its-detection": "5a2c363ccf204555853efe43895ebeb85fb4f147ff517b68cdd57ec3715270e0"
+    },
+    "RK-12.8.11-008": {
+      "conference/a-screen-track-announces-the-start-and-end-of-sharing": "a6d5310747b4bb1d8ce4654d5f6b340d109e574f4e393b06c050c48b4395fd8a"
+    },
+    "RK-12.8.11-009": {
+      "conference/a-screen-track-announces-the-start-and-end-of-sharing": "63bde1dbe22ea358b44f6189ae9818eec88fee2fb01b441f1157ac8a0e91368c"
+    },
+    "RK-12.8.11-010": {
+      "video/the-bridge-obeys-the-frame-hook": "4631d08c08ec8f0aa754aefd1b6954bc553d611889fc65ccab30cd5672a49e23"
+    },
+    "RK-12.8.4-004": {
+      "video/a-frame-filter-reports-its-detection": "fb46c7a69f9f0c954ba6471f5da17eb06d2e3338fb74971d16902777cba029f0"
+    },
+    "RK-12.8.4-006": {
+      "video/a-frame-filter-reports-its-detection": "898728c828e89783e3f0fee7e36b8a55f0c738ee0dceda7898b6aec050235fb0"
+    },
+    "RK-12.8.4-009": {
+      "video/a-frame-filter-reports-its-detection": "5f0a3f32993a9b7c9d2d2e2acb9d3ba601d62432534f06e4c3e005dfa3e58d5b"
+    },
+    "RK-12.8.4-010": {
+      "video/a-vision-hook-controls-the-result-that-is-published": "e8b54e21a98c87f311f7c3ffe1278a2134a1078ac42b56dc39172248f658922d"
+    },
+    "RK-12.8.4-012": {
+      "video/a-vision-hook-controls-the-result-that-is-published": "f3825d85111d1a46f6092f8866c3aed50574b9e15bf67b8132e6bdaa00f13b68"
+    },
+    "RK-12.8.9-003": {
+      "video/the-bridge-obeys-the-frame-hook": "22e4d10c114a9a61b4cc1618844ba350b1b124628c90481d9a2bc65a7b605a75"
+    },
+    "RK-12.8.9-013": {
+      "video/the-bridge-obeys-the-frame-hook": "49c08141a6528a6e19da193505b023f84ccdc16740b4a8ee72fcf805e5b367bb"
+    },
     "RK-13.2-004": {
       "delivery/a-retried-delivery-keeps-its-successful-provider-receipt": "8504abca107b13da520b70284632b270c3d86c86a32db7cb46bd3f96555880da"
     },

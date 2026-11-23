@@ -2121,6 +2121,176 @@
       "card": "RMK-2054",
       "note": "voice.open with bridge, transcripts and a vad script: frames forwarded and ON_TRANSCRIPTION both observed."
     },
+    "RK-12.8.10-006": {
+      "class": "step",
+      "card": "RMK-2062",
+      "note": "step: video.open with a scripted session recorder and a read of its result (VI3): without encryption or storage_encrypted_at_rest, the recording starts and its result names no encryption."
+    },
+    "RK-12.8.10-007": {
+      "class": "step",
+      "card": "RMK-2062",
+      "note": "step: video.open with a scripted session recorder and a read of its result (VI3): with a scripted cipher, stop() reports the cipher's path as url and names the cipher in metadata, and close() encrypts a recording still open."
+    },
+    "RK-12.8.10-009": {
+      "class": "step",
+      "card": "RMK-2062",
+      "note": "step: video.open with a scripted session recorder and a read of its result (VI3): with storage_encrypted_at_rest and no encryption, the result's metadata[\"encryption\"] is \"storage\"."
+    },
+    "RK-12.8.10-010": {
+      "class": "step",
+      "card": "RMK-2062",
+      "note": "step: video.open with a scripted session recorder that refuses to start (VI3): the join fails and the session is never bound, ON_VIDEO_SESSION_STARTED never firing."
+    },
+    "RK-12.8.3-005": {
+      "class": "step",
+      "card": "RMK-2062",
+      "note": "named backend: leaves the RFC in P6-V (D8)"
+    },
+    "RK-12.8.3-006": {
+      "class": "step",
+      "card": "RMK-2062",
+      "note": "named backend: leaves the RFC in P6-V (D8)"
+    },
+    "RK-12.8.3-010": {
+      "class": "step",
+      "card": "RMK-2062",
+      "note": "step: av.open, an audio/video channel over a scripted combined backend (VI4): every call, with or without video, reports its start and its end through the voice lifecycle."
+    },
+    "RK-12.8.3-011": {
+      "class": "step",
+      "card": "RMK-2062",
+      "note": "step: av.open, an audio/video channel over a scripted combined backend (VI4): a call that negotiated video reports its video session under the call's id, ready once its video path is live and ended with the call."
+    },
+    "RK-12.8.3-012": {
+      "class": "step",
+      "card": "RMK-2062",
+      "note": "step: av.open, an audio/video channel over a scripted combined backend (VI4): a call without video never reports a video session."
+    },
+    "RK-12.8.3-013": {
+      "class": "step",
+      "card": "RMK-2062",
+      "note": "step: av.open, an audio/video channel over a scripted combined backend (VI4): disconnecting the video facet ends the call, and the facet's connect is refused."
+    },
+    "RK-12.8.3-014": {
+      "class": "step",
+      "card": "RMK-2062",
+      "note": "step: av.open, an audio/video channel over a scripted combined backend (VI4): ON_SESSION_STARTED for the call, ON_VIDEO_SESSION_STARTED once the session is bound and its video live, whichever comes last, and ON_VIDEO_SESSION_ENDED after it, each once, the video ones only for a call with video."
+    },
+    "RK-12.8.4-005": {
+      "class": "step",
+      "card": "RMK-2062",
+      "note": "step: a pipeline vision provider and vision_interval_ms on video.open (VI1; the runners analyse every frame): a frame inside the interval is not analysed."
+    },
+    "RK-12.8.4-007": {
+      "class": "step",
+      "card": "RMK-2062",
+      "note": "step: a scripted filter that reads its FilterContext on video.open (VI1): after a vision result, the filter's context holds it."
+    },
+    "RK-12.8.4-011": {
+      "class": "step",
+      "card": "RMK-2062",
+      "note": "step: a scripted filter that reads its FilterContext on video.open (VI1): the frame after a vision result sees it in last_vision_result and labels_detected."
+    },
+    "RK-12.8.4-013": {
+      "class": "writable",
+      "card": "RMK-2062",
+      "note": "video.open with vision and a scripted agent attached to the same room: after a frame, the agent's next turn reads the description as a <vision> block (models)."
+    },
+    "RK-12.8.4-014": {
+      "class": "step",
+      "card": "RMK-2062",
+      "note": "step: video.open with a scripted session recorder and a read of its result (VI3): every frame of a recorded session reaches the recorder."
+    },
+    "RK-12.8.5-010": {
+      "class": "step",
+      "card": "RMK-2062",
+      "note": "step: scripted transforms on video.open (VI1): two transforms run in their configured order on each frame."
+    },
+    "RK-12.8.5-012": {
+      "class": "step",
+      "card": "RMK-2062",
+      "note": "step: a scripted filter that replaces the frame on video.open (VI1): the replacement is what the bridge and the vision provider receive."
+    },
+    "RK-12.8.5-013": {
+      "class": "step",
+      "card": "RMK-2062",
+      "note": "step: a scripted filter that reads its FilterContext on video.open (VI1): it holds the latest vision result."
+    },
+    "RK-12.8.7-011": {
+      "class": "writable",
+      "card": "RMK-2062",
+      "note": "video.open with vision and a scripted agent attached to the same room and no wiring step: the agent's turn after a frame reads the vision result (models)."
+    },
+    "RK-12.8.7-012": {
+      "class": "writable",
+      "card": "RMK-2062",
+      "note": "video.open with vision and a scripted agent attached to the same room: after a frame, the turn's system_prompt (models) and the room's binding (get_binding) are unchanged; the result rides the turn's notes."
+    },
+    "RK-12.8.7-013": {
+      "class": "writable",
+      "card": "RMK-2062",
+      "note": "two video channels with vision on one room and a scripted agent: the turn reads the latest result as one <vision> block, its description, labels and text, and a text that tries to close the block stays inside it."
+    },
+    "RK-12.8.7-014": {
+      "class": "writable",
+      "card": "RMK-2062",
+      "note": "video.open with vision and a scripted agent attached to the same room, a frame, then send_event with standalone on that room: the standalone turn's request carries no vision block."
+    },
+    "RK-12.8.7-015": {
+      "class": "writable",
+      "card": "RMK-2062",
+      "note": "video.open with vision and a scripted agent attached to the same room, a frame, then video.disconnect: the agent's next turn reads no vision block."
+    },
+    "RK-12.8.7-016": {
+      "class": "step",
+      "card": "RMK-2062",
+      "note": "step: a realtime session given the video channel's vision results (Python's setup_realtime_vision), with video.open and realtime.start: realtime.read shows the <vision> block as a silent injection (requires video and realtime)."
+    },
+    "RK-12.8.8-005": {
+      "class": "step",
+      "card": "RMK-2062",
+      "note": "step: av.open with a scripted avatar (VI4): the TTS audio of a reply reaches the avatar's feed_audio()."
+    },
+    "RK-12.8.8-006": {
+      "class": "step",
+      "card": "RMK-2062",
+      "note": "step: av.open with a scripted avatar and a read of the video sent (VI4): the avatar's frames are encoded and sent through the video backend."
+    },
+    "RK-12.8.9-004": {
+      "class": "step",
+      "card": "RMK-2062",
+      "note": "step: video.open bridge as a config object (the runners take a boolean): enabled false forwards nothing."
+    },
+    "RK-12.8.9-005": {
+      "class": "step",
+      "card": "RMK-2062",
+      "note": "step: video.open bridge as a config object (the runners take a boolean): a session past max_participants is not bridged, the refusal observable."
+    },
+    "RK-12.8.9-006": {
+      "class": "writable",
+      "card": "RMK-2062",
+      "note": "video.open with bridge and three participants: a frame fed by one reaches both others unchanged, one send per target (the default forward strategy)."
+    },
+    "RK-12.8.9-007": {
+      "class": "step",
+      "card": "RMK-2062",
+      "note": "step: a read of the keyframe requests (PLI) the bridged sessions' backend received (VI2): one request per keyframe_interval_s."
+    },
+    "RK-12.8.9-009": {
+      "class": "step",
+      "card": "RMK-2062",
+      "note": "step: a late joiner on video.open (VI2): the joining session receives a keyframe first (suspect RMK-2058)."
+    },
+    "RK-12.8.9-010": {
+      "class": "step",
+      "card": "RMK-2062",
+      "note": "step: a read of the keyframe requests (PLI) the bridged sessions' backend received (VI2): the bridge requests keyframes periodically."
+    },
+    "RK-12.8.9-011": {
+      "class": "step",
+      "card": "RMK-2062",
+      "note": "step: the keyframe flag on video.frame (VI2; the runners send keyframes only): a new session receives no delta frame before a keyframe (suspect RMK-2059)."
+    },
     "RK-13.1-001": {
       "class": "step",
       "card": "RMK-1965",
