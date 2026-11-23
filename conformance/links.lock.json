@@ -4486,6 +4486,48 @@
     "RK-12.6-014": {
       "voice/a-transport-barge-in-cancels-active-playback": "fcf8d159fb72aec4dd8f323beef863e3d113b51b5a969b09066569ea7b1b08c0"
     },
+    "RK-12.7.2-009": {
+      "voice/a-bridge-forwards-only-the-frame-the-hook-admits": "df19faf9a00b7117cefb20876252511bb38f9795499646a7210233c3f2758643"
+    },
+    "RK-12.7.2-011": {
+      "voice/a-bridge-forwards-only-the-frame-the-hook-admits": "a3e6ba223ab689b39741bc36902f2fcd3a6a0440c1d3f6bb52cd72efd5d88a94"
+    },
+    "RK-12.7.2-012": {
+      "voice/a-bridge-forwards-only-the-frame-the-hook-admits": "65c35962e12a97ea8f509979ac6b8451bb34622ec721df66104c0d657af12eab"
+    },
+    "RK-12.7.2-013": {
+      "voice/a-bridge-forwards-only-the-frame-the-hook-admits": "a2e552c592bb0e84bac5bec0a5fb42d2b983c0a86a3f2be9d9c8a5f3d2d33c81"
+    },
+    "RK-12.7.3-001": {
+      "voice/a-bridge-forwards-only-the-frame-the-hook-admits": "49f865768be52345b64370253449ed92e7ec85f45a3c7664e369575c87d15b8a"
+    },
+    "RK-12.7.3-007": {
+      "voice/a-bridge-forwards-only-the-frame-the-hook-admits": "e3d386dba8bd5ab8a15083f90f6f7f3e86c4ed31f766e13a320d31dc1829a812"
+    },
+    "RK-12.7.3-009": {
+      "voice/a-bridge-forwards-only-the-frame-the-hook-admits": "5f18fb16c8aa6a7b19c7ab1fd146e6f28788e912ba0c502ae71dbbfbe0c7f075"
+    },
+    "RK-12.7.6-001": {
+      "voice/a-bridge-forwards-only-the-frame-the-hook-admits": "7de72972eeb0c05fc9fcfb38d7ddaf6712fd02f91b97169e3441e2db0f21d90d"
+    },
+    "RK-12.7.6-004": {
+      "voice/a-bridge-forwards-only-the-frame-the-hook-admits": "987eb0c240864f6f9ac50bcd368c55cda73d2bb6188176f25af726003a2e8e6e"
+    },
+    "RK-12.7.6-005": {
+      "voice/a-bridge-forwards-only-the-frame-the-hook-admits": "9cb8b48372acdfec71885d0fe71a710fb46c98c25a726815d77bb3c036d0b514"
+    },
+    "RK-12.7.6-006": {
+      "voice/a-bridge-forwards-only-the-frame-the-hook-admits": "58fcab74e831b5cbb9621d15a55e846381e0fc10160dd287dfb94785628deadb"
+    },
+    "RK-12.7.8-003": {
+      "voice/a-bridge-forwards-only-the-frame-the-hook-admits": "2d72a27969888059ea189545fda06d721a2dd9fe6c5343b7b5bb26bdc22bc2c2"
+    },
+    "RK-12.7.8-004": {
+      "voice/a-bridge-forwards-only-the-frame-the-hook-admits": "e9f5b2884a3ec3ea509e7e27d987e5d5595350e2457d03a7a8aac8a508d86dd1"
+    },
+    "RK-12.7.8-006": {
+      "voice/a-bridge-forwards-only-the-frame-the-hook-admits": "1e544e5c1512e8f1e1825076d0c50fe620b9eeec3792dd3d3bc57e90f8990bde"
+    },
     "RK-13.2-004": {
       "delivery/a-retried-delivery-keeps-its-successful-provider-receipt": "8504abca107b13da520b70284632b270c3d86c86a32db7cb46bd3f96555880da"
     },
