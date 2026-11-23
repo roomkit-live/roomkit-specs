@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "rfc_sha256": "d0107f823215ed71bc35c0c3525bb71932f1ed6d2ba37aa4f286a5eaa6afb2fd",
+  "rfc_sha256": "0120c5379a08e688697925bb2be9fadac37a0ec3c5d0301de0e30737aaecaa34",
   "corpus_sha256": "b6be90365c506d3356efc99c81d6387592780678f23506e174c78dae3ca578be",
   "python_commit": "651ae82c198066cc771ad2fcfdc6995fdad25c99",
   "scenario_count": 3393,
@@ -6211,11 +6211,13 @@
       "section": "12.1",
       "title": "Architecture Overview",
       "review": "normative",
-      "requirements": 2,
+      "requirements": 1,
       "mapping": {
-        "unmapped": 2
+        "unmapped": 1
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "writable": 1
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -6223,12 +6225,12 @@
       "section": "12.2",
       "title": "Voice Channel (STT/TTS Pipeline)",
       "review": "normative",
-      "requirements": 42,
+      "requirements": 75,
       "mapping": {
-        "unmapped": 42
+        "unmapped": 75
       },
       "decided_gaps": {
-        "step": 10,
+        "step": 31,
         "writable": 3
       },
       "unannotated_keyword_lines": [],
@@ -27223,46 +27225,84 @@
       "links": []
     },
     {
-      "id": "RK-12.1-001",
+      "id": "RK-12.1-003",
       "section": "12.1",
       "mapping": "unmapped",
-      "links": []
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-2019",
+        "note": "A room where voice.open attaches a voice channel and a declared realtime channel starts its session (realtime.start), each still doing its work; a bridge and a conference join the same way."
+      }
     },
     {
-      "id": "RK-12.1-002",
-      "section": "12.1",
-      "mapping": "unmapped",
-      "links": []
-    },
-    {
-      "id": "RK-12.2-001",
+      "id": "RK-12.2-044",
       "section": "12.2",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.2-002",
+      "id": "RK-12.2-045",
       "section": "12.2",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.2-003",
+      "id": "RK-12.2-046",
+      "section": "12.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2019",
+        "note": "step: voice.open TTS options (S7): a scripted TTS chunk format; the transport's send_audio receives decoded PCM only, never an encoded chunk."
+      }
+    },
+    {
+      "id": "RK-12.2-047",
       "section": "12.2",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.2-004",
+      "id": "RK-12.2-048",
       "section": "12.2",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.2-005",
+      "id": "RK-12.2-049",
       "section": "12.2",
       "mapping": "unmapped",
       "links": []
+    },
+    {
+      "id": "RK-12.2-050",
+      "section": "12.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.2-051",
+      "section": "12.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2019",
+        "note": "step: voice.open capabilities (S2) and voice stage trace (S3): a backend declaring NATIVE_AEC or NATIVE_AGC with both stages configured; voice.read reports neither stage ran."
+      }
+    },
+    {
+      "id": "RK-12.2-052",
+      "section": "12.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2019",
+        "note": "step: voice.dtmf_signal (S13): a digit the backend signals and an in-band tone, both reaching the ON_DTMF hook."
+      }
     },
     {
       "id": "RK-12.2-006",
@@ -27277,49 +27317,313 @@
       "links": []
     },
     {
-      "id": "RK-12.2-008",
+      "id": "RK-12.2-053",
+      "section": "12.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2019",
+        "note": "step: voice.end (S4): a session's state read once it opens and once it ends; a pause has no step."
+      }
+    },
+    {
+      "id": "RK-12.2-054",
+      "section": "12.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2019",
+        "note": "step: voice.end (S4): an ended session's state, still ENDED once the participant reconnects."
+      }
+    },
+    {
+      "id": "RK-12.2-055",
+      "section": "12.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2019",
+        "note": "step: voice.end (S4): a participant who reconnects after the end, given a session of another id."
+      }
+    },
+    {
+      "id": "RK-12.2-056",
       "section": "12.2",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.2-009",
+      "id": "RK-12.2-057",
       "section": "12.2",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.2-010",
+      "id": "RK-12.2-058",
+      "section": "12.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2019",
+        "note": "step: voice.open STT options (S5) and voice.set_language (S6): a provider reporting supports_language_override false in a session whose language is chosen; the streams the channel opens are passed none (the flag itself is the provider's contract)."
+      }
+    },
+    {
+      "id": "RK-12.2-059",
       "section": "12.2",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.2-011",
+      "id": "RK-12.2-060",
+      "section": "12.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2019",
+        "note": "step: voice.set_language (S6): a session's STT language chosen at runtime."
+      }
+    },
+    {
+      "id": "RK-12.2-061",
+      "section": "12.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2019",
+        "note": "step: voice.set_language (S6): a language chosen mid-session; the next stream opened is passed it, the open one is not."
+      }
+    },
+    {
+      "id": "RK-12.2-062",
+      "section": "12.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2019",
+        "note": "step: voice.open STT options (S5): continuous mode with a provider that neither diarizes nor keeps its stream; voice.read counts a stream per turn."
+      }
+    },
+    {
+      "id": "RK-12.2-063",
+      "section": "12.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2019",
+        "note": "step: voice.open STT options (S5): continuous mode with keeps_stream_across_turns; voice.read counts one stream across turns, a new one after an error or a language change."
+      }
+    },
+    {
+      "id": "RK-12.2-064",
+      "section": "12.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2019",
+        "note": "step: voice.open STT options (S5): a kept stream giving two finals while the first one's hook is held; both reach the room in the order produced."
+      }
+    },
+    {
+      "id": "RK-12.2-065",
       "section": "12.2",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.2-012",
+      "id": "RK-12.2-066",
+      "section": "12.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2019",
+        "note": "step: voice.set_language (S6): a hook that reads the reported language and pins the session's next streams to it."
+      }
+    },
+    {
+      "id": "RK-12.2-067",
+      "section": "12.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2019",
+        "note": "step: voice.open STT options (S5): continuous mode with an STT reconnect held; the frames fed meanwhile reach the next stream."
+      }
+    },
+    {
+      "id": "RK-12.2-068",
+      "section": "12.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2019",
+        "note": "step: voice.open STT options (S5): continuous mode with an STT reconnect held past the bound; the next stream receives no more than the bound."
+      }
+    },
+    {
+      "id": "RK-12.2-069",
+      "section": "12.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2019",
+        "note": "step: voice.open STT options (S5): an STT reconnect held past the bound; the next stream receives the newest frames (the amount dropped is a log line in Python, which no step reads)."
+      }
+    },
+    {
+      "id": "RK-12.2-070",
       "section": "12.2",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.2-013",
+      "id": "RK-12.2-071",
       "section": "12.2",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.2-014",
+      "id": "RK-12.2-072",
       "section": "12.2",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.2-015",
+      "id": "RK-12.2-073",
+      "section": "12.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.2-074",
+      "section": "12.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.2-075",
+      "section": "12.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.2-076",
+      "section": "12.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2019",
+        "note": "step: voice.open TTS options (S7): a TTS chunk whose format is mp3; the session's synthesis is refused with an error naming the format, reported as tts_error, and the transport received nothing."
+      }
+    },
+    {
+      "id": "RK-12.2-077",
+      "section": "12.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.2-078",
+      "section": "12.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2019",
+        "note": "step: voice.open TTS options (S7): a TTS whose context_level is NONE; voice.read shows it received no context."
+      }
+    },
+    {
+      "id": "RK-12.2-079",
+      "section": "12.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.2-080",
+      "section": "12.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.2-081",
+      "section": "12.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2019",
+        "note": "step: TTS catalog (S10): list_voices on a scripted TTS that keeps the default; its curated catalog comes back filtered."
+      }
+    },
+    {
+      "id": "RK-12.2-082",
+      "section": "12.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2019",
+        "note": "step: TTS catalog (S10): list_voices with language, gender and query filters on a scripted catalog, a voice of unknown language or gender matching none."
+      }
+    },
+    {
+      "id": "RK-12.2-083",
+      "section": "12.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.2-084",
+      "section": "12.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.2-085",
+      "section": "12.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.2-086",
+      "section": "12.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2019",
+        "note": "step: TTS catalog (S10): synthesize_dialogue on a scripted TTS with no dialogue, then with too many or unmapped speakers, raising before any call."
+      }
+    },
+    {
+      "id": "RK-12.2-087",
+      "section": "12.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.2-088",
+      "section": "12.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.2-089",
       "section": "12.2",
       "mapping": "unmapped",
       "links": []
