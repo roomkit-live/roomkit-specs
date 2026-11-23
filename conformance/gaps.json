@@ -327,9 +327,9 @@
       "note": "voice.open before recording.start, then voice.feed: recording.read shows none of the session's frames; joining again needs voice.leave (V5)."
     },
     "RK-12.11-026": {
-      "class": "writable",
+      "class": "step",
       "card": "RMK-2066",
-      "note": "recording.start, recording.stop, then recording.start again: ON_RECORDING_STARTED fires for the second start too."
+      "note": "step: restart_process, and the recording calls naming kit, an argument README does not give them: recording.start on the restarted process announces ON_RECORDING_STARTED again (a second start on one kit shows no restart)."
     },
     "RK-12.11-030": {
       "class": "step",
