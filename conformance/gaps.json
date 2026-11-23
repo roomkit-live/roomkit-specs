@@ -2124,7 +2124,7 @@
     "RK-12.8.10-010": {
       "class": "step",
       "card": "RMK-2062",
-      "note": "step: video.open with a scripted session recorder that refuses to start (VI3): the join fails and the session is never bound, ON_VIDEO_SESSION_STARTED never firing."
+      "note": "step: video.open with a scripted session recorder that refuses to start (VI3): the join fails and the session is never bound, ON_VIDEO_SESSION_STARTED never firing. The .. half is the file recorders' (validate_storage_path, src/roomkit/video/recorder/base.py, which no runner reaches), proven by tests/test_video_recording.py::TestVideoChannelRecordingFailures::test_a_refused_recording_refuses_the_session_before_binding_it with the storage a/../b."
     },
     "RK-12.8.3-005": {
       "class": "step",
