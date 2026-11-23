@@ -13898,10 +13898,9 @@ is refused before the gate, as an unreadable one, and answered under its id.<!--
 provider hands every call the model makes to the channel, these, a call the
 output cap cut and a call to a tool the channel never declared included: the
 channel decides it, and no provider or vendor SDK answers it in the channel's
-place.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-042", "kind": "behavior", "applies": "§12.4 One call, one outcome, the realtime feature's provider contract, what any realtime provider must do: the id a provider hands on is the service's, never a key of the call's arguments; a vendor SDK that folds the id into the arguments is patched so the service's id stands and the model's key stays an argument. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The id a provider hands on is the service's, never a key of the call's
-arguments: a vendor SDK that folds the id into the arguments, where a key the
-model wrote can replace it, is patched so the service's id stands and the
-model's key stays an argument, judged as any (Section 9.3).<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-043", "kind": "behavior", "applies": "§12.4 One call, one outcome, the realtime feature's provider contract, what any realtime provider must do: a provider books a call as awaiting its result only when the channel can answer it; a call refused with nothing sent never holds the response, or the provider's continuation after it, open. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A provider books a call as
+place.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-042", "kind": "behavior", "applies": "§12.4 One call, one outcome, the realtime feature's provider contract, what any realtime provider must do: the id a provider hands on is the service's, never a key of the call's arguments; a key the model wrote under that name stays an argument. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The id a provider hands on is the service's, never a key of the call's
+arguments: a key the model wrote under that name stays an argument, judged as
+any (Section 9.3).<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-043", "kind": "behavior", "applies": "§12.4 One call, one outcome, the realtime feature's provider contract, what any realtime provider must do: a provider books a call as awaiting its result only when the channel can answer it; a call refused with nothing sent never holds the response, or the provider's continuation after it, open. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A provider books a call as
 awaiting its result only when the channel can answer it: a call refused with
 nothing sent MUST NOT hold the response, or the provider's continuation after
 it, open on a result that never comes.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-044", "kind": "behavior", "applies": "§12.4 One call, one outcome, the realtime feature: a channel that mutes the input while one of the provider's tool calls runs keeps it muted until the last such call ends; a call recovered from speech or a backend's call mutes nothing. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A channel that mutes the
@@ -13920,48 +13919,6 @@ as a tool result, because the model issued no call and has no pending response
 to close.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-048", "kind": "behavior", "applies": "§12.4 One call, one outcome, the realtime feature, where an implementation recovers a tool call the model emitted as assistant text: the result it returns is set apart as a tool's result (<tool_result>, §6.4), data the tool returned, never the runtime's own words. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The result it returns is set apart as a tool's result
 (`<tool_result>`, Section 6.4): it is data the tool returned, never the
 runtime's own words.
-<!-- /rfc -->
-
-<!-- rfc: {"id": "RK-12.4-082", "kind": "behavior", "applies": "§12.4 A response's calls are answered together, the realtime feature's provider contract, a provider that must be asked to continue once tool results are in: it asks once per model response, after that response has ended and every call it emitted has its result, not once per result (what asking per result costs, informative, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
-**A response's calls are answered together (normative).** A provider that
-must be asked to continue once tool results are in MUST ask once per model
-response, after that response has ended and every call it emitted has its
-result, not once per result. Two calls issued in parallel would otherwise ask
-twice, the first time while the response is still active, which the service
-rejects, and the second call's output would then wait, unspoken, for the
-caller's next turn.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-083", "kind": "behavior", "applies": "§12.4 A response's calls are answered together, the realtime feature's provider contract, a provider that must be asked to continue once tool results are in: a result for a call of a response the conversation has already left joins the response in progress, which covers it with its single request once it has ended and its own calls have their results; with no response in progress, the provider asks at once. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A result for a call of a response the conversation has
-already left (the caller spoke again and a new response began) joins the
-response in progress: that response's single request covers it, once the
-response has ended and its own calls have their results, and with no response
-in progress the provider asks at once.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-084", "kind": "behavior", "applies": "§12.4 A response's calls are answered together, the realtime feature's provider contract, a provider that must be asked to continue once tool results are in: a request it has made counts as a response in progress until the response it asked for begins; a result submitted in between is covered by the next request, and never holds the new response back nor waits for the caller's next turn. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A request the provider has made counts
-as a response in progress until the response it asked for begins, and a
-result submitted in between is not part of that response: the next request
-covers it. Such a result never holds the new response back, and never waits
-for the caller's next turn.
-<!-- /rfc -->
-
-<!-- rfc: {"id": "RK-12.4-085", "kind": "behavior", "applies": "§12.4 A response's calls are answered together, the realtime feature's provider contract, a provider that must be asked to continue once tool results are in: every request it makes reads that same state, the continuation, a non-silent text injection and the request that closes the caller's turn in the endpointing role alike, and none is sent while a response is in progress, active or requested. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
-Every request the provider makes reads that same state, whoever makes it: the
-continuation, a non-silent text injection, the request that closes the
-caller's turn in the endpointing role (Section 12.4, audio pipeline). None
-sends a request while a response is in progress, active or requested.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-086", "kind": "behavior", "applies": "§12.4 A response's calls are answered together, the realtime feature's provider contract, a provider that must be asked to continue once tool results are in: a continuation never starts while the caller is speaking (between activity start and end in the endpointing role, between the provider's own speech start and end otherwise): it is held until the caller's turn ends, and the request that answers the turn covers it (what a continuation over the caller costs, informative, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->And a
-continuation never starts while the caller is speaking (between activity
-start and activity end in the endpointing role, between the provider's own
-speech start and speech end otherwise): it is held until the caller's turn
-ends, and the request that answers the caller's turn covers it, since
-the results already sit in the conversation ahead of what the caller said. A
-continuation that started anyway would speak over the caller, and the
-caller's own request would then find a response in progress and leave the
-turn unanswered.
-<!-- /rfc -->
-
-<!-- rfc: {"id": "RK-12.4-087", "kind": "behavior", "applies": "§12.4 A response's calls are answered together, the realtime feature's provider contract, a provider that must be asked to continue once tool results are in: a caller's turn whose request found a response in progress is still owed one, asked once that response ends. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
-A caller's turn whose request found a response in progress is still owed
-one: the provider asks once that response ends.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-088", "kind": "behavior", "applies": "§12.4 A response's calls are answered together, the realtime feature's provider contract, a provider that must be asked to continue once tool results are in: any request sent after the caller's turn was committed covers that turn, a continuation included, so the turn is never answered twice. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Any request the provider
-sends after the caller's turn was committed covers it, a continuation
-included, so the turn is never answered twice.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-089", "kind": "behavior", "applies": "§12.4 A response's calls are answered together, the realtime feature's provider contract, a provider that must be asked to continue once tool results are in: a request the service rejects is no longer in progress: the error that answers it releases the state. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A request the service rejects
-is no longer in progress: the error that answers it releases the state, or
-the session would never ask again.
 <!-- /rfc -->
 
 <!-- rfc: {"id": "RK-12.4-090", "kind": "behavior", "applies": "§12.4 Text injection, the realtime feature: ON_REALTIME_TEXT_INJECTED fires after a text is injected into a realtime session's conversation context (what a text injection is, informative, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
@@ -14055,25 +14012,13 @@ to carry an intent MUST refuse it (`not_sent`, with a reason) rather than
 deliver it as something else.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.4-110", "kind": "behavior", "applies": "§12.4 Text from another channel, the realtime feature's provider contract, a provider that joins an injected text to instructions of its own: it keeps the two apart, an instruction a resumption left unapplied in a block of its own before the injected text, content it adds to a prompt it rewrites for a silent injection in a <context> block after the instructions. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+<!-- rfc: {"id": "RK-12.4-110", "kind": "behavior", "applies": "§12.4 Text from another channel, the realtime feature's provider contract, a provider that joins an injected text to instructions of its own: it keeps the two apart, an instruction it has yet to apply in a block of its own before the injected text, content it adds to a prompt it rewrites for a silent injection in a <context> block after the instructions. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A provider that joins an injected text to instructions of its own MUST keep
 the two apart, so that the text never reads as more of the instructions: an
-instruction a resumption left unapplied (below) is set apart in a block of its
+instruction the provider has yet to apply is set apart in a block of its
 own before the injected text, and content a provider adds to the prompt it
 rewrites for a silent injection is set apart in a `<context>` block
 after the instructions.
-<!-- /rfc -->
-
-<!-- rfc: {"id": "RK-12.4-111", "kind": "behavior", "applies": "§12.4 A reconfiguration's instruction takes effect, the realtime feature's provider contract, a provider that applies a reconfiguration by resuming the session under the instruction it started with: it still makes the new instruction govern the session; a session that holds no conversation yet reconnects without resuming, and one that holds one keeps its context and receives the new instruction with its next non-silent injection. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
-**A reconfiguration's instruction takes effect.** A provider that applies a
-reconfiguration by resuming the session, where the service resumes it under
-the instruction it started with, MUST still
-make the new instruction govern the session: a session that holds no
-conversation yet reconnects without resuming, since it has nothing to keep,
-and a session that holds one keeps its context and receives the new
-instruction with its next non-silent injection, which the model acts on.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-112", "kind": "non_testable", "applies": "§12.4 A reconfiguration's instruction takes effect, the realtime feature: an integrator that reconfigures such a session directly follows it with an injection when the model must act on the change at once; only the integrator keeps it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An
-integrator that reconfigures such a session directly follows it with an
-injection when the model must act on the change at once.
 <!-- /rfc -->
 
 <!-- rfc: {"id": "RK-12.4-015", "kind": "structural", "applies": "§12.4 RealtimeAudioTransport interface, the realtime feature: name, accept(), send_audio(), send_message(), on_audio_received(), on_client_disconnected(), set_trace_emitter(), disconnect() and close(), audio reception pushed through on_audio_received(callback) rather than pulled from an iterator (the e.g. transport names and the rationale, informative, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
@@ -14243,9 +14188,7 @@ full-duplex provider has neither on its wire. The provider MUST synthesize
 them: `on_response_start` when assistant output (audio or transcript) resumes
 after quiet, `on_response_end` when assistant output has been quiet for a
 configurable gap.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4.1-015", "kind": "behavior", "applies": "§12.4.1 Boundaries are synthesized, the realtime feature's provider contract, a provider that declares full_duplex: the gap exceeds the provider's transcript frame granularity, so that an ordinary pause inside a sentence does not close the response. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The gap MUST exceed the provider's transcript frame
-granularity, or an ordinary pause inside a sentence would close the response;<!-- /rfc --><!-- rfc: {"id": "RK-12.4.1-016", "kind": "behavior", "applies": "§12.4.1 Boundaries are synthesized, the realtime feature's provider contract, a provider that declares full_duplex and emits transcript fragments on 200 ms frames: a default gap in the order of 800 ms, a vendor's wire value. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
-for a provider that emits transcript fragments on 200 ms frames a default in
-the order of 800 ms is RECOMMENDED.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4.1-017", "kind": "behavior", "applies": "§12.4.1 Boundaries are synthesized, the realtime feature's provider contract, a provider that declares full_duplex: it may synthesize on_speech_start and on_speech_end from user-role transcript activity, as it synthesizes the response boundaries, so that ON_SPEECH_START and ON_SPEECH_END keep firing. Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->A provider MAY synthesize `on_speech_start`
+granularity, or an ordinary pause inside a sentence would close the response.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4.1-017", "kind": "behavior", "applies": "§12.4.1 Boundaries are synthesized, the realtime feature's provider contract, a provider that declares full_duplex: it may synthesize on_speech_start and on_speech_end from user-role transcript activity, as it synthesizes the response boundaries, so that ON_SPEECH_START and ON_SPEECH_END keep firing. Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->A provider MAY synthesize `on_speech_start`
 and `on_speech_end` from user-role transcript activity the same way, so that
 ON_SPEECH_START and ON_SPEECH_END keep firing;<!-- /rfc --> <!-- rfc: {"id": "RK-12.4.1-018", "kind": "behavior", "applies": "§12.4.1 Boundaries are synthesized, the realtime feature, on a provider that declares full_duplex: the channel treats synthesized speech starts and ends as observation, never as the entry to the interruption path (Interruption belongs to the model). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->the channel MUST treat them as
 observation, never as the entry to the interruption path below.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4.1-019", "kind": "behavior", "applies": "§12.4.1 Boundaries are synthesized, the realtime feature, on a provider that declares full_duplex: synthesized boundaries lag the audio they describe by the gap, and a latency metric read from them accounts for that lag. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Synthesized
@@ -15112,20 +15055,11 @@ VideoBackend (interface)
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.8.3-005", "kind": "structural", "applies": "§12.8.3 Required implementations, the video feature: the required LocalVideoBackend, over a local camera, for development and testing. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
-**Required implementations:**
+<!-- rfc: {"id": "RK-12.8.3-003", "kind": "structural", "applies": "§12.8.3 Backends, the video feature: an implementation may provide video backends for any transport (a local camera, a screen capture, WebRTC, RTP, SIP video or WebSocket, examples); none is required by name. Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->
+**Backends:**
 
-| Backend | Transport | Use Case |
-|---|---|---|
-| LocalVideoBackend | Local camera | Development, testing |
-| <!-- /rfc --><!-- rfc: {"id": "RK-12.8.3-006", "kind": "structural", "applies": "§12.8.3 Required implementations, the video feature: the required ScreenCaptureBackend, over screen capture, for screen sharing and monitoring. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ScreenCaptureBackend | Screen capture | Screen sharing, monitoring |
-<!-- /rfc -->
-
-<!-- rfc: {"id": "RK-12.8.3-003", "kind": "structural", "applies": "§12.8.3 Optional backends, the video feature: an implementation may provide further video backends, for WebRTC, RTP, SIP video or WebSocket transport (examples). Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->
-**Optional backends:**
-
-Implementations MAY provide additional backends for WebRTC,
-RTP, SIP video, or WebSocket transport.
+Implementations MAY provide backends for any transport: a local camera, a
+screen capture, WebRTC, RTP, SIP video or WebSocket, for example.
 <!-- /rfc -->
 
 <!-- rfc: {"id": "RK-12.8.3-007", "kind": "structural", "applies": "§12.8.3 Combined audio/video backends, the video feature with the voice feature: a transport carrying a call's audio and video together is a voice backend (§12.2) whose calls may carry video (the SIP, RTP and WebRTC transports in parentheses are examples). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
@@ -26175,17 +26109,16 @@ VideoChannel
 │       (Section 12.8.7); setup_video_vision() is deprecated, wires nothing
 ```
 <!-- /rfc -->
-<!-- rfc: {"id": "RK-A.12-014", "kind": "structural", "applies": "§A.12 Video Channel (media feature video; Level 3, §26.4): the backends LocalVideoBackend (local camera capture), ScreenCaptureBackend (screen capture) and MockVideoBackend (unit testing with call tracking). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+<!-- rfc: {"id": "RK-A.12-014", "kind": "structural", "applies": "§A.12 Video Channel (media feature video; Level 3, §26.4): the backend MockVideoBackend (unit testing with call tracking). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 └── backends:
-    ├── LocalVideoBackend — local camera capture (dev/testing)
-    ├── ScreenCaptureBackend — screen capture (screen sharing, monitoring)
     ├── MockVideoBackend — Unit testing with call tracking
 ```
 <!-- /rfc -->
-<!-- rfc: {"id": "RK-A.12-015", "kind": "structural", "applies": "§A.12 Video Channel (media feature video; Level 3, §26.4): optional WebRTC, RTP, SIP video and WebSocket backends. Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->
+<!-- rfc: {"id": "RK-A.12-015", "kind": "structural", "applies": "§A.12 Video Channel (media feature video; Level 3, §26.4): optional local camera, screen capture, WebRTC, RTP, SIP video and WebSocket backends. Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->
 ```
-    └── optional (MAY): WebRTC, RTP, SIP video, WebSocket backends
+    └── optional (MAY): local camera, screen capture, WebRTC, RTP, SIP video,
+        WebSocket backends
 ```
 <!-- /rfc -->
 

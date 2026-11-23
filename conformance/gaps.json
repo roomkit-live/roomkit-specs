@@ -2836,46 +2836,6 @@
       "card": "RMK-2045",
       "note": "step: skills with an executor on the realtime channel spec (S7)."
     },
-    "RK-12.4-082": {
-      "class": "step",
-      "card": "RMK-2045",
-      "note": "vendor wire: leaves the RFC in P6-V (D2)"
-    },
-    "RK-12.4-083": {
-      "class": "step",
-      "card": "RMK-2045",
-      "note": "vendor wire: leaves the RFC in P6-V (D2)"
-    },
-    "RK-12.4-084": {
-      "class": "step",
-      "card": "RMK-2045",
-      "note": "vendor wire: leaves the RFC in P6-V (D2)"
-    },
-    "RK-12.4-085": {
-      "class": "step",
-      "card": "RMK-2045",
-      "note": "vendor wire: leaves the RFC in P6-V (D2)"
-    },
-    "RK-12.4-086": {
-      "class": "step",
-      "card": "RMK-2045",
-      "note": "vendor wire: leaves the RFC in P6-V (D2)"
-    },
-    "RK-12.4-087": {
-      "class": "step",
-      "card": "RMK-2045",
-      "note": "vendor wire: leaves the RFC in P6-V (D2)"
-    },
-    "RK-12.4-088": {
-      "class": "step",
-      "card": "RMK-2045",
-      "note": "vendor wire: leaves the RFC in P6-V (D2)"
-    },
-    "RK-12.4-089": {
-      "class": "step",
-      "card": "RMK-2045",
-      "note": "vendor wire: leaves the RFC in P6-V (D2)"
-    },
     "RK-12.4-092": {
       "class": "writable",
       "card": "RMK-2045",
@@ -2900,11 +2860,6 @@
       "class": "writable",
       "card": "RMK-2045",
       "note": "deliver with instruction true into the room of a running realtime session: the injection reads role system."
-    },
-    "RK-12.4-111": {
-      "class": "step",
-      "card": "RMK-2045",
-      "note": "vendor wire: leaves the RFC in P6-V (D2)"
     },
     "RK-12.4-113": {
       "class": "step",
@@ -2975,11 +2930,6 @@
       "class": "step",
       "card": "RMK-2049",
       "note": "step: a scripted ReasoningBackend (S10) whose run delegates a task (§23)."
-    },
-    "RK-12.4.1-016": {
-      "class": "step",
-      "card": "RMK-2049",
-      "note": "vendor wire: leaves the RFC in P6-V (D2)"
     },
     "RK-12.4.1-018": {
       "class": "step",
@@ -3550,16 +3500,6 @@
       "class": "step",
       "card": "RMK-2062",
       "note": "step: video.open with a scripted session recorder that refuses to start (VI3): the join fails and the session is never bound, ON_VIDEO_SESSION_STARTED never firing. The .. half is the file recorders' (validate_storage_path, src/roomkit/video/recorder/base.py, which no runner reaches), proven by tests/test_video_recording.py::TestVideoChannelRecordingFailures::test_a_refused_recording_refuses_the_session_before_binding_it with the storage a/../b."
-    },
-    "RK-12.8.3-005": {
-      "class": "step",
-      "card": "RMK-2062",
-      "note": "named backend: leaves the RFC in P6-V (D8)"
-    },
-    "RK-12.8.3-006": {
-      "class": "step",
-      "card": "RMK-2062",
-      "note": "named backend: leaves the RFC in P6-V (D8)"
     },
     "RK-12.8.3-010": {
       "class": "step",
@@ -7563,11 +7503,6 @@
       "class": "writable",
       "card": "RMK-1961",
       "note": "video.open with vision and a scripted agent in the room: its models read the vision result as a <vision> block (requires video)."
-    },
-    "RK-A.12-014": {
-      "class": "step",
-      "card": "RMK-1961",
-      "note": "named backend: leaves the RFC in P6-V (D8)"
     },
     "RK-A.13-002": {
       "class": "step",
