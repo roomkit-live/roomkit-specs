@@ -30,13 +30,13 @@ proof: a scenario can cite a unit without covering all of it.
 | [§3 Architecture Overview](section-3.md) | 3 | 0 | 0 | 0 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | [§4 Core Concepts](section-4.md) | 11 | 0 | 0 | 0 | 11 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | [§5 Data Models](section-5.md) | 184 | 171 | 9 | 4 | 0 | 169 | 675 | 0 | 0 | 0 | 0 | 0 |
-| [§6 Channel System](section-6.md) | 657 | 641 | 7 | 9 | 0 | 422 | 2683 | 0 | 181 | 98 | 81 | 4 |
+| [§6 Channel System](section-6.md) | 657 | 641 | 7 | 9 | 0 | 422 | 2684 | 0 | 181 | 98 | 81 | 4 |
 | [§7 Permission Model](section-7.md) | 85 | 84 | 0 | 1 | 0 | 83 | 339 | 0 | 0 | 0 | 0 | 0 |
 | [§8 Event System](section-8.md) | 177 | 176 | 1 | 0 | 0 | 119 | 1211 | 0 | 55 | 20 | 16 | 19 |
 | [§9 Hook System](section-9.md) | 350 | 343 | 3 | 4 | 0 | 333 | 1342 | 0 | 0 | 0 | 0 | 0 |
 | [§10 Processing Pipelines](section-10.md) | 646 | 626 | 7 | 13 | 0 | 588 | 2264 | 0 | 0 | 0 | 0 | 0 |
 | [§11 Identity Resolution](section-11.md) | 110 | 108 | 2 | 0 | 0 | 91 | 381 | 0 | 11 | 5 | 4 | 2 |
-| [§12 Voice and Realtime Media](section-12.md) | 1290 | 1175 | 74 | 38 | 3 | 164 | 321 | 0 | 656 | 78 | 614 | 7 |
+| [§12 Voice and Realtime Media](section-12.md) | 1293 | 1178 | 74 | 38 | 3 | 165 | 322 | 0 | 656 | 77 | 615 | 7 |
 | [§13 Resilience and Error Handling](section-13.md) | 97 | 88 | 7 | 2 | 0 | 58 | 255 | 0 | 29 | 16 | 15 | 0 |
 | [§14 Storage Interface](section-14.md) | 110 | 107 | 1 | 2 | 0 | 69 | 146 | 0 | 31 | 8 | 23 | 0 |
 | [§15 Observability](section-15.md) | 71 | 58 | 11 | 1 | 1 | 35 | 59 | 0 | 19 | 6 | 11 | 5 |

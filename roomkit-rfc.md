@@ -2107,11 +2107,11 @@ reference capabilities:
 | Teams | TEXT, RICH | Threading, reactions, rich text, edit, delete |
 | RCS | TEXT, RICH, MEDIA | Buttons, cards, SMS fallback |
 | WebSocket | TEXT, RICH, MEDIA, AUDIO, VIDEO, LOCATION | All features, real-time, edit, delete |
-| <!-- /rfc --><!-- rfc: {"id": "RK-6.3-004", "kind": "structural", "applies": "§6.3 reference capabilities table, media rows (media features voice and realtime): Voice and Realtime Voice. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Voice | AUDIO | Streaming audio, STT/TTS |
-| Realtime Voice | AUDIO | Speech-to-speech, tool calling |
+| <!-- /rfc --><!-- rfc: {"id": "RK-6.3-004", "kind": "structural", "applies": "§6.3 reference capabilities table, media rows (media features voice and realtime): Voice and Realtime Voice. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Voice | AUDIO, TEXT | Streaming audio, STT/TTS |
+| Realtime Voice | AUDIO, TEXT | Speech-to-speech, tool calling |
 | <!-- /rfc --><!-- rfc: {"id": "RK-6.3-005", "kind": "structural", "applies": "§6.3 reference capabilities table, the Telegram row: the media types and key features an implementation's Telegram channel declares. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Telegram | TEXT, RICH, MEDIA, AUDIO, VIDEO, LOCATION | Buttons, inline keyboards, edit, delete |
-| <!-- /rfc --><!-- rfc: {"id": "RK-6.3-006", "kind": "structural", "applies": "§6.3 reference capabilities table, media rows (media features voice, realtime, video and conference): Audio/Video, Realtime Audio/Video, Video and Conference. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Audio/Video | AUDIO, VIDEO | Combined voice + video, STT/TTS + vision |
-| Realtime Audio/Video | AUDIO, VIDEO | Speech-to-speech + video, tool calling |
+| <!-- /rfc --><!-- rfc: {"id": "RK-6.3-006", "kind": "structural", "applies": "§6.3 reference capabilities table, media rows (media features voice, realtime, video and conference): Audio/Video, Realtime Audio/Video, Video and Conference. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Audio/Video | AUDIO, VIDEO, TEXT | Combined voice + video, STT/TTS + vision |
+| Realtime Audio/Video | AUDIO, VIDEO, TEXT | Speech-to-speech + video, tool calling |
 | Video | VIDEO | Video-only, vision provider integration |
 | Conference | AUDIO | Multi-party SFU, per-track STT, AI bot participant |
 | <!-- /rfc --><!-- rfc: {"id": "RK-6.3-007", "kind": "structural", "applies": "§6.3 reference capabilities table, the Webhook row: the media types and key features an implementation's webhook channel declares. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Webhook | TEXT, RICH | Generic HTTP POST |
@@ -3515,9 +3515,11 @@ as a colon or a double quote left out, a mark such as the Devanagari
 visarga included), on one line and bounded, as the
 `Name: ` prefix of a transcript gives it. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-359", "kind": "behavior", "applies": "§6.4 Speaker labels: with several speakers in the window, or two people or more taking part, each line of a participant's turn opens with the speaker's label. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->When the history window holds
 several speakers, counted by source (a participant, whichever channel
-reached them, else a sender on its channel, else the channel: two senders
-with no name on one channel are two speakers, one sender whose name changed
-is one; the runtime's own system events aside, and a one-to-one
+reached them, else a voice its channel's diarization labels on its sender's
+stream, by `metadata.speaker_label` in its `speaker_epoch` (Section 12.2.3),
+else a sender on its channel, else the channel: two senders with no name on
+one channel are two speakers, two voices labelled on one stream are two, one
+sender whose name changed is one; the runtime's own system events aside, and a one-to-one
 conversation left as it is), or two people or more take part
 (below), every line of a participant's turn
 in the conversation opens with such a label, which the runtime alone places:
@@ -3609,8 +3611,8 @@ sender name (a transport's stamp, or the voice a channel's diarization names
 on a shared microphone, Section 12.2.3) and from the room's participant
 record otherwise (a participant's id, or their identity's, names them on a
 channel they are reached through, Section 5.5): when two distinct sources of
-the room (a participant, whichever channel reached them, or a sender) have
-names that read alike (in case or in Unicode's confusables, `Alice` and
+the room (a participant, whichever channel reached them, a labelled voice, or
+a sender) have names that read alike (in case or in Unicode's confusables, `Alice` and
 `Аlice`), a participant the room registered keeps the name, then the first
 source the room saw, and each later one carries it with its rank and the name
 it is not (`Alice (2, not Alice)`), a form no name takes: under its rank alone
@@ -4170,10 +4172,10 @@ MUST transcode content to match each target channel's supported media types.
 The target's `media_types` (Section 5.8) decides: a content of a category it
 names is delivered unchanged, and one of a category it does not name is
 replaced by its text form, as the table below gives it; so is a file whose
-type or size the target does not take (Section 5.8). <!-- /rfc --><!-- rfc: {"id": "RK-6.6-006", "kind": "behavior", "applies": "§6.6 Content transcoding: text is the fallback every channel takes whatever its media_types declares, a text unchanged and a rich text as its text form (the sentence's example is a voice channel that declares AUDIO alone). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Text is the fallback
-every channel takes, whatever its `media_types` declares: a voice channel
-that declares AUDIO alone receives a text unchanged and a rich text as its
-text form.
+type or size the target does not take (Section 5.8). <!-- /rfc --><!-- rfc: {"id": "RK-6.6-006", "kind": "behavior", "applies": "§6.6 Content transcoding: text is the fallback every channel takes whatever its media_types declares, a text unchanged and a rich text as its text form (the sentence's example is a conference channel, which declares AUDIO alone). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Text is the fallback
+every channel takes, whatever its `media_types` declares: a conference
+channel, which declares AUDIO alone, receives a text unchanged and a rich text
+as its text form.
 <!-- /rfc -->
 
 <!-- rfc: {"id": "RK-6.6-007", "kind": "behavior", "applies": "§6.6 Default transcoding rules (the table's header), the TextContent row: a text reaches any target unchanged. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
@@ -10924,11 +10926,11 @@ Architecture 4: SFU Conference (ConferenceChannel — Section 12.10)
 
 ### 12.2 Voice Channel (STT/TTS Pipeline)
 
-<!-- rfc: {"id": "RK-12.2-044", "kind": "structural", "applies": "§12.2 Voice Channel, the voice feature: its three required components, a VoiceBackend, an STTProvider and a TTSProvider (the sentence on the channel's purpose, informative, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+<!-- rfc: {"id": "RK-12.2-044", "kind": "structural", "applies": "§12.2 Voice Channel, the voice feature: its three components, a VoiceBackend, an STTProvider and a TTSProvider (the sentence on the channel's purpose, informative, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The Voice Channel processes audio through a pipeline of STT and TTS providers,
 converting speech to text events and text responses back to speech.
 
-**Required components:**
+**Components:**
 
 | Component | Interface | Purpose |
 |---|---|---|
@@ -10937,14 +10939,25 @@ converting speech to text events and text responses back to speech.
 | TTSProvider | See below | Text-to-speech synthesis |
 <!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.2-090", "kind": "behavior", "applies": "§12.2 Voice Channel, the voice feature: each component optional at construction, unless an option given needs it; without an STTProvider detected speech reaches no room, without a TTSProvider a delivered message plays nothing, and a call to speak without a TTSProvider or a VoiceBackend fails naming the missing one. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+Each component is optional at construction, unless an option the channel is
+given needs it: an option that transcribes (batch transcription, a language
+lock) without an STTProvider is refused. The channel then does without the
+paths that need the missing one: without an STTProvider, speech it detects
+is transcribed by nobody and reaches no room; without a TTSProvider, a
+message delivered to it plays nothing; and a call that asks it to speak
+without a TTSProvider or a VoiceBackend fails with an error that names the
+missing component.
+<!-- /rfc -->
+
 <!-- rfc: {"id": "RK-12.2-045", "kind": "structural", "applies": "§12.2 VoiceBackend interface, the voice feature: connect(), disconnect() and send_audio(), with their parameters and results. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **VoiceBackend interface:**
 
 ```
 VoiceBackend (interface)
-├── connect(room_id, participant_id, channel_id) → VoiceSession
+├── connect(room_id, participant_id, channel_id, metadata = null) → VoiceSession
 ├── disconnect(session) → void
-├── send_audio(session, audio_chunks) → void
+├── send_audio(session, audio) → void       # audio: bytes, or a stream of AudioChunk
 ```
 <!-- /rfc -->
 <!-- rfc: {"id": "RK-12.2-046", "kind": "behavior", "applies": "§12.2 VoiceBackend interface, the voice feature: what send_audio() receives is decoded 16-bit PCM only; encoding it for the wire is the backend's. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
@@ -10952,11 +10965,11 @@ VoiceBackend (interface)
 │       # Decoded 16-bit PCM only; encoding for the wire is the backend's
 ```
 <!-- /rfc -->
-<!-- rfc: {"id": "RK-12.2-047", "kind": "behavior", "applies": "§12.2 VoiceBackend interface, the voice feature: an exception raised by the audio_chunks send_audio() reads reaches the caller once the backend has stopped playing; the backend may log and absorb errors of its own transport. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+<!-- rfc: {"id": "RK-12.2-047", "kind": "behavior", "applies": "§12.2 VoiceBackend interface, the voice feature: an exception raised by the audio stream send_audio() reads reaches the caller once the backend has stopped playing; the backend may log and absorb errors of its own transport. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
-│       # An exception raised by audio_chunks MUST reach the caller once the
-│       # backend has stopped playing; the backend MAY log and absorb errors of
-│       # its own transport
+│       # An exception raised by the audio stream MUST reach the caller once
+│       # the backend has stopped playing; the backend MAY log and absorb errors
+│       # of its own transport
 ```
 <!-- /rfc -->
 <!-- rfc: {"id": "RK-12.2-048", "kind": "behavior", "applies": "§12.2 VoiceBackend interface, the voice feature: send_audio_sync() sends one chunk without awaiting, from an audio callback thread, for the audio bridge (§12.7); a backend that supports bridging should override the default, which schedules send_audio() on the calling thread's running event loop and drops the chunk with a warning when that thread runs no loop. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
@@ -10969,25 +10982,34 @@ VoiceBackend (interface)
 │       # drops the chunk with a warning when that thread runs no loop
 ```
 <!-- /rfc -->
-<!-- rfc: {"id": "RK-12.2-049", "kind": "structural", "applies": "§12.2 VoiceBackend interface, the voice feature: its other members, cancel_audio(), send_dtmf(), the audio, barge-in and session callbacks, get_session() and list_sessions() (null and an empty list where the backend tracks no sessions), accept(), set_trace_emitter(), name, auto_connect, capabilities() and close() (the note on the events that moved off VoiceBackend, informative, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+<!-- rfc: {"id": "RK-12.2-049", "kind": "structural", "applies": "§12.2 VoiceBackend interface, the voice feature: its other members, cancel_audio() (false when nothing was playing, true from a backend that cannot tell), send_dtmf(), on_dtmf_received() on a backend that declares DTMF_SIGNALING, the audio, barge-in and session callbacks (the audio and disconnect registrations returning an unsubscribe function or null), get_session() and list_sessions() (null and an empty list where the backend tracks no sessions), accept() of a connection to a session the channel created, set_trace_emitter(), name, auto_connect, capabilities and close() (the note on the events that moved off VoiceBackend, informative, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
-├── cancel_audio(session) → void            # Cancel current playback (if supported)
+├── cancel_audio(session) → bool            # Cancel current playback (if supported):
+│                                           # false if none was playing; a backend
+│                                           # that cannot tell says true
 ├── send_dtmf(session, digit, duration_ms) → void  # Send outbound DTMF (RFC 4733)
+├── on_dtmf_received(callback) → void       # Inbound DTMF by signalling, on a backend
+│                                           # that declares DTMF_SIGNALING
 │
 │   # Raw audio callback:
-├── on_audio_received(callback) → void      # Raw inbound audio frames from client
+├── on_audio_received(callback) → unsubscribe | null  # Raw inbound audio frames
+│                                           # from client; unsubscribe is idempotent,
+│                                           # null from a backend that keeps no list
 │
 │   # Barge-in (transport-level detection):
 ├── on_barge_in(callback) → void            # Client audio detected during playback
 │
 │   # Session lifecycle:
 ├── on_session_ready(callback) → void       # Audio path is live, ready for send/receive
-├── on_client_disconnected(callback) → void  # Client or transport disconnected
+├── on_client_disconnected(callback) → unsubscribe | null  # Client or transport
+│                                           # disconnected
 ├── get_session(session_id) → VoiceSession | null  # null if sessions are not tracked
 ├── list_sessions(room_id) → list<VoiceSession>    # Empty if sessions are not tracked
 │
 │   # Server-side session acceptance:
-├── accept(request) → VoiceSession          # Accept an inbound session (SIP/PSTN/WebRTC offer)
+├── accept(session, connection) → void      # Bind a connection that arrived from
+│                                           # outside (SIP/PSTN/WebRTC offer) to a
+│                                           # session the channel created
 │
 │   # Protocol tracing:
 ├── set_trace_emitter(emitter | null) → void  # Set callback for emitting ProtocolTraces
@@ -10996,7 +11018,7 @@ VoiceBackend (interface)
 ├── name: string                            # Backend identifier for attribution and logging
 ├── auto_connect: bool                      # Auto-create session when channel is attached to a room
 │
-├── capabilities() → VoiceCapability        # What the backend supports
+├── capabilities: VoiceCapability           # What the backend supports
 └── close() → void
 ```
 
@@ -11034,6 +11056,14 @@ in-band detection only. Implementations MUST merge both sources into the same
 ON_DTMF hook.
 <!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.2-091", "kind": "behavior", "applies": "§12.2 VoiceCapability, the voice feature: a backend that declares DTMF_SIGNALING provides on_dtmf_received(), calls it with the session and a DTMF event for each digit it receives by signalling, and the channel registers on it; a backend without the capability need not provide it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+A backend that declares `DTMF_SIGNALING` MUST provide `on_dtmf_received`, and
+call the callback registered on it with the session and a DTMF event for each
+digit it receives by signalling; the channel registers on it, which is how
+those digits reach the ON_DTMF hook. A backend without the capability need not
+provide it.
+<!-- /rfc -->
+
 <!-- rfc: {"id": "RK-12.2-006", "kind": "structural", "applies": "§12.2 VoiceSession, the voice feature: the session record's fields. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **VoiceSession:**
 
@@ -11057,23 +11087,34 @@ VoiceSession
 |---|---|
 | CONNECTING | Session is being established (transport handshake, provider init) |
 | ACTIVE | Audio is flowing bidirectionally |
-| PAUSED | Session temporarily suspended (e.g., hold, mute) |
+| PAUSED | Session marked suspended by the integrator (e.g., hold, mute) |
 | ENDED | Session terminated — no further audio |
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.2-053", "kind": "behavior", "applies": "§12.2 VoiceSession transitions, the voice feature: the transitions between session states and what causes each. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+<!-- rfc: {"id": "RK-12.2-053", "kind": "behavior", "applies": "§12.2 VoiceSession transitions, the voice feature: the transitions between session states and what causes each, a session starting ACTIVE when its transport is connected at creation; the framework never sets PAUSED, and while it holds a realtime channel forwards none of the participant's audio and a voice channel goes on. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Transitions:**
 
-- CONNECTING → ACTIVE: Transport connected and provider ready.
+- CONNECTING → ACTIVE: Transport connected and provider ready. A session
+  whose transport is already connected when it is created starts ACTIVE.
 - ACTIVE → PAUSED: Integrator pauses session (e.g., call hold).
 - PAUSED → ACTIVE: Integrator resumes session.
+- ACTIVE → CONNECTING: The provider reconnects while the participant stays
+  (a realtime provider whose connection dropped).
 - ACTIVE → ENDED: Session terminated (user hangup, timeout, integrator call).
 - CONNECTING → ENDED: Connection failed.
 - PAUSED → ENDED: Session terminated while paused.
+
+The framework never sets PAUSED: pausing is the integrator's. While a session
+is PAUSED, a realtime channel forwards none of the participant's audio to its
+provider; a voice channel goes on as in ACTIVE.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.2-054", "kind": "behavior", "applies": "§12.2 VoiceSession transitions, the voice feature: no transition leaves ENDED. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
-Implementations MUST NOT allow transitions from ENDED to any other state. <!-- /rfc --><!-- rfc: {"id": "RK-12.2-055", "kind": "behavior", "applies": "§12.2 VoiceSession transitions, the voice feature: a participant who reconnects gets a new session. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A new
+<!-- rfc: {"id": "RK-12.2-054", "kind": "behavior", "applies": "§12.2 VoiceSession transitions, the voice feature: no transition leaves ENDED but the framework's own renegotiation, back to CONNECTING, of a session whose provider it reconnects with nobody having hung up. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+Implementations MUST NOT allow transitions from ENDED to any other state,
+but one: the framework's own renegotiation (`renegotiate()` on the session),
+which returns a session to CONNECTING when the framework ends its provider's
+connection to build another while nobody hung up, as a provider reconfigured
+for an agent handoff does. <!-- /rfc --><!-- rfc: {"id": "RK-12.2-055", "kind": "behavior", "applies": "§12.2 VoiceSession transitions, the voice feature: a participant who reconnects gets a new session. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A new
 session MUST be created if the participant reconnects.
 <!-- /rfc -->
 
@@ -11790,6 +11831,15 @@ labels as strings (a vendor's integer `0` becomes `"0"`) and MUST report a
 speaker it could not attribute as null, whatever its vendor spells it: the
 framework knows no vendor's spelling.<!-- /rfc --> <!-- rfc: {"id": "RK-12.2.3-014", "kind": "behavior", "applies": "§12.2.3 Labels, the voice feature, what any STT provider must do: no label the vendor did not send, and none carried over from another turn. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A provider MUST NOT invent a label the
 vendor did not send, nor carry one over from another turn.
+<!-- /rfc -->
+
+<!-- rfc: {"id": "RK-12.2.3-052", "kind": "behavior", "applies": "§12.2.3 Labels, the voice feature: a leading word speaker, in any case, dropped from a label with the separators after it or before a digit, a longer word that starts with it and a label nothing would be left of kept whole. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+A leading word `speaker`, in any case, is dropped from a label with the
+separators after it (whitespace, `_`, `:`, `#` or `-`), or before a digit:
+`"Speaker 1"`, `"speaker_1"` and `"speaker1"` all read `"1"`, so a default
+`sender_name` (*Into the room*, step 3) never reads `"Speaker Speaker 1"`. A
+longer word that starts with it is kept whole (`"Speakerphone"`), and so is a
+label nothing would be left of (`"speaker"`, `"speaker_"`).
 <!-- /rfc -->
 
 <!-- rfc: {"id": "RK-12.2.3-015", "kind": "behavior", "applies": "§12.2.3 Segments, the voice feature, what any STT provider reporting supports_diarization true must do: every final result gives the segments its text is made of, in order, each attributed to one speaker, a vendor's turns or runs of words sharing a label, text attributed to nobody a segment with a null speaker. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
@@ -25853,22 +25903,22 @@ accounting. No tariff, credit policy or inferred cost delta is specified here.
 
 ### A.10 Voice Channel
 
-<!-- rfc: {"id": "RK-A.10-002", "kind": "structural", "applies": "§A.10 Voice Channel (media feature voice; Level 3, §26.4): its type VOICE, category TRANSPORT, direction BIDIRECTIONAL and media type AUDIO. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+<!-- rfc: {"id": "RK-A.10-002", "kind": "structural", "applies": "§A.10 Voice Channel (media feature voice; Level 3, §26.4): its type VOICE, category TRANSPORT, direction BIDIRECTIONAL and media types AUDIO and TEXT (a message delivered to it is spoken). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 VoiceChannel
 ├── type: VOICE
 ├── category: TRANSPORT
 ├── direction: BIDIRECTIONAL
-├── media_types: [AUDIO]
+├── media_types: [AUDIO, TEXT]               # a message delivered to it is spoken
 ```
 <!-- /rfc -->
-<!-- rfc: {"id": "RK-A.10-003", "kind": "structural", "applies": "§A.10 Voice Channel (media feature voice; Level 3, §26.4): the channel requires an STT provider, a TTS provider, a voice backend and an audio pipeline configuration. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+<!-- rfc: {"id": "RK-A.10-003", "kind": "structural", "applies": "§A.10 Voice Channel (media feature voice; Level 3, §26.4): the channel takes an STT provider, a TTS provider, a voice backend and an audio pipeline configuration, each optional at construction (§12.2, RK-12.2-090). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
-├── requires:
-│   ├── stt: STTProvider
-│   ├── tts: TTSProvider
-│   ├── backend: VoiceBackend
-│   └── audio_pipeline: AudioPipelineConfig
+├── takes (each optional at construction, Section 12.2):
+│   ├── stt: STTProvider | null
+│   ├── tts: TTSProvider | null
+│   ├── backend: VoiceBackend | null
+│   └── audio_pipeline: AudioPipelineConfig | null
 ```
 <!-- /rfc -->
 <!-- rfc: {"id": "RK-A.10-004", "kind": "structural", "applies": "§A.10 Voice Channel (media feature voice; Level 3, §26.4): streaming, true by default. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
@@ -25952,13 +26002,13 @@ VoiceChannel
 
 ### A.11 Realtime Voice Channel
 
-<!-- rfc: {"id": "RK-A.11-002", "kind": "structural", "applies": "§A.11 Realtime Voice Channel (media feature realtime; Level 3, §26.4): its type REALTIME_VOICE, category TRANSPORT, direction BIDIRECTIONAL and media type AUDIO. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+<!-- rfc: {"id": "RK-A.11-002", "kind": "structural", "applies": "§A.11 Realtime Voice Channel (media feature realtime; Level 3, §26.4): its type REALTIME_VOICE, category TRANSPORT, direction BIDIRECTIONAL and media types AUDIO and TEXT (text delivered to it enters its session). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 RealtimeVoiceChannel
 ├── type: REALTIME_VOICE
 ├── category: TRANSPORT
 ├── direction: BIDIRECTIONAL
-├── media_types: [AUDIO]
+├── media_types: [AUDIO, TEXT]               # text delivered to it enters its session
 ```
 <!-- /rfc -->
 <!-- rfc: {"id": "RK-A.11-003", "kind": "structural", "applies": "§A.11 Realtime Voice Channel (media feature realtime; Level 3, §26.4): the channel requires a RealtimeVoiceProvider and a RealtimeAudioTransport. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->

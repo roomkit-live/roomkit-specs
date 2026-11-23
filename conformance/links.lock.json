@@ -4334,6 +4334,9 @@
       "voice/a-backchannel-leaves-the-reply-playing": "d8873a89a00dc7d77ebf96e66d165ad5b483c384982f6bcdd3232e0648b0c4c3",
       "voice/a-transport-barge-in-cancels-active-playback": "d8873a89a00dc7d77ebf96e66d165ad5b483c384982f6bcdd3232e0648b0c4c3"
     },
+    "RK-12.2.3-037": {
+      "memory/two-voices-labelled-on-one-stream-are-two-speakers": "8e3a89b266419f4902797b35c71b88777eee494b38cfa83491053dd6d74d25f8"
+    },
     "RK-12.2.3-041": {
       "voice/diarization-reports-a-new-speaker": "365c51edf8417c1cafa21e0b59d389c8ace248bcfcb85951812459589b19d003"
     },
@@ -14858,10 +14861,11 @@
       "tasks/a-worker-s-words-in-the-tasks-note-are-quoted-and-its-name-and-ending-carry-none": "514d30ef24e34f61ae0e6df15f1a39a4d427f59c8513c746214e87dbc0881dfe"
     },
     "RK-6.4-359": {
-      "discussion/a-stored-handle-for-no-agent-labels-no-sender": "ab2029265b2321a3851051af2962a115c9f0ac1caa9694d5ad7ac91c9ec4ef58",
-      "discussion/the-dispatch-policy-reads-agents-by-their-handles": "ab2029265b2321a3851051af2962a115c9f0ac1caa9694d5ad7ac91c9ec4ef58",
-      "discussion/the-recent-conversation-holds-what-a-candidate-may-read": "ab2029265b2321a3851051af2962a115c9f0ac1caa9694d5ad7ac91c9ec4ef58",
-      "memory/two-senders-with-no-name-on-one-channel-are-two-speakers": "ab2029265b2321a3851051af2962a115c9f0ac1caa9694d5ad7ac91c9ec4ef58"
+      "discussion/a-stored-handle-for-no-agent-labels-no-sender": "ac697b2eb25799d2e5ac4a55709789cce8a38fe9532da7c6875fd8ac34b87a0d",
+      "discussion/the-dispatch-policy-reads-agents-by-their-handles": "ac697b2eb25799d2e5ac4a55709789cce8a38fe9532da7c6875fd8ac34b87a0d",
+      "discussion/the-recent-conversation-holds-what-a-candidate-may-read": "ac697b2eb25799d2e5ac4a55709789cce8a38fe9532da7c6875fd8ac34b87a0d",
+      "memory/two-senders-with-no-name-on-one-channel-are-two-speakers": "ac697b2eb25799d2e5ac4a55709789cce8a38fe9532da7c6875fd8ac34b87a0d",
+      "memory/two-voices-labelled-on-one-stream-are-two-speakers": "ac697b2eb25799d2e5ac4a55709789cce8a38fe9532da7c6875fd8ac34b87a0d"
     },
     "RK-6.4-360": {
       "discussion/a-stored-handle-for-no-agent-labels-no-sender": "3253a9e25261e81e788f6480e10bf1409349df55a96069c5cb67f7f3331438c6",
@@ -14900,9 +14904,9 @@
       "orchestration/a-mark-s-opening-behind-any-opening-bracket-is-a-copy-the-notes-header-s-included": "fcbc4ac4031caeac5b19de9a45d39171929ae67eef5e6d29f26ac942170bcd77"
     },
     "RK-6.4-377": {
-      "acp/context-people-named": "ef0c8e50c4ed74ba1da6eb8a2ff5d36cc51bd1122fc4c04eb051f54d4a4f11b7",
-      "injection/a-post-shows-its-speaker-s-name-to-an-agent": "ef0c8e50c4ed74ba1da6eb8a2ff5d36cc51bd1122fc4c04eb051f54d4a4f11b7",
-      "memory/a-name-that-reads-like-an-earlier-sender-s-is-labelled-with-the-name-it-is-not": "ef0c8e50c4ed74ba1da6eb8a2ff5d36cc51bd1122fc4c04eb051f54d4a4f11b7"
+      "acp/context-people-named": "3df86487e730e80c6918317d486708bcc2242ba3b8c3422b82cc7e1b7cd9b96e",
+      "injection/a-post-shows-its-speaker-s-name-to-an-agent": "3df86487e730e80c6918317d486708bcc2242ba3b8c3422b82cc7e1b7cd9b96e",
+      "memory/a-name-that-reads-like-an-earlier-sender-s-is-labelled-with-the-name-it-is-not": "3df86487e730e80c6918317d486708bcc2242ba3b8c3422b82cc7e1b7cd9b96e"
     },
     "RK-6.4-378": {
       "memory/a-ranked-label-cuts-the-name-it-disclaims-to-24-characters": "7b7a10bd84b2e939cf3a012f46afb296be6b4310daf78eba550827e054d50b2e"

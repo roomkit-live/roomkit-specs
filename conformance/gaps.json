@@ -1976,11 +1976,6 @@
       "card": "RMK-2023",
       "note": "step: voice.open STT options (S5): a segment with a null speaker; its message carries no speaker_label and sender_name \"Unknown speaker\"."
     },
-    "RK-12.2.3-037": {
-      "class": "writable",
-      "card": "RMK-2023",
-      "note": "process_inbound from one sender with metadata sender_name \"Speaker A\", then \"Speaker B\", an agent bound: the model reads each turn under its sender_name, and from the first turn with the people on the roster; unprobed suspect RMK-2026, one sender's voices may count as one speaker."
-    },
     "RK-12.2.3-038": {
       "class": "step",
       "card": "RMK-2023",
@@ -2040,6 +2035,11 @@
       "class": "step",
       "card": "RMK-2023",
       "note": "step: voice.open pipeline naming option (S5b): no ON_SPEAKER_CHANGE with source stt for the transcript, only the stage's own."
+    },
+    "RK-12.2.3-052": {
+      "class": "step",
+      "card": "RMK-2023",
+      "note": "step: voice.open pipeline naming option (S5b): a stage speaker_id \"speaker_1\"; the message's speaker_label is \"1\" and its sender_name \"Speaker 1\"."
     },
     "RK-12.3-007": {
       "class": "step",
@@ -6239,7 +6239,7 @@
     "RK-6.3-004": {
       "class": "writable",
       "card": "RMK-1955",
-      "note": "Suspect RMK-2021: Python's VoiceChannel and RealtimeVoiceChannel declare media types AUDIO and TEXT, the text AUDIO alone; the bindings expectation after voice.open and of a bound realtime channel shows them, and no scenario asserting the text is written until it is decided (requires voice and realtime)."
+      "note": "The bindings expectation after voice.open and of a bound realtime channel shows the Voice and Realtime Voice rows, AUDIO and TEXT (requires voice and realtime)."
     },
     "RK-6.3-005": {
       "class": "step",
@@ -6249,7 +6249,7 @@
     "RK-6.3-006": {
       "class": "writable",
       "card": "RMK-1955",
-      "note": "The bindings expectation after video.open and conference.open shows the Video and Conference rows; the two audio-video rows need an audio-video channel fixture, and Python's audio-video channels also declare TEXT (suspect RMK-2021) (requires video and conference)."
+      "note": "The bindings expectation after video.open and conference.open shows the Video and Conference rows; the two audio-video rows, AUDIO, VIDEO and TEXT, need an audio-video channel fixture (requires video and conference)."
     },
     "RK-6.3-007": {
       "class": "step",
@@ -7357,7 +7357,7 @@
     "RK-A.10-002": {
       "class": "writable",
       "card": "RMK-1961",
-      "note": "Suspect RMK-2021: Python's VoiceChannel declares media types AUDIO and TEXT, the text AUDIO alone; the bindings expectation after voice.open shows type VOICE, category TRANSPORT, direction BIDIRECTIONAL and the media types (requires voice)."
+      "note": "The bindings expectation after voice.open shows type VOICE, category TRANSPORT, direction BIDIRECTIONAL and media types AUDIO and TEXT (requires voice)."
     },
     "RK-A.10-007": {
       "class": "phase6",
@@ -7402,7 +7402,7 @@
     "RK-A.11-002": {
       "class": "writable",
       "card": "RMK-1961",
-      "note": "Suspect RMK-2021: Python's RealtimeVoiceChannel declares media types AUDIO and TEXT, the text AUDIO alone; the bindings expectation of a bound realtime channel shows type REALTIME_VOICE, category TRANSPORT, direction BIDIRECTIONAL and the media types (requires realtime)."
+      "note": "The bindings expectation of a bound realtime channel shows type REALTIME_VOICE, category TRANSPORT, direction BIDIRECTIONAL and media types AUDIO and TEXT (requires realtime)."
     },
     "RK-A.11-008": {
       "class": "writable",
