@@ -1,14 +1,14 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "delivery/an-observer-s-close-cuts-the-send-of-the-work-that-fired-it",
-  "title": "An ASYNC observer that closes the kit does not spare the work that fired it: that work's send gets the grace, then is cut, failed kit_closed",
+  "title": "An ASYNC observer that closes the kit does not spare the lane whose work fired it: the send that lane runs gets the grace, then is cut, failed kit_closed",
   "rules": [
     "§12.10.4"
   ],
   "requirements": [
     "RK-12.10.4-079"
   ],
-  "notes": "Python: tests/test_kit_close_doors.py::test_a_close_from_a_hook_cuts_another_call_s_send_under_way, here with the observer of One's own BEFORE_BROADCAST. The observer holds at its gate until One's send holds at a gate no step opens; let go, it closes the kit. The close waits for One's send for its grace (100 ms, which no successful work races), then cuts it: One's call reports the send failed, kit_closed, and the observer's close returns null.",
+  "notes": "Python: tests/test_kit_close_doors.py::test_a_close_from_a_hook_cuts_another_call_s_send_under_way. One's ASYNC AFTER_BROADCAST observer, fired by the aftermath of One's delivery in room-1's lane, holds at its gate while the lane sends Two, held at a gate no step opens; let go, the observer closes the kit. The observer is not the work that fired it: the close spares the observer, not the lane, so Two's send gets the grace (100 ms, which no successful work races), then is cut: Two's call reports it failed, kit_closed, retryable, and the observer's close returns null.",
   "setup": {
     "kit": {
       "close_grace_ms": 100
@@ -24,7 +24,7 @@
         "deliver": [
           {
             "when": {
-              "text": "One"
+              "text": "Two"
             },
             "gate": "sending"
           }
@@ -47,7 +47,7 @@
     "hooks": [
       {
         "name": "quit",
-        "trigger": "before_broadcast",
+        "trigger": "after_broadcast",
         "execution": "async",
         "reactions": [
           {
@@ -77,26 +77,38 @@
           "type": "text",
           "body": "One"
         }
-      },
-      "background": true,
-      "as": "one"
-    },
-    {
-      "wait_for": "sending"
+      }
     },
     {
       "wait_for": "go"
     },
     {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "u",
+        "content": {
+          "type": "text",
+          "body": "Two"
+        }
+      },
+      "background": true,
+      "as": "two"
+    },
+    {
+      "wait_for": "sending"
+    },
+    {
       "open": "go"
     },
     {
-      "await": "one",
+      "await": "two",
       "expect": {
         "result": {
           "event": {
             "content": {
-              "body": "One"
+              "body": "Two"
             }
           },
           "cancellation_reason": "kit_closed",
@@ -123,6 +135,11 @@
           "content": {
             "body": "One"
           }
+        },
+        {
+          "content": {
+            "body": "Two"
+          }
         }
       ]
     },
@@ -132,6 +149,11 @@
           {
             "content": {
               "body": "One"
+            }
+          },
+          {
+            "content": {
+              "body": "Two"
             }
           }
         ]

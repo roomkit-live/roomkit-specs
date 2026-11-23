@@ -6,9 +6,10 @@
     "§12.10.4"
   ],
   "requirements": [
+    "RK-12.10.4-066",
     "RK-12.10.4-068"
   ],
-  "notes": "Python: tests/test_kit_close.py::test_a_cut_commit_whose_read_back_fails_reports_nothing_stored_and_says_so. Each call holds once its commit's write answered, at a gate no step opens, past the close's grace (100 ms, which no successful work races); the close cuts it, and its read-back by id fails. Each call reports nothing stored, as a call cut before its commit does (a refusal, or kit_closed raised), though the store holds its event. The warning the framework logs is not observed, nor a read-back that runs out, nor a write that completes after the call's writes unwound.",
+  "notes": "Python: tests/test_kit_close.py::test_a_cut_commit_whose_read_back_fails_reports_nothing_stored_and_says_so. Each call holds once its commit's write answered, at a gate no step opens, past the close's grace (100 ms, which no successful work races); the close cuts it, and it reads its event back by its id: the get_event faults, each taken by one call's read-back, fail it. Each call reports nothing stored, as a call cut before its commit does (a refusal, or kit_closed raised), though the store holds its event. The warning the framework logs is not observed, nor a read-back that runs out, nor a write that completes after the call's writes unwound.",
   "setup": {
     "kit": {
       "store_faults": true,

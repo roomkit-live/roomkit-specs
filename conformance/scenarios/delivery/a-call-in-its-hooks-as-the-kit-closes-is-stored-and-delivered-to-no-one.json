@@ -150,7 +150,14 @@
           },
           "blocked": false,
           "cancellation_reason": "kit_closed",
-          "delivery_results": {}
+          "delivery_results": {
+            "ws": {
+              "$absent": true
+            },
+            "sms": {
+              "$absent": true
+            }
+          }
         }
       }
     },
@@ -165,7 +172,14 @@
           },
           "blocked": false,
           "cancellation_reason": "kit_closed",
-          "delivery_results": {}
+          "delivery_results": {
+            "ws": {
+              "$absent": true
+            },
+            "sms": {
+              "$absent": true
+            }
+          }
         }
       }
     },

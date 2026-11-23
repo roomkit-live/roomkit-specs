@@ -99,7 +99,17 @@
       "expect": {
         "result": {
           "cancellation_reason": "kit_closed",
-          "delivery_results": {}
+          "delivery_results": {
+            "sms": {
+              "$absent": true
+            },
+            "witness": {
+              "$absent": true
+            },
+            "sender": {
+              "$absent": true
+            }
+          }
         }
       }
     },

@@ -4143,7 +4143,8 @@
       "delivery/a-call-waiting-for-its-room-s-lock-as-the-kit-closes-is-cut-at-once": "8d72a8e657242feb2b15788f7c7de218f322e15017d7df639a5a2ea7bb39bbca"
     },
     "RK-12.10.4-066": {
-      "delivery/a-call-the-kit-s-close-cuts-once-its-commit-landed-reports-its-event-stored": "14f2a5453bc0464f46a3639f67f0dc6b8658da90a1d0024d90d2e2fc78c5e9a5"
+      "delivery/a-call-the-kit-s-close-cuts-once-its-commit-landed-reports-its-event-stored": "14f2a5453bc0464f46a3639f67f0dc6b8658da90a1d0024d90d2e2fc78c5e9a5",
+      "delivery/a-cut-commit-whose-read-back-fails-is-reported-not-stored": "14f2a5453bc0464f46a3639f67f0dc6b8658da90a1d0024d90d2e2fc78c5e9a5"
     },
     "RK-12.10.4-067": {
       "delivery/a-call-the-kit-s-close-cuts-once-its-commit-landed-reports-its-event-stored": "c62a8bbb3a7fc407d267a0964bf9fd9f0a0d8e7a5e6e943f9630d63c7379c1bd"

@@ -9,7 +9,7 @@
   "requirements": [
     "RK-12.10.4-046"
   ],
-  "notes": "Python: tests/test_kit_close.py::test_a_running_tool_call_is_cut_at_once_its_end_row_stored. The tool holds at a gate no step opens before the close returns; the close's grace (30 s) is longer than a call may take (10 s), so the close returns only because the turn is cut at once.",
+  "notes": "Python: tests/test_kit_close.py::test_a_running_tool_call_is_cut_at_once_its_end_row_stored. The tool holds at a gate no step opens before the close returns; the close's grace (30 s) is longer than a call may take (10 s), so the close returns only because the turn is cut at once. Looking. is the text of a round that ended before its tool call: no cancelled mark is asserted on it, and text cut while it streams is not observed here.",
   "setup": {
     "kit": {
       "close_grace_ms": 30000
