@@ -6383,11 +6383,13 @@
       "section": "12.3",
       "title": "Audio Processing Pipeline",
       "review": "normative",
-      "requirements": 6,
+      "requirements": 2,
       "mapping": {
-        "unmapped": 6
+        "unmapped": 2
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "step": 2
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -6395,29 +6397,20 @@
       "section": "12.3.1",
       "title": "Pipeline Configuration",
       "review": "normative",
-      "requirements": 4,
+      "requirements": 22,
       "mapping": {
-        "unmapped": 4
+        "unmapped": 22
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "step": 5,
+        "writable": 2
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
     {
       "section": "12.3.2",
       "title": "Denoiser Provider",
-      "review": "normative",
-      "requirements": 1,
-      "mapping": {
-        "unmapped": 1
-      },
-      "decided_gaps": {},
-      "unannotated_keyword_lines": [],
-      "candidate_scenarios": []
-    },
-    {
-      "section": "12.3.3",
-      "title": "Resampler",
       "review": "normative",
       "requirements": 2,
       "mapping": {
@@ -6428,14 +6421,31 @@
       "candidate_scenarios": []
     },
     {
+      "section": "12.3.3",
+      "title": "Resampler",
+      "review": "normative",
+      "requirements": 8,
+      "mapping": {
+        "unmapped": 8
+      },
+      "decided_gaps": {
+        "phase6": 1,
+        "step": 5
+      },
+      "unannotated_keyword_lines": [],
+      "candidate_scenarios": []
+    },
+    {
       "section": "12.3.4",
       "title": "Echo Canceller (AEC)",
       "review": "normative",
-      "requirements": 4,
+      "requirements": 16,
       "mapping": {
-        "unmapped": 4
+        "unmapped": 16
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "step": 10
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -6443,11 +6453,13 @@
       "section": "12.3.5",
       "title": "Automatic Gain Control (AGC)",
       "review": "normative",
-      "requirements": 1,
+      "requirements": 7,
       "mapping": {
-        "unmapped": 1
+        "unmapped": 7
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "step": 3
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -6455,17 +6467,33 @@
       "section": "12.3.6",
       "title": "DTMF Detector",
       "review": "normative",
-      "requirements": 3,
+      "requirements": 10,
       "mapping": {
-        "unmapped": 3
+        "unmapped": 10
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "step": 5
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
     {
       "section": "12.3.7",
       "title": "Audio Recorder",
+      "review": "normative",
+      "requirements": 19,
+      "mapping": {
+        "unmapped": 19
+      },
+      "decided_gaps": {
+        "step": 5
+      },
+      "unannotated_keyword_lines": [],
+      "candidate_scenarios": []
+    },
+    {
+      "section": "12.3.8",
+      "title": "VAD Provider",
       "review": "normative",
       "requirements": 5,
       "mapping": {
@@ -6476,26 +6504,16 @@
       "candidate_scenarios": []
     },
     {
-      "section": "12.3.8",
-      "title": "VAD Provider",
-      "review": "normative",
-      "requirements": 4,
-      "mapping": {
-        "unmapped": 4
-      },
-      "decided_gaps": {},
-      "unannotated_keyword_lines": [],
-      "candidate_scenarios": []
-    },
-    {
       "section": "12.3.9",
       "title": "Diarization Provider",
       "review": "normative",
-      "requirements": 2,
+      "requirements": 7,
       "mapping": {
-        "unmapped": 2
+        "unmapped": 7
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "step": 2
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -6503,11 +6521,13 @@
       "section": "12.3.10",
       "title": "Audio Post-Processor",
       "review": "normative",
-      "requirements": 1,
+      "requirements": 2,
       "mapping": {
-        "unmapped": 1
+        "unmapped": 2
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "step": 1
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -6515,9 +6535,9 @@
       "section": "12.3.11",
       "title": "Audio Frame",
       "review": "normative",
-      "requirements": 2,
+      "requirements": 6,
       "mapping": {
-        "unmapped": 2
+        "unmapped": 6
       },
       "decided_gaps": {},
       "unannotated_keyword_lines": [],
@@ -28646,67 +28666,202 @@
       "links": []
     },
     {
-      "id": "RK-12.3-001",
+      "id": "RK-12.3-007",
       "section": "12.3",
       "mapping": "unmapped",
-      "links": []
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2034",
+        "note": "step: voice stage trace (S3) and the session recorder (S8): the stages a frame goes through in order, the recorder handed the resampled frame unchanged, the DTMF detector beside the chain."
+      }
     },
     {
-      "id": "RK-12.3-002",
+      "id": "RK-12.3-008",
       "section": "12.3",
       "mapping": "unmapped",
-      "links": []
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2034",
+        "note": "step: voice stage trace (S3) and voice.open capabilities (S2): the outbound stages in order, the AEC reference fed between the recorder and the resampler, none with a backend that feeds it."
+      }
     },
     {
-      "id": "RK-12.3-003",
-      "section": "12.3",
-      "mapping": "unmapped",
-      "links": []
-    },
-    {
-      "id": "RK-12.3-004",
-      "section": "12.3",
-      "mapping": "unmapped",
-      "links": []
-    },
-    {
-      "id": "RK-12.3-005",
-      "section": "12.3",
-      "mapping": "unmapped",
-      "links": []
-    },
-    {
-      "id": "RK-12.3-006",
-      "section": "12.3",
-      "mapping": "unmapped",
-      "links": []
-    },
-    {
-      "id": "RK-12.3.1-001",
+      "id": "RK-12.3.1-005",
       "section": "12.3.1",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.3.1-002",
+      "id": "RK-12.3.1-006",
       "section": "12.3.1",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.3.1-003",
+      "id": "RK-12.3.1-007",
       "section": "12.3.1",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.3.1-004",
+      "id": "RK-12.3.1-008",
+      "section": "12.3.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2034",
+        "note": "step: voice stage trace (S3): a scripted VAD reporting the VADConfig its configure() received when the pipeline is built; no voice.open key sets vad_config."
+      }
+    },
+    {
+      "id": "RK-12.3.1-009",
       "section": "12.3.1",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.3.2-001",
+      "id": "RK-12.3.1-010",
+      "section": "12.3.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.3.1-011",
+      "section": "12.3.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.3.1-012",
+      "section": "12.3.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-2034",
+        "note": "Two voice.open in one room, each channel with its own scripted stages (a vad script on one, a tones script on the other): each channel's hooks follow its own pipeline; a realtime channel's pipeline needs a realtime step."
+      }
+    },
+    {
+      "id": "RK-12.3.1-013",
+      "section": "12.3.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.3.1-014",
+      "section": "12.3.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2034",
+        "note": "step: voice.open pipeline contract (S19) and voice stage trace (S3): a scripted stage declaring a format the internal one is not; the start fails or a resampler matches it (Python validates nothing, suspect RMK-2028)."
+      }
+    },
+    {
+      "id": "RK-12.3.1-015",
+      "section": "12.3.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.3.1-016",
+      "section": "12.3.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-2034",
+        "note": "voice.open with two participants and a vad script, voice.feed interleaving their frames: each participant's speech edges follow the script from its start, once the README says each participant walks the vad, speakers or tones script from its start (the runners' mocks already do)."
+      }
+    },
+    {
+      "id": "RK-12.3.1-017",
+      "section": "12.3.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.3.1-018",
+      "section": "12.3.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.3.1-019",
+      "section": "12.3.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.3.1-020",
+      "section": "12.3.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.3.1-021",
+      "section": "12.3.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.3.1-022",
+      "section": "12.3.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.3.1-023",
+      "section": "12.3.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2034",
+        "note": "step: voice.end (S4) and voice stage trace (S3): a stream that ends, and the reset(stream) each scripted stage received."
+      }
+    },
+    {
+      "id": "RK-12.3.1-024",
+      "section": "12.3.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2034",
+        "note": "step: voice.end (S4) and voice stage trace (S3): a participant who returns on the same key walks the vad script from its start, each scripted stage reset before its first frame."
+      }
+    },
+    {
+      "id": "RK-12.3.1-025",
+      "section": "12.3.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.3.1-026",
+      "section": "12.3.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2034",
+        "note": "step: voice.end (S4) and the voice stage trace (S3) extended to the turn detector's reset() calls, which the audit's catalogue does not hold: the session's end calls none; the detectors' reset() taking no key is pinned in Python's public API snapshot."
+      }
+    },
+    {
+      "id": "RK-12.3.2-002",
+      "section": "12.3.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.3.2-003",
       "section": "12.3.2",
       "mapping": "unmapped",
       "links": []
@@ -28718,7 +28873,73 @@
       "links": []
     },
     {
-      "id": "RK-12.3.3-002",
+      "id": "RK-12.3.3-003",
+      "section": "12.3.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2034",
+        "note": "step: voice.open pipeline contract (S19), voice.feed at another rate (S14) and voice stage trace (S3): the frame a scripted stage receives is in the internal format."
+      }
+    },
+    {
+      "id": "RK-12.3.3-004",
+      "section": "12.3.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2034",
+        "note": "step: voice.open pipeline contract (S19) and voice stage trace (S3): a transport outbound format other than the internal one; voice.read's audio is in the transport's format."
+      }
+    },
+    {
+      "id": "RK-12.3.3-005",
+      "section": "12.3.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2034",
+        "note": "step: voice.open pipeline contract (S19), voice.feed at another rate (S14) and voice stage trace (S3): the resampled frame a scripted stage receives keeps its timestamp_ms."
+      }
+    },
+    {
+      "id": "RK-12.3.3-006",
+      "section": "12.3.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2034",
+        "note": "step: voice.open pipeline contract (S19), voice.feed at another rate (S14) and voice stage trace (S3): the resampled frame a scripted stage receives carries original_sample_rate and original_channels."
+      }
+    },
+    {
+      "id": "RK-12.3.3-007",
+      "section": "12.3.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-2034",
+        "note": "measurement: resampling quality, the artifacts a resampler leaves for VAD and STT (Python's default is linear interpolation, suspect RMK-2029)."
+      }
+    },
+    {
+      "id": "RK-12.3.3-008",
+      "section": "12.3.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2034",
+        "note": "step: voice.feed at another rate (S14) and voice stage trace (S3): with no resampler, the frame each scripted stage receives is the transport's, unchanged."
+      }
+    },
+    {
+      "id": "RK-12.3.3-009",
       "section": "12.3.3",
       "mapping": "unmapped",
       "links": []
@@ -28730,55 +28951,349 @@
       "links": []
     },
     {
-      "id": "RK-12.3.4-002",
+      "id": "RK-12.3.4-005",
       "section": "12.3.4",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.3.4-003",
+      "id": "RK-12.3.4-006",
+      "section": "12.3.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2034",
+        "note": "step: voice stage trace (S3) with the AEC reference read: a scripted AEC reporting the stream key of each process() and feed_reference() call."
+      }
+    },
+    {
+      "id": "RK-12.3.4-007",
+      "section": "12.3.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2034",
+        "note": "step: voice stage trace (S3) with the AEC reference read: the outbound audio reaches feed_reference() with the key of the session it is played to."
+      }
+    },
+    {
+      "id": "RK-12.3.4-008",
       "section": "12.3.4",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.3.4-004",
+      "id": "RK-12.3.4-009",
+      "section": "12.3.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2034",
+        "note": "step: voice.open capabilities (S2) and voice stage trace (S3): a backend that feeds the reference itself; the pipeline's outbound path calls no feed_reference()."
+      }
+    },
+    {
+      "id": "RK-12.3.4-010",
+      "section": "12.3.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2034",
+        "note": "step: voice stage trace (S3) with the AEC reference read: feed_reference() is called after the postprocessors and the recorder tap, before the outbound resampler."
+      }
+    },
+    {
+      "id": "RK-12.3.4-011",
+      "section": "12.3.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2034",
+        "note": "step: voice.open capabilities (S2) and voice stage trace (S3): with transport-level feeding, the scripted AEC is fed each played block once."
+      }
+    },
+    {
+      "id": "RK-12.3.4-012",
       "section": "12.3.4",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.3.5-001",
+      "id": "RK-12.3.4-013",
+      "section": "12.3.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.3.4-014",
+      "section": "12.3.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2034",
+        "note": "step: voice.open capabilities (S2), played blocks marked reference_continues, and voice stage trace (S3): the scripted AEC stays active after playback_ended."
+      }
+    },
+    {
+      "id": "RK-12.3.4-015",
+      "section": "12.3.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2034",
+        "note": "step: voice.open capabilities (S2), played blocks that stop between responses, and voice stage trace (S3): the scripted AEC is bypassed once playback has ended, never reset."
+      }
+    },
+    {
+      "id": "RK-12.3.4-016",
+      "section": "12.3.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2034",
+        "note": "step: voice.feed at another rate (S14) and voice stage trace (S3) with the AEC reference read: the reference reaches the scripted AEC at the captured frames' rate and size."
+      }
+    },
+    {
+      "id": "RK-12.3.4-017",
+      "section": "12.3.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2034",
+        "note": "step: voice.open capabilities (S2) and voice stage trace (S3): a backend declaring NATIVE_AEC with an AEC configured; the scripted AEC sees no frame."
+      }
+    },
+    {
+      "id": "RK-12.3.4-018",
+      "section": "12.3.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2034",
+        "note": "step: voice stage trace (S3): a scripted AEC and denoiser, the AEC handed each frame first."
+      }
+    },
+    {
+      "id": "RK-12.3.4-019",
+      "section": "12.3.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.3.5-002",
       "section": "12.3.5",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.3.6-001",
+      "id": "RK-12.3.5-003",
+      "section": "12.3.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.3.5-004",
+      "section": "12.3.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.3.5-005",
+      "section": "12.3.5",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2034",
+        "note": "step: voice stage trace (S3): a scripted AGC configured on voice.open processes each inbound frame."
+      }
+    },
+    {
+      "id": "RK-12.3.5-006",
+      "section": "12.3.5",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2034",
+        "note": "step: voice stage trace (S3): a scripted AEC, AGC and denoiser, the AGC handed each frame after the AEC and before the denoiser."
+      }
+    },
+    {
+      "id": "RK-12.3.5-007",
+      "section": "12.3.5",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2034",
+        "note": "step: voice.open capabilities (S2) and voice stage trace (S3): a backend declaring NATIVE_AGC with an AGC configured; the scripted AGC sees no frame."
+      }
+    },
+    {
+      "id": "RK-12.3.5-008",
+      "section": "12.3.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.3.6-004",
       "section": "12.3.6",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.3.6-002",
+      "id": "RK-12.3.6-005",
       "section": "12.3.6",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.3.6-003",
+      "id": "RK-12.3.6-006",
+      "section": "12.3.6",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2034",
+        "note": "step: voice stage trace (S3): the frame the DTMF detector receives is the resampled one, before the scripted AEC, AGC and denoiser."
+      }
+    },
+    {
+      "id": "RK-12.3.6-007",
       "section": "12.3.6",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.3.7-001",
+      "id": "RK-12.3.6-008",
+      "section": "12.3.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.3.6-009",
+      "section": "12.3.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.3.6-010",
+      "section": "12.3.6",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2034",
+        "note": "step: voice.send_dtmf (S9): a digit outside 0 to 9, *, # and A to D is refused, the valid ones sent."
+      }
+    },
+    {
+      "id": "RK-12.3.6-011",
+      "section": "12.3.6",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2034",
+        "note": "step: voice.send_dtmf (S9): a digit sent with no duration reaches the backend with 160 ms."
+      }
+    },
+    {
+      "id": "RK-12.3.6-012",
+      "section": "12.3.6",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2034",
+        "note": "step: voice.send_dtmf (S9) and voice.open capabilities (S2): a backend without DTMF_SIGNALING refuses the digit (NotImplementedError in Python, an error class for Rust)."
+      }
+    },
+    {
+      "id": "RK-12.3.6-013",
+      "section": "12.3.6",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2034",
+        "note": "step: voice.send_dtmf (S9): a duration outside 1 to 10000 ms, an invalid digit and an ended session are refused by the channel."
+      }
+    },
+    {
+      "id": "RK-12.3.7-006",
       "section": "12.3.7",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.3.7-002",
+      "id": "RK-12.3.7-007",
+      "section": "12.3.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.3.7-008",
+      "section": "12.3.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.3.7-009",
+      "section": "12.3.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.3.7-010",
+      "section": "12.3.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.3.7-011",
+      "section": "12.3.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.3.7-012",
+      "section": "12.3.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.3.7-013",
+      "section": "12.3.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.3.7-014",
+      "section": "12.3.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.3.7-015",
+      "section": "12.3.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.3.7-016",
       "section": "12.3.7",
       "mapping": "unmapped",
       "links": []
@@ -28787,19 +29302,74 @@
       "id": "RK-12.3.7-003",
       "section": "12.3.7",
       "mapping": "unmapped",
-      "links": []
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2034",
+        "note": "step: the voice session recorder (S8): with INBOUND_ONLY or OUTBOUND_ONLY, voice.read shows the recorder handed one direction only."
+      }
     },
     {
-      "id": "RK-12.3.7-004",
+      "id": "RK-12.3.7-017",
       "section": "12.3.7",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.3.7-005",
+      "id": "RK-12.3.7-018",
       "section": "12.3.7",
       "mapping": "unmapped",
       "links": []
+    },
+    {
+      "id": "RK-12.3.7-019",
+      "section": "12.3.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2034",
+        "note": "step: the voice session recorder (S8) and voice stage trace (S3): the recorder is handed the resampled inbound frame before the AEC and the outbound frame after the postprocessors."
+      }
+    },
+    {
+      "id": "RK-12.3.7-020",
+      "section": "12.3.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.3.7-021",
+      "section": "12.3.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2034",
+        "note": "step: the voice session recorder (S8) and voice stage trace (S3): record_inbound between the inbound resampler and the AEC, record_outbound between the postprocessors and the outbound resampler."
+      }
+    },
+    {
+      "id": "RK-12.3.7-022",
+      "section": "12.3.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2034",
+        "note": "step: the voice session recorder (S8): ON_RECORDING_STARTED fires when the session's recording starts."
+      }
+    },
+    {
+      "id": "RK-12.3.7-023",
+      "section": "12.3.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2034",
+        "note": "step: the voice session recorder (S8) and voice.end (S4): ON_RECORDING_STOPPED fires with the RecordingResult when the session ends."
+      }
     },
     {
       "id": "RK-12.3.8-001",
@@ -28808,40 +29378,97 @@
       "links": []
     },
     {
-      "id": "RK-12.3.8-002",
+      "id": "RK-12.3.8-005",
       "section": "12.3.8",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.3.8-003",
+      "id": "RK-12.3.8-006",
       "section": "12.3.8",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.3.8-004",
+      "id": "RK-12.3.8-007",
       "section": "12.3.8",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.3.9-001",
+      "id": "RK-12.3.8-008",
+      "section": "12.3.8",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.3.9-003",
       "section": "12.3.9",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.3.9-002",
+      "id": "RK-12.3.9-004",
       "section": "12.3.9",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.3.10-001",
+      "id": "RK-12.3.9-005",
+      "section": "12.3.9",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.3.9-006",
+      "section": "12.3.9",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2034",
+        "note": "vendor wire: leaves the RFC in P6-V (D2)"
+      }
+    },
+    {
+      "id": "RK-12.3.9-007",
+      "section": "12.3.9",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2034",
+        "note": "step: voice.open naming the transcript's speaker from the diarization stage (S5b): an unattributed result heard the longest gives the transcript the sender_name Unknown speaker."
+      }
+    },
+    {
+      "id": "RK-12.3.9-008",
+      "section": "12.3.9",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.3.9-009",
+      "section": "12.3.9",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.3.10-002",
       "section": "12.3.10",
       "mapping": "unmapped",
       "links": []
+    },
+    {
+      "id": "RK-12.3.10-003",
+      "section": "12.3.10",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2034",
+        "note": "step: voice stage trace (S3): two scripted postprocessors, the second handed the first one's output, in list order."
+      }
     },
     {
       "id": "RK-12.3.11-001",
@@ -28850,7 +29477,31 @@
       "links": []
     },
     {
-      "id": "RK-12.3.11-002",
+      "id": "RK-12.3.11-003",
+      "section": "12.3.11",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.3.11-004",
+      "section": "12.3.11",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.3.11-005",
+      "section": "12.3.11",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.3.11-006",
+      "section": "12.3.11",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.3.11-007",
       "section": "12.3.11",
       "mapping": "unmapped",
       "links": []
