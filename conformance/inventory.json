@@ -585,15 +585,15 @@
     },
     {
       "section": "12.1",
-      "sha256": "f271fc9811aee8a5d0f0b5e6ee440a87d166780cec14049506b981b435bf81aa",
+      "sha256": "d43283c1a3555cca2414ea0aac4baa55e325ef1f8bb70cf847cd59ec0c1f5293",
       "classification": "normative",
-      "review": "Source inventory: Architecture Overview. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Architecture Overview, one unit (RMK-2014): RK-12.1-003, the four media architectures may coexist in one room, which an implementation allows (must). The architecture diagrams, the choice table and its latency figures are informative and folded into it. Every unit carries its level."
     },
     {
       "section": "12.2",
-      "sha256": "268fe6aee47e50abd0519036b16a6c2a23a7dd68fe189b0997b66e29bdd56783",
+      "sha256": "5728390a12168f7793da14267a7e88bd4437c08a61a3c5e9e20a9c2eccd644e6",
       "classification": "normative",
-      "review": "Source inventory: Voice Channel (STT/TTS Pipeline). Its audio processing flow (formerly RK-12.2-016) is split to one obligation per unit (RMK-2006), each with its level: RK-12.2-017 to 025, 027 to 031, 036 to 041 and 043, the voice feature's inbound flow, standard path, streamed-path voice steps, playback and outbound path; RK-12.2-026 and 032 to 035, steps 8s to 11s, 13s and 14s, the framework's streaming delivery of an AI turn, counted with the core; RK-12.2-042, the closing paragraph. The fenced flow is cut at step and line boundaries by closing and reopening its fence; the 13s Interrupted and Failed paragraphs stay one unit each, their sentences ending mid-line. Step 16s, Planned, is folded into 15s. The other units of §12.2 keep their complete source blocks, a contextual inventory not yet split."
+      "review": "Source inventory: Voice Channel (STT/TTS Pipeline), split to one obligation per unit, each with its level. RK-12.2-044 to 089, RK-12.2-006 and 007 (RMK-2014): the required components, the VoiceBackend interface, VoiceCapability, VoiceSession, its states and transitions, the STTProvider interface, kept streams, audio between streams, the TTSProvider interface, encoding, voices and dialogue. The VoiceBackend block is cut at line boundaries by closing and reopening its fence; its send_audio_sync comment and its exception rule stay one unit each, their sentences ending mid-line. Interfaces, records and enumerations are structural; what any provider or backend must do on its own wire is a unit of its own; the delivery-cue clause binds the application and is non_testable. The purpose sentence and the note on events moved off VoiceBackend are folded into neighbouring units. Its audio processing flow (formerly RK-12.2-016) is split by RMK-2006: RK-12.2-017 to 025, 027 to 031, 036 to 041 and 043, the voice feature's inbound flow, standard path, streamed-path voice steps, playback and outbound path; RK-12.2-026 and 032 to 035, steps 8s to 11s, 13s and 14s, the framework's streaming delivery of an AI turn, counted with the core; RK-12.2-042, the closing paragraph. The fenced flow is cut at step and line boundaries; the 13s Interrupted and Failed paragraphs stay one unit each, their sentences ending mid-line. Step 16s, Planned, is folded into 15s. Every unit carries its level."
     },
     {
       "section": "12.2.1",

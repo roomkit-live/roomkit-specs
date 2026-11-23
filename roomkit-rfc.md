@@ -10842,7 +10842,7 @@ identity names.
 
 ### 12.1 Architecture Overview
 
-<!-- rfc: {"id": "RK-12.1-001", "kind": "behavior", "applies": "§12.1 Architecture Overview; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.1-003", "kind": "behavior", "applies": "§12.1 Architecture overview, the voice, realtime and conference features: channels of the four media architectures (the STT/TTS voice channel, the speech-to-speech realtime channel, the audio bridge and the SFU conference) may be attached to one room, which the implementation allows; the architecture diagrams, the choice table and its latency figures are informative, folded in. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 RoomKit supports four real-time media architectures:
 
 ```
@@ -10868,9 +10868,7 @@ Architecture 2: Speech-to-Speech (RealtimeVoiceChannel)
                                                │ (events)│
                                                └─────────┘
 ```
-<!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.1-002", "kind": "behavior", "applies": "§12.1 Architecture Overview; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Choosing between architectures:**
 
 | Criterion | VoiceChannel (STT/TTS) | RealtimeVoiceChannel (Speech-to-Speech) | VoiceChannel (Bridge) | ConferenceChannel (SFU) |
@@ -10927,12 +10925,10 @@ Architecture 4: SFU Conference (ConferenceChannel — Section 12.10)
 
 ### 12.2 Voice Channel (STT/TTS Pipeline)
 
-<!-- rfc: {"id": "RK-12.2-001", "kind": "behavior", "applies": "§12.2 Voice Channel (STT/TTS Pipeline); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.2-044", "kind": "structural", "applies": "§12.2 Voice Channel, the voice feature: its three required components, a VoiceBackend, an STTProvider and a TTSProvider (the sentence on the channel's purpose, informative, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The Voice Channel processes audio through a pipeline of STT and TTS providers,
 converting speech to text events and text responses back to speech.
-<!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.2-002", "kind": "behavior", "applies": "§12.2 Voice Channel (STT/TTS Pipeline); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Required components:**
 
 | Component | Interface | Purpose |
@@ -10942,7 +10938,7 @@ converting speech to text events and text responses back to speech.
 | TTSProvider | See below | Text-to-speech synthesis |
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.2-003", "kind": "behavior", "applies": "§12.2 Voice Channel (STT/TTS Pipeline); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.2-045", "kind": "structural", "applies": "§12.2 VoiceBackend interface, the voice feature: connect(), disconnect() and send_audio(), with their parameters and results. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **VoiceBackend interface:**
 
 ```
@@ -10950,16 +10946,32 @@ VoiceBackend (interface)
 ├── connect(room_id, participant_id, channel_id) → VoiceSession
 ├── disconnect(session) → void
 ├── send_audio(session, audio_chunks) → void
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.2-046", "kind": "behavior", "applies": "§12.2 VoiceBackend interface, the voice feature: what send_audio() receives is decoded 16-bit PCM only; encoding it for the wire is the backend's. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │       # Decoded 16-bit PCM only; encoding for the wire is the backend's
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.2-047", "kind": "behavior", "applies": "§12.2 VoiceBackend interface, the voice feature: an exception raised by the audio_chunks send_audio() reads reaches the caller once the backend has stopped playing; the backend may log and absorb errors of its own transport. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 │       # An exception raised by audio_chunks MUST reach the caller once the
 │       # backend has stopped playing; the backend MAY log and absorb errors of
 │       # its own transport
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.2-048", "kind": "behavior", "applies": "§12.2 VoiceBackend interface, the voice feature: send_audio_sync() sends one chunk without awaiting, from an audio callback thread, for the audio bridge (§12.7); a backend that supports bridging should override the default, which schedules send_audio() on the calling thread's running event loop and drops the chunk with a warning when that thread runs no loop. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
+```
 ├── send_audio_sync(session, audio_chunk) → void
 │       # Send one chunk without awaiting, from an audio callback thread; the
 │       # audio bridge sends through it (Section 12.7). Backends that support
 │       # bridging SHOULD override the default, which schedules send_audio()
 │       # on the calling thread's running event loop (adding latency) and
 │       # drops the chunk with a warning when that thread runs no loop
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.2-049", "kind": "structural", "applies": "§12.2 VoiceBackend interface, the voice feature: its other members, cancel_audio(), send_dtmf(), the audio, barge-in and session callbacks, get_session() and list_sessions() (null and an empty list where the backend tracks no sessions), accept(), set_trace_emitter(), name, auto_connect, capabilities() and close() (the note on the events that moved off VoiceBackend, informative, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── cancel_audio(session) → void            # Cancel current playback (if supported)
 ├── send_dtmf(session, digit, duration_ms) → void  # Send outbound DTMF (RFC 4733)
 │
@@ -10988,9 +11000,7 @@ VoiceBackend (interface)
 ├── capabilities() → VoiceCapability        # What the backend supports
 └── close() → void
 ```
-<!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.2-004", "kind": "behavior", "applies": "§12.2 Voice Channel (STT/TTS Pipeline); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Note:** `on_speech_start`, `on_speech_end`, `on_vad_silence`, and
 `on_vad_audio_level` are removed from VoiceBackend. These events are now emitted
 by the audio pipeline's VAD provider (Section 12.3). `on_partial_transcription`
@@ -10998,7 +11008,7 @@ is emitted by the STT provider. `on_barge_in` remains on VoiceBackend as it is a
 transport-level concern (detecting client audio during active playback).
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.2-005", "kind": "behavior", "applies": "§12.2 Voice Channel (STT/TTS Pipeline); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.2-050", "kind": "structural", "applies": "§12.2 VoiceCapability, the voice feature: the backend's capability flags and what each declares. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **VoiceCapability** flags:
 
 | Flag | Description |
@@ -11010,18 +11020,22 @@ transport-level concern (detecting client audio during active playback).
 | DTMF_INBAND | Backend receives in-band DTMF tones in audio stream |
 | DTMF_SIGNALING | Backend sends and receives DTMF via signaling (RFC 4733) |
 | NATIVE_BRIDGE | Backend can bridge audio at the transport level (RTP relay) |
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.2-051", "kind": "behavior", "applies": "§12.2 VoiceCapability, the voice feature: a backend that declares NATIVE_AEC or NATIVE_AGC has the pipeline skip the corresponding stage, even with a provider configured in AudioPipelineConfig. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 When a VoiceBackend declares `NATIVE_AEC` or `NATIVE_AGC`, the pipeline MUST
 skip the corresponding stage automatically, even if a provider is configured in
 `AudioPipelineConfig`. This prevents double processing.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.2-052", "kind": "behavior", "applies": "§12.2 VoiceCapability, the voice feature: with a backend that declares DTMF_SIGNALING, the digits it signals and the digits the pipeline's in-band DTMFDetector finds fire the same ON_DTMF hook. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 When a VoiceBackend declares `DTMF_SIGNALING`, DTMF events arrive via the
 signaling layer (not the audio stream). The pipeline's DTMFDetector handles
 in-band detection only. Implementations MUST merge both sources into the same
 ON_DTMF hook.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.2-006", "kind": "behavior", "applies": "§12.2 Voice Channel (STT/TTS Pipeline); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.2-006", "kind": "structural", "applies": "§12.2 VoiceSession, the voice feature: the session record's fields. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **VoiceSession:**
 
 ```
@@ -11037,7 +11051,7 @@ VoiceSession
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.2-007", "kind": "behavior", "applies": "§12.2 Voice Channel (STT/TTS Pipeline); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.2-007", "kind": "structural", "applies": "§12.2 VoiceSessionState, the voice feature: the session states CONNECTING, ACTIVE, PAUSED and ENDED. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **VoiceSessionState** enumeration:
 
 | Value | Meaning |
@@ -11048,7 +11062,7 @@ VoiceSession
 | ENDED | Session terminated — no further audio |
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.2-008", "kind": "behavior", "applies": "§12.2 Voice Channel (STT/TTS Pipeline); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.2-053", "kind": "behavior", "applies": "§12.2 VoiceSession transitions, the voice feature: the transitions between session states and what causes each. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Transitions:**
 
 - CONNECTING → ACTIVE: Transport connected and provider ready.
@@ -11057,12 +11071,14 @@ VoiceSession
 - ACTIVE → ENDED: Session terminated (user hangup, timeout, integrator call).
 - CONNECTING → ENDED: Connection failed.
 - PAUSED → ENDED: Session terminated while paused.
+<!-- /rfc -->
 
-Implementations MUST NOT allow transitions from ENDED to any other state. A new
+<!-- rfc: {"id": "RK-12.2-054", "kind": "behavior", "applies": "§12.2 VoiceSession transitions, the voice feature: no transition leaves ENDED. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+Implementations MUST NOT allow transitions from ENDED to any other state. <!-- /rfc --><!-- rfc: {"id": "RK-12.2-055", "kind": "behavior", "applies": "§12.2 VoiceSession transitions, the voice feature: a participant who reconnects gets a new session. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A new
 session MUST be created if the participant reconnects.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.2-009", "kind": "behavior", "applies": "§12.2 Voice Channel (STT/TTS Pipeline); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.2-056", "kind": "structural", "applies": "§12.2 STTProvider interface, the voice feature: the STTProvider members, TranscriptionResult and SpeakerSegment, with their defaults. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **STTProvider interface:**
 
 ```
@@ -11091,58 +11107,62 @@ SpeakerSegment
 ├── start_ms: int | null                    # Offsets from the start of the stream
 └── end_ms: int | null
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.2-057", "kind": "behavior", "applies": "§12.2 STTProvider interface, the voice feature, a provider's contract: a language passed on a call overrides the provider's configured language for that call only. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 `language` on a call overrides the provider's configured language for that
-call only. A provider that cannot honour it MUST report
+call only. <!-- /rfc --><!-- rfc: {"id": "RK-12.2-058", "kind": "behavior", "applies": "§12.2 STTProvider interface, the voice feature: a provider that cannot honour a per-call language reports supports_language_override = false, and a Voice Channel passes no language to such a provider. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A provider that cannot honour it MUST report
 `supports_language_override = false`, and a Voice Channel MUST NOT pass a
-language to such a provider. `TranscriptionResult.language` is what the
+language to such a provider. <!-- /rfc --><!-- rfc: {"id": "RK-12.2-059", "kind": "behavior", "applies": "§12.2 STTProvider interface, the voice feature, a provider's contract: TranscriptionResult.language is what the provider reports, never back-filled from the request; null means the provider said nothing. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`TranscriptionResult.language` is what the
 provider reports — what it detected when it was asked to detect — and MUST NOT
 be back-filled from the request: null means the provider said nothing.
+<!-- /rfc -->
 
-A Voice Channel SHOULD let the STT language be chosen per session at runtime.
+<!-- rfc: {"id": "RK-12.2-060", "kind": "behavior", "applies": "§12.2 STTProvider interface, the voice feature: a Voice Channel lets the STT language be chosen per session at runtime. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
+A Voice Channel SHOULD let the STT language be chosen per session at runtime.<!-- /rfc --><!-- rfc: {"id": "RK-12.2-061", "kind": "behavior", "applies": "§12.2 STTProvider interface, the voice feature, where a Voice Channel lets the STT language be chosen per session: the choice applies from the next stream opened for that session, a stream per utterance in VAD mode or per turn in continuous mode, but for a kept stream. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The choice applies from the next stream opened for that session: a stream is
 opened per utterance (VAD mode) or per turn (continuous mode, but for a kept
 stream, below), and every streaming STT API RoomKit targets fixes the language
 for the life of a stream.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.2-010", "kind": "behavior", "applies": "§12.2 Voice Channel (STT/TTS Pipeline); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.2-062", "kind": "behavior", "applies": "§12.2 Kept streams, the voice feature, continuous mode: a Voice Channel opens a stream per turn, except for a provider that diarizes or reports keeps_stream_across_turns. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Kept streams.** In continuous mode a Voice Channel opens a stream per turn,
 except for a provider that diarizes (its labels hold within one stream,
 Section 12.2.3) or that reports `keeps_stream_across_turns`: its model cuts
-the turns within one stream, a final for each, and keeps listening. The
+the turns within one stream, a final for each, and keeps listening. <!-- /rfc --><!-- rfc: {"id": "RK-12.2-063", "kind": "behavior", "applies": "§12.2 Kept streams, the voice feature, continuous mode: the stream of a provider that diarizes or reports keeps_stream_across_turns stays open across turns, a new one only when the provider ends it, on an error or on a language change; silence fills a pause, and a final discarded as echo leaves it open. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The
 channel MUST keep such a stream open across turns, as Section 12.2.3 *Stream
 lifetime* says for a diarizing one: a new stream only when the provider ends
 it, on an error, or on a language change; silence filling a pause; a final
-discarded as echo leaving the stream open. Its finals MUST reach the room in
-the order they were produced, the reply to one never holding back the next.
+discarded as echo leaving the stream open. <!-- /rfc --><!-- rfc: {"id": "RK-12.2-064", "kind": "behavior", "applies": "§12.2 Kept streams, the voice feature, a kept stream: its finals reach the room in the order they were produced, the reply to one never holding back the next. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Its finals MUST reach the room in
+the order they were produced, the reply to one never holding back the next.<!-- /rfc --><!-- rfc: {"id": "RK-12.2-065", "kind": "behavior", "applies": "§12.2 Kept streams, the voice feature, a provider's contract: a provider whose text trails its turn events gives a turn's final once its last words can have arrived and before the next turn's own words can (the rationale and its example folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A provider whose text trails its turn events needs it: when a model writes a
 word a streaming delay after hearing it while its turn events come at once, a
 stream per turn sends a turn started soon after the last one half to the
 stream being closed, and the turn reaches the room in pieces ("What is the
 capital of Italy?", "Answer", "in one word."). Such a provider gives a turn's
 final once its last words can have arrived, and before the next turn's own
-words can.
+words can.<!-- /rfc --><!-- rfc: {"id": "RK-12.2-066", "kind": "behavior", "applies": "§12.2 Kept streams, the voice feature: the flow that detects a session's language and pins the following streams to it may ship as a policy, and the primitive that chooses a session's language stays reachable from hooks. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The typical flow starts a session in a detecting mode, reads
 the reported language, and pins the following streams to it. An implementation
 MAY ship that flow as a policy; it MUST leave the primitive reachable from
 hooks.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.2-011", "kind": "behavior", "applies": "§12.2 Voice Channel (STT/TTS Pipeline); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.2-067", "kind": "behavior", "applies": "§12.2 Audio between streams, the voice feature, continuous mode: audio that arrives while no stream is open is carried into the next stream. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Audio between streams.** In continuous mode, audio that arrives while no
 stream is open (between two turns, during a reconnect after an error) is
-carried into the next stream, so a reconnect loses no speech. What is carried
+carried into the next stream, so a reconnect loses no speech. <!-- /rfc --><!-- rfc: {"id": "RK-12.2-068", "kind": "behavior", "applies": "§12.2 Audio between streams, the voice feature, continuous mode: the audio carried between streams is bounded (the rationale folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->What is carried
 MUST be bounded: a reconnect that takes long (a service that does not answer
 its handshake) would otherwise hand the next stream a backlog the service
-refuses, or a lag behind the conversation that only grows. A Voice Channel
+refuses, or a lag behind the conversation that only grows. <!-- /rfc --><!-- rfc: {"id": "RK-12.2-069", "kind": "behavior", "applies": "§12.2 Audio between streams, the voice feature, continuous mode: a Voice Channel keeps the most recent audio, drops the oldest, and exposes how much it dropped. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A Voice Channel
 keeps the most recent audio and drops the oldest, and MUST expose how much it
-dropped (RoomKit keeps 5 s and logs a warning naming the seconds dropped).
+dropped (RoomKit keeps 5 s and logs a warning naming the seconds dropped).<!-- /rfc --><!-- rfc: {"id": "RK-12.2-070", "kind": "behavior", "applies": "§12.2 Audio between streams, the voice feature, a provider's contract: a provider whose service limits how far ahead of real time audio may be sent paces what it sends rather than send a backlog at once. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A provider whose service limits how far ahead of real time audio may be sent
 MUST pace what it sends rather than send a backlog at once.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.2-012", "kind": "behavior", "applies": "§12.2 Voice Channel (STT/TTS Pipeline); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.2-071", "kind": "structural", "applies": "§12.2 TTSProvider interface, the voice feature: the TTSProvider members, VoiceInfo and DialogueTurn, with their defaults. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **TTSProvider interface:**
 
 ```
@@ -11190,19 +11210,23 @@ DialogueTurn
 ├── text: string
 └── style: string | null                    # Delivery direction for this turn only
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.2-072", "kind": "behavior", "applies": "§12.2 TTSProvider interface, the voice feature, a provider's contract: a TTS provider that builds a speech model's prompt around the text sets the text apart as a <transcript> block (§6.4); a line a realtime session is asked to say keeps §12.4's quote. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A TTS provider that builds a speech model's prompt around the text to speak
 (a model with no field of its own for the text and its delivery) MUST set
 the text apart as a `<transcript>` block (Section 6.4), so that the text can
 neither end the transcript nor open another; a line a realtime session is
-asked to say keeps the quote of Section 12.4. A generative speech model may
+asked to say keeps the quote of Section 12.4. <!-- /rfc --><!-- rfc: {"id": "RK-12.2-073", "kind": "non_testable", "applies": "§12.2 TTSProvider interface, the voice feature, the application: delivery cues in text the application does not trust are removed before the text reaches a generative speech model, in a BEFORE_TTS hook where a channel speaks it, and by the application before it calls synthesize() or injects an assistant line into a realtime session. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A generative speech model may
 perform a delivery cue written in the text it speaks (an audio tag, a
 sentence such as "whisper this"), whatever frame holds the text: text the
 application does not trust has such cues removed before it reaches the
 model, in a BEFORE_TTS hook where a channel speaks it, and by the
 application itself before it calls `synthesize()` directly or injects an
 `assistant` line into a realtime session.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.2-074", "kind": "behavior", "applies": "§12.2 TTSProvider interface, the voice feature, a provider's contract: synthesize() returns an AudioContent, synthesize_stream() yields AudioChunks as they become available, and synthesize_stream_input() yields audio as each text chunk is synthesized (the rationale folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 `synthesize()` returns an `AudioContent` (Section 5) rather than raw bytes.
 This allows the result to carry metadata (transcript, duration, MIME type) and
 supports both inline data URLs and remote storage URLs. For streaming,
@@ -11213,51 +11237,53 @@ synthesized. This enables the streaming AI → TTS pipeline where LLM tokens are
 buffered into sentences and fed to TTS incrementally.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.2-013", "kind": "behavior", "applies": "§12.2 Voice Channel (STT/TTS Pipeline); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.2-075", "kind": "behavior", "applies": "§12.2 Encoding, the voice feature, a provider's contract: a streamed AudioChunk names its encoding in format; a vendor offering several output encodings may stream any of them. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Encoding.** A streamed `AudioChunk` names its encoding in `format` (Section
 12.3.11), and a vendor offering several output encodings may stream any of
-them (MP3, Opus, G.711). A Voice Channel plays decoded 16-bit PCM only: it
+them (MP3, Opus, G.711). <!-- /rfc --><!-- rfc: {"id": "RK-12.2-076", "kind": "behavior", "applies": "§12.2 Encoding, the voice feature: a Voice Channel refuses a TTS chunk whose format is not pcm_s16le or pcm before it reaches the outbound pipeline or the transport, with an error naming the format. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A Voice Channel plays decoded 16-bit PCM only: it
 MUST refuse a TTS chunk whose `format` is not `pcm_s16le` (or `pcm`) before
 the chunk reaches the outbound pipeline or the transport, with an error naming
-the format, rather than play encoded bytes as samples. Encoding for the wire
+the format, rather than play encoded bytes as samples. <!-- /rfc --><!-- rfc: {"id": "RK-12.2-077", "kind": "behavior", "applies": "§12.2 Encoding, the voice feature: encoding for the wire is the backend's, and a TTS that speaks on a Voice Channel is configured for PCM output. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Encoding for the wire
 belongs to the backend, as it does for a conference (Section 12.10.3); a TTS
 that speaks on a Voice Channel is configured for PCM output.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.2-078", "kind": "behavior", "applies": "§12.2 Encoding, the voice feature: a TTS provider whose context_level is NONE never receives a context (the sentence on what context carries, §12.2.2, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 `context` carries the conversation so far to a TTS that can use it (Section
 12.2.2). A provider whose `context_level` is `NONE` never receives one, so an
 existing provider needs no change.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.2-014", "kind": "behavior", "applies": "§12.2 Voice Channel (STT/TTS Pipeline); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.2-079", "kind": "behavior", "applies": "§12.2 Voices, the voice feature, a provider's contract: the voice id a provider returns in its catalog is the string synthesize() accepts, with no translation. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Voices.** A voice is named by the `id` of a `VoiceInfo`: the string a
 provider returns in its catalog is the string `synthesize()` accepts, with no
-translation between the two. `available_voices()` is the curated catalog a
+translation between the two. <!-- /rfc --><!-- rfc: {"id": "RK-12.2-080", "kind": "behavior", "applies": "§12.2 Voices, the voice feature, a provider's contract: available_voices() is the curated catalog the provider ships, readable without credentials or network; list_voices() asks the vendor and includes the caller's custom voices. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`available_voices()` is the curated catalog a
 provider ships, readable without credentials or network; `list_voices()`
 asks the vendor, and includes the custom voices the caller owns (Section
-12.2.4). A provider whose vendor has no voices endpoint keeps the default,
-which filters its curated catalog. The filters apply wherever the catalog
+12.2.4). <!-- /rfc --><!-- rfc: {"id": "RK-12.2-081", "kind": "behavior", "applies": "§12.2 Voices, the voice feature: the default list_voices(), which a provider whose vendor has no voices endpoint keeps, filters the curated catalog. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A provider whose vendor has no voices endpoint keeps the default,
+which filters its curated catalog. <!-- /rfc --><!-- rfc: {"id": "RK-12.2-082", "kind": "behavior", "applies": "§12.2 Voices, the voice feature: the language, gender and query filters of list_voices() and how each matches, wherever the catalog comes from; a voice whose language or gender is unknown matches no filter on it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The filters apply wherever the catalog
 comes from, server side or on the results, so a caller gets the same answer
 from every provider: `language` matches a voice whose tag equals it or
 starts with it and a hyphen (`"fr"` matches `fr-CA`, and `fr-CA` does not
 match `fr-FR`); `gender` matches exactly; `query` matches, without regard to
 case, a substring of the name or the description. A voice whose language or
-gender is unknown does not match a filter on it. `VoiceInfo` fields a vendor
+gender is unknown does not match a filter on it. <!-- /rfc --><!-- rfc: {"id": "RK-12.2-083", "kind": "behavior", "applies": "§12.2 Voices, the voice feature, a provider's contract: VoiceInfo fields a vendor does not report are null or absent, never inferred from another voice; attributes carries what the vendor reports beyond the common fields, under its own names. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`VoiceInfo` fields a vendor
 does not report are null or absent, and MUST NOT be inferred from another
 voice; `attributes` carries what a vendor reports beyond the common fields,
-under the vendor's own names. The `RealtimeVoiceProvider` catalog (Section
+under the vendor's own names. <!-- /rfc --><!-- rfc: {"id": "RK-12.2-084", "kind": "structural", "applies": "§12.2 Voices, the voice and realtime features: the RealtimeVoiceProvider catalog (§12.4) uses the same VoiceInfo. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The `RealtimeVoiceProvider` catalog (Section
 12.4) uses the same `VoiceInfo`.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.2-015", "kind": "behavior", "applies": "§12.2 Voice Channel (STT/TTS Pipeline); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.2-085", "kind": "behavior", "applies": "§12.2 Dialogue, the voice feature, a provider's contract: synthesize_dialogue() voices a scripted exchange in one clip, each turn in the voice its speaker is mapped to. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Dialogue.** `synthesize_dialogue()` voices a scripted exchange in one clip,
 each turn in the voice its speaker is mapped to, the way a podcast or a
-training role-play is produced. A provider whose `max_dialogue_speakers` is 0
+training role-play is produced. <!-- /rfc --><!-- rfc: {"id": "RK-12.2-086", "kind": "behavior", "applies": "§12.2 Dialogue, the voice feature: synthesize_dialogue() raises on a provider whose max_dialogue_speakers is 0, and on every provider before any call when the turns name more distinct speakers than its maximum or a speaker the voices map does not hold. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A provider whose `max_dialogue_speakers` is 0
 MUST raise, and every provider MUST raise before any call when the turns name
 more distinct speakers than its maximum or a speaker the `voices` map does
-not hold. `style` directs one turn's delivery, and a provider that cannot
-direct a single turn MUST raise rather than drop it. The returned
+not hold. <!-- /rfc --><!-- rfc: {"id": "RK-12.2-087", "kind": "behavior", "applies": "§12.2 Dialogue, the voice feature, a provider's contract: style directs one turn's delivery; a provider that cannot direct a single turn raises rather than drop it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`style` directs one turn's delivery, and a provider that cannot
+direct a single turn MUST raise rather than drop it. <!-- /rfc --><!-- rfc: {"id": "RK-12.2-088", "kind": "behavior", "applies": "§12.2 Dialogue, the voice feature: the AudioContent synthesize_dialogue() returns has the turns as its transcript, each as \"<speaker>: <text>\" on its own line. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The returned
 `AudioContent` carries the turns, each as `"<speaker>: <text>"` on its own
-line, as its `transcript`. A Voice Channel speaks with one voice and never
+line, as its `transcript`. <!-- /rfc --><!-- rfc: {"id": "RK-12.2-089", "kind": "behavior", "applies": "§12.2 Dialogue, the voice feature: a Voice Channel speaks with one voice and never calls synthesize_dialogue(); dialogue enters a room as any other audio. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A Voice Channel speaks with one voice and never
 calls `synthesize_dialogue()`: dialogue is produced by the integrator, and
 enters a room as any other audio.
 <!-- /rfc -->
