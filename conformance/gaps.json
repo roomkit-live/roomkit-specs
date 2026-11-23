@@ -76,6 +76,201 @@
       "card": "RMK-1942",
       "note": "Two attempts at a request's last one count once: racing them needs a gate inside a verification transition."
     },
+    "RK-12.10.4-019": {
+      "class": "step",
+      "card": "RMK-2007",
+      "note": "step: conference.fault: a backend call held past its budget as the channel closes."
+    },
+    "RK-12.10.4-020": {
+      "class": "step",
+      "card": "RMK-2007",
+      "note": "step: conference.read, conference.fault: the order of the backend calls a close makes, one of them held past its budget."
+    },
+    "RK-12.10.4-021": {
+      "class": "step",
+      "card": "RMK-2007",
+      "note": "step: conference.fault, conference.read: a call abandoned past its budget, and what the close frees on its account."
+    },
+    "RK-12.10.4-022": {
+      "class": "step",
+      "card": "RMK-2007",
+      "note": "step: conference.fault: two closes of one conference channel overlapping, the first one held, then cancelled."
+    },
+    "RK-12.10.4-023": {
+      "class": "step",
+      "card": "RMK-2007",
+      "note": "step: conference.fault: a close the backend fails, then a later close of the same channel."
+    },
+    "RK-12.10.4-024": {
+      "class": "step",
+      "card": "RMK-2007",
+      "note": "step: conference.read, conference.fault: a detach and a close asking for one session's departure at once."
+    },
+    "RK-12.10.4-025": {
+      "class": "step",
+      "card": "RMK-2007",
+      "note": "step: conference.fault, conference.read: a backend call that swallows its cancellation, and when its resource is closed."
+    },
+    "RK-12.10.4-026": {
+      "class": "step",
+      "card": "RMK-2007",
+      "note": "step: conference.fault: a close that abandons a call reports the resource it retains and fails."
+    },
+    "RK-12.10.4-027": {
+      "class": "step",
+      "card": "RMK-2007",
+      "note": "step: conference.fault: a close one of whose four conditions does not hold fails."
+    },
+    "RK-12.10.4-028": {
+      "class": "step",
+      "card": "RMK-2007",
+      "note": "step: conference.fault: a leave() the backend refuses, raised by name at the end of the close."
+    },
+    "RK-12.10.4-029": {
+      "class": "step",
+      "card": "RMK-2007",
+      "note": "step: conference.fault, conference.read: the session a failed close left, still reported by the channel."
+    },
+    "RK-12.10.4-030": {
+      "class": "step",
+      "card": "RMK-2007",
+      "note": "step: a channel whose close fails: the channels after it still closed, the kit's close failing once its shutdown ran."
+    },
+    "RK-12.10.4-031": {
+      "class": "step",
+      "card": "RMK-2007",
+      "note": "step: conference.fault: a channel's roster write held in the store as the channels close."
+    },
+    "RK-12.10.4-032": {
+      "class": "step",
+      "card": "RMK-2007",
+      "note": "step: conference.fault: a channel's store write held past the close's last unwind; its log line is no step's to read."
+    },
+    "RK-12.10.4-033": {
+      "class": "step",
+      "card": "RMK-2007",
+      "note": "step: conference.fault: a participant callback parked in the backend past every closing budget, resuming after the close."
+    },
+    "RK-12.10.4-035": {
+      "class": "step",
+      "card": "RMK-2007",
+      "note": "step: a store the kit closes in every backend: the memory store stays open after the close, so a read answers there."
+    },
+    "RK-12.10.4-036": {
+      "class": "step",
+      "card": "RMK-2007",
+      "note": "step: a scripted source (source_provider) whose health check a read starts once the close started."
+    },
+    "RK-12.10.4-039": {
+      "class": "step",
+      "card": "RMK-2007",
+      "note": "step: a realtime session's start and a conference participant's arrival after the close; entering a closed kit's context again is Python's async with."
+    },
+    "RK-12.10.4-044": {
+      "class": "writable",
+      "card": "RMK-2007",
+      "note": "A call waiting for its room's lock (wait_for_lock) as the close starts, cut at once with nothing stored."
+    },
+    "RK-12.10.4-046": {
+      "class": "writable",
+      "card": "RMK-2007",
+      "note": "A tool call held at its gate as the close starts: its end row failed, error kit_closed."
+    },
+    "RK-12.10.4-048": {
+      "class": "step",
+      "card": "RMK-2007",
+      "note": "step: a turn's call that starts the kit's close on a task of its own."
+    },
+    "RK-12.10.4-050": {
+      "class": "step",
+      "card": "RMK-2007",
+      "note": "step: a scripted source (source_provider) whose stop is held as the close runs."
+    },
+    "RK-12.10.4-051": {
+      "class": "writable",
+      "card": "RMK-2007",
+      "note": "A call held in a BEFORE_BROADCAST hook as the close starts and let go within the grace: stored, delivered to no one."
+    },
+    "RK-12.10.4-054": {
+      "class": "step",
+      "card": "RMK-2007",
+      "note": "step: a channel whose close starts work, which the close cuts at once."
+    },
+    "RK-12.10.4-056": {
+      "class": "step",
+      "card": "RMK-2007",
+      "note": "step: work that ignores its cancellation, to bound the close's two unwinds."
+    },
+    "RK-12.10.4-059": {
+      "class": "step",
+      "card": "RMK-2007",
+      "note": "step: work that ignores its cancellation and writes once the close returned."
+    },
+    "RK-12.10.4-065": {
+      "class": "writable",
+      "card": "RMK-2007",
+      "note": "A call waiting for its room's lock as the close starts: blocked, reason kit_closed, nothing stored; a send_event refused the same way raises kit_closed."
+    },
+    "RK-12.10.4-066": {
+      "class": "writable",
+      "card": "RMK-2007",
+      "note": "A commit held at a store_fault gate once its write landed, cut past a short close_grace_ms: its event read back by its id."
+    },
+    "RK-12.10.4-067": {
+      "class": "writable",
+      "card": "RMK-2007",
+      "note": "A commit held at a store_fault gate once its write landed, cut past a short close_grace_ms: the inbound path returns the stored event, reason kit_closed."
+    },
+    "RK-12.10.4-068": {
+      "class": "writable",
+      "card": "RMK-2007",
+      "note": "A cut commit whose read-back a store_fault fails: the call reported as not stored."
+    },
+    "RK-12.10.4-069": {
+      "class": "writable",
+      "card": "RMK-2007",
+      "note": "Two closes in the background while a send holds, the first cancelled: the second returns once the shutdown ends, the send delivered."
+    },
+    "RK-12.10.4-070": {
+      "class": "writable",
+      "card": "RMK-2007",
+      "note": "A second close after a successful one returns null; the failure half needs a channel whose close fails."
+    },
+    "RK-12.10.4-071": {
+      "class": "step",
+      "card": "RMK-2007",
+      "note": "step: an error name for ShutdownCancelledError, and a step that cuts the shutdown itself."
+    },
+    "RK-12.10.4-073": {
+      "class": "step",
+      "card": "RMK-2007",
+      "note": "step: a tool whose call closes the kit (a scripted tool runs no step)."
+    },
+    "RK-12.10.4-075": {
+      "class": "writable",
+      "card": "RMK-2007",
+      "note": "A hook held at its gate within the close's grace, which then closes the kit itself: the shutdown stops waiting for it."
+    },
+    "RK-12.10.4-076": {
+      "class": "step",
+      "card": "RMK-2007",
+      "note": "step: a tool whose cleanup closes the kit after the close cut its turn."
+    },
+    "RK-12.10.4-077": {
+      "class": "writable",
+      "card": "RMK-2007",
+      "note": "A close from an agent's turn in a room's lane, a delivery queued behind it: that delivery dropped, kit_closed."
+    },
+    "RK-12.10.4-078": {
+      "class": "writable",
+      "card": "RMK-2007",
+      "note": "An AFTER_BROADCAST hook that sends, then closes the kit: its send dropped."
+    },
+    "RK-12.10.4-080": {
+      "class": "step",
+      "card": "RMK-2007",
+      "note": "step: a channel whose close calls the kit's close."
+    },
     "RK-13.1-001": {
       "class": "step",
       "card": "RMK-1965",

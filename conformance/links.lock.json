@@ -4023,8 +4023,106 @@
     "RK-11.7.7-010": {
       "verification/a-verification-labels-only-its-organization-s-rooms": "bfddad81acd06f398b662bd0a87dc1037d6ddf516cded704a322b4625b682259"
     },
-    "RK-12.10.4-005": {
-      "delivery/a-delivery-whose-turn-the-closing-owner-gave-up-counts-its-cleanup-done": "443dc9c61356466d98f46229110f951ff34fab24f36ec3931113dd8ce14983bd"
+    "RK-12.10.4-034": {
+      "tasks/nonempty-task-and-observation-reads-remain-available-during-close": "b5e0e80a7cfaf4cb9c48e38a42a284be1ec560d33d8ec9f3590bfb1d1ca819ad"
+    },
+    "RK-12.10.4-037": {
+      "delivery/a-closing-kit-refuses-new-operations-and-ignores-cancellation": "4afe4f3283005cf8a59daf8a06c492cf4e70c1adc1ec3693656883a18e0fb9c0"
+    },
+    "RK-12.10.4-038": {
+      "channel-call/a-closed-kit-takes-no-calls": "846503b60a8a49d0c2eb3cc5529928d2c3679889b6da5d624bed47102f05b2db",
+      "channel-release/a-closed-kit-refuses-release": "846503b60a8a49d0c2eb3cc5529928d2c3679889b6da5d624bed47102f05b2db",
+      "channel-release/a-closed-kit-refuses-release-before-checking-registration": "846503b60a8a49d0c2eb3cc5529928d2c3679889b6da5d624bed47102f05b2db",
+      "delivery/a-closing-kit-refuses-new-operations-and-ignores-cancellation": "846503b60a8a49d0c2eb3cc5529928d2c3679889b6da5d624bed47102f05b2db",
+      "delivery/an-observer-refused-during-close-starts-no-due-room-timer": "846503b60a8a49d0c2eb3cc5529928d2c3679889b6da5d624bed47102f05b2db",
+      "discussion/a-closed-kit-refuses-regeneration-before-reading-its-store": "846503b60a8a49d0c2eb3cc5529928d2c3679889b6da5d624bed47102f05b2db",
+      "executor-close/a-turn-closing-the-kit-sees-its-close-return": "846503b60a8a49d0c2eb3cc5529928d2c3679889b6da5d624bed47102f05b2db",
+      "host-declared/admission-declare-after-close": "846503b60a8a49d0c2eb3cc5529928d2c3679889b6da5d624bed47102f05b2db"
+    },
+    "RK-12.10.4-040": {
+      "delivery/a-closing-kit-refuses-new-operations-and-ignores-cancellation": "bea619cb715b7e867a319232c4cd0e68205cf7a31cae25046251bd05f54ea320",
+      "delivery/a-set-the-kit-s-close-drops-still-stores-its-hooks-side-effects": "bea619cb715b7e867a319232c4cd0e68205cf7a31cae25046251bd05f54ea320",
+      "delivery/an-adopted-call-whose-set-the-close-drops-reads-its-hook-s-task-stored": "bea619cb715b7e867a319232c4cd0e68205cf7a31cae25046251bd05f54ea320",
+      "delivery/an-observer-refused-during-close-starts-no-due-room-timer": "bea619cb715b7e867a319232c4cd0e68205cf7a31cae25046251bd05f54ea320",
+      "locks/the-hooks-side-effects-of-a-set-of-a-deleted-room-the-close-drops-stay-out-of-the-room-created-again": "bea619cb715b7e867a319232c4cd0e68205cf7a31cae25046251bd05f54ea320",
+      "tasks/nonempty-task-and-observation-reads-remain-available-during-close": "bea619cb715b7e867a319232c4cd0e68205cf7a31cae25046251bd05f54ea320"
+    },
+    "RK-12.10.4-041": {
+      "delivery/an-answer-from-after-broadcast-gets-grace-when-its-observer-closes-the-kit": "8f9c481526e8ec81f588d985788f59e7b46479b4ce9afda9ec507f8f1ba37935",
+      "delivery/an-answer-from-response-gets-grace-when-its-observer-closes-the-kit": "8f9c481526e8ec81f588d985788f59e7b46479b4ce9afda9ec507f8f1ba37935"
+    },
+    "RK-12.10.4-042": {
+      "delivery/an-answer-from-after-broadcast-gets-grace-when-its-observer-closes-the-kit": "c47e0543505e2672643403defc13a842e763535a08da9c4a721111ad55df88ba",
+      "delivery/an-answer-from-response-gets-grace-when-its-observer-closes-the-kit": "c47e0543505e2672643403defc13a842e763535a08da9c4a721111ad55df88ba"
+    },
+    "RK-12.10.4-043": {
+      "delivery/an-answer-from-after-broadcast-gets-grace-when-its-observer-closes-the-kit": "358b92b4c73a53b7ac1d6f5134217dc57f6792deca48c0d70ac430afc8134c6d",
+      "delivery/an-answer-from-response-gets-grace-when-its-observer-closes-the-kit": "358b92b4c73a53b7ac1d6f5134217dc57f6792deca48c0d70ac430afc8134c6d"
+    },
+    "RK-12.10.4-045": {
+      "ai-external-handler/close-during-decision-drains-cancelled-report-non-streaming": "d66f43d8082aacd698839bdb0a6de37c2926a642e9c2814d15fd8f89f369b504",
+      "ai-external-handler/close-during-decision-drains-cancelled-report-streaming": "d66f43d8082aacd698839bdb0a6de37c2926a642e9c2814d15fd8f89f369b504",
+      "delivery/a-delivery-whose-turn-the-closing-owner-gave-up-counts-its-cleanup-done": "d66f43d8082aacd698839bdb0a6de37c2926a642e9c2814d15fd8f89f369b504",
+      "delivery/a-turn-still-open-once-the-close-s-grace-is-over-is-given-up": "d66f43d8082aacd698839bdb0a6de37c2926a642e9c2814d15fd8f89f369b504",
+      "delivery/a-turn-whose-end-is-owed-as-the-kit-closes-stays-incomplete": "d66f43d8082aacd698839bdb0a6de37c2926a642e9c2814d15fd8f89f369b504"
+    },
+    "RK-12.10.4-047": {
+      "executor-close/a-turn-closing-the-kit-sees-its-close-return": "a4deeede0ac974192d9a7919cbad956479b83b7561d8c0652b0ca7692a2d0cd1"
+    },
+    "RK-12.10.4-049": {
+      "delivery/a-delivery-whose-turn-the-closing-owner-gave-up-counts-its-cleanup-done": "0cc7a640d3b9c2632bc241a0c3cb659f24463101b6c7071d488548fccb775d46",
+      "delivery/a-turn-still-open-once-the-close-s-grace-is-over-is-given-up": "0cc7a640d3b9c2632bc241a0c3cb659f24463101b6c7071d488548fccb775d46"
+    },
+    "RK-12.10.4-052": {
+      "delivery/a-delivery-whose-turn-the-closing-owner-gave-up-counts-its-cleanup-done": "b233a9f0b482327a9c3887fa884280e0e45c34144213ef29cd379ad11695b861",
+      "delivery/a-turn-still-open-once-the-close-s-grace-is-over-is-given-up": "b233a9f0b482327a9c3887fa884280e0e45c34144213ef29cd379ad11695b861"
+    },
+    "RK-12.10.4-053": {
+      "delivery/a-delivery-whose-turn-the-closing-owner-gave-up-counts-its-cleanup-done": "62aa7995d752e0b6fbf278947a4d326460e0b51bb0fc24be60b8dd7fd88a95b2",
+      "delivery/a-turn-still-open-once-the-close-s-grace-is-over-is-given-up": "62aa7995d752e0b6fbf278947a4d326460e0b51bb0fc24be60b8dd7fd88a95b2"
+    },
+    "RK-12.10.4-055": {
+      "status/a-status-posted-after-close-starts-no-room-hook": "86a4339ec36561c153f87a4f4bb96b86784b2617763de37336ec3e4ecb7a2571"
+    },
+    "RK-12.10.4-057": {
+      "delivery/a-turn-still-open-once-the-close-s-grace-is-over-is-given-up": "3a86e60aafffdcf98bebd8d2df4a26a64bdeb84135f539d1465ac81c347afe40"
+    },
+    "RK-12.10.4-060": {
+      "delivery/a-closing-kit-refuses-new-operations-and-ignores-cancellation": "58ac0148634772c6a074878b8e3211fb5bf126b7a74a3de1016318796543de42",
+      "delivery/a-turn-still-open-once-the-close-s-grace-is-over-is-given-up": "58ac0148634772c6a074878b8e3211fb5bf126b7a74a3de1016318796543de42"
+    },
+    "RK-12.10.4-061": {
+      "delivery/a-call-the-close-finds-under-way-returns-kit-closed-while-its-adopted-call-s-stream-is-read": "4bea8867f9421d48320f8f2842ccaa7603503216f37440cd010d18020c9bebc0",
+      "delivery/a-closing-kit-refuses-new-operations-and-ignores-cancellation": "4bea8867f9421d48320f8f2842ccaa7603503216f37440cd010d18020c9bebc0",
+      "delivery/a-delivery-whose-turn-the-closing-owner-gave-up-counts-its-cleanup-done": "4bea8867f9421d48320f8f2842ccaa7603503216f37440cd010d18020c9bebc0",
+      "delivery/a-set-the-kit-s-close-drops-still-stores-its-hooks-side-effects": "4bea8867f9421d48320f8f2842ccaa7603503216f37440cd010d18020c9bebc0",
+      "delivery/a-turn-still-open-once-the-close-s-grace-is-over-is-given-up": "4bea8867f9421d48320f8f2842ccaa7603503216f37440cd010d18020c9bebc0",
+      "delivery/a-turn-the-close-cuts-leaves-no-outcome-and-the-set-s-failure-is-recorded": "4bea8867f9421d48320f8f2842ccaa7603503216f37440cd010d18020c9bebc0",
+      "delivery/an-adopted-call-whose-set-the-close-drops-reads-its-hook-s-task-stored": "4bea8867f9421d48320f8f2842ccaa7603503216f37440cd010d18020c9bebc0",
+      "delivery/an-observer-refused-during-close-starts-no-due-room-timer": "4bea8867f9421d48320f8f2842ccaa7603503216f37440cd010d18020c9bebc0",
+      "locks/the-hooks-side-effects-of-a-set-of-a-deleted-room-the-close-drops-stay-out-of-the-room-created-again": "4bea8867f9421d48320f8f2842ccaa7603503216f37440cd010d18020c9bebc0",
+      "tasks/nonempty-task-and-observation-reads-remain-available-during-close": "4bea8867f9421d48320f8f2842ccaa7603503216f37440cd010d18020c9bebc0"
+    },
+    "RK-12.10.4-062": {
+      "delivery/a-turn-the-close-cuts-leaves-no-outcome-and-the-set-s-failure-is-recorded": "56e252679289803b599a4e32ca81140171b3d4aecf4a50790a9d5dd72033e0ae"
+    },
+    "RK-12.10.4-063": {
+      "delivery/a-call-the-close-finds-under-way-returns-kit-closed-while-its-adopted-call-s-stream-is-read": "db471fa2f23cc407178988cd7e33706405a50d1324fa245fb8be04fcada03927",
+      "delivery/a-closing-kit-refuses-new-operations-and-ignores-cancellation": "db471fa2f23cc407178988cd7e33706405a50d1324fa245fb8be04fcada03927",
+      "delivery/a-turn-the-close-cuts-leaves-no-outcome-and-the-set-s-failure-is-recorded": "db471fa2f23cc407178988cd7e33706405a50d1324fa245fb8be04fcada03927"
+    },
+    "RK-12.10.4-064": {
+      "delivery/a-deferred-event-s-wait-after-the-close-reads-its-own-end": "d5a56e161aa4570b11459fa7c7106a2f6d8b7e54974ecf21c56c4aea797dfa8a"
+    },
+    "RK-12.10.4-072": {
+      "executor-close/a-turn-closing-the-kit-sees-its-close-return": "972543a916fe12b2c79cd141b5532114414af9f73f9fa862e749a4fdece2be13"
+    },
+    "RK-12.10.4-074": {
+      "executor-close/a-turn-closing-the-kit-sees-its-close-return": "9b8694f4c448abdf6ded61184817a9ae0f0bcb81215a1a78617c9417e4040231"
+    },
+    "RK-12.10.4-079": {
+      "delivery/an-answer-from-after-broadcast-gets-grace-when-its-observer-closes-the-kit": "ce1e75b06a83f2e539072dd7ef8bbd2eb727c659e27b73814e35413f391c79a9",
+      "delivery/an-answer-from-response-gets-grace-when-its-observer-closes-the-kit": "ce1e75b06a83f2e539072dd7ef8bbd2eb727c659e27b73814e35413f391c79a9"
     },
     "RK-13.2-004": {
       "delivery/a-retried-delivery-keeps-its-successful-provider-receipt": "8504abca107b13da520b70284632b270c3d86c86a32db7cb46bd3f96555880da"
