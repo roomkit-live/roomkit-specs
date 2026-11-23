@@ -2121,21 +2121,6 @@
       "card": "RMK-2054",
       "note": "voice.open with bridge, transcripts and a vad script: frames forwarded and ON_TRANSCRIPTION both observed."
     },
-    "RK-12.8.10-006": {
-      "class": "step",
-      "card": "RMK-2062",
-      "note": "step: video.open with a scripted session recorder and a read of its result (VI3): without encryption or storage_encrypted_at_rest, the recording starts and its result names no encryption."
-    },
-    "RK-12.8.10-007": {
-      "class": "step",
-      "card": "RMK-2062",
-      "note": "step: video.open with a scripted session recorder and a read of its result (VI3): with a scripted cipher, stop() reports the cipher's path as url and names the cipher in metadata, and close() encrypts a recording still open."
-    },
-    "RK-12.8.10-009": {
-      "class": "step",
-      "card": "RMK-2062",
-      "note": "step: video.open with a scripted session recorder and a read of its result (VI3): with storage_encrypted_at_rest and no encryption, the result's metadata[\"encryption\"] is \"storage\"."
-    },
     "RK-12.8.10-010": {
       "class": "step",
       "card": "RMK-2062",
@@ -2229,7 +2214,7 @@
     "RK-12.8.7-013": {
       "class": "writable",
       "card": "RMK-2062",
-      "note": "two video channels with vision on one room and a scripted agent: the turn reads the latest result as one <vision> block, its description, labels and text, and a text that tries to close the block stays inside it."
+      "note": "two video channels with vision on one room and a scripted agent: the turn reads the latest result as one <vision> block, its description, labels and text, and a text that tries to close the block stays inside it; in Python a result with no description reaches no turn (suspect RMK-2063)."
     },
     "RK-12.8.7-014": {
       "class": "writable",
@@ -2279,7 +2264,7 @@
     "RK-12.8.9-009": {
       "class": "step",
       "card": "RMK-2062",
-      "note": "step: a late joiner on video.open (VI2): the joining session receives a keyframe first (suspect RMK-2058)."
+      "note": "step: a late joiner on video.open with a read of what it receives (VI2): the joining session receives the source's buffered keyframe on join, before the source sends a new one (suspect RMK-2058)."
     },
     "RK-12.8.9-010": {
       "class": "step",
