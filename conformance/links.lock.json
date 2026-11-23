@@ -4383,6 +4383,12 @@
       "realtime/a-handler-reconnects-through-its-child": "17a76f486f659d828db2fb563f45190e33b8aa09c3a87a3e5eea2cfa1106b023",
       "realtime/a-late-cancellation-leaves-the-served-call-alone": "17a76f486f659d828db2fb563f45190e33b8aa09c3a87a3e5eea2cfa1106b023"
     },
+    "RK-12.4.1-057": {
+      "realtime/a-reasoning-error-reaches-the-room": "87c7e3cd566baff3b21c5b72cd17390630693ad890e859cfd3eee80534cbcbc4"
+    },
+    "RK-12.4.1-082": {
+      "realtime/a-hosted-delegation-reaches-its-room": "7d87247375124000cf77b216cb4e8c5e021bfd0d7892307efb666a7e0e5ee225"
+    },
     "RK-12.5-003": {
       "voice/speech-edges-bracket-an-utterance": "bef87d14c2ce4b5d2203ba08d1e822d3155f5d022289c160c0d58629e5a9fcb9"
     },
