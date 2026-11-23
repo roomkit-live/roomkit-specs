@@ -13514,12 +13514,10 @@ used simultaneously:
 
 ### 12.4 Realtime Voice Channel (Speech-to-Speech)
 
-<!-- rfc: {"id": "RK-12.4-001", "kind": "behavior", "applies": "§12.4 Realtime Voice Channel (Speech-to-Speech); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.4-049", "kind": "structural", "applies": "§12.4 RealtimeVoiceProvider interface, the realtime feature: its identity and traits, name, model_name (default name), full_duplex (default false, §12.4.1), supports_tools (default true) and supports_mid_session_reconfigure (default true; false when reconfigure() would replace the session or lose its state) (the sentence on what the channel wraps, with its e.g. vendors, informative, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The Realtime Voice Channel wraps speech-to-speech APIs (e.g., OpenAI Realtime,
 Gemini Live) that handle audio processing natively, bypassing STT/TTS.
-<!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.4-002", "kind": "behavior", "applies": "§12.4 Realtime Voice Channel (Speech-to-Speech); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **RealtimeVoiceProvider interface:**
 
 ```
@@ -13531,10 +13529,18 @@ RealtimeVoiceProvider (interface)
 ├── supports_mid_session_reconfigure: bool (default true)
 │       # Whether reconfigure() can run mid-session; false when it would
 │       # replace the session or lose its state
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.4-050", "kind": "behavior", "applies": "§12.4 RealtimeVoiceProvider interface, the realtime feature's provider contract, what a provider that declares supports_context_preservation (default false) must do: under provider_config {\"preserve_context\": true} it keeps tool-delivered instructions verbatim for the session, or ends the session with an error before going on without them. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── supports_context_preservation: bool (default false)
 │       # Whether provider_config {"preserve_context": true} is supported:
 │       # the provider keeps tool-delivered instructions verbatim for the
 │       # session, or ends it with an error before going on without them
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.4-051", "kind": "structural", "applies": "§12.4 RealtimeVoiceProvider interface, the realtime feature: its catalogues, available_voices(), list_voices() (default available_voices()) and available_models() (which may be empty), and its session calls, connect() with its defaults (16000 Hz in, 24000 Hz out, server_vad true; false puts the channel in the endpointing role), disconnect(), reconfigure() (default: disconnect, then connect again), send_audio() and start_audio_stream() (no-op by default). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── available_voices() → VoiceInfo[]        # Curated offline catalog (VoiceInfo: Section 12.2)
 ├── list_voices() → VoiceInfo[]             # Live catalog; default: available_voices()
 ├── available_models() → ModelInfo[]        # Curated offline catalog (MAY be empty)
@@ -13551,12 +13557,20 @@ RealtimeVoiceProvider (interface)
 ├── start_audio_stream(session) → void
 │       # Open the provider's audio input path before audio flows (a
 │       # greeting before the caller speaks); no-op by default
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.4-052", "kind": "behavior", "applies": "§12.4 RealtimeVoiceProvider interface, the realtime feature: inject_text() returns a VoiceInjectionResult, its status sent, not_sent or unknown with a reason and whether a retry is allowed (§22.1), and a null result reads as unknown (the role, an intent, and silent, no response asked, defined below, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── inject_text(session, text, role = "user", silent = false)
 │           → VoiceInjectionResult | null
 │       # Insert text into the conversation; role is an intent ("system" or
 │       # "user", below); silent adds it without requesting a response. The
 │       # result's status is sent, not_sent or unknown, with a reason and
 │       # whether a retry is allowed (Section 22.1); null reads as unknown
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.4-053", "kind": "structural", "applies": "§12.4 RealtimeVoiceProvider interface, the realtime feature: its other members, inject_image() (default: fails as unsupported), submit_tool_result(), submit_tool_error() (default submit_tool_result()), submit_delegation_output() (§12.4.1), interrupt(), truncate_audio() (optional, no-op by default), send_activity_start() and send_activity_end() (no-op by default), send_event() (default: fails as unsupported), is_responding() (default false), close(), and the callback registrations on_audio() to on_error(). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ├── inject_image(session, image_data, mime_type = "image/png", prompt = "",
 │                silent = false) → void
 │       # Add an image for multimodal analysis; default: fails as unsupported
@@ -13587,14 +13601,14 @@ RealtimeVoiceProvider (interface)
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.4-003", "kind": "behavior", "applies": "§12.4 Realtime Voice Channel (Speech-to-Speech); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.4-054", "kind": "behavior", "applies": "§12.4 What a provider owes its tool calls, the realtime feature's provider contract, what any realtime provider must do: a call whose arguments read as an object reaches on_tool_call as that mapping; one whose arguments do not (invalid JSON, an array, a fragment) reaches it as the text the model wrote, never as a mapping. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **What a provider owes its tool calls (normative).** A call whose arguments
 read as an object reaches `on_tool_call` as that mapping; a call whose
 arguments do not (invalid JSON, an array, a fragment) reaches it as the text
-the model wrote, never as a mapping that could pass for arguments. The channel
+the model wrote, never as a mapping that could pass for arguments.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-055", "kind": "behavior", "applies": "§12.4 What a provider owes its tool calls, the realtime feature: the channel refuses a call whose arguments reached it as text before the gate, as a tool loop refuses a partial call (§6.4): nothing runs, the model reads that its arguments could not be read, and the observers receive the refusal. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The channel
 refuses such a call before the gate below, as a tool loop refuses a partial
 call (Section 6.4): nothing runs, the model reads that its arguments could not
-be read, and the observers receive the refusal. A call the provider issued is
+be read, and the observers receive the refusal.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-056", "kind": "behavior", "applies": "§12.4 What a provider owes its tool calls, the realtime feature: a call the provider issued is answered once, by the channel, through submit_tool_result(), or through submit_tool_error() when the call failed (refused, failed, blocked, served by nothing); a provider whose protocol marks a result as an error marks those and nothing else, so a served result whose body carries an error field is not read as a failure, and a provider whose protocol does not ignores the distinction. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A call the provider issued is
 answered once, by the channel, through `submit_tool_result`, or through
 `submit_tool_error` when the call failed (refused, failed, blocked,
 served by nothing): a provider whose protocol marks a result as an error
@@ -13602,42 +13616,42 @@ MUST mark it, so the
 model does not read a refusal as a success, and MUST mark nothing else, so a
 served result whose body carries an error field of its own is not read as a
 failure; a provider whose protocol does not ignores the distinction, the
-result's body saying it. A provider MUST report through
+result's body saying it.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-057", "kind": "behavior", "applies": "§12.4 What a provider owes its tool calls, the realtime feature's provider contract, what any realtime provider must do: a provider reports through on_tool_call_cancelled every call it abandons, whatever the cause: the model discarding it, a reconnect orphaning it (call ids are connection-scoped), its own wait on the channel timing out, the conversation ending (what an unreported abandon costs, informative, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A provider MUST report through
 `on_tool_call_cancelled` every call it abandons, whatever the cause: the
 model discarding it, a reconnect orphaning it (call ids are
 connection-scoped), its own wait on the channel timing out, the conversation
 ending. A call it abandons without that report runs on unseen, and the
-observers record a success the model never read. The tasks a session lives on
+observers record a success the model never read.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-058", "kind": "behavior", "applies": "§12.4 What a provider owes its tool calls, the realtime feature's provider contract, what any realtime provider must do: the tasks a session lives on (its receive loop, its keepalive) run in a context of their own, so a connection opened inside a tool handler does not carry that call's context into the events of the new connection. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The tasks a session lives on
 (its receive loop, its keepalive) MUST run in a context of their own: a
 connection opened inside a tool handler (a handoff reconnecting the session)
 would otherwise carry that call's context into every event of the new
-connection. A provider whose model cannot call tools says so
+connection.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-059", "kind": "behavior", "applies": "§12.4 What a provider owes its tool calls, the realtime feature: a provider whose model cannot call tools declares supports_tools false; the channel then declares no tool to it and warns once. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A provider whose model cannot call tools says so
 (`supports_tools` false); the channel then declares none to it and warns
-once, rather than leave every call unanswerable. A provider whose service
+once, rather than leave every call unanswerable.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-060", "kind": "behavior", "applies": "§12.4 What a provider owes its tool calls, the realtime feature's provider contract, a provider whose service ends a turn on a function call it could not parse: it tells the model that the call did not run, once until the user speaks again. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A provider whose service
 ends a turn on a function call it could not parse MUST tell the model that the call did not run,
 since nothing else will, once until the user speaks again, so a model that
 keeps failing does not loop on the reminder.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.4-004", "kind": "behavior", "applies": "§12.4 Realtime Voice Channel (Speech-to-Speech); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.4-061", "kind": "behavior", "applies": "§12.4 Callback to hook mapping, the realtime feature: on_audio fires no hook; its frames are routed to the transport (the table's header folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **RealtimeVoiceProvider callback → hook mapping:**
 
 | Provider Callback | Hook Fired | Notes |
 |---|---|---|
 | `on_audio` | — | Audio frames routed to transport; no hook (too high frequency) |
-| `on_transcription` | ON_TRANSCRIPTION | User and AI transcripts emitted as RoomEvents |
-| `on_speech_start` | ON_SPEECH_START | Provider-detected speech start |
+| <!-- /rfc --><!-- rfc: {"id": "RK-12.4-062", "kind": "behavior", "applies": "§12.4 Callback to hook mapping, the realtime feature: on_transcription fires ON_TRANSCRIPTION; user and AI transcripts are emitted as RoomEvents (where configured, as the session lifecycle's step 4 says). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`on_transcription` | ON_TRANSCRIPTION | User and AI transcripts emitted as RoomEvents |
+| <!-- /rfc --><!-- rfc: {"id": "RK-12.4-063", "kind": "behavior", "applies": "§12.4 Callback to hook mapping, the realtime feature: on_speech_start and on_speech_end, the speech edges the provider detects, fire ON_SPEECH_START and ON_SPEECH_END. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`on_speech_start` | ON_SPEECH_START | Provider-detected speech start |
 | `on_speech_end` | ON_SPEECH_END | Provider-detected speech end |
-| `on_tool_call` | ON_TOOL_CALL | Tool execution request from AI, behind the pre-execution gate below (ON_REALTIME_TOOL_CALL is superseded, Section 9.2) |
-| `on_tool_call_cancelled` | ON_TOOL_CALL | Model abandoned outstanding calls; the channel interrupts their handlers, sends nothing back, and reports them to the observers with the cancelled marker, except a call whose own handler caused the reconnect (Section 9.3) |
-| `on_delegation` | ON_REALTIME_DELEGATION | Model handed reasoning to a backend, hosted or integrator; the integrator target is served by the ReasoningBackend (Section 12.4.1) |
-| `on_response_start` | — | Internal lifecycle; no hook (use AFTER_BROADCAST for response tracking) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-12.4-064", "kind": "behavior", "applies": "§12.4 Callback to hook mapping, the realtime feature: on_tool_call fires ON_TOOL_CALL for the call, behind the pre-execution gate (ON_REALTIME_TOOL_CALL is superseded, §9.2). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`on_tool_call` | ON_TOOL_CALL | Tool execution request from AI, behind the pre-execution gate below (ON_REALTIME_TOOL_CALL is superseded, Section 9.2) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-12.4-065", "kind": "behavior", "applies": "§12.4 Callback to hook mapping, the realtime feature: on_tool_call_cancelled: the channel interrupts the handlers of the abandoned calls, sends nothing back for them, and reports them to ON_TOOL_CALL's observers with the cancelled marker, except a call whose own handler caused the reconnect (§9.3). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`on_tool_call_cancelled` | ON_TOOL_CALL | Model abandoned outstanding calls; the channel interrupts their handlers, sends nothing back, and reports them to the observers with the cancelled marker, except a call whose own handler caused the reconnect (Section 9.3) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-12.4-066", "kind": "behavior", "applies": "§12.4 Callback to hook mapping, the realtime feature: on_delegation fires ON_REALTIME_DELEGATION, for a hosted or an integrator target; the integrator target is served by the ReasoningBackend (§12.4.1). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`on_delegation` | ON_REALTIME_DELEGATION | Model handed reasoning to a backend, hosted or integrator; the integrator target is served by the ReasoningBackend (Section 12.4.1) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-12.4-067", "kind": "structural", "applies": "§12.4 Callback to hook mapping, the realtime feature: on_response_start, on_response_end and on_usage map to no hook (on_usage relays the provider's own usage report unaltered, §12.4.2). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`on_response_start` | — | Internal lifecycle; no hook (use AFTER_BROADCAST for response tracking) |
 | `on_response_end` | — | Internal lifecycle; no hook (use AFTER_BROADCAST for response tracking) |
 | `on_usage` | — | The provider's own usage report, relayed unaltered; no hook (an integrator that bills a call reads it here, Section 12.4.2) |
-| `on_error` | ON_ERROR | Mapped to the global ON_ERROR hook (Section 9.2) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-12.4-068", "kind": "behavior", "applies": "§12.4 Callback to hook mapping, the realtime feature: on_error fires the global ON_ERROR hook (§9.2). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`on_error` | ON_ERROR | Mapped to the global ON_ERROR hook (Section 9.2) |
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.4-005", "kind": "behavior", "applies": "§12.4 Realtime Voice Channel (Speech-to-Speech); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.4-005", "kind": "non_testable", "applies": "§12.4 Callback to hook mapping, the realtime feature: an integrator who needs response-level tracking uses AFTER_BROADCAST on the transcription events the provider emits; only the integrator keeps it (why on_response_start and on_response_end map to no hook, and the pointer to the boundaries a full-duplex provider synthesizes, §12.4.1, informative, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 **Note:** `on_response_start` and `on_response_end` are internal provider
 lifecycle callbacks used for audio routing and session bookkeeping. They do not
 map to hooks because they don't represent events the integrator needs to act on.
@@ -13646,11 +13660,11 @@ transcription events emitted by the provider. A full-duplex provider has no
 response boundaries on its wire and synthesizes them (Section 12.4.1).
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.4-006", "kind": "behavior", "applies": "§12.4 Realtime Voice Channel (Speech-to-Speech); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.4-069", "kind": "behavior", "applies": "§12.4 Session configuration, the realtime feature: a session starts with the configuration it was opened with (its own prompt, voice or tools), else the one set for its room (the active agent of a pipeline installed there, §19.5), else the channel's. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Session configuration.** A session starts with the configuration it was
 opened with (its own prompt, voice or tools), else the one set for its room
 (the active agent of a pipeline installed there, Section 19.5), else the
-channel's. Reconfiguring a session (a handoff, an application changing one
+channel's.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-070", "kind": "behavior", "applies": "§12.4 Session configuration, the realtime feature: reconfiguring a session (a handoff, an application changing one call's instructions) changes that session only: the channel's configuration for future sessions and the sessions of other rooms do not change with it, and the channel's configuration changes only through the channel's own configuration call. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Reconfiguring a session (a handoff, an application changing one
 call's instructions) changes that session only: the channel's configuration
 for future sessions, and the sessions of other rooms, MUST NOT change with it,
 since one channel serves every room it is attached to (Section 19.7). The
@@ -13658,49 +13672,53 @@ channel's configuration changes through the channel's own configuration call,
 never as a side effect of a session's.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.4-007", "kind": "behavior", "applies": "§12.4 Realtime Voice Channel (Speech-to-Speech); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.4-071", "kind": "behavior", "applies": "§12.4 Tool policy, the integrator's choice: a realtime channel takes a ToolPolicy (§21.1), with an AI channel's meaning and the same exempt names. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Tool policy:** A realtime channel MAY carry a ToolPolicy (Section 21.1),
-with the same meaning as an AI channel's and the same exempt names. It filters
+with the same meaning as an AI channel's and the same exempt names.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-072", "kind": "behavior", "applies": "§12.4 Tool policy, the realtime feature: the channel's policy filters the tools declared to the session, at connection and at every reconfiguration (a Tool Search reveal and a skill activation included), the catalogue a reasoning backend receives (§12.4.1) and what Tool Search names, and guards every call at the gate, whichever entry brought it (the provider's call, a call recovered from spoken text, a reasoning backend's call). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->It filters
 the tools declared to the session, at connection and at every reconfiguration
 (a Tool Search reveal and a skill activation included), the catalogue a
 reasoning backend receives (Section 12.4.1), and what Tool Search names; and it
 guards every call at the gate below, whichever entry brought it: the
 provider's own call, a call recovered from spoken text, a reasoning backend's
-call. A role override applies to the session's participant, with the role the
+call.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-073", "kind": "behavior", "applies": "§12.4 Tool policy, the realtime feature: a role override applies to the session's participant, with the role the store holds for it when the session's tools are first declared and again at each call; a role changed during the session holds at the gate from the next call on, even while the declared tools still reflect the former one. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A role override applies to the session's participant, with the role the
 store holds for it when the session's tools are first declared and again at
 each call: a role changed during the session MUST hold at the gate from the
-next call on, even while the declared tools still reflect the former one. A
+next call on, even while the declared tools still reflect the former one.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-074", "kind": "behavior", "applies": "§12.4 Tool policy, the realtime feature: a participant the store does not hold has no role, and the base rules apply to it (why the policy holds on every entry, informative, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
 participant the store does not hold has no role, and the base rules apply to
 it. A policy that held on the provider's calls and not on a backend's would be
 a door around it.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.4-008", "kind": "behavior", "applies": "§12.4 Realtime Voice Channel (Speech-to-Speech); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.4-075", "kind": "behavior", "applies": "§12.4 Tool call pre-execution gate, the realtime feature: before a realtime tool call is routed to whatever serves it, the channel applies, in this order, the declared-tool check (a name absent from a non-empty declared catalogue is refused), the channel's ToolPolicy when it has one, skill gating (§24.2), argument validation against the declared schema, and BEFORE_TOOL_USE (§9.2). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Tool call pre-execution gate:**
 
 Before a realtime tool call is routed to whatever serves it, the channel MUST
 apply, in this order: the declared-tool check (a name absent from a non-empty
 declared catalogue is refused), the channel's ToolPolicy when it has one
 (above), skill gating (Section 24.2), argument validation against the declared
-schema, and the BEFORE_TOOL_USE hook (Section 9.2). A tool the policy denies or
+schema, and the BEFORE_TOOL_USE hook (Section 9.2).<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-076", "kind": "behavior", "applies": "§12.4 Tool call pre-execution gate, the realtime feature: a tool the policy denies or a skill keeps closed is refused before its arguments are read, so its refusal never names what its schema requires; each refusal reads its cause's text (§21.1). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A tool the policy denies or
 a skill keeps closed is refused before its arguments are read, so its refusal
 never names what its schema requires; each refusal reads its cause's text
 (Section 21.1).
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.4-077", "kind": "behavior", "applies": "§12.4 Tool call pre-execution gate, the realtime feature: the gate applies identically whether the call is served by a tool handler, by an ON_TOOL_CALL hook or by a channel infrastructure tool (Tool Search, skill activation). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The gate's scope is the call, not its servant. It MUST apply identically whether
 the call is served by a tool handler, by an ON_TOOL_CALL hook, or by a channel
 infrastructure tool (Tool Search, skill activation) — otherwise a hook that
 denies a tool would deny it only under some configurations, and a host auditing
 tool use would not see every call.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.4-078", "kind": "behavior", "applies": "§12.4 Tool call pre-execution gate, the realtime feature: a call the gate refuses is still reported to ON_TOOL_CALL's observers (§9.3), and the report does not precede the refusal on the wire. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A call the gate refuses MUST still be reported through ON_TOOL_CALL's observers
 (Section 9.3), and the report MUST NOT precede the refusal on the wire: the
 provider is holding a turn open on the result, and an observer must not stand in
-front of it. Infrastructure tools are declared by the
+front of it.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-079", "kind": "behavior", "applies": "§12.4 Tool call pre-execution gate, the realtime feature: the declared-tool check admits the infrastructure tools the session declares, Tool Search's while it hides the session's catalogue, run_skill_script with an executor. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Infrastructure tools are declared by the
 channel rather than by the caller's catalogue, so the declared-tool check admits
 them when the session declares them: Tool Search's while it hides the session's
-catalogue, `run_skill_script` with an executor. One the session does not
-declare is refused as any undeclared tool is (Section 6.4). Those that only read or unlock (skill activation and reference reading,
+catalogue, `run_skill_script` with an executor.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-080", "kind": "behavior", "applies": "§12.4 Tool call pre-execution gate, the realtime feature: an infrastructure tool the session does not declare is refused as any undeclared tool is (§6.4). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->One the session does not
+declare is refused as any undeclared tool is (Section 6.4).<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-081", "kind": "behavior", "applies": "§12.4 Tool call pre-execution gate, the realtime feature: the infrastructure tools that only read or unlock (skill activation and reference reading, Tool Search: the exact names of §21.1) are exempt from skill gating; run_skill_script acts, and is gated like any other tool. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Those that only read or unlock (skill activation and reference reading,
 Tool Search: the exact names of Section 21.1) remain exempt from skill gating,
 which they exist to operate; `run_skill_script` acts, and is gated like any
 other tool.
@@ -13808,27 +13826,29 @@ to close.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-048", "kind": "behavior", "appl
 runtime's own words.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.4-010", "kind": "behavior", "applies": "§12.4 Realtime Voice Channel (Speech-to-Speech); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.4-082", "kind": "behavior", "applies": "§12.4 A response's calls are answered together, the realtime feature's provider contract, a provider that must be asked to continue once tool results are in: it asks once per model response, after that response has ended and every call it emitted has its result, not once per result (what asking per result costs, informative, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **A response's calls are answered together (normative).** A provider that
 must be asked to continue once tool results are in MUST ask once per model
 response, after that response has ended and every call it emitted has its
 result, not once per result. Two calls issued in parallel would otherwise ask
 twice, the first time while the response is still active, which the service
 rejects, and the second call's output would then wait, unspoken, for the
-caller's next turn. A result for a call of a response the conversation has
+caller's next turn.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-083", "kind": "behavior", "applies": "§12.4 A response's calls are answered together, the realtime feature's provider contract, a provider that must be asked to continue once tool results are in: a result for a call of a response the conversation has already left joins the response in progress, which covers it with its single request once it has ended and its own calls have their results; with no response in progress, the provider asks at once. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A result for a call of a response the conversation has
 already left (the caller spoke again and a new response began) joins the
 response in progress: that response's single request covers it, once the
 response has ended and its own calls have their results, and with no response
-in progress the provider asks at once. A request the provider has made counts
+in progress the provider asks at once.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-084", "kind": "behavior", "applies": "§12.4 A response's calls are answered together, the realtime feature's provider contract, a provider that must be asked to continue once tool results are in: a request it has made counts as a response in progress until the response it asked for begins; a result submitted in between is covered by the next request, and never holds the new response back nor waits for the caller's next turn. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A request the provider has made counts
 as a response in progress until the response it asked for begins, and a
 result submitted in between is not part of that response: the next request
 covers it. Such a result never holds the new response back, and never waits
 for the caller's next turn.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.4-085", "kind": "behavior", "applies": "§12.4 A response's calls are answered together, the realtime feature's provider contract, a provider that must be asked to continue once tool results are in: every request it makes reads that same state, the continuation, a non-silent text injection and the request that closes the caller's turn in the endpointing role alike, and none is sent while a response is in progress, active or requested. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Every request the provider makes reads that same state, whoever makes it: the
 continuation, a non-silent text injection, the request that closes the
 caller's turn in the endpointing role (Section 12.4, audio pipeline). None
-sends a request while a response is in progress, active or requested. And a
+sends a request while a response is in progress, active or requested.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-086", "kind": "behavior", "applies": "§12.4 A response's calls are answered together, the realtime feature's provider contract, a provider that must be asked to continue once tool results are in: a continuation never starts while the caller is speaking (between activity start and end in the endpointing role, between the provider's own speech start and end otherwise): it is held until the caller's turn ends, and the request that answers the turn covers it (what a continuation over the caller costs, informative, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->And a
 continuation never starts while the caller is speaking (between activity
 start and activity end in the endpointing role, between the provider's own
 speech start and speech end otherwise): it is held until the caller's turn
@@ -13837,51 +13857,54 @@ the results already sit in the conversation ahead of what the caller said. A
 continuation that started anyway would speak over the caller, and the
 caller's own request would then find a response in progress and leave the
 turn unanswered.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.4-087", "kind": "behavior", "applies": "§12.4 A response's calls are answered together, the realtime feature's provider contract, a provider that must be asked to continue once tool results are in: a caller's turn whose request found a response in progress is still owed one, asked once that response ends. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A caller's turn whose request found a response in progress is still owed
-one: the provider asks once that response ends. Any request the provider
+one: the provider asks once that response ends.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-088", "kind": "behavior", "applies": "§12.4 A response's calls are answered together, the realtime feature's provider contract, a provider that must be asked to continue once tool results are in: any request sent after the caller's turn was committed covers that turn, a continuation included, so the turn is never answered twice. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Any request the provider
 sends after the caller's turn was committed covers it, a continuation
-included, so the turn is never answered twice. A request the service rejects
+included, so the turn is never answered twice.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-089", "kind": "behavior", "applies": "§12.4 A response's calls are answered together, the realtime feature's provider contract, a provider that must be asked to continue once tool results are in: a request the service rejects is no longer in progress: the error that answers it releases the state. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A request the service rejects
 is no longer in progress: the error that answers it releases the state, or
 the session would never ask again.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.4-011", "kind": "behavior", "applies": "§12.4 Realtime Voice Channel (Speech-to-Speech); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.4-090", "kind": "behavior", "applies": "§12.4 Text injection, the realtime feature: ON_REALTIME_TEXT_INJECTED fires after a text is injected into a realtime session's conversation context (what a text injection is, informative, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Text injection** refers to programmatically inserting text into a realtime
 session's conversation context (e.g., instructions, tool results, or context
 updates) rather than sending audio. The ON_REALTIME_TEXT_INJECTED hook fires
 after such an injection, allowing integrators to log or react to context
-changes. It receives the event of the injection itself, the same on every host
+changes.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-091", "kind": "behavior", "applies": "§12.4 Text injection, the realtime feature: the hook receives the event of the injection itself, the same on every host of a realtime model (a realtime voice channel, a conference with a realtime model plugged in): its source the host channel, its content the text, its metadata injected_role (the intent) and session_id, and, for an injection that carries a broadcast event, injected_from (its channel_id and event_id). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->It receives the event of the injection itself, the same on every host
 of a realtime model (a realtime voice channel, a conference with a realtime
 model plugged in): its source the host channel, its content the text, and its
 metadata `injected_role` (the intent) and `session_id`; an injection that
 carries a broadcast event names it in `injected_from` (its `channel_id` and
-`event_id`). A session the host no longer holds, or one its provider ended
+`event_id`).<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-092", "kind": "behavior", "applies": "§12.4 Text injection, the realtime feature: a session the host no longer holds, or one its provider ended before the host let it go, is not injected into: the injection is not_sent with reason realtime_session_gone, and the hook does not fire. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A session the host no longer holds, or one its provider ended
 before the host let it go, is not injected into: the injection is `not_sent`
 with reason `realtime_session_gone`, and the hook does not fire.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.4-012", "kind": "behavior", "applies": "§12.4 Realtime Voice Channel (Speech-to-Speech); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.4-093", "kind": "behavior", "applies": "§12.4 The role is an intent, the realtime feature: inject_text's role names what the integrator means, not a wire field, and each provider maps that meaning onto what its wire offers (why the providers share no vocabulary, informative, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **The role is an intent, not a wire field (normative).** The providers do not
 share a vocabulary: one takes system and user messages, one takes only user and
 model turns, one takes no turns at all. `inject_text` therefore names what the
-integrator means, and each provider maps that meaning onto what its wire offers:
+integrator means, and each provider maps that meaning onto what its wire offers:<!-- /rfc --><!-- rfc: {"id": "RK-12.4-094", "kind": "behavior", "applies": "§12.4 The role is an intent, the realtime feature's provider contract, what any realtime provider must do with the system intent: an instruction from the application (how to behave, or what to do now), which the model acts on at once when the injection is not silent. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 - `system` — an **instruction** from the application: how to behave, or what to
   do now ("greet the user by first name, then listen"). Non-silent, the model
-  acts on it at once.
+  acts on it at once.<!-- /rfc --><!-- rfc: {"id": "RK-12.4-095", "kind": "behavior", "applies": "§12.4 The role is an intent, the realtime feature's provider contract, what any realtime provider must do with the user intent: content for the conversation, a user turn the model answers on a turn-based provider, content the model says aloud in its own words on a full-duplex provider that takes only appends (§12.4.1). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - `user` — **content** for the conversation. On a turn-based provider it is a
   user turn the model answers; on a full-duplex provider that takes only appends
-  it is content the model says aloud, in its own words (Section 12.4.1).
+  it is content the model says aloud, in its own words (Section 12.4.1).<!-- /rfc --><!-- rfc: {"id": "RK-12.4-096", "kind": "behavior", "applies": "§12.4 The role is an intent, the realtime feature's provider contract, what any realtime provider must do with the assistant intent: a line the agent says to the user now, carried by the wire's primitive that makes the agent speak a text where it has one, else asked of the model as an instruction that quotes the line as §6.4 quotes a text; it never reaches the model as something the user said. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - `assistant` — a **line** the agent says to the user now (a configured
   greeting, a scripted announcement). Where the wire has a primitive that makes
   the agent speak a text, the provider uses it, verbatim or paraphrased as that
   primitive does; otherwise it asks the model to say the line, as an
   instruction that quotes the line as Section 6.4 quotes a text, so the line
   cannot end the instruction and add to it. It MUST NOT reach the model as
-  something the user said: the model would answer its own line.
-- `silent` — any intent, added as context without asking for a response.
+  something the user said: the model would answer its own line.<!-- /rfc --><!-- rfc: {"id": "RK-12.4-097", "kind": "behavior", "applies": "§12.4 The role is an intent, the realtime feature's provider contract, what any realtime provider must do with silent, whatever the intent: the text is added as context, without asking for a response. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+- `silent` — any intent, added as context without asking for a response.<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.4-098", "kind": "non_testable", "applies": "§12.4 The role is an intent, the realtime feature's provider contract, where a provider accepts further intents its wire carries: it documents them, which only a review of its documentation shows (the pointer to the INSTRUCTION event that carries the same intent outside a realtime session, §10.1.1, informative, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A provider MAY accept further intents its wire carries and MUST document them.
 
 Outside a realtime session the same intent is an `INSTRUCTION` event
@@ -13890,45 +13913,53 @@ pipeline, as the input of one turn marked as the application's, and is never
 stored.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.4-013", "kind": "behavior", "applies": "§12.4 Realtime Voice Channel (Speech-to-Speech); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.4-099", "kind": "behavior", "applies": "§12.4 Text from another channel, the realtime feature: a text event another channel broadcast into the room reaches a realtime session (a realtime voice channel's, a conference's with a realtime model plugged in) as content someone else wrote. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Text from another channel (normative).** A text event another channel
 broadcast into the room reaches a realtime session (a realtime voice channel's,
 a conference's with a realtime model plugged in) as what it is: content
-someone else wrote. It is injected with the `user` intent, never `system` nor
+someone else wrote.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-100", "kind": "behavior", "applies": "§12.4 Text from another channel, the realtime feature: such an event is injected with the user intent, never system nor assistant, its author named as a transcript names them (a person by their name and the channel they wrote through, anything else by its channel id) and its text quoted as §6.4 quotes a text from outside. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->It is injected with the `user` intent, never `system` nor
 `assistant`, its author named as a transcript names them (a person by their
 name and the channel they wrote through, anything else by its channel id) and
-its text quoted as Section 6.4 quotes a text from outside: `Marie · sms: “…”`.
+its text quoted as Section 6.4 quotes a text from outside: `Marie · sms: “…”`.<!-- /rfc --><!-- rfc: {"id": "RK-12.4-101", "kind": "behavior", "applies": "§12.4 Text from another channel, the realtime feature: nothing the event carries chooses the intent, its metadata included. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Nothing the event carries chooses the intent, its metadata included, which a
-remote client can write. An event a hook injects (Section 9.4) asks no
+remote client can write.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-102", "kind": "behavior", "applies": "§12.4 Text from another channel, the realtime feature: an event a hook injects (§9.4), and an edit, a delete or an event that opens no turn (§10.3 rule 4), is injected the same way but silent, so the model, a hosted one included, takes it as context and is asked no answer. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An event a hook injects (Section 9.4) asks no
 agent, a hosted model included: it is injected the same way, `silent`, so
 the model takes it as context and is asked no answer; so is an edit, a
-delete or an event that opens no turn (Section 10.3 rule 4). The application
+delete or an event that opens no turn (Section 10.3 rule 4).<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-103", "kind": "behavior", "applies": "§12.4 Text from another channel, the realtime feature: the application directs the model through its own doors, inject_text with the system intent or a delivery marked as an instruction (§22.1). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The application
 directs the model through its own doors: `inject_text` with the `system`
-intent, or a delivery marked as an instruction (Section 22.1). A blank text
+intent, or a delivery marked as an instruction (Section 22.1).<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-104", "kind": "behavior", "applies": "§12.4 Text from another channel, the realtime feature: a blank text reaches no session. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A blank text
 reaches no session.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.4-105", "kind": "behavior", "applies": "§12.4 Text from another channel, the realtime feature: text that directs the model is injected with the system role, never as user (why, on a full-duplex provider, and the example of a greeting, informative, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Text that directs the model MUST be injected with the `system` role, never as
 `user`: on a full-duplex provider a `user` injection is voiced as the model's
 own words, so an instruction sent that way is said, or improvised upon, instead
 of followed. An instruction to greet ("greet the user by first name") is
 `system`; the greeting itself, when the application wrote it, is `assistant`.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.4-106", "kind": "behavior", "applies": "§12.4 Text from another channel, the realtime feature's provider contract, a provider with a speech primitive of its own (an agent message, a direct text-to-speech call): it carries the assistant intent on it; a primitive that relays information in the model's own words is not one. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A provider with a speech primitive of its own carries `assistant` on it — an
 agent message, a direct text-to-speech call. A primitive that relays
 information in the model's own words is not one: a model handed a written
 greeting that way may improvise another, down to a name the application never
-supplied. A provider whose only instruction primitive rewrites the
+supplied.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-107", "kind": "behavior", "applies": "§12.4 Text from another channel, the realtime feature's provider contract, a provider whose only instruction primitive rewrites the prompt: it keeps that for a silent system injection, and delivers a non-silent one where the model answers at once (a user message). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A provider whose only instruction primitive rewrites the
 prompt keeps that for a silent `system`, and delivers a non-silent one where
 the model answers at once (a user message), or the instruction waits
 for the user to speak.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.4-108", "kind": "behavior", "applies": "§12.4 Text from another channel, the realtime feature's provider contract, a provider whose wire cannot express an intent: it maps the intent to the nearest primitive that keeps its effect, and documents the mapping in its inject_text. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A provider whose wire cannot express an intent MUST map it to the nearest
 primitive that keeps the intent's effect (an instruction still directs, content
-is still content) and MUST document the mapping in its `inject_text`. A mapping
+is still content) and MUST document the mapping in its `inject_text`.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-109", "kind": "behavior", "applies": "§12.4 Text from another channel, the realtime feature's provider contract, a provider with no way to carry an intent: it refuses it (not_sent, with a reason) rather than deliver it as something else. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A mapping
 that changes the effect is not an implementation detail: a provider with no way
 to carry an intent MUST refuse it (`not_sent`, with a reason) rather than
 deliver it as something else.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.4-110", "kind": "behavior", "applies": "§12.4 Text from another channel, the realtime feature's provider contract, a provider that joins an injected text to instructions of its own: it keeps the two apart, an instruction a resumption left unapplied in a block of its own before the injected text, content it adds to a prompt it rewrites for a silent injection in a <context> block after the instructions. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A provider that joins an injected text to instructions of its own MUST keep
 the two apart, so that the text never reads as more of the instructions: an
 instruction a resumption left unapplied (below) is set apart in a block of its
@@ -13937,19 +13968,19 @@ rewrites for a silent injection is set apart in a `<context>` block
 after the instructions.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.4-014", "kind": "behavior", "applies": "§12.4 Realtime Voice Channel (Speech-to-Speech); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.4-111", "kind": "behavior", "applies": "§12.4 A reconfiguration's instruction takes effect, the realtime feature's provider contract, a provider that applies a reconfiguration by resuming the session under the instruction it started with: it still makes the new instruction govern the session; a session that holds no conversation yet reconnects without resuming, and one that holds one keeps its context and receives the new instruction with its next non-silent injection. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **A reconfiguration's instruction takes effect.** A provider that applies a
 reconfiguration by resuming the session, where the service resumes it under
 the instruction it started with, MUST still
 make the new instruction govern the session: a session that holds no
 conversation yet reconnects without resuming, since it has nothing to keep,
 and a session that holds one keeps its context and receives the new
-instruction with its next non-silent injection, which the model acts on. An
+instruction with its next non-silent injection, which the model acts on.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-112", "kind": "non_testable", "applies": "§12.4 A reconfiguration's instruction takes effect, the realtime feature: an integrator that reconfigures such a session directly follows it with an injection when the model must act on the change at once; only the integrator keeps it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An
 integrator that reconfigures such a session directly follows it with an
 injection when the model must act on the change at once.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.4-015", "kind": "behavior", "applies": "§12.4 Realtime Voice Channel (Speech-to-Speech); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.4-015", "kind": "structural", "applies": "§12.4 RealtimeAudioTransport interface, the realtime feature: name, accept(), send_audio(), send_message(), on_audio_received(), on_client_disconnected(), set_trace_emitter(), disconnect() and close(), audio reception pushed through on_audio_received(callback) rather than pulled from an iterator (the e.g. transport names and the rationale, informative, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **RealtimeAudioTransport interface:**
 
 ```
@@ -13971,7 +14002,7 @@ than a pull-based async iterator. This aligns with the transport pattern used by
 session boundaries.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.4-016", "kind": "behavior", "applies": "§12.4 Realtime Voice Channel (Speech-to-Speech); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.4-113", "kind": "behavior", "applies": "§12.4 Session lifecycle, the realtime feature: start_session reads the room scoped to its organization_id (§17.2); another organization's room is not found, and no session is created (the transport's accept and the call's parameters, steps 1 and 2, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Session lifecycle:**
 
 ```
@@ -13979,15 +14010,35 @@ session boundaries.
 2. start_session(room_id, participant_id, connection, metadata, organization_id)
    ├── Read the room scoped to organization_id (§17.2); another
    │   organization's room is not found, and no session is created
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.4-114", "kind": "behavior", "applies": "§12.4 Session lifecycle, the realtime feature: from the session's creation, the transport audio received is retained until the provider has connected, at most 1 MiB, new input past it dropped and logged. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
    ├── Create RealtimeSession
    ├── Retain transport audio received from here until the provider has
    │   connected (at most 1 MiB; past it, new input is dropped and logged)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.4-115", "kind": "behavior", "applies": "§12.4 Session lifecycle, the realtime feature: the provider is connected with the session's system prompt, voice and tools. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
    ├── Connect provider with system_prompt, voice, tools
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.4-128", "kind": "behavior", "applies": "§12.4 Session lifecycle, the realtime feature: the callbacks are wired, transport audio to the provider and provider audio to the transport. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
    ├── Wire callbacks: transport audio → provider, provider audio → transport
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.4-116", "kind": "behavior", "applies": "§12.4 Session lifecycle, the realtime feature: the retained audio is flushed to the provider in arrival order, frames arriving during the flush included, before ON_SESSION_STARTED, and a failed start discards it (step 3, audio flowing both ways, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
    └── Flush the retained audio to the provider in arrival order, frames
        arriving during the flush included, before ON_SESSION_STARTED; a
        failed start discards it
 3. Audio flows bidirectionally: Client ↔ Transport ↔ Provider
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.4-117", "kind": "behavior", "applies": "§12.4 Session lifecycle, the realtime feature: transcriptions are emitted as RoomEvents (if configured) after the model heard them, neither labelled nor held by identity verification (§11.7.3); a user transcription has chain_depth 0, an assistant transcription the depth of what the model last heard plus one (§8.3), and a silent injection leaves that depth as it was. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 4. Transcriptions emitted as RoomEvents (if configured), after the model
    heard them: identity verification neither labels nor holds them, and
    the integrator gates the session instead (§11.7.3). A user
@@ -13996,14 +14047,22 @@ session boundaries.
    after the user spoke, the injected event's depth plus one after a text
    injection. A silent injection asks no answer and leaves that depth as
    it was.
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.4-118", "kind": "behavior", "applies": "§12.4 Session lifecycle, the realtime feature: a tool call passes the pre-execution gate, then is handled by the async tool handler when one is provided, else by the ON_TOOL_CALL hook. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 5. Tool calls pass the pre-execution gate, then are handled via:
    ├── Async tool handler function (if provided)
    └── ON_TOOL_CALL hook (fallback)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.4-119", "kind": "behavior", "applies": "§12.4 Session lifecycle, the realtime feature: end_session() disconnects the provider and the transport. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 6. end_session() → disconnect provider and transport
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.4-017", "kind": "behavior", "applies": "§12.4 Realtime Voice Channel (Speech-to-Speech); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.4-120", "kind": "behavior", "applies": "§12.4 Audio pipeline in speech-to-speech mode, the integrator's choice: an audio pipeline (§12.3) configured on a realtime channel sits between the transport and the provider, its stages in the order shown (the typical uses, informative, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Audio pipeline in speech-to-speech mode:**
 
 When using a speech-to-speech provider, the audio pipeline (Section 12.3) MAY be
@@ -14022,32 +14081,37 @@ Typical use cases:
 - **Denoising** — cleaner audio improves AI recognition accuracy
 - **Diarization** — identify which speaker is talking in multi-party calls
 - **Audio level monitoring** (via optional VAD) — for UI indicators
-- **Activity logging and metrics** — for observability
+- **Activity logging and metrics** — for observability<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.4-121", "kind": "behavior", "applies": "§12.4 Audio pipeline in speech-to-speech mode, the realtime feature: a VAD is optional in this mode; a configured VAD serves one of two roles, set by the provider, endpointing on a provider that takes turns (where an implementation offers that role, RK-12.4-124), observation on a full-duplex provider. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 VAD is OPTIONAL in this mode, and a configured VAD serves one of two roles,
 set by the provider: endpointing on a provider that takes turns, observation on
 a full-duplex provider.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.4-018", "kind": "behavior", "applies": "§12.4 Realtime Voice Channel (Speech-to-Speech); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.4-018", "kind": "behavior", "applies": "§12.4 Observation role, the realtime feature: the pipeline VAD feeds diarization, level metering and metrics, and does not control when the speech-to-speech provider responds; turn-taking is the provider's own endpointing. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Observation.** The VAD feeds diarization, level metering and
 metrics; it does NOT control when the speech-to-speech provider responds.
 Turn-taking is fully managed by the provider's own endpointing.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.4-019", "kind": "behavior", "applies": "§12.4 Realtime Voice Channel (Speech-to-Speech); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.4-122", "kind": "behavior", "applies": "§12.4 Endpointing role, the realtime feature, where an implementation offers it: the pipeline VAD drives turn-taking and the provider's server VAD is disabled (why the role exists, informative, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Endpointing.** The pipeline VAD drives turn-taking and the provider's server
 VAD is disabled. This exists because a provider's endpointing is not always the
 right one: an integrator may have a VAD tuned to their acoustics, or need the
-same turn behaviour across several providers whose endpointing differs. In this
+same turn behaviour across several providers whose endpointing differs.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-123", "kind": "behavior", "applies": "§12.4 Endpointing role, the realtime feature, where an implementation offers it: the implementation signals activity start and end to the provider, and does not rely on provider-side speech events for turn boundaries. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->In this
 role the implementation MUST signal activity start and end to the provider, and
 MUST NOT rely on provider-side speech events for turn boundaries.
+<!-- /rfc -->
 
-An implementation that supports only the observation role is conformant. A
+<!-- rfc: {"id": "RK-12.4-124", "kind": "behavior", "applies": "§12.4 Endpointing role, the realtime feature: an implementation may support only the observation role, and stays conformant. Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->
+An implementation that supports only the observation role is conformant.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-125", "kind": "behavior", "applies": "§12.4 Endpointing role, the realtime feature: a full-duplex provider admits only the observation role (§12.4.1). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
 full-duplex provider admits only the observation role (Section 12.4.1).
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.4-126", "kind": "structural", "applies": "§12.4 RealtimeVoiceChannel, the realtime feature: it accepts an AudioPipelineConfig as VoiceChannel does. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The `RealtimeVoiceChannel` accepts an `AudioPipelineConfig` in the same way as
-`VoiceChannel`. When a pipeline is configured, inbound audio frames are processed
+`VoiceChannel`.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-127", "kind": "behavior", "applies": "§12.4 RealtimeVoiceChannel, the realtime feature: when a pipeline is configured, inbound audio frames go through it before they are forwarded to the provider. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->When a pipeline is configured, inbound audio frames are processed
 through the pipeline before being forwarded to the provider.
 <!-- /rfc -->
 
