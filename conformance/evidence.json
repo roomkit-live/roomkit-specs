@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "python_commit": "651ae82c198066cc771ad2fcfdc6995fdad25c99",
+  "python_commit": "91320acb5d3fb53b50ea63d69764fdacc420297b",
   "retired": [
     "RK-1.4-001",
     "RK-10.1-002",
@@ -33768,6 +33768,442 @@
       ],
       "artifact": {
         "path": "conformance/executions/rust-8f49956-postgres-redis-executors-current-thread.xml",
+        "format": "cargo_junit",
+        "sha256": "3067aaa25e3007c98d15a6d5a80cc51eacf36d6ed27b96055aeb5671e813c3f9"
+      },
+      "counts": {
+        "passed": 3347,
+        "skipped": 46
+      },
+      "results_sha256": "65d154f8ff89d2e900df8ae7c265f43b687dcdd87ce40265ca0220b1b97ee798"
+    },
+    {
+      "id": "python-postgres-scenarios-91320ac-postgres",
+      "implementation": "python",
+      "implementation_commit": "91320acb5d3fb53b50ea63d69764fdacc420297b",
+      "rfc_commit": "9e407ff7df2c5f211915d49a37419b076014a406",
+      "corpus_commit": "72252e243777adedd92e5eec2fac396cec4c68e0",
+      "rfc_sha256": "ccc83193aa643c7c3d6d4cad79d81fc5cc52dec5d544de7cb06a44d953e00c9d",
+      "backend": "postgres",
+      "runtime": "asyncio",
+      "command": [
+        "env",
+        "POSTGRES_DSN=postgresql://postgres:postgres@localhost:5432/roomkit_test",
+        "REDIS_URL=redis://localhost:6379",
+        "uv",
+        "run",
+        "pytest",
+        "-v",
+        "-n",
+        "auto",
+        "--dist",
+        "worksteal",
+        "--junitxml=postgres-scenarios.xml",
+        "tests/conformance/test_postgres.py"
+      ],
+      "artifact": {
+        "path": "conformance/executions/python-postgres-scenarios-91320ac.xml",
+        "format": "pytest_junit",
+        "sha256": "39f4160baf7fe880c0e3c4ae641088cdf2eec28d9ee4695792f64177308b86c6"
+      },
+      "counts": {
+        "passed": 581
+      },
+      "results_sha256": "77578d982e75fcb7b19e7cbdce4b44851eb74f583878c909d4557a78a68139f2"
+    },
+    {
+      "id": "python-redis-turns-91320ac-memory-redis-turns",
+      "implementation": "python",
+      "implementation_commit": "91320acb5d3fb53b50ea63d69764fdacc420297b",
+      "rfc_commit": "9e407ff7df2c5f211915d49a37419b076014a406",
+      "corpus_commit": "72252e243777adedd92e5eec2fac396cec4c68e0",
+      "rfc_sha256": "ccc83193aa643c7c3d6d4cad79d81fc5cc52dec5d544de7cb06a44d953e00c9d",
+      "backend": "memory+redis-turns",
+      "runtime": "asyncio",
+      "command": [
+        "env",
+        "-u",
+        "POSTGRES_DSN",
+        "ROOMKIT_TEST_TURN_BACKEND=redis",
+        "REDIS_URL=redis://localhost:6379",
+        "uv",
+        "run",
+        "--with",
+        "fastapi",
+        "--with",
+        "httpx2",
+        "pytest",
+        "-q",
+        "-n",
+        "auto",
+        "--dist",
+        "worksteal",
+        "--junitxml=redis-turns.xml"
+      ],
+      "artifact": {
+        "path": "conformance/executions/python-redis-turns-91320ac.xml",
+        "format": "pytest_junit",
+        "sha256": "16e64edafa07b8fcf2fe6b8f872b573578088f7f9bd17ed1d0e56b45680d0bb7"
+      },
+      "counts": {
+        "passed": 3371,
+        "skipped": 22
+      },
+      "results_sha256": "913dba0eeea6f12c8459b0e9b807611d01e947b62ae4ab9c99e5f8df59fc65df"
+    },
+    {
+      "id": "python-redis-turns-91320ac-sqlite-redis-turns",
+      "implementation": "python",
+      "implementation_commit": "91320acb5d3fb53b50ea63d69764fdacc420297b",
+      "rfc_commit": "9e407ff7df2c5f211915d49a37419b076014a406",
+      "corpus_commit": "72252e243777adedd92e5eec2fac396cec4c68e0",
+      "rfc_sha256": "ccc83193aa643c7c3d6d4cad79d81fc5cc52dec5d544de7cb06a44d953e00c9d",
+      "backend": "sqlite+redis-turns",
+      "runtime": "asyncio",
+      "command": [
+        "env",
+        "-u",
+        "POSTGRES_DSN",
+        "ROOMKIT_TEST_TURN_BACKEND=redis",
+        "REDIS_URL=redis://localhost:6379",
+        "uv",
+        "run",
+        "--with",
+        "fastapi",
+        "--with",
+        "httpx2",
+        "pytest",
+        "-q",
+        "-n",
+        "auto",
+        "--dist",
+        "worksteal",
+        "--junitxml=redis-turns.xml"
+      ],
+      "artifact": {
+        "path": "conformance/executions/python-redis-turns-91320ac.xml",
+        "format": "pytest_junit",
+        "sha256": "16e64edafa07b8fcf2fe6b8f872b573578088f7f9bd17ed1d0e56b45680d0bb7"
+      },
+      "counts": {
+        "passed": 749,
+        "skipped": 11
+      },
+      "results_sha256": "0a13db4c8ec816d13b1d1d2c03c03e0312f74cc83c2f4616527e5771f74e744b"
+    },
+    {
+      "id": "python-rule-links-91320ac-memory",
+      "implementation": "python",
+      "implementation_commit": "91320acb5d3fb53b50ea63d69764fdacc420297b",
+      "rfc_commit": "9e407ff7df2c5f211915d49a37419b076014a406",
+      "corpus_commit": "72252e243777adedd92e5eec2fac396cec4c68e0",
+      "rfc_sha256": "ccc83193aa643c7c3d6d4cad79d81fc5cc52dec5d544de7cb06a44d953e00c9d",
+      "backend": "memory",
+      "runtime": "asyncio",
+      "command": [
+        "env",
+        "-u",
+        "POSTGRES_DSN",
+        "ROOMKIT_TEST_TURN_BACKEND=memory",
+        "uv",
+        "run",
+        "pytest",
+        "tests/conformance",
+        "-q",
+        "-n",
+        "4",
+        "-p",
+        "no:cacheprovider",
+        "--junitxml=python-conformance.xml"
+      ],
+      "artifact": {
+        "path": "conformance/executions/python-rule-links-91320ac.xml",
+        "format": "pytest_junit",
+        "sha256": "4e7f39bb2ee2f6d535943f449c4f9e33ad01c1f2c908b8ca1f53071f80942eea"
+      },
+      "counts": {
+        "passed": 3385,
+        "skipped": 8
+      },
+      "results_sha256": "4a95563c42fab9a14e1e30dd12f6f0503a7d6eaca8bfd65960ebd000ea15dea9"
+    },
+    {
+      "id": "python-rule-links-91320ac-sqlite",
+      "implementation": "python",
+      "implementation_commit": "91320acb5d3fb53b50ea63d69764fdacc420297b",
+      "rfc_commit": "9e407ff7df2c5f211915d49a37419b076014a406",
+      "corpus_commit": "72252e243777adedd92e5eec2fac396cec4c68e0",
+      "rfc_sha256": "ccc83193aa643c7c3d6d4cad79d81fc5cc52dec5d544de7cb06a44d953e00c9d",
+      "backend": "sqlite",
+      "runtime": "asyncio",
+      "command": [
+        "env",
+        "-u",
+        "POSTGRES_DSN",
+        "ROOMKIT_TEST_TURN_BACKEND=memory",
+        "uv",
+        "run",
+        "pytest",
+        "tests/conformance",
+        "-q",
+        "-n",
+        "4",
+        "-p",
+        "no:cacheprovider",
+        "--junitxml=python-conformance.xml"
+      ],
+      "artifact": {
+        "path": "conformance/executions/python-rule-links-91320ac.xml",
+        "format": "pytest_junit",
+        "sha256": "4e7f39bb2ee2f6d535943f449c4f9e33ad01c1f2c908b8ca1f53071f80942eea"
+      },
+      "counts": {
+        "passed": 754,
+        "skipped": 6
+      },
+      "results_sha256": "af6b587b7fa704fe543a782e110b50916956b1f1298a706fa8b12ddf077f67f2"
+    },
+    {
+      "id": "rust-63dccad-memory-current-thread",
+      "implementation": "rust",
+      "implementation_commit": "63dccadcd4c747ab7f98989f94349820fa3f805f",
+      "rfc_commit": "9e407ff7df2c5f211915d49a37419b076014a406",
+      "corpus_commit": "72252e243777adedd92e5eec2fac396cec4c68e0",
+      "rfc_sha256": "ccc83193aa643c7c3d6d4cad79d81fc5cc52dec5d544de7cb06a44d953e00c9d",
+      "backend": "memory",
+      "runtime": "current_thread",
+      "command": [
+        "env",
+        "ROOMKIT_CONFORMANCE_JUNIT=target/conformance",
+        "cargo",
+        "test",
+        "-p",
+        "roomkit",
+        "--test",
+        "conformance"
+      ],
+      "artifact": {
+        "path": "conformance/executions/rust-63dccad-memory-current-thread.xml",
+        "format": "cargo_junit",
+        "sha256": "a6c3b12c05b76f3b405080c1051b42ddfa347ae11170b5dc24d1efd24e623ac9"
+      },
+      "counts": {
+        "passed": 3240,
+        "skipped": 153
+      },
+      "results_sha256": "e60e63588b85fcb3c2ae6475ec8b0897971b628f69346525756b0b2bdd43557a"
+    },
+    {
+      "id": "rust-63dccad-memory-multi-thread-4",
+      "implementation": "rust",
+      "implementation_commit": "63dccadcd4c747ab7f98989f94349820fa3f805f",
+      "rfc_commit": "9e407ff7df2c5f211915d49a37419b076014a406",
+      "corpus_commit": "72252e243777adedd92e5eec2fac396cec4c68e0",
+      "rfc_sha256": "ccc83193aa643c7c3d6d4cad79d81fc5cc52dec5d544de7cb06a44d953e00c9d",
+      "backend": "memory",
+      "runtime": "multi_thread_4",
+      "command": [
+        "env",
+        "ROOMKIT_CONFORMANCE_JUNIT=target/conformance",
+        "cargo",
+        "test",
+        "-p",
+        "roomkit",
+        "--test",
+        "conformance"
+      ],
+      "artifact": {
+        "path": "conformance/executions/rust-63dccad-memory-multi-thread-4.xml",
+        "format": "cargo_junit",
+        "sha256": "69490c5da6e8e47d4a2a56572a58f3587577586548ad54cd8383f93a87eb1dc9"
+      },
+      "counts": {
+        "passed": 3240,
+        "skipped": 153
+      },
+      "results_sha256": "e60e63588b85fcb3c2ae6475ec8b0897971b628f69346525756b0b2bdd43557a"
+    },
+    {
+      "id": "rust-63dccad-sqlite-current-thread",
+      "implementation": "rust",
+      "implementation_commit": "63dccadcd4c747ab7f98989f94349820fa3f805f",
+      "rfc_commit": "9e407ff7df2c5f211915d49a37419b076014a406",
+      "corpus_commit": "72252e243777adedd92e5eec2fac396cec4c68e0",
+      "rfc_sha256": "ccc83193aa643c7c3d6d4cad79d81fc5cc52dec5d544de7cb06a44d953e00c9d",
+      "backend": "sqlite",
+      "runtime": "current_thread",
+      "command": [
+        "env",
+        "ROOMKIT_CONFORMANCE_JUNIT=target/conformance",
+        "cargo",
+        "test",
+        "-p",
+        "roomkit-sqlite",
+        "--test",
+        "conformance"
+      ],
+      "artifact": {
+        "path": "conformance/executions/rust-63dccad-sqlite-current-thread.xml",
+        "format": "cargo_junit",
+        "sha256": "8b367de620d0fd74e1d391428b8d4adca942767ccb739684bc88167de07fa5fe"
+      },
+      "counts": {
+        "passed": 3240,
+        "skipped": 153
+      },
+      "results_sha256": "e60e63588b85fcb3c2ae6475ec8b0897971b628f69346525756b0b2bdd43557a"
+    },
+    {
+      "id": "rust-63dccad-postgres-current-thread",
+      "implementation": "rust",
+      "implementation_commit": "63dccadcd4c747ab7f98989f94349820fa3f805f",
+      "rfc_commit": "9e407ff7df2c5f211915d49a37419b076014a406",
+      "corpus_commit": "72252e243777adedd92e5eec2fac396cec4c68e0",
+      "rfc_sha256": "ccc83193aa643c7c3d6d4cad79d81fc5cc52dec5d544de7cb06a44d953e00c9d",
+      "backend": "postgres",
+      "runtime": "current_thread",
+      "command": [
+        "env",
+        "ROOMKIT_CONFORMANCE_JUNIT=target/conformance",
+        "POSTGRES_DSN=postgresql://postgres@127.0.0.1:55443/postgres?sslmode=disable",
+        "cargo",
+        "test",
+        "-p",
+        "roomkit-postgres",
+        "--test",
+        "conformance"
+      ],
+      "artifact": {
+        "path": "conformance/executions/rust-63dccad-postgres-current-thread.xml",
+        "format": "cargo_junit",
+        "sha256": "b17274a12e65f9081c18e3bbd0efe11ea6e29774c36212bb84b7965fa2addfe4"
+      },
+      "counts": {
+        "passed": 3240,
+        "skipped": 153
+      },
+      "results_sha256": "e60e63588b85fcb3c2ae6475ec8b0897971b628f69346525756b0b2bdd43557a"
+    },
+    {
+      "id": "rust-63dccad-memory-redis-executors-current-thread",
+      "implementation": "rust",
+      "implementation_commit": "63dccadcd4c747ab7f98989f94349820fa3f805f",
+      "rfc_commit": "9e407ff7df2c5f211915d49a37419b076014a406",
+      "corpus_commit": "72252e243777adedd92e5eec2fac396cec4c68e0",
+      "rfc_sha256": "ccc83193aa643c7c3d6d4cad79d81fc5cc52dec5d544de7cb06a44d953e00c9d",
+      "backend": "memory+redis-executors",
+      "runtime": "current_thread",
+      "command": [
+        "env",
+        "REDIS_URL=redis://127.0.0.1:56393",
+        "ROOMKIT_CONFORMANCE_JUNIT=target/conformance",
+        "cargo",
+        "test",
+        "-p",
+        "roomkit",
+        "--features",
+        "redis",
+        "--test",
+        "conformance"
+      ],
+      "artifact": {
+        "path": "conformance/executions/rust-63dccad-memory-redis-executors-current-thread.xml",
+        "format": "cargo_junit",
+        "sha256": "965af1b89eb5713f14a4c5ac4029d920eb96833a370401c5d9f92bf1cb8f436c"
+      },
+      "counts": {
+        "passed": 3347,
+        "skipped": 46
+      },
+      "results_sha256": "65d154f8ff89d2e900df8ae7c265f43b687dcdd87ce40265ca0220b1b97ee798"
+    },
+    {
+      "id": "rust-63dccad-memory-redis-executors-multi-thread-4",
+      "implementation": "rust",
+      "implementation_commit": "63dccadcd4c747ab7f98989f94349820fa3f805f",
+      "rfc_commit": "9e407ff7df2c5f211915d49a37419b076014a406",
+      "corpus_commit": "72252e243777adedd92e5eec2fac396cec4c68e0",
+      "rfc_sha256": "ccc83193aa643c7c3d6d4cad79d81fc5cc52dec5d544de7cb06a44d953e00c9d",
+      "backend": "memory+redis-executors",
+      "runtime": "multi_thread_4",
+      "command": [
+        "env",
+        "REDIS_URL=redis://127.0.0.1:56393",
+        "ROOMKIT_CONFORMANCE_JUNIT=target/conformance",
+        "cargo",
+        "test",
+        "-p",
+        "roomkit",
+        "--features",
+        "redis",
+        "--test",
+        "conformance"
+      ],
+      "artifact": {
+        "path": "conformance/executions/rust-63dccad-memory-redis-executors-multi-thread-4.xml",
+        "format": "cargo_junit",
+        "sha256": "061a87ad345031c76a1d096057328fb8309fb77c32cd86e73cc6b677980bd1db"
+      },
+      "counts": {
+        "passed": 3347,
+        "skipped": 46
+      },
+      "results_sha256": "65d154f8ff89d2e900df8ae7c265f43b687dcdd87ce40265ca0220b1b97ee798"
+    },
+    {
+      "id": "rust-63dccad-sqlite-redis-executors-current-thread",
+      "implementation": "rust",
+      "implementation_commit": "63dccadcd4c747ab7f98989f94349820fa3f805f",
+      "rfc_commit": "9e407ff7df2c5f211915d49a37419b076014a406",
+      "corpus_commit": "72252e243777adedd92e5eec2fac396cec4c68e0",
+      "rfc_sha256": "ccc83193aa643c7c3d6d4cad79d81fc5cc52dec5d544de7cb06a44d953e00c9d",
+      "backend": "sqlite+redis-executors",
+      "runtime": "current_thread",
+      "command": [
+        "env",
+        "REDIS_URL=redis://127.0.0.1:56393",
+        "ROOMKIT_CONFORMANCE_JUNIT=target/conformance",
+        "cargo",
+        "test",
+        "-p",
+        "roomkit-sqlite",
+        "--test",
+        "conformance"
+      ],
+      "artifact": {
+        "path": "conformance/executions/rust-63dccad-sqlite-redis-executors-current-thread.xml",
+        "format": "cargo_junit",
+        "sha256": "31dcd5a10fe4d38b5ff59bf3dec21b065650a4f464a3b7b8ae65b6179b5d7d93"
+      },
+      "counts": {
+        "passed": 3347,
+        "skipped": 46
+      },
+      "results_sha256": "65d154f8ff89d2e900df8ae7c265f43b687dcdd87ce40265ca0220b1b97ee798"
+    },
+    {
+      "id": "rust-63dccad-postgres-redis-executors-current-thread",
+      "implementation": "rust",
+      "implementation_commit": "63dccadcd4c747ab7f98989f94349820fa3f805f",
+      "rfc_commit": "9e407ff7df2c5f211915d49a37419b076014a406",
+      "corpus_commit": "72252e243777adedd92e5eec2fac396cec4c68e0",
+      "rfc_sha256": "ccc83193aa643c7c3d6d4cad79d81fc5cc52dec5d544de7cb06a44d953e00c9d",
+      "backend": "postgres+redis-executors",
+      "runtime": "current_thread",
+      "command": [
+        "env",
+        "REDIS_URL=redis://127.0.0.1:56393",
+        "ROOMKIT_CONFORMANCE_JUNIT=target/conformance",
+        "POSTGRES_DSN=postgresql://postgres@127.0.0.1:55443/postgres?sslmode=disable",
+        "cargo",
+        "test",
+        "-p",
+        "roomkit-postgres",
+        "--test",
+        "conformance"
+      ],
+      "artifact": {
+        "path": "conformance/executions/rust-63dccad-postgres-redis-executors-current-thread.xml",
         "format": "cargo_junit",
         "sha256": "3067aaa25e3007c98d15a6d5a80cc51eacf36d6ed27b96055aeb5671e813c3f9"
       },
