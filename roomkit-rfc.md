@@ -17874,7 +17874,7 @@ another holds on neither.
 
 ### 12.11 Room Media Recording
 
-<!-- rfc: {"id": "RK-12.11-001", "kind": "behavior", "applies": "§12.11 Room Media Recording; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.11-008", "kind": "structural", "applies": "§12.11 Room Media Recording, the recording feature: the MediaRecorder interface, its name and its calls on_recording_start, on_track_added, on_track_removed, on_data, on_recording_stop and close (why a room, which is not a session, has its own recording interface, and that conference recording binds to it, Section 12.10.8, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Sections 12.3.7 and 12.8.10 each record a *session*: one participant, one
 medium — audio in the two directions a session has (12.3.7), the video the
 session receives (12.8.10). A room is not a session. It holds
@@ -17900,7 +17900,9 @@ MediaRecorder (interface)
 └── close() → void
         # Release resources
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.11-009", "kind": "structural", "applies": "§12.11 Room Media Recording, the recording feature: the RecordingTrack record and its fields: id, kind (audio, video or screen_share), channel_id, participant_id, codec, sample_rate and channels for audio, width and height for video. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 RecordingTrack
 ├── id: string                        # Track identifier
@@ -17913,7 +17915,9 @@ RecordingTrack
 ├── width: int | null                 # Video
 └── height: int | null                # Video
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.11-010", "kind": "structural", "applies": "§12.11 Room Media Recording, the recording feature: the MediaRecordingConfig record (storage, format defaulting to mp4, video_codec, video_fps, audio_codec, audio_sample_rate, metadata defaulting to empty, encryption, storage_encrypted_at_rest defaulting to false) and the MediaRecordingResult record (id, url, duration_seconds, tracks, format, size_bytes), set side by side in one block. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 MediaRecordingConfig                  MediaRecordingResult
 ├── storage: string                   ├── id: string
@@ -17926,64 +17930,70 @@ MediaRecordingConfig                  MediaRecordingResult
 ├── encryption: RecordingEncryption | null
 └── storage_encrypted_at_rest: bool = false
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.11-011", "kind": "behavior", "applies": "§12.11 Room Media Recording, the recording feature: a recorder that stores files refuses on_recording_start() when the configuration sets neither encryption nor storage_encrypted_at_rest, the rule of Section 12.3.7. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 `encryption` and `storage_encrypted_at_rest` follow the rule of
 Section 12.3.7: a recorder that stores files MUST refuse
-`on_recording_start()` when neither is set, and with `encryption` the result's
+`on_recording_start()` when neither is set, <!-- /rfc --><!-- rfc: {"id": "RK-12.11-012", "kind": "behavior", "applies": "§12.11 Room Media Recording, the recording feature: with encryption, the url of the result of a recorder that stores files names the encrypted artifact. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->and with `encryption` the result's
 `url` names the encrypted artifact.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.11-013", "kind": "behavior", "applies": "§12.11 Room Media Recording, the recording feature: recorders bound when a room is created start before the room is written, all or nothing. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Recorders bound when a room is created start before the room is written,
-all or nothing.** When one refuses `on_recording_start()`, the recordings
-already started for that room MUST be stopped and room creation MUST fail
+all or nothing.** <!-- /rfc --><!-- rfc: {"id": "RK-12.11-014", "kind": "behavior", "applies": "§12.11 Room Media Recording, the recording feature: at room creation, when one bound recorder refuses on_recording_start(), the recordings already started for that room are stopped. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->When one refuses `on_recording_start()`, the recordings
+already started for that room MUST be stopped <!-- /rfc --><!-- rfc: {"id": "RK-12.11-015", "kind": "behavior", "applies": "§12.11 Room Media Recording, the recording feature: at room creation, when one bound recorder refuses on_recording_start(), room creation fails with that refusal and no room is written (why: a room created with a recording it lacks is one the integrator believes recorded, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->and room creation MUST fail
 with the refusal, with no room written: a room that exists without the
-recording it was created with is a room the integrator believes is recorded.
-When writing the room fails, the recordings started for it MUST be stopped,
-and the recordings of a room already holding that id MUST NOT be touched.
+recording it was created with is a room the integrator believes is recorded.<!-- /rfc --><!-- rfc: {"id": "RK-12.11-016", "kind": "behavior", "applies": "§12.11 Room Media Recording, the recording feature: at room creation, when writing the room fails, the recordings started for it are stopped. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+When writing the room fails, the recordings started for it MUST be stopped,<!-- /rfc --><!-- rfc: {"id": "RK-12.11-017", "kind": "behavior", "applies": "§12.11 Room Media Recording, the recording feature: at room creation, when writing the room fails, the recordings of a room already holding that id are not touched. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+and the recordings of a room already holding that id MUST NOT be touched.<!-- /rfc --><!-- rfc: {"id": "RK-12.11-018", "kind": "behavior", "applies": "§12.11 Room Media Recording, the recording feature: at room creation, ON_RECORDING_STARTED fires for each recording once the room exists and before any media: a room recording captures nothing until a track is added. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 `ON_RECORDING_STARTED` fires for each recording once the room exists, which
 still precedes any media: a room recording captures nothing until a track is
 added.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.11-002", "kind": "behavior", "applies": "§12.11 Room Media Recording; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.11-019", "kind": "behavior", "applies": "§12.11 Room Media Recording, the recording feature: recorders started on an existing room: a room that is missing, another organization's (§17.2) or whose status refuses new events (§5.1) is refused before any recorder starts. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Recorders started on an existing room** obey the same rules: a room that is
 missing, another organization's (§17.2), or whose status refuses new events
-(§5.1) is refused before any recorder starts; the recorders start all or
-nothing, under the room lock; and `ON_RECORDING_STARTED` fires for each before
-any media, as at creation. Media may already flow in the room: a recording
+(§5.1) is refused before any recorder starts; <!-- /rfc --><!-- rfc: {"id": "RK-12.11-020", "kind": "behavior", "applies": "§12.11 Room Media Recording, the recording feature: recorders started on an existing room start all or nothing, under the room lock. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->the recorders start all or
+nothing, under the room lock; <!-- /rfc --><!-- rfc: {"id": "RK-12.11-021", "kind": "behavior", "applies": "§12.11 Room Media Recording, the recording feature: recorders started on an existing room: ON_RECORDING_STARTED fires for each before any media, as at creation. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->and `ON_RECORDING_STARTED` fires for each before
+any media, as at creation. <!-- /rfc --><!-- rfc: {"id": "RK-12.11-022", "kind": "behavior", "applies": "§12.11 Room Media Recording, the recording feature: a recording started on a room whose media already flows joins that media only once announced, each of the room's tracks declared to it first, so that what reaches it comes after its consent point and in the format its track declares. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Media may already flow in the room: a recording
 joins it only once announced, with each of the room's tracks declared to it
 first, so what reaches it comes after its consent point and in the format its
-track declares. What such a recording captures is the room's declared tracks:
+track declares. <!-- /rfc --><!-- rfc: {"id": "RK-12.11-023", "kind": "behavior", "applies": "§12.11 Room Media Recording, the recording feature: a recording started on an existing room captures the room's declared tracks: those declared from then on, and those already declared while an earlier recording ran. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->What such a recording captures is the room's declared tracks:
 those declared from then on, and those already declared while an earlier
-recording ran. A channel the framework wires itself declares a session's
+recording ran. <!-- /rfc --><!-- rfc: {"id": "RK-12.11-024", "kind": "behavior", "applies": "§12.11 Room Media Recording, the recording feature: a channel the framework wires itself declares a session's tracks when the session joins a room that records, once the join has read the room with the caller's scope (§17.2). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A channel the framework wires itself declares a session's
 tracks when the session joins a room that records, once the join has read the
-room with the caller's scope (§17.2); a session that joined while
+room with the caller's scope (§17.2); <!-- /rfc --><!-- rfc: {"id": "RK-12.11-025", "kind": "behavior", "applies": "§12.11 Room Media Recording, the recording feature: a channel the framework wires itself: a session that joined while the room recorded nothing declares no track, and is not recorded until it joins again. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->a session that joined while
 the room recorded nothing declares none, and is not recorded until it joins
-again. A recording resumed after a restart is one of these:
-its consent point is announced again. A caller feeding a room recording from a
+again. <!-- /rfc --><!-- rfc: {"id": "RK-12.11-026", "kind": "behavior", "applies": "§12.11 Room Media Recording, the recording feature: a recording resumed after a restart is started as on an existing room: its consent point, ON_RECORDING_STARTED, is announced again. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A recording resumed after a restart is one of these:
+its consent point is announced again. <!-- /rfc --><!-- rfc: {"id": "RK-12.11-027", "kind": "non_testable", "applies": "§12.11 Room Media Recording, the recording feature: a caller feeding a room recording from a source the framework does not wire itself declares each track to the room's recordings and hands them its media through the framework, never through a recorder it holds, which binds that caller. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A caller feeding a room recording from a
 source the framework does not wire itself declares each track to the room's
 recordings and hands them its media through the framework, never through a
 recorder it holds.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.11-003", "kind": "behavior", "applies": "§12.11 Room Media Recording; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.11-028", "kind": "behavior", "applies": "§12.11 Room Media Recording, the recording feature: when a room's recordings stop, on an explicit stop, when the room closes or is archived, or when the framework shuts down, ON_RECORDING_STOPPED fires for each recording that stopped, with its result. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **A room recording's end is announced.** When a room's recordings stop, on an
 explicit stop, when the room closes or is archived, or when the framework
 shuts down, `ON_RECORDING_STOPPED` fires for each recording that stopped, with
-its result, as for a session's or a conference track's. A room recording has
-no session: the event names the room instead. Stopping happens after the room
-is read with its scope, so a call that is refused stops nothing. A room whose
+its result, as for a session's or a conference track's. <!-- /rfc --><!-- rfc: {"id": "RK-12.11-029", "kind": "behavior", "applies": "§12.11 Room Media Recording, the recording feature: ON_RECORDING_STOPPED for a room recording names the room, a room recording having no session. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A room recording has
+no session: the event names the room instead. <!-- /rfc --><!-- rfc: {"id": "RK-12.11-030", "kind": "behavior", "applies": "§12.11 Room Media Recording, the recording feature: stopping a room's recordings reads the room with the caller's scope first, so that a refused call stops nothing. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Stopping happens after the room
+is read with its scope, so a call that is refused stops nothing. <!-- /rfc --><!-- rfc: {"id": "RK-12.11-031", "kind": "behavior", "applies": "§12.11 Room Media Recording, the recording feature: stopping a room's recordings: a room whose record is gone while its recordings still run has them stopped by an explicit stop all the same. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A room whose
 record is gone while its recordings still run has them stopped by an explicit
-stop all the same, since a file nothing stops is never finalized; another
-organization's room is refused, and a gone room that records nothing is not
-found, as either would be told. A gone room has no record left to read its
+stop all the same, since a file nothing stops is never finalized; <!-- /rfc --><!-- rfc: {"id": "RK-12.11-032", "kind": "behavior", "applies": "§12.11 Room Media Recording, the recording feature: stopping a room's recordings: another organization's room is refused. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->another
+organization's room is refused, <!-- /rfc --><!-- rfc: {"id": "RK-12.11-033", "kind": "behavior", "applies": "§12.11 Room Media Recording, the recording feature: stopping a room's recordings: a gone room that records nothing is not found. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->and a gone room that records nothing is not
+found, as either would be told. <!-- /rfc --><!-- rfc: {"id": "RK-12.11-034", "kind": "behavior", "applies": "§12.11 Room Media Recording, the recording feature: while a room records, the framework keeps the organization its recordings were started under, so that a scoped call on a gone room naming another organization is refused. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A gone room has no record left to read its
 organization from, so the framework keeps, while a room records, the
 organization its recordings were started under: a scoped call on a gone room
-naming another organization is refused as well. With no room left to read a
-context from, such an end MAY be logged rather than announced. Listing a
+naming another organization is refused as well. <!-- /rfc --><!-- rfc: {"id": "RK-12.11-035", "kind": "behavior", "applies": "§12.11 Room Media Recording, the recording feature: the end of a room recording with no room left to read a context from may be logged rather than announced. Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->With no room left to read a
+context from, such an end MAY be logged rather than announced. <!-- /rfc --><!-- rfc: {"id": "RK-12.11-036", "kind": "behavior", "applies": "§12.11 Room Media Recording, the recording feature: listing a room's recordings and declaring a track to them read the room with the caller's scope and the same rule for a gone room, so that a caller learns of, or feeds, no other organization's recording. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Listing a
 room's recordings and declaring a track to them read the room the same way,
 with its scope and the same rule for a gone room: through these verbs a caller
 learns of, or feeds, no other organization's recording.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.11-037", "kind": "structural", "applies": "§12.11 Room Media Recording, the recording feature: the MediaRecordingHandle record (id, room_id, state, started_at, path) and the RoomRecorderBinding record (recorder, config, enabled defaulting to true, name), set side by side in one block (the handle as the unit, one recording each, how many a room opens being the caller's decision, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 MediaRecordingHandle                  RoomRecorderBinding
 ├── id: string                        ├── recorder: MediaRecorder
@@ -17999,14 +18009,16 @@ into a single file opens one and adds every track to it; a conference opens
 one per track (Section 12.10.8). Both are the same interface used at
 different granularities, which is why the interface names a track on every
 call rather than assuming one.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.11-038", "kind": "behavior", "applies": "§12.11 Room Media Recording, the recording feature: an implementation populates a RecordingTrack's participant_id wherever the framework knows the publisher (why it is the recorder's only source for who said what, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 `participant_id` is what makes an output answerable to "who said what", and
 it is the recorder's only source for it: the interface carries no session and
 no direction. An implementation MUST populate it wherever the framework knows
 the publisher.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.11-004", "kind": "behavior", "applies": "§12.11 Room Media Recording; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.11-039", "kind": "non_testable", "applies": "§12.11 Room Media Recording, the recording feature: a caller declaring a track describes the media it will actually deliver, rather than what the framework normally carries, and delivers none in another format, which binds that caller (why on_data carries no format, and why the failure is silent, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **A track describes its own media.** `codec`, `sample_rate` and `channels`
 are how a recorder learns to interpret the bytes it is then handed: `on_data`
 carries none of it, and PCM in particular is indistinguishable from any other
@@ -18015,69 +18027,77 @@ deliver rather than what the framework normally carries, and MUST NOT deliver
 media in a format other than the one it declared. The obligation is a caller's
 because the failure is silent: a recorder told 16-bit mono and handed stereo
 writes a file that opens, plays at the wrong speed, and reports no error at
-all. A recorder MAY refuse a declaration it cannot honour, and MUST say so.
+all. <!-- /rfc --><!-- rfc: {"id": "RK-12.11-040", "kind": "behavior", "applies": "§12.11 Room Media Recording, the recording feature: a recorder may refuse a track declaration it cannot honour. Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->A recorder MAY refuse a declaration it cannot honour, <!-- /rfc --><!-- rfc: {"id": "RK-12.11-041", "kind": "behavior", "applies": "§12.11 Room Media Recording, the recording feature: a recorder that refuses a track declaration it cannot honour says so. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->and MUST say so.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.11-042", "kind": "non_testable", "applies": "§12.11 Room Media Recording, the recording feature: storage is an identifier the integrator defines and the implementation resolves at runtime, as in Section 12.3.7; an implementation documents which storage backends it supports, which a review of its documentation keeps. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 `storage` is an integrator-defined identifier resolved by the implementation
 at runtime, as in Section 12.3.7. Implementations MUST document which storage
-backends they support and MUST raise a configuration error for an unknown
-identifier. A storage path MUST NOT be allowed to escape its configured
+backends they support <!-- /rfc --><!-- rfc: {"id": "RK-12.11-043", "kind": "behavior", "applies": "§12.11 Room Media Recording, the recording feature: an implementation raises a configuration error for an unknown storage identifier. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->and MUST raise a configuration error for an unknown
+identifier. <!-- /rfc --><!-- rfc: {"id": "RK-12.11-044", "kind": "behavior", "applies": "§12.11 Room Media Recording, the recording feature: a storage path is not allowed to escape its configured directory. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A storage path MUST NOT be allowed to escape its configured
 directory.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.11-045", "kind": "behavior", "applies": "§12.11 Room Media Recording, the recording feature: a recorder may refuse a track declared after it has begun writing, a container that fixes its streams at the first write being unable to honour a late one. Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->
 A recorder MAY refuse a track declared after it has begun writing — a
-container that fixes its streams at the first write cannot honour a late one
+container that fixes its streams at the first write cannot honour a late one<!-- /rfc --><!-- rfc: {"id": "RK-12.11-046", "kind": "behavior", "applies": "§12.11 Room Media Recording, the recording feature: a recorder that refuses a track declared after it has begun writing says so rather than silently dropping the media (a caller that cannot predict its tracks opening one recording per track instead, as a conference does, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 — and MUST say so rather than silently dropping the media. A caller that
 cannot predict its tracks opens one recording per track instead, which is why
 a conference does.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.11-005", "kind": "behavior", "applies": "§12.11 Room Media Recording; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.11-047", "kind": "structural", "applies": "§12.11 Room Media Recording, the recording feature: every call of the MediaRecorder interface is synchronous, and blocks for as long as its storage takes. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Which thread calls it.** Every call in this interface is synchronous, and
 what they do — encode a frame, write a container, close a file — blocks for
-as long as the storage takes. An implementation MAY therefore call a recorder
-outside the thread its event loop runs on, and one recording media as it
+as long as the storage takes. <!-- /rfc --><!-- rfc: {"id": "RK-12.11-048", "kind": "behavior", "applies": "§12.11 Room Media Recording, the recording feature: an implementation may call a recorder outside the thread its event loop runs on. Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->An implementation MAY therefore call a recorder
+outside the thread its event loop runs on, <!-- /rfc --><!-- rfc: {"id": "RK-12.11-049", "kind": "behavior", "applies": "§12.11 Room Media Recording, the recording feature: an implementation recording media as it arrives calls the recorder outside its event loop's thread: Section 12.10.8 forbids a write that delays another track's delivery, and a blocking call made on the loop delays everything on it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->and one recording media as it
 arrives will have to: Section 12.10.8 forbids a write that delays another
 track's delivery, and a blocking call made on the loop delays everything on
-it. A recorder MUST NOT assume it is called on the loop thread, and MUST NOT
+it. <!-- /rfc --><!-- rfc: {"id": "RK-12.11-050", "kind": "behavior", "applies": "§12.11 Room Media Recording, the recording feature: a recorder assumes neither that it is called on the loop thread nor that the calling thread is the same across calls. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A recorder MUST NOT assume it is called on the loop thread, and MUST NOT
 assume the calling thread is the same one across calls.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.11-051", "kind": "behavior", "applies": "§12.11 Room Media Recording, the recording feature: an implementation serializes the calls of one recording (one handle): they are ordered and never overlap, and its media arrives in the order the framework received it (that different handles carry no such promise and may be written concurrently, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 What an implementation owes in return is serialization **per handle**: the
 calls belonging to one recording are ordered and never overlap, so a
 recorder's per-recording state needs no locking of its own and its media
 arrives in the order the framework received it. Different handles carry no
 such promise and may be written concurrently, which is what lets one track's
 slow storage stay one track's problem.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.11-052", "kind": "behavior", "applies": "§12.11 Room Media Recording, the recording feature: an implementation may finalize a recording whose write has exhausted the budget of Section 12.10.8 and is still running, that write being the one call that may overlap. Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->
 There is one call that may overlap, and only one: a write that has exhausted
 the budget of Section 12.10.8 cannot be taken back — a call made on another
 thread runs to completion whatever the framework does about it — and holding
 the close until it returns would let a wedged recorder hold a teardown, and
 with it a bot, in a conference indefinitely. An implementation MAY therefore
-finalize a recording whose write has passed that budget and is still running,
+finalize a recording whose write has passed that budget and is still running,<!-- /rfc --><!-- rfc: {"id": "RK-12.11-053", "kind": "behavior", "applies": "§12.11 Room Media Recording, the recording feature: where an implementation finalizes a recording whose write has passed the budget of Section 12.10.8 and is still running, it reports it (recorders told that the case exists rather than asked to make it safe, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 and MUST report it when it does. Recorders are not asked to make that case
 safe; they are told it exists, because the alternative reading is that it
 cannot happen.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.11-006", "kind": "behavior", "applies": "§12.11 Room Media Recording; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.11-054", "kind": "behavior", "applies": "§12.11 Room Media Recording, the recording feature: an implementation bounds the finalization of a recording, on_track_removed() and on_recording_stop() included, as the budget of Section 12.10.8 bounds what a recording holds before it is finalized, a conference teardown waiting for them before its bot leaves. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Every wait is bounded, the close included.** The budget of Section 12.10.8
 covers what a recording holds *before* it is finalized; `on_track_removed()`
 and `on_recording_stop()` are calls into the same recorder and block the same
 way, and a conference teardown waits for them before its bot leaves. An
-implementation MUST therefore bound the finalization too, and MUST report a
+implementation MUST therefore bound the finalization too, <!-- /rfc --><!-- rfc: {"id": "RK-12.11-055", "kind": "behavior", "applies": "§12.11 Room Media Recording, the recording feature: an implementation reports a recording whose finalization it stopped waiting for, where the media was written left unreported rather than guessed. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->and MUST report a
 recording it stopped waiting for — the result is unknown, so where the media
-was written goes unreported rather than guessed. Recorders MUST NOT read the
+was written goes unreported rather than guessed. <!-- /rfc --><!-- rfc: {"id": "RK-12.11-056", "kind": "behavior", "applies": "§12.11 Room Media Recording, the recording feature: a recorder does not read the absence of a further call as permission to discard: what it was told to close is still its to close. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Recorders MUST NOT read the
 absence of a further call as permission to discard: what they were told to
 close is still theirs to close.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.11-007", "kind": "behavior", "applies": "§12.11 Room Media Recording; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.11-057", "kind": "behavior", "applies": "§12.11 Room Media Recording, the recording feature: an implementation does not call a recorder's close() while any call it stopped waiting for is still outstanding (why: close() frees what a running call may be executing inside, a crash for a native muxer, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **A recorder is not released while a call is running in it.** `close()` frees
 whatever the recorder holds, and freeing the context a call is executing inside
 is not an error a recorder can return — for one wrapping a native muxer it is a
 crash. So an implementation MUST NOT call `close()` while any call it stopped
-waiting for is still outstanding, and this wait is separate from the ones
+waiting for is still outstanding, <!-- /rfc --><!-- rfc: {"id": "RK-12.11-058", "kind": "behavior", "applies": "§12.11 Room Media Recording, the recording feature: the wait before releasing a recorder is separate from a teardown's waits: those have a bot waiting behind them, this one belongs to releasing a provider and has nothing queued behind it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->and this wait is separate from the ones
 above: those belong to a teardown with a bot waiting behind them, this one
-belongs to releasing a provider and has nothing queued behind it. An
+belongs to releasing a provider and has nothing queued behind it. <!-- /rfc --><!-- rfc: {"id": "RK-12.11-059", "kind": "behavior", "applies": "§12.11 Room Media Recording, the recording feature: an implementation that still cannot settle the calls it stopped waiting for leaves the recorder unreleased and says so (leaking a recorder being a bounded cost and calling into a freed one not, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An
 implementation that still cannot settle them MUST leave the recorder unreleased
 and MUST say so. Leaking a recorder is a bounded cost; calling into a freed one
 is not.
@@ -18087,7 +18107,7 @@ is not.
 
 ### 12.12 Capture Sources
 
-<!-- rfc: {"id": "RK-12.12-001", "kind": "behavior", "applies": "§12.12 Capture Sources; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.12-008", "kind": "structural", "applies": "§12.12 Capture Sources, the voice feature (capture sources): the AudioCaptureSource interface: the format it emits (sample_rate, channels, sample_width), start, stop, close, mark, and subscribe with its since and name (why a capture source owns the device, which a voice transport holds for a session's lifetime only, and a session becoming one subscriber among several, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Every voice transport (VoiceBackend, Section 12.2) acquires its capture device when a session
 starts and releases it when that session ends. That is the right lifetime for a
 call, and the wrong one for anything that must be listening *before* there is a
@@ -18113,7 +18133,9 @@ AudioCaptureSource (interface)
               since: CaptureMark | null = null,
               name: string | null = null) → CaptureSubscription
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.12-009", "kind": "structural", "applies": "§12.12 Capture Sources, the voice feature (capture sources): the CaptureSubscription record (name, replayed_bytes, truncated, unsubscribe) and the opaque CaptureMark, set side by side in one block. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 CaptureSubscription                   CaptureMark
 ├── name: string | null               └── (opaque)
@@ -18121,80 +18143,84 @@ CaptureSubscription                   CaptureMark
 ├── truncated: bool
 └── unsubscribe() → void
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.12-010", "kind": "structural", "applies": "§12.12 Capture Sources, the voice feature (capture sources): a capture source does not implement the VoiceBackend interface (a source having no notion of a session, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A capture source is **not** a `VoiceBackend` and MUST NOT implement that
 interface. A backend is keyed by `VoiceSession` throughout; a source has no
 notion of a session, and conflating the two reintroduces the lifetime this
 section exists to break.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.12-002", "kind": "behavior", "applies": "§12.12 Capture Sources; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.12-011", "kind": "behavior", "applies": "§12.12 Capture Sources, the voice feature (capture sources): start() and stop() are the only calls that acquire and release a capture source's device. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Lifetime is explicit and independent of subscribers.** `start()` and `stop()`
-are the only things that acquire and release the device. A source MUST NOT stop
-capturing because its subscriber count reached zero, and MUST NOT start
+are the only things that acquire and release the device. <!-- /rfc --><!-- rfc: {"id": "RK-12.12-012", "kind": "behavior", "applies": "§12.12 Capture Sources, the voice feature (capture sources): a capture source does not stop capturing because its subscriber count reached zero. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A source MUST NOT stop
+capturing because its subscriber count reached zero, <!-- /rfc --><!-- rfc: {"id": "RK-12.12-013", "kind": "behavior", "applies": "§12.12 Capture Sources, the voice feature (capture sources): a capture source does not start because its subscriber count became non-zero (that a consumer may therefore unsubscribe at any moment without endangering another subscriber's audio, as a wake-word detector does for a session, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->and MUST NOT start
 because it became non-zero. A consumer may therefore unsubscribe at any moment
 without endangering another subscriber's audio — which is what makes it safe
 for a wake-word detector to detach for the duration of a session and reattach
 after.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.12-003", "kind": "behavior", "applies": "§12.12 Capture Sources; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
-**Frames are raw.** A source emits what the device gave it. Echo cancellation
+<!-- rfc: {"id": "RK-12.12-014", "kind": "behavior", "applies": "§12.12 Capture Sources, the voice feature (capture sources): a capture source emits the frames its device gave it, raw. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+**Frames are raw.** A source emits what the device gave it. <!-- /rfc --><!-- rfc: {"id": "RK-12.12-015", "kind": "behavior", "applies": "§12.12 Capture Sources, the voice feature (capture sources): echo cancellation, which is per session, is applied downstream, by the backend after the fan-out, never in the capture source. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Echo cancellation
 is per-session — it needs the reference signal of what *that* session is
 playing — so it belongs downstream, applied by the backend after fan-out, not
-in the source. A subscriber that stays attached while a session is playing
-audio therefore hears the far end unattenuated, and MUST NOT assume otherwise.
+in the source. <!-- /rfc --><!-- rfc: {"id": "RK-12.12-016", "kind": "non_testable", "applies": "§12.12 Capture Sources, the voice feature (capture sources): a subscriber attached while a session plays audio hears the far end unattenuated and does not assume otherwise, which binds the integrator who writes it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A subscriber that stays attached while a session is playing
+audio therefore hears the far end unattenuated, and MUST NOT assume otherwise.<!-- /rfc --><!-- rfc: {"id": "RK-12.12-017", "kind": "behavior", "applies": "§12.12 Capture Sources, the voice feature (capture sources): a capture source has one format and converts no sample rate: a consumer that needs another resamples it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Sample-rate conversion is likewise the subscriber's concern: a source has one
 format, and a consumer that needs another resamples it.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.12-004", "kind": "behavior", "applies": "§12.12 Capture Sources; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.12-018", "kind": "behavior", "applies": "§12.12 Capture Sources, the voice feature (capture sources): a capture source fans each frame out to its subscribers synchronously on the capture thread, which keeps capture and the AEC reference in step. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Fan-out is synchronous on the capture thread.** This is what keeps the
 existing AEC invariant intact — capture and reference must stay in step, which
-they cannot do across a queue hop. The consequence is a contract every
+they cannot do across a queue hop. <!-- /rfc --><!-- rfc: {"id": "RK-12.12-019", "kind": "non_testable", "applies": "§12.12 Capture Sources, the voice feature (capture sources): a subscriber performs no unbounded work inside the fan-out callback: it enqueues the frame and returns, which binds the integrator who writes it (that the source guarantees no isolation between subscribers, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The consequence is a contract every
 subscriber MUST honour:
 
 > A subscriber MUST NOT perform unbounded work inside the fan-out callback. It
 > enqueues the frame and returns. The source guarantees no isolation between
 > subscribers: one slow subscriber degrades capture for all of them.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.12-020", "kind": "behavior", "applies": "§12.12 Capture Sources, the voice feature (capture sources): implementations should make a subscriber's breach observable, timing each callback and logging a rate-limited warning past a fraction of the block duration (the cost of a slow subscriber against a 20 ms block, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 The bar is lower than it sounds. A block is typically 20 ms, and a wake-word
 subscriber running an ONNX encoder spends about that long per segment — enough
 on its own to starve the device. Implementations SHOULD make the breach
 observable rather than leaving it to be diagnosed from audio artifacts: timing
 each callback and logging a rate-limited warning past a fraction of the block
-duration turns "the audio crackles" into "this subscriber is slow". A
-subscriber that raises MUST be caught and logged; an exception MUST NOT
+duration turns "the audio crackles" into "this subscriber is slow". <!-- /rfc --><!-- rfc: {"id": "RK-12.12-021", "kind": "behavior", "applies": "§12.12 Capture Sources, the voice feature (capture sources): a subscriber that raises is caught and logged. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
+subscriber that raises MUST be caught and logged; <!-- /rfc --><!-- rfc: {"id": "RK-12.12-022", "kind": "behavior", "applies": "§12.12 Capture Sources, the voice feature (capture sources): a subscriber's exception does not propagate into the capture stream. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->an exception MUST NOT
 propagate into the capture stream.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.12-005", "kind": "behavior", "applies": "§12.12 Capture Sources; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.12-023", "kind": "behavior", "applies": "§12.12 Capture Sources, the voice feature (capture sources): a capture source retains recent frames in a ring bounded by duration and by bytes, evicting the oldest first. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **The backlog.** A source retains recent frames in a bounded ring — bounded by
-duration and by bytes, evicting oldest-first. `mark()` names a position in it;
-`subscribe(since=mark)` replays from there before delivering anything live.
+duration and by bytes, evicting oldest-first. <!-- /rfc --><!-- rfc: {"id": "RK-12.12-024", "kind": "behavior", "applies": "§12.12 Capture Sources, the voice feature (capture sources): mark() names a position in the ring, and subscribe(since=mark) replays from there before delivering anything live. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`mark()` names a position in it;
+`subscribe(since=mark)` replays from there before delivering anything live.<!-- /rfc --><!-- rfc: {"id": "RK-12.12-025", "kind": "behavior", "applies": "§12.12 Capture Sources, the voice feature (capture sources): a subscriber that replays receives every replayed frame before every live one, with no interleaving, frames captured during the replay included. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Ordering is total: every replayed frame reaches the subscriber before every
 live one, with no interleaving, even for frames captured during the replay
-itself. Replay MUST NOT hold the fan-out lock for its duration — seconds of
+itself. <!-- /rfc --><!-- rfc: {"id": "RK-12.12-026", "kind": "behavior", "applies": "§12.12 Capture Sources, the voice feature (capture sources): a replay does not hold the fan-out lock for its duration: live frames are queued for a subscriber catching up, and delivery goes direct under the lock once the queue drains. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Replay MUST NOT hold the fan-out lock for its duration — seconds of
 audio delivered under that lock would stall the capture thread — so an
 implementation queues live frames for a catching-up subscriber and switches to
 direct delivery under the lock once the queue drains.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.12-027", "kind": "behavior", "applies": "§12.12 Capture Sources, the voice feature (capture sources): with a stale mark, one whose position was evicted, the source replays what remains rather than fail. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A mark whose position has been evicted is **stale**. The source MUST replay
 what remains rather than fail: raising at the moment a session opens would
 discard the very utterance the backlog exists to preserve, and a partial phrase
-is worth more than none. It MUST report the degradation — `truncated` on the
+is worth more than none. <!-- /rfc --><!-- rfc: {"id": "RK-12.12-028", "kind": "behavior", "applies": "§12.12 Capture Sources, the voice feature (capture sources): with a stale mark, the source reports the degradation: truncated on the subscription, and a log line. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->It MUST report the degradation — `truncated` on the
 subscription, and a log line — so that silence is never mistaken for
-completeness. `replayed_bytes` is reported in every case.
+completeness. <!-- /rfc --><!-- rfc: {"id": "RK-12.12-029", "kind": "behavior", "applies": "§12.12 Capture Sources, the voice feature (capture sources): a subscription reports replayed_bytes in every case. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`replayed_bytes` is reported in every case.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.12-006", "kind": "behavior", "applies": "§12.12 Capture Sources; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.12-030", "kind": "behavior", "applies": "§12.12 Capture Sources, the voice feature (capture sources): with the realtime path (Section 12.4): frames a transport replays from a mark enter through its ordinary inbound callback, land in the session-start retention buffer and are flushed with it, so that with the caller's mark in the session metadata the transport subscribes with it and the utterance that preceded the session arrives ahead of the audio that followed (why a mark, not a duration, addresses the backlog, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Addressing by mark, not by duration.** A "replay the last N seconds" request
 forces the caller to guess: too short truncates the utterance, too long
 replays the tail of the previous conversation into the provider. A mark placed
 where the speech actually began has neither failure.
-<!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.12-007", "kind": "behavior", "applies": "§12.12 Capture Sources; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Composition with the realtime path.** The session-start sequence of Section
 12.4 already retains inbound audio across the provider handshake and flushes
 it in order once the handshake completes. Replayed frames enter through the
@@ -18202,9 +18228,11 @@ transport's ordinary inbound callback, so they land in that same retention
 buffer and are flushed with it. A wake word therefore needs no new control
 point on the inbound path: the caller passes its mark in the session metadata,
 the transport subscribes with it, and the utterance that preceded the session
-arrives ahead of the audio that followed. If the handshake fails, the retained
+arrives ahead of the audio that followed. <!-- /rfc --><!-- rfc: {"id": "RK-12.12-031", "kind": "behavior", "applies": "§12.12 Capture Sources, the voice feature (capture sources): with the realtime path (Section 12.4): when the provider handshake fails, the retained audio, replayed frames included, is discarded with the session and nothing reaches the provider. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->If the handshake fails, the retained
 audio is discarded with the session and nothing reaches the provider.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.12-032", "kind": "behavior", "applies": "§12.12 Capture Sources, the voice feature (capture sources): the replayed backlog contains the wake word itself, and implementations should treat its presence as intended rather than filter it (why no boundary splits the trigger phrase from the request, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 One consequence is worth stating plainly, because it is a design choice and not
 an oversight: **the replayed backlog contains the wake word itself.** Where the
 trigger phrase and the request share a single utterance — "hey jarvis what are
