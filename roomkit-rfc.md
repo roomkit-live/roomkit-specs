@@ -11992,7 +11992,7 @@ Section 17.6 governs how reference and consent audio are handled.
 
 ### 12.3 Audio Processing Pipeline
 
-<!-- rfc: {"id": "RK-12.3-001", "kind": "behavior", "applies": "§12.3 Audio Processing Pipeline; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.3-007", "kind": "behavior", "applies": "§12.3 Audio Processing Pipeline, the voice feature: the inbound stage order, transport, resampler, recorder tap, AEC, AGC, denoiser, VAD, diarization, then STT, the recorder tapping a copy without modifying frames and the DTMF detector running beside the chain on the resampled stream (the pipeline's purpose and the rationale table of the order, informative, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The audio processing pipeline is a configurable layer between the transport and
 the conversation engine. The transport delivers raw audio frames; the pipeline
 processes them before they reach STT or speech-to-speech providers. All stages
@@ -12003,9 +12003,7 @@ This design ensures that audio processing capabilities (VAD, denoising,
 diarization) are available regardless of the transport choice (WebRTC, WebSocket,
 SIP, or any custom transport) and regardless of the voice architecture
 (STT/TTS or speech-to-speech).
-<!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.3-002", "kind": "behavior", "applies": "§12.3 Audio Processing Pipeline; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Inbound (preprocessing):**
 
 ```
@@ -12017,9 +12015,7 @@ Transport → [Resampler] → [Recorder ◉] → [AEC] → [AGC] → [Denoiser] 
 
 ◉ Recorder taps the stream (non-blocking copy), does not modify frames.
 ```
-<!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.3-003", "kind": "behavior", "applies": "§12.3 Audio Processing Pipeline; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Note on ordering rationale:**
 
 | Position | Stage | Why here |
@@ -12034,7 +12030,7 @@ Transport → [Resampler] → [Recorder ◉] → [AEC] → [AGC] → [Denoiser] 
 | — | DTMF | Runs in parallel on the resampled stream — DTMF tones would be destroyed by denoiser/AGC. |
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.3-004", "kind": "behavior", "applies": "§12.3 Audio Processing Pipeline; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.3-008", "kind": "behavior", "applies": "§12.3 Audio Processing Pipeline, the voice feature: the outbound stage order, TTS or speech-to-speech provider, postprocessors, recorder tap (what the user hears), AEC reference, resampler, then transport, the pipeline feeding the AEC reference there for a network transport and skipping it when the transport feeds it (the table of symmetry with the text hooks and the note on subsection order, informative, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Outbound (postprocessing):**
 
 ```
@@ -12048,9 +12044,7 @@ TTS / Speech-to-Speech Provider → [PostProcessors] → [Recorder ◉] → [AEC
   callback for precise time alignment (see Section 12.3.4). The pipeline skips this step when
   the transport handles AEC reference feeding directly.
 ```
-<!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.3-005", "kind": "behavior", "applies": "§12.3 Audio Processing Pipeline; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Pipeline symmetry with text hooks:**
 
 | Text Pipeline | Audio Pipeline |
@@ -12061,9 +12055,7 @@ TTS / Speech-to-Speech Provider → [PostProcessors] → [Recorder ◉] → [AEC
 | BEFORE_TTS hook | Pre-synthesis hook (exists in Section 12.5) |
 | — | Turn detection (post-STT, pre-room event) |
 | — | Interruption handling (barge-in → backchannel detection) |
-<!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.3-006", "kind": "behavior", "applies": "§12.3 Audio Processing Pipeline; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Note on subsection ordering:** The subsections below (12.3.1–12.3.15) are
 organized by concern (configuration, then inbound stages, then outbound stages,
 then frame format, then post-STT stages, then execution flow, then debug taps) — NOT by pipeline
@@ -12073,7 +12065,7 @@ and the Pipeline Execution Flow (Section 12.3.14).
 
 #### 12.3.1 Pipeline Configuration
 
-<!-- rfc: {"id": "RK-12.3.1-001", "kind": "behavior", "applies": "§12.3.1 Pipeline Configuration; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.3.1-005", "kind": "structural", "applies": "§12.3.1 AudioPipelineConfig, the voice feature: its fields, each stage optional. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 AudioPipelineConfig
 ├── resampler: ResamplerConfig | null        # OPTIONAL format normalization (RECOMMENDED)
@@ -12093,7 +12085,7 @@ AudioPipelineConfig
 └── debug_taps: PipelineDebugTaps | null     # OPTIONAL diagnostic stage capture (Section 12.3.15)
 ```
 
-All stages are OPTIONAL. At least one provider SHOULD be configured for the
+All stages are OPTIONAL. <!-- /rfc --><!-- rfc: {"id": "RK-12.3.1-006", "kind": "non_testable", "applies": "§12.3.1 Pipeline Configuration, the voice feature: the integrator should configure at least one provider for the pipeline to be useful (the typical configurations, informative, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->At least one provider SHOULD be configured for the
 pipeline to be useful. Typical configurations:
 
 - **Voice Channel (STT/TTS):** VAD (required for speech detection) + optional
@@ -12101,7 +12093,9 @@ pipeline to be useful. Typical configurations:
 - **Realtime Voice Channel (speech-to-speech):** Denoiser, AEC, and/or
   diarization; a VAD is optional and takes one of the two roles of Section 12.4.
 - **PSTN/SIP integration:** Resampler (RECOMMENDED) + DTMF + recorder + VAD.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.1-007", "kind": "structural", "applies": "§12.3.1 VADConfig, the voice feature: its fields and their defaults. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 VADConfig
 ├── silence_threshold_ms: int | null = null   # Silence duration to trigger speech_end
@@ -12109,21 +12103,25 @@ VADConfig
 ├── min_speech_duration_ms: int | null = null # Minimum speech duration to emit event
 └── extra: map<string, any> = {}              # Provider-specific settings
 ```
+<!-- /rfc -->
 
-`vad_config` tunes the configured `vad` provider when the pipeline is built.
+<!-- rfc: {"id": "RK-12.3.1-008", "kind": "behavior", "applies": "§12.3.1 Pipeline Configuration, the voice feature: the pipeline hands vad_config to the configured VAD provider when it is built. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+`vad_config` tunes the configured `vad` provider when the pipeline is built.<!-- /rfc --><!-- rfc: {"id": "RK-12.3.1-009", "kind": "behavior", "applies": "§12.3.1 Pipeline Configuration, the voice feature: what a VAD provider does with vad_config, a set field replacing its own value for that setting and a null one leaving it unchanged. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Each field that is set MUST replace the provider's own value for that setting;
 a field left `null` MUST leave the provider's value unchanged, so the provider's
-defaults hold for everything the application did not set. `extra` carries
+defaults hold for everything the application did not set. <!-- /rfc --><!-- rfc: {"id": "RK-12.3.1-010", "kind": "behavior", "applies": "§12.3.1 Pipeline Configuration, the voice feature: a VAD provider rejects a key of extra it does not know rather than ignore it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`extra` carries
 settings specific to the provider (for example a model threshold); a provider
-MUST reject a key it does not know rather than ignore it. A provider that cannot
+MUST reject a key it does not know rather than ignore it. <!-- /rfc --><!-- rfc: {"id": "RK-12.3.1-011", "kind": "behavior", "applies": "§12.3.1 Pipeline Configuration, the voice feature: a VAD provider that cannot apply a VADConfig should make it visible, with a logged warning. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->A provider that cannot
 apply a `VADConfig` SHOULD make that visible (a logged warning) instead of
 ignoring it silently.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.1-012", "kind": "behavior", "applies": "§12.3.1 Pipeline Configuration, the voice and realtime features: each Voice Channel or Realtime Voice Channel has its own pipeline, and channels of one room may be configured differently, which the implementation honours. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The audio pipeline is configured per Voice Channel or per Realtime Voice Channel.
 Different channels in the same room MAY have different pipeline configurations.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.3.1-002", "kind": "behavior", "applies": "§12.3.1 Pipeline Configuration; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.3.1-013", "kind": "structural", "applies": "§12.3.1 AudioPipelineContract and AudioFormat, the voice feature: their fields. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Pipeline format contract:**
 
 ```
@@ -12138,7 +12136,9 @@ AudioFormat
 ├── sample_width: int                        # Bytes per sample
 └── codec: string                            # Encoding (e.g., "pcm_s16le", "opus", "mulaw")
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.1-014", "kind": "behavior", "applies": "§12.3.1 Pipeline format contract, the voice feature: when the pipeline starts, every configured stage is checked against the internal format; a stage requiring another format gets a matching resampler, or the start fails with a configuration error. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 When the pipeline starts, implementations MUST validate that all configured
 stages are compatible with the internal format. If a stage requires a different
 format (e.g., a specific VAD requires 16kHz), the implementation MUST either:
@@ -12146,7 +12146,7 @@ format (e.g., a specific VAD requires 16kHz), the implementation MUST either:
 - Raise a configuration error at startup (fail fast).
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.3.1-003", "kind": "behavior", "applies": "§12.3.1 Pipeline Configuration; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.3.1-015", "kind": "behavior", "applies": "§12.3.1 Stream identity contract, the voice feature: every frame stage (resampler, AEC, AGC, denoiser, VAD, DTMF, diarization, postprocessors) receives a stream key with each call and keeps its state under it; process(), reset(stream) and close() as shown (one pipeline serving many streams, informative, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Stream identity contract:**
 
 One `AudioPipeline` serves many audio streams. A Voice Channel bridging
@@ -12162,52 +12162,68 @@ process(audio_frame: AudioFrame, stream: string) → ...
 reset(stream: string) → void
 close() → void
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.1-016", "kind": "behavior", "applies": "§12.3.1 Stream identity contract, the voice feature: the caller (a voice channel, a conference) gives each stream an opaque key of its own, a session or lane id, stable for the life of the stream. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The stream key is an opaque identifier chosen by the caller — a session id, a
-lane id — and is stable for the life of that stream. Implementations MUST NOT
+lane id — and is stable for the life of that stream. <!-- /rfc --><!-- rfc: {"id": "RK-12.3.1-017", "kind": "behavior", "applies": "§12.3.1 Stream identity contract, the voice feature: no stage shares adaptive state between streams (VAD hangover and speech buffers, denoiser history, AGC gain, AEC filters and delay estimates, diarization accumulators). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Implementations MUST NOT
 share adaptive state between streams: VAD hangover and speech buffers, denoiser
 history, AGC gain, AEC adaptive filters and delay estimates, and diarization
 accumulators are all per stream. Sharing them makes one speaker's silence close
 another speaker's utterance.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.1-018", "kind": "structural", "applies": "§12.3.1 Stream identity contract, the voice feature: a frame stage's stream parameter is required, with no default value. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 `stream` MUST be a required parameter with **no default value**. A default
 would let an implementation accept the argument, ignore it, satisfy the
 interface, and mix streams silently — which is the failure this contract exists
-to prevent. A conformance check SHOULD verify that a stream's output sequence is
+to prevent. <!-- /rfc --><!-- rfc: {"id": "RK-12.3.1-019", "kind": "behavior", "applies": "§12.3.1 Stream identity contract, the voice feature: a conformance check should verify that a stream's output sequence is unchanged when a second stream is interleaved with it. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->A conformance check SHOULD verify that a stream's output sequence is
 unchanged when a second stream is interleaved with it.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.1-020", "kind": "behavior", "applies": "§12.3.1 Stream identity contract, the voice feature: the resampler's reset() reads a null stream as every stream, which is how a pipeline-wide reset calls it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The resampler is the one exception: its `reset(stream | null)` reads null as
 every stream, which is how a pipeline-wide reset calls it. A forgotten key
 there resets every stream rather than mixing two of them, so the rule above
 does not need to bind it.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.1-021", "kind": "behavior", "applies": "§12.3.1 Stream identity contract, the voice feature: a stage backed by a native SDK, holding one native instance per stream, should create it on the stream's first frame. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 For providers backed by a native SDK, the model and the adaptive state
 typically live in the same object (SpeexDSP's `SpeexEchoState`, RNNoise's
 `DenoiseState`, WebRTC's `AudioProcessing`). Per-stream state then means one
 native instance per stream; these SDKs offer no way to share the model alone.
 Implementations SHOULD create it lazily on the stream's first frame.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.1-022", "kind": "behavior", "applies": "§12.3.1 Stream identity contract, the voice feature: state that is not per stream (immutable configuration, process-level resources, shared registries such as a diarization provider's enrolled speakers) stays on the stage instance, shared by its streams. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 State that is **not** per stream stays on the instance: immutable
 configuration, process-level resources, and shared registries such as a
 diarization provider's enrolled-speaker set — enrolment belongs to the room, not
 to a speaker's current stream.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.3.1-004", "kind": "behavior", "applies": "§12.3.1 Pipeline Configuration; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.3.1-023", "kind": "behavior", "applies": "§12.3.1 Session lifecycle contract, the voice feature: when a stream ends, the implementation calls reset(stream) on every configured frame stage. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Session lifecycle contract:**
 
 Implementations MUST call `reset(stream)` on every configured stage when that
 stream ends, releasing its state. Omitting this leaks one speaker's worth of
 buffers — and, for native providers, C memory — for every stream a long-running
 room ever had.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.1-024", "kind": "behavior", "applies": "§12.3.1 Session lifecycle contract, the voice feature: before the first frame of a new stream, the implementation calls reset(stream) on every configured frame stage, so a reused key inherits no state. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Implementations MUST also call `reset(stream)` before the first audio frame of a
 new stream, so a reused key never inherits adaptive state (denoiser filter
 coefficients, VAD speech buffers, AGC gain history, diarization accumulators)
 from a previous stream with the same id.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.1-025", "kind": "behavior", "applies": "§12.3.1 Session lifecycle contract, the voice feature: a stage's close() releases every stream's state. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 `close()` remains global and MUST release every stream's state.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.1-026", "kind": "behavior", "applies": "§12.3.1 Session lifecycle contract, the voice feature: the lifecycle covers the frame stages only; the recorder is addressed by its handle, and the turn and backchannel detectors' reset() takes no stream key and is not called by the session lifecycle. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The stages this contract covers are the frame stages: resampler, AEC, AGC,
 denoiser, VAD, DTMF, diarization and postprocessors. The recorder is addressed
 by its handle (Section 12.3.7). The turn detector (Section 12.3.12) and the
@@ -12217,7 +12233,7 @@ their `reset()` takes none either, and the session lifecycle does not call it.
 
 #### 12.3.2 Denoiser Provider
 
-<!-- rfc: {"id": "RK-12.3.2-001", "kind": "behavior", "applies": "§12.3.2 Denoiser Provider; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.3.2-002", "kind": "structural", "applies": "§12.3.2 DenoiserProvider, the voice feature: the interface (the sentence on what the denoiser does, before VAD and STT, which the inbound order of §12.3 states, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The denoiser removes background noise from inbound audio before VAD and STT
 process it. Running the denoiser first improves accuracy of all downstream stages.
 
@@ -12231,7 +12247,9 @@ DenoiserProvider (interface)
 └── close() → void
         # Release resources
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.2-003", "kind": "behavior", "applies": "§12.3.2 Denoiser Provider, the voice feature: an implementation should provide at least one denoiser, shipped with it or as a separate package built on the interface. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 Implementations SHOULD provide at least one denoiser, shipped with the
 implementation or as a separate package built on this interface (e.g.,
 sherpa-onnx).
@@ -12239,7 +12257,7 @@ sherpa-onnx).
 
 #### 12.3.3 Resampler
 
-<!-- rfc: {"id": "RK-12.3.3-001", "kind": "behavior", "applies": "§12.3.3 Resampler; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.3.3-001", "kind": "structural", "applies": "§12.3.3 ResamplerConfig, the voice feature: its fields and their defaults, 16000 Hz, mono, 2 bytes per sample (the sentence on what the resampler is for, informative, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The resampler normalizes audio format at pipeline entry (inbound) and exit
 (outbound). All pipeline stages operate on a consistent internal format,
 eliminating format mismatches between transport, STT, TTS, and VAD.
@@ -12253,29 +12271,35 @@ ResamplerConfig
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.3.3-002", "kind": "behavior", "applies": "§12.3.3 Resampler; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.3.3-003", "kind": "behavior", "applies": "§12.3.3 Resampler behavior, the voice feature: inbound, the resampler converts each transport frame to the internal format before the downstream stages. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Behavior:**
 
 - **Inbound:** After receiving a raw AudioFrame from transport, the resampler
-  converts it to the internal format before passing to downstream stages.
+  converts it to the internal format before passing to downstream stages.<!-- /rfc --><!-- rfc: {"id": "RK-12.3.3-004", "kind": "behavior", "applies": "§12.3.3 Resampler behavior, the voice feature: outbound, after the postprocessors, the resampler converts from the internal format to the transport's format (sample rate, channels, codec). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - **Outbound:** After postprocessors, the resampler converts from internal format
   to the transport's expected format (sample rate, channels, codec).
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.3-005", "kind": "behavior", "applies": "§12.3.3 Resampler behavior, the voice feature: the resampler preserves a frame's timestamp_ms through conversion. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The resampler MUST preserve `AudioFrame.timestamp_ms` accurately through
-conversion. The resampler MUST add `metadata.original_sample_rate` and
+conversion. <!-- /rfc --><!-- rfc: {"id": "RK-12.3.3-006", "kind": "behavior", "applies": "§12.3.3 Resampler behavior, the voice feature: the resampler adds metadata.original_sample_rate and metadata.original_channels to the frame. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The resampler MUST add `metadata.original_sample_rate` and
 `metadata.original_channels` to the frame for audit purposes.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.3-007", "kind": "behavior", "applies": "§12.3.3 Resampler behavior, the voice feature: resampling should be high-quality, introducing no artifacts that degrade VAD and STT. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 Implementations SHOULD use high-quality resampling (e.g., libsamplerate,
 sox-quality) to avoid introducing artifacts that degrade VAD and STT accuracy.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.3-008", "kind": "behavior", "applies": "§12.3.3 Resampler behavior, the voice feature: with no resampler configured, every stage is handed the transport's native format. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 When no resampler is configured, all pipeline stages MUST accept the transport's
-native format. Implementations SHOULD log a warning if the transport format
+native format. <!-- /rfc --><!-- rfc: {"id": "RK-12.3.3-009", "kind": "behavior", "applies": "§12.3.3 Resampler behavior, the voice feature: with no resampler, a warning should be logged when the transport's format differs from what the downstream stages expect. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->Implementations SHOULD log a warning if the transport format
 differs from the expected format of downstream stages.
 <!-- /rfc -->
 
 #### 12.3.4 Echo Canceller (AEC)
 
-<!-- rfc: {"id": "RK-12.3.4-001", "kind": "behavior", "applies": "§12.3.4 Echo Canceller (AEC); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.3.4-001", "kind": "structural", "applies": "§12.3.4 AECProvider, the voice feature: the interface (the sentence on what the echo canceller removes, informative, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The echo canceller removes acoustic echo — the bot's own TTS audio picked up
 by the user's microphone. Without AEC, the VAD triggers on the bot's speech,
 causing false speech detections and feedback loops.
@@ -12294,7 +12318,7 @@ AECProvider (interface)
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.3.4-002", "kind": "behavior", "applies": "§12.3.4 Echo Canceller (AEC); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.3.4-005", "kind": "behavior", "applies": "§12.3.4 Integration with the outbound path, the voice feature: an AEC provider keeps the reference fed through feed_reference() itself, so process() takes the inbound frame alone. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Integration with outbound path:**
 
 The AEC requires a reference signal — the audio being played back to the user.
@@ -12306,28 +12330,30 @@ track and pass the reference signal. The bidirectional dependency is:
 Reference: Speaker output → AEC.feed_reference(frame, stream)
 Inbound:   Transport → [resampler] → AEC.process(frame, stream) → [AGC] → ...
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.4-006", "kind": "behavior", "applies": "§12.3.4 Integration with the outbound path, the voice feature: feed_reference() and process() for one stream carry the same stream key. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Both calls MUST carry the same stream key. Each stream owns its echo canceller,
 so an unkeyed reference could not reach the right one; in a conference every
 lane hears a different mix, and feeding one lane's output into another lane's
 canceller models an echo that never occurred.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.3.4-003", "kind": "behavior", "applies": "§12.3.4 Echo Canceller (AEC); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.3.4-007", "kind": "behavior", "applies": "§12.3.4 Reference feeding, the voice feature: the implementation calls feed_reference() with the outbound audio and the key of the stream it is played to (the two strategies' introduction folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Reference feeding strategies:**
 
 Implementations MUST call `AECProvider.feed_reference()` with the outbound audio
 and the stream key that audio is being played to.
 The point at which this call is made has a critical impact on echo cancellation
-quality. Two strategies are defined:
+quality. Two strategies are defined:<!-- /rfc --><!-- rfc: {"id": "RK-12.3.4-008", "kind": "behavior", "applies": "§12.3.4 Reference feeding, strategy 1, the voice feature: a transport with direct access to the playback hardware should feed the reference from its speaker output callback. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 
 1. **Transport-level feeding (RECOMMENDED for local hardware).** When the
    transport has direct access to the playback hardware (e.g., a local speaker
    via PortAudio), the transport SHOULD feed reference audio from within the
    speaker output callback — at the exact moment audio is written to the DAC.
-   This provides the best time alignment between reference and echo. The
+   This provides the best time alignment between reference and echo. <!-- /rfc --><!-- rfc: {"id": "RK-12.3.4-009", "kind": "behavior", "applies": "§12.3.4 Reference feeding, strategy 1, the voice feature: with a VoiceBackend that takes an AECProvider and feeds the reference itself, the pipeline's outbound path does not call feed_reference(). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The
    `VoiceBackend` accepts an optional `AECProvider` and feeds reference
-   internally; the pipeline's outbound path does not call `feed_reference()`.
+   internally; the pipeline's outbound path does not call `feed_reference()`.<!-- /rfc --><!-- rfc: {"id": "RK-12.3.4-010", "kind": "behavior", "applies": "§12.3.4 Reference feeding, strategy 2, the voice feature: for a network transport, the pipeline's outbound path calls feed_reference() after the postprocessors and the recorder, before the resampler (the provider's ring buffer absorbing the playback latency, informative, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 2. **Pipeline-level feeding (for network transports).** When the transport sends
    audio over a network (WebRTC, SIP, WebSocket), the pipeline's outbound path
@@ -12339,12 +12365,14 @@ quality. Two strategies are defined:
 
    In this scenario the remote client's playback latency is handled by the AEC
    provider's internal ring buffer (e.g., SpeexDSP's split API).
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.4-011", "kind": "behavior", "applies": "§12.3.4 Reference feeding, the voice feature: one AEC instance is never fed the reference from both levels at once. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Implementations MUST NOT feed reference from both levels simultaneously for the
 same AEC instance — this would double-feed and corrupt the adaptive filter.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.3.4-004", "kind": "behavior", "applies": "§12.3.4 Echo Canceller (AEC); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.3.4-012", "kind": "behavior", "applies": "§12.3.4 Important considerations, the voice feature: a transport feeding the reference from its speaker callback should keep one output stream open for the session, playing silence between responses (the note on time alignment, informative, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 **Important considerations:**
 
 - AEC effectiveness depends on accurate time alignment between the reference
@@ -12357,7 +12385,7 @@ same AEC instance — this would double-feed and corrupt the adaptive filter.
   each time, which the audio server may then take seconds to settle; an
   adaptive filter cannot follow a delay that moves under it (measured on a
   desktop audio server: a quarter of the echo left above -50 dBFS, against
-  one twentieth with the delay held still).
+  one twentieth with the delay held still).<!-- /rfc --><!-- rfc: {"id": "RK-12.3.4-013", "kind": "behavior", "applies": "§12.3.4 Important considerations, the voice feature: a transport running its own AEC should run it without pause while it captures, through responses, cuts and the silent reference, processing every captured frame. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 - A transport running its own AEC SHOULD run it without pause for as long as
   it captures: through a response, through a cut, and on the silent reference
   between responses, feeding every played block and processing every captured
@@ -12366,7 +12394,7 @@ same AEC instance — this would double-feed and corrupt the adaptive filter.
   and its converged filter misses the next response's echo (measured: up to
   89 % of a response's first-second echo left above -50 dBFS, against none
   when it never pauses). With a silent reference it leaves the user's voice
-  untouched.
+  untouched.<!-- /rfc --><!-- rfc: {"id": "RK-12.3.4-014", "kind": "behavior", "applies": "§12.3.4 Important considerations, the voice feature: a transport handing a pipeline canceller every played block should mark each one metadata.reference_continues = true, and the pipeline should then keep the canceller active until the stream ends, metadata.playback_ended not bypassing it. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 - The same holds for a pipeline canceller whose reference the transport hands
   over block by block as it plays it, at the timing of strategy 1 but without a
   canceller of its own. A transport that reports every played block, the
@@ -12377,27 +12405,29 @@ same AEC instance — this would double-feed and corrupt the adaptive filter.
   there, it drops the silent reference while capture runs on, and resumes at the
   next response with the timelines out of step (measured on a recorded session
   replayed through WebRTC AEC3: the next response's echo 0 to 5 dB below the
-  microphone signal, against 34 to 44 dB kept active). A transport whose played
+  microphone signal, against 34 to 44 dB kept active). <!-- /rfc --><!-- rfc: {"id": "RK-12.3.4-015", "kind": "behavior", "applies": "§12.3.4 Important considerations, the voice feature: when a transport's played blocks stop between responses, the pipeline bypasses the canceller once that playback has ended, keeping its converged filter for the next response. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A transport whose played
   blocks stop between responses leaves the canceller no reference to run on; the
   pipeline bypasses it once that playback has ended, keeping its converged filter
-  for the next response.
+  for the next response.<!-- /rfc --><!-- rfc: {"id": "RK-12.3.4-016", "kind": "behavior", "applies": "§12.3.4 Important considerations, the voice feature: the reference and the captured audio have the same sample rate and frame size; with different transport rates the implementation resamples the reference to the inbound rate or requires matching rates when AEC is enabled. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - The reference and capture (inbound) audio MUST have the same sample rate and
   frame size. When the transport uses different sample rates for input and
   output, the implementation MUST either resample the reference to match the
-  inbound rate, or require matching rates when AEC is enabled.
+  inbound rate, or require matching rates when AEC is enabled.<!-- /rfc --><!-- rfc: {"id": "RK-12.3.4-017", "kind": "behavior", "applies": "§12.3.4 Important considerations, the voice feature: with a VoiceBackend declaring NATIVE_AEC, the pipeline skips its AEC stage, even with an AECProvider configured. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - When the VoiceBackend declares `NATIVE_AEC` capability, the pipeline MUST skip
   the AEC stage automatically, even if an AECProvider is configured, to avoid
-  double processing.
+  double processing.<!-- /rfc --><!-- rfc: {"id": "RK-12.3.4-018", "kind": "behavior", "applies": "§12.3.4 Important considerations, the voice feature: the AEC runs before the denoiser. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - AEC MUST run before the denoiser — echo is a known signal to subtract, not
   random noise to filter.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.4-019", "kind": "behavior", "applies": "§12.3.4 Echo Canceller (AEC), the voice feature: an AEC should add metadata.echo_cancelled = true to the frames it processes. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 AEC SHOULD add `metadata.echo_cancelled = true` to processed frames for
 observability.
 <!-- /rfc -->
 
 #### 12.3.5 Automatic Gain Control (AGC)
 
-<!-- rfc: {"id": "RK-12.3.5-001", "kind": "behavior", "applies": "§12.3.5 Automatic Gain Control (AGC); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.3.5-002", "kind": "structural", "applies": "§12.3.5 AGCProvider, the voice feature: the interface (the sentence on what AGC is for, informative, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The AGC normalizes input audio volume to a consistent level. Users on different
 devices, at different distances from their microphone, or in different
 environments produce widely varying audio levels. AGC ensures that the VAD
@@ -12413,7 +12443,9 @@ AGCProvider (interface)
 └── close() → void
         # Release resources
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.5-003", "kind": "structural", "applies": "§12.3.5 AGCConfig, the voice feature: its fields and their defaults. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 AGCConfig
 ├── target_level_dbfs: float = -3.0         # Target audio level in dBFS
@@ -12421,23 +12453,31 @@ AGCConfig
 ├── attack_ms: float = 10.0                 # Attack time (how fast gain increases)
 └── release_ms: float = 100.0               # Release time (how fast gain decreases)
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.5-004", "kind": "behavior", "applies": "§12.3.5 Automatic Gain Control (AGC), the voice feature: the implementation provides at least one built-in AGCProvider. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The AGC algorithm is well-standardized. Implementations MUST provide at least
-one built-in AGCProvider (e.g., based on WebRTC's AGC). Custom AGCProvider
+one built-in AGCProvider (e.g., based on WebRTC's AGC). <!-- /rfc --><!-- rfc: {"id": "RK-12.3.5-005", "kind": "behavior", "applies": "§12.3.5 Automatic Gain Control (AGC), the voice feature: an AGCProvider the integrator registers is the one the pipeline runs, which the implementation honours. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Custom AGCProvider
 implementations MAY be registered for specialized requirements.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.5-006", "kind": "behavior", "applies": "§12.3.5 Automatic Gain Control (AGC), the voice feature: the AGC runs after the AEC and before the denoiser. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 AGC MUST run after AEC (to avoid amplifying echo) and before the denoiser
 (to give the denoiser consistent input levels).
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.5-007", "kind": "behavior", "applies": "§12.3.5 Automatic Gain Control (AGC), the voice feature: with a VoiceBackend declaring NATIVE_AGC, the pipeline skips its AGC stage, even with an AGCProvider configured. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 When the VoiceBackend declares `NATIVE_AGC` capability, the pipeline MUST skip
 the AGC stage automatically, even if an AGCProvider is configured.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.5-008", "kind": "behavior", "applies": "§12.3.5 Automatic Gain Control (AGC), the voice feature: an AGC should add metadata.gain_applied_db to the frames it processes. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 AGC SHOULD add `metadata.gain_applied_db` to processed frames for observability.
 <!-- /rfc -->
 
 #### 12.3.6 DTMF Detector
 
-<!-- rfc: {"id": "RK-12.3.6-001", "kind": "behavior", "applies": "§12.3.6 DTMF Detector; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.3.6-004", "kind": "structural", "applies": "§12.3.6 DTMFDetector, the voice feature: the interface (the sentence on what DTMF detection is for, informative, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The DTMF detector identifies telephone keypad tones (0-9, *, #, A-D) in the
 audio stream. This is essential for IVR (Interactive Voice Response) scenarios,
 call transfers, and PSTN/SIP integrations where users interact via keypad.
@@ -12452,7 +12492,9 @@ DTMFDetector (interface)
 └── close() → void
         # Release resources
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.6-005", "kind": "structural", "applies": "§12.3.6 DTMFEvent, the voice feature: its fields, the digit, the tone's duration and an optional confidence. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 DTMFEvent
 ├── digit: string                            # Detected digit ("0"-"9", "*", "#", "A"-"D")
@@ -12461,7 +12503,7 @@ DTMFEvent
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.3.6-002", "kind": "behavior", "applies": "§12.3.6 DTMF Detector; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.3.6-006", "kind": "behavior", "applies": "§12.3.6 DTMF in parallel, the voice feature: the DTMF detector processes the frame the inbound resampler produced (the transport frame without one), before the AEC, AGC and denoiser, beside the main chain. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Critical: DTMF runs in parallel, not in series.**
 
 DTMF tones are sinusoidal signals that would be destroyed or distorted by the
@@ -12474,32 +12516,32 @@ Transport → [Resampler] → ┬─→ [AEC] → [AGC] → [Denoiser] → [VAD]
                            │
                            └─→ [DTMF Detector] (parallel)
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.6-007", "kind": "behavior", "applies": "§12.3.6 DTMF in parallel, the voice feature: a detected tone fires the ON_DTMF hook. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 When a DTMF tone is detected, the framework MUST fire the ON_DTMF hook
-(Section 9.2). Implementations MAY optionally suppress the DTMF audio from the
+(Section 9.2). <!-- /rfc --><!-- rfc: {"id": "RK-12.3.6-008", "kind": "behavior", "applies": "§12.3.6 DTMF in parallel, the voice feature: an implementation may suppress the tone's audio from the main pipeline. Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->Implementations MAY optionally suppress the DTMF audio from the
 main pipeline to prevent the tone from being transcribed as speech.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.3.6-003", "kind": "behavior", "applies": "§12.3.6 DTMF Detector; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.3.6-009", "kind": "structural", "applies": "§12.3.6 Outbound DTMF, the voice feature: VoiceBackend's send_dtmf(session, digit, duration_ms), which sends the digit to the remote party as an RFC 4733 telephone-event (its purpose, informative, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Outbound DTMF.** VoiceBackend exposes `send_dtmf(session, digit, duration_ms)`
 for sending DTMF digits to the remote party via RFC 4733 telephone-events. This
 is essential for AI agents navigating IVR menus, entering PINs, or interacting
-with phone systems programmatically. Valid digits are `'0'-'9'`, `'*'`, `'#'`,
-and `'A'-'D'`. The default duration is 160 ms. Only backends with the
+with phone systems programmatically. <!-- /rfc --><!-- rfc: {"id": "RK-12.3.6-010", "kind": "behavior", "applies": "§12.3.6 Outbound DTMF, the voice feature: the valid digits are 0 to 9, *, # and A to D. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Valid digits are `'0'-'9'`, `'*'`, `'#'`,
+and `'A'-'D'`. <!-- /rfc --><!-- rfc: {"id": "RK-12.3.6-011", "kind": "behavior", "applies": "§12.3.6 Outbound DTMF, the voice feature: a digit's default duration is 160 ms. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The default duration is 160 ms. <!-- /rfc --><!-- rfc: {"id": "RK-12.3.6-012", "kind": "behavior", "applies": "§12.3.6 Outbound DTMF, the voice feature: only a backend declaring DTMF_SIGNALING supports send_dtmf; another raises NotImplementedError. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Only backends with the
 `DTMF_SIGNALING` capability support this method; others MUST raise
-`NotImplementedError`. VoiceChannel provides the public entry point with input
+`NotImplementedError`. <!-- /rfc --><!-- rfc: {"id": "RK-12.3.6-013", "kind": "behavior", "applies": "§12.3.6 Outbound DTMF, the voice feature: VoiceChannel's send_dtmf is the public entry point and validates the digit set, the duration range 1 to 10000 ms and the session's state. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->VoiceChannel provides the public entry point with input
 validation (digit set, duration range 1–10000 ms, session state).
 <!-- /rfc -->
 
 #### 12.3.7 Audio Recorder
 
-<!-- rfc: {"id": "RK-12.3.7-001", "kind": "behavior", "applies": "§12.3.7 Audio Recorder; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.3.7-006", "kind": "structural", "applies": "§12.3.7 AudioRecorder, the voice feature: the interface, which records one VoiceSession in its two directions (the recorder's purpose and its scope, a room's participants recording through §12.11 and a conference through §12.10.8, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The audio recorder captures bidirectional audio for compliance, audit, quality
 assurance, and training purposes. In regulated industries (financial services,
 healthcare), call recording is often mandatory.
-<!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.3.7-002", "kind": "behavior", "applies": "§12.3.7 Audio Recorder; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Scope.** This interface records a VoiceSession, and everything about it says
 so: the handle names a session, and both the mode and the channel mode are
 expressed in terms of two directions. That is the shape of a call, not of a
@@ -12520,7 +12562,9 @@ AudioRecorder (interface)
 └── close() → void
         # Release resources
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.7-007", "kind": "structural", "applies": "§12.3.7 RecordingHandle, the voice feature: its fields, an opaque token start() returns and every later recorder call takes. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 RecordingHandle
 ├── id: string                               # Unique handle identifier
@@ -12530,9 +12574,11 @@ RecordingHandle
 ```
 
 The `RecordingHandle` is an opaque token returned by `start()` and passed to
-all subsequent recorder calls. Implementations MAY extend it with
+all subsequent recorder calls. <!-- /rfc --><!-- rfc: {"id": "RK-12.3.7-008", "kind": "structural", "applies": "§12.3.7 RecordingHandle, the voice feature: an implementation may extend it with provider-specific fields. Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->Implementations MAY extend it with
 provider-specific fields.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.7-009", "kind": "structural", "applies": "§12.3.7 RecordingConfig, the voice feature: its fields and their defaults. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 RecordingConfig
 ├── format: string = "wav"                   # Output format ("wav", "mp3", "ogg", "flac")
@@ -12544,35 +12590,41 @@ RecordingConfig
 ├── storage_encrypted_at_rest: bool = false  # Integrator's statement: storage encrypts
 └── metadata: map<string, any>               # Recording metadata (room_id, participant_id, etc.)
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.7-010", "kind": "structural", "applies": "§12.3.7 RecordingEncryption, the voice feature: the interface. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 RecordingEncryption (interface)
 ├── name: string                             # Cipher/provider name
 └── encrypt_file(path: string) → string      # Encrypt a finished file, leave no
                                              # plaintext; returns the artifact's path
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.7-011", "kind": "behavior", "applies": "§12.3.7 Audio Recorder, the voice feature: a recorder that stores files refuses to start when its configuration carries neither encryption nor storage_encrypted_at_rest = true. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A recorder that stores files MUST refuse to start when its configuration
 carries neither `encryption` nor `storage_encrypted_at_rest = true`
 (Section 17.6): an omitted security decision fails closed instead of producing
-a plaintext recording. With `encryption`, the recorder hands each finished
+a plaintext recording. <!-- /rfc --><!-- rfc: {"id": "RK-12.3.7-012", "kind": "behavior", "applies": "§12.3.7 Audio Recorder, the voice feature: with encryption, the recorder hands each finished file to encrypt_file() and reports the path it returns; a file the cipher cannot encrypt is deleted, never kept in the clear. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->With `encryption`, the recorder hands each finished
 file to `encrypt_file()` and reports the path it returns; a file the cipher
-cannot encrypt MUST be deleted rather than kept in the clear. With
+cannot encrypt MUST be deleted rather than kept in the clear. <!-- /rfc --><!-- rfc: {"id": "RK-12.3.7-013", "kind": "behavior", "applies": "§12.3.7 Audio Recorder, the voice feature: with encryption, a file whose finalisation raises is deleted, never kept in the clear. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->With
 `encryption`, a file whose finalisation raises is likewise deleted rather than
-kept in the clear.
+kept in the clear.<!-- /rfc --><!-- rfc: {"id": "RK-12.3.7-014", "kind": "non_testable", "applies": "§12.3.7 Audio Recorder, the voice feature: storage_encrypted_at_rest is the deployment's assertion, which the implementation cannot verify (the pointer to the room media recorder of §12.11 and conference recording of §12.10.8, which state the same rule, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 `storage_encrypted_at_rest` is a deployment assertion the implementation
 cannot verify. The same two fields, with the same rule, configure the room
 media recorder (Section 12.11) and conference recording (Section 12.10.8).
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.7-015", "kind": "behavior", "applies": "§12.3.7 Audio Recorder, the voice feature: storage names a storage backend the implementation resolves at runtime; the implementation documents the backends it supports and raises a configuration error for an unknown one. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The `storage` field is an integrator-defined identifier resolved by the
 implementation at runtime — similar to how provider names reference registered
 providers. Implementations MUST document which storage backends they support
 (e.g., "local", "s3", "gcs") and MUST raise a configuration error if an
-unknown identifier is provided. A storage path containing `..` is a
+unknown identifier is provided. <!-- /rfc --><!-- rfc: {"id": "RK-12.3.7-016", "kind": "behavior", "applies": "§12.3.7 Audio Recorder, the voice feature: a storage path containing .. is a configuration error, never replaced by another location. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A storage path containing `..` is a
 configuration error, never replaced by another location.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.3.7-003", "kind": "behavior", "applies": "§12.3.7 Audio Recorder; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.3.7-003", "kind": "behavior", "applies": "§12.3.7 RecordingMode, the voice feature: what each mode records, the user's audio only, the bot's audio only or both directions. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **RecordingMode** enumeration:
 
 | Value | Description |
@@ -12582,7 +12634,7 @@ configuration error, never replaced by another location.
 | BOTH | Record both directions |
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.3.7-004", "kind": "behavior", "applies": "§12.3.7 Audio Recorder; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.3.7-017", "kind": "behavior", "applies": "§12.3.7 RecordingChannelMode, the voice feature: how each mode lays the directions out, mixed in one file, user on the left and bot on the right of one stereo file, or one file per direction. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **RecordingChannelMode** enumeration:
 
 | Value | Description |
@@ -12590,7 +12642,9 @@ configuration error, never replaced by another location.
 | MIXED | Single file, both directions mixed |
 | STEREO | Single file, user on left channel, bot on right channel |
 | SEPARATE | Two separate files, one per direction |
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.7-018", "kind": "structural", "applies": "§12.3.7 RecordingResult, the voice feature: its fields. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 RecordingResult
 ├── recording_id: string                     # Unique recording identifier
@@ -12602,7 +12656,7 @@ RecordingResult
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.3.7-005", "kind": "behavior", "applies": "§12.3.7 Audio Recorder; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.3.7-019", "kind": "behavior", "applies": "§12.3.7 Recording position, the voice feature: the recorder captures inbound audio after the resampler, before any processing, and outbound audio after the postprocessors. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Recording position in the pipeline:**
 
 The recorder captures audio at two points:
@@ -12610,35 +12664,43 @@ The recorder captures audio at two points:
   processing, to preserve the original signal for compliance.
 - **Outbound:** After postprocessors (final bot audio) — what the user actually
   heard.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.7-020", "kind": "behavior", "applies": "§12.3.7 Recording position, the voice feature: an implementation may offer an option to record at other pipeline positions. Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->
 Implementations MAY provide a configuration option to record at different
 pipeline positions (e.g., after denoiser for cleaner recordings).
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.7-021", "kind": "behavior", "applies": "§12.3.7 Recording position, the voice feature: the calls at the two capture points, record_inbound() between the inbound resampler and the AEC, record_outbound() between the postprocessors and the outbound resampler. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 Inbound:  Transport → [Resampler] → recorder.record_inbound() → [AEC] → [AGC] → ...
 Outbound: [PostProcessors] → recorder.record_outbound() → [Resampler] → Transport
 ```
+<!-- /rfc -->
 
-When recording starts, the framework SHOULD fire ON_RECORDING_STARTED hook.
+<!-- rfc: {"id": "RK-12.3.7-022", "kind": "behavior", "applies": "§12.3.7 Recording position, the voice feature: the framework should fire ON_RECORDING_STARTED when a recording starts. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
+When recording starts, the framework SHOULD fire ON_RECORDING_STARTED hook.<!-- /rfc --><!-- rfc: {"id": "RK-12.3.7-023", "kind": "behavior", "applies": "§12.3.7 Recording position, the voice feature: the framework should fire ON_RECORDING_STOPPED with the RecordingResult when a recording stops. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 When recording stops, the framework SHOULD fire ON_RECORDING_STOPPED hook with
 the RecordingResult.
 <!-- /rfc -->
 
 #### 12.3.8 VAD Provider
 
-<!-- rfc: {"id": "RK-12.3.8-001", "kind": "behavior", "applies": "§12.3.8 VAD Provider; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.3.8-001", "kind": "behavior", "applies": "§12.3.8 VAD Provider, the voice feature: the VAD's events are the source of the ON_SPEECH_START, ON_SPEECH_END, ON_VAD_SILENCE and ON_VAD_AUDIO_LEVEL hooks. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The VAD provider detects speech activity in audio frames and emits events that
 drive the voice pipeline. VAD events are the source for the ON_SPEECH_START,
 ON_SPEECH_END, ON_VAD_SILENCE, and ON_VAD_AUDIO_LEVEL hooks defined in
 Section 9.2.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.3.8-002", "kind": "behavior", "applies": "§12.3.8 VAD Provider; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.3.8-005", "kind": "non_testable", "applies": "§12.3.8 VAD Provider, the voice feature: VAD is optional in the schema for speech-to-speech, and the integrator configures one for a Voice Channel, whose STT path finds speech boundaries through it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Note:** VAD is OPTIONAL in the `AudioPipelineConfig` schema to support
 speech-to-speech architectures where the AI provider handles turn detection.
 However, for Voice Channels (STT/TTS pipeline), VAD is effectively required —
 without it, the pipeline has no way to detect speech boundaries for STT.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.8-006", "kind": "structural", "applies": "§12.3.8 VADProvider, the voice feature: the interface, configure() applying the pipeline's vad_config. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 VADProvider (interface)
 ├── name: string                             # Provider name (e.g., "silero", "ten_vad", "webrtc")
@@ -12651,7 +12713,9 @@ VADProvider (interface)
 └── close() → void
         # Release resources
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.8-007", "kind": "structural", "applies": "§12.3.8 VADEvent, the voice feature: its fields, the event type, the captured speech on SPEECH_END, a confidence, a duration and an audio level. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 VADEvent
 ├── type: VADEventType                       # What was detected
@@ -12662,7 +12726,7 @@ VADEvent
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.3.8-003", "kind": "behavior", "applies": "§12.3.8 VAD Provider; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.3.8-008", "kind": "structural", "applies": "§12.3.8 VADEventType, the voice feature: its values and what each reports (the relationship with speech-to-speech providers, which restates the two VAD roles of §12.4, informative, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **VADEventType** enumeration:
 
 | Value | Description |
@@ -12671,9 +12735,7 @@ VADEvent
 | SPEECH_END | Speech activity ended — `audio_bytes` contains captured segment |
 | SILENCE | Silence duration exceeded `silence_threshold_ms` |
 | AUDIO_LEVEL | Periodic audio level report |
-<!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.3.8-004", "kind": "behavior", "applies": "§12.3.8 VAD Provider; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Relationship with speech-to-speech providers:**
 
 When using a speech-to-speech provider (Section 12.4), the audio pipeline acts
@@ -12687,7 +12749,7 @@ UI) and turn-taking stays with the provider.
 
 #### 12.3.9 Diarization Provider
 
-<!-- rfc: {"id": "RK-12.3.9-001", "kind": "behavior", "applies": "§12.3.9 Diarization Provider; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.3.9-003", "kind": "structural", "applies": "§12.3.9 DiarizationProvider, the voice feature: the interface (the sentence on what diarization is for, informative, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The diarization provider identifies which speaker produced each audio segment.
 This is particularly relevant in multi-participant voice rooms or when multiple
 speakers share a single audio stream (e.g., speakerphone).
@@ -12702,28 +12764,32 @@ DiarizationProvider (interface)
 └── close() → void
         # Release resources
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.9-004", "kind": "structural", "applies": "§12.3.9 DiarizationResult, the voice feature: its fields, the speaker label, a confidence and whether the speaker is new. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 DiarizationResult
 ├── speaker_id: string                       # Identified speaker label
 ├── confidence: float | null                 # Identification confidence [0.0, 1.0]
 └── is_new_speaker: bool                     # True if this speaker was not previously seen
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.9-005", "kind": "behavior", "applies": "§12.3.9 Diarization Provider, the voice feature: a speaker change the diarization stage detects fires the ON_SPEAKER_CHANGE hook. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 When diarization detects a speaker change, the framework MUST fire the
-ON_SPEAKER_CHANGE hook (Section 9.2). A result that attributes the audio to
+ON_SPEAKER_CHANGE hook (Section 9.2). <!-- /rfc --><!-- rfc: {"id": "RK-12.3.9-006", "kind": "behavior", "applies": "§12.3.9 Diarization Provider, the voice feature: a result whose speaker_id the label rule of §12.2.3 reads as unattributed (UU, PENDING, unknown in any case, or empty) is no speaker: it fires no hook and leaves the last speaker unchanged. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A result that attributes the audio to
 nobody — a `speaker_id` the label rule of Section 12.2.3 reads as unattributed
 (`UU`, `PENDING`, `unknown` in any case, or empty) — is not a speaker, as for an STT label: it
 neither fires the hook nor resets the last speaker, so a stretch the stage
-could not match between two stretches of one voice is no change. The result
+could not match between two stretches of one voice is no change. <!-- /rfc --><!-- rfc: {"id": "RK-12.3.9-007", "kind": "behavior", "applies": "§12.3.9 Diarization Provider, the voice feature: an unattributed result still reaches the frame, where a channel naming speakers from the stage counts it (§12.2.3). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The result
 still reaches the frame, where a channel naming speakers from the stage counts
 it (Section 12.2.3, *From the pipeline stage*).
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.3.9-002", "kind": "behavior", "applies": "§12.3.9 Diarization Provider; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.3.9-008", "kind": "behavior", "applies": "§12.3.9 Speaker-to-Participant mapping, the voice feature: a DiarizationResult's speaker_id is the provider's label, which the implementation reports as such, never a Participant.id. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Speaker-to-Participant mapping:** `DiarizationResult.speaker_id` is a
 provider-assigned label (e.g., "speaker_0", "speaker_1"), not a RoomKit
-`Participant.id`. Mapping diarization labels to participants is an
+`Participant.id`. <!-- /rfc --><!-- rfc: {"id": "RK-12.3.9-009", "kind": "non_testable", "applies": "§12.3.9 Speaker-to-Participant mapping, the voice feature: mapping labels to participants is the integrator's, typically in the ON_SPEAKER_CHANGE hook; a diarizing STT's label follows the same rule (§12.2.3). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Mapping diarization labels to participants is an
 integrator concern — typically resolved via the ON_SPEAKER_CHANGE hook,
 where the integrator can match speaker labels to known participants using
 voice enrollment, channel metadata, or heuristics (e.g., the participant
@@ -12733,7 +12799,7 @@ STT follows the same rule, and Section 12.2.3 defines how it reaches the room.
 
 #### 12.3.10 Audio Post-Processor
 
-<!-- rfc: {"id": "RK-12.3.10-001", "kind": "behavior", "applies": "§12.3.10 Audio Post-Processor; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.3.10-002", "kind": "structural", "applies": "§12.3.10 AudioPostProcessor, the voice feature: the interface, each processor taking an outbound frame and returning a possibly modified one (its use cases, informative, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Audio post-processors form an ordered chain on the outbound path. Each processor
 receives an audio frame and returns a (possibly modified) frame. Common use cases
 include volume normalization, audio watermarking (for compliance), and recording.
@@ -12748,14 +12814,16 @@ AudioPostProcessor (interface)
 └── close() → void
         # Release resources
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.10-003", "kind": "behavior", "applies": "§12.3.10 Audio Post-Processor, the voice feature: the postprocessors run in the order of the postprocessors list, each receiving the previous one's output. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Multiple post-processors are executed in the order they appear in the
 `postprocessors` list. Each processor receives the output of the previous one.
 <!-- /rfc -->
 
 #### 12.3.11 Audio Frame
 
-<!-- rfc: {"id": "RK-12.3.11-001", "kind": "behavior", "applies": "§12.3.11 Audio Frame; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.3.11-001", "kind": "structural", "applies": "§12.3.11 AudioFrame, the voice feature: its fields. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The common data structure passed through the pipeline:
 
 ```
@@ -12769,7 +12837,7 @@ AudioFrame
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.3.11-002", "kind": "behavior", "applies": "§12.3.11 Audio Frame; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.3.11-003", "kind": "structural", "applies": "§12.3.11 AudioChunk, the voice feature: a type of its own, not an alias of AudioFrame, with its fields. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **AudioChunk** is a distinct type, not an alias:
 
 ```
@@ -12781,25 +12849,33 @@ AudioChunk
 ├── timestamp_ms: int | null                 # Chunk timestamp
 └── is_final: bool                           # Last chunk of the stream
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.11-004", "kind": "behavior", "applies": "§12.3.11 Audio Frame, the voice feature: an AudioFrame is validated on construction, and the stages it goes through record their annotations in its metadata. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The two exist because inbound and outbound audio are not the same problem.
 Inbound audio is a stream to be *analysed*: an AudioFrame is a standalone unit
 that accumulates stage annotations in `metadata` as it descends the pipeline —
 the VAD records that speech was present, diarization records which speaker —
 and it is validated on construction, because a misaligned frame breaks the
 stages that consume it.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.11-005", "kind": "behavior", "applies": "§12.3.11 Audio Frame, the voice feature: an AudioChunk says with is_final which chunk ends the stream, and carries no metadata and no validation. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Outbound audio is a stream to be *finished*: TTS emits a sequence of chunks and
 must be able to say which one is last, so the transport knows when an utterance
 has ended, can drain its buffers, and can hand control back to barge-in
 handling. `is_final` carries that, and AudioFrame has no equivalent because a
 live microphone has no last frame. Nothing annotates an outbound chunk, so it
 carries no metadata and no validation.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.11-006", "kind": "structural", "applies": "§12.3.11 Audio Frame, the voice feature: AudioFrame and AudioChunk stay two types, never merged. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Implementations MUST NOT merge the two. Doing so means either dragging
 `is_final` and `format` into the pipeline type, where they are meaningless, or
 losing stream termination on the TTS path.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.11-007", "kind": "behavior", "applies": "§12.3.11 Audio Frame, the voice feature: an AudioFrame becomes an AudioChunk by dropping its metadata; a chunk becomes a frame only by validating its alignment, with a fresh metadata record. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Conversion is one-directional and lossy by design: an AudioFrame becomes an
 AudioChunk by dropping its pipeline metadata; the reverse requires validating
 alignment and starting a fresh annotation record.

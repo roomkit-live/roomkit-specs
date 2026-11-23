@@ -621,75 +621,75 @@
     },
     {
       "section": "12.3",
-      "sha256": "15e3ecdd9d7f27660f0d9d960bfe048f3d17f58e05a1d832c1efed3e8d959df0",
+      "sha256": "4c7248ae6301f54454134197b0f7bc59d6e5dde84f54dfa14015b79af7d9bf9e",
       "classification": "normative",
-      "review": "Source inventory: Audio Processing Pipeline. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Audio Processing Pipeline, split to one obligation per unit, each with its level (RMK-2027): RK-12.3-007, the inbound stage order, with the recorder tapping a copy and the DTMF detector beside the chain; RK-12.3-008, the outbound stage order, with the AEC reference fed by the pipeline for a network transport. The pipeline's purpose, the rationale table, the table of symmetry with the text hooks and the note on subsection order are informative and folded into them. Every unit carries its level."
     },
     {
       "section": "12.3.1",
-      "sha256": "ff4254bbd0642862aa1fee196e9ca0703b5718e782fd7bb03e0bc64f9315ce7e",
+      "sha256": "dbbf55cda7ab01b4cd701c5153a7b7c395676401cac35c8814378593a0e04dba",
       "classification": "normative",
-      "review": "Source inventory: Pipeline Configuration. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Pipeline Configuration, split to one obligation per unit, each with its level (RMK-2027): RK-12.3.1-005 to 026. AudioPipelineConfig, VADConfig, AudioPipelineContract and AudioFormat are structural; the integrator's SHOULD of configuring a provider is non_testable, the typical configurations folded into it; what a VAD provider does with vad_config and its extra keys are units of their own beside the pipeline handing vad_config over at build; the stream identity contract separates each stage's per-stream state, the caller's stable key, the required stream parameter, the conformance check, the resampler's null reset, native instances and shared state; the session lifecycle contract separates the resets at a stream's end and before its first frame, close() and the stages it covers. Every unit carries its level."
     },
     {
       "section": "12.3.2",
-      "sha256": "e5081df43fbc57ca2aa9cc0f3d9bead593b686cd69f763f70f6b9a816da4679d",
+      "sha256": "91456764467e2deb45583bb0f2f0f75ca6284717d000d82fe4a86b8267508b0a",
       "classification": "normative",
-      "review": "Source inventory: Denoiser Provider. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage. Vendor cleanup (RMK-1991, decision D6): the built-in denoiser counts whether it ships with the implementation or as a separate package built on the interface."
+      "review": "Source inventory: Denoiser Provider, split to one obligation per unit, each with its level (RMK-2027): RK-12.3.2-002, the DenoiserProvider interface (its purpose folded in), and RK-12.3.2-003, the SHOULD of providing a denoiser. Vendor cleanup (RMK-1991, decision D6): the built-in denoiser counts whether it ships with the implementation or as a separate package built on the interface. Every unit carries its level."
     },
     {
       "section": "12.3.3",
-      "sha256": "f50588eaaab60c95c71f1e7566cc7b5cdaf801b1bd61f3ac2d5d7e943d345083",
+      "sha256": "ffec27278df20c21ede432337bb138a353cfea7dc076b089fef885af90385829",
       "classification": "normative",
-      "review": "Source inventory: Resampler. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Resampler, split to one obligation per unit, each with its level (RMK-2027): RK-12.3.3-001, ResamplerConfig with its defaults (its purpose folded in); RK-12.3.3-003 to 009, inbound and outbound conversion, the preserved timestamp, the original-format metadata, the SHOULD of high-quality resampling, stages taking the native format without a resampler and the SHOULD of a mismatch warning. Every unit carries its level."
     },
     {
       "section": "12.3.4",
-      "sha256": "40438f9be31489f9fc69ece008849390b789263e467e958abdcc29ce5f216a55",
+      "sha256": "493649e92eaa18d1b8c335421c4daff3fc0cd9e83c069a235dc31128b0aec768",
       "classification": "normative",
-      "review": "Source inventory: Echo Canceller (AEC). Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Echo Canceller (AEC), split to one obligation per unit, each with its level (RMK-2027): RK-12.3.4-001, the AECProvider interface (its purpose folded in); RK-12.3.4-005 to 019, the provider holding its reference, one stream key for both calls, the reference fed with its stream key, the transport-level and pipeline-level strategies, never both levels, the transport's SHOULDs (one output stream, an AEC never paused, played blocks marked), the pipeline keeping or bypassing its canceller, matching formats, the NATIVE_AEC skip, AEC before the denoiser and the SHOULD of echo_cancelled metadata. The note on time alignment and the measured figures are informative. Every unit carries its level."
     },
     {
       "section": "12.3.5",
-      "sha256": "2bdd43c4f5992a96b74e5fa882ecca29deee7bc1584bca437c62e795ef3019bd",
+      "sha256": "bcee46263670a5afab3006bec04d3a1da44b523dbcb66aa995089c98d8d4e532",
       "classification": "normative",
-      "review": "Source inventory: Automatic Gain Control (AGC). Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Automatic Gain Control (AGC), split to one obligation per unit, each with its level (RMK-2027): RK-12.3.5-002 to 008, the AGCProvider interface (its purpose folded in), AGCConfig, a built-in AGC, a registered custom AGC, the order after AEC and before the denoiser, the NATIVE_AGC skip and the SHOULD of gain metadata. Every unit carries its level."
     },
     {
       "section": "12.3.6",
-      "sha256": "a7a99f2d79ab1fbfc84a84dd0b5c682b77c215bc049f6f1d0907051f38c53ae1",
+      "sha256": "df398f36e18240a30ed2045aaf9807817a2362b8fb9320bc9b1b521bf9fbfac0",
       "classification": "normative",
-      "review": "Source inventory: DTMF Detector. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: DTMF Detector, split to one obligation per unit, each with its level (RMK-2027): RK-12.3.6-004 to 013, the DTMFDetector interface (its purpose folded in), DTMFEvent, detection on the resampled frame beside the chain, the ON_DTMF hook, the permission to suppress the tone, and outbound DTMF: send_dtmf on the backend, the valid digits, the 160 ms default, NotImplementedError without DTMF_SIGNALING and the channel's validation. Every unit carries its level."
     },
     {
       "section": "12.3.7",
-      "sha256": "8f787d6dd94fd37beabefecee0fd007ee75e7b51b0d973ea2d7ae193a2adfea0",
+      "sha256": "ea771ab9e9ff191afab6c379236b86cf7d7457dc7bf865f82a9ead7ddfd5fde9",
       "classification": "normative",
-      "review": "Source inventory: Audio Recorder. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Audio Recorder, split to one obligation per unit, each with its level (RMK-2027): RK-12.3.7-006 to 023, with RK-12.3.7-003 kept. AudioRecorder (its purpose and scope folded in), RecordingHandle, RecordingConfig, RecordingEncryption and RecordingResult are structural, with the permission to extend the handle; the encryption rules (refusal without encryption or encrypted storage, encrypted or deleted files, deletion after a failed finalisation), the deployment's assertion (non_testable, the pointer to §12.11 and §12.10.8 folded in), storage identifiers and '..' are units of their own; RecordingMode, RecordingChannelMode, the two capture points, the permission to record elsewhere, the diagram's calls and the two recording hooks follow. Every unit carries its level."
     },
     {
       "section": "12.3.8",
-      "sha256": "056f9151e0a4e36bf47676214d8f4b94a9728c97a5041c60c8049a37f68aef11",
+      "sha256": "57468f8069e598e3a80f1be5794ba536ebbc41ec08097aa1b548b1ac0db98a47",
       "classification": "normative",
-      "review": "Source inventory: VAD Provider. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: VAD Provider, split to one obligation per unit, each with its level (RMK-2027): RK-12.3.8-001 kept, VAD events as the source of the four VAD hooks; RK-12.3.8-005, a VAD for a Voice Channel, the integrator's (non_testable); RK-12.3.8-006 to 008, the VADProvider interface, VADEvent and VADEventType, the relationship with speech-to-speech providers, which restates the two VAD roles of §12.4, folded into the last. Every unit carries its level."
     },
     {
       "section": "12.3.9",
-      "sha256": "a2f45cc7f209b887be83990a411ce7f29c4ee44f54ea814c3c7f2394e9e17d73",
+      "sha256": "a7adebc01d3c039a3f12dfb8248168e7f3a37ebf6ede8c9ec6bdfb107447b09d",
       "classification": "normative",
-      "review": "Source inventory: Diarization Provider. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Diarization Provider, split to one obligation per unit, each with its level (RMK-2027): RK-12.3.9-003 to 009, the DiarizationProvider interface (its purpose folded in), DiarizationResult, the ON_SPEAKER_CHANGE hook on a change, an unattributed result being no change, that result still reaching the frame, the speaker label as the provider's, and mapping labels to participants, the integrator's (non_testable). Every unit carries its level."
     },
     {
       "section": "12.3.10",
-      "sha256": "06869709ca7ab8509888b6bc46daf15c1fbb6c49c5e67b6b6a5a85066f2eebaf",
+      "sha256": "6db6ae65694864e59c1e40d9335ed8012c9391889c6fe651dfc2b97507e7e5ea",
       "classification": "normative",
-      "review": "Source inventory: Audio Post-Processor. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Audio Post-Processor, split to one obligation per unit, each with its level (RMK-2027): RK-12.3.10-002, the AudioPostProcessor interface (the chain's description and use cases folded in), and RK-12.3.10-003, the postprocessors run in list order, each fed the previous one's output. Every unit carries its level."
     },
     {
       "section": "12.3.11",
-      "sha256": "9e9696f47c7a619a819b1fe2ccc562c408d808f407f5c092327e2d90b5a099b8",
+      "sha256": "658e403afd7c40324eb9d3769fd355e46ff4e56ad154786066e0e4fe3d82e02e",
       "classification": "normative",
-      "review": "Source inventory: Audio Frame. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Audio Frame, split to one obligation per unit, each with its level (RMK-2027): RK-12.3.11-001 kept, AudioFrame; RK-12.3.11-003 to 007, AudioChunk, an AudioFrame validated and annotated, an AudioChunk closed by is_final, the two types never merged, and their one-way conversion. Every unit carries its level."
     },
     {
       "section": "12.3.12",
