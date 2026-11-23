@@ -4308,6 +4308,47 @@
       "tools/report-claim-reused-id-non-streaming": "7dd0867fdcc526c12014a22b8094ace3cd66bd86015f9b0b2f03095b37221694",
       "tools/report-claim-reused-id-streaming": "7dd0867fdcc526c12014a22b8094ace3cd66bd86015f9b0b2f03095b37221694"
     },
+    "RK-12.4-056": {
+      "realtime/a-late-cancellation-leaves-the-served-call-alone": "8d03c50f57284cdc6e14aa5a4791db060eb5cb41968355892592e5ff7c2da8af"
+    },
+    "RK-12.4-064": {
+      "realtime/a-handler-reconnects-through-its-child": "efbde4f388dec38b534373b1d265cacf7ab5cc5935d68f3d84a42e479d2602c8",
+      "realtime/a-late-cancellation-leaves-the-served-call-alone": "efbde4f388dec38b534373b1d265cacf7ab5cc5935d68f3d84a42e479d2602c8"
+    },
+    "RK-12.4-065": {
+      "realtime/a-handler-reconnects-through-its-child": "4e777d00f582d6506a18639f5e2f1bed658179a07b38862e610ee4d035c2bc09",
+      "realtime/an-abandoned-call-interrupts-its-handler": "4e777d00f582d6506a18639f5e2f1bed658179a07b38862e610ee4d035c2bc09"
+    },
+    "RK-12.4-066": {
+      "realtime/a-hosted-delegation-reaches-its-room": "52bcbb50ff45597b5fc1fcadaf005b19e37c16dc3f86190e1c604529078669d3"
+    },
+    "RK-12.4-068": {
+      "realtime/a-provider-error-reaches-the-room": "7eb92ec57745eda1d216b0bb92fdb35c377a7feb721869fe5c353b17687d9924"
+    },
+    "RK-12.4-090": {
+      "realtime/a-session-takes-its-instruction-directly": "009c339981e8a6708ac630409dfbaa14b781e00750a18109d2939c84db03fac4"
+    },
+    "RK-12.4-091": {
+      "realtime/a-session-takes-its-instruction-directly": "4957ceac6dd49f8cb84bb75748f47d4a70b73c0c19651e4ec2e658de2a0802c2"
+    },
+    "RK-12.4-093": {
+      "realtime/a-session-takes-its-instruction-directly": "0c0a9f01e79acf2011264ab5d1424a3389cfa159d7229fcbcf6ed07ba30c1fef"
+    },
+    "RK-12.4-099": {
+      "realtime/a-correction-enters-the-session-silently": "87b3db0df2f7c17f1cb3e0de74b0344e2b56562542b8c8059142a444c41502d3",
+      "realtime/a-hook-injection-enters-the-session-silently": "87b3db0df2f7c17f1cb3e0de74b0344e2b56562542b8c8059142a444c41502d3"
+    },
+    "RK-12.4-102": {
+      "realtime/a-correction-enters-the-session-silently": "07bb270a89316cbe87de2e6610eb43335c4047e4eb380e604ce214f8e970bf1c",
+      "realtime/a-hook-injection-enters-the-session-silently": "07bb270a89316cbe87de2e6610eb43335c4047e4eb380e604ce214f8e970bf1c"
+    },
+    "RK-12.4-103": {
+      "realtime/a-session-takes-its-instruction-directly": "dd1cb7314bf6078d70e70a9b8264fe660c4627f6a850b10f13d848fa7a718a9e"
+    },
+    "RK-12.4-118": {
+      "realtime/a-handler-reconnects-through-its-child": "17a76f486f659d828db2fb563f45190e33b8aa09c3a87a3e5eea2cfa1106b023",
+      "realtime/a-late-cancellation-leaves-the-served-call-alone": "17a76f486f659d828db2fb563f45190e33b8aa09c3a87a3e5eea2cfa1106b023"
+    },
     "RK-13.2-004": {
       "delivery/a-retried-delivery-keeps-its-successful-provider-receipt": "8504abca107b13da520b70284632b270c3d86c86a32db7cb46bd3f96555880da"
     },

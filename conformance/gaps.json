@@ -891,6 +891,11 @@
       "card": "RMK-2034",
       "note": "step: voice.open naming the transcript's speaker from the diarization stage (S5b): an unattributed result heard the longest gives the transcript the sender_name Unknown speaker."
     },
+    "RK-12.4-018": {
+      "class": "step",
+      "card": "RMK-2045",
+      "note": "step: a pipeline VAD on the realtime channel spec and a read of the activity signals (S13, S8)."
+    },
     "RK-12.4-022": {
       "class": "writable",
       "card": "RMK-2008",
@@ -975,6 +980,236 @@
       "class": "step",
       "card": "RMK-2008",
       "note": "step: realtime.transcribe, a call recovered from the assistant's text (S2)."
+    },
+    "RK-12.4-052": {
+      "class": "step",
+      "card": "RMK-2045",
+      "note": "step: a scripted inject_text result in realtime.start, null included, read through deliver's session_outcomes (S1)."
+    },
+    "RK-12.4-055": {
+      "class": "step",
+      "card": "RMK-2045",
+      "note": "step: realtime.tool_call with arguments that are not an object, which the schema types as an object (S9)."
+    },
+    "RK-12.4-059": {
+      "class": "step",
+      "card": "RMK-2045",
+      "note": "step: supports_tools false in realtime.start and a read of the tools declared at connect (S1, S7)."
+    },
+    "RK-12.4-061": {
+      "class": "step",
+      "card": "RMK-2045",
+      "note": "step: realtime.audio, the provider's audio read at the transport (S4)."
+    },
+    "RK-12.4-062": {
+      "class": "step",
+      "card": "RMK-2045",
+      "note": "step: realtime.transcribe, a provider transcript, user or assistant (S2)."
+    },
+    "RK-12.4-063": {
+      "class": "step",
+      "card": "RMK-2045",
+      "note": "step: realtime.speech, the provider's speech start and end (S3)."
+    },
+    "RK-12.4-069": {
+      "class": "step",
+      "card": "RMK-2045",
+      "note": "step: realtime.reconfigure and a read of each session's prompt, voice and tools (S6, S8)."
+    },
+    "RK-12.4-070": {
+      "class": "step",
+      "card": "RMK-2045",
+      "note": "step: realtime.reconfigure and a second session on the channel, the fixture starting one (S6)."
+    },
+    "RK-12.4-071": {
+      "class": "step",
+      "card": "RMK-2045",
+      "note": "step: tool_policy on the realtime channel spec (S7)."
+    },
+    "RK-12.4-072": {
+      "class": "step",
+      "card": "RMK-2045",
+      "note": "step: tool_policy on the realtime channel spec and a read of the tools declared at connect and reconfigure (S7)."
+    },
+    "RK-12.4-073": {
+      "class": "step",
+      "card": "RMK-2045",
+      "note": "step: tool_policy with a role override on the realtime channel spec, and a role changed during the session (S7)."
+    },
+    "RK-12.4-074": {
+      "class": "step",
+      "card": "RMK-2045",
+      "note": "step: tool_policy with a role override on the realtime channel spec, for a participant the store does not hold (S7)."
+    },
+    "RK-12.4-075": {
+      "class": "writable",
+      "card": "RMK-2045",
+      "note": "realtime.tool_call to a name realtime.tools does not declare: nothing runs and the call is answered with its refusal; the order, the policy, skill gating and schema validation need tool_policy, skills and declared schemas on the realtime spec (S7)."
+    },
+    "RK-12.4-076": {
+      "class": "step",
+      "card": "RMK-2045",
+      "note": "step: tool_policy and skills on the realtime channel spec (S7)."
+    },
+    "RK-12.4-077": {
+      "class": "step",
+      "card": "RMK-2045",
+      "note": "step: a realtime channel served by an ON_TOOL_CALL hook (no handler), Tool Search or skills (S7)."
+    },
+    "RK-12.4-078": {
+      "class": "writable",
+      "card": "RMK-2045",
+      "note": "the undeclared call of RK-12.4-075 is reported refused to ON_TOOL_CALL's observers; that the report never precedes the refusal on the wire needs an ordered read of results and reports (S8)."
+    },
+    "RK-12.4-079": {
+      "class": "step",
+      "card": "RMK-2045",
+      "note": "step: Tool Search, or skills with an executor, on the realtime channel spec (S7)."
+    },
+    "RK-12.4-080": {
+      "class": "writable",
+      "card": "RMK-2045",
+      "note": "realtime.tool_call to run_skill_script on a channel with no skills: refused as undeclared, nothing run, which only replays RK-12.4-075's check under that name; a session with skills and no executor needs skills on the realtime spec (S7)."
+    },
+    "RK-12.4-081": {
+      "class": "step",
+      "card": "RMK-2045",
+      "note": "step: skills with an executor on the realtime channel spec (S7)."
+    },
+    "RK-12.4-082": {
+      "class": "step",
+      "card": "RMK-2045",
+      "note": "vendor wire: leaves the RFC in P6-V (D2)"
+    },
+    "RK-12.4-083": {
+      "class": "step",
+      "card": "RMK-2045",
+      "note": "vendor wire: leaves the RFC in P6-V (D2)"
+    },
+    "RK-12.4-084": {
+      "class": "step",
+      "card": "RMK-2045",
+      "note": "vendor wire: leaves the RFC in P6-V (D2)"
+    },
+    "RK-12.4-085": {
+      "class": "step",
+      "card": "RMK-2045",
+      "note": "vendor wire: leaves the RFC in P6-V (D2)"
+    },
+    "RK-12.4-086": {
+      "class": "step",
+      "card": "RMK-2045",
+      "note": "vendor wire: leaves the RFC in P6-V (D2)"
+    },
+    "RK-12.4-087": {
+      "class": "step",
+      "card": "RMK-2045",
+      "note": "vendor wire: leaves the RFC in P6-V (D2)"
+    },
+    "RK-12.4-088": {
+      "class": "step",
+      "card": "RMK-2045",
+      "note": "vendor wire: leaves the RFC in P6-V (D2)"
+    },
+    "RK-12.4-089": {
+      "class": "step",
+      "card": "RMK-2045",
+      "note": "vendor wire: leaves the RFC in P6-V (D2)"
+    },
+    "RK-12.4-092": {
+      "class": "writable",
+      "card": "RMK-2045",
+      "note": "realtime.end, then realtime.inject: nothing reaches the provider and ON_REALTIME_TEXT_INJECTED does not fire; the not_sent result needs realtime.inject to return the injection's result."
+    },
+    "RK-12.4-100": {
+      "class": "writable",
+      "card": "RMK-2045",
+      "note": "a broadcast text reads role user in realtime.read's injections; asserting its quoted author waits for the decision on RMK-2043."
+    },
+    "RK-12.4-101": {
+      "class": "writable",
+      "card": "RMK-2045",
+      "note": "send_event with a text whose metadata names another intent (injected_role system): the injection still reads role user."
+    },
+    "RK-12.4-104": {
+      "class": "writable",
+      "card": "RMK-2045",
+      "note": "send_event with a blank text: realtime.read's injections stay empty."
+    },
+    "RK-12.4-105": {
+      "class": "writable",
+      "card": "RMK-2045",
+      "note": "deliver with instruction true into the room of a running realtime session: the injection reads role system."
+    },
+    "RK-12.4-111": {
+      "class": "step",
+      "card": "RMK-2045",
+      "note": "vendor wire: leaves the RFC in P6-V (D2)"
+    },
+    "RK-12.4-113": {
+      "class": "step",
+      "card": "RMK-2045",
+      "note": "step: realtime.start with an organization_id (S5)."
+    },
+    "RK-12.4-114": {
+      "class": "step",
+      "card": "RMK-2045",
+      "note": "step: realtime.audio while the provider connects, behind a held start (S4, S5); the 1 MiB drop and its log are a native check."
+    },
+    "RK-12.4-115": {
+      "class": "step",
+      "card": "RMK-2045",
+      "note": "step: a read of the system prompt, voice and tools connect received (S6, S8)."
+    },
+    "RK-12.4-116": {
+      "class": "step",
+      "card": "RMK-2045",
+      "note": "step: realtime.audio during a held start, a failed start, and the order against ON_SESSION_STARTED (S4, S5)."
+    },
+    "RK-12.4-117": {
+      "class": "step",
+      "card": "RMK-2045",
+      "note": "step: realtime.transcribe, read as RoomEvents with their chain_depth (S2)."
+    },
+    "RK-12.4-119": {
+      "class": "step",
+      "card": "RMK-2045",
+      "note": "step: a read of the provider's and the transport's disconnections (S8)."
+    },
+    "RK-12.4-120": {
+      "class": "step",
+      "card": "RMK-2045",
+      "note": "step: a scripted pipeline on the realtime channel spec, and realtime.audio (S13, S4)."
+    },
+    "RK-12.4-121": {
+      "class": "step",
+      "card": "RMK-2045",
+      "note": "step: a pipeline VAD on the realtime channel spec and the provider's full_duplex trait (S13, S1)."
+    },
+    "RK-12.4-122": {
+      "class": "step",
+      "card": "RMK-2045",
+      "note": "step: a pipeline VAD on the realtime channel spec and a read of connect's server_vad (S13, S1)."
+    },
+    "RK-12.4-123": {
+      "class": "step",
+      "card": "RMK-2045",
+      "note": "step: a pipeline VAD on the realtime channel spec, realtime.speech, and a read of activity start and end (S13, S3, S8)."
+    },
+    "RK-12.4-125": {
+      "class": "step",
+      "card": "RMK-2045",
+      "note": "step: the provider's full_duplex trait and a pipeline VAD on the realtime channel spec (S1, S13)."
+    },
+    "RK-12.4-127": {
+      "class": "step",
+      "card": "RMK-2045",
+      "note": "step: a scripted pipeline on the realtime channel spec and realtime.audio (S13, S4)."
+    },
+    "RK-12.4-128": {
+      "class": "step",
+      "card": "RMK-2045",
+      "note": "step: realtime.audio both ways, the transport's audio read at the provider and the provider's at the transport (S4)."
     },
     "RK-13.1-001": {
       "class": "step",
