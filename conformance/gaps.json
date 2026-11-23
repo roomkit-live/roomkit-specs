@@ -1564,27 +1564,27 @@
     "RK-12.4.1-020": {
       "class": "step",
       "card": "RMK-2049",
-      "note": "step: realtime.response with the model's response start, and an observation of the host's idleness (S11)."
+      "note": "step: realtime.response with the model's response start, and an observation of the host's idleness (S11); its scope is suspect RMK-2056."
     },
     "RK-12.4.1-021": {
       "class": "step",
       "card": "RMK-2049",
-      "note": "step: realtime.response with a response start, audible assistant audio or a partial assistant transcript on a full-duplex provider, and an observation of the host's idleness (S11, S1)."
+      "note": "step: realtime.response with a response start, audible assistant audio or a partial assistant transcript on a full-duplex provider, and an observation of the host's idleness (S11, S1); its scope is suspect RMK-2056."
     },
     "RK-12.4.1-022": {
       "class": "step",
       "card": "RMK-2049",
-      "note": "step: realtime.response scripted to start before the send of the output returns, and an observation of the host's idleness (S11)."
+      "note": "step: realtime.response scripted to start before the send of the output returns, and an observation of the host's idleness (S11); its scope is suspect RMK-2056."
     },
     "RK-12.4.1-023": {
       "class": "step",
       "card": "RMK-2049",
-      "note": "step: an output the provider fails to take, and an observation of the host's idleness (S11)."
+      "note": "step: an output the provider fails to take, and an observation of the host's idleness (S11); its scope is suspect RMK-2056."
     },
     "RK-12.4.1-024": {
       "class": "step",
       "card": "RMK-2049",
-      "note": "step: realtime.response and the idleness of a conference with a realtime model beside the realtime voice channel's (S11)."
+      "note": "step: realtime.response and the idleness of a conference with a realtime model beside the realtime voice channel's (S11); its scope is suspect RMK-2056."
     },
     "RK-12.4.1-025": {
       "class": "step",
@@ -1614,7 +1614,7 @@
     "RK-12.4.1-034": {
       "class": "step",
       "card": "RMK-2049",
-      "note": "step: the provider's supports_mid_session_reconfigure trait in realtime.start, with a handoff or a skill activation on the realtime room (S1)."
+      "note": "step: the provider's supports_mid_session_reconfigure trait in realtime.start, with a handoff or a skill activation on the realtime room (S1); its scope is suspect RMK-2056."
     },
     "RK-12.4.1-042": {
       "class": "writable",
