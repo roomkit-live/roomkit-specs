@@ -903,57 +903,57 @@
     },
     {
       "section": "12.10.4",
-      "sha256": "97aab40f27486e6b0b5fddc45e4332074446f157ff82947b0517062a5aef7e74",
+      "sha256": "f3c5e94dd55fd37340a7dbacdf12771bafec0a7551cc468aaa6d7b34bba82644",
       "classification": "normative",
-      "review": "Source inventory: ConferenceChannel. Its unit Closing and shared state (RK-12.10.4-005) is split to one obligation per unit (RMK-2005, lot P6-0a), every one must: the conference channel's close, the conference feature (RK-12.10.4-019 to 029: no unbounded wait, the media plane's order and budgets, one shutdown, exact-once departures, abandoned operations, the conditions of a success, a session left raised by name); the framework's close, a core rule this section holds (RK-12.10.4-030 to 080: a channel's failed close, the store and lock manager released after their operations, the sealing, steps 1 to 4 one unit per sentence, abandoned work, the result of each call the close cuts, the one shutdown, a close from the framework's own work). Lead-ins and rationale are folded into the unit they introduce. The section's other units keep the source inventory, with no level, until lot P6-T11 splits them: complete source blocks are retained; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: ConferenceChannel, split to one obligation per unit, each with its level. Lot P6-T11 (RMK-2075), the conference feature: RK-12.10.4-001, the ConferenceChannel record (structural, its comment rules and the sentence on what the channel owns folded in); lifecycle step 1, RK-12.10.4-081 to 104 (ensure_room at the attach, the lazy join as a should, ON_SESSION_STARTED and conference_started, the mint as the trigger needing no callback, the mint neither delayed nor failed, the occupancy probe, the attach neither delayed nor failed, an empty conference unjoined, ensure_bot and what it does, no join without a consumer or a voice, no probe as a should, explicit grants creating no need, admission and roster standing, the integrator's attendance as non_testable); steps 2 to 5, RK-12.10.4-105 to 119 (the participant record and its hook, the track hooks and lanes, the teardown at unpublication, leave, conference_ended and close_room at a detach, its bounded drain, a detach from inside the work, the closing order); the SFU's relays, RK-12.10.4-120 to 124 (speaker, quality, mute pair, ungated, the bot's tracks excluded); one conference per room, RK-12.10.4-125 to 128; bot self-exclusion, RK-12.10.4-129 to 131; admitting participants, RK-12.10.4-132 to 144 (default grants, the integrator's narrowing as a non_testable should, attributes passed, bounded and unadded, organization_id, no credential once detached and across awaits, the mint as in-flight work, taken back past the deadline, the re-read, saying it is no revocation as a should, close() likewise); per-track audio lanes, RK-12.10.4-145 to 157 (stages, no per-utterance resolution, a lane per track, one pipeline, normalisation first, VAD present and refused when missing, AEC and diarization not required, AGC and Denoiser as a may, the transcription and speech hooks, no lane unsubscribed); lane isolation, RK-12.10.4-008; overload, RK-12.10.4-158 to 160; per-track video lanes, RK-12.10.4-018, must where an implementation consumes conference video (Planned); selective subscription, RK-12.10.4-161 to 167 (a reduced simulcast layer as a may); the collection gate, RK-12.10.4-168 to 176; hot-plugging, RK-12.10.4-177 to 199 (an unplug narrowing grants as a should, leaving them as a may); runtime ownership of explicit grants, RK-12.10.4-200 to 213 (the disclosure answering directly as a should); outbound, RK-12.10.4-214 and 215; one utterance at a time, RK-12.10.4-216 to 225 (an empty closing chunk as a may). Lot P6-0a (RMK-2005), every one must: the conference channel's close, the conference feature (RK-12.10.4-019 to 029: no unbounded wait, the media plane's order and budgets, one shutdown, exact-once departures, abandoned operations, the conditions of a success, a session left raised by name); the framework's close, a core rule this section holds (RK-12.10.4-030 to 080: a channel's failed close, the store and lock manager released after their operations, the sealing, steps 1 to 4 one unit per sentence, abandoned work, the result of each call the close cuts, the one shutdown, a close from the framework's own work). Lead-ins and rationale are folded into the unit they introduce. Every unit carries its level."
     },
     {
       "section": "12.10.5",
-      "sha256": "eddce9179ad143b6310340f4b0967ff2ed4cd2d89a91a03c271b15dcb91fc290",
+      "sha256": "30fbf6ec780f4c5d3b111fd11d419b83630c245abf9c96d264c440c209104342",
       "classification": "normative",
-      "review": "Source inventory: Multi-Party Interruption Policy. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Multi-Party Interruption Policy, split to one obligation per unit, each with its level (RMK-2075): RK-12.10.5-002, ConferenceInterruptionConfig (structural, that who interrupts is policy folded in); RK-12.10.5-003 to 005, the scopes any, none and allowlist, should as §12.10.11 recommends enforcing the scope; RK-12.10.5-006, SEMANTIC refused as a should; RK-12.10.5-007 and 008, the other strategies per track and no backchannel detection; RK-12.10.5-009 and 010, the queued utterances dropped (the stop_playback() call folded in) and ON_BARGE_IN naming the participant. Every unit carries its level."
     },
     {
       "section": "12.10.6",
-      "sha256": "6961377e6dfca8291d44eb40d133751ee6c013fa05249cbd9f3588d7064a7e28",
+      "sha256": "90c9d23397bef7dd6f7e9279bf246526eede1f6cb6f518c45dfa2392a891a8b2",
       "classification": "normative",
-      "review": "Source inventory: AI Participation Patterns. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: AI Participation Patterns, split to one obligation per unit, each with its level (RMK-2075): RK-12.10.6-004, speech-to-speech as OPTIONAL, a may (the STT/TTS default pattern, informative, folded in); RK-12.10.6-005, per-track STT lanes in parallel when transcripts are required, a should (the observer pattern, informative, folded in). Every unit carries its level."
     },
     {
       "section": "12.10.7",
-      "sha256": "129a0d8f915963486d8cbe8c55c430ebfc7f83b59e781eab4bddde4c8ce51076",
+      "sha256": "c38ba19dccf011b6c50bb2e1eccfcb1020e0672e78a21392a6ad5cb03ca96000",
       "classification": "normative",
-      "review": "Source inventory: Conference State Events. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Conference State Events, split to one obligation per unit, each with its level (RMK-2075): RK-12.10.7-004 and 005, the conference hooks and the screen-share pair (the CONFERENCE_ prefix folded in); RK-12.10.7-006 and 007, media state never stored and published as ephemeral events, a should; RK-12.10.7-008 to 014, the framework events table one row per unit (the note on conference_started folded into the last row), and the bot_session_id on conference_ended and conference_started. Every unit carries its level."
     },
     {
       "section": "12.10.8",
-      "sha256": "39a8b03b82ca2d36cf577c4ce6df90b08086c7bd64ebb5e484ff7e663a967aa4",
+      "sha256": "170b9bfdc4190198473cf5eb4f67738b1e9aefb7a468c04ccf658884edaaa89f",
       "classification": "normative",
-      "review": "Source inventory: Recording. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Recording, split to one obligation per unit, each with its level (RMK-2075): RK-12.10.8-006, ConferenceRecordingConfig (structural); RK-12.10.8-007 to 011, framework mode, no added subscription, egress as OPTIONAL (a may), its configuration error, and documenting the switch as a should (no result contract folded in); RK-12.10.8-012 to 018, the recorder mapping and the six framework-mode duties; RK-12.10.8-019 to 021, a frame in another format; RK-12.10.8-022 to 029, writing off the callback, the bound, documented and exposed, the flush within a budget and its loss; RK-12.10.8-030 to 038, the result, its report as a should and per track, the attribution, ASYNC hooks, silence, egress firing neither, file layout as a may, video tracks where recorded. Every unit carries its level."
     },
     {
       "section": "12.10.9",
-      "sha256": "21b802171b37b9d2a764ff46bad5e061ff1a44ac36c1cce14d73e46c3ab6a29e",
+      "sha256": "0ba544cdac1b12335b81b45ba5d51b18641e2904a36ef80794061307290d02ba",
       "classification": "normative",
-      "review": "Source inventory: Cross-Channel Integration. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Cross-Channel Integration, split to one obligation per unit, each with its level (RMK-2075): RK-12.10.9-002, transcripts broadcast (that no new mechanism is needed folded in); RK-12.10.9-003, text voiced in (the AIChannel item folded in); RK-12.10.9-004 and 005, the SIP gateway and SIP bridging as mays; RK-12.10.9-006, a phone participant's number reaching identity resolution; RK-12.10.9-007, asserted_metadata as a should. Every unit carries its level."
     },
     {
       "section": "12.10.10",
-      "sha256": "87aef6b09df5e5846ddd931923e00c72693f1985699c863a4d56759c3ed401c9",
+      "sha256": "72403551690be842593080eaad7582c618cd6db815c858e2dc0edf86d34475d4",
       "classification": "normative",
-      "review": "Source inventory: Relationship to Audio Bridging (Section 12.7). Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Relationship to Audio Bridging (Section 12.7), one unit with its level (RMK-2075): RK-12.10.10-001, a may, that AudioBridge and conferences may coexist (the comparison table, informative, and the interfaces they do not share, folded in). Every unit carries its level."
     },
     {
       "section": "12.10.11",
-      "sha256": "a09e6bd5c3174a23ace4ab51d3d7eda0074dca88afce57567589325214ff1c18",
+      "sha256": "d236e0869b1e282f60922fd90e5b1f7cc41d073a964896fe729cabd1c9a4c54d",
       "classification": "normative",
-      "review": "Source inventory: Conformance. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Conformance, one unit with its level (RMK-2075): RK-12.10.11-001, a may, conference support as OPTIONAL within Conformance Level 3. Its MUST, SHOULD and MAY checklists restate obligations stated, levelled and counted in §12.10.1 to §12.10.12, §12.4 and §17.7, and are folded in rather than counted twice. Every unit carries its level."
     },
     {
       "section": "12.10.12",
-      "sha256": "a08b10e9844562a0535f8b38aaf6bcbe347e90b935b8029629fa4177e9f4cf02",
+      "sha256": "dd226ca4ce42b4ef2f29157e558c6405b24addb6e1f2b81429ec18ebf48049cd",
       "classification": "normative",
-      "review": "Source inventory: Speech-to-Speech Composition. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Speech-to-Speech Composition, split to one obligation per unit, each with its level (RMK-2075): RK-12.10.12-012, the composition as OPTIONAL (a may); RK-12.10.12-013, ConferenceRealtimeConfig (structural, the unchanged boundaries folded in); RK-12.10.12-014 to 018, the N to 1 mix, no silent window, the resampling (the active-speaker routing folded in), the private mixer (structural) and factoring one as a may; RK-12.10.12-019 to 025, attribution ends at the provider (a may to surface unattributed); RK-12.10.12-026 to 029, proactive delivery; RK-12.10.12-030 to 032, delegations answered; RK-12.10.12-006, one voice per bot; RK-12.10.12-033 to 036, the provider's voice as an utterance (an empty interrupted_text as a may); RK-12.10.12-037 to 042, one sensor and two effects (cancelling and aligning the provider as shoulds); RK-12.10.12-043 to 050, the session following the bot (the cooldown as a should); RK-12.10.12-051 and 052, the lanes staying on; RK-12.10.12-053 to 061, a tool call as a realtime tool call. Every unit carries its level."
     },
     {
       "section": "12.11",

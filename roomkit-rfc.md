@@ -16432,7 +16432,7 @@ satisfy this interface (e.g., LiveKit, Janus, Daily — informative).
 
 #### 12.10.4 ConferenceChannel
 
-<!-- rfc: {"id": "RK-12.10.4-001", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.10.4-001", "kind": "structural", "applies": "§12.10.4 ConferenceChannel, the conference feature: the ConferenceChannel record: channel_type CONFERENCE, category TRANSPORT, direction BIDIRECTIONAL, its backend, stt, tts, realtime (excluding tts), pipeline (null for the default VAD and contract), vision (Planned), interruption, recording, recorder (required with recording, refused without it), bot_identity, bot_grants (null derived), default_grants, e2ee (requiring the E2EE capability), close_room_on_detach and speak_text_events, each false by default (the sentence on what the channel owns, folded in) Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The ConferenceChannel orchestrates a conference for a room. It owns the
 ConferenceBackend, demultiplexes tracks into the existing audio and video
 pipelines, and represents the AI's voice in the conference.
@@ -16460,15 +16460,15 @@ ConferenceChannel
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.10.4-002", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.10.4-081", "kind": "behavior", "applies": "§12.10.4 Lifecycle, the conference feature step 1: a channel attached to a room calls ensure_room() Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Lifecycle:**
 
 1. When the channel is attached to a room, the channel MUST call
-   `ensure_room()`. It SHOULD call `join_as_bot(room_id, bot_identity,
+   `ensure_room()`. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-082", "kind": "behavior", "applies": "§12.10.4 Lifecycle, the conference feature step 1: the channel joins its bot lazily, on the first successful mint_access(), the first delivery, or the first participant or track event a backend able to observe one reports Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->It SHOULD call `join_as_bot(room_id, bot_identity,
    bot_grants)` lazily — on the first successful `mint_access()`, the
    first delivery, or the first participant or track event a backend able
-   to observe one reports — and MUST fire `ON_SESSION_STARTED` and emit
-   `conference_started` once the bot connection is live. Whatever the set
+   to observe one reports — <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-083", "kind": "behavior", "applies": "§12.10.4 Lifecycle, the conference feature step 1: ON_SESSION_STARTED fires once the bot connection is live Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->and MUST fire `ON_SESSION_STARTED` <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-084", "kind": "behavior", "applies": "§12.10.4 Lifecycle, the conference feature step 1: conference_started is emitted once the bot connection is live, with ON_SESSION_STARTED Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->and emit
+   `conference_started` once the bot connection is live. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-085", "kind": "behavior", "applies": "§12.10.4 Lifecycle, the conference feature step 1: the lazy-join triggers include at least one signal that does not depend on the backend's callbacks: the first successful mint_access() starts the join Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Whatever the set
    of triggers, it MUST include at least one signal that does not depend
    on the backend's callbacks, and the first successful `mint_access()`
    is that signal: presence is observable only through a connection
@@ -16477,10 +16477,10 @@ ConferenceChannel
    bot never enters, and a meeting where humans speak and the AI is
    meant to listen is never transcribed. A mint is the framework's own
    advance notice that a human is about to connect, and it reaches the
-   channel without the backend's help. The join it starts MUST NOT delay
-   the mint's answer and MUST NOT fail the mint when the join itself
+   channel without the backend's help. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-086", "kind": "behavior", "applies": "§12.10.4 Lifecycle, the conference feature step 1: the join a mint starts does not delay the mint's answer Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The join it starts MUST NOT delay
+   the mint's answer <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-087", "kind": "behavior", "applies": "§12.10.4 Lifecycle, the conference feature step 1: a failed join does not fail the mint that started it: the credential is returned Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->and MUST NOT fail the mint when the join itself
    fails: the credential belongs to the participant regardless of
-   whether the framework got its own session into the room.
+   whether the framework got its own session into the room.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-088", "kind": "behavior", "applies": "§12.10.4 Lifecycle, the conference feature step 1: the trigger set covers the conference's present occupancy at attach: after ensure_room() the channel asks whether the conference holds participants other than its bot (list_participants(), or a persistent roster as a may), and a non-empty answer starts the join (why a mint cannot resume a conference underway, folded in) Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
    The mint bootstraps a conference nobody has yet been admitted to; it
    cannot resume one already underway. An attach can land over a live
@@ -16495,29 +16495,29 @@ ConferenceChannel
    `list_participants()` is the control-plane answer that requires no
    connection (Section 12.10.3); a persistent roster whose conference
    participants are still active MAY stand in for it or add to it — and
-   a non-empty answer is a first need like any other. The probe and the
-   join it may start MUST NOT delay the attach's answer, and their
+   a non-empty answer is a first need like any other. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-089", "kind": "behavior", "applies": "§12.10.4 Lifecycle, the conference feature step 1: the occupancy probe and the join it may start do not delay the attach's answer Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The probe and the
+   join it may start MUST NOT delay the attach's answer, <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-090", "kind": "behavior", "applies": "§12.10.4 Lifecycle, the conference feature step 1: a failed occupancy probe or join does not fail an attach the backend accepted; the lazy join remains behind them Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->and their
    failure MUST NOT fail an attach the backend accepted: the lazy join
-   remains behind them. Laziness is preserved — an empty conference
+   remains behind them. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-091", "kind": "behavior", "applies": "§12.10.4 Lifecycle, the conference feature step 1: an empty conference stays unjoined at the attach: one control-plane call, nothing more (why a restart over a running meeting needs the trigger, folded in) Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Laziness is preserved — an empty conference
    stays unjoined, and a room nobody confers in costs one control-plane
    call per attach and nothing more. Without this trigger, a restart
    over a running meeting leaves it unheard for as long as nobody new
    is admitted, and the unaccounted window of Section 17.7 stretches
-   without bound.
+   without bound.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-092", "kind": "behavior", "applies": "§12.10.4 Lifecycle, the conference feature step 1: a host may request the join itself: the channel offers ensure_bot(room_id), a first need like the others Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
    A host MAY request the join itself (`ensure_bot(room_id)`), a first
    need like the others for a host that must know the bot is in before
-   it lets a meeting begin. Unlike the triggers above, it waits for the
+   it lets a meeting begin. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-093", "kind": "behavior", "applies": "§12.10.4 Lifecycle, the conference feature step 1, ensure_bot(): it waits for the join and returns the bot's session, a live session as it is Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Unlike the triggers above, it waits for the
    join and returns the bot's session: a live session is returned as it
-   is, a lost one is joined again, the request is serialised with every
-   other trigger so the room is joined once, and a new join fires
-   `ON_SESSION_STARTED` and emits `conference_started` before it returns.
+   is, <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-094", "kind": "behavior", "applies": "§12.10.4 Lifecycle, the conference feature step 1, ensure_bot(): a lost session is joined again Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->a lost one is joined again, <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-095", "kind": "behavior", "applies": "§12.10.4 Lifecycle, the conference feature step 1, ensure_bot(): the request is serialised with every other trigger, so the room is joined once Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->the request is serialised with every
+   other trigger so the room is joined once, <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-096", "kind": "behavior", "applies": "§12.10.4 Lifecycle, the conference feature step 1, ensure_bot(): a new join fires ON_SESSION_STARTED and emits conference_started before it returns Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->and a new join fires
+   `ON_SESSION_STARTED` and emits `conference_started` before it returns.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-097", "kind": "behavior", "applies": "§12.10.4 Lifecycle, the conference feature step 1, ensure_bot(): it fails with RoomNotAttachedError when the channel is not attached to the room or is detached while joining Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
    It fails with `RoomNotAttachedError` when the channel is not attached
-   to the room or is detached while joining, and with the backend's
-   error when `join_as_bot()` fails. A channel configured with nothing
+   to the room or is detached while joining, <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-098", "kind": "behavior", "applies": "§12.10.4 Lifecycle, the conference feature step 1, ensure_bot(): it fails with the backend's error when join_as_bot() fails Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->and with the backend's
+   error when `join_as_bot()` fails. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-099", "kind": "behavior", "applies": "§12.10.4 Lifecycle, the conference feature step 1, ensure_bot(): a channel configured with nothing to consume or say refuses it with ConferenceCapabilityError rather than join Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A channel configured with nothing
    to consume or say refuses it (`ConferenceCapabilityError`) rather than
    join: its bot would be the silent observer this section declines to
-   make a mode.
+   make a mode.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-100", "kind": "behavior", "applies": "§12.10.4 Lifecycle, the conference feature step 1: a channel configured with no consumer of media (stt, vision, recording) and no voice (tts) does not join on a mint, an arrival or the occupancy probe (why the join exists for the intelligence, folded in) Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
    The join exists for the intelligence. The bot's session is the
    framework's media access (Section 12.10.1 principle 4): subscribed
@@ -16525,16 +16525,16 @@ ConferenceChannel
    published on it. First need is therefore only a need when something
    configured on the channel consumes media — stt, vision, recording —
    or can speak — tts. A channel configured with none of these MUST
-   NOT join on a mint, an arrival, or the occupancy probe, and SHOULD
+   NOT join on a mint, an arrival, or the occupancy probe, <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-101", "kind": "behavior", "applies": "§12.10.4 Lifecycle, the conference feature step 1: such a channel makes no occupancy probe (that a delivery needs no guard of its own, folded in) Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->and SHOULD
    NOT make the probe at all: the join is the only consequence a probe
    can have. A delivery needs no guard of its own — without tts there
-   is nothing to speak it with. An explicit `bot_grants` creates no
+   is nothing to speak it with. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-102", "kind": "behavior", "applies": "§12.10.4 Lifecycle, the conference feature step 1: an explicit bot_grants creates no need: such a channel still does not join Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An explicit `bot_grants` creates no
    need either: grants say what the SFU would let the bot do, not what
    the channel was configured to do, and a session justified by its
    privileges alone is a participant with no function — one server
    connection per conference, an unexplained name on the meeting's
    roster, and a Section 17.7 disclosure surface reporting a bot that
-   collects nothing. Everything that is not the join stands:
+   collects nothing. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-103", "kind": "behavior", "applies": "§12.10.4 Lifecycle, the conference feature step 1: a channel that stands down still calls ensure_room(), still admits through mint_access(), and still writes the participant records of step 2 (the price, no callback from a backend that observes presence only through a connection, folded in) Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Everything that is not the join stands:
    `ensure_room()` is still called, `mint_access()` still admits, and
    the participant records of step 2 are still written — the channel
    remains the room's admission gate and roster, which is exactly what
@@ -16543,7 +16543,7 @@ ConferenceChannel
    12.10.3), so with a backend that observes presence only through a
    connection, a conference this channel never joins produces no
    participant, track, speaker or quality callbacks, and the
-   unaccounted window of Section 17.7 spans the whole meeting. An
+   unaccounted window of Section 17.7 spans the whole meeting. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-104", "kind": "non_testable", "applies": "§12.10.4 Lifecycle, the conference feature step 1: an integrator whose obligations require attendance configures a consumer or tracks attendance through its own client surface (that hot-plugging is how a need arrives mid-meeting, folded in) Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An
    integrator whose obligations require attendance MUST configure a
    consumer or track attendance through its own client surface —
    joining a bot with nothing to consume just to keep the callbacks is
@@ -16552,55 +16552,55 @@ ConferenceChannel
    state, not a sentence: the configuration it is read from can change
    while the channel runs, and **Hot-plugging intelligence** (below) is
    how a need arrives mid-meeting — bringing the join, the probe and the
-   grants with it.
+   grants with it.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-105", "kind": "behavior", "applies": "§12.10.4 Lifecycle, the conference feature step 2: on_participant_joined creates or updates the room Participant record (Section 5.5), correlated per Section 12.10.2 Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 2. `on_participant_joined` MUST create or update the corresponding Room
-   Participant record (Section 5.5, correlated per Section 12.10.2) and
-   fire `ON_CONFERENCE_PARTICIPANT_JOINED`.
-3. `on_track_published` MUST fire `ON_CONFERENCE_TRACK_PUBLISHED`, and MUST
+   Participant record (Section 5.5, correlated per Section 12.10.2) <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-106", "kind": "behavior", "applies": "§12.10.4 Lifecycle, the conference feature step 2: on_participant_joined fires ON_CONFERENCE_PARTICIPANT_JOINED Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->and
+   fire `ON_CONFERENCE_PARTICIPANT_JOINED`.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-107", "kind": "behavior", "applies": "§12.10.4 Lifecycle, the conference feature step 3: on_track_published fires ON_CONFERENCE_TRACK_PUBLISHED Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+3. `on_track_published` MUST fire `ON_CONFERENCE_TRACK_PUBLISHED`, and MUST<!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-108", "kind": "behavior", "applies": "§12.10.4 Lifecycle, the conference feature step 3: on_track_published starts a per-track lane for a track the channel subscribes to, and none for an unsubscribed track Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
    start a per-track processing lane (below) for tracks the channel
    subscribes to — an unsubscribed track never yields a frame, so it gets
-   no lane (see **Selective subscription**). For SCREEN_SHARE tracks,
-   `ON_SCREEN_SHARE_STARTED` fires additionally.
-4. `on_track_unpublished` MUST tear down the lane, unsubscribe if
-   subscribed, and fire the corresponding hooks.
-5. When the channel is detached, the channel MUST call `leave()` and emit
+   no lane (see **Selective subscription**). <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-109", "kind": "behavior", "applies": "§12.10.4 Lifecycle, the conference feature step 3: a SCREEN_SHARE track's publication also fires ON_SCREEN_SHARE_STARTED Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->For SCREEN_SHARE tracks,
+   `ON_SCREEN_SHARE_STARTED` fires additionally.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-110", "kind": "behavior", "applies": "§12.10.4 Lifecycle, the conference feature step 4: on_track_unpublished tears down the track's lane Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+4. `on_track_unpublished` MUST tear down the lane, <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-111", "kind": "behavior", "applies": "§12.10.4 Lifecycle, the conference feature step 4: on_track_unpublished unsubscribes the track if subscribed Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->unsubscribe if
+   subscribed, <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-112", "kind": "behavior", "applies": "§12.10.4 Lifecycle, the conference feature step 4: on_track_unpublished fires the corresponding hooks (ON_CONFERENCE_TRACK_UNPUBLISHED, and ON_SCREEN_SHARE_STOPPED for a screen share) Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->and fire the corresponding hooks.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-113", "kind": "behavior", "applies": "§12.10.4 Lifecycle, the conference feature step 5: a detach calls leave() if a bot session is active (the lazy join may never have run) Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+5. When the channel is detached, the channel MUST call `leave()` <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-114", "kind": "behavior", "applies": "§12.10.4 Lifecycle, the conference feature step 5: a detach emits conference_ended if a bot session is active Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->and emit
    `conference_ended` **if a bot session is active** — the lazy join of
-   step 1 may never have run — and MUST call `close_room()` when
-   `close_room_on_detach` is set, whether or not a bot ever joined.
+   step 1 may never have run — <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-115", "kind": "behavior", "applies": "§12.10.4 Lifecycle, the conference feature step 5: a detach calls close_room() when close_room_on_detach is set, whether or not a bot ever joined Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->and MUST call `close_room()` when
+   `close_room_on_detach` is set, whether or not a bot ever joined.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-116", "kind": "behavior", "applies": "§12.10.4 Lifecycle, the conference feature step 5: the detach first closes the room to new work, then waits for the work in flight for it (announcements and their hooks, publications on the bot track, mints) on one bounded budget for the whole wait Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
    The detach first closes the room to new work, then waits for the work
    already in flight for it — announcements and the hooks they run,
    publications on the bot track, mints — on one bounded budget for the
-   whole wait. Past the budget the teardown goes ahead without what
+   whole wait. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-117", "kind": "behavior", "applies": "§12.10.4 Lifecycle, the conference feature step 5: past the budget the teardown goes ahead without what remains, and an outstanding mint is taken back as Admitting participants requires Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Past the budget the teardown goes ahead without what
    remains, and a mint still outstanding is taken back as **Admitting
-   participants** requires. A detach issued from inside such work does not
+   participants** requires. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-118", "kind": "behavior", "applies": "§12.10.4 Lifecycle, the conference feature step 5: a detach issued from inside such work does not wait for it: admission closes at once and the rest of the teardown runs once that work ended or the bound passed Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A detach issued from inside such work does not
    wait for it: admission closes at once, and the rest of the teardown runs
-   once that work has ended or the same bound has passed. The
+   once that work has ended or the same bound has passed. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-119", "kind": "behavior", "applies": "§12.10.4 Lifecycle, the conference feature step 5: the speech-to-speech session, the lanes and the recordings are closed before leave(), and conference_ended is announced last Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The
    speech-to-speech session, the lanes and the recordings are closed before
-   `leave()`, and `conference_ended` is announced last.
+   `leave()`, and `conference_ended` is announced last.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-120", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature: while the bot's session is connected, on_active_speaker_changed fires ON_ACTIVE_SPEAKER_CHANGED, naming the participant Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 The SFU's own signals about the conference are relayed on their hooks
 while the bot's session is connected: `on_active_speaker_changed` fires
-`ON_ACTIVE_SPEAKER_CHANGED`, `on_connection_quality` fires
-`ON_CONNECTION_QUALITY_CHANGED`, and `on_track_muted` /
+`ON_ACTIVE_SPEAKER_CHANGED`, <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-121", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature: while the bot's session is connected, on_connection_quality fires ON_CONNECTION_QUALITY_CHANGED, naming the participant Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`on_connection_quality` fires
+`ON_CONNECTION_QUALITY_CHANGED`, <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-122", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature: while the bot's session is connected, on_track_muted and on_track_unmuted fire ON_CONFERENCE_TRACK_MUTED and ON_CONFERENCE_TRACK_UNMUTED, naming the participant, the track and its kind Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->and `on_track_muted` /
 `on_track_unmuted` fire `ON_CONFERENCE_TRACK_MUTED` /
 `ON_CONFERENCE_TRACK_UNMUTED` — each naming the participant, and the
 mute pair the track and its kind, since a muted VIDEO track is how most
-clients say "camera off". None of these is collection — no media is read
-to relay them — so none is gated by the binding's collection state, and
+clients say "camera off". <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-123", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature: these relays are not collection: none is gated by the binding's collection state Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->None of these is collection — no media is read
+to relay them — so none is gated by the binding's collection state, <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-124", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature: the bot's own tracks are excluded from these relays as from every other track event Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->and
 the bot's own tracks are excluded exactly as they are from every other
 track event.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.10.4-003", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.10.4-125", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, One conference per room: an attach of a conference channel to a room that already has a channel of type CONFERENCE attached is refused (why a second conference has no way to be expressed, folded in) Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **One conference per room (normative):** principle 2's mapping is 1:1 in
 both directions, and the attachment is where that is enforceable:
 implementations MUST refuse to attach a conference channel to a room that
 already has a channel of type CONFERENCE attached. A second conference
 channel is a second bot session, a second transcription of every utterance
 and a second AI voice speaking the same deliveries — duplicates the
-roster, the transcript and the meeting have no way to express.
+roster, the transcript and the meeting have no way to express.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-126", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, One conference per room: re-attaching the same conference channel is no second conference: it remains an ordinary attach over a live attachment Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Re-attaching the *same* conference channel is not a second conference; it
-remains an ordinary attach over a live attachment.
+remains an ordinary attach over a live attachment.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-127", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, One conference per room: the refusal holds for as long as the previous conference channel still holds the room (a session active or on its books, a teardown still running), not merely while its binding exists Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 The reservation outlives the binding. A detach removes the binding at its
 start and takes the bot out at its end, and a teardown can be deferred
@@ -16608,18 +16608,18 @@ past the detach that asked for it — so a check that reads only the
 bindings admits a second conference while the first one's bot is still in
 the meeting. The refusal MUST therefore hold for as long as the previous
 conference channel still *holds* the room — a session active or on its
-books, a teardown still running — not merely while its binding exists.
+books, a teardown still running — not merely while its binding exists.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-128", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, One conference per room: it is a refusal, not a wait; the caller retries once the teardown ended Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 And it is a refusal, not a wait: the attach may be issued from inside the
 very announcement the teardown is deferred behind, where waiting is a
 deadlock. The caller retries once the teardown has ended.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.10.4-004", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.10.4-129", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Bot self-exclusion: the channel ignores participant and track events whose participant identity matches the active BotSession Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Bot self-exclusion (normative):** the bot is itself a conference
 participant, and some backends report it back through
 `on_participant_joined` or echo its published track. The channel MUST
 ignore participant and track events whose participant identity matches the
-active BotSession, MUST NOT create a Participant record for it, and MUST
+active BotSession, <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-130", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Bot self-exclusion: the channel creates no Participant record for the bot Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->MUST NOT create a Participant record for it, <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-131", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Bot self-exclusion: the channel does not subscribe to a track the bot published (the feedback loop it prevents, folded in) Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->and MUST
 NOT subscribe to a track it published. Without this rule the bot's own TTS
 returns through a lane, the STT transcribes the AI's own speech, and the
 AIChannel answers itself — a feedback loop the chain depth limit (Section
@@ -16907,31 +16907,31 @@ A `close()` called from the shutdown's own work (a hook it fires as it
 closes) returns at once.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.10.4-006", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.10.4-132", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Admitting participants: mint_access() for a participant of the room applies default_grants unless the caller overrides them (the integrator delivering the access, which the framework does not serve, folded in) Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Admitting participants:** the channel exposes `mint_access()` for a
 participant of the room, applying `default_grants` unless the caller
 overrides them. The integrator delivers the resulting ConferenceAccess to
 the client application through its own surface (Section 16); the framework
-does not serve it. ConferenceGrants defaults are permissive so the common
+does not serve it. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-133", "kind": "non_testable", "applies": "§12.10.4 ConferenceChannel, the conference feature, Admitting participants: narrowing the permissive ConferenceGrants defaults is the integrator's call: a listener-only attendee receives grants without publish permissions Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->ConferenceGrants defaults are permissive so the common
 case works unconfigured; narrowing them is the integrator's call and is
 RECOMMENDED wherever a role does not need to publish — a listener-only
-attendee SHOULD receive grants without publish permissions (Section 17.7).
+attendee SHOULD receive grants without publish permissions (Section 17.7).<!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-134", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Admitting participants: attributes the caller passes to mint_access() reach the backend: the channel passes them through Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The caller MAY also pass `attributes` for the backend to carry on the
-participant (Section 12.10.3); the channel passes them through, bounds them
-as it bounds the provider attributes it persists, and adds none of its own.
+participant (Section 12.10.3); the channel passes them through, <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-135", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Admitting participants: the channel bounds the caller's attributes as it bounds the provider attributes it persists Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->bounds them
+as it bounds the provider attributes it persists, <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-136", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Admitting participants: the channel adds no attribute of its own to a mint Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->and adds none of its own.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-137", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Admitting participants: with the organization_id the caller acts for, the room is read before anything is admitted, and another organization's room is not found (Section 17.2) Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The caller MAY pass the `organization_id` it acts for: the room is read with
 it before anything is admitted, and another organization's room is not found
-(Section 17.2).
+(Section 17.2).<!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-138", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Admitting participants: mint_access() issues no credential for a room the channel is no longer attached to Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 `mint_access()` MUST NOT issue a credential for a room the channel is no
-longer attached to, and the check MUST hold across every await the call
-makes. Minting is not a read: the token is honoured by the SFU, the
+longer attached to, <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-139", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Admitting participants: the attachment check holds across every await the mint makes Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->and the check MUST hold across every await the call
+makes. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-140", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Admitting participants: the mint is in-flight work a detach waits for (lifecycle step 5), not a precondition tested once (why minting is not a read, folded in) Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Minting is not a read: the token is honoured by the SFU, the
 ConferenceBackend contract offers no revocation, and a check that was true
 before a roster lookup and false after it has already handed out admission
 to a conference the framework has left. Implementations MUST therefore
 treat the mint as work a detach cannot land in the middle of — the
 in-flight work a detach waits for (step 5 of the lifecycle above) — rather
-than as a precondition tested once.
+than as a precondition tested once.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-141", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Admitting participants: a mint still in flight when the detach's deadline passes is taken back: the outstanding backend request is cancelled (why a bounded drain is not enough, folded in) Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 A bounded drain does not satisfy this on its own. Every other kind of
 in-flight work degrades gracefully past the deadline — a chunk arrives late,
@@ -16939,15 +16939,15 @@ an event lands out of order — and a credential does not: it stays valid for
 as long as it says it does, against a conference the framework has left. So
 a mint still in flight when the deadline passes MUST be taken back rather
 than left behind: implementations MUST cancel the outstanding backend
-request, and MUST re-read the attachment when a request that survived
-cancellation returns, refusing to hand the credential on. Refusing is not
+request, <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-142", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Admitting participants: when a backend request that survived cancellation returns, the attachment is read again and the credential is not handed on Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->and MUST re-read the attachment when a request that survived
+cancellation returns, refusing to hand the credential on. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-143", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Admitting participants: an implementation says that refusing such a credential is not revoking it: the backend may have recorded one nobody received Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->Refusing is not
 revocation, and implementations SHOULD say so — the backend may have
 recorded a credential nobody received, and only the operator can decide
-whether it needs revoking there. `close()` carries the same obligation
+whether it needs revoking there. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-144", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Admitting participants: close() takes back the mints still outstanding, as a detach does, before it closes the backend Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`close()` carries the same obligation
 before it closes the backend.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.10.4-007", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.10.4-145", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Per-track audio lanes: one lane per AUDIO track runs Resampler, AGC and Denoiser where configured, VAD and streaming STT in the inbound stage order of Section 12.3, without AEC and diarization, and its transcription RoomEvents are attributed to the publishing participant Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Per-track audio lanes:**
 
 ```
@@ -16958,7 +16958,7 @@ on_track_audio (one lane per AUDIO track)
 
 The lane preserves the inbound stage ordering of Section 12.3, minus the
 stages a conference makes unnecessary: AEC (no server-side echo path) and
-Diarization (track identity already attributes speech).
+Diarization (track identity already attributes speech).<!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-146", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Per-track audio lanes: identity resolution does not run per utterance: the transcription enters the inbound pipeline under the participant id its track was published under (Section 11.6, case 1) Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 A transcription enters the inbound pipeline under the identity its track was
 published under, which is a room `Participant.id` and not an address. Identity
@@ -16969,42 +16969,42 @@ new. Running it anyway resolves on the backend's opaque identity — what rule 3
 rules out — and fails as rule 3 says it would: UNKNOWN every time, so
 `ON_IDENTITY_UNKNOWN` fires per utterance and an implementation refusing
 unknown senders there discards the transcripts of a participant it identified
-on arrival.
+on arrival.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-147", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Per-track audio lanes: each AUDIO track gets its own lane, its stage state held under the stream identity contract of Section 12.3 with the track as the stream key Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 Each AUDIO track gets its own lane, holding its stage state under the stream
-identity contract of Section 12.3 with the track as the stream key. That
+identity contract of Section 12.3 with the track as the stream key. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-148", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Per-track audio lanes: one pipeline serves every lane: the lanes' independence is a property of their state, not of pipeline instances Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->That
 independence is a property of the **state**, not of the instances: one
 pipeline serves every lane. Instantiating a pipeline per track buys no
 isolation the stream key does not already provide, and costs a denoiser
 model loaded once per participant.
 
-Within a lane:
+Within a lane:<!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-149", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Per-track audio lanes: within a lane, format normalisation runs before the other stages Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 - Format normalisation MUST run before the other stages. Participants
   negotiate their own formats with the SFU, so tracks arrive in whatever
   each publisher sent, while every stage downstream assumes one format.
-  This is the Resampler position of Section 12.3.
+  This is the Resampler position of Section 12.3.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-150", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Per-track audio lanes: within a lane, VAD is present and divides the stream into utterances: one recognition per utterance, not per frame Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - VAD MUST be present. It is what divides the stream into utterances, and
   without it the lane has no utterance to speak of: it calls the recognizer
   once per frame, spending a round trip per 20 ms and producing a transcript
-  cut at frame boundaries instead of at turns. An implementation given a
+  cut at frame boundaries instead of at turns. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-151", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Per-track audio lanes: a recognizer configured with no VAD is refused rather than degraded to per-frame recognition Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An implementation given a
   recognizer and no VAD MUST refuse the configuration rather than degrade to
-  per-frame recognition.
-- AEC MUST NOT be required (no server-side echo path — Section 12.10.1).
-- Diarization MUST NOT be required (track identity provides attribution).
-- AGC and Denoiser MAY apply per lane.
+  per-frame recognition.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-152", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Per-track audio lanes: a lane does not require AEC Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+- AEC MUST NOT be required (no server-side echo path — Section 12.10.1).<!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-153", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Per-track audio lanes: a lane does not require diarization Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+- Diarization MUST NOT be required (track identity provides attribution).<!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-154", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Per-track audio lanes: AGC and Denoiser may apply per lane Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->
+- AGC and Denoiser MAY apply per lane.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-155", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Per-track audio lanes: ON_TRANSCRIPTION fires per lane, its hook context identifying the track and the participant Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - `ON_TRANSCRIPTION` fires per lane; the hook context identifies the track
-  and participant.
+  and participant.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-156", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Per-track audio lanes: ON_SPEECH_START and ON_SPEECH_END fire per lane at the VAD's utterance boundaries, naming the publishing participant and track Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - `ON_SPEECH_START` and `ON_SPEECH_END` fire per lane at the VAD's own
   utterance boundaries, naming the publishing participant and track. They
   are the real-time answer to "who is speaking right now": the
   dominant-speaker signal cannot say that nobody is (its interface carries
   one identity), and the transcription arrives only after the recognizer's
-  round trip. An unsubscribed track has no lane and therefore no speech
+  round trip. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-157", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Per-track audio lanes: an unsubscribed track has no lane and so no speech events; the binding's collection gate applies Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An unsubscribed track has no lane and therefore no speech
   events — this is collection, and the binding's gate applies.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.10.4-008", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.10.4-008", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Lane isolation: processing one track does not delay frame delivery for any other: a lane accepts a frame and returns, doing its work on its own schedule (that it is observable by delaying recognition on one track, folded in) Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Lane isolation:** processing one track MUST NOT delay frame delivery for
 any other. A backend hands frames to its subscribers in sequence, so a lane
 that does its work — speech recognition above all — inside the delivery
@@ -17017,21 +17017,21 @@ is observable from outside: an implementation can be checked by delaying
 recognition on one track and measuring frame delivery on another.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.10.4-009", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.10.4-158", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Overload: a lane accepting frames faster than it processes them bounds what it holds Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Overload:** a lane accepting frames faster than it processes them MUST
 bound what it holds. An unbounded backlog turns a slow recognizer into
-unbounded memory and a lag behind the live conversation that only grows.
+unbounded memory and a lag behind the live conversation that only grows.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-159", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Overload: an implementation documents which audio a full lane discards (the trade-off between the oldest frames and the utterance in progress, folded in) Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 Which audio to discard is a genuine trade-off, and this specification does
 not settle it. Dropping the oldest frames keeps the lane near live at the
 cost of a gap mid-utterance; dropping the utterance in progress and
 resynchronising loses more audio but never emits a transcript stitched
-across a hole. Implementations MUST document which they do, and MUST expose
+across a hole. Implementations MUST document which they do, <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-160", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Overload: an implementation exposes how much a lane discarded Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->and MUST expose
 how much was discarded — an integrator who cannot see the loss will read a
 damaged transcript as a bad recognizer.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.10.4-018", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.10.4-018", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Per-track video lanes, where an implementation consumes conference video (Planned): VIDEO and SCREEN_SHARE tracks route through the VideoPipeline of Section 12.8.4 (decoder if needed, transforms, filters, vision analysis), and VisionResults are attributed to the publishing participant and reach the AI turns as the <vision> block of Section 12.8.7 Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Per-track video lanes:**
 
 **Planned.** No implementation analyses conference video yet: the
@@ -17042,36 +17042,36 @@ VisionResults are attributed to the publishing participant and reach the AI
 turns as the `<vision>` block of Section 12.8.7.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.10.4-012", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.10.4-161", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Selective subscription: the channel calls subscribe_track() only for tracks it consumes Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Selective subscription:** the channel MUST call `subscribe_track()` only
-for tracks it consumes, and MUST NOT rely on backend auto-subscription
-(Section 12.10.3). AUDIO tracks are subscribed when STT, recording, or
-speech-to-speech composition is configured. VIDEO and SCREEN_SHARE tracks
+for tracks it consumes, <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-162", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Selective subscription: the channel does not rely on backend auto-subscription: it subscribes what it consumes explicitly Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->and MUST NOT rely on backend auto-subscription
+(Section 12.10.3). <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-163", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Selective subscription: AUDIO tracks are subscribed when STT, recording or speech-to-speech composition is configured Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->AUDIO tracks are subscribed when STT, recording, or
+speech-to-speech composition is configured. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-164", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Selective subscription: VIDEO and SCREEN_SHARE tracks are not subscribed unless a VisionProvider or framework-side video recording is configured (the bot's own tracks never subscribed, folded in) Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->VIDEO and SCREEN_SHARE tracks
 MUST NOT be subscribed unless a VisionProvider or framework-side video
 recording is configured — otherwise no video frame ever reaches the
 framework process. Tracks published by the bot itself are never subscribed
-(**Bot self-exclusion** above). Backends MAY subscribe to a reduced
-simulcast layer for vision analysis; this is provider-internal.
+(**Bot self-exclusion** above). <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-165", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Selective subscription: a backend may subscribe to a reduced simulcast layer for vision analysis, provider-internal Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->Backends MAY subscribe to a reduced
+simulcast layer for vision analysis; this is provider-internal.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-166", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Selective subscription, where an implementation carries vision: adding a VisionProvider to a live conference subscribes the already-published video tracks Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 Subscription is re-evaluated when configuration changes at runtime: adding
 a VisionProvider to a live conference MUST subscribe the already-published
-video tracks, and removing the last consumer of a track MUST
+video tracks, <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-167", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Selective subscription: removing the last consumer of a track unsubscribes it Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->and removing the last consumer of a track MUST
 `unsubscribe_track()` it.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.10.4-013", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.10.4-168", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Collection gate: while the binding does not permit collection (attached, access READ_WRITE or WRITE_ONLY, muted false; Section 7.5), the channel subscribes no track Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Collection gate (normative):** the room binding permits collection while
 the channel is attached to the room and the binding can write under Section
 7.5 — `access` ∈ {READ_WRITE, WRITE_ONLY} and `muted = false`. While it does
-not, the channel MUST NOT subscribe a track, hand a frame to a lane or a
-recording, deliver a transcription, or start a re-join after a session loss.
-When the gate closes, frames stop being routed at once; the channel then
-unsubscribes every track, closes its lanes and finalizes its recordings. When
+not, the channel MUST NOT subscribe a track, <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-169", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Collection gate: while it does not, the channel hands no frame to a lane or a recording Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->hand a frame to a lane or a
+recording, <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-170", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Collection gate: while it does not, the channel delivers no transcription Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->deliver a transcription, <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-171", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Collection gate: while it does not, the channel starts no re-join after a session loss Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->or start a re-join after a session loss.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-172", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Collection gate: when the gate closes, frames stop being routed at once Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+When the gate closes, frames stop being routed at once; <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-173", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Collection gate: when the gate closes, the channel then unsubscribes every track Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->the channel then
+unsubscribes every track, <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-174", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Collection gate: when the gate closes, the channel closes its lanes Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->closes its lanes <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-175", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Collection gate: when the gate closes, the channel finalizes its recordings Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->and finalizes its recordings. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-176", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Collection gate: when it reopens with a bot in the conference, the published tracks the channel consumes are subscribed again Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->When
 it reopens with a bot in the conference, the published tracks the channel
 consumes are subscribed again.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.10.4-014", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.10.4-177", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Hot-plugging intelligence: stt, tts, recording (and vision where an implementation carries it) can each be plugged into and unplugged from a running channel, as explicit per-kind operations rather than bare attribute assignment Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Hot-plugging intelligence (normative):** the configuration first need is
 read from — stt, tts, recording, and vision where an implementation
 carries it — is not fixed at construction. Implementations MUST let each
@@ -17084,7 +17084,7 @@ reaching the conference's intelligence, and it is the other half of the
 pure-transport contract of step 1: a meeting can begin purely human and
 gain its notetaker when the host asks for one — the explicit gesture a
 consent obligation wants (Section 17.7) — and lose it again the same
-way, without the channel being rebuilt around either.
+way, without the channel being rebuilt around either.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-178", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Hot-plugging intelligence: if the channel is attached and holds no session, the occupancy probe is run again at the plug, and a conference already holding participants is joined at once Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 Plugging a need is a first need. The lazy-join triggers of step 1 answer
 "has the conference started to matter"; a plug answers "has the channel
@@ -17092,105 +17092,105 @@ started to care", and the two compose: if the channel is attached and
 holds no session, the occupancy probe of step 1 MUST be re-run at the
 plug — the join is once more a consequence a probe can have, so the
 probe's justification returns with the need — and a conference already
-holding participants is joined at once. An empty conference stays
+holding participants is joined at once. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-179", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Hot-plugging intelligence: after a plug, an empty conference stays unjoined, and the mint, delivery and arrival triggers stand ready Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An empty conference stays
 unjoined: laziness is preserved, and the mint, delivery and arrival
-triggers stand ready as on any configured channel. The join a plug
+triggers stand ready as on any configured channel. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-180", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Hot-plugging intelligence: a failed join a plug started does not fail the plug: the configuration stands and the lazy join remains Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The join a plug
 starts follows the discipline of every trigger before it: its failure
 MUST NOT fail the plug — the configuration stands, and the lazy join
-remains behind it. What a plug refuses, it refuses for the reasons
+remains behind it. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-181", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Hot-plugging intelligence: a plug refuses for the reasons construction does: the E2EE exclusions of Section 12.10.2 gate a plugged stt or recording Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->What a plug refuses, it refuses for the reasons
 construction does, held identically at runtime: the E2EE exclusions
 (Section 12.10.2) gate a plugged stt or recording exactly as a
-constructed one, and a recording plugged without a recorder is refused
-wherever it is asked. A plug into a slot already holding a provider MUST
+constructed one, <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-182", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Hot-plugging intelligence: a recording plugged without a recorder is refused Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->and a recording plugged without a recorder is refused
+wherever it is asked. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-183", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Hot-plugging intelligence: a plug into a slot already holding a provider is refused rather than replacing it Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A plug into a slot already holding a provider MUST
 be refused rather than replace it: a swap of streaming intelligence is a
 teardown and a rebuild whatever single verb offers it, and the
-observation gap belongs in the open — unplug, then plug. Unplugging an
-empty slot is a no-op: the state the caller asked for already holds.
+observation gap belongs in the open — unplug, then plug. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-184", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Hot-plugging intelligence: unplugging an empty slot is a no-op Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Unplugging an
+empty slot is a no-op: the state the caller asked for already holds.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-185", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Hot-plugging intelligence: configuration changes are serialised per channel: two never interleave Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Configuration changes are serialised per channel: implementations MUST
 NOT let two interleave, since everything below — the grants derived, the
 subscriptions re-evaluated, the join or leave decided — is read from the
-configuration as a whole.
+configuration as a whole.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-186", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Hot-plugging intelligence: an stt or recording plugged mid-meeting subscribes the already-published tracks it consumes, and their lanes open Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 A plugged consumer reaches back. **Selective subscription**'s runtime
 clause is the mechanism: an stt or recording plugged mid-meeting MUST
 subscribe the already-published tracks it consumes, and their lanes open
 as for any subscription — the meeting is transcribed from the plug
-forward, not from the next publication. An unplug re-evaluates the same
+forward, not from the next publication. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-187", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Hot-plugging intelligence: an unplug closes the lanes and unsubscribes the tracks nothing else consumes Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An unplug re-evaluates the same
 way: lanes close and tracks are unsubscribed when nothing else consumes
-them, recordings are finalized and announced exactly as a detach
-finalizes them, and an utterance in flight when the voice is unplugged
+them, <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-188", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Hot-plugging intelligence: an unplugged recording is finalized and announced as a detach finalizes it Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->recordings are finalized and announced exactly as a detach
+finalizes them, <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-189", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Hot-plugging intelligence: an utterance in flight when the voice is unplugged ends as a live conference ends one: stop_playback() and a terminal chunk Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->and an utterance in flight when the voice is unplugged
 is ended as a live conference ends one — `stop_playback()` and a
 terminal chunk (**One utterance at a time**), since the bot is still in
-the meeting and the turn genuinely ended. Who closes an unplugged
+the meeting and the turn genuinely ended. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-190", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Hot-plugging intelligence: who closes an unplugged provider follows the channel's one provider-ownership rule, the one that governs its close() Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Who closes an unplugged
 provider follows the channel's one provider-ownership rule, the same
-that governs its `close()`.
+that governs its `close()`.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-191", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Hot-plugging intelligence: unplugging the last need makes the channel leave, with conference_ended announced Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 Unplugging the last need takes the bot out. A session kept past the last
 consumer and the last voice is the participant with no function step 1
 declines to admit — the silent observer of Section 17.7, now with a
 connection it was given back when it had a purpose — so the channel MUST
-leave, with `conference_ended` announced, and stand down exactly as a
+leave, with `conference_ended` announced, <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-192", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Hot-plugging intelligence: after the last need is unplugged the channel stands down as one constructed pure-transport: triggers quiet, no probe, admission and roster on duty Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->and stand down exactly as a
 channel constructed pure-transport: triggers quiet, probe unmade, the
 admission gate and roster still on duty. The round trip is the point:
 transport-only to intelligent and back is a lifecycle the channel
-serves, not two deployments.
+serves, not two deployments.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-193", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Hot-plugging intelligence: the session's grants cover the configured needs, at the join and across every change Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 The session's grants MUST cover the configured needs, at the join and
-across every change. Derived grants (Section 12.10.3, **Bot grants**)
+across every change. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-194", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Hot-plugging intelligence: derived grants are derived from the configuration in force at the join, not at construction Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Derived grants (Section 12.10.3, **Bot grants**)
 are derived from the configuration in force at the join, not at
-construction. A plug that widens what a live session must be able to
+construction. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-195", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Hot-plugging intelligence: a plug that widens what a live session must do brings its grants in line before reporting the plug complete, through update_bot_grants() where the backend declares BOT_GRANT_UPDATE Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A plug that widens what a live session must be able to
 do — a voice plugged onto a listening bot needs `publish_audio`; a
 consumer plugged onto a speaking bot needs `subscribe` — MUST bring the
 session's grants in line before reporting the plug complete: through
 `update_bot_grants()` where the backend declares BOT_GRANT_UPDATE — the
-session, its subscriptions and the event bridge all survive — and
+session, its subscriptions and the event bridge all survive — <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-196", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Hot-plugging intelligence: otherwise the widening plug re-joins, a leave() and a join_as_bot(), each announced as the session event it is Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->and
 otherwise by re-joining, a `leave()` and a `join_as_bot()`, each
 announced as the session event it is, because a session the SFU will not
-re-permission can only be replaced. An unplug that narrows the needs
-SHOULD narrow the grants in place where the backend can, and MAY leave
+re-permission can only be replaced. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-197", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Hot-plugging intelligence: an unplug that narrows the needs narrows the grants in place where the backend can Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->An unplug that narrows the needs
+SHOULD narrow the grants in place where the backend can, <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-198", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Hot-plugging intelligence: an unplug may leave the grants standing where the backend cannot narrow them in place Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->and MAY leave
 them standing where it cannot: an unused privilege against a cut in the
-event bridge is a trade this specification settles for continuity.
+event bridge is a trade this specification settles for continuity.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-199", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Hot-plugging intelligence: explicit bot_grants are never rewritten by a plug or an unplug Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Explicit `bot_grants` are never rewritten by a plug or an unplug — the
 caller who set them took coverage on themselves (the coverage rule
 binds derived grants only, below), and that holds at runtime exactly as
 at construction.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.10.4-015", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.10.4-200", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Runtime ownership of explicit grants: the caller who set explicit bot_grants has a runtime operation that replaces the explicit grant set on a running channel Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Runtime ownership of explicit grants (normative):** that the plugs
 never rewrite an explicit `bot_grants` does not make the grant set
 immutable — it makes it *owned*. The owner is the caller who set it, and
 implementations MUST give that caller a runtime operation that replaces
-the explicit grant set on a running channel, serialised with the plugs
-under the same configuration-change discipline. Replacing an explicit
+the explicit grant set on a running channel, <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-201", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Runtime ownership of explicit grants: the setter is serialised with the plugs under the same configuration-change discipline Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->serialised with the plugs
+under the same configuration-change discipline. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-202", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Runtime ownership of explicit grants: an explicit set replaced by another explicit set that does not cover the configured needs is accepted, not refused (the coverage rule binding derived grants only, folded in) Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Replacing an explicit
 set with another explicit set carries the construction-time bargain
 forward unchanged: the caller took coverage of the configured needs on
 themselves, so a replacement that does not cover them — `subscribe`
 withdrawn under a plugged recognizer — is accepted exactly as
 construction would accept it, not refused. The coverage rule of this
-section binds *derived* grants only, at the setter as at the join.
+section binds *derived* grants only, at the setter as at the join.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-203", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Runtime ownership of explicit grants: replacing the explicit set with nothing returns the channel to derivation: the grants then follow the configuration in force (grants channel-wide in this revision, folded in) Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Replacing the explicit set with nothing returns the channel to
 derivation: from there the grants follow the configuration in force,
 exactly as on a channel that never had an explicit set — the round trip
 is available here as everywhere else in this section. Grants remain
 channel-wide in this revision, as the rest of the channel's
-configuration is; per-conference grants are not modelled. An explicit
+configuration is; per-conference grants are not modelled. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-204", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Runtime ownership of explicit grants: an explicit set on a channel with no consumer and no voice joins nothing Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An explicit
 set still creates no need (step 1): a set on a channel with no consumer
 and no voice changes what the next session would be allowed, and joins
-nothing.
+nothing.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-205", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Runtime ownership of explicit grants: the setter's change is applied in full, through update_bot_grants() where the backend declares BOT_GRANT_UPDATE, whatever its direction Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 The setter is an instruction, not a hint. Where the alignment a plug
 makes may leave a narrowing standing — an unused privilege traded for
 continuity — the setter's change MUST be applied in full: through
-`update_bot_grants()` where the backend declares BOT_GRANT_UPDATE, and
+`update_bot_grants()` where the backend declares BOT_GRANT_UPDATE, <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-206", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Runtime ownership of explicit grants: the setter's change is applied by the announced re-join on a backend without BOT_GRANT_UPDATE or when the in-place update fails (a withdrawal is an order, folded in) Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->and
 by the announced re-join otherwise or when the in-place update fails,
 whatever the direction of the change. A privilege the caller asked to
 withdraw is not an unused privilege; it is an ignored order. A caller
-who prefers continuity to the change expresses that by not calling. An
+who prefers continuity to the change expresses that by not calling. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-207", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Runtime ownership of explicit grants: the caller can learn before calling whether the change applies in place or costs a re-join: the capability is consultable on the backend Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An
 implementation MUST let the caller learn *before* calling whether the
 change will be applied in place or cost the event bridge a re-join —
-the capability is consultable on the backend, and the channel's
-disclosure surface SHOULD answer it directly.
+the capability is consultable on the backend, <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-208", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Runtime ownership of explicit grants: the channel's disclosure surface answers whether the change applies in place Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->and the channel's
+disclosure surface SHOULD answer it directly.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-209", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Runtime ownership of explicit grants: a hidden-to-visible transition is applied like any other change, in place where the backend can Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 Visibility is the one grant the SFU's clients are told about, and it
 does not move symmetrically: an SFU that can
@@ -17198,17 +17198,17 @@ announce a newly visible participant to the clients already connected
 delivers a *reveal* in place, but no interface exists to un-tell them —
 a session re-hidden in place stays on the roster of every client that
 saw it. A hidden-to-visible transition is therefore applied like any
-other change: in place where the backend can (Section 12.10.3). A
+other change: in place where the backend can (Section 12.10.3). <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-210", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Runtime ownership of explicit grants: a visible-to-hidden transition is applied by replacing the session, whatever the backend's capabilities Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
 visible-to-hidden transition MUST be applied by replacing the session,
 whatever the backend's capabilities: the announced leave *is* the
-retraction, and it is the only one every backend can deliver.
+retraction, and it is the only one every backend can deliver.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-211", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Runtime ownership of explicit grants: when a connected session's effective grants change, in place or by the re-join's replacement session, conference_bot_grants_changed is emitted Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 When a connected session's effective grants change — in place, or
 carried by the replacement session of the re-join — the implementation
 MUST emit `conference_bot_grants_changed` (Section 12.10.7): with an
 in-place update nothing else says anything happened, and the code that
 asked for the change and the code that renders the room are rarely the
-same component. A set that changes nothing emits nothing.
+same component. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-212", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Runtime ownership of explicit grants: a set that changes nothing emits nothing Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A set that changes nothing emits nothing.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-213", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Runtime ownership of explicit grants: the disclosure surface reports the configuration in force, not the construction Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 The disclosure surface follows the configuration, not the constructor.
 Section 17.7 already requires that whether STT, vision or recording is
@@ -17219,17 +17219,17 @@ gained a transcriber mid-way reads as transcribed from that moment, and
 one that lost it reads as clean.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.10.4-016", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.10.4-214", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Outbound (deliver): when a broadcast event reaches the conference binding and TTS is configured, the channel synthesizes once, BEFORE_TTS and AFTER_TTS applying Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Outbound (deliver):**
 
 When a broadcast event reaches the conference binding and TTS is
 configured, the channel MUST synthesize once (BEFORE_TTS / AFTER_TTS hooks
-apply) and publish the audio on the bot track via `publish_audio()`. The
+apply) <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-215", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Outbound (deliver): the synthesized audio is published on the bot track through publish_audio(), one track heard by all (no targeted per-participant audio, folded in) Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->and publish the audio on the bot track via `publish_audio()`. The
 SFU distributes it to all participants. Targeted per-participant audio is
 NOT supported in this revision: one bot track, heard by all.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.10.4-017", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.10.4-216", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, One utterance at a time: the channel does not interleave the chunks of two utterances on the bot track; whether a second waits or replaces the first is the implementation's choice Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **One utterance at a time (normative):** the channel MUST NOT interleave the
 chunks of two utterances on the bot track. There is one track and the SFU
 mixes nothing for it, so two utterances published together do not arrive as
@@ -17239,20 +17239,20 @@ whose broadcast pipeline serialises per room (Section 10.1) may still
 consume a streaming response outside that serialisation, so the single track
 is the channel's own to protect. Whether a second utterance waits for the
 first or replaces it is left to the implementation — both are defensible, and
-they differ in whether an answer the AI produced may go unheard.
+they differ in whether an answer the AI produced may go unheard.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-217", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, One utterance at a time: every utterance the channel publishes ends with a chunk whose is_final is set, one cut short by a barge-in included Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 Every utterance the channel publishes MUST end with a chunk whose `is_final`
 is set, **including one cut short by a barge-in** (Section 12.10.5). This is
 what makes `is_final` a boundary a backend can rely on rather than a hint:
 without it, an interrupted utterance leaves the SFU believing the bot is
-still mid-sentence. The closing chunk MAY carry no audio (`data` empty) —
-there is nothing left to play, only an end to declare — and backends MUST
-accept one.
+still mid-sentence. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-218", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, One utterance at a time: the closing chunk may carry no audio Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->The closing chunk MAY carry no audio (`data` empty) —
+there is nothing left to play, only an end to declare — <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-219", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, One utterance at a time: a backend accepts a closing chunk with no audio Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->and backends MUST
+accept one.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-220", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, One utterance at a time: a backend does not discard queued audio on is_final Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 The closing chunk is a boundary, not a flush. An utterance cut short and
 one that ended by itself close identically, so a backend MUST NOT discard
 queued audio on `is_final` — a synthesizer whose real ending is already
-queued behind an empty final chunk would lose it. What silences the room is
+queued behind an empty final chunk would lose it. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-221", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, One utterance at a time: when an interruption lands, the channel calls stop_playback() on the session the utterance publishes on (the call and the closing chunk owed both, in no required order, folded in) Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->What silences the room is
 `stop_playback()` (Section 12.10.3): when an interruption lands, the
 channel MUST call it on the session the utterance is publishing on, so the
 audio the transport already holds is discarded rather than played out to
@@ -17260,7 +17260,7 @@ the end of whatever buffer holds it. The call and the closing chunk are two
 different statements — the gesture that stops the sound, and the boundary
 that ends the turn — and the channel owes the backend both. No ordering is
 required between them: the closing chunk of an interrupted utterance
-carries nothing a flush could truncate.
+carries nothing a flush could truncate.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-222", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, One utterance at a time: an utterance abandoned because the channel left the conference (a detach, or its close) is not closed with a terminal chunk Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 There is exactly one exception, and it is the end of the session rather than
 the end of an utterance: an utterance the channel abandons because it has
@@ -17270,16 +17270,16 @@ way out of the conference and may already be gone, so publishing into it is
 either a write to a session the framework has left or a race with `leave()`.
 The framework cannot honour the guarantee here in any case: the process may
 also have crashed, the network may have dropped, and no in-band marker
-survives either. So a backend MUST treat `leave()`, and a session's
+survives either. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-223", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, One utterance at a time: a backend treats leave(), and a session's disconnection by any other means, as terminating the utterance in flight on it (an utterance a participant interrupts still closed, folded in) Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->So a backend MUST treat `leave()`, and a session's
 disconnection by any other means, as terminating whatever utterance was in
 flight on it — the same way it already has to treat the connection dropping.
 An utterance interrupted by a participant is not this case and is still
 closed: the conference is live, the bot is in it, and the turn genuinely
-ended.
+ended.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-224", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, One utterance at a time: with speak_text_events true, inbound text events from other channels are also spoken into the conference (only AI responses by default) Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 By default only AI/agent responses are spoken. When `speak_text_events` is
 true, inbound text events from other channels (SMS, WebSocket, ...) are
-also spoken into the conference.
+also spoken into the conference.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-225", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, One utterance at a time: non-AI text events are not spoken unless speak_text_events is set (why the default diverges from VoiceChannel, folded in) Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 This default deliberately diverges from VoiceChannel, which speaks every
 TextContent it receives (Section 12.3). A 1:1 voice session has one
@@ -17292,7 +17292,7 @@ convention: implementations MUST NOT speak non-AI text events unless
 
 #### 12.10.5 Multi-Party Interruption Policy
 
-<!-- rfc: {"id": "RK-12.10.5-001", "kind": "behavior", "applies": "§12.10.5 Multi-Party Interruption Policy; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.10.5-002", "kind": "structural", "applies": "§12.10.5 Multi-Party Interruption Policy, the conference feature: the ConferenceInterruptionConfig record: strategy (IMMEDIATE by default, Section 12.6 semantics), scope any, none or allowlist (any by default) and allowlist (empty by default) (that who interrupts is policy, folded in) Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 In a 1:1 voice session, any user speech may interrupt TTS playback
 (Section 12.6). In a conference, *who* can interrupt the AI is policy:
 
@@ -17302,54 +17302,52 @@ ConferenceInterruptionConfig
 ├── scope: "any" | "none" | "allowlist" = "any"
 └── allowlist: list<participant_id> = []
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.5-003", "kind": "behavior", "applies": "§12.10.5 Multi-Party Interruption Policy, the conference feature: with scope any, speech the VAD detects on any audio track interrupts the bot's playback, subject to the strategy (the level of §12.10.11, which recommends enforcing the scope) Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 - `"any"` — speech detected (VAD) on any audio track interrupts bot
-  playback, subject to the configured InterruptionStrategy.
-- `"none"` — the bot always finishes speaking (presentation/IVR style).
+  playback, subject to the configured InterruptionStrategy.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.5-004", "kind": "behavior", "applies": "§12.10.5 Multi-Party Interruption Policy, the conference feature: with scope none, the bot always finishes speaking (the level of §12.10.11, which recommends enforcing the scope) Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
+- `"none"` — the bot always finishes speaking (presentation/IVR style).<!-- /rfc --><!-- rfc: {"id": "RK-12.10.5-005", "kind": "behavior", "applies": "§12.10.5 Multi-Party Interruption Policy, the conference feature: with scope allowlist, only the listed participants can interrupt (the level of §12.10.11, which recommends enforcing the scope) Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 - `"allowlist"` — only listed participants can interrupt (moderator
-  pattern).
+  pattern).<!-- /rfc --><!-- rfc: {"id": "RK-12.10.5-006", "kind": "behavior", "applies": "§12.10.5 Multi-Party Interruption Policy, the conference feature: SEMANTIC is not available on a conference, and an implementation refuses it at configuration time rather than degrade silently (why, folded in) Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 
 `SEMANTIC` is NOT available here, and an implementation SHOULD refuse it at
 configuration time rather than degrade silently. The strategy classifies an
 utterance from its transcript, and a conference lane only has a transcript once
 the utterance has ended — by which point the interruption it would have
-authorised is moot. The remaining strategies apply with the InterruptionConfig
+authorised is moot. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.5-007", "kind": "behavior", "applies": "§12.10.5 Multi-Party Interruption Policy, the conference feature: the remaining strategies apply with the InterruptionConfig defaults of Section 12.3.13, evaluated per track: CONFIRMED waits for 300 ms of one track's sustained speech (scope composing with all of them, folded in) Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The remaining strategies apply with the InterruptionConfig
 defaults of Section 12.3.13, evaluated per track: CONFIRMED waits for
 `min_speech_ms` (300 ms) of one track's sustained speech, and
 ConferenceInterruptionConfig has no field to change it. `scope` is the
-conference's own axis and composes with all of them.
+conference's own axis and composes with all of them.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.5-008", "kind": "behavior", "applies": "§12.10.5 Multi-Party Interruption Policy, the conference feature: no backchannel detection runs on a conference lane Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 No backchannel detection runs on a conference lane: it belongs to the SEMANTIC
-strategy. An interruption that lands is more than the chunk
+strategy. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.5-009", "kind": "behavior", "applies": "§12.10.5 Multi-Party Interruption Policy, the conference feature: when an interruption lands, the utterances still waiting for their turn in that room are dropped unpublished (the stop_playback() call, which RK-12.10.4-221 states, folded in) Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An interruption that lands is more than the chunk
 stream stopping: the channel calls `stop_playback()` so the audio the
 transport already holds is discarded instead of playing on over the
 participant (Sections 12.10.3 and 12.10.4). The utterances still waiting for
-their turn in that room are dropped unpublished. `ON_BARGE_IN` fires with the
+their turn in that room are dropped unpublished. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.5-010", "kind": "behavior", "applies": "§12.10.5 Multi-Party Interruption Policy, the conference feature: ON_BARGE_IN fires with the interrupting participant identified Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`ON_BARGE_IN` fires with the
 interrupting participant identified.
 <!-- /rfc -->
 
 #### 12.10.6 AI Participation Patterns
 
-<!-- rfc: {"id": "RK-12.10.6-001", "kind": "behavior", "applies": "§12.10.6 AI Participation Patterns; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.10.6-004", "kind": "behavior", "applies": "§12.10.6 AI Participation Patterns, the conference feature: speech-to-speech is OPTIONAL: a RealtimeVoiceProvider may be composed with a conference, all AUDIO tracks subscribed, mixed N to 1, fed to it, its audio published on the bot track, as Section 12.10.12 specifies (the STT/TTS default pattern, informative, folded in) Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->
 **STT/TTS (default).** Per-track STT lanes produce attributed
 transcription RoomEvents; an AIChannel in the room responds through the
 normal broadcast pipeline; the response is spoken via the bot track. The
 AI requires no conference-specific mechanics and sees a fully attributed
 multi-speaker transcript.
-<!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.10.6-002", "kind": "behavior", "applies": "§12.10.6 AI Participation Patterns; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Speech-to-speech (OPTIONAL).** A RealtimeVoiceProvider (Section 12.4)
 may be composed with a conference: subscribe to all AUDIO tracks, mix
 N→1, feed the provider, and publish its audio output on the bot track.
 Section 12.10.12 specifies the composition — the mixing rule, where
 attribution ends, how the provider's voice meets the utterance contract,
-and how it crosses the interruption policy. Per-speaker attribution is
+and how it crosses the interruption policy. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.6-005", "kind": "behavior", "applies": "§12.10.6 AI Participation Patterns, the conference feature: per-speaker attribution is lost at the provider boundary, so an implementation runs per-track STT lanes in parallel when transcripts are required (the observer pattern, informative, folded in) Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->Per-speaker attribution is
 lost at the provider boundary; implementations SHOULD run per-track STT
 lanes in parallel when transcripts are required.
-<!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.10.6-003", "kind": "behavior", "applies": "§12.10.6 AI Participation Patterns; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Observer.** A bot joined with `bot_grants` set to subscribe-only and
 `hidden`, with STT lanes but no TTS — transcription, compliance
 monitoring, or meeting summarization without a voice presence. Whether a
@@ -17361,12 +17359,12 @@ integrator can meet the disclosure rules that apply to it.
 
 #### 12.10.7 Conference State Events
 
-<!-- rfc: {"id": "RK-12.10.7-001", "kind": "behavior", "applies": "§12.10.7 Conference State Events; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.10.7-004", "kind": "behavior", "applies": "§12.10.7 Conference State Events, the conference feature: the conference hooks (Section 9.2): ON_CONFERENCE_PARTICIPANT_JOINED and _LEFT, ON_CONFERENCE_TRACK_PUBLISHED and _UNPUBLISHED, ON_CONFERENCE_TRACK_MUTED and _UNMUTED, ON_ACTIVE_SPEAKER_CHANGED and ON_CONNECTION_QUALITY_CHANGED fire Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Hooks** (Section 9.2): `ON_CONFERENCE_PARTICIPANT_JOINED`,
 `ON_CONFERENCE_PARTICIPANT_LEFT`, `ON_CONFERENCE_TRACK_PUBLISHED`,
 `ON_CONFERENCE_TRACK_UNPUBLISHED`, `ON_CONFERENCE_TRACK_MUTED`,
 `ON_CONFERENCE_TRACK_UNMUTED`, `ON_ACTIVE_SPEAKER_CHANGED`,
-`ON_CONNECTION_QUALITY_CHANGED`.
+`ON_CONNECTION_QUALITY_CHANGED`.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.7-005", "kind": "behavior", "applies": "§12.10.7 Conference State Events, the conference feature: a screen-share track's publication and withdrawal also fire ON_SCREEN_SHARE_STARTED and ON_SCREEN_SHARE_STOPPED (why the track triggers carry the CONFERENCE_ prefix, folded in) Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Screen-share track publication additionally fires the existing
 `ON_SCREEN_SHARE_STARTED` / `ON_SCREEN_SHARE_STOPPED`.
 
@@ -17376,9 +17374,9 @@ which describe tracks within a single VideoChannel session rather than
 publications by other participants in a conference.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.10.7-002", "kind": "behavior", "applies": "§12.10.7 Conference State Events; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.10.7-006", "kind": "behavior", "applies": "§12.10.7 Conference State Events, the conference feature: high-frequency media state (mute, active speaker, connection quality) is not stored as RoomEvents Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Ephemeral events** (Section 8.4): high-frequency media state MUST NOT be
-stored as RoomEvents; implementations SHOULD publish it via the
+stored as RoomEvents; <!-- /rfc --><!-- rfc: {"id": "RK-12.10.7-007", "kind": "behavior", "applies": "§12.10.7 Conference State Events, the conference feature: an implementation publishes it through the RealtimeBackend: conference_track_muted and conference_track_unmuted, conference_active_speaker, conference_connection_quality Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->implementations SHOULD publish it via the
 RealtimeBackend instead:
 
 - `conference_track_muted` / `conference_track_unmuted`
@@ -17386,33 +17384,33 @@ RealtimeBackend instead:
 - `conference_connection_quality`
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.10.7-003", "kind": "behavior", "applies": "§12.10.7 Conference State Events; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.10.7-008", "kind": "behavior", "applies": "§12.10.7 Conference State Events, the conference feature, framework events (Section 8.2): conference_started is emitted when join_as_bot() completes and the bot connection is live, the point of ON_SESSION_STARTED Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Framework events** (Section 8.2), with their emission points:
 
 | Event | Emitted when |
 |---|---|
 | `conference_started` | `join_as_bot()` completes and the bot connection is live — the same point as `ON_SESSION_STARTED` |
-| `conference_ended` | The bot session ends: `leave()` completes (channel detach, the unplug of the last need, or the leave of a re-join), or the backend reports the session's end (`on_bot_session_ended`) |
-| `conference_participant_joined` | A Participant record is created or reactivated from `on_participant_joined` |
-| `conference_participant_left` | `on_participant_left` is processed |
-| `conference_bot_grants_changed` | A connected session's effective grants changed (Section 12.10.4): replaced in place through `update_bot_grants()`, or carried in by the replacement session of the announced re-join. Carries `bot_session_id` and the session's `hidden` status |
+| <!-- /rfc --><!-- rfc: {"id": "RK-12.10.7-009", "kind": "behavior", "applies": "§12.10.7 Conference State Events, the conference feature, framework events (Section 8.2): conference_ended is emitted when the bot session ends: leave() completes (detach, the unplug of the last need, a re-join's leave) or the backend reports its end (on_bot_session_ended) Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`conference_ended` | The bot session ends: `leave()` completes (channel detach, the unplug of the last need, or the leave of a re-join), or the backend reports the session's end (`on_bot_session_ended`) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-12.10.7-010", "kind": "behavior", "applies": "§12.10.7 Conference State Events, the conference feature, framework events (Section 8.2): conference_participant_joined is emitted when a Participant record is created or reactivated from on_participant_joined Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`conference_participant_joined` | A Participant record is created or reactivated from `on_participant_joined` |
+| <!-- /rfc --><!-- rfc: {"id": "RK-12.10.7-011", "kind": "behavior", "applies": "§12.10.7 Conference State Events, the conference feature, framework events (Section 8.2): conference_participant_left is emitted when on_participant_left is processed Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`conference_participant_left` | `on_participant_left` is processed |
+| <!-- /rfc --><!-- rfc: {"id": "RK-12.10.7-012", "kind": "behavior", "applies": "§12.10.7 Conference State Events, the conference feature, framework events (Section 8.2): conference_bot_grants_changed is emitted when a connected session's effective grants changed, in place or by the re-join's replacement session, carrying bot_session_id and the session's hidden status (that conference_started tracks the framework's presence, not the SFU room's, folded in) Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`conference_bot_grants_changed` | A connected session's effective grants changed (Section 12.10.4): replaced in place through `update_bot_grants()`, or carried in by the replacement session of the announced re-join. Carries `bot_session_id` and the session's `hidden` status |
 
 `conference_started` tracks the framework's own media presence, not the
 existence of the SFU room: `ensure_room()` MAY have run much earlier, and
-human participants MAY be conferring before the bot joins.
+human participants MAY be conferring before the bot joins.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.7-013", "kind": "behavior", "applies": "§12.10.7 Conference State Events, the conference feature, framework events (Section 8.2): conference_ended carries the bot_session_id of the session that left Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 `conference_ended` MUST carry the `bot_session_id` of the session that left.
 A detach whose destructive half is deferred (Section 12.10.4) can complete
 after the room has been re-attached and a second bot has been announced, so
 the end is not always the last conference event a room emits; without the
 session identifier an observer cannot tell which conference it is the end
-of. The same identifier appears on `conference_started`, and pairing them is
+of. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.7-014", "kind": "behavior", "applies": "§12.10.7 Conference State Events, the conference feature, framework events (Section 8.2): conference_started carries the same bot_session_id Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The same identifier appears on `conference_started`, and pairing them is
 the only ordering guarantee available in that case.
 <!-- /rfc -->
 
 #### 12.10.8 Recording
 
-<!-- rfc: {"id": "RK-12.10.8-001", "kind": "behavior", "applies": "§12.10.8 Recording; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.10.8-006", "kind": "structural", "applies": "§12.10.8 Recording, the conference feature with the recording feature: the ConferenceRecordingConfig record: mode framework or egress (framework by default), storage, format (wav for audio, mp4 for composed video by default), metadata, encryption (handed to each track's recording) and storage_encrypted_at_rest (false by default) Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 ConferenceRecordingConfig
 ├── mode: "framework" | "egress" = "framework"
@@ -17422,23 +17420,25 @@ ConferenceRecordingConfig
 ├── encryption: RecordingEncryption | null   # Section 12.3.7, handed to each track's recording
 └── storage_encrypted_at_rest: bool = false
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.8-007", "kind": "behavior", "applies": "§12.10.8 Recording, the conference feature with the recording feature: framework mode, the default, records the bot-subscribed tracks through the room media recorder interface of Section 12.11, one recording per track, with no backend capability and against MockConferenceBackend Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - **framework** (default) — bot-subscribed tracks are recorded through the
   room media recorder interface (Section 12.11), one recording per track.
   This is the path that always works: it needs no
   backend capability, it functions against MockConferenceBackend, and the
   recording is written wherever the implementation writes it, which matters
-  where data residency is constrained. Since audio tracks are already
+  where data residency is constrained. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.8-008", "kind": "behavior", "applies": "§12.10.8 Recording, the conference feature with the recording feature: recording audio tracks already subscribed for STT adds no media subscription Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Since audio tracks are already
   subscribed for STT (Section 12.10.4), recording them adds a file write and
-  no additional media subscription.
+  no additional media subscription.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.8-009", "kind": "behavior", "applies": "§12.10.8 Recording, the conference feature with the recording feature: egress mode is OPTIONAL: recording delegated to the SFU, requiring EGRESS_RECORDING Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->
 - **egress** (OPTIONAL) — recording is delegated to the SFU, and requires
-  EGRESS_RECORDING. Configuring it on a backend without the capability MUST
+  EGRESS_RECORDING. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.8-010", "kind": "behavior", "applies": "§12.10.8 Recording, the conference feature with the recording feature: configuring egress on a backend without EGRESS_RECORDING raises a configuration error (why egress exists, a composed video recording, folded in) Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Configuring it on a backend without the capability MUST
   raise a configuration error. This mode exists for one reason: a
   **composed** video recording — grid or active-speaker layout — cannot be
   produced by the framework without subscribing every video track, decoding
   all of them, compositing and re-encoding, which is exactly the media-plane
   work Section 12.10.1 forbids. Delegating it is the only conforming way to
-  obtain it.
+  obtain it.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.8-011", "kind": "behavior", "applies": "§12.10.8 Recording, the conference feature with the recording feature: an implementation documents that switching between framework and egress modes is not a transparent configuration change (egress promising no result contract, folded in) Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 
 Egress carries **no unified result contract**. The framework does not
 promise a RecordingResult or `ON_RECORDING_STOPPED` for a delegated
@@ -17451,7 +17451,7 @@ modes is therefore not a transparent configuration change, and
 implementations SHOULD document it as such.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.10.8-002", "kind": "behavior", "applies": "§12.10.8 Recording; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.10.8-012", "kind": "behavior", "applies": "§12.10.8 Recording, the conference feature with the recording feature, framework mode: conference recording binds to MediaRecorder (Section 12.11), addressed by track, never to AudioRecorder or VideoRecorder, which stay unchanged Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Recorder mapping.** AudioRecorder (Section 12.3.7) and VideoRecorder
 (Section 12.8.10) are specified around a session, with a handle carrying a
 `session_id`: AudioRecorder records its two directions (`record_inbound` /
@@ -17460,7 +17460,7 @@ VideoRecorder the video the session receives (`tap_frame`). A conference has no 
 direction — it has N attributed tracks plus one bot track — so neither
 interface applies to it, and neither changes on its account. Framework-mode
 conference recording binds to MediaRecorder (Section 12.11) instead, which
-is addressed by track and already carries the attribution.
+is addressed by track and already carries the attribution.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.8-013", "kind": "behavior", "applies": "§12.10.8 Recording, the conference feature with the recording feature, framework mode: one recording per subscribed track: one on_recording_start() carrying exactly that track Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 An implementation recording a conference in framework mode MUST:
 
@@ -17469,70 +17469,70 @@ An implementation recording a conference in framework mode MUST:
   runs, and a recording that admits its tracks only at the start cannot
   record a late arrival — MP4, the usual container, refuses a new stream
   once muxing has begun. Per-track recordings also make "who said what" a
-  property of the output rather than of a mixing decision.
+  property of the output rather than of a mixing decision.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.8-014", "kind": "behavior", "applies": "§12.10.8 Recording, the conference feature with the recording feature, framework mode: every track is attributed: RecordingTrack.participant_id the publishing participant as Section 12.10.2 resolved it, channel_id the conference channel Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - Attribute every track: `RecordingTrack.participant_id` carries the
   publishing participant as Section 12.10.2 resolved it, and `channel_id`
-  the conference channel.
+  the conference channel.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.8-015", "kind": "behavior", "applies": "§12.10.8 Recording, the conference feature with the recording feature, framework mode: each recording declares the format its track actually carries (codec, sample_rate, channels of the delivered frames) Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - Declare the format that track actually carries — `codec`, `sample_rate` and
   `channels` describing the frames the backend delivered, not the format the
   framework normalizes to elsewhere. Section 12.10.3 obliges a backend to
   deliver decoded PCM with a declared sample rate; it obliges no two
   participants to agree, so a conference of three may carry three formats,
-  and the first frame of a track is where its own is known.
+  and the first frame of a track is where its own is known.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.8-016", "kind": "behavior", "applies": "§12.10.8 Recording, the conference feature with the recording feature, framework mode: the bot's published track is recorded as its own attributed track, never mixed into a participant's Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - Record the bot's published track as **its own attributed track**, never
   mixed into a participant's. The bot track is the only one that resembles
   an outbound direction, and treating it as one would make the framework mix
-  media it was given separately. What the AI said is part of what was said.
+  media it was given separately. What the AI said is part of what was said.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.8-017", "kind": "behavior", "applies": "§12.10.8 Recording, the conference feature with the recording feature, framework mode: a track's recording ends when that track ends (unpublished, unsubscribed, or the conference left) without ending the others Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - End a track's recording when that track ends — unpublished, unsubscribed,
-  or the conference left — without ending the others.
+  or the conference left — without ending the others.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.8-018", "kind": "behavior", "applies": "§12.10.8 Recording, the conference feature with the recording feature, framework mode: recording stops when the room binding stops permitting collection, on the gate of transcription (Section 12.10.4) Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - Stop recording when the room binding stops permitting collection, on the
   same gate as transcription (Section 12.10.4). Recording is collection.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.10.8-003", "kind": "behavior", "applies": "§12.10.8 Recording; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.10.8-019", "kind": "behavior", "applies": "§12.10.8 Recording, the conference feature with the recording feature: a frame in another format than the one a track's recording was opened on is not written (the declaration made once, on the opening frame, folded in) Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **A recording is opened on a format.** That declaration is made once, on the
 frame that opens the track's recording, and a container fixes its streams at
 the first write — so a later frame in another format has no honest place in
-it. An implementation MUST NOT write one anyway: it is discarded, reported
-through the same loss the overload bound owes below, and said in the log. A
+it. An implementation MUST NOT write one anyway: <!-- /rfc --><!-- rfc: {"id": "RK-12.10.8-020", "kind": "behavior", "applies": "§12.10.8 Recording, the conference feature with the recording feature: such a frame is discarded and reported through the loss the overload bound owes Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->it is discarded, reported
+through the same loss the overload bound owes below, <!-- /rfc --><!-- rfc: {"id": "RK-12.10.8-021", "kind": "behavior", "applies": "§12.10.8 Recording, the conference feature with the recording feature: such a discard is said in the log Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->and said in the log. A
 recording missing the seconds where a publisher renegotiated has a defect
 anyone can see; one that wrote them is a file that opens and lies.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.10.8-004", "kind": "behavior", "applies": "§12.10.8 Recording; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.10.8-022", "kind": "behavior", "applies": "§12.10.8 Recording, the conference feature with the recording feature, Writing is not the callback's work: recording a track does not delay frame delivery for any other Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Writing is not the callback's work.** Recording a track MUST NOT delay
 frame delivery for any other. This is the lane isolation rule of Section
 12.10.4, and it applies to the recorder for the same reason it applies to
 the recogniser: the backend hands frames to its subscribers in sequence, so
 an encode and a file write performed where the frame arrives makes one
-track's storage latency into every participant's delivery latency. That the
+track's storage latency into every participant's delivery latency. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.8-023", "kind": "behavior", "applies": "§12.10.8 Recording, the conference feature with the recording feature, Writing is not the callback's work: the synchronous recorder call is taken off the delivery path altogether Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->That the
 recorder interface is synchronous (Section 12.11) does not exempt it — it is
 what makes the obligation bite, since a caller cannot await its way out of a
-blocking write and MUST therefore get it off the delivery path altogether.
+blocking write and MUST therefore get it off the delivery path altogether.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.8-024", "kind": "behavior", "applies": "§12.10.8 Recording, the conference feature with the recording feature, Writing is not the callback's work: what an implementation holds for a track whose writes fall behind is bounded Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 An implementation MUST bound what it holds for a track whose writes fall
-behind, MUST document which audio it discards when that bound is reached, and
+behind, <!-- /rfc --><!-- rfc: {"id": "RK-12.10.8-025", "kind": "behavior", "applies": "§12.10.8 Recording, the conference feature with the recording feature, Writing is not the callback's work: an implementation documents which audio it discards when that bound is reached Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->MUST document which audio it discards when that bound is reached, <!-- /rfc --><!-- rfc: {"id": "RK-12.10.8-026", "kind": "behavior", "applies": "§12.10.8 Recording, the conference feature with the recording feature, Writing is not the callback's work: an implementation exposes how much it discarded Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->and
 MUST expose how much it discarded — the same three obligations Section
 12.10.4 places on a lane's backlog, and for the same reason: a recording with
-a hole in it that nothing reports reads as a defective recorder.
+a hole in it that nothing reports reads as a defective recorder.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.8-027", "kind": "behavior", "applies": "§12.10.8 Recording, the conference feature with the recording feature, Writing is not the callback's work: what is still queued when a track's recording ends is written before the recording is finalized Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 What is still queued when a track's recording ends MUST be written before the
-recording is finalized, within a bounded budget. A container closed over
+recording is finalized, <!-- /rfc --><!-- rfc: {"id": "RK-12.10.8-028", "kind": "behavior", "applies": "§12.10.8 Recording, the conference feature with the recording feature, Writing is not the callback's work: that flush runs within a bounded budget Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->within a bounded budget. A container closed over
 frames that were still in flight is not a truncated recording but a
 misleading one — it ends early and says nothing about it — and a budget is
 what keeps a recorder that has stopped draining from holding the teardown, and
-with it the bot, in the conference. What the budget could not write is loss,
+with it the bot, in the conference. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.8-029", "kind": "behavior", "applies": "§12.10.8 Recording, the conference feature with the recording feature, Writing is not the callback's work: what the budget could not write is reported as loss Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->What the budget could not write is loss,
 and is reported as such.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.10.8-005", "kind": "behavior", "applies": "§12.10.8 Recording; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.10.8-030", "kind": "behavior", "applies": "§12.10.8 Recording, the conference feature with the recording feature, Reporting the result: a framework-mode recording ends with a MediaRecordingResult naming where it was written Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Reporting the result.** A framework-mode recording ends with a
-`MediaRecordingResult` naming where it was written, and the framework SHOULD
+`MediaRecordingResult` naming where it was written, <!-- /rfc --><!-- rfc: {"id": "RK-12.10.8-031", "kind": "behavior", "applies": "§12.10.8 Recording, the conference feature with the recording feature, Reporting the result: the framework reports it: ON_RECORDING_STARTED when a track's recording opens, ON_RECORDING_STOPPED with the result when it ends Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->and the framework SHOULD
 report it: `ON_RECORDING_STARTED` when a track's recording opens,
 `ON_RECORDING_STOPPED` when it ends, carrying that result — the same pair
 Section 12.3.7 fires for a session. Without it an integrator has files on a
 disk and no programmatic way to learn their paths: the recorder's return
-value stops inside the framework, and a log line is not an interface.
+value stops inside the framework, and a log line is not an interface.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.8-032", "kind": "behavior", "applies": "§12.10.8 Recording, the conference feature with the recording feature, Reporting the result: the report is per track, not per conference Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 
 Per track, not per conference. The recording *is* a track, and the tracks of
 one meeting do not end together — a participant who leaves halfway through
@@ -17540,20 +17540,20 @@ has a finished recording while the meeting continues. A single report at the
 end would have to hold every earlier result until then, and would arrive
 after the point where an observer could have acted on it. An integrator
 wanting the meeting's full list accumulates it by room, which is state it
-was going to keep anyway.
+was going to keep anyway.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.8-033", "kind": "behavior", "applies": "§12.10.8 Recording, the conference feature with the recording feature, Reporting the result, where the framework reports it: the report carries the room, the track, and the participant publishing it as Section 12.10.2 resolved it Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 The report carries the attribution the result alone need not: the room, the
-track, and the participant publishing it as Section 12.10.2 resolved it.
+track, and the participant publishing it as Section 12.10.2 resolved it.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.8-034", "kind": "behavior", "applies": "§12.10.8 Recording, the conference feature with the recording feature, Reporting the result, where the framework reports it: both hooks are ASYNC: nothing about a recording is a hook's to block Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Both hooks are ASYNC — a recording already written is a fact, not a decision,
-and nothing about it is a hook's to block. A track subscribed but never
+and nothing about it is a hook's to block. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.8-035", "kind": "behavior", "applies": "§12.10.8 Recording, the conference feature with the recording feature, Reporting the result: a track subscribed but never published on reports nothing: the recording opens on the first frame Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A track subscribed but never
 published on reports nothing at all: the recording opens on the first frame,
-so silence produces no file and no pair of hooks describing one. Egress mode
-fires neither, for the reason given above — it promises no result contract.
+so silence produces no file and no pair of hooks describing one. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.8-036", "kind": "behavior", "applies": "§12.10.8 Recording, the conference feature with the recording feature, Reporting the result: egress mode fires neither hook Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Egress mode
+fires neither, for the reason given above — it promises no result contract.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.8-037", "kind": "behavior", "applies": "§12.10.8 Recording, the conference feature with the recording feature, Reporting the result: a recorder may write one file per track or mux several; the framework guarantees attribution, not file layout Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->
 
 How many files come out is the recorder implementation's decision: the
 framework guarantees attribution, not file layout. A recorder MAY write one
 file per track or mux several — it is handed the tracks separately and
-attributed, so either remains open to it.
+attributed, so either remains open to it.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.8-038", "kind": "behavior", "applies": "§12.10.8 Recording, the conference feature with the recording feature, Reporting the result, where an implementation records video tracks: they take the same per-track shape, RecordingTrack.kind distinguishing them, never a composed recording Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 Video tracks take the same shape where an implementation records them
 (`RecordingTrack.kind` distinguishes them), which is per-track and therefore
@@ -17563,28 +17563,28 @@ territory, for the reason given above.
 
 #### 12.10.9 Cross-Channel Integration
 
-<!-- rfc: {"id": "RK-12.10.9-001", "kind": "behavior", "applies": "§12.10.9 Cross-Channel Integration; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.10.9-002", "kind": "behavior", "applies": "§12.10.9 Cross-Channel Integration, the conference feature: transcription RoomEvents flow through the broadcast pipeline (Section 10.2) to every bound channel (that integration needs no new mechanism, folded in) Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Because the conference is a room, integration with other channels requires
 no new mechanism:
 
 - **Transcripts broadcast everywhere.** Transcription RoomEvents flow
   through the broadcast pipeline (Section 10.2) to every bound channel — a
   WebSocket or messaging binding receives a live, attributed meeting
-  transcript for free.
+  transcript for free.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.9-003", "kind": "behavior", "applies": "§12.10.9 Cross-Channel Integration, the conference feature: with speak_text_events, a message from any channel is spoken into the conference by the bot (that AI is an ordinary AIChannel, folded in) Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - **Text can be voiced in.** With `speak_text_events`, a message arriving
   from any channel is spoken into the conference by the bot.
 - **AI is just an AIChannel.** Responding to transcripts, summarizing on
   close (ON_ROOM_CLOSED), or steering via hooks all use existing
-  primitives.
+  primitives.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.9-004", "kind": "behavior", "applies": "§12.10.9 Cross-Channel Integration, the conference feature: a backend with SIP_GATEWAY may admit phone participants directly Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->
 - **SIP/PSTN interop (OPTIONAL).** Backends with SIP_GATEWAY MAY admit
-  phone participants directly. Alternatively, an implementation MAY bridge
+  phone participants directly. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.9-005", "kind": "behavior", "applies": "§12.10.9 Cross-Channel Integration, the conference feature: an implementation may bridge a VoiceChannel SIP session into the conference, republishing its audio as an additional bot participant Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->Alternatively, an implementation MAY bridge
   an existing VoiceChannel SIP session into the conference by republishing
-  its audio as an additional bot participant (audio-only gateway). A phone
+  its audio as an additional bot participant (audio-only gateway). <!-- /rfc --><!-- rfc: {"id": "RK-12.10.9-006", "kind": "behavior", "applies": "§12.10.9 Cross-Channel Integration, the conference feature: a phone participant's caller number, arriving in ConferenceParticipant.metadata, reaches identity resolution (Section 12.10.2) Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A phone
   participant admitted by the SFU is the canonical case of a participant
   the framework did not name: its caller number arrives in
   `ConferenceParticipant.metadata` and MUST reach identity resolution
   (Section 12.10.2), so that dialling into a conference identifies the
-  caller as reliably as messaging the room would. A gateway is also where
+  caller as reliably as messaging the room would. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.9-007", "kind": "behavior", "applies": "§12.10.9 Cross-Channel Integration, the conference feature: a backend admitting phone participants says through asserted_metadata that the number is the SFU's Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->A gateway is also where
   the provenance rule earns its keep: the number the trunk reported is a
   fact the SFU established, and a backend admitting phone participants
   SHOULD say so through `asserted_metadata` — otherwise the one address the
@@ -17593,7 +17593,7 @@ no new mechanism:
 
 #### 12.10.10 Relationship to Audio Bridging (Section 12.7)
 
-<!-- rfc: {"id": "RK-12.10.10-001", "kind": "behavior", "applies": "§12.10.10 Relationship to Audio Bridging (Section 12.7); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.10.10-001", "kind": "behavior", "applies": "§12.10.10 Relationship to Audio Bridging, the conference and voice features: AudioBridge and conferences may coexist in one implementation (the comparison table, informative, and that they share no interface, which RK-12.10.12-017 states for the mixer, folded in) Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->
 | Criterion | AudioBridge (12.7) | Conference (12.10) |
 |---|---|---|
 | Media plane | In-process (framework forwards/mixes) | External SFU |
@@ -17610,7 +17610,7 @@ ConferenceTracks.
 
 #### 12.10.11 Conformance
 
-<!-- rfc: {"id": "RK-12.10.11-001", "kind": "behavior", "applies": "§12.10.11 Conformance; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.10.11-001", "kind": "behavior", "applies": "§12.10.11 Conformance, the conference feature: conference support is part of Conformance Level 3 and is OPTIONAL. Its checklists hold no obligation of their own and are counted where stated: §12.10.1 (principles 1 and 2), §12.10.2 (correlation, asserted attributes, provider attributes, opaque ConferenceAccess, E2EE), §12.10.3 (the Mock, decoded PCM, REMOTE_UNMUTE, explicit subscription, decoded bot media, bot video), §12.10.4 (bot self-exclusion, lanes, isolation, overload, one bot track, hooks and records, the scope and the planned vision), §12.10.5, §12.10.7 (ephemeral events), §12.10.8 (framework recording, its writes, its report), §12.10.9 (SIP), §12.10.12 (the composition's rules), §12.4 (the assistant transcription's depth) and §17.7 (disclosure) Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->
 Conference support is part of **Conformance Level 3 (Real-Time Media)**
 and is OPTIONAL. It is STABLE (see the status note above).
 
@@ -17706,13 +17706,13 @@ Implementations that compose speech-to-speech providers (Section
 
 #### 12.10.12 Speech-to-Speech Composition
 
-<!-- rfc: {"id": "RK-12.10.12-001", "kind": "behavior", "applies": "§12.10.12 Speech-to-Speech Composition; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.10.12-012", "kind": "behavior", "applies": "§12.10.12 Speech-to-Speech Composition, the conference feature with the realtime feature: a conference may compose a RealtimeVoiceProvider as its intelligence, OPTIONAL within Conformance Level 3; the section binds only implementations that offer it Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->
 A conference MAY compose a RealtimeVoiceProvider (Section 12.4) as its
 intelligence: the participants' voices reach one realtime session, and
 the provider's voice is the bot's. This is the sub-second, natively
 turn-taking agent in a multi-party meeting — the speech-to-speech
 pattern of Section 12.10.6 — and it is OPTIONAL within Conformance
-Level 3. This section binds only implementations that offer it.
+Level 3. This section binds only implementations that offer it.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.12-013", "kind": "structural", "applies": "§12.10.12 Speech-to-Speech Composition, the conference feature with the realtime feature, where an implementation offers it: the ConferenceRealtimeConfig record, configured through the channel's realtime field: provider, system_prompt, voice, tools (each needing tool_handler or human_input_handler), tool_handler, temperature, input_sample_rate and output_sample_rate (24000), server_vad (true, turn-taking only), provider_config, tool_policy, tool_timeout_seconds (10, null unbounded), tool_timeouts (empty) and human_input_handler (served before tool_handler); the provider and the backend keep their interfaces (folded in) Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 The composition is configured through the channel's `realtime` field
 (Section 12.10.4):
@@ -17743,14 +17743,14 @@ contract of Sections 12.10.4 and 12.10.5. What this section specifies
 is the crossing itself.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.10.12-002", "kind": "behavior", "applies": "§12.10.12 Speech-to-Speech Composition; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.10.12-014", "kind": "behavior", "applies": "§12.10.12 Speech-to-Speech Composition, the conference feature with the realtime feature, where an implementation offers it: the provider is fed one stream mixed from every subscribed AUDIO track with the additive algorithm of Section 12.7.5 (promoted, summed per window, scaled by the square root of the contributing tracks, clamped), a track with no audio contributing silence Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **N→1: the provider hears a mix (normative).** Implementations MUST
 feed the provider one stream mixed from every subscribed AUDIO track,
 using the additive algorithm of Section 12.7.5: samples promoted and
 summed per mixing window, headroom-scaled by the square root of the
 number of tracks contributing to that window, clamped back to the
-sample width. A track with no audio in the window contributes silence;
-a window to which no track contributed MUST NOT be forwarded. The
+sample width. A track with no audio in the window contributes silence;<!-- /rfc --><!-- rfc: {"id": "RK-12.10.12-015", "kind": "behavior", "applies": "§12.10.12 Speech-to-Speech Composition, the conference feature with the realtime feature, where an implementation offers it: a window to which no track contributed is not forwarded Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+a window to which no track contributed MUST NOT be forwarded. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.12-016", "kind": "behavior", "applies": "§12.10.12 Speech-to-Speech Composition, the conference feature with the realtime feature, where an implementation offers it: the mixed stream is resampled to the provider's declared input rate before it is sent (routing the active speaker instead, no admissible narrowing, folded in) Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The
 mixed stream is resampled to the provider's declared input rate before
 it is sent.
 
@@ -17761,62 +17761,62 @@ routing would not survive a backend change; the switch lands
 mid-syllable, so every hand-over chops a phoneme; and overlapping
 speech — the thing a meeting has that a 1:1 call does not — is audible
 in a mix and lost in a switch. The mix is the one complete signal every
-backend can produce. The mixer itself stays private: the *algorithm* of
+backend can produce. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.12-017", "kind": "structural", "applies": "§12.10.12 Speech-to-Speech Composition, the conference feature with the realtime feature, where an implementation offers it: the mixer stays private: the algorithm of Section 12.7.5 is reused, the AudioBridge interface is not, and no mixer provider interface is defined Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The mixer itself stays private: the *algorithm* of
 Section 12.7.5 is reusable, the AudioBridge interface is not (Section
-12.10.10), and this specification defines no mixer provider interface —
+12.10.10), and this specification defines no mixer provider interface —<!-- /rfc --><!-- rfc: {"id": "RK-12.10.12-018", "kind": "behavior", "applies": "§12.10.12 Speech-to-Speech Composition, the conference feature with the realtime feature, where an implementation offers it: an implementation may factor a mixer out privately Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->
 an implementation MAY factor one out privately.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.10.12-003", "kind": "behavior", "applies": "§12.10.12 Speech-to-Speech Composition; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.10.12-019", "kind": "behavior", "applies": "§12.10.12 Speech-to-Speech Composition, the conference feature with the realtime feature, where an implementation offers it: the provider's user-role transcriptions are not stored as RoomEvents Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Attribution ends at the provider boundary (normative).** A mix
 carries no speaker identity, so nothing downstream of it can. The
-provider's user-role transcriptions MUST NOT be stored as RoomEvents
+provider's user-role transcriptions MUST NOT be stored as RoomEvents<!-- /rfc --><!-- rfc: {"id": "RK-12.10.12-020", "kind": "behavior", "applies": "§12.10.12 Speech-to-Speech Composition, the conference feature with the realtime feature, where an implementation offers it: they are not attributed to a participant by inference (active-speaker events, lane VAD timing) Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 and MUST NOT be attributed to a participant by inference — correlating
 them with active-speaker events or lane VAD timing is a guess wearing
 attribution's clothes, and principle 5 places identity on tracks
-precisely so that no component has to guess. Implementations MUST
-discard user-role transcriptions; they MAY surface them to
+precisely so that no component has to guess. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.12-021", "kind": "behavior", "applies": "§12.10.12 Speech-to-Speech Composition, the conference feature with the realtime feature, where an implementation offers it: user-role transcriptions are discarded Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Implementations MUST
+discard user-role transcriptions; <!-- /rfc --><!-- rfc: {"id": "RK-12.10.12-022", "kind": "behavior", "applies": "§12.10.12 Speech-to-Speech Composition, the conference feature with the realtime feature, where an implementation offers it: an implementation may surface them to observability, or hand them to a reasoning backend, unattributed Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->they MAY surface them to
 observability, unattributed, and MAY hand them, unattributed, to a
 reasoning backend (Section 12.4.1) as state the session drops with
-itself. The attributed transcript is the one the
+itself. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.12-023", "kind": "behavior", "applies": "§12.10.12 Speech-to-Speech Composition, the conference feature with the realtime feature, where an implementation offers it: stt configured beside the provider transcribes the meeting through the per-track lanes, the two consuming the same lanes without contending Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The attributed transcript is the one the
 conference already has: per-track STT lanes (Section 12.10.4), running
 in parallel with the mix, each event carrying its speaker. A deployment
 that needs the meeting transcribed configures stt beside the provider;
-the two consume the same lanes and do not contend.
+the two consume the same lanes and do not contend.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.12-024", "kind": "behavior", "applies": "§12.10.12 Speech-to-Speech Composition, the conference feature with the realtime feature, where an implementation offers it: final assistant transcriptions are emitted as RoomEvents attributed to the channel, no participant their author Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 The provider's assistant-role transcriptions are the other half, and
 they are kept: they are the only record of what the AI said, because
 no AIChannel generation stands behind this voice for the store to
 hold. Final assistant transcriptions MUST be emitted as RoomEvents
-attributed to the channel — no participant is their author — and MUST
+attributed to the channel — no participant is their author — <!-- /rfc --><!-- rfc: {"id": "RK-12.10.12-025", "kind": "behavior", "applies": "§12.10.12 Speech-to-Speech Composition, the conference feature with the realtime feature, where an implementation offers it: final assistant transcriptions are not delivered back into the conference's own voice path Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->and MUST
 NOT be delivered back into the conference's own voice path: the words
 were already heard once, on the bot track.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.10.12-004", "kind": "behavior", "applies": "§12.10.12 Speech-to-Speech Composition; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.10.12-026", "kind": "behavior", "applies": "§12.10.12 Speech-to-Speech Composition, the conference feature with the realtime feature, where an implementation offers it: a delivery naming the conference, with no intelligence address, is injected into the provider's room session with the intent of Section 12.4, as on a realtime voice channel Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Proactive delivery (normative).** The provider's room session is the
 conference's realtime destination (Section 22): a delivery naming the
 conference, with no intelligence address, MUST be injected into that
-session with the intent of Section 12.4, as on a realtime voice channel,
-and is `unavailable` while no session is connected. A strategy waiting
+session with the intent of Section 12.4, as on a realtime voice channel,<!-- /rfc --><!-- rfc: {"id": "RK-12.10.12-027", "kind": "behavior", "applies": "§12.10.12 Speech-to-Speech Composition, the conference feature with the realtime feature, where an implementation offers it: such a delivery is unavailable while no session is connected Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+and is `unavailable` while no session is connected. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.12-028", "kind": "behavior", "applies": "§12.10.12 Speech-to-Speech Composition, the conference feature with the realtime feature, where an implementation offers it: a wait_for_idle delivery waits until the answer ended and reached the bot track, nobody speaks, no tool call is in flight, and no result or delegation fallback awaits its answer Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A strategy waiting
 for idle waits until the model's answer has ended and reached the bot
 track, the provider hears nobody speak, no tool call of the session is in
 flight, and no result (or delegation fallback) sent to the model is still
-waiting for its answer (Section 12.4.1), as on a realtime voice channel. The
+waiting for its answer (Section 12.4.1), as on a realtime voice channel. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.12-029", "kind": "behavior", "applies": "§12.10.12 Speech-to-Speech Composition, the conference feature with the realtime feature, where an implementation offers it: the injection fires ON_REALTIME_TEXT_INJECTED Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The
 injection fires ON_REALTIME_TEXT_INJECTED.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.10.12-005", "kind": "behavior", "applies": "§12.10.12 Speech-to-Speech Composition; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.10.12-030", "kind": "behavior", "applies": "§12.10.12 Speech-to-Speech Composition, the conference feature with the realtime feature, where an implementation offers it: a full-duplex provider's delegation fires ON_REALTIME_DELEGATION Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **A delegation is always answered (normative).** A full-duplex provider's
-delegation fires ON_REALTIME_DELEGATION; a conference serves no reasoning
+delegation fires ON_REALTIME_DELEGATION; <!-- /rfc --><!-- rfc: {"id": "RK-12.10.12-031", "kind": "behavior", "applies": "§12.10.12 Speech-to-Speech Composition, the conference feature with the realtime feature, where an implementation offers it: an integrator-side delegation is answered with the spoken fallback of a realtime voice channel without a backend, never left waiting Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->a conference serves no reasoning
 backend, so an integrator-side delegation is answered with the spoken
 fallback a realtime voice channel without a backend gives (Section 12.4.1),
-never left waiting. A delegation the provider issues while the room's session
+never left waiting. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.12-032", "kind": "behavior", "applies": "§12.10.12 Speech-to-Speech Composition, the conference feature with the realtime feature, where an implementation offers it: a delegation issued while the room's session is still connecting is answered once the session is the room's Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A delegation the provider issues while the room's session
 is still connecting is answered once the session is the room's, as a tool call
 issued then is served.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.10.12-006", "kind": "behavior", "applies": "§12.10.12 Speech-to-Speech Composition; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.10.12-006", "kind": "behavior", "applies": "§12.10.12 Speech-to-Speech Composition, the conference feature with the realtime feature, One voice per bot: a channel refuses a configuration holding both a synthesizer (tts) and a speech-to-speech provider, at construction and at the plugs alike Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **One voice per bot (normative).** A channel MUST refuse a
 configuration holding both a synthesizer (tts) and a speech-to-speech
 provider, at construction and at the plugs alike. There is one bot
@@ -17827,37 +17827,37 @@ STT/TTS pattern for the realtime one does it through the plugs —
 unplug one, plug the other — and never holds both.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.10.12-007", "kind": "behavior", "applies": "§12.10.12 Speech-to-Speech Composition; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.10.12-033", "kind": "behavior", "applies": "§12.10.12 Speech-to-Speech Composition, the conference feature with the realtime feature, where an implementation offers it: provider audio goes through the outbound contract of Section 12.10.4 unchanged: a response opens an utterance, its deltas are its chunks, its end (or a barge-in) closes it with is_final, a leave abandons it with no terminal chunk Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **The provider's voice is an utterance (normative).** Provider audio
 reaches the conference through the outbound contract of Section
 12.10.4 unchanged: a response takes its turn and opens an utterance,
 its audio deltas are the utterance's chunks, and its end closes the
 utterance with `is_final` — as does a barge-in, and a leave abandons
-it with no terminal chunk, exactly as written there. One utterance at
-a time holds: a second response waits for its turn. BEFORE_TTS and
+it with no terminal chunk, exactly as written there. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.12-034", "kind": "behavior", "applies": "§12.10.12 Speech-to-Speech Composition, the conference feature with the realtime feature, where an implementation offers it: one utterance at a time holds: a second response waits for its turn Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->One utterance at
+a time holds: a second response waits for its turn. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.12-035", "kind": "behavior", "applies": "§12.10.12 Speech-to-Speech Composition, the conference feature with the realtime feature, where an implementation offers it: BEFORE_TTS and AFTER_TTS do not fire for provider audio Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->BEFORE_TTS and
 AFTER_TTS do not fire — they are text-synthesis hooks and no text
-precedes this synthesis. ON_BARGE_IN fires as always, though its
+precedes this synthesis. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.12-036", "kind": "behavior", "applies": "§12.10.12 Speech-to-Speech Composition, the conference feature with the realtime feature, where an implementation offers it: ON_BARGE_IN's interrupted_text may be empty when the interruption lands before the first assistant transcript delta (ON_BARGE_IN firing as always, which RK-12.10.12-039 states, folded in) Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->ON_BARGE_IN fires as always, though its
 `interrupted_text` MAY be empty when the interruption lands before the
 first assistant transcript delta has arrived.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.10.12-008", "kind": "behavior", "applies": "§12.10.12 Speech-to-Speech Composition; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.10.12-037", "kind": "behavior", "applies": "§12.10.12 Speech-to-Speech Composition, the conference feature with the realtime feature, where an implementation offers it: the per-lane VAD stays the interruption sensor: ON_BARGE_IN identifies the interrupting participant Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Interruption has one sensor and two effects (normative).** Section
 12.10.5 stays the policy authority, and the per-lane VAD stays its
 sensor: ON_BARGE_IN MUST identify the interrupting participant, and
-only track identity can — the provider's own speech detection hears
+only track identity can — <!-- /rfc --><!-- rfc: {"id": "RK-12.10.12-038", "kind": "behavior", "applies": "§12.10.12 Speech-to-Speech Composition, the conference feature with the realtime feature, where an implementation offers it: the provider's own speech detection does not trigger the interruption path Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->the provider's own speech detection hears
 the mix and can name no one, so it MUST NOT trigger the interruption
-path. An interruption that lands does what Section 12.10.5 says — the
+path. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.12-039", "kind": "behavior", "applies": "§12.10.12 Speech-to-Speech Composition, the conference feature with the realtime feature, where an implementation offers it: an interruption that lands publishes nothing past the response's next chunk, closes it with is_final, calls stop_playback(), fires ON_BARGE_IN, and discards what the provider still sends for that response Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An interruption that lands does what Section 12.10.5 says — the
 response publishes nothing past its next chunk and closes with `is_final`,
 `stop_playback()` is called, ON_BARGE_IN fires, and what the provider
-still sends for that response is discarded — and additionally SHOULD
+still sends for that response is discarded — <!-- /rfc --><!-- rfc: {"id": "RK-12.10.12-040", "kind": "behavior", "applies": "§12.10.12 Speech-to-Speech Composition, the conference feature with the realtime feature, where an implementation offers it: an interruption signals the provider to cancel the response in flight where the provider can (best-effort; a full-duplex provider has no cancel signal) Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->and additionally SHOULD
 signal the provider to cancel the response in flight, where the
 provider can: cancellation is best-effort, since Section 12.4
 providers exist whose sessions cannot cancel a response, and it is
 `stop_playback()` that silences the room either way. A full-duplex
 provider (Section 12.4.1) is the standing case: it has no cancel
 signal, and the mix carries the interruption to it; `stop_playback()`
-and ON_BARGE_IN remain the framework's.
+and ON_BARGE_IN remain the framework's.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.12-041", "kind": "behavior", "applies": "§12.10.12 Speech-to-Speech Composition, the conference feature with the realtime feature, where an implementation offers it: an implementation aligns the provider's own interruption behaviour with the configured scope where the provider exposes it Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 
 The provider brings its own turn-taking, and the two authorities can
 disagree: a provider whose native detection halts generation on any
@@ -17865,45 +17865,45 @@ speech in the mix will fall silent for a speaker the configured scope
 would not admit — no barge-in fires, the bot simply trails off.
 Implementations SHOULD align the provider's own interruption
 behaviour with the configured scope where the provider exposes it
-(Section 12.4 provider configuration), and MUST NOT substitute the
+(Section 12.4 provider configuration), <!-- /rfc --><!-- rfc: {"id": "RK-12.10.12-042", "kind": "behavior", "applies": "§12.10.12 Speech-to-Speech Composition, the conference feature with the realtime feature, where an implementation offers it: the provider's detection never replaces the policy: scope enforcement, stop_playback() and ON_BARGE_IN remain the framework's Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->and MUST NOT substitute the
 provider's detection for the policy: scope enforcement,
 `stop_playback()` and ON_BARGE_IN remain the framework's, whatever the
 provider does with its generation.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.10.12-009", "kind": "behavior", "applies": "§12.10.12 Speech-to-Speech Composition; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.10.12-043", "kind": "behavior", "applies": "§12.10.12 Speech-to-Speech Composition, the conference feature with the realtime feature, where an implementation offers it: one provider session serves one conference, within the lifetime of the bot session whose track it speaks on Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **The session follows the bot (normative).** One provider session
 serves one conference, scoped within the lifetime of the bot session
-whose track it speaks on. Speech-to-speech is a first need under
+whose track it speaks on. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.12-044", "kind": "behavior", "applies": "§12.10.12 Speech-to-Speech Composition, the conference feature with the realtime feature, where an implementation offers it: speech-to-speech is a first need whose derived grants carry both subscribe and publish_audio Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Speech-to-speech is a first need under
 Hot-plugging intelligence (Section 12.10.4): it consumes AUDIO tracks
 and it is a voice, so its derived grants carry both `subscribe` and
-`publish_audio`, and plugging and unplugging it follow every rule of
+`publish_audio`, <!-- /rfc --><!-- rfc: {"id": "RK-12.10.12-045", "kind": "behavior", "applies": "§12.10.12 Speech-to-Speech Composition, the conference feature with the realtime feature, where an implementation offers it: plugging and unplugging it follow the hot-plugging rules: the probe re-runs at the plug, an occupied slot refuses a second provider, the last need's unplug takes the bot out Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->and plugging and unplugging it follow every rule of
 that section — the occupancy probe re-runs at the plug, an occupied
 slot refuses a second provider, and unplugging the last need takes the
-bot out. Connecting the provider is lazy: the session is established
-when there is something for it to hear or say, and a connect failure
+bot out. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.12-046", "kind": "behavior", "applies": "§12.10.12 Speech-to-Speech Composition, the conference feature with the realtime feature, where an implementation offers it: connecting the provider is lazy: the session is established when there is something for it to hear or say Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Connecting the provider is lazy: the session is established
+when there is something for it to hear or say, <!-- /rfc --><!-- rfc: {"id": "RK-12.10.12-047", "kind": "behavior", "applies": "§12.10.12 Speech-to-Speech Composition, the conference feature with the realtime feature, where an implementation offers it: a connect failure does not fail the join or the plug: the configuration stands Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->and a connect failure
 MUST NOT fail the join or the plug, exactly as a lazy join's own
-failure does not (Section 12.10.4) — the configuration stands, and
+failure does not (Section 12.10.4) — the configuration stands, <!-- /rfc --><!-- rfc: {"id": "RK-12.10.12-048", "kind": "behavior", "applies": "§12.10.12 Speech-to-Speech Composition, the conference feature with the realtime feature, where an implementation offers it: a failed connect is retried with a cooldown rather than on every mixing window Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->and
 implementations SHOULD retry with a cooldown rather than on every
-mixing window. With no caller to raise to, each failed connect fires
+mixing window. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.12-049", "kind": "behavior", "applies": "§12.10.12 Speech-to-Speech Composition, the conference feature with the realtime feature, where an implementation offers it: each failed connect fires ON_ERROR with error_category realtime_provider and error_type the error's type name Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->With no caller to raise to, each failed connect fires
 ON_ERROR (`error_category = realtime_provider`, `error_type` the
-error's type name), so the integrator learns the model is unreachable.
+error's type name), so the integrator learns the model is unreachable.<!-- /rfc --><!-- rfc: {"id": "RK-12.10.12-050", "kind": "behavior", "applies": "§12.10.12 Speech-to-Speech Composition, the conference feature with the realtime feature, where an implementation offers it: when the bot session ends (detach, unplug, backend-side loss, close) the provider session is disconnected with it Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 When the bot session ends — detach, unplug,
 backend-side loss, close — the provider session is disconnected with
 it.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.10.12-010", "kind": "behavior", "applies": "§12.10.12 Speech-to-Speech Composition; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.10.12-051", "kind": "behavior", "applies": "§12.10.12 Speech-to-Speech Composition, the conference feature with the realtime feature, where an implementation offers it: composing a provider suspends none of the per-track machinery: VAD, speech edges, recording and STT lanes run as before Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **The lanes stay on.** Composing a provider suspends none of the
 per-track machinery: VAD, speech edges, recording, and STT lanes where
-configured all run as before. The pipeline requirement of Section
+configured all run as before. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.12-052", "kind": "behavior", "applies": "§12.10.12 Speech-to-Speech Composition, the conference feature with the realtime feature, where an implementation offers it: a conference composing speech-to-speech runs per-track VAD even with no STT configured Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The pipeline requirement of Section
 12.10.4 extends accordingly: a conference composing speech-to-speech
 MUST run per-track VAD even when no STT is configured — without it the
 interruption policy of Section 12.10.5 has no sensor, and the bot
 cannot be interrupted at all.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.10.12-011", "kind": "behavior", "applies": "§12.10.12 Speech-to-Speech Composition; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.10.12-053", "kind": "behavior", "applies": "§12.10.12 Speech-to-Speech Composition, the conference feature with the realtime feature, A tool call is a realtime tool call, where an implementation offers the composition: a call the provider issues passes the pre-execution gate of Section 12.4 before the handler, in its order: the declared-tool check, the ToolPolicy when configured, argument validation against the declared schema, then BEFORE_TOOL_USE with its edited arguments validated again; no skill gating Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **A tool call is a realtime tool call (normative).** A call the
 provider issues passes the pre-execution gate of Section 12.4 before it
 reaches the configured handler, in that section's order: the
@@ -17911,15 +17911,15 @@ declared-tool check against the configuration's tools, the
 configuration's ToolPolicy when it carries one, argument validation
 against the declared schema, and BEFORE_TOOL_USE (Section 9.2), whose
 arguments, replaced or edited, are validated again. The gate has no skill-gating
-step because a conference declares no skills. The call fires ON_TOOL_CALL
-(Section 9.3) with its outcome, a refusal and a failure included, and as
+step because a conference declares no skills. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.12-054", "kind": "behavior", "applies": "§12.10.12 Speech-to-Speech Composition, the conference feature with the realtime feature, A tool call is a realtime tool call, where an implementation offers the composition: the call fires ON_TOOL_CALL with its outcome, a refusal and a failure included Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The call fires ON_TOOL_CALL
+(Section 9.3) with its outcome, a refusal and a failure included, <!-- /rfc --><!-- rfc: {"id": "RK-12.10.12-055", "kind": "behavior", "applies": "§12.10.12 Speech-to-Speech Composition, the conference feature with the realtime feature, A tool call is a realtime tool call, where an implementation offers the composition: the report of a refusal does not precede the refusal on the wire Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->and as
 on any realtime channel the report of a refusal MUST NOT precede the
-refusal on the wire. Its result is bounded as any tool result is
-(Section 21.5), and a call the provider abandons interrupts its handler,
-sends no result, and is reported once, as cancelled; a call whose outcome
-ON_TOOL_CALL already received is not reported again. A handler's
-exception is logged; the model reads that the tool failed, not the
-exception's text. The ToolPolicy (Section 21.1) also filters the tools
+refusal on the wire. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.12-056", "kind": "behavior", "applies": "§12.10.12 Speech-to-Speech Composition, the conference feature with the realtime feature, A tool call is a realtime tool call, where an implementation offers the composition: the call's result is bounded as any tool result is (Section 21.5) Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Its result is bounded as any tool result is
+(Section 21.5), <!-- /rfc --><!-- rfc: {"id": "RK-12.10.12-057", "kind": "behavior", "applies": "§12.10.12 Speech-to-Speech Composition, the conference feature with the realtime feature, A tool call is a realtime tool call, where an implementation offers the composition: a call the provider abandons interrupts its handler, sends no result and is reported once, as cancelled Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->and a call the provider abandons interrupts its handler,
+sends no result, and is reported once, as cancelled; <!-- /rfc --><!-- rfc: {"id": "RK-12.10.12-058", "kind": "behavior", "applies": "§12.10.12 Speech-to-Speech Composition, the conference feature with the realtime feature, A tool call is a realtime tool call, where an implementation offers the composition: a call whose outcome ON_TOOL_CALL already received is not reported again Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->a call whose outcome
+ON_TOOL_CALL already received is not reported again. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.12-059", "kind": "behavior", "applies": "§12.10.12 Speech-to-Speech Composition, the conference feature with the realtime feature, A tool call is a realtime tool call, where an implementation offers the composition: a handler's exception is logged Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A handler's
+exception is logged; <!-- /rfc --><!-- rfc: {"id": "RK-12.10.12-060", "kind": "behavior", "applies": "§12.10.12 Speech-to-Speech Composition, the conference feature with the realtime feature, A tool call is a realtime tool call, where an implementation offers the composition: the model reads that the tool failed, not the exception's text Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->the model reads that the tool failed, not the
+exception's text. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.12-061", "kind": "behavior", "applies": "§12.10.12 Speech-to-Speech Composition, the conference feature with the realtime feature, A tool call is a realtime tool call, where an implementation offers the composition: the ToolPolicy also filters the tools declared to the provider, with its base rules, never a role override (one gate on every door, folded in) Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The ToolPolicy (Section 21.1) also filters the tools
 declared to the provider; the mix names no participant, so its base
 rules apply, never a role override. The conference is a door to the same
 tools as any other channel, and a gate that holds on one door and not
