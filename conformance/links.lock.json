@@ -4026,6 +4026,9 @@
     "RK-12.10.1-004": {
       "conference/a-call-reports-presence-without-changing-room-membership": "89d1167aa0cbaf0ec4501107dabe7c564d3a110bce39de077134917f9feff86f"
     },
+    "RK-12.10.12-054": {
+      "conference/a-conference-model-receives-the-gated-tool-result": "a1737cc991de55b37e84a6648abff6082b693efe0562e149eb32672841e2713c"
+    },
     "RK-12.10.2-001": {
       "conference/a-camera-toggle-reaches-the-mute-and-unmute-observers": "1817a3fa716ab52cbb5ae1b38649d61716135d3f1780edb1ed9cdd68c24b74c1",
       "conference/a-screen-track-announces-the-start-and-end-of-sharing": "1817a3fa716ab52cbb5ae1b38649d61716135d3f1780edb1ed9cdd68c24b74c1"
@@ -4137,6 +4140,40 @@
     },
     "RK-12.10.4-074": {
       "executor-close/a-turn-closing-the-kit-sees-its-close-return": "9b8694f4c448abdf6ded61184817a9ae0f0bcb81215a1a78617c9417e4040231"
+    },
+    "RK-12.10.4-105": {
+      "conference/a-call-reports-presence-without-changing-room-membership": "b01ddfc7b5226c191a1492371f99b5020af2797b87da473b2bb5ca7c5dcd8beb"
+    },
+    "RK-12.10.4-106": {
+      "conference/a-call-reports-presence-without-changing-room-membership": "3e0e948987268b297c1c7e80cf4f14cfe14930dc64c433527fd123fc72bcff32"
+    },
+    "RK-12.10.4-107": {
+      "conference/a-screen-track-announces-the-start-and-end-of-sharing": "e3f996da8bf17851d0a5d3fba4fadc8a3661f077eede4db6f668c3382fd5693c"
+    },
+    "RK-12.10.4-109": {
+      "conference/a-screen-track-announces-the-start-and-end-of-sharing": "f7d232d7e3224555b78a4f01ee19341054100b8e79c52b16908ac959696c1309"
+    },
+    "RK-12.10.4-112": {
+      "conference/a-screen-track-announces-the-start-and-end-of-sharing": "3db4c620b803c0911152f7d1b8159587651316fff99d082fc2a4959d0c0f6291"
+    },
+    "RK-12.10.4-120": {
+      "conference/a-speaker-change-identifies-the-dominant-participant": "176a568fa82d74dccbc5cb40bca1480cc7fcf9d08365d1c2f08ca4eac06706de"
+    },
+    "RK-12.10.4-121": {
+      "conference/a-quality-report-identifies-the-affected-participant": "45dd2101950b6e5f1d570caeace892aed3f5be55541cad6d3515cc88b8d58386"
+    },
+    "RK-12.10.4-122": {
+      "conference/a-camera-toggle-reaches-the-mute-and-unmute-observers": "8df2e9583355a07b57adf842cfbc0db1d3248ce30a0afaa3cd7f24d1b73c3acc"
+    },
+    "RK-12.10.7-004": {
+      "conference/a-call-reports-presence-without-changing-room-membership": "a7d7341d40c08d110367526260dac1cb67a895bf90981227f0f3a74c3fa1d834",
+      "conference/a-camera-toggle-reaches-the-mute-and-unmute-observers": "a7d7341d40c08d110367526260dac1cb67a895bf90981227f0f3a74c3fa1d834",
+      "conference/a-quality-report-identifies-the-affected-participant": "a7d7341d40c08d110367526260dac1cb67a895bf90981227f0f3a74c3fa1d834",
+      "conference/a-screen-track-announces-the-start-and-end-of-sharing": "a7d7341d40c08d110367526260dac1cb67a895bf90981227f0f3a74c3fa1d834",
+      "conference/a-speaker-change-identifies-the-dominant-participant": "a7d7341d40c08d110367526260dac1cb67a895bf90981227f0f3a74c3fa1d834"
+    },
+    "RK-12.10.7-005": {
+      "conference/a-screen-track-announces-the-start-and-end-of-sharing": "52bd0af48ab9eec9828502f2d71e8bea8dd70e4701103fc398b7f63fc098d7dd"
     },
     "RK-12.11-021": {
       "recording/a-recorder-joins-the-live-feed-after-consent": "aaf543dd04a03870fc2083caa63bc44c528100ce4c7084855377c41bf762556d"
