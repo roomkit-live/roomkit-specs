@@ -224,7 +224,7 @@
     "RK-12.10.2-055": {
       "class": "step",
       "card": "RMK-2070",
-      "note": "step: a backend session whose joined_at is naive (no audit family): the end still announced with its duration."
+      "note": "step: framework_events media rows, a backend handing back a session whose joined_at is naive: conference_ended still announced with its duration."
     },
     "RK-12.10.2-056": {
       "class": "step",

@@ -885,21 +885,21 @@
     },
     {
       "section": "12.10.1",
-      "sha256": "ae98897812519b44cc96a46b23f6a62b8450c6e71cb3f8adbaa030ab5c3062f1",
+      "sha256": "b28451b49a74df96dbd777d52239d00b331bf4242d4c69e7695e062bf105ca4d",
       "classification": "normative",
       "review": "Source inventory: Design Principles, split to one obligation per unit, each with its level (RMK-2068): the six principles, one unit each, principle 2 at its sentences (1:1 with a Room, participants, transcriptions as RoomEvents, hooks, permissions and broadcast without exception), principle 5 (the stream carries its publisher, attribution from track identity) and principle 6 (decoded frames and opaque credentials, no SDP, ICE, codec or bitrate in an interface) in two; RK-12.10.1-002 to 012, all must. Rationale and examples are folded into the unit they explain. Every unit carries its level."
     },
     {
       "section": "12.10.2",
-      "sha256": "b3e877e3b3ecba62458cc532a6e01e2c5d47ebfd03b9c095e574c99064aac65b",
+      "sha256": "200f24c9d36d70dbd62af7658a2c90f72751736e4335b669aa7345600ef9807d",
       "classification": "normative",
       "review": "Source inventory: Data Models, split to one obligation per unit, each with its level (RMK-2068): the TrackKind, ConferenceTrack, ConferenceParticipant, ConferenceGrants, ConferenceAccess, BotSession and ConferenceCapability shapes (structural), each followed by the rules its prose states (the track's room, the provider attributes surfaced, the three asserted_metadata rules, the screen-share sound grant and kind, access opacity, joined_at's default, timezone and settling); participant identity correlation at its rules and sentences; resolution of the participant the framework did not name, provenance, the participant record's attribute key, provenance and bound, an arrival as no inbound message, and E2EE's per-conference request and media-access alternatives, one unit per sentence. RK-12.10.2-001 and 013 kept; RK-12.10.2-015 to 057 new. Rationale is folded into the unit it explains. Every unit carries its level."
     },
     {
       "section": "12.10.3",
-      "sha256": "d2bddd497532f42ce2f83504f2cf077c5dd2984f6e8a898608d75c49bd32d4bc",
+      "sha256": "337c760dbc6711addab3ee192740bfe5b856e535143c257b0fb4d64708b187c1",
       "classification": "normative",
-      "review": "Source inventory: ConferenceBackend Interface, split to one obligation per unit, each with its level (RMK-2068): the interface block cut at ensure_room (idempotent) and publish_video (requires VIDEO_PUBLISH) by closing and reopening its fence (eight bare fence lines), its other members kept as structural units; presence through a connection and the join's catch-up; the bot's own connection (the backend's report, the channel's handling, no silent drop, report after disconnect, the discontinuity, the integrator's unaccounted window as non_testable, the re-join); frame delivery and publishing; stopping playback; mute transitions; track subscription; bot grants; display names; participant attributes; moderation; the abstraction boundary; the required MockConferenceBackend and the permitted further SFU backends (may). RK-12.10.3-007 and 013 kept; RK-12.10.3-015 to 063 new. Rationale is folded into the unit it explains. Every unit carries its level."
+      "review": "Source inventory: ConferenceBackend Interface, split to one obligation per unit, each with its level (RMK-2068): the interface block cut at ensure_room (idempotent) and publish_video (requires VIDEO_PUBLISH) by closing and reopening its fence (eight bare fence lines), its other members kept as structural units; presence through a connection and the join's catch-up; the bot's own connection (the backend's report, the channel's handling, no silent drop, report after disconnect, a session whose disconnect fails kept, the discontinuity, the integrator's unaccounted window as non_testable, the re-join); frame delivery and publishing; stopping playback; mute transitions; track subscription; bot grants; display names; participant attributes (a backend whose SFU carries none ignoring them in a unit of its own); moderation; the abstraction boundary; the required MockConferenceBackend and the permitted further SFU backends (may). RK-12.10.3-007 and 013 kept; RK-12.10.3-015 to 065 new. Rationale is folded into the unit it explains. Every unit carries its level."
     },
     {
       "section": "12.10.4",
