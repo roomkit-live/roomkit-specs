@@ -7107,15 +7107,15 @@
       "section": "12.10.4",
       "title": "ConferenceChannel",
       "review": "normative",
-      "requirements": 77,
+      "requirements": 210,
       "mapping": {
         "mapped_partial": 3,
-        "unmapped": 74
+        "unmapped": 207
       },
       "decided_gaps": {
         "phase6": 1,
-        "step": 25,
-        "writable": 13
+        "step": 148,
+        "writable": 16
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -7149,11 +7149,13 @@
       "section": "12.10.5",
       "title": "Multi-Party Interruption Policy",
       "review": "normative",
-      "requirements": 1,
+      "requirements": 9,
       "mapping": {
-        "unmapped": 1
+        "unmapped": 9
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "step": 8
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -7161,11 +7163,13 @@
       "section": "12.10.6",
       "title": "AI Participation Patterns",
       "review": "normative",
-      "requirements": 3,
+      "requirements": 2,
       "mapping": {
-        "unmapped": 3
+        "unmapped": 2
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "step": 1
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -7173,11 +7177,14 @@
       "section": "12.10.7",
       "title": "Conference State Events",
       "review": "normative",
-      "requirements": 3,
+      "requirements": 11,
       "mapping": {
-        "unmapped": 3
+        "unmapped": 11
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "step": 7,
+        "writable": 2
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -7185,11 +7192,13 @@
       "section": "12.10.8",
       "title": "Recording",
       "review": "normative",
-      "requirements": 5,
+      "requirements": 33,
       "mapping": {
-        "unmapped": 5
+        "unmapped": 33
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "step": 25
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -7197,11 +7206,13 @@
       "section": "12.10.9",
       "title": "Cross-Channel Integration",
       "review": "normative",
-      "requirements": 1,
+      "requirements": 5,
       "mapping": {
-        "unmapped": 1
+        "unmapped": 5
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "step": 2
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -7221,9 +7232,9 @@
       "section": "12.10.11",
       "title": "Conformance",
       "review": "normative",
-      "requirements": 1,
+      "requirements": 2,
       "mapping": {
-        "unmapped": 1
+        "unmapped": 2
       },
       "decided_gaps": {},
       "unannotated_keyword_lines": [],
@@ -7233,11 +7244,14 @@
       "section": "12.10.12",
       "title": "Speech-to-Speech Composition",
       "review": "normative",
-      "requirements": 11,
+      "requirements": 51,
       "mapping": {
-        "unmapped": 11
+        "unmapped": 51
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "step": 40,
+        "writable": 4
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "conference/a-conference-model-receives-the-gated-tool-result"
@@ -34998,25 +35012,528 @@
       "id": "RK-12.10.4-001",
       "section": "12.10.4",
       "mapping": "unmapped",
-      "links": []
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.open options: a recording without a recorder and a recorder without a recording refused, e2ee on a backend without E2EE refused, the binding's channel type read; the record's shape and defaults are pinned by Python's public API snapshot (ConferenceChannel), suspect twin RMK-1966."
+      }
     },
     {
-      "id": "RK-12.10.4-002",
+      "id": "RK-12.10.4-081",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.read: the scripted backend's ensure_room() call at the attach."
+      }
+    },
+    {
+      "id": "RK-12.10.4-082",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.read, conference.mint: no join_as_bot() at the attach, one at the first mint, delivery or arrival."
+      }
+    },
+    {
+      "id": "RK-12.10.4-083",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-2076",
+        "note": "conference.open, then conference.join: an on_session_started hook fires once, for the room, at the lazy join the arrival starts."
+      }
+    },
+    {
+      "id": "RK-12.10.4-084",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: framework_events media rows: conference_started at the lazy join."
+      }
+    },
+    {
+      "id": "RK-12.10.4-085",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.mint, conference.read: a mint on a backend that reports no arrival brings the bot in."
+      }
+    },
+    {
+      "id": "RK-12.10.4-086",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.fault, conference.mint: join_as_bot() held while the mint answers."
+      }
+    },
+    {
+      "id": "RK-12.10.4-087",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.fault, conference.mint: join_as_bot() failing, the mint's credential returned."
+      }
+    },
+    {
+      "id": "RK-12.10.4-088",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.open over a conference the scripted SFU already holds participants in, conference.read: the bot joins at the attach."
+      }
+    },
+    {
+      "id": "RK-12.10.4-089",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.fault: list_participants() or join_as_bot() held while the attach returns."
+      }
+    },
+    {
+      "id": "RK-12.10.4-090",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.fault: list_participants() failing at the attach, the attach returning the binding and a later arrival bringing the bot in."
+      }
+    },
+    {
+      "id": "RK-12.10.4-091",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.read: an attach over an empty conference makes no join_as_bot() call."
+      }
+    },
+    {
+      "id": "RK-12.10.4-092",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.ensure_bot: the call brings the bot in on an empty conference."
+      }
+    },
+    {
+      "id": "RK-12.10.4-093",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.ensure_bot: the bot's session returned once joined, the same one when live."
+      }
+    },
+    {
+      "id": "RK-12.10.4-094",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.ensure_bot, conference.bot_lost: a second join after the backend reports the bot's end."
+      }
+    },
+    {
+      "id": "RK-12.10.4-095",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.ensure_bot, conference.fault, conference.read: ensure_bot() racing an arrival's join, one join_as_bot()."
+      }
+    },
+    {
+      "id": "RK-12.10.4-096",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.ensure_bot, framework_events media rows: the hook and conference_started before the call returns."
+      }
+    },
+    {
+      "id": "RK-12.10.4-097",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.ensure_bot: on a room the channel is not attached to, and with a detach during a held join (conference.fault)."
+      }
+    },
+    {
+      "id": "RK-12.10.4-098",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.ensure_bot, conference.fault: join_as_bot() failing, its error raised."
+      }
+    },
+    {
+      "id": "RK-12.10.4-099",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.ensure_bot, conference.open options: a channel with no stt, tts, recording or realtime refuses it, and an error name for ConferenceCapabilityError."
+      }
+    },
+    {
+      "id": "RK-12.10.4-100",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.open options (no stt, tts, recording or realtime), conference.mint, conference.read: no join_as_bot()."
+      }
+    },
+    {
+      "id": "RK-12.10.4-101",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.open options (no consumer, no voice), conference.read: no list_participants() at the attach."
+      }
+    },
+    {
+      "id": "RK-12.10.4-102",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.open options (bot_grants, no consumer, no voice), conference.read: no join_as_bot()."
+      }
+    },
+    {
+      "id": "RK-12.10.4-103",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.open options (no consumer, no voice), conference.mint, conference.read: ensure_room() called, a credential minted, the arrival's participant record written."
+      }
+    },
+    {
+      "id": "RK-12.10.4-104",
       "section": "12.10.4",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.10.4-003",
+      "id": "RK-12.10.4-105",
       "section": "12.10.4",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.10.4-004",
+      "id": "RK-12.10.4-106",
       "section": "12.10.4",
       "mapping": "unmapped",
       "links": []
+    },
+    {
+      "id": "RK-12.10.4-107",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.10.4-108",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.feed, conference.read: a lane's transcript for a subscribed audio track, none for a video track with no consumer."
+      }
+    },
+    {
+      "id": "RK-12.10.4-109",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.10.4-110",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.feed, conference.read: frames after the unpublication produce no transcript, the lane gone."
+      }
+    },
+    {
+      "id": "RK-12.10.4-111",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.read: unsubscribe_track() for a subscribed track once unpublished."
+      }
+    },
+    {
+      "id": "RK-12.10.4-112",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.10.4-113",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.read: leave() at the detach after a join, none with no bot."
+      }
+    },
+    {
+      "id": "RK-12.10.4-114",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: framework_events media rows: conference_ended at the detach after a join, none with no bot."
+      }
+    },
+    {
+      "id": "RK-12.10.4-115",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.open options (close_room_on_detach), conference.read: close_room() at the detach, with and without a bot."
+      }
+    },
+    {
+      "id": "RK-12.10.4-116",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.fault: a mint or a publication held as the detach runs; the detach waits for it within its budget."
+      }
+    },
+    {
+      "id": "RK-12.10.4-117",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.fault, conference.mint: a mint held past the detach's budget is taken back."
+      }
+    },
+    {
+      "id": "RK-12.10.4-118",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: a hook of a conference announcement whose do detaches the channel (conference.read): the detach returns, the teardown runs after the hook."
+      }
+    },
+    {
+      "id": "RK-12.10.4-119",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.read, framework_events media rows: the order of the closes, leave() and conference_ended at a detach."
+      }
+    },
+    {
+      "id": "RK-12.10.4-120",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.10.4-121",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.10.4-122",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.10.4-123",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-2076",
+        "note": "conference.open, conference.join, then mute (the binding) before conference.active_speaker, conference.connection_quality and conference.mute: their hooks still fire."
+      }
+    },
+    {
+      "id": "RK-12.10.4-124",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.echo: the backend reports the bot's own track muted; no hook fires."
+      }
+    },
+    {
+      "id": "RK-12.10.4-125",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: error name conference_already_attached in the Errors table: a second conference.open on the room refused."
+      }
+    },
+    {
+      "id": "RK-12.10.4-126",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-2076",
+        "note": "conference.open, then attach_channel of the same channel to the same room: the binding is returned, and a later conference.join still fires its hook."
+      }
+    },
+    {
+      "id": "RK-12.10.4-127",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: error name conference_already_attached, conference.fault: a second conference attached while the first one's deferred teardown is held."
+      }
+    },
+    {
+      "id": "RK-12.10.4-128",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: error name conference_already_attached, conference.fault: the attach refused at once while the teardown is held, accepted once it ends."
+      }
+    },
+    {
+      "id": "RK-12.10.4-129",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.echo: the backend reports the bot as a participant and publisher; no conference hook fires for it."
+      }
+    },
+    {
+      "id": "RK-12.10.4-130",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.echo: the participants expectation holds no record for the bot."
+      }
+    },
+    {
+      "id": "RK-12.10.4-131",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.echo, conference.read: no subscribe_track() for the bot's echoed track."
+      }
     },
     {
       "id": "RK-12.10.4-019",
@@ -35628,28 +36145,314 @@
       }
     },
     {
-      "id": "RK-12.10.4-006",
+      "id": "RK-12.10.4-132",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.mint, conference.read: the grants the backend was asked to mint, defaults and an override."
+      }
+    },
+    {
+      "id": "RK-12.10.4-133",
       "section": "12.10.4",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.10.4-007",
+      "id": "RK-12.10.4-134",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.mint (attributes), conference.read: the attributes the backend received."
+      }
+    },
+    {
+      "id": "RK-12.10.4-135",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.mint with attributes over the bound, conference.read: what the backend received, bounded."
+      }
+    },
+    {
+      "id": "RK-12.10.4-136",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.mint, conference.read: the backend received exactly the caller's attributes."
+      }
+    },
+    {
+      "id": "RK-12.10.4-137",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.mint with organization_id: room_not_found for another organization's room, no backend call (conference.read)."
+      }
+    },
+    {
+      "id": "RK-12.10.4-138",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.mint after detach_channel: refused, no credential."
+      }
+    },
+    {
+      "id": "RK-12.10.4-139",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.fault, conference.mint: a mint held in the backend while the channel detaches returns no credential."
+      }
+    },
+    {
+      "id": "RK-12.10.4-140",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.fault, conference.mint: a detach during a held mint waits for it within its budget."
+      }
+    },
+    {
+      "id": "RK-12.10.4-141",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.fault, conference.mint, conference.read: a mint held past the detach's deadline, its backend request cancelled."
+      }
+    },
+    {
+      "id": "RK-12.10.4-142",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.fault: a mint whose backend call ignores its cancellation and returns after the detach: no credential returned."
+      }
+    },
+    {
+      "id": "RK-12.10.4-143",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.mint, conference.fault: a mint whose backend call outlives the detach's deadline; the refusal says it is no revocation (Python says so in its log and in the refusal's message, src/roomkit/channels/_conference_access.py)."
+      }
+    },
+    {
+      "id": "RK-12.10.4-144",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.fault, conference.mint, close: a mint held as the kit closes returns no credential, and close_backend comes after its cancellation (conference.read)."
+      }
+    },
+    {
+      "id": "RK-12.10.4-145",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.feed: PCM frames on a track, a scripted lane VAD and STT; the transcription event's participant."
+      }
+    },
+    {
+      "id": "RK-12.10.4-146",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.feed with a scripted identity resolver: two utterances of a resolved participant, no resolution per utterance and no on_identity_unknown."
+      }
+    },
+    {
+      "id": "RK-12.10.4-147",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.feed: two tracks speaking at once, each utterance transcribed apart."
+      }
+    },
+    {
+      "id": "RK-12.10.4-148",
       "section": "12.10.4",
       "mapping": "unmapped",
       "links": []
+    },
+    {
+      "id": "RK-12.10.4-149",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.feed with frames at another rate: the scripted VAD and STT receive the normalised format."
+      }
+    },
+    {
+      "id": "RK-12.10.4-150",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.feed: an utterance of several frames gives one transcription event."
+      }
+    },
+    {
+      "id": "RK-12.10.4-151",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.open options: stt with a pipeline holding no VAD refused."
+      }
+    },
+    {
+      "id": "RK-12.10.4-152",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.feed: a lane with no AEC configured transcribes."
+      }
+    },
+    {
+      "id": "RK-12.10.4-153",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.feed: a lane with no diarization configured transcribes, attributed by its track."
+      }
+    },
+    {
+      "id": "RK-12.10.4-154",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.10.4-155",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.feed: an on_transcription hook's context names the track and the participant."
+      }
+    },
+    {
+      "id": "RK-12.10.4-156",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.feed: on_speech_start and on_speech_end hooks naming the participant and track."
+      }
+    },
+    {
+      "id": "RK-12.10.4-157",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.feed after mute (the binding): no on_speech_start, no transcription."
+      }
     },
     {
       "id": "RK-12.10.4-008",
       "section": "12.10.4",
       "mapping": "unmapped",
-      "links": []
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.feed with a gated recognizer: recognition held on one track while another track's utterance is transcribed."
+      }
     },
     {
-      "id": "RK-12.10.4-009",
+      "id": "RK-12.10.4-158",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.feed with a gated recognizer, conference.read (lane drops): frames beyond the bound are discarded."
+      }
+    },
+    {
+      "id": "RK-12.10.4-159",
       "section": "12.10.4",
       "mapping": "unmapped",
       "links": []
+    },
+    {
+      "id": "RK-12.10.4-160",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.read (lane drops): the count of frames a full lane discarded."
+      }
     },
     {
       "id": "RK-12.10.4-018",
@@ -35658,115 +36461,1261 @@
       "links": []
     },
     {
-      "id": "RK-12.10.4-012",
+      "id": "RK-12.10.4-161",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.read: the subscriptions the scripted backend recorded hold only consumed tracks."
+      }
+    },
+    {
+      "id": "RK-12.10.4-162",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.read: subscribe_track() called for a consumed track on the scripted backend, which subscribes nothing by itself."
+      }
+    },
+    {
+      "id": "RK-12.10.4-163",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.open options, conference.read: an audio track subscribed with stt, with recording and with realtime."
+      }
+    },
+    {
+      "id": "RK-12.10.4-164",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.read: a video and a screen-share track published, no subscribe_track() for either."
+      }
+    },
+    {
+      "id": "RK-12.10.4-165",
       "section": "12.10.4",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.10.4-013",
+      "id": "RK-12.10.4-166",
       "section": "12.10.4",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.10.4-014",
+      "id": "RK-12.10.4-167",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.unplug, conference.read: unsubscribe_track() once the last consumer of a track is unplugged and the bot stays."
+      }
+    },
+    {
+      "id": "RK-12.10.4-168",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.read: mute or set_access READ_ONLY, then a published audio track: no subscribe_track()."
+      }
+    },
+    {
+      "id": "RK-12.10.4-169",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.feed, recording.read per conference track: frames while the binding is muted reach neither."
+      }
+    },
+    {
+      "id": "RK-12.10.4-170",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.feed: an utterance while the binding is muted stores no transcription."
+      }
+    },
+    {
+      "id": "RK-12.10.4-171",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.bot_lost while the binding is muted, conference.read: no join_as_bot()."
+      }
+    },
+    {
+      "id": "RK-12.10.4-172",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.feed: a frame right after mute reaches no lane."
+      }
+    },
+    {
+      "id": "RK-12.10.4-173",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.read: unsubscribe_track() for every subscribed track after mute."
+      }
+    },
+    {
+      "id": "RK-12.10.4-174",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.feed, conference.read: no lane left after mute."
+      }
+    },
+    {
+      "id": "RK-12.10.4-175",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: recording.read per conference track: the recordings finalized at mute."
+      }
+    },
+    {
+      "id": "RK-12.10.4-176",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.read: unmute (the binding) subscribes the consumed tracks again."
+      }
+    },
+    {
+      "id": "RK-12.10.4-177",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.plug and conference.unplug per kind."
+      }
+    },
+    {
+      "id": "RK-12.10.4-178",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.plug on a pure-transport channel whose conference holds participants, conference.read: list_participants() then join_as_bot()."
+      }
+    },
+    {
+      "id": "RK-12.10.4-179",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.plug over an empty conference, conference.read: no join_as_bot() until an arrival."
+      }
+    },
+    {
+      "id": "RK-12.10.4-180",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.plug, conference.fault: join_as_bot() failing, the plug returning."
+      }
+    },
+    {
+      "id": "RK-12.10.4-181",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.open options (e2ee), conference.plug: stt and recording refused."
+      }
+    },
+    {
+      "id": "RK-12.10.4-182",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.plug: a recording with no recorder refused."
+      }
+    },
+    {
+      "id": "RK-12.10.4-183",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.plug twice for one kind: the second refused."
+      }
+    },
+    {
+      "id": "RK-12.10.4-184",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.unplug of an empty slot: nothing changes (conference.read)."
+      }
+    },
+    {
+      "id": "RK-12.10.4-185",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.plug held in the backend (conference.fault) while a second plug is issued: applied one after the other."
+      }
+    },
+    {
+      "id": "RK-12.10.4-186",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.plug of stt after a track was published, conference.read and conference.feed: the track subscribed and transcribed."
+      }
+    },
+    {
+      "id": "RK-12.10.4-187",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.unplug, conference.read: unsubscribe_track() for tracks no other consumer holds, none for those recording still holds."
+      }
+    },
+    {
+      "id": "RK-12.10.4-188",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.unplug of recording, recording.read per conference track: finalized, on_recording_stopped fired."
+      }
+    },
+    {
+      "id": "RK-12.10.4-189",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.unplug of tts during a held utterance, conference.read: stop_playback() and a final chunk."
+      }
+    },
+    {
+      "id": "RK-12.10.4-190",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.open options (close_providers), conference.unplug, conference.read: the unplugged provider closed when the channel owns it, left open when it does not."
+      }
+    },
+    {
+      "id": "RK-12.10.4-191",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.unplug of the last need, conference.read, framework_events media rows: leave() and conference_ended."
+      }
+    },
+    {
+      "id": "RK-12.10.4-192",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.unplug of the last need, then conference.join and conference.mint: no join, the roster written."
+      }
+    },
+    {
+      "id": "RK-12.10.4-193",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.read (bot grants): subscribe and publish_audio as stt and tts are plugged."
+      }
+    },
+    {
+      "id": "RK-12.10.4-194",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.plug before the join, conference.read: the grants of the join cover the plug."
+      }
+    },
+    {
+      "id": "RK-12.10.4-195",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.open options (backend capabilities), conference.plug, conference.read: update_bot_grants() before the plug returns."
+      }
+    },
+    {
+      "id": "RK-12.10.4-196",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.plug on a backend without BOT_GRANT_UPDATE, conference.read, framework_events media rows: leave(), join_as_bot(), conference_ended, conference_started."
+      }
+    },
+    {
+      "id": "RK-12.10.4-197",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.unplug on a backend with BOT_GRANT_UPDATE, conference.read: update_bot_grants() with the narrower set."
+      }
+    },
+    {
+      "id": "RK-12.10.4-198",
       "section": "12.10.4",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.10.4-015",
+      "id": "RK-12.10.4-199",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.open options (bot_grants), conference.plug, conference.read: no update_bot_grants(), no re-join."
+      }
+    },
+    {
+      "id": "RK-12.10.4-200",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.set_bot_grants on a running channel, conference.read."
+      }
+    },
+    {
+      "id": "RK-12.10.4-201",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.set_bot_grants issued while a plug is held (conference.fault): applied after it."
+      }
+    },
+    {
+      "id": "RK-12.10.4-202",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.set_bot_grants withdrawing subscribe under a plugged stt: accepted (conference.read)."
+      }
+    },
+    {
+      "id": "RK-12.10.4-203",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.set_bot_grants with null, conference.read: the derived grants applied."
+      }
+    },
+    {
+      "id": "RK-12.10.4-204",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.set_bot_grants on a pure-transport channel, conference.read: no join_as_bot()."
+      }
+    },
+    {
+      "id": "RK-12.10.4-205",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.set_bot_grants narrowing on a backend with BOT_GRANT_UPDATE, conference.read: update_bot_grants() with the new set."
+      }
+    },
+    {
+      "id": "RK-12.10.4-206",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.set_bot_grants on a backend without the capability, and with update_bot_grants() failing (conference.fault): leave() and join_as_bot()."
+      }
+    },
+    {
+      "id": "RK-12.10.4-207",
       "section": "12.10.4",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.10.4-016",
+      "id": "RK-12.10.4-208",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.read (channel info): whether a grant change would apply in place."
+      }
+    },
+    {
+      "id": "RK-12.10.4-209",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.set_bot_grants revealing a hidden bot on a backend with BOT_GRANT_UPDATE, conference.read: update_bot_grants(), no re-join."
+      }
+    },
+    {
+      "id": "RK-12.10.4-210",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.set_bot_grants hiding a visible bot on a backend with BOT_GRANT_UPDATE, conference.read: leave() and join_as_bot()."
+      }
+    },
+    {
+      "id": "RK-12.10.4-211",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: framework_events media rows: conference_bot_grants_changed after a set applied in place and after a re-join."
+      }
+    },
+    {
+      "id": "RK-12.10.4-212",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: framework_events media rows: no conference_bot_grants_changed after a set equal to the grants in force."
+      }
+    },
+    {
+      "id": "RK-12.10.4-213",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.plug, conference.read (channel info): stt reported configured from the plug, not after an unplug."
+      }
+    },
+    {
+      "id": "RK-12.10.4-214",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.open options (tts), conference.read: one synthesis per delivery, before_tts and after_tts hooks."
+      }
+    },
+    {
+      "id": "RK-12.10.4-215",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.open options (tts), conference.read: the publications on the bot session."
+      }
+    },
+    {
+      "id": "RK-12.10.4-216",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.open options (tts), two deliveries at once, conference.read: the utterances recorded apart."
+      }
+    },
+    {
+      "id": "RK-12.10.4-217",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.read (is_final), conference.feed for the barge-in: each utterance closed."
+      }
+    },
+    {
+      "id": "RK-12.10.4-218",
       "section": "12.10.4",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.10.4-017",
+      "id": "RK-12.10.4-219",
       "section": "12.10.4",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.10.5-001",
+      "id": "RK-12.10.4-220",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.10.4-221",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.feed for a barge-in during a held utterance, conference.read: stop_playback() on the bot session."
+      }
+    },
+    {
+      "id": "RK-12.10.4-222",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.open options (tts), a delivery held mid-utterance, detach_channel, conference.read: no final chunk."
+      }
+    },
+    {
+      "id": "RK-12.10.4-223",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.10.4-224",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.open options (tts), send_event from a websocket binding, conference.read: the text synthesized and published."
+      }
+    },
+    {
+      "id": "RK-12.10.4-225",
+      "section": "12.10.4",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.open options (tts, speak_text_events false), send_event from a websocket binding, conference.read: nothing synthesized."
+      }
+    },
+    {
+      "id": "RK-12.10.5-002",
       "section": "12.10.5",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.10.6-001",
+      "id": "RK-12.10.5-003",
+      "section": "12.10.5",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.open options (tts, interruption), conference.feed: any participant's speech cuts the bot."
+      }
+    },
+    {
+      "id": "RK-12.10.5-004",
+      "section": "12.10.5",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.open options (tts, interruption none), conference.feed: speech during the utterance stops nothing."
+      }
+    },
+    {
+      "id": "RK-12.10.5-005",
+      "section": "12.10.5",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.open options (tts, interruption allowlist), conference.feed: a listed speaker cuts the bot, another does not."
+      }
+    },
+    {
+      "id": "RK-12.10.5-006",
+      "section": "12.10.5",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.open options (interruption SEMANTIC): refused."
+      }
+    },
+    {
+      "id": "RK-12.10.5-007",
+      "section": "12.10.5",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.open options (tts, interruption CONFIRMED), conference.feed: speech split across two tracks does not reach the bound."
+      }
+    },
+    {
+      "id": "RK-12.10.5-008",
+      "section": "12.10.5",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.open options (tts), conference.feed: a short acknowledgement interrupts as the strategy says, with no backchannel decision."
+      }
+    },
+    {
+      "id": "RK-12.10.5-009",
+      "section": "12.10.5",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.open options (tts), two deliveries, conference.feed for a barge-in, conference.read: the queued utterance never published."
+      }
+    },
+    {
+      "id": "RK-12.10.5-010",
+      "section": "12.10.5",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.open options (tts), conference.feed: an on_barge_in hook naming the participant."
+      }
+    },
+    {
+      "id": "RK-12.10.6-004",
       "section": "12.10.6",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.10.6-002",
+      "id": "RK-12.10.6-005",
       "section": "12.10.6",
       "mapping": "unmapped",
-      "links": []
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.open options (stt and realtime), conference.feed: the lanes' attributed transcriptions beside the provider."
+      }
     },
     {
-      "id": "RK-12.10.6-003",
-      "section": "12.10.6",
-      "mapping": "unmapped",
-      "links": []
-    },
-    {
-      "id": "RK-12.10.7-001",
+      "id": "RK-12.10.7-004",
       "section": "12.10.7",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.10.7-002",
+      "id": "RK-12.10.7-005",
       "section": "12.10.7",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.10.7-003",
+      "id": "RK-12.10.7-006",
       "section": "12.10.7",
       "mapping": "unmapped",
-      "links": []
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-2076",
+        "note": "conference.open, conference.join, conference.publish, then conference.mute, conference.unmute, conference.active_speaker and conference.connection_quality: the timeline holds no event for them."
+      }
     },
     {
-      "id": "RK-12.10.8-001",
+      "id": "RK-12.10.7-007",
+      "section": "12.10.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-2076",
+        "note": "subscribe_room, then conference.mute, conference.unmute, conference.active_speaker and conference.connection_quality: the subscribers expectation reads the four ephemeral events; red on Python, which publishes none, and §8.4's type list names none (suspect RMK-2078)."
+      }
+    },
+    {
+      "id": "RK-12.10.7-008",
+      "section": "12.10.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: framework_events media rows: conference_started at the join."
+      }
+    },
+    {
+      "id": "RK-12.10.7-009",
+      "section": "12.10.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: framework_events media rows, conference.bot_lost: conference_ended at a detach and at the backend's report."
+      }
+    },
+    {
+      "id": "RK-12.10.7-010",
+      "section": "12.10.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: framework_events media rows: conference_participant_joined at conference.join."
+      }
+    },
+    {
+      "id": "RK-12.10.7-011",
+      "section": "12.10.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: framework_events media rows: conference_participant_left at conference.leave."
+      }
+    },
+    {
+      "id": "RK-12.10.7-012",
+      "section": "12.10.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: framework_events media rows, conference.set_bot_grants: the event's bot_session_id and hidden."
+      }
+    },
+    {
+      "id": "RK-12.10.7-013",
+      "section": "12.10.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: framework_events media rows: conference_ended's bot_session_id after a re-attach."
+      }
+    },
+    {
+      "id": "RK-12.10.7-014",
+      "section": "12.10.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: framework_events media rows: conference_started and conference_ended paired by bot_session_id."
+      }
+    },
+    {
+      "id": "RK-12.10.8-006",
+      "section": "12.10.8",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: recording.read per conference track: each track's recording receives the configuration's format and encryption; the record's shape and defaults are pinned by Python's public API snapshot (ConferenceRecordingConfig)."
+      }
+    },
+    {
+      "id": "RK-12.10.8-007",
+      "section": "12.10.8",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.open options (recording, recorder), recording.read per conference track."
+      }
+    },
+    {
+      "id": "RK-12.10.8-008",
+      "section": "12.10.8",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.open options (stt, recording, recorder), conference.read: one subscribe_track() per track."
+      }
+    },
+    {
+      "id": "RK-12.10.8-009",
       "section": "12.10.8",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.10.8-002",
+      "id": "RK-12.10.8-010",
+      "section": "12.10.8",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "planned feature: P6-V proposes to remove it"
+      }
+    },
+    {
+      "id": "RK-12.10.8-011",
       "section": "12.10.8",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.10.8-003",
+      "id": "RK-12.10.8-012",
       "section": "12.10.8",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.10.8-004",
+      "id": "RK-12.10.8-013",
+      "section": "12.10.8",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: recording.read per conference track: two tracks, two recordings, each started with one track."
+      }
+    },
+    {
+      "id": "RK-12.10.8-014",
+      "section": "12.10.8",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: recording.read per conference track: participant_id and channel_id of each track."
+      }
+    },
+    {
+      "id": "RK-12.10.8-015",
+      "section": "12.10.8",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.feed at two rates, recording.read per conference track: each track's declared format."
+      }
+    },
+    {
+      "id": "RK-12.10.8-016",
+      "section": "12.10.8",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.open options (tts, recording, recorder), recording.read per conference track: the bot's track recorded apart."
+      }
+    },
+    {
+      "id": "RK-12.10.8-017",
+      "section": "12.10.8",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.unpublish, recording.read per conference track: one recording finalized, the other still written."
+      }
+    },
+    {
+      "id": "RK-12.10.8-018",
+      "section": "12.10.8",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: mute (the binding), recording.read per conference track: the recordings stopped."
+      }
+    },
+    {
+      "id": "RK-12.10.8-019",
+      "section": "12.10.8",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.feed with a frame in another format, recording.read per conference track: not written."
+      }
+    },
+    {
+      "id": "RK-12.10.8-020",
+      "section": "12.10.8",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: recording.read per conference track (loss): the frames in another format counted."
+      }
+    },
+    {
+      "id": "RK-12.10.8-021",
       "section": "12.10.8",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.10.8-005",
+      "id": "RK-12.10.8-022",
+      "section": "12.10.8",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: recording.read per conference track with a gate on the recorder's writes: another track's frames still delivered."
+      }
+    },
+    {
+      "id": "RK-12.10.8-023",
       "section": "12.10.8",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.10.9-001",
+      "id": "RK-12.10.8-024",
+      "section": "12.10.8",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: recording.read per conference track with a gate on the recorder's writes: frames past the bound discarded."
+      }
+    },
+    {
+      "id": "RK-12.10.8-025",
+      "section": "12.10.8",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.10.8-026",
+      "section": "12.10.8",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: recording.read per conference track (loss), or conference.read (channel info): the discarded count."
+      }
+    },
+    {
+      "id": "RK-12.10.8-027",
+      "section": "12.10.8",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: recording.read per conference track with a gate on the writes, then conference.unpublish: every queued frame written before the stop."
+      }
+    },
+    {
+      "id": "RK-12.10.8-028",
+      "section": "12.10.8",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: recording.read per conference track with a recorder that stops draining: the teardown ends past the budget."
+      }
+    },
+    {
+      "id": "RK-12.10.8-029",
+      "section": "12.10.8",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: recording.read per conference track (loss): the frames the budget left counted."
+      }
+    },
+    {
+      "id": "RK-12.10.8-030",
+      "section": "12.10.8",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.open options (recording, recorder), an on_recording_stopped hook: the result's url."
+      }
+    },
+    {
+      "id": "RK-12.10.8-031",
+      "section": "12.10.8",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.open options (recording, recorder), conference.feed: on_recording_started and on_recording_stopped hooks."
+      }
+    },
+    {
+      "id": "RK-12.10.8-032",
+      "section": "12.10.8",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.feed on two tracks, conference.unpublish of one: its on_recording_stopped before the meeting ends."
+      }
+    },
+    {
+      "id": "RK-12.10.8-033",
+      "section": "12.10.8",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.feed, on_recording_started and on_recording_stopped hooks: room, track and participant."
+      }
+    },
+    {
+      "id": "RK-12.10.8-034",
+      "section": "12.10.8",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.feed with a sync on_recording_started hook that blocks: the recording goes on."
+      }
+    },
+    {
+      "id": "RK-12.10.8-035",
+      "section": "12.10.8",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.publish with no frame, recording.read per conference track: no recording, no hook."
+      }
+    },
+    {
+      "id": "RK-12.10.8-036",
+      "section": "12.10.8",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "planned feature: P6-V proposes to remove it"
+      }
+    },
+    {
+      "id": "RK-12.10.8-037",
+      "section": "12.10.8",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.10.8-038",
+      "section": "12.10.8",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.10.9-002",
+      "section": "12.10.9",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.feed, a websocket binding: the transcription delivered to it."
+      }
+    },
+    {
+      "id": "RK-12.10.9-003",
+      "section": "12.10.9",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.10.9-004",
+      "section": "12.10.9",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.10.9-005",
+      "section": "12.10.9",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.join metadata (an asserted caller number), a scripted identity resolver: the number resolved on arrival."
+      }
+    },
+    {
+      "id": "RK-12.10.9-006",
       "section": "12.10.9",
       "mapping": "unmapped",
       "links": []
@@ -35778,76 +37727,542 @@
       "links": []
     },
     {
-      "id": "RK-12.10.11-001",
+      "id": "RK-12.10.11-002",
       "section": "12.10.11",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.10.12-001",
+      "id": "RK-12.10.11-003",
+      "section": "12.10.11",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.10.12-012",
       "section": "12.10.12",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.10.12-002",
+      "id": "RK-12.10.12-013",
+      "section": "12.10.12",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.open options: tools with no handler refused, a human-input tool served before tool_handler, tool_timeout_seconds and tool_timeouts bounding a held handler; the record's shape and defaults are pinned by Python's public API snapshot (ConferenceRealtimeConfig)."
+      }
+    },
+    {
+      "id": "RK-12.10.12-014",
+      "section": "12.10.12",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.feed on two tracks, the conference model steps' read of what the provider received: the mixed windows."
+      }
+    },
+    {
+      "id": "RK-12.10.12-015",
+      "section": "12.10.12",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.feed with a pause, the conference model steps' read: no window for the silence."
+      }
+    },
+    {
+      "id": "RK-12.10.12-016",
+      "section": "12.10.12",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.feed at 16 kHz, the conference model steps' read: audio at the provider's input rate."
+      }
+    },
+    {
+      "id": "RK-12.10.12-017",
       "section": "12.10.12",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.10.12-003",
+      "id": "RK-12.10.12-018",
       "section": "12.10.12",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.10.12-004",
+      "id": "RK-12.10.12-019",
+      "section": "12.10.12",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: the conference model steps (a user transcript): the timeline holds no event for it."
+      }
+    },
+    {
+      "id": "RK-12.10.12-020",
+      "section": "12.10.12",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.active_speaker then a user transcript (conference model steps): nothing names the participant."
+      }
+    },
+    {
+      "id": "RK-12.10.12-021",
+      "section": "12.10.12",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: the conference model steps (a user transcript): no event, no delivery, no hook carries it."
+      }
+    },
+    {
+      "id": "RK-12.10.12-022",
       "section": "12.10.12",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.10.12-005",
+      "id": "RK-12.10.12-023",
       "section": "12.10.12",
       "mapping": "unmapped",
-      "links": []
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.open options (stt and realtime), conference.feed: attributed transcriptions and the provider fed."
+      }
+    },
+    {
+      "id": "RK-12.10.12-024",
+      "section": "12.10.12",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: the conference model steps (an assistant final transcript): the event's channel and no participant."
+      }
+    },
+    {
+      "id": "RK-12.10.12-025",
+      "section": "12.10.12",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: the conference model steps (an assistant final transcript), conference.read: nothing injected or published for it."
+      }
+    },
+    {
+      "id": "RK-12.10.12-026",
+      "section": "12.10.12",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: deliver to the conference with a connected model, the conference model steps' read of the injections."
+      }
+    },
+    {
+      "id": "RK-12.10.12-027",
+      "section": "12.10.12",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-2076",
+        "note": "conference.open with tools, then deliver to the conference before any broadcast connects its model: the outcome unavailable."
+      }
+    },
+    {
+      "id": "RK-12.10.12-028",
+      "section": "12.10.12",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference model activity for the idle wait: deliver with wait_for_idle during a held answer and a held tool call."
+      }
+    },
+    {
+      "id": "RK-12.10.12-029",
+      "section": "12.10.12",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-2076",
+        "note": "conference.open with tools, a send_event that connects the model, then deliver to the conference: on_realtime_text_injected fires for the broadcast's injection, then for the delivery's (probed green); the hook's role and session also cover RK-12.10.12-026 in part."
+      }
+    },
+    {
+      "id": "RK-12.10.12-030",
+      "section": "12.10.12",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: the conference model steps (a delegation): an on_realtime_delegation hook."
+      }
+    },
+    {
+      "id": "RK-12.10.12-031",
+      "section": "12.10.12",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: the conference model steps (an integrator delegation): the fallback the provider received."
+      }
+    },
+    {
+      "id": "RK-12.10.12-032",
+      "section": "12.10.12",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: the conference model steps (a delegation during a held connect): answered after it."
+      }
     },
     {
       "id": "RK-12.10.12-006",
       "section": "12.10.12",
       "mapping": "unmapped",
-      "links": []
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.open options (tts and realtime) refused, and conference.plug of either onto the other refused."
+      }
     },
     {
-      "id": "RK-12.10.12-007",
+      "id": "RK-12.10.12-033",
+      "section": "12.10.12",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: the conference model steps (a response's audio), conference.read: the utterance's chunks and final chunk."
+      }
+    },
+    {
+      "id": "RK-12.10.12-034",
+      "section": "12.10.12",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: the conference model steps (two responses at once), conference.read: two utterances, in turn."
+      }
+    },
+    {
+      "id": "RK-12.10.12-035",
+      "section": "12.10.12",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: the conference model steps (a response's audio): before_tts and after_tts hooks never fire."
+      }
+    },
+    {
+      "id": "RK-12.10.12-036",
       "section": "12.10.12",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.10.12-008",
+      "id": "RK-12.10.12-037",
+      "section": "12.10.12",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: the conference model steps, conference.feed: on_barge_in naming the speaker's participant."
+      }
+    },
+    {
+      "id": "RK-12.10.12-038",
+      "section": "12.10.12",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: the conference model steps (the provider reports speech started): no on_barge_in, no stop_playback()."
+      }
+    },
+    {
+      "id": "RK-12.10.12-039",
+      "section": "12.10.12",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: the conference model steps, conference.feed for a barge-in, conference.read: the closing chunk, stop_playback() and no later chunk."
+      }
+    },
+    {
+      "id": "RK-12.10.12-040",
+      "section": "12.10.12",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: the conference model steps' read of what the provider received: a cancel after the barge-in."
+      }
+    },
+    {
+      "id": "RK-12.10.12-041",
+      "section": "12.10.12",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.open options (interruption none), the conference model steps' read of the session configuration."
+      }
+    },
+    {
+      "id": "RK-12.10.12-042",
+      "section": "12.10.12",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.open options (interruption allowlist), the conference model steps, conference.feed: an unlisted speaker fires no on_barge_in whatever the provider does."
+      }
+    },
+    {
+      "id": "RK-12.10.12-043",
+      "section": "12.10.12",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.read and the conference model steps: one provider connect per bot session."
+      }
+    },
+    {
+      "id": "RK-12.10.12-044",
+      "section": "12.10.12",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.read (bot grants): subscribe and publish_audio at the join of a realtime channel."
+      }
+    },
+    {
+      "id": "RK-12.10.12-045",
+      "section": "12.10.12",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.plug and conference.unplug of realtime, conference.read."
+      }
+    },
+    {
+      "id": "RK-12.10.12-046",
+      "section": "12.10.12",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: the conference model steps' read: no connect before a track or a delivery, one after."
+      }
+    },
+    {
+      "id": "RK-12.10.12-047",
+      "section": "12.10.12",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: the conference model steps (a connect failure), conference.plug: the plug returns."
+      }
+    },
+    {
+      "id": "RK-12.10.12-048",
+      "section": "12.10.12",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: the conference model steps (a connect failure), conference.feed: one retry per cooldown, not per window."
+      }
+    },
+    {
+      "id": "RK-12.10.12-049",
+      "section": "12.10.12",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: the conference model steps (a connect failure): an on_error hook with its category and type."
+      }
+    },
+    {
+      "id": "RK-12.10.12-050",
+      "section": "12.10.12",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: detach_channel and conference.bot_lost, the conference model steps' read: the provider disconnected."
+      }
+    },
+    {
+      "id": "RK-12.10.12-051",
+      "section": "12.10.12",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.open options (realtime with stt and recording), conference.feed: speech hooks, transcriptions and recordings."
+      }
+    },
+    {
+      "id": "RK-12.10.12-052",
+      "section": "12.10.12",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.open with tools only, conference.feed: on_speech_start per track."
+      }
+    },
+    {
+      "id": "RK-12.10.12-053",
+      "section": "12.10.12",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-2076",
+        "note": "conference.tool_call naming an undeclared tool (refused before the handler), and a before_tool_use hook that blocks or edits the arguments (probed green); the ToolPolicy check needs a tool_policy option on conference.open, and schema validation a declared schema, the runner declaring every tool with an empty object schema."
+      }
+    },
+    {
+      "id": "RK-12.10.12-054",
       "section": "12.10.12",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.10.12-009",
+      "id": "RK-12.10.12-055",
+      "section": "12.10.12",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.tool_call refused, an on_tool_call hook held at a gate (conference model steps' read): the refusal on the wire first."
+      }
+    },
+    {
+      "id": "RK-12.10.12-056",
+      "section": "12.10.12",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-2076",
+        "note": "conference.open with a tool whose handler result exceeds the implementation's bound (Section 21.5 fixes no number; Python's is 16,384 characters): the provider receives it truncated (probed green with 20,013 characters)."
+      }
+    },
+    {
+      "id": "RK-12.10.12-057",
+      "section": "12.10.12",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.cancel during a held handler: no result sent, on_tool_call cancelled once."
+      }
+    },
+    {
+      "id": "RK-12.10.12-058",
+      "section": "12.10.12",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.cancel after the outcome: no second on_tool_call."
+      }
+    },
+    {
+      "id": "RK-12.10.12-059",
       "section": "12.10.12",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.10.12-010",
+      "id": "RK-12.10.12-060",
       "section": "12.10.12",
       "mapping": "unmapped",
-      "links": []
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.open with a handler that raises: the provider receives the failure without the exception's text."
+      }
     },
     {
-      "id": "RK-12.10.12-011",
+      "id": "RK-12.10.12-061",
       "section": "12.10.12",
       "mapping": "unmapped",
-      "links": []
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2076",
+        "note": "step: conference.open options (tool_policy), the conference model steps' read of the declared tools."
+      }
     },
     {
       "id": "RK-12.11-008",
