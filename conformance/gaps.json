@@ -1154,7 +1154,7 @@
     "RK-19.1-041": {
       "class": "writable",
       "card": "RMK-1925",
-      "note": "A scripted agent with a greeting and auto_greet in a room where voice.open, with a playback_gate, starts the session, a message sent meanwhile: voice.read shows the agent's reply synthesized only once the gate opens (requires voice)."
+      "note": "A scripted agent with a greeting and auto_greet in a room where voice.open, with a playback_gate, starts the session, a message sent while the greeting is held: the agent's reply is neither generated (models) nor in the timeline until the gate opens (requires voice)."
     },
     "RK-19.1-042": {
       "class": "writable",
@@ -4212,7 +4212,7 @@
     "RK-8.3-032": {
       "class": "writable",
       "card": "RMK-1912",
-      "note": "A hook's reaction, or a scripted turn's on_event reaction, whose do makes realtime.inject on an event one short of the chain limit: realtime.read shows the text injected silently; the tool-call door needs a realtime handler with do actions (requires realtime)."
+      "note": "An after_broadcast (ASYNC) hook whose do makes realtime.inject on an event one short of the chain limit, or a scripted turn's on_event do on an event two short of it: realtime.read shows the text injected silently; the tool-call door needs a realtime handler with do actions (requires realtime)."
     },
     "RK-8.3-033": {
       "class": "phase6",
@@ -4232,12 +4232,12 @@
     "RK-8.3-046": {
       "class": "writable",
       "card": "RMK-1912",
-      "note": "A before_tts hook whose do posts into the room: the timeline shows the post at the floor's depth; the realtime and conference tool-call hooks and a speech-to-speech model's words need their steps (requires voice)."
+      "note": "A scripted agent's answer, at depth 1 or more, delivered to the voice binding, and a before_tts hook whose do posts into the room: the timeline shows the post at the floor's depth; the realtime and conference tool-call hooks and a speech-to-speech model's words need their steps (requires voice)."
     },
     "RK-8.3-047": {
       "class": "writable",
       "card": "RMK-1912",
-      "note": "A scripted agent answering into a voice channel and an after_tts hook whose do posts at each answer: the chain ends at the limit, and work started while a playback_gate holds the audio keeps its own depth (requires voice)."
+      "note": "A scripted agent answering into a voice channel and an after_tts hook whose do posts at each answer: the chain ends at the limit; voice.feed with a transcript while a playback_gate holds the reply: the user's message stored at depth 0, not at the reply's depth (requires voice)."
     },
     "RK-8.3-051": {
       "class": "writable",
