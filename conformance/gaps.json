@@ -729,7 +729,7 @@
     "RK-12.3.1-026": {
       "class": "step",
       "card": "RMK-2034",
-      "note": "step: voice.end (S4) and a turn detector that reports its reset() calls: the session's end calls none; the detectors' reset() taking no key is pinned in Python's public API snapshot."
+      "note": "step: voice.end (S4) and the voice stage trace (S3) extended to the turn detector's reset() calls, which the audit's catalogue does not hold: the session's end calls none; the detectors' reset() taking no key is pinned in Python's public API snapshot."
     },
     "RK-12.3.10-003": {
       "class": "step",

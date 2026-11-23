@@ -627,7 +627,7 @@
     },
     {
       "section": "12.3.1",
-      "sha256": "dbbf55cda7ab01b4cd701c5153a7b7c395676401cac35c8814378593a0e04dba",
+      "sha256": "a760a9779dd1c1ecf866ec759f515f35d149745f820e15b84db8faa08ab31f20",
       "classification": "normative",
       "review": "Source inventory: Pipeline Configuration, split to one obligation per unit, each with its level (RMK-2027): RK-12.3.1-005 to 026. AudioPipelineConfig, VADConfig, AudioPipelineContract and AudioFormat are structural; the integrator's SHOULD of configuring a provider is non_testable, the typical configurations folded into it; what a VAD provider does with vad_config and its extra keys are units of their own beside the pipeline handing vad_config over at build; the stream identity contract separates each stage's per-stream state, the caller's stable key, the required stream parameter, the conformance check, the resampler's null reset, native instances and shared state; the session lifecycle contract separates the resets at a stream's end and before its first frame, close() and the stages it covers. Every unit carries its level."
     },
@@ -639,7 +639,7 @@
     },
     {
       "section": "12.3.3",
-      "sha256": "ffec27278df20c21ede432337bb138a353cfea7dc076b089fef885af90385829",
+      "sha256": "722026352583194343455c589705ce1b544fb044a4b2b402def5e75a141268b4",
       "classification": "normative",
       "review": "Source inventory: Resampler, split to one obligation per unit, each with its level (RMK-2027): RK-12.3.3-001, ResamplerConfig with its defaults (its purpose folded in); RK-12.3.3-003 to 009, inbound and outbound conversion, the preserved timestamp, the original-format metadata, the SHOULD of high-quality resampling, stages taking the native format without a resampler and the SHOULD of a mismatch warning. Every unit carries its level."
     },

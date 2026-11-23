@@ -12173,7 +12173,7 @@ accumulators are all per stream. Sharing them makes one speaker's silence close
 another speaker's utterance.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.3.1-018", "kind": "structural", "applies": "§12.3.1 Stream identity contract, the voice feature: a frame stage's stream parameter is required, with no default value. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+<!-- rfc: {"id": "RK-12.3.1-018", "kind": "structural", "applies": "§12.3.1 Stream identity contract, the voice feature: a frame stage's stream parameter is required, with no default value, the resampler's reset excepted (RK-12.3.1-020). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 `stream` MUST be a required parameter with **no default value**. A default
 would let an implementation accept the argument, ignore it, satisfy the
 interface, and mix streams silently — which is the failure this contract exists
@@ -12291,7 +12291,7 @@ Implementations SHOULD use high-quality resampling (e.g., libsamplerate,
 sox-quality) to avoid introducing artifacts that degrade VAD and STT accuracy.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.3.3-008", "kind": "behavior", "applies": "§12.3.3 Resampler behavior, the voice feature: with no resampler configured, every stage is handed the transport's native format. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+<!-- rfc: {"id": "RK-12.3.3-008", "kind": "behavior", "applies": "§12.3.3 Resampler behavior, the voice feature: with no resampler configured, every pipeline stage accepts the transport's native format, handed to it unchanged. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 When no resampler is configured, all pipeline stages MUST accept the transport's
 native format. <!-- /rfc --><!-- rfc: {"id": "RK-12.3.3-009", "kind": "behavior", "applies": "§12.3.3 Resampler behavior, the voice feature: with no resampler, a warning should be logged when the transport's format differs from what the downstream stages expect. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->Implementations SHOULD log a warning if the transport format
 differs from the expected format of downstream stages.
