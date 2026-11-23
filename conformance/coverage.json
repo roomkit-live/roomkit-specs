@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "rfc_sha256": "73ed31c5bc659b55d9ae58c50c9a69c6199bc21e8b848af214d633fe61a3b265",
+  "rfc_sha256": "d5cf4e406885374c4c6110bdcd3c57e5e180e59480f6bba21db3c3fdd0d3d8f7",
   "corpus_sha256": "b6be90365c506d3356efc99c81d6387592780678f23506e174c78dae3ca578be",
   "python_commit": "651ae82c198066cc771ad2fcfdc6995fdad25c99",
   "scenario_count": 3393,
@@ -7063,11 +7063,13 @@
       "section": "12.10.1",
       "title": "Design Principles",
       "review": "normative",
-      "requirements": 1,
+      "requirements": 11,
       "mapping": {
-        "unmapped": 1
+        "unmapped": 11
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "step": 5
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -7075,11 +7077,14 @@
       "section": "12.10.2",
       "title": "Data Models",
       "review": "normative",
-      "requirements": 14,
+      "requirements": 45,
       "mapping": {
-        "unmapped": 14
+        "unmapped": 45
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "step": 25,
+        "writable": 1
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -7087,11 +7092,14 @@
       "section": "12.10.3",
       "title": "ConferenceBackend Interface",
       "review": "normative",
-      "requirements": 14,
+      "requirements": 53,
       "mapping": {
-        "unmapped": 14
+        "unmapped": 53
       },
-      "decided_gaps": {},
+      "decided_gaps": {
+        "phase6": 1,
+        "step": 11
+      },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -34118,7 +34126,92 @@
       "links": []
     },
     {
-      "id": "RK-12.10.1-001",
+      "id": "RK-12.10.1-002",
+      "section": "12.10.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.10.1-003",
+      "section": "12.10.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2070",
+        "note": "step: conference_already_attached error name: a second conference channel attached to a room already holding one, refused under a name no runner error table holds."
+      }
+    },
+    {
+      "id": "RK-12.10.1-004",
+      "section": "12.10.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.10.1-005",
+      "section": "12.10.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2070",
+        "note": "step: conference.feed: speech on a participant's track stored as a RoomEvent of the room."
+      }
+    },
+    {
+      "id": "RK-12.10.1-006",
+      "section": "12.10.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2070",
+        "note": "step: conference.feed: a transcription through BEFORE_BROADCAST, the room's permissions and the broadcast to its other channels, as any inbound event."
+      }
+    },
+    {
+      "id": "RK-12.10.1-007",
+      "section": "12.10.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.10.1-008",
+      "section": "12.10.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2070",
+        "note": "step: conference.read: one join_as_bot per conference, its subscriptions and the bot's publications on that one session."
+      }
+    },
+    {
+      "id": "RK-12.10.1-009",
+      "section": "12.10.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.10.1-010",
+      "section": "12.10.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2070",
+        "note": "step: conference.feed: two participants speaking on their own tracks, each transcription attributed to its track's publisher with no diarization stage."
+      }
+    },
+    {
+      "id": "RK-12.10.1-011",
+      "section": "12.10.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.10.1-012",
       "section": "12.10.1",
       "mapping": "unmapped",
       "links": []
@@ -34130,70 +34223,370 @@
       "links": []
     },
     {
-      "id": "RK-12.10.2-002",
+      "id": "RK-12.10.2-015",
       "section": "12.10.2",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.10.2-003",
+      "id": "RK-12.10.2-016",
       "section": "12.10.2",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.10.2-004",
+      "id": "RK-12.10.2-017",
       "section": "12.10.2",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.10.2-005",
+      "id": "RK-12.10.2-018",
       "section": "12.10.2",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.10.2-006",
+      "id": "RK-12.10.2-019",
       "section": "12.10.2",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.10.2-007",
+      "id": "RK-12.10.2-020",
       "section": "12.10.2",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.10.2-008",
+      "id": "RK-12.10.2-021",
       "section": "12.10.2",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.10.2-009",
+      "id": "RK-12.10.2-022",
       "section": "12.10.2",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.10.2-010",
+      "id": "RK-12.10.2-023",
       "section": "12.10.2",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.10.2-011",
+      "id": "RK-12.10.2-024",
+      "section": "12.10.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2070",
+        "note": "step: conference.feed: a screen share's sound, a track of kind audio, transcribed and recorded like any audio track, attributed to the participant sharing."
+      }
+    },
+    {
+      "id": "RK-12.10.2-025",
       "section": "12.10.2",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.10.2-012",
+      "id": "RK-12.10.2-026",
       "section": "12.10.2",
       "mapping": "unmapped",
       "links": []
+    },
+    {
+      "id": "RK-12.10.2-027",
+      "section": "12.10.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2070",
+        "note": "step: conference.mint, conference.read: the participant_id a mint hands the backend is the room Participant.id."
+      }
+    },
+    {
+      "id": "RK-12.10.2-028",
+      "section": "12.10.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.10.2-029",
+      "section": "12.10.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.10.2-030",
+      "section": "12.10.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2070",
+        "note": "step: conference.join metadata: an asserted caller number handed to identity resolution; the UNKNOWN record with the backend identity as external_id is writable today."
+      }
+    },
+    {
+      "id": "RK-12.10.2-031",
+      "section": "12.10.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2070",
+        "note": "step: conference.join metadata: a dial-in's asserted caller number reaching the Identity a text from that number reaches."
+      }
+    },
+    {
+      "id": "RK-12.10.2-032",
+      "section": "12.10.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.10.2-033",
+      "section": "12.10.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2070",
+        "note": "step: conference.join metadata: a participant arriving with an asserted address, resolved before it speaks."
+      }
+    },
+    {
+      "id": "RK-12.10.2-034",
+      "section": "12.10.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2070",
+        "note": "step: conference.join metadata: the resolved Identity linked through identity_id on the record keyed on the backend identity."
+      }
+    },
+    {
+      "id": "RK-12.10.2-035",
+      "section": "12.10.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2070",
+        "note": "step: conference.open options (identity_address_keys), conference.join metadata: keys an integrator configures read in place of the defaults; the documented keys are by review."
+      }
+    },
+    {
+      "id": "RK-12.10.2-036",
+      "section": "12.10.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2070",
+        "note": "step: conference.join metadata: an arrival asserting only the number it dialled, left unresolved."
+      }
+    },
+    {
+      "id": "RK-12.10.2-037",
+      "section": "12.10.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-2070",
+        "note": "conference.join of a participant not in the room, with an identity_resolver that would identify anyone: the participant stays unknown with its identity as external_id, and the resolver records no call."
+      }
+    },
+    {
+      "id": "RK-12.10.2-038",
+      "section": "12.10.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2070",
+        "note": "step: conference.join metadata: an address the participant's client supplied, left unresolved."
+      }
+    },
+    {
+      "id": "RK-12.10.2-039",
+      "section": "12.10.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2070",
+        "note": "step: conference.join metadata (provenance flag): a backend that cannot tell, its participant left unknown."
+      }
+    },
+    {
+      "id": "RK-12.10.2-040",
+      "section": "12.10.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2070",
+        "note": "step: conference.join metadata: an asserted generic key resolved over an unasserted provider key."
+      }
+    },
+    {
+      "id": "RK-12.10.2-041",
+      "section": "12.10.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2070",
+        "note": "step: conference.open options (identity_trusts_unasserted_metadata), conference.join metadata: an unasserted address resolved once the integrator widens the default."
+      }
+    },
+    {
+      "id": "RK-12.10.2-042",
+      "section": "12.10.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2070",
+        "note": "step: conference.join metadata: an unconfigured channel resolving nothing on an unasserted address."
+      }
+    },
+    {
+      "id": "RK-12.10.2-043",
+      "section": "12.10.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2070",
+        "note": "step: conference.join metadata: the resolver's context carrying the unasserted attributes apart from the asserted ones, which the scripted resolver would record."
+      }
+    },
+    {
+      "id": "RK-12.10.2-044",
+      "section": "12.10.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2070",
+        "note": "step: conference.join metadata: the provider attributes under one key of the Participant's metadata, an integrator's field beside them kept."
+      }
+    },
+    {
+      "id": "RK-12.10.2-045",
+      "section": "12.10.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2070",
+        "note": "step: conference.join metadata: the record keeping asserted and unasserted attributes apart."
+      }
+    },
+    {
+      "id": "RK-12.10.2-046",
+      "section": "12.10.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2070",
+        "note": "step: conference.join metadata: attributes past the bound or oversize left out of the record."
+      }
+    },
+    {
+      "id": "RK-12.10.2-047",
+      "section": "12.10.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2070",
+        "note": "step: conference.join metadata: an arrival resolved on its address firing no ON_IDENTITY_* hook."
+      }
+    },
+    {
+      "id": "RK-12.10.2-048",
+      "section": "12.10.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2070",
+        "note": "step: conference.join metadata: an ambiguous answer recorded as a pending identification with its candidates, a rejection leaving the participant unknown."
+      }
+    },
+    {
+      "id": "RK-12.10.2-049",
+      "section": "12.10.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2070",
+        "note": "step: conference.join metadata: a resolver held past identity_timeout_ms, the participant joining unknown and identity_timeout emitted."
+      }
+    },
+    {
+      "id": "RK-12.10.2-050",
+      "section": "12.10.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2070",
+        "note": "step: conference.join metadata: a resolver that fails, the participant still joining."
+      }
+    },
+    {
+      "id": "RK-12.10.2-051",
+      "section": "12.10.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.10.2-052",
+      "section": "12.10.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2070",
+        "note": "step: framework_events media rows: conference_ended's duration_ms measured from the bot session's joined_at."
+      }
+    },
+    {
+      "id": "RK-12.10.2-053",
+      "section": "12.10.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.10.2-054",
+      "section": "12.10.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.10.2-055",
+      "section": "12.10.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2070",
+        "note": "step: framework_events media rows, a backend handing back a session whose joined_at is naive: conference_ended still announced with its duration."
+      }
     },
     {
       "id": "RK-12.10.2-013",
@@ -34202,43 +34595,210 @@
       "links": []
     },
     {
-      "id": "RK-12.10.2-014",
+      "id": "RK-12.10.2-056",
       "section": "12.10.2",
       "mapping": "unmapped",
-      "links": []
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2070",
+        "note": "step: conference.open options (e2ee, backend capabilities), conference.read: e2ee passed to ensure_room, and refused as a configuration error without the E2EE capability."
+      }
     },
     {
-      "id": "RK-12.10.3-001",
+      "id": "RK-12.10.2-057",
+      "section": "12.10.2",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2070",
+        "note": "step: conference.open options (e2ee with stt or recording): refused as a configuration error."
+      }
+    },
+    {
+      "id": "RK-12.10.3-015",
       "section": "12.10.3",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.10.3-002",
+      "id": "RK-12.10.3-016",
       "section": "12.10.3",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.10.3-003",
+      "id": "RK-12.10.3-017",
       "section": "12.10.3",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.10.3-004",
+      "id": "RK-12.10.3-018",
       "section": "12.10.3",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.10.3-005",
+      "id": "RK-12.10.3-019",
       "section": "12.10.3",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.10.3-006",
+      "id": "RK-12.10.3-020",
+      "section": "12.10.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2070",
+        "note": "step: conference.mint, conference.read: a mint alone bringing the bot in, with no presence reported before the join."
+      }
+    },
+    {
+      "id": "RK-12.10.3-021",
+      "section": "12.10.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.10.3-022",
+      "section": "12.10.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.10.3-023",
+      "section": "12.10.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2070",
+        "note": "step: conference.bot_lost, conference.read, framework_events media rows: the session off the books, conference_ended announced, its lanes closed and recordings finalized, the next need re-joining."
+      }
+    },
+    {
+      "id": "RK-12.10.3-024",
+      "section": "12.10.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.10.3-025",
+      "section": "12.10.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.10.3-064",
+      "section": "12.10.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.10.3-026",
+      "section": "12.10.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.10.3-027",
+      "section": "12.10.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.10.3-028",
+      "section": "12.10.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2070",
+        "note": "step: conference.bot_lost, conference.read: a reported end followed by a bounded, backed-off re-join with no new external event."
+      }
+    },
+    {
+      "id": "RK-12.10.3-029",
+      "section": "12.10.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.10.3-030",
+      "section": "12.10.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.10.3-031",
+      "section": "12.10.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2070",
+        "note": "step: conference.feed (video): an encoded frame on a subscribed video track decoded by the channel's VideoPipeline; no implementation consumes conference video (RK-12.10.4-018, Planned), suspect RMK-2072."
+      }
+    },
+    {
+      "id": "RK-12.10.3-032",
+      "section": "12.10.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.10.3-033",
+      "section": "12.10.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.10.3-034",
+      "section": "12.10.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.10.3-035",
+      "section": "12.10.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.10.3-036",
+      "section": "12.10.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "phase6",
+        "card": "RMK-2070",
+        "note": "measurement: the residue of a stop, the bot audio a backend still plays out after stop_playback()."
+      }
+    },
+    {
+      "id": "RK-12.10.3-037",
+      "section": "12.10.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.10.3-038",
+      "section": "12.10.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.10.3-039",
+      "section": "12.10.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.10.3-040",
       "section": "12.10.3",
       "mapping": "unmapped",
       "links": []
@@ -34250,31 +34810,168 @@
       "links": []
     },
     {
-      "id": "RK-12.10.3-008",
+      "id": "RK-12.10.3-041",
       "section": "12.10.3",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.10.3-009",
+      "id": "RK-12.10.3-042",
       "section": "12.10.3",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.10.3-010",
+      "id": "RK-12.10.3-043",
       "section": "12.10.3",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.10.3-011",
+      "id": "RK-12.10.3-044",
+      "section": "12.10.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2070",
+        "note": "step: conference.open options, conference.read: the grants a bot joins with derived from what the channel consumes and says, subscribe included."
+      }
+    },
+    {
+      "id": "RK-12.10.3-045",
       "section": "12.10.3",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-12.10.3-012",
+      "id": "RK-12.10.3-046",
+      "section": "12.10.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.10.3-047",
+      "section": "12.10.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.10.3-048",
+      "section": "12.10.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.10.3-049",
+      "section": "12.10.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2070",
+        "note": "step: conference.set_bot_grants, conference.read: concealing a visible bot replaces its session, even on a backend able to update grants in place."
+      }
+    },
+    {
+      "id": "RK-12.10.3-050",
+      "section": "12.10.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2070",
+        "note": "step: conference.mint, conference.read: the display_name on record handed to mint_access."
+      }
+    },
+    {
+      "id": "RK-12.10.3-051",
+      "section": "12.10.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.10.3-052",
+      "section": "12.10.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.10.3-053",
+      "section": "12.10.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2070",
+        "note": "step: conference.join metadata (display_name): a reported name filling a record that has none, never one the integrator set."
+      }
+    },
+    {
+      "id": "RK-12.10.3-054",
+      "section": "12.10.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.10.3-065",
+      "section": "12.10.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.10.3-055",
+      "section": "12.10.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.10.3-056",
+      "section": "12.10.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2070",
+        "note": "step: conference.mint, conference.read: a mint asking for no attribute hands the backend none, whatever the participant's record holds."
+      }
+    },
+    {
+      "id": "RK-12.10.3-057",
+      "section": "12.10.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2070",
+        "note": "step: conference.mint: an attribute the room would not keep, refused."
+      }
+    },
+    {
+      "id": "RK-12.10.3-058",
+      "section": "12.10.3",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2070",
+        "note": "step: conference.mint: an oversize attribute refused, not truncated."
+      }
+    },
+    {
+      "id": "RK-12.10.3-059",
+      "section": "12.10.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.10.3-060",
+      "section": "12.10.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.10.3-061",
       "section": "12.10.3",
       "mapping": "unmapped",
       "links": []
@@ -34286,7 +34983,13 @@
       "links": []
     },
     {
-      "id": "RK-12.10.3-014",
+      "id": "RK-12.10.3-062",
+      "section": "12.10.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-12.10.3-063",
       "section": "12.10.3",
       "mapping": "unmapped",
       "links": []
