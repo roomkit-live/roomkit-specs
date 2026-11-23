@@ -4238,6 +4238,9 @@
       "voice/a-backchannel-leaves-the-reply-playing": "d8873a89a00dc7d77ebf96e66d165ad5b483c384982f6bcdd3232e0648b0c4c3",
       "voice/a-transport-barge-in-cancels-active-playback": "d8873a89a00dc7d77ebf96e66d165ad5b483c384982f6bcdd3232e0648b0c4c3"
     },
+    "RK-12.2.3-041": {
+      "voice/diarization-reports-a-new-speaker": "365c51edf8417c1cafa21e0b59d389c8ace248bcfcb85951812459589b19d003"
+    },
     "RK-12.4-020": {
       "conference/a-conference-model-receives-the-gated-tool-result": "0e73235de6a47c51733e29c91a9abd4b43d365369bdc875ac914de1d77a4a975"
     },
