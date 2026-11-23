@@ -591,9 +591,9 @@
     },
     {
       "section": "12.2",
-      "sha256": "460103006b17392552aefe2a3826b937ac3e80324873001205ca3deb79eea6d7",
+      "sha256": "268fe6aee47e50abd0519036b16a6c2a23a7dd68fe189b0997b66e29bdd56783",
       "classification": "normative",
-      "review": "Source inventory: Voice Channel (STT/TTS Pipeline). Its audio processing flow (formerly RK-12.2-016) is split to one obligation per unit (RMK-2006), each with its level: RK-12.2-017 to 025 and 027 to 031 and 036 to 041, the voice feature's inbound flow, standard path, streamed-path voice steps, playback and outbound path; RK-12.2-026 and 032 to 035, steps 8s to 11s, 13s and 14s, the framework's streaming delivery of an AI turn, counted with the core; RK-12.2-042, the closing paragraph. The fenced flow is cut at step and line boundaries by closing and reopening its fence; the 13s Interrupted and Failed paragraphs stay one unit each, their sentences ending mid-line. Step 16s, Planned, is folded into 15s. The other units of §12.2 keep their complete source blocks, a contextual inventory not yet split."
+      "review": "Source inventory: Voice Channel (STT/TTS Pipeline). Its audio processing flow (formerly RK-12.2-016) is split to one obligation per unit (RMK-2006), each with its level: RK-12.2-017 to 025, 027 to 031, 036 to 041 and 043, the voice feature's inbound flow, standard path, streamed-path voice steps, playback and outbound path; RK-12.2-026 and 032 to 035, steps 8s to 11s, 13s and 14s, the framework's streaming delivery of an AI turn, counted with the core; RK-12.2-042, the closing paragraph. The fenced flow is cut at step and line boundaries by closing and reopening its fence; the 13s Interrupted and Failed paragraphs stay one unit each, their sentences ending mid-line. Step 16s, Planned, is folded into 15s. The other units of §12.2 keep their complete source blocks, a contextual inventory not yet split."
     },
     {
       "section": "12.2.1",
@@ -717,9 +717,9 @@
     },
     {
       "section": "12.4",
-      "sha256": "d12aa05a872c7f9071e7d0848dcd1b92f587f2f1e5169667fab9469b80660ceb",
+      "sha256": "a6012f29f0f8436af4ed543a9d879d6581b752f7268f750c0af5fa03993fcede",
       "classification": "normative",
-      "review": "Source inventory: Realtime Voice Channel (Speech-to-Speech). Its One call, one outcome paragraphs (formerly RK-12.4-009) are split to one obligation per unit (RMK-2006), at sentence boundaries, each with its level: RK-12.4-020 to 038 and 040 to 048, the realtime feature's, among them the provider contract (032, 034, 041 to 043) and the recovery of a call from assistant text (045 may, 046 to 048 where an implementation recovers one); RK-12.4-039, a text turn's calls by id, counted with the core. The other units of §12.4 keep their complete source blocks, a contextual inventory not yet split."
+      "review": "Source inventory: Realtime Voice Channel (Speech-to-Speech). Its One call, one outcome paragraphs (formerly RK-12.4-009) are split to one obligation per unit (RMK-2006), at sentence boundaries, each with its level: RK-12.4-020 to 038 and 040 to 048, the realtime feature's, among them the provider contract (032, 034, 035, 041 to 043) and the recovery of a call from assistant text (045 may, 046 to 048 where an implementation recovers one); RK-12.4-039, a text turn's calls by id, counted with the core. The other units of §12.4 keep their complete source blocks, a contextual inventory not yet split."
     },
     {
       "section": "12.4.1",

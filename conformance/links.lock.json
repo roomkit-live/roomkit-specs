@@ -4135,15 +4135,19 @@
       "voice/speech-edges-bracket-an-utterance": "81c71c90e131e0946b2c512a4df125e6f3e9ffb4bbc9977d05fe1b553e5a37a1"
     },
     "RK-12.2-019": {
+      "voice/a-failed-transcription-hook-withholds-the-utterance": "ac83ddfe0d42036890be1f25124909316cd53c976ac66037c3c4a31d9964f289",
       "voice/the-transcription-hook-replaces-the-routed-words": "ac83ddfe0d42036890be1f25124909316cd53c976ac66037c3c4a31d9964f289"
     },
     "RK-12.2-020": {
+      "voice/a-failed-transcription-hook-withholds-the-utterance": "caacde3738bb176697322d4dabafcb06e7de5c02362487230d83a06a0425a51c",
       "voice/the-transcription-hook-replaces-the-routed-words": "caacde3738bb176697322d4dabafcb06e7de5c02362487230d83a06a0425a51c"
     },
     "RK-12.2-022": {
       "voice/a-turn-waits-for-its-last-fragment": "843c41b4122856039fcb1f69ad437cac75f41aaba0e6cbea703cb83bf0e893be"
     },
     "RK-12.2-026": {
+      "store/reattached-binding-moves-behind-existing-streaming-targets": "79cf19345e48e30293306e33b2df07285a11b639f938023eca270375d20fe028",
+      "store/updated-bindings-keep-the-first-streaming-target": "79cf19345e48e30293306e33b2df07285a11b639f938023eca270375d20fe028",
       "streaming/a-channel-streams-in-the-rooms-it-says": "79cf19345e48e30293306e33b2df07285a11b639f938023eca270375d20fe028",
       "streaming/a-channel-that-declares-no-streaming-streams-in-the-rooms-it-says": "79cf19345e48e30293306e33b2df07285a11b639f938023eca270375d20fe028",
       "streaming/a-stream-reaches-an-outbound-only-transport-and-no-inbound-only-one": "79cf19345e48e30293306e33b2df07285a11b639f938023eca270375d20fe028",
@@ -4155,7 +4159,7 @@
       "streaming/the-stream-goes-to-the-first-streaming-transport-bound": "79cf19345e48e30293306e33b2df07285a11b639f938023eca270375d20fe028"
     },
     "RK-12.2-027": {
-      "voice/a-streamed-reply-checks-each-sentence-before-synthesis": "c9d693d51216667ec56645ad3c5cf6099fb422c9386269af6945c6b06a9deaff"
+      "voice/a-streamed-reply-checks-each-sentence-before-synthesis": "e84955e2de8c6ace6705cb36637c7bc37ecb69cea7c665c99eb11581738f7af0"
     },
     "RK-12.2-028": {
       "voice/a-streamed-reply-checks-each-sentence-before-synthesis": "701f75282a37beffaffaabb4fae5ac6f7f4c9a1d407aff42c5dff641f3d618a4"
@@ -4171,6 +4175,7 @@
     },
     "RK-12.2-033": {
       "streaming/a-cut-in-the-first-generation-records-only-its-end": "50d98ebe665a7e1772b36e77a7d3537ee13d0b528ac1b9ae9ceec8c6250043b9",
+      "streaming/a-cut-turn-that-wrote-no-message-tells-its-caller-what-it-used": "50d98ebe665a7e1772b36e77a7d3537ee13d0b528ac1b9ae9ceec8c6250043b9",
       "streaming/a-generation-cut-from-outside-counts-the-input-it-told": "50d98ebe665a7e1772b36e77a7d3537ee13d0b528ac1b9ae9ceec8c6250043b9",
       "streaming/a-reader-that-stops-at-a-delta-before-a-call-leaves-the-call-unrun": "50d98ebe665a7e1772b36e77a7d3537ee13d0b528ac1b9ae9ceec8c6250043b9",
       "streaming/a-reader-that-stops-ends-the-turn-while-its-agent-holds-its-next-piece": "50d98ebe665a7e1772b36e77a7d3537ee13d0b528ac1b9ae9ceec8c6250043b9",
@@ -4189,6 +4194,7 @@
       "tools/a-call-that-ended-before-its-reader-stopped-keeps-its-outcome": "50d98ebe665a7e1772b36e77a7d3537ee13d0b528ac1b9ae9ceec8c6250043b9",
       "tools/a-call-that-ended-before-its-round-was-cut-keeps-its-outcome": "50d98ebe665a7e1772b36e77a7d3537ee13d0b528ac1b9ae9ceec8c6250043b9",
       "tools/a-call-under-an-id-an-earlier-round-used-the-turn-cuts-reads-cancelled": "50d98ebe665a7e1772b36e77a7d3537ee13d0b528ac1b9ae9ceec8c6250043b9",
+      "tools/a-cut-call-s-end-row-reads-the-arguments-its-gate-fixed": "50d98ebe665a7e1772b36e77a7d3537ee13d0b528ac1b9ae9ceec8c6250043b9",
       "tools/a-cut-turn-closes-each-of-two-open-calls-under-one-id": "50d98ebe665a7e1772b36e77a7d3537ee13d0b528ac1b9ae9ceec8c6250043b9"
     },
     "RK-12.2-034": {
@@ -4225,6 +4231,7 @@
       "streaming/rows-the-persistence-policy-keeps-out-are-handed-to-no-stream-reader": "43424542937f116bf95a83c82f43c123711695c7698ede99b47692fe6706a93a",
       "streaming/stream-fails-mid-answer": "43424542937f116bf95a83c82f43c123711695c7698ede99b47692fe6706a93a",
       "streaming/what-a-target-s-outputs-leave-in-the-room": "43424542937f116bf95a83c82f43c123711695c7698ede99b47692fe6706a93a",
+      "tasks/a-shared-room-reads-the-stream-of-an-answer-s-answer": "43424542937f116bf95a83c82f43c123711695c7698ede99b47692fe6706a93a",
       "tasks/a-shared-transport-is-told-the-answer-never-the-task": "43424542937f116bf95a83c82f43c123711695c7698ede99b47692fe6706a93a"
     },
     "RK-12.2-040": {
@@ -4238,10 +4245,8 @@
       "realtime/a-late-cancellation-leaves-the-served-call-alone": "57681e6f85b24f7b7750ab7305c279c7add7c02806f658fe798382c2202dd97d"
     },
     "RK-12.4-033": {
+      "realtime/a-handler-reconnects-through-its-child": "ee86337cb680ce6b387f6d10539c33d6c745d33887010d2d526db4e9a63fa35b",
       "realtime/an-abandoned-call-interrupts-its-handler": "ee86337cb680ce6b387f6d10539c33d6c745d33887010d2d526db4e9a63fa35b"
-    },
-    "RK-12.4-035": {
-      "realtime/a-handler-reconnects-through-its-child": "a8c3ff4263b5e6e99830063fa7fa1678ca356bb59cb02cc41211776228718e42"
     },
     "RK-12.4-036": {
       "realtime/a-handler-reconnects-through-its-child": "ccd686edd45fb18e8c574d49d667e0eb90a2695d269ac00e49c94313887ed8d9"
@@ -4267,7 +4272,9 @@
       "tools/a-round-s-results-each-keep-their-tool-s-name": "7dd0867fdcc526c12014a22b8094ace3cd66bd86015f9b0b2f03095b37221694",
       "tools/a-second-call-under-a-held-id-is-refused-before-it-reads-as-cut": "7dd0867fdcc526c12014a22b8094ace3cd66bd86015f9b0b2f03095b37221694",
       "tools/a-second-call-under-an-id-in-its-round-is-refused": "7dd0867fdcc526c12014a22b8094ace3cd66bd86015f9b0b2f03095b37221694",
-      "tools/another-turn-among-a-round-s-starts-leaves-its-results-paired": "7dd0867fdcc526c12014a22b8094ace3cd66bd86015f9b0b2f03095b37221694"
+      "tools/another-turn-among-a-round-s-starts-leaves-its-results-paired": "7dd0867fdcc526c12014a22b8094ace3cd66bd86015f9b0b2f03095b37221694",
+      "tools/report-claim-reused-id-non-streaming": "7dd0867fdcc526c12014a22b8094ace3cd66bd86015f9b0b2f03095b37221694",
+      "tools/report-claim-reused-id-streaming": "7dd0867fdcc526c12014a22b8094ace3cd66bd86015f9b0b2f03095b37221694"
     },
     "RK-13.2-004": {
       "delivery/a-retried-delivery-keeps-its-successful-provider-receipt": "8504abca107b13da520b70284632b270c3d86c86a32db7cb46bd3f96555880da"

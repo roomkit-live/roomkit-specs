@@ -11338,7 +11338,7 @@ enters a room as any other audio.
      supports_streaming_delivery by default); one that does not is delivered the answer whole
 ```
 <!-- /rfc -->
-<!-- rfc: {"id": "RK-12.2-027", "kind": "behavior", "applies": "§12.2 Streaming AI → TTS path, step 12s.a, the voice feature: the sentence splitter of VoiceChannel.deliver_stream() yields at sentence boundaries (min_chunk_chars against short fragments) and at the end of each text segment (§6.4), what the segment holds going out before the call runs; a span a streaming text filter removes stays open across a call. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+<!-- rfc: {"id": "RK-12.2-027", "kind": "behavior", "applies": "§12.2 Streaming AI → TTS path, step 12s and 12s.a, the voice feature: the framework pipes the response stream to VoiceChannel.deliver_stream(), whose sentence splitter yields at sentence boundaries (min_chunk_chars against short fragments) and at the end of each text segment (§6.4), what the segment holds going out before the call runs; a span a streaming text filter removes stays open across a call. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 12s. Framework pipes stream → VoiceChannel.deliver_stream():
      a. Sentence splitter buffers tokens → yields at sentence boundaries (.!?)
@@ -11523,10 +11523,14 @@ session's played audio counts, what was heard of it.
 
 ```
 <!-- /rfc -->
-<!-- rfc: {"id": "RK-12.2-038", "kind": "behavior", "applies": "§12.2 Common outbound path, step 12, the voice feature: the AudioChunk stream goes through the post-processors, the recorder and the resampler to the transport; a stage that needs fixed-size AudioFrames buffers and re-chunks the variable-size chunks itself. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+<!-- rfc: {"id": "RK-12.2-038", "kind": "behavior", "applies": "§12.2 Common outbound path, step 12, the voice feature: the AudioChunk stream goes through the post-processors, the recorder and the resampler to the transport, in that order. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 --- Common outbound path ---
 12. AudioChunk stream → [PostProcessors] → [Recorder] → [Resampler] → Transport
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.2-043", "kind": "behavior", "applies": "§12.2 Common outbound path, step 12, the voice feature: TTS emits variable-size AudioChunks, so a pipeline stage that requires fixed-size AudioFrames buffers and re-chunks the stream itself. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
     (TTS emits variable-size AudioChunks; pipeline stages that require fixed-size
      AudioFrames MUST buffer and re-chunk the stream internally)
 ```
@@ -13640,7 +13644,7 @@ provider holds the ids it issued in one book, freed by the result or the
 abandonment, and drops, with a log, a result submitted for an id it does not
 hold, abandoned, never issued, or issued by a connection that is gone:
 nothing goes out for it, whoever submits it (an application calling the
-provider directly included), and an abandoned call is reported once.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-035", "kind": "behavior", "applies": "§12.4 One call, one outcome, the realtime feature: a session connected again under the same id abandons the calls its previous connection issued. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
+provider directly included), and an abandoned call is reported once.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-035", "kind": "behavior", "applies": "§12.4 One call, one outcome, the realtime feature's provider contract, what any realtime provider must do: a session connected again under the same id abandons the calls its previous connection issued. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
 session connected again under the same id abandons the calls its previous
 connection issued.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-036", "kind": "behavior", "applies": "§12.4 One call, one outcome, the realtime feature: a call orphaned by a reconnect its own handler caused runs on and frees its id at that step: the new connection never issued it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
 call a reconnect its own handler caused orphans, which runs on, frees its id
@@ -13656,7 +13660,7 @@ the first keeping its report and its end row its own arguments; one the
 provider already ran under such an id is reported as a call of its own with
 the outcome the provider gave it, and a call under an id an earlier round used
 is a new call.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-040", "kind": "behavior", "applies": "§12.4 One call, one outcome, the realtime feature: a call that named no tool is refused before the gate, as an unreadable call, and answered under its id. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A call that named no tool
-is refused before the gate, as an unreadable one, and answered under its id.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-041", "kind": "behavior", "applies": "§12.4 One call, one outcome, the realtime feature's provider contract, what any realtime provider must do: a provider hands every call the model makes to the channel, a call with no id, one under an id in flight, one the output cap cut and one to a tool the channel never declared included; the channel decides it, and no provider or vendor SDK answers it in the channel's place. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
+is refused before the gate, as an unreadable one, and answered under its id.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-041", "kind": "behavior", "applies": "§12.4 One call, one outcome, the realtime feature's provider contract, what any realtime provider must do: a provider hands every call the model makes to the channel, a call with no id, one under an id in flight, one that named no tool, one the output cap cut and one to a tool the channel never declared included; the channel decides it, and no provider or vendor SDK answers it in the channel's place. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
 provider hands every call the model makes to the channel, these, a call the
 output cap cut and a call to a tool the channel never declared included: the
 channel decides it, and no provider or vendor SDK answers it in the channel's

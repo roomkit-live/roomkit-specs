@@ -284,7 +284,7 @@
     "RK-12.2-023": {
       "class": "writable",
       "card": "RMK-2008",
-      "note": "An AI channel with a whole response in the room a voice channel is opened in: a BEFORE_TTS hook and voice.read's synthesized texts show the delivered response spoken."
+      "note": "A text another channel sends with send_event into the room a voice channel is opened in reaches the voice channel's deliver(): a BEFORE_TTS hook and voice.read's synthesized texts show it spoken (an AI answer streams to the voice channel instead)."
     },
     "RK-12.2-024": {
       "class": "step",
@@ -314,12 +314,12 @@
     "RK-12.2-037": {
       "class": "step",
       "card": "RMK-2008",
-      "note": "step: voice.play and a gate holding a streamed reply mid-way (S12); say() cutting a playback is writable with voice.say and the playback gate."
+      "note": "step: voice.play (S12) and a gate holding a streamed reply mid-way (S20); say() cutting a playback is writable with voice.say and the playback gate."
     },
     "RK-12.2-038": {
       "class": "step",
       "card": "RMK-2008",
-      "note": "step: voice stage trace (S3): no voice.open key sets post-processors, a recorder or a resampler on the outbound path."
+      "note": "step: voice stage trace (S3): no voice.open key sets post-processors, a recorder or a resampler on the outbound path, nor does voice.read report their order."
     },
     "RK-12.2-039": {
       "class": "step",
@@ -330,6 +330,11 @@
       "class": "step",
       "card": "RMK-2008",
       "note": "step: voice TTS options (S7): no voice.open key sets a TTS that consumes context."
+    },
+    "RK-12.2-043": {
+      "class": "step",
+      "card": "RMK-2008",
+      "note": "step: voice stage trace (S3): no voice.open key sets a stage that requires fixed-size AudioFrames on the outbound path."
     },
     "RK-12.4-022": {
       "class": "writable",
