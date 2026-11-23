@@ -11590,7 +11590,7 @@ pure transport with no AIProvider reference.
 
 #### 12.2.1 Packet Loss Handling (Lossy Transports)
 
-<!-- rfc: {"id": "RK-12.2.1-001", "kind": "behavior", "applies": "§12.2.1 Packet Loss Handling (Lossy Transports); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.2.1-001", "kind": "behavior", "applies": "§12.2.1 Packet Loss Handling, the voice feature: packet loss concealment (PLC) is optional for Level 3 and recommended for an RTP-based backend (the rationale, that only the transport sees packet loss, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 Backends carrying audio over lossy transports (RTP/SIP, datagram-based) are the
 only layer that can observe packet loss: sequence numbers exist at the
 transport, and the pipeline above sees only PCM frames. A backend that silently
@@ -11601,16 +11601,16 @@ Packet loss concealment (PLC) is OPTIONAL for Level 3 conformance and
 RECOMMENDED for RTP-based backends.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.2.1-002", "kind": "behavior", "applies": "§12.2.1 Packet Loss Handling (Lossy Transports); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.2.1-005", "kind": "behavior", "applies": "§12.2.1 Detection, the voice feature, a backend that implements PLC: a packet not yet arrived is told from one confirmed lost by sequence-number analysis within a bounded reordering window, and a packet the jitter buffer can still deliver triggers no concealment. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Detection.** A backend implementing PLC:
 
 - MUST distinguish packets that have not yet arrived (reordering) from packets
   confirmed lost, using sequence-number analysis with a bounded reordering
   window. Packets the jitter buffer can still deliver MUST NOT trigger
-  concealment.
+  concealment.<!-- /rfc --><!-- rfc: {"id": "RK-12.2.1-006", "kind": "behavior", "applies": "§12.2.1 Detection, the voice feature, a backend that implements PLC: a sender's transmission pause (discontinuous transmission, comfort noise) is not loss; only a sequence-number gap is. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - MUST NOT treat sender-side transmission pauses as loss. Discontinuous
   transmission (VAD suppression, comfort noise) advances the RTP timestamp
-  without consuming sequence numbers; only sequence-number gaps indicate loss.
+  without consuming sequence numbers; only sequence-number gaps indicate loss.<!-- /rfc --><!-- rfc: {"id": "RK-12.2.1-007", "kind": "behavior", "applies": "§12.2.1 Detection, the voice feature, a backend that implements PLC: non-media packets filtered out before loss detection are accounted for; a receiver that filters RFC 4733 telephone-events upstream of its jitter buffer marks their sequence numbers received, so their slots are neither confirmed lost nor concealed. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - MUST account for non-media packets filtered out of the audio path before
   loss detection. RFC 4733 telephone-events consume sequence numbers from the
   same RTP stream: a receiver that filters them upstream of its jitter buffer
@@ -11618,17 +11618,17 @@ RECOMMENDED for RTP-based backends.
   neither confirmed as loss nor concealed.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.2.1-003", "kind": "behavior", "applies": "§12.2.1 Packet Loss Handling (Lossy Transports); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.2.1-008", "kind": "behavior", "applies": "§12.2.1 Concealment, the voice feature, a backend that implements PLC: on confirmed loss, the lost duration is replaced with concealment audio, so the frames the pipeline receives keep the timeline and no downstream stage needs to know of the loss. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Concealment.** On confirmed loss, the backend:
 
 - MUST deliver a temporally continuous stream: the lost duration is replaced
   with concealment audio so the frames emitted to the pipeline preserve
   timeline alignment. Downstream stages (AEC, recorder, STT) require no loss
-  awareness.
+  awareness.<!-- /rfc --><!-- rfc: {"id": "RK-12.2.1-009", "kind": "behavior", "applies": "§12.2.1 Concealment, the voice feature, a backend that implements PLC: codec-native concealment when the negotiated codec provides it. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 - SHOULD use codec-native concealment when the negotiated codec provides it
-  (e.g., libopus PLC). For codecs without native concealment (G.711, G.722,
+  (e.g., libopus PLC).<!-- /rfc --> <!-- rfc: {"id": "RK-12.2.1-010", "kind": "behavior", "applies": "§12.2.1 Concealment, the voice feature, a backend that implements PLC: for a codec without native concealment, a generic concealer that at least repeats the last frame received with progressive attenuation. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->For codecs without native concealment (G.711, G.722,
   L16), the backend MUST fall back to a generic concealer that at minimum
-  repeats the last received frame with progressive attenuation.
+  repeats the last received frame with progressive attenuation.<!-- /rfc --><!-- rfc: {"id": "RK-12.2.1-011", "kind": "behavior", "applies": "§12.2.1 Concealment, the voice feature, a backend that implements PLC: synthetic audio is bounded; a generic concealer decays to silence within max_conceal_ms (60 ms recommended) of consecutive concealment and fills the rest of the loss with silence, and codec-native concealment with its own energy decay satisfies this as it is. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - MUST bound synthetic audio: a generic concealer MUST decay to silence within
   `max_conceal_ms` (RECOMMENDED 60 ms) of consecutive concealment and fill the
   remaining lost duration with silence. Codec-native concealment with built-in
@@ -11636,12 +11636,14 @@ RECOMMENDED for RTP-based backends.
   way, alignment is preserved without generating artifacts on long bursts.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.2.1-004", "kind": "behavior", "applies": "§12.2.1 Packet Loss Handling (Lossy Transports); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.2.1-012", "kind": "behavior", "applies": "§12.2.1 Observability, the voice feature, a backend that implements PLC: per session, the count of packets confirmed lost (packets_lost) and of frames concealment synthesized (concealed_frames). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Observability.** A backend implementing PLC MUST expose, per session:
 
 - `packets_lost` — count of packets confirmed lost.
 - `concealed_frames` — count of frames synthesized by concealment.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.2.1-013", "kind": "behavior", "applies": "§12.2.1 Observability, the voice feature, a backend that implements PLC: an emitted concealed frame annotated metadata.concealed = true, so that a pipeline stage may treat it apart. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 Emitted concealed frames SHOULD be annotated (`metadata.concealed = true` on
 the AudioFrame) so that pipeline stages MAY treat them differently — e.g., the
 recorder journaling concealed ranges, or STT adjusting confidence.
@@ -11649,7 +11651,7 @@ recorder journaling concealed ranges, or STT adjusting confidence.
 
 #### 12.2.2 Conversation Context for TTS
 
-<!-- rfc: {"id": "RK-12.2.2-001", "kind": "behavior", "applies": "§12.2.2 Conversation Context for TTS; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.2.2-009", "kind": "behavior", "applies": "§12.2.2 TTSContextLevel, the voice feature: what the channel hands a provider at each level, nothing at NONE (the default), which of its own turns were played and how far at SELF, the text of every turn of both roles at TEXT, the text and the audio of every turn at AUDIO, each level including those above it (the section's motivation, and the typical uses, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A TTS that synthesizes each sentence in isolation cannot carry prosody across
 a conversation. Some can, when they are told what came before: the voice's own
 previous generations, the text of the dialogue, or the dialogue's audio —
@@ -11657,9 +11659,7 @@ including how the user spoke. The Voice Channel already holds all of it: the
 captured utterance at speech end, its final transcript after
 `ON_TRANSCRIPTION`, and what it synthesized and played. This section defines
 how it hands that to the TTS.
-<!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.2.2-002", "kind": "behavior", "applies": "§12.2.2 Conversation Context for TTS; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **TTSContextLevel** enumeration — what a provider consumes. Each level
 includes the ones above it:
 
@@ -11669,13 +11669,19 @@ includes the ones above it:
 | SELF | Which of its own previous turns were played, and how far | Continuity handles returned by a cloud API (a request id, a generation id) |
 | TEXT | The text of every turn, both roles | Previous / next text conditioning |
 | AUDIO | The text and the audio of every turn | Dialogue-conditioned models that decode inside the conversation |
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.2.2-010", "kind": "structural", "applies": "§12.2.2 TTSContext record, the voice feature: its fields, context_id the id of the VoiceSession it belongs to, turns oldest first within the bounds of TTSContextConfig, next_turn_id the turn_id the call's assistant turn will get. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 TTSContext
 ├── context_id: string                      # The VoiceSession.id the context belongs to
 ├── turns: list<ConversationTurn>           # Oldest first, bounded by TTSContextConfig
 └── next_turn_id: string                    # The turn_id the assistant turn of this call will get
+```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.2.2-011", "kind": "structural", "applies": "§12.2.2 ConversationTurn record, the voice feature: its fields, turn_id assigned by the channel and unique within the context, the text as synthesized or as transcribed after ON_TRANSCRIPTION, audio only at the AUDIO level, played_ms and interrupted on assistant turns. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ConversationTurn
 ├── turn_id: string                         # Assigned by the channel, unique within the context
 ├── role: "user" | "assistant"
@@ -11684,7 +11690,11 @@ ConversationTurn
 ├── audio: AudioFrame | null                # The whole turn; only when the provider's level is AUDIO
 ├── played_ms: int | null                   # Assistant turns: audio actually played
 └── interrupted: bool                       # Assistant turns: playback was cancelled
+```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.2.2-012", "kind": "behavior", "applies": "§12.2.2 TTSContextConfig, the voice feature: its fields and defaults, and the bounds the channel keeps by them, no context when enabled is false, audio only with include_audio, the oldest turns dropped past max_turns, the oldest audio dropped past max_audio_seconds while its text stays. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 TTSContextConfig
 ├── enabled: bool = true                    # Whether the channel keeps a context at all
 ├── include_audio: bool = false             # Whether user and assistant audio is kept
@@ -11693,65 +11703,65 @@ TTSContextConfig
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.2.2-003", "kind": "behavior", "applies": "§12.2.2 Conversation Context for TTS; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.2.2-013", "kind": "behavior", "applies": "§12.2.2 Passing rules, the voice feature: the channel passes no context to a provider whose context_level is NONE, and audio only to a provider at AUDIO with include_audio true; an AUDIO provider without include_audio receives the context at the TEXT level, every audio null. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Passing rules.** A Voice Channel MUST NOT pass a context to a provider
 whose `context_level` is `NONE`, and MUST NOT put audio in a context unless
 the provider's level is `AUDIO` and `include_audio` is true. When
 `include_audio` is false, an `AUDIO` provider receives the context at `TEXT`
-level: every `audio` is null. The context passed to a call is a snapshot:
+level: every `audio` is null.<!-- /rfc --> <!-- rfc: {"id": "RK-12.2.2-014", "kind": "behavior", "applies": "§12.2.2 Passing rules, the voice feature, what any TTS provider must do: the context passed to a call is a snapshot, which the provider neither expects to change during the call nor writes to. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The context passed to a call is a snapshot:
 the provider MUST NOT expect it to change during the call, and MUST NOT
 write to it.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.2.2-004", "kind": "behavior", "applies": "§12.2.2 Conversation Context for TTS; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.2.2-015", "kind": "behavior", "applies": "§12.2.2 One context per session, the voice feature: a session's context holds the dialogue heard on that session only, never another channel's of the room or another session's, and is not read from the room timeline. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **One context per session.** A context belongs to one `VoiceSession` and
 holds the dialogue heard on that session only — never other channels of the
 room, and never other sessions. The room timeline is not its source: the
-timeline mixes channels and holds no audio. A response delivered to several
+timeline mixes channels and holds no audio.<!-- /rfc --> <!-- rfc: {"id": "RK-12.2.2-016", "kind": "behavior", "applies": "§12.2.2 One context per session, the voice feature: a response delivered to several sessions is synthesized once per session, each call with that session's own context. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A response delivered to several
 sessions is therefore synthesized once per session, each call with its own
 context.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.2.2-005", "kind": "behavior", "applies": "§12.2.2 Conversation Context for TTS; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.2.2-017", "kind": "behavior", "applies": "§12.2.2 Recording the user turn, the voice feature: after ON_TRANSCRIPTION, the channel appends a user turn with the transcript as the hooks left it and, when audio is kept, the utterance captured at speech end. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Recording the user turn.** After `ON_TRANSCRIPTION` (step 6a of the audio
 processing flow), the channel appends a `user` turn with the transcript as
 the hook left it and, when audio is kept, the utterance captured at speech
-end. If the hook changed the transcript — a redaction, typically — the
+end.<!-- /rfc --> <!-- rfc: {"id": "RK-12.2.2-018", "kind": "behavior", "applies": "§12.2.2 Recording the user turn, the voice feature: a user turn whose transcript a hook changed (a redaction) keeps no audio. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->If the hook changed the transcript — a redaction, typically — the
 channel MUST NOT keep the audio of that turn: the audio would still hold what
-the hook removed. A speech segment classified as a backchannel (Section
+the hook removed.<!-- /rfc --> <!-- rfc: {"id": "RK-12.2.2-019", "kind": "behavior", "applies": "§12.2.2 Recording the user turn, the voice feature: a speech segment classified as a backchannel (§12.3.13) records no turn. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A speech segment classified as a backchannel (Section
 12.3.13) is not recorded.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.2.2-006", "kind": "behavior", "applies": "§12.2.2 Conversation Context for TTS; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.2.2-020", "kind": "behavior", "applies": "§12.2.2 Recording the assistant turn, the voice feature: when playback ends or is cancelled, the channel appends an assistant turn with the text sent to the TTS after BEFORE_TTS and any text filter, under the call's next_turn_id, played_ms the duration played. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Recording the assistant turn.** When playback ends or is cancelled, the
 channel appends an `assistant` turn with the text actually sent to the TTS —
 after `BEFORE_TTS` and any text filter — under the `next_turn_id` the call
-was given, and `played_ms` set to the duration played. When audio is kept,
-the turn carries the synthesized audio. A call cancelled before any of its
-audio was played leaves no turn: the user heard nothing of it. On
+was given, and `played_ms` set to the duration played.<!-- /rfc --> <!-- rfc: {"id": "RK-12.2.2-021", "kind": "behavior", "applies": "§12.2.2 Recording the assistant turn, the voice feature: when audio is kept, the assistant turn carries the synthesized audio. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->When audio is kept,
+the turn carries the synthesized audio.<!-- /rfc --> <!-- rfc: {"id": "RK-12.2.2-022", "kind": "behavior", "applies": "§12.2.2 Recording the assistant turn, the voice feature: a call cancelled before any of its audio was played leaves no turn. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A call cancelled before any of its
+audio was played leaves no turn: the user heard nothing of it.<!-- /rfc --> <!-- rfc: {"id": "RK-12.2.2-023", "kind": "behavior", "applies": "§12.2.2 Recording the assistant turn, the voice feature: a cancelled call's turn records interrupted = true and holds only what was played, its audio cut at played_ms, its text cut to the part the provider or the channel can attribute to the played audio, else kept whole with played_ms its only bound. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->On
 cancellation, the turn records `interrupted = true` and holds only what was
 played: the audio is cut at `played_ms`,
 and the text is cut to the part the provider or the channel can attribute to
 the played audio, or kept whole with `played_ms` as the only bound when no
-such attribution exists. A provider consuming the context MUST treat
+such attribution exists.<!-- /rfc --> <!-- rfc: {"id": "RK-12.2.2-024", "kind": "behavior", "applies": "§12.2.2 Recording the assistant turn, the voice feature, what any TTS provider consuming the context must do: played_ms read as the end of what the user heard. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A provider consuming the context MUST treat
 `played_ms` as the end of what the user heard.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.2.2-007", "kind": "behavior", "applies": "§12.2.2 Conversation Context for TTS; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.2.2-025", "kind": "behavior", "applies": "§12.2.2 Stateful providers, the voice feature: a provider that keeps its own state per context may rely on the turns it already saw and read only the new ones, keyed by context_id and turn_id. Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->
 **Stateful providers.** A provider that keeps its own state per context (a
 model that holds the dialogue in a KV cache, say) MAY rely on the turns it
 already saw and read only the new ones on each call, keyed by `context_id`
-and `turn_id`. A provider that needs its own handle for a turn — the request
+and `turn_id`.<!-- /rfc --> <!-- rfc: {"id": "RK-12.2.2-026", "kind": "behavior", "applies": "§12.2.2 Stateful providers, the voice feature, what any provider that needs its own handle for a turn does (at the SELF level): it keeps the handle under the call's next_turn_id, and finds it again, with its played_ms, when that turn appears in a later context. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A provider that needs its own handle for a turn — the request
 id a cloud API returned, at level `SELF` — keeps it under the call's
 `next_turn_id`, and finds it again when that turn appears in a later context,
-with its `played_ms`. A call cancelled before any audio was played leaves no
+with its `played_ms`.<!-- /rfc --> <!-- rfc: {"id": "RK-12.2.2-027", "kind": "behavior", "applies": "§12.2.2 Stateful providers, the voice feature, what any provider must do: it does not assume every next_turn_id it saw is recorded, a call cancelled before any audio leaving no turn. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A call cancelled before any audio was played leaves no
 turn (see above): the provider MUST NOT assume every `next_turn_id` it saw
-is recorded. The channel MUST call `release_context(context_id)` when the session is
+is recorded.<!-- /rfc --> <!-- rfc: {"id": "RK-12.2.2-028", "kind": "behavior", "applies": "§12.2.2 Stateful providers, the voice feature: the channel calls release_context(context_id) when the session is unbound or ends, and the provider drops everything it holds for that context. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The channel MUST call `release_context(context_id)` when the session is
 unbound or ends, and the provider MUST drop everything it holds for that
-context. `release_context` on an unknown context is a no-op.
+context.<!-- /rfc --> <!-- rfc: {"id": "RK-12.2.2-029", "kind": "behavior", "applies": "§12.2.2 Stateful providers, the voice feature, what any provider must do: release_context on an unknown context does nothing. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`release_context` on an unknown context is a no-op.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.2.2-008", "kind": "behavior", "applies": "§12.2.2 Conversation Context for TTS; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.2.2-008", "kind": "behavior", "applies": "§12.2.2 Scope, the conference feature: a Conference Channel passes no context to its TTS (that this version defines the context for the Voice Channel's one-to-one sessions, and that a Realtime Voice Channel is out of scope, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Scope.** This version defines the context for the Voice Channel's 1:1
 sessions. A Conference Channel (Section 12.10) MUST NOT pass a context to its
 TTS. A Realtime Voice Channel (Section 12.4) is out of scope: a
@@ -11760,14 +11770,12 @@ speech-to-speech provider keeps its own conversation.
 
 #### 12.2.3 Speaker Attribution from STT
 
-<!-- rfc: {"id": "RK-12.2.3-001", "kind": "behavior", "applies": "§12.2.3 Speaker Attribution from STT; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.2.3-011", "kind": "behavior", "applies": "§12.2.3 Status, the voice feature: a Voice Channel that does not implement Stream lifetime, Into the room and Speaker change refuses a diarizing STT at construction, in every mode, with an error that says so (the section's introduction and its status note folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Streaming recognisers now label speakers themselves, so who spoke can come from
 the STT as well as from the pipeline's diarization stage (Section 12.3.9). The
 STT's label is aligned to the words it transcribed; this section defines what
 a provider reports and how a channel carries it to the room.
-<!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.2.3-002", "kind": "behavior", "applies": "§12.2.3 Speaker Attribution from STT; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Status.** Implemented: the provider contract, the refusals, a Voice
 Channel carrying labels in continuous mode, and the opt-in naming from the
 pipeline stage. A Voice Channel that does not
@@ -11775,140 +11783,144 @@ implement *Stream lifetime*, *Into the room* and *Speaker change* MUST refuse a
 diarizing STT at construction, in every mode, with an error that says so.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.2.3-003", "kind": "behavior", "applies": "§12.2.3 Speaker Attribution from STT; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.2.3-012", "kind": "behavior", "applies": "§12.2.3 Labels, the voice feature, what any STT provider must do: a speaker label is assigned by the provider, opaque, and stable within one STT stream and only there. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Labels.** A speaker label is assigned by the provider, is opaque, and is
 stable within one STT stream and only there: two streams may give one voice
-different labels, and one label to different voices. A provider MUST report
+different labels, and one label to different voices.<!-- /rfc --> <!-- rfc: {"id": "RK-12.2.3-013", "kind": "behavior", "applies": "§12.2.3 Labels, the voice feature, what any STT provider must do: labels reported as strings, and a speaker the provider could not attribute reported as null, whatever the vendor spells it (the spellings listed are a vendor's wire). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A provider MUST report
 labels as strings (a vendor's integer `0` becomes `"0"`) and MUST report a
 speaker it could not attribute as null, whatever the vendor spells it
-(`UU`, `PENDING`, `unknown` in any case, or empty). A provider MUST NOT invent a label the
+(`UU`, `PENDING`, `unknown` in any case, or empty).<!-- /rfc --> <!-- rfc: {"id": "RK-12.2.3-014", "kind": "behavior", "applies": "§12.2.3 Labels, the voice feature, what any STT provider must do: no label the vendor did not send, and none carried over from another turn. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A provider MUST NOT invent a label the
 vendor did not send, nor carry one over from another turn.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.2.3-004", "kind": "behavior", "applies": "§12.2.3 Speaker Attribution from STT; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.2.3-015", "kind": "behavior", "applies": "§12.2.3 Segments, the voice feature, what any STT provider reporting supports_diarization true must do: every final result gives the segments its text is made of, in order, each attributed to one speaker, a vendor's turns or runs of words sharing a label, text attributed to nobody a segment with a null speaker. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Segments.** A provider reporting `supports_diarization = true` MUST give every
 final result the segments its text is made of, in order, each attributed to
 one speaker: a vendor that labels turns yields one segment per turn, a vendor
 that labels words yields one segment per run of consecutive words sharing a
 label, and text the vendor attributed to nobody is a segment with a null
-speaker. Partial results MAY carry segments. A provider reporting `false` MUST
-return no segments. A label MAY be revised by the vendor after the fact; a
+speaker.<!-- /rfc --> <!-- rfc: {"id": "RK-12.2.3-016", "kind": "behavior", "applies": "§12.2.3 Segments, the voice feature, an STT provider: a partial result may carry segments. Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->Partial results MAY carry segments.<!-- /rfc --> <!-- rfc: {"id": "RK-12.2.3-017", "kind": "behavior", "applies": "§12.2.3 Segments, the voice feature, what any STT provider reporting supports_diarization false must do: it returns no segments. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A provider reporting `false` MUST
+return no segments.<!-- /rfc --> <!-- rfc: {"id": "RK-12.2.3-018", "kind": "behavior", "applies": "§12.2.3 Segments, the voice feature: a Voice Channel applies no revision of a label to a result it has already routed (that a vendor may revise a label folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A label MAY be revised by the vendor after the fact; a
 Voice Channel does not apply a revision to a result it has already routed.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.2.3-005", "kind": "behavior", "applies": "§12.2.3 Speaker Attribution from STT; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.2.3-019", "kind": "behavior", "applies": "§12.2.3 Channels that cannot carry labels, the voice feature: a channel that opens one stream per utterance (a Voice Channel in VAD mode) or per flush (batch mode) refuses a diarizing STT at construction. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Channels that cannot carry labels.** Labels compare only within one stream,
 so a channel that opens one stream per utterance (Voice Channel in VAD mode)
-or per flush (batch mode) MUST refuse a diarizing STT at construction. So MUST
+or per flush (batch mode) MUST refuse a diarizing STT at construction.<!-- /rfc --> <!-- rfc: {"id": "RK-12.2.3-020", "kind": "behavior", "applies": "§12.2.3 Channels that cannot carry labels, the conference feature: a Conference Channel refuses a diarizing STT at construction, attributing speech by participant track (several people sharing one track, out of scope, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->So MUST
 a Conference Channel (Section 12.10): it attributes speech by participant
 track and transcribes each utterance on its own. Several people sharing one
 track (a room microphone) is out of scope in this revision.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.2.3-006", "kind": "behavior", "applies": "§12.2.3 Speaker Attribution from STT; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.2.3-021", "kind": "behavior", "applies": "§12.2.3 Stream lifetime, the voice feature: in continuous mode, a Voice Channel with a diarizing STT keeps one stream open across turns and opens a new one only when the provider ends it, on an error, or on a language change. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Stream lifetime.** In continuous mode, a Voice Channel with a diarizing STT
 MUST keep one stream open across turns, and open a new one only when the
-provider ends it, on an error, or on a language change (Section 12.2). The
+provider ends it, on an error, or on a language change (Section 12.2).<!-- /rfc --> <!-- rfc: {"id": "RK-12.2.3-022", "kind": "behavior", "applies": "§12.2.3 Stream lifetime, the voice feature: the channel keeps the kept stream's audio level with the clock, filling a pause with silence when the stream is behind. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->The
 channel SHOULD keep the stream's audio level with the clock, filling a pause
 with silence when the stream is behind (a microphone muted during playback,
 packets lost over a long call): a provider may end a stream whose audio falls
-behind real time, which would start a new epoch. A transcript it
-discards as echo of its own playback does not end the stream either. Each
+behind real time, which would start a new epoch.<!-- /rfc --> <!-- rfc: {"id": "RK-12.2.3-023", "kind": "behavior", "applies": "§12.2.3 Stream lifetime, the voice feature: a transcript the channel discards as echo of its own playback does not end the stream. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A transcript it
+discards as echo of its own playback does not end the stream either.<!-- /rfc --> <!-- rfc: {"id": "RK-12.2.3-024", "kind": "behavior", "applies": "§12.2.3 Stream lifetime, the voice feature: each stream a session opens starts a new label epoch, numbered from 0 for the session. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Each
 stream a session opens starts a new *label epoch*, numbered from 0 for the
-session. The epoch travels with every label (below), and a consumer MUST NOT
+session.<!-- /rfc --> <!-- rfc: {"id": "RK-12.2.3-025", "kind": "behavior", "applies": "§12.2.3 Stream lifetime, the voice feature: the epoch travels with every label, and no consumer equates two labels from different epochs. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The epoch travels with every label (below), and a consumer MUST NOT
 equate two labels from different epochs.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.2.3-007", "kind": "behavior", "applies": "§12.2.3 Speaker Attribution from STT; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.2.3-026", "kind": "behavior", "applies": "§12.2.3 Into the room, the voice feature: for a final result with segments, the Voice Channel fires ON_SPEECH_END once. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Into the room.** For a final result with segments, the Voice Channel fires
 `ON_SPEECH_END` once, then:
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.2.3-027", "kind": "behavior", "applies": "§12.2.3 Into the room, step 1, the voice feature: one inbound message routed per segment, in the order the finals and their segments were produced. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 1. Routes one inbound message per segment, in the order the finals and their
-   segments were produced: a room message has one speaker. Ordering covers
+   segments were produced: a room message has one speaker.<!-- /rfc --> <!-- rfc: {"id": "RK-12.2.3-028", "kind": "behavior", "applies": "§12.2.3 Into the room, step 1, the voice feature: the order covers each message's commit, not the reply to it; a reply still being produced does not hold back the next segment. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Ordering covers
    the commit of each message, not the reply to it: a reply still being
-   produced MUST NOT hold back the next segment. A change of speaker ends the pending turn: a turn detector
+   produced MUST NOT hold back the next segment.<!-- /rfc --> <!-- rfc: {"id": "RK-12.2.3-029", "kind": "behavior", "applies": "§12.2.3 Into the room, step 1, the voice feature: a change of speaker ends the pending turn; no turn detector joins two speakers' segments into one message, two segments under one label a hook matched to two participants included. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A change of speaker ends the pending turn: a turn detector
    (Section 12.3.12) MUST NOT join two speakers' segments into one message,
    two segments under one label that a hook matched to two participants
-   (below) included.
+   (below) included.<!-- /rfc --><!-- rfc: {"id": "RK-12.2.3-030", "kind": "behavior", "applies": "§12.2.3 Into the room, step 1, the voice feature: ON_TRANSCRIPTION fires per segment, its event carrying the segment's speaker, speaker_epoch and sender_name; a hook may replace sender_name and name the room participant the voice is, and the channel honours it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
    `ON_TRANSCRIPTION` fires per segment, and its event carries the segment's
    `speaker`, the `speaker_epoch` and the `sender_name` below; a hook MAY
    replace `sender_name` (a label matched to a known voice), and MAY name the
-   room participant the voice is (`participant_id`).
+   room participant the voice is (`participant_id`).<!-- /rfc --><!-- rfc: {"id": "RK-12.2.3-031", "kind": "behavior", "applies": "§12.2.3 Into the room, step 2, the voice feature: the message keeps the session's participant as sender_id unless a hook named the participant who spoke, whose message it then is, their record naming it and sender_name left out unless the hook also named the voice (that a label is not a participant, mapping one being the integrator's, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 2. Keeps `sender_id` as the session's participant, the owner of the audio
    stream, unless a hook named the participant who spoke: the message is
    then theirs, and their record names it, `sender_name` left out, unless
    the hook also gave the voice a name of its own. A label is not a participant (Section 12.3.9): mapping one
    to a known person is the integrator's concern, and the hook is where it
-   does so. A name proves nothing, so a voice is never matched to a
+   does so.<!-- /rfc --> <!-- rfc: {"id": "RK-12.2.3-032", "kind": "behavior", "applies": "§12.2.3 Into the room, step 2, the voice feature: a voice is never matched to a participant by its name; one named like a participant without being matched to them is another source and carries a rank (§6.4). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A name proves nothing, so a voice is never matched to a
    participant by its name; a voice named like a participant without being
-   matched to them is another source and carries a rank (Section 6.4). An
+   matched to them is another source and carries a rank (Section 6.4).<!-- /rfc --> <!-- rfc: {"id": "RK-12.2.3-033", "kind": "behavior", "applies": "§12.2.3 Into the room, step 2, the voice feature: a participant id a hook gives names its participant only on a channel they are reached through, one added to the room on the voice channel (the meeting bridged into one stream, its people on the roster, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An
    id names its participant only on a channel they are reached through
    (Section 5.5): one added to the room on the voice channel. A meeting
    bridged into one stream thus writes its people on the room's roster and
    matches each voice to its person, and its first turn reads under that
-   person's name (Section 6.4, *Who takes part*).
+   person's name (Section 6.4, *Who takes part*).<!-- /rfc --><!-- rfc: {"id": "RK-12.2.3-034", "kind": "behavior", "applies": "§12.2.3 Into the room, step 3, the voice feature: the message carries metadata.speaker_label, metadata.speaker_epoch and metadata.sender_name. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 3. Sets on the message `metadata.speaker_label`, `metadata.speaker_epoch` and
-   `metadata.sender_name`. `sender_name` defaults to `"Speaker <label>"` in
+   `metadata.sender_name`.<!-- /rfc --> <!-- rfc: {"id": "RK-12.2.3-035", "kind": "behavior", "applies": "§12.2.3 Into the room, step 3, the voice feature: sender_name defaults to \"Speaker <label>\" in epoch 0 and \"Speaker <label>#<epoch>\" after. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`sender_name` defaults to `"Speaker <label>"` in
    epoch 0 and `"Speaker <label>#<epoch>"` after, so the same letter from two
-   epochs never reads as one person. A segment with a null speaker carries no
+   epochs never reads as one person.<!-- /rfc --> <!-- rfc: {"id": "RK-12.2.3-036", "kind": "behavior", "applies": "§12.2.3 Into the room, step 3, the voice feature: a segment with a null speaker carries no label and sender_name \"Unknown speaker\". Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A segment with a null speaker carries no
    label and `sender_name = "Unknown speaker"`: without a name, the AI channel
-   would fall back to the stream owner's for words nobody was attributed. The
+   would fall back to the stream owner's for words nobody was attributed.<!-- /rfc --> <!-- rfc: {"id": "RK-12.2.3-037", "kind": "behavior", "applies": "§12.2.3 Into the room, step 3, the voice feature: the AI channel attributes a turn to its sender_name when the room holds more than one speaker, and from the first turn when the integrator wrote the people the stream carries on the room's roster. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The
    AI channel attributes a turn to `sender_name` when the room holds more than
    one speaker, so the model reads `"Speaker A: …"` rather than one anonymous
    stream, and from the first turn when the integrator wrote the people the
    stream carries on the room's roster (step 2).
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.2.3-008", "kind": "behavior", "applies": "§12.2.3 Speaker Attribution from STT; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.2.3-038", "kind": "behavior", "applies": "§12.2.3 Speaker change, the voice feature: evaluated per routed segment, in order; a segment with a null speaker neither fires ON_SPEAKER_CHANGE nor resets the last label. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Speaker change.** Evaluated per routed segment, in order. A
-segment with a null speaker neither fires nor resets the last label. The
+segment with a null speaker neither fires nor resets the last label.<!-- /rfc --> <!-- rfc: {"id": "RK-12.2.3-039", "kind": "behavior", "applies": "§12.2.3 Speaker change, the voice feature: ON_SPEAKER_CHANGE fires with source \"stt\" when a segment's label differs from the last label routed in the same epoch, and on the first labelled segment of each epoch. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The
 framework MUST fire `ON_SPEAKER_CHANGE` with `source = "stt"` when a segment's
 label differs from the last label routed in the same epoch, and on the first
-labelled segment of each epoch. The event's `speaker_id` is the label,
+labelled segment of each epoch.<!-- /rfc --> <!-- rfc: {"id": "RK-12.2.3-040", "kind": "behavior", "applies": "§12.2.3 Speaker change, the voice feature: the event's speaker_id is the label, speaker_epoch its epoch, is_new_speaker true for a label not routed before in that epoch, and confidence null unless the provider reports one. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The event's `speaker_id` is the label,
 `speaker_epoch` its epoch, `is_new_speaker` is true when the label had not been
 routed before in that epoch, and `confidence` is null unless the provider
-reports one. Events from
+reports one.<!-- /rfc --> <!-- rfc: {"id": "RK-12.2.3-041", "kind": "behavior", "applies": "§12.2.3 Speaker change, the voice feature: an ON_SPEAKER_CHANGE event from the pipeline's diarization stage carries source \"pipeline\". Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Events from
 the pipeline stage carry `source = "pipeline"`.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.2.3-009", "kind": "behavior", "applies": "§12.2.3 Speaker Attribution from STT; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.2.3-009", "kind": "behavior", "applies": "§12.2.3 With the pipeline stage, the voice feature: with both a diarizing STT and a DiarizationProvider, the STT's label is the one attached to the transcript, and the stage keeps firing ON_SPEAKER_CHANGE with its own source. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **With the pipeline stage.** When a session has both a diarizing STT and a
 `DiarizationProvider`, the STT's label is the one attached to the transcript,
 being aligned to its words; the stage keeps firing `ON_SPEAKER_CHANGE` with its
 own source.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.2.3-010", "kind": "behavior", "applies": "§12.2.3 Speaker Attribution from STT; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.2.3-042", "kind": "behavior", "applies": "§12.2.3 From the pipeline stage, the voice feature: when the STT is not diarizing, a Voice Channel may name a transcript's speaker from its DiarizationProvider, on the integrator's opt-in. Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->
 **From the pipeline stage.** When the STT is not diarizing, a Voice Channel
 MAY name a transcript's speaker from its `DiarizationProvider` (Section
-12.3.9), on the integrator's opt-in. A channel MUST refuse the option at
+12.3.9), on the integrator's opt-in.<!-- /rfc --> <!-- rfc: {"id": "RK-12.2.3-043", "kind": "behavior", "applies": "§12.2.3 From the pipeline stage, the voice feature, where an implementation offers the option: it is refused at construction without a diarization stage, and in batch mode. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A channel MUST refuse the option at
 construction without a diarization stage, and in batch mode. With it:
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.2.3-044", "kind": "behavior", "applies": "§12.2.3 From the pipeline stage, step 1, the voice feature, where an implementation offers the option: a transcript's speaker is the stage's result heard the longest over the audio it transcribes (the utterance with its SPEECH_END frame in VAD mode, the audio since the previous final in continuous mode), each result standing for the audio since the stage's previous result on that stream. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 1. A transcript's speaker is the stage's result heard the longest over the
    audio it transcribes: in VAD mode the utterance, its `SPEECH_END` frame
    included; in continuous mode the audio since the previous final. A result
    stands for the audio since the stage's previous result on that stream, so
-   a stage that judges a buffer weighs each verdict by what it heard. The
+   a stage that judges a buffer weighs each verdict by what it heard.<!-- /rfc --> <!-- rfc: {"id": "RK-12.2.3-045", "kind": "behavior", "applies": "§12.2.3 From the pipeline stage, step 1, the voice feature, where an implementation offers the option: a channel that reads the stage when SPEECH_END fires waits until that frame has been through the stage. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The
    pipeline runs its VAD before its diarization stage, and a stage may
    identify only on the `SPEECH_END` frame, so a channel that reads the stage
-   when `SPEECH_END` fires MUST wait until that frame has been through it.
-2. The stage's `speaker_id` is normalised as an STT label (*Labels*). A
+   when `SPEECH_END` fires MUST wait until that frame has been through it.<!-- /rfc --><!-- rfc: {"id": "RK-12.2.3-046", "kind": "behavior", "applies": "§12.2.3 From the pipeline stage, step 2, the voice feature, where an implementation offers the option: the stage's speaker_id normalised as an STT label (Labels). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+2. The stage's `speaker_id` is normalised as an STT label (*Labels*).<!-- /rfc --> <!-- rfc: {"id": "RK-12.2.3-047", "kind": "behavior", "applies": "§12.2.3 From the pipeline stage, step 2, the voice feature, where an implementation offers the option: a result attributing the audio to nobody (unknown) counts as a null speaker, and heard the longest gives the transcript sender_name \"Unknown speaker\". Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
    result that attributes the audio to nobody (`unknown`) counts as a null
    speaker; if heard the longest, the transcript's `sender_name` is
-   `"Unknown speaker"`. A transcript over which the stage gave no result
-   carries no speaker, as without the option.
-3. The stage keeps its labels for the whole session, so the epoch is 0.
+   `"Unknown speaker"`.<!-- /rfc --> <!-- rfc: {"id": "RK-12.2.3-048", "kind": "behavior", "applies": "§12.2.3 From the pipeline stage, step 2, the voice feature, where an implementation offers the option: a transcript over which the stage gave no result carries no speaker. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A transcript over which the stage gave no result
+   carries no speaker, as without the option.<!-- /rfc --><!-- rfc: {"id": "RK-12.2.3-049", "kind": "behavior", "applies": "§12.2.3 From the pipeline stage, step 3, the voice feature, where an implementation offers the option: the stage keeps its labels for the whole session, the epoch 0. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+3. The stage keeps its labels for the whole session, so the epoch is 0.<!-- /rfc --><!-- rfc: {"id": "RK-12.2.3-050", "kind": "behavior", "applies": "§12.2.3 From the pipeline stage, step 4, the voice feature, where an implementation offers the option: the transcript reaches the room as one message, as Into the room sets it, ON_TRANSCRIPTION carrying the speaker and free to rename it or name its participant, the message carrying speaker_label, speaker_epoch and sender_name. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 4. The transcript reaches the room as one message, as *Into the room* sets
    it: `ON_TRANSCRIPTION` carries the speaker and MAY rename it or name the
    participant it is, and the message carries `speaker_label`,
-   `speaker_epoch` and `sender_name`. The
+   `speaker_epoch` and `sender_name`.<!-- /rfc --> <!-- rfc: {"id": "RK-12.2.3-051", "kind": "behavior", "applies": "§12.2.3 From the pipeline stage, step 4, the voice feature, where an implementation offers the option: the channel fires no ON_SPEAKER_CHANGE with source \"stt\" for the transcript, the stage firing its own. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The
    channel fires no `ON_SPEAKER_CHANGE` with `source = "stt"` for it: the
    stage fires its own.
 <!-- /rfc -->
 
 #### 12.2.4 Custom Voices
 
-<!-- rfc: {"id": "RK-12.2.4-001", "kind": "behavior", "applies": "§12.2.4 Custom Voices; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.2.4-005", "kind": "structural", "applies": "§12.2.4 VoiceLibrary interface, the voice feature: its members, the design and replication flags defaulting to false, design_voice, replicate_voice, get_voice and delete_voice, with their parameters and results (the section's introduction folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A voice can be made rather than picked: designed from a description, or
 replicated from a recording of a person. Making one manages the vendor's voice
 store; it is not synthesis, so it has an interface of its own, and the voice it
@@ -11927,7 +11939,11 @@ VoiceLibrary (interface)
 │       # A person's voice, from a recording of it and their recorded consent
 ├── get_voice(voice_id: string) → CustomVoice | null
 └── delete_voice(voice_id: string) → void
+```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.2.4-006", "kind": "structural", "applies": "§12.2.4 CustomVoice record, the voice feature: its fields, voice.id what the TTS accepts, stored, expires_at and the vendor's sample. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 CustomVoice
 ├── voice: VoiceInfo                        # voice.id is what the TTS accepts
 ├── stored: bool                            # Held by the vendor, listed by its TTS
@@ -11936,37 +11952,39 @@ CustomVoice
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.2.4-002", "kind": "behavior", "applies": "§12.2.4 Custom Voices; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.2.4-002", "kind": "behavior", "applies": "§12.2.4 Kinds, the voice feature, what any voice library must do: it raises for a kind of creation its supports_design or supports_replication does not announce. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Kinds.** A library MUST raise for a kind of creation its
 `supports_design` or `supports_replication` does not announce.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.2.4-003", "kind": "behavior", "applies": "§12.2.4 Custom Voices; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.2.4-007", "kind": "behavior", "applies": "§12.2.4 Storage, the voice feature, what any voice library must do: store = true has the vendor keep the voice for the caller's account until it is deleted or expires, listed by the vendor TTS's list_voices() and read back with get_voice(). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Storage.** `store = true` asks the vendor to keep the voice for the caller's
 account until it is deleted or expires; such a voice appears in the vendor
-TTS's `list_voices()` and is read back with `get_voice()`. `store = false`
+TTS's `list_voices()` and is read back with `get_voice()`.<!-- /rfc --> <!-- rfc: {"id": "RK-12.2.4-008", "kind": "behavior", "applies": "§12.2.4 Storage, the voice feature, what any voice library must do: store = false gives a voice the vendor keeps nothing addressable for, the returned id its only handle and get_voice() unable to find it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`store = false`
 asks for a voice the vendor keeps nothing addressable for: the returned id is
-the only handle, and `get_voice()` cannot find it. A vendor that offers one
+the only handle, and `get_voice()` cannot find it.<!-- /rfc --> <!-- rfc: {"id": "RK-12.2.4-009", "kind": "behavior", "applies": "§12.2.4 Storage, the voice feature, what any voice library must do: with a vendor that offers one storage mode only, the library raises for the other rather than return the mode it has. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A vendor that offers one
 mode only MUST make the library raise for the other, rather than return the
-mode it has. `get_voice()` returns null for an id the vendor does not hold;
+mode it has.<!-- /rfc --> <!-- rfc: {"id": "RK-12.2.4-010", "kind": "behavior", "applies": "§12.2.4 Storage, the voice feature, what any voice library must do: get_voice() returns null for an id the vendor does not hold, and deleting such an id is not an error. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`get_voice()` returns null for an id the vendor does not hold;
 deleting such an id is not an error.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.2.4-011", "kind": "behavior", "applies": "§12.2.4 Storage, the voice feature, what any voice library must do: name is the display name a stored voice is listed under, ignored by a vendor that names nothing. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 `name` is the display name a stored voice is listed under; a vendor that
 names nothing ignores it.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.2.4-004", "kind": "behavior", "applies": "§12.2.4 Custom Voices; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.2.4-012", "kind": "structural", "applies": "§12.2.4 Consent, the voice feature: replicate_voice() takes as a required argument the consent recording, by the person whose voice sample holds, agreeing to its replication. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Consent.** `replicate_voice()` takes the consent recording as a required
 argument: a recording, by the person whose voice `sample` holds, agreeing to
-its replication. A vendor MAY prescribe the words, read verbatim, and refuse
+its replication.<!-- /rfc --> <!-- rfc: {"id": "RK-12.2.4-013", "kind": "behavior", "applies": "§12.2.4 Consent, the voice feature, a voice library whose vendor prescribes the words read verbatim and refuses any other: it exposes the statement per language. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->A vendor MAY prescribe the words, read verbatim, and refuse
 any other; a library SHOULD then expose the statement per language, so an
-application can show the person what to read. A library MUST send the
+application can show the person what to read.<!-- /rfc --> <!-- rfc: {"id": "RK-12.2.4-014", "kind": "behavior", "applies": "§12.2.4 Consent, the voice feature, what any voice library must do: the consent recording sent to a vendor that verifies it, no voice the vendor refused returned, and the refusal raised as an error of its own, distinct from any other failure. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A library MUST send the
 recording to a vendor that verifies it, MUST NOT return a voice the vendor
 refused, and MUST raise the refusal as an error of its own, distinct from any
-other failure, so the application can ask for a new recording. It MUST raise
+other failure, so the application can ask for a new recording.<!-- /rfc --> <!-- rfc: {"id": "RK-12.2.4-015", "kind": "behavior", "applies": "§12.2.4 Consent, the voice feature, what any voice library must do: with a vendor that has no consent check of its own, the library raises without calling it unless the integrator declared, through configuration, that consent is established outside the call. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->It MUST raise
 without calling a vendor
 that has no consent check of its own when the integrator has not declared,
-through configuration, that consent is established outside the call. A TTS
+through configuration, that consent is established outside the call.<!-- /rfc --> <!-- rfc: {"id": "RK-12.2.4-016", "kind": "non_testable", "applies": "§12.2.4 Consent, the integrator's obligation: a TTS provider may take reference audio in its configuration (a local model cloning a voice per call), the consent obligation then lying with the integrator (the pointer to §17.6 folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A TTS
 provider MAY also take reference audio in its configuration, a local model
 cloning a voice per call; the same obligation then lies with the integrator.
 Section 17.6 governs how reference and consent audio are handled.

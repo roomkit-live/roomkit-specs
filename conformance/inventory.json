@@ -597,27 +597,27 @@
     },
     {
       "section": "12.2.1",
-      "sha256": "5d6d3f2f105b18f563959197077d53a3ac147cb4862ed56a8e1d101b6a8addd0",
+      "sha256": "43f3d54fcb58650cfde12243e6d73224cc611ef1e75454eea66f665a3c6b9873",
       "classification": "normative",
-      "review": "Source inventory: Packet Loss Handling (Lossy Transports). Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Packet Loss Handling (Lossy Transports), split to one obligation per unit, each with its level (RMK-2022). RK-12.2.1-001, concealment optional for Level 3 and recommended for an RTP-based backend (should), its rationale folded in; RK-12.2.1-005 to 011, detection and concealment by a backend that implements PLC (009, codec-native concealment, should); RK-12.2.1-012, the per-session counters, and 013, the concealed-frame annotation (should). What a backend does on its own transport is a unit of its own; codecs, a codec library and RFC 4733 are named as examples. Every unit carries its level."
     },
     {
       "section": "12.2.2",
-      "sha256": "cb45cbb8c3237ea3087473b9aa8bdc7e0cd968b424d61ebfd84183985e6ed995",
+      "sha256": "ce71a66b0454ce6993979085787c64e70f3e6ae7f8ac39f71507fa609e2de9a8",
       "classification": "normative",
-      "review": "Source inventory: Conversation Context for TTS. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Conversation Context for TTS, split to one obligation per unit, each with its level (RMK-2022). RK-12.2.2-009, the context levels, the section's motivation folded in; RK-12.2.2-010 and 011, the TTSContext and ConversationTurn records (structural), and 012, TTSContextConfig with the bounds it sets, the block cut at its blank lines by closing and reopening its fence; RK-12.2.2-013 to 029, the passing rules, one context per session, recording the user and the assistant turns, and stateful providers (025, a provider's licence to read only the new turns, may); RK-12.2.2-008, the conference scope, the sentences on what the version covers folded in. What any TTS provider must do with the context is a unit of its own. Every unit carries its level."
     },
     {
       "section": "12.2.3",
-      "sha256": "6c2034faaa5b89b76d6a89f8256270860ea75cca667434d8cf8e4452de9da35f",
+      "sha256": "b19acaeb08102e2d4854be419b752637512d8f79f684e46b82f399424d452307",
       "classification": "normative",
-      "review": "Source inventory: Speaker Attribution from STT. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Speaker Attribution from STT, split to one obligation per unit, each with its level (RMK-2022). RK-12.2.3-011, the refusal by a channel lacking the three parts, the introduction and the status note folded in; RK-12.2.3-012 to 017, what any STT provider must do with labels and segments (016, partial segments, may), 013 holding the vendor spellings of an unattributed speaker; RK-12.2.3-018 to 041, revisions, the refusals, stream lifetime (022, should), the route into the room and the speaker-change event; RK-12.2.3-009, with the pipeline stage; RK-12.2.3-042 to 051, the opt-in naming from the pipeline stage (042, the option itself, may). Every unit carries its level."
     },
     {
       "section": "12.2.4",
-      "sha256": "f8dac070e0df0fcc78c1543b8e62975fef88b76097c3f36c2d2ad8fed36a9183",
+      "sha256": "680e322b666f9504e6f09d9d80d60ba06d750210cb52a21820459c833bce0cc9",
       "classification": "normative",
-      "review": "Source inventory: Custom Voices. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Custom Voices, split to one obligation per unit, each with its level (RMK-2022). RK-12.2.4-005 and 006, the VoiceLibrary interface and the CustomVoice record (structural), the introduction folded in and the block cut at its blank line by closing and reopening its fence; RK-12.2.4-002, the kinds; RK-12.2.4-007 to 011, the storage modes; RK-12.2.4-012 to 016, consent (012 structural, 013 should, 016 the integrator's obligation for reference audio, non_testable). What any voice library must do is a unit of its own. Every unit carries its level."
     },
     {
       "section": "12.3",
