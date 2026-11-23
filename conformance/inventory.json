@@ -723,15 +723,15 @@
     },
     {
       "section": "12.4.1",
-      "sha256": "b7df2e1533d1d1e96cbeb890a1a02007c5fde165b07a12ac271038c19ac91a0d",
+      "sha256": "e594b92bfe73a61d7b546de3ed12bf5fd714d219ad0ce8ee1d03123d075a9708",
       "classification": "normative",
-      "review": "Source inventory: Full-Duplex Providers and Reasoning Delegation. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage. Vendor cleanup (RMK-1991): the full-duplex provider's example names no model."
+      "review": "Source inventory: Full-Duplex Providers and Reasoning Delegation, split to one obligation per unit, each with its level (RMK-2047). RK-12.4.1-011, a full-duplex provider declares full_duplex (the definitions folded in), 012 may, support optional within Conformance Level 3, and 013, a delegation's backend may itself delegate a task (§23); 014 to 019, the synthesized boundaries (014 to 017 bind the provider: 016 should, the 800 ms default, a vendor's wire value, and 017 may, synthesized speech edges; 018, the channel observes them; 019, a latency metric accounts for their lag); 020 to 024, an answer awaited starts with the model's output, for every host of a realtime model; 025 to 030, interruption belongs to the model (026 binds the provider; 030 should, the notice where the VAD is configured); 031 and 032, the output is a stream (032, the recorder keeps its silence); 033 to 037, the session fixed at start (033, 035 (should), 036 and 037 bind the provider; 034, the orchestration chooses an append); 038 to 041 and 085, text injection is paraphrased (038 non_testable, what inject_text documents; 039 to 041 and 085 bind the provider); 042 to 044, the hosted backend (043 and 044 bind the provider); 045 to 081, the integrator backend: 045 and 046 bind the provider; 047, the channel serves the integrator target; 048 to 051, the ReasoningBackend contract (048 and 051 structural; 049, the request; 050, a call's outcome); 052 to 059, the transcript, the outputs, the ledger (055 in a conference), the fallback answer, ON_ERROR and the expected ends (059 should, the provider's instructions); 060 to 070, the gate and the tool loop's rules (063 should); 071 to 081, a backend that is an agent; 082 to 084, observability (083 and 084 bind the provider). The ReasoningBackend code block is cut by closing and reopening its fence (3 cuts, 6 bare fence lines). Vendor cleanup (RMK-1991): the full-duplex provider's example names no model. Every unit carries its level."
     },
     {
       "section": "12.4.2",
-      "sha256": "87d49a8267ce71d472b658dc480af272a26644f892d7864bf9053cba825b00b2",
+      "sha256": "7a9fbf28652694083aa0b9217c3a0191ed16deedff9895d9c9fae8a5d5299eca",
       "classification": "normative",
-      "review": "Source inventory: Usage Reporting. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Usage Reporting, split to one obligation per unit, each with its level (RMK-2047): RK-12.4.2-004 to 007, the snapshot (the rationale folded into 004; 005, the two keys the framework fixes; 006, a provider's own keys, carried; 007 non_testable, a reader takes an absent key as unreported); 008 to 012 and 015, the on_usage callback (009 non_testable, an integrator that bills uses it; 010, the next report replaces the snapshot; 015, the channel clears it at each turn's end; 011 and 012, a callback that blocks or fails); 013 and 014 bind the provider (duration, and a hosted backend's token usage). Every unit carries its level."
     },
     {
       "section": "12.5",

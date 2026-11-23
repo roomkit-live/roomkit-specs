@@ -14213,7 +14213,7 @@ through the pipeline before being forwarded to the provider.
 
 #### 12.4.1 Full-Duplex Providers and Reasoning Delegation
 
-<!-- rfc: {"id": "RK-12.4.1-001", "kind": "behavior", "applies": "§12.4.1 Full-Duplex Providers and Reasoning Delegation; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.4.1-011", "kind": "behavior", "applies": "§12.4.1 Full-Duplex Providers and Reasoning Delegation, the realtime feature's provider contract: a provider that listens and speaks at once and holds no tools (no response or speech boundaries, no request to respond and no interruption on its wire; reasoning and tool use handed to a backend model, a reasoning delegation) declares both traits with full_duplex = true, and §12.4.1 binds only providers that declare it (the definitions, informative, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Some speech-to-speech providers do not take turns. A **full-duplex provider**
 listens and speaks at the same time: it decides on its
 own when to answer, when to fall silent because the user spoke over it, and
@@ -14223,9 +14223,10 @@ end, no speech start or end, no request to respond, no interruption. The same
 providers hold no tools: the conversational model hands reasoning and tool use
 to a backend model, a **reasoning delegation**, and keeps talking while the
 backend works. A provider declares both traits with `full_duplex = true`, and
-this section binds only providers that declare it. Support is OPTIONAL within
-Conformance Level 3.
+this section binds only providers that declare it.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4.1-012", "kind": "behavior", "applies": "§12.4.1 Full-Duplex Providers and Reasoning Delegation, the realtime feature: support of full-duplex providers is optional within Conformance Level 3 (§26). Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->Support is OPTIONAL within
+Conformance Level 3.<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.4.1-013", "kind": "behavior", "applies": "§12.4.1 Full-Duplex Providers and Reasoning Delegation, the realtime feature, a delegation the provider hands over: its backend may itself delegate a task (§23), the integrator's choice, which the implementation honours (what sets a reasoning delegation apart from Task Delegation, informative, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Reasoning delegation is not Task Delegation (Section 23). Section 23 dispatches
 a described task to an agent in a child room and delivers a result into the
 conversation; a reasoning delegation is the provider's own model deferring the
@@ -14234,37 +14235,37 @@ and call tools. The two compose: the backend of a reasoning delegation MAY
 itself delegate a task.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.4.1-002", "kind": "behavior", "applies": "§12.4.1 Full-Duplex Providers and Reasoning Delegation; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.4.1-014", "kind": "behavior", "applies": "§12.4.1 Boundaries are synthesized, the realtime feature's provider contract, a provider that declares full_duplex: it synthesizes on_response_start when assistant output (audio or transcript) resumes after quiet, and on_response_end when assistant output has been quiet for a configurable gap (the channel contracts that hold on those callbacks, which its wire lacks, informative, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Boundaries are synthesized (normative).** The channel contracts of this
 section — idle tracking, end-of-response flushing, AEC activation, one
 utterance at a time on the bot track (Section 12.10.12) — hold on `on_response_start` and `on_response_end`, and a
 full-duplex provider has neither on its wire. The provider MUST synthesize
 them: `on_response_start` when assistant output (audio or transcript) resumes
 after quiet, `on_response_end` when assistant output has been quiet for a
-configurable gap. The gap MUST exceed the provider's transcript frame
-granularity, or an ordinary pause inside a sentence would close the response;
+configurable gap.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4.1-015", "kind": "behavior", "applies": "§12.4.1 Boundaries are synthesized, the realtime feature's provider contract, a provider that declares full_duplex: the gap exceeds the provider's transcript frame granularity, so that an ordinary pause inside a sentence does not close the response. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The gap MUST exceed the provider's transcript frame
+granularity, or an ordinary pause inside a sentence would close the response;<!-- /rfc --><!-- rfc: {"id": "RK-12.4.1-016", "kind": "behavior", "applies": "§12.4.1 Boundaries are synthesized, the realtime feature's provider contract, a provider that declares full_duplex and emits transcript fragments on 200 ms frames: a default gap in the order of 800 ms, a vendor's wire value. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 for a provider that emits transcript fragments on 200 ms frames a default in
-the order of 800 ms is RECOMMENDED. A provider MAY synthesize `on_speech_start`
+the order of 800 ms is RECOMMENDED.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4.1-017", "kind": "behavior", "applies": "§12.4.1 Boundaries are synthesized, the realtime feature's provider contract, a provider that declares full_duplex: it may synthesize on_speech_start and on_speech_end from user-role transcript activity, as it synthesizes the response boundaries, so that ON_SPEECH_START and ON_SPEECH_END keep firing. Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->A provider MAY synthesize `on_speech_start`
 and `on_speech_end` from user-role transcript activity the same way, so that
-ON_SPEECH_START and ON_SPEECH_END keep firing; the channel MUST treat them as
-observation, never as the entry to the interruption path below. Synthesized
+ON_SPEECH_START and ON_SPEECH_END keep firing;<!-- /rfc --> <!-- rfc: {"id": "RK-12.4.1-018", "kind": "behavior", "applies": "§12.4.1 Boundaries are synthesized, the realtime feature, on a provider that declares full_duplex: the channel treats synthesized speech starts and ends as observation, never as the entry to the interruption path (Interruption belongs to the model). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->the channel MUST treat them as
+observation, never as the entry to the interruption path below.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4.1-019", "kind": "behavior", "applies": "§12.4.1 Boundaries are synthesized, the realtime feature, on a provider that declares full_duplex: synthesized boundaries lag the audio they describe by the gap, and a latency metric read from them accounts for that lag. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Synthesized
 boundaries lag the audio they describe by the gap, and a latency metric read
 from them MUST account for it.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.4.1-003", "kind": "behavior", "applies": "§12.4.1 Full-Duplex Providers and Reasoning Delegation; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.4.1-020", "kind": "behavior", "applies": "§12.4.1 An answer awaited starts with the model's output, the realtime feature, every host of a realtime model (a realtime voice channel, a conference): a host that sent the model a tool result or a delegation's spoken output is not idle until the model's answer to it starts. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **An answer awaited starts with the model's output (normative).** A host that
 sent the model a tool result or a delegation's spoken output is not idle until
-the model's answer to it starts. The answer starts with a response start, and,
+the model's answer to it starts.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4.1-021", "kind": "behavior", "applies": "§12.4.1 An answer awaited starts with the model's output, the realtime feature, every host of a realtime model (a realtime voice channel, a conference): the awaited answer starts with a response start, and, on a full-duplex provider (which may answer inside a response already open and synthesize no new start), with audible assistant audio or a non-empty partial transcript of the assistant's words. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The answer starts with a response start, and,
 on a full-duplex provider, which may say it inside a response already open and
 synthesize no new start, with audible assistant audio or a non-empty partial
-transcript of the assistant's words. The host waits from before the output is
-sent, so an answer that starts before the send returns is not missed. An output
-that could not be sent is not waited for. Every host of a realtime model (a
+transcript of the assistant's words.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4.1-022", "kind": "behavior", "applies": "§12.4.1 An answer awaited starts with the model's output, the realtime feature, every host of a realtime model (a realtime voice channel, a conference): the host waits from before the output is sent, so that an answer that starts before the send returns is not missed. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The host waits from before the output is
+sent, so an answer that starts before the send returns is not missed.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4.1-023", "kind": "behavior", "applies": "§12.4.1 An answer awaited starts with the model's output, the realtime feature, every host of a realtime model (a realtime voice channel, a conference): an output that could not be sent is not waited for. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An output
+that could not be sent is not waited for.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4.1-024", "kind": "behavior", "applies": "§12.4.1 An answer awaited starts with the model's output, the realtime feature, every host of a realtime model (a realtime voice channel, a conference): every such host reads the answer's start the same way, a conference as a realtime voice channel does. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Every host of a realtime model (a
 realtime voice channel, a conference) reads the answer's start the same way.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.4.1-004", "kind": "behavior", "applies": "§12.4.1 Full-Duplex Providers and Reasoning Delegation; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.4.1-025", "kind": "behavior", "applies": "§12.4.1 Interruption belongs to the model, the realtime feature, on a provider that declares full_duplex: when the user speaks over the model, the channel decides nothing for it: it calls neither interrupt() nor truncate_audio(), neither flushes nor interrupts the transport's playback, and does not gate provider audio on user speech, whatever the sensor (provider speech events, pipeline VAD, transport-level barge-in) (what the model decides, and why gating would harm it, informative, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Interruption belongs to the model (normative).** When the user speaks over a
 full-duplex provider, the model hears it and decides — it stops, or finishes
 its clause, or says "mhm" and carries on. The framework MUST NOT decide for
@@ -14273,58 +14274,59 @@ it: on a full-duplex session the channel MUST NOT call `interrupt()` or
 MUST NOT gate provider audio on user speech, whatever the sensor — provider
 speech events, pipeline VAD, or transport-level barge-in. Gating would cut the
 model's backchannels and its own recovery from being talked over, the very
-behaviour the provider was chosen for. The provider's `interrupt()` and
+behaviour the provider was chosen for.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4.1-026", "kind": "behavior", "applies": "§12.4.1 Interruption belongs to the model, the realtime feature's provider contract, a provider that declares full_duplex: its interrupt() and truncate_audio() are no-ops that neither fail nor log above debug level, so that a channel that ignores the flag does no harm calling them. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The provider's `interrupt()` and
 `truncate_audio()` MUST be no-ops that neither fail nor log above debug level,
-so a channel that ignores the flag does no harm calling them. ON_BARGE_IN does
+so a channel that ignores the flag does no harm calling them.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4.1-027", "kind": "behavior", "applies": "§12.4.1 Interruption belongs to the model, the realtime feature, on a provider that declares full_duplex: ON_BARGE_IN does not fire on a full-duplex 1:1 session, since the framework interrupted nothing (a conference keeps its own authority over the bot track, §12.10.12, the pointer folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_BARGE_IN does
 not fire on a full-duplex 1:1 session: the framework interrupted nothing. A
 conference keeps its own authority over the bot track and is treated in
-Section 12.10.12.
+Section 12.10.12.<!-- /rfc -->
 
-The audio pipeline (Section 12.3) keeps its preprocessing role. Of the two VAD
+<!-- rfc: {"id": "RK-12.4.1-028", "kind": "behavior", "applies": "§12.4.1 Interruption belongs to the model, the realtime feature, on a provider that declares full_duplex: the audio pipeline (§12.3) keeps its preprocessing role. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+The audio pipeline (Section 12.3) keeps its preprocessing role.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4.1-029", "kind": "behavior", "applies": "§12.4.1 Interruption belongs to the model, the realtime feature, on a provider that declares full_duplex: an implementation drives neither endpointing nor interruption from a pipeline VAD on such a session; of the two VAD roles of §12.4, only observation is admissible (why, informative, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Of the two VAD
 roles above, only observation is admissible: endpointing needs an activity
 signal the provider does not take. An implementation MUST NOT drive
-endpointing or interruption from a pipeline VAD on such a session, and SHOULD
+endpointing or interruption from a pipeline VAD on such a session, <!-- /rfc --><!-- rfc: {"id": "RK-12.4.1-030", "kind": "behavior", "applies": "§12.4.1 Interruption belongs to the model, the realtime feature, on a provider that declares full_duplex: an implementation says, where the VAD is configured, that a pipeline VAD on such a session only observes, rather than demote it silently; a notice at session start suffices. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->and SHOULD
 say so where the VAD is configured — a notice at session start suffices —
 rather than demote it silently.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.4.1-005", "kind": "behavior", "applies": "§12.4.1 Full-Duplex Providers and Reasoning Delegation; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.4.1-031", "kind": "behavior", "applies": "§12.4.1 The output is a stream, not a burst, the realtime feature, on a provider that declares full_duplex: the provider may emit output audio continuously at real-time pace, silence included, and the outbound path does not rely on audio arriving faster than real time (a pacer waiting to prebuffer a response, informative, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **The output is a stream, not a burst (normative).** A full-duplex provider
 MAY emit output audio continuously at real-time pace, silence included, since
 it does not know in advance when it will speak. The outbound path MUST NOT
 rely on audio arriving faster than real time — a pacer that waits to prebuffer
-a response would wait for a burst that never comes — and a recorder (Section
+a response would wait for a burst that never comes — <!-- /rfc --><!-- rfc: {"id": "RK-12.4.1-032", "kind": "behavior", "applies": "§12.4.1 The output is a stream, not a burst, the realtime feature, on a provider that declares full_duplex and a recorder of the audio pipeline (§12.3.7): the recorder records the provider's silence as such. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->and a recorder (Section
 12.3.7) records the silence as such.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.4.1-006", "kind": "behavior", "applies": "§12.4.1 Full-Duplex Providers and Reasoning Delegation; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.4.1-033", "kind": "behavior", "applies": "§12.4.1 The session is fixed at start, the realtime feature's provider contract, a provider that declares full_duplex: it declares supports_mid_session_reconfigure false, since a mid-session reconfiguration replaces the session (what such a provider typically fixes at start, informative, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **The session is fixed at start (normative).** Such a provider typically fixes
 model, instructions, voice, audio format, delegation mode and seeded history
 when the session starts, and takes only appends afterwards. The provider MUST
 declare `supports_mid_session_reconfigure` false — a mid-session
-reconfiguration replaces the session — so that the
+reconfiguration replaces the session — <!-- /rfc --><!-- rfc: {"id": "RK-12.4.1-034", "kind": "behavior", "applies": "§12.4.1 The session is fixed at start, the realtime feature, a provider that declares supports_mid_session_reconfigure false: the orchestration that changes a running agent (a handoff, §19.6; a skill activation, §24.4) chooses an append where one exists and accepts the loss where it does not. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->so that the
 orchestration that changes a running agent — a handoff (Section 19.6), a skill
 activation (Section 24.4) — chooses an append where one exists and accepts the
-loss where it does not. A changed system prompt SHOULD be delivered as an
+loss where it does not.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4.1-035", "kind": "behavior", "applies": "§12.4.1 The session is fixed at start, the realtime feature's provider contract, a provider that declares full_duplex: a changed system prompt is delivered as an instructions append where the provider offers one (a reconnect reseeds a text-only history and loses the audio context, informative, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->A changed system prompt SHOULD be delivered as an
 instructions append where the provider offers one; a reconnect reseeds a
-text-only history and loses the audio context. Tools, in the hosted mode
+text-only history and loses the audio context.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4.1-036", "kind": "behavior", "applies": "§12.4.1 The session is fixed at start, the realtime feature's provider contract, a provider that declares full_duplex and runs the backend in its service (the hosted mode): tools, the one field that may change after start, are forwarded to the backend without replacing the session. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Tools, in the hosted mode
 below, are the one field that MAY change after start and MUST be forwarded to
-the backend without replacing the session. A provider that takes one audio
+the backend without replacing the session.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4.1-037", "kind": "behavior", "applies": "§12.4.1 The session is fixed at start, the realtime feature's provider contract, a provider that declares full_duplex and takes one audio format for both directions: it resamples so that the channel's declared input and output rates hold at the channel boundary. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A provider that takes one audio
 format for both directions MUST resample so that the channel's declared input
 and output rates hold at the channel boundary.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.4.1-007", "kind": "behavior", "applies": "§12.4.1 Full-Duplex Providers and Reasoning Delegation; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.4.1-038", "kind": "non_testable", "applies": "§12.4.1 Text injection is paraphrased, the realtime feature's provider contract, a provider that declares full_duplex: its inject_text documents that a spoken injection is context the model relays in its own words, with no verbatim primitive; only a review of its documentation shows it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Text injection is paraphrased.** On these providers a spoken injection is
 context the model relays in its own words, not a script it reads; there is no
-verbatim primitive, and `inject_text` MUST document that. Nor is there a user
+verbatim primitive, and `inject_text` MUST document that.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4.1-039", "kind": "behavior", "applies": "§12.4.1 Text injection is paraphrased, the realtime feature's provider contract, a provider that declares full_duplex: the session takes no user text once started, so a user injection is content the model voices as its own. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Nor is there a user
 turn: the session takes no user text once started, so a `user` injection is
-content the model voices as its own, and an instruction — an opening greeting
+content the model voices as its own, <!-- /rfc --><!-- rfc: {"id": "RK-12.4.1-085", "kind": "behavior", "applies": "§12.4.1 Text injection is paraphrased, the realtime feature's provider contract, a provider that declares full_duplex: an instruction, an opening greeting included, travels as an instructions append (the system intent, §12.4). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->and an instruction — an opening greeting
 included — MUST travel as an instructions append (the `system` intent, Section
-12.4). Where the provider
+12.4).<!-- /rfc --> <!-- rfc: {"id": "RK-12.4.1-040", "kind": "behavior", "applies": "§12.4.1 Text injection is paraphrased, the realtime feature's provider contract, a provider that declares full_duplex and bounds the size of one append: a longer text is split on sentence boundaries into as many appends as it takes, rather than truncated or refused. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Where the provider
 bounds the size of one append, an implementation MUST split a longer text on
 sentence boundaries into as many appends as it takes, rather than truncate or
-refuse. A text the runtime set apart in a frame (Section 6.4) keeps it in each
+refuse.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4.1-041", "kind": "behavior", "applies": "§12.4.1 Text injection is paraphrased, the realtime feature's provider contract, a provider that declares full_duplex: a text the runtime set apart in a frame (§6.4) keeps it in each append, a block left open closed at the end of an append and opened again at the start of the next, a quote left open closed there and opened again after what precedes it on its line, so that no piece reaches the model outside its frame. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A text the runtime set apart in a frame (Section 6.4) keeps it in each
 append: a block left open at the end of an append is closed there and opened
 again at the start of the next, and a quote left open is closed there and
 opened again after what precedes it on its line (its author's name, the
@@ -14332,28 +14334,29 @@ instruction that quotes it), so that no piece of the text reaches the model
 outside its frame, an instructions append least of all.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.4.1-008", "kind": "behavior", "applies": "§12.4.1 Full-Duplex Providers and Reasoning Delegation; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.4.1-042", "kind": "behavior", "applies": "§12.4.1 Reasoning delegation, hosted backend, the realtime feature, a provider whose service runs the backend model (the tools passed to connect() are the backend's): every function call the backend emits reaches on_tool_call and passes the channel's pre-execution gate (§12.4) unchanged, ON_TOOL_CALL fires as always, and the result returns through submit_tool_result. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Reasoning delegation, hosted backend (normative).** In the hosted mode the
 provider's service runs the backend model, and the `tools` passed to
 `connect()` are that backend's tools. The channel sees nothing new: every
 function call the backend emits MUST reach `on_tool_call` and pass the
 pre-execution gate of this section unchanged, ON_TOOL_CALL fires as always,
-and the result returns through `submit_tool_result`. The provider MUST NOT
+and the result returns through `submit_tool_result`.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4.1-043", "kind": "behavior", "applies": "§12.4.1 Reasoning delegation, hosted backend, the realtime feature, a provider whose service runs the backend model (the tools passed to connect() are the backend's), its provider contract: the provider does not resume the backend while any call of the same delegation is unanswered, and resumes it once the last result is in, the rule of §12.4 counted per delegation. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The provider MUST NOT
 resume the backend while any call of the same delegation is unanswered — the
 hosted service rejects a partial continuation — and MUST resume it once the
-last result is in: the rule of Section 12.4, counted per delegation. A result
+last result is in: the rule of Section 12.4, counted per delegation.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4.1-044", "kind": "behavior", "applies": "§12.4.1 Reasoning delegation, hosted backend, the realtime feature, a provider whose service runs the backend model (the tools passed to connect() are the backend's), its provider contract: a result submitted after the session ended is dropped, as for any provider. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A result
 submitted after the session ended is dropped, as for any provider.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.4.1-009", "kind": "behavior", "applies": "§12.4.1 Full-Duplex Providers and Reasoning Delegation; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.4.1-045", "kind": "behavior", "applies": "§12.4.1 Reasoning delegation, integrator backend, the realtime feature's provider contract, a provider that delegates: in the integrator mode it fires on_delegation(session, delegation_id, target) with target = \"integrator\", and the request carries no task text. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Reasoning delegation, integrator backend (normative).** In the integrator
 mode the model signals only that it is handing work over: the provider fires
 `on_delegation(session, delegation_id, target)` with `target = "integrator"`,
-and the request carries no task text. The hosted mode announces its
+and the request carries no task text.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4.1-046", "kind": "behavior", "applies": "§12.4.1 Reasoning delegation, integrator backend, the realtime feature's provider contract, a provider that delegates: in the hosted mode it announces its delegations through the same callback with target = \"hosted\", so that a channel can observe both while serving one. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The hosted mode announces its
 delegations through the same callback with `target = "hosted"`, so that a
-channel can observe both while serving one. The channel MUST serve the
-integrator target through a configured **ReasoningBackend**:
+channel can observe both while serving one.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4.1-047", "kind": "behavior", "applies": "§12.4.1 Reasoning delegation, integrator backend, the realtime feature, a delegation the provider hands over: the channel serves the integrator target through a configured ReasoningBackend. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The channel MUST serve the
+integrator target through a configured **ReasoningBackend**:<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.4.1-048", "kind": "structural", "applies": "§12.4.1 Reasoning delegation, integrator backend, the realtime feature: the ReasoningBackend interface, run(request) yielding ReasoningOutput, session_ended(session_id) (optional, no-op by default: releases the state kept for a session), served_names() (optional, none by default: the tool names the backend answers itself, before the gate) and close(). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 ReasoningBackend (interface)
 ├── run(request: ReasoningRequest) → async_iterator<ReasoningOutput>
@@ -14362,7 +14365,11 @@ ReasoningBackend (interface)
 ├── session_ended(session_id) → void        # OPTIONAL: release state kept for a session; no-op by default
 ├── served_names() → set<string>            # OPTIONAL: tool names the backend answers itself, before the gate; none by default
 └── close() → void
+```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.4.1-049", "kind": "behavior", "applies": "§12.4.1 Reasoning delegation, integrator backend, the realtime feature, a delegation the provider hands over: the ReasoningRequest the channel hands the backend carries the session, the delegation id (opaque, returned unchanged with every output), the transcript of both roles since the previous request (the whole conversation on the session's first request, which first says), the channel's declared catalogue as tools, the session tools the model is not offered with the refusal each call reads (unavailable, §21.1), execute_tool and execute_tool_call (one call through the gate and handler), report_refusal and report_call, and the session participant's role when the delegation was handed over. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ReasoningRequest
 ├── session: VoiceSession
 ├── delegation_id: string                   # Opaque; returned unchanged with every output
@@ -14375,12 +14382,20 @@ ReasoningRequest
 ├── report_refusal(name, arguments, body, cancelled = false, refused = true, detail = null) → void  # Reports a call the backend's own loop ended before the gate, with its outcome, under the id model_call_id() names
 ├── report_call(name, arguments, result, is_error, detail, tool_call_id) → void  # Reports a call the backend's own provider served outside the gate, with its outcome
 └── participant_role: string?               # The session participant's role when the delegation was handed over
+```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.4.1-050", "kind": "behavior", "applies": "§12.4.1 Reasoning delegation, integrator backend, the realtime feature, a delegation the provider hands over: the ToolCallResult that execute_tool_call returns holds text, what the backend's model reads; is_error, true for a call refused, failed, blocked, served by nothing or cancelled; and refused, true among those for a refusal, so that the backend's loop reads it refused and any other error failed. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 ToolCallResult
 ├── text: string                            # What the backend's model reads
 ├── is_error: bool                          # Refused, failed, blocked, served by nothing or cancelled
 └── refused: bool                           # Among those, refused: the backend's loop reads it refused, any other error failed
+```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.4.1-051", "kind": "structural", "applies": "§12.4.1 Reasoning delegation, integrator backend, the realtime feature: TranscriptLine (role, user or assistant; text) and ReasoningOutput (text; spoken, true for an output the model relays in its own words, false for silent context it may draw on; is_final, the answer to the request as opposed to progress toward it). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 TranscriptLine
 ├── role: "user" | "assistant"
 └── text: string
@@ -14390,126 +14405,129 @@ ReasoningOutput
 ├── spoken: bool                            # true: the model relays it in its own words; false: silent context it may draw on
 └── is_final: bool                          # The answer to the request, as opposed to progress toward it
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.4.1-052", "kind": "behavior", "applies": "§12.4.1 Reasoning delegation, integrator backend, the realtime feature, a delegation the provider hands over: the channel hands the backend the transcript recorded since the previous request, user and assistant lines both, the backend's only account of what was asked. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The channel MUST hand the backend the transcript recorded since the previous
 request, user and assistant lines both — the backend has no other way to learn
-what was asked — and MUST return every output through
+what was asked — <!-- /rfc --><!-- rfc: {"id": "RK-12.4.1-053", "kind": "behavior", "applies": "§12.4.1 Reasoning delegation, integrator backend, the realtime feature, a delegation the provider hands over: the channel returns every output of the backend through submit_delegation_output(session, delegation_id, text, spoken) as it arrives, so that a backend working in steps can tell the user what it learned on the way. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->and MUST return every output through
 `submit_delegation_output(session, delegation_id, text, spoken)` as it
 arrives, so that a backend working in steps can tell the user what it learned
-on the way. The transcript ledger is session state, not a RoomEvent: it MUST
-NOT be stored, and in a conference (Section 12.10.12) its user lines are
-unattributed, as that section requires. A backend that yields nothing, fails,
+on the way.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4.1-054", "kind": "behavior", "applies": "§12.4.1 Reasoning delegation, integrator backend, the realtime feature, a delegation the provider hands over: the transcript ledger is session state, not a RoomEvent, and is not stored. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The transcript ledger is session state, not a RoomEvent: it MUST
+NOT be stored, <!-- /rfc --><!-- rfc: {"id": "RK-12.4.1-055", "kind": "behavior", "applies": "§12.4.1 Reasoning delegation, integrator backend, the realtime feature, a delegation the provider hands over, the conference feature, a conference with a realtime model (§12.10.12): the ledger's user lines are unattributed, as that section requires. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->and in a conference (Section 12.10.12) its user lines are
+unattributed, as that section requires.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4.1-056", "kind": "behavior", "applies": "§12.4.1 Reasoning delegation, integrator backend, the realtime feature, a delegation the provider hands over: a backend that yields nothing, fails, or exceeds the bound the channel places on its run (the bound itself a should) is still answered with one spoken output saying the work could not be completed. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A backend that yields nothing, fails,
 or exceeds the bound the channel SHOULD place on its run MUST still be
 answered with one spoken output saying the work could not be completed — a
 full-duplex model otherwise keeps the conversation open for an answer that
-never comes. One that fails on an error also fires ON_ERROR once, as the
+never comes.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4.1-057", "kind": "behavior", "applies": "§12.4.1 Reasoning delegation, integrator backend, the realtime feature, a delegation the provider hands over: a backend that fails on an error also fires ON_ERROR once, as the channel, with the category reasoning, as a room turn's failure fires it (§6.4). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->One that fails on an error also fires ON_ERROR once, as the
 channel, with the category `reasoning`, as a room turn's failure fires it
-(Section 6.4): the fallback tells the user, the hook tells the host. A turn
+(Section 6.4): the fallback tells the user, the hook tells the host.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4.1-058", "kind": "behavior", "applies": "§12.4.1 Reasoning delegation, integrator backend, the realtime feature, a delegation the provider hands over: a backend turn its round cap, deadline or budget cut, and a run past the channel's bound, are expected ends and fire no ON_ERROR, as on a room. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A turn
 its round cap, deadline or budget cut is an expected end and fires none, as
 on a room, and so is a run past the channel's bound, the delegation's own
-deadline. An output returned for a delegation the conversation has moved
+deadline.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4.1-059", "kind": "behavior", "applies": "§12.4.1 Reasoning delegation, integrator backend, the realtime feature's provider contract, a provider that delegates: its instructions tell the model that an output returned for a delegation the conversation has moved past is the model's to ignore. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->An output returned for a delegation the conversation has moved
 past is the model's to ignore, and the provider's instructions SHOULD tell it
-so.
+so.<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.4.1-060", "kind": "behavior", "applies": "§12.4.1 Reasoning delegation, integrator backend, the realtime feature, a delegation the provider hands over: the tool calls a backend makes, whatever hosts it, are the framework's and pass the pre-execution gate and the ToolPolicy (§21) as any other: execute_tool on the request is that gate, followed by the channel's handler, ON_TOOL_CALL and result truncation (what the backend may be, the integrator's, informative, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The backend is the integrator's — an AIProvider (Section 6.7) driven through a
 tool loop, an AIChannel, an Agent (Section 19). This specification defines the
 contract, not the component. Whatever hosts it, the tool calls the backend
 makes are tool calls of the framework and MUST pass the pre-execution gate and
 the ToolPolicy (Section 21) as any other: `execute_tool` on the request is
 that gate, followed by the channel's handler, ON_TOOL_CALL and result
-truncation, and a backend MUST route its calls through it. A delegation is
-not a way around them. `execute_tool_call` runs the same call and also says
+truncation, <!-- /rfc --><!-- rfc: {"id": "RK-12.4.1-061", "kind": "behavior", "applies": "§12.4.1 Reasoning delegation, integrator backend, the realtime feature, a delegation the provider hands over: a backend routes its tool calls through execute_tool; a delegation is no way around the gate and the ToolPolicy. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->and a backend MUST route its calls through it. A delegation is
+not a way around them.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4.1-062", "kind": "behavior", "applies": "§12.4.1 Reasoning delegation, integrator backend, the realtime feature, a delegation the provider hands over: execute_tool_call runs the same call as execute_tool and also says whether it failed, so that the backend's model reads a refused or failed call as one, as every tool loop does (§9.3). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`execute_tool_call` runs the same call and also says
 whether it failed, so the backend's model reads a refused or failed call as
-one, as every tool loop does (Section 9.3); a backend SHOULD use it, and
-`execute_tool` returns the text alone.
+one, as every tool loop does (Section 9.3);<!-- /rfc --> <!-- rfc: {"id": "RK-12.4.1-063", "kind": "behavior", "applies": "§12.4.1 Reasoning delegation, integrator backend, the realtime feature, a delegation the provider hands over: a backend uses execute_tool_call, since execute_tool returns the text alone. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->a backend SHOULD use it, and
+`execute_tool` returns the text alone.<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.4.1-064", "kind": "behavior", "applies": "§12.4.1 Reasoning delegation, integrator backend, the realtime feature, a delegation the provider hands over: a backend's turn ends by the rules of a tool loop (§6.4), whatever drives its model: a call the provider could not parse, or an empty answer, is asked again within the loop's bounds. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A backend's turn ends by the rules of a tool loop (Section 6.4), whatever
 drives its model: a call the provider could not parse, or an empty answer, is
-asked again within the loop's bounds; a call whose arguments do not read is
-refused, and a backend whose loop ends a call before the gate reports it
+asked again within the loop's bounds;<!-- /rfc --> <!-- rfc: {"id": "RK-12.4.1-065", "kind": "behavior", "applies": "§12.4.1 Reasoning delegation, integrator backend, the realtime feature, a delegation the provider hands over: a backend's call whose arguments do not read is refused. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->a call whose arguments do not read is
+refused, <!-- /rfc --><!-- rfc: {"id": "RK-12.4.1-066", "kind": "behavior", "applies": "§12.4.1 Reasoning delegation, integrator backend, the realtime feature, a delegation the provider hands over: a backend whose loop ends a call before the gate reports it to the channel's ON_TOOL_CALL observers through report_refusal, with the outcome its loop gave it (refused, cancelled or failed) and what failed, as the gate reports the calls it refuses itself. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->and a backend whose loop ends a call before the gate reports it
 to the channel's ON_TOOL_CALL observers through `report_refusal`, with the
 outcome its loop gave it (refused, cancelled or failed) and what failed, as the gate
-reports the calls it refuses itself; a call the backend's own provider served
+reports the calls it refuses itself;<!-- /rfc --> <!-- rfc: {"id": "RK-12.4.1-067", "kind": "behavior", "applies": "§12.4.1 Reasoning delegation, integrator backend, the realtime feature, a delegation the provider hands over: a call the backend's own provider served (a provider-side tool, outside the gate) is reported once to the channel's ON_TOOL_CALL hooks through report_call, served or failed, as an AI channel reports one (§9.3). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->a call the backend's own provider served
 (a provider-side tool, outside the gate) is reported once to the channel's
 ON_TOOL_CALL hooks through `report_call`, served or failed, as an AI channel
-reports one (Section 9.3); each of these reports names the call by the id
+reports one (Section 9.3);<!-- /rfc --> <!-- rfc: {"id": "RK-12.4.1-068", "kind": "behavior", "applies": "§12.4.1 Reasoning delegation, integrator backend, the realtime feature, a delegation the provider hands over: each of these reports names the call by the id the backend's model gave it, within its delegation's, whichever of them reports it (report_call takes it as tool_call_id; execute_tool, execute_tool_call and report_refusal read it from model_call_id(), which the framework's tool loop sets); a call that comes with no id is reported under one minted within its delegation's. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->each of these reports names the call by the id
 the backend's model gave it, within its delegation's, whichever of them
 reports it (`report_call` takes that id as `tool_call_id`; `execute_tool`,
 `execute_tool_call` and `report_refusal` read it from `model_call_id()`,
 which the framework's tool loop sets around the call it runs or reports; a
 call that comes with no id is reported under one minted within its
-delegation's); and a turn that did not complete (it
+delegation's);<!-- /rfc --> <!-- rfc: {"id": "RK-12.4.1-069", "kind": "behavior", "applies": "§12.4.1 Reasoning delegation, integrator backend, the realtime feature, a delegation the provider hands over: a backend turn that did not complete (it ended for any reason but completed) has no answer: its narration is progress, the run fails, and the channel answers the delegation as it answers a failed backend. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->and a turn that did not complete (it
 ended for any reason but `completed`: its round cap, deadline or budget cut
 it, or its answer was cut or never came) has no answer. Its narration is
 progress, never the answer: the run fails, and the channel answers the
-delegation as it answers a failed backend. A backend call the end of its
+delegation as it answers a failed backend.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4.1-070", "kind": "behavior", "applies": "§12.4.1 Reasoning delegation, integrator backend, the realtime feature, a delegation the provider hands over: a backend call the end of its delegation cut (the channel's bound on the run) is reported once, cancelled, as a call the session's end cut is. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A backend call the end of its
 delegation cut (the channel's bound on the run) is reported once, cancelled,
-as a call the session's end cut is. A backend that is an agent (Section 19)
+as a call the session's end cut is.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4.1-071", "kind": "behavior", "applies": "§12.4.1 Reasoning delegation, integrator backend, the realtime feature, a delegation the provider hands over, a backend that is an agent (§19): it runs on the AI channel's tool loop with the agent's settings and turn budget, the voice session's catalogue as its tools and the channel's gate as their handler, which bounds each call as it bounds every call of the session (§21.6). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A backend that is an agent (Section 19)
 runs on the AI channel's tool loop with the agent's settings and turn
 budget, the voice session's catalogue as its tools and the channel's gate as
 their handler, which bounds each call as it bounds every call of the session
-(Section 21.6): the agent's own bounds, its default and per tool, do not apply
-on top of it, and a tool that waits by design has no bound but the run's. The
+(Section 21.6):<!-- /rfc --> <!-- rfc: {"id": "RK-12.4.1-072", "kind": "behavior", "applies": "§12.4.1 Reasoning delegation, integrator backend, the realtime feature, a delegation the provider hands over, a backend that is an agent: the agent's own call bounds, its default and per tool, do not apply on top of the gate's, and a tool that waits by design has no bound but the run's. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->the agent's own bounds, its default and per tool, do not apply
+on top of it, and a tool that waits by design has no bound but the run's.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4.1-073", "kind": "behavior", "applies": "§12.4.1 Reasoning delegation, integrator backend, the realtime feature, a delegation the provider hands over, a backend that is an agent: the loop's own re-read of a result it stored (§21.5) stays the loop's, as on any turn, and answers from memory, with no wait to bound. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The
 loop's own re-read of a result it stored (Section 21.5) stays the loop's, as
-on any turn, and answers from memory, with no wait to bound. Tools of its own (host tools, a skill
+on any turn, and answers from memory, with no wait to bound.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4.1-074", "kind": "behavior", "applies": "§12.4.1 Reasoning delegation, integrator backend, the realtime feature, a delegation the provider hands over, a backend that is an agent: an agent with tools of its own (host tools, a skill registry even empty, a human-input handler, a sandbox, planning, an external handler), which would run outside the gate, or registered with a kit, which would judge each call a second time, is refused as a backend. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Tools of its own (host tools, a skill
 registry even empty, a human-input handler, a sandbox, planning, an external
 handler) would run outside that gate, and a kit that
 registered it would judge each call a second time, so such an agent is
-refused. The names the agent serves itself (its re-read of a stored result,
+refused.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4.1-075", "kind": "behavior", "applies": "§12.4.1 Reasoning delegation, integrator backend, the realtime feature, a delegation the provider hands over, a backend that is an agent: a channel refuses a session tool given under a name the agent serves itself (its re-read of a stored result, its tool search unless turned off), at construction and at configure, a human-input tool's included. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The names the agent serves itself (its re-read of a stored result,
 its tool search unless turned off) stay its own: a channel MUST refuse a
 session tool given under one of them, at construction and at `configure`, a
 human-input tool's included, which the agent would otherwise answer outside
-the gate; one that arrives later (a session's or a room's tools, a
+the gate;<!-- /rfc --> <!-- rfc: {"id": "RK-12.4.1-076", "kind": "behavior", "applies": "§12.4.1 Reasoning delegation, integrator backend, the realtime feature, a delegation the provider hands over, a backend that is an agent: a tool under such a name that arrives later (a session's or a room's tools, a reconfiguration) is not declared, with a warning, as §21.1 drops a name the channel serves. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->one that arrives later (a session's or a room's tools, a
 reconfiguration) is not declared, with a warning, as Section 21.1 drops a
-name the channel serves. The agent's own `tool_policy` composes with the
+name the channel serves.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4.1-077", "kind": "behavior", "applies": "§12.4.1 Reasoning delegation, integrator backend, the realtime feature, a delegation the provider hands over, a backend that is an agent: the agent's own tool_policy composes with the channel's, as on a realtime pipeline (§19.5), resolved for the session participant's role, which the channel reads when it hands the delegation over and passes in the request (participant_role), so that its role overrides apply. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The agent's own `tool_policy` composes with the
 channel's, as an agent's policy does on a realtime pipeline (Section 19.5):
 it is resolved for the session participant's role, which the channel reads
 when it hands the delegation over and passes in the request
-(`participant_role`), so its role overrides apply; a call it denies is
+(`participant_role`), so its role overrides apply;<!-- /rfc --> <!-- rfc: {"id": "RK-12.4.1-078", "kind": "behavior", "applies": "§12.4.1 Reasoning delegation, integrator backend, the realtime feature, a delegation the provider hands over, a backend that is an agent: a call the agent's tool_policy denies is refused in the agent's loop, before the channel's gate, and the channel's ON_TOOL_CALL observers see it as any refusal. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->a call it denies is
 refused in the agent's loop, before the channel's gate, and the channel's
-ON_TOOL_CALL observers see it as any refusal. Its conversation is the session's: a call a cut delegation left
+ON_TOOL_CALL observers see it as any refusal.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4.1-079", "kind": "behavior", "applies": "§12.4.1 Reasoning delegation, integrator backend, the realtime feature, a delegation the provider hands over, a backend that is an agent: its conversation is the session's, and a call a cut delegation left unanswered is answered as a room turn answers one before the next generation. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Its conversation is the session's: a call a cut delegation left
 unanswered is answered as a room turn answers one before the next
-generation, and a session's delegations run one at a time, each reading
-what the one before it worked out. The backend's turn is traced under the
+generation, <!-- /rfc --><!-- rfc: {"id": "RK-12.4.1-080", "kind": "behavior", "applies": "§12.4.1 Reasoning delegation, integrator backend, the realtime feature, a delegation the provider hands over, a backend that is an agent: a session's delegations run one at a time, each reading what the one before it worked out. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->and a session's delegations run one at a time, each reading
+what the one before it worked out.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4.1-081", "kind": "behavior", "applies": "§12.4.1 Reasoning delegation, integrator backend, the realtime feature, a delegation the provider hands over, a backend that is an agent: the backend's turn is traced under the voice session's span. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The backend's turn is traced under the
 voice session's span.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.4.1-010", "kind": "behavior", "applies": "§12.4.1 Full-Duplex Providers and Reasoning Delegation; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.4.1-082", "kind": "behavior", "applies": "§12.4.1 Observability, the realtime feature, a delegation the provider hands over: ON_REALTIME_DELEGATION (§9.2) fires when the model hands work over, in either mode, with the delegation id and its target, hosted or integrator (the latency the user hears, informative, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Observability.** ON_REALTIME_DELEGATION (Section 9.2) fires when the model
 hands work over, in either mode, with the delegation id and its target (hosted
 or integrator); the time from it to the first spoken output is the latency the
-user hears. A provider billed by session duration MUST report duration as its
-usage and MUST NOT restate it as tokens; backend token usage, where the
+user hears.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4.1-083", "kind": "behavior", "applies": "§12.4.1 Observability, the realtime feature's provider contract, a provider billed by session duration: it reports duration as its usage and never restates it as tokens. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A provider billed by session duration MUST report duration as its
+usage and MUST NOT restate it as tokens;<!-- /rfc --> <!-- rfc: {"id": "RK-12.4.1-084", "kind": "behavior", "applies": "§12.4.1 Observability, the realtime feature's provider contract, a provider that surfaces its hosted backend's token usage: that usage is the backend model's and is attributed to it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->backend token usage, where the
 provider surfaces it, is the backend model's and is attributed to it.
 <!-- /rfc -->
 
 #### 12.4.2 Usage Reporting
 
-<!-- rfc: {"id": "RK-12.4.2-001", "kind": "behavior", "applies": "§12.4.2 Usage Reporting; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.4.2-004", "kind": "behavior", "applies": "§12.4.2 Usage Reporting, the realtime feature: VoiceSession.last_usage holds what the provider recorded last for the session, a read-only map, empty until the first report (why a provider reports its usage, and the two public surfaces that carry it, informative, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 What a spoken turn consumed is known to the service that billed it, not to the
 framework, so a realtime provider reports its usage rather than having it
 inferred. Two surfaces carry that report, and both are public.
-<!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.4.2-002", "kind": "behavior", "applies": "§12.4.2 Usage Reporting; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **The snapshot.** `VoiceSession.last_usage` is what the provider recorded last
-for that session: a read-only map, empty until the first report. The framework
+for that session: a read-only map, empty until the first report.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4.2-005", "kind": "behavior", "applies": "§12.4.2 Usage Reporting, the realtime feature: the framework fixes two keys of last_usage, input_tokens and output_tokens, the totals a token-billed provider reports. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The framework
 fixes two of its keys — `input_tokens` and `output_tokens`, the totals a
-token-billed provider reports — and a provider MAY add its own breakdown beside
+token-billed provider reports — <!-- /rfc --><!-- rfc: {"id": "RK-12.4.2-006", "kind": "behavior", "applies": "§12.4.2 Usage Reporting, the realtime feature: a provider may add its own breakdown beside the two keys (per modality, cached share, reasoning or tool use) under the names its API uses, and the snapshot carries it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->and a provider MAY add its own breakdown beside
 them, per modality, cached share, reasoning or tool use, under the names its API
-uses. A reader MUST treat an absent key as unreported rather than as zero.
+uses.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4.2-007", "kind": "non_testable", "applies": "§12.4.2 Usage Reporting, the realtime feature: a reader of last_usage treats an absent key as unreported, not as zero; only the integrator keeps it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A reader MUST treat an absent key as unreported rather than as zero.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.4.2-003", "kind": "behavior", "applies": "§12.4.2 Usage Reporting; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.4.2-008", "kind": "behavior", "applies": "§12.4.2 Usage Reporting, the realtime feature: on_usage(callback) fires on every report, with the session and the map just recorded. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **The callback.** `on_usage(callback)` fires on every report, with the session
-and the map just recorded. An integrator that bills a call MUST use it rather
-than the snapshot: the next report replaces the snapshot and the channel clears
+and the map just recorded.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4.2-009", "kind": "non_testable", "applies": "§12.4.2 Usage Reporting, the realtime feature: an integrator that bills a call uses on_usage rather than the snapshot; only the integrator keeps it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An integrator that bills a call MUST use it rather
+than the snapshot:<!-- /rfc --> <!-- rfc: {"id": "RK-12.4.2-010", "kind": "behavior", "applies": "§12.4.2 Usage Reporting, the realtime feature: the next report replaces the snapshot. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->the next report replaces the snapshot <!-- /rfc --><!-- rfc: {"id": "RK-12.4.2-015", "kind": "behavior", "applies": "§12.4.2 Usage Reporting, the realtime feature: the channel clears the snapshot at the end of each turn, so that a reader that polls can miss a turn while an on_usage callback sees every one. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->and the channel clears
 it at the end of each turn, so a reader that polls can miss a turn, while a
-callback sees every one. Callbacks MUST NOT block the provider's event loop, and
-a failing one MUST NOT break the session.
+callback sees every one.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4.2-011", "kind": "behavior", "applies": "§12.4.2 Usage Reporting, the realtime feature: on_usage callbacks do not block the provider's event loop. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Callbacks MUST NOT block the provider's event loop, <!-- /rfc --><!-- rfc: {"id": "RK-12.4.2-012", "kind": "behavior", "applies": "§12.4.2 Usage Reporting, the realtime feature: a failing on_usage callback does not break the session. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->and
+a failing one MUST NOT break the session.<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.4.2-013", "kind": "behavior", "applies": "§12.4.2 Usage Reporting, the realtime feature's provider contract, a provider billed by session duration: it reports duration (§12.4.1) through the same two surfaces, under its own key, never restated as tokens. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A provider billed by session duration reports duration (Section 12.4.1) through
-these same two surfaces, under its own key and never restated as tokens; a
+these same two surfaces, under its own key and never restated as tokens;<!-- /rfc --> <!-- rfc: {"id": "RK-12.4.2-014", "kind": "behavior", "applies": "§12.4.2 Usage Reporting, the realtime feature's provider contract, a provider that surfaces its hosted backend's token usage: that usage is the backend model's, reported apart and attributed to it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->a
 hosted backend's token usage is likewise the backend model's and is reported
 apart, attributed to it.
 <!-- /rfc -->
