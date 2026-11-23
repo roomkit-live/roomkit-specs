@@ -81,6 +81,221 @@
       "card": "RMK-2019",
       "note": "A room where voice.open attaches a voice channel and a declared realtime channel starts its session (realtime.start), each still doing its work; a bridge and a conference join the same way."
     },
+    "RK-12.10.1-003": {
+      "class": "step",
+      "card": "RMK-2070",
+      "note": "step: conference_already_attached error name: a second conference channel attached to a room already holding one, refused under a name no runner error table holds."
+    },
+    "RK-12.10.1-005": {
+      "class": "step",
+      "card": "RMK-2070",
+      "note": "step: conference.feed: speech on a participant's track stored as a RoomEvent of the room."
+    },
+    "RK-12.10.1-006": {
+      "class": "step",
+      "card": "RMK-2070",
+      "note": "step: conference.feed: a transcription through BEFORE_BROADCAST, the room's permissions and the broadcast to its other channels, as any inbound event."
+    },
+    "RK-12.10.1-008": {
+      "class": "step",
+      "card": "RMK-2070",
+      "note": "step: conference.read: one join_as_bot per conference, its subscriptions and the bot's publications on that one session."
+    },
+    "RK-12.10.1-010": {
+      "class": "step",
+      "card": "RMK-2070",
+      "note": "step: conference.feed: two participants speaking on their own tracks, each transcription attributed to its track's publisher with no diarization stage."
+    },
+    "RK-12.10.2-024": {
+      "class": "step",
+      "card": "RMK-2070",
+      "note": "step: conference.feed: a screen share's sound, a track of kind audio, transcribed and recorded like any audio track, attributed to the participant sharing."
+    },
+    "RK-12.10.2-027": {
+      "class": "step",
+      "card": "RMK-2070",
+      "note": "step: conference.mint, conference.read: the participant_id a mint hands the backend is the room Participant.id."
+    },
+    "RK-12.10.2-030": {
+      "class": "step",
+      "card": "RMK-2070",
+      "note": "step: conference.join metadata: an asserted caller number handed to identity resolution; the UNKNOWN record with the backend identity as external_id is writable today."
+    },
+    "RK-12.10.2-031": {
+      "class": "step",
+      "card": "RMK-2070",
+      "note": "step: conference.join metadata: a dial-in's asserted caller number reaching the Identity a text from that number reaches."
+    },
+    "RK-12.10.2-033": {
+      "class": "step",
+      "card": "RMK-2070",
+      "note": "step: conference.join metadata: a participant arriving with an asserted address, resolved before it speaks."
+    },
+    "RK-12.10.2-034": {
+      "class": "step",
+      "card": "RMK-2070",
+      "note": "step: conference.join metadata: the resolved Identity linked through identity_id on the record keyed on the backend identity."
+    },
+    "RK-12.10.2-035": {
+      "class": "step",
+      "card": "RMK-2070",
+      "note": "step: conference.open options (identity_address_keys), conference.join metadata: keys an integrator configures read in place of the defaults; the documented keys are by review."
+    },
+    "RK-12.10.2-036": {
+      "class": "step",
+      "card": "RMK-2070",
+      "note": "step: conference.join metadata: an arrival asserting only the number it dialled, left unresolved."
+    },
+    "RK-12.10.2-037": {
+      "class": "writable",
+      "card": "RMK-2070",
+      "note": "conference.join of a participant not in the room, with an identity_resolver that would identify anyone: the participant stays unknown with its identity as external_id, and the resolver records no call."
+    },
+    "RK-12.10.2-038": {
+      "class": "step",
+      "card": "RMK-2070",
+      "note": "step: conference.join metadata: an address the participant's client supplied, left unresolved."
+    },
+    "RK-12.10.2-039": {
+      "class": "step",
+      "card": "RMK-2070",
+      "note": "step: conference.join metadata (provenance flag): a backend that cannot tell, its participant left unknown."
+    },
+    "RK-12.10.2-040": {
+      "class": "step",
+      "card": "RMK-2070",
+      "note": "step: conference.join metadata: an asserted generic key resolved over an unasserted provider key."
+    },
+    "RK-12.10.2-041": {
+      "class": "step",
+      "card": "RMK-2070",
+      "note": "step: conference.open options (identity_trusts_unasserted_metadata), conference.join metadata: an unasserted address resolved once the integrator widens the default."
+    },
+    "RK-12.10.2-042": {
+      "class": "step",
+      "card": "RMK-2070",
+      "note": "step: conference.join metadata: an unconfigured channel resolving nothing on an unasserted address."
+    },
+    "RK-12.10.2-043": {
+      "class": "step",
+      "card": "RMK-2070",
+      "note": "step: conference.join metadata: the resolver's context carrying the unasserted attributes apart from the asserted ones, which the scripted resolver would record."
+    },
+    "RK-12.10.2-044": {
+      "class": "step",
+      "card": "RMK-2070",
+      "note": "step: conference.join metadata: the provider attributes under one key of the Participant's metadata, an integrator's field beside them kept."
+    },
+    "RK-12.10.2-045": {
+      "class": "step",
+      "card": "RMK-2070",
+      "note": "step: conference.join metadata: the record keeping asserted and unasserted attributes apart."
+    },
+    "RK-12.10.2-046": {
+      "class": "step",
+      "card": "RMK-2070",
+      "note": "step: conference.join metadata: attributes past the bound or oversize left out of the record."
+    },
+    "RK-12.10.2-047": {
+      "class": "step",
+      "card": "RMK-2070",
+      "note": "step: conference.join metadata: an arrival resolved on its address firing no ON_IDENTITY_* hook."
+    },
+    "RK-12.10.2-048": {
+      "class": "step",
+      "card": "RMK-2070",
+      "note": "step: conference.join metadata: an ambiguous answer recorded as a pending identification with its candidates, a rejection leaving the participant unknown."
+    },
+    "RK-12.10.2-049": {
+      "class": "step",
+      "card": "RMK-2070",
+      "note": "step: conference.join metadata: a resolver held past identity_timeout_ms, the participant joining unknown and identity_timeout emitted."
+    },
+    "RK-12.10.2-050": {
+      "class": "step",
+      "card": "RMK-2070",
+      "note": "step: conference.join metadata: a resolver that fails, the participant still joining."
+    },
+    "RK-12.10.2-052": {
+      "class": "step",
+      "card": "RMK-2070",
+      "note": "step: framework_events media rows: conference_ended's duration_ms measured from the bot session's joined_at."
+    },
+    "RK-12.10.2-055": {
+      "class": "step",
+      "card": "RMK-2070",
+      "note": "step: a backend session whose joined_at is naive (no audit family): the end still announced with its duration."
+    },
+    "RK-12.10.2-056": {
+      "class": "step",
+      "card": "RMK-2070",
+      "note": "step: conference.open options (e2ee, backend capabilities), conference.read: e2ee passed to ensure_room, and refused as a configuration error without the E2EE capability."
+    },
+    "RK-12.10.2-057": {
+      "class": "step",
+      "card": "RMK-2070",
+      "note": "step: conference.open options (e2ee with stt or recording): refused as a configuration error."
+    },
+    "RK-12.10.3-020": {
+      "class": "step",
+      "card": "RMK-2070",
+      "note": "step: conference.mint, conference.read: a mint alone bringing the bot in, with no presence reported before the join."
+    },
+    "RK-12.10.3-023": {
+      "class": "step",
+      "card": "RMK-2070",
+      "note": "step: conference.bot_lost, conference.read, framework_events media rows: the session off the books, conference_ended announced, its lanes closed and recordings finalized, the next need re-joining."
+    },
+    "RK-12.10.3-028": {
+      "class": "step",
+      "card": "RMK-2070",
+      "note": "step: conference.bot_lost, conference.read: a reported end followed by a bounded, backed-off re-join with no new external event."
+    },
+    "RK-12.10.3-031": {
+      "class": "step",
+      "card": "RMK-2070",
+      "note": "step: conference.feed (video): an encoded frame on a subscribed video track decoded by the channel's VideoPipeline; no implementation consumes conference video (RK-12.10.4-018, Planned), suspect RMK-2072."
+    },
+    "RK-12.10.3-036": {
+      "class": "phase6",
+      "card": "RMK-2070",
+      "note": "measurement: the residue of a stop, the bot audio a backend still plays out after stop_playback()."
+    },
+    "RK-12.10.3-044": {
+      "class": "step",
+      "card": "RMK-2070",
+      "note": "step: conference.open options, conference.read: the grants a bot joins with derived from what the channel consumes and says, subscribe included."
+    },
+    "RK-12.10.3-049": {
+      "class": "step",
+      "card": "RMK-2070",
+      "note": "step: conference.set_bot_grants, conference.read: concealing a visible bot replaces its session, even on a backend able to update grants in place."
+    },
+    "RK-12.10.3-050": {
+      "class": "step",
+      "card": "RMK-2070",
+      "note": "step: conference.mint, conference.read: the display_name on record handed to mint_access."
+    },
+    "RK-12.10.3-053": {
+      "class": "step",
+      "card": "RMK-2070",
+      "note": "step: conference.join metadata (display_name): a reported name filling a record that has none, never one the integrator set."
+    },
+    "RK-12.10.3-056": {
+      "class": "step",
+      "card": "RMK-2070",
+      "note": "step: conference.mint, conference.read: a mint asking for no attribute hands the backend none, whatever the participant's record holds."
+    },
+    "RK-12.10.3-057": {
+      "class": "step",
+      "card": "RMK-2070",
+      "note": "step: conference.mint: an attribute the room would not keep, refused."
+    },
+    "RK-12.10.3-058": {
+      "class": "step",
+      "card": "RMK-2070",
+      "note": "step: conference.mint: an oversize attribute refused, not truncated."
+    },
     "RK-12.10.4-019": {
       "class": "step",
       "card": "RMK-2007",

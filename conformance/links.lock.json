@@ -4023,6 +4023,13 @@
     "RK-11.7.7-010": {
       "verification/a-verification-labels-only-its-organization-s-rooms": "bfddad81acd06f398b662bd0a87dc1037d6ddf516cded704a322b4625b682259"
     },
+    "RK-12.10.1-004": {
+      "conference/a-call-reports-presence-without-changing-room-membership": "1bcec62fb0982da683cfd23ed29b654a6fadd0838642064ba875ff7b71fdb2be"
+    },
+    "RK-12.10.2-001": {
+      "conference/a-camera-toggle-reaches-the-mute-and-unmute-observers": "a1bc4b5b7faa7f41974a9bcce743a6821649d81b2b775b07e732f1f6470523be",
+      "conference/a-screen-track-announces-the-start-and-end-of-sharing": "a1bc4b5b7faa7f41974a9bcce743a6821649d81b2b775b07e732f1f6470523be"
+    },
     "RK-12.10.4-034": {
       "tasks/nonempty-task-and-observation-reads-remain-available-during-close": "b5e0e80a7cfaf4cb9c48e38a42a284be1ec560d33d8ec9f3590bfb1d1ca819ad"
     },
