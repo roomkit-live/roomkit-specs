@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "ccc83193aa643c7c3d6d4cad79d81fc5cc52dec5d544de7cb06a44d953e00c9d",
-  "corpus_sha256": "b6be90365c506d3356efc99c81d6387592780678f23506e174c78dae3ca578be",
+  "corpus_sha256": "d9552922bc9814f681099dd52c031b17054179f24a2630c883326d2ae9ebabf8",
   "python_commit": "91320acb5d3fb53b50ea63d69764fdacc420297b",
-  "scenario_count": 3393,
+  "scenario_count": 3402,
   "sections": [
     {
       "section": "0",
@@ -6236,6 +6236,7 @@
       "candidate_scenarios": [
         "delivery/a-key-cut-after-a-round-that-spoke-tells-its-caller-the-turn-s-end",
         "delivery/a-key-cut-between-rounds-tells-its-caller-the-turn-s-end",
+        "delivery/a-tool-call-the-kit-s-close-cuts-gets-its-failed-end-row",
         "delivery/an-adopted-call-s-handle-cuts-its-turn-while-a-target-reads",
         "delivery/an-adopted-call-s-key-cuts-its-turn-while-a-target-reads",
         "inbound/a-headless-turn-s-provider-error-reaches-the-caller-and-on-error",
@@ -7114,8 +7115,8 @@
       },
       "decided_gaps": {
         "phase6": 1,
-        "step": 148,
-        "writable": 16
+        "step": 149,
+        "writable": 3
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -7124,18 +7125,27 @@
         "conference/a-quality-report-identifies-the-affected-participant",
         "conference/a-screen-track-announces-the-start-and-end-of-sharing",
         "conference/a-speaker-change-identifies-the-dominant-participant",
+        "delivery/a-call-in-its-hooks-as-the-kit-closes-is-stored-and-delivered-to-no-one",
         "delivery/a-call-the-close-finds-under-way-returns-kit-closed-while-its-adopted-call-s-stream-is-read",
+        "delivery/a-call-the-kit-s-close-cuts-once-its-commit-landed-reports-its-event-stored",
+        "delivery/a-call-waiting-for-its-room-s-lock-as-the-kit-closes-is-cut-at-once",
+        "delivery/a-close-from-a-delivery-s-send-drops-the-delivery-queued-behind-it",
+        "delivery/a-close-from-work-the-shutdown-waits-for-stops-that-wait",
+        "delivery/a-close-whose-caller-is-cancelled-leaves-the-one-shutdown-running",
         "delivery/a-closing-kit-refuses-new-operations-and-ignores-cancellation",
+        "delivery/a-cut-commit-whose-read-back-fails-is-reported-not-stored",
         "delivery/a-deferred-event-s-wait-after-the-close-reads-its-own-end",
         "delivery/a-delivery-whose-turn-the-closing-owner-gave-up-counts-its-cleanup-done",
         "delivery/a-later-event-s-answer-ready-first-is-stored-first",
         "delivery/a-set-the-kit-s-close-drops-still-stores-its-hooks-side-effects",
+        "delivery/a-tool-call-the-kit-s-close-cuts-gets-its-failed-end-row",
         "delivery/a-turn-still-open-once-the-close-s-grace-is-over-is-given-up",
         "delivery/a-turn-whose-end-is-owed-as-the-kit-closes-stays-incomplete",
         "delivery/an-adopted-call-whose-set-the-close-drops-reads-its-hook-s-task-stored",
         "delivery/an-answer-from-after-broadcast-gets-grace-when-its-observer-closes-the-kit",
         "delivery/an-answer-from-response-gets-grace-when-its-observer-closes-the-kit",
         "delivery/an-observer-refused-during-close-starts-no-due-room-timer",
+        "delivery/an-observer-s-close-cuts-the-send-of-the-work-that-fired-it",
         "delivery/the-next-event-s-turn-runs-while-the-turn-before-it-is-held",
         "discussion/a-closed-kit-refuses-regeneration-before-reading-its-store",
         "executor-close/a-turn-closing-the-kit-sees-its-close-return",
@@ -44889,12 +44899,7 @@
       "id": "RK-12.10.4-044",
       "section": "12.10.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2007",
-        "note": "A call waiting for its room's lock (wait_for_lock) as the close starts, cut at once with nothing stored."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.4-045",
@@ -44906,12 +44911,7 @@
       "id": "RK-12.10.4-046",
       "section": "12.10.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2007",
-        "note": "A tool call held at its gate as the close starts: its end row failed, error kit_closed."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.4-047",
@@ -44951,12 +44951,7 @@
       "id": "RK-12.10.4-051",
       "section": "12.10.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2007",
-        "note": "A call held in a BEFORE_BROADCAST hook as the close starts and let go within the grace: stored, delivered to no one."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.4-052",
@@ -45055,67 +45050,37 @@
       "id": "RK-12.10.4-065",
       "section": "12.10.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2007",
-        "note": "A call waiting for its room's lock as the close starts: blocked, reason kit_closed, nothing stored; a send_event refused the same way raises kit_closed."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.4-066",
       "section": "12.10.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2007",
-        "note": "A commit held at a store_fault gate once its write landed, cut past a short close_grace_ms: its event read back by its id."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.4-067",
       "section": "12.10.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2007",
-        "note": "A commit held at a store_fault gate once its write landed, cut past a short close_grace_ms: the inbound path returns the stored event, reason kit_closed."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.4-068",
       "section": "12.10.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2007",
-        "note": "A cut commit whose read-back a store_fault fails: the call reported as not stored."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.4-069",
       "section": "12.10.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2007",
-        "note": "Two closes in the background while a send holds, the first cancelled: the second returns once the shutdown ends, the send delivered."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.4-070",
       "section": "12.10.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2007",
-        "note": "A second close after a successful one returns null; the failure half needs a channel whose close fails."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.4-071",
@@ -45150,12 +45115,7 @@
       "id": "RK-12.10.4-075",
       "section": "12.10.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2007",
-        "note": "A hook held at its gate within the close's grace, which then closes the kit itself: the shutdown stops waiting for it."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.4-076",
@@ -45172,12 +45132,7 @@
       "id": "RK-12.10.4-077",
       "section": "12.10.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2007",
-        "note": "A close from an agent's turn in a room's lane, a delivery queued behind it: that delivery dropped, kit_closed."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.4-078",
@@ -45185,21 +45140,16 @@
       "mapping": "unmapped",
       "links": [],
       "gap": {
-        "class": "writable",
+        "class": "step",
         "card": "RMK-2007",
-        "note": "An AFTER_BROADCAST hook that sends, then closes the kit: its send dropped."
+        "note": "A step that holds a room's lane before it takes a delivery placed while it was idle. Without it the unit holds on one thread only: on several workers the lane takes an AFTER_BROADCAST hook's send as soon as it is placed, before the hook's close starts, and that send then runs, no longer held."
       }
     },
     {
       "id": "RK-12.10.4-079",
       "section": "12.10.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2007",
-        "note": "An ASYNC hook's observer that closes the kit while the work that fired it holds its send at a gate past a short close_grace_ms: that send failed, code kit_closed."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.4-080",
