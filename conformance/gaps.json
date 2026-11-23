@@ -76,6 +76,11 @@
       "card": "RMK-1942",
       "note": "Two attempts at a request's last one count once: racing them needs a gate inside a verification transition."
     },
+    "RK-12.1-003": {
+      "class": "writable",
+      "card": "RMK-2019",
+      "note": "A room where voice.open attaches a voice channel and a declared realtime channel starts its session (realtime.start), each still doing its work; a bridge and a conference join the same way."
+    },
     "RK-12.10.4-019": {
       "class": "step",
       "card": "RMK-2007",
@@ -335,6 +340,111 @@
       "class": "step",
       "card": "RMK-2008",
       "note": "step: voice stage trace (S3): no voice.open key sets a stage that requires fixed-size AudioFrames on the outbound path."
+    },
+    "RK-12.2-046": {
+      "class": "step",
+      "card": "RMK-2019",
+      "note": "step: voice.open TTS options (S7): a scripted TTS chunk format; the transport's send_audio receives decoded PCM only, never an encoded chunk."
+    },
+    "RK-12.2-051": {
+      "class": "step",
+      "card": "RMK-2019",
+      "note": "step: voice.open capabilities (S2) and voice stage trace (S3): a backend declaring NATIVE_AEC or NATIVE_AGC with both stages configured; voice.read reports neither stage ran."
+    },
+    "RK-12.2-052": {
+      "class": "step",
+      "card": "RMK-2019",
+      "note": "step: voice.dtmf_signal (S13): a digit the backend signals and an in-band tone, both reaching the ON_DTMF hook."
+    },
+    "RK-12.2-053": {
+      "class": "step",
+      "card": "RMK-2019",
+      "note": "step: voice.end (S4): a session's state read once it opens and once it ends; a pause has no step."
+    },
+    "RK-12.2-054": {
+      "class": "step",
+      "card": "RMK-2019",
+      "note": "step: voice.end (S4): an ended session's state, still ENDED once the participant reconnects."
+    },
+    "RK-12.2-055": {
+      "class": "step",
+      "card": "RMK-2019",
+      "note": "step: voice.end (S4): a participant who reconnects after the end, given a session of another id."
+    },
+    "RK-12.2-058": {
+      "class": "step",
+      "card": "RMK-2019",
+      "note": "step: voice.open STT options (S5) and voice.set_language (S6): a provider reporting supports_language_override false in a session whose language is chosen; the streams the channel opens are passed none (the flag itself is the provider's contract)."
+    },
+    "RK-12.2-060": {
+      "class": "step",
+      "card": "RMK-2019",
+      "note": "step: voice.set_language (S6): a session's STT language chosen at runtime."
+    },
+    "RK-12.2-061": {
+      "class": "step",
+      "card": "RMK-2019",
+      "note": "step: voice.set_language (S6): a language chosen mid-session; the next stream opened is passed it, the open one is not."
+    },
+    "RK-12.2-062": {
+      "class": "step",
+      "card": "RMK-2019",
+      "note": "step: voice.open STT options (S5): continuous mode with a provider that neither diarizes nor keeps its stream; voice.read counts a stream per turn."
+    },
+    "RK-12.2-063": {
+      "class": "step",
+      "card": "RMK-2019",
+      "note": "step: voice.open STT options (S5): continuous mode with keeps_stream_across_turns; voice.read counts one stream across turns, a new one after an error or a language change."
+    },
+    "RK-12.2-064": {
+      "class": "step",
+      "card": "RMK-2019",
+      "note": "step: voice.open STT options (S5): a kept stream giving two finals while the first one's hook is held; both reach the room in the order produced."
+    },
+    "RK-12.2-066": {
+      "class": "step",
+      "card": "RMK-2019",
+      "note": "step: voice.set_language (S6): a hook that reads the reported language and pins the session's next streams to it."
+    },
+    "RK-12.2-067": {
+      "class": "step",
+      "card": "RMK-2019",
+      "note": "step: voice.open STT options (S5): continuous mode with an STT reconnect held; the frames fed meanwhile reach the next stream."
+    },
+    "RK-12.2-068": {
+      "class": "step",
+      "card": "RMK-2019",
+      "note": "step: voice.open STT options (S5): continuous mode with an STT reconnect held past the bound; the next stream receives no more than the bound."
+    },
+    "RK-12.2-069": {
+      "class": "step",
+      "card": "RMK-2019",
+      "note": "step: voice.open STT options (S5): an STT reconnect held past the bound; the next stream receives the newest frames (the amount dropped is a log line in Python, which no step reads)."
+    },
+    "RK-12.2-076": {
+      "class": "step",
+      "card": "RMK-2019",
+      "note": "step: voice.open TTS options (S7): a TTS chunk whose format is mp3; the session's synthesis is refused with an error naming the format, reported as tts_error, and the transport received nothing."
+    },
+    "RK-12.2-078": {
+      "class": "step",
+      "card": "RMK-2019",
+      "note": "step: voice.open TTS options (S7): a TTS whose context_level is NONE; voice.read shows it received no context."
+    },
+    "RK-12.2-081": {
+      "class": "step",
+      "card": "RMK-2019",
+      "note": "step: TTS catalog (S10): list_voices on a scripted TTS that keeps the default; its curated catalog comes back filtered."
+    },
+    "RK-12.2-082": {
+      "class": "step",
+      "card": "RMK-2019",
+      "note": "step: TTS catalog (S10): list_voices with language, gender and query filters on a scripted catalog, a voice of unknown language or gender matching none."
+    },
+    "RK-12.2-086": {
+      "class": "step",
+      "card": "RMK-2019",
+      "note": "step: TTS catalog (S10): synthesize_dialogue on a scripted TTS with no dialogue, then with too many or unmapped speakers, raising before any call."
     },
     "RK-12.4-022": {
       "class": "writable",
