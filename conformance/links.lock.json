@@ -4241,6 +4241,35 @@
     "RK-12.2.3-041": {
       "voice/diarization-reports-a-new-speaker": "365c51edf8417c1cafa21e0b59d389c8ace248bcfcb85951812459589b19d003"
     },
+    "RK-12.3.6-005": {
+      "voice/a-detected-tone-reaches-the-dtmf-hook": "a41ee5b0d3b0a83baeb7cf7b4b78709b496cc5280f016878e36446d72cdd7f44"
+    },
+    "RK-12.3.6-007": {
+      "voice/a-detected-tone-reaches-the-dtmf-hook": "04672654acfebd3fcde1980e0b889285f95c9c5c335111934bd98bbff77e023c"
+    },
+    "RK-12.3.8-001": {
+      "voice/speech-edges-bracket-an-utterance": "9d32c972fb5debfc2c74513e9cb4f9a5ea5946900e99801817262f9990de6a47",
+      "voice/vad-reports-a-silence": "9d32c972fb5debfc2c74513e9cb4f9a5ea5946900e99801817262f9990de6a47",
+      "voice/vad-reports-its-measured-level": "9d32c972fb5debfc2c74513e9cb4f9a5ea5946900e99801817262f9990de6a47"
+    },
+    "RK-12.3.8-007": {
+      "voice/vad-reports-a-silence": "b7b6a523c4747718f28a38802d437bb4185ef9c63e088460e5a303c0cc0dc432",
+      "voice/vad-reports-its-measured-level": "b7b6a523c4747718f28a38802d437bb4185ef9c63e088460e5a303c0cc0dc432"
+    },
+    "RK-12.3.8-008": {
+      "voice/speech-edges-bracket-an-utterance": "baede52f2a4f455a7beafb6e90c9bd27f2817b7ee04d2aa289a1e3a9f83c3890",
+      "voice/vad-reports-a-silence": "baede52f2a4f455a7beafb6e90c9bd27f2817b7ee04d2aa289a1e3a9f83c3890",
+      "voice/vad-reports-its-measured-level": "baede52f2a4f455a7beafb6e90c9bd27f2817b7ee04d2aa289a1e3a9f83c3890"
+    },
+    "RK-12.3.9-004": {
+      "voice/diarization-reports-a-new-speaker": "06831d5c622cfa965598730d483f8d7d94af6ed217628acea14520d6fe8eff24"
+    },
+    "RK-12.3.9-005": {
+      "voice/diarization-reports-a-new-speaker": "9a966d1df518ca2859351d312f29d7f8c22d971e66b47d59ba00322fabf646e2"
+    },
+    "RK-12.3.9-008": {
+      "voice/diarization-reports-a-new-speaker": "b51b1aa1168489f34a619f331c435ff5f5749b91bd0be9b27b7179d50606b4e9"
+    },
     "RK-12.4-020": {
       "conference/a-conference-model-receives-the-gated-tool-result": "0e73235de6a47c51733e29c91a9abd4b43d365369bdc875ac914de1d77a4a975"
     },
