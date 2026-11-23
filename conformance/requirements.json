@@ -1225,7 +1225,7 @@
       "section": "12.10.4",
       "title": "ConferenceChannel",
       "line": 15875,
-      "sha256": "b91bcbf64b22fe75d93dea2b118431d38c01dedca83daba62e50700153efa3b7",
+      "sha256": "97aab40f27486e6b0b5fddc45e4332074446f157ff82947b0517062a5aef7e74",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
     },
@@ -27457,12 +27457,12 @@
     {
       "id": "RK-12.10.4-036",
       "kind": "behavior",
-      "applies": "§12.10.4 Closing and shared state: the framework's close, a core rule this section holds, not the conference feature's: step 1: work a read starts (a source's health check) is no read. Enclosing capability conditions and §26 levels still apply.",
+      "applies": "§12.10.4 Closing and shared state: the framework's close, a core rule this section holds, not the conference feature's: step 1: work a read starts (a source's health check) is no read, so once the close started it is not answered as a read: what it sets off builds no room's context and fires no hook. Enclosing capability conditions and §26 levels still apply.",
       "level": "must",
       "section": "12.10.4",
       "line": 16193,
       "text": "Work a read starts (a source's health\n     check) is no read.",
-      "sha256": "a2a430b6021dd5bda0cbcd80fe64dd35ec255bfa691ed45e2a43f32373ea0c18"
+      "sha256": "773886dbab23d71641e98fb6e1f0d229da0b865be9e835ced0cf3b26c3627165"
     },
     {
       "id": "RK-12.10.4-037",
@@ -27537,12 +27537,12 @@
     {
       "id": "RK-12.10.4-044",
       "kind": "behavior",
-      "applies": "§12.10.4 Closing and shared state: the framework's close, a core rule this section holds, not the conference feature's: step 2: a call waiting for its room's lock, the framework's background runs (§19.7) and its verification timers (§11.7.5) are cut at once. Enclosing capability conditions and §26 levels still apply.",
+      "applies": "§12.10.4 Closing and shared state: the framework's close, a core rule this section holds, not the conference feature's: step 2: a call waiting for its room's lock is cut at once, nothing of it stored; the framework's background runs (§19.7) and its verification timers (§11.7.5) are cut at once. Enclosing capability conditions and §26 levels still apply.",
       "level": "must",
       "section": "12.10.4",
       "line": 16220,
       "text": "A call waiting for its room's\n   lock is cut, nothing of it stored; the framework's background runs\n   (§19.7) and its verification timers (§11.7.5) are cut.",
-      "sha256": "b2104c481a048591202744a8d59fc27c1899f4355cf9f5512185947407af47b1"
+      "sha256": "b61b4fecc1d9fba4c304407ce91590c5f8be3eb7ccba3528d365423aed118c25"
     },
     {
       "id": "RK-12.10.4-045",
@@ -27560,7 +27560,7 @@
       "applies": "§12.10.4 Closing and shared state: the framework's close, a core rule this section holds, not the conference feature's: step 3: the cut turn's streamed text is stored marked cancelled, and an open tool call gets its end row, failed, error kit_closed. Enclosing capability conditions and §26 levels still apply.",
       "level": "must",
       "section": "12.10.4",
-      "line": 16225,
+      "line": 16224,
       "text": "The text it streamed is stored marked cancelled and an open tool call\n   gets its end row, `failed`, error `kit_closed` (§12.2 step 13s), so the\n   history stays valid.",
       "sha256": "5e957ffe1d347b5c9b93630e427a7646a212aa49ab6a15571846e805477fce69"
     },

@@ -7012,8 +7012,9 @@
         "unmapped": 74
       },
       "decided_gaps": {
-        "step": 27,
-        "writable": 12
+        "phase6": 1,
+        "step": 25,
+        "writable": 13
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -38198,9 +38199,9 @@
       "mapping": "unmapped",
       "links": [],
       "gap": {
-        "class": "step",
+        "class": "phase6",
         "card": "RMK-2007",
-        "note": "step: work that ignores its cancellation, to bound the close's two unwinds."
+        "note": "measurement: the close's whole duration bound (the grace, the turn backend's budget, the closes, at most two unwinds of 1 second); no step reads elapsed time."
       }
     },
     {
@@ -38343,12 +38344,7 @@
       "id": "RK-12.10.4-073",
       "section": "12.10.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2007",
-        "note": "step: a tool whose call closes the kit (a scripted tool runs no step)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.4-074",
@@ -38404,7 +38400,12 @@
       "id": "RK-12.10.4-079",
       "section": "12.10.4",
       "mapping": "unmapped",
-      "links": []
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-2007",
+        "note": "An ASYNC hook's observer that closes the kit while the work that fired it holds its send at a gate past a short close_grace_ms: that send failed, code kit_closed."
+      }
     },
     {
       "id": "RK-12.10.4-080",

@@ -173,7 +173,7 @@ See [requirements.json](requirements.json) for exact clauses and applicability,
 | §12.10.1 Design Principles | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | §12.10.2 Data Models | normative | 14 | 14 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | §12.10.3 ConferenceBackend Interface | normative | 14 | 14 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| §12.10.4 ConferenceChannel | normative | 77 | 74 | 3 | 0 | 24 | 0 | 12 | 27 | 0 |
+| §12.10.4 ConferenceChannel | normative | 77 | 74 | 3 | 0 | 24 | 0 | 13 | 25 | 1 |
 | §12.10.5 Multi-Party Interruption Policy | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | §12.10.6 AI Participation Patterns | normative | 3 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | §12.10.7 Conference State Events | normative | 3 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
@@ -594,7 +594,7 @@ Units [gaps.json](gaps.json) lists: a scenario can test each, and none cites it 
 | RK-12.10.4-050 | §12.10.4 | step | RMK-2007 | step: a scripted source (source_provider) whose stop is held as the close runs. |
 | RK-12.10.4-051 | §12.10.4 | writable | RMK-2007 | A call held in a BEFORE_BROADCAST hook as the close starts and let go within the grace: stored, delivered to no one. |
 | RK-12.10.4-054 | §12.10.4 | step | RMK-2007 | step: a channel whose close starts work, which the close cuts at once. |
-| RK-12.10.4-056 | §12.10.4 | step | RMK-2007 | step: work that ignores its cancellation, to bound the close's two unwinds. |
+| RK-12.10.4-056 | §12.10.4 | phase6 | RMK-2007 | measurement: the close's whole duration bound (the grace, the turn backend's budget, the closes, at most two unwinds of 1 second); no step reads elapsed time. |
 | RK-12.10.4-059 | §12.10.4 | step | RMK-2007 | step: work that ignores its cancellation and writes once the close returned. |
 | RK-12.10.4-065 | §12.10.4 | writable | RMK-2007 | A call waiting for its room's lock as the close starts: blocked, reason kit_closed, nothing stored; a send_event refused the same way raises kit_closed. |
 | RK-12.10.4-066 | §12.10.4 | writable | RMK-2007 | A commit held at a store_fault gate once its write landed, cut past a short close_grace_ms: its event read back by its id. |
@@ -603,11 +603,11 @@ Units [gaps.json](gaps.json) lists: a scenario can test each, and none cites it 
 | RK-12.10.4-069 | §12.10.4 | writable | RMK-2007 | Two closes in the background while a send holds, the first cancelled: the second returns once the shutdown ends, the send delivered. |
 | RK-12.10.4-070 | §12.10.4 | writable | RMK-2007 | A second close after a successful one returns null; the failure half needs a channel whose close fails. |
 | RK-12.10.4-071 | §12.10.4 | step | RMK-2007 | step: an error name for ShutdownCancelledError, and a step that cuts the shutdown itself. |
-| RK-12.10.4-073 | §12.10.4 | step | RMK-2007 | step: a tool whose call closes the kit (a scripted tool runs no step). |
 | RK-12.10.4-075 | §12.10.4 | writable | RMK-2007 | A hook held at its gate within the close's grace, which then closes the kit itself: the shutdown stops waiting for it. |
 | RK-12.10.4-076 | §12.10.4 | step | RMK-2007 | step: a tool whose cleanup closes the kit after the close cut its turn. |
 | RK-12.10.4-077 | §12.10.4 | writable | RMK-2007 | A close from an agent's turn in a room's lane, a delivery queued behind it: that delivery dropped, kit_closed. |
 | RK-12.10.4-078 | §12.10.4 | writable | RMK-2007 | An AFTER_BROADCAST hook that sends, then closes the kit: its send dropped. |
+| RK-12.10.4-079 | §12.10.4 | writable | RMK-2007 | An ASYNC hook's observer that closes the kit while the work that fired it holds its send at a gate past a short close_grace_ms: that send failed, code kit_closed. |
 | RK-12.10.4-080 | §12.10.4 | step | RMK-2007 | step: a channel whose close calls the kit's close. |
 | RK-13.1-001 | §13.1 | step | RMK-1965 | Needs a channel's circuit breaker observable in the runners, which record no circuit_breaker_opened and expose no breaker state. |
 | RK-13.1-004 | §13.1 | step | RMK-1965 | Needs a channel's breaker state observable in the runners. |
