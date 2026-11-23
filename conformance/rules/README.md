@@ -30,25 +30,25 @@ proof: a scenario can cite a unit without covering all of it.
 | [§3 Architecture Overview](section-3.md) | 3 | 0 | 0 | 0 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | [§4 Core Concepts](section-4.md) | 11 | 0 | 0 | 0 | 11 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | [§5 Data Models](section-5.md) | 184 | 171 | 9 | 4 | 0 | 169 | 675 | 0 | 0 | 0 | 0 | 0 |
-| [§6 Channel System](section-6.md) | 657 | 641 | 7 | 9 | 0 | 422 | 2683 | 0 | 182 | 92 | 81 | 11 |
+| [§6 Channel System](section-6.md) | 657 | 641 | 7 | 9 | 0 | 422 | 2683 | 0 | 181 | 98 | 81 | 4 |
 | [§7 Permission Model](section-7.md) | 85 | 84 | 0 | 1 | 0 | 83 | 339 | 0 | 0 | 0 | 0 | 0 |
-| [§8 Event System](section-8.md) | 177 | 176 | 1 | 0 | 0 | 119 | 1211 | 0 | 55 | 16 | 16 | 23 |
+| [§8 Event System](section-8.md) | 177 | 176 | 1 | 0 | 0 | 119 | 1211 | 0 | 55 | 20 | 16 | 19 |
 | [§9 Hook System](section-9.md) | 350 | 343 | 3 | 4 | 0 | 333 | 1342 | 0 | 0 | 0 | 0 | 0 |
 | [§10 Processing Pipelines](section-10.md) | 646 | 626 | 7 | 13 | 0 | 588 | 2264 | 0 | 0 | 0 | 0 | 0 |
 | [§11 Identity Resolution](section-11.md) | 110 | 108 | 2 | 0 | 0 | 91 | 381 | 0 | 11 | 5 | 4 | 2 |
 | [§12 Voice and Realtime Media](section-12.md) | 431 | 164 | 2 | 1 | 264 | 40 | 173 | 0 | 90 | 21 | 69 | 1 |
 | [§13 Resilience and Error Handling](section-13.md) | 97 | 88 | 7 | 2 | 0 | 58 | 255 | 0 | 29 | 16 | 15 | 0 |
 | [§14 Storage Interface](section-14.md) | 110 | 107 | 1 | 2 | 0 | 69 | 146 | 0 | 31 | 8 | 23 | 0 |
-| [§15 Observability](section-15.md) | 71 | 58 | 11 | 1 | 1 | 35 | 59 | 0 | 19 | 3 | 11 | 11 |
+| [§15 Observability](section-15.md) | 71 | 58 | 11 | 1 | 1 | 35 | 59 | 0 | 19 | 6 | 11 | 5 |
 | [§16 Integration Surfaces](section-16.md) | 12 | 4 | 8 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| [§17 Security Considerations](section-17.md) | 78 | 62 | 16 | 0 | 0 | 24 | 165 | 0 | 36 | 0 | 14 | 26 |
+| [§17 Security Considerations](section-17.md) | 78 | 62 | 16 | 0 | 0 | 24 | 165 | 0 | 31 | 0 | 14 | 20 |
 | [§18 Design Principles](section-18.md) | 1 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| [§19 Multi-Agent Orchestration](section-19.md) | 567 | 560 | 3 | 3 | 1 | 417 | 1826 | 0 | 141 | 69 | 20 | 52 |
+| [§19 Multi-Agent Orchestration](section-19.md) | 567 | 560 | 3 | 3 | 1 | 417 | 1826 | 0 | 139 | 73 | 20 | 46 |
 | [§20 Memory System](section-20.md) | 63 | 62 | 0 | 1 | 0 | 48 | 234 | 0 | 12 | 10 | 2 | 0 |
-| [§21 Tool Access Control](section-21.md) | 214 | 199 | 13 | 2 | 0 | 127 | 880 | 0 | 71 | 18 | 30 | 30 |
-| [§22 Delivery Strategies](section-22.md) | 144 | 130 | 5 | 8 | 1 | 72 | 268 | 0 | 55 | 12 | 5 | 39 |
+| [§21 Tool Access Control](section-21.md) | 214 | 199 | 13 | 2 | 0 | 127 | 880 | 0 | 71 | 18 | 30 | 28 |
+| [§22 Delivery Strategies](section-22.md) | 144 | 130 | 5 | 8 | 1 | 72 | 268 | 0 | 52 | 21 | 5 | 27 |
 | [§23 Task Delegation](section-23.md) | 196 | 194 | 1 | 0 | 1 | 159 | 550 | 0 | 33 | 8 | 18 | 7 |
 | [§24 Skills Framework](section-24.md) | 184 | 174 | 3 | 6 | 1 | 106 | 733 | 0 | 71 | 42 | 24 | 5 |
 | [§25 Image Generation](section-25.md) | 38 | 30 | 0 | 7 | 1 | 1 | 15 | 0 | 19 | 0 | 19 | 0 |
 | [§26 Conformance Levels](section-26.md) | 24 | 21 | 0 | 0 | 3 | 20 | 229 | 0 | 0 | 0 | 0 | 0 |
-| [Appendix A: Channel Reference](appendix-A.md) | 202 | 200 | 0 | 2 | 0 | 98 | 267 | 0 | 102 | 7 | 44 | 51 |
+| [Appendix A: Channel Reference](appendix-A.md) | 202 | 200 | 0 | 2 | 0 | 98 | 267 | 0 | 84 | 17 | 45 | 22 |

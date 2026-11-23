@@ -60,9 +60,9 @@ See [requirements.json](requirements.json) for exact clauses and applicability,
 | §5.14 Protocol Trace | normative | 5 | 5 | 0 | 0 | 1 | 0 | 0 | 0 | 0 |
 | §6 Channel System | informative | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | §6.1 Channel Interface | normative | 25 | 25 | 0 | 0 | 44 | 0 | 1 | 4 | 0 |
-| §6.2 ChannelType | normative | 11 | 11 | 0 | 0 | 0 | 0 | 4 | 1 | 1 |
-| §6.3 Transport Channels | normative | 7 | 7 | 0 | 0 | 0 | 0 | 0 | 3 | 2 |
-| §6.4 Intelligence Channels | normative | 494 | 472 | 22 | 0 | 1263 | 0 | 70 | 53 | 8 |
+| §6.2 ChannelType | normative | 11 | 11 | 0 | 0 | 0 | 0 | 5 | 1 | 0 |
+| §6.3 Transport Channels | normative | 7 | 7 | 0 | 0 | 0 | 0 | 2 | 3 | 0 |
+| §6.4 Intelligence Channels | normative | 494 | 472 | 22 | 0 | 1263 | 0 | 73 | 53 | 4 |
 | §6.5 Source Providers | normative | 4 | 4 | 0 | 0 | 0 | 0 | 0 | 4 | 0 |
 | §6.6 Content Transcoding | normative | 32 | 32 | 0 | 0 | 17 | 0 | 8 | 1 | 0 |
 | §6.7 Provider Abstraction | normative | 74 | 70 | 4 | 0 | 107 | 0 | 9 | 7 | 0 |
@@ -76,7 +76,7 @@ See [requirements.json](requirements.json) for exact clauses and applicability,
 | §8 Event System | informative | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | §8.1 Room Events | normative | 11 | 10 | 1 | 0 | 24 | 0 | 2 | 2 | 0 |
 | §8.2 Framework Events | normative | 63 | 63 | 0 | 0 | 93 | 0 | 0 | 10 | 15 |
-| §8.3 Event Chain Depth | normative | 46 | 43 | 3 | 0 | 78 | 0 | 7 | 1 | 7 |
+| §8.3 Event Chain Depth | normative | 46 | 43 | 3 | 0 | 78 | 0 | 11 | 1 | 3 |
 | §8.4 Realtime / Ephemeral Events | normative | 35 | 31 | 4 | 0 | 41 | 0 | 2 | 3 | 0 |
 | §8.5 Responses: What They Answer, and Whether They Were Consumed | normative | 22 | 21 | 1 | 0 | 4 | 0 | 5 | 0 | 1 |
 | §9 Hook System | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
@@ -200,13 +200,13 @@ See [requirements.json](requirements.json) for exact clauses and applicability,
 | §15.1 Logging | normative | 2 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | §15.2 Log Levels | normative | 3 | 3 | 0 | 0 | 2 | 0 | 0 | 0 | 0 |
 | §15.3 Structured Log Context | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| §15.4 Voice Pipeline Observability | normative | 3 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 3 |
+| §15.4 Voice Pipeline Observability | normative | 3 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 2 |
 | §15.5 Framework Events for Monitoring | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| §15.6 Protocol Trace Infrastructure | normative | 15 | 15 | 0 | 0 | 0 | 0 | 2 | 3 | 5 |
+| §15.6 Protocol Trace Infrastructure | normative | 15 | 15 | 0 | 0 | 0 | 0 | 2 | 3 | 3 |
 | §15.7 Telemetry Provider | normative | 8 | 8 | 0 | 0 | 0 | 0 | 0 | 2 | 0 |
 | §15.8 Audit System | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | §15.8.1 Tool Auditing | normative | 18 | 18 | 0 | 0 | 2 | 0 | 1 | 2 | 0 |
-| §15.8.2 Session Auditing | normative | 11 | 11 | 0 | 0 | 1 | 0 | 0 | 1 | 3 |
+| §15.8.2 Session Auditing | normative | 11 | 11 | 0 | 0 | 1 | 0 | 3 | 1 | 0 |
 | §15.8.3 Audit Data Format | normative | 4 | 4 | 0 | 0 | 0 | 0 | 0 | 3 | 0 |
 | §15.9 Feedback | normative | 4 | 4 | 0 | 0 | 2 | 0 | 0 | 0 | 0 |
 | §16 Integration Surfaces | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
@@ -215,29 +215,29 @@ See [requirements.json](requirements.json) for exact clauses and applicability,
 | §16.3 Surface Independence | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | §17 Security Considerations | informative | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | §17.1 Input Validation | normative | 3 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| §17.2 Multi-Tenant Isolation | normative | 27 | 26 | 1 | 0 | 106 | 0 | 0 | 9 | 3 |
+| §17.2 Multi-Tenant Isolation | normative | 27 | 26 | 1 | 0 | 106 | 0 | 0 | 9 | 2 |
 | §17.3 Sensitive Data | normative | 3 | 3 | 0 | 0 | 0 | 0 | 0 | 1 | 0 |
 | §17.4 Rate Limiting | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 1 | 0 |
 | §17.5 Chain Depth | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| §17.6 Voice and Audio Security | normative | 28 | 28 | 0 | 0 | 0 | 0 | 0 | 0 | 18 |
-| §17.7 Conference Access Security | normative | 9 | 9 | 0 | 0 | 0 | 0 | 0 | 0 | 5 |
+| §17.6 Voice and Audio Security | normative | 28 | 28 | 0 | 0 | 0 | 0 | 0 | 0 | 15 |
+| §17.7 Conference Access Security | normative | 9 | 9 | 0 | 0 | 0 | 0 | 0 | 0 | 3 |
 | §17.8 Skill-Bundled Files | normative | 6 | 6 | 0 | 0 | 0 | 0 | 0 | 3 | 0 |
 | §18 Design Principles | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | §19 Multi-Agent Orchestration | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| §19.1 Overview | normative | 40 | 40 | 0 | 0 | 31 | 0 | 2 | 1 | 6 |
+| §19.1 Overview | normative | 40 | 40 | 0 | 0 | 31 | 0 | 4 | 1 | 3 |
 | §19.2 ConversationState | normative | 5 | 5 | 0 | 0 | 9 | 0 | 0 | 0 | 0 |
 | §19.3 Addressing | normative | 15 | 15 | 0 | 0 | 13 | 0 | 1 | 0 | 1 |
 | §19.3.1 Agent-sourced events | normative | 12 | 12 | 0 | 0 | 4 | 0 | 1 | 0 | 0 |
 | §19.3.2 Delivered versus solicited | normative | 5 | 4 | 1 | 0 | 37 | 0 | 0 | 0 | 0 |
 | §19.4 ConversationRouter | normative | 21 | 21 | 0 | 0 | 17 | 0 | 2 | 1 | 0 |
-| §19.5 ConversationPipeline | normative | 34 | 34 | 0 | 0 | 12 | 0 | 0 | 0 | 15 |
+| §19.5 ConversationPipeline | normative | 34 | 34 | 0 | 0 | 12 | 0 | 1 | 0 | 14 |
 | §19.6 HandoffHandler | normative | 46 | 46 | 0 | 0 | 32 | 0 | 1 | 3 | 5 |
 | §19.7 Orchestration Strategies | normative | 67 | 65 | 2 | 0 | 64 | 0 | 5 | 1 | 6 |
 | §19.7.1 Pipeline | normative | 11 | 11 | 0 | 0 | 12 | 0 | 0 | 0 | 4 |
 | §19.7.2 Swarm | normative | 2 | 2 | 0 | 0 | 1 | 0 | 0 | 0 | 0 |
 | §19.7.3 Supervisor | normative | 55 | 53 | 2 | 0 | 67 | 0 | 4 | 2 | 2 |
-| §19.7.4 Loop | normative | 31 | 31 | 0 | 0 | 16 | 0 | 1 | 1 | 12 |
-| §19.7.5 Discussion | normative | 201 | 197 | 4 | 0 | 180 | 0 | 51 | 6 | 1 |
+| §19.7.4 Loop | normative | 31 | 31 | 0 | 0 | 16 | 0 | 1 | 1 | 11 |
+| §19.7.5 Discussion | normative | 201 | 197 | 4 | 0 | 180 | 0 | 52 | 6 | 0 |
 | §19.8 StatusBus | normative | 21 | 21 | 0 | 0 | 17 | 0 | 1 | 5 | 0 |
 | §20 Memory System | normative | 1 | 1 | 0 | 0 | 2 | 0 | 0 | 0 | 0 |
 | §20.1 MemoryProvider Interface | normative | 8 | 6 | 2 | 0 | 35 | 0 | 2 | 0 | 0 |
@@ -249,10 +249,10 @@ See [requirements.json](requirements.json) for exact clauses and applicability,
 | §21.3 AI Steering Directives | normative | 15 | 15 | 0 | 0 | 25 | 0 | 3 | 1 | 0 |
 | §21.4 Tool Call Context | normative | 42 | 39 | 3 | 0 | 121 | 0 | 1 | 2 | 9 |
 | §21.5 Large Tool Results | normative | 19 | 19 | 0 | 0 | 26 | 0 | 3 | 3 | 0 |
-| §21.6 Tool Call Timeout | normative | 16 | 16 | 0 | 0 | 27 | 0 | 1 | 1 | 4 |
+| §21.6 Tool Call Timeout | normative | 16 | 16 | 0 | 0 | 27 | 0 | 1 | 1 | 2 |
 | §22 Delivery Strategies | normative | 1 | 1 | 0 | 0 | 1 | 0 | 0 | 0 | 0 |
-| §22.1 DeliveryStrategy Interface | normative | 99 | 99 | 0 | 0 | 44 | 0 | 3 | 2 | 31 |
-| §22.2 Built-in Strategies | normative | 31 | 31 | 0 | 0 | 12 | 0 | 8 | 3 | 8 |
+| §22.1 DeliveryStrategy Interface | normative | 99 | 99 | 0 | 0 | 44 | 0 | 10 | 2 | 21 |
+| §22.2 Built-in Strategies | normative | 31 | 31 | 0 | 0 | 12 | 0 | 10 | 3 | 6 |
 | §22.3 Delivery Hooks | normative | 13 | 13 | 0 | 0 | 8 | 0 | 1 | 0 | 0 |
 | §23 Task Delegation | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | §23.1 TaskRunner Interface | normative | 8 | 8 | 0 | 0 | 4 | 0 | 0 | 4 | 0 |
@@ -292,13 +292,13 @@ See [requirements.json](requirements.json) for exact clauses and applicability,
 | §A.8 WebSocket Channel | normative | 8 | 8 | 0 | 0 | 0 | 0 | 0 | 8 | 0 |
 | §A.9 AI Channel | normative | 39 | 39 | 0 | 0 | 92 | 0 | 3 | 1 | 0 |
 | §A.9.1 ACP Agent Channel | normative | 42 | 39 | 3 | 0 | 120 | 0 | 3 | 4 | 0 |
-| §A.10 Voice Channel | normative | 15 | 15 | 0 | 0 | 0 | 0 | 0 | 0 | 14 |
-| §A.11 Realtime Voice Channel | normative | 8 | 8 | 0 | 0 | 0 | 0 | 0 | 0 | 6 |
-| §A.12 Video Channel | normative | 14 | 14 | 0 | 0 | 0 | 0 | 0 | 0 | 9 |
+| §A.10 Voice Channel | normative | 15 | 15 | 0 | 0 | 0 | 0 | 5 | 0 | 4 |
+| §A.11 Realtime Voice Channel | normative | 8 | 8 | 0 | 0 | 0 | 0 | 2 | 0 | 0 |
+| §A.12 Video Channel | normative | 14 | 14 | 0 | 0 | 0 | 0 | 2 | 1 | 3 |
 | §A.13 Telegram Channel | normative | 6 | 6 | 0 | 0 | 0 | 0 | 0 | 4 | 0 |
 | §A.14 CLI Channel | normative | 2 | 2 | 0 | 0 | 0 | 0 | 0 | 2 | 0 |
 | §A.14.1 Host Channel | normative | 5 | 5 | 0 | 0 | 0 | 0 | 1 | 0 | 0 |
-| §A.15 Conference Channel | normative | 29 | 29 | 0 | 0 | 0 | 0 | 0 | 0 | 22 |
+| §A.15 Conference Channel | normative | 29 | 29 | 0 | 0 | 0 | 0 | 1 | 0 | 15 |
 | §B Complete Event Flow Examples | informative | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | §B.1 Customer (SMS) + AI — Basic Conversation | informative | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 |
 | §B.2 Sensitivity Scanning — Block and Inject | informative | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 |
@@ -325,21 +325,20 @@ Units [gaps.json](gaps.json) lists: a scenario can test each, and none cites it 
 | RK-6.1-009 | §6.1 | step | RMK-1955 | Needs a deliver_cut reaction that raises on the scripted streaming channel. |
 | RK-6.1-016 | §6.1 | step | RMK-1955 | Needs a channel built on a provider whose name the event source carries; scripted channels have no provider (feature name transport_provider proposed). |
 | RK-6.1-018 | §6.1 | writable | RMK-1955 | agent.direct_prompt reads the responded flag: a channel that does not answer, its response events not re-entering. |
-| RK-6.2-003 | §6.2 | phase6 | RMK-1955 | The media rows of the ChannelType table: VOICE, REALTIME_VOICE, AUDIO_VIDEO, REALTIME_AUDIO_VIDEO, VIDEO, CONFERENCE (media features voice, realtime, video, conference). |
+| RK-6.2-003 | §6.2 | writable | RMK-1955 | The bindings expectation after voice.open, video.open and conference.open, with a realtime channel bound, shows the VOICE, REALTIME_VOICE, VIDEO and CONFERENCE rows; AUDIO_VIDEO and REALTIME_AUDIO_VIDEO need an audio-video channel fixture (requires voice, realtime, video and conference). |
 | RK-6.2-007 | §6.2 | writable | RMK-1955 | A scripted channel whose type uses digits, _ and - is stored and read back as that plain string. |
 | RK-6.2-008 | §6.2 | writable | RMK-1955 | A scripted channel of a type the table does not list (slack) is registered, and an event naming it reads back as written. |
 | RK-6.2-009 | §6.2 | step | RMK-1955 | register_channel with a type outside the grammar: the Rust runner fails building the scripted channel instead of reporting the refusal as an outcome. |
 | RK-6.2-012 | §6.2 | writable | RMK-1955 | A hook filtered on a channel type the table does not list (channel_types) fires for that type's events. |
 | RK-6.2-011 | §6.2 | writable | RMK-1955 | register_channel of a scripted channel of type system is refused. |
 | RK-6.3-003 | §6.3 | step | RMK-1955 | Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed. |
-| RK-6.3-004 | §6.3 | phase6 | RMK-1955 | Voice and Realtime Voice reference capabilities (media features voice and realtime). |
+| RK-6.3-004 | §6.3 | writable | RMK-1955 | Suspect RMK-2021: Python's VoiceChannel and RealtimeVoiceChannel declare media types AUDIO and TEXT, the text AUDIO alone; the bindings expectation after voice.open and of a bound realtime channel shows them, and no scenario asserting the text is written until it is decided (requires voice and realtime). |
 | RK-6.3-005 | §6.3 | step | RMK-1955 | Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed. The audit's suspect on the Telegram row is RMK-1954. |
-| RK-6.3-006 | §6.3 | phase6 | RMK-1955 | Audio/Video, Realtime Audio/Video, Video and Conference reference capabilities (media features voice, realtime, video, conference). |
+| RK-6.3-006 | §6.3 | writable | RMK-1955 | The bindings expectation after video.open and conference.open shows the Video and Conference rows; the two audio-video rows need an audio-video channel fixture, and Python's audio-video channels also declare TEXT (suspect RMK-2021) (requires video and conference). |
 | RK-6.3-007 | §6.3 | step | RMK-1955 | Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed. |
 | RK-6.4-049 | §6.4 | writable | RMK-1911 |  |
 | RK-6.4-059 | §6.4 | writable | RMK-1911 |  |
 | RK-6.4-069 | §6.4 | writable | RMK-1911 |  |
-| RK-6.4-095 | §6.4 | phase6 | RMK-1911 | Media feature realtime. |
 | RK-6.4-096 | §6.4 | writable | RMK-1911 |  |
 | RK-6.4-098 | §6.4 | writable | RMK-1911 |  |
 | RK-6.4-100 | §6.4 | writable | RMK-1911 |  |
@@ -359,7 +358,7 @@ Units [gaps.json](gaps.json) lists: a scenario can test each, and none cites it 
 | RK-6.4-118 | §6.4 | writable | RMK-1911 |  |
 | RK-6.4-119 | §6.4 | writable | RMK-1911 |  |
 | RK-6.4-120 | §6.4 | writable | RMK-1911 |  |
-| RK-6.4-121 | §6.4 | phase6 | RMK-1911 | Media feature realtime. |
+| RK-6.4-121 | §6.4 | phase6 | RMK-1911 | step: a scripted realtime reasoning backend: an agent with the option that a realtime session delegates to. |
 | RK-6.4-133 | §6.4 | writable | RMK-1911 |  |
 | RK-6.4-144 | §6.4 | step | RMK-1911 | Needs a classifier fixture: scripted classifier answers behind the provided speak policy. |
 | RK-6.4-146 | §6.4 | writable | RMK-1911 |  |
@@ -394,7 +393,7 @@ Units [gaps.json](gaps.json) lists: a scenario can test each, and none cites it 
 | RK-6.4-202 | §6.4 | step | RMK-1911 | Needs a classifier fixture: scripted classifier answers behind the provided speak policy. |
 | RK-6.4-203 | §6.4 | step | RMK-1911 | Needs a classifier fixture: scripted classifier answers behind the provided speak policy. |
 | RK-6.4-204 | §6.4 | step | RMK-1911 | Needs a step that chooses the provided LLM thinker over a scripted provider answering JSON. |
-| RK-6.4-205 | §6.4 | phase6 | RMK-1911 | Media feature voice. |
+| RK-6.4-205 | §6.4 | writable | RMK-1911 | voice.open with a playback_gate, voice.stream, then voice.barge_in: the timeline holds the record naming the cut answer (requires voice). |
 | RK-6.4-206 | §6.4 | step | RMK-1911 | A scenario can store the cut record through the store calls (a binding and an internal event of a voice channel) on Python today; roomkit-rs reads no cut record, so the scenario needs a requires_features name in both runners' feature tables (decision D1), which lot T-1 does not add. |
 | RK-6.4-207 | §6.4 | step | RMK-1911 | A scenario can store the cut record through the store calls (a binding and an internal event of a voice channel) on Python today; roomkit-rs reads no cut record, so the scenario needs a requires_features name in both runners' feature tables (decision D1), which lot T-1 does not add. |
 | RK-6.4-208 | §6.4 | step | RMK-1911 | A scenario can store the cut record through the store calls (a binding and an internal event of a voice channel) on Python today; roomkit-rs reads no cut record, so the scenario needs a requires_features name in both runners' feature tables (decision D1), which lot T-1 does not add. |
@@ -404,12 +403,12 @@ Units [gaps.json](gaps.json) lists: a scenario can test each, and none cites it 
 | RK-6.4-212 | §6.4 | step | RMK-1911 | Needs a stored cut record and the speak_turns snapshot to carry the turn's cut, in both runners. |
 | RK-6.4-213 | §6.4 | step | RMK-1911 | Needs a classifier fixture (scripted classifier answers behind the provided speak policy) and a stored cut record. |
 | RK-6.4-214 | §6.4 | step | RMK-1911 | Needs a classifier fixture (scripted classifier answers behind the provided speak policy) and a stored cut record. |
-| RK-6.4-215 | §6.4 | phase6 | RMK-1911 | Media feature voice. |
+| RK-6.4-215 | §6.4 | writable | RMK-1911 | voice.open with a playback_gate, voice.stream, then voice.barge_in: the cut record keeps the text handed to speech and how long it played, matched loosely (requires voice). |
 | RK-6.4-216 | §6.4 | step | RMK-1911 | A scenario can store the cut record through the store calls (a binding and an internal event of a voice channel) on Python today; roomkit-rs reads no cut record, so the scenario needs a requires_features name in both runners' feature tables (decision D1), which lot T-1 does not add. |
 | RK-6.4-217 | §6.4 | step | RMK-1911 | A scenario can store the cut record through the store calls (a binding and an internal event of a voice channel) on Python today; roomkit-rs reads no cut record, so the scenario needs a requires_features name in both runners' feature tables (decision D1), which lot T-1 does not add. |
 | RK-6.4-224 | §6.4 | writable | RMK-1940 | A hook under Tool Search that removes a tool from the first round's declaration only, the tool still found and declared. |
-| RK-6.4-230 | §6.4 | phase6 | RMK-1940 | Media feature realtime. |
-| RK-6.4-237 | §6.4 | phase6 | RMK-1940 | Media feature realtime. |
+| RK-6.4-230 | §6.4 | phase6 | RMK-1940 | step: Tool Search on a realtime session, realtime.read of the session configuration: a realtime session declaring what a served find_tools call revealed, and a reconfiguration while the call was judged. |
+| RK-6.4-237 | §6.4 | phase6 | RMK-1940 | step: Tool Search on a realtime session, realtime.read of the session configuration: a reconfigurable realtime session's retention of a called tool, and a call from an earlier catalogue revealing nothing into its replacement. |
 | RK-6.4-242 | §6.4 | writable | RMK-1940 | An ACP agent's turn under an ON_AI_RESPONSE hook, its declared_tools empty. |
 | RK-6.4-259 | §6.4 | step | RMK-1940 | Needs a scripted AFTER_TOOL_ROUND hook whose MODIFY returns no event, in both runners. |
 | RK-6.4-262 | §6.4 | writable | RMK-1940 | An ACP agent's turn with an AFTER_TOOL_ROUND hook registered, the hook never called; a reasoning backend's agent needs the realtime feature. |
@@ -419,7 +418,7 @@ Units [gaps.json](gaps.json) lists: a scenario can test each, and none cites it 
 | RK-6.4-401 | §6.4 | writable | RMK-1940 | A standalone instruction's turn in a room whose earlier turns read instructions, none replayed. |
 | RK-6.4-284 | §6.4 | step | RMK-1940 | Needs a scripted model that refuses an image before any request leaves, in both runners. |
 | RK-6.4-287 | §6.4 | step | RMK-1940 | Needs a scripted BEFORE_AI_GENERATION hook that adds a block to the turn's notes, in both runners. |
-| RK-6.4-294 | §6.4 | phase6 | RMK-1940 | Media feature realtime. |
+| RK-6.4-294 | §6.4 | phase6 | RMK-1940 | step: a realtime call recovered from speech: the headers a realtime host injects into its own session are no marks. |
 | RK-6.4-298 | §6.4 | writable | RMK-1940 | Two turns over one participant's copy of a mark, the same replacement in both requests. |
 | RK-6.4-299 | §6.4 | writable | RMK-1940 | A tool's result and the agent's text between calls holding a mark's words, replayed as written. |
 | RK-6.4-301 | §6.4 | writable | RMK-1940 | A standalone instruction's turn on an agent with a memory provider, no memory in its request. |
@@ -437,7 +436,7 @@ Units [gaps.json](gaps.json) lists: a scenario can test each, and none cites it 
 | RK-6.4-362 | §6.4 | writable | RMK-1940 | A participant's message with a carriage return and a Unicode line separator, each line labelled. |
 | RK-6.4-365 | §6.4 | writable | RMK-1940 | An ACP agent's request from two participants, each line labelled. |
 | RK-6.4-366 | §6.4 | writable | RMK-1940 | One room read by the conversation and an ACP agent, the same labels at the same threshold. |
-| RK-6.4-368 | §6.4 | phase6 | RMK-1940 | Media feature conference. |
+| RK-6.4-368 | §6.4 | writable | RMK-1940 | conference.join: the participants expectation shows the person the conference keeps on its roster; the labelled first turn needs pipeline_speakers on voice.open and an on_transcription hook naming the participant (requires conference and voice). |
 | RK-6.4-372 | §6.4 | writable | RMK-1940 | SpeakTurn.people in a speak policy's snapshot with two people taking part. |
 | RK-6.4-374 | §6.4 | writable | RMK-1940 | Two requests in one ACP session, the second labelled and the note given once. |
 | RK-6.4-376 | §6.4 | writable | RMK-1940 | A memory summary joined to a labelled turn, its label out of the quote in the compaction's rendering. |
@@ -518,35 +517,35 @@ Units [gaps.json](gaps.json) lists: a scenario can test each, and none cites it 
 | RK-8.2-019 | §8.2 | step | RMK-1912 | Needs a scripted source provider; roomkit-rs lacks sources. |
 | RK-8.2-043 | §8.2 | step | RMK-1912 | Needs a circuit breaker on a scripted transport. |
 | RK-8.2-044 | §8.2 | step | RMK-1912 | Needs a circuit breaker on a scripted transport. |
-| RK-8.2-045 | §8.2 | phase6 | RMK-1912 |  |
-| RK-8.2-046 | §8.2 | phase6 | RMK-1912 |  |
-| RK-8.2-047 | §8.2 | phase6 | RMK-1912 |  |
-| RK-8.2-048 | §8.2 | phase6 | RMK-1912 |  |
-| RK-8.2-049 | §8.2 | phase6 | RMK-1912 |  |
-| RK-8.2-050 | §8.2 | phase6 | RMK-1912 |  |
-| RK-8.2-051 | §8.2 | phase6 | RMK-1912 |  |
-| RK-8.2-052 | §8.2 | phase6 | RMK-1912 |  |
-| RK-8.2-053 | §8.2 | phase6 | RMK-1912 |  |
-| RK-8.2-054 | §8.2 | phase6 | RMK-1912 |  |
-| RK-8.2-055 | §8.2 | phase6 | RMK-1912 |  |
-| RK-8.2-056 | §8.2 | phase6 | RMK-1912 |  |
-| RK-8.2-057 | §8.2 | phase6 | RMK-1912 |  |
-| RK-8.2-058 | §8.2 | phase6 | RMK-1912 |  |
-| RK-8.2-059 | §8.2 | phase6 | RMK-1912 |  |
-| RK-8.3-012 | §8.3 | phase6 | RMK-1912 |  |
+| RK-8.2-045 | §8.2 | phase6 | RMK-1912 | step: framework_events media rows: the voice_session_started row, when it is emitted and its data. |
+| RK-8.2-046 | §8.2 | phase6 | RMK-1912 | step: framework_events media rows: the voice_session_ended row, when it is emitted and its data. |
+| RK-8.2-047 | §8.2 | phase6 | RMK-1912 | step: framework_events media rows: the recording_started row, when it is emitted and its data. |
+| RK-8.2-048 | §8.2 | phase6 | RMK-1912 | step: framework_events media rows: the recording_stopped row, when it is emitted and its data. |
+| RK-8.2-049 | §8.2 | phase6 | RMK-1912 | step: framework_events media rows, voice.open failing STT or TTS scripts: the stt_error row, when it is emitted and its data. |
+| RK-8.2-050 | §8.2 | phase6 | RMK-1912 | step: framework_events media rows, voice.open failing STT or TTS scripts: the tts_error row, when it is emitted and its data. |
+| RK-8.2-051 | §8.2 | phase6 | RMK-1912 | step: framework_events media rows: the voice_session_ready row, when it is emitted and its data. |
+| RK-8.2-052 | §8.2 | phase6 | RMK-1912 | step: framework_events media rows: the video_session_started row, when it is emitted and its data. |
+| RK-8.2-053 | §8.2 | phase6 | RMK-1912 | step: framework_events media rows: the video_session_ended row, when it is emitted and its data. |
+| RK-8.2-054 | §8.2 | phase6 | RMK-1912 | step: framework_events media rows: the video_vision_result row, when it is emitted and its data. |
+| RK-8.2-055 | §8.2 | phase6 | RMK-1912 | step: framework_events media rows: the conference_started row, when it is emitted and its data. |
+| RK-8.2-056 | §8.2 | phase6 | RMK-1912 | step: framework_events media rows: the conference_ended row, when it is emitted and its data. |
+| RK-8.2-057 | §8.2 | phase6 | RMK-1912 | step: framework_events media rows: the conference_participant_joined row, when it is emitted and its data. |
+| RK-8.2-058 | §8.2 | phase6 | RMK-1912 | step: framework_events media rows: the conference_participant_left row, when it is emitted and its data. |
+| RK-8.2-059 | §8.2 | phase6 | RMK-1912 | step: framework_events media rows, conference.plug, unplug, set_bot_grants and ensure_bot: the conference_bot_grants_changed row, when it is emitted and its data. |
+| RK-8.3-012 | §8.3 | phase6 | RMK-1912 | step: a hook or handler body that sends or injects: the depth of a call made while a realtime or conference tool call runs outside a turn. |
 | RK-8.3-015 | §8.3 | writable | RMK-1912 | An ASYNC body's direct change fires triggers whose hooks send under the same floor. |
 | RK-8.3-016 | §8.3 | writable | RMK-1912 | A task a post-delivery hook body spawns calls at its own depth once the body is over. |
 | RK-8.3-018 | §8.3 | writable | RMK-1912 | A task a hook body spawns has the floor while the body runs, its own depth after. |
 | RK-8.3-019 | §8.3 | writable | RMK-1912 | A hook a turn executor fires carries its floor with the host verb it makes. |
 | RK-8.3-021 | §8.3 | step | RMK-1912 | Needs a framework-event handler reaction that spawns a task. |
 | RK-8.3-030 | §8.3 | writable | RMK-1912 | A non-intelligence channel's responses at the limit are stored BLOCKED. |
-| RK-8.3-031 | §8.3 | phase6 | RMK-1912 |  |
-| RK-8.3-032 | §8.3 | phase6 | RMK-1912 |  |
-| RK-8.3-033 | §8.3 | phase6 | RMK-1912 |  |
-| RK-8.3-034 | §8.3 | phase6 | RMK-1912 |  |
+| RK-8.3-031 | §8.3 | writable | RMK-1912 | deliver with chain_depth at the limit to a realtime channel with a live session: realtime.read shows the text injected silently (requires realtime). |
+| RK-8.3-032 | §8.3 | writable | RMK-1912 | An after_broadcast (ASYNC) hook whose do makes realtime.inject on an event one short of the chain limit, or a scripted turn's on_event do on an event two short of it: realtime.read shows the text injected silently; the tool-call door needs a realtime handler with do actions (requires realtime). |
+| RK-8.3-033 | §8.3 | phase6 | RMK-1912 | step: a hook or handler body that sends or injects: what a model's session leaves at the limit, and the observer loop it ends. |
+| RK-8.3-034 | §8.3 | phase6 | RMK-1912 | step: a read of a realtime or conference tool handler's context: the depth a realtime or conference tool call carries at the limit. |
 | RK-8.3-044 | §8.3 | writable | RMK-1912 | Work a hook body spawns has its own depth and, once the delivery is over, its own budget. |
-| RK-8.3-046 | §8.3 | phase6 | RMK-1912 |  |
-| RK-8.3-047 | §8.3 | phase6 | RMK-1912 |  |
+| RK-8.3-046 | §8.3 | writable | RMK-1912 | A scripted agent's answer, at depth 1 or more, delivered to the voice binding, and a before_tts hook whose do posts into the room: the timeline shows the post at the floor's depth; the realtime and conference tool-call hooks and a speech-to-speech model's words need their steps (requires voice). |
+| RK-8.3-047 | §8.3 | writable | RMK-1912 | A scripted agent answering into a voice channel and an after_tts hook whose do posts at each answer: the chain ends at the limit; voice.feed with a transcript while a playback_gate holds the reply: the user's message stored at depth 0, not at the reply's depth (requires voice). |
 | RK-8.3-051 | §8.3 | writable | RMK-1912 | A channel whose responses are blocked at the limit still has its side effects collected. |
 | RK-8.4-010 | §8.4 | step | RMK-1912 | Needs the in-memory realtime backend's options (its queue bound). |
 | RK-8.4-014 | §8.4 | writable | RMK-1912 | A subscription made while no room held the id reads the room created under it. |
@@ -554,19 +553,19 @@ Units [gaps.json](gaps.json) lists: a scenario can test each, and none cites it 
 | RK-8.4-021 | §8.4 | step | RMK-1912 | Needs a slow or stuck realtime backend. |
 | RK-8.4-036 | §8.4 | writable | RMK-1912 | A turn whose ephemerals are withheld still emits its framework events. |
 | RK-8.5-011 | §8.5 | writable | RMK-1912 | A buffered answer whose channel named responds_to keeps it. |
-| RK-8.5-013 | §8.5 | phase6 | RMK-1912 |  |
+| RK-8.5-013 | §8.5 | phase6 | RMK-1912 | step: realtime transcripts: a speech-to-speech channel's answers, not bound by the rule yet (Planned). |
 | RK-8.5-016 | §8.5 | writable | RMK-1912 | A response that claims another source gets the responder's. |
 | RK-8.5-017 | §8.5 | writable | RMK-1912 | A response under its own source keeps the fields its channel wrote. |
 | RK-8.5-018 | §8.5 | writable | RMK-1912 | A verified sender's message is answered with verification cleared. |
 | RK-8.5-021 | §8.5 | writable | RMK-1912 | Work that leaves a scoped cascade is not scoped. |
 | RK-11.2-017 | §11.2 | writable | RMK-1942 | An identity hook that answers a status its trigger does not act on, as AMBIGUOUS on ON_IDENTITY_UNKNOWN, is read as null. |
-| RK-11.6-003 | §11.6 | phase6 | RMK-1942 | A conference's utterances, under the identity their track was published under, are never put to the resolver (media feature conference). |
+| RK-11.6-003 | §11.6 | phase6 | RMK-1942 | step: conference.feed: a conference's utterances, under the identity their track was published under, are never put to the resolver. |
 | RK-11.6-010 | §11.6 | step | RMK-1942 | Needs one of the implementation's own wire channels in the runners, which build scripted channels only (feature name transport_provider proposed). |
 | RK-11.6-011 | §11.6 | step | RMK-1942 | Needs the implementation's interactive terminal channel in the runners; roomkit-rs has none, and no feature name is proposed for it. |
 | RK-11.6-012 | §11.6 | step | RMK-1942 | Needs one of the implementation's channels whose sender_id the integrator supplies, a WebSocket or HTTP one, in the runners (feature name websocket_channel proposed). |
 | RK-11.7-001 | §11.7 | writable | RMK-1942 | An unknown or pending sender under a verification policy: no label, no hold and no ON_VERIFICATION_REQUIRED. |
 | RK-11.7.3-003 | §11.7.3 | writable | RMK-1942 | An IDENTIFIED participant's id arriving through a channel it was never resolved on: the event carries no verification. |
-| RK-11.7.3-019 | §11.7.3 | phase6 | RMK-1942 | A speech-to-speech session's transcript is neither labelled nor held (media feature realtime). |
+| RK-11.7.3-019 | §11.7.3 | phase6 | RMK-1942 | step: realtime transcripts: a speech-to-speech session's transcript is neither labelled nor held. |
 | RK-11.7.6-008 | §11.7.6 | writable | RMK-1942 | A deferred code reply sent from a hook's locked section has its released message answered after that hook's work is delivered. |
 | RK-11.7.6-014 | §11.7.6 | writable | RMK-1942 | A completion handle's cancel (delivery.cancel) reaches a held message while its delivery set runs, and nothing once it ran. |
 | RK-11.7.7-007 | §11.7.7 | step | RMK-1942 | Two attempts at a request's last one count once: racing them needs a gate inside a verification transition. |
@@ -723,33 +722,30 @@ Units [gaps.json](gaps.json) lists: a scenario can test each, and none cites it 
 | RK-14.3-018 | §14.3 | step | RMK-1976 | Needs a store.update_room step held against a concurrent commit. |
 | RK-14.3-020 | §14.3 | writable | RMK-1976 | Two concurrent store.patch_room_metadata calls on different keys, both keys standing. |
 | RK-14.3-025 | §14.3 | writable | RMK-1976 | The kit's commit_event of a record that brings delivery_results, read back with them; the store's own commit_event is shown by store/a-delivery-record-alone-writes-an-event-s-results. |
-| RK-15.4-002 | §15.4 | phase6 | RMK-1979 | The voice pipeline's metrics; suspect RMK-1977. |
-| RK-15.4-003 | §15.4 | phase6 | RMK-1979 | The RECOMMENDED voice metric names: Python emits two of the seventeen as named and its other voice metrics under other names, roomkit-rs has no voice; suspect RMK-1977. |
-| RK-15.4-004 | §15.4 | phase6 | RMK-1979 | The voice pipeline logger and its context fields; suspect RMK-1977. |
-| RK-15.6-007 | §15.6 | phase6 | RMK-1979 | Traces a channel's transport protocol emits: Python's SIP voice backends are the only emitters, roomkit-rs has no protocol trace, and neither has an SMTP transport. |
+| RK-15.4-002 | §15.4 | phase6 | RMK-1979 | step: a read of the metrics the runner's telemetry mock records, beside telemetry.spans: the voice pipeline's structured metrics (suspect RMK-1977). |
+| RK-15.4-003 | §15.4 | phase6 | RMK-1979 | step: a read of the metrics the runner's telemetry mock records, beside telemetry.spans: the RECOMMENDED voice metric names, Python emitting two of them as named (suspect RMK-1977). |
 | RK-15.6-010 | §15.6 | step | RMK-1979 | Needs a trace callback registered with on_trace and a protocols filter, which no runner step registers. |
 | RK-15.6-011 | §15.6 | step | RMK-1979 | Needs a channel's trace_enabled read, which no runner step reads. |
 | RK-15.6-012 | §15.6 | writable | RMK-1979 | A trace naming only a session, on a channel that resolves no session, reaches no room's hook (requires protocol_trace). |
 | RK-15.6-014 | §15.6 | step | RMK-1979 | Needs sync and async trace callbacks registered with on_trace, which no runner step registers. |
-| RK-15.6-015 | §15.6 | phase6 | RMK-1979 | A voice or realtime voice channel bridging its backend's or transport's traces. |
-| RK-15.6-016 | §15.6 | phase6 | RMK-1979 | The voice trace bridge activated once trace_enabled becomes true. |
-| RK-15.6-018 | §15.6 | phase6 | RMK-1979 | The session-binding fallback, which a voice channel resolves. |
+| RK-15.6-015 | §15.6 | phase6 | RMK-1979 | step: a voice backend or realtime transport that emits a protocol trace: a voice or realtime voice channel bridging its backend's or transport's traces. |
+| RK-15.6-016 | §15.6 | phase6 | RMK-1979 | step: a voice backend or realtime transport that emits a protocol trace: the voice trace bridge activated once trace_enabled becomes true. |
+| RK-15.6-018 | §15.6 | phase6 | RMK-1979 | step: a voice backend or realtime transport that emits a protocol trace: the session-binding fallback, which a voice channel resolves. |
 | RK-15.6-005 | §15.6 | writable | RMK-1979 | A trace emitted for a room not yet created reaches ON_PROTOCOL_TRACE once create_room and attach_channel make it (requires protocol_trace). |
-| RK-15.6-006 | §15.6 | phase6 | RMK-1979 | A SIP voice backend's traces. |
 | RK-15.7-008 | §15.7 | step | RMK-1979 | Needs a store's delivery cursor spans in telemetry.spans, whose kinds hold no store span. |
 | RK-15.7-009 | §15.7 | step | RMK-1979 | Needs the inbound and delivery spans, which carry the addresses and the provider error, and a span's error_message: telemetry.spans has neither kind and returns no attribute or error. |
 | RK-15.8.1-009 | §15.8.1 | writable | RMK-1979 | An audited tool cancelled because its turn ended, by a steer cancel directive or the kit's close, is recorded cancelled. |
 | RK-15.8.1-015 | §15.8.1 | step | RMK-1979 | Needs an audited producer of the implementation's own, such as an MCP tool's isError result; the runners wrap scripted tools only. |
 | RK-15.8.1-023 | §15.8.1 | step | RMK-1979 | Needs a ToolAuditor of the scenario's own handed to audit_tool_handler. |
-| RK-15.8.2-009 | §15.8.2 | phase6 | RMK-1979 | The speech entry, recorded on ON_TRANSCRIPTION. |
-| RK-15.8.2-011 | §15.8.2 | phase6 | RMK-1979 | The vision entry, recorded on ON_VISION_RESULT. |
-| RK-15.8.2-012 | §15.8.2 | phase6 | RMK-1979 | The barge_in entry, recorded on ON_BARGE_IN. |
+| RK-15.8.2-009 | §15.8.2 | writable | RMK-1979 | voice.open with transcripts and the session_auditor attached: expect.session_audit holds the speech entry the transcription recorded (requires voice). |
+| RK-15.8.2-011 | §15.8.2 | writable | RMK-1979 | video.open with vision and the session_auditor attached: expect.session_audit holds the vision entry, the frame's description (requires video). |
+| RK-15.8.2-012 | §15.8.2 | writable | RMK-1979 | voice.barge_in on a playback held by a playback_gate, the session_auditor attached: expect.session_audit holds the barge_in entry (requires voice). |
 | RK-15.8.2-014 | §15.8.2 | step | RMK-1979 | Needs a step that records an application's own entry on the session auditor. |
 | RK-15.8.3-005 | §15.8.3 | step | RMK-1979 | Needs an auditor file that holds lines before the run, so that a scenario sees them kept. |
 | RK-15.8.3-003 | §15.8.3 | step | RMK-1979 | Needs an auditor whose file's parent directories do not exist yet. |
 | RK-15.8.3-004 | §15.8.3 | step | RMK-1979 | Needs an auditor whose file write fails. |
-| RK-17.2-005 | §17.2 | phase6 | RMK-1986 | A media door (a join, a realtime session start, a conference mint_access()) refusing another organization's room before any session, credential or recording. |
-| RK-17.2-006 | §17.2 | phase6 | RMK-1986 | A media door called without an organization. |
+| RK-17.2-005 | §17.2 | phase6 | RMK-1986 | step: conference.mint, organization_id on realtime.start and voice.open: a media door (a join, a realtime session start, a conference mint_access()) refusing another organization's room before any session, credential or recording. |
+| RK-17.2-006 | §17.2 | phase6 | RMK-1986 | step: conference.mint, organization_id on realtime.start and voice.open: a media door called without an organization. |
 | RK-17.2-017 | §17.2 | step | RMK-1986 | No step registers, subscribes or unregisters a connection of a transport whose registry reads no room; roomkit-rs has none, so it needs a requires_features name. |
 | RK-17.2-018 | §17.2 | step | RMK-1986 | No step registers, subscribes or unregisters a connection of a transport whose registry reads no room; roomkit-rs has none, so it needs a requires_features name. |
 | RK-17.2-019 | §17.2 | step | RMK-1986 | No step registers, subscribes or unregisters a connection of a transport whose registry reads no room; roomkit-rs has none, so it needs a requires_features name. |
@@ -759,114 +755,106 @@ Units [gaps.json](gaps.json) lists: a scenario can test each, and none cites it 
 | RK-17.2-023 | §17.2 | step | RMK-1986 | No step registers, subscribes or unregisters a connection of a transport whose registry reads no room; roomkit-rs has none, so it needs a requires_features name. |
 | RK-17.2-025 | §17.2 | step | RMK-1986 | No step steers through a channel's own steer() or a turn client's, with or without an organization. |
 | RK-17.2-027 | §17.2 | step | RMK-1986 | No step calls a strategy's install() directly, below the kit's install_strategy(). |
-| RK-17.2-028 | §17.2 | phase6 | RMK-1986 | The deprecated connect_voice(), connect_video() and bind_voice_session(), which name no organization. |
 | RK-17.3-002 | §17.3 | step | RMK-1986 | Neither implementation offers configurable redaction or encryption of raw_payload at rest, so no step configures one. |
 | RK-17.4-001 | §17.4 | step | RMK-1986 | Neither implementation offers per-organization rate limits, so no step configures one. |
-| RK-17.6-010 | §17.6 | phase6 | RMK-1986 | Configurable consent modes; suspect RMK-1985: Python offers none. |
-| RK-17.6-011 | §17.6 | phase6 | RMK-1986 | A recording encrypted at rest. |
-| RK-17.6-012 | §17.6 | phase6 | RMK-1986 | Configurable encryption of stored recordings. |
-| RK-17.6-013 | §17.6 | phase6 | RMK-1986 | The encryption settings every recording configuration carries. |
-| RK-17.6-014 | §17.6 | phase6 | RMK-1986 | A recorder that fails closed when neither encryption setting is set, a recording of video alone included. |
-| RK-17.6-017 | §17.6 | phase6 | RMK-1986 | Voice session metadata under the room's retention and redaction policies. |
-| RK-17.6-018 | §17.6 | phase6 | RMK-1986 | TTS context audio kept in memory only. |
-| RK-17.6-019 | §17.6 | phase6 | RMK-1986 | TTS context audio within max_turns and max_audio_seconds, dropped with its session. |
-| RK-17.6-020 | §17.6 | phase6 | RMK-1986 | TTS context audio kept only when include_audio is set. |
-| RK-17.6-021 | §17.6 | phase6 | RMK-1986 | The TTS context's text read from the stored transcript. |
-| RK-17.6-022 | §17.6 | phase6 | RMK-1986 | A user turn whose transcript a hook modified keeps no context audio. |
-| RK-17.6-023 | §17.6 | phase6 | RMK-1986 | Under DTMF redaction, a user turn with detected DTMF keeps no context audio. |
-| RK-17.6-025 | §17.6 | phase6 | RMK-1986 | A custom voice's recordings handed to the synthesizer for the call and kept nowhere. |
-| RK-17.6-026 | §17.6 | phase6 | RMK-1986 | A custom voice's evidence kept as metadata. |
-| RK-17.6-027 | §17.6 | phase6 | RMK-1986 | No custom voice created without the consent of the person it belongs to. |
-| RK-17.6-030 | §17.6 | phase6 | RMK-1986 | A provenance mark passed on as the synthesizer produced it. |
-| RK-17.6-032 | §17.6 | phase6 | RMK-1986 | Configurable DTMF redaction in stored events and logs. |
-| RK-17.6-033 | §17.6 | phase6 | RMK-1986 | Under DTMF redaction, no raw digit in raw_payload, transcripts or log output. |
-| RK-17.7-003 | §17.7 | phase6 | RMK-1986 | Conference tokens minted per participant, hidden observers subscribe-only. |
-| RK-17.7-004 | §17.7 | phase6 | RMK-1986 | ConferenceGrants' permissive defaults. |
-| RK-17.7-005 | §17.7 | phase6 | RMK-1986 | Short-lived conference tokens; their absence from logs needs a log reader no step has. |
-| RK-17.7-007 | §17.7 | phase6 | RMK-1986 | The bot's presence, identity and hidden status as in force on the session. |
-| RK-17.7-008 | §17.7 | phase6 | RMK-1986 | Whether STT, vision or recording is active on a conference, observable at any time. |
+| RK-17.6-010 | §17.6 | phase6 | RMK-1986 | step: a consent mode on recording.start: a recording started only once the parties its mode names consented; no implementation offers consent modes (suspect RMK-1985). |
+| RK-17.6-014 | §17.6 | phase6 | RMK-1986 | step: recording.start encryption options: a recorder that fails closed when neither encryption setting is set, a recording of video alone included. |
+| RK-17.6-017 | §17.6 | phase6 | RMK-1986 | step: a room retention or redaction policy over voice: voice session metadata under the room's retention and redaction policies. |
+| RK-17.6-018 | §17.6 | phase6 | RMK-1986 | step: voice.read of the TTS call, voice.open TTS options: TTS context audio kept in memory only. |
+| RK-17.6-019 | §17.6 | phase6 | RMK-1986 | step: voice.read of the TTS call, voice.open TTS options: TTS context audio within max_turns and max_audio_seconds, dropped with its session. |
+| RK-17.6-020 | §17.6 | phase6 | RMK-1986 | step: voice.read of the TTS call, voice.open TTS options: TTS context audio kept only when include_audio is set. |
+| RK-17.6-021 | §17.6 | phase6 | RMK-1986 | step: voice.read of the TTS call, voice.open TTS options: the TTS context's text read from the stored transcript. |
+| RK-17.6-022 | §17.6 | phase6 | RMK-1986 | step: voice.read of the TTS call, voice.open TTS options: a user turn whose transcript a hook modified keeps no context audio. |
+| RK-17.6-023 | §17.6 | phase6 | RMK-1986 | step: voice.read of the TTS call, voice.open TTS options: under DTMF redaction, a user turn with detected DTMF keeps no context audio. |
+| RK-17.6-025 | §17.6 | phase6 | RMK-1986 | step: a scripted voice-replication provider: a custom voice's recordings handed to the synthesizer for the call and kept nowhere. |
+| RK-17.6-026 | §17.6 | phase6 | RMK-1986 | step: a scripted voice-replication provider: a custom voice's evidence kept as metadata. |
+| RK-17.6-027 | §17.6 | phase6 | RMK-1986 | step: a scripted voice-replication provider: no custom voice created without the consent of the person it belongs to. |
+| RK-17.6-030 | §17.6 | phase6 | RMK-1986 | step: a TTS scripted on voice.open to return a marked file: voice.read shows the file at the transport as the synthesizer produced it, not rebuilt from its samples. |
+| RK-17.6-032 | §17.6 | phase6 | RMK-1986 | step: voice.open DTMF redaction: configurable DTMF redaction in stored events and logs. |
+| RK-17.6-033 | §17.6 | phase6 | RMK-1986 | step: voice.open DTMF redaction: under DTMF redaction, no raw digit in raw_payload, transcripts or log output. |
+| RK-17.7-004 | §17.7 | phase6 | RMK-1986 | step: conference.mint, conference.read: ConferenceGrants' permissive defaults. |
+| RK-17.7-007 | §17.7 | phase6 | RMK-1986 | step: conference.read, conference.plug, unplug, set_bot_grants and ensure_bot: the bot's presence, identity and hidden status as in force on the session. |
+| RK-17.7-008 | §17.7 | phase6 | RMK-1986 | step: conference.read, conference.plug, unplug, set_bot_grants and ensure_bot: whether STT, vision or recording is active on a conference, observable at any time. |
 | RK-17.8-002 | §17.8 | step | RMK-1986 | The skills fixture writes each skill to a directory, but no step stages a name that resolves outside it only once resolved (a symlink); the traversal scenarios refuse a parent segment by its name. |
 | RK-17.8-003 | §17.8 | step | RMK-1986 | No step swaps a skill file between its check and its read, or makes a skill's SKILL.md resolve outside its directory. |
 | RK-17.8-004 | §17.8 | step | RMK-1986 | No step stages a script name that resolves outside its skill only once resolved; the traversal scenarios refuse a parent segment by its name before the integrator's executor runs. |
-| RK-19.1-004 | §19.1 | phase6 | RMK-1925 | Exercise a voice-configured agent's TTS voice. |
-| RK-19.1-008 | §19.1 | phase6 | RMK-1925 | A configuration-only speech-to-speech agent and its read-only flag need media coverage. |
+| RK-19.1-004 | §19.1 | phase6 | RMK-1925 | step: voice.read of the TTS call, voice.open TTS options: exercise a voice-configured agent's TTS voice. |
 | RK-19.1-009 | §19.1 | step | RMK-1925 | Expose the public identity builder with a caller-specified language; turn prompt inspection exercises its output only indirectly. |
 | RK-19.1-011 | §19.1 | writable | RMK-1925 | Set a room's language through its handoff handler, then assert the new language in that agent's next system prompt. |
-| RK-19.1-012 | §19.1 | phase6 | RMK-1925 | Inspect the identity block on an installed realtime pipeline session. |
-| RK-19.1-014 | §19.1 | phase6 | RMK-1925 | Exercise a configuration-only speech-to-speech agent with no model and observe no generation. |
+| RK-19.1-012 | §19.1 | phase6 | RMK-1925 | step: realtime.read of the session configuration: inspect the identity block on an installed realtime pipeline session. |
+| RK-19.1-014 | §19.1 | phase6 | RMK-1925 | step: an agent with no model in the setup: a configuration-only agent on a realtime channel accepted, making no generation call; every scripted agent has a model today. |
 | RK-19.1-039 | §19.1 | writable | RMK-1925 | Exercise the reference 10,000-room bound and oldest-tenth eviction on subsequent starts. |
-| RK-19.1-041 | §19.1 | phase6 | RMK-1925 | Observe the conventional voice session greeting gate and waiting deliveries. |
-| RK-19.1-042 | §19.1 | phase6 | RMK-1925 | Inspect the realtime provider's own-turn injection for the greeting. |
+| RK-19.1-041 | §19.1 | writable | RMK-1925 | A scripted agent with a greeting and auto_greet in a room where voice.open, with a playback_gate, starts the session, a message sent while the greeting is held: the agent's reply is neither generated (models) nor in the timeline until the gate opens (requires voice). |
+| RK-19.1-042 | §19.1 | writable | RMK-1925 | A scripted agent with a greeting and auto_greet in a room where realtime.start starts the session: realtime.read shows the greeting injected as the model's own turn (requires realtime). |
 | RK-19.3-012 | §19.3 | writable | RMK-1925 | Deliver an injected event visible to an agent that is skipped, then assert its content in that agent's later model history. |
-| RK-19.3-017 | §19.3 | phase6 | RMK-1925 | Select a realtime transport session and verify it does not select an intelligence recipient. |
+| RK-19.3-017 | §19.3 | phase6 | RMK-1925 | step: a reference to a realtime session's id, realtime.start returning it: deliver with that session_id selects the transport session and addresses no intelligence channel. |
 | RK-19.3.1-007 | §19.3.1 | writable | RMK-1925 | Issue an explicitly addressed event from a bound intelligence channel under each response policy and assert that only its named peer answers. An installed discussion supersedes the room policy. |
 | RK-19.4-012 | §19.4 | writable | RMK-1925 | Route otherwise identical events from two named source channels and assert the selected rule. |
 | RK-19.4-013 | §19.4 | step | RMK-1925 | Add a configurable predicate receiving event, context and conversation state, and assert its effect on routing. |
 | RK-19.4-019 | §19.4 | writable | RMK-1925 | Observe the supervisor on unaddressed agent output with ADDRESSED_ONLY explicitly selected. |
-| RK-19.5-021 | §19.5 | phase6 | RMK-1925 | Exercise this realtime behavior in a shared feature scenario: a session in pipeline mode takes the active agent's configuration and handoff switches it to the next agent. |
-| RK-19.5-022 | §19.5 | phase6 | RMK-1925 | Exercise this realtime behavior in a shared feature scenario: session start reads the room's agent and handoff changes only that room's sessions, leaving other rooms and channel defaults intact. |
-| RK-19.5-023 | §19.5 | phase6 | RMK-1925 | Exercise this realtime behavior in a shared feature scenario: without a prompt or identity, the active agent inherits the channel prompt at session start or handoff. |
-| RK-19.5-024 | §19.5 | phase6 | RMK-1925 | Exercise this realtime behavior in a shared feature scenario: a room language change preserves the session prompt when the agent supplies none. |
-| RK-19.5-025 | §19.5 | phase6 | RMK-1925 | Exercise this realtime behavior in a shared feature scenario: a pipeline session includes the channel tools, the active agent's tools and handoff. |
-| RK-19.5-026 | §19.5 | phase6 | RMK-1925 | Exercise this realtime behavior in a shared feature scenario: late channel tool changes are read at session start or handoff. |
-| RK-19.5-027 | §19.5 | phase6 | RMK-1925 | Exercise this realtime behavior in a shared feature scenario: an agent tool uses its agent handler or falls back to the channel handler. |
-| RK-19.5-028 | §19.5 | phase6 | RMK-1925 | Exercise this realtime behavior in a shared feature scenario: a conflicting tool retains the channel's definition and handler, is warned at install, and never reverts to the agent's copy. |
-| RK-19.5-029 | §19.5 | phase6 | RMK-1925 | Exercise this realtime behavior in a shared feature scenario: channel reservations include host, human-input, search and skill tools even when hidden, without refusing the agent's other tools. |
-| RK-19.5-030 | §19.5 | phase6 | RMK-1925 | Exercise this realtime behavior in a shared feature scenario: both participant-resolved policies govern declaration, discovery, handler catalogue and execution of a session tool. |
-| RK-19.5-031 | §19.5 | phase6 | RMK-1925 | Exercise this realtime behavior in a shared feature scenario: handoff applies the new agent policy per participant across the room before declaring its tools. |
-| RK-19.5-032 | §19.5 | phase6 | RMK-1925 | Exercise this realtime behavior in a shared feature scenario: the serving room agent's policy governs calls despite stale session declarations. |
-| RK-19.5-033 | §19.5 | phase6 | RMK-1925 | Verify the session's actual channel-provided capabilities. The existing refusal observes installation, not a live session. |
-| RK-19.5-035 | §19.5 | phase6 | RMK-1925 | Exercise this realtime behavior in a shared feature scenario: a reasoning backend rejects the same unsupported agent capabilities and agent tools; its MCP instructions reach its own model. |
-| RK-19.5-036 | §19.5 | phase6 | RMK-1925 | Exercise this realtime behavior in a shared feature scenario: installation refuses declaration-only agents and intelligence channels without an Agent's prompt. |
+| RK-19.5-021 | §19.5 | phase6 | RMK-1925 | step: realtime.read of the session configuration: a session in pipeline mode takes the active agent's configuration and handoff switches it to the next agent. |
+| RK-19.5-022 | §19.5 | phase6 | RMK-1925 | step: realtime.read of the session configuration: session start reads the room's agent and handoff changes only that room's sessions, leaving other rooms and channel defaults intact. |
+| RK-19.5-023 | §19.5 | phase6 | RMK-1925 | step: realtime.read of the session configuration: without a prompt or identity, the active agent inherits the channel prompt at session start or handoff. |
+| RK-19.5-024 | §19.5 | phase6 | RMK-1925 | step: realtime.read of the session configuration: a room language change preserves the session prompt when the agent supplies none. |
+| RK-19.5-025 | §19.5 | phase6 | RMK-1925 | step: realtime.read of the session configuration: a pipeline session includes the channel tools, the active agent's tools and handoff. |
+| RK-19.5-026 | §19.5 | phase6 | RMK-1925 | step: realtime.read of the session configuration: late channel tool changes are read at session start or handoff. |
+| RK-19.5-027 | §19.5 | phase6 | RMK-1925 | step: realtime pipeline agents with their own tool handlers: an agent tool uses its agent handler or falls back to the channel handler. |
+| RK-19.5-028 | §19.5 | phase6 | RMK-1925 | step: realtime.read of the session configuration: a conflicting tool retains the channel's definition and handler, is warned at install, and never reverts to the agent's copy. |
+| RK-19.5-029 | §19.5 | phase6 | RMK-1925 | step: realtime.read of the session configuration: channel reservations include host, human-input, search and skill tools even when hidden, without refusing the agent's other tools. |
+| RK-19.5-030 | §19.5 | phase6 | RMK-1925 | step: realtime.read of the session configuration, per-participant role policies on a realtime session: both participant-resolved policies govern declaration, discovery, handler catalogue and execution of a session tool. |
+| RK-19.5-031 | §19.5 | phase6 | RMK-1925 | step: realtime.read of the session configuration, per-participant role policies on a realtime session: handoff applies the new agent policy per participant across the room before declaring its tools. |
+| RK-19.5-032 | §19.5 | phase6 | RMK-1925 | step: realtime.read of the session configuration, per-participant role policies on a realtime session: the serving room agent's policy governs calls despite stale session declarations. |
+| RK-19.5-033 | §19.5 | phase6 | RMK-1925 | step: realtime.read of the session configuration: verify the session's actual channel-provided capabilities; the existing refusal observes installation, not a live session. |
+| RK-19.5-035 | §19.5 | phase6 | RMK-1925 | step: a scripted realtime reasoning backend: a reasoning backend rejects the same unsupported agent capabilities and agent tools; its MCP instructions reach its own model. |
+| RK-19.5-036 | §19.5 | writable | RMK-1925 | install_pipeline with voice_channel_id naming a realtime channel, given a declared agent, then an intelligence channel that is no agent: each refused, invalid_argument (requires realtime). |
 | RK-19.6-011 | §19.6 | step | RMK-1925 | Add a public HandoffRequest construction or inspection step to assert the urgent=false default; the stock model tool does not expose urgent. |
 | RK-19.6-026 | §19.6 | writable | RMK-1925 | Inspect the target's next model request for the framed conversation summary attributed to the sanitized previous agent ID; stored state alone is not that request. |
-| RK-19.6-042 | §19.6 | phase6 | RMK-1925 | Exercise this realtime behavior in a shared feature scenario: session handoffs use the room's active agent as caller; the human hold rule is not yet required there. |
-| RK-19.6-043 | §19.6 | phase6 | RMK-1925 | Exercise this realtime behavior in a shared feature scenario: handoff changes room sessions to the target agent's prompt and a language change uses the active agent's prompt. |
-| RK-19.6-044 | §19.6 | phase6 | RMK-1925 | Exercise this realtime behavior in a shared feature scenario: a handler with a registered realtime event channel rejects declaration-only agents and intelligence channels without an Agent. |
-| RK-19.6-045 | §19.6 | phase6 | RMK-1925 | Exercise this realtime behavior in a shared feature scenario: a language change refuses such an active agent before writing the room language. |
+| RK-19.6-042 | §19.6 | phase6 | RMK-1925 | step: realtime.tool_call of the handoff tool: session handoffs use the room's active agent as caller; the human hold rule is not yet required there. |
+| RK-19.6-043 | §19.6 | phase6 | RMK-1925 | step: realtime.read of the session configuration: handoff changes room sessions to the target agent's prompt and a language change uses the active agent's prompt. |
+| RK-19.6-044 | §19.6 | phase6 | RMK-1925 | step: a handoff handler given its agents: a handler over a realtime event channel refuses a declared agent or an intelligence channel that is no agent; install_router builds a handler of its own, and install_pipeline refuses first. |
+| RK-19.6-045 | §19.6 | phase6 | RMK-1925 | step: a handoff handler given its agents: set_language on a realtime channel whose active agent is held by its declaration alone is refused before the room's language is written. |
 | RK-19.6-046 | §19.6 | step | RMK-1925 | Supply an agent held by declaration to the non-realtime handler and assert its acceptance; the direct handler fixture must support supplying that agent. |
 | RK-19.6-048 | §19.6 | step | RMK-1925 | Invoke the installed tool outside the bound async tool context; the available handoff.handle step supplies an explicit room and bypasses the tool. |
-| RK-19.6-052 | §19.6 | phase6 | RMK-1925 | Exercise this realtime behavior in a shared feature scenario: the addressed realtime channel delivers the handler's greeting to each of its sessions. |
-| RK-19.7-006 | §19.7 | phase6 | RMK-1929 | Attach one realtime channel to multiple rooms and observe it serving sessions in both. |
-| RK-19.7-008 | §19.7 | phase6 | RMK-1929 | Install strategy additions in one room on a shared realtime channel and inspect the declarations in each room's session. |
-| RK-19.7-010 | §19.7 | phase6 | RMK-1929 | Inspect tools declared to realtime sessions on both an installed room and a different room using the same channel. |
-| RK-19.7-014 | §19.7 | phase6 | RMK-1929 | Change the active agent in one of two realtime rooms and inspect each session's configuration. |
-| RK-19.7-069 | §19.7 | phase6 | RMK-1929 | Observe the same shared agent or realtime channel's voice in two rooms while strategy installs and turns alter the active voice in one room. |
+| RK-19.6-052 | §19.6 | phase6 | RMK-1925 | step: several realtime sessions per channel and across rooms: the addressed realtime channel delivers the handler's greeting to each of its sessions. |
+| RK-19.7-006 | §19.7 | phase6 | RMK-1929 | step: several realtime sessions per channel and across rooms, realtime.read of the session configuration: attach one realtime channel to multiple rooms and observe it serving sessions in both. |
+| RK-19.7-008 | §19.7 | phase6 | RMK-1929 | step: several realtime sessions per channel and across rooms, realtime.read of the session configuration: install strategy additions in one room on a shared realtime channel and inspect the declarations in each room's session. |
+| RK-19.7-010 | §19.7 | phase6 | RMK-1929 | step: several realtime sessions per channel and across rooms, realtime.read of the session configuration: inspect tools declared to realtime sessions on both an installed room and a different room using the same channel. |
+| RK-19.7-014 | §19.7 | phase6 | RMK-1929 | step: several realtime sessions per channel and across rooms, realtime.read of the session configuration: change the active agent in one of two realtime rooms and inspect each session's configuration. |
+| RK-19.7-069 | §19.7 | phase6 | RMK-1929 | step: voice.read of the TTS call, TTS options per room: observe the same shared agent or realtime channel's voice in two rooms while strategy installs and turns alter the active voice in one room. |
 | RK-19.7-070 | §19.7 | writable | RMK-1929 | Read a shared binding's original options before and after strategy install and work in a second room. Tests of selected child transport bindings do not read back the original binding. |
-| RK-19.7-027 | §19.7 | phase6 | RMK-1929 | Configure global realtime delegation and check declaration and destination across two rooms. |
+| RK-19.7-027 | §19.7 | phase6 | RMK-1929 | step: several realtime sessions per channel and across rooms, realtime.read of the session configuration: configure global realtime delegation and check declaration and destination across two rooms. |
 | RK-19.7-036 | §19.7 | writable | RMK-1929 | Set store_fault on the initial list_bindings snapshot, assert the returned error and the retained install claim. The native Python case test_an_uninstall_after_an_install_the_store_cut_short_frees_the_room identifies this boundary. |
 | RK-19.7-037 | §19.7 | writable | RMK-1929 | After failing the snapshot with store_fault, explicitly uninstall under a bound and install a replacement. |
 | RK-19.7-054 | §19.7 | writable | RMK-1929 | Hold a claimed installation, close the room in another call and check that close returns before the installation resumes. |
 | RK-19.7-055 | §19.7 | step | RMK-1929 | Make strategy cleanup raise on room close and observe its log message and the closed room together; the shared execution surface has no application-log oracle. |
 | RK-19.7-057 | §19.7 | writable | RMK-1929 | Race a gated strategy claim against closing the room and verify the installer does not land after close. |
-| RK-19.7.1-009 | §19.7.1 | phase6 | RMK-1929 | A named physical voice channel exposes the installed pipeline's agent voice map. |
-| RK-19.7.1-010 | §19.7.1 | phase6 | RMK-1929 | Enable the host's greet_on_handoff option and observe the new active agent's greeting on the named voice channel. |
-| RK-19.7.1-011 | §19.7.1 | phase6 | RMK-1929 | Observe the old agent's farewell and the new agent's greeting in order, and verify that a second room's voice hooks are not invoked. |
-| RK-19.7.1-012 | §19.7.1 | phase6 | RMK-1929 | Installing a room-scoped Pipeline with a realtime voice channel is refused. |
+| RK-19.7.1-009 | §19.7.1 | phase6 | RMK-1929 | step: voice.read of the TTS call, TTS options per room: a named physical voice channel exposes the installed pipeline's agent voice map. |
+| RK-19.7.1-010 | §19.7.1 | phase6 | RMK-1929 | step: voice.read of the TTS call, TTS options per room: enable the host's greet_on_handoff option and observe the new active agent's greeting on the named voice channel. |
+| RK-19.7.1-011 | §19.7.1 | phase6 | RMK-1929 | step: voice.read of the TTS call, TTS options per room: observe the old agent's farewell and the new agent's greeting in order, and verify that a second room's voice hooks are not invoked. |
+| RK-19.7.1-012 | §19.7.1 | phase6 | RMK-1929 | step: voice_channel_id on a scripted pipeline strategy: installing a Pipeline whose voice channel is a realtime voice channel is refused. |
 | RK-19.7.3-004 | §19.7.3 | writable | RMK-1929 | Send media, a composite and empty text to a one-pass supervisor and check its channel answers each with no worker. The comparable existing no-task scenario installs Loop. |
 | RK-19.7.3-014 | §19.7.3 | step | RMK-1929 | Observe the original background exception in the application log independently of the generic instruction and the bus entry. |
-| RK-19.7.3-016 | §19.7.3 | phase6 | RMK-1929 | Call the same background strategy tool from sessions on two voice channels in one room and observe exclusivity across them. |
-| RK-19.7.3-017 | §19.7.3 | phase6 | RMK-1929 | Observe the outcome of a strategy call on the originating session when other voice sessions are available. |
+| RK-19.7.3-016 | §19.7.3 | phase6 | RMK-1929 | step: realtime.tool_call of a strategy's background tool: call the same background strategy tool from sessions on two voice channels in one room and observe exclusivity across them. |
+| RK-19.7.3-017 | §19.7.3 | phase6 | RMK-1929 | step: realtime.tool_call of a strategy's background tool: observe the outcome of a strategy call on the originating session when other voice sessions are available. |
 | RK-19.7.3-024 | §19.7.3 | writable | RMK-1929 | Start a gated background team, close the framework, and inspect worker terminal entries before the run's failure, with no hand-back. |
 | RK-19.7.3-030 | §19.7.3 | step | RMK-1929 | Expose a configuration-only supervisor to the shared sequential team fixture, then inspect the workers' actual inputs and order without a supervisor generation. Python tests/orchestration/test_supervisor_text_background.py::test_a_supervisor_without_a_model_lets_its_chain_run_unsupervised checks worker order natively. |
 | RK-19.7.3-032 | §19.7.3 | writable | RMK-1929 | Begin framework shutdown around a gated background run, then dispatch another and observe that it starts no workers. |
 | RK-19.7.3-040 | §19.7.3 | writable | RMK-1929 | Gate a formulation turn and inspect a simultaneous ordinary request from a second room on the shared supervisor, checking its prompt and configuration. |
 | RK-19.7.4-007 | §19.7.4 | step | RMK-1929 | Provide a declared reviewer whose turns take no owner tools, script both APPROVED and verdict-shaped text, and inspect its declared tools and unapproved outcome. Python tests/test_declared_strategies.py::test_a_reviewer_whose_turns_take_no_owner_tools_approves_nothing and Rust crates/roomkit/tests/review_loop.rs::a_reviewer_whose_turns_take_no_owner_tools_approves_nothing test that outcome natively. |
-| RK-19.7.4-018 | §19.7.4 | phase6 | RMK-1929 | Dispatch delegate_loop from a realtime voice session and observe its private instruction addressed to that voice channel. |
-| RK-19.7.4-019 | §19.7.4 | phase6 | RMK-1929 | Inspect the 4,000-character default and worker framing in an asynchronous realtime voice Loop hand-back. |
-| RK-19.7.4-020 | §19.7.4 | phase6 | RMK-1929 | Check that the asynchronous voice Loop outcome is excluded from participant messages. |
-| RK-19.7.4-021 | §19.7.4 | phase6 | RMK-1929 | Listen for how the asynchronous voice hand-back describes a producer cutoff and verify it excludes the underlying task error. |
-| RK-19.7.4-022 | §19.7.4 | phase6 | RMK-1929 | Make the realtime voice Loop raise, then inspect its generic reasoning fallback and exclusion of the original message. |
-| RK-19.7.4-023 | §19.7.4 | phase6 | RMK-1929 | Observe the original exception in the application's logs for a voice-triggered asynchronous Loop. |
-| RK-19.7.4-030 | §19.7.4 | phase6 | RMK-1929 | Observe the original exception in the status bus for an asynchronous voice Loop failure. |
-| RK-19.7.4-024 | §19.7.4 | phase6 | RMK-1929 | Call the asynchronous Loop from multiple voice channels sharing a room and check one run is admitted. |
-| RK-19.7.4-031 | §19.7.4 | phase6 | RMK-1929 | Verify that an asynchronous Loop returns its instruction to the originating realtime voice session. |
-| RK-19.7.4-025 | §19.7.4 | phase6 | RMK-1929 | Dispatch another Loop from the voice session's hand-back and check that the previous run freed the room first. |
-| RK-19.7.4-026 | §19.7.4 | phase6 | RMK-1929 | Inspect the terminal status of a voice-triggered Loop stopped by its producer task. |
+| RK-19.7.4-018 | §19.7.4 | phase6 | RMK-1929 | step: realtime.tool_call of a strategy's background tool: dispatch delegate_loop from a realtime voice session and observe its private instruction addressed to that voice channel. |
+| RK-19.7.4-019 | §19.7.4 | phase6 | RMK-1929 | step: realtime.tool_call of a strategy's background tool: inspect the 4,000-character default and worker framing in an asynchronous realtime voice Loop hand-back. |
+| RK-19.7.4-020 | §19.7.4 | phase6 | RMK-1929 | step: realtime.tool_call of a strategy's background tool: check that the asynchronous voice Loop outcome is excluded from participant messages. |
+| RK-19.7.4-021 | §19.7.4 | phase6 | RMK-1929 | step: realtime.tool_call of a strategy's background tool: listen for how the asynchronous voice hand-back describes a producer cutoff and verify it excludes the underlying task error. |
+| RK-19.7.4-022 | §19.7.4 | phase6 | RMK-1929 | step: realtime.tool_call of a strategy's background tool: make the realtime voice Loop raise, then inspect its generic reasoning fallback and exclusion of the original message. |
+| RK-19.7.4-030 | §19.7.4 | phase6 | RMK-1929 | step: realtime.tool_call of a strategy's background tool: observe the original exception in the status bus for an asynchronous voice Loop failure. |
+| RK-19.7.4-024 | §19.7.4 | phase6 | RMK-1929 | step: realtime.tool_call of a strategy's background tool: call the asynchronous Loop from multiple voice channels sharing a room and check one run is admitted. |
+| RK-19.7.4-031 | §19.7.4 | phase6 | RMK-1929 | step: realtime.tool_call of a strategy's background tool: verify that an asynchronous Loop returns its instruction to the originating realtime voice session. |
+| RK-19.7.4-025 | §19.7.4 | phase6 | RMK-1929 | step: realtime.tool_call of a strategy's background tool: dispatch another Loop from the voice session's hand-back and check that the previous run freed the room first. |
+| RK-19.7.4-026 | §19.7.4 | phase6 | RMK-1929 | step: realtime.tool_call of a strategy's background tool: inspect the terminal status of a voice-triggered Loop stopped by its producer task. |
 | RK-19.7.4-027 | §19.7.4 | writable | RMK-1929 | Hold a Loop producer and its reviewer independently past a run bound, release them and verify that no strategy per-task timeout cut either delegation. |
-| RK-19.7.4-029 | §19.7.4 | phase6 | RMK-1929 | Close the framework with a voice-triggered asynchronous Loop active and inspect its cancellation, cleanup and absence of hand-back. |
+| RK-19.7.4-029 | §19.7.4 | phase6 | RMK-1929 | step: realtime.tool_call of a strategy's background tool: close the framework with a voice-triggered asynchronous Loop active and inspect its cancellation, cleanup and absence of hand-back. |
 | RK-19.7.5-016 | §19.7.5 | writable | RMK-1931 | Run the scripted decision at the default timeout without configuring a value and assert the reported five-second duration. The existing timeout scenario configures a different value. |
-| RK-19.7.5-020 | §19.7.5 | phase6 | RMK-1931 | Exercise a discussion install over a realtime speech-to-speech binding. The existing shared refusal uses a conventional voice channel. |
+| RK-19.7.5-020 | §19.7.5 | writable | RMK-1931 | install_strategy of a scripted discussion in a room binding a realtime channel: refused, as the existing voice case is (requires realtime). |
 | RK-19.7.5-021 | §19.7.5 | writable | RMK-1931 | Install a discussion over an existing agent configured to think while listening and assert installation refusal. |
 | RK-19.7.5-030 | §19.7.5 | writable | RMK-1931 | Compare a framework-originated delivery with a person's input and verify it cannot enter the personal-message route. |
 | RK-19.7.5-037 | §19.7.5 | step | RMK-1931 | Configure two independently held committed-event memory notifications and compare parallel versus sequential completion. |
@@ -944,23 +932,23 @@ Units [gaps.json](gaps.json) lists: a scenario can test each, and none cites it 
 | RK-21.1-012 | §21.1 | writable | RMK-1918 | Give an allow or deny pattern containing an ordinary punctuation character that would otherwise have special pattern meaning and assert both matching and nonmatching tool outcomes. |
 | RK-21.1-013 | §21.1 | step | RMK-1918 | Expose a failed ToolPolicy construction as a scenario result; a failing static setup cannot be an expected step result. |
 | RK-21.1-017 | §21.1 | step | RMK-1918 | Exercise a host-owned reader lookalike under a denying rule and a tool merely sharing its prefix. A fixture must make ownership distinguishable when a builtin reserves the same exact name. |
-| RK-21.1-018 | §21.1 | phase6 | RMK-1918 | Observe a conference tool with the same name as a channel reader under a denying policy. |
-| RK-21.1-019 | §21.1 | phase6 | RMK-1918 | Observe policy and skill gating when spoken recovery or a reasoning backend names a reader it does not serve. |
-| RK-21.1-022 | §21.1 | phase6 | RMK-1918 | Exercise the fixed-declaration session's call_tool carrier and the policy check on its resolved tool. |
+| RK-21.1-018 | §21.1 | phase6 | RMK-1918 | step: conference.open tool_policy: observe a conference tool with the same name as a channel reader under a denying policy. |
+| RK-21.1-019 | §21.1 | phase6 | RMK-1918 | step: a scripted realtime reasoning backend, a realtime call recovered from speech: observe policy and skill gating when spoken recovery or a reasoning backend names a reader it does not serve. |
+| RK-21.1-022 | §21.1 | phase6 | RMK-1918 | step: Tool Search on a realtime session: exercise the fixed-declaration session's call_tool carrier and the policy check on its resolved tool. |
 | RK-21.1-023 | §21.1 | step | RMK-1918 | Configure a nameless native provider tool alongside discoverable named tools and inspect the native provider declaration and discovery list. |
-| RK-21.1-029 | §21.1 | phase6 | RMK-1918 | Exercise each refusal cause entering through a delegated reasoning backend. |
-| RK-21.1-030 | §21.1 | phase6 | RMK-1918 | Exercise refusal selection and text on realtime-session tools. |
-| RK-21.1-075 | §21.1 | phase6 | RMK-1918 | Exercise refusal selection and text on conference tools. |
+| RK-21.1-029 | §21.1 | phase6 | RMK-1918 | step: a scripted realtime reasoning backend: exercise each refusal cause entering through a delegated reasoning backend. |
+| RK-21.1-030 | §21.1 | phase6 | RMK-1918 | step: realtime tool_policy and tool timeout options: exercise refusal selection and text on realtime-session tools. |
+| RK-21.1-075 | §21.1 | phase6 | RMK-1918 | step: conference.open tool_policy: exercise refusal selection and text on conference tools. |
 | RK-21.1-035 | §21.1 | writable | RMK-1918 | Call a declared open object with an additional property and verify the handler receives it unmodified. |
 | RK-21.1-038 | §21.1 | writable | RMK-1918 | Pass a valid top-level value with a nested mismatch and verify it reaches the handler. |
-| RK-21.1-043 | §21.1 | phase6 | RMK-1918 | A reasoning backend's exclusion for a skill it cannot activate names the conversation's activation state. |
-| RK-21.1-046 | §21.1 | phase6 | RMK-1918 | Ask for an unknown name through the realtime carrier and inventory and check the search hint. |
-| RK-21.1-049 | §21.1 | phase6 | RMK-1918 | Read the delegated model's tool catalogue and the per-name unavailable reason alongside its actual refusals. |
-| RK-21.1-050 | §21.1 | phase6 | RMK-1918 | Exercise delegation-time role and room reads and the audible fallback on a bounded read failure. |
-| RK-21.1-051 | §21.1 | phase6 | RMK-1918 | Queue a delegation across a role change and compare the snapshot offered with the gate's current-role decision. |
+| RK-21.1-043 | §21.1 | phase6 | RMK-1918 | step: a scripted realtime reasoning backend: a reasoning backend's exclusion for a skill it cannot activate names the conversation's activation state. |
+| RK-21.1-046 | §21.1 | phase6 | RMK-1918 | step: Tool Search on a realtime session: ask for an unknown name through the realtime carrier and inventory and check the search hint. |
+| RK-21.1-049 | §21.1 | phase6 | RMK-1918 | step: a scripted realtime reasoning backend: read the delegated model's tool catalogue and the per-name unavailable reason alongside its actual refusals. |
+| RK-21.1-050 | §21.1 | phase6 | RMK-1918 | step: a scripted realtime reasoning backend: exercise delegation-time role and room reads and the audible fallback on a bounded read failure. |
+| RK-21.1-051 | §21.1 | phase6 | RMK-1918 | step: a scripted realtime reasoning backend: queue a delegation across a role change and compare the snapshot offered with the gate's current-role decision. |
 | RK-21.1-054 | §21.1 | step | RMK-1918 | Reject duplicate host tool names during construction and observe both the error category and the conflicting name. |
 | RK-21.1-056 | §21.1 | writable | RMK-1918 | Install the same strategy twice for an existing room and assert that its own tools are replaced without affecting host tools. |
-| RK-21.1-058 | §21.1 | phase6 | RMK-1918 | Exercise a realtime pipeline agent declaring its own setup tool while a distinct conflicting late declaration is refused. |
+| RK-21.1-058 | §21.1 | phase6 | RMK-1918 | step: realtime.read of the session configuration on a realtime pipeline: exercise a realtime pipeline agent declaring its own setup tool while a distinct conflicting late declaration is refused. |
 | RK-21.1-066 | §21.1 | writable | RMK-1918 | Deny or gate the orchestration-injected handoff or delegated tool while Tool Search is active; assert both its declaration and its dispatch outcome. |
 | RK-21.2-005 | §21.2 | step | RMK-1918 | Observe process start and exit across connect and close of a public command-backed provider. |
 | RK-21.2-006 | §21.2 | step | RMK-1918 | Capture the argument vector of a harmless fixture process as launched by the public stdio provider. |
@@ -969,22 +957,22 @@ Units [gaps.json](gaps.json) lists: a scenario can test each, and none cites it 
 | RK-21.2-011 | §21.2 | step | RMK-1918 | Pass invalid header configurations and capture the public constructor's rejection before a connection attempt. |
 | RK-21.2-012 | §21.2 | step | RMK-1918 | Capture validation of server labels at public construction and compare a valid host label with the different identity announced at handshake. |
 | RK-21.2-014 | §21.2 | writable | RMK-1918 | Configure an unlabelled provider with a forwarded call using a differently named server alias and check which provider responds. |
-| RK-21.2-019 | §21.2 | phase6 | RMK-1918 | Inspect tool-handler policy on a realtime session and its delegated reasoning agent using a labelled provider. |
-| RK-21.2-055 | §21.2 | phase6 | RMK-1918 | Inspect tool-handler policy on a conference call using a labelled provider. |
+| RK-21.2-019 | §21.2 | phase6 | RMK-1918 | step: a read of a realtime or conference tool handler's context: inspect tool-handler policy on a realtime session and its delegated reasoning agent using a labelled provider. |
+| RK-21.2-055 | §21.2 | phase6 | RMK-1918 | step: a read of a realtime or conference tool handler's context: inspect tool-handler policy on a conference call using a labelled provider. |
 | RK-21.2-022 | §21.2 | writable | RMK-1918 | List a tool with an output schema, then exercise a successful result that distinguishes retained validation from absent validation. |
 | RK-21.2-027 | §21.2 | writable | RMK-1918 | Supply an empty cursor-bearing page or a repeated cursor, verify that listing terminates and no further wire request is made. Capturing the warning also needs a log observation. |
 | RK-21.2-030 | §21.2 | writable | RMK-1918 | List an output schema, respond with missing and mismatched structured content on successful MCP calls and observe a failed result. |
 | RK-21.2-033 | §21.2 | step | RMK-1918 | Read the public instructions property from a handshake that publishes optional instructions. The peer can supply instructions but the session fixture lacks this observation. |
 | RK-21.2-035 | §21.2 | step | RMK-1918 | Let a text AI channel accept host-labelled MCP instructions and inspect its composed model prompt. |
-| RK-21.2-036 | §21.2 | phase6 | RMK-1918 | Inspect host-labelled MCP instructions on the reasoning agent and tool-enabled realtime prompt. |
+| RK-21.2-036 | §21.2 | phase6 | RMK-1918 | step: realtime.read of the session configuration, MCP host instructions: inspect host-labelled MCP instructions on the reasoning agent and tool-enabled realtime prompt. |
 | RK-21.2-037 | §21.2 | step | RMK-1918 | Capture channel construction with invalid instruction labels independently from provider labels. |
 | RK-21.2-038 | §21.2 | step | RMK-1918 | Configure host-labelled server instructions and inspect the model prompt between room-specific instructions and the skill preamble. |
 | RK-21.2-039 | §21.2 | step | RMK-1918 | Configure server instructions and compare the prompt prefix across discovery, result eviction and history compaction. |
 | RK-21.2-040 | §21.2 | step | RMK-1918 | Supply host-labelled server instructions and inspect the label, framing and authority wording of the composed prompt. |
 | RK-21.2-041 | §21.2 | step | RMK-1918 | Supply overlength instructions to the channel, observing its truncated prompt and named warning. |
 | RK-21.2-042 | §21.2 | step | RMK-1918 | Configure omitted labels and empty instructions then inspect the composed model prompt. |
-| RK-21.2-043 | §21.2 | phase6 | RMK-1918 | Configure distinct pipeline and agent instructions and inspect which the voice path receives. |
-| RK-21.2-044 | §21.2 | phase6 | RMK-1918 | Compare the host-supplied conference prompt with the one received by its realtime bot. |
+| RK-21.2-043 | §21.2 | phase6 | RMK-1918 | step: realtime.read of the session configuration, MCP host instructions: configure distinct pipeline and agent instructions and inspect which the voice path receives. |
+| RK-21.2-044 | §21.2 | phase6 | RMK-1918 | step: conference model steps, the session prompt it received: compare the host-supplied conference prompt with the one received by its realtime bot. |
 | RK-21.2-049 | §21.2 | step | RMK-1918 | Expose structured MCP handler response content to a vision-capable model for each accepted image format. |
 | RK-21.2-050 | §21.2 | step | RMK-1918 | Supply binary MCP handler content and inspect the short model-visible replacement for an unsupported or undecodable part. |
 | RK-21.2-051 | §21.2 | writable | RMK-1918 | Exercise the public MCP text call with non-text parts under a scripted peer and inspect exact notes, media type cleanup and defaults. |
@@ -996,16 +984,16 @@ Units [gaps.json](gaps.json) lists: a scenario can test each, and none cites it 
 | RK-21.3-008 | §21.3 | writable | RMK-1918 | Cancel while multiple starts are announced and inspect each persistent failed end row and the absence of pending rows. |
 | RK-21.3-012 | §21.3 | step | RMK-1918 | Expose direct channel steering with optional loop, room and turn selectors, capturing invalid selector combinations. |
 | RK-21.4-006 | §21.4 | step | RMK-1918 | Supply a native non-JSON result value through a scripted handler, then inspect both the model-safe result and normal turn completion. |
-| RK-21.4-010 | §21.4 | phase6 | RMK-1918 | Decline every conference handler and observe the unserved outcome. |
-| RK-21.4-043 | §21.4 | phase6 | RMK-1918 | Decline every handler of a tool recovered from speech and compare its outcome to a normal function call. |
+| RK-21.4-010 | §21.4 | phase6 | RMK-1918 | step: conference.open with a handler that declines: decline every conference handler and observe the unserved outcome. |
+| RK-21.4-043 | §21.4 | phase6 | RMK-1918 | step: a realtime call recovered from speech: decline every handler of a tool recovered from speech and compare its outcome to a normal function call. |
 | RK-21.4-013 | §21.4 | step | RMK-1918 | Invoke the public tool-context accessors directly outside every turn and record their empty values. |
-| RK-21.4-015 | §21.4 | phase6 | RMK-1918 | Inspect the room and participant from inside a realtime tool handler during a voice session. |
-| RK-21.4-018 | §21.4 | phase6 | RMK-1918 | Inspect the room that the realtime call fetches for its handler without a running text turn. |
-| RK-21.4-023 | §21.4 | phase6 | RMK-1918 | Inspect the admitted tool-name set on a realtime session, including the no-catalogue entry. |
-| RK-21.4-027 | §21.4 | phase6 | RMK-1918 | Inspect the response metadata accessor inside a realtime tool call without an enclosing turn. |
-| RK-21.4-030 | §21.4 | phase6 | RMK-1918 | Compare the context chain depth in a realtime handler with the resulting assistant response depth. |
-| RK-21.4-038 | §21.4 | phase6 | RMK-1918 | Inspect the room loaded and shared by a realtime call and its optional gate and count independent loads with and without the gate. |
-| RK-21.4-039 | §21.4 | phase6 | RMK-1918 | Read the response metadata accessor where no realtime tool call will produce a message merging it. |
+| RK-21.4-015 | §21.4 | phase6 | RMK-1918 | step: a read of a realtime or conference tool handler's context: inspect the room and participant from inside a realtime tool handler during a voice session. |
+| RK-21.4-018 | §21.4 | phase6 | RMK-1918 | step: a read of a realtime or conference tool handler's context: inspect the room that the realtime call fetches for its handler without a running text turn. |
+| RK-21.4-023 | §21.4 | phase6 | RMK-1918 | step: a read of a realtime or conference tool handler's context: inspect the admitted tool-name set on a realtime session, including the no-catalogue entry. |
+| RK-21.4-027 | §21.4 | phase6 | RMK-1918 | step: a read of a realtime or conference tool handler's context: inspect the response metadata accessor inside a realtime tool call without an enclosing turn. |
+| RK-21.4-030 | §21.4 | phase6 | RMK-1918 | step: a read of a realtime or conference tool handler's context: compare the context chain depth in a realtime handler with the resulting assistant response depth. |
+| RK-21.4-038 | §21.4 | phase6 | RMK-1918 | step: a read of a realtime or conference tool handler's context: inspect the room loaded and shared by a realtime call and its optional gate and count independent loads with and without the gate. |
+| RK-21.4-039 | §21.4 | phase6 | RMK-1918 | step: a read of a realtime or conference tool handler's context: read the response metadata accessor where no realtime tool call will produce a message merging it. |
 | RK-21.4-040 | §21.4 | writable | RMK-1918 | Read room and actor context on successive rounds of the same text turn and compare them while another room uses the channel. |
 | RK-21.5-007 | §21.5 | writable | RMK-1918 | Return an oversized explicit refusal, compare the observer's full raw message to the model's bounded copy. |
 | RK-21.5-012 | §21.5 | writable | RMK-1918 | Search a stored result for ordinary literal punctuation that also has pattern syntax and check the exact matching lines. |
@@ -1013,65 +1001,60 @@ Units [gaps.json](gaps.json) lists: a scenario can test each, and none cites it 
 | RK-21.5-015 | §21.5 | step | RMK-1918 | Make capacity small enough to force competing evictions, read an older stored value, and verify it survives according to its updated use. |
 | RK-21.5-017 | §21.5 | step | RMK-1918 | Resume a persisted history with an empty result store and inspect rebuilt summaries for invalid read-back references. |
 | RK-21.5-020 | §21.5 | writable | RMK-1918 | Return an image over the event budget and compare the retained model image with its omission in the persisted event. |
-| RK-21.6-003 | §21.6 | phase6 | RMK-1918 | Exercise every realtime entry, including a spoken recovery, with a slow handler and verify the timeout. |
-| RK-21.6-004 | §21.6 | phase6 | RMK-1918 | Exercise a slow conference handler and observe its configured timeout. |
-| RK-21.6-006 | §21.6 | phase6 | RMK-1918 | Compare a default realtime handler timeout with the documented short silence interval without a named override. |
-| RK-21.6-017 | §21.6 | phase6 | RMK-1918 | Observe the default deadline of a conference handler where a participant waits in silence. |
+| RK-21.6-003 | §21.6 | phase6 | RMK-1918 | step: realtime tool_policy and tool timeout options, a realtime call recovered from speech: exercise every realtime entry, including a spoken recovery, with a slow handler and verify the timeout. |
+| RK-21.6-004 | §21.6 | phase6 | RMK-1918 | step: conference.open tool_timeouts with a gated handler: exercise a slow conference handler and observe its configured timeout. |
 | RK-21.6-013 | §21.6 | writable | RMK-1918 | Install an ordinary host tool for a pipeline agent using a strategy, set a short channel bound and observe its timed-out call. |
 | RK-21.6-015 | §21.6 | step | RMK-1918 | Make a scripted handler raise the actual native timeout before the channel deadline; a synthetic exception with the same class name does not exercise the timeout handler's classification. |
-| RK-22.1-101 | §22.1 | phase6 | RMK-1917 | Observe provider acceptance of a proactive voice injection and a sent delivery outcome. |
+| RK-22.1-101 | §22.1 | writable | RMK-1917 | deliver to a realtime channel with a live session: the outcome sent once the provider accepted the injection, which realtime.read shows (requires realtime). |
 | RK-22.1-012 | §22.1 | step | RMK-1917 | A custom strategy that completes with no outcome needs a fixture. |
-| RK-22.1-103 | §22.1 | phase6 | RMK-1917 | Assert the IDs of sessions actually injected in a proactive real-time delivery, including more than one destination. |
+| RK-22.1-103 | §22.1 | phase6 | RMK-1917 | step: several realtime sessions per channel and across rooms: assert the IDs of sessions actually injected in a proactive real-time delivery, including more than one destination. |
 | RK-22.1-025 | §22.1 | writable | RMK-1917 | Supply an intelligence-channel transport alias and a different explicit intelligence target. The current alias scenario omits the address. |
-| RK-22.1-047 | §22.1 | phase6 | RMK-1917 | Exercise proactive instruction delivery and observe the provider system intent. |
-| RK-22.1-050 | §22.1 | phase6 | RMK-1917 | Observe the exact selected destination with multiple live sessions. |
-| RK-22.1-051 | §22.1 | phase6 | RMK-1917 | Use zero, one and several active provider sessions. |
-| RK-22.1-052 | §22.1 | phase6 | RMK-1917 | Replace a session while idle is awaited and observe which one receives the injection. |
-| RK-22.1-053 | §22.1 | phase6 | RMK-1917 | End the session or remove the realtime model during the wait; check refusal and no text publication. |
-| RK-22.1-054 | §22.1 | phase6 | RMK-1917 | Observe the unsuccessful outcome of the selected session. |
-| RK-22.1-056 | §22.1 | phase6 | RMK-1917 | Select an actual realtime-model channel as well as an intelligence address and verify that the turn uses text. |
+| RK-22.1-047 | §22.1 | writable | RMK-1917 | deliver with instruction into a room binding a realtime channel with a live session: realtime.read shows the injection in the system role (requires realtime). |
+| RK-22.1-050 | §22.1 | phase6 | RMK-1917 | step: several realtime sessions per channel and across rooms: observe the exact selected destination with multiple live sessions. |
+| RK-22.1-051 | §22.1 | phase6 | RMK-1917 | step: several realtime sessions per channel and across rooms: use zero, one and several active provider sessions. |
+| RK-22.1-052 | §22.1 | phase6 | RMK-1917 | step: realtime model activity for idle waits: replace a session while idle is awaited and observe which one receives the injection. |
+| RK-22.1-053 | §22.1 | phase6 | RMK-1917 | step: realtime model activity for idle waits: end the session or remove the realtime model during the wait; check refusal and no text publication. |
+| RK-22.1-054 | §22.1 | phase6 | RMK-1917 | step: realtime model activity for idle waits: observe the unsuccessful outcome of the selected session. |
+| RK-22.1-056 | §22.1 | writable | RMK-1917 | deliver with addressed_to an agent in a room binding a realtime channel: the agent's turn answers, and realtime.read shows no injection (requires realtime). |
 | RK-22.1-057 | §22.1 | writable | RMK-1917 | Supply addressed_to, a channel and session_id on the same delivery. The existing invalid-request scenario only supplies session_id without a channel. |
 | RK-22.1-065 | §22.1 | writable | RMK-1917 | Use process_timeout_ms, a second call holding the room lock, and a keyed publication; assert blocked/process_timeout and no event. |
 | RK-22.1-072 | §22.1 | step | RMK-1917 | The shared restart_process fixture reopens a kit on its shared store, including the in-memory test store. A fixture distinguishing durable store reopen/restart from the loss of an ephemeral store could test the different lifetimes. |
-| RK-22.1-074 | §22.1 | phase6 | RMK-1917 | Observe the store reservation before the provider call, including a concurrent claim. |
-| RK-22.1-075 | §22.1 | phase6 | RMK-1917 | Reuse a key in different rooms, channels and sessions and inspect the independent outcomes. |
-| RK-22.1-076 | §22.1 | phase6 | RMK-1917 | Retry each recorded outcome and count provider submissions. |
-| RK-22.1-077 | §22.1 | phase6 | RMK-1917 | Change the effective text of a repeated injection and observe the conflict. |
-| RK-22.1-078 | §22.1 | phase6 | RMK-1917 | Exercise the stored claim, its unique token and final outcome. |
-| RK-22.1-079 | §22.1 | phase6 | RMK-1917 | Race two attempts and reject an expired owner completing another attempt. |
-| RK-22.1-080 | §22.1 | phase6 | RMK-1917 | Redeliver the acknowledged queue item and observe durable deduplication. |
-| RK-22.1-081 | §22.1 | phase6 | RMK-1917 | Contrast session-claim persistence across restart and deletion for durable and process-local stores. |
-| RK-22.1-082 | §22.1 | phase6 | RMK-1917 | Run the same keyed injection with no reservation support; assert the provider is untouched. |
-| RK-22.1-083 | §22.1 | phase6 | RMK-1917 | Exercise recovery of an uncertain injection; retries cannot resubmit it. |
-| RK-22.1-085 | §22.1 | phase6 | RMK-1917 | Hold an attempt past the wait, assert unknown and a single provider call. |
-| RK-22.1-086 | §22.1 | phase6 | RMK-1917 | Cancel or fail submission and fail final persistence; assert conservative unknown. |
-| RK-22.1-088 | §22.1 | phase6 | RMK-1917 | Retry the provider after definitive non-submission only. |
-| RK-22.1-089 | §22.1 | phase6 | RMK-1917 | Have a provider give no result and observe uncertainty. |
-| RK-22.1-090 | §22.1 | phase6 | RMK-1917 | Observe refusal for both cases. |
-| RK-22.1-091 | §22.1 | phase6 | RMK-1917 | Queue input without establishing remote acceptance and observe uncertainty. |
-| RK-22.1-092 | §22.1 | phase6 | RMK-1917 | The API distinguishes transmitting from peer playback and turn completion. |
-| RK-22.1-093 | §22.1 | phase6 | RMK-1917 | Return mixed statuses including duplicates, failures and unknown for different sessions. |
-| RK-22.1-094 | §22.1 | phase6 | RMK-1917 | Retry multi-session work with some prior successful or unresolved reservations. |
-| RK-22.1-095 | §22.1 | phase6 | RMK-1917 | Attach or replace sessions between enqueue and execution; observe the selected sessions at execution. |
-| RK-22.1-098 | §22.1 | phase6 | RMK-1917 | An uncertain remote submission may go undelivered after retry suppression; examine provider and store separately. |
-| RK-22.1-099 | §22.1 | phase6 | RMK-1917 | Repeated unkeyed real-time delivery has no deduplication promise. |
+| RK-22.1-074 | §22.1 | phase6 | RMK-1917 | step: a store fault or read on the voice injection reservation: observe the store reservation before the provider call, including a concurrent claim. |
+| RK-22.1-075 | §22.1 | writable | RMK-1917 | deliver twice with one idempotency_key to two realtime channels, each with its session in its own room: independent outcomes; the same key on two sessions of one channel needs several realtime sessions per channel (requires realtime). |
+| RK-22.1-076 | §22.1 | writable | RMK-1917 | deliver twice with one idempotency_key to a realtime session: the second outcome reused, realtime.read showing one injection (requires realtime). |
+| RK-22.1-077 | §22.1 | writable | RMK-1917 | deliver twice with one idempotency_key and different text to a realtime session: the second refused as an idempotency conflict (requires realtime). |
+| RK-22.1-078 | §22.1 | phase6 | RMK-1917 | step: a store read of a voice injection reservation: exercise the stored claim, its unique token and final outcome. |
+| RK-22.1-079 | §22.1 | phase6 | RMK-1917 | step: a store read of a voice injection reservation: race two attempts and reject an expired owner completing another attempt. |
+| RK-22.1-080 | §22.1 | phase6 | RMK-1917 | step: a queued delivery redelivered after its acknowledgement: redeliver the acknowledged queue item and observe durable deduplication. |
+| RK-22.1-081 | §22.1 | phase6 | RMK-1917 | step: restart_process with a realtime fixture per process: contrast session-claim persistence across restart and deletion for durable and process-local stores. |
+| RK-22.1-082 | §22.1 | phase6 | RMK-1917 | step: a store without reservation support: run the same keyed injection with no reservation support; assert the provider is untouched. |
+| RK-22.1-083 | §22.1 | phase6 | RMK-1917 | step: scripted realtime injection outcomes: exercise recovery of an uncertain injection; retries cannot resubmit it. |
+| RK-22.1-085 | §22.1 | phase6 | RMK-1917 | step: scripted realtime injection outcomes: hold an attempt past the wait, assert unknown and a single provider call. |
+| RK-22.1-086 | §22.1 | phase6 | RMK-1917 | step: scripted realtime injection outcomes: cancel or fail submission and fail final persistence; assert conservative unknown. |
+| RK-22.1-088 | §22.1 | phase6 | RMK-1917 | step: scripted realtime injection outcomes: retry the provider after definitive non-submission only. |
+| RK-22.1-089 | §22.1 | phase6 | RMK-1917 | step: scripted realtime injection outcomes: have a provider give no result and observe uncertainty. |
+| RK-22.1-090 | §22.1 | writable | RMK-1917 | deliver to a realtime channel with no live session: the outcome is not a success; an injection the provider does not support needs a provider without injection (requires realtime). |
+| RK-22.1-091 | §22.1 | phase6 | RMK-1917 | step: scripted realtime injection outcomes: queue input without establishing remote acceptance and observe uncertainty. |
+| RK-22.1-093 | §22.1 | phase6 | RMK-1917 | step: several realtime sessions per channel and across rooms: return mixed statuses including duplicates, failures and unknown for different sessions. |
+| RK-22.1-094 | §22.1 | phase6 | RMK-1917 | step: several realtime sessions per channel and across rooms: retry multi-session work with some prior successful or unresolved reservations. |
+| RK-22.1-095 | §22.1 | phase6 | RMK-1917 | step: several realtime sessions per channel and across rooms: attach or replace sessions between enqueue and execution; observe the selected sessions at execution. |
 | RK-22.2-005 | §22.2 | step | RMK-1917 | A scenario can select WaitForIdle but cannot inspect its constructor settings or advance a controlled playback clock to observe both defaults. Python tests/test_delivery_strategies.py::TestWaitForIdleStrategy::test_init_defaults and Rust crates/roomkit/tests/delivery_queue.rs::the_strategies_take_python_s_defaults verify the values. |
-| RK-22.2-006 | §22.2 | phase6 | RMK-1917 | Exercise actual TTS playback followed by the configured buffer. |
-| RK-22.2-007 | §22.2 | phase6 | RMK-1917 | Exercise pending answers, speech, tools and audio forwarding before real-time sessions become idle. |
-| RK-22.2-009 | §22.2 | phase6 | RMK-1917 | Exceed the media playback bound and observe delivery despite activity. |
+| RK-22.2-006 | §22.2 | writable | RMK-1917 | deliver with wait_for_idle while a voice playback is held at its playback_gate: delivered only once the gate opens (requires voice). |
+| RK-22.2-007 | §22.2 | phase6 | RMK-1917 | step: realtime model activity for idle waits: exercise pending answers, speech, tools and audio forwarding before real-time sessions become idle. |
+| RK-22.2-009 | §22.2 | phase6 | RMK-1917 | step: deliver playback_timeout with a held playback: exceed the media playback bound and observe delivery despite activity. |
 | RK-22.2-010 | §22.2 | step | RMK-1917 | A scenario can select Queued but cannot inspect its constructor settings or advance a controlled playback clock to observe both defaults. Python tests/test_delivery_strategies.py::TestQueuedStrategy::test_init_defaults and Rust crates/roomkit/tests/delivery_queue.rs::the_strategies_take_python_s_defaults verify the values. |
 | RK-22.2-011 | §22.2 | writable | RMK-1917 | Use concurrent calls with the shared queued strategy. The current queued-strategy scenario only checks a lone item. Reading a custom separator or controlling the inactivity clock may need a fixture. |
-| RK-22.2-012 | §22.2 | phase6 | RMK-1917 | Run a queued batch during ongoing media playback or model activity and past the timeout. |
-| RK-22.2-014 | §22.2 | phase6 | RMK-1917 | Observe both active speech and answer; in voice, inspect TTS activity. |
-| RK-22.2-015 | §22.2 | phase6 | RMK-1917 | Observe actual TTS playback in the selected voice channel. |
+| RK-22.2-012 | §22.2 | phase6 | RMK-1917 | step: deliver playback_timeout with a held playback: run a queued batch during ongoing media playback or model activity and past the timeout. |
+| RK-22.2-014 | §22.2 | phase6 | RMK-1917 | step: realtime model activity for idle waits: observe both active speech and answer; in voice, inspect TTS activity. |
+| RK-22.2-015 | §22.2 | writable | RMK-1917 | deliver with wait_for_idle on a voice channel whose playback a playback_gate holds: the strategy watches that playback (requires voice). |
 | RK-22.2-016 | §22.2 | writable | RMK-1917 | Queue concurrent text requests that differ in room, transport or intelligence address and assert they are kept separate. |
-| RK-22.2-029 | §22.2 | phase6 | RMK-1917 | Select different live sessions on the same real-time transport for two queued requests; assert individual injections. |
+| RK-22.2-029 | §22.2 | phase6 | RMK-1917 | step: several realtime sessions per channel and across rooms: select different live sessions on the same real-time transport for two queued requests; assert individual injections. |
 | RK-22.2-030 | §22.2 | writable | RMK-1917 | Queue otherwise identical requests with incompatible metadata or instruction/message intents; assert that neither is merged into the other. |
 | RK-22.2-017 | §22.2 | writable | RMK-1917 | Submit two concurrent queued text deliveries with distinct keys, then inspect their keys, event IDs and outcomes. |
 | RK-22.2-018 | §22.2 | writable | RMK-1917 | Block a first delivery and submit other queued calls before and during its execution; assert distinct returned outcomes. |
 | RK-22.2-019 | §22.2 | writable | RMK-1917 | Make a hook holding a lock deliver while another caller drains the same shared queue; exercise same and different room cases. |
 | RK-22.2-020 | §22.2 | writable | RMK-1917 | Have a locked hook call the shared queue while no drain is running; check it follows the ordinary drain path, including waiting callers. |
-| RK-22.2-031 | §22.2 | phase6 | RMK-1917 | Queue and retry an explicitly selected real-time session, then assert the worker injects only into that session. |
+| RK-22.2-031 | §22.2 | phase6 | RMK-1917 | step: several realtime sessions per channel and across rooms: queue and retry an explicitly selected real-time session, then assert the worker injects only into that session. |
 | RK-22.2-032 | §22.2 | writable | RMK-1917 | Queue an instruction for an addressed agent through a delivery backend, force a retry, and assert an instruction reaches the target rather than a participant message. |
 | RK-22.2-033 | §22.2 | step | RMK-1917 | Hold the worker on an item, close the kit, and observe the held item on the same still-available delivery backend or through a new worker on it. The current scenario driver does not expose that backend after kit close. |
 | RK-22.3-006 | §22.3 | writable | RMK-1917 | Raise from AFTER_DELIVER and compare the committed event and caller outcome to the successful case. |
@@ -1081,11 +1064,11 @@ Units [gaps.json](gaps.json) lists: a scenario can test each, and none cites it 
 | RK-23.1-006 | §23.1 | step | RMK-1922 | Cancel the caller while the runner's cancel awaits completion and observe that the original completion finishes. |
 | RK-23.2-007 | §23.2 | step | RMK-1922 | Construct a public result without giving its duration and read the default. Durations measured on completed delegations exercise elapsed time instead. |
 | RK-23.3-018 | §23.3 | writable | RMK-1922 | Have a private worker publish structured content on a served tool call and inspect the structured copy of its stored child end row. |
-| RK-23.3-042 | §23.3 | phase6 | RMK-1922 | Observe the instruction flag on a delegation hand-back to a channel hosting a realtime model. |
-| RK-23.3-044 | §23.3 | phase6 | RMK-1922 | Observe private system-intent injection on the delegating realtime voice session and the sole session when delegation is outside a call. |
-| RK-23.3-045 | §23.3 | phase6 | RMK-1922 | Observe the targeted audio-video session receiving the worker hand-back as an injection. |
-| RK-23.3-046 | §23.3 | phase6 | RMK-1922 | Observe a conference with a realtime model receiving the private task result for its delegating or sole session. |
-| RK-23.3-053 | §23.3 | phase6 | RMK-1922 | Compare a realtime task-result injection with the expected result, observing that it omits the text-agent-only turn instruction. |
+| RK-23.3-042 | §23.3 | phase6 | RMK-1922 | step: setup_realtime_delegation: observe the instruction flag on a delegation hand-back to a channel hosting a realtime model. |
+| RK-23.3-044 | §23.3 | phase6 | RMK-1922 | step: setup_realtime_delegation: observe private system-intent injection on the delegating realtime voice session and the sole session when delegation is outside a call. |
+| RK-23.3-045 | §23.3 | phase6 | RMK-1922 | step: an audio-video channel with a realtime model: observe the targeted audio-video session receiving the worker hand-back as an injection. |
+| RK-23.3-046 | §23.3 | phase6 | RMK-1922 | step: conference model steps, a task delegated from a conference tool call: observe a conference with a realtime model receiving the private task result for its delegating or sole session. |
+| RK-23.3-053 | §23.3 | phase6 | RMK-1922 | step: setup_realtime_delegation: compare a realtime task-result injection with the expected result, observing that it omits the text-agent-only turn instruction. |
 | RK-23.3-055 | §23.3 | writable | RMK-1922 | Delegate to a notifying channel and compare an empty successful task with an unsuccessful task that has no output. Assert which hand-backs arrive. |
 | RK-23.3-085 | §23.3 | writable | RMK-1922 | Hold inline and background workers at model gates, call framework close and observe cancellation and completion before the store is released. |
 | RK-23.3-086 | §23.3 | step | RMK-1922 | Expose an instrumented task completion callback and shutdown grace/unwind observations, including the callback that persists after cancellation and its log. |
@@ -1101,12 +1084,12 @@ Units [gaps.json](gaps.json) lists: a scenario can test each, and none cites it 
 | RK-23.3-103 | §23.3 | step | RMK-1922 | Gate the child store write separately from its post-create hooks and cancel preparation to observe cleanup ordering. |
 | RK-23.3-104 | §23.3 | step | RMK-1922 | Instrument terminal cleanup while issuing repeated caller cancellation and framework close under the configured budgets. |
 | RK-23.3-105 | §23.3 | step | RMK-1922 | Inject a store error specifically during preparation cleanup and compare the original error or cancellation, absence of announcement and logged cleanup diagnostic. |
-| RK-23.4-009 | §23.4 | phase6 | RMK-1922 | Set up delegation on a realtime voice channel and inspect its session's declared tool and execution. |
+| RK-23.4-009 | §23.4 | phase6 | RMK-1922 | step: setup_realtime_delegation: set up delegation on a realtime voice channel and inspect its session's declared tool and execution. |
 | RK-23.4-030 | §23.4 | step | RMK-1922 | Allow deterministic advancement or injection of a CompletedTaskCache clock and supply running durations around the reference expiry and maximum-run boundaries. |
 | RK-23.4-033 | §23.4 | step | RMK-1922 | Expose host insertion into the public task cache to compare caller-specific and host values and the most recent of both. |
 | RK-23.4-035 | §23.4 | writable | RMK-1922 | Gate concurrent calls on one configured handler and observe at most one active delegation in the same room, with another room still able to progress. |
 | RK-23.4-059 | §23.4 | writable | RMK-1922 | Keep a stale running bus entry, exceed the global ended-task retention using other rooms and then query the original task. |
-| RK-23.4-066 | §23.4 | phase6 | RMK-1922 | Demonstrate that a realtime session with otherwise visible room tasks receives no task-notes block. |
+| RK-23.4-066 | §23.4 | phase6 | RMK-1922 | step: realtime.read of the session configuration: demonstrate that a realtime session with otherwise visible room tasks receives no task-notes block. |
 | RK-23.4-068 | §23.4 | step | RMK-1922 | Invoke the delegation tool itself without any current tool call and observe refusal. The delegate.handle step supplies a room explicitly and tests a different public API. |
 | RK-24.1-004 | §24.1 | writable | RMK-1939 | The served registry fixture accepts raw content, but no shared case checks the 64-level boundary. Local input is generated from structured fields. |
 | RK-24.1-005 | §24.1 | writable | RMK-1939 | No served frontmatter case checks the open-delimiter limit or its quoted-character counting. Local input is generated. |
@@ -1122,13 +1105,13 @@ Units [gaps.json](gaps.json) lists: a scenario can test each, and none cites it 
 | RK-24.3-004 | §24.3 | step | RMK-1939 | The shared registry session has no get_metadata operation for a single present or absent name. |
 | RK-24.3-011 | §24.3 | step | RMK-1939 | A snapshot exposes the unavailable map but the shared registry session offers no direct get_unavailable_reason accessor. |
 | RK-24.3-015 | §24.3 | step | RMK-1939 | The shared registry snapshot offers gated_tool_names but no closed_tool_names(activated) result. The text gate cases exercise the behavioral rules about overlapping patterns separately. |
-| RK-24.3-029 | §24.3 | phase6 | RMK-1939 | No shared realtime session exercises activation prerequisites. |
+| RK-24.3-029 | §24.3 | phase6 | RMK-1939 | step: a realtime fixture skills option: no shared realtime session exercises activation prerequisites. |
 | RK-24.4-012 | §24.4 | writable | RMK-1939 | Existing cases observe bounded eviction, but none reactivates the evicted local skill to assert redelivery of its full body. |
 | RK-24.4-013 | §24.4 | writable | RMK-1939 | The shared runner can replace an agent and control room history, but no local skill case demonstrates a lost record followed by a fresh body without recoverable stored activation. |
 | RK-24.4-021 | §24.4 | writable | RMK-1939 | The model capture supports the text reveal window; no shared missing-skill case asserts its replacement, excluded declarations and session lifetime. |
 | RK-24.4-022 | §24.4 | writable | RMK-1939 | Existing blocked-activation cases target a real skill. The unknown-skill hint after an ON_TOOL_CALL block remains unasserted. |
-| RK-24.4-023 | §24.4 | phase6 | RMK-1939 | No shared realtime case asserts the missing-skill response and reveal. |
-| RK-24.4-024 | §24.4 | phase6 | RMK-1939 | The fixed-declaration realtime gateway's hint directing the model to call_tool lacks a shared oracle. |
+| RK-24.4-023 | §24.4 | phase6 | RMK-1939 | step: a realtime fixture skills option: no shared realtime case asserts the missing-skill response and reveal. |
+| RK-24.4-024 | §24.4 | phase6 | RMK-1939 | step: a realtime fixture skills option: the fixed-declaration realtime gateway's hint directing the model to call_tool lacks a shared oracle. |
 | RK-24.5-002 | §24.5 | step | RMK-1939 | Shared local setup cannot observe invalid source as a discovery or registration failure. |
 | RK-24.5-004 | §24.5 | step | RMK-1939 | The local directory discovery operation, failure order and registry state cannot be observed through current steps. |
 | RK-24.5-005 | §24.5 | step | RMK-1939 | Shared local setup cannot capture a failing discovery result identifying the skill and its cause. |
@@ -1169,12 +1152,12 @@ Units [gaps.json](gaps.json) lists: a scenario can test each, and none cites it 
 | RK-24.7-035 | §24.7 | writable | RMK-1939 | Shared listing and snapshot can inspect distinct paths with the same frontmatter name; the existing paging case repeats an identical URI. |
 | RK-24.7-038 | §24.7 | writable | RMK-1939 | The served registry session can exercise turn activation with declared prerequisites. Local prerequisite cases do not register a served skill. |
 | RK-24.7-051 | §24.7 | writable | RMK-1939 | The scripted registry can return a refused refreshed entry and report its reason. Existing mismatch cases refresh to an admissible entry, or report a generic verification failure. |
-| RK-24.7-053 | §24.7 | phase6 | RMK-1939 | No shared fixed-instructions realtime provider demonstrates the attributed body in an activation result. |
+| RK-24.7-053 | §24.7 | phase6 | RMK-1939 | step: a realtime fixture skills option: no shared fixed-instructions realtime provider demonstrates the attributed body in an activation result. |
 | RK-24.7-055 | §24.7 | writable | RMK-1939 | No shared activation compares the held entry with a later lookup or refuses a previously loaded skill that has since been marked unavailable. A blocked tool hook exercises a different condition. |
 | RK-24.7-059 | §24.7 | writable | RMK-1939 | The registry session supports a lookup error under a known label. No shared case observes the missing-skill diagnostic following that lookup. |
 | RK-24.7-062 | §24.7 | writable | RMK-1939 | The shared registry can inspect an active entry and resource requests. No case requests a file omitted from that entry; inactive-reference refusal is a different condition. |
 | RK-24.7-066 | §24.7 | writable | RMK-1939 | The scripted registry accepts multiple servers and records each request. No case asserts that a reference read on one produces no request on the other. |
-| RK-24.7-068 | §24.7 | phase6 | RMK-1939 | No shared realtime inline_full session asserts refusal and the reason for a served entry. |
+| RK-24.7-068 | §24.7 | phase6 | RMK-1939 | step: a realtime fixture skills option: no shared realtime inline_full session asserts refusal and the reason for a served entry. |
 | RK-24.7-070 | §24.7 | writable | RMK-1939 | The served registry can list and read a nested metadata file. No case asserts it remains an ordinary file with no nested activation. |
 | RK-24.7-071 | §24.7 | writable | RMK-1939 | Shared served skills can run through an installed text channel. No case asserts run_skill_script refuses execution of a served skill. |
 | RK-24.7-077 | §24.7 | writable | RMK-1939 | The server fixture supports dynamic entries and captured approvals but no scenario asserts the missing fingerprint for one. |
@@ -1242,35 +1225,23 @@ Units [gaps.json](gaps.json) lists: a scenario can test each, and none cites it 
 | RK-A.9.1-014 | §A.9.1 | step | RMK-1961 | No runner key sets environment or authentication_method on an ACP channel. The text differs from Python's signature (RMK-1966). |
 | RK-A.9.1-031 | §A.9.1 | writable | RMK-1961 | acp.close and the acp_wire expectation exist; no scenario yet asserts the sessions and the transport a close releases. |
 | RK-A.9.1-042 | §A.9.1 | writable | RMK-1961 | A turn that errs or is abandoned after a usage_update (prompts[].error exists): the usage stays an ephemeral custom event, and no completed response or accounting follows. |
-| RK-A.10-002 | §A.10 | phase6 | RMK-1961 | Media feature voice: its type VOICE, category TRANSPORT, direction BIDIRECTIONAL and media type AUDIO. |
-| RK-A.10-003 | §A.10 | phase6 | RMK-1961 | Media feature voice: the channel requires an STT provider, a TTS provider, a voice backend and an audio pipeline configuration. The audit's suspect on the requires list is RMK-1963. |
-| RK-A.10-004 | §A.10 | phase6 | RMK-1961 | Media feature voice: streaming, true by default. |
-| RK-A.10-005 | §A.10 | phase6 | RMK-1961 | Media feature voice: interruption, an InterruptionConfig or null, the current interruption surface (Section 12.6). |
-| RK-A.10-006 | §A.10 | phase6 | RMK-1961 | Media feature voice: enable_barge_in, legacy, true by default, superseded by interruption. |
-| RK-A.10-007 | §A.10 | phase6 | RMK-1961 | Media feature voice: barge_in_threshold_ms, legacy, 200 by default, mapped to allow_during_first_ms of the IMMEDIATE strategy and used only when no InterruptionConfig is given. |
-| RK-A.10-008 | §A.10 | phase6 | RMK-1961 | Media feature voice: supports_streaming_delivery, true when the TTS takes streaming input and a backend is configured. |
-| RK-A.10-010 | §A.10 | phase6 | RMK-1961 | Media feature voice: deliver_stream() fires the AFTER_TTS hook after the stream completes. |
-| RK-A.10-011 | §A.10 | phase6 | RMK-1961 | Media feature voice: bind_session(session, room_id, binding) and unbind_session(session). |
-| RK-A.10-012 | §A.10 | phase6 | RMK-1961 | Media feature voice: the standard delivery path of AudioContent: postprocessors, recorder, resampler, transport, and the AEC reference. |
-| RK-A.10-013 | §A.10 | phase6 | RMK-1961 | Media feature voice: the standard delivery path of TextContent: TTS, an AudioChunk stream, the outbound pipeline, the transport and the AEC reference. |
-| RK-A.10-014 | §A.10 | phase6 | RMK-1961 | Media feature voice: other content (system, tool-call, a composite keeping a part that is neither text nor audio) is not spoken, with no delivery error. |
-| RK-A.10-015 | §A.10 | phase6 | RMK-1961 | Media feature voice: the framework-native streaming path: the framework pipes an AI channel's response stream into deliver_stream(), the sentence splitter, synthesize_stream_input(), the outbound pipeline and the transport. |
-| RK-A.10-016 | §A.10 | phase6 | RMK-1961 | Media feature voice: the AEC reference fed at transport level (local hardware) or at pipeline level (network), as Section 12.3.4 says. |
-| RK-A.11-002 | §A.11 | phase6 | RMK-1961 | Media feature realtime: its type REALTIME_VOICE, category TRANSPORT, direction BIDIRECTIONAL and media type AUDIO. |
-| RK-A.11-003 | §A.11 | phase6 | RMK-1961 | Media feature realtime: the channel requires a RealtimeVoiceProvider and a RealtimeAudioTransport. |
-| RK-A.11-005 | §A.11 | phase6 | RMK-1961 | Media feature realtime: an audio pipeline configuration, optional in speech-to-speech mode. The audit's suspect on the requires list is RMK-1963. |
-| RK-A.11-006 | §A.11 | phase6 | RMK-1961 | Media feature realtime: the configuration: system_prompt, voice, tools, temperature, input and output sample rates, reasoning_timeout_s (the bound on one delegation's run, Section 12.4.1) and emit_transcription_events. |
-| RK-A.11-007 | §A.11 | phase6 | RMK-1961 | Media feature realtime: start_session(room_id, participant_id, connection, metadata, organization_id) and end_session(session). |
-| RK-A.11-008 | §A.11 | phase6 | RMK-1961 | Media feature realtime: a tool call goes to the async handler function first, and to the ON_TOOL_CALL hook as the fallback. |
-| RK-A.12-002 | §A.12 | phase6 | RMK-1961 | Media feature video: its channel type VIDEO, category TRANSPORT, direction BIDIRECTIONAL and media type VIDEO. |
-| RK-A.12-003 | §A.12 | phase6 | RMK-1961 | Media feature video: the channel requires a VideoBackend; a VisionProvider is optional, the channel working with or without it. |
-| RK-A.12-004 | §A.12 | phase6 | RMK-1961 | Media feature video: vision_interval_ms, 2000 by default. |
-| RK-A.12-005 | §A.12 | phase6 | RMK-1961 | Media feature video: the session lifecycle: connect_video(), bind_session(), unbind_session() and disconnect_video(). |
-| RK-A.12-010 | §A.12 | phase6 | RMK-1961 | Media feature video: the framework event video_session_started. |
-| RK-A.12-011 | §A.12 | phase6 | RMK-1961 | Media feature video: the framework event video_session_ended. |
-| RK-A.12-012 | §A.12 | phase6 | RMK-1961 | Media feature video: the framework event video_vision_result, with description, labels, confidence, text and faces. |
-| RK-A.12-013 | §A.12 | phase6 | RMK-1961 | Media feature video: vision results reach the AI turns as a <vision> block (Section 12.8.7); setup_video_vision() is deprecated and wires nothing. |
-| RK-A.12-014 | §A.12 | phase6 | RMK-1961 | Media feature video: the backends LocalVideoBackend (local camera capture), ScreenCaptureBackend (screen capture) and MockVideoBackend (unit testing with call tracking). |
+| RK-A.10-002 | §A.10 | writable | RMK-1961 | Suspect RMK-2021: Python's VoiceChannel declares media types AUDIO and TEXT, the text AUDIO alone; the bindings expectation after voice.open shows type VOICE, category TRANSPORT, direction BIDIRECTIONAL and the media types (requires voice). |
+| RK-A.10-007 | §A.10 | phase6 | RMK-1961 | step: voice.open legacy barge_in_threshold_ms and interruption: barge_in_threshold_ms, legacy, 200 by default, mapped to allow_during_first_ms of the IMMEDIATE strategy and used only when no InterruptionConfig is given. |
+| RK-A.10-008 | §A.10 | phase6 | RMK-1961 | step: voice.open TTS streaming option: supports_streaming_delivery, true when the TTS takes streaming input and a backend is configured. |
+| RK-A.10-010 | §A.10 | writable | RMK-1961 | voice.stream with an after_tts hook: the hook fires once the stream completed (requires voice). |
+| RK-A.10-012 | §A.10 | phase6 | RMK-1961 | step: AudioContent to a voice channel with scripted outbound stages: the standard delivery path of AudioContent: postprocessors, recorder, resampler, transport, and the AEC reference. |
+| RK-A.10-013 | §A.10 | writable | RMK-1961 | A text event delivered to a voice binding: voice.read shows the TTS text and the audio at the transport; the AEC reference half needs the voice stage trace (requires voice). |
+| RK-A.10-014 | §A.10 | writable | RMK-1961 | A system, tool-call or mixed event delivered to a voice binding: voice.read shows nothing synthesized and the delivery reports no error (requires voice). |
+| RK-A.10-015 | §A.10 | writable | RMK-1961 | A scripted streaming agent in a room bound to voice.open: voice.read shows its answer synthesized sentence by sentence (requires voice). |
+| RK-A.10-016 | §A.10 | phase6 | RMK-1961 | step: voice stage trace with the AEC reference read (S3): where the outbound path feeds the AEC reference. |
+| RK-A.11-002 | §A.11 | writable | RMK-1961 | Suspect RMK-2021: Python's RealtimeVoiceChannel declares media types AUDIO and TEXT, the text AUDIO alone; the bindings expectation of a bound realtime channel shows type REALTIME_VOICE, category TRANSPORT, direction BIDIRECTIONAL and the media types (requires realtime). |
+| RK-A.11-008 | §A.11 | writable | RMK-1961 | realtime.tool_call of a tool with a realtime.tools handler: the handler answers; the ON_TOOL_CALL fallback needs a realtime tool no handler serves, the fixture's handler serving every name (requires realtime). |
+| RK-A.12-002 | §A.12 | writable | RMK-1961 | The bindings expectation after video.open shows type VIDEO, category TRANSPORT, direction BIDIRECTIONAL and media type VIDEO (requires video). |
+| RK-A.12-010 | §A.12 | phase6 | RMK-1961 | step: framework_events media rows: the framework event video_session_started. |
+| RK-A.12-011 | §A.12 | phase6 | RMK-1961 | step: framework_events media rows: the framework event video_session_ended. |
+| RK-A.12-012 | §A.12 | phase6 | RMK-1961 | step: framework_events media rows: the framework event video_vision_result, with description, labels, confidence, text and faces. |
+| RK-A.12-013 | §A.12 | writable | RMK-1961 | video.open with vision and a scripted agent in the room: its models read the vision result as a <vision> block (requires video). |
+| RK-A.12-014 | §A.12 | step | RMK-1961 | named backend: leaves the RFC in P6-V (D8) |
 | RK-A.13-002 | §A.13 | step | RMK-1961 | Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed. |
 | RK-A.13-003 | §A.13 | step | RMK-1961 | Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed. |
 | RK-A.13-004 | §A.13 | step | RMK-1961 | Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed. The text differs from Python's signature (RMK-1966). |
@@ -1278,28 +1249,22 @@ Units [gaps.json](gaps.json) lists: a scenario can test each, and none cites it 
 | RK-A.14-002 | §A.14 | step | RMK-1961 | Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed. |
 | RK-A.14-003 | §A.14 | step | RMK-1961 | Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed. |
 | RK-A.14.1-003 | §A.14.1 | writable | RMK-1961 | A scenario can assert the host binding's direction, inbound, and that no delivery reaches the host channel. |
-| RK-A.15-002 | §A.15 | phase6 | RMK-1961 | Media feature conference: its channel type CONFERENCE, category TRANSPORT, direction BIDIRECTIONAL and media type AUDIO. |
-| RK-A.15-003 | §A.15 | phase6 | RMK-1961 | Media feature conference: the channel requires a ConferenceBackend, and takes an STT provider (per-track transcription) and a TTS provider (AI voice through the bot track), each or null. |
-| RK-A.15-004 | §A.15 | phase6 | RMK-1961 | Media feature conference: an optional speech-to-speech realtime configuration, which excludes tts. |
-| RK-A.15-005 | §A.15 | phase6 | RMK-1961 | Media feature conference: pipeline, the lane stages, null meaning the default VAD and format contract (the planned vision on video and screen tracks folded in). |
-| RK-A.15-006 | §A.15 | phase6 | RMK-1961 | Media feature conference: interruption, a ConferenceInterruptionConfig, and recording, a ConferenceRecordingConfig or null. The text differs from Python's signature (RMK-1966). |
-| RK-A.15-007 | §A.15 | phase6 | RMK-1961 | Media feature conference: recorder, required with recording and refused without it. |
-| RK-A.15-008 | §A.15 | phase6 | RMK-1961 | Media feature conference: bot_identity, the bot's display identity. The text differs from Python's signature (RMK-1966). |
-| RK-A.15-009 | §A.15 | phase6 | RMK-1961 | Media feature conference: bot_grants, explicit grants for join_as_bot(), derived when null. |
-| RK-A.15-010 | §A.15 | phase6 | RMK-1961 | Media feature conference: default_grants, the grants minted for participants. The text differs from Python's signature (RMK-1966). |
-| RK-A.15-011 | §A.15 | phase6 | RMK-1961 | Media feature conference: e2ee, false by default, which requires the backend's E2EE capability. |
-| RK-A.15-012 | §A.15 | phase6 | RMK-1961 | Media feature conference: close_room_on_detach, false by default. |
-| RK-A.15-013 | §A.15 | phase6 | RMK-1961 | Media feature conference: speak_text_events, false by default. |
-| RK-A.15-014 | §A.15 | phase6 | RMK-1961 | Media feature conference: an attach ensures the SFU room, and joins the bot lazily with bot_grants. |
-| RK-A.15-016 | §A.15 | phase6 | RMK-1961 | Media feature conference: a track published is subscribed when consumed, into a pipeline lane. |
-| RK-A.15-017 | §A.15 | phase6 | RMK-1961 | Media feature conference: a track unpublished tears its lane down and is unsubscribed. |
-| RK-A.15-018 | §A.15 | phase6 | RMK-1961 | Media feature conference: a detach leaves the SFU room, and closes it when close_room_on_detach. |
-| RK-A.15-025 | §A.15 | phase6 | RMK-1961 | Media feature conference: the ON_TRANSCRIPTION hook, per track and attributed to its participant. |
-| RK-A.15-026 | §A.15 | phase6 | RMK-1961 | Media feature conference: the framework events conference_started and conference_ended. |
-| RK-A.15-027 | §A.15 | phase6 | RMK-1961 | Media feature conference: the framework events conference_participant_joined and conference_participant_left. |
-| RK-A.15-028 | §A.15 | phase6 | RMK-1961 | Media feature conference: the framework event conference_bot_grants_changed. |
-| RK-A.15-029 | §A.15 | phase6 | RMK-1961 | Media feature conference: the MockConferenceBackend, for unit testing with scripted event sequences. |
-| RK-A.15-030 | §A.15 | phase6 | RMK-1961 | Media feature conference: SFU provider backends. |
+| RK-A.15-002 | §A.15 | writable | RMK-1961 | The bindings expectation after conference.open shows type CONFERENCE, category TRANSPORT, direction BIDIRECTIONAL and media type AUDIO (requires conference). |
+| RK-A.15-004 | §A.15 | phase6 | RMK-1961 | step: conference.open options: an optional speech-to-speech realtime configuration, which excludes tts. |
+| RK-A.15-005 | §A.15 | phase6 | RMK-1961 | step: conference.open options: pipeline, the lane stages, null meaning the default VAD and format contract (the planned vision on video and screen tracks folded in). |
+| RK-A.15-007 | §A.15 | phase6 | RMK-1961 | step: conference.open options: recorder, required with recording and refused without it. |
+| RK-A.15-009 | §A.15 | phase6 | RMK-1961 | step: conference.read, conference.open options: bot_grants, explicit grants for join_as_bot(), derived when null. |
+| RK-A.15-011 | §A.15 | phase6 | RMK-1961 | step: conference.open options: e2ee, false by default, which requires the backend's E2EE capability. |
+| RK-A.15-012 | §A.15 | phase6 | RMK-1961 | step: conference.read, conference.open options: close_room_on_detach, false by default. |
+| RK-A.15-013 | §A.15 | phase6 | RMK-1961 | step: conference.open options: speak_text_events, false by default. |
+| RK-A.15-014 | §A.15 | phase6 | RMK-1961 | step: conference.read, conference.open options: an attach ensures the SFU room, and joins the bot lazily with bot_grants. |
+| RK-A.15-016 | §A.15 | phase6 | RMK-1961 | step: conference.read, conference.open options: a track published is subscribed when consumed, into a pipeline lane. |
+| RK-A.15-017 | §A.15 | phase6 | RMK-1961 | step: conference.read, conference.open options: a track unpublished tears its lane down and is unsubscribed. |
+| RK-A.15-018 | §A.15 | phase6 | RMK-1961 | step: conference.read, conference.open options: a detach leaves the SFU room, and closes it when close_room_on_detach. |
+| RK-A.15-025 | §A.15 | phase6 | RMK-1961 | step: conference.feed: the ON_TRANSCRIPTION hook, per track and attributed to its participant. |
+| RK-A.15-026 | §A.15 | phase6 | RMK-1961 | step: framework_events media rows: the framework events conference_started and conference_ended. |
+| RK-A.15-027 | §A.15 | phase6 | RMK-1961 | step: framework_events media rows: the framework events conference_participant_joined and conference_participant_left. |
+| RK-A.15-028 | §A.15 | phase6 | RMK-1961 | step: framework_events media rows, conference.plug, unplug, set_bot_grants and ensure_bot: the framework event conference_bot_grants_changed. |
 
 ## Recorded executions
 
