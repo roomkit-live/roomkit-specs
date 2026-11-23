@@ -693,27 +693,27 @@
     },
     {
       "section": "12.3.12",
-      "sha256": "25c555e70393e3478b530d827e85d3fbaa7105b7e6ad2c04ebfb881eb3dfcf17",
+      "sha256": "0abbf542d56fde4be09a89418a544b9615b05090cbea9d8a33e74bd7db3e35b8",
       "classification": "normative",
-      "review": "Source inventory: Turn Detector. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Turn Detector, split to one obligation per unit, each with its level (RMK-2036): RK-12.3.12-007 to 009, the TurnDetector interface, TurnContext with TurnEntry, and TurnDecision (structural), turn detection as distinct from VAD folded into the first and the qualitative table of detection modes into the last; RK-12.3.12-004 kept, the integration point; RK-12.3.12-010 to 015, waiting on an incomplete turn (a may to bound the extra wait for a transcript); RK-12.3.12-016 to 020, speech that resumes before the turn is routed and after it, before its response is heard (hold, supersede, release), and the superseded marks an intelligence channel never replays as history; RK-12.3.12-021, the VAD-only fallback; RK-12.3.12-022, the 200 ms fast-path bound; RK-12.3.12-023, the small, fast LLM-based detector (should, non_testable). Every unit carries its level."
     },
     {
       "section": "12.3.13",
-      "sha256": "e85df9d1ca11873f43f5c3ba03a6d566de897d814fb53fcf6c0de07864872366",
+      "sha256": "1ea6f3cde1330b09825a0ceac25289055837091469204c8cbfeb94bcbc5bfdbc",
       "classification": "normative",
-      "review": "Source inventory: Interruption Strategy. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Interruption Strategy, split to one obligation per unit, each with its level (RMK-2036): RK-12.3.13-001 kept, InterruptionConfig and its defaults (structural); RK-12.3.13-009 to 012, the four InterruptionStrategy rows; RK-12.3.13-013 to 015, BackchannelDetector, BackchannelContext and BackchannelDecision (structural); RK-12.3.13-016 to 025, the timing constraint (detectors designed for audio features, should and non_testable; the wait before consulting the detector and the speech held meanwhile, RK-12.3.13-056; the wordless backchannel, a may and a detector configuration off by default; transcribing the held speech and finalizing it, should); RK-12.3.13-026 to 042 and 055, the echo guard, one unit per sentence, the voice-aware rule and the continuous-STT mode included; RK-12.3.13-043 to 045 and 057, words still being said and pending verdicts; RK-12.3.13-007 kept, the interruption flow diagram; RK-12.3.13-046 to 054, when TTS is cancelled, one unit per item or sentence. Every unit carries its level."
     },
     {
       "section": "12.3.14",
-      "sha256": "ccfbd798c12bd565870ee661ef4fb573ad59d4ef92e80767274afe3affb50fb8",
+      "sha256": "6fe6d3541d6dfb0f2baf0220b178df32110e2a8a4a323424ae3858847e718200",
       "classification": "normative",
-      "review": "Source inventory: Pipeline Execution Flow. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Pipeline Execution Flow, split to one obligation per unit, each with its level (RMK-2036), each pseudo-code block cut at its numbered steps by closing and reopening its fence (34 bare fence lines in all, no word changed): RK-12.3.14-005 to 007, session start (stage resets, ON_SESSION_STARTED on both signals, the recorder's start); RK-12.3.14-008 to 010, session end (stage resets, the recorder's stop, close() only when the channel is destroyed); RK-12.3.14-011 to 019, the inbound flow (resampling, recorder, DTMF in parallel, AEC and AGC skipped on native capabilities, denoiser, VAD with STT and turn detection as one step, diarization, the stream's end); RK-12.3.14-020 to 025, the outbound flow (re-chunking inside stages, postprocessors, recorder, AEC reference feeding, resampling, the transport and a local speaker callback). Every unit carries its level."
     },
     {
       "section": "12.3.15",
-      "sha256": "137f1e1023ffc7b839650672de07611e9e9c593393bb6623b8207d7cf3459003",
+      "sha256": "d79c662eb35d8e8d87203e6146e87e253527113784eb9cb5735245d37a6c2125",
       "classification": "normative",
-      "review": "Source inventory: Pipeline Debug Taps. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Pipeline Debug Taps, split to one obligation per unit, each with its level (RMK-2036): RK-12.3.15-008, PipelineDebugTaps (structural), the purpose of debug taps folded in; RK-12.3.15-009 to 011, a parent component refused, the stage selection and the valid stage names; RK-12.3.15-012 to 017, the output files (names, session prefix, a transport's own AEC taps and their threads, lazy files, file format); RK-12.3.15-018, the debug_taps field (structural); RK-12.3.15-019 to 024, the behaviour (read-only taps, non-blocking writes should, asynchronous flush may, no work when disabled, speech segment files, the warning should); RK-12.3.15-006 and 007 kept, the session lifecycle and the relationship to AudioRecorder. Every unit carries its level."
     },
     {
       "section": "12.4",
@@ -735,15 +735,15 @@
     },
     {
       "section": "12.5",
-      "sha256": "3f04d17cf862dc974fe64a5035c16dab02dc82b59d0a75bf9856cf11db9d91cb",
+      "sha256": "427ced07ce0f5222c8c13ae66fef59cb03afe4cc915f3538ef9dbb5f3e1167ea",
       "classification": "normative",
-      "review": "Source inventory: Voice Hooks. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Voice Hooks, split to one obligation per unit, each with its level (RMK-2036): RK-12.5-003 to 028, one unit per row of the voice hooks table, each the hook's type and source, the Use Case column informative and the table's purpose folded into the first; RK-12.5-029 to 031, the audio level hooks (independent of VAD, the throttle as a should, the AudioLevelEvent payload, structural). Every unit carries its level."
     },
     {
       "section": "12.6",
-      "sha256": "eb73c5a9980711b6a3265b18dc092f0704ddb769aa8f6b2e6bedda4af1d7729d",
+      "sha256": "8b1154f2bc0039bb1a0c347e9074e98389cb132fca63ba51b88697f3013e303e",
       "classification": "normative",
-      "review": "Source inventory: Barge-In and Interruption Handling. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Barge-In and Interruption Handling, split to one obligation per unit, each with its level (RMK-2036): RK-12.6-004 to 013, the default behaviour (the strategy dispatch, with the pointer to §12.3.13 folded in; one unit per step of a confirmed interruption and of a backchannel; the allow_during_first_ms should); RK-12.6-014 to 020, VoiceBackend barge-in and VAD (the transport signal and its capability, VAD during playback, both active, a confirmed and a rejected interruption, a SEMANTIC segment ended before its first word, the VAD fallback as a may). Every unit carries its level."
     },
     {
       "section": "12.7",

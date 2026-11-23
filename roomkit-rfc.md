@@ -12883,14 +12883,12 @@ alignment and starting a fresh annotation record.
 
 #### 12.3.12 Turn Detector
 
-<!-- rfc: {"id": "RK-12.3.12-001", "kind": "behavior", "applies": "§12.3.12 Turn Detector; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.3.12-007", "kind": "structural", "applies": "§12.3.12 TurnDetector, the voice feature: a post-STT stage that judges transcripts, not audio frames, between STT output and the room event pipeline and configured with the audio pipeline, with name, evaluate(context) returning a TurnDecision, reset() and close() (turn detection as distinct from VAD, informative, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The turn detector determines whether the user has finished their conversational
 turn. This is distinct from VAD, which detects acoustic silence. A user may
 pause mid-sentence (VAD triggers silence) but not be done speaking. Conversely,
 a user may finish a question without a long pause.
-<!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.3.12-002", "kind": "behavior", "applies": "§12.3.12 Turn Detector; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Note:** Unlike the frame-level stages above (denoiser, AEC, AGC, VAD), the
 turn detector operates on **transcripts** (text from STT), not audio frames.
 It does not implement `process(AudioFrame)`. It sits between STT output and the
@@ -12908,7 +12906,9 @@ TurnDetector (interface)
 └── close() → void
         # Release resources
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.12-008", "kind": "structural", "applies": "§12.3.12 TurnContext and TurnEntry, the voice feature: what a turn detector is handed (the accumulated transcript, whether it is final, the silence and speech durations, recent turns or null, metadata) and each recent turn's role and text. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 TurnContext
 ├── transcript: string                       # Current accumulated transcript (from STT)
@@ -12922,7 +12922,9 @@ TurnEntry
 ├── role: string                             # "user" or "assistant"
 └── text: string                             # Transcript text of the turn
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.12-009", "kind": "structural", "applies": "§12.3.12 TurnDecision, the voice feature: whether the turn is complete, a confidence, a reason and, for an incomplete turn, how long to wait before evaluating it again (the qualitative table of detection modes, informative, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 TurnDecision
 ├── is_complete: bool                        # Whether the turn is considered complete
@@ -12930,9 +12932,7 @@ TurnDecision
 ├── reason: string | null                    # Why (e.g., "question_mark", "long_pause", "semantic_complete")
 └── suggested_wait_ms: float | null          # If not complete, how long to wait before re-evaluating
 ```
-<!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.3.12-003", "kind": "behavior", "applies": "§12.3.12 Turn Detector; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Turn detection modes:**
 
 | Mode | Description | Latency | Accuracy |
@@ -12943,7 +12943,7 @@ TurnDecision
 | Hybrid | VAD for fast path, LLM for ambiguous cases | Adaptive | High |
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.3.12-004", "kind": "behavior", "applies": "§12.3.12 Turn Detector; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.3.12-004", "kind": "behavior", "applies": "§12.3.12 Integration point, the voice feature, with a turn detector: a transcript the detector judges complete becomes a room event routed normally; one judged incomplete waits, the next speech joins it, and the accumulated turn is evaluated again. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Integration point:**
 
 The turn detector sits between STT and the room event pipeline. It replaces the
@@ -12959,34 +12959,36 @@ VAD SPEECH_END → STT transcribes → TurnDetector.evaluate(context)
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.3.12-005", "kind": "behavior", "applies": "§12.3.12 Turn Detector; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.3.12-010", "kind": "behavior", "applies": "§12.3.12 Waiting on an incomplete turn, the voice feature: a turn judged incomplete is never held indefinitely; it waits for the decision's suggested_wait_ms of silence, or for a configured default when the decision gives none. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Waiting on an incomplete turn:** when `is_complete` is false, the channel
 MUST NOT hold the turn indefinitely. It waits for `suggested_wait_ms` of
-silence, or a configured default when the decision gives none. The wait counts
+silence, or a configured default when the decision gives none. <!-- /rfc --><!-- rfc: {"id": "RK-12.3.12-011", "kind": "behavior", "applies": "§12.3.12 Waiting on an incomplete turn, the voice feature: the wait counts silence, not time: speech that starts during it, or while the turn is still being judged, keeps the turn open, and silence counts again from the end of that speech. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The wait counts
 silence, not time: speech that starts during it — including speech that started
 while the turn was still being judged — keeps the turn open, and silence counts
-again from the end of that speech. A transcript from that speech joins the
+again from the end of that speech. <!-- /rfc --><!-- rfc: {"id": "RK-12.3.12-012", "kind": "behavior", "applies": "§12.3.12 Waiting on an incomplete turn, the voice feature: a transcript of speech during the wait joins the accumulated turn, which is evaluated again; speech that yields no transcript does not hold the turn. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A transcript from that speech joins the
 accumulated turn, which is then evaluated again; speech that yields no
-transcript does not hold the turn. That transcript may still be on its way
+transcript does not hold the turn. <!-- /rfc --><!-- rfc: {"id": "RK-12.3.12-013", "kind": "behavior", "applies": "§12.3.12 Waiting on an incomplete turn, the voice feature: the wait does not end before the transcript of speech that has ended has joined the turn or turned out empty, so the turn is routed with it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->That transcript may still be on its way
 when the silence has lasted the wait (a streaming STT finalizes after the
 speech, sometimes for longer than the wait): the wait MUST NOT end before the
 transcript of speech that has ended has joined the turn or turned out empty,
-so the turn is routed with it. An implementation MAY bound this extra wait,
-so that a transcription that never ends does not hold the turn indefinitely.
+so the turn is routed with it. <!-- /rfc --><!-- rfc: {"id": "RK-12.3.12-014", "kind": "behavior", "applies": "§12.3.12 Waiting on an incomplete turn, the voice feature: an implementation may bound the extra wait for a transcript that never ends. Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->An implementation MAY bound this extra wait,
+so that a transcription that never ends does not hold the turn indefinitely.<!-- /rfc --><!-- rfc: {"id": "RK-12.3.12-015", "kind": "behavior", "applies": "§12.3.12 Waiting on an incomplete turn, the voice feature: once the wait ends in silence, the accumulated turn is routed as complete, its completion event carrying confidence 0.0, so a pausing user is answered. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Once the wait ends in silence, the
 accumulated turn MUST be routed as complete, and its completion event carries
 `confidence = 0.0`. A user who pauses on a sentence the detector judged
 unfinished is answered, never ignored.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.3.12-006", "kind": "behavior", "applies": "§12.3.12 Turn Detector; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.3.12-016", "kind": "behavior", "applies": "§12.3.12 Speech that resumes before the turn is routed, the voice feature: a turn judged complete is not routed while speech that started after the evaluated segment is in progress; it is held as an incomplete turn, joined by the new speech and evaluated again, or routed once the wait ends in silence. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Speech that resumes before the turn is routed:** a turn the detector judges
 complete MUST NOT be routed while speech that started after the evaluated
 segment is in progress. The channel holds it as it would an incomplete turn:
 the new speech joins it and the accumulated turn is evaluated again, or routed
 once the wait ends in silence. A user who resumes a sentence after a short
 pause is answered once, on the whole sentence.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.12-017", "kind": "behavior", "applies": "§12.3.12 Speech that resumes after the turn is routed, the voice feature, with or without a turn detector: from a turn's routing until the first audio of its response reaches the transport the response is unheard; speech that starts then, while nothing else is audible on the session, holds that response (none of its audio is sent while the speech lasts) and is processed as a user turn, not as a barge-in; speech over audible audio keeps its echo guard. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Speech that resumes after the turn is routed, before its response is
 heard:** this applies with or without a TurnDetector. From the routing of a
 turn until the first audio of its response reaches the transport, the response
@@ -12994,17 +12996,19 @@ is *unheard*. Speech that starts while a session's response is unheard, and
 while no other audio is audible on the session, MUST hold that response: no
 audio of it is sent while the speech lasts, and the speech is processed as a
 user turn, not evaluated as a barge-in (nothing plays, so there is no echo to
-guard against). Speech over audible audio keeps its usual echo guard. Each
+guard against). Speech over audible audio keeps its usual echo guard. <!-- /rfc --><!-- rfc: {"id": "RK-12.3.12-018", "kind": "behavior", "applies": "§12.3.12 Speech that resumes after the turn is routed, the voice feature: each speech segment is measured from its own onset; speech of at least min_speech_ms whose transcript is routed cancels the unheard turn with reason superseded before the new transcript is routed, the committed user message staying stored and the new transcript routed on its own, so the model reads both messages in turn. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Each
 speech segment is measured from its own onset. When the speech ends:
 
 - if it lasted at least `min_speech_ms` and yields a transcript that is routed,
   the unheard turn MUST be cancelled with reason `superseded` before the new
   transcript is routed. The committed user message stays stored; the new
-  transcript is routed on its own, and the model sees both messages in turn;
+  transcript is routed on its own, and the model sees both messages in turn;<!-- /rfc --><!-- rfc: {"id": "RK-12.3.12-019", "kind": "behavior", "applies": "§12.3.12 Speech that resumes after the turn is routed, the voice feature: speech that is shorter, yields no transcript, is blocked by an ON_TRANSCRIPTION hook or is discarded as echo releases the held response, which plays as it would have, unless new speech has started meanwhile, which holds it in turn. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - otherwise (shorter, no transcript, blocked by an `ON_TRANSCRIPTION` hook,
   or discarded as echo) the held response is released and plays as it would
   have, unless new speech has started meanwhile, which holds it in turn.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.12-020", "kind": "behavior", "applies": "§12.3.12 A response cancelled as superseded, the voice feature and any intelligence channel: the voice channel marks every MESSAGE response event of the turn metadata.cancelled true with cancellation_reason superseded, and an intelligence channel, with or without voice, never replays such an event as history (the response's consumption, Planned in §8.5, informative). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A response cancelled as `superseded` was never heard, so it is not part of the
 conversation (its consumption on the voice channel, Planned in Section 8.5, is
 `unconsumed`). Its text may already be stored as finished (generation often ends
@@ -13013,18 +13017,22 @@ turn `metadata.cancelled = true` and `metadata.cancellation_reason =
 "superseded"`, and an intelligence channel MUST NOT replay such an event as
 history. A user who
 resumes a sentence after the turn was sent is answered once, not twice.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.12-021", "kind": "behavior", "applies": "§12.3.12, the voice feature, with no turn detector configured: the pipeline falls back to VAD-only behaviour, each utterance's transcript routed at its speech end. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 When no TurnDetector is configured, the pipeline falls back to VAD-only behavior
 (current default).
+<!-- /rfc -->
 
-The turn detector MUST NOT add more than 200ms latency in the fast path. For
+<!-- rfc: {"id": "RK-12.3.12-022", "kind": "behavior", "applies": "§12.3.12, the voice feature: a turn detector adds at most 200 ms of latency on its fast path. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+The turn detector MUST NOT add more than 200ms latency in the fast path. <!-- /rfc --><!-- rfc: {"id": "RK-12.3.12-023", "kind": "non_testable", "applies": "§12.3.12, the voice feature: an LLM-based turn detector should use a small, fast model or cache common patterns, the detector author's choice. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->For
 LLM-based detection, implementations SHOULD use a small, fast model or cache
 common patterns.
 <!-- /rfc -->
 
 #### 12.3.13 Interruption Strategy
 
-<!-- rfc: {"id": "RK-12.3.13-001", "kind": "behavior", "applies": "§12.3.13 Interruption Strategy; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.3.13-001", "kind": "structural", "applies": "§12.3.13 InterruptionConfig, the voice feature: its fields and defaults, CONFIRMED, min_speech_ms 300, allow_during_first_ms 0, no backchannel detector, transcript_wait_ms 1000, echo_guard_ms 6000, flush_partial_tts and keep_partial_transcript true (why barge-in needs a strategy, informative, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 When the user speaks while the bot is responding (barge-in), the framework needs
 a configurable strategy to handle the interruption. Not all speech during bot
 playback is a genuine interruption — backchannels ("mmhmm", "ok", "yes") are
@@ -13043,20 +13051,20 @@ InterruptionConfig
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.3.13-002", "kind": "behavior", "applies": "§12.3.13 Interruption Strategy; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.3.13-009", "kind": "behavior", "applies": "§12.3.13 InterruptionStrategy, the voice feature, the IMMEDIATE row: TTS is cancelled as soon as VAD detects speech. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **InterruptionStrategy** enumeration:
 
 | Value | Description |
 |---|---|
 | IMMEDIATE | Cancel TTS as soon as VAD detects speech (v1 behavior). Fast but aggressive. |
-| CONFIRMED | Wait for `min_speech_ms` of sustained speech before cancelling. Tolerates brief sounds. Default. |
-| SEMANTIC | Use backchannel detector to decide — only interrupt on non-backchannel speech. Most natural. |
-| DISABLED | Never interrupt — user speech is queued until bot finishes. For non-interactive playback. |
+| <!-- /rfc --><!-- rfc: {"id": "RK-12.3.13-010", "kind": "behavior", "applies": "§12.3.13 InterruptionStrategy, the voice feature, the CONFIRMED row: TTS is cancelled only after min_speech_ms of sustained speech, brief sounds being tolerated (the default, RK-12.3.13-001). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->CONFIRMED | Wait for `min_speech_ms` of sustained speech before cancelling. Tolerates brief sounds. Default. |
+| <!-- /rfc --><!-- rfc: {"id": "RK-12.3.13-011", "kind": "behavior", "applies": "§12.3.13 InterruptionStrategy, the voice feature, the SEMANTIC row: the backchannel detector decides, and only speech that is no backchannel interrupts. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->SEMANTIC | Use backchannel detector to decide — only interrupt on non-backchannel speech. Most natural. |
+| <!-- /rfc --><!-- rfc: {"id": "RK-12.3.13-012", "kind": "behavior", "applies": "§12.3.13 InterruptionStrategy, the voice feature, the DISABLED row: nothing interrupts; the user's speech is queued until the bot finishes. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->DISABLED | Never interrupt — user speech is queued until bot finishes. For non-interactive playback. |
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.3.13-003", "kind": "behavior", "applies": "§12.3.13 Interruption Strategy; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **BackchannelDetector interface:**
 
+<!-- rfc: {"id": "RK-12.3.13-013", "kind": "structural", "applies": "§12.3.13 BackchannelDetector, the voice feature: name, classify(context) returning a BackchannelDecision, a reset() the session lifecycle does not call, and close(). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 BackchannelDetector (interface)
 ├── name: string                             # Detector name
@@ -13067,7 +13075,9 @@ BackchannelDetector (interface)
 └── close() → void
         # Release resources
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.13-014", "kind": "structural", "applies": "§12.3.13 BackchannelContext, the voice feature: the speech's audio and partial transcript when available, its duration, the bot's progress through its response, whether the transcript is final (true by default), metadata. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 BackchannelContext
 ├── audio_bytes: bytes | null                # Short audio segment (if available)
@@ -13077,7 +13087,9 @@ BackchannelContext
 ├── is_final: bool (default true)            # False: a partial transcript of speech under way
 └── metadata: map<string, any>               # Additional context
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.13-015", "kind": "structural", "applies": "§12.3.13 BackchannelDecision, the voice feature: is_backchannel, a confidence, a label, and pending (false by default). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 BackchannelDecision
 ├── is_backchannel: bool                     # True = acknowledgment, False = real interruption
@@ -13087,7 +13099,7 @@ BackchannelDecision
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.3.13-004", "kind": "behavior", "applies": "§12.3.13 Interruption Strategy; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.3.13-016", "kind": "non_testable", "applies": "§12.3.13 Timing constraint, the voice feature: backchannel detectors should be designed to work on audio features alone, a transcript being a bonus signal, the detector author's choice (the transcript's frequent absence under SEMANTIC, informative, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 **Timing constraint:** In the SEMANTIC strategy, the `BackchannelContext.transcript`
 field may be null or incomplete if STT has not yet produced a result for the
 speech segment. In practice, the classifier will often operate on `audio_bytes`
@@ -13095,95 +13107,103 @@ and `speech_duration_ms` alone, falling back to transcript-based classification
 only when streaming STT provides partial results fast enough. Implementations
 SHOULD design backchannel detectors to work with audio features alone and treat
 transcript availability as a bonus signal.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.13-017", "kind": "behavior", "applies": "§12.3.13 Timing constraint, the voice feature, SEMANTIC: the detector is never consulted at speech onset with neither a transcript nor any speech duration, on which no detector can tell an acknowledgement from an interruption. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 An implementation MUST NOT consult the detector at speech onset with neither a
 transcript nor any speech duration: no detector can tell an acknowledgement
 from an interruption on an empty utterance, and a transcript-based one would
-turn SEMANTIC into IMMEDIATE. It waits instead, and the speech is held (not
-processed as a user turn) meanwhile:
+turn SEMANTIC into IMMEDIATE. <!-- /rfc --><!-- rfc: {"id": "RK-12.3.13-056", "kind": "behavior", "applies": "§12.3.13 Timing constraint, the voice feature, SEMANTIC: instead of consulting the detector at an empty onset, the implementation waits, the speech held meanwhile and not processed as a user turn. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->It waits instead, and the speech is held (not
+processed as a user turn) meanwhile:<!-- /rfc --><!-- rfc: {"id": "RK-12.3.13-018", "kind": "behavior", "applies": "§12.3.13 Timing constraint, the voice feature, SEMANTIC with a streaming STT transcribing the speech: the wait lasts until the first partial transcript, for at most max(min_speech_ms, transcript_wait_ms) of sustained speech. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 - When a streaming STT is transcribing the speech, it waits for the first
   partial transcript, for at most `max(min_speech_ms, transcript_wait_ms)` of
   sustained speech. A streaming STT typically needs longer than `min_speech_ms`
-  for its first words, and judging before them classifies an empty utterance.
+  for its first words, and judging before them classifies an empty utterance.<!-- /rfc --><!-- rfc: {"id": "RK-12.3.13-019", "kind": "behavior", "applies": "§12.3.13 Timing constraint, the voice feature, SEMANTIC without a streaming STT: the wait lasts min_speech_ms of sustained speech. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - Otherwise it waits for `min_speech_ms` of sustained speech.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.13-020", "kind": "behavior", "applies": "§12.3.13 Timing constraint, the voice feature, SEMANTIC: once the wait ends without words, the classification relies on the speech duration (and audio) alone. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Once the wait ends without words, the classification relies on
-`speech_duration_ms` (and `audio_bytes`) alone. A detector MAY instead judge an
+`speech_duration_ms` (and `audio_bytes`) alone. <!-- /rfc --><!-- rfc: {"id": "RK-12.3.13-021", "kind": "behavior", "applies": "§12.3.13 Timing constraint, the voice feature: a backchannel detector may judge an utterance without words a backchannel, so that only words interrupt. Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->A detector MAY instead judge an
 utterance without words a backchannel, so that only words interrupt: sound the
 STT made nothing of (echo an AEC left, a cough, room noise) then never cuts the
-bot, and a wordless interruption does not either. It is a configuration of the
-detector, not its default. When a streaming STT is
+bot, and a wordless interruption does not either. <!-- /rfc --><!-- rfc: {"id": "RK-12.3.13-022", "kind": "behavior", "applies": "§12.3.13 Timing constraint, the voice feature, where a backchannel detector offers it: judging an utterance without words a backchannel is a configuration of the detector, never its default. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->It is a configuration of the
+detector, not its default. <!-- /rfc --><!-- rfc: {"id": "RK-12.3.13-023", "kind": "behavior", "applies": "§12.3.13 Timing constraint, the voice feature, SEMANTIC with a streaming STT: the held speech should be transcribed during playback and its partials classified; a backchannel then fires ON_BACKCHANNEL once and the speech is discarded, a genuine interruption cancels TTS and the speech becomes the user's turn. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->When a streaming STT is
 available, the held speech SHOULD be transcribed during playback so its
 partials can be classified; a backchannel then fires ON_BACKCHANNEL once and
 the speech is discarded, a genuine interruption cancels TTS and the speech is
 processed as the user's turn.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.13-024", "kind": "behavior", "applies": "§12.3.13 Timing constraint, the voice feature, SEMANTIC: held speech that ends before its first word and before the wait ends should have its streaming STT finalized and its final transcript classified, not be discarded unheard. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 The held speech may end before its first word and before the wait ends: a
 streaming STT often releases a short word ("okay", "stop") only when the
 speech is over. The streaming STT SHOULD then be finalized and its final
-transcript classified, rather than the speech discarded unheard. A
+transcript classified, rather than the speech discarded unheard. <!-- /rfc --><!-- rfc: {"id": "RK-12.3.13-025", "kind": "behavior", "applies": "§12.3.13 Timing constraint, the voice feature, SEMANTIC, held speech that ended before its first word: a backchannel or no words is discarded (a backchannel firing ON_BACKCHANNEL once) and TTS continues; anything else cancels TTS if it still plays, and the speech becomes the user's turn. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
 backchannel, or no words at all, is discarded (a backchannel fires
 ON_BACKCHANNEL once) and TTS continues; anything else cancels TTS if it is
 still playing, and the speech is processed as the user's turn.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.3.13-005", "kind": "behavior", "applies": "§12.3.13 Interruption Strategy; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.3.13-026", "kind": "behavior", "applies": "§12.3.13 Echo guard, the voice feature, whatever the strategy: while the session has played less than echo_guard_ms of response audio in all, speech whose words are only words of the response being played (the text handed to the TTS so far), consecutive and in their order, is that response's echo (why an echo canceller lets a response's opening words back, informative, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Echo guard.** An echo canceller learns the room from the responses it hears:
 at a session's start it has heard none, and a response's opening words come
 back through the microphone, where an STT transcribes them as if someone had
 spoken. While the session has played less than `echo_guard_ms` of response
 audio in all, whatever the strategy, speech whose words are only words of the
 response being played (the text handed to the TTS so far), consecutive and in
-their order, is that response's echo. Words are compared without case,
-punctuation or accents. In a partial transcript the last word heard may be the
+their order, is that response's echo. <!-- /rfc --><!-- rfc: {"id": "RK-12.3.13-027", "kind": "behavior", "applies": "§12.3.13 Echo guard, the voice feature: words are compared without case, punctuation or accents. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Words are compared without case,
+punctuation or accents. <!-- /rfc --><!-- rfc: {"id": "RK-12.3.13-028", "kind": "behavior", "applies": "§12.3.13 Echo guard, the voice feature: in a partial transcript the last word heard may be the start of the response's word, but only after a whole word. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->In a partial transcript the last word heard may be the
 start of the response's, as a partial catches a word being said, but only after
-a whole word: a lone "No" is no echo of "not", nor "Stop" of "stopped". A final
-transcript is compared in whole words. An echo does not interrupt, is not
+a whole word: a lone "No" is no echo of "not", nor "Stop" of "stopped". <!-- /rfc --><!-- rfc: {"id": "RK-12.3.13-029", "kind": "behavior", "applies": "§12.3.13 Echo guard, the voice feature: a final transcript is compared in whole words. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A final
+transcript is compared in whole words. <!-- /rfc --><!-- rfc: {"id": "RK-12.3.13-030", "kind": "behavior", "applies": "§12.3.13 Echo guard, the voice feature: an echo does not interrupt, is not queued under DISABLED and is no turn: its partial transcripts are not published (ON_PARTIAL_TRANSCRIPTION), and its final is discarded, also when it arrives once the response is over, as long as it adds no word the response did not say there. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An echo does not interrupt, is not
 queued (DISABLED), and is no turn: its partial transcripts are not published
 (`ON_PARTIAL_TRANSCRIPTION`), and its final transcript is discarded, including
 when it arrives once the response is over, as long as it adds no word the
-response did not say there. The verdict on an utterance holds while its
+response did not say there. <!-- /rfc --><!-- rfc: {"id": "RK-12.3.13-031", "kind": "behavior", "applies": "§12.3.13 Echo guard, the voice feature: the verdict on an utterance holds while its response plays and up to 10 seconds after the session's playback ends; it ends with its utterance (a final, the end of the STT stream) and with any speech that starts once nothing plays. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The verdict on an utterance holds while its
 response plays and up to 10 seconds after the session's playback ends; it ends
 with its utterance (a final, the end of the STT stream) and with any speech
-that starts once nothing plays, which is nobody's echo. While it holds, the
+that starts once nothing plays, which is nobody's echo. <!-- /rfc --><!-- rfc: {"id": "RK-12.3.13-032", "kind": "behavior", "applies": "§12.3.13 Echo guard, the voice feature: while the verdict holds, the utterance's words decide no barge-in, neither on the response that cut the echoed one short nor on the next. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->While it holds, the
 utterance's words decide nothing else: no barge-in on the response that cut the
-echoed one short, or on the next, is decided on them. When it lapses with its
-utterance still open (an STT that never closed it), the words go with it. A
+echoed one short, or on the next, is decided on them. <!-- /rfc --><!-- rfc: {"id": "RK-12.3.13-033", "kind": "behavior", "applies": "§12.3.13 Echo guard, the voice feature: when the verdict lapses with its utterance still open (an STT that never closed it), the utterance's words go with it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->When it lapses with its
+utterance still open (an STT that never closed it), the words go with it. <!-- /rfc --><!-- rfc: {"id": "RK-12.3.13-034", "kind": "behavior", "applies": "§12.3.13 Echo guard, the voice feature: a word that is not the response's makes the speech an ordinary utterance; a final that alone says it during playback is judged then, as a whole utterance past any minimum duration, and when the strategy interrupts, the playback is cut and the final is the turn. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
 word that is not the response's makes the speech an ordinary utterance, judged
 as any other: when only the final says it, during the playback, the final is
 judged then, as a whole utterance past any minimum duration, and when the
-strategy interrupts, the playback is cut and the final is the turn. While the
+strategy interrupts, the playback is cut and the final is the turn. <!-- /rfc --><!-- rfc: {"id": "RK-12.3.13-035", "kind": "behavior", "applies": "§12.3.13 Echo guard, the voice feature: while the guard is open, loud audio with no words yet waits for the STT's first words, up to transcript_wait_ms, before it may interrupt on its duration. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->While the
 guard is open, a stretch of loud audio with no words yet waits for the STT's
 first words, up to `transcript_wait_ms`, before it may interrupt on its
-duration: only words tell the echo from the person. Audio played from a file
+duration: only words tell the echo from the person. <!-- /rfc --><!-- rfc: {"id": "RK-12.3.13-036", "kind": "behavior", "applies": "§12.3.13 Echo guard, the voice feature: audio played from a file (VoiceChannel.play()) counts toward the session's played audio as a response's does. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Audio played from a file
 (`VoiceChannel.play()`) counts toward the session's played audio as a
-response's does. Past `echo_guard_ms`, the response's own words interrupt as
+response's does. <!-- /rfc --><!-- rfc: {"id": "RK-12.3.13-037", "kind": "behavior", "applies": "§12.3.13 Echo guard, the voice feature: past echo_guard_ms of played audio, the response's own words interrupt as any words do. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Past `echo_guard_ms`, the response's own words interrupt as
 any words do: someone answering "the sword" to "the sword or the shield?" is
-not an echo. `echo_guard_ms = 0` turns the guard off. With an STT that tells
+not an echo. <!-- /rfc --><!-- rfc: {"id": "RK-12.3.13-038", "kind": "behavior", "applies": "§12.3.13 Echo guard, the voice feature: echo_guard_ms 0 turns the guard off. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`echo_guard_ms = 0` turns the guard off. <!-- /rfc --><!-- rfc: {"id": "RK-12.3.13-039", "kind": "behavior", "applies": "§12.3.13 Echo guard, the voice feature, with an STT that tells voices apart (§12.2.3), whatever echo_guard_ms: a voice heard speaking while nothing played is a person's; a final from a voice never heard so, said over a response, whose words are that response's in order (one misheard at most, three at least heard right), is the response come back past the canceller and is discarded, no turn. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->With an STT that tells
 voices apart (Section 12.2.3), whatever `echo_guard_ms`, a voice heard speaking
 while nothing played is a person's; a final from a voice never heard so, said
 over a response, whose words are that response's in their order, one misheard
 at most and three at least heard right, is that response come back past the
-canceller and taken for another speaker: it is discarded, no turn. The barge-in
+canceller and taken for another speaker: it is discarded, no turn. <!-- /rfc --><!-- rfc: {"id": "RK-12.3.13-055", "kind": "behavior", "applies": "§12.3.13 Echo guard, the voice feature, with an STT that tells voices apart: the barge-in the first words of a voice later discarded as echo decided stands, the voice being known only with the final (the accepted cost, informative). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The barge-in
 its first words decided stands: the voice is only known with the final. The
 rule has a cost, accepted: a person not yet heard while nothing played who
 answers over a response with three or more of its words in their order ("the
 kitchen lamp" to "the kitchen lamp or the living room lamp?") cuts the
 response and is not heard, so the agent stops and says nothing; what they say
-next while nothing plays is heard. A voice is known within one STT stream:
+next while nothing plays is heard. <!-- /rfc --><!-- rfc: {"id": "RK-12.3.13-040", "kind": "behavior", "applies": "§12.3.13 Echo guard, the voice feature, with an STT that tells voices apart: a voice is known within one STT stream; when the provider closes a kept stream, the voices heard alone are forgotten. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A voice is known within one STT stream:
 when the provider closes a kept stream, the voices heard alone are forgotten,
 as the next stream numbers its voices afresh.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.13-041", "kind": "behavior", "applies": "§12.3.13 Echo guard, the voice feature, continuous-STT mode (the STT transcribes all audio and no local VAD segments it): every evaluation of an ongoing stretch of speech during playback, a partial, an energy or a transport barge-in, classifies the latest words of that stretch. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 In continuous-STT mode, where the STT transcribes all audio and no local VAD
 segments it, every evaluation of an ongoing stretch of speech during playback,
 whichever signal triggered it (a partial transcript, or an energy or transport
-barge-in), classifies the latest words of that stretch. A stretch classified
+barge-in), classifies the latest words of that stretch. <!-- /rfc --><!-- rfc: {"id": "RK-12.3.13-042", "kind": "behavior", "applies": "§12.3.13 Echo guard, the voice feature, continuous-STT mode: a stretch classified as a backchannel fires ON_BACKCHANNEL once and is not cut on duration alone afterwards; later words that are no backchannel still interrupt. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A stretch classified
 as a backchannel fires ON_BACKCHANNEL once and is not cut on duration alone
 afterwards; later words that are not a backchannel still interrupt.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.3.13-006", "kind": "behavior", "applies": "§12.3.13 Interruption Strategy; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.3.13-043", "kind": "behavior", "applies": "§12.3.13 Words still being said, the voice feature, SEMANTIC: the implementation tells the detector whether the transcript is a partial (BackchannelContext.is_final), and a detector may answer a partial pending while its words may still become a backchannel (why partials split words, informative, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Words still being said.** A streaming STT writes its partial transcripts
 word by word, or in pieces of words: "Ou" before "Ouais", "Je" before
 "Je vois", "D" before "D'accord". Judged alone, the first
@@ -13192,10 +13212,10 @@ acknowledgement it should have talked through. The implementation therefore
 tells the detector whether the transcript is a partial
 (`BackchannelContext.is_final`), and a detector MAY answer a partial `pending`
 when its words may still become a backchannel: acknowledgements, then the
-first words of one, the last of them perhaps only begun. A pending verdict
+first words of one, the last of them perhaps only begun. <!-- /rfc --><!-- rfc: {"id": "RK-12.3.13-044", "kind": "behavior", "applies": "§12.3.13 Words still being said, the voice feature, SEMANTIC: a pending verdict neither interrupts nor fires ON_BACKCHANNEL; the speech is judged again on its next words and is not cut on duration alone meanwhile. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A pending verdict
 neither interrupts nor fires ON_BACKCHANNEL: the speech is judged again on its
-next words, and is not cut on duration alone meanwhile. A final transcript is
-never pending. When the last partial of speech said during playback was left
+next words, and is not cut on duration alone meanwhile. <!-- /rfc --><!-- rfc: {"id": "RK-12.3.13-045", "kind": "behavior", "applies": "§12.3.13 Words still being said, the voice feature, SEMANTIC: a final transcript is never pending. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A final transcript is
+never pending. <!-- /rfc --><!-- rfc: {"id": "RK-12.3.13-057", "kind": "behavior", "applies": "§12.3.13 Words still being said, the voice feature, SEMANTIC: when the last partial of speech said during playback was left pending, its final is classified as a whole utterance past any minimum duration, a backchannel discarded and anything else cancelling TTS and becoming the user's turn (the accepted cost, informative). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->When the last partial of speech said during playback was left
 pending and its final arrives, the final is classified as a whole utterance,
 past any minimum duration: a backchannel is discarded, anything else cancels
 TTS and is processed as the user's turn ("No" might have been "noted"; its
@@ -13205,7 +13225,7 @@ later; one whose first word opens none
 ("non", "stop", "attends", "wait") cuts at once.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.3.13-007", "kind": "behavior", "applies": "§12.3.13 Interruption Strategy; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.3.13-007", "kind": "behavior", "applies": "§12.3.13 Interruption flow, the voice feature: a backend's on_barge_in during playback goes through the strategy: IMMEDIATE cancels TTS at once; CONFIRMED cancels after min_speech_ms of continued speech and ignores shorter speech; SEMANTIC runs the backchannel detector (pending waits for the next words, a backchannel resumes TTS and fires ON_BACKCHANNEL, anything else cancels TTS and fires ON_BARGE_IN); DISABLED queues the speech until TTS completes. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Interruption flow:**
 
 ```
@@ -13234,64 +13254,80 @@ Check InterruptionStrategy:
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.3.13-008", "kind": "behavior", "applies": "§12.3.13 Interruption Strategy; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.3.13-046", "kind": "behavior", "applies": "§12.3.13 When TTS is cancelled, the voice feature: with flush_partial_tts true, all unplayed audio in the TTS buffer is discarded. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **When TTS is cancelled:**
 
-1. If `flush_partial_tts = true`: discard all unplayed audio in the TTS buffer.
+1. If `flush_partial_tts = true`: discard all unplayed audio in the TTS buffer.<!-- /rfc --><!-- rfc: {"id": "RK-12.3.13-047", "kind": "behavior", "applies": "§12.3.13 When TTS is cancelled, the voice feature: with keep_partial_transcript true, the bot's partial response is stored in the timeline with metadata.interrupted true and metadata.played_ms, how far playback got. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 2. If `keep_partial_transcript = true`: store the bot's partial response in the
    timeline with `metadata.interrupted = true` and `metadata.played_ms` (how far
-   playback got). `metadata.played_percentage` is added only when the utterance's
-   total duration is known: its synthesis ended before the cut. One still being
+   playback got). <!-- /rfc --><!-- rfc: {"id": "RK-12.3.13-048", "kind": "behavior", "applies": "§12.3.13 When TTS is cancelled, the voice feature: metadata.played_percentage is added only when the utterance's total duration is known, its synthesis having ended before the cut. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`metadata.played_percentage` is added only when the utterance's
+   total duration is known: its synthesis ended before the cut. <!-- /rfc --><!-- rfc: {"id": "RK-12.3.13-049", "kind": "behavior", "applies": "§12.3.13 When TTS is cancelled, the voice feature: an utterance still being synthesized, a streamed response whose sentences are still arriving included, carries played_ms alone. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->One still being
    synthesized, a streamed response (Section 12.2, step 12s) whose sentences are
-   still arriving included, carries `played_ms` alone. For a streamed response,
-   the stored text is the sentences already handed to TTS at the moment of the interruption.
+   still arriving included, carries `played_ms` alone. <!-- /rfc --><!-- rfc: {"id": "RK-12.3.13-050", "kind": "behavior", "applies": "§12.3.13 When TTS is cancelled, the voice feature: for a streamed response, the stored text is the sentences already handed to TTS at the moment of the interruption. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->For a streamed response,
+   the stored text is the sentences already handed to TTS at the moment of the interruption.<!-- /rfc --><!-- rfc: {"id": "RK-12.3.13-051", "kind": "behavior", "applies": "§12.3.13 When TTS is cancelled, the voice feature: the response is recorded partial on the voice channel with the same played_ms (§8.5), whether or not the partial response is kept. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
    The response is recorded `partial` on the voice channel, with the same
-   `played_ms` (Section 8.5), whether or not the partial response is kept.
+   `played_ms` (Section 8.5), whether or not the partial response is kept.<!-- /rfc --><!-- rfc: {"id": "RK-12.3.13-052", "kind": "behavior", "applies": "§12.3.13 When TTS is cancelled, the voice feature: the partial record is the agent's words, not the listener's: it carries no participant id and names the answer it cut with metadata.answer_channel_id and metadata.answer_responds_to, so the AI channel can mark that answer as cut (§6.4). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
    The record is the agent's words, not the listener's: it carries no
    participant id, and names the answer it cut with
    `metadata.answer_channel_id` (the intelligence channel that produced it) and
    `metadata.answer_responds_to` (the event that answer responds to, Section
-   8.5), so the AI channel can mark that answer as cut (Section 6.4).
+   8.5), so the AI channel can mark that answer as cut (Section 6.4).<!-- /rfc --><!-- rfc: {"id": "RK-12.3.13-053", "kind": "behavior", "applies": "§12.3.13 When TTS is cancelled, the voice feature: if the TTS consumes context, the assistant turn is recorded with interrupted true and the same played_ms (§12.2.2). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 3. If the TTS consumes context: record the assistant turn with
    `interrupted = true` and the same `played_ms` (Section 12.2.2), so the
-   provider knows where the user stopped hearing it.
+   provider knows where the user stopped hearing it.<!-- /rfc --><!-- rfc: {"id": "RK-12.3.13-054", "kind": "behavior", "applies": "§12.3.13 When TTS is cancelled, the voice feature: the user's speech is then processed normally through the inbound pipeline. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 4. Process the user's speech normally through the inbound pipeline.
 <!-- /rfc -->
 
 #### 12.3.14 Pipeline Execution Flow
 
-<!-- rfc: {"id": "RK-12.3.14-001", "kind": "behavior", "applies": "§12.3.14 Pipeline Execution Flow; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.3.14-005", "kind": "behavior", "applies": "§12.3.14 Session start, the voice feature: once per voice session, when it becomes ACTIVE, every configured frame stage receives reset(stream) with the session id as the stream key. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Session start (once per VoiceSession):**
 
 ```
 1. VoiceSession transitions to ACTIVE
 2. Call reset(stream) on every configured frame stage (Section 12.3.1), the
    session id being the stream key
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.3.14-006", "kind": "behavior", "applies": "§12.3.14 Session start, the voice feature: the voice channel fires ON_SESSION_STARTED once both bind_session() and the backend's on_session_ready have happened, in either order. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 3. Backend fires on_session_ready callback when audio path is live
    └── VoiceChannel fires ON_SESSION_STARTED hook (dual-signal: requires
        both bind_session() and backend ready, in either order)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.3.14-007", "kind": "behavior", "applies": "§12.3.14 Session start, the voice feature: with a recorder and a recording_config, the recorder starts for the session and ON_RECORDING_STARTED fires. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 4. IF recorder AND recording_config configured:
    ├── handle = recorder.start(session, recording_config)
    └── Fire ON_RECORDING_STARTED hook
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.3.14-002", "kind": "behavior", "applies": "§12.3.14 Pipeline Execution Flow; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.3.14-008", "kind": "behavior", "applies": "§12.3.14 Session end, the voice feature: once per voice session, when it ends, every configured frame stage receives reset(stream) with the session id as the stream key. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Session end (once per VoiceSession):**
 
 ```
 1. VoiceSession transitions to ENDED
 2. Call reset(stream) on every configured frame stage (Section 12.3.1), the
    session id being the stream key
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.3.14-009", "kind": "behavior", "applies": "§12.3.14 Session end, the voice feature: with a recording active, the recorder stops and ON_RECORDING_STOPPED fires with the RecordingResult. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 3. IF recorder configured AND recording active:
    ├── result = recorder.stop(handle)
    └── Fire ON_RECORDING_STOPPED hook with RecordingResult
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.3.14-010", "kind": "behavior", "applies": "§12.3.14 Session end, the voice feature: pipeline stages are closed only when the channel is destroyed, never at a session's end, stages being reused across sessions. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 4. Call close() on pipeline stages only if the channel is being destroyed
    (not on session end — stages are reused across sessions)
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.3.14-003", "kind": "behavior", "applies": "§12.3.14 Pipeline Execution Flow; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.3.14-011", "kind": "behavior", "applies": "§12.3.14 Inbound flow, the voice feature: with a resampler, each frame a transport emits for a stream (a session, or a lane in a conference) is resampled to the internal format, its metadata keeping original_sample_rate. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Inbound flow (per audio frame):**
 
 ```
@@ -13300,18 +13336,42 @@ Check InterruptionStrategy:
 2. IF resampler configured:
    └── frame = resample(frame, internal_format)
        └── frame.metadata.original_sample_rate = original_rate
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.3.14-012", "kind": "behavior", "applies": "§12.3.14 Inbound flow, the voice feature: with a recorder, each inbound frame is recorded (record_inbound) after resampling. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 3. IF recorder configured:
    └── recorder.record_inbound(handle, frame)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.3.14-013", "kind": "behavior", "applies": "§12.3.14 Inbound flow, the voice feature: with a DTMF detector, each frame is handed to it in parallel with the AEC, AGC, denoiser, VAD and diarization steps, and a detected digit fires ON_DTMF. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 4. IF dtmf configured (PARALLEL with steps 5-9):
    ├── dtmf_event = dtmf.process(frame, stream)
    └── IF dtmf_event is not null:
        └── Fire ON_DTMF hook
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.3.14-014", "kind": "behavior", "applies": "§12.3.14 Inbound flow, the voice feature: with an AEC, each frame goes through it unless the backend has NATIVE_AEC. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 5. IF aec configured AND NOT backend.NATIVE_AEC:
    └── frame = aec.process(frame, stream)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.3.14-015", "kind": "behavior", "applies": "§12.3.14 Inbound flow, the voice feature: with an AGC, each frame goes through it unless the backend has NATIVE_AGC. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 6. IF agc configured AND NOT backend.NATIVE_AGC:
    └── frame = agc.process(frame, stream)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.3.14-016", "kind": "behavior", "applies": "§12.3.14 Inbound flow, the voice feature: with a denoiser, each frame goes through it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 7. IF denoiser configured:
    └── frame = denoiser.process(frame, stream)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.3.14-017", "kind": "behavior", "applies": "§12.3.14 Inbound flow, the voice feature: with a VAD, each event fires its hook (ON_SPEECH_START, ON_SPEECH_END and the others); at SPEECH_END the STT transcribes the speech and ON_TRANSCRIPTION may modify it; a turn detector then routes a complete turn (ON_TURN_COMPLETE) or accumulates an incomplete one (ON_TURN_INCOMPLETE), and without one the transcript is routed as a room event. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 8. IF vad configured:
    ├── vad_event = vad.process(frame, stream)
    └── IF vad_event is not null:
@@ -13329,12 +13389,20 @@ Check InterruptionStrategy:
                    └── Accumulate, wait for next speech segment
            └── ELSE (no turn detector):
                └── Create RoomEvent, route to Room (v1 behavior)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.3.14-018", "kind": "behavior", "applies": "§12.3.14 Inbound flow, the voice feature: with a diarization stage, a result that names a speaker (not unattributed, §12.3.9) other than the stream's last one fires ON_SPEAKER_CHANGE. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 9. IF diarization configured:
    ├── result = diarization.process(frame, stream)
    └── IF result names a speaker (not unattributed, Section 12.3.9)
           AND it differs from the stream's last one:
        └── Fire ON_SPEAKER_CHANGE hook
+```
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.3.14-019", "kind": "behavior", "applies": "§12.3.14 Inbound flow, the voice feature: when a stream ends, every configured frame stage receives reset(stream), releasing that speaker's state. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 10. WHEN the stream ends:
    └── FOR EACH configured frame stage: stage.reset(stream)
        (Releases that speaker's state. Skipping it leaks one stream's buffers —
@@ -13342,23 +13410,43 @@ Check InterruptionStrategy:
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.3.14-004", "kind": "behavior", "applies": "§12.3.14 Pipeline Execution Flow; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.3.14-020", "kind": "behavior", "applies": "§12.3.14 Outbound flow, the voice feature: TTS emits variable-size AudioChunks and speech-to-speech AudioFrames; a stage that needs fixed-size frames buffers and re-chunks them itself. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Outbound flow (per audio frame / chunk):**
 
 ```
 1. TTS emits AudioChunk stream (variable-size); speech-to-speech emits AudioFrame
    (Stages that require fixed-size AudioFrames MUST buffer and re-chunk internally)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.3.14-021", "kind": "behavior", "applies": "§12.3.14 Outbound flow, the voice feature: the postprocessors process each outbound frame in their configured order. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 2. FOR EACH postprocessor in order:
    └── frame = postprocessor.process(frame, stream)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.3.14-022", "kind": "behavior", "applies": "§12.3.14 Outbound flow, the voice feature: with a recorder, each outbound frame is recorded (record_outbound) after the postprocessors. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 3. IF recorder configured:
    └── recorder.record_outbound(handle, frame)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.3.14-023", "kind": "behavior", "applies": "§12.3.14 Outbound flow, the voice feature: with an AEC, each outbound frame is fed to it as the reference (feed_reference), unless the transport feeds the reference from its speaker output, when the pipeline skips the step so as not to feed it twice. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 4. IF aec configured AND transport does NOT handle AEC reference feeding:
    └── aec.feed_reference(frame, stream)
    (When the transport feeds reference from its speaker output callback — e.g.,
     local audio hardware — the pipeline MUST skip this step to avoid double-feeding.
     See Section 12.3.4 for reference feeding strategies.)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.3.14-024", "kind": "behavior", "applies": "§12.3.14 Outbound flow, the voice feature: with a resampler, each outbound frame is resampled to the transport's format before the transport sends it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 5. IF resampler configured:
    └── frame = resample(frame, transport_format)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-12.3.14-025", "kind": "behavior", "applies": "§12.3.14 Outbound flow, the voice feature: the transport sends the processed frame; a local hardware transport's speaker callback feeds aec.feed_reference() with that stream's key, aligned with actual playback. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 6. Transport sends processed frame to client
    (For local hardware transports, the speaker output callback feeds
     aec.feed_reference() here with that stream's key, time-aligned with actual
@@ -13368,7 +13456,7 @@ Check InterruptionStrategy:
 
 #### 12.3.15 Pipeline Debug Taps
 
-<!-- rfc: {"id": "RK-12.3.15-001", "kind": "behavior", "applies": "§12.3.15 Pipeline Debug Taps; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.3.15-008", "kind": "structural", "applies": "§12.3.15 PipelineDebugTaps, the voice feature: output_dir required, stages all by default, session_scoped true by default, an optional sample_rate override (what debug taps are for, informative, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Pipeline Debug Taps provide lightweight diagnostic audio capture at every
 stage boundary in the processing pipeline. Unlike the production AudioRecorder
 (Section 12.3.7) — which captures raw audio for compliance and audit — debug
@@ -13378,9 +13466,7 @@ the signal before and after each transformation.
 This is invaluable for debugging audio quality issues: "Is the denoiser
 removing too much signal?", "What does the VAD actually hear?", "Is AEC
 effective?". Without debug taps, these questions require custom instrumentation.
-<!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.3.15-002", "kind": "behavior", "applies": "§12.3.15 Pipeline Debug Taps; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Configuration:**
 
 ```
@@ -13390,12 +13476,16 @@ PipelineDebugTaps
 ├── session_scoped: bool = true             # Prefix files with session ID + timestamp
 └── sample_rate: int | null                 # Override sample rate for output files (null = use internal format)
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.15-009", "kind": "behavior", "applies": "§12.3.15 Configuration, the voice feature: an output_dir with a .. component is a configuration error; the implementation refuses it and never writes the taps elsewhere. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 An `output_dir` with a `..` component is a configuration error: the
 implementation refuses it and never writes the taps elsewhere.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.15-010", "kind": "behavior", "applies": "§12.3.15 Configuration, the voice feature: with stages all, taps are inserted at every stage boundary; with a list, only the named stages are captured. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 When `stages` is `"all"`, taps are inserted at every stage boundary. When a
-list is provided, only the named stages are captured. Valid stage names:
+list is provided, only the named stages are captured. <!-- /rfc --><!-- rfc: {"id": "RK-12.3.15-011", "kind": "behavior", "applies": "§12.3.15 Configuration, the voice feature: the valid stage names and their capture points, transport_raw, raw, post_aec, post_agc, post_denoiser, post_vad_speech, outbound_raw, outbound_final and aec_reference. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Valid stage names:
 
 | Stage name | Capture point | What it reveals |
 |---|---|---|
@@ -13410,7 +13500,7 @@ list is provided, only the named stages are captured. Valid stage names:
 | `aec_reference` | In a transport that cancels echo itself, beside `transport_raw` | The reference its AEC received while that frame was captured |
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.3.15-003", "kind": "behavior", "applies": "§12.3.15 Pipeline Debug Taps; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.3.15-012", "kind": "behavior", "applies": "§12.3.15 Output files, the voice feature: each file is named with a numeric prefix in pipeline order, {session_id}_NN_stage.wav. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Output files:**
 
 Files are named with a numeric prefix reflecting pipeline order, making it
@@ -13428,10 +13518,14 @@ easy to compare stages side by side in any audio editor:
   {session_id}_07_outbound_final.wav
   {session_id}_08_aec_reference.wav
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.15-013", "kind": "behavior", "applies": "§12.3.15 Output files, the voice feature: with session_scoped false, the file names omit the session prefix. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 When `session_scoped` is false, files omit the session prefix (useful for
 quick single-session debugging).
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.15-014", "kind": "behavior", "applies": "§12.3.15 Output files, the voice feature: a transport that cancels echo itself (NATIVE_AEC, transport-level reference feeding) emits transport_raw and aec_reference for every captured frame from its capture path, the reference silent where it received none, both aligned sample for sample with raw (raw then already echo-cancelled and post_aec equal to it, informative). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A transport that cancels echo itself (`NATIVE_AEC`, transport-level reference
 feeding, Section 12.3.4) runs its AEC before the pipeline: `raw` is then already
 echo-cancelled and `post_aec` equals it. Such a transport emits `transport_raw`
@@ -13439,16 +13533,18 @@ and `aec_reference` for every captured frame, from the capture path: the frame
 as captured, and the reference its AEC received meanwhile (as played, at the
 captured frame's rate), silence where it received none, so the frame's duration
 is kept. Both are then aligned sample for sample with `raw`, which makes the
-transport's echo cancellation measurable, and replayable offline. Writing them
+transport's echo cancellation measurable, and replayable offline. <!-- /rfc --><!-- rfc: {"id": "RK-12.3.15-015", "kind": "behavior", "applies": "§12.3.15 Output files, the voice feature: those transport taps are never written on the audio I/O threads. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Writing them
 MUST NOT happen on the audio I/O threads: a file write there delays playback
 and capture.
+<!-- /rfc -->
 
-Files are opened lazily on first write and closed on session end. Each file
+<!-- rfc: {"id": "RK-12.3.15-016", "kind": "behavior", "applies": "§12.3.15 Output files, the voice feature: files are opened lazily on their first write and closed at the session's end. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+Files are opened lazily on first write and closed on session end. <!-- /rfc --><!-- rfc: {"id": "RK-12.3.15-017", "kind": "behavior", "applies": "§12.3.15 Output files, the voice feature: each file uses the pipeline's internal AudioFormat (from the AudioPipelineContract), unless sample_rate overrides it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Each file
 uses the pipeline's internal AudioFormat (from the AudioPipelineContract),
 unless `sample_rate` is overridden.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.3.15-004", "kind": "behavior", "applies": "§12.3.15 Pipeline Debug Taps; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.3.15-018", "kind": "structural", "applies": "§12.3.15 Integration with pipeline config, the voice feature: AudioPipelineConfig's debug_taps field, optional and null by default. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Integration with pipeline config:**
 
 ```
@@ -13458,24 +13554,24 @@ AudioPipelineConfig
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.3.15-005", "kind": "behavior", "applies": "§12.3.15 Pipeline Debug Taps; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.3.15-019", "kind": "behavior", "applies": "§12.3.15 Behavior, the voice feature: debug taps never modify audio frames; they are read-only observers, a tap a non-blocking copy of the frame's data. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Behavior:**
 
 - Debug taps MUST NOT modify audio frames — they are read-only observers.
-  Tap processing is a non-blocking copy of the frame data.
-- Tap writes SHOULD be non-blocking. Implementations MAY buffer frames and
-  flush to disk asynchronously to avoid adding latency to the audio pipeline.
+  Tap processing is a non-blocking copy of the frame data.<!-- /rfc --><!-- rfc: {"id": "RK-12.3.15-020", "kind": "behavior", "applies": "§12.3.15 Behavior, the voice feature: tap writes should be non-blocking. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
+- Tap writes SHOULD be non-blocking. <!-- /rfc --><!-- rfc: {"id": "RK-12.3.15-021", "kind": "behavior", "applies": "§12.3.15 Behavior, the voice feature: an implementation may buffer tapped frames and flush them to disk asynchronously. Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->Implementations MAY buffer frames and
+  flush to disk asynchronously to avoid adding latency to the audio pipeline.<!-- /rfc --><!-- rfc: {"id": "RK-12.3.15-022", "kind": "behavior", "applies": "§12.3.15 Behavior, the voice feature: with debug_taps null, the pipeline does no tap-related processing. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - When `debug_taps` is null, the pipeline MUST NOT perform any tap-related
-  processing (zero overhead when disabled).
+  processing (zero overhead when disabled).<!-- /rfc --><!-- rfc: {"id": "RK-12.3.15-023", "kind": "behavior", "applies": "§12.3.15 Behavior, the voice feature: the post_vad_speech tap writes each SPEECH_END segment's audio_bytes, the speech sent to STT, to a WAV file of its own with a segment counter. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - The `post_vad_speech` tap captures the `vad_event.audio_bytes` blob — the
   accumulated speech segment that would be sent to STT. This is written as a
   separate WAV file per speech segment (appending a segment counter:
-  `{session_id}_05_post_vad_speech_001.wav`, etc.).
+  `{session_id}_05_post_vad_speech_001.wav`, etc.).<!-- /rfc --><!-- rfc: {"id": "RK-12.3.15-024", "kind": "behavior", "applies": "§12.3.15 Behavior, the voice feature: implementations should log a warning when debug taps are enabled, their disk cost not meant for production. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 - Implementations SHOULD log a warning at startup when debug taps are enabled,
   as the disk I/O and storage cost is not intended for production.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.3.15-006", "kind": "behavior", "applies": "§12.3.15 Pipeline Debug Taps; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.3.15-006", "kind": "behavior", "applies": "§12.3.15 Session lifecycle, the voice feature: when the session becomes active the output directory is created and writers open lazily on a stage's first frame; each frame of a configured stage is written; each SPEECH_END segment gets a file; when the session ends every writer is flushed and closed, its WAV header holding the data's size. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Session lifecycle:**
 
 ```
@@ -13496,7 +13592,7 @@ AudioPipelineConfig
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.3.15-007", "kind": "behavior", "applies": "§12.3.15 Pipeline Debug Taps; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.3.15-007", "kind": "behavior", "applies": "§12.3.15 Relationship to AudioRecorder, the voice feature: debug taps and a session recorder can be used on one pipeline at once (the comparison table, informative). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Relationship to AudioRecorder:**
 
 Pipeline Debug Taps and AudioRecorder serve different purposes and MAY be
@@ -14420,64 +14516,66 @@ apart, attributed to it.
 
 ### 12.5 Voice Hooks
 
-<!-- rfc: {"id": "RK-12.5-001", "kind": "behavior", "applies": "§12.5 Voice Hooks; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.5-003", "kind": "behavior", "applies": "§12.5 Voice hooks table, the ON_SPEECH_START row, the voice feature: ON_SPEECH_START runs ASYNC, fired by the audio pipeline's VAD (the table's purpose and its Use Case column, informative, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Voice-specific hooks allow integrators to customize the voice pipeline:
 
 | Hook | Type | Use Case | Source |
 |---|---|---|---|
 | ON_SPEECH_START | ASYNC | Show "listening" indicator | Audio Pipeline (VAD) |
-| ON_SPEECH_END | ASYNC | Log speech duration | Audio Pipeline (VAD) |
-| ON_TRANSCRIPTION | SYNC | Fix STT errors, redact content | STT Provider |
-| BEFORE_TTS | SYNC | Redact or rewrite text, hold speech back | Voice Channel |
-| AFTER_TTS | ASYNC | Log synthesis metrics, cache | Voice Channel |
-| ON_BARGE_IN | ASYNC | Track interruptions | VoiceBackend (transport) |
-| ON_TTS_CANCELLED | ASYNC | Log cancellation reason | Voice Channel |
-| ON_PARTIAL_TRANSCRIPTION | ASYNC | Show real-time captions | STT Provider |
-| ON_VAD_SILENCE | ASYNC | Trigger silence timeout | Audio Pipeline (VAD) |
-| ON_VAD_AUDIO_LEVEL | ASYNC | Audio level visualization | Audio Pipeline (VAD) |
-| ON_INPUT_AUDIO_LEVEL | ASYNC | VU meter for mic input | Audio Pipeline |
-| ON_OUTPUT_AUDIO_LEVEL | ASYNC | VU meter for speaker output | VoiceBackend |
-| ON_SPEAKER_CHANGE | ASYNC | Identify speaker switch | Audio Pipeline (Diarization) or STT (Section 12.2.3) |
-| ON_DTMF | ASYNC | IVR navigation, call transfer | Audio Pipeline (DTMF Detector) |
-| ON_TURN_COMPLETE | ASYNC | Log turn-taking metrics | Audio Pipeline (Turn Detector) |
-| ON_TURN_INCOMPLETE | ASYNC | Debug turn detection | Audio Pipeline (Turn Detector) |
-| ON_BACKCHANNEL | ASYNC | Track user engagement | Audio Pipeline (Backchannel Detector) |
-| ON_SESSION_STARTED | ASYNC | Send greeting, start telemetry | VoiceBackend / Inbound pipeline |
-| ON_RECORDING_STARTED | ASYNC | Notify participants of recording | Audio Pipeline (Recorder) / Conference Channel / Room media recorder (Section 12.11) |
-| ON_RECORDING_STOPPED | ASYNC | Store recording reference in timeline | Audio Pipeline (Recorder) / Conference Channel / Room media recorder (Section 12.11) |
-| ON_TOOL_CALL | SYNC | Execute tool and return result | Realtime Provider (ON_REALTIME_TOOL_CALL is superseded, Section 9.2) |
-| ON_TOOL_CALL | ASYNC | Audit tool use, including calls refused, failed, or abandoned by the model (Section 9.3) | Realtime Voice Channel |
-| ON_REALTIME_TEXT_INJECTED | ASYNC | Log text injections | Realtime Voice Channel / Conference Channel (realtime model) |
-| ON_REALTIME_DELEGATION | ASYNC | Measure delegation latency, log hand-offs to the backend | Realtime Provider (Section 12.4.1) |
-| ON_PROTOCOL_TRACE | ASYNC | Log/inspect transport protocol traces (SIP, RTP) | Channel (via emit_trace) |
-| BEFORE_BRIDGE_AUDIO | SYNC | Filter/modify audio before bridging (mute, gain) | AudioBridge (Section 12.7) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-12.5-004", "kind": "behavior", "applies": "§12.5 Voice hooks table, the ON_SPEECH_END row, the voice feature: ON_SPEECH_END runs ASYNC, fired by the audio pipeline's VAD (Use Case column informative). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_SPEECH_END | ASYNC | Log speech duration | Audio Pipeline (VAD) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-12.5-005", "kind": "behavior", "applies": "§12.5 Voice hooks table, the ON_TRANSCRIPTION row, the voice feature: ON_TRANSCRIPTION runs SYNC, fired by the STT provider's result (Use Case column informative). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_TRANSCRIPTION | SYNC | Fix STT errors, redact content | STT Provider |
+| <!-- /rfc --><!-- rfc: {"id": "RK-12.5-006", "kind": "behavior", "applies": "§12.5 Voice hooks table, the BEFORE_TTS row, the voice feature: BEFORE_TTS runs SYNC, fired by the voice channel (Use Case column informative). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->BEFORE_TTS | SYNC | Redact or rewrite text, hold speech back | Voice Channel |
+| <!-- /rfc --><!-- rfc: {"id": "RK-12.5-007", "kind": "behavior", "applies": "§12.5 Voice hooks table, the AFTER_TTS row, the voice feature: AFTER_TTS runs ASYNC, fired by the voice channel (Use Case column informative). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->AFTER_TTS | ASYNC | Log synthesis metrics, cache | Voice Channel |
+| <!-- /rfc --><!-- rfc: {"id": "RK-12.5-008", "kind": "behavior", "applies": "§12.5 Voice hooks table, the ON_BARGE_IN row, the voice feature: ON_BARGE_IN runs ASYNC, fired by the voice backend (transport) (Use Case column informative). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_BARGE_IN | ASYNC | Track interruptions | VoiceBackend (transport) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-12.5-009", "kind": "behavior", "applies": "§12.5 Voice hooks table, the ON_TTS_CANCELLED row, the voice feature: ON_TTS_CANCELLED runs ASYNC, fired by the voice channel (Use Case column informative). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_TTS_CANCELLED | ASYNC | Log cancellation reason | Voice Channel |
+| <!-- /rfc --><!-- rfc: {"id": "RK-12.5-010", "kind": "behavior", "applies": "§12.5 Voice hooks table, the ON_PARTIAL_TRANSCRIPTION row, the voice feature: ON_PARTIAL_TRANSCRIPTION runs ASYNC, fired by the STT provider's partials (Use Case column informative). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_PARTIAL_TRANSCRIPTION | ASYNC | Show real-time captions | STT Provider |
+| <!-- /rfc --><!-- rfc: {"id": "RK-12.5-011", "kind": "behavior", "applies": "§12.5 Voice hooks table, the ON_VAD_SILENCE row, the voice feature: ON_VAD_SILENCE runs ASYNC, fired by the audio pipeline's VAD (Use Case column informative). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_VAD_SILENCE | ASYNC | Trigger silence timeout | Audio Pipeline (VAD) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-12.5-012", "kind": "behavior", "applies": "§12.5 Voice hooks table, the ON_VAD_AUDIO_LEVEL row, the voice feature: ON_VAD_AUDIO_LEVEL runs ASYNC, fired by the audio pipeline's VAD (Use Case column informative). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_VAD_AUDIO_LEVEL | ASYNC | Audio level visualization | Audio Pipeline (VAD) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-12.5-013", "kind": "behavior", "applies": "§12.5 Voice hooks table, the ON_INPUT_AUDIO_LEVEL row, the voice feature: ON_INPUT_AUDIO_LEVEL runs ASYNC, fired by the audio pipeline (Use Case column informative). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_INPUT_AUDIO_LEVEL | ASYNC | VU meter for mic input | Audio Pipeline |
+| <!-- /rfc --><!-- rfc: {"id": "RK-12.5-014", "kind": "behavior", "applies": "§12.5 Voice hooks table, the ON_OUTPUT_AUDIO_LEVEL row, the voice feature: ON_OUTPUT_AUDIO_LEVEL runs ASYNC, fired by the voice backend's output (Use Case column informative). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_OUTPUT_AUDIO_LEVEL | ASYNC | VU meter for speaker output | VoiceBackend |
+| <!-- /rfc --><!-- rfc: {"id": "RK-12.5-015", "kind": "behavior", "applies": "§12.5 Voice hooks table, the ON_SPEAKER_CHANGE row, the voice feature: ON_SPEAKER_CHANGE runs ASYNC, fired by the audio pipeline's diarization stage or the STT (§12.2.3) (Use Case column informative). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_SPEAKER_CHANGE | ASYNC | Identify speaker switch | Audio Pipeline (Diarization) or STT (Section 12.2.3) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-12.5-016", "kind": "behavior", "applies": "§12.5 Voice hooks table, the ON_DTMF row, the voice feature: ON_DTMF runs ASYNC, fired by the audio pipeline's DTMF detector (Use Case column informative). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_DTMF | ASYNC | IVR navigation, call transfer | Audio Pipeline (DTMF Detector) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-12.5-017", "kind": "behavior", "applies": "§12.5 Voice hooks table, the ON_TURN_COMPLETE row, the voice feature: ON_TURN_COMPLETE runs ASYNC, fired by the audio pipeline's turn detector (Use Case column informative). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_TURN_COMPLETE | ASYNC | Log turn-taking metrics | Audio Pipeline (Turn Detector) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-12.5-018", "kind": "behavior", "applies": "§12.5 Voice hooks table, the ON_TURN_INCOMPLETE row, the voice feature: ON_TURN_INCOMPLETE runs ASYNC, fired by the audio pipeline's turn detector (Use Case column informative). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_TURN_INCOMPLETE | ASYNC | Debug turn detection | Audio Pipeline (Turn Detector) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-12.5-019", "kind": "behavior", "applies": "§12.5 Voice hooks table, the ON_BACKCHANNEL row, the voice feature: ON_BACKCHANNEL runs ASYNC, fired by the audio pipeline's backchannel detector (Use Case column informative). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_BACKCHANNEL | ASYNC | Track user engagement | Audio Pipeline (Backchannel Detector) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-12.5-020", "kind": "behavior", "applies": "§12.5 Voice hooks table, the ON_SESSION_STARTED row, the voice feature and the core: ON_SESSION_STARTED runs ASYNC, fired by a voice backend's session or the inbound pipeline (the latter the core's, §10.1) (Use Case column informative). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_SESSION_STARTED | ASYNC | Send greeting, start telemetry | VoiceBackend / Inbound pipeline |
+| <!-- /rfc --><!-- rfc: {"id": "RK-12.5-021", "kind": "behavior", "applies": "§12.5 Voice hooks table, the ON_RECORDING_STARTED row, the voice, conference and recording features: ON_RECORDING_STARTED runs ASYNC, fired by the audio pipeline's recorder, a conference channel or a room media recorder (§12.11) (Use Case column informative). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_RECORDING_STARTED | ASYNC | Notify participants of recording | Audio Pipeline (Recorder) / Conference Channel / Room media recorder (Section 12.11) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-12.5-022", "kind": "behavior", "applies": "§12.5 Voice hooks table, the ON_RECORDING_STOPPED row, the voice, conference and recording features: ON_RECORDING_STOPPED runs ASYNC, fired by the audio pipeline's recorder, a conference channel or a room media recorder (§12.11) (Use Case column informative). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_RECORDING_STOPPED | ASYNC | Store recording reference in timeline | Audio Pipeline (Recorder) / Conference Channel / Room media recorder (Section 12.11) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-12.5-023", "kind": "behavior", "applies": "§12.5 Voice hooks table, the ON_TOOL_CALL SYNC row, the realtime feature: ON_TOOL_CALL runs SYNC, fired by a realtime provider's tool call, which the hook executes and answers (ON_REALTIME_TOOL_CALL superseded, §9.2) (Use Case column informative). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_TOOL_CALL | SYNC | Execute tool and return result | Realtime Provider (ON_REALTIME_TOOL_CALL is superseded, Section 9.2) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-12.5-024", "kind": "behavior", "applies": "§12.5 Voice hooks table, the ON_TOOL_CALL ASYNC row, the realtime feature: ON_TOOL_CALL runs ASYNC, fired by the realtime voice channel, auditing calls including those refused, failed or abandoned by the model (§9.3) (Use Case column informative). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_TOOL_CALL | ASYNC | Audit tool use, including calls refused, failed, or abandoned by the model (Section 9.3) | Realtime Voice Channel |
+| <!-- /rfc --><!-- rfc: {"id": "RK-12.5-025", "kind": "behavior", "applies": "§12.5 Voice hooks table, the ON_REALTIME_TEXT_INJECTED row, the realtime and conference features: ON_REALTIME_TEXT_INJECTED runs ASYNC, fired by the realtime voice channel or a conference channel's realtime model (Use Case column informative). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_REALTIME_TEXT_INJECTED | ASYNC | Log text injections | Realtime Voice Channel / Conference Channel (realtime model) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-12.5-026", "kind": "behavior", "applies": "§12.5 Voice hooks table, the ON_REALTIME_DELEGATION row, the realtime feature: ON_REALTIME_DELEGATION runs ASYNC, fired by the realtime provider (§12.4.1) (Use Case column informative). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_REALTIME_DELEGATION | ASYNC | Measure delegation latency, log hand-offs to the backend | Realtime Provider (Section 12.4.1) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-12.5-027", "kind": "behavior", "applies": "§12.5 Voice hooks table, the ON_PROTOCOL_TRACE row, the protocol_trace feature: ON_PROTOCOL_TRACE runs ASYNC, fired by a channel, through emit_trace (Use Case column informative). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_PROTOCOL_TRACE | ASYNC | Log/inspect transport protocol traces (SIP, RTP) | Channel (via emit_trace) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-12.5-028", "kind": "behavior", "applies": "§12.5 Voice hooks table, the BEFORE_BRIDGE_AUDIO row, the voice feature: BEFORE_BRIDGE_AUDIO runs SYNC, fired by the audio bridge (§12.7) (Use Case column informative). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->BEFORE_BRIDGE_AUDIO | SYNC | Filter/modify audio before bridging (mute, gain) | AudioBridge (Section 12.7) |
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.5-002", "kind": "behavior", "applies": "§12.5 Voice Hooks; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.5-029", "kind": "behavior", "applies": "§12.5 Audio level hooks, the voice feature: ON_INPUT_AUDIO_LEVEL and ON_OUTPUT_AUDIO_LEVEL report the RMS level in dB of all processed audio, independently of VAD. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Audio level hooks (ON_INPUT_AUDIO_LEVEL, ON_OUTPUT_AUDIO_LEVEL):**
 
 These hooks provide real-time audio level (RMS in dB) for building VU meters and
 audio visualizations. Unlike ON_VAD_AUDIO_LEVEL (which requires VAD and includes
 speech classification), these fire independently of VAD for all processed audio.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.5-030", "kind": "behavior", "applies": "§12.5 Audio level hooks, the voice feature: ON_INPUT_AUDIO_LEVEL and ON_OUTPUT_AUDIO_LEVEL should be throttled to at most 10 events per second per session, 100 ms apart by default (why, informative). Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 Implementations SHOULD throttle ON_INPUT_AUDIO_LEVEL and ON_OUTPUT_AUDIO_LEVEL
 to at most 10 events per second per session (default interval: 100ms). Without
 throttling, per-frame firing at typical 20ms frame sizes would produce 50
 events/sec per direction, each requiring a context build and store query.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.5-031", "kind": "structural", "applies": "§12.5 Audio level hooks, the voice feature: their payload is an AudioLevelEvent holding the session, level_db and a timestamp. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The event payload is an `AudioLevelEvent` containing `session`, `level_db`
 (typically -60 to 0 dBFS), and `timestamp`.
 <!-- /rfc -->
 
 ### 12.6 Barge-In and Interruption Handling
 
-<!-- rfc: {"id": "RK-12.6-001", "kind": "behavior", "applies": "§12.6 Barge-In and Interruption Handling; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.6-004", "kind": "behavior", "applies": "§12.6 Default behaviour, the voice feature: a barge-in enters through the backend's on_barge_in callback and the pipeline handles it by InterruptionConfig.strategy, IMMEDIATE cancelling at once, CONFIRMED waiting for min_speech_ms of sustained speech, SEMANTIC classifying, DISABLED queuing the speech until TTS completes (barge-in and the configurable strategies, informative, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Barge-in occurs when a user speaks while TTS is playing. The framework supports
 configurable interruption strategies (Section 12.3.13 — InterruptionConfig)
 ranging from immediate cancellation to semantic backchannel detection.
-<!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.6-002", "kind": "behavior", "applies": "§12.6 Barge-In and Interruption Handling; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Default behavior (CONFIRMED strategy):**
 
 1. The VoiceBackend fires `on_barge_in` callback.
@@ -14485,26 +14583,28 @@ ranging from immediate cancellation to semantic backchannel detection.
    - IMMEDIATE: Cancel TTS immediately.
    - CONFIRMED: Wait for `min_speech_ms` of sustained speech.
    - SEMANTIC: Run BackchannelDetector to classify.
-   - DISABLED: Ignore, queue speech for after TTS completes.
+   - DISABLED: Ignore, queue speech for after TTS completes.<!-- /rfc --><!-- rfc: {"id": "RK-12.6-005", "kind": "behavior", "applies": "§12.6 Default behaviour, the voice feature, a confirmed interruption: the current TTS playback is cancelled, where the backend supports INTERRUPTION. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 3. If interruption is confirmed:
-   a. Cancel current TTS playback (if backend supports INTERRUPTION).
-   b. If `flush_partial_tts = true`: discard unplayed audio buffer.
+   a. Cancel current TTS playback (if backend supports INTERRUPTION).<!-- /rfc --><!-- rfc: {"id": "RK-12.6-006", "kind": "behavior", "applies": "§12.6 Default behaviour, the voice feature, a confirmed interruption: with flush_partial_tts true, the unplayed audio buffer is discarded. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+   b. If `flush_partial_tts = true`: discard unplayed audio buffer.<!-- /rfc --><!-- rfc: {"id": "RK-12.6-007", "kind": "behavior", "applies": "§12.6 Default behaviour, the voice feature, a confirmed interruption: with keep_partial_transcript true, the partial bot response is stored in the timeline with metadata.interrupted true. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
    c. If `keep_partial_transcript = true`: store partial bot response in timeline
-      with `metadata.interrupted = true`.
+      with `metadata.interrupted = true`.<!-- /rfc --><!-- rfc: {"id": "RK-12.6-008", "kind": "behavior", "applies": "§12.6 Default behaviour, the voice feature, a confirmed interruption: if the TTS consumes context, the assistant turn is recorded truncated to played_ms (§12.2.2). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
    d. If the TTS consumes context: record the assistant turn truncated to
-      `played_ms` (Section 12.2.2).
-   e. Fire ON_BARGE_IN hook.
-   f. Process the user's speech through the audio pipeline as the user's turn.
+      `played_ms` (Section 12.2.2).<!-- /rfc --><!-- rfc: {"id": "RK-12.6-009", "kind": "behavior", "applies": "§12.6 Default behaviour, the voice feature, a confirmed interruption: ON_BARGE_IN fires. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+   e. Fire ON_BARGE_IN hook.<!-- /rfc --><!-- rfc: {"id": "RK-12.6-010", "kind": "behavior", "applies": "§12.6 Default behaviour, the voice feature, a confirmed interruption: the user's speech goes through the audio pipeline as the user's turn. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+   f. Process the user's speech through the audio pipeline as the user's turn.<!-- /rfc --><!-- rfc: {"id": "RK-12.6-011", "kind": "behavior", "applies": "§12.6 Default behaviour, the voice feature, speech classified as a backchannel: ON_BACKCHANNEL fires. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 4. If classified as backchannel:
-   a. Fire ON_BACKCHANNEL hook.
+   a. Fire ON_BACKCHANNEL hook.<!-- /rfc --><!-- rfc: {"id": "RK-12.6-012", "kind": "behavior", "applies": "§12.6 Default behaviour, the voice feature, speech classified as a backchannel: TTS continues uninterrupted, and the speech is discarded (§12.3.13). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
    b. TTS continues uninterrupted, and the speech is discarded (Section 12.3.13).
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.6-013", "kind": "behavior", "applies": "§12.6 Default behaviour, the voice feature: implementations should let a minimum played duration before barge-in is allowed be configured (allow_during_first_ms, §12.3.13), so that a response's very start is not interrupted. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 Implementations SHOULD support a configurable minimum playback duration before
 barge-in is allowed (`InterruptionConfig.allow_during_first_ms`, Section
 12.3.13). This prevents interruption at the very start of a response.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.6-003", "kind": "behavior", "applies": "§12.6 Barge-In and Interruption Handling; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.6-014", "kind": "behavior", "applies": "§12.6 VoiceBackend barge-in and VAD, the voice feature: on_barge_in is a transport-level signal, fired at once when the client sends audio while outbound audio plays, and the entry point of the interruption strategy, from a backend with the BARGE_IN capability (two separate detection systems, informative, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Relationship between VoiceBackend barge-in and VAD:**
 
 `VoiceBackend.on_barge_in` and VAD are two separate detection systems:
@@ -14512,24 +14612,27 @@ barge-in is allowed (`InterruptionConfig.allow_during_first_ms`, Section
 - **`on_barge_in`** is a transport-level signal — the backend detects that the
   client is sending audio while outbound audio is playing. It fires immediately
   and is the entry point for the interruption strategy. Not all backends support
-  this (requires `BARGE_IN` capability).
+  this (requires `BARGE_IN` capability).<!-- /rfc --><!-- rfc: {"id": "RK-12.6-015", "kind": "behavior", "applies": "§12.6 VoiceBackend barge-in and VAD, the voice feature: VAD is a pipeline-level signal that detects speech whether or not TTS plays, and it keeps processing inbound frames during playback. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - **VAD** is a pipeline-level signal — it detects speech activity in the audio
   stream regardless of whether TTS is playing. VAD continues to process inbound
-  frames during TTS playback.
+  frames during TTS playback.<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.6-016", "kind": "behavior", "applies": "§12.6 VoiceBackend barge-in and VAD, the voice feature, both active during playback: on_barge_in fires first, the strategy decides whether to act on it, and VAD processes the same audio meanwhile. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 When both are active during TTS playback:
 
 1. `on_barge_in` fires first (transport-level, lowest latency).
 2. The interruption strategy determines whether to act on the barge-in.
-3. Meanwhile, VAD processes the same audio through the pipeline normally.
+3. Meanwhile, VAD processes the same audio through the pipeline normally.<!-- /rfc --><!-- rfc: {"id": "RK-12.6-017", "kind": "behavior", "applies": "§12.6 VoiceBackend barge-in and VAD, the voice feature, both active during playback: a confirmed interruption cancels TTS, and the VAD's speech segment is routed to STT as usual. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 4. If the interruption is confirmed, the voice channel cancels TTS and the VAD's
-   speech segment is routed to STT as usual.
+   speech segment is routed to STT as usual.<!-- /rfc --><!-- rfc: {"id": "RK-12.6-018", "kind": "behavior", "applies": "§12.6 VoiceBackend barge-in and VAD, the voice feature, both active during playback: an interruption rejected as a backchannel or as too short leaves the VAD segment captured, and the pipeline should discard it, or queue it under DISABLED. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 5. If the interruption is rejected (backchannel or too short), the VAD speech
    segment is still captured but the pipeline SHOULD discard it (or queue it
-   if `InterruptionStrategy = DISABLED`). A SEMANTIC segment that ends before
+   if `InterruptionStrategy = DISABLED`). <!-- /rfc --><!-- rfc: {"id": "RK-12.6-019", "kind": "behavior", "applies": "§12.6 VoiceBackend barge-in and VAD, the voice feature, SEMANTIC: a segment that ends before its first word is not rejected as too short; its final transcript is classified first (§12.3.13). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A SEMANTIC segment that ends before
    its first word is not rejected as too short: its final transcript is
    classified first (Section 12.3.13).
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.6-020", "kind": "behavior", "applies": "§12.6 VoiceBackend barge-in and VAD, the voice feature, a backend without BARGE_IN: the pipeline may use VAD's SPEECH_START during playback as the barge-in trigger, at a higher latency. Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->
 When the backend does NOT support `BARGE_IN`, the pipeline MAY use VAD's
 `SPEECH_START` event during TTS playback as a fallback barge-in trigger. In this
 mode, the VAD effectively replaces the transport-level detection, but with higher
