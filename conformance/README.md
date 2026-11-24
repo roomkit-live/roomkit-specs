@@ -150,10 +150,11 @@ provider, and no feature names one: what a provider reads and writes on its
 vendor's wire is proven by that provider's own tests, outside roomkit's
 conformance. `untested.json` names none of them: for each unit it says what
 the core guarantees and which tests prove it, on roomkit's mocks, scripted
-providers and built-in defaults, or that the unit has no core side. Each runner declares the features it
-provides. Before setup, it reports the scenario skipped if any are missing,
-naming the missing features in its test result. With the member absent, the
-scenario runs without a feature prerequisite.
+providers and built-in defaults, or that the unit has no core side. Each
+runner declares the features it provides. Before setup, it reports the
+scenario skipped if any are missing, naming the missing features in its test
+result. With the member absent, the scenario runs without a feature
+prerequisite.
 
 ### Setup
 
