@@ -1789,7 +1789,7 @@
     "RK-12.2.2-028": {
       "class": "step",
       "card": "RMK-2023",
-      "note": "step: voice.end (S4) and voice.open TTS options (S7): a session unbound or ended; voice.read shows release_context called with its id (what the provider then drops is a provider's contract, tested by tests/voice/tts/test_elevenlabs_stitching.py::TestProvider::test_release_forgets_the_ids and tests/voice/tts/test_vui_session.py::TestRelease::test_release_empties_the_cache)."
+      "note": "step: voice.end (S4) and voice.open TTS options (S7): a session unbound or ended; voice.read shows release_context called with its id (what the provider then drops is the provider's own contract, which it proves in its own tests, outside roomkit's conformance)."
     },
     "RK-12.2.3-009": {
       "class": "step",
@@ -1979,7 +1979,7 @@
     "RK-12.3.1-014": {
       "class": "step",
       "card": "RMK-2034",
-      "note": "step: voice.open pipeline contract (S19) and voice stage trace (S3): with a contract, every inbound scripted stage gets the internal format; a frame stage passing a frame in another format on unchanged with one warning is each stage's test (tests/voice/pipeline/test_speex_aec.py::TestSpeexAECProviderProcess::test_mismatched_pcm_format_passes_through); the built-in energy VAD and the sherpa-onnx VAD and diarization read a frame without that check (RMK-2089)."
+      "note": "step: voice.open pipeline contract (S19) and voice stage trace (S3): with a contract, every inbound scripted stage gets the internal format; a frame stage passing a frame in another format on unchanged with one warning is each stage's own test, outside roomkit's conformance; roomkit's built-in energy VAD reads a frame without that check (RMK-2089)."
     },
     "RK-12.3.1-016": {
       "class": "writable",
