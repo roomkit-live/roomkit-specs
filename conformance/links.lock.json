@@ -4043,12 +4043,27 @@
     "RK-12.10.1-004": {
       "conference/a-call-reports-presence-without-changing-room-membership": "89d1167aa0cbaf0ec4501107dabe7c564d3a110bce39de077134917f9feff86f"
     },
+    "RK-12.10.12-027": {
+      "conference/a-delivery-before-the-model-connects-is-unavailable": "35150786b21d586c022484eef3a7acc7156d376345dc18f231aaf7d23eb85731"
+    },
+    "RK-12.10.12-029": {
+      "conference/a-delivery-into-the-conference-model-fires-the-injection-hook": "46eb4ebeb227099a85a22973f7fc7d7f2426b582c25fcfb4b18eb5330a2c6056"
+    },
+    "RK-12.10.12-053": {
+      "conference/a-conference-tool-call-passes-the-pre-execution-gate": "261ade75252b1b7ff2852411719941103492616d232c7c71af852bf0300885e3"
+    },
     "RK-12.10.12-054": {
       "conference/a-conference-model-receives-the-gated-tool-result": "b63c6061217c386add5c958ba510f32b99051a97a422646a63e1f16a0184bf12"
+    },
+    "RK-12.10.12-056": {
+      "conference/a-conference-tool-result-is-bounded-as-a-realtime-one": "be0aae91ff6b99aad1c53e02c344bb9911e11a76734dde8b3ec01126cc05de65"
     },
     "RK-12.10.2-001": {
       "conference/a-camera-toggle-reaches-the-mute-and-unmute-observers": "1817a3fa716ab52cbb5ae1b38649d61716135d3f1780edb1ed9cdd68c24b74c1",
       "conference/a-screen-track-announces-the-start-and-end-of-sharing": "1817a3fa716ab52cbb5ae1b38649d61716135d3f1780edb1ed9cdd68c24b74c1"
+    },
+    "RK-12.10.2-037": {
+      "conference/an-arrival-with-no-address-stays-unknown": "0dad5be985eb01fc0872e6ed2094d5eaf1fc28369beb3a38f7fe0da0a17d523f"
     },
     "RK-12.10.4-030": {
       "kit-close/a-channel-whose-close-fails-holds-no-other-back-and-fails-the-close-last": "724d726b8be24a8d918606e10b1501cfc32378dc29b4f7c728486ecc46b84fba"
@@ -4239,6 +4254,9 @@
     "RK-12.10.4-080": {
       "kit-close/a-close-from-a-channel-s-close-returns-at-once": "c46020e2e295db87e3a589e3fe5d28ae1f96d48b077a4f77e64d8d4077e6c87e"
     },
+    "RK-12.10.4-083": {
+      "conference/a-conference-session-starts-once-at-its-first-arrival": "3c12472ae69776c130c092ae0a46194ecf3c4f3c212aa96224c370437ee7815a"
+    },
     "RK-12.10.4-105": {
       "conference/a-call-reports-presence-without-changing-room-membership": "bbe0e2422341203b13e72306dfdcd7c495348e4bf72b3ea3fe7a8f71e99fb4ab"
     },
@@ -4263,6 +4281,12 @@
     "RK-12.10.4-122": {
       "conference/a-camera-toggle-reaches-the-mute-and-unmute-observers": "7b44d36c1f70eb81899c4fc7d80a2b2a57716d36992f0b44ecd9772153f12dc3"
     },
+    "RK-12.10.4-123": {
+      "conference/a-muted-binding-still-relays-the-sfu-s-signals": "cd06053f3341064bafdfb3a2de8fd5e08909f1f9522c9ba21caadfb8a857e5f3"
+    },
+    "RK-12.10.4-126": {
+      "conference/re-attaching-the-same-conference-is-an-ordinary-attach": "598a9e0d6c0974af2de14539395df0c93ef18b5ac4b0f7ed77f9b9ee29a09b95"
+    },
     "RK-12.10.7-004": {
       "conference/a-call-reports-presence-without-changing-room-membership": "8ed4550dffd59938be0b5826a08a98f1f9110ac574752b3934441c1754c8170f",
       "conference/a-camera-toggle-reaches-the-mute-and-unmute-observers": "8ed4550dffd59938be0b5826a08a98f1f9110ac574752b3934441c1754c8170f",
@@ -4273,6 +4297,12 @@
     "RK-12.10.7-005": {
       "conference/a-screen-track-announces-the-start-and-end-of-sharing": "cbe62b2aaed6a12d8a03178ec41464bb7f8759a8dd2a4672a6e56d6de860ffce"
     },
+    "RK-12.10.7-006": {
+      "conference/media-state-leaves-no-event-in-the-room": "e461969dfe95eed127d39bf2f835eefa9f573dbcafa8c9c7b2ce7a044fdfbc7d"
+    },
+    "RK-12.11-019": {
+      "recording/a-recording-on-a-missing-or-closed-room-is-refused": "87b8b00f9e6e328ebde49aacb10d937911d23227a0f200ddad9b4c9e59d6891a"
+    },
     "RK-12.11-021": {
       "recording/a-recorder-joins-the-live-feed-after-consent": "aaf543dd04a03870fc2083caa63bc44c528100ce4c7084855377c41bf762556d"
     },
@@ -4282,11 +4312,26 @@
     "RK-12.11-023": {
       "recording/a-recorder-joins-the-live-feed-after-consent": "dff7d51a483501be258848929b5aa04ccc6d90a6195b32e9fd1afb3753cc2c25"
     },
+    "RK-12.11-024": {
+      "recording/only-a-voice-session-that-joined-while-the-room-records-is-recorded": "cc687984ba25a0cd2e7d727a5dce33fed0e2989f4a50f1244772ad8d82a649bf"
+    },
+    "RK-12.11-025": {
+      "recording/only-a-voice-session-that-joined-while-the-room-records-is-recorded": "6aad7f150b8ab78079ff0da48cb939906f33c3df9bb4d8a939cf4e829b4251b1"
+    },
     "RK-12.11-028": {
       "recording/a-stopped-recorder-announces-its-file": "3863212fb691eb5835b14b631351259be7788a69864d717a63eb15982eed2068"
     },
     "RK-12.11-029": {
       "recording/a-stopped-recorder-announces-its-file": "c301ec17cc04f9c65291cdf6e5329e8884bc6c2d7a1c46528b5fb3960f411644"
+    },
+    "RK-12.11-031": {
+      "recording/a-gone-room-s-running-recordings-stop-on-an-explicit-stop": "3f896fe1890cc72600041272258124e79732ebd84c554b991e6a0b2eba3521df"
+    },
+    "RK-12.11-033": {
+      "recording/stopping-a-gone-room-that-records-nothing-is-not-found": "3cdba3826d56b1976773eb63caaa767d5d317be338fbd556139318804255cfbb"
+    },
+    "RK-12.11-051": {
+      "recording/one-recording-s-media-arrives-in-the-order-it-was-fed": "3dacba414c3fe83cfec83c57eebf86edfeaec17ce4413e37104e72895144509e"
     },
     "RK-12.2-018": {
       "voice/speech-edges-bracket-an-utterance": "81c71c90e131e0946b2c512a4df125e6f3e9ffb4bbc9977d05fe1b553e5a37a1"
@@ -4658,6 +4703,23 @@
     "RK-12.6-014": {
       "voice/a-transport-barge-in-cancels-active-playback": "fcf8d159fb72aec4dd8f323beef863e3d113b51b5a969b09066569ea7b1b08c0"
     },
+    "RK-12.7.1-002": {
+      "voice/a-bridged-listener-hears-the-speaker-and-the-synthesized-reply": "5e727550ea42868b086f9998ba03097864a80aeef31136e3190cb7c8f7e7fc33",
+      "voice/a-bridged-speaker-is-heard-detected-and-transcribed": "5e727550ea42868b086f9998ba03097864a80aeef31136e3190cb7c8f7e7fc33"
+    },
+    "RK-12.7.1-003": {
+      "voice/a-bridged-speaker-is-heard-detected-and-transcribed": "ae4788fd42823d71c758819c0c65073ba3c29fc81524b79a752d2233c1a8302b"
+    },
+    "RK-12.7.1-004": {
+      "voice/a-blocked-transcription-leaves-the-bridged-frames-forwarded": "bc8c900fd659e2f153ea4b8e29c2b4f1a34aebe344a1df84b4eb512692a62abc",
+      "voice/a-held-hook-on-one-path-leaves-the-other-path-running": "bc8c900fd659e2f153ea4b8e29c2b4f1a34aebe344a1df84b4eb512692a62abc"
+    },
+    "RK-12.7.1-005": {
+      "voice/a-bridged-frame-leaves-no-event-in-the-room": "e2ca84de233be3dd0222cffc01b0ea1b0ce69de5bb3e9261e2f967f6245ab92f"
+    },
+    "RK-12.7.2-008": {
+      "voice/a-forward-bridge-sends-each-frame-unmixed-to-every-other-participant": "84be9abb9fa37605c6241d2de065fc2c6eafc3264b7b66b74caac95f7905c220"
+    },
     "RK-12.7.2-009": {
       "voice/a-bridge-forwards-only-the-frame-the-hook-admits": "df19faf9a00b7117cefb20876252511bb38f9795499646a7210233c3f2758643"
     },
@@ -4676,8 +4738,23 @@
     "RK-12.7.3-007": {
       "voice/a-bridge-forwards-only-the-frame-the-hook-admits": "e3d386dba8bd5ab8a15083f90f6f7f3e86c4ed31f766e13a320d31dc1829a812"
     },
+    "RK-12.7.3-008": {
+      "voice/a-held-hook-on-one-path-leaves-the-other-path-running": "cbf186fbf3ceded7563d8bd0a36659c14c6fa267ab140a8e3c69e4038af01f93"
+    },
     "RK-12.7.3-009": {
       "voice/a-bridge-forwards-only-the-frame-the-hook-admits": "5f18fb16c8aa6a7b19c7ab1fd146e6f28788e912ba0c502ae71dbbfbe0c7f075"
+    },
+    "RK-12.7.3-013": {
+      "voice/a-bridged-speaker-is-heard-detected-and-transcribed": "addfa1a59707e70d2dc12b57ff35f3f3404b927e2dea11653d4984e095dc6ae3"
+    },
+    "RK-12.7.3-014": {
+      "voice/a-bridged-listener-hears-the-speaker-and-the-synthesized-reply": "5c93649c35b90f0fb926e91b1e523f4f74872510adf091c71ce729afe1a98687"
+    },
+    "RK-12.7.3-015": {
+      "voice/without-a-bridge-no-frame-reaches-another-participant": "fc3458df52fe9851095ef108bc0e5aa9812f6e823eb23f6cea7c9406c99d289d"
+    },
+    "RK-12.7.3-016": {
+      "voice/a-bridged-listener-hears-the-speaker-and-the-synthesized-reply": "97a8c20180479028449d6fd344edf26e5bce72ac67ea2867a1b6230d54204baf"
     },
     "RK-12.7.6-001": {
       "voice/a-bridge-forwards-only-the-frame-the-hook-admits": "22e2a4675e1474baa2c9192b4a31064458840adee96658d83dc68706b721b575"
@@ -4691,6 +4768,18 @@
     "RK-12.7.6-006": {
       "voice/a-bridge-forwards-only-the-frame-the-hook-admits": "58fcab74e831b5cbb9621d15a55e846381e0fc10160dd287dfb94785628deadb"
     },
+    "RK-12.7.6-008": {
+      "voice/a-bridged-speaker-is-heard-detected-and-transcribed": "34a55a00aed2925c84896afa4fd4e64fe65230fdcfcdbca35c8bb4002e86760d"
+    },
+    "RK-12.7.6-009": {
+      "voice/a-bridged-speaker-is-heard-detected-and-transcribed": "8727660aa9db9d0988913a447a44e60a3a2fa996480bce956ade65eaf44d1530"
+    },
+    "RK-12.7.6-010": {
+      "voice/a-bridged-call-s-room-recordings-are-announced-and-capture-the-speaker": "1c8075889c0766780357d2cd65bb44c6c7947c581b805d085fc17ed8fa9402e1"
+    },
+    "RK-12.7.6-011": {
+      "voice/a-bridged-session-starts-as-any-session-does": "bbbb34906d6c7e6c8d994a27d2be898b3a224f852c6f94acdfc711b0b3d23783"
+    },
     "RK-12.7.6-012": {
       "voice/a-bridge-hook-runs-outside-the-call-that-delivers-the-frame": "7ccdb7a770309e4e019f46771d04d3f88badb07982eac952dbf6b93a703d99ed"
     },
@@ -4702,6 +4791,9 @@
     },
     "RK-12.7.8-006": {
       "voice/a-bridge-forwards-only-the-frame-the-hook-admits": "1e544e5c1512e8f1e1825076d0c50fe620b9eeec3792dd3d3bc57e90f8990bde"
+    },
+    "RK-12.7.8-010": {
+      "voice/a-bridged-speaker-is-heard-detected-and-transcribed": "24ececb69e9c964797954618f3bb28eae93928f06cc18b3b3ae6591458781940"
     },
     "RK-12.8.11-002": {
       "video/a-video-session-announces-its-start-and-end": "59c79af19203eabdc51797d53b2baa460d9b058463f2352ef98c1ff026b8994b"
@@ -4741,11 +4833,36 @@
       "video/a-vision-hook-controls-the-result-that-is-published": "f8f15c9c8e0cbfde515bb8e71303d5282ebc28aff445ff85ef1b96764f380451",
       "video/a-vision-result-with-no-description-is-not-published": "f8f15c9c8e0cbfde515bb8e71303d5282ebc28aff445ff85ef1b96764f380451"
     },
+    "RK-12.8.4-013": {
+      "video/a-vision-result-rides-the-turn-of-the-room-s-agent": "85fc0b2b73797b0bfc5147b00d157f957b06516c1f92ca4a8b71514184328820"
+    },
     "RK-12.8.4-015": {
       "video/a-vision-result-with-no-description-is-not-published": "25e7a5c0497a53c3a37d5ccb3f12a7632f368080adec1fb78af91121479abb80"
     },
+    "RK-12.8.7-011": {
+      "video/a-vision-result-rides-the-turn-of-the-room-s-agent": "612de6fc5197a8c15c6491a19fe9a9a7f140e952253cba113799eb2e1da4b8b9"
+    },
+    "RK-12.8.7-012": {
+      "video/a-vision-result-rides-the-turn-of-the-room-s-agent": "c5c4ebd1997490b7a66316371378b2ebb570c259562e098d0badc8429543ee9e"
+    },
+    "RK-12.8.7-013": {
+      "video/a-turn-reads-the-latest-view-whichever-video-channel-produced-it": "234bc55306919d8feb612b9b7ef6c38cfef87dab06fa448ecc6112416ef6786e",
+      "video/a-view-that-tries-to-close-its-block-stays-inside-it": "234bc55306919d8feb612b9b7ef6c38cfef87dab06fa448ecc6112416ef6786e"
+    },
+    "RK-12.8.7-014": {
+      "video/a-standalone-turn-reads-no-view": "3b71a031e060283bb84ba83c13936e085652d3f65c9464761bda04a854df5059"
+    },
+    "RK-12.8.7-015": {
+      "video/a-view-ends-with-its-video-session": "d50d48ba2dcf5b9de5946543913508d355453167c4c4988bae61935eaa9b2c15"
+    },
+    "RK-12.8.7-018": {
+      "video/an-empty-vision-result-ends-the-session-s-view": "1fc0332eadb69f0908e1934b12fc20fc7257cc6fbf55fe7ac41072f5110bb313"
+    },
     "RK-12.8.9-003": {
       "video/the-bridge-obeys-the-frame-hook": "22e4d10c114a9a61b4cc1618844ba350b1b124628c90481d9a2bc65a7b605a75"
+    },
+    "RK-12.8.9-006": {
+      "video/a-forward-bridge-sends-each-frame-to-every-other-participant": "739a4e2744c1de82a2370ebdd588e59c06677cff6415991c5660785c9d5df1df"
     },
     "RK-12.8.9-013": {
       "video/the-bridge-obeys-the-frame-hook": "49c08141a6528a6e19da193505b023f84ccdc16740b4a8ee72fcf805e5b367bb"

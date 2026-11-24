@@ -166,20 +166,10 @@
       "card": "RMK-2076",
       "note": "step: deliver to the conference with a connected model, the conference model steps' read of the injections."
     },
-    "RK-12.10.12-027": {
-      "class": "writable",
-      "card": "RMK-2076",
-      "note": "conference.open with tools, then deliver to the conference before any broadcast connects its model: the outcome unavailable."
-    },
     "RK-12.10.12-028": {
       "class": "step",
       "card": "RMK-2076",
       "note": "step: conference model activity for the idle wait: deliver with wait_for_idle during a held answer and a held tool call."
-    },
-    "RK-12.10.12-029": {
-      "class": "writable",
-      "card": "RMK-2076",
-      "note": "conference.open with tools, a send_event that connects the model, then deliver to the conference: on_realtime_text_injected fires for the broadcast's injection, then for the delivery's (probed green); the hook's role and session also cover RK-12.10.12-026 in part."
     },
     "RK-12.10.12-030": {
       "class": "step",
@@ -291,20 +281,10 @@
       "card": "RMK-2076",
       "note": "step: conference.open with tools only, conference.feed: on_speech_start per track."
     },
-    "RK-12.10.12-053": {
-      "class": "writable",
-      "card": "RMK-2076",
-      "note": "conference.tool_call naming an undeclared tool (refused before the handler), and a before_tool_use hook that blocks or edits the arguments (probed green); the ToolPolicy check needs a tool_policy option on conference.open, and schema validation a declared schema, the runner declaring every tool with an empty object schema."
-    },
     "RK-12.10.12-055": {
       "class": "step",
       "card": "RMK-2076",
       "note": "step: conference.tool_call refused, an on_tool_call hook held at a gate (conference model steps' read): the refusal on the wire first."
-    },
-    "RK-12.10.12-056": {
-      "class": "writable",
-      "card": "RMK-2076",
-      "note": "conference.open with a tool whose handler result exceeds the implementation's bound (Section 21.5 fixes no number; Python's is 16,384 characters): the provider receives it truncated (probed green with 20,013 characters)."
     },
     "RK-12.10.12-057": {
       "class": "step",
@@ -365,11 +345,6 @@
       "class": "step",
       "card": "RMK-2070",
       "note": "step: conference.join metadata: an arrival asserting only the number it dialled, left unresolved."
-    },
-    "RK-12.10.2-037": {
-      "class": "writable",
-      "card": "RMK-2070",
-      "note": "conference.join of a participant not in the room, with an identity_resolver that would identify anyone: the participant stays unknown with its identity as external_id, and the resolver records no call."
     },
     "RK-12.10.2-038": {
       "class": "step",
@@ -596,11 +571,6 @@
       "card": "RMK-2076",
       "note": "step: conference.read, conference.mint: no join_as_bot() at the attach, one at the first mint, delivery or arrival."
     },
-    "RK-12.10.4-083": {
-      "class": "writable",
-      "card": "RMK-2076",
-      "note": "conference.open, then conference.join: an on_session_started hook fires once, for the room, at the lazy join the arrival starts."
-    },
     "RK-12.10.4-084": {
       "class": "step",
       "card": "RMK-2076",
@@ -751,11 +721,6 @@
       "card": "RMK-2076",
       "note": "step: conference.read, framework_events media rows: the order of the closes, leave() and conference_ended at a detach."
     },
-    "RK-12.10.4-123": {
-      "class": "writable",
-      "card": "RMK-2076",
-      "note": "conference.open, conference.join, then mute (the binding) before conference.active_speaker, conference.connection_quality and conference.mute: their hooks still fire."
-    },
     "RK-12.10.4-124": {
       "class": "step",
       "card": "RMK-2076",
@@ -765,11 +730,6 @@
       "class": "step",
       "card": "RMK-2076",
       "note": "step: error name conference_already_attached in the Errors table: a second conference.open on the room refused."
-    },
-    "RK-12.10.4-126": {
-      "class": "writable",
-      "card": "RMK-2076",
-      "note": "conference.open, then attach_channel of the same channel to the same room: the binding is returned, and a later conference.join still fires its hook."
     },
     "RK-12.10.4-127": {
       "class": "step",
@@ -1251,11 +1211,6 @@
       "card": "RMK-2076",
       "note": "step: conference.open options (stt and realtime), conference.feed: the lanes' attributed transcriptions beside the provider."
     },
-    "RK-12.10.7-006": {
-      "class": "writable",
-      "card": "RMK-2076",
-      "note": "conference.open, conference.join, conference.publish, then conference.mute, conference.unmute, conference.active_speaker and conference.connection_quality: the timeline holds no event for them."
-    },
     "RK-12.10.7-008": {
       "class": "step",
       "card": "RMK-2076",
@@ -1446,25 +1401,10 @@
       "card": "RMK-2066",
       "note": "step: create_room with recorders (R1): ON_RECORDING_STARTED fires for each once the room exists, and the recorder reads nothing before a track is added."
     },
-    "RK-12.11-019": {
-      "class": "writable",
-      "card": "RMK-2066",
-      "note": "recording.start on a missing room and on a closed one (close_room first): room_not_found and room_closed, no ON_RECORDING_STARTED; another organization's room also needs the recording calls forwarding organization_id, which the Python runner drops."
-    },
     "RK-12.11-020": {
       "class": "step",
       "card": "RMK-2066",
       "note": "step: recording.start with several recorders, one a scripted recorder that refuses its start (R2): none is started and no ON_RECORDING_STARTED fires."
-    },
-    "RK-12.11-024": {
-      "class": "writable",
-      "card": "RMK-2066",
-      "note": "recording.start, then voice.open joining a participant to the room and voice.feed: recording.read shows the session's frames; the join's scope is not shown."
-    },
-    "RK-12.11-025": {
-      "class": "writable",
-      "card": "RMK-2066",
-      "note": "voice.open before recording.start, then voice.feed: recording.read shows none of the session's frames; joining again needs voice.leave (V5)."
     },
     "RK-12.11-026": {
       "class": "step",
@@ -1476,20 +1416,10 @@
       "card": "RMK-2066",
       "note": "step: the recording calls forwarding organization_id, which the Python runner drops: recording.stop naming another organization is refused and the recorder keeps receiving its feed."
     },
-    "RK-12.11-031": {
-      "class": "writable",
-      "card": "RMK-2066",
-      "note": "recording.start, store.delete_room, then recording.stop: the recording's result is returned."
-    },
     "RK-12.11-032": {
       "class": "step",
       "card": "RMK-2066",
       "note": "step: the recording calls forwarding organization_id, which the Python runner drops: recording.stop naming another organization fails with room_not_found."
-    },
-    "RK-12.11-033": {
-      "class": "writable",
-      "card": "RMK-2066",
-      "note": "recording.stop on a room never created, or deleted with store.delete_room while recording nothing: room_not_found."
     },
     "RK-12.11-034": {
       "class": "step",
@@ -1505,11 +1435,6 @@
       "class": "step",
       "card": "RMK-2066",
       "note": "step: the description of the tracks a recorder was told (R4): a voice session's track names its participant_id."
-    },
-    "RK-12.11-051": {
-      "class": "writable",
-      "card": "RMK-2066",
-      "note": "two recording.feed calls on one track: recording.read shows both chunks in order; that the calls never overlap is shown by native tests of the conference writer only, and room recorders run inline, to be fixed (RMK-2094)."
     },
     "RK-12.11-054": {
       "class": "step",
@@ -3096,26 +3021,6 @@
       "card": "RMK-2042",
       "note": "step: voice.open STT options (S5): a streaming STT whose words come only with its final; a short stop is classified and cuts."
     },
-    "RK-12.7.1-002": {
-      "class": "writable",
-      "card": "RMK-2054",
-      "note": "voice.open with bridge, transcripts and a vad script: the speaker's frames reach the other participant and ON_TRANSCRIPTION fires, and voice.say to a bridged participant reaches its transport."
-    },
-    "RK-12.7.1-003": {
-      "class": "writable",
-      "card": "RMK-2054",
-      "note": "voice.open with bridge, transcripts and a vad script: ON_TRANSCRIPTION fires for the bridged speech while its frames reach the other participant."
-    },
-    "RK-12.7.1-004": {
-      "class": "writable",
-      "card": "RMK-2054",
-      "note": "voice.open with bridge, transcripts, a vad script and an ON_TRANSCRIPTION hook whose result is block: the speaker's frames still reach the other participant."
-    },
-    "RK-12.7.1-005": {
-      "class": "writable",
-      "card": "RMK-2054",
-      "note": "voice.open with bridge: after a frame is forwarded, the room's timeline (expect.timeline) holds no event for it."
-    },
     "RK-12.7.1-006": {
       "class": "step",
       "card": "RMK-2054",
@@ -3136,11 +3041,6 @@
       "card": "RMK-2054",
       "note": "step: voice.open bridge as a config object (V1): a session past max_participants is not bridged, the refusal observable."
     },
-    "RK-12.7.2-008": {
-      "class": "writable",
-      "card": "RMK-2054",
-      "note": "voice.open with bridge and three participants: frames fed by two of them reach the third unmixed, one send per source (the default forward strategy); mix needs step V1."
-    },
     "RK-12.7.2-010": {
       "class": "step",
       "card": "RMK-2054",
@@ -3156,11 +3056,6 @@
       "card": "RMK-2054",
       "note": "step: an outbound stage or recorder tap in voice.open (V4), visible on the bridged frame."
     },
-    "RK-12.7.3-008": {
-      "class": "writable",
-      "card": "RMK-2054",
-      "note": "voice.open with bridge, transcripts and a vad script: an ON_TRANSCRIPTION hook held at a gate leaves the frames reaching the listener, and a BEFORE_BRIDGE_AUDIO hook held at a gate leaves ON_TRANSCRIPTION firing."
-    },
     "RK-12.7.3-010": {
       "class": "step",
       "card": "RMK-2054",
@@ -3170,26 +3065,6 @@
       "class": "step",
       "card": "RMK-2054",
       "note": "step: voice.open without a TTS provider (no audit family; the runners always give one): frames forwarded, nothing synthesized."
-    },
-    "RK-12.7.3-013": {
-      "class": "writable",
-      "card": "RMK-2054",
-      "note": "voice.open with bridge, transcripts and a vad script: a transcription of the bridged speech (ON_TRANSCRIPTION) beside the forwarded frames."
-    },
-    "RK-12.7.3-014": {
-      "class": "writable",
-      "card": "RMK-2054",
-      "note": "voice.open with bridge, transcripts and a vad script: voice.say to the listener while the speaker feeds frames; the listener's transport receives both the synthesized audio and the bridged frames."
-    },
-    "RK-12.7.3-015": {
-      "class": "writable",
-      "card": "RMK-2054",
-      "note": "voice.open with two participants and no bridge: frames fed by one reach no other participant's transport (voice.read)."
-    },
-    "RK-12.7.3-016": {
-      "class": "writable",
-      "card": "RMK-2054",
-      "note": "voice.open with bridge: voice.say to the listener and frames fed by the speaker both reach the listener's transport (voice.read)."
     },
     "RK-12.7.3-019": {
       "class": "step",
@@ -3291,26 +3166,6 @@
       "card": "RMK-2054",
       "note": "step: a voice bridge hook that replaces the frame bytes (V7): the replaced frame is the one forwarded."
     },
-    "RK-12.7.6-008": {
-      "class": "writable",
-      "card": "RMK-2054",
-      "note": "voice.open with bridge and a vad script: ON_SPEECH_START and ON_SPEECH_END fire for the bridged speaker while its frames reach the other participant."
-    },
-    "RK-12.7.6-009": {
-      "class": "writable",
-      "card": "RMK-2054",
-      "note": "voice.open with bridge, transcripts and a vad script: ON_TRANSCRIPTION fires for the bridged speech."
-    },
-    "RK-12.7.6-010": {
-      "class": "writable",
-      "card": "RMK-2054",
-      "note": "recording.start on the room, then voice.open with bridge, then a second recorder started while the bridge runs and recording.stop: ON_RECORDING_STARTED and ON_RECORDING_STOPPED fire in bridge mode and recording.read holds the bridged speaker's frames; the pipeline recorder needs step V4."
-    },
-    "RK-12.7.6-011": {
-      "class": "writable",
-      "card": "RMK-2054",
-      "note": "voice.open with bridge and an on_session_started hook: the hook fires for each joined participant."
-    },
     "RK-12.7.8-005": {
       "class": "step",
       "card": "RMK-2054",
@@ -3325,11 +3180,6 @@
       "class": "step",
       "card": "RMK-2054",
       "note": "step: per-participant sample rates in voice.open (V2)."
-    },
-    "RK-12.7.8-010": {
-      "class": "writable",
-      "card": "RMK-2054",
-      "note": "voice.open with bridge, transcripts and a vad script: frames forwarded and ON_TRANSCRIPTION both observed."
     },
     "RK-12.8.10-010": {
       "class": "step",
@@ -3376,11 +3226,6 @@
       "card": "RMK-2062",
       "note": "step: a scripted filter that reads its FilterContext on video.open (VI1): the frame after a vision result sees it in last_vision_result and labels_detected."
     },
-    "RK-12.8.4-013": {
-      "class": "writable",
-      "card": "RMK-2062",
-      "note": "video.open with vision and a scripted agent attached to the same room: after a frame, the agent's next turn reads the description as a <vision> block (models)."
-    },
     "RK-12.8.4-014": {
       "class": "step",
       "card": "RMK-2062",
@@ -3401,40 +3246,10 @@
       "card": "RMK-2062",
       "note": "step: a scripted filter that reads its FilterContext on video.open (VI1): it holds the latest vision result."
     },
-    "RK-12.8.7-011": {
-      "class": "writable",
-      "card": "RMK-2062",
-      "note": "video.open with vision and a scripted agent attached to the same room and no wiring step: the agent's turn after a frame reads the vision result (models)."
-    },
-    "RK-12.8.7-012": {
-      "class": "writable",
-      "card": "RMK-2062",
-      "note": "video.open with vision and a scripted agent attached to the same room: after a frame, the turn's system_prompt (models) and the room's binding (get_binding) are unchanged; the result rides the turn's notes."
-    },
-    "RK-12.8.7-013": {
-      "class": "writable",
-      "card": "RMK-2062",
-      "note": "two video channels with vision on one room and a scripted agent: the turn reads the latest result as one <vision> block, its description, labels and text, and a text that tries to close the block stays inside it; a result with no description reaches no turn (RK-12.8.4-015)."
-    },
-    "RK-12.8.7-014": {
-      "class": "writable",
-      "card": "RMK-2062",
-      "note": "video.open with vision and a scripted agent attached to the same room, a frame, then send_event with standalone on that room: the standalone turn's request carries no vision block."
-    },
-    "RK-12.8.7-015": {
-      "class": "writable",
-      "card": "RMK-2062",
-      "note": "video.open with vision and a scripted agent attached to the same room, a frame, then video.disconnect: the agent's next turn reads no vision block."
-    },
     "RK-12.8.7-016": {
       "class": "step",
       "card": "RMK-2062",
       "note": "step: a realtime session given the video channel's vision results (Python's setup_realtime_vision), with video.open and realtime.start: realtime.read shows the <vision> block as a silent injection (requires video and realtime)."
-    },
-    "RK-12.8.7-018": {
-      "class": "writable",
-      "card": "RMK-2062",
-      "note": "video.open with vision [\"a person waves\", \"\"] and a scripted agent attached to the room: after the second frame the agent's next turn reads no <vision> block; proven natively by tests/test_video_ai_integration.py::TestVisionRidesTheTurnNotes::test_a_result_with_no_description_leaves_the_turn_no_view (RMK-2063)."
     },
     "RK-12.8.8-005": {
       "class": "step",
@@ -3455,11 +3270,6 @@
       "class": "step",
       "card": "RMK-2062",
       "note": "step: video.open bridge as a config object (the runners take a boolean): a session past max_participants is not bridged, the refusal observable."
-    },
-    "RK-12.8.9-006": {
-      "class": "writable",
-      "card": "RMK-2062",
-      "note": "video.open with bridge and three participants: a frame fed by one reaches both others unchanged, one send per target (the default forward strategy)."
     },
     "RK-12.8.9-007": {
       "class": "step",

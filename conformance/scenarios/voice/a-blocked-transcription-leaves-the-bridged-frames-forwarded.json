@@ -1,0 +1,103 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "voice/a-blocked-transcription-leaves-the-bridged-frames-forwarded",
+  "title": "A transcription hook that blocks the bridged speaker's words leaves its frames forwarded",
+  "rules": [
+    "§12.7.1",
+    "§9.2"
+  ],
+  "requirements": [
+    "RK-12.7.1-004"
+  ],
+  "requires_features": [
+    "voice"
+  ],
+  "setup": {
+    "rooms": [
+      {
+        "id": "r1"
+      }
+    ],
+    "hooks": [
+      {
+        "name": "screen",
+        "trigger": "on_transcription",
+        "execution": "sync",
+        "reactions": [
+          {
+            "result": {
+              "action": "block",
+              "reason": "private"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "voice.open",
+      "channel_id": "phone",
+      "room_id": "r1",
+      "participants": [
+        "alice",
+        "bob"
+      ],
+      "bridge": true,
+      "vad": [
+        {
+          "type": "speech_start"
+        },
+        {
+          "type": "speech_end"
+        }
+      ],
+      "transcripts": [
+        "my number"
+      ]
+    },
+    {
+      "call": "voice.feed",
+      "channel_id": "phone",
+      "participant_id": "alice",
+      "frames": [
+        "AQI=",
+        "AwQ="
+      ]
+    },
+    {
+      "call": "voice.settle",
+      "channel_id": "phone"
+    },
+    {
+      "call": "voice.read",
+      "channel_id": "phone",
+      "expect": {
+        "result": {
+          "audio": {
+            "alice": [],
+            "bob": [
+              "AQI=",
+              "AwQ="
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "expect": {
+    "hooks": {
+      "screen": [
+        {
+          "voice": {
+            "participant_id": "alice",
+            "text": "my number"
+          }
+        }
+      ]
+    },
+    "timeline": {
+      "r1": []
+    }
+  }
+}
