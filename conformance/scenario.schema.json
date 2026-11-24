@@ -49,7 +49,8 @@
           "message_session",
           "protocol_trace",
           "executor_media",
-          "scoring"
+          "scoring",
+          "source_provider"
         ]
       }
     },
@@ -88,6 +89,34 @@
       "$ref": "#/$defs/expect"
     }
   },
+  "allOf": [
+    {
+      "if": {
+        "required": [
+          "setup"
+        ],
+        "properties": {
+          "setup": {
+            "required": [
+              "sources"
+            ]
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "requires_features"
+        ],
+        "properties": {
+          "requires_features": {
+            "contains": {
+              "const": "source_provider"
+            }
+          }
+        }
+      }
+    }
+  ],
   "$defs": {
     "cell": {
       "enum": [
@@ -606,6 +635,39 @@
           "type": "array",
           "items": {
             "$ref": "#/$defs/event_handler"
+          }
+        },
+        "sources": {
+          "description": "Scripted sources attached to the kit (\u00a76.5), each for a channel of the setup; a scenario that has them requires source_provider.",
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": [
+              "channel_id"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "channel_id": {
+                "type": "string"
+              },
+              "auto_restart": {
+                "type": "boolean"
+              },
+              "restart_delay_ms": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "start": {
+                "$ref": "#/$defs/reactions"
+              },
+              "stop": {
+                "$ref": "#/$defs/reactions"
+              },
+              "healthcheck": {
+                "$ref": "#/$defs/reactions"
+              }
+            }
           }
         }
       }
@@ -2446,6 +2508,7 @@
             "regenerate_target",
             "close",
             "enter",
+            "source_health",
             "room_strategy_is_current",
             "pause_room",
             "resume_room",
@@ -6990,6 +7053,21 @@
           "type": "array",
           "items": {
             "type": "string"
+          }
+        },
+        "sources": {
+          "description": "Per scripted source, by its channel id, its calls in order: start, stop, healthcheck, and cut when its start's task was cut (\u00a76.5, \u00a712.10.4).",
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "start",
+                "stop",
+                "healthcheck",
+                "cut"
+              ]
+            }
           }
         },
         "channel_closes": {

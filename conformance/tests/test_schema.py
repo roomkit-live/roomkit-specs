@@ -475,6 +475,28 @@ class SchemaTests(unittest.TestCase):
                 scenario["expect"]["channel_closes"] = closes
                 self.assertEqual(validator.is_valid(scenario), valid)
 
+    def test_a_scripted_source_needs_its_feature_and_a_channel(self) -> None:
+        schema = json.loads((ROOT / "scenario.schema.json").read_text())
+        validator = Draft202012Validator(schema)
+        fixture = (
+            ROOT
+            / "scenarios/kit-close"
+            / "every-source-s-task-is-cut-whatever-its-stop-does.json"
+        )
+        scenario = json.loads(fixture.read_text())
+        self.assertTrue(validator.is_valid(scenario))
+        for change, valid in (
+            (lambda s: s.pop("requires_features"), False),
+            (lambda s: s.update(requires_features=["conference"]), False),
+            (lambda s: s["setup"]["sources"][0].pop("channel_id"), False),
+            (lambda s: s["setup"]["sources"][0].update(restart_delay_ms=0), False),
+            (lambda s: s["setup"]["sources"][0].update(health=[]), False),
+        ):
+            with self.subTest(change=change):
+                candidate = json.loads(fixture.read_text())
+                change(candidate)
+                self.assertEqual(validator.is_valid(candidate), valid)
+
     def test_a_turn_s_cleanup_and_an_action_on_its_own_task_make_actions(self) -> None:
         schema = json.loads((ROOT / "scenario.schema.json").read_text())
         validator = Draft202012Validator(schema)

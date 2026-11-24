@@ -132,16 +132,18 @@ alone does not make it plain.
 
 A scenario can list the features it needs in `requires_features`. The defined
 names are `message_session`, `protocol_trace`, `voice`, `realtime`,
-`conference`, `video`, `recording`, `executor_media` and `scoring`.
+`conference`, `video`, `recording`, `executor_media`, `scoring` and
+`source_provider`.
 `executor_media` requires a standalone executor that accepts both host media
 readers (§10.6.2). `scoring` requires a turn scoring hook that can attach to a
-kit or a standalone executor (§10.6.6). Four more names are reserved for the
+kit or a standalone executor (§10.6.6). `source_provider` requires scripted
+sources on the source interface (§6.5), attached to the kit (`sources`,
+below). Three more names are reserved for the
 decided gaps that need them; no scenario uses them yet, so neither the schema
 nor a runner lists them:
 `transport_provider`, the implementation's own channel of a platform type
 (Appendix A) over a scripted provider that implements that type's provider
-interface; `source_provider`, a scripted source on the source interface
-(§6.5); `websocket_channel`, the implementation's WebSocket channel and its
+interface; `websocket_channel`, the implementation's WebSocket channel and its
 connection registry (§8.2); and `classifier_dispatch`, a step that asks a
 scripted classifier its questions (§6.8). The corpus never drives a vendor's
 provider, and no feature names one: what a provider reads and writes on its
@@ -442,6 +444,16 @@ room callbacks of the setup are not compared.
   realtime bus. `kit.executor_catalogue: false` supplies a transport that
   omits the optional catalogue. `kit.turn_backend_faults` enables the
   scripted failures described alongside `turn_backend.fault`.
+- `sources`: each a **scripted source** (§6.5), attached to the kit for its
+  `channel_id`, a channel of the setup, after the rooms, with its
+  `auto_restart` (default false) and `restart_delay_ms` (the
+  implementation's default when absent); `start`, `stop` and
+  `healthcheck` hold the reactions of those methods (`gate`, `do`, `spawn`,
+  `fail`): its start, once its reaction ran, reads until it is cut; its
+  health check answers the source's health once its reaction ran. It records
+  each call of its `stop` and `healthcheck`, and each of its `start` once
+  the setup is made, under `sources`, and `cut` when its start's task is
+  cut. A scenario that has `sources` requires `source_provider`.
 - `event_handlers`: **framework-event handlers** (§8.2), each registered on
   the kit after the hooks, in order, for the events of its `event` type (a
   framework event's name: `before_tool_use`, `tool_call`, `ai_response`...).
@@ -1198,6 +1210,7 @@ run's own kit when absent.
 | `publish_typing` | `room_id`, `user_id`, `is_typing` (default true), optional `kit`: the kit's `publish_typing` (§8.4) | null |
 | `cancel_delivery` | `key`, the `delivery_key` of the messages whose delivery it cancels, and `reason` (§10.1 Explicit delivery cancellation) | how many deliveries it cancelled |
 | `close` | none | null once the kit's shutdown ended (§12.10.4) |
+| `source_health` | `channel_id`: the kit's `source_health` (§6.5), a read | the `status` of the health of the source attached for the channel; null for none |
 | `enter` | none: enters the kit's context, as an integrator opens the kit (§12.10.4): roomkit's `async with` (its `__aenter__`), roomkit-rs's `start` | null; once the kit's close started, `kit_closed` |
 | `steer` | `room_id`, the room whose turns it reaches, `channel_id`, the agent, optional `kit` selecting the owner, and `directive` (a SteeringDirective in the serialized form: `{"type": "cancel", "reason"}`, ...) (§21.3) | how many of the agent's running loops in the room it reached |
 | `install_strategy` | `room_id`, `strategy` (a scripted strategy's id) (§19.7) | null |
@@ -1501,6 +1514,7 @@ stores a simulated plan nor derives its tool result from these observations.
 | `framework_events` | Per room (`*` for the events of no room), every framework event of the §26.1 table and `process_timeout`, and of the Level 2 features the suite exercises, `status_posted` (§19.8) and `feedback` (§15.9), identity resolution's `identity_resolved` and `identity_timeout` (§8.2), a human-input request's `user_input_required` (§9.3), and identity verification's `verification_requested`, `verification_completed` and `verification_ended` (§8.2, §11.7), and a delivery lane's `delivery_skipped` (§8.2, §13.5), in emission order |
 | `hooks` | Per scripted hook, its calls in order: `trigger`, `room_id`, `delegation` (`delegation_id`, `target` for `on_realtime_delegation`), `trace` (the §5.14 record for `on_protocol_trace`, including its UTC timestamp and binary data in base64), `event` (the payload, when an event), `context_room` (the room supplied to an event or session hook, captured on entry), `recent_events` (the ids of the events of the context supplied to an event hook, lifecycle records left out, as `contexts` reads them), `context_events`, `context_bindings` and `context_participants` (that context's events, bindings and participants, as `contexts` reads its `events`, `bindings` and `participants`), `tool_call` (the payload, when a tool call: `name`, `tool_call_id`, `arguments` as the call runs or was stopped with, and, on `on_tool_call`, `result` as the model reads it, `is_error`, `refused`, `cancelled`, `error_detail` and `structured_content`), `delivery_status` (the payload, when a delivery status, §10.4), `status_entry` (the payload, when a status entry: `on_status_posted`), `dispatch_decision` (the payload, on `on_dispatch_decision`: `room_id`, `event`, `candidates`, `decision` as `{agents, reason, judgments}`, `duration_ms`), `observation` (the payload, when an observation: `on_feedback`), `request` (the payload, when a human-input request: `pending_id`, `tool_name`, `arguments`, `room_id`, `tool_call_id`, `channel_id`, `channel_type`, `actor_id`), `identity_result` (what an identity hook is handed, §11.2), `generation` (the payload, on `before_ai_generation`: `channel_id`, `provider_name`, `purpose`, `trigger` the event the turn answers, and its context's `system_prompt`, `messages` as `models` reads them, the names of its `tools`, and `room`, `target_capabilities` and `target_media_types` as `models` reads them), `tool_round` (on `after_tool_round`: `channel_id`, `round_index`, its `calls`, each `{tool_call_id, name, arguments, metadata, partial, garbled}`, its `results` and provider-served `answered` results as `models` reads them, and the names of the turn's `tools`), `response` (on `on_ai_response`: `channel_id`, `response_content`, `segments`, `tool_calls_count`, `round_count`, `loop_end_reason`, `usage`, `usage_complete`, `usage_metadata` (the response provenance, copied unchanged), `streaming`, `thinking`, and `declared_tools`, by name: `position`, `description`, `parameters`, `origin`) |
 | `hook_order` | The order in which the hooks it lists were called, a scripted channel's room callbacks among them (`<id>.on_room_attached`, `<id>.on_room_detached`) |
+| `sources` | Per scripted source, by its channel id, its calls in order: `start`, `stop`, `healthcheck`, and `cut` when its start's task was cut (§6.5, §12.10.4) |
 | `channel_closes` | The scripted channels whose close ran, each id once per call, in the order they ran (§6.1, §12.10.4); the order in which the kit closes its channels is the implementation's, so a scenario that names several matches them `$unordered` |
 | `room_callbacks` | Per room and scripted channel, its room callbacks (§6.1) in order: `{"call": "on_room_attached", "binding": ...}`, the binding it was handed, `{"call": "on_room_detached"}`, or `{"call": "connect_session", "session": ..., "binding": ...}` for an inbound session |
 | `deliveries` | Per room and channel, the events a scripted channel's `deliver()` received, as delivered, in order |
