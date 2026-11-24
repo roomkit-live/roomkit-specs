@@ -1,9 +1,9 @@
 {
   "version": 1,
-  "rfc_sha256": "047cbea552fa7cee0f23214d38e3a4bb69a0817f7e8d1772f1919f19a04a41db",
-  "corpus_sha256": "f853d11f557f9f409cb84b459d497286163f919366e4b9aa09ce66ca49b6575c",
+  "rfc_sha256": "a503e1288c2798013c596d524a3e100d7ac4dc89cf772a85787c4fd5e50a49f3",
+  "corpus_sha256": "0a70fa318c98101e792677179d95e3320e13cc21fad60b83a2f50fcfec4a4c51",
   "python_commit": "1ee7ec379dee1e17c49a1949ad7ce8756c132606",
-  "scenario_count": 3461,
+  "scenario_count": 3491,
   "sections": [
     {
       "section": "0",
@@ -3086,7 +3086,8 @@
         "discussion/an-agent-s-answer-typed-instruction-gives-no-turn",
         "permissions/an-answer-scope-internal-a-channel-gives-reads-as-none",
         "tasks/a-delegated-agent-s-streamed-answer-is-kept-as-one-message",
-        "tasks/a-delegated-turn-s-trace-is-stored-as-its-responses"
+        "tasks/a-delegated-turn-s-trace-is-stored-as-its-responses",
+        "voice/a-cut-answer-s-record-names-the-answer-not-the-listener"
       ]
     },
     {
@@ -3255,6 +3256,7 @@
         "realtime/a-provider-error-reaches-the-room",
         "realtime/a-reasoning-error-reaches-the-room",
         "realtime/a-session-takes-its-instruction-directly",
+        "realtime/an-ended-session-takes-no-injection",
         "reasoning/a-generation-hook-reads-a-message-s-parts",
         "recording/a-recorder-joins-the-live-feed-after-consent",
         "recording/a-stopped-recorder-announces-its-file",
@@ -3416,9 +3418,13 @@
         "voice/a-failed-transcription-hook-withholds-the-utterance",
         "voice/a-held-hook-on-one-path-leaves-the-other-path-running",
         "voice/a-streamed-reply-checks-each-sentence-before-synthesis",
+        "voice/a-text-from-another-channel-is-spoken",
         "voice/a-transport-barge-in-cancels-active-playback",
         "voice/a-turn-waits-for-its-last-fragment",
+        "voice/after-tts-reports-the-sentences-before-tts-let-through",
+        "voice/blocked-speech-before-the-reply-is-heard-releases-it",
         "voice/diarization-reports-a-new-speaker",
+        "voice/each-joined-session-reports-its-start-once",
         "voice/input-frames-report-an-audio-level",
         "voice/outbound-speech-reports-an-audio-level",
         "voice/partial-speech-is-observed-before-its-final",
@@ -3757,10 +3763,12 @@
         "provider-served/without-handler-stream",
         "provider-served/without-handler-whole",
         "realtime/a-handler-reconnects-through-its-child",
+        "realtime/a-hosted-backend-s-call-passes-the-gate",
         "realtime/a-late-cancellation-leaves-the-served-call-alone",
         "realtime/a-realtime-pipeline-refuses-the-agents-human-input",
         "realtime/an-abandoned-call-interrupts-its-handler",
         "realtime/an-ended-session-reports-a-late-call-once",
+        "realtime/an-undeclared-tool-is-refused-and-still-reported",
         "recording/a-recorder-joins-the-live-feed-after-consent",
         "recording/a-stopped-recorder-announces-its-file",
         "reentrancy/a-locked-hook-s-section-waits-past-the-hook-s-timeout-for-its-task-s-call",
@@ -6245,11 +6253,11 @@
       "mapping": {
         "unmapped": 1
       },
-      "decided_gaps": {
-        "writable": 1
-      },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
-      "candidate_scenarios": []
+      "candidate_scenarios": [
+        "voice/a-voice-and-a-realtime-channel-share-one-room"
+      ]
     },
     {
       "section": "12.2",
@@ -6260,8 +6268,7 @@
         "unmapped": 77
       },
       "decided_gaps": {
-        "step": 31,
-        "writable": 3
+        "step": 31
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -6354,7 +6361,10 @@
         "tools/a-call-refused-under-a-held-id-keeps-its-outcome-at-a-cut",
         "tools/a-call-refused-under-a-held-id-keeps-its-outcome-at-a-reader-s-stop",
         "tools/a-call-that-ended-before-its-reader-stopped-keeps-its-outcome",
-        "tools/a-call-that-ended-before-its-round-was-cut-keeps-its-outcome"
+        "tools/a-call-that-ended-before-its-round-was-cut-keeps-its-outcome",
+        "voice/a-streamed-reply-reaches-every-session-sentence-by-sentence",
+        "voice/a-text-from-another-channel-is-spoken",
+        "voice/after-tts-reports-the-sentences-before-tts-let-through"
       ]
     },
     {
@@ -6378,11 +6388,12 @@
         "unmapped": 22
       },
       "decided_gaps": {
-        "step": 13,
-        "writable": 1
+        "step": 13
       },
       "unannotated_keyword_lines": [],
-      "candidate_scenarios": []
+      "candidate_scenarios": [
+        "voice/a-response-to-two-sessions-is-synthesized-for-each"
+      ]
     },
     {
       "section": "12.2.3",
@@ -6436,11 +6447,13 @@
         "unmapped": 22
       },
       "decided_gaps": {
-        "step": 5,
-        "writable": 2
+        "step": 5
       },
       "unannotated_keyword_lines": [],
-      "candidate_scenarios": []
+      "candidate_scenarios": [
+        "voice/each-participant-s-stream-walks-its-own-detector",
+        "voice/two-voice-channels-of-a-room-keep-their-own-pipelines"
+      ]
     },
     {
       "section": "12.3.2",
@@ -6589,12 +6602,12 @@
       },
       "decided_gaps": {
         "phase6": 1,
-        "step": 7,
-        "writable": 1
+        "step": 7
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
-        "memory/history-omits-only-responses-marked-superseded"
+        "memory/history-omits-only-responses-marked-superseded",
+        "voice/blocked-speech-before-the-reply-is-heard-releases-it"
       ]
     },
     {
@@ -6606,11 +6619,22 @@
         "unmapped": 51
       },
       "decided_gaps": {
-        "step": 30,
-        "writable": 10
+        "step": 29
       },
       "unannotated_keyword_lines": [],
-      "candidate_scenarios": []
+      "candidate_scenarios": [
+        "voice/a-cut-answer-s-record-names-the-answer-not-the-listener",
+        "voice/a-cut-reply-is-stored-as-interrupted-with-how-far-it-played",
+        "voice/a-final-adding-a-word-after-the-reply-ended-is-the-turn",
+        "voice/a-final-adding-its-own-word-to-the-echo-cuts-and-is-the-turn",
+        "voice/a-final-ending-on-part-of-the-reply-s-word-is-no-echo",
+        "voice/a-lone-partial-word-starting-the-reply-s-first-word-cuts",
+        "voice/a-partial-ending-on-the-start-of-the-reply-s-next-word-is-echo",
+        "voice/an-echo-is-heard-without-case-punctuation-or-accents",
+        "voice/an-echo-of-the-reply-s-opening-is-no-turn",
+        "voice/immediate-with-a-vad-cuts-before-words-can-tell-an-echo",
+        "voice/speech-that-cuts-the-reply-is-the-user-s-turn"
+      ]
     },
     {
       "section": "12.3.14",
@@ -6621,11 +6645,12 @@
         "unmapped": 21
       },
       "decided_gaps": {
-        "step": 15,
-        "writable": 1
+        "step": 15
       },
       "unannotated_keyword_lines": [],
-      "candidate_scenarios": []
+      "candidate_scenarios": [
+        "voice/each-joined-session-reports-its-start-once"
+      ]
     },
     {
       "section": "12.3.15",
@@ -6650,8 +6675,7 @@
         "unmapped": 102
       },
       "decided_gaps": {
-        "step": 43,
-        "writable": 11
+        "step": 43
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -6703,7 +6727,16 @@
         "provider-served/success-whole",
         "provider-served/without-handler-stream",
         "provider-served/without-handler-whole",
+        "realtime/a-blank-text-reaches-no-session",
         "realtime/a-broadcast-text-enters-under-its-author-s-label",
+        "realtime/a-call-id-names-one-call-until-its-result-goes-out",
+        "realtime/a-call-naming-no-tool-is-answered-before-the-gate",
+        "realtime/a-call-without-an-id-is-refused-and-reported-once",
+        "realtime/an-ended-session-takes-no-injection",
+        "realtime/an-ending-session-cancels-its-waiting-call-once",
+        "realtime/an-event-s-metadata-chooses-no-injection-role",
+        "realtime/an-instruction-enters-the-session-as-system",
+        "realtime/an-undeclared-tool-is-refused-and-still-reported",
         "skills/a-stored-activation-under-a-held-id-leaves-out-the-one-refused",
         "skills/a-stored-activation-under-a-held-id-reads-the-call-that-ran",
         "tools/a-call-refused-under-a-held-id-is-no-repeat",
@@ -6732,11 +6765,12 @@
         "unmapped": 75
       },
       "decided_gaps": {
-        "step": 45,
-        "writable": 1
+        "step": 45
       },
       "unannotated_keyword_lines": [],
-      "candidate_scenarios": []
+      "candidate_scenarios": [
+        "realtime/a-hosted-backend-s-call-passes-the-gate"
+      ]
     },
     {
       "section": "12.4.2",
@@ -6775,11 +6809,13 @@
         "unmapped": 17
       },
       "decided_gaps": {
-        "step": 5,
-        "writable": 6
+        "step": 5
       },
       "unannotated_keyword_lines": [],
-      "candidate_scenarios": []
+      "candidate_scenarios": [
+        "voice/a-cut-reply-is-stored-as-interrupted-with-how-far-it-played",
+        "voice/speech-that-cuts-the-reply-is-the-user-s-turn"
+      ]
     },
     {
       "section": "12.7",
@@ -9920,6 +9956,7 @@
         "delivery/the-worker-retries-an-unavailable-destination",
         "delivery/wait-for-idle-on-a-text-transport-delivers-at-once",
         "inbound/a-kit-s-inbound-rate-limit-refuses-a-proactive-delivery-past-its-bucket",
+        "realtime/an-instruction-enters-the-session-as-system",
         "tasks/a-before-deliver-hook-s-block-keeps-a-hand-back-from-its-agent",
         "tasks/a-delegated-turn-s-trace-is-stored-as-its-responses",
         "tasks/a-hand-back-in-a-room-with-no-transport-reaches-no-agent",
@@ -27516,12 +27553,7 @@
       "id": "RK-12.1-003",
       "section": "12.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2019",
-        "note": "A room where voice.open attaches a voice channel and a declared realtime channel starts its session (realtime.start), each still doing its work; a bridge and a conference join the same way."
-      }
+      "links": []
     },
     {
       "id": "RK-12.2-044",
@@ -27978,12 +28010,7 @@
       "id": "RK-12.2-023",
       "section": "12.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2008",
-        "note": "A text another channel sends with send_event into the room a voice channel is opened in reaches the voice channel's deliver(): a BEFORE_TTS hook and voice.read's synthesized texts show it spoken (an AI answer streams to the voice channel instead)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.2-024",
@@ -28035,12 +28062,7 @@
       "id": "RK-12.2-030",
       "section": "12.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2008",
-        "note": "voice.open with several participants, voice.stream and voice.barge_in on one: voice.read gives each session every sentence; a session whose TTS fails needs step S7."
-      }
+      "links": []
     },
     {
       "id": "RK-12.2-031",
@@ -28081,12 +28103,7 @@
       "id": "RK-12.2-036",
       "section": "12.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2008",
-        "note": "voice.stream with an AFTER_TTS hook shows the text the session was sent, as BEFORE_TTS left it; the budget and failing-session cases need steps S1 and S7."
-      }
+      "links": []
     },
     {
       "id": "RK-12.2-037",
@@ -28281,12 +28298,7 @@
       "id": "RK-12.2.2-016",
       "section": "12.2.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2023",
-        "note": "voice.open with two participants, then a text another channel sends with send_event into the room: voice.read's synthesized list holds it once per session; that each call gets its own session's context needs step S7."
-      }
+      "links": []
     },
     {
       "id": "RK-12.2.2-017",
@@ -28991,12 +29003,7 @@
       "id": "RK-12.3.1-012",
       "section": "12.3.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2034",
-        "note": "Two voice.open in one room, each channel with its own scripted stages (a vad script on one, a tones script on the other): each channel's hooks follow its own pipeline; a realtime channel's pipeline needs a realtime step."
-      }
+      "links": []
     },
     {
       "id": "RK-12.3.1-013",
@@ -29025,12 +29032,7 @@
       "id": "RK-12.3.1-016",
       "section": "12.3.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2034",
-        "note": "voice.open with two participants and a vad script, voice.feed interleaving their frames: each participant's speech edges follow the script from its start, once the README says each participant walks the vad, speakers or tones script from its start (the runners' mocks already do)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.3.1-017",
@@ -29893,12 +29895,7 @@
       "id": "RK-12.3.12-019",
       "section": "12.3.12",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2042",
-        "note": "voice.open in a room with a scripted agent whose round waits at a gate: speech shorter than the default min_speech_ms, or blocked by an ON_TRANSCRIPTION hook, releases the held reply, whose audio then reaches the transport (voice.read)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.3.12-020",
@@ -29939,12 +29936,7 @@
       "id": "RK-12.3.13-009",
       "section": "12.3.13",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2042",
-        "note": "step: voice.open interruption (S1): echo_guard_ms 0 under IMMEDIATE, a speech_start alone fed while voice.say plays cuts it (ON_BARGE_IN, ON_TTS_CANCELLED); under the runners' default echo guard, speech without words waits for words (RK-12.3.13-035)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.3.13-010",
@@ -30097,56 +30089,31 @@
       "id": "RK-12.3.13-026",
       "section": "12.3.13",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2042",
-        "note": "voice.open with vad, partials and transcripts and a playback_gate, the runners' interruption config leaving echo_guard_ms at its default and the session having played nothing yet: partials and a final repeating the playing reply's opening words neither cut it (no ON_BARGE_IN) nor become a turn."
-      }
+      "links": []
     },
     {
       "id": "RK-12.3.13-027",
       "section": "12.3.13",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2042",
-        "note": "voice.open with vad, partials and transcripts and a playback_gate, the runners' interruption config leaving echo_guard_ms at its default and the session having played nothing yet: the reply's words heard with another case, punctuation and accents are still its echo."
-      }
+      "links": []
     },
     {
       "id": "RK-12.3.13-028",
       "section": "12.3.13",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2042",
-        "note": "voice.open with vad, partials and transcripts and a playback_gate, the runners' interruption config leaving echo_guard_ms at its default and the session having played nothing yet: a partial ending on the start of the reply's next word is echo; a lone partial word that only starts the reply's first word cuts."
-      }
+      "links": []
     },
     {
       "id": "RK-12.3.13-029",
       "section": "12.3.13",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2042",
-        "note": "voice.open with vad, partials and transcripts and a playback_gate, the runners' interruption config leaving echo_guard_ms at its default and the session having played nothing yet: a final whose last word only starts the reply's word is no echo and cuts."
-      }
+      "links": []
     },
     {
       "id": "RK-12.3.13-030",
       "section": "12.3.13",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2042",
-        "note": "voice.open with vad, partials and transcripts and a playback_gate, the runners' interruption config leaving echo_guard_ms at its default and the session having played nothing yet: the echo's partials fire no ON_PARTIAL_TRANSCRIPTION and its final, released after the reply ended, reaches no room; DISABLED needs voice.open interruption (S1)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.3.13-031",
@@ -30185,12 +30152,7 @@
       "id": "RK-12.3.13-034",
       "section": "12.3.13",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2042",
-        "note": "voice.open with vad, partials and transcripts and a playback_gate, the runners' interruption config leaving echo_guard_ms at its default and the session having played nothing yet: partials repeating the reply, then a final adding a word of its own while it plays: the reply is cut and the final reaches the room."
-      }
+      "links": []
     },
     {
       "id": "RK-12.3.13-035",
@@ -30356,23 +30318,13 @@
       "id": "RK-12.3.13-047",
       "section": "12.3.13",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2042",
-        "note": "voice.say held by a playback_gate, then voice.barge_in: the timeline holds the partial response with metadata.interrupted true and its played_ms."
-      }
+      "links": []
     },
     {
       "id": "RK-12.3.13-048",
       "section": "12.3.13",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2042",
-        "note": "voice.say held by a playback_gate, then voice.barge_in: the reply's synthesis has ended (the gate holds the transport), so its partial record carries played_percentage."
-      }
+      "links": []
     },
     {
       "id": "RK-12.3.13-049",
@@ -30400,12 +30352,7 @@
       "id": "RK-12.3.13-052",
       "section": "12.3.13",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2042",
-        "note": "voice.open in a room with a scripted agent whose reply is cut by voice.barge_in: the partial record has no participant id and names the agent's channel and the event its answer responds to."
-      }
+      "links": []
     },
     {
       "id": "RK-12.3.13-051",
@@ -30428,12 +30375,7 @@
       "id": "RK-12.3.13-054",
       "section": "12.3.13",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2042",
-        "note": "voice.open with vad, partials and transcripts and a playback_gate: words that cut the playing reply reach the room as the user's turn (timeline)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.3.14-005",
@@ -30450,12 +30392,7 @@
       "id": "RK-12.3.14-006",
       "section": "12.3.14",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2042",
-        "note": "voice.open with an ON_SESSION_STARTED hook: it fires once per joined participant's session; the other order of the two signals needs voice.end (S4) or a backend held before it is ready."
-      }
+      "links": []
     },
     {
       "id": "RK-12.3.14-007",
@@ -30986,12 +30923,7 @@
       "id": "RK-12.4-075",
       "section": "12.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2045",
-        "note": "realtime.tool_call to a name realtime.tools does not declare: nothing runs and the call is answered with its refusal; the order, the policy, skill gating and schema validation need tool_policy, skills and declared schemas on the realtime spec (S7)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4-076",
@@ -31019,12 +30951,7 @@
       "id": "RK-12.4-078",
       "section": "12.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2045",
-        "note": "the undeclared call of RK-12.4-075 is reported refused to ON_TOOL_CALL's observers; that the report never precedes the refusal on the wire needs an ordered read of results and reports (S8)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4-079",
@@ -31041,12 +30968,7 @@
       "id": "RK-12.4-080",
       "section": "12.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2045",
-        "note": "realtime.tool_call to run_skill_script on a channel with no skills: refused as undeclared, nothing run, which only replays RK-12.4-075's check under that name; a session with skills and no executor needs skills on the realtime spec (S7)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4-081",
@@ -31075,12 +30997,7 @@
       "id": "RK-12.4-022",
       "section": "12.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2008",
-        "note": "realtime.end while a realtime.tool_call waits at its handler's gate: the call is reported once, cancelled; the channel's close and a conference's detach or unplug need steps S9 and conference detach."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4-023",
@@ -31174,12 +31091,7 @@
       "id": "RK-12.4-031",
       "section": "12.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2008",
-        "note": "Two realtime.tool_call steps under one call_id while the first handler waits at its gate, then a third once its result went out: realtime.read and the reports show one result per call."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4-032",
@@ -31215,12 +31127,7 @@
       "id": "RK-12.4-037",
       "section": "12.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2008",
-        "note": "realtime.tool_call with an empty call_id, which Python reads as no id: one report, refused, and nothing in realtime.read's results."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4-038",
@@ -31243,12 +31150,7 @@
       "id": "RK-12.4-040",
       "section": "12.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2008",
-        "note": "realtime.tool_call with an empty name, which Python reads as no tool: refused before the gate and answered under its id."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4-041",
@@ -31334,12 +31236,7 @@
       "id": "RK-12.4-092",
       "section": "12.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2045",
-        "note": "realtime.end, then realtime.inject: nothing reaches the provider and ON_REALTIME_TEXT_INJECTED does not fire; the not_sent result needs realtime.inject to return the injection's result."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4-093",
@@ -31393,12 +31290,7 @@
       "id": "RK-12.4-101",
       "section": "12.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2045",
-        "note": "send_event with a text whose metadata names another intent (injected_role system): the injection still reads role user."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4-102",
@@ -31416,23 +31308,13 @@
       "id": "RK-12.4-104",
       "section": "12.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2045",
-        "note": "send_event with a blank text: realtime.read's injections stay empty."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4-105",
       "section": "12.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2045",
-        "note": "deliver with instruction true into the room of a running realtime session: the injection reads role system."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4-106",
@@ -31897,12 +31779,7 @@
       "id": "RK-12.4.1-042",
       "section": "12.4.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2049",
-        "note": "realtime.delegate with target hosted, then realtime.tool_call: the call passes the gate, ON_TOOL_CALL fires and realtime.read shows the result submitted; that the provider surfaces its backend's calls is its own (D2)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4.1-043",
@@ -32640,12 +32517,7 @@
       "id": "RK-12.6-007",
       "section": "12.6",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2042",
-        "note": "voice.say held by a playback_gate, then voice.barge_in: the timeline holds the partial response with metadata.interrupted true."
-      }
+      "links": []
     },
     {
       "id": "RK-12.6-008",
@@ -32668,12 +32540,7 @@
       "id": "RK-12.6-010",
       "section": "12.6",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2042",
-        "note": "voice.open with vad, partials and transcripts and a playback_gate: words that cut the playing reply reach the room as the user's turn (timeline)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.6-011",
@@ -32685,12 +32552,7 @@
       "id": "RK-12.6-012",
       "section": "12.6",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2042",
-        "note": "voice/a-backchannel-leaves-the-reply-playing with an on_tts_cancelled observer and a timeline expectation: no ON_TTS_CANCELLED fires and the acknowledged words become no room event."
-      }
+      "links": []
     },
     {
       "id": "RK-12.6-013",
@@ -32713,12 +32575,7 @@
       "id": "RK-12.6-015",
       "section": "12.6",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2042",
-        "note": "voice.open with a vad script and a playback_gate: speech fed while voice.say plays fires ON_SPEECH_START and ON_SPEECH_END."
-      }
+      "links": []
     },
     {
       "id": "RK-12.6-016",
@@ -32735,23 +32592,13 @@
       "id": "RK-12.6-017",
       "section": "12.6",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2042",
-        "note": "voice.open with vad, partials and transcripts and a playback_gate (IMMEDIATE): words that cut the reply are transcribed and reach the room as a turn."
-      }
+      "links": []
     },
     {
       "id": "RK-12.6-018",
       "section": "12.6",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2042",
-        "note": "voice/a-backchannel-leaves-the-reply-playing with a timeline expectation: the acknowledged words become no room event; too short and DISABLED need voice.open interruption (S1)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.6-019",
