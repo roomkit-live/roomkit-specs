@@ -2031,11 +2031,6 @@
       "card": "RMK-2034",
       "note": "measurement: resampling quality, the artifacts a resampler leaves for VAD and STT (Python's default is linear interpolation, suspect RMK-2029)."
     },
-    "RK-12.3.4-014": {
-      "class": "step",
-      "card": "RMK-2034",
-      "note": "step: voice.open capabilities (S2), played blocks marked reference_continues, and voice stage trace (S3): the scripted AEC stays active after playback_ended."
-    },
     "RK-12.3.6-010": {
       "class": "step",
       "card": "RMK-2034",

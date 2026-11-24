@@ -12539,7 +12539,7 @@ same AEC instance — this would double-feed and corrupt the adaptive filter.
   and its converged filter misses the next response's echo (measured: up to
   89 % of a response's first-second echo left above -50 dBFS, against none
   when it never pauses). With a silent reference it leaves the user's voice
-  untouched.<!-- /rfc --><!-- rfc: {"id": "RK-12.3.4-014", "kind": "behavior", "applies": "§12.3.4 Important considerations, the voice feature: a transport handing a pipeline canceller every played block should mark each one metadata.reference_continues = true, and the pipeline should then keep the canceller active until the stream ends, metadata.playback_ended not bypassing it. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
+  untouched.<!-- /rfc --><!-- rfc: {"id": "RK-12.3.4-014", "kind": "behavior", "applies": "§12.3.4 Important considerations, the voice feature: a transport handing a pipeline canceller every played block should mark each one metadata.reference_continues = true, and the pipeline should then keep the canceller active until the stream ends, metadata.playback_ended not bypassing it; a voice channel still bypasses its canceller once each response's echo tail has passed, whatever the transport marks. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 - The same holds for a pipeline canceller whose reference the transport hands
   over block by block as it plays it, at the timing of strategy 1 but without a
   canceller of its own. A transport that reports every played block, the
@@ -12550,7 +12550,9 @@ same AEC instance — this would double-feed and corrupt the adaptive filter.
   there, it drops the silent reference while capture runs on, and resumes at the
   next response with the timelines out of step (measured on a recorded session
   replayed through WebRTC AEC3: the next response's echo 0 to 5 dB below the
-  microphone signal, against 34 to 44 dB kept active). <!-- /rfc --><!-- rfc: {"id": "RK-12.3.4-015", "kind": "behavior", "applies": "§12.3.4 Important considerations, the voice feature: when a transport's played blocks stop between responses, the pipeline bypasses the canceller once that playback has ended, keeping its converged filter for the next response. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A transport whose played
+  microphone signal, against 34 to 44 dB kept active). A voice channel still
+  bypasses its canceller once each response's echo tail has passed, whatever
+  the transport marks. <!-- /rfc --><!-- rfc: {"id": "RK-12.3.4-015", "kind": "behavior", "applies": "§12.3.4 Important considerations, the voice feature: when a transport's played blocks stop between responses, the pipeline bypasses the canceller once that playback has ended, keeping its converged filter for the next response. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A transport whose played
   blocks stop between responses leaves the canceller no reference to run on; the
   pipeline bypasses it once that playback has ended, keeping its converged filter
   for the next response.<!-- /rfc --><!-- rfc: {"id": "RK-12.3.4-016", "kind": "behavior", "applies": "§12.3.4 Important considerations, the voice feature: the reference and the captured audio have the same sample rate and frame size; with different transport rates the implementation resamples the reference to the inbound rate or requires matching rates when AEC is enabled. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
