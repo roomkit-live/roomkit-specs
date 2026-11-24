@@ -29,7 +29,7 @@ proof: a scenario can cite a unit without covering all of it.
 | [§2 Introduction](section-2.md) | 4 | 0 | 0 | 0 | 4 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | [§3 Architecture Overview](section-3.md) | 3 | 0 | 0 | 0 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | [§4 Core Concepts](section-4.md) | 11 | 0 | 0 | 0 | 11 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| [§5 Data Models](section-5.md) | 184 | 171 | 9 | 4 | 0 | 169 | 675 | 0 | 0 | 0 | 0 | 0 |
+| [§5 Data Models](section-5.md) | 184 | 171 | 9 | 4 | 0 | 169 | 676 | 0 | 0 | 0 | 0 | 0 |
 | [§6 Channel System](section-6.md) | 657 | 641 | 7 | 9 | 0 | 422 | 2684 | 0 | 181 | 98 | 81 | 4 |
 | [§7 Permission Model](section-7.md) | 85 | 84 | 0 | 1 | 0 | 83 | 339 | 0 | 0 | 0 | 0 | 0 |
 | [§8 Event System](section-8.md) | 177 | 176 | 1 | 0 | 0 | 119 | 1211 | 0 | 55 | 20 | 16 | 19 |
@@ -45,7 +45,7 @@ proof: a scenario can cite a unit without covering all of it.
 | [§18 Design Principles](section-18.md) | 1 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | [§19 Multi-Agent Orchestration](section-19.md) | 567 | 560 | 3 | 3 | 1 | 417 | 1826 | 0 | 139 | 73 | 20 | 46 |
 | [§20 Memory System](section-20.md) | 63 | 62 | 0 | 1 | 0 | 48 | 234 | 0 | 12 | 10 | 2 | 0 |
-| [§21 Tool Access Control](section-21.md) | 214 | 199 | 13 | 2 | 0 | 127 | 880 | 0 | 71 | 18 | 30 | 28 |
+| [§21 Tool Access Control](section-21.md) | 214 | 199 | 13 | 2 | 0 | 127 | 881 | 0 | 71 | 18 | 30 | 28 |
 | [§22 Delivery Strategies](section-22.md) | 144 | 130 | 5 | 8 | 1 | 72 | 268 | 0 | 52 | 21 | 5 | 27 |
 | [§23 Task Delegation](section-23.md) | 196 | 194 | 1 | 0 | 1 | 159 | 550 | 0 | 33 | 8 | 18 | 7 |
 | [§24 Skills Framework](section-24.md) | 184 | 174 | 3 | 6 | 1 | 106 | 733 | 0 | 71 | 42 | 24 | 5 |

@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "98392b5efa7b3a09e331941fde8564c7e7b3dd53bf53cef01e7bf73d328ee1ed",
-  "corpus_sha256": "575c244067e5e21ee22a80ce7ad3369d794e20ea23da7627f28cc9f933552a14",
+  "corpus_sha256": "26cb5c5fdf41bbe7a2fc592c33a7b214842641b1b2de72376b8bfc817eac1ff7",
   "python_commit": "91320acb5d3fb53b50ea63d69764fdacc420297b",
-  "scenario_count": 3421,
+  "scenario_count": 3422,
   "sections": [
     {
       "section": "0",
@@ -454,7 +454,8 @@
         "inbound/a-parse-writing-responds-to-answers-nothing",
         "inbound/a-thread-parent-is-rooted",
         "store/a-read-leaves-the-message-delivered",
-        "store/every-stored-event-type-is-read-back-by-its-value"
+        "store/every-stored-event-type-is-read-back-by-its-value",
+        "streaming/a-text-follows-the-row-the-room-held-when-its-writing-began"
       ]
     },
     {
@@ -1896,6 +1897,7 @@
         "streaming/a-row-updated-before-the-turn-s-record-keeps-the-update",
         "streaming/a-streamed-answer-hands-its-end-after-its-last-row",
         "streaming/a-task-sharing-a-transport-publishes-no-text",
+        "streaming/a-text-follows-the-row-the-room-held-when-its-writing-began",
         "streaming/a-text-window-of-zero-publishes-each-piece",
         "streaming/a-turn-of-its-room-publishes-no-text-though-asked",
         "streaming/a-turn-that-ends-on-a-call-hands-its-end-to-the-reader-last",
@@ -9560,6 +9562,7 @@
         "steering/another-person-s-message-is-served-under-its-own-role-s-tools",
         "steering/another-person-s-message-waits-a-turn-of-its-own",
         "streaming/a-generation-a-fallback-serves-names-it-on-what-it-told-and-on-its-cut",
+        "streaming/a-text-follows-the-row-the-room-held-when-its-writing-began",
         "tools/a-cancel-outranks-the-force-stop",
         "tools/a-cancel-while-the-calls-are-announced-counts-no-round",
         "tools/a-round-a-cancel-keeps-from-running-publishes-no-tool-call-event",

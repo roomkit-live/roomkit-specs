@@ -9462,7 +9462,8 @@
       "reasoning/a-steered-answer-s-reasoning-reaches-no-chat-request": "f30d47c1b2f3137d364383745b75b8e9909e7cd672efb6907f4127aa056721d1",
       "steering/a-message-during-a-tool-round-is-read-by-the-running-turn": "f30d47c1b2f3137d364383745b75b8e9909e7cd672efb6907f4127aa056721d1",
       "steering/a-message-during-the-answer-is-answered-by-the-same-turn": "f30d47c1b2f3137d364383745b75b8e9909e7cd672efb6907f4127aa056721d1",
-      "steering/a-steer-reaches-the-room-it-names-alone": "f30d47c1b2f3137d364383745b75b8e9909e7cd672efb6907f4127aa056721d1"
+      "steering/a-steer-reaches-the-room-it-names-alone": "f30d47c1b2f3137d364383745b75b8e9909e7cd672efb6907f4127aa056721d1",
+      "streaming/a-text-follows-the-row-the-room-held-when-its-writing-began": "f30d47c1b2f3137d364383745b75b8e9909e7cd672efb6907f4127aa056721d1"
     },
     "RK-21.3-010": {
       "reasoning/a-steered-answer-keeps-its-blocks-in-place": "91645551c4485dff760dc043c65ff6e475cf7f06a1ddaa8e934d2b5f7252ad0f",
@@ -12788,7 +12789,8 @@
       "media/an-emitted-protocol-trace-reaches-its-room-observer": "59a627cca90e295801d9534ad90dcdd5aa35a193fc4efb7f66b3eab69034b94f"
     },
     "RK-5.2-001": {
-      "inbound/a-thread-parent-is-rooted": "11db879e2589f6da3d026ac3862fbb808b18edc81a759c7e7b373af88f2cb0bf"
+      "inbound/a-thread-parent-is-rooted": "11db879e2589f6da3d026ac3862fbb808b18edc81a759c7e7b373af88f2cb0bf",
+      "streaming/a-text-follows-the-row-the-room-held-when-its-writing-began": "11db879e2589f6da3d026ac3862fbb808b18edc81a759c7e7b373af88f2cb0bf"
     },
     "RK-5.2-002": {
       "store/every-stored-event-type-is-read-back-by-its-value": "0243a306d72eb931447e1ac8a5d0d6fdc7dd688d637e5c9059623da9b4bc47b7"

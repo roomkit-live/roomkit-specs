@@ -1578,7 +1578,7 @@ the RFC leaves to each implementation:
   them: an index loses one for each lifecycle record at or below it. That
   holds for an event's `index` (an instruction's provisional index too) and a
   room's `latest_index` (null when it reaches below 0) and `delivered_index`
-  (-1 at least), and a `delivery_skipped`'s `from_index` and `to_index`; a
+  (-1 at least), an event's `metadata.follows_index` (-1 at least), and a `delivery_skipped`'s `from_index` and `to_index`; a
   RoomContext's positive `history_start_index` is read the same way (zero still means the whole conversation, and null stays unknown); a room's `event_count` loses one for each lifecycle record below it. Every other gap stays: a hard delete leaves its index given out
   (§8.1). Appendix B counts the same way.
 - **Rooms** the run created and the scenario does not name are `$r1`, `$r2`...
