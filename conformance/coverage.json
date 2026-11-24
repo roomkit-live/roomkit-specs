@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "047cbea552fa7cee0f23214d38e3a4bb69a0817f7e8d1772f1919f19a04a41db",
-  "corpus_sha256": "cd0c8e86afd553d7a9fd402662d8b16ed8aa6a2d371a83e6c0d5bb7a2f4f1fca",
+  "corpus_sha256": "f853d11f557f9f409cb84b459d497286163f919366e4b9aa09ce66ca49b6575c",
   "python_commit": "1ee7ec379dee1e17c49a1949ad7ce8756c132606",
-  "scenario_count": 3431,
+  "scenario_count": 3461,
   "sections": [
     {
       "section": "0",
@@ -359,6 +359,7 @@
         "orchestration/a-conversation-state-written-through-the-kit-moves-no-agent",
         "orchestration/closing-a-room-takes-its-strategy-back-out",
         "permissions/binding-changes-and-their-triggers",
+        "recording/a-recording-on-a-missing-or-closed-room-is-refused",
         "regenerate/a-closed-room-refuses-a-regeneration-before-the-agent-runs",
         "regenerate/a-closed-room-with-nothing-to-regenerate-refuses-it-too",
         "regenerate/an-archived-room-refuses-a-regeneration",
@@ -2280,7 +2281,9 @@
         "turn-tool-timeouts/budget-before-bound-whole",
         "turn-tool-timeouts/route-before-bound-stream",
         "turn-tool-timeouts/route-before-bound-whole",
-        "verification/a-released-message-s-turn-reads-what-came-after-it"
+        "verification/a-released-message-s-turn-reads-what-came-after-it",
+        "video/a-view-that-tries-to-close-its-block-stays-inside-it",
+        "video/a-vision-result-rides-the-turn-of-the-room-s-agent"
       ]
     },
     {
@@ -3180,6 +3183,7 @@
         "chain/the-hook-calls-stop-a-before-broadcast-observer-loop",
         "conference/a-call-reports-presence-without-changing-room-membership",
         "conference/a-camera-toggle-reaches-the-mute-and-unmute-observers",
+        "conference/a-conference-tool-call-passes-the-pre-execution-gate",
         "conference/a-quality-report-identifies-the-affected-participant",
         "conference/a-screen-track-announces-the-start-and-end-of-sharing",
         "conference/a-speaker-change-identifies-the-dominant-participant",
@@ -3406,9 +3410,11 @@
         "video/a-vision-result-with-no-description-is-not-published",
         "video/the-bridge-obeys-the-frame-hook",
         "voice/a-backchannel-leaves-the-reply-playing",
+        "voice/a-blocked-transcription-leaves-the-bridged-frames-forwarded",
         "voice/a-bridge-forwards-only-the-frame-the-hook-admits",
         "voice/a-detected-tone-reaches-the-dtmf-hook",
         "voice/a-failed-transcription-hook-withholds-the-utterance",
+        "voice/a-held-hook-on-one-path-leaves-the-other-path-running",
         "voice/a-streamed-reply-checks-each-sentence-before-synthesis",
         "voice/a-transport-barge-in-cancels-active-playback",
         "voice/a-turn-waits-for-its-last-fragment",
@@ -4828,7 +4834,8 @@
         "skills/a-standalone-turn-reads-the-room-s-stored-rows-first",
         "tasks/a-background-delegation-relays-its-result-to-the-notified-agent",
         "tasks/the-tasks-note-lists-the-latest-six-tasks-and-a-standalone-turn-none",
-        "tool-search/a-standalone-instruction-reads-none-of-the-room-s-tools"
+        "tool-search/a-standalone-instruction-reads-none-of-the-room-s-tools",
+        "video/a-standalone-turn-reads-no-view"
       ]
     },
     {
@@ -6652,6 +6659,7 @@
         "ai-external-handler/duplicate-pending-call-is-refused-before-its-cut-streaming",
         "ai-external-handler/reused-call-ids-in-the-next-round-get-new-reports-non-streaming",
         "ai-external-handler/reused-call-ids-in-the-next-round-get-new-reports-streaming",
+        "conference/a-conference-tool-call-passes-the-pre-execution-gate",
         "eviction/a-call-under-an-id-its-round-holds-is-refused-unstored",
         "provider-served/absent-is-pending-stream",
         "provider-served/absent-is-pending-whole",
@@ -6794,11 +6802,16 @@
         "unmapped": 7
       },
       "decided_gaps": {
-        "step": 2,
-        "writable": 4
+        "step": 2
       },
       "unannotated_keyword_lines": [],
-      "candidate_scenarios": []
+      "candidate_scenarios": [
+        "voice/a-blocked-transcription-leaves-the-bridged-frames-forwarded",
+        "voice/a-bridged-frame-leaves-no-event-in-the-room",
+        "voice/a-bridged-listener-hears-the-speaker-and-the-synthesized-reply",
+        "voice/a-bridged-speaker-is-heard-detected-and-transcribed",
+        "voice/a-held-hook-on-one-path-leaves-the-other-path-running"
+      ]
     },
     {
       "section": "12.7.2",
@@ -6809,11 +6822,12 @@
         "unmapped": 11
       },
       "decided_gaps": {
-        "step": 4,
-        "writable": 1
+        "step": 4
       },
       "unannotated_keyword_lines": [],
-      "candidate_scenarios": []
+      "candidate_scenarios": [
+        "voice/a-forward-bridge-sends-each-frame-unmixed-to-every-other-participant"
+      ]
     },
     {
       "section": "12.7.3",
@@ -6824,11 +6838,15 @@
         "unmapped": 24
       },
       "decided_gaps": {
-        "step": 13,
-        "writable": 5
+        "step": 13
       },
       "unannotated_keyword_lines": [],
-      "candidate_scenarios": []
+      "candidate_scenarios": [
+        "voice/a-bridged-listener-hears-the-speaker-and-the-synthesized-reply",
+        "voice/a-bridged-speaker-is-heard-detected-and-transcribed",
+        "voice/a-held-hook-on-one-path-leaves-the-other-path-running",
+        "voice/without-a-bridge-no-frame-reaches-another-participant"
+      ]
     },
     {
       "section": "12.7.4",
@@ -6867,12 +6885,14 @@
         "unmapped": 12
       },
       "decided_gaps": {
-        "step": 1,
-        "writable": 4
+        "step": 1
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
-        "voice/a-bridge-hook-runs-outside-the-call-that-delivers-the-frame"
+        "voice/a-bridge-hook-runs-outside-the-call-that-delivers-the-frame",
+        "voice/a-bridged-call-s-room-recordings-are-announced-and-capture-the-speaker",
+        "voice/a-bridged-session-starts-as-any-session-does",
+        "voice/a-bridged-speaker-is-heard-detected-and-transcribed"
       ]
     },
     {
@@ -6896,11 +6916,12 @@
         "unmapped": 9
       },
       "decided_gaps": {
-        "step": 3,
-        "writable": 1
+        "step": 3
       },
       "unannotated_keyword_lines": [],
-      "candidate_scenarios": []
+      "candidate_scenarios": [
+        "voice/a-bridged-speaker-is-heard-detected-and-transcribed"
+      ]
     },
     {
       "section": "12.8",
@@ -6967,11 +6988,13 @@
         "unmapped": 13
       },
       "decided_gaps": {
-        "step": 4,
-        "writable": 1
+        "step": 4
       },
       "unannotated_keyword_lines": [],
-      "candidate_scenarios": []
+      "candidate_scenarios": [
+        "video/a-vision-result-rides-the-turn-of-the-room-s-agent",
+        "video/an-empty-vision-result-ends-the-session-s-view"
+      ]
     },
     {
       "section": "12.8.5",
@@ -7008,11 +7031,17 @@
         "unmapped": 15
       },
       "decided_gaps": {
-        "step": 1,
-        "writable": 6
+        "step": 1
       },
       "unannotated_keyword_lines": [],
-      "candidate_scenarios": []
+      "candidate_scenarios": [
+        "video/a-standalone-turn-reads-no-view",
+        "video/a-turn-reads-the-latest-view-whichever-video-channel-produced-it",
+        "video/a-view-ends-with-its-video-session",
+        "video/a-view-that-tries-to-close-its-block-stays-inside-it",
+        "video/a-vision-result-rides-the-turn-of-the-room-s-agent",
+        "video/an-empty-vision-result-ends-the-session-s-view"
+      ]
     },
     {
       "section": "12.8.8",
@@ -7037,11 +7066,12 @@
         "unmapped": 12
       },
       "decided_gaps": {
-        "step": 7,
-        "writable": 1
+        "step": 7
       },
       "unannotated_keyword_lines": [],
-      "candidate_scenarios": []
+      "candidate_scenarios": [
+        "video/a-forward-bridge-sends-each-frame-to-every-other-participant"
+      ]
     },
     {
       "section": "12.8.10",
@@ -7114,11 +7144,12 @@
         "unmapped": 46
       },
       "decided_gaps": {
-        "step": 26,
-        "writable": 1
+        "step": 26
       },
       "unannotated_keyword_lines": [],
-      "candidate_scenarios": []
+      "candidate_scenarios": [
+        "conference/an-arrival-with-no-address-stays-unknown"
+      ]
     },
     {
       "section": "12.10.3",
@@ -7146,16 +7177,18 @@
       },
       "decided_gaps": {
         "phase6": 1,
-        "step": 134,
-        "writable": 3
+        "step": 134
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "conference/a-call-reports-presence-without-changing-room-membership",
         "conference/a-camera-toggle-reaches-the-mute-and-unmute-observers",
+        "conference/a-conference-session-starts-once-however-many-participants-arrive",
+        "conference/a-muted-binding-still-relays-the-sfu-s-signals",
         "conference/a-quality-report-identifies-the-affected-participant",
         "conference/a-screen-track-announces-the-start-and-end-of-sharing",
         "conference/a-speaker-change-identifies-the-dominant-participant",
+        "conference/re-attaching-the-same-conference-is-an-ordinary-attach",
         "delivery/a-call-in-its-hooks-as-the-kit-closes-is-stored-and-delivered-to-no-one",
         "delivery/a-call-the-close-finds-under-way-returns-kit-closed-while-its-adopted-call-s-stream-is-read",
         "delivery/a-call-the-kit-s-close-cuts-once-its-commit-landed-reports-its-event-stored",
@@ -7239,11 +7272,12 @@
         "unmapped": 10
       },
       "decided_gaps": {
-        "step": 7,
-        "writable": 1
+        "step": 7
       },
       "unannotated_keyword_lines": [],
-      "candidate_scenarios": []
+      "candidate_scenarios": [
+        "conference/media-state-leaves-no-event-in-the-room"
+      ]
     },
     {
       "section": "12.10.8",
@@ -7306,12 +7340,15 @@
         "unmapped": 51
       },
       "decided_gaps": {
-        "step": 40,
-        "writable": 4
+        "step": 40
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
-        "conference/a-conference-model-receives-the-gated-tool-result"
+        "conference/a-conference-model-receives-the-gated-tool-result",
+        "conference/a-conference-tool-call-passes-the-pre-execution-gate",
+        "conference/a-conference-tool-result-is-bounded-as-a-realtime-one",
+        "conference/a-delivery-before-the-model-connects-is-unavailable",
+        "conference/a-delivery-into-the-conference-model-fires-the-injection-hook"
       ]
     },
     {
@@ -7323,13 +7360,18 @@
         "unmapped": 52
       },
       "decided_gaps": {
-        "step": 18,
-        "writable": 6
+        "step": 18
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
+        "recording/a-gone-room-s-running-recordings-stop-on-an-explicit-stop",
         "recording/a-recorder-joins-the-live-feed-after-consent",
-        "recording/a-stopped-recorder-announces-its-file"
+        "recording/a-recording-on-a-missing-or-closed-room-is-refused",
+        "recording/a-stopped-recorder-announces-its-file",
+        "recording/one-recording-s-media-arrives-in-the-order-it-was-fed",
+        "recording/only-a-voice-session-that-joined-while-the-room-records-is-recorded",
+        "recording/stopping-a-gone-room-that-records-nothing-is-not-found",
+        "voice/a-bridged-call-s-room-recordings-are-announced-and-capture-the-speaker"
       ]
     },
     {
@@ -9738,6 +9780,7 @@
       "candidate_scenarios": [
         "ai-external-handler/read-stored-result-stays-local-non-streaming",
         "ai-external-handler/read-stored-result-stays-local-streaming",
+        "conference/a-conference-tool-result-is-bounded-as-a-realtime-one",
         "eviction/a-call-id-reused-in-a-later-turn-is-stored-under-a-new-id",
         "eviction/a-call-under-an-id-its-round-holds-is-refused-unstored",
         "eviction/a-generation-hook-sees-the-re-read-once-its-room-stores-a-result",
@@ -32737,45 +32780,25 @@
       "id": "RK-12.7.1-002",
       "section": "12.7.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2054",
-        "note": "voice.open with bridge, transcripts and a vad script: the speaker's frames reach the other participant and ON_TRANSCRIPTION fires, and voice.say to a bridged participant reaches its transport."
-      }
+      "links": []
     },
     {
       "id": "RK-12.7.1-003",
       "section": "12.7.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2054",
-        "note": "voice.open with bridge, transcripts and a vad script: ON_TRANSCRIPTION fires for the bridged speech while its frames reach the other participant."
-      }
+      "links": []
     },
     {
       "id": "RK-12.7.1-004",
       "section": "12.7.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2054",
-        "note": "voice.open with bridge, transcripts, a vad script and an ON_TRANSCRIPTION hook whose result is block: the speaker's frames still reach the other participant."
-      }
+      "links": []
     },
     {
       "id": "RK-12.7.1-005",
       "section": "12.7.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2054",
-        "note": "voice.open with bridge: after a frame is forwarded, the room's timeline (expect.timeline) holds no event for it."
-      }
+      "links": []
     },
     {
       "id": "RK-12.7.1-006",
@@ -32837,12 +32860,7 @@
       "id": "RK-12.7.2-008",
       "section": "12.7.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2054",
-        "note": "voice.open with bridge and three participants: frames fed by two of them reach the third unmixed, one send per source (the default forward strategy); mix needs step V1."
-      }
+      "links": []
     },
     {
       "id": "RK-12.7.2-009",
@@ -32912,12 +32930,7 @@
       "id": "RK-12.7.3-008",
       "section": "12.7.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2054",
-        "note": "voice.open with bridge, transcripts and a vad script: an ON_TRANSCRIPTION hook held at a gate leaves the frames reaching the listener, and a BEFORE_BRIDGE_AUDIO hook held at a gate leaves ON_TRANSCRIPTION firing."
-      }
+      "links": []
     },
     {
       "id": "RK-12.7.3-003",
@@ -32968,45 +32981,25 @@
       "id": "RK-12.7.3-013",
       "section": "12.7.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2054",
-        "note": "voice.open with bridge, transcripts and a vad script: a transcription of the bridged speech (ON_TRANSCRIPTION) beside the forwarded frames."
-      }
+      "links": []
     },
     {
       "id": "RK-12.7.3-014",
       "section": "12.7.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2054",
-        "note": "voice.open with bridge, transcripts and a vad script: voice.say to the listener while the speaker feeds frames; the listener's transport receives both the synthesized audio and the bridged frames."
-      }
+      "links": []
     },
     {
       "id": "RK-12.7.3-015",
       "section": "12.7.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2054",
-        "note": "voice.open with two participants and no bridge: frames fed by one reach no other participant's transport (voice.read)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.7.3-016",
       "section": "12.7.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2054",
-        "note": "voice.open with bridge: voice.say to the listener and frames fed by the speaker both reach the listener's transport (voice.read)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.7.3-017",
@@ -33268,45 +33261,25 @@
       "id": "RK-12.7.6-008",
       "section": "12.7.6",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2054",
-        "note": "voice.open with bridge and a vad script: ON_SPEECH_START and ON_SPEECH_END fire for the bridged speaker while its frames reach the other participant."
-      }
+      "links": []
     },
     {
       "id": "RK-12.7.6-009",
       "section": "12.7.6",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2054",
-        "note": "voice.open with bridge, transcripts and a vad script: ON_TRANSCRIPTION fires for the bridged speech."
-      }
+      "links": []
     },
     {
       "id": "RK-12.7.6-010",
       "section": "12.7.6",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2054",
-        "note": "recording.start on the room, then voice.open with bridge, then a second recorder started while the bridge runs and recording.stop: ON_RECORDING_STARTED and ON_RECORDING_STOPPED fire in bridge mode and recording.read holds the bridged speaker's frames; the pipeline recorder needs step V4."
-      }
+      "links": []
     },
     {
       "id": "RK-12.7.6-011",
       "section": "12.7.6",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2054",
-        "note": "voice.open with bridge and an on_session_started hook: the hook fires for each joined participant."
-      }
+      "links": []
     },
     {
       "id": "RK-12.7.6-012",
@@ -33411,12 +33384,7 @@
       "id": "RK-12.7.8-010",
       "section": "12.7.8",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2054",
-        "note": "voice.open with bridge, transcripts and a vad script: frames forwarded and ON_TRANSCRIPTION both observed."
-      }
+      "links": []
     },
     {
       "id": "RK-12.8-001",
@@ -33636,12 +33604,7 @@
       "id": "RK-12.8.4-013",
       "section": "12.8.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2062",
-        "note": "video.open with vision and a scripted agent attached to the same room: after a frame, the agent's next turn reads the description as a <vision> block (models)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.8.4-014",
@@ -33817,67 +33780,37 @@
       "id": "RK-12.8.7-011",
       "section": "12.8.7",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2062",
-        "note": "video.open with vision and a scripted agent attached to the same room and no wiring step: the agent's turn after a frame reads the vision result (models)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.8.7-012",
       "section": "12.8.7",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2062",
-        "note": "video.open with vision and a scripted agent attached to the same room: after a frame, the turn's system_prompt (models) and the room's binding (get_binding) are unchanged; the result rides the turn's notes."
-      }
+      "links": []
     },
     {
       "id": "RK-12.8.7-013",
       "section": "12.8.7",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2062",
-        "note": "two video channels with vision on one room and a scripted agent: the turn reads the latest result as one <vision> block, its description, labels and text, and a text that tries to close the block stays inside it; a result with no description reaches no turn (RK-12.8.4-015)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.8.7-014",
       "section": "12.8.7",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2062",
-        "note": "video.open with vision and a scripted agent attached to the same room, a frame, then send_event with standalone on that room: the standalone turn's request carries no vision block."
-      }
+      "links": []
     },
     {
       "id": "RK-12.8.7-015",
       "section": "12.8.7",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2062",
-        "note": "video.open with vision and a scripted agent attached to the same room, a frame, then video.disconnect: the agent's next turn reads no vision block."
-      }
+      "links": []
     },
     {
       "id": "RK-12.8.7-018",
       "section": "12.8.7",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2062",
-        "note": "video.open with vision [\"a person waves\", \"\"] and a scripted agent attached to the room: after the second frame the agent's next turn reads no <vision> block; proven natively by tests/test_video_ai_integration.py::TestVisionRidesTheTurnNotes::test_a_result_with_no_description_leaves_the_turn_no_view (RMK-2063)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.8.7-016",
@@ -33968,12 +33901,7 @@
       "id": "RK-12.8.9-006",
       "section": "12.8.9",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2062",
-        "note": "video.open with bridge and three participants: a frame fed by one reaches both others unchanged, one send per target (the default forward strategy)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.8.9-007",
@@ -34451,12 +34379,7 @@
       "id": "RK-12.10.2-037",
       "section": "12.10.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2070",
-        "note": "conference.join of a participant not in the room, with an identity_resolver that would identify anyone: the participant stays unknown with its identity as external_id, and the resolver records no call."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.2-038",
@@ -35079,12 +35002,7 @@
       "id": "RK-12.10.4-083",
       "section": "12.10.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2076",
-        "note": "conference.open, then conference.join: an on_session_started hook fires once, for the room, at the lazy join the arrival starts."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.4-084",
@@ -35474,12 +35392,7 @@
       "id": "RK-12.10.4-123",
       "section": "12.10.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2076",
-        "note": "conference.open, conference.join, then mute (the binding) before conference.active_speaker, conference.connection_quality and conference.mute: their hooks still fire."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.4-124",
@@ -35507,12 +35420,7 @@
       "id": "RK-12.10.4-126",
       "section": "12.10.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2076",
-        "note": "conference.open, then attach_channel of the same channel to the same room: the binding is returned, and a later conference.join still fires its hook."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.4-127",
@@ -37161,12 +37069,7 @@
       "id": "RK-12.10.7-006",
       "section": "12.10.7",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2076",
-        "note": "conference.open, conference.join, conference.publish, then conference.mute, conference.unmute, conference.active_speaker and conference.connection_quality: the timeline holds no event for them."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.7-008",
@@ -37741,12 +37644,7 @@
       "id": "RK-12.10.12-027",
       "section": "12.10.12",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2076",
-        "note": "conference.open with tools, then deliver to the conference before any broadcast connects its model: the outcome unavailable."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.12-028",
@@ -37763,12 +37661,7 @@
       "id": "RK-12.10.12-029",
       "section": "12.10.12",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2076",
-        "note": "conference.open with tools, a send_event that connects the model, then deliver to the conference: on_realtime_text_injected fires for the broadcast's injection, then for the delivery's (probed green); the hook's role and session also cover RK-12.10.12-026 in part."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.12-030",
@@ -38033,12 +37926,7 @@
       "id": "RK-12.10.12-053",
       "section": "12.10.12",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2076",
-        "note": "conference.tool_call naming an undeclared tool (refused before the handler), and a before_tool_use hook that blocks or edits the arguments (probed green); the ToolPolicy check needs a tool_policy option on conference.open, and schema validation a declared schema, the runner declaring every tool with an empty object schema."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.12-054",
@@ -38061,12 +37949,7 @@
       "id": "RK-12.10.12-056",
       "section": "12.10.12",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2076",
-        "note": "conference.open with a tool whose handler result exceeds the implementation's bound (Section 21.5 fixes no number; Python's is 16,384 characters): the provider receives it truncated (probed green with 20,013 characters)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.12-057",
@@ -38218,12 +38101,7 @@
       "id": "RK-12.11-019",
       "section": "12.11",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2066",
-        "note": "recording.start on a missing room and on a closed one (close_room first): room_not_found and room_closed, no ON_RECORDING_STARTED; another organization's room also needs the recording calls forwarding organization_id, which the Python runner drops."
-      }
+      "links": []
     },
     {
       "id": "RK-12.11-020",
@@ -38258,23 +38136,13 @@
       "id": "RK-12.11-024",
       "section": "12.11",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2066",
-        "note": "recording.start, then voice.open joining a participant to the room and voice.feed: recording.read shows the session's frames; the join's scope is not shown."
-      }
+      "links": []
     },
     {
       "id": "RK-12.11-025",
       "section": "12.11",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2066",
-        "note": "voice.open before recording.start, then voice.feed: recording.read shows none of the session's frames; joining again needs voice.leave (V5)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.11-026",
@@ -38320,12 +38188,7 @@
       "id": "RK-12.11-031",
       "section": "12.11",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2066",
-        "note": "recording.start, store.delete_room, then recording.stop: the recording's result is returned."
-      }
+      "links": []
     },
     {
       "id": "RK-12.11-032",
@@ -38342,12 +38205,7 @@
       "id": "RK-12.11-033",
       "section": "12.11",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2066",
-        "note": "recording.stop on a room never created, or deleted with store.delete_room while recording nothing: room_not_found."
-      }
+      "links": []
     },
     {
       "id": "RK-12.11-034",
@@ -38470,12 +38328,7 @@
       "id": "RK-12.11-051",
       "section": "12.11",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2066",
-        "note": "two recording.feed calls on one track: recording.read shows both chunks in order; that the calls never overlap is shown by native tests of the conference writer only, and room recorders run inline, to be fixed (RMK-2094)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.11-052",
