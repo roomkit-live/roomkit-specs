@@ -476,11 +476,6 @@
       "card": "RMK-2070",
       "note": "step: conference.bot_lost, conference.read: a reported end followed by a bounded, backed-off re-join with no new external event."
     },
-    "RK-12.10.3-031": {
-      "class": "step",
-      "card": "RMK-2070",
-      "note": "step: conference.feed (video): an encoded frame on a subscribed video track decoded by the channel's VideoPipeline; no implementation consumes conference video (RK-12.10.4-018, Planned), suspect RMK-2072."
-    },
     "RK-12.10.3-036": {
       "class": "phase6",
       "card": "RMK-2070",
@@ -1281,11 +1276,6 @@
       "card": "RMK-2076",
       "note": "conference.open, conference.join, conference.publish, then conference.mute, conference.unmute, conference.active_speaker and conference.connection_quality: the timeline holds no event for them."
     },
-    "RK-12.10.7-007": {
-      "class": "writable",
-      "card": "RMK-2076",
-      "note": "subscribe_room, then conference.mute, conference.unmute, conference.active_speaker and conference.connection_quality: the subscribers expectation reads the four ephemeral events; red on Python, which publishes none, and §8.4's type list names none (suspect RMK-2078)."
-    },
     "RK-12.10.7-008": {
       "class": "step",
       "card": "RMK-2076",
@@ -1539,12 +1529,12 @@
     "RK-12.11-051": {
       "class": "writable",
       "card": "RMK-2066",
-      "note": "two recording.feed calls on one track: recording.read shows both chunks in order; that the calls never overlap is shown by native tests of the conference writer only, and room recorders run inline (RMK-2065)."
+      "note": "two recording.feed calls on one track: recording.read shows both chunks in order; that the calls never overlap is shown by native tests of the conference writer only, and room recorders run inline, to be fixed (RMK-2094)."
     },
     "RK-12.11-054": {
       "class": "step",
       "card": "RMK-2066",
-      "note": "step: conference.open with recording and a recorder whose calls a gate holds (LINK-P6U-3: conference.open options, recording.read per conference track): with the recorder's stop held, detach_channel ends and the bot leaves; room recordings are unbounded (RMK-2065)."
+      "note": "step: conference.open with recording and a recorder whose calls a gate holds (LINK-P6U-3: conference.open options, recording.read per conference track): with the recorder's stop held, detach_channel ends and the bot leaves; room recordings are unbounded, to be fixed (RMK-2094)."
     },
     "RK-12.11-055": {
       "class": "step",
@@ -3364,7 +3354,7 @@
     "RK-12.8.10-010": {
       "class": "step",
       "card": "RMK-2062",
-      "note": "step: video.open with a scripted session recorder that refuses to start (VI3): the join fails and the session is never bound, ON_VIDEO_SESSION_STARTED never firing. The .. half is the file recorders' (validate_storage_path, src/roomkit/video/recorder/base.py, which no runner reaches), proven by tests/test_video_recording.py::TestVideoChannelRecordingFailures::test_a_refused_recording_refuses_the_session_before_binding_it with the storage a/../b."
+      "note": "step: video.open with a scripted session recorder that refuses to start (VI3): the VideoChannel join fails and the session is never bound, ON_VIDEO_SESSION_STARTED never firing. The .. half is the file recorders' (validate_storage_path, src/roomkit/video/recorder/base.py, which no runner reaches), proven by tests/test_video_recording.py::TestVideoChannelRecordingFailures::test_a_refused_recording_refuses_the_session_before_binding_it with the storage a/../b."
     },
     "RK-12.8.3-010": {
       "class": "step",
@@ -3444,7 +3434,7 @@
     "RK-12.8.7-013": {
       "class": "writable",
       "card": "RMK-2062",
-      "note": "two video channels with vision on one room and a scripted agent: the turn reads the latest result as one <vision> block, its description, labels and text, and a text that tries to close the block stays inside it; in Python a result with no description reaches no turn (suspect RMK-2063)."
+      "note": "two video channels with vision on one room and a scripted agent: the turn reads the latest result as one <vision> block, its description, labels and text, and a text that tries to close the block stays inside it; a result with no description reaches no turn (RK-12.8.4-015)."
     },
     "RK-12.8.7-014": {
       "class": "writable",
@@ -3460,6 +3450,11 @@
       "class": "step",
       "card": "RMK-2062",
       "note": "step: a realtime session given the video channel's vision results (Python's setup_realtime_vision), with video.open and realtime.start: realtime.read shows the <vision> block as a silent injection (requires video and realtime)."
+    },
+    "RK-12.8.7-018": {
+      "class": "writable",
+      "card": "RMK-2062",
+      "note": "video.open with vision [\"a person waves\", \"\"] and a scripted agent attached to the room: after the second frame the agent's next turn reads no <vision> block; proven natively by tests/test_video_ai_integration.py::TestVisionRidesTheTurnNotes::test_a_result_with_no_description_leaves_the_turn_no_view (RMK-2063)."
     },
     "RK-12.8.8-005": {
       "class": "step",
@@ -3494,7 +3489,7 @@
     "RK-12.8.9-009": {
       "class": "step",
       "card": "RMK-2062",
-      "note": "step: a late joiner on video.open with a read of what it receives (VI2): the joining session receives the source's buffered keyframe on join, before the source sends a new one (suspect RMK-2058)."
+      "note": "step: a late joiner on video.open with a read of the keyframe requests (PLI) the bridged sessions' backend received (VI2): when a session joins, every session already in the room is asked for a keyframe (RMK-2058)."
     },
     "RK-12.8.9-010": {
       "class": "step",
@@ -3504,7 +3499,12 @@
     "RK-12.8.9-011": {
       "class": "step",
       "card": "RMK-2062",
-      "note": "step: the keyframe flag on video.frame (VI2; the runners send keyframes only): a new session receives no delta frame before a keyframe (suspect RMK-2059)."
+      "note": "step: the keyframe flag on video.frame (VI2; the runners send keyframes only): a new session receives no delta frame from a source before its first keyframe, until keyframe_wait_s passes (RMK-2059)."
+    },
+    "RK-12.8.9-014": {
+      "class": "step",
+      "card": "RMK-2062",
+      "note": "step: video.open bridge as a config object and the keyframe flag on video.frame (VI2): with keyframe_wait_s 0 a new session's first delta frame is forwarded at once."
     },
     "RK-13.1-001": {
       "class": "step",

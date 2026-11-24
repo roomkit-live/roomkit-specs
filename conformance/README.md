@@ -1259,7 +1259,8 @@ run's own kit when absent.
 ### Video sessions and room recording
 
 A video scenario requires `video`. The optional `vision` array on `video.open`
-supplies the vision provider's descriptions in order, one per frame. An optional
+supplies the vision provider's descriptions in order, one per frame, an empty
+string a result with no description. An optional
 `detections` array scripts the filter: each event names its `frame_sequence`
 and `kind`, with optional `labels`, `confidence` and `metadata`. The video
 steps await the work the channel scheduled for the input before returning.

@@ -1,9 +1,9 @@
 {
   "version": 1,
-  "rfc_sha256": "40ba7dc5e6da3cbd82842e80ecfc753e293d1b6529dd82f3a3255f3396f9904b",
-  "corpus_sha256": "e42358777da0538c971b0bf345e1a8a6f72eab8cf4209fe651ab3df624525fe0",
+  "rfc_sha256": "ca84b78b4d263a7de00b92b19847e360f2de7364b6d2347ac242a1bd2c3a84ab",
+  "corpus_sha256": "575c244067e5e21ee22a80ce7ad3369d794e20ea23da7627f28cc9f933552a14",
   "python_commit": "91320acb5d3fb53b50ea63d69764fdacc420297b",
-  "scenario_count": 3420,
+  "scenario_count": 3421,
   "sections": [
     {
       "section": "0",
@@ -3399,6 +3399,7 @@
         "video/a-frame-filter-reports-its-detection",
         "video/a-video-session-announces-its-start-and-end",
         "video/a-vision-hook-controls-the-result-that-is-published",
+        "video/a-vision-result-with-no-description-is-not-published",
         "video/the-bridge-obeys-the-frame-hook",
         "voice/a-backchannel-leaves-the-reply-playing",
         "voice/a-bridge-forwards-only-the-frame-the-hook-admits",
@@ -6904,6 +6905,7 @@
         "video/a-frame-filter-reports-its-detection",
         "video/a-video-session-announces-its-start-and-end",
         "video/a-vision-hook-controls-the-result-that-is-published",
+        "video/a-vision-result-with-no-description-is-not-published",
         "video/the-bridge-obeys-the-frame-hook"
       ]
     },
@@ -6949,9 +6951,9 @@
       "section": "12.8.4",
       "title": "Video Processing Pipeline",
       "review": "normative",
-      "requirements": 12,
+      "requirements": 13,
       "mapping": {
-        "unmapped": 12
+        "unmapped": 13
       },
       "decided_gaps": {
         "step": 4,
@@ -6978,9 +6980,9 @@
       "section": "12.8.6",
       "title": "Overlay System",
       "review": "normative",
-      "requirements": 5,
+      "requirements": 6,
       "mapping": {
-        "unmapped": 5
+        "unmapped": 6
       },
       "decided_gaps": {},
       "unannotated_keyword_lines": [],
@@ -6990,13 +6992,13 @@
       "section": "12.8.7",
       "title": "VisionProvider",
       "review": "normative",
-      "requirements": 14,
+      "requirements": 15,
       "mapping": {
-        "unmapped": 14
+        "unmapped": 15
       },
       "decided_gaps": {
         "step": 1,
-        "writable": 5
+        "writable": 6
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
@@ -7019,12 +7021,12 @@
       "section": "12.8.9",
       "title": "VideoBridge",
       "review": "normative",
-      "requirements": 11,
+      "requirements": 12,
       "mapping": {
-        "unmapped": 11
+        "unmapped": 12
       },
       "decided_gaps": {
-        "step": 6,
+        "step": 7,
         "writable": 1
       },
       "unannotated_keyword_lines": [],
@@ -7117,7 +7119,7 @@
       },
       "decided_gaps": {
         "phase6": 1,
-        "step": 11
+        "step": 10
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
@@ -7219,13 +7221,13 @@
       "section": "12.10.7",
       "title": "Conference State Events",
       "review": "normative",
-      "requirements": 11,
+      "requirements": 10,
       "mapping": {
-        "unmapped": 11
+        "unmapped": 10
       },
       "decided_gaps": {
         "step": 7,
-        "writable": 2
+        "writable": 1
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
@@ -33589,6 +33591,12 @@
       }
     },
     {
+      "id": "RK-12.8.4-015",
+      "section": "12.8.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
       "id": "RK-12.8.5-001",
       "section": "12.8.5",
       "mapping": "unmapped",
@@ -33694,6 +33702,12 @@
       "links": []
     },
     {
+      "id": "RK-12.8.6-007",
+      "section": "12.8.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
       "id": "RK-12.8.7-001",
       "section": "12.8.7",
       "mapping": "unmapped",
@@ -33765,7 +33779,7 @@
       "gap": {
         "class": "writable",
         "card": "RMK-2062",
-        "note": "two video channels with vision on one room and a scripted agent: the turn reads the latest result as one <vision> block, its description, labels and text, and a text that tries to close the block stays inside it; in Python a result with no description reaches no turn (suspect RMK-2063)."
+        "note": "two video channels with vision on one room and a scripted agent: the turn reads the latest result as one <vision> block, its description, labels and text, and a text that tries to close the block stays inside it; a result with no description reaches no turn (RK-12.8.4-015)."
       }
     },
     {
@@ -33788,6 +33802,17 @@
         "class": "writable",
         "card": "RMK-2062",
         "note": "video.open with vision and a scripted agent attached to the same room, a frame, then video.disconnect: the agent's next turn reads no vision block."
+      }
+    },
+    {
+      "id": "RK-12.8.7-018",
+      "section": "12.8.7",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "writable",
+        "card": "RMK-2062",
+        "note": "video.open with vision [\"a person waves\", \"\"] and a scripted agent attached to the room: after the second frame the agent's next turn reads no <vision> block; proven natively by tests/test_video_ai_integration.py::TestVisionRidesTheTurnNotes::test_a_result_with_no_description_leaves_the_turn_no_view (RMK-2063)."
       }
     },
     {
@@ -33898,6 +33923,17 @@
       }
     },
     {
+      "id": "RK-12.8.9-014",
+      "section": "12.8.9",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2062",
+        "note": "step: video.open bridge as a config object and the keyframe flag on video.frame (VI2): with keyframe_wait_s 0 a new session's first delta frame is forwarded at once."
+      }
+    },
+    {
       "id": "RK-12.8.9-008",
       "section": "12.8.9",
       "mapping": "unmapped",
@@ -33911,7 +33947,7 @@
       "gap": {
         "class": "step",
         "card": "RMK-2062",
-        "note": "step: a late joiner on video.open with a read of what it receives (VI2): the joining session receives the source's buffered keyframe on join, before the source sends a new one (suspect RMK-2058)."
+        "note": "step: a late joiner on video.open with a read of the keyframe requests (PLI) the bridged sessions' backend received (VI2): when a session joins, every session already in the room is asked for a keyframe (RMK-2058)."
       }
     },
     {
@@ -33933,7 +33969,7 @@
       "gap": {
         "class": "step",
         "card": "RMK-2062",
-        "note": "step: the keyframe flag on video.frame (VI2; the runners send keyframes only): a new session receives no delta frame before a keyframe (suspect RMK-2059)."
+        "note": "step: the keyframe flag on video.frame (VI2; the runners send keyframes only): a new session receives no delta frame from a source before its first keyframe, until keyframe_wait_s passes (RMK-2059)."
       }
     },
     {
@@ -33986,7 +34022,7 @@
       "gap": {
         "class": "step",
         "card": "RMK-2062",
-        "note": "step: video.open with a scripted session recorder that refuses to start (VI3): the join fails and the session is never bound, ON_VIDEO_SESSION_STARTED never firing. The .. half is the file recorders' (validate_storage_path, src/roomkit/video/recorder/base.py, which no runner reaches), proven by tests/test_video_recording.py::TestVideoChannelRecordingFailures::test_a_refused_recording_refuses_the_session_before_binding_it with the storage a/../b."
+        "note": "step: video.open with a scripted session recorder that refuses to start (VI3): the VideoChannel join fails and the session is never bound, ON_VIDEO_SESSION_STARTED never firing. The .. half is the file recorders' (validate_storage_path, src/roomkit/video/recorder/base.py, which no runner reaches), proven by tests/test_video_recording.py::TestVideoChannelRecordingFailures::test_a_refused_recording_refuses_the_session_before_binding_it with the storage a/../b."
       }
     },
     {
@@ -34690,12 +34726,7 @@
       "id": "RK-12.10.3-031",
       "section": "12.10.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2070",
-        "note": "step: conference.feed (video): an encoded frame on a subscribed video track decoded by the channel's VideoPipeline; no implementation consumes conference video (RK-12.10.4-018, Planned), suspect RMK-2072."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.3-032",
@@ -37094,17 +37125,6 @@
       }
     },
     {
-      "id": "RK-12.10.7-007",
-      "section": "12.10.7",
-      "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2076",
-        "note": "subscribe_room, then conference.mute, conference.unmute, conference.active_speaker and conference.connection_quality: the subscribers expectation reads the four ephemeral events; red on Python, which publishes none, and §8.4's type list names none (suspect RMK-2078)."
-      }
-    },
-    {
       "id": "RK-12.10.7-008",
       "section": "12.10.7",
       "mapping": "unmapped",
@@ -38410,7 +38430,7 @@
       "gap": {
         "class": "writable",
         "card": "RMK-2066",
-        "note": "two recording.feed calls on one track: recording.read shows both chunks in order; that the calls never overlap is shown by native tests of the conference writer only, and room recorders run inline (RMK-2065)."
+        "note": "two recording.feed calls on one track: recording.read shows both chunks in order; that the calls never overlap is shown by native tests of the conference writer only, and room recorders run inline, to be fixed (RMK-2094)."
       }
     },
     {
@@ -38433,7 +38453,7 @@
       "gap": {
         "class": "step",
         "card": "RMK-2066",
-        "note": "step: conference.open with recording and a recorder whose calls a gate holds (LINK-P6U-3: conference.open options, recording.read per conference track): with the recorder's stop held, detach_channel ends and the bot leaves; room recordings are unbounded (RMK-2065)."
+        "note": "step: conference.open with recording and a recorder whose calls a gate holds (LINK-P6U-3: conference.open options, recording.read per conference track): with the recorder's stop held, detach_channel ends and the bot leaves; room recordings are unbounded, to be fixed (RMK-2094)."
       }
     },
     {

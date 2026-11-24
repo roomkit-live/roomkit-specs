@@ -4686,7 +4686,8 @@
       "video/a-video-session-announces-its-start-and-end": "64dfa20da77ba17081be8d613df295c4d3ec25039be6d28649549184518b8647"
     },
     "RK-12.8.11-006": {
-      "video/a-vision-hook-controls-the-result-that-is-published": "cc76a8ce56ae5ad136cf6e473d1dd3213139a0d0452e39f5ae73fa2ca0d5eeff"
+      "video/a-vision-hook-controls-the-result-that-is-published": "dc07fed3a491d4c338bdfb12efca1a6a04d5cd1d808b353664e642d6c7030dbd",
+      "video/a-vision-result-with-no-description-is-not-published": "dc07fed3a491d4c338bdfb12efca1a6a04d5cd1d808b353664e642d6c7030dbd"
     },
     "RK-12.8.11-007": {
       "video/a-frame-filter-reports-its-detection": "5a2c363ccf204555853efe43895ebeb85fb4f147ff517b68cdd57ec3715270e0"
@@ -4713,7 +4714,11 @@
       "video/a-vision-hook-controls-the-result-that-is-published": "e8b54e21a98c87f311f7c3ffe1278a2134a1078ac42b56dc39172248f658922d"
     },
     "RK-12.8.4-012": {
-      "video/a-vision-hook-controls-the-result-that-is-published": "f3825d85111d1a46f6092f8866c3aed50574b9e15bf67b8132e6bdaa00f13b68"
+      "video/a-vision-hook-controls-the-result-that-is-published": "f8f15c9c8e0cbfde515bb8e71303d5282ebc28aff445ff85ef1b96764f380451",
+      "video/a-vision-result-with-no-description-is-not-published": "f8f15c9c8e0cbfde515bb8e71303d5282ebc28aff445ff85ef1b96764f380451"
+    },
+    "RK-12.8.4-015": {
+      "video/a-vision-result-with-no-description-is-not-published": "9414f526107e202e979c2c4121fb776c2213fc486c6c071ff7afe07e9c010e6e"
     },
     "RK-12.8.9-003": {
       "video/the-bridge-obeys-the-frame-hook": "22e4d10c114a9a61b4cc1618844ba350b1b124628c90481d9a2bc65a7b605a75"

@@ -813,63 +813,63 @@
     },
     {
       "section": "12.8.2",
-      "sha256": "a17638cd8d747c1b20270e64f5e70847367b4f7e7acc4a996d9e7f4b10a72bd0",
+      "sha256": "b1d223db80325c8992942ed46657d84e9c98f66898c808d66fb840a1cd45c27c",
       "classification": "normative",
-      "review": "Source inventory: Video Data Models, split to one obligation per unit, each with its level (RMK-2057): RK-12.8.2-005, the VideoFrame fields (structural), and RK-12.8.2-006, its derived is_encoded and is_raw (the model block is cut before them by closing and reopening its fence, two bare fence lines); RK-12.8.2-002 to 004 kept, VideoChunk, VideoSession and the VideoCapability flags (structural). Every unit carries its level."
+      "review": "Source inventory: Video Data Models, split to one obligation per unit, each with its level (RMK-2057): RK-12.8.2-005, the VideoFrame fields (structural), and RK-12.8.2-006, its derived is_encoded and is_raw (the model block is cut before them by closing and reopening its fence, two bare fence lines); RK-12.8.2-002 to 004 kept, VideoChunk, VideoSession and the VideoCapability flags (structural). Every unit carries its level. Amended on the probes of lot P6-S3 (RMK-2093), to what Python does: VideoFrame's timestamp_ms nullable, null by default, its codec h264 and 640 by 480 by default; VideoChunk's same defaults; VideoCapability's NONE (RMK-2061)."
     },
     {
       "section": "12.8.3",
-      "sha256": "4e601bbd7fd49434fcf993a23afd9649378a3fbb326d37701dc7fb780552ed9b",
+      "sha256": "bba1f04cb7a3aebfe2e9cf3aa4cf1f5f37122230d36923e93b06d6d30d6632ea",
       "classification": "normative",
-      "review": "Source inventory: VideoBackend Interface, split to one obligation per unit, each with its level (RMK-2057): RK-12.8.3-001 kept, the VideoBackend interface (structural); RK-12.8.3-005 and 006, the required LocalVideoBackend and ScreenCaptureBackend, retired: the RFC requires no backend by name (decision D8, RMK-2080); RK-12.8.3-003 kept, backends for any transport as a may, a local camera and a screen capture among its examples; RK-12.8.3-007 to 014, combined audio/video backends (a voice backend whose calls may carry video, no object implementing both interfaces, the AudioVideoBackend interface, the call's lifecycle, the video facet's sessions and callbacks, video never starting on its own, the facet creating no session, the audio/video channel's hooks). Every unit carries its level."
+      "review": "Source inventory: VideoBackend Interface, split to one obligation per unit, each with its level (RMK-2057): RK-12.8.3-001 kept, the VideoBackend interface (structural); RK-12.8.3-005 and 006, the required LocalVideoBackend and ScreenCaptureBackend, retired: the RFC requires no backend by name (decision D8, RMK-2080); RK-12.8.3-003 kept, backends for any transport as a may, a local camera and a screen capture among its examples; RK-12.8.3-007 to 014, combined audio/video backends (a voice backend whose calls may carry video, no object implementing both interfaces, the AudioVideoBackend interface, the call's lifecycle, the video facet's sessions and callbacks, video never starting on its own, the facet creating no session, the audio/video channel's hooks). Every unit carries its level. Amended on the probes of lot P6-S3 (RMK-2093), to what Python does: VideoBackend's accept(session, connection) binding an outside connection to a session the channel created, get_video_session, add_video_tap and set_trace_emitter (RMK-2061). Review fixes of lot P6-S3 (RMK-2093): accept is refused by a backend that takes no outside connection; add_video_tap a no-op on a backend that offers no taps; send_video takes bytes or a stream of VideoChunk."
     },
     {
       "section": "12.8.4",
-      "sha256": "beeab6f24f0543e491fee39dcc722e8a442f54802f3e720feb0d3d1f89fe5253",
+      "sha256": "98f5e44e40c4f966e27e64d257539b5ed56531fc38905ba20b5bea13bf482e53",
       "classification": "normative",
-      "review": "Source inventory: Video Processing Pipeline, split to one obligation per unit, each with its level (RMK-2057): RK-12.8.4-001 kept, VideoPipelineConfig (structural); RK-12.8.4-004 to 008, the VideoPipeline orchestrator (process_inbound's procedure, process_vision, drain_events, update_filter_context, reset and close; the block cut at its members by closing and reopening its fence, eight bare fence lines); RK-12.8.4-009 to 014, the inbound processing flow (the four stages, the vision analysis, the filter context it updates, the ON_VISION_RESULT hook, the AI channels' context, the recorder tap; ten bare fence lines). Every unit carries its level."
+      "review": "Source inventory: Video Processing Pipeline, split to one obligation per unit, each with its level (RMK-2057): RK-12.8.4-001 kept, VideoPipelineConfig (structural); RK-12.8.4-004 to 008, the VideoPipeline orchestrator (process_inbound's procedure, process_vision, drain_events, update_filter_context, reset and close; the block cut at its members by closing and reopening its fence, eight bare fence lines); RK-12.8.4-009 to 014, the inbound processing flow (the four stages, the vision analysis, the filter context it updates, the ON_VISION_RESULT hook, the AI channels' context, the recorder tap; ten bare fence lines). Every unit carries its level. Amended on the probes of lot P6-S3 (RMK-2093), to what Python does: VideoPipelineConfig's recording_config nullable, the recorder not started without one; VideoPipeline's aclose() (RMK-2061); a vision result with a description fires ON_VISION_RESULT, and RK-12.8.4-015 (new): one whose description is empty is not published, no hook, no video_vision_result event, no AI turn, the filter context still taking it (RMK-2063). Review fixes of lot P6-S3 (RMK-2093): VideoChannel starts the recorder only with both recorder and recording_config (the audio/video channels never do, HITL 9bfe81d1, RMK-2097); RK-12.8.4-015 is about the result the vision provider returns."
     },
     {
       "section": "12.8.5",
-      "sha256": "1050f01ea161aa57b9a6d62e81d15f9a0847cef0ae62f34b87d2c7f067e4fb9f",
+      "sha256": "4c76ac773c8e66e4a79f20c06005967792f518c59987d2355eb63b79bef55e3c",
       "classification": "normative",
-      "review": "Source inventory: Pipeline Stage Providers, split to one obligation per unit, each with its level (RMK-2057): RK-12.8.5-001 to 003 kept, the decoder, resizer and encoder interfaces (structural); RK-12.8.5-008 to 010, the transform interface, pixels changed and dimensions kept, transforms chained in order; RK-12.8.5-011 to 013, the filter interface, a filter that may replace a frame, the FilterContext it receives; RK-12.8.5-006 kept, FilterContext (structural). Every unit carries its level."
+      "review": "Source inventory: Pipeline Stage Providers, split to one obligation per unit, each with its level (RMK-2057): RK-12.8.5-001 to 003 kept, the decoder, resizer and encoder interfaces (structural); RK-12.8.5-008 to 010, the transform interface, pixels changed and dimensions kept, transforms chained in order; RK-12.8.5-011 to 013, the filter interface, a filter that may replace a frame, the FilterContext it receives; RK-12.8.5-006 kept, FilterContext (structural). Every unit carries its level. Amended on the probes of lot P6-S3 (RMK-2093), to what Python does: VideoDecoderProvider's decode_for_session and reset_session, VideoFilterProvider's reset_session (RMK-2061)."
     },
     {
       "section": "12.8.6",
-      "sha256": "61a83a9f6b15e9adf19c22a98c2c2955a086ab4eaf9d8b2f45c7d311393a84df",
+      "sha256": "0d27d5164c9e17bf9cd81dccf02147b311c0fc74100190aa6d85552ec7d042f1",
       "classification": "normative",
-      "review": "Source inventory: Overlay System, split to one obligation per unit, each with its level (RMK-2057): RK-12.8.6-001 and 002 kept, Overlay and OverlayPosition (structural); RK-12.8.6-004 to 006, the OverlayRenderer interface, the four renderers, the overlay filter stage. Every unit carries its level."
+      "review": "Source inventory: Overlay System, split to one obligation per unit, each with its level (RMK-2057): RK-12.8.6-001 and 002 kept, Overlay and OverlayPosition (structural); RK-12.8.6-004 to 006, the OverlayRenderer interface, the four renderers, the overlay filter stage. Every unit carries its level. Amended on the probes of lot P6-S3 (RMK-2093), to what Python does: Overlay's types text, image and rich, text and BOTTOM_CENTER by default; the three renderers; the OverlayFilter, a VideoFilterProvider; RK-12.8.6-007 (new): live subtitles a text overlay SubtitleManager keeps updated from ON_TRANSCRIPTION (RMK-2060). Review fixes of lot P6-S3 (RMK-2093): Overlay's content is text or markup, or an image's PNG or JPEG bytes."
     },
     {
       "section": "12.8.7",
-      "sha256": "8256169842010931da5cd809d6c6aa68ccbe9515ef40da3a60e80605fbb7d90d",
+      "sha256": "2f03a882b106526de0f3a4ef00cfc150554b17ed7bf9cf778e04e9a05c052dc0",
       "classification": "normative",
-      "review": "Source inventory: VisionProvider, split to one obligation per unit, each with its level (RMK-2057): RK-12.8.7-001 kept, the VisionProvider interface (structural); RK-12.8.7-007 to 010, the response schema (the rules of §6.7, a provider that supports it, one that does not, the consumer that passes one); RK-12.8.7-003 and 004 kept, VisionResult and FaceDetection (structural); RK-12.8.7-011 to 017, the AI integration (no wiring, the turn's notes and never the prompt or the binding, the <vision> block of the latest result, none in a standalone turn, the result ending with its session, the realtime silent injection, setup_video_vision deprecated). Every unit carries its level."
+      "review": "Source inventory: VisionProvider, split to one obligation per unit, each with its level (RMK-2057): RK-12.8.7-001 kept, the VisionProvider interface (structural); RK-12.8.7-007 to 010, the response schema (the rules of §6.7, a provider that supports it, one that does not, the consumer that passes one); RK-12.8.7-003 and 004 kept, VisionResult and FaceDetection (structural); RK-12.8.7-011 to 017, the AI integration (no wiring, the turn's notes and never the prompt or the binding, the <vision> block of the latest result, none in a standalone turn, the result ending with its session, the realtime silent injection, setup_video_vision deprecated). Every unit carries its level. Review fixes of lot P6-S3 (RMK-2093): RK-12.8.7-018 (new): a result returned with an empty description ends that session's view, no turn reading what it showed before (HITL 2017e95e, roomkit fix)."
     },
     {
       "section": "12.8.8",
-      "sha256": "690e81a68d23f0c5e1342498049c4c367a67d7e5cd6f8a188f999bb37bac6209",
+      "sha256": "89f19558400b4c922f4285ccb08fdf2b2ad74e3372c90affd3d47e9556a292d0",
       "classification": "normative",
-      "review": "Source inventory: AvatarProvider (Lip-Sync Video Generation), split to one obligation per unit, each with its level (RMK-2057): RK-12.8.8-001 kept, the AvatarProvider interface (structural); RK-12.8.8-003 and 004, the synchronous and asynchronous delivery modes; RK-12.8.8-005 and 006, the avatar wired as an outbound audio tap of AudioVideoChannel, its frames encoded and sent through the video backend. Every unit carries its level."
+      "review": "Source inventory: AvatarProvider (Lip-Sync Video Generation), split to one obligation per unit, each with its level (RMK-2057): RK-12.8.8-001 kept, the AvatarProvider interface (structural); RK-12.8.8-003 and 004, the synchronous and asynchronous delivery modes; RK-12.8.8-005 and 006, the avatar wired as an outbound audio tap of AudioVideoChannel, its frames encoded and sent through the video backend. Every unit carries its level. Amended on the probes of lot P6-S3 (RMK-2093), to what Python does: AvatarProvider's is_started (RMK-2061). Review fixes of lot P6-S3 (RMK-2093): AvatarProvider's fps is an int."
     },
     {
       "section": "12.8.9",
-      "sha256": "f3005c9903236962cbeccab50b7be5d3f7ab9f0016c6ab7bb9fc9b64a34ed28c",
+      "sha256": "4dc9f78baae2d9b4ef1a9e95e926353b12a772d5e6cf0f7dae2de0322a7923c4",
       "classification": "normative",
-      "review": "Source inventory: VideoBridge, split to one obligation per unit, each with its level (RMK-2057): RK-12.8.9-003, frames forwarded between the sessions of a room; RK-12.8.9-004 to 007, the VideoBridgeConfig fields enabled, max_participants, forwarding_strategy and keyframe_interval_s with their defaults (structural; the config block cut at its fields by closing and reopening its fence, six bare fence lines); RK-12.8.9-008, the VideoBridge interface (structural); RK-12.8.9-009 to 013, the key behaviours, one per list item (keyframe buffering for late joiners, periodic PLI, delta frame gating, thread safety, the BEFORE_BRIDGE_VIDEO hook). Every unit carries its level."
+      "review": "Source inventory: VideoBridge, split to one obligation per unit, each with its level (RMK-2057): RK-12.8.9-003, frames forwarded between the sessions of a room; RK-12.8.9-004 to 007, the VideoBridgeConfig fields enabled, max_participants, forwarding_strategy and keyframe_interval_s with their defaults (structural; the config block cut at its fields by closing and reopening its fence, six bare fence lines); RK-12.8.9-008, the VideoBridge interface (structural); RK-12.8.9-009 to 013, the key behaviours, one per list item (keyframe buffering for late joiners, periodic PLI, delta frame gating, thread safety, the BEFORE_BRIDGE_VIDEO hook). Every unit carries its level. Amended on the probes of lot P6-S3 (RMK-2093), to what Python does: RK-12.8.9-009: a keyframe request to every session already in the room when a session joins, no earlier keyframe replayed (RMK-2058); RK-12.8.9-011: the delta hold bounded by keyframe_wait_s, then forwarded with a warning; keyframe_interval_s 0 turning the periodic requests off; RK-12.8.9-014 (new): keyframe_wait_s, 1.0 by default, 0 no hold (RMK-2059). Review fixes of lot P6-S3 (RMK-2093): the gate drops a source's deltas to a target until that source's first keyframe reaches it, per source and target, at most keyframe_wait_s from the first delta dropped, then lets them through with one warning; keyframe_interval_s 0 turns the periodic requests off only."
     },
     {
       "section": "12.8.10",
-      "sha256": "24fd0d06bfd82b980df00815fcc15da2359ceef75667d53e58eef6bd119ff5d2",
+      "sha256": "fedba07081633d05f659aa433a7b7d4ebc8e3b7356c971922d04b763cd1bd38f",
       "classification": "normative",
-      "review": "Source inventory: Video Recording, split to one obligation per unit, each with its level (RMK-2057): RK-12.8.10-005, VideoRecordingConfig (structural); RK-12.8.10-006 to 010, the session recorder's encryption (applied when set and not required, encryption at stop and close, an unencryptable file deleted, storage encrypted at rest, the configuration error and the refused recording that fails the join); RK-12.8.10-011, the VideoRecorder interface (structural); RK-12.8.10-002 kept, VideoRecordingResult (structural); RK-12.8.10-004 kept, the scope (the recorder of one session; a conference records through §12.11). Every unit carries its level."
+      "review": "Source inventory: Video Recording, split to one obligation per unit, each with its level (RMK-2057): RK-12.8.10-005, VideoRecordingConfig (structural); RK-12.8.10-006 to 010, the session recorder's encryption (applied when set and not required, encryption at stop and close, an unencryptable file deleted, storage encrypted at rest, the configuration error and the refused recording that fails the join); RK-12.8.10-011, the VideoRecorder interface (structural); RK-12.8.10-002 kept, VideoRecordingResult (structural); RK-12.8.10-004 kept, the scope (the recorder of one session; a conference records through §12.11). Every unit carries its level. Amended on the probes of lot P6-S3 (RMK-2093), to what Python does: VideoRecordingConfig's storage the directory the recorder writes to, as in Section 12.3.7, empty by default for the recorder's documented default (RMK-2061, RMK-2030). Review fixes of lot P6-S3 (RMK-2093): RK-12.8.10-010's refused recording fails the join in VideoChannel (HITL 9bfe81d1)."
     },
     {
       "section": "12.8.11",
-      "sha256": "ac1c3b2bdde89135beed779c5835a4f196de877f5b4efe06a8c94ce766bf4bb8",
+      "sha256": "e7885c11aa8aa826293880c00f531a22d44d2635add629d6daa20449918057da",
       "classification": "normative",
-      "review": "Source inventory: Video Hooks, split to one obligation per unit, each with its level (RMK-2057): RK-12.8.11-002 to 010, one unit per row of the hooks table, the two Planned track rows included. Every unit carries its level."
+      "review": "Source inventory: Video Hooks, split to one obligation per unit, each with its level (RMK-2057): RK-12.8.11-002 to 010, one unit per row of the hooks table, the two Planned track rows included. Every unit carries its level. Amended on the probes of lot P6-S3 (RMK-2093), to what Python does: ON_VISION_RESULT runs for a result with a description (RMK-2063)."
     },
     {
       "section": "12.9",
@@ -897,9 +897,9 @@
     },
     {
       "section": "12.10.3",
-      "sha256": "8680b32e3478bd2dce16174893bdf46989779e3affc4135d5f6ee6f8e579d376",
+      "sha256": "d9304ab453a4e0e222c77bc071c3db469db1069182cdfaac461729749fd82f32",
       "classification": "normative",
-      "review": "Source inventory: ConferenceBackend Interface, split to one obligation per unit, each with its level (RMK-2068): the interface block cut at ensure_room (idempotent) and publish_video (requires VIDEO_PUBLISH) by closing and reopening its fence (eight bare fence lines), its other members kept as structural units; presence through a connection and the join's catch-up; the bot's own connection (the backend's report, the channel's handling, no silent drop, report after disconnect, a session whose disconnect fails kept, the discontinuity, the integrator's unaccounted window as non_testable, the re-join); frame delivery and publishing; stopping playback; mute transitions; track subscription; bot grants; display names; participant attributes (a backend whose SFU carries none ignoring them in a unit of its own); moderation; the abstraction boundary; the required MockConferenceBackend and the permitted further SFU backends (may). RK-12.10.3-007 and 013 kept; RK-12.10.3-015 to 065 new; 015 lists address_keys since RMK-2080. Rationale is folded into the unit it explains. Every unit carries its level."
+      "review": "Source inventory: ConferenceBackend Interface, split to one obligation per unit, each with its level (RMK-2068): the interface block cut at ensure_room (idempotent) and publish_video (requires VIDEO_PUBLISH) by closing and reopening its fence (eight bare fence lines), its other members kept as structural units; presence through a connection and the join's catch-up; the bot's own connection (the backend's report, the channel's handling, no silent drop, report after disconnect, a session whose disconnect fails kept, the discontinuity, the integrator's unaccounted window as non_testable, the re-join); frame delivery and publishing; stopping playback; mute transitions; track subscription; bot grants; display names; participant attributes (a backend whose SFU carries none ignoring them in a unit of its own); moderation; the abstraction boundary; the required MockConferenceBackend and the permitted further SFU backends (may). RK-12.10.3-007 and 013 kept; RK-12.10.3-015 to 065 new; 015 lists address_keys since RMK-2080. Rationale is folded into the unit it explains. Every unit carries its level. Amended on the probes of lot P6-S3 (RMK-2093), to what Python does: RK-12.10.3-031: the decoder stage applies to encoded conference video once a channel consumes it, Planned as RK-12.10.4-018 (RMK-2072)."
     },
     {
       "section": "12.10.4",
@@ -921,9 +921,9 @@
     },
     {
       "section": "12.10.7",
-      "sha256": "0bc0abf2a93bee43209e543263699f0f653bd1638d66f96085069fbbe85de9b9",
+      "sha256": "6d0f52db194b13ff27d06145cdc9dd9c125554a026ff65d030d1648a9f29ce3f",
       "classification": "normative",
-      "review": "Source inventory: Conference State Events, split to one obligation per unit, each with its level (RMK-2075): RK-12.10.7-004 and 005, the conference hooks and the screen-share pair (the CONFERENCE_ prefix folded in); RK-12.10.7-006 and 007, media state never stored and published as ephemeral events, a should; RK-12.10.7-008 to 014, the framework events table one row per unit, and the bot_session_id on conference_ended (the note on conference_started folded in) and on conference_started. Every unit carries its level."
+      "review": "Source inventory: Conference State Events, split to one obligation per unit, each with its level (RMK-2075): RK-12.10.7-004 and 005, the conference hooks and the screen-share pair (the CONFERENCE_ prefix folded in); RK-12.10.7-006 and 007, media state never stored and published as ephemeral events, a should; RK-12.10.7-008 to 014, the framework events table one row per unit, and the bot_session_id on conference_ended (the note on conference_started folded in) and on conference_started. Every unit carries its level. Amended on the probes of lot P6-S3 (RMK-2093), to what Python does: high-frequency media state is not stored as RoomEvents and the conference hooks carry it (RK-12.10.7-006); RK-12.10.7-007, the SHOULD of four ephemeral types §8.4 does not name, is retired (RMK-2078)."
     },
     {
       "section": "12.10.8",
@@ -945,9 +945,9 @@
     },
     {
       "section": "12.10.11",
-      "sha256": "7daeb6492054c0b25320c35a4042336debb27418cf2041f9eb85a7cff9486d80",
+      "sha256": "58b7f89da9177d58689f7b5051c26c0306c6ebd0f4f551fbb2664531ced6ef6e",
       "classification": "normative",
-      "review": "Source inventory: Conformance, split to one obligation per unit, each with its level (RMK-2075): RK-12.10.11-002, a may, conference support as OPTIONAL within Conformance Level 3 (the MUST checklist folded in); RK-12.10.11-003, a should, vision analysis on video and screen-share tracks, Planned (the remaining checklists folded in). The folded checklists restate obligations stated, levelled and counted in §12.10.1 to §12.10.12, §12.4 and §17.7, and are not counted twice; the egress delegation left the checklist with the mode (RMK-2080). Every unit carries its level."
+      "review": "Source inventory: Conformance, split to one obligation per unit, each with its level (RMK-2075): RK-12.10.11-002, a may, conference support as OPTIONAL within Conformance Level 3 (the MUST checklist folded in); RK-12.10.11-003, a should, vision analysis on video and screen-share tracks, Planned (the remaining checklists folded in). The folded checklists restate obligations stated, levelled and counted in §12.10.1 to §12.10.12, §12.4 and §17.7, and are not counted twice; the egress delegation left the checklist with the mode (RMK-2080). Every unit carries its level. Review fixes of lot P6-S3 (RMK-2093): the SHOULD checklist surfaces active speaker and connection quality through the conference hooks (§12.10.7), not as ephemeral events (RMK-2078)."
     },
     {
       "section": "12.10.12",
