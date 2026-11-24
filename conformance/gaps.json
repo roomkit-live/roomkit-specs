@@ -586,11 +586,6 @@
       "card": "RMK-2007",
       "note": "step: a channel's own store operation (a conference roster write, under the framework's hold on the store) held until the kit's close waits for it after the channels closed, and the store's release recorded against it; a store_fault gate holds the write, but no step orders the release after it."
     },
-    "RK-12.10.4-032": {
-      "class": "step",
-      "card": "RMK-2007",
-      "note": "step: a channel's own store operation held past the close's last unwind, the store released under it and its write failing; its log line is no step's to read."
-    },
     "RK-12.10.4-033": {
       "class": "step",
       "card": "RMK-2007",

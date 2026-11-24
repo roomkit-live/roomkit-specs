@@ -4036,6 +4036,9 @@
     "RK-12.10.4-030": {
       "kit-close/a-channel-whose-close-fails-holds-no-other-back-and-fails-the-close-last": "724d726b8be24a8d918606e10b1501cfc32378dc29b4f7c728486ecc46b84fba"
     },
+    "RK-12.10.4-032": {
+      "kit-close/a-channel-s-write-still-in-the-store-past-the-close-s-unwind-fails-under-it": "ccb5d72e98380566beb17315b62ee90442de768df29b6b77ac8570db7f232cd3"
+    },
     "RK-12.10.4-034": {
       "tasks/nonempty-task-and-observation-reads-remain-available-during-close": "b5e0e80a7cfaf4cb9c48e38a42a284be1ec560d33d8ec9f3590bfb1d1ca819ad"
     },
