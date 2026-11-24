@@ -8,7 +8,6 @@
   "requirements": [
     "RK-12.2-030"
   ],
-  "notes": "The BEFORE_TTS observer makes the channel check, then synthesize, the reply sentence by sentence (§12.2 step 12s.b), so the TTS receives each sentence once per session.",
   "requires_features": [
     "voice"
   ],
@@ -16,13 +15,6 @@
     "rooms": [
       {
         "id": "r1"
-      }
-    ],
-    "hooks": [
-      {
-        "name": "checked",
-        "trigger": "before_tts",
-        "execution": "sync"
       }
     ]
   },
