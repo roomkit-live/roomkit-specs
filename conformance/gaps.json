@@ -3026,6 +3026,11 @@
       "card": "RMK-2049",
       "note": "step: an agent as the ReasoningBackend (S10), and the voice session's span among the kinds telemetry.spans reads."
     },
+    "RK-12.4.1-086": {
+      "class": "step",
+      "card": "RMK-2049",
+      "note": "step: a realtime channel with no ReasoningBackend whose model delegates to the integrator, and a read of the delegation outputs submitted to the provider (S8)."
+    },
     "RK-12.4.2-004": {
       "class": "step",
       "card": "RMK-2049",
