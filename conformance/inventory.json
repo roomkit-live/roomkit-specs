@@ -723,7 +723,7 @@
     },
     {
       "section": "12.4.1",
-      "sha256": "f4a5f8bc9cb8682a12caefa30bfff6b621b612baed194b65456dd96d5bef6038",
+      "sha256": "415ca1af612bc397a45bb8b90b787d37568344b1d4f757b0a13dcca962383feb",
       "classification": "normative",
       "review": "Source inventory: Full-Duplex Providers and Reasoning Delegation, split to one obligation per unit, each with its level (RMK-2047). RK-12.4.1-011, a full-duplex provider declares full_duplex (the definitions folded in), what binds only such a provider and what binds the framework in every realtime session (RMK-2056), 012 may, support optional within Conformance Level 3, and 013, a delegation's backend may itself delegate a task (§23); 014 to 019, the synthesized boundaries (014, 015 and 017 bind the provider: 017 may, synthesized speech edges; 016, the 800 ms default, retired as a vendor's wire value (D2, RMK-2080); 018, the channel observes them; 019, a latency metric accounts for their lag); 020 to 024, an answer awaited starts with the model's output, for every host of a realtime model; 025 to 030, interruption belongs to the model (026 binds the provider; 030 should, the notice where the VAD is configured); 031 and 032, the output is a stream (032, the recorder keeps its silence); 033 to 037, the session fixed at start (033, 035 (should), 036 and 037 bind the provider; 034, the orchestration chooses an append); 038 to 041 and 085, text injection is paraphrased (038 non_testable, what inject_text documents; 039 to 041 and 085 bind the provider); 042 to 044, the hosted backend (043 and 044 bind the provider); 045 to 081, the integrator backend: 045 and 046 bind the provider; 047, the channel serves the integrator target; 048 to 051, the ReasoningBackend contract (048 and 051 structural; 049, the request; 050, a call's outcome); 052 to 059, the transcript, the outputs, the ledger (055 in a conference), the fallback answer, ON_ERROR and the expected ends (059 should, the provider's instructions); 086, the spoken fallback of a channel with no ReasoningBackend (RMK-2092); 060 to 070, the gate and the tool loop's rules (063 should); 071 to 081, a backend that is an agent; 082 to 084, observability (083 and 084 bind the provider). The ReasoningBackend code block is cut by closing and reopening its fence (3 cuts, 6 bare fence lines). Vendor cleanup (RMK-1991): the full-duplex provider's example names no model. Every unit carries its level."
     },
@@ -735,9 +735,9 @@
     },
     {
       "section": "12.5",
-      "sha256": "427ced07ce0f5222c8c13ae66fef59cb03afe4cc915f3538ef9dbb5f3e1167ea",
+      "sha256": "6236384bd0ebcec151c8d584f4d8400cdc229f9a9d5d4304d65efb9843ca28b1",
       "classification": "normative",
-      "review": "Source inventory: Voice Hooks, split to one obligation per unit, each with its level (RMK-2036): RK-12.5-003 to 028, one unit per row of the voice hooks table, each the hook's type and source, the Use Case column informative and the table's purpose folded into the first; RK-12.5-029 to 031, the audio level hooks (independent of VAD, the throttle as a should, the AudioLevelEvent payload, structural). Every unit carries its level."
+      "review": "Source inventory: Voice Hooks, split to one obligation per unit, each with its level (RMK-2036): RK-12.5-003 to 028, one unit per row of the voice hooks table, each the hook's type and source, the Use Case column informative and the table's purpose folded into the first; RK-12.5-029 to 031, the audio level hooks (independent of VAD, the throttle as a should, the AudioLevelEvent payload, structural). The BEFORE_BRIDGE_AUDIO row names the VoiceChannel as its source, as §12.7.6 does (RMK-2050). Every unit carries its level."
     },
     {
       "section": "12.6",
@@ -783,9 +783,9 @@
     },
     {
       "section": "12.7.6",
-      "sha256": "361e1a397ade3606f60846a79f2bcd78c7f183f72fe5d4147e352ae6a63a0a8a",
+      "sha256": "0fd6aeb824acf5615ae4f4f4b464c5fae904683d9dc2157ca38593c927acf75d",
       "classification": "normative",
-      "review": "Source inventory: Hooks, split to one obligation per unit, each with its level (RMK-2048): RK-12.7.6-001, the BEFORE_BRIDGE_AUDIO row of the hooks table; RK-12.7.6-004 to 007, the hook per frame, its payload, block and modify; RK-12.7.6-008 to 011, the existing hooks that still fire in bridge mode, one per list item; RK-12.7.6-012 to 014, the note (a SYNC hook run per frame outside the audio callback path, where set_bridge_filter runs; handlers under 1 ms and no long-running operation, both the integrator's non_testable; RMK-2050, which also names the VoiceChannel in the table's Source column). Every unit carries its level."
+      "review": "Source inventory: Hooks, split to one obligation per unit, each with its level (RMK-2048): RK-12.7.6-001, the BEFORE_BRIDGE_AUDIO row of the hooks table; RK-12.7.6-004 to 007, the hook per frame, its payload, block and modify; RK-12.7.6-008 to 011, the existing hooks that still fire in bridge mode, one per list item; RK-12.7.6-012 to 014, the note (a SYNC hook run per frame outside the audio callback path; set_bridge_filter, which fires no hook, in that path only where no such hook is registered; handlers under 1 ms and no long-running operation, both the integrator's non_testable; RMK-2050, which also names the VoiceChannel in the table's Source column). Every unit carries its level."
     },
     {
       "section": "12.7.7",

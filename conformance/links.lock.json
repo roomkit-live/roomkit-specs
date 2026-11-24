@@ -4609,7 +4609,7 @@
       "media/an-emitted-protocol-trace-reaches-its-room-observer": "8ea25cfcd7dccf4d27663a4dc0301bc76a9965136c9bda1d3e13f2471d2119aa"
     },
     "RK-12.5-028": {
-      "voice/a-bridge-forwards-only-the-frame-the-hook-admits": "2c20d95a44fd00c261e652c2ceb1ca810105247f9e7250fc61f9852061b75539"
+      "voice/a-bridge-forwards-only-the-frame-the-hook-admits": "c995a56c539c982ee3372cc6a60cbc798e055b6d05cae4281ae7976cf86c6aaa"
     },
     "RK-12.5-029": {
       "voice/input-frames-report-an-audio-level": "cf2f25ca101f3d0eb9ac34f9de14adebbf1174ac99b6b716fe0d62cae8401ac3",
@@ -4668,7 +4668,7 @@
       "voice/a-bridge-forwards-only-the-frame-the-hook-admits": "58fcab74e831b5cbb9621d15a55e846381e0fc10160dd287dfb94785628deadb"
     },
     "RK-12.7.6-012": {
-      "voice/a-bridge-hook-runs-outside-the-call-that-delivers-the-frame": "a935f921082f241ab3f4fdd8b449a83cedfbb1f40a0e30f367a001c445427e3c"
+      "voice/a-bridge-hook-runs-outside-the-call-that-delivers-the-frame": "7ccdb7a770309e4e019f46771d04d3f88badb07982eac952dbf6b93a703d99ed"
     },
     "RK-12.7.8-003": {
       "voice/a-bridge-forwards-only-the-frame-the-hook-admits": "2d72a27969888059ea189545fda06d721a2dd9fe6c5343b7b5bb26bdc22bc2c2"
