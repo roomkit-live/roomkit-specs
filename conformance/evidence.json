@@ -7684,21 +7684,21 @@
           "scenario": "store/concurrent-commits-take-each-rooms-own-sequence",
           "pointer": "/steps/0/expect",
           "sha256": "672858c295214f4ee6c1880bdcd50d40616a30d5e030d824941612ceb7068925",
-          "scenario_sha256": "71ee6d3ce097fcb3487c8b810e2a965916f90d81afeaf550d184eab315b47e0e",
+          "scenario_sha256": "c72cae23fcaf66041d7be3fb159705fbb40a7ebade057b870cf331b62eac7ff8",
           "proves": "The public call returns the stated result or refusal; event identity, replay flags and counters are compared where named."
         },
         {
           "scenario": "store/concurrent-commits-take-each-rooms-own-sequence",
           "pointer": "/steps/1/expect",
           "sha256": "672858c295214f4ee6c1880bdcd50d40616a30d5e030d824941612ceb7068925",
-          "scenario_sha256": "71ee6d3ce097fcb3487c8b810e2a965916f90d81afeaf550d184eab315b47e0e",
+          "scenario_sha256": "c72cae23fcaf66041d7be3fb159705fbb40a7ebade057b870cf331b62eac7ff8",
           "proves": "The public call returns the stated result or refusal; event identity, replay flags and counters are compared where named."
         },
         {
           "scenario": "store/concurrent-commits-take-each-rooms-own-sequence",
           "pointer": "/expect",
           "sha256": "f24586993cfc040d68f1d113c082ed2bea494264fb1faa0db19af3667cf14440",
-          "scenario_sha256": "71ee6d3ce097fcb3487c8b810e2a965916f90d81afeaf550d184eab315b47e0e",
+          "scenario_sha256": "c72cae23fcaf66041d7be3fb159705fbb40a7ebade057b870cf331b62eac7ff8",
           "proves": "Concurrent commits allocate each room its own sequence and update its counters with every stored row. Exact timeline, delivery and counter assertions are compared where named."
         },
         {
@@ -8122,21 +8122,21 @@
           "scenario": "store/concurrent-commits-take-each-rooms-own-sequence",
           "pointer": "/steps/0/expect",
           "sha256": "672858c295214f4ee6c1880bdcd50d40616a30d5e030d824941612ceb7068925",
-          "scenario_sha256": "71ee6d3ce097fcb3487c8b810e2a965916f90d81afeaf550d184eab315b47e0e",
+          "scenario_sha256": "c72cae23fcaf66041d7be3fb159705fbb40a7ebade057b870cf331b62eac7ff8",
           "proves": "The public call returns the stated result or refusal; event identity, replay flags and counters are compared where named."
         },
         {
           "scenario": "store/concurrent-commits-take-each-rooms-own-sequence",
           "pointer": "/steps/1/expect",
           "sha256": "672858c295214f4ee6c1880bdcd50d40616a30d5e030d824941612ceb7068925",
-          "scenario_sha256": "71ee6d3ce097fcb3487c8b810e2a965916f90d81afeaf550d184eab315b47e0e",
+          "scenario_sha256": "c72cae23fcaf66041d7be3fb159705fbb40a7ebade057b870cf331b62eac7ff8",
           "proves": "The public call returns the stated result or refusal; event identity, replay flags and counters are compared where named."
         },
         {
           "scenario": "store/concurrent-commits-take-each-rooms-own-sequence",
           "pointer": "/expect",
           "sha256": "f24586993cfc040d68f1d113c082ed2bea494264fb1faa0db19af3667cf14440",
-          "scenario_sha256": "71ee6d3ce097fcb3487c8b810e2a965916f90d81afeaf550d184eab315b47e0e",
+          "scenario_sha256": "c72cae23fcaf66041d7be3fb159705fbb40a7ebade057b870cf331b62eac7ff8",
           "proves": "Concurrent commits allocate each room its own sequence and update its counters with every stored row. Exact timeline, delivery and counter assertions are compared where named."
         },
         {
@@ -14979,14 +14979,14 @@
           "scenario": "discussion/a-closed-kit-refuses-regeneration-before-reading-its-store",
           "pointer": "/expect",
           "sha256": "7dd81c03099c6a880a24d69d84b641161a5811d827bbaa10a443519705d4b342",
-          "scenario_sha256": "67622a42922c7067124234b89b3b37cbfe8580854a49c16cd9d3656b040dcbf5",
+          "scenario_sha256": "bf523e62be44fa4669034dc40807074fe4c95e009642e6d9c59bd51db6e26c6f",
           "proves": "No model runs and the room timeline stays empty."
         },
         {
           "scenario": "discussion/a-closed-kit-refuses-regeneration-before-reading-its-store",
           "pointer": "/steps/1/expect",
           "sha256": "efd959f894e404d93cb1cc308c1557308ae74ba1fc5bd4a24455e60830fc5859",
-          "scenario_sha256": "67622a42922c7067124234b89b3b37cbfe8580854a49c16cd9d3656b040dcbf5",
+          "scenario_sha256": "bf523e62be44fa4669034dc40807074fe4c95e009642e6d9c59bd51db6e26c6f",
           "proves": "The public regenerate_response call must match this required outcome: {\"error\": {\"name\": \"kit_closed\"}}."
         }
       ],
@@ -23755,7 +23755,7 @@
           "scenario": "acp/handler-before-tool-use-observer-reentry-bound",
           "pointer": "/expect/actions/posted",
           "sha256": "963bf2b374da882d13c630f2d4ac468c607b074460f133a018c656f2fdf94b8c",
-          "scenario_sha256": "346a814f33b37f62b087a2ce3bc561bf5c3d12fd59c80fa487266cd6d3c05aa0",
+          "scenario_sha256": "0b255c51b19b71af945c4c60799d9a9de68b87dd42c8851f817b4b89b18d5e2c",
           "proves": "Exactly 20 observer posts start while their prompt is live and pass; the next is refused with reentry_loop_cap. Barriers precede prompt completion."
         },
         {
@@ -23769,7 +23769,7 @@
           "scenario": "acp/handler-on-tool-call-observer-reentry-bound",
           "pointer": "/expect/actions/posted",
           "sha256": "963bf2b374da882d13c630f2d4ac468c607b074460f133a018c656f2fdf94b8c",
-          "scenario_sha256": "f55dcf98984b385b6c2458d143a66616e07e6ccda5fec1ce239d3352ebb1cc70",
+          "scenario_sha256": "63c4dd0ff977bafe2d1040c8237b507cbe53456d133c504a4d7a371fcb38f2d3",
           "proves": "Exactly 20 observer posts start while their prompt is live and pass; the next is refused with reentry_loop_cap. Barriers precede prompt completion."
         },
         {

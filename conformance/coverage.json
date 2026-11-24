@@ -1,7 +1,7 @@
 {
   "version": 1,
   "rfc_sha256": "c21480e2d4b338f16d3b4999d90b1e7f84b25e945ff5262a08b84c1884d3f88f",
-  "corpus_sha256": "74fdcc1a93f3430f2547e34c4fed57bb2ec26a850f597a680e6a8e02d176ac6b",
+  "corpus_sha256": "ee096bf0799eb9631a4eb76725d9109782f916e7c61c2d721eb7c58c6ae7bb7b",
   "python_commit": "1ee7ec379dee1e17c49a1949ad7ce8756c132606",
   "scenario_count": 3424,
   "sections": [
@@ -19946,32 +19946,7 @@
           "missing": [
             "A persistent-store uniqueness constraint and atomic allocation across independent connection owners require specialized store tests, beyond the shared runner. The model compatibility check is specialized too; a scenario receipt does not execute it."
           ],
-          "executions": [
-            {
-              "execution": "python-rule-links-1ee7ec3-memory",
-              "implementation": "python",
-              "commit": "1ee7ec379dee1e17c49a1949ad7ce8756c132606",
-              "backend": "memory",
-              "runtime": "asyncio",
-              "state": "incomplete"
-            },
-            {
-              "execution": "rust-abb899e-memory-current-thread",
-              "implementation": "rust",
-              "commit": "abb899e4593b0a8ff83c556d57e56f9a9d83ea07",
-              "backend": "memory",
-              "runtime": "current_thread",
-              "state": "incomplete"
-            },
-            {
-              "execution": "rust-abb899e-memory-multi-thread-4",
-              "implementation": "rust",
-              "commit": "abb899e4593b0a8ff83c556d57e56f9a9d83ea07",
-              "backend": "memory",
-              "runtime": "multi_thread_4",
-              "state": "incomplete"
-            }
-          ]
+          "executions": []
         }
       ]
     },
@@ -20952,32 +20927,7 @@
             "This broad unit also covers separate hook-call budgets, mutation loops, spawned work and optional realtime observers; these ACP cases do not establish all those paths.",
             "No remote or Redis executor context is claimed. Historical receipts of the prior scenario revisions remain historical, not credited to the strengthened cases."
           ],
-          "executions": [
-            {
-              "execution": "python-rule-links-1ee7ec3-memory",
-              "implementation": "python",
-              "commit": "1ee7ec379dee1e17c49a1949ad7ce8756c132606",
-              "backend": "memory",
-              "runtime": "asyncio",
-              "state": "incomplete"
-            },
-            {
-              "execution": "rust-abb899e-memory-current-thread",
-              "implementation": "rust",
-              "commit": "abb899e4593b0a8ff83c556d57e56f9a9d83ea07",
-              "backend": "memory",
-              "runtime": "current_thread",
-              "state": "incomplete"
-            },
-            {
-              "execution": "rust-abb899e-memory-multi-thread-4",
-              "implementation": "rust",
-              "commit": "abb899e4593b0a8ff83c556d57e56f9a9d83ea07",
-              "backend": "memory",
-              "runtime": "multi_thread_4",
-              "state": "incomplete"
-            }
-          ]
+          "executions": []
         }
       ]
     },
@@ -30842,7 +30792,7 @@
       "gap": {
         "class": "step",
         "card": "RMK-2023",
-        "note": "step: voice.end (S4) and voice.open TTS options (S7): a session unbound or ended; voice.read shows release_context called with its id (what the provider then drops is a provider's contract, tested by tests/voice/tts/test_elevenlabs_stitching.py::TestProvider::test_release_forgets_the_ids and tests/voice/tts/test_vui_session.py::TestRelease::test_release_empties_the_cache)."
+        "note": "step: voice.end (S4) and voice.open TTS options (S7): a session unbound or ended; voice.read shows release_context called with its id (what the provider then drops is the provider's own contract, which it proves in its own tests, outside roomkit's conformance)."
       }
     },
     {
@@ -31457,7 +31407,7 @@
       "gap": {
         "class": "step",
         "card": "RMK-2034",
-        "note": "step: voice.open pipeline contract (S19) and voice stage trace (S3): with a contract, every inbound scripted stage gets the internal format; a frame stage passing a frame in another format on unchanged with one warning is each stage's test (tests/voice/pipeline/test_speex_aec.py::TestSpeexAECProviderProcess::test_mismatched_pcm_format_passes_through); the built-in energy VAD and the sherpa-onnx VAD and diarization read a frame without that check (RMK-2089)."
+        "note": "step: voice.open pipeline contract (S19) and voice stage trace (S3): with a contract, every inbound scripted stage gets the internal format; a frame stage passing a frame in another format on unchanged with one warning is each stage's own test: roomkit's built-in AGC shows it (tests/voice/pipeline/test_simple_agc.py::TestSimpleAGCProvider::test_unsupported_pcm_format_is_not_misinterpreted), its built-in energy VAD reads a frame without that check (RMK-2089), and a provider's stage proves it in its own tests, outside roomkit's conformance."
       }
     },
     {
@@ -38309,32 +38259,7 @@
           "missing": [
             "Shutdown of other operations, services and separate processes is outside this link."
           ],
-          "executions": [
-            {
-              "execution": "python-rule-links-1ee7ec3-memory",
-              "implementation": "python",
-              "commit": "1ee7ec379dee1e17c49a1949ad7ce8756c132606",
-              "backend": "memory",
-              "runtime": "asyncio",
-              "state": "incomplete"
-            },
-            {
-              "execution": "rust-abb899e-memory-current-thread",
-              "implementation": "rust",
-              "commit": "abb899e4593b0a8ff83c556d57e56f9a9d83ea07",
-              "backend": "memory",
-              "runtime": "current_thread",
-              "state": "incomplete"
-            },
-            {
-              "execution": "rust-abb899e-memory-multi-thread-4",
-              "implementation": "rust",
-              "commit": "abb899e4593b0a8ff83c556d57e56f9a9d83ea07",
-              "backend": "memory",
-              "runtime": "multi_thread_4",
-              "state": "incomplete"
-            }
-          ]
+          "executions": []
         }
       ]
     },
@@ -42813,32 +42738,7 @@
           "missing": [
             "The rest of the store consistency clause (other record updates, metadata merging and delivery-result ownership) keeps its own evidence. A commit failure, a slow store, and caller cancellation are specialized source/runtime tests. Shared scenarios alone cannot prove transaction isolation for every backend."
           ],
-          "executions": [
-            {
-              "execution": "python-rule-links-1ee7ec3-memory",
-              "implementation": "python",
-              "commit": "1ee7ec379dee1e17c49a1949ad7ce8756c132606",
-              "backend": "memory",
-              "runtime": "asyncio",
-              "state": "incomplete"
-            },
-            {
-              "execution": "rust-abb899e-memory-current-thread",
-              "implementation": "rust",
-              "commit": "abb899e4593b0a8ff83c556d57e56f9a9d83ea07",
-              "backend": "memory",
-              "runtime": "current_thread",
-              "state": "incomplete"
-            },
-            {
-              "execution": "rust-abb899e-memory-multi-thread-4",
-              "implementation": "rust",
-              "commit": "abb899e4593b0a8ff83c556d57e56f9a9d83ea07",
-              "backend": "memory",
-              "runtime": "multi_thread_4",
-              "state": "incomplete"
-            }
-          ]
+          "executions": []
         }
       ]
     },
