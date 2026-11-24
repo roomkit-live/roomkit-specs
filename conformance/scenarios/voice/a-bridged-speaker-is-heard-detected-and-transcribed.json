@@ -16,6 +16,7 @@
     "RK-12.7.6-009",
     "RK-12.7.8-010"
   ],
+  "notes": "RK-12.7.1-002 in part: the TTS path beside the bridge is shown by voice/a-bridged-listener-hears-the-speaker-and-the-synthesized-reply.",
   "requires_features": [
     "voice"
   ],

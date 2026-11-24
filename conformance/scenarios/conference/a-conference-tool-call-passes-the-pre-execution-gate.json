@@ -157,34 +157,36 @@
           }
         }
       ],
-      "reported": [
-        {
-          "tool_call": {
-            "tool_call_id": "c1",
-            "name": "erase",
-            "refused": true
+      "reported": {
+        "$unordered": [
+          {
+            "tool_call": {
+              "tool_call_id": "c1",
+              "name": "erase",
+              "refused": true
+            }
+          },
+          {
+            "tool_call": {
+              "tool_call_id": "c2",
+              "name": "lookup",
+              "refused": true
+            }
+          },
+          {
+            "tool_call": {
+              "tool_call_id": "c3",
+              "name": "lookup",
+              "arguments": {
+                "q": "edited"
+              },
+              "result": "found",
+              "is_error": false,
+              "refused": false
+            }
           }
-        },
-        {
-          "tool_call": {
-            "tool_call_id": "c2",
-            "name": "lookup",
-            "refused": true
-          }
-        },
-        {
-          "tool_call": {
-            "tool_call_id": "c3",
-            "name": "lookup",
-            "arguments": {
-              "q": "edited"
-            },
-            "result": "found",
-            "is_error": false,
-            "refused": false
-          }
-        }
-      ]
+        ]
+      }
     }
   }
 }

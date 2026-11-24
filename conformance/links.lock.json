@@ -4255,7 +4255,7 @@
       "kit-close/a-close-from-a-channel-s-close-returns-at-once": "c46020e2e295db87e3a589e3fe5d28ae1f96d48b077a4f77e64d8d4077e6c87e"
     },
     "RK-12.10.4-083": {
-      "conference/a-conference-session-starts-once-at-its-first-arrival": "3c12472ae69776c130c092ae0a46194ecf3c4f3c212aa96224c370437ee7815a"
+      "conference/a-conference-session-starts-once-however-many-participants-arrive": "3c12472ae69776c130c092ae0a46194ecf3c4f3c212aa96224c370437ee7815a"
     },
     "RK-12.10.4-105": {
       "conference/a-call-reports-presence-without-changing-room-membership": "bbe0e2422341203b13e72306dfdcd7c495348e4bf72b3ea3fe7a8f71e99fb4ab"

@@ -16,6 +16,28 @@
       {
         "id": "r1"
       }
+    ],
+    "hooks": [
+      {
+        "name": "track_muted",
+        "trigger": "on_conference_track_muted",
+        "execution": "async"
+      },
+      {
+        "name": "track_unmuted",
+        "trigger": "on_conference_track_unmuted",
+        "execution": "async"
+      },
+      {
+        "name": "speaker",
+        "trigger": "on_active_speaker_changed",
+        "execution": "async"
+      },
+      {
+        "name": "quality",
+        "trigger": "on_connection_quality_changed",
+        "execution": "async"
+      }
     ]
   },
   "steps": [
@@ -82,5 +104,65 @@
       }
     }
   ],
-  "expect": {}
+  "expect": {
+    "hooks": {
+      "track_muted": [
+        {
+          "room_id": "r1",
+          "event": {
+            "content": {
+              "data": {
+                "channel_id": "conf",
+                "participant_id": "alice",
+                "track_id": "mic",
+                "kind": "audio"
+              }
+            }
+          }
+        }
+      ],
+      "track_unmuted": [
+        {
+          "room_id": "r1",
+          "event": {
+            "content": {
+              "data": {
+                "channel_id": "conf",
+                "participant_id": "alice",
+                "track_id": "mic",
+                "kind": "audio"
+              }
+            }
+          }
+        }
+      ],
+      "speaker": [
+        {
+          "room_id": "r1",
+          "event": {
+            "content": {
+              "data": {
+                "channel_id": "conf",
+                "participant_id": "alice"
+              }
+            }
+          }
+        }
+      ],
+      "quality": [
+        {
+          "room_id": "r1",
+          "event": {
+            "content": {
+              "data": {
+                "channel_id": "conf",
+                "participant_id": "alice",
+                "quality": "poor"
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
 }

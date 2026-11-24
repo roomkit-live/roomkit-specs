@@ -9,7 +9,7 @@
   "requirements": [
     "RK-12.11-019"
   ],
-  "notes": "Another organization's room is not shown: the recording calls take no organization_id.",
+  "notes": "Another organization's room is not shown: the recording calls take no organization_id. That the refusal comes before any recorder starts is shown only by ON_RECORDING_STARTED not firing: no step reads a recorder's starts.",
   "requires_features": [
     "recording"
   ],

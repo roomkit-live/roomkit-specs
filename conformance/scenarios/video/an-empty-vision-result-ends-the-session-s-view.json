@@ -122,7 +122,7 @@
           "messages": [
             {
               "text": {
-                "$lacks": "<vision>"
+                "$lacks": "a person waves"
               }
             },
             {
@@ -130,7 +130,7 @@
             },
             {
               "text": {
-                "$lacks": "<vision>"
+                "$lacks": "a person waves"
               }
             }
           ]

@@ -104,7 +104,7 @@
           "messages": [
             {
               "text": {
-                "$lacks": "<vision>"
+                "$lacks": "a person waves"
               }
             }
           ]

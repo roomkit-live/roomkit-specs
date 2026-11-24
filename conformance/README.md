@@ -1162,7 +1162,7 @@ run's own kit when absent.
 | `voice.stream` | `channel_id`, `chunks` (strings) | deliver a streamed reply to the channel |
 | `voice.barge_in` | `channel_id`, `participant_id` | the transport signals an interruption |
 | `voice.settle` | `channel_id` | wait for outstanding voice work after the utterance, playback or bridge frame |
-| `voice.read` | `channel_id` | `synthesized` (the sentences the TTS provider received) and `audio` (per participant, the base64 chunks received by their transport) |
+| `voice.read` | `channel_id` | `synthesized` (the sentences the TTS provider received) and `audio` (per participant, the base64 chunks received by their transport, in order: each frame the bridge forwarded is one chunk, and so is each spoken reply, its streamed audio joined) |
 | `realtime.start` | `channel_id`, `room_id`, `participant_id` | opens the realtime session |
 | `realtime.end` | `channel_id` | ends the session |
 | `realtime.read` | `channel_id` | the provider's `injections` (text, role, silent) and `results` (call_id, result), and the tool `handlers` (name, outcome of `returned` or `interrupted`), in observation order |

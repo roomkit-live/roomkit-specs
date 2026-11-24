@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
-  "id": "conference/a-conference-session-starts-once-at-its-first-arrival",
-  "title": "A conference's bot session starts once, at the join the first arrival starts",
+  "id": "conference/a-conference-session-starts-once-however-many-participants-arrive",
+  "title": "A conference's bot session announces its start once for its room, however many participants arrive",
   "rules": [
     "§12.10.4"
   ],
