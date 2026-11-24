@@ -4412,7 +4412,7 @@
       "voice/diarization-reports-a-new-speaker": "9300759b3d10a857b3e488b07a2b6a95f3f9efe4fb4437d63cc63508dc58a819"
     },
     "RK-12.3.6-005": {
-      "voice/a-detected-tone-reaches-the-dtmf-hook": "a41ee5b0d3b0a83baeb7cf7b4b78709b496cc5280f016878e36446d72cdd7f44"
+      "voice/a-detected-tone-reaches-the-dtmf-hook": "f245675797439e71da6acaa0a4b3cc6388c730c1ac5f98d8d75fdf788e378df9"
     },
     "RK-12.3.6-007": {
       "voice/a-detected-tone-reaches-the-dtmf-hook": "04672654acfebd3fcde1980e0b889285f95c9c5c335111934bd98bbff77e023c"
@@ -4432,7 +4432,7 @@
       "voice/vad-reports-its-measured-level": "baede52f2a4f455a7beafb6e90c9bd27f2817b7ee04d2aa289a1e3a9f83c3890"
     },
     "RK-12.3.9-004": {
-      "voice/diarization-reports-a-new-speaker": "e50fc58014ec762ab400ea5bfc05db4a29907025142305dc14d2072e4cc3def7"
+      "voice/diarization-reports-a-new-speaker": "67fdae7940791a06c5b831979a92721c452646a6c1601e125c1e550f32e2fbc3"
     },
     "RK-12.3.9-005": {
       "voice/diarization-reports-a-new-speaker": "9a966d1df518ca2859351d312f29d7f8c22d971e66b47d59ba00322fabf646e2"

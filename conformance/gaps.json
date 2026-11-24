@@ -2009,7 +2009,7 @@
     "RK-12.3.1-014": {
       "class": "step",
       "card": "RMK-2034",
-      "note": "step: voice.open pipeline contract (S19) and voice stage trace (S3): a scripted stage declaring a format the internal one is not; the start fails or a resampler matches it (Python validates nothing, suspect RMK-2028)."
+      "note": "step: voice.open pipeline contract (S19) and voice stage trace (S3): with a contract, every inbound scripted stage gets the internal format; a frame stage passing a frame in another format on unchanged with one warning is each stage's test (tests/voice/pipeline/test_speex_aec.py::TestSpeexAECProviderProcess::test_mismatched_pcm_format_passes_through), the built-in energy VAD and the sherpa-onnx VAD and diarization read a frame without that check (RMK-2089)."
     },
     "RK-12.3.1-016": {
       "class": "writable",
@@ -2251,11 +2251,6 @@
       "card": "RMK-2042",
       "note": "step: a gate holding a streamed reply mid-way (S20): the partial record holds only the sentences handed to the TTS before the cut."
     },
-    "RK-12.3.13-051": {
-      "class": "step",
-      "card": "RMK-2042",
-      "note": "step: consumption records (§8.5, Planned): no implementation records consumption yet, so the text reads as current what §8.5 plans, a suspect (RMK-2040); no runner step unlocks it until RMK-2040 is decided."
-    },
     "RK-12.3.13-052": {
       "class": "writable",
       "card": "RMK-2042",
@@ -2369,7 +2364,7 @@
     "RK-12.3.15-020": {
       "class": "phase6",
       "card": "RMK-2042",
-      "note": "measurement: debug tap write latency on the audio path; Python writes each frame on the pipeline path, a suspect (RMK-2039)."
+      "note": "measurement: debug tap write latency on the audio path; Python writes each frame on the pipeline's path."
     },
     "RK-12.3.3-003": {
       "class": "step",
@@ -2504,7 +2499,7 @@
     "RK-12.3.7-021": {
       "class": "step",
       "card": "RMK-2034",
-      "note": "step: the voice session recorder (S8) and voice stage trace (S3): record_inbound between the inbound resampler and the AEC, record_outbound between the postprocessors and the outbound resampler."
+      "note": "step: the voice session recorder (S8) and voice stage trace (S3): tap_inbound between the inbound resampler and the AEC, tap_outbound between the postprocessors and the outbound resampler."
     },
     "RK-12.3.7-022": {
       "class": "step",
@@ -2515,6 +2510,11 @@
       "class": "step",
       "card": "RMK-2034",
       "note": "step: the voice session recorder (S8) and voice.end (S4): ON_RECORDING_STOPPED fires with the RecordingResult when the session ends."
+    },
+    "RK-12.3.8-005": {
+      "class": "step",
+      "card": "RMK-2034",
+      "note": "step: voice.open STT options (S5) and batch_mode (S18): a Voice Channel with no VAD, a streaming STT that finds the end of speech (continuous mode), then in batch mode a flush; each transcript reaches the room."
     },
     "RK-12.3.9-006": {
       "class": "step",
