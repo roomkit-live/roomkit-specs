@@ -1297,6 +1297,8 @@ real channel input. The optional inputs on `voice.open` script its providers:
   pre-roll or utterance buffer.
 - `speakers` supplies diarization results (`speaker_id`, `confidence`,
   `is_new_speaker`). `tones` supplies detected digits (`digit`, `duration_ms`).
+- Each participant's stream walks the `vad`, `speakers` and `tones` scripts
+  from their start, whatever the other participants were fed (§12.3.1).
 - `transcripts` supplies final STT text by utterance. With `partials`, the
   recognizer streams these partial words on the first audio of the segment and
   returns its final at the end of the segment.

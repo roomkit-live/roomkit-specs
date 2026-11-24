@@ -76,11 +76,6 @@
       "card": "RMK-1942",
       "note": "Two attempts at a request's last one count once: racing them needs a gate inside a verification transition."
     },
-    "RK-12.1-003": {
-      "class": "writable",
-      "card": "RMK-2019",
-      "note": "A room where voice.open attaches a voice channel and a declared realtime channel starts its session (realtime.start), each still doing its work; a bridge and a conference join the same way."
-    },
     "RK-12.10.1-003": {
       "class": "step",
       "card": "RMK-2070",
@@ -1486,11 +1481,6 @@
       "card": "RMK-2008",
       "note": "step: voice TTS options (S7): no voice.open key sets a TTS that consumes context, and voice.read reports no recorded turn."
     },
-    "RK-12.2-023": {
-      "class": "writable",
-      "card": "RMK-2008",
-      "note": "A text another channel sends with send_event into the room a voice channel is opened in reaches the voice channel's deliver(): a BEFORE_TTS hook and voice.read's synthesized texts show it spoken (an AI answer streams to the voice channel instead)."
-    },
     "RK-12.2-024": {
       "class": "step",
       "card": "RMK-2008",
@@ -1501,20 +1491,10 @@
       "card": "RMK-2008",
       "note": "step: voice TTS options, a failing synthesis (S7): no voice.open key makes a session's synthesis or playback fail."
     },
-    "RK-12.2-030": {
-      "class": "writable",
-      "card": "RMK-2008",
-      "note": "voice.open with several participants, voice.stream and voice.barge_in on one: voice.read gives each session every sentence; a session whose TTS fails needs step S7."
-    },
     "RK-12.2-031": {
       "class": "step",
       "card": "RMK-2008",
       "note": "step: interruption configuration and max_sentences (S1): no voice.open key sets a sentence budget."
-    },
-    "RK-12.2-036": {
-      "class": "writable",
-      "card": "RMK-2008",
-      "note": "voice.stream with an AFTER_TTS hook shows the text the session was sent, as BEFORE_TTS left it; the budget and failing-session cases need steps S1 and S7."
     },
     "RK-12.2-037": {
       "class": "step",
@@ -1670,11 +1650,6 @@
       "class": "step",
       "card": "RMK-2023",
       "note": "step: voice.open TTS options (S7): two sessions, one spoken to alone; voice.read shows each session's context holds its own dialogue only."
-    },
-    "RK-12.2.2-016": {
-      "class": "writable",
-      "card": "RMK-2023",
-      "note": "voice.open with two participants, then a text another channel sends with send_event into the room: voice.read's synthesized list holds it once per session; that each call gets its own session's context needs step S7."
     },
     "RK-12.2.2-017": {
       "class": "step",
@@ -1896,20 +1871,10 @@
       "card": "RMK-2034",
       "note": "step: voice stage trace (S3): a scripted VAD reporting the VADConfig its configure() received when the pipeline is built; no voice.open key sets vad_config."
     },
-    "RK-12.3.1-012": {
-      "class": "writable",
-      "card": "RMK-2034",
-      "note": "Two voice.open in one room, each channel with its own scripted stages (a vad script on one, a tones script on the other): each channel's hooks follow its own pipeline; a realtime channel's pipeline needs a realtime step."
-    },
     "RK-12.3.1-014": {
       "class": "step",
       "card": "RMK-2034",
       "note": "step: voice.open pipeline contract (S19) and voice stage trace (S3): with a contract, every inbound scripted stage gets the internal format; a frame stage passing a frame in another format on unchanged with one warning is each stage's own test: roomkit's built-in AGC passes such a frame on unchanged (tests/voice/pipeline/test_simple_agc.py::TestSimpleAGCProvider::test_unsupported_pcm_format_is_not_misinterpreted), its built-in energy VAD reads a frame without that check (RMK-2089), and a provider's stage proves it in its own tests, outside roomkit's conformance."
-    },
-    "RK-12.3.1-016": {
-      "class": "writable",
-      "card": "RMK-2034",
-      "note": "voice.open with two participants and a vad script, voice.feed interleaving their frames: each participant's speech edges follow the script from its start, once the README says each participant walks the vad, speakers or tones script from its start (the runners' mocks already do)."
     },
     "RK-12.3.1-023": {
       "class": "step",
@@ -1966,11 +1931,6 @@
       "card": "RMK-2042",
       "note": "step: voice.open interruption (S1), min_speech_ms among its inputs, with a scripted agent whose round waits at a gate: the held reply is cancelled as superseded, every stored response event of the turn carries metadata.cancelled true and cancellation_reason superseded, and the model's next request reads both user messages."
     },
-    "RK-12.3.12-019": {
-      "class": "writable",
-      "card": "RMK-2042",
-      "note": "voice.open in a room with a scripted agent whose round waits at a gate: speech shorter than the default min_speech_ms, or blocked by an ON_TRANSCRIPTION hook, releases the held reply, whose audio then reaches the transport (voice.read)."
-    },
     "RK-12.3.12-022": {
       "class": "phase6",
       "card": "RMK-2042",
@@ -2016,26 +1976,6 @@
       "card": "RMK-2042",
       "note": "step: voice.open STT options (S5): a streaming STT whose words come only with its final; an okay leaves the reply playing, a stop cuts it and is the turn."
     },
-    "RK-12.3.13-027": {
-      "class": "writable",
-      "card": "RMK-2042",
-      "note": "voice.open with vad, partials and transcripts and a playback_gate, the runners' interruption config leaving echo_guard_ms at its default and the session having played nothing yet: the reply's words heard with another case, punctuation and accents are still its echo."
-    },
-    "RK-12.3.13-028": {
-      "class": "writable",
-      "card": "RMK-2042",
-      "note": "voice.open with vad, partials and transcripts and a playback_gate, the runners' interruption config leaving echo_guard_ms at its default and the session having played nothing yet: a partial ending on the start of the reply's next word is echo; a lone partial word that only starts the reply's first word cuts."
-    },
-    "RK-12.3.13-029": {
-      "class": "writable",
-      "card": "RMK-2042",
-      "note": "voice.open with vad, partials and transcripts and a playback_gate, the runners' interruption config leaving echo_guard_ms at its default and the session having played nothing yet: a final whose last word only starts the reply's word is no echo and cuts."
-    },
-    "RK-12.3.13-030": {
-      "class": "writable",
-      "card": "RMK-2042",
-      "note": "voice.open with vad, partials and transcripts and a playback_gate, the runners' interruption config leaving echo_guard_ms at its default and the session having played nothing yet: the echo's partials fire no ON_PARTIAL_TRANSCRIPTION and its final, released after the reply ended, reaches no room; DISABLED needs voice.open interruption (S1)."
-    },
     "RK-12.3.13-031": {
       "class": "step",
       "card": "RMK-2042",
@@ -2050,11 +1990,6 @@
       "class": "step",
       "card": "RMK-2042",
       "note": "step: voice.open STT options (S5) and the virtual clock (X-CLK): an STT stream that never closes an echoed utterance, past the verdict's 10 seconds."
-    },
-    "RK-12.3.13-034": {
-      "class": "writable",
-      "card": "RMK-2042",
-      "note": "voice.open with vad, partials and transcripts and a playback_gate, the runners' interruption config leaving echo_guard_ms at its default and the session having played nothing yet: partials repeating the reply, then a final adding a word of its own while it plays: the reply is cut and the final reaches the room."
     },
     "RK-12.3.13-035": {
       "class": "step",
@@ -2116,16 +2051,6 @@
       "card": "RMK-2042",
       "note": "step: a gate holding a reply's synthesis mid-way and the transport's cancel_audio calls in voice.read (S20): the unplayed audio is dropped at the cut."
     },
-    "RK-12.3.13-047": {
-      "class": "writable",
-      "card": "RMK-2042",
-      "note": "voice.say held by a playback_gate, then voice.barge_in: the timeline holds the partial response with metadata.interrupted true and its played_ms."
-    },
-    "RK-12.3.13-048": {
-      "class": "writable",
-      "card": "RMK-2042",
-      "note": "voice.say held by a playback_gate, then voice.barge_in: the reply's synthesis has ended (the gate holds the transport), so its partial record carries played_percentage."
-    },
     "RK-12.3.13-049": {
       "class": "step",
       "card": "RMK-2042",
@@ -2136,20 +2061,10 @@
       "card": "RMK-2042",
       "note": "step: a gate holding a streamed reply mid-way (S20): the partial record holds only the sentences handed to the TTS before the cut."
     },
-    "RK-12.3.13-052": {
-      "class": "writable",
-      "card": "RMK-2042",
-      "note": "voice.open in a room with a scripted agent whose reply is cut by voice.barge_in: the partial record has no participant id and names the agent's channel and the event its answer responds to."
-    },
     "RK-12.3.13-053": {
       "class": "step",
       "card": "RMK-2042",
       "note": "step: voice.open TTS options (S7): a TTS consuming context, and the interrupted turn it received with its played_ms in voice.read."
-    },
-    "RK-12.3.13-054": {
-      "class": "writable",
-      "card": "RMK-2042",
-      "note": "voice.open with vad, partials and transcripts and a playback_gate: words that cut the playing reply reach the room as the user's turn (timeline)."
     },
     "RK-12.3.13-055": {
       "class": "step",
@@ -2170,11 +2085,6 @@
       "class": "step",
       "card": "RMK-2042",
       "note": "step: voice stage trace (S3): the reset(stream) each scripted stage received when the session became active, keyed by the session id."
-    },
-    "RK-12.3.14-006": {
-      "class": "writable",
-      "card": "RMK-2042",
-      "note": "voice.open with an ON_SESSION_STARTED hook: it fires once per joined participant's session; the other order of the two signals needs voice.end (S4) or a backend held before it is ready."
     },
     "RK-12.3.14-007": {
       "class": "step",
@@ -2416,11 +2326,6 @@
       "card": "RMK-2045",
       "note": "step: a pipeline VAD on the realtime channel spec and a read of the activity signals (S13, S8)."
     },
-    "RK-12.4-022": {
-      "class": "writable",
-      "card": "RMK-2008",
-      "note": "realtime.end while a realtime.tool_call waits at its handler's gate: the call is reported once, cancelled; the channel's close and a conference's detach or unplug need steps S9 and conference detach."
-    },
     "RK-12.4-023": {
       "class": "step",
       "card": "RMK-2008",
@@ -2461,25 +2366,10 @@
       "card": "RMK-2008",
       "note": "step: realtime.read extensions with the observation order (S8): a report held while an ending arrives."
     },
-    "RK-12.4-031": {
-      "class": "writable",
-      "card": "RMK-2008",
-      "note": "Two realtime.tool_call steps under one call_id while the first handler waits at its gate, then a third once its result went out: realtime.read and the reports show one result per call."
-    },
-    "RK-12.4-037": {
-      "class": "writable",
-      "card": "RMK-2008",
-      "note": "realtime.tool_call with an empty call_id, which Python reads as no id: one report, refused, and nothing in realtime.read's results."
-    },
     "RK-12.4-038": {
       "class": "step",
       "card": "RMK-2008",
       "note": "step: realtime.transcribe (S2) for the wait on the transcription, and Tool Search on a realtime channel (S7) for the call_tool transport; the ended session's part is writable."
-    },
-    "RK-12.4-040": {
-      "class": "writable",
-      "card": "RMK-2008",
-      "note": "realtime.tool_call with an empty name, which Python reads as no tool: refused before the gate and answered under its id."
     },
     "RK-12.4-044": {
       "class": "step",
@@ -2561,11 +2451,6 @@
       "card": "RMK-2045",
       "note": "step: tool_policy with a role override on the realtime channel spec, for a participant the store does not hold (S7)."
     },
-    "RK-12.4-075": {
-      "class": "writable",
-      "card": "RMK-2045",
-      "note": "realtime.tool_call to a name realtime.tools does not declare: nothing runs and the call is answered with its refusal; the order, the policy, skill gating and schema validation need tool_policy, skills and declared schemas on the realtime spec (S7)."
-    },
     "RK-12.4-076": {
       "class": "step",
       "card": "RMK-2045",
@@ -2576,45 +2461,15 @@
       "card": "RMK-2045",
       "note": "step: a realtime channel served by an ON_TOOL_CALL hook (no handler), Tool Search or skills (S7)."
     },
-    "RK-12.4-078": {
-      "class": "writable",
-      "card": "RMK-2045",
-      "note": "the undeclared call of RK-12.4-075 is reported refused to ON_TOOL_CALL's observers; that the report never precedes the refusal on the wire needs an ordered read of results and reports (S8)."
-    },
     "RK-12.4-079": {
       "class": "step",
       "card": "RMK-2045",
       "note": "step: Tool Search, or skills with an executor, on the realtime channel spec (S7)."
     },
-    "RK-12.4-080": {
-      "class": "writable",
-      "card": "RMK-2045",
-      "note": "realtime.tool_call to run_skill_script on a channel with no skills: refused as undeclared, nothing run, which only replays RK-12.4-075's check under that name; a session with skills and no executor needs skills on the realtime spec (S7)."
-    },
     "RK-12.4-081": {
       "class": "step",
       "card": "RMK-2045",
       "note": "step: skills with an executor on the realtime channel spec (S7)."
-    },
-    "RK-12.4-092": {
-      "class": "writable",
-      "card": "RMK-2045",
-      "note": "realtime.end, then realtime.inject: nothing reaches the provider and ON_REALTIME_TEXT_INJECTED does not fire; the not_sent result needs realtime.inject to return the injection's result."
-    },
-    "RK-12.4-101": {
-      "class": "writable",
-      "card": "RMK-2045",
-      "note": "send_event with a text whose metadata names another intent (injected_role system): the injection still reads role user."
-    },
-    "RK-12.4-104": {
-      "class": "writable",
-      "card": "RMK-2045",
-      "note": "send_event with a blank text: realtime.read's injections stay empty."
-    },
-    "RK-12.4-105": {
-      "class": "writable",
-      "card": "RMK-2045",
-      "note": "deliver with instruction true into the room of a running realtime session: the injection reads role system."
     },
     "RK-12.4-113": {
       "class": "step",
@@ -2745,11 +2600,6 @@
       "class": "step",
       "card": "RMK-2049",
       "note": "step: the provider's supports_mid_session_reconfigure trait in realtime.start, with a handoff or a skill activation on the realtime room (S1)."
-    },
-    "RK-12.4.1-042": {
-      "class": "writable",
-      "card": "RMK-2049",
-      "note": "realtime.delegate with target hosted, then realtime.tool_call: the call passes the gate, ON_TOOL_CALL fires and realtime.read shows the result submitted; that the provider surfaces its backend's calls is its own (D2)."
     },
     "RK-12.4.1-047": {
       "class": "step",
@@ -2961,50 +2811,20 @@
       "card": "RMK-2042",
       "note": "step: a gate holding a reply's synthesis mid-way and the transport's cancel_audio calls in voice.read (S20): the unplayed audio is dropped at the cut."
     },
-    "RK-12.6-007": {
-      "class": "writable",
-      "card": "RMK-2042",
-      "note": "voice.say held by a playback_gate, then voice.barge_in: the timeline holds the partial response with metadata.interrupted true."
-    },
     "RK-12.6-008": {
       "class": "step",
       "card": "RMK-2042",
       "note": "step: voice.open TTS options (S7): a TTS consuming context, and the truncated turn it received in voice.read."
-    },
-    "RK-12.6-010": {
-      "class": "writable",
-      "card": "RMK-2042",
-      "note": "voice.open with vad, partials and transcripts and a playback_gate: words that cut the playing reply reach the room as the user's turn (timeline)."
-    },
-    "RK-12.6-012": {
-      "class": "writable",
-      "card": "RMK-2042",
-      "note": "voice/a-backchannel-leaves-the-reply-playing with an on_tts_cancelled observer and a timeline expectation: no ON_TTS_CANCELLED fires and the acknowledged words become no room event."
     },
     "RK-12.6-013": {
       "class": "step",
       "card": "RMK-2042",
       "note": "step: voice.open interruption (S1): allow_during_first_ms set, a barge-in before that much of the reply played cuts nothing."
     },
-    "RK-12.6-015": {
-      "class": "writable",
-      "card": "RMK-2042",
-      "note": "voice.open with a vad script and a playback_gate: speech fed while voice.say plays fires ON_SPEECH_START and ON_SPEECH_END."
-    },
     "RK-12.6-016": {
       "class": "step",
       "card": "RMK-2042",
       "note": "step: voice.open capabilities (S2): a backend that itself signals barge-in on audio it receives during playback, with a vad script; ON_BARGE_IN, then the speech edges."
-    },
-    "RK-12.6-017": {
-      "class": "writable",
-      "card": "RMK-2042",
-      "note": "voice.open with vad, partials and transcripts and a playback_gate (IMMEDIATE): words that cut the reply are transcribed and reach the room as a turn."
-    },
-    "RK-12.6-018": {
-      "class": "writable",
-      "card": "RMK-2042",
-      "note": "voice/a-backchannel-leaves-the-reply-playing with a timeline expectation: the acknowledged words become no room event; too short and DISABLED need voice.open interruption (S1)."
     },
     "RK-12.6-019": {
       "class": "step",
