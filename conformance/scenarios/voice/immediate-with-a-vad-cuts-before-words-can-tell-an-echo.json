@@ -1,0 +1,142 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "voice/immediate-with-a-vad-cuts-before-words-can-tell-an-echo",
+  "title": "Under IMMEDIATE with a VAD, speech start cuts the reply before its words are heard, and they are a turn",
+  "rules": [
+    "§12.3.13"
+  ],
+  "requirements": [
+    "RK-12.3.13-009",
+    "RK-12.3.13-026"
+  ],
+  "notes": "voice.open without backchannels runs IMMEDIATE; the session has played nothing, so the echo guard is open when the speech starts.",
+  "requires_features": [
+    "voice"
+  ],
+  "setup": {
+    "rooms": [
+      {
+        "id": "r1"
+      }
+    ],
+    "hooks": [
+      {
+        "name": "cut",
+        "trigger": "on_barge_in",
+        "execution": "async"
+      },
+      {
+        "name": "stopped",
+        "trigger": "on_tts_cancelled",
+        "execution": "async"
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "voice.open",
+      "channel_id": "phone",
+      "room_id": "r1",
+      "participants": [
+        "alice"
+      ],
+      "playback_gate": "playing",
+      "vad": [
+        {
+          "type": "speech_start"
+        },
+        {
+          "type": "speech_end"
+        }
+      ],
+      "partials": [
+        "Your table"
+      ],
+      "transcripts": [
+        "your table for two"
+      ]
+    },
+    {
+      "call": "voice.say",
+      "channel_id": "phone",
+      "participant_id": "alice",
+      "text": "Your table for two is ready.",
+      "background": true,
+      "as": "reply"
+    },
+    {
+      "wait_for": "playing"
+    },
+    {
+      "call": "voice.feed",
+      "channel_id": "phone",
+      "participant_id": "alice",
+      "frames": [
+        "AQI=",
+        "AQI="
+      ]
+    },
+    {
+      "call": "voice.settle",
+      "channel_id": "phone"
+    },
+    {
+      "open": "playing"
+    },
+    {
+      "await": "reply"
+    },
+    {
+      "call": "voice.settle",
+      "channel_id": "phone"
+    },
+    {
+      "idle": true
+    }
+  ],
+  "expect": {
+    "hooks": {
+      "cut": [
+        {
+          "voice": {
+            "participant_id": "alice"
+          }
+        }
+      ],
+      "stopped": [
+        {
+          "voice": {
+            "participant_id": "alice",
+            "reason": "barge_in"
+          }
+        }
+      ]
+    },
+    "timeline": {
+      "r1": {
+        "$unordered": [
+          {
+            "source": {
+              "channel_id": "phone",
+              "participant_id": {
+                "$absent": true
+              }
+            },
+            "metadata": {
+              "interrupted": true,
+              "played_ms": {
+                "$present": true
+              }
+            }
+          },
+          {
+            "content": {
+              "type": "text",
+              "body": "your table for two"
+            }
+          }
+        ]
+      }
+    }
+  }
+}

@@ -13325,14 +13325,16 @@ ON_BACKCHANNEL once) and TTS continues; anything else cancels TTS if it is
 still playing, and the speech is processed as the user's turn.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.3.13-026", "kind": "behavior", "applies": "§12.3.13 Echo guard, the voice feature, whatever the strategy: while the session has played less than echo_guard_ms of response audio in all, speech whose words are only words of the response being played (the text handed to the TTS so far), consecutive and in their order, is that response's echo (why an echo canceller lets a response's opening words back, informative, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+<!-- rfc: {"id": "RK-12.3.13-026", "kind": "behavior", "applies": "§12.3.13 Echo guard, the voice feature, whatever the strategy but IMMEDIATE with a VAD: while the session has played less than echo_guard_ms of response audio in all, speech whose words are only words of the response being played (the text handed to the TTS so far), consecutive and in their order, is that response's echo; under IMMEDIATE with a VAD, the VAD's speech start cuts the response before any word can tell its echo, and the speech is an ordinary utterance (why an echo canceller lets a response's opening words back, informative, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Echo guard.** An echo canceller learns the room from the responses it hears:
 at a session's start it has heard none, and a response's opening words come
 back through the microphone, where an STT transcribes them as if someone had
 spoken. While the session has played less than `echo_guard_ms` of response
 audio in all, whatever the strategy, speech whose words are only words of the
 response being played (the text handed to the TTS so far), consecutive and in
-their order, is that response's echo. <!-- /rfc --><!-- rfc: {"id": "RK-12.3.13-027", "kind": "behavior", "applies": "§12.3.13 Echo guard, the voice feature: words are compared without case, punctuation or accents. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Words are compared without case,
+their order, is that response's echo. IMMEDIATE with a VAD is the exception:
+the VAD's speech start cuts the response before any word can tell its echo
+(its row above), and the speech is then an ordinary utterance. <!-- /rfc --><!-- rfc: {"id": "RK-12.3.13-027", "kind": "behavior", "applies": "§12.3.13 Echo guard, the voice feature: words are compared without case, punctuation or accents. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Words are compared without case,
 punctuation or accents. <!-- /rfc --><!-- rfc: {"id": "RK-12.3.13-028", "kind": "behavior", "applies": "§12.3.13 Echo guard, the voice feature: in a partial transcript the last word heard may be the start of the response's word, but only after a whole word. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->In a partial transcript the last word heard may be the
 start of the response's, as a partial catches a word being said, but only after
 a whole word: a lone "No" is no echo of "not", nor "Stop" of "stopped". <!-- /rfc --><!-- rfc: {"id": "RK-12.3.13-029", "kind": "behavior", "applies": "§12.3.13 Echo guard, the voice feature: a final transcript is compared in whole words. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A final

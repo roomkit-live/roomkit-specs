@@ -4464,11 +4464,17 @@
     "RK-12.3.13-007": {
       "voice/a-transport-barge-in-cancels-active-playback": "9b595ef7923df914b70a8b22724f7492e9976c5943f3e2ac1d04c826bac2805a"
     },
+    "RK-12.3.13-009": {
+      "voice/immediate-with-a-vad-cuts-before-words-can-tell-an-echo": "fd9d46ba2baab8f9b4de7d53b62c4dcb2daaa6913d020895bc62beea2e7a5f34"
+    },
     "RK-12.3.13-011": {
       "voice/a-backchannel-leaves-the-reply-playing": "06c720db201a0fb45b7a1c7b133d100b8910d712f2d0699d75a9e5b2f7ef2b12"
     },
     "RK-12.3.13-023": {
       "voice/a-backchannel-leaves-the-reply-playing": "5df2f294597cd25ec73ceb5b983eec40c26d81aa4f3819ec1a8b57b70eef0c4f"
+    },
+    "RK-12.3.13-026": {
+      "voice/immediate-with-a-vad-cuts-before-words-can-tell-an-echo": "300573a314a90e69cd93b1c8f3f6ad7a95361a0ee0a28cc26abc80ad91d58ae4"
     },
     "RK-12.3.14-013": {
       "voice/a-detected-tone-reaches-the-dtmf-hook": "5434cb7b63e67c08c4d02686386e2fdad53c34e4fabf543feac1a6856d89b407"
