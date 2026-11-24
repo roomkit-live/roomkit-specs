@@ -1,0 +1,82 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "kit-close/a-store-the-integrator-owns-answers-reads-and-takes-writes-after-the-close",
+  "title": "A store the integrator owns stays open after the kit's close: the kit answers a read, and the store takes a write",
+  "rules": [
+    "§12.10.4",
+    "§14.1"
+  ],
+  "requirements": [
+    "RK-12.10.4-035",
+    "RK-12.10.4-059"
+  ],
+  "notes": "Python: tests/test_kit_close.py::test_a_read_answers_during_the_close_and_after_it_while_its_store_is_open. The store is one the integrator owns (setup.kit.store_owner integrator), a pool it handed in: the kit's close leaves it open. The writer here is a call made once the close returned, not work abandoned by the close's cut: what such work writes afterwards meets the same store.",
+  "setup": {
+    "kit": {
+      "store_owner": "integrator"
+    },
+    "channels": [
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport"
+      }
+    ],
+    "rooms": [
+      {
+        "id": "r",
+        "bindings": [
+          {
+            "channel_id": "ws"
+          }
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "close",
+      "expect": {
+        "result": null
+      }
+    },
+    {
+      "call": "get_room",
+      "room_id": "r",
+      "expect": {
+        "result": {
+          "id": "r",
+          "status": "active"
+        }
+      }
+    },
+    {
+      "call": "store.add_event_auto_index",
+      "room_id": "r",
+      "event": {
+        "content": {
+          "type": "text",
+          "body": "Late."
+        }
+      },
+      "expect": {
+        "result": {
+          "content": {
+            "body": "Late."
+          }
+        }
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "r": [
+        {
+          "content": {
+            "body": "Late."
+          }
+        }
+      ]
+    }
+  }
+}

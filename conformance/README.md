@@ -206,7 +206,14 @@ room callbacks of the setup are not compared.
   `persist_types`; and `store_faults: true`, the kit built over the run's
   store wrapped so that `store_fault` steps make its operations fail or
   hold, every operation the store's own otherwise; a runner runs such a
-  scenario on each store it ships.
+  scenario on each store it ships; and `store_owner`, who owns the run's
+  store, which the kit is then built over wrapped as `store_faults` wraps
+  it (§12.10.4): `kit`, a store the kit's close closes, every operation made
+  after its close failing as a closed store's own failure (roomkit's
+  `RuntimeError`, roomkit-rs's `StoreError::Unavailable`), or `integrator`,
+  a store the kit's close leaves open, as a pool the integrator handed in; a
+  `store.<operation>` call reaches it before the kit's close and after it,
+  and the runner's own reads once the steps ran read what it holds.
 - `channels`: each is registered. A channel of type `host` is the
   implementation's host channel (§10.5); any other is a **scripted channel**:
   - `id`, `type` (a ChannelType: `sms`, `websocket`, `whatsapp`, `email`,
@@ -227,6 +234,11 @@ room callbacks of the setup are not compared.
     room callbacks (§6.1): it records each call under `room_callbacks`, and
     in `hook_order` as `<id>.on_room_attached` or `<id>.on_room_detached`,
     then reacts (`gate`, `do`, `fail`); with no reaction it does nothing;
+  - `close` holds the reactions of its close (§6.1, §12.10.4): every
+    scripted channel records each call of its close under `channel_closes`,
+    then reacts (`gate`, `do`, `spawn`, then `fail`, the close's failure,
+    which roomkit raises and roomkit-rs, whose close returns nothing,
+    panics with); with no reaction it does nothing;
   - `update_binding: {}` enables its synchronous binding callback recorder (§7.2).
     Each call records `{"call": "update_binding", "binding": ...}` under
     `room_callbacks`, and `<id>.update_binding` in `hook_order`. An optional
@@ -461,9 +473,10 @@ left, the call does what it does by default. A reaction:
 | `gate` | Holds the call at this gate until a step opens it |
 | `delay_ms` | Waits this many milliseconds after the gate and before the actions, to separate the start of nested call deadlines; absent or zero, no delay |
 | `holds_cpu_ms` | Keeps the thread running the call busy for this many milliseconds, once its actions returned and before its `after_do_gate`, yielding nothing to its event loop meanwhile, as work busy with its CPU does (§10.6.8) |
-| `do` | Kit calls the hook or the channel makes while it runs, in its execution context, in order: an **action** is a call (below) with an optional `as` and `expect`. Its error is caught, kept and checked, never raised into the kit |
+| `do` | Kit calls the hook or the channel makes while it runs, in its execution context, in order: an **action** is a call (below) with an optional `as` and `expect`, and with `own_task: true`, made on a task of its own, started in the acting code's execution context (roomkit: `asyncio.create_task`; roomkit-rs: `tokio::spawn` of `keep_context`), which the action awaits: a cut of the acting code cuts that wait, not the task. Its error is caught, kept and checked, never raised into the kit |
 | `after_do_gate` | Holds after all `do` actions returned, before `after_turn` work and the reaction's result or failure; lets steps observe completed work without a delay |
 | `spawn` | Once `writes_record` is written and before its `gate`: starts a task, which the call does not wait for, that holds at the spawn's `gate`, waits its `delay_ms`, makes its `do` actions in order and holds at its `after_do_gate`, each as a reaction's. The task is started in the call's execution context, as the implementation's own spawn keeps it (roomkit: `asyncio.create_task`; roomkit-rs: `tokio::spawn` of `keep_context`), so that it acts for the call while the call runs and outlives it (§9.5.1 Reentrance). A runner waits for the task when it waits for the kit to go idle |
+| `on_cut` | In an `on_event` reaction: actions the reacting code makes as its cleanup once the turn it runs in is cut (§12.10.4), in its execution context, in order: roomkit makes them as the cut unwinds the call, roomkit-rs, whose cut drops the call's future and runs no async cleanup in it, on a task a guard the call holds starts with `keep_context` as it drops. A runner waits for that work when it waits for the kit to go idle |
 | `after_turn` | In an `on_event` reaction: actions the turn leaves to work it began, a task in the turn's execution context that makes them in order once the turn ended (§10.6.5): a `host.<verb>` then crosses as a `room_call`. A runner waits for that work when it waits for the kit to go idle |
 | `fail` | Then raises, with this message |
 | `refuse` | In a `deliver` or `on_event` reaction: then fails with the provider's explicit refusal (§5.13), its `error`, the `code` and `retryable` it declares, and the `provider_message_id` it names |
@@ -1083,6 +1096,7 @@ and declares the descriptors in `session/new`.
 | `{"await": label}` | Waits for the background call; `expect` checks its outcome |
 | `{"cancel": label}` | Consumes the label and cancels the pending background call’s caller. Its implementation decides when the cancellation returns. Later steps can release work the call already started. |
 | `{"close_while_pending": label, "as": closing}` | Requires that the labelled background call is pending and starts the kit’s ordinary close in the background. Await `closing` for its outcome. |
+| `{"close_cut_at": gate}` | Starts the kit's close, waits until the close reaches `gate` (fails after 5 s), then cuts the shutdown itself, as a process's end cuts every task (§12.10.4): roomkit cancels every task of its event loop but the runner's own; roomkit-rs, having started that close on a runtime of its own, drops that runtime. The close's caller is not one a later step names |
 | `{"concurrent": [calls]}` | Starts the calls together and waits for all |
 | `{"wait_for": gate}` | Waits until the gate is reached (fails after 5 s). Optional `after` requires that the named gate was first reached strictly earlier. Optional `pending` checks that the labelled background call is still pending when the step observes the gate |
 | `{"open": gate}` | Opens the gate: every call held there, and every later one, goes on |
@@ -1184,6 +1198,7 @@ run's own kit when absent.
 | `publish_typing` | `room_id`, `user_id`, `is_typing` (default true), optional `kit`: the kit's `publish_typing` (§8.4) | null |
 | `cancel_delivery` | `key`, the `delivery_key` of the messages whose delivery it cancels, and `reason` (§10.1 Explicit delivery cancellation) | how many deliveries it cancelled |
 | `close` | none | null once the kit's shutdown ended (§12.10.4) |
+| `enter` | none: enters the kit's context, as an integrator opens the kit (§12.10.4): roomkit's `async with` (its `__aenter__`), roomkit-rs's `start` | null; once the kit's close started, `kit_closed` |
 | `steer` | `room_id`, the room whose turns it reaches, `channel_id`, the agent, optional `kit` selecting the owner, and `directive` (a SteeringDirective in the serialized form: `{"type": "cancel", "reason"}`, ...) (§21.3) | how many of the agent's running loops in the room it reached |
 | `install_strategy` | `room_id`, `strategy` (a scripted strategy's id) (§19.7) | null |
 | `uninstall_strategy` | `room_id` (§19.7) | whether the room held a strategy |
@@ -1486,6 +1501,7 @@ stores a simulated plan nor derives its tool result from these observations.
 | `framework_events` | Per room (`*` for the events of no room), every framework event of the §26.1 table and `process_timeout`, and of the Level 2 features the suite exercises, `status_posted` (§19.8) and `feedback` (§15.9), identity resolution's `identity_resolved` and `identity_timeout` (§8.2), a human-input request's `user_input_required` (§9.3), and identity verification's `verification_requested`, `verification_completed` and `verification_ended` (§8.2, §11.7), and a delivery lane's `delivery_skipped` (§8.2, §13.5), in emission order |
 | `hooks` | Per scripted hook, its calls in order: `trigger`, `room_id`, `delegation` (`delegation_id`, `target` for `on_realtime_delegation`), `trace` (the §5.14 record for `on_protocol_trace`, including its UTC timestamp and binary data in base64), `event` (the payload, when an event), `context_room` (the room supplied to an event or session hook, captured on entry), `recent_events` (the ids of the events of the context supplied to an event hook, lifecycle records left out, as `contexts` reads them), `context_events`, `context_bindings` and `context_participants` (that context's events, bindings and participants, as `contexts` reads its `events`, `bindings` and `participants`), `tool_call` (the payload, when a tool call: `name`, `tool_call_id`, `arguments` as the call runs or was stopped with, and, on `on_tool_call`, `result` as the model reads it, `is_error`, `refused`, `cancelled`, `error_detail` and `structured_content`), `delivery_status` (the payload, when a delivery status, §10.4), `status_entry` (the payload, when a status entry: `on_status_posted`), `dispatch_decision` (the payload, on `on_dispatch_decision`: `room_id`, `event`, `candidates`, `decision` as `{agents, reason, judgments}`, `duration_ms`), `observation` (the payload, when an observation: `on_feedback`), `request` (the payload, when a human-input request: `pending_id`, `tool_name`, `arguments`, `room_id`, `tool_call_id`, `channel_id`, `channel_type`, `actor_id`), `identity_result` (what an identity hook is handed, §11.2), `generation` (the payload, on `before_ai_generation`: `channel_id`, `provider_name`, `purpose`, `trigger` the event the turn answers, and its context's `system_prompt`, `messages` as `models` reads them, the names of its `tools`, and `room`, `target_capabilities` and `target_media_types` as `models` reads them), `tool_round` (on `after_tool_round`: `channel_id`, `round_index`, its `calls`, each `{tool_call_id, name, arguments, metadata, partial, garbled}`, its `results` and provider-served `answered` results as `models` reads them, and the names of the turn's `tools`), `response` (on `on_ai_response`: `channel_id`, `response_content`, `segments`, `tool_calls_count`, `round_count`, `loop_end_reason`, `usage`, `usage_complete`, `usage_metadata` (the response provenance, copied unchanged), `streaming`, `thinking`, and `declared_tools`, by name: `position`, `description`, `parameters`, `origin`) |
 | `hook_order` | The order in which the hooks it lists were called, a scripted channel's room callbacks among them (`<id>.on_room_attached`, `<id>.on_room_detached`) |
+| `channel_closes` | The scripted channels whose close ran, each id once per call, in the order they ran (§6.1, §12.10.4); the order in which the kit closes its channels is the implementation's, so a scenario that names several matches them `$unordered` |
 | `room_callbacks` | Per room and scripted channel, its room callbacks (§6.1) in order: `{"call": "on_room_attached", "binding": ...}`, the binding it was handed, `{"call": "on_room_detached"}`, or `{"call": "connect_session", "session": ..., "binding": ...}` for an inbound session |
 | `deliveries` | Per room and channel, the events a scripted channel's `deliver()` received, as delivered, in order |
 | `contexts` | Per room and scripted channel, the context each of its parses (`handle_inbound()`, §10.1 step 4), each of its `deliver()` calls and, for an intelligence channel, each of its turns (`on_event()`) was handed, in order: `call` (`parse`, `deliver` or `on_event`), `recent_events`, the ids of its events read as Normalization reads them, lifecycle records left out, `events`, those events as `timeline` reads them, `room`, its room as `rooms` reads it, counters included, `bindings`, its bindings, each as `bindings` reads one, and `participants`, its participants as `participants` reads them, each list in the context's order |
@@ -1642,7 +1658,9 @@ refuses its value, a `ChannelId`).
 | `acp_connection_closed` | The ACP pipe closes while a request is waiting (§6.4) | `ConnectionError`, including its remote wrapper | `AcpError::ConnectionClosed`, relayed as `ConnectionError` |
 | `acp_setup_refused` | A new ACP session cannot apply its required configuration and is never prompted (§6.4) | ACP setup `RuntimeError` | ACP `AcpError::SetupRefused`, relayed as `RuntimeError` |
 | `already_set_up` | A handoff's tool set up again where it is declared, or an install over an agent whose handoff is set up already (§19.6); `delegate_task` set up again on an agent (§23.4) | `RuntimeError`, `setup_handoff() already called`, `setup_delegation() already called` | `RoomKitError::Runtime` |
-| `store_failed` | A store operation that failed, as a store fault (`store_fault`) makes it fail, the store's own failure, which the call is handed (§14.1) | the store fault's error, raised as it is | `RoomKitError::Store` |
+| `store_failed` | A store operation that failed, as a store fault (`store_fault`) makes it fail, or as a store the kit closed refuses it (`store_owner`), the store's own failure, which the call is handed (§14.1) | the store fault's error, raised as it is | `RoomKitError::Store` |
+| `channel_close_failed` | The kit's close once one or more of its channels failed to close, raised once the rest of its shutdown ran, and the same failure answered to every later close (§12.10.4) | `ExceptionGroup` from `RoomKit.close` | `RoomKitError::ExceptionGroup` |
+| `shutdown_cancelled` | A close once the kit's shutdown was cut itself before it ended, to a caller nobody cancelled (§12.10.4) | `ShutdownCancelledError` | `RoomKitError::ShutdownCancelled` |
 
 ## Reentrancy cells
 

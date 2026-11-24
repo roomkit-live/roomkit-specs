@@ -442,6 +442,59 @@ class SchemaTests(unittest.TestCase):
                 scenario["setup"]["kit"]["close_grace_ms"] = grace
                 self.assertEqual(validator.is_valid(scenario), valid)
 
+    def test_the_kit_s_close_is_cut_at_a_gate_and_its_store_has_an_owner(self) -> None:
+        schema = json.loads((ROOT / "scenario.schema.json").read_text())
+        validator = Draft202012Validator(schema)
+        fixture = (
+            ROOT
+            / "scenarios/kit-close"
+            / "a-close-after-its-shutdown-was-cut-says-the-shutdown-did-not-finish.json"
+        )
+        for step, valid in (
+            ({"close_cut_at": "closing"}, True),
+            ({"close_cut_at": ""}, False),
+            ({"close_cut_at": "closing", "as": "x"}, False),
+        ):
+            with self.subTest(step=step):
+                scenario = json.loads(fixture.read_text())
+                scenario["steps"][0] = step
+                self.assertEqual(validator.is_valid(scenario), valid)
+        for owner, valid in (("kit", True), ("integrator", True), ("nobody", False), (True, False)):
+            with self.subTest(owner=owner):
+                scenario = json.loads(fixture.read_text())
+                scenario["setup"]["kit"] = {"store_owner": owner}
+                self.assertEqual(validator.is_valid(scenario), valid)
+        for closes, valid in (
+            (["held"], True),
+            ({"$unordered": ["held"]}, True),
+            ({"$unordered": "held"}, False),
+            ("held", False),
+        ):
+            with self.subTest(closes=closes):
+                scenario = json.loads(fixture.read_text())
+                scenario["expect"]["channel_closes"] = closes
+                self.assertEqual(validator.is_valid(scenario), valid)
+
+    def test_a_turn_s_cleanup_and_an_action_on_its_own_task_make_actions(self) -> None:
+        schema = json.loads((ROOT / "scenario.schema.json").read_text())
+        validator = Draft202012Validator(schema)
+        fixture = (
+            ROOT
+            / "scenarios/kit-close"
+            / "a-turn-s-cleanup-closing-the-kit-the-close-cut-joins-that-close.json"
+        )
+        close = {"call": "close", "as": "cleanup"}
+        for reaction, valid in (
+            ({"gate": "turn", "on_cut": [close]}, True),
+            ({"gate": "turn", "on_cut": [{**close, "own_task": True}]}, True),
+            ({"gate": "turn", "on_cut": []}, False),
+            ({"gate": "turn", "on_cut": [{**close, "own_task": False}]}, False),
+        ):
+            with self.subTest(reaction=reaction):
+                scenario = json.loads(fixture.read_text())
+                scenario["setup"]["channels"][1]["on_event"][0] = reaction
+                self.assertEqual(validator.is_valid(scenario), valid)
+
     def test_a_turn_s_end_is_held_at_a_named_gate(self) -> None:
         schema = json.loads((ROOT / "scenario.schema.json").read_text())
         validator = Draft202012Validator(schema)

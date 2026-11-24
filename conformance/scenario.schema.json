@@ -491,6 +491,13 @@
               "description": "The kit built over the run's store wrapped so that store_fault steps make its operations fail or hold; every operation the store's own otherwise.",
               "const": true
             },
+            "store_owner": {
+              "description": "Who owns the run's store, over which the kit is built wrapped (\u00a712.10.4): `kit`, a store the kit's close closes, every operation made after it failing as a closed store's own failure; `integrator`, a store the kit's close leaves open, as a pool the integrator handed in.",
+              "enum": [
+                "kit",
+                "integrator"
+              ]
+            },
             "scoring": {
               "type": "boolean",
               "description": "Attach the implementation's turn scoring hook to this site, with a scorer that gives the default dimension a score of 1.0."
@@ -729,6 +736,10 @@
         },
         "on_room_detached": {
           "description": "Reactions of the channel's `on_room_detached` (\u00a76.1), tried once per call: `fail` raises. Each call is recorded under `room_callbacks`.",
+          "$ref": "#/$defs/reactions"
+        },
+        "close": {
+          "description": "Reactions of the channel's `close` (\u00a76.1, \u00a712.10.4), tried once per call: `gate`, `do`, `spawn`, then `fail`, the close's failure. Every scripted channel's close is recorded under `channel_closes`.",
           "$ref": "#/$defs/reactions"
         },
         "model": {
@@ -1762,6 +1773,14 @@
             }
           }
         },
+        "on_cut": {
+          "description": "In an `on_event` reaction: actions the reacting code makes as its cleanup once the turn it runs in is cut, in its execution context, in order (\u00a712.10.4).",
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/action"
+          }
+        },
         "after_turn": {
           "description": "In an `on_event` reaction: actions the turn leaves to work it began, a task in the turn's execution context that makes them in order once the turn ended (\u00a710.6.5): a verb of the turn's host then crosses as a `room_call`.",
           "type": "array",
@@ -1926,6 +1945,10 @@
         }
       ],
       "properties": {
+        "own_task": {
+          "description": "Made on a task of its own, started in the acting code's execution context, which the action awaits: a cut of the acting code cuts that wait, not the task.",
+          "const": true
+        },
         "as": {
           "$ref": "#/$defs/label"
         },
@@ -1979,6 +2002,20 @@
             },
             "as": {
               "$ref": "#/$defs/label"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "close_cut_at"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "close_cut_at": {
+              "description": "Starts the kit's close, waits until it reaches this gate, then cuts the shutdown itself, as a process's end cuts every task.",
+              "type": "string",
+              "minLength": 1
             }
           }
         },
@@ -2408,6 +2445,7 @@
             "regenerate_response",
             "regenerate_target",
             "close",
+            "enter",
             "room_strategy_is_current",
             "pause_room",
             "resume_room",
@@ -6894,7 +6932,9 @@
         "input_released",
         "idempotency_key_taken",
         "store_failed",
-        "cleanup_incomplete"
+        "cleanup_incomplete",
+        "channel_close_failed",
+        "shutdown_cancelled"
       ]
     },
     "expect": {
@@ -6951,6 +6991,32 @@
           "items": {
             "type": "string"
           }
+        },
+        "channel_closes": {
+          "description": "The scripted channels whose close ran, each id once per call, in the order they ran (\u00a76.1, \u00a712.10.4).",
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "object",
+              "required": [
+                "$unordered"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "$unordered": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          ]
         },
         "deliveries": {
           "type": "object",
