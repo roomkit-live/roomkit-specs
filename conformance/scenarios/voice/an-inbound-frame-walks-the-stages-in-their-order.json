@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "voice/an-inbound-frame-walks-the-stages-in-their-order",
-  "title": "An inbound frame reaches the recorder and the DTMF detector as the transport sent it, then the AEC, the AGC, the denoiser and the VAD, each handed the one before's output",
+  "title": "An inbound frame reaches the recorder and the DTMF detector as the transport sent it, then the AEC, the AGC, the denoiser, the VAD and the diarization, each handed the one before's output",
   "rules": [
     "§12.2",
     "§12.3",
@@ -18,7 +18,7 @@
     "RK-12.3.6-006",
     "RK-12.3.14-016"
   ],
-  "notes": "No contract, so no resampler: the frame the transport sent is what the recorder and the DTMF detector receive. The resampler's place is in voice/a-contract-hands-every-inbound-stage-the-internal-format.",
+  "notes": "No contract, so no resampler: the frame the transport sent is what the recorder and the DTMF detector receive. The resampler's place is in voice/a-contract-hands-every-inbound-stage-the-internal-format. The recorder and the DTMF detector are each read against the main chain: their order between themselves is left open.",
   "requires_features": [
     "voice"
   ],
@@ -51,6 +51,7 @@
       },
       "recorder": {},
       "tones": [],
+      "speakers": [],
       "vad": [
         null
       ]
@@ -76,11 +77,11 @@
       "channel_id": "phone",
       "stages": [
         "recorder",
-        "dtmf",
         "aec",
         "agc",
         "denoiser",
-        "vad"
+        "vad",
+        "diarization"
       ],
       "calls": [
         "tap_inbound",
@@ -92,14 +93,6 @@
             {
               "stage": "recorder",
               "call": "tap_inbound",
-              "stream": "s-alice",
-              "frame": {
-                "data": "AQI="
-              }
-            },
-            {
-              "stage": "dtmf",
-              "call": "process",
               "stream": "s-alice",
               "frame": {
                 "data": "AQI="
@@ -135,6 +128,47 @@
               "stream": "s-alice",
               "frame": {
                 "data": "Bwg="
+              }
+            },
+            {
+              "stage": "diarization",
+              "call": "process",
+              "stream": "s-alice",
+              "frame": {
+                "data": "Bwg="
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "call": "voice.read",
+      "channel_id": "phone",
+      "stages": [
+        "dtmf",
+        "aec"
+      ],
+      "calls": [
+        "process"
+      ],
+      "expect": {
+        "result": {
+          "stages": [
+            {
+              "stage": "dtmf",
+              "call": "process",
+              "stream": "s-alice",
+              "frame": {
+                "data": "AQI="
+              }
+            },
+            {
+              "stage": "aec",
+              "call": "process",
+              "stream": "s-alice",
+              "frame": {
+                "data": "AQI="
               }
             }
           ]

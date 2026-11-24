@@ -1,15 +1,14 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "voice/a-participant-who-comes-back-gets-a-new-session",
-  "title": "A participant who left and joins again is given a session of another id, the ended one staying ended",
+  "title": "A participant who left and joins again is given a session of another id",
   "rules": [
     "§12.2"
   ],
   "requirements": [
-    "RK-12.2-054",
     "RK-12.2-055"
   ],
-  "notes": "The framework's own renegotiation back to CONNECTING (a realtime provider reconnected) is not shown.",
+  "notes": "The kit's join asks the transport for a new session; the session's state is its transport's on a voice channel and is not compared.",
   "requires_features": [
     "voice"
   ],
@@ -49,14 +48,12 @@
               {
                 "session_id": {
                   "$as": "first"
-                },
-                "state": "ended"
+                }
               },
               {
                 "session_id": {
                   "$as": "second"
-                },
-                "state": "active"
+                }
               }
             ]
           }

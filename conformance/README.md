@@ -1163,7 +1163,7 @@ run's own kit when absent.
 | `voice.stream` | `channel_id`, `chunks` (strings) | deliver a streamed reply to the channel |
 | `voice.barge_in` | `channel_id`, `participant_id` | the transport signals an interruption |
 | `voice.settle` | `channel_id` | wait for outstanding voice work after the utterance, playback or bridge frame |
-| `voice.read` | `channel_id`, optional `stages` (stage names) and `calls` (call names) | `synthesized` (the sentences the TTS provider received); `audio` (per participant, the base64 chunks received by their transport, in order: each frame the bridge forwarded is one chunk, and so is each spoken reply, its streamed audio joined); `chunks` (per participant, each AudioChunk their transport received, in order, a reply's every chunk: `data`, `sample_rate`, `channels`); `sessions` (per participant, each session joined, in order: `session_id` and its `state`, `active` or `ended`); `stages` (each call the scripted stages received, in order: only those of the named stages when `stages` is given, and only the named calls when `calls` is; see Scripted voice sessions) |
+| `voice.read` | `channel_id`, optional `stages` (stage names) and `calls` (call names) | `synthesized` (the sentences the TTS provider received); `audio` (per participant, the base64 chunks received by their transport, in order: each frame the bridge forwarded is one chunk, and so is each spoken reply, its streamed audio joined); `chunks` (per participant, each AudioChunk their transport received, in order, a reply's every chunk: `data`, `sample_rate`, `channels`); `sessions` (per participant, each session joined, in order: `session_id` and its `state` as the transport reports it, `active` or `ended`); `stages` (each call the scripted stages received, in order: only those of the named stages when `stages` is given, and only the named calls when `calls` is; see Scripted voice sessions) |
 | `voice.join` | `channel_id`, `participant_id`, optional `session_id` | joins the participant to the channel's room again (the kit's `join`), the transport naming the new session `session_id` when given: the participant's session is now that one |
 | `voice.leave` | `channel_id`, `participant_id` | the kit's `leave` of the participant's session |
 | `voice.dtmf_received` | `channel_id`, `participant_id`, `digit`, `duration_ms` | the transport receives the digit by signalling and calls the callbacks registered on its `on_dtmf_received` (§12.2) |
@@ -1321,19 +1321,26 @@ The transport's traits (§12.2, §12.3.4):
 - `capabilities` lists the VoiceCapability flags the transport declares, in
   lowercase: `interruption`, `barge_in`, `native_aec`, `native_agc`,
   `dtmf_inband`, `dtmf_signaling`, `native_bridge`. Absent, it declares
-  `interruption` and `barge_in`. With `dtmf_signaling` it provides
-  `on_dtmf_received`, which `voice.dtmf_received` drives.
-- `session_ids` maps a participant to the id the transport gives its
-  session, as a transport names its sessions by a call or a track; absent,
-  the transport makes up a unique id. Each session the transport creates is
-  `active`, and reads `ended` once the transport disconnects it.
-- `feeds_aec_reference: true` declares that the transport feeds an echo
-  canceller of its own with what it plays (`feeds_aec_reference`).
+  `interruption` and `barge_in`. The transport always provides
+  `on_dtmf_received`, and `voice.dtmf_received` calls what is registered
+  there: the channel registers on it only when the transport declares
+  `dtmf_signaling`.
+- `session_ids` maps a participant to the id the transport gives the first
+  session it creates for that participant, as a transport names its sessions
+  by a call or a track; otherwise the transport makes up a unique id. Each
+  session the transport creates is `active`, and reads `ended` once the
+  transport disconnects it: on a voice channel, a session's state is its
+  transport's.
+- `feeds_aec_reference: true` declares that the transport feeds the AEC
+  reference itself as it plays (`feeds_aec_reference`, strategy 1 of
+  §12.3.4); the pipeline's AEC still processes the captured frames.
 - `playback_callback: true` makes the transport report each block it plays
   through `on_audio_played` (`supports_playback_callback`), as it plays it:
   each chunk of a reply, the reply's last one marked
   `metadata.playback_ended`. With `reference_continues: true` it also marks
-  every block it reports `metadata.reference_continues`.
+  every block it reports `metadata.reference_continues`. The blocks are
+  reported as the transport sends them, before a `playback_gate` holds the
+  playback.
 
 Scripted pipeline stages (§12.3.1). Each stage named here is configured on
 the channel's pipeline, under the AudioPipelineConfig member of its name:
@@ -1354,9 +1361,13 @@ the channel's pipeline, under the AudioPipelineConfig member of its name:
   the RFC's AudioFormat does (16000, 1, 2). No resampler is scripted: the
   implementation's own resampler converts.
 
-`voice.read`'s `stages` lists every call these stages and the scripted
-`vad`, `tones` (stage `dtmf`), `speakers` (stage `diarization`) and `turns`
-(stage `turn_detector`) received, in the order received. Each is an object:
+`voice.read`'s `stages` lists the calls these stages and the scripted `vad`,
+`tones` (stage `dtmf`), `speakers` (stage `diarization`) and `turns` (stage
+`turn_detector`) received, in the order received: `process`, `reset` and
+`close` of every frame stage and postprocessor; the AEC's `feed_reference`,
+`set_active` and `set_stream_active`; the VAD's `configure`; the
+recorder's `start`, `stop`, `tap_inbound`, `tap_outbound`, `reset` and
+`close`; the turn detector's `reset` and `close`. Each is an object:
 `stage` (`aec`, `agc`, `denoiser`, `recorder`, `vad`, `dtmf`,
 `diarization`, `turn_detector`, or a postprocessor's `name`), `call` (the
 method's name: `process`, `feed_reference`, `set_active`,
@@ -1366,7 +1377,7 @@ for the recorder, the session id of its handle), `frame` (the frame as the
 call received it: `data` in base64, `sample_rate`, `channels`,
 `sample_width`, `timestamp_ms` and `metadata`), `active` (for
 `set_active` and `set_stream_active`) and `config` (the VADConfig a
-`configure` received, its unset fields null).
+`configure` received: its unset fields null, `extra` an object).
 
 Voice hook observations under `expect.hooks` expose `voice.participant_id`
 from the session and the payload's scalar fields, such as the transcript's

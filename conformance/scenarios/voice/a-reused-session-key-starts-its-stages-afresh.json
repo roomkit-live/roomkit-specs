@@ -8,7 +8,7 @@
   "requirements": [
     "RK-12.3.1-024"
   ],
-  "notes": "The scripted VAD keeps its position per stream key: only the reset at the new session's start brings the second session's first frame back to the script's speech start.",
+  "notes": "The scripted VAD keeps its position per stream key, and a reset of the key brings it back to its script's start; the trace shows the reset at the end of the first session and the one at the start of the second, before its first frame.",
   "requires_features": [
     "voice"
   ],

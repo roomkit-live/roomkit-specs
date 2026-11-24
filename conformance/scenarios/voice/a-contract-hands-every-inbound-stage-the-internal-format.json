@@ -18,7 +18,7 @@
     "RK-12.3.6-006",
     "RK-12.3.14-011"
   ],
-  "notes": "The implementation's own resampler converts; the converted samples are not compared. A frame stage that requires a format and passes another one on unchanged, with a warning, is each stage's own test.",
+  "notes": "The implementation's own resampler converts; the converted samples are not compared. The recorder and the DTMF detector are each read against the main chain: their order between themselves is left open. Not shown of RK-12.3.1-014: the AEC reference converted under a contract, that no stage declares a format and none is validated at start, a stage refusing a setting at construction, and a frame stage passing a frame in another format on unchanged with a warning (each stage's own test).",
   "requires_features": [
     "voice"
   ],
@@ -77,7 +77,6 @@
       "channel_id": "phone",
       "stages": [
         "recorder",
-        "dtmf",
         "aec",
         "agc",
         "denoiser",
@@ -93,21 +92,6 @@
             {
               "stage": "recorder",
               "call": "tap_inbound",
-              "stream": "s-alice",
-              "frame": {
-                "sample_rate": 16000,
-                "channels": 1,
-                "sample_width": 2,
-                "timestamp_ms": 40,
-                "metadata": {
-                  "original_sample_rate": 8000,
-                  "original_channels": 1
-                }
-              }
-            },
-            {
-              "stage": "dtmf",
-              "call": "process",
               "stream": "s-alice",
               "frame": {
                 "sample_rate": 16000,
@@ -167,6 +151,53 @@
             },
             {
               "stage": "vad",
+              "call": "process",
+              "stream": "s-alice",
+              "frame": {
+                "sample_rate": 16000,
+                "channels": 1,
+                "sample_width": 2,
+                "timestamp_ms": 40,
+                "metadata": {
+                  "original_sample_rate": 8000,
+                  "original_channels": 1
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "call": "voice.read",
+      "channel_id": "phone",
+      "stages": [
+        "dtmf",
+        "aec"
+      ],
+      "calls": [
+        "process"
+      ],
+      "expect": {
+        "result": {
+          "stages": [
+            {
+              "stage": "dtmf",
+              "call": "process",
+              "stream": "s-alice",
+              "frame": {
+                "sample_rate": 16000,
+                "channels": 1,
+                "sample_width": 2,
+                "timestamp_ms": 40,
+                "metadata": {
+                  "original_sample_rate": 8000,
+                  "original_channels": 1
+                }
+              }
+            },
+            {
+              "stage": "aec",
               "call": "process",
               "stream": "s-alice",
               "frame": {

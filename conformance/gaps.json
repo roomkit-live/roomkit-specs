@@ -1506,6 +1506,16 @@
       "card": "RMK-2019",
       "note": "step: voice.open TTS options (S7): a scripted TTS chunk format; the transport's send_audio receives decoded PCM only, never an encoded chunk."
     },
+    "RK-12.2-053": {
+      "class": "step",
+      "card": "RMK-2019",
+      "note": "step: a realtime session's state read (realtime family): on a voice channel a session's state is its transport's, which roomkit never writes, so no voice scenario observes roomkit's transitions; PAUSED set by the integrator has no step either."
+    },
+    "RK-12.2-054": {
+      "class": "step",
+      "card": "RMK-2019",
+      "note": "step: a realtime session's state read once its provider reconnects (renegotiate) and once it ended (realtime family): on a voice channel roomkit never writes a session's state, its transport does."
+    },
     "RK-12.2-058": {
       "class": "step",
       "card": "RMK-2019",
@@ -2590,6 +2600,11 @@
       "class": "step",
       "card": "RMK-2042",
       "note": "step: voice.open interruption (S1): allow_during_first_ms set, a barge-in before that much of the reply played cuts nothing."
+    },
+    "RK-12.6-016": {
+      "class": "step",
+      "card": "RMK-2042",
+      "note": "step: voice.open capabilities (S2) and an InterruptionConfig on voice.open (S1): a transport barge-in told apart from the VAD's own, under a strategy that does not act on the VAD's speech start; ON_BARGE_IN from the transport, then the speech edges."
     },
     "RK-12.6-019": {
       "class": "step",

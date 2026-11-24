@@ -4475,12 +4475,6 @@
     "RK-12.2-052": {
       "voice/a-signalled-digit-and-an-in-band-tone-reach-one-dtmf-hook": "ed9dc8c48ed1867d364a62a286ac98f3a0b2aef7a4b073ed0b68fb484253e83d"
     },
-    "RK-12.2-053": {
-      "voice/a-session-is-active-from-its-start-and-ended-once-left": "b429687f3a378e199699419a73681e96c85cf6f369d6d7bcc60f28c31ac5179a"
-    },
-    "RK-12.2-054": {
-      "voice/a-participant-who-comes-back-gets-a-new-session": "a78fd7c814d9b92ea282384485bc8a23341f0e8a2950c86b3f76afb4e9ac5dd9"
-    },
     "RK-12.2-055": {
       "voice/a-participant-who-comes-back-gets-a-new-session": "f07a095d9866f10f7e535b693752b658bbe6fc003aa07b5942fa7fc0aa8f0122"
     },
@@ -4958,9 +4952,6 @@
     },
     "RK-12.6-015": {
       "voice/speech-that-cuts-the-reply-is-the-user-s-turn": "2328e86cb7e97611e3f391837bd721523a0557e0451c86c2f38ba3ad9aef7ada"
-    },
-    "RK-12.6-016": {
-      "voice/a-transport-barge-in-leaves-the-vad-hearing-the-speech": "716986d15981192b2b9fefadd0b8493bc4c0ae22e8ce16787fd052abdecad2d1"
     },
     "RK-12.6-017": {
       "voice/speech-that-cuts-the-reply-is-the-user-s-turn": "9daefc4efa212cc74cbf2905d0c954e72c0e4faa1bf0ef8aa87c6e3c7440e659"

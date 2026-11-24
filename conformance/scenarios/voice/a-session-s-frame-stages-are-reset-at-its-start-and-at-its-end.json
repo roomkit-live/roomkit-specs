@@ -14,7 +14,7 @@
     "RK-12.3.14-008",
     "RK-12.3.14-019"
   ],
-  "notes": "The order in which the stages are reset is left open. The turn detector's and the recorder's own reset() is never called by the session's lifecycle.",
+  "notes": "The order in which the stages are reset is left open. The turn detector's and the recorder's own reset() is never called by the session's lifecycle; the backchannel detector is not configured here.",
   "requires_features": [
     "voice"
   ],

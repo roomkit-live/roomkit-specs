@@ -8,6 +8,7 @@
   "requirements": [
     "RK-12.7.1-006"
   ],
+  "notes": "No contract, so no resampler in the bridged chain.",
   "requires_features": [
     "voice"
   ],
