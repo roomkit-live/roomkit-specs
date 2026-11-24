@@ -1979,7 +1979,7 @@
     "RK-12.3.1-014": {
       "class": "step",
       "card": "RMK-2034",
-      "note": "step: voice.open pipeline contract (S19) and voice stage trace (S3): with a contract, every inbound scripted stage gets the internal format; a frame stage passing a frame in another format on unchanged with one warning is each stage's own test, outside roomkit's conformance; roomkit's built-in energy VAD reads a frame without that check (RMK-2089)."
+      "note": "step: voice.open pipeline contract (S19) and voice stage trace (S3): with a contract, every inbound scripted stage gets the internal format; a frame stage passing a frame in another format on unchanged with one warning is each stage's own test: roomkit's built-in AGC shows it (tests/voice/pipeline/test_simple_agc.py::TestSimpleAGCProvider::test_unsupported_pcm_format_is_not_misinterpreted), its built-in energy VAD reads a frame without that check (RMK-2089), and a provider's stage proves it in its own tests, outside roomkit's conformance."
     },
     "RK-12.3.1-016": {
       "class": "writable",

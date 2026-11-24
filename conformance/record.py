@@ -3,14 +3,11 @@
 `python_commit`, roomkit-rs's at its checkout's commit
 (conformance/executions/README.md, "Recording receipts").
 
-    # PostgreSQL and Redis turn mode, from the CI run of python_commit:
-    python3 conformance/record.py ci --python-repo ../roomkit
-
-    # any other report, with the command that wrote it after `--`:
+    # the core's Python receipt, with the command that wrote the report after `--`:
     python3 conformance/record.py junit --python-repo ../roomkit \\
         --junit ../roomkit/python-conformance.xml --name python-core \\
-        --backend memory --backend sqlite \\
-        -- env -u POSTGRES_DSN ROOMKIT_TEST_TURN_BACKEND=memory uv run pytest \\
+        --backend memory \\
+        -- env ROOMKIT_TEST_TURN_BACKEND=memory uv run pytest \\
            tests/conformance --junitxml=python-conformance.xml
 
     # roomkit-rs's result files, one pass each, with the command that wrote them:
@@ -21,10 +18,12 @@
            cargo test -p roomkit --test conformance
 
 The report is cleaned and retained under conformance/executions/, and each
-backend, or each Rust pass, becomes a receipt appended to evidence.json. `ci`
-needs the GitHub CLI (`gh`), and records only from a successful run of the
-exact commit. Then run `check.py --strict --traceability --update-traceability
---python-repo ... --rust-repo ...`.
+backend, or each Rust pass, becomes a receipt appended to evidence.json. Then
+run `check.py --strict --traceability --update-traceability --python-repo ...
+--rust-repo ...`. The core's receipts are the in-memory passes (TRACEABILITY.md,
+"Execution receipts"); `ci`, which imports the CI's passes of other backends,
+stays for the receipts recorded before that rule, needs the GitHub CLI (`gh`),
+and records only from a successful run of the exact commit.
 
 It needs `jsonschema`, as check.py does.
 """

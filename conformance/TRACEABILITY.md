@@ -337,7 +337,8 @@ recorded as a receipt of the core. A backend may still run the corpus as one
 of its own tests, under its own name. The receipts recorded before that
 decision under other backends stay in `evidence.json`, unchanged, and the
 checker still verifies them by the rules they were recorded under
-(`traceability/receipts.py`, `traceability/ci.py`).
+(`traceability/receipts.py`, `traceability/ci.py`). The checker does not
+refuse a new receipt of another backend: whoever records keeps the rule.
 
 Python's core receipt is JUnit with `asyncio`, backend `memory`: the cases of
 `tests.conformance.test_conformance` run with in-process turns: a command

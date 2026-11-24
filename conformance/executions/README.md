@@ -260,7 +260,8 @@ the corpus on it is that provider's own test, which its implementation's CI
 keeps running, and it is no longer recorded here. The sections below dated
 before that decision describe receipts of such passes as well: they stay
 recorded, unchanged, and are still verified, and so do the importer's rules
-for them (`record.py ci` among them).
+for them (`record.py ci` among them). Neither the importer nor the checker
+refuses a new receipt of another backend: whoever records keeps the rule.
 
 The retained report keeps only the testcases of the runner module of the
 recorded backend (`tests.conformance.test_conformance`), each with its class,
@@ -1001,7 +1002,7 @@ workers), in-process turns, by the command of "Receipts after the B series
 `python-rule-links-1ee7ec3-memory`, records the 3424 memory cases: 3416 passed
 and 8 were skipped. The skipped cases need a distributed turn backend: six
 scenarios of independent turn owners and two of an executor in a process of
-its own, each skip naming the turn mode it needs.
+its own, each skip saying what it needs.
 
 `rust-abb899e-memory-current-thread.xml` and
 `rust-abb899e-memory-multi-thread-4.xml` retain the memory passes of
