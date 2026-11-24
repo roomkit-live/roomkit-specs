@@ -1017,3 +1017,46 @@ test pinned by a link changed since
 receipts give no credit to specialized tests, to an executor in another
 process or a process death in roomkit-rs, or to a scenario a runner skips. The
 207 earlier execution receipts are unchanged.
+
+## Receipts closing phase 6 step 2a (2026-11-24)
+
+`python-rule-links-1ee7ec3.xml` retains the cases of one run of clean,
+published Python `1ee7ec379dee1e17c49a1949ad7ce8756c132606`, on Linux with
+Python 3.14.9, pytest 9.1.1, pytest-asyncio 1.4.0 and pytest-xdist 3.8.0 (four
+workers), in-process turns, by the command of "Receipts after the B series
+(2026-11-21)", without its suite-lock and CPU-affinity wrappers. Its receipt,
+`python-rule-links-1ee7ec3-memory`, records the 3424 memory cases: 3416 passed
+and 8 were skipped. The skipped cases need Redis: six scenarios of
+independent turn owners ("independent turn owners require REDIS_URL") and two
+of an executor in a process of its own ("an executor in a process of its own
+needs the Redis turn mode").
+
+`rust-abb899e-memory-current-thread.xml` and
+`rust-abb899e-memory-multi-thread-4.xml` retain the memory passes of
+roomkit-rs `abb899e4593b0a8ff83c556d57e56f9a9d83ea07`, a clean commit of its
+main, run with Rust 1.99.1 through the local wrapper of "Core rule links:
+Python and roomkit-rs passes (2026-11-18)", by the memory command of
+"roomkit-rs memory and SQLite passes (2026-11-17)", with no `REDIS_URL`. Each
+holds the 3424 scenarios of the copy: 3261 passed, 163 skipped and none
+failed. The 163 are 56 scenarios that name a feature in `requires_features`
+that roomkit-rs's runner does not provide ("missing scenario features: voice"
+and so on): voice 18, realtime 12, conference 7, video 5, source_provider 3,
+conference with realtime 2, message_session 2, protocol_trace 2, recording 2,
+scoring 2 and executor_media 1; and the 107 other scenarios with
+`setup.executors` ("§10.6.7: this pass has no Redis turn executor"). The
+runner provides none of those features; for the media of §12 (voice, realtime
+voice, video, conference, recording), roomkit-rs has no code, as the phase 6
+plan decided. No scenario fails: the runner's known-failure list is empty at
+this commit.
+
+Both copies are corpus `8dd82ebeeda59d8302668beac7230f14309b782a`, after the
+core's close gaps were closed with new runner steps and scenarios, the §12
+suspects were probed, §12, a few units of §6 and Appendix A were amended, and
+a streamed text came to name the row it follows; the RFC is
+`4293f85da70f4637dc7254eabd2d1f52330812c0`. The evidence's `python_commit`
+moved to the Python commit first. No specialized test pinned by a link
+changed since `91320acb5d3fb53b50ea63d69764fdacc420297b`, so none was pinned
+again. These receipts give no credit to the SQLite or PostgreSQL stores, to
+turns across Redis, to specialized tests or to a scenario a runner skips; the
+SQLite cases the Python report also holds are not recorded. The 220 earlier
+execution receipts are unchanged.
