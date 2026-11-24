@@ -147,8 +147,10 @@ interface; `websocket_channel`, the implementation's WebSocket channel and its
 connection registry (§8.2); and `classifier_dispatch`, a step that asks a
 scripted classifier its questions (§6.8). The corpus never drives a vendor's
 provider, and no feature names one: what a provider reads and writes on its
-vendor's wire is proven by that provider's own tests, which `untested.json`
-names. Each runner declares the features it
+vendor's wire is proven by that provider's own tests, outside roomkit's
+conformance. `untested.json` names none of them: for each unit it says what
+the core guarantees and which tests of roomkit's mocks and in-memory defaults
+prove it. Each runner declares the features it
 provides. Before setup, it reports the scenario skipped if any are missing,
 naming the missing features in its test result. With the member absent, the
 scenario runs without a feature prerequisite.
@@ -304,7 +306,8 @@ room callbacks of the setup are not compared.
     having ended the turn, beats no more meanwhile: an owner whose
     `heartbeat_timeout` passes first loses the turn (`executor_lost`). A
     runner holds the end at the transport the kit is built with: roomkit-rs's
-    Redis executor pass, whose transport is its own, refuses the member.
+    distributed-turn executor pass, whose transport is its own, refuses the
+    member.
     `expect.turn_ends` reads what became of each turn so held;
   - an `ai` channel with a `model` is a **scripted agent** instead (below).
 - `rooms`: each is created (`id`, `organization_id`, `metadata`, `timers`),
@@ -416,7 +419,8 @@ room callbacks of the setup are not compared.
   records share staying on the run's own loop; `executor.kill`,
   `executor.pause`, `executor.resume` and `channel.publish` do not name it;
   a runner that cannot run it so skips the scenario: roomkit outside its
-  Redis turn mode, roomkit-rs outside its Redis executor pass). The channels it runs are the ones
+  distributed turn mode, roomkit-rs outside its distributed-turn executor
+  pass). The channels it runs are the ones
   the setup marks `declared`: each executor builds its own copy, and a
   scripted agent answers from the one model of its channel id, whichever
   executor runs its turn. `kit.turn_timeouts` gives the bounds of a turn
@@ -1722,14 +1726,17 @@ the final state. Timing races remain in the implementation tests.
 ## On a distributed turn backend
 
 A runner may run the suite with every turn crossing a distributed backend's
-transport, the kit's own executor reached as one elsewhere. roomkit's is
-`ROOMKIT_TEST_TURN_BACKEND=redis REDIS_URL=... uv run pytest tests/conformance`,
-which its CI runs. It skips what a transport cannot give the runner, with
-its reason in `tests/conformance/test_conformance.py`: a scripted turn that
-calls the kit it holds (across a backend a turn reaches its room through its
-host, `host.*`). Its idle wait also waits for the work a turn began that
-reaches the owner after the turn across the transport (§10.6.3), as an ASYNC
-hook whose timeout falls after its turn.
+transport, the kit's own executor reached as one elsewhere. Such a pass is a
+test of that backend, a provider of the core's turn interface: its
+implementation's CI runs it, and it records no receipt of the core, whose
+receipts are the in-memory defaults with the mocks (TRACEABILITY.md,
+« Execution receipts »). roomkit selects the turn mode with
+`ROOMKIT_TEST_TURN_BACKEND`. The pass skips what a transport cannot give the
+runner, with its reason in `tests/conformance/test_conformance.py`: a
+scripted turn that calls the kit it holds (across a backend a turn reaches
+its room through its host, `host.*`). Its idle wait also waits for the work
+a turn began that reaches the owner after the turn across the transport
+(§10.6.3), as an ASYNC hook whose timeout falls after its turn.
 
 ## Known failures
 

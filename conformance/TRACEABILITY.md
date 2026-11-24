@@ -276,7 +276,7 @@ Rust outcome per backend:
 ```markdown
 | Unit | Kind | Level | Scenario | Lock | Python | Rust |
 |---|---|---|---|---|---|---|
-| RK-10.4-022 | behavior | must | `routing/x` | pinned | memory passed, sqlite passed |  |
+| RK-10.4-022 | behavior | must | `routing/x` | pinned | memory passed |  |
 | RK-8.2-014 | behavior | must | decided gap: step, RMK-1904: Needs a scripted source. | | | |
 ```
 
@@ -326,30 +326,37 @@ by the checker. A receipt is a reviewed record of a run, not a signed attestatio
 that the working tree was clean; the author must run the exact clean commits.
 
 The checker validates the saved output, actual commit contents and the corpus
-copied into the implementation. Python's profiles are JUnit with `asyncio`,
-one backend per receipt: `memory` and `sqlite` (cases of
-`tests.conformance.test_conformance`), `postgres` (cases of
-`tests.conformance.test_postgres`), and `memory+redis-turns` and
-`sqlite+redis-turns`, the kit's turns across Redis. That mode runs the same
-cases under the same names, so its receipt's command must set
-`ROOMKIT_TEST_TURN_BACKEND=redis`, no other receipt's command may, and a
-command whose turn mode cannot be read from its words is refused. A scenario
-with several cases in the report (a PostgreSQL slow-preparation variant) takes
-the worst of their outcomes. `conformance/record.py` writes receipts from a
-JUnit report; none is written by hand (see the
-[executions README](executions/README.md)).
+copied into the implementation.
+
+**The core's receipts are the in-memory defaults with the mocks** (the
+maintainer's decision of 2026-11-24). A store, a lock manager or a turn
+backend other than the in-memory default is a provider of an interface the
+core holds, as an AI vendor's provider is: a pass of the corpus on it tests
+that provider, its implementation's CI keeps running it, and it is not
+recorded as a receipt of the core. A backend may still run the corpus as one
+of its own tests, under its own name. The receipts recorded before that
+decision under other backends stay in `evidence.json`, unchanged, and the
+checker still verifies them by the rules they were recorded under
+(`traceability/receipts.py`, `traceability/ci.py`).
+
+Python's core receipt is JUnit with `asyncio`, backend `memory`: the cases of
+`tests.conformance.test_conformance` run with in-process turns: a command
+that selects a distributed turn mode through `ROOMKIT_TEST_TURN_BACKEND`, or
+whose turn mode cannot be read from its words, is refused. A scenario with several
+cases in the report takes the worst of their outcomes.
+`conformance/record.py` writes receipts from a JUnit report; none is written
+by hand (see the [executions README](executions/README.md)).
 
 Rust receipts come from roomkit-rs's result files (format `cargo_junit`), one
-receipt per pass: a backend, `memory`, `sqlite` or `postgres`, and a tokio
-runtime, `current_thread` (one thread) or `multi_thread_4` (four workers, run
-on memory only). The runner writes one case per scenario, named by its id,
-under the class `conformance.<backend>.<runtime>`, so the report names its
-pass and the command is not read. A receipt holds the whole pass, every
-scenario of the copy with the scenarios the runner sets apart as skipped. The
-copy is roomkit-rs `conformance/scenarios`, synced from the corpus at its
-`conformance/SPECS_COMMIT`. The report also names the commit the run was at,
-which must be the checkout's, clean, when it is recorded. From a clean
-roomkit-rs commit on main:
+receipt per pass: backend `memory` and a tokio runtime, `current_thread` (one
+thread) or `multi_thread_4` (four workers). The runner writes one case per
+scenario, named by its id, under the class `conformance.<backend>.<runtime>`,
+so the report names its pass and the command is not read. A receipt holds the
+whole pass, every scenario of the copy with the scenarios the runner sets
+apart as skipped. The copy is roomkit-rs `conformance/scenarios`, synced from
+the corpus at its `conformance/SPECS_COMMIT`. The report also names the
+commit the run was at, which must be the checkout's, clean, when it is
+recorded. From a clean roomkit-rs commit on main:
 
 ```sh
 ROOMKIT_CONFORMANCE_JUNIT=target/conformance cargo test -p roomkit --test conformance
@@ -358,34 +365,14 @@ python conformance/record.py rust --rust-repo ../roomkit-rs \
   -- env ROOMKIT_CONFORMANCE_JUNIT=target/conformance cargo test -p roomkit --test conformance
 ```
 
-roomkit-rs runs the scenarios with `setup.executors` only across its Redis
-turn executor, when `REDIS_URL` names a Redis server; the passes above skip
-them. A pass that runs them is a backend of its own, `memory+redis-executors`,
-`sqlite+redis-executors` or `postgres+redis-executors`, on its store's
-runtimes. From roomkit-rs `773311efae440c2b2b88a37674cfc34396b1b014` on, its
-class names it (`conformance.memory+redis-executors.current_thread`): a plain
-report is never recorded under that backend, nor such a report under the plain
-one. An earlier runner gave that pass the plain class (see the
-[executions README](executions/README.md), "Recording receipts"). Only the
-scenarios with executors cross Redis in that pass;
-every other scenario runs in process, as in the plain pass. Python's
-`+redis-turns`, whose every turn crosses Redis, is another mode, hence another
-name. The receipt and its file write `+` as `-`:
-`rust-<commit>-memory-redis-executors-current-thread`.
+roomkit-rs runs the scenarios with `setup.executors` only across a
+distributed turn executor; its memory passes report them skipped. A pass
+that runs them crosses a distributed backend's transport, so it is that
+backend's own test, not a receipt of the core.
 
-```sh
-REDIS_URL=redis://127.0.0.1:6379 ROOMKIT_CONFORMANCE_JUNIT=target/conformance \
-  cargo test -p roomkit --features redis --test conformance
-python conformance/record.py rust --rust-repo ../roomkit-rs \
-  --junit ../roomkit-rs/target/conformance/memory+redis-executors-current_thread.xml \
-  -- env REDIS_URL=redis://127.0.0.1:6379 ROOMKIT_CONFORMANCE_JUNIT=target/conformance \
-     cargo test -p roomkit --features redis --test conformance
-```
-
-Rust's aggregate cargo summary (format `cargo`) stays refused: memory and
-SQLite emit the same summary, and equal scenario counts do not identify the
-executed IDs. Other backends and specialized test executions remain
-unrecorded.
+Rust's aggregate cargo summary (format `cargo`) stays refused: two passes can
+emit the same summary, and equal scenario counts do not identify the
+executed IDs. Specialized test executions remain unrecorded.
 
 
 `recorded_pass` applies only to the named scope, revision, backend and runtime.

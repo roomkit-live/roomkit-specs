@@ -1,5 +1,11 @@
 # Retained execution evidence
 
+Since 2026-11-24 the core's receipts are the in-memory defaults with the
+mocks ("Recording receipts" below). The sections dated before then also
+describe receipts of other stores and turn backends, providers of the core's
+interfaces: those receipts stay recorded and verified, under the names they
+were recorded with.
+
 `python-hooks-33d1f4.xml` retains all 55 selected scenario outcomes from:
 
 ```sh
@@ -245,82 +251,68 @@ It reads the corpus the implementation copied (`tests/conformance/SPECS_COMMIT`
 in roomkit, `conformance/SPECS_COMMIT` in roomkit-rs, at the recorded commit)
 and the last commit of `roomkit-rfc.md`, which must match the checkout's RFC.
 
+**The core's receipts are the in-memory defaults with the mocks**, since the
+maintainer's decision of 2026-11-24 (TRACEABILITY.md, « Execution
+receipts »): one Python receipt, backend `memory`, and roomkit-rs's two
+`memory` passes. A store, a lock manager or a turn backend other than the
+in-memory default is a provider of an interface the core holds: a pass of
+the corpus on it is that provider's own test, which its implementation's CI
+keeps running, and it is no longer recorded here. The sections below dated
+before that decision describe receipts of such passes as well: they stay
+recorded, unchanged, and are still verified, and so do the importer's rules
+for them (`record.py ci` among them).
+
 The retained report keeps only the testcases of the runner module of the
-recorded backends (`tests.conformance.test_conformance`, or
-`tests.conformance.test_postgres`), each with its class, its name and its
-outcome; a skip, failure or error keeps pytest's `type` and `message`, with the
-directories of local paths cut out of the message. Hosts, timestamps,
-durations, file and line attributes, properties, captured output and
-tracebacks are dropped, and the suite counts are recomputed from the cases kept.
-The command's `--junitxml` path becomes its file name. Each backend becomes one
-receipt, `<name>-<commit>-<backend>` with `+` written `-`. Its results, every
-scenario case of that backend in the report with its outcome and the scenario's
-hash at the copied corpus (a scenario with several cases in the report takes
-the worst of them), are not stored: the checker reads them from the retained
-report and the corpus. The receipt records their `counts` by outcome and
-`results_sha256`, their fingerprint, and the check fails when the report and
-the corpus no longer give those results. The import is refused when a backend
-has no case in the report; when a Redis turn-mode receipt's command does not set
-`ROOMKIT_TEST_TURN_BACKEND=redis`, another one's does, or the command names the
-variable where its turn mode cannot be read (a wrapper such as `flock` or
-`sh -c` around it: record the command without its wrapper); when the command
-still names a local path; when the implementation's copy of a scenario differs
-from the corpus; when the receipt id is already recorded; or when the retained
-file exists with other content.
-
-After `python_commit` moves, once roomkit's CI run of that commit is green,
-one command refreshes the PostgreSQL and Redis turn-mode receipts:
-
-```sh
-uv run --no-project --python 3.13 --with jsonschema==4.26.0 \
-  python conformance/record.py ci --python-repo ../roomkit
-```
-
-It takes the successful push run of the `CI` workflow on that exact commit,
-downloads its `integration-junit` artifact with `gh`, and records
-`postgres-scenarios.xml` as `python-postgres-scenarios-<commit>-postgres` and
-`redis-turns.xml` as `python-redis-turns-<commit>-memory-redis-turns` and
-`-sqlite-redis-turns`. Their commands are the CI steps' own, written in
-`CI_REPORTS` (`traceability/ci.py`). The import is refused unless
-`.github/workflows/ci.yml` at that commit sets no workflow environment, gives the
-integration job exactly the recorded environment, and holds each step exactly as
-recorded, comments aside. CI writes
-`redis-turns.xml` from roomkit `781f0c9d5fd01682e4f90285d942ba74fae2e0e7` on;
-an artifact without it records PostgreSQL only and says so. Then regenerate the
-report:
-
-```sh
-uv run --no-project --python 3.13 --with jsonschema==4.26.0 \
-  python conformance/check.py --strict --traceability --update-traceability \
-  --python-repo ../roomkit --rust-repo ../roomkit-rs
-```
+recorded backend (`tests.conformance.test_conformance`), each with its class,
+its name and its outcome; a skip, failure or error keeps pytest's `type` and
+`message`, with the directories of local paths cut out of the message. Hosts,
+timestamps, durations, file and line attributes, properties, captured output
+and tracebacks are dropped, and the suite counts are recomputed from the
+cases kept. The command's `--junitxml` path becomes its file name. The
+backend becomes one receipt, `<name>-<commit>-<backend>`. Its results, every
+scenario case of that backend in the report with its outcome and the
+scenario's hash at the copied corpus (a scenario with several cases in the
+report takes the worst of them), are not stored: the checker reads them from
+the retained report and the corpus. The receipt records their `counts` by
+outcome and `results_sha256`, their fingerprint, and the check fails when the
+report and the corpus no longer give those results. The import is refused
+when the backend has no case in the report; when the command selects a
+distributed turn mode, or names the turn-mode variable where its words cannot
+tell it (a wrapper such as `flock` or `sh -c` around it: record the command
+without its wrapper); when the command still names a local path; when the
+implementation's copy of a scenario differs from the corpus; when the receipt
+id is already recorded; or when the retained file exists with other content.
 
 A local run is recorded with `record.py junit`, the command that ran after
-`--`, for instance the memory and SQLite receipts of a conformance run:
+`--`. The core's Python receipt, then the report regenerated:
 
 ```sh
 uv run --no-project --python 3.13 --with jsonschema==4.26.0 \
   python conformance/record.py junit --python-repo ../roomkit \
   --junit ../roomkit/python-conformance.xml --name python-<lot> \
-  --backend memory --backend sqlite \
-  -- env -u POSTGRES_DSN ROOMKIT_TEST_TURN_BACKEND=memory uv run pytest \
+  --backend memory \
+  -- env ROOMKIT_TEST_TURN_BACKEND=memory uv run pytest \
      tests/conformance -q --junitxml=python-conformance.xml
+uv run --no-project --python 3.13 --with jsonschema==4.26.0 \
+  python conformance/check.py --strict --traceability --update-traceability \
+  --python-repo ../roomkit --rust-repo ../roomkit-rs
 ```
 
 A roomkit-rs run is recorded with `record.py rust`, at the commit the
 roomkit-rs checkout is on, a commit of roomkit-rs's main (CI reads only its
 history): each `--junit` file, one pass of the runner, becomes
 `rust-<commit>-<backend>-<runtime>.xml` and the receipt of the same name, with
-the commit's first seven characters and `+` and `_` written `-`. The runner writes the commit it ran at and whether tracked
-files differed from it; the import is refused unless that is the checkout's
-commit, clean, so a file an earlier run left is never recorded at a later
-commit. It is also refused when the checkout has uncommitted changes to
-tracked files, when a file holds no pass or several, when the pass left out a
-scenario of the copy (`ROOMKIT_CONFORMANCE_FILTER` runs are not recorded), and
-for the reasons above. The checker refuses a Rust receipt with a
-`scenario_filter`, or whose id or file is not named after its commit, backend
-and runtime. The memory runner's two passes come from
-one command:
+the commit's first seven characters and `+` and `_` written `-`. The runner
+writes the commit it ran at and whether tracked files differed from it; the
+import is refused unless that is the checkout's commit, clean, so a file an
+earlier run left is never recorded at a later commit. It is also refused when
+the checkout has uncommitted changes to tracked files, when a file holds no
+pass or several, when the pass left out a scenario of the copy
+(`ROOMKIT_CONFORMANCE_FILTER` runs are not recorded), and for the reasons
+above. The checker refuses a Rust receipt with a `scenario_filter`, or whose
+id or file is not named after its commit, backend and runtime. The memory
+runner's two passes come from one command, run with no distributed turn
+backend configured:
 
 ```sh
 uv run --no-project --python 3.13 --with jsonschema==4.26.0 \
@@ -331,29 +323,10 @@ uv run --no-project --python 3.13 --with jsonschema==4.26.0 \
      cargo test -p roomkit --test conformance
 ```
 
-The scenarios with `setup.executors` run only in roomkit-rs's Redis executor
-pass: with `REDIS_URL` naming a Redis server, a runner built with the `redis`
-feature (the SQLite and PostgreSQL runners always are) runs them across its
-Redis turn executor, every other scenario in process. That pass writes the
-backend `<store>+redis-executors` in its file's name and its class
-(`memory+redis-executors-current_thread.xml`, class
-`conformance.memory+redis-executors.current_thread`), and becomes the receipt
-`rust-<commit>-memory-redis-executors-current-thread`. A plain receipt never
-reads that pass's cases, nor the reverse, and `record.py` refuses a report
-holding both. The runner names the pass so from roomkit-rs
-`773311efae440c2b2b88a37674cfc34396b1b014` on. An earlier commit's runner
-gives that pass the plain pass's name and class, which the importer cannot
-tell apart: record no file an earlier commit wrote with `REDIS_URL` set. The
-memory runner's two Redis executor passes:
-
-```sh
-uv run --no-project --python 3.13 --with jsonschema==4.26.0 \
-  python conformance/record.py rust --rust-repo ../roomkit-rs \
-  --junit ../roomkit-rs/target/conformance/memory+redis-executors-current_thread.xml \
-  --junit ../roomkit-rs/target/conformance/memory+redis-executors-multi_thread_4.xml \
-  -- env REDIS_URL=redis://127.0.0.1:6379 ROOMKIT_CONFORMANCE_JUNIT=target/conformance \
-     cargo test -p roomkit --features redis --test conformance
-```
+The scenarios with `setup.executors` run only across a distributed turn
+executor: the memory passes report them skipped. A pass that runs them
+crosses that backend's transport, so it is the backend's own test, not a
+receipt of the core.
 
 ## PostgreSQL and the Redis turn mode
 
@@ -1026,24 +999,24 @@ Python 3.14.9, pytest 9.1.1, pytest-asyncio 1.4.0 and pytest-xdist 3.8.0 (four
 workers), in-process turns, by the command of "Receipts after the B series
 (2026-11-21)", without its suite-lock and CPU-affinity wrappers. Its receipt,
 `python-rule-links-1ee7ec3-memory`, records the 3424 memory cases: 3416 passed
-and 8 were skipped. The skipped cases need Redis: six scenarios of
-independent turn owners ("independent turn owners require REDIS_URL") and two
-of an executor in a process of its own ("an executor in a process of its own
-needs the Redis turn mode").
+and 8 were skipped. The skipped cases need a distributed turn backend: six
+scenarios of independent turn owners and two of an executor in a process of
+its own, each skip naming the turn mode it needs.
 
 `rust-abb899e-memory-current-thread.xml` and
 `rust-abb899e-memory-multi-thread-4.xml` retain the memory passes of
 roomkit-rs `abb899e4593b0a8ff83c556d57e56f9a9d83ea07`, a clean commit of its
 main, run with Rust 1.99.1 through the local wrapper of "Core rule links:
 Python and roomkit-rs passes (2026-11-18)", by the memory command of
-"roomkit-rs memory and SQLite passes (2026-11-17)", with no `REDIS_URL`. Each
+"Recording receipts", with no distributed turn backend configured. Each
 holds the 3424 scenarios of the copy: 3261 passed, 163 skipped and none
 failed. The 163 are 56 scenarios that name a feature in `requires_features`
 that roomkit-rs's runner does not provide ("missing scenario features: voice"
 and so on): voice 18, realtime 12, conference 7, video 5, source_provider 3,
 conference with realtime 2, message_session 2, protocol_trace 2, recording 2,
 scoring 2 and executor_media 1; and the 107 other scenarios with
-`setup.executors` ("§10.6.7: this pass has no Redis turn executor"). The
+`setup.executors`, whose skip cites §10.6.7: the pass has no distributed turn
+executor. The
 runner provides none of those features; for the media of §12 (voice, realtime
 voice, video, conference, recording), roomkit-rs has no code, as the phase 6
 plan decided. No scenario fails: the runner's known-failure list is empty at
@@ -1056,7 +1029,7 @@ a streamed text came to name the row it follows; the RFC is
 `4293f85da70f4637dc7254eabd2d1f52330812c0`. The evidence's `python_commit`
 moved to the Python commit first. No specialized test pinned by a link
 changed since `91320acb5d3fb53b50ea63d69764fdacc420297b`, so none was pinned
-again. These receipts give no credit to the SQLite or PostgreSQL stores, to
-turns across Redis, to specialized tests or to a scenario a runner skips; the
-SQLite cases the Python report also holds are not recorded. The 220 earlier
+again. These receipts give no credit to a store or a turn backend other than
+the in-memory defaults, to specialized tests or to a scenario a runner skips;
+the cases of another store the Python report also holds are not recorded. The 220 earlier
 execution receipts are unchanged.
