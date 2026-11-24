@@ -449,6 +449,10 @@ room callbacks of the setup are not compared.
   realtime bus. `kit.executor_catalogue: false` supplies a transport that
   omits the optional catalogue. `kit.turn_backend_faults` enables the
   scripted failures described alongside `turn_backend.fault`.
+  `kit.turn_backend_contract_only` supplies a transport written on the
+  public contract alone: the runner's own, which hands each operation of the
+  contract to the mode's backend, so the kit is served as by any transport
+  written outside the implementation.
 - `sources`: each a **scripted source** (§6.5), attached to the kit for its
   `channel_id`, a channel of the setup, after the rooms, with its
   `auto_restart` (default false) and `restart_delay_ms` (the

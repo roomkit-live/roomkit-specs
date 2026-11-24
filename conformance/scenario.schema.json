@@ -556,6 +556,10 @@
             "executor_catalogue": {
               "type": "boolean",
               "description": "Whether the turn backend implements the optional executor catalogue. Defaults to true."
+            },
+            "turn_backend_contract_only": {
+              "type": "boolean",
+              "description": "Give the kit a transport of the runner's own, written on the public contract alone, which hands each operation to the mode's backend."
             }
           }
         },

@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "047cbea552fa7cee0f23214d38e3a4bb69a0817f7e8d1772f1919f19a04a41db",
-  "corpus_sha256": "ba569b71613342d029a156a0d74d28095eff852564f4f2f5589a5c22f761272b",
+  "corpus_sha256": "cd0c8e86afd553d7a9fd402662d8b16ed8aa6a2d371a83e6c0d5bb7a2f4f1fca",
   "python_commit": "1ee7ec379dee1e17c49a1949ad7ce8756c132606",
-  "scenario_count": 3430,
+  "scenario_count": 3431,
   "sections": [
     {
       "section": "0",
@@ -5757,6 +5757,7 @@
         "executors/after-a-lost-executor-the-room-s-next-turn-runs-elsewhere",
         "executors/an-agent-is-offline-in-a-room-of-an-organization-its-executors-do-not-serve",
         "executors/an-agent-its-executor-builds-nothing-for-fails-no-executor",
+        "executors/an-agent-s-presence-is-published-at-once-on-a-transport-written-on-the-contract-alone",
         "executors/an-agent-s-presence-is-published-in-its-rooms-on-attach-and-when-its-coverage-changes",
         "executors/an-executor-declaring-every-agent-takes-the-turns-of-agents-it-was-never-named",
         "executors/an-executor-drops-the-state-a-turn-elsewhere-made-stale",
