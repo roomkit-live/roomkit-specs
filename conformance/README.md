@@ -1158,12 +1158,15 @@ run's own kit when absent.
 | `recording.read` | `recorder` | the base64 chunks this recorder actually received, in order |
 | `recording.stop` | `room_id` | stop the room's recordings, returning their `recording_id` and `url` |
 | `voice.open` | `room_id`, `channel_id`, `participants` and the optional provider inputs below | registers and attaches a voice channel, then joins the named participants to that room |
-| `voice.feed` | `channel_id`, `participant_id`, `frames` (base64 PCM16 mono at 16 kHz) | the transport delivers these inbound frames in order |
+| `voice.feed` | `channel_id`, `participant_id`, `frames` (base64 PCM16), optional `sample_rate` (16000 by default), `channels` (1 by default) and `timestamp_ms` (every frame of the step carries it; none by default) | the transport delivers these inbound frames in order, in that format |
 | `voice.say` | `channel_id`, `participant_id`, `text` | speak to the participant, awaiting playback |
 | `voice.stream` | `channel_id`, `chunks` (strings) | deliver a streamed reply to the channel |
 | `voice.barge_in` | `channel_id`, `participant_id` | the transport signals an interruption |
 | `voice.settle` | `channel_id` | wait for outstanding voice work after the utterance, playback or bridge frame |
-| `voice.read` | `channel_id` | `synthesized` (the sentences the TTS provider received) and `audio` (per participant, the base64 chunks received by their transport, in order: each frame the bridge forwarded is one chunk, and so is each spoken reply, its streamed audio joined) |
+| `voice.read` | `channel_id`, optional `stages` (stage names) and `calls` (call names) | `synthesized` (the sentences the TTS provider received); `audio` (per participant, the base64 chunks received by their transport, in order: each frame the bridge forwarded is one chunk, and so is each spoken reply, its streamed audio joined); `chunks` (per participant, each AudioChunk their transport received, in order, a reply's every chunk: `data`, `sample_rate`, `channels`); `sessions` (per participant, each session joined, in order: `session_id` and its `state`, `active` or `ended`); `stages` (each call the scripted stages received, in order: only those of the named stages when `stages` is given, and only the named calls when `calls` is; see Scripted voice sessions) |
+| `voice.join` | `channel_id`, `participant_id`, optional `session_id` | joins the participant to the channel's room again (the kit's `join`), the transport naming the new session `session_id` when given: the participant's session is now that one |
+| `voice.leave` | `channel_id`, `participant_id` | the kit's `leave` of the participant's session |
+| `voice.dtmf_received` | `channel_id`, `participant_id`, `digit`, `duration_ms` | the transport receives the digit by signalling and calls the callbacks registered on its `on_dtmf_received` (§12.2) |
 | `realtime.start` | `channel_id`, `room_id`, `participant_id` | opens the realtime session |
 | `realtime.end` | `channel_id` | ends the session |
 | `realtime.read` | `channel_id` | the provider's `injections` (text, role, silent) and `results` (call_id, result), and the tool `handlers` (name, outcome of `returned` or `interrupted`), in observation order |
@@ -1312,6 +1315,58 @@ real channel input. The optional inputs on `voice.open` script its providers:
 - `bridge` forwards permitted frames to the other participants when true.
   `playback_gate` holds the playback at the transport until a step opens it,
   so speech or a barge-in can arrive while the reply is playing.
+
+The transport's traits (§12.2, §12.3.4):
+
+- `capabilities` lists the VoiceCapability flags the transport declares, in
+  lowercase: `interruption`, `barge_in`, `native_aec`, `native_agc`,
+  `dtmf_inband`, `dtmf_signaling`, `native_bridge`. Absent, it declares
+  `interruption` and `barge_in`. With `dtmf_signaling` it provides
+  `on_dtmf_received`, which `voice.dtmf_received` drives.
+- `session_ids` maps a participant to the id the transport gives its
+  session, as a transport names its sessions by a call or a track; absent,
+  the transport makes up a unique id. Each session the transport creates is
+  `active`, and reads `ended` once the transport disconnects it.
+- `feeds_aec_reference: true` declares that the transport feeds an echo
+  canceller of its own with what it plays (`feeds_aec_reference`).
+- `playback_callback: true` makes the transport report each block it plays
+  through `on_audio_played` (`supports_playback_callback`), as it plays it:
+  each chunk of a reply, the reply's last one marked
+  `metadata.playback_ended`. With `reference_continues: true` it also marks
+  every block it reports `metadata.reference_continues`.
+
+Scripted pipeline stages (§12.3.1). Each stage named here is configured on
+the channel's pipeline, under the AudioPipelineConfig member of its name:
+
+- `aec`, `agc` and `denoiser` each take an object. With `output` (base64),
+  the frame each `process` returns carries these bytes, the frame's format,
+  timestamp and metadata otherwise kept; without it, `process` returns the
+  frame it received.
+- `postprocessors` lists postprocessors in order, each with its `name` and
+  an optional `output`, as above.
+- `recorder: {}` sets a recorder, which writes nothing, with the default
+  RecordingConfig.
+- `vad_config` sets the pipeline's VADConfig: `silence_threshold_ms`,
+  `speech_pad_ms`, `min_speech_duration_ms`.
+- `contract` sets the AudioPipelineContract: `transport_inbound_format`,
+  `transport_outbound_format` and `internal_format`, each an AudioFormat of
+  `sample_rate`, `channels` and `sample_width`, each member defaulting as
+  the RFC's AudioFormat does (16000, 1, 2). No resampler is scripted: the
+  implementation's own resampler converts.
+
+`voice.read`'s `stages` lists every call these stages and the scripted
+`vad`, `tones` (stage `dtmf`), `speakers` (stage `diarization`) and `turns`
+(stage `turn_detector`) received, in the order received. Each is an object:
+`stage` (`aec`, `agc`, `denoiser`, `recorder`, `vad`, `dtmf`,
+`diarization`, `turn_detector`, or a postprocessor's `name`), `call` (the
+method's name: `process`, `feed_reference`, `set_active`,
+`set_stream_active`, `reset`, `close`, `configure`, `start`, `stop`,
+`tap_inbound`, `tap_outbound`), `stream` (the stream key the call carries;
+for the recorder, the session id of its handle), `frame` (the frame as the
+call received it: `data` in base64, `sample_rate`, `channels`,
+`sample_width`, `timestamp_ms` and `metadata`), `active` (for
+`set_active` and `set_stream_active`) and `config` (the VADConfig a
+`configure` received, its unset fields null).
 
 Voice hook observations under `expect.hooks` expose `voice.participant_id`
 from the session and the payload's scalar fields, such as the transcript's

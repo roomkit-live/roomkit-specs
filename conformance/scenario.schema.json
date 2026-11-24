@@ -2366,6 +2366,9 @@
             "voice.barge_in",
             "voice.settle",
             "voice.read",
+            "voice.join",
+            "voice.leave",
+            "voice.dtmf_received",
             "realtime.start",
             "realtime.end",
             "realtime.read",
@@ -3183,6 +3186,163 @@
                     }
                   ]
                 }
+              },
+              "capabilities": {
+                "type": "array",
+                "items": {
+                  "enum": [
+                    "interruption",
+                    "barge_in",
+                    "native_aec",
+                    "native_agc",
+                    "dtmf_inband",
+                    "dtmf_signaling",
+                    "native_bridge"
+                  ]
+                },
+                "uniqueItems": true
+              },
+              "feeds_aec_reference": {
+                "type": "boolean"
+              },
+              "playback_callback": {
+                "type": "boolean"
+              },
+              "reference_continues": {
+                "type": "boolean"
+              },
+              "session_ids": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "aec": {
+                "type": "object",
+                "properties": {
+                  "output": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "agc": {
+                "type": "object",
+                "properties": {
+                  "output": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "denoiser": {
+                "type": "object",
+                "properties": {
+                  "output": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "postprocessors": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "output": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "recorder": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": false
+              },
+              "vad_config": {
+                "type": "object",
+                "properties": {
+                  "silence_threshold_ms": {
+                    "type": "integer"
+                  },
+                  "speech_pad_ms": {
+                    "type": "integer"
+                  },
+                  "min_speech_duration_ms": {
+                    "type": "integer"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "contract": {
+                "type": "object",
+                "properties": {
+                  "transport_inbound_format": {
+                    "type": "object",
+                    "properties": {
+                      "sample_rate": {
+                        "type": "integer",
+                        "minimum": 1
+                      },
+                      "channels": {
+                        "type": "integer",
+                        "minimum": 1
+                      },
+                      "sample_width": {
+                        "type": "integer",
+                        "minimum": 1
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  "transport_outbound_format": {
+                    "type": "object",
+                    "properties": {
+                      "sample_rate": {
+                        "type": "integer",
+                        "minimum": 1
+                      },
+                      "channels": {
+                        "type": "integer",
+                        "minimum": 1
+                      },
+                      "sample_width": {
+                        "type": "integer",
+                        "minimum": 1
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  "internal_format": {
+                    "type": "object",
+                    "properties": {
+                      "sample_rate": {
+                        "type": "integer",
+                        "minimum": 1
+                      },
+                      "channels": {
+                        "type": "integer",
+                        "minimum": 1
+                      },
+                      "sample_width": {
+                        "type": "integer",
+                        "minimum": 1
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "additionalProperties": false
               }
             },
             "dependentRequired": {
@@ -3191,6 +3351,9 @@
               ],
               "backchannels": [
                 "partials"
+              ],
+              "reference_continues": [
+                "playback_callback"
               ]
             }
           }
@@ -3222,6 +3385,17 @@
                   "type": "string"
                 },
                 "minItems": 1
+              },
+              "sample_rate": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "channels": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "timestamp_ms": {
+                "type": "number"
               }
             }
           }
@@ -3337,6 +3511,104 @@
             "properties": {
               "channel_id": {
                 "type": "string"
+              },
+              "stages": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              },
+              "calls": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "voice.join"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "channel_id",
+              "participant_id"
+            ],
+            "properties": {
+              "channel_id": {
+                "type": "string"
+              },
+              "participant_id": {
+                "type": "string"
+              },
+              "session_id": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "voice.leave"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "channel_id",
+              "participant_id"
+            ],
+            "properties": {
+              "channel_id": {
+                "type": "string"
+              },
+              "participant_id": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "voice.dtmf_received"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "channel_id",
+              "participant_id",
+              "digit",
+              "duration_ms"
+            ],
+            "properties": {
+              "channel_id": {
+                "type": "string"
+              },
+              "participant_id": {
+                "type": "string"
+              },
+              "digit": {
+                "type": "string",
+                "minLength": 1
+              },
+              "duration_ms": {
+                "type": "number"
               }
             }
           }

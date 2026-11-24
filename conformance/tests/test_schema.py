@@ -661,3 +661,79 @@ class SchemaTests(unittest.TestCase):
                 scenario = json.loads(fixture.read_text())
                 scenario["setup"]["channels"][1]["model"]["chat_dialect"] = dialect
                 self.assertEqual(validator.is_valid(scenario), valid)
+
+    def test_a_voice_pipeline_states_its_stages_transport_and_sessions(self) -> None:
+        schema = json.loads((ROOT / "scenario.schema.json").read_text())
+        validator = Draft202012Validator(schema)
+        fixture = ROOT / "scenarios/voice/a-reply-walks-the-outbound-stages-in-their-order.json"
+        self.assertTrue(validator.is_valid(json.loads(fixture.read_text())))
+        for member, value, valid in (
+            ("capabilities", ["native_aec", "dtmf_signaling"], True),
+            ("capabilities", ["echo_cancelling"], False),
+            ("session_ids", {"alice": ""}, False),
+            ("aec", {"output": 5}, False),
+            ("agc", {"gain": 2}, False),
+            ("postprocessors", [{"output": "AQI="}], False),
+            ("recorder", {"mode": "both"}, False),
+            ("vad_config", {"silence_threshold_ms": 300}, True),
+            ("vad_config", {"threshold": 0.5}, False),
+            ("contract", {"internal_format": {"sample_rate": 8000}}, True),
+            ("contract", {"internal_format": {"codec": "opus"}}, False),
+            ("reference_continues", True, False),
+        ):
+            with self.subTest(member=member, value=value):
+                scenario = json.loads(fixture.read_text())
+                scenario["steps"][0][member] = value
+                self.assertEqual(validator.is_valid(scenario), valid)
+        for step, valid in (
+            ({"call": "voice.join", "channel_id": "phone", "participant_id": "alice"}, True),
+            ({"call": "voice.join", "channel_id": "phone", "session_id": "s"}, False),
+            ({"call": "voice.leave", "channel_id": "phone", "participant_id": "alice"}, True),
+            (
+                {
+                    "call": "voice.dtmf_received",
+                    "channel_id": "phone",
+                    "participant_id": "alice",
+                    "digit": "#",
+                    "duration_ms": 120,
+                },
+                True,
+            ),
+            (
+                {
+                    "call": "voice.dtmf_received",
+                    "channel_id": "phone",
+                    "participant_id": "alice",
+                    "duration_ms": 120,
+                },
+                False,
+            ),
+            (
+                {
+                    "call": "voice.feed",
+                    "channel_id": "phone",
+                    "participant_id": "alice",
+                    "frames": ["AQI="],
+                    "sample_rate": 8000,
+                    "channels": 2,
+                    "timestamp_ms": 40,
+                },
+                True,
+            ),
+            (
+                {
+                    "call": "voice.feed",
+                    "channel_id": "phone",
+                    "participant_id": "alice",
+                    "frames": ["AQI="],
+                    "sample_rate": "8k",
+                },
+                False,
+            ),
+            ({"call": "voice.read", "channel_id": "phone", "stages": "aec"}, False),
+            ({"call": "voice.read", "channel_id": "phone", "calls": ["process"]}, True),
+        ):
+            with self.subTest(step=step):
+                scenario = json.loads(fixture.read_text())
+                scenario["steps"].append(step)
+                self.assertEqual(validator.is_valid(scenario), valid)

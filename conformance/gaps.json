@@ -1471,11 +1471,6 @@
       "card": "RMK-2066",
       "note": "step: CS1 and S4: the frames captured from the mark, the wake word's included, reach the provider whole."
     },
-    "RK-12.2-017": {
-      "class": "step",
-      "card": "RMK-2008",
-      "note": "step: voice stage trace (S3): no voice.open key sets the resampler, AEC, AGC, denoiser or recorder, and voice.read reports no stage a frame went through."
-    },
     "RK-12.2-021": {
       "class": "step",
       "card": "RMK-2008",
@@ -1501,55 +1496,15 @@
       "card": "RMK-2008",
       "note": "step: voice.play (S12) and a gate holding a streamed reply mid-way (S20); say() cutting a playback is writable with voice.say and the playback gate."
     },
-    "RK-12.2-038": {
-      "class": "step",
-      "card": "RMK-2008",
-      "note": "step: voice stage trace (S3): no voice.open key sets post-processors, a recorder or a resampler on the outbound path, nor does voice.read report their order."
-    },
-    "RK-12.2-039": {
-      "class": "step",
-      "card": "RMK-2008",
-      "note": "step: voice stage trace with the AEC reference read (S3): no step reads where feed_reference is called."
-    },
     "RK-12.2-041": {
       "class": "step",
       "card": "RMK-2008",
       "note": "step: voice TTS options (S7): no voice.open key sets a TTS that consumes context."
     },
-    "RK-12.2-043": {
-      "class": "step",
-      "card": "RMK-2008",
-      "note": "step: voice stage trace (S3): no voice.open key sets a stage that requires fixed-size AudioFrames on the outbound path."
-    },
     "RK-12.2-046": {
       "class": "step",
       "card": "RMK-2019",
       "note": "step: voice.open TTS options (S7): a scripted TTS chunk format; the transport's send_audio receives decoded PCM only, never an encoded chunk."
-    },
-    "RK-12.2-051": {
-      "class": "step",
-      "card": "RMK-2019",
-      "note": "step: voice.open capabilities (S2) and voice stage trace (S3): a backend declaring NATIVE_AEC or NATIVE_AGC with both stages configured; voice.read reports neither stage ran."
-    },
-    "RK-12.2-052": {
-      "class": "step",
-      "card": "RMK-2019",
-      "note": "step: voice.dtmf_signal (S13): a digit the backend signals and an in-band tone, both reaching the ON_DTMF hook."
-    },
-    "RK-12.2-053": {
-      "class": "step",
-      "card": "RMK-2019",
-      "note": "step: voice.end (S4): a session's state read once it opens and once it ends; a pause has no step."
-    },
-    "RK-12.2-054": {
-      "class": "step",
-      "card": "RMK-2019",
-      "note": "step: voice.end (S4): an ended session's state, still ENDED once the participant reconnects."
-    },
-    "RK-12.2-055": {
-      "class": "step",
-      "card": "RMK-2019",
-      "note": "step: voice.end (S4): a participant who reconnects after the end, given a session of another id."
     },
     "RK-12.2-058": {
       "class": "step",
@@ -1861,41 +1816,6 @@
       "card": "RMK-2034",
       "note": "step: voice stage trace (S3) and the session recorder (S8): the stages a frame goes through in order, the recorder handed the resampled frame unchanged, the DTMF detector beside the chain."
     },
-    "RK-12.3-008": {
-      "class": "step",
-      "card": "RMK-2034",
-      "note": "step: voice stage trace (S3) and voice.open capabilities (S2): the outbound stages in order, the AEC reference fed between the recorder and the resampler, none with a backend that feeds it."
-    },
-    "RK-12.3.1-008": {
-      "class": "step",
-      "card": "RMK-2034",
-      "note": "step: voice stage trace (S3): a scripted VAD reporting the VADConfig its configure() received when the pipeline is built; no voice.open key sets vad_config."
-    },
-    "RK-12.3.1-014": {
-      "class": "step",
-      "card": "RMK-2034",
-      "note": "step: voice.open pipeline contract (S19) and voice stage trace (S3): with a contract, every inbound scripted stage gets the internal format; a frame stage passing a frame in another format on unchanged with one warning is each stage's own test: roomkit's built-in AGC passes such a frame on unchanged (tests/voice/pipeline/test_simple_agc.py::TestSimpleAGCProvider::test_unsupported_pcm_format_is_not_misinterpreted), its built-in energy VAD reads a frame without that check (RMK-2089), and a provider's stage proves it in its own tests, outside roomkit's conformance."
-    },
-    "RK-12.3.1-023": {
-      "class": "step",
-      "card": "RMK-2034",
-      "note": "step: voice.end (S4) and voice stage trace (S3): a stream that ends, and the reset(stream) each scripted stage received."
-    },
-    "RK-12.3.1-024": {
-      "class": "step",
-      "card": "RMK-2034",
-      "note": "step: voice.end (S4) and voice stage trace (S3): a participant who returns on the same key walks the vad script from its start, each scripted stage reset before its first frame."
-    },
-    "RK-12.3.1-026": {
-      "class": "step",
-      "card": "RMK-2034",
-      "note": "step: voice.end (S4) and the voice stage trace (S3) extended to the turn detector's reset() calls, which the audit's catalogue does not hold: the session's end calls none; the detectors' reset() taking no key is pinned in Python's public API snapshot."
-    },
-    "RK-12.3.10-003": {
-      "class": "step",
-      "card": "RMK-2034",
-      "note": "step: voice stage trace (S3): two scripted postprocessors, the second handed the first one's output, in list order."
-    },
     "RK-12.3.12-010": {
       "class": "step",
       "card": "RMK-2042",
@@ -2081,185 +2001,40 @@
       "card": "RMK-2042",
       "note": "step: voice.open backchannels (S1b): a partial left pending, then a final judged no backchannel cuts the reply and is the turn."
     },
-    "RK-12.3.14-005": {
-      "class": "step",
-      "card": "RMK-2042",
-      "note": "step: voice stage trace (S3): the reset(stream) each scripted stage received when the session became active, keyed by the session id."
-    },
     "RK-12.3.14-007": {
       "class": "step",
       "card": "RMK-2042",
       "note": "step: voice session recorder (S8): a recorder and a recording_config on voice.open; its start and ON_RECORDING_STARTED."
-    },
-    "RK-12.3.14-008": {
-      "class": "step",
-      "card": "RMK-2042",
-      "note": "step: voice.end (S4) and voice stage trace (S3): the reset(stream) each scripted stage received at the session's end."
     },
     "RK-12.3.14-009": {
       "class": "step",
       "card": "RMK-2042",
       "note": "step: voice.end (S4) and voice session recorder (S8): the recorder's stop and ON_RECORDING_STOPPED with its result."
     },
-    "RK-12.3.14-010": {
-      "class": "step",
-      "card": "RMK-2042",
-      "note": "step: voice.end (S4) and voice stage trace (S3): no close() at a session's end, one when the channel closes."
-    },
-    "RK-12.3.14-011": {
-      "class": "step",
-      "card": "RMK-2042",
-      "note": "step: voice.feed format (S14) and voice stage trace (S3): a frame at another rate reaches the stages at the internal one, with original_sample_rate in its metadata."
-    },
     "RK-12.3.14-012": {
       "class": "step",
       "card": "RMK-2042",
       "note": "step: voice session recorder (S8): the inbound frames the recorder received, after resampling."
-    },
-    "RK-12.3.14-014": {
-      "class": "step",
-      "card": "RMK-2042",
-      "note": "step: voice.open capabilities (S2) and voice stage trace (S3): a backend with NATIVE_AEC, and the frames a scripted AEC received, none."
-    },
-    "RK-12.3.14-015": {
-      "class": "step",
-      "card": "RMK-2042",
-      "note": "step: voice.open capabilities (S2) and voice stage trace (S3): a backend with NATIVE_AGC, and the frames a scripted AGC received, none."
-    },
-    "RK-12.3.14-016": {
-      "class": "step",
-      "card": "RMK-2042",
-      "note": "step: voice stage trace (S3): the frames a scripted denoiser received, and what it returned reaching the VAD."
-    },
-    "RK-12.3.14-019": {
-      "class": "step",
-      "card": "RMK-2042",
-      "note": "step: voice.end (S4) and voice stage trace (S3): the reset(stream) each scripted stage received when the stream ended."
-    },
-    "RK-12.3.14-021": {
-      "class": "step",
-      "card": "RMK-2042",
-      "note": "step: voice stage trace (S3): two scripted postprocessors, each frame handed to them in order, the second's output played."
     },
     "RK-12.3.14-022": {
       "class": "step",
       "card": "RMK-2042",
       "note": "step: voice session recorder (S8): the outbound frames the recorder received, after the postprocessors."
     },
-    "RK-12.3.14-023": {
-      "class": "step",
-      "card": "RMK-2042",
-      "note": "step: voice.open capabilities (S2), transport-level AEC feeding, and voice stage trace (S3): the feed_reference calls a scripted AEC received, none when the transport feeds it."
-    },
-    "RK-12.3.14-024": {
-      "class": "step",
-      "card": "RMK-2042",
-      "note": "step: voice.open pipeline contract (S19) and voice stage trace (S3): a transport format other than the internal one, and the frames the transport received at it."
-    },
     "RK-12.3.15-020": {
       "class": "phase6",
       "card": "RMK-2042",
       "note": "measurement: debug tap write latency on the audio path; Python writes each frame on the pipeline's path."
-    },
-    "RK-12.3.3-003": {
-      "class": "step",
-      "card": "RMK-2034",
-      "note": "step: voice.open pipeline contract (S19), voice.feed at another rate (S14) and voice stage trace (S3): the frame a scripted stage receives is in the internal format."
-    },
-    "RK-12.3.3-004": {
-      "class": "step",
-      "card": "RMK-2034",
-      "note": "step: voice.open pipeline contract (S19) and voice stage trace (S3): a transport outbound format other than the internal one; voice.read's audio is in the transport's format."
-    },
-    "RK-12.3.3-005": {
-      "class": "step",
-      "card": "RMK-2034",
-      "note": "step: voice.open pipeline contract (S19), voice.feed at another rate (S14) and voice stage trace (S3): the resampled frame a scripted stage receives keeps its timestamp_ms."
-    },
-    "RK-12.3.3-006": {
-      "class": "step",
-      "card": "RMK-2034",
-      "note": "step: voice.open pipeline contract (S19), voice.feed at another rate (S14) and voice stage trace (S3): the resampled frame a scripted stage receives carries original_sample_rate and original_channels."
     },
     "RK-12.3.3-007": {
       "class": "phase6",
       "card": "RMK-2034",
       "note": "measurement: resampling quality, the artifacts a resampler leaves for VAD and STT (Python's default is linear interpolation, suspect RMK-2029)."
     },
-    "RK-12.3.3-008": {
-      "class": "step",
-      "card": "RMK-2034",
-      "note": "step: voice.feed at another rate (S14) and voice stage trace (S3): with no resampler, the frame each scripted stage receives is the transport's, unchanged."
-    },
-    "RK-12.3.4-006": {
-      "class": "step",
-      "card": "RMK-2034",
-      "note": "step: voice stage trace (S3) with the AEC reference read: a scripted AEC reporting the stream key of each process() and feed_reference() call."
-    },
-    "RK-12.3.4-007": {
-      "class": "step",
-      "card": "RMK-2034",
-      "note": "step: voice stage trace (S3) with the AEC reference read: the outbound audio reaches feed_reference() with the key of the session it is played to."
-    },
-    "RK-12.3.4-009": {
-      "class": "step",
-      "card": "RMK-2034",
-      "note": "step: voice.open capabilities (S2) and voice stage trace (S3): a backend that feeds the reference itself; the pipeline's outbound path calls no feed_reference()."
-    },
-    "RK-12.3.4-010": {
-      "class": "step",
-      "card": "RMK-2034",
-      "note": "step: voice stage trace (S3) with the AEC reference read: feed_reference() is called after the postprocessors and the recorder tap, before the outbound resampler."
-    },
-    "RK-12.3.4-011": {
-      "class": "step",
-      "card": "RMK-2034",
-      "note": "step: voice.open capabilities (S2) and voice stage trace (S3): with transport-level feeding, the scripted AEC is fed each played block once."
-    },
     "RK-12.3.4-014": {
       "class": "step",
       "card": "RMK-2034",
       "note": "step: voice.open capabilities (S2), played blocks marked reference_continues, and voice stage trace (S3): the scripted AEC stays active after playback_ended."
-    },
-    "RK-12.3.4-015": {
-      "class": "step",
-      "card": "RMK-2034",
-      "note": "step: voice.open capabilities (S2), played blocks that stop between responses, and voice stage trace (S3): the scripted AEC is bypassed once playback has ended, never reset."
-    },
-    "RK-12.3.4-016": {
-      "class": "step",
-      "card": "RMK-2034",
-      "note": "step: voice.feed at another rate (S14) and voice stage trace (S3) with the AEC reference read: the reference reaches the scripted AEC at the captured frames' rate and size."
-    },
-    "RK-12.3.4-017": {
-      "class": "step",
-      "card": "RMK-2034",
-      "note": "step: voice.open capabilities (S2) and voice stage trace (S3): a backend declaring NATIVE_AEC with an AEC configured; the scripted AEC sees no frame."
-    },
-    "RK-12.3.4-018": {
-      "class": "step",
-      "card": "RMK-2034",
-      "note": "step: voice stage trace (S3): a scripted AEC and denoiser, the AEC handed each frame first."
-    },
-    "RK-12.3.5-005": {
-      "class": "step",
-      "card": "RMK-2034",
-      "note": "step: voice stage trace (S3): a scripted AGC configured on voice.open processes each inbound frame."
-    },
-    "RK-12.3.5-006": {
-      "class": "step",
-      "card": "RMK-2034",
-      "note": "step: voice stage trace (S3): a scripted AEC, AGC and denoiser, the AGC handed each frame after the AEC and before the denoiser."
-    },
-    "RK-12.3.5-007": {
-      "class": "step",
-      "card": "RMK-2034",
-      "note": "step: voice.open capabilities (S2) and voice stage trace (S3): a backend declaring NATIVE_AGC with an AGC configured; the scripted AGC sees no frame."
-    },
-    "RK-12.3.6-006": {
-      "class": "step",
-      "card": "RMK-2034",
-      "note": "step: voice stage trace (S3): the frame the DTMF detector receives is the resampled one, before the scripted AEC, AGC and denoiser."
     },
     "RK-12.3.6-010": {
       "class": "step",
@@ -2821,25 +2596,10 @@
       "card": "RMK-2042",
       "note": "step: voice.open interruption (S1): allow_during_first_ms set, a barge-in before that much of the reply played cuts nothing."
     },
-    "RK-12.6-016": {
-      "class": "step",
-      "card": "RMK-2042",
-      "note": "step: voice.open capabilities (S2): a backend that itself signals barge-in on audio it receives during playback, with a vad script; ON_BARGE_IN, then the speech edges."
-    },
     "RK-12.6-019": {
       "class": "step",
       "card": "RMK-2042",
       "note": "step: voice.open STT options (S5): a streaming STT whose words come only with its final; a short stop is classified and cuts."
-    },
-    "RK-12.7.1-006": {
-      "class": "step",
-      "card": "RMK-2054",
-      "note": "step: a scripted inbound stage in voice.open (V4): its change shows on the forwarded frame."
-    },
-    "RK-12.7.1-007": {
-      "class": "step",
-      "card": "RMK-2054",
-      "note": "step: an outbound stage or tap in voice.open (V4): its change shows on the bridged frame."
     },
     "RK-12.7.2-006": {
       "class": "step",
@@ -2860,11 +2620,6 @@
       "class": "step",
       "card": "RMK-2054",
       "note": "step: mixing_strategy mix in voice.open (V1): with three participants, each receives the mix of the two others."
-    },
-    "RK-12.7.3-003": {
-      "class": "step",
-      "card": "RMK-2054",
-      "note": "step: an outbound stage or recorder tap in voice.open (V4), visible on the bridged frame."
     },
     "RK-12.7.3-010": {
       "class": "step",
@@ -2975,11 +2730,6 @@
       "class": "step",
       "card": "RMK-2054",
       "note": "step: a voice bridge hook that replaces the frame bytes (V7): the replaced frame is the one forwarded."
-    },
-    "RK-12.7.8-005": {
-      "class": "step",
-      "card": "RMK-2054",
-      "note": "step: an outbound stage or tap in voice.open (V4), visible on the bridged frame."
     },
     "RK-12.7.8-008": {
       "class": "step",

@@ -4336,6 +4336,10 @@
     "RK-12.11-051": {
       "recording/one-recording-s-media-arrives-in-the-order-it-was-fed": "3dacba414c3fe83cfec83c57eebf86edfeaec17ce4413e37104e72895144509e"
     },
+    "RK-12.2-017": {
+      "voice/a-contract-hands-every-inbound-stage-the-internal-format": "e9e6ee137ea6eefa6d675ba5796faa77b5906755634af63549f5ad4792f41a96",
+      "voice/an-inbound-frame-walks-the-stages-in-their-order": "e9e6ee137ea6eefa6d675ba5796faa77b5906755634af63549f5ad4792f41a96"
+    },
     "RK-12.2-018": {
       "voice/speech-edges-bracket-an-utterance": "81c71c90e131e0946b2c512a4df125e6f3e9ffb4bbc9977d05fe1b553e5a37a1"
     },
@@ -4451,9 +4455,34 @@
     "RK-12.2-036": {
       "voice/after-tts-reports-the-sentences-before-tts-let-through": "5e44bb0e99cf6e1c49940b13235bf59834f0a779ff3d076a014539bec1c33f31"
     },
+    "RK-12.2-038": {
+      "voice/a-reply-walks-the-outbound-stages-in-their-order": "f3897ee91e73702d43106502b2729e87d35387ca47303d3308a3bffbdc579382"
+    },
+    "RK-12.2-039": {
+      "voice/a-reply-walks-the-outbound-stages-in-their-order": "ab1f557579fb6288881c5136435e0b11bd6ed243dc3f010c1f2a7d5aa1d21aee",
+      "voice/each-played-block-feeds-the-canceller-once-as-it-plays": "ab1f557579fb6288881c5136435e0b11bd6ed243dc3f010c1f2a7d5aa1d21aee"
+    },
     "RK-12.2-040": {
       "voice/a-backchannel-leaves-the-reply-playing": "d8873a89a00dc7d77ebf96e66d165ad5b483c384982f6bcdd3232e0648b0c4c3",
       "voice/a-transport-barge-in-cancels-active-playback": "d8873a89a00dc7d77ebf96e66d165ad5b483c384982f6bcdd3232e0648b0c4c3"
+    },
+    "RK-12.2-043": {
+      "voice/a-reply-walks-the-outbound-stages-in-their-order": "070fe1b9a17684193fb42f9369ebcd8aecdd2679120a8b4265bad86f41b86cc1"
+    },
+    "RK-12.2-051": {
+      "voice/a-transport-s-own-canceller-and-gain-replace-the-pipeline-s": "489ccfee9ad07dfef89912ac8c4301774fc2f729b102e31c52aa92dfe3f0a55a"
+    },
+    "RK-12.2-052": {
+      "voice/a-signalled-digit-and-an-in-band-tone-reach-one-dtmf-hook": "ed9dc8c48ed1867d364a62a286ac98f3a0b2aef7a4b073ed0b68fb484253e83d"
+    },
+    "RK-12.2-053": {
+      "voice/a-session-is-active-from-its-start-and-ended-once-left": "b429687f3a378e199699419a73681e96c85cf6f369d6d7bcc60f28c31ac5179a"
+    },
+    "RK-12.2-054": {
+      "voice/a-participant-who-comes-back-gets-a-new-session": "a78fd7c814d9b92ea282384485bc8a23341f0e8a2950c86b3f76afb4e9ac5dd9"
+    },
+    "RK-12.2-055": {
+      "voice/a-participant-who-comes-back-gets-a-new-session": "f07a095d9866f10f7e535b693752b658bbe6fc003aa07b5942fa7fc0aa8f0122"
     },
     "RK-12.2.2-016": {
       "voice/a-response-to-two-sessions-is-synthesized-for-each": "8f454b9876b682e33edbc1127bc2e168e1232812389bc561ba6cdb293b2ae1c9"
@@ -4464,11 +4493,35 @@
     "RK-12.2.3-041": {
       "voice/diarization-reports-a-new-speaker": "365c51edf8417c1cafa21e0b59d389c8ace248bcfcb85951812459589b19d003"
     },
+    "RK-12.3-008": {
+      "voice/a-reply-walks-the-outbound-stages-in-their-order": "08b459f4204656177bc71697057f40f48f0e7f71e8b642b0f1f7655df865a3da",
+      "voice/a-transport-feeding-its-own-canceller-gets-no-reference-from-the-pipeline": "08b459f4204656177bc71697057f40f48f0e7f71e8b642b0f1f7655df865a3da"
+    },
+    "RK-12.3.1-008": {
+      "voice/the-pipeline-hands-its-vad-config-to-the-vad": "619e563136ec995ed0e62818f44b705d53f97cd760c962392995917bc68990fb"
+    },
     "RK-12.3.1-012": {
       "voice/two-voice-channels-of-a-room-keep-their-own-pipelines": "4d0bd169387264d1aaf097aef2f7d26a201de9b2cf27808311bacf62e06c4885"
     },
+    "RK-12.3.1-014": {
+      "voice/a-contract-hands-every-inbound-stage-the-internal-format": "914a3344d3460cb4051e28f4d7576a8afd5dbf2e129693723ec3ae4175463812",
+      "voice/a-reply-walks-the-outbound-stages-in-their-order": "914a3344d3460cb4051e28f4d7576a8afd5dbf2e129693723ec3ae4175463812"
+    },
     "RK-12.3.1-016": {
       "voice/each-participant-s-stream-walks-its-own-detector": "2f074cffd35465429c855b92c0692aa5a7243fdb879bcec5c66b7a3b3c27fda5"
+    },
+    "RK-12.3.1-023": {
+      "voice/a-session-s-frame-stages-are-reset-at-its-start-and-at-its-end": "945ca1ebe75369d80c96843fde317cc0547e0baf98da66e740435a432f442b96"
+    },
+    "RK-12.3.1-024": {
+      "voice/a-reused-session-key-starts-its-stages-afresh": "771dee5e0695adb85c07fe6eb3c568afb97c5c55194b98d5bf82d2370b8f480c",
+      "voice/a-session-s-frame-stages-are-reset-at-its-start-and-at-its-end": "771dee5e0695adb85c07fe6eb3c568afb97c5c55194b98d5bf82d2370b8f480c"
+    },
+    "RK-12.3.1-026": {
+      "voice/a-session-s-frame-stages-are-reset-at-its-start-and-at-its-end": "64b7b4e5bbd043d5855194f59fb9b9609e4e282f519f3c063b875bb70587bba9"
+    },
+    "RK-12.3.10-003": {
+      "voice/a-reply-walks-the-outbound-stages-in-their-order": "3a2f7f06af71a0b9332f05c9e3b57997a64d794e5027e6d0db8a392abf564afb"
     },
     "RK-12.3.12-004": {
       "voice/a-turn-waits-for-its-last-fragment": "a47e66c81702a2b1490ba95f377ce1aeb1d9003bfd679f4e62389db59729ff4b"
@@ -4530,11 +4583,32 @@
     "RK-12.3.13-054": {
       "voice/speech-that-cuts-the-reply-is-the-user-s-turn": "37bf6693c40154b0f4fc799dc88796998b6f1eb16c76d7e053d098953f883375"
     },
+    "RK-12.3.14-005": {
+      "voice/a-session-s-frame-stages-are-reset-at-its-start-and-at-its-end": "c9a845810dadcb56163514a1729d2be2bf19a75290ffa1f9b31895c8f7853c95"
+    },
     "RK-12.3.14-006": {
       "voice/each-joined-session-reports-its-start-once": "547b90252ed5a37ae446f4bbc83c186381ee53f3398ed8f042332180160bf691"
     },
+    "RK-12.3.14-008": {
+      "voice/a-session-s-frame-stages-are-reset-at-its-start-and-at-its-end": "bafb156b7662f3ee594dbf4aa8dfcadebdfd7205f493fe6aa74428c477ab88c4"
+    },
+    "RK-12.3.14-010": {
+      "voice/stages-close-with-the-channel-never-with-a-session": "2b63775502638e46f6ce6c8e7ea8fe9df461390dcb8e8b5419afe5db5aae7074"
+    },
+    "RK-12.3.14-011": {
+      "voice/a-contract-hands-every-inbound-stage-the-internal-format": "ff9c1986a5485ebcee9d8f903aa64efa4bbdcafa3fbdd638f69fb6854ac5bb20"
+    },
     "RK-12.3.14-013": {
       "voice/a-detected-tone-reaches-the-dtmf-hook": "5434cb7b63e67c08c4d02686386e2fdad53c34e4fabf543feac1a6856d89b407"
+    },
+    "RK-12.3.14-014": {
+      "voice/a-transport-s-own-canceller-and-gain-replace-the-pipeline-s": "b04778814ecf87dec6a5e86eecd5fa1c80073f34d684cd29c7a3dda1a7d02556"
+    },
+    "RK-12.3.14-015": {
+      "voice/a-transport-s-own-canceller-and-gain-replace-the-pipeline-s": "ecfd305eecedf9017bea1f56a1128030812ecb6ce5d78dc5f7c9f124c1e8a4ec"
+    },
+    "RK-12.3.14-016": {
+      "voice/an-inbound-frame-walks-the-stages-in-their-order": "88817590e5d033327c0efe81121e22bd7e9b02086fbb692c1af562ea7da8f896"
     },
     "RK-12.3.14-017": {
       "voice/a-turn-waits-for-its-last-fragment": "6373ab5a854a4d4323623c27e8363d3c05469da0b9ce387ae0b33fb328109cc1",
@@ -4546,8 +4620,76 @@
     "RK-12.3.14-018": {
       "voice/diarization-reports-a-new-speaker": "9300759b3d10a857b3e488b07a2b6a95f3f9efe4fb4437d63cc63508dc58a819"
     },
+    "RK-12.3.14-019": {
+      "voice/a-session-s-frame-stages-are-reset-at-its-start-and-at-its-end": "1dcb59d877e2b3c66a7ea47c30d16bc790a96e831f978aae39569676af68466b"
+    },
+    "RK-12.3.14-021": {
+      "voice/a-reply-walks-the-outbound-stages-in-their-order": "7451e524777888ccdccf12048a5bf34f5fa47a93278c6b6985541272dc410d30"
+    },
+    "RK-12.3.14-023": {
+      "voice/a-reply-walks-the-outbound-stages-in-their-order": "77a3d1398d3b8876a31b3e325f12118038b6c21bf2084d0026d012c89f121b60",
+      "voice/a-transport-feeding-its-own-canceller-gets-no-reference-from-the-pipeline": "77a3d1398d3b8876a31b3e325f12118038b6c21bf2084d0026d012c89f121b60"
+    },
+    "RK-12.3.14-024": {
+      "voice/a-reply-walks-the-outbound-stages-in-their-order": "19148895ef9cb716da9ab76dbd504d2e7a42e8c4634b992980297e88809777b3"
+    },
+    "RK-12.3.3-003": {
+      "voice/a-contract-hands-every-inbound-stage-the-internal-format": "487f9ca8d30be93c78ccbfc8dd9499fe9be0c55b9eb6ee957f1c365d08397509"
+    },
+    "RK-12.3.3-004": {
+      "voice/a-reply-walks-the-outbound-stages-in-their-order": "bc920f061b3cc6ede8239c17eb94158bf0955edaa01bcb0ce5780d6abcd7f010"
+    },
+    "RK-12.3.3-005": {
+      "voice/a-contract-hands-every-inbound-stage-the-internal-format": "aaacec84039a68d626de1ab02937799f2a85d4cd237143a5f062476b5a29a100"
+    },
+    "RK-12.3.3-006": {
+      "voice/a-contract-hands-every-inbound-stage-the-internal-format": "2f2685e86873a7233da3d97bf6fffad128dcee3ad2293d0cce7a88f3e3b1bdaf"
+    },
+    "RK-12.3.3-008": {
+      "voice/without-a-resampler-each-stage-gets-the-transport-s-frame": "5acfcceab357f853519ed90a0f53a4da022c6c6b842eb0a2819f3cd0b77cad35"
+    },
+    "RK-12.3.4-006": {
+      "voice/an-aec-hears-a-stream-s-capture-and-reference-under-one-key": "33b0406df5292c7f97efde3537263b8f96a2660f4119b5a925174d25b611d2c4"
+    },
+    "RK-12.3.4-007": {
+      "voice/an-aec-hears-a-stream-s-capture-and-reference-under-one-key": "d79f6f2010b37c3f2d4617cdcfe66c1ae470812c25fe58a3a96ca1a400fea000"
+    },
+    "RK-12.3.4-009": {
+      "voice/a-transport-feeding-its-own-canceller-gets-no-reference-from-the-pipeline": "d29f09a0288dc87bea22c3ad23b8a4720d9bad5f6e33e23fcbd64ca9f79e1b84"
+    },
+    "RK-12.3.4-010": {
+      "voice/a-reply-walks-the-outbound-stages-in-their-order": "a185f6ba7fa699808c9d3b5e955ba9bf3ebb9df7f045025f9fd8ced11f8dacda"
+    },
+    "RK-12.3.4-011": {
+      "voice/each-played-block-feeds-the-canceller-once-as-it-plays": "e0f515456623654d3633717d25f09db8da4e335a716f661c48980c4e884f81ae"
+    },
+    "RK-12.3.4-015": {
+      "voice/the-canceller-is-bypassed-between-replies-and-keeps-its-filter": "10eb337159d2e552a8842b12637a341961470193879f9f5128395ede09680094"
+    },
+    "RK-12.3.4-016": {
+      "voice/the-canceller-s-reference-arrives-in-its-capture-s-format": "cd3913fcf626524461ccabb7d67c3b99f3fcbc1ddb4a6a286341fbbc86c3f142"
+    },
+    "RK-12.3.4-017": {
+      "voice/a-transport-s-own-canceller-and-gain-replace-the-pipeline-s": "b2f52426343e4a68871248944dadc8a120211ff434454b870c3be7e6652397c6"
+    },
+    "RK-12.3.4-018": {
+      "voice/an-inbound-frame-walks-the-stages-in-their-order": "b355669c5e3b790243592a6a61469c2457ebe3d67c47b150577d7ff8a1dfda16"
+    },
+    "RK-12.3.5-005": {
+      "voice/an-inbound-frame-walks-the-stages-in-their-order": "78477c98189d64bcc15a9aa0711ada10e859ca5bcd1b3bf0ec8675999575cd06"
+    },
+    "RK-12.3.5-006": {
+      "voice/an-inbound-frame-walks-the-stages-in-their-order": "721440ec853e6087055246148729c95d44a7cd00a901fbb1925c4deeda76e3d3"
+    },
+    "RK-12.3.5-007": {
+      "voice/a-transport-s-own-canceller-and-gain-replace-the-pipeline-s": "45757b72a7c8e9a65ee29b4849b998a2040fc5d468bc05eb7027bb7a7b3b1298"
+    },
     "RK-12.3.6-005": {
       "voice/a-detected-tone-reaches-the-dtmf-hook": "f245675797439e71da6acaa0a4b3cc6388c730c1ac5f98d8d75fdf788e378df9"
+    },
+    "RK-12.3.6-006": {
+      "voice/a-contract-hands-every-inbound-stage-the-internal-format": "605041bd81d3bf7e6956e88a7a7969933f617757c5761ed71ba78abde48578b3",
+      "voice/an-inbound-frame-walks-the-stages-in-their-order": "605041bd81d3bf7e6956e88a7a7969933f617757c5761ed71ba78abde48578b3"
     },
     "RK-12.3.6-007": {
       "voice/a-detected-tone-reaches-the-dtmf-hook": "04672654acfebd3fcde1980e0b889285f95c9c5c335111934bd98bbff77e023c"
@@ -4814,6 +4956,9 @@
     "RK-12.6-015": {
       "voice/speech-that-cuts-the-reply-is-the-user-s-turn": "2328e86cb7e97611e3f391837bd721523a0557e0451c86c2f38ba3ad9aef7ada"
     },
+    "RK-12.6-016": {
+      "voice/a-transport-barge-in-leaves-the-vad-hearing-the-speech": "716986d15981192b2b9fefadd0b8493bc4c0ae22e8ce16787fd052abdecad2d1"
+    },
     "RK-12.6-017": {
       "voice/speech-that-cuts-the-reply-is-the-user-s-turn": "9daefc4efa212cc74cbf2905d0c954e72c0e4faa1bf0ef8aa87c6e3c7440e659"
     },
@@ -4834,6 +4979,12 @@
     "RK-12.7.1-005": {
       "voice/a-bridged-frame-leaves-no-event-in-the-room": "e2ca84de233be3dd0222cffc01b0ea1b0ce69de5bb3e9261e2f967f6245ab92f"
     },
+    "RK-12.7.1-006": {
+      "voice/a-bridged-frame-carries-the-inbound-stages-changes": "3a123590f231f6a5ed14a19874537d32a009a2c6506d09ec6bf716cd94d96f9b"
+    },
+    "RK-12.7.1-007": {
+      "voice/a-bridged-frame-walks-the-listener-s-outbound-stages": "8ded2791368fe54afe35648dee3f69ea89c3a6afd7b3833658c7ac55aac053b7"
+    },
     "RK-12.7.2-008": {
       "voice/a-forward-bridge-sends-each-frame-unmixed-to-every-other-participant": "84be9abb9fa37605c6241d2de065fc2c6eafc3264b7b66b74caac95f7905c220"
     },
@@ -4851,6 +5002,9 @@
     },
     "RK-12.7.3-001": {
       "voice/a-bridge-forwards-only-the-frame-the-hook-admits": "49f865768be52345b64370253449ed92e7ec85f45a3c7664e369575c87d15b8a"
+    },
+    "RK-12.7.3-003": {
+      "voice/a-bridged-frame-walks-the-listener-s-outbound-stages": "cb26c13a2d1b36777dc53a549185485985814e4dcc9a412115aa0ad2e66348cc"
     },
     "RK-12.7.3-007": {
       "voice/a-bridge-forwards-only-the-frame-the-hook-admits": "e3d386dba8bd5ab8a15083f90f6f7f3e86c4ed31f766e13a320d31dc1829a812"
@@ -4905,6 +5059,9 @@
     },
     "RK-12.7.8-004": {
       "voice/a-bridge-forwards-only-the-frame-the-hook-admits": "e9f5b2884a3ec3ea509e7e27d987e5d5595350e2457d03a7a8aac8a508d86dd1"
+    },
+    "RK-12.7.8-005": {
+      "voice/a-bridged-frame-walks-the-listener-s-outbound-stages": "d3f145328433d612018e0d84d77d9998accc665734a5c2c6b1f4e5ed802be8d8"
     },
     "RK-12.7.8-006": {
       "voice/a-bridge-forwards-only-the-frame-the-hook-admits": "1e544e5c1512e8f1e1825076d0c50fe620b9eeec3792dd3d3bc57e90f8990bde"
