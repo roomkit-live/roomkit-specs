@@ -2541,6 +2541,7 @@
             "owner.kill",
             "executor.pause",
             "executor.resume",
+            "executor.reserve",
             "executor.calls",
             "channel.publish",
             "channel_call",
@@ -6217,6 +6218,33 @@
           "if": {
             "properties": {
               "call": {
+                "const": "executor.reserve"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "executor"
+            ],
+            "properties": {
+              "executor": {
+                "description": "An id of `setup.executors`, the executor the kit's turns are submitted to from now; null: none, they are placed as usual again.",
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "process": {
+                "description": "An id of `setup.processes`, or `main`: the process the executor is named in. Absent, it is named by its id alone.",
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
                 "const": "channel.publish"
               }
             }
@@ -7378,6 +7406,16 @@
         },
         "turn_ends": {
           "description": "Per channel with `holds_end`, each of its turns its owner cut, in the order cut: `room_id`, `cut` (the first of `close` and `cancel` the owner sent the turn's executor) and `read`, whether the owner read the turn's `end` once the gate opened, false when it had let go of the turn first (§10.6.8).",
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "array",
+              "object"
+            ]
+          }
+        },
+        "reserved_turns": {
+          "description": "Per executor an `executor.reserve` step reserved, each turn the kit submitted to it, in order: `room_id`, `error` (the reason the submission failed with, null when it returned the turn's link) and `handed`, whether the request was marked handed once the submission returned (§10.6.2, §10.6.7).",
           "type": "object",
           "additionalProperties": {
             "type": [
