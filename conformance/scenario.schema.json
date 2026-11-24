@@ -2206,8 +2206,12 @@
               "minLength": 1
             },
             "gate": {
-              "description": "The call holds at this gate once the operation answered, or, with fail, in its place.",
+              "description": "The call holds at this gate once the operation answered, or, with fail or in_place, in its place.",
               "type": "string"
+            },
+            "in_place": {
+              "description": "With gate: the call holds at the gate in the operation's place, then runs it on the store as it then stands, a store the kit closed meanwhile refusing it.",
+              "const": true
             }
           },
           "anyOf": [
@@ -2221,7 +2225,19 @@
                 "gate"
               ]
             }
-          ]
+          ],
+          "dependentSchemas": {
+            "in_place": {
+              "required": [
+                "gate"
+              ],
+              "not": {
+                "required": [
+                  "fail"
+                ]
+              }
+            }
+          }
         },
         {
           "type": "object",
