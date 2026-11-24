@@ -586,85 +586,25 @@
       "card": "RMK-2007",
       "note": "step: conference.fault, conference.read: the session a failed close left, still reported by the channel."
     },
-    "RK-12.10.4-030": {
-      "class": "step",
-      "card": "RMK-2007",
-      "note": "step: a channel whose close fails: the channels after it still closed, the kit's close failing once its shutdown ran."
-    },
     "RK-12.10.4-031": {
       "class": "step",
       "card": "RMK-2007",
-      "note": "step: conference.fault: a channel's roster write held in the store as the channels close."
+      "note": "step: a channel's own store operation (a conference roster write, under the framework's hold on the store) held until the kit's close waits for it after the channels closed, and the store's release recorded against it; a store_fault gate holds the write, but no step orders the release after it."
     },
     "RK-12.10.4-032": {
       "class": "step",
       "card": "RMK-2007",
-      "note": "step: conference.fault: a channel's store write held past the close's last unwind; its log line is no step's to read."
+      "note": "step: a channel's own store operation held past the close's last unwind, the store released under it and its write failing; its log line is no step's to read."
     },
     "RK-12.10.4-033": {
       "class": "step",
       "card": "RMK-2007",
-      "note": "step: conference.fault: a participant callback parked in the backend past every closing budget, resuming after the close."
-    },
-    "RK-12.10.4-035": {
-      "class": "step",
-      "card": "RMK-2007",
-      "note": "step: a store the kit closes in every backend: the memory store stays open after the close, so a read answers there."
-    },
-    "RK-12.10.4-036": {
-      "class": "step",
-      "card": "RMK-2007",
-      "note": "step: a scripted source (source_provider) whose health check a read starts once the close started."
-    },
-    "RK-12.10.4-039": {
-      "class": "step",
-      "card": "RMK-2007",
-      "note": "step: a realtime session's start and a conference participant's arrival after the close; entering a closed kit's context again is Python's async with."
-    },
-    "RK-12.10.4-048": {
-      "class": "step",
-      "card": "RMK-2007",
-      "note": "step: a turn's call that starts the kit's close on a task of its own."
-    },
-    "RK-12.10.4-050": {
-      "class": "step",
-      "card": "RMK-2007",
-      "note": "step: a scripted source (source_provider) whose stop is held as the close runs."
-    },
-    "RK-12.10.4-054": {
-      "class": "step",
-      "card": "RMK-2007",
-      "note": "step: a channel whose close starts work, which the close cuts at once."
+      "note": "step: a channel's callback parked in its backend past every closing budget, holding no hold on the store, resuming after the store was sealed and refused naming the shutdown."
     },
     "RK-12.10.4-056": {
       "class": "phase6",
       "card": "RMK-2007",
       "note": "measurement: the close's whole duration bound (the grace, the turn backend's budget, the closes, at most two unwinds of 1 second); no step reads elapsed time."
-    },
-    "RK-12.10.4-059": {
-      "class": "step",
-      "card": "RMK-2007",
-      "note": "step: work that ignores its cancellation and writes once the close returned."
-    },
-    "RK-12.10.4-071": {
-      "class": "step",
-      "card": "RMK-2007",
-      "note": "step: an error name for ShutdownCancelledError, and a step that cuts the shutdown itself."
-    },
-    "RK-12.10.4-076": {
-      "class": "step",
-      "card": "RMK-2007",
-      "note": "step: a tool whose cleanup closes the kit after the close cut its turn."
-    },
-    "RK-12.10.4-078": {
-      "class": "step",
-      "card": "RMK-2007",
-      "note": "A step that holds a room's lane before it takes a delivery placed while it was idle. Without it the unit holds on one thread only: on several workers the lane takes an AFTER_BROADCAST hook's send as soon as it is placed, before the hook's close starts, and that send then runs, no longer held."
-    },
-    "RK-12.10.4-080": {
-      "class": "step",
-      "card": "RMK-2007",
-      "note": "step: a channel whose close calls the kit's close."
     },
     "RK-12.10.4-081": {
       "class": "step",
