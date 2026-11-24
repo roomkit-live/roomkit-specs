@@ -4137,6 +4137,10 @@
     "RK-12.10.4-057": {
       "delivery/a-turn-still-open-once-the-close-s-grace-is-over-is-given-up": "3a86e60aafffdcf98bebd8d2df4a26a64bdeb84135f539d1465ac81c347afe40"
     },
+    "RK-12.10.4-059": {
+      "kit-close/a-channel-s-write-past-the-close-s-unwind-lands-in-a-store-the-integrator-owns": "825b188f91e7dd7e3d92aa7a9fbb78b3465dd7580fe2d9c8791719b3e937c71b",
+      "kit-close/a-channel-s-write-still-in-the-store-past-the-close-s-unwind-fails-under-it": "825b188f91e7dd7e3d92aa7a9fbb78b3465dd7580fe2d9c8791719b3e937c71b"
+    },
     "RK-12.10.4-060": {
       "delivery/a-closing-kit-refuses-new-operations-and-ignores-cancellation": "58ac0148634772c6a074878b8e3211fb5bf126b7a74a3de1016318796543de42",
       "delivery/a-turn-still-open-once-the-close-s-grace-is-over-is-given-up": "58ac0148634772c6a074878b8e3211fb5bf126b7a74a3de1016318796543de42"
