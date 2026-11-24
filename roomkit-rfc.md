@@ -3835,6 +3835,38 @@ What a turn's record says of its generations rides that row alone: its
 caller reads the end and the usage under `turns`, and no more of it.
 <!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.4-541", "kind": "behavior", "applies": "§6.4 The row a streamed text follows: metadata.follows_index on each text segment of a streamed response and on the event its stream is rendered under, and its value. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+**The row a streamed text follows.** A streamed response's rows are stored as
+they are written, and a text segment is written when something ends it: a
+call's start, a round the loop tries again, the response's end. A record the
+room receives while a generation is under way, before its first text, is
+therefore stored before that text. Each text segment of a streamed response
+MUST carry, under its metadata's `follows_index`, the index of the row the
+turn stored before it: a text segment, a call's start or end, or its own copy
+of an instruction (Section 10.1.1), a row stored BLOCKED or kept out of the
+store (Section 14.3) not counting. A text no such row comes before carries
+the room's `latest_index` (Section 5.1), read as the framework begins to read
+the response, and the framework writes it no key when the room then holds no
+row or cannot be read. The event a streaming channel renders the response
+under (`deliver_stream`'s `event`, Section 6.1) MUST carry the key with that
+`latest_index`, on the same condition: the value of a text no row of the turn
+comes before. The channel learns the row a later text follows from the rows
+its stream hands it, and from the text's own row when the turn stored a row
+the channel is not handed: its copy of an instruction, a row narrowed away
+from the channel.<!-- /rfc --> <!-- rfc: {"id": "RK-6.4-542", "kind": "behavior", "applies": "§6.4 The row a streamed text follows: what the key leaves as it was, the index a commit gives and a timeline read, and the rows that carry none. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The key
+changes nothing the store orders by: each row keeps the index its commit gave
+it, and a timeline is read in index order (Section 14.1). The framework
+writes it on a streamed response's text segments alone: on a record, a tool
+call's row and a buffered response's row it writes none.<!-- /rfc --> <!-- rfc: {"id": "RK-6.4-543", "kind": "non_testable", "applies": "§6.4 The row a streamed text follows: the order a reader of the conversation takes from the key, which only the application keeps, and what the key does not tell. Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->A reader that
+renders the conversation as it was written MAY order the rows by
+`follows_index` where a row carries it, else by its `index`, then by `index`:
+a text reads right after the row it follows, before the rows stored while it
+was written, and a row without the key at its index. The key names the turn's
+own previous row, not the room's last row when the next generation began: a
+row the room stores between the two, which that generation reads, reads after
+the text.
+<!-- /rfc -->
+
 <!-- rfc: {"id": "RK-6.4-436", "kind": "behavior", "applies": "§6.4 What a generation used: the UsageMarker the loop yields after each generation that returned, in its order among the text and the rows. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **What a generation used.** After each generation that returned, the loop
 yields what it used, its model and its provider (`UsageMarker`), in its order

@@ -16279,6 +16279,17 @@
     "RK-6.4-540": {
       "executors/a-turn-whose-owner-was-killed-is-cut-owner-lost-on-its-executor": "0914fef1ea1a9cd9252917b268339250cbb7b6087b3edbf9f3b14ae4e6238146"
     },
+    "RK-6.4-541": {
+      "speaking/an-instruction-bypasses-the-policy-streaming": "db97fb89c74fda130e759b4315a36e7b4401f9ea691e8a686c059c019db41582",
+      "streaming/a-text-follows-the-row-the-room-held-when-its-writing-began": "db97fb89c74fda130e759b4315a36e7b4401f9ea691e8a686c059c019db41582",
+      "tasks/a-delegated-agent-s-streamed-answer-is-kept-as-one-message": "db97fb89c74fda130e759b4315a36e7b4401f9ea691e8a686c059c019db41582",
+      "tools/a-round-that-only-replays-the-prefix-is-delivered-whole": "db97fb89c74fda130e759b4315a36e7b4401f9ea691e8a686c059c019db41582"
+    },
+    "RK-6.4-542": {
+      "streaming/a-text-follows-the-row-the-room-held-when-its-writing-began": "16c9b06c5745f0f6188134e21b9ff9f311b3c1bf2d503e52a88de10b8fb0276b",
+      "tasks/a-delegated-turn-s-trace-is-stored-as-its-responses": "16c9b06c5745f0f6188134e21b9ff9f311b3c1bf2d503e52a88de10b8fb0276b",
+      "tools/a-round-that-only-replays-the-prefix-is-delivered-whole": "16c9b06c5745f0f6188134e21b9ff9f311b3c1bf2d503e52a88de10b8fb0276b"
+    },
     "RK-6.6-005": {
       "transcoding/a-composite-flattens-to-one-text": "cc8097d852b621c93252ac57876376a15f9719258e41bae857a3561b5fcd6c9e",
       "transcoding/a-file-a-media-channel-does-not-take-reaches-it-as-its-text": "cc8097d852b621c93252ac57876376a15f9719258e41bae857a3561b5fcd6c9e",

@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "rfc_sha256": "98392b5efa7b3a09e331941fde8564c7e7b3dd53bf53cef01e7bf73d328ee1ed",
-  "corpus_sha256": "26cb5c5fdf41bbe7a2fc592c33a7b214842641b1b2de72376b8bfc817eac1ff7",
+  "rfc_sha256": "c21480e2d4b338f16d3b4999d90b1e7f84b25e945ff5262a08b84c1884d3f88f",
+  "corpus_sha256": "7a9cfb12549d84e54f69d6cce416c43c78e3997758dec7035a2af006102b6a61",
   "python_commit": "91320acb5d3fb53b50ea63d69764fdacc420297b",
   "scenario_count": 3422,
   "sections": [
@@ -1000,10 +1000,10 @@
       "section": "6.4",
       "title": "Intelligence Channels",
       "review": "normative",
-      "requirements": 494,
+      "requirements": 497,
       "mapping": {
         "mapped_partial": 22,
-        "unmapped": 472
+        "unmapped": 475
       },
       "decided_gaps": {
         "phase6": 4,
@@ -1912,8 +1912,10 @@
         "tasks/a-buffered-turn-cut-short-fails-its-task-with-its-narration",
         "tasks/a-buffered-worker-whose-record-names-a-cut-fails-its-task",
         "tasks/a-copy-of-a-hand-back-header-is-replaced-and-the-runtime-s-is-kept",
+        "tasks/a-delegated-agent-s-streamed-answer-is-kept-as-one-message",
         "tasks/a-delegated-turn-cut-while-its-call-runs-records-on-its-last-row",
         "tasks/a-delegated-turn-failing-after-a-tool-round-keeps-its-end",
+        "tasks/a-delegated-turn-s-trace-is-stored-as-its-responses",
         "tasks/a-delegated-turn-that-wrote-no-message-records-on-its-last-row",
         "tasks/a-delegation-hands-its-worker-the-room-s-last-messages",
         "tasks/a-failed-task-keeps-the-error-its-worker-s-turn-raised",
@@ -16435,6 +16437,24 @@
     },
     {
       "id": "RK-6.4-435",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-541",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-542",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-543",
       "section": "6.4",
       "mapping": "unmapped",
       "links": []
