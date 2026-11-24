@@ -581,25 +581,10 @@
       "card": "RMK-2007",
       "note": "step: conference.fault, conference.read: the session a failed close left, still reported by the channel."
     },
-    "RK-12.10.4-031": {
-      "class": "step",
-      "card": "RMK-2007",
-      "note": "step: a channel's own store operation (a conference roster write, under the framework's hold on the store) held until the kit's close waits for it after the channels closed, and the store's release recorded against it; a store_fault gate holds the write, but no step orders the release after it."
-    },
-    "RK-12.10.4-033": {
-      "class": "step",
-      "card": "RMK-2007",
-      "note": "step: a channel's callback parked in its backend past every closing budget, holding no hold on the store, resuming after the store was sealed and refused naming the shutdown."
-    },
     "RK-12.10.4-056": {
       "class": "phase6",
       "card": "RMK-2007",
       "note": "measurement: the close's whole duration bound (the grace, the turn backend's budget, the closes, at most two unwinds of 1 second); no step reads elapsed time."
-    },
-    "RK-12.10.4-059": {
-      "class": "step",
-      "card": "RMK-2007",
-      "note": "step: work that ignores its cut and writes once the close returned. A write a step makes through the store after the close shows only the store's own refusal or acceptance (the reads of RK-12.10.4-035 already show whether the kit closed it), and roomkit-rs drops a cut future, so no work outlives its cut there."
     },
     "RK-12.10.4-081": {
       "class": "step",
