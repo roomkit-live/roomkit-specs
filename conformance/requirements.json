@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "rfc_sha256": "ca84b78b4d263a7de00b92b19847e360f2de7364b6d2347ac242a1bd2c3a84ab",
+  "rfc_sha256": "98392b5efa7b3a09e331941fde8564c7e7b3dd53bf53cef01e7bf73d328ee1ed",
   "sections": [
     {
       "section": "0",
@@ -1106,7 +1106,7 @@
       "section": "12.8.3",
       "title": "VideoBackend Interface",
       "line": 15150,
-      "sha256": "bba1f04cb7a3aebfe2e9cf3aa4cf1f5f37122230d36923e93b06d6d30d6632ea",
+      "sha256": "c0f19dcaa84664ce157834a0582fd18b15dd7321bdccb9d529e7bc2bdaf59247",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
     },
@@ -1114,7 +1114,7 @@
       "section": "12.8.4",
       "title": "Video Processing Pipeline",
       "line": 15235,
-      "sha256": "98f5e44e40c4f966e27e64d257539b5ed56531fc38905ba20b5bea13bf482e53",
+      "sha256": "81516c7d7988596783684679daadaf386c0f84367489051fc7529c091f0e0e91",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
     },
@@ -32227,12 +32227,12 @@
     {
       "id": "RK-12.8.3-001",
       "kind": "structural",
-      "applies": "§12.8.3 VideoBackend Interface, the video feature: the VideoBackend interface, its name, the session lifecycle (connect, accept of a connection that arrived from outside to a session, refused by a backend that takes none, disconnect, get_session and its alias get_video_session, list_sessions), the video transport (send_video of bytes or a stream of VideoChunk, send_video_sync for callbacks, request_keyframe for keyframe recovery, set_video_passthrough for bridge mode), the callbacks on_video_received, add_video_tap (an additional frame consumer beside on_video_received, which a backend may leave unsupported), on_session_ready and on_client_disconnected, set_trace_emitter(), its capabilities and close(). Enclosing capability conditions and §26 levels still apply.",
+      "applies": "§12.8.3 VideoBackend Interface, the video feature: the VideoBackend interface, its name, the session lifecycle (connect, accept of a connection that arrived from outside to a session, refused by a backend that takes none, disconnect, get_session and its alias get_video_session, list_sessions), the video transport (send_video of bytes or a stream of VideoChunk, send_video_sync for callbacks, request_keyframe for keyframe recovery, set_video_passthrough for bridge mode), the callbacks on_video_received, add_video_tap (an additional frame consumer beside on_video_received, taps adding up where a backend offers them, a no-op elsewhere), on_session_ready and on_client_disconnected, set_trace_emitter(), its capabilities and close(). Enclosing capability conditions and §26 levels still apply.",
       "level": "must",
       "section": "12.8.3",
       "line": 15152,
-      "text": "```\nVideoBackend (interface)\n├── name: string (property)                 # Backend identifier\n│\n│   # Session lifecycle:\n├── connect(room_id, participant_id, channel_id, metadata) → VideoSession\n├── accept(session, connection) → void      # Bind a connection that arrived from\n│                                           # outside to a session; refused by a\n│                                           # backend that takes none\n├── disconnect(session) → void\n├── get_session(session_id) → VideoSession | null\n├── get_video_session(session_id) → VideoSession | null  # Alias of get_session\n├── list_sessions(room_id) → list<VideoSession>\n│\n│   # Video transport:\n├── send_video(session, video) → void       # video: bytes, or a stream of VideoChunk\n├── send_video_sync(session, frame) → void  # Synchronous send (for callbacks)\n├── request_keyframe(session) → void        # Request PLI/FIR for keyframe recovery\n├── set_video_passthrough(session_id, enabled) → void  # Bridge mode toggle\n│\n│   # Callbacks:\n├── on_video_received(callback) → void      # Raw inbound video frames\n├── add_video_tap(callback) → void          # Additional frame consumer (recording)\n│                                           # beside on_video_received; a no-op on\n│                                           # a backend that offers no taps\n├── on_session_ready(callback) → void       # Video path is live\n├── on_client_disconnected(callback) → void # Transport disconnect\n│\n│   # Protocol tracing:\n├── set_trace_emitter(emitter | null) → void  # Set callback for emitting ProtocolTraces\n│\n├── capabilities: VideoCapability           # What the backend supports\n└── close() → void\n```",
-      "sha256": "a03b4ec6b8aa6bcbdde48d27a0d395862d4c6591c2372783f47a1f54cc132598"
+      "text": "```\nVideoBackend (interface)\n├── name: string (property)                 # Backend identifier\n│\n│   # Session lifecycle:\n├── connect(room_id, participant_id, channel_id, metadata) → VideoSession\n├── accept(session, connection) → void      # Bind a connection that arrived from\n│                                           # outside to a session; refused by a\n│                                           # backend that takes none\n├── disconnect(session) → void\n├── get_session(session_id) → VideoSession | null\n├── get_video_session(session_id) → VideoSession | null  # Alias of get_session\n├── list_sessions(room_id) → list<VideoSession>\n│\n│   # Video transport:\n├── send_video(session, video) → void       # video: bytes, or a stream of VideoChunk\n├── send_video_sync(session, frame) → void  # Synchronous send (for callbacks)\n├── request_keyframe(session) → void        # Request PLI/FIR for keyframe recovery\n├── set_video_passthrough(session_id, enabled) → void  # Bridge mode toggle\n│\n│   # Callbacks:\n├── on_video_received(callback) → void      # Raw inbound video frames\n├── add_video_tap(callback) → void          # Additional frame consumer (recording)\n│                                           # beside on_video_received; taps add up\n│                                           # where offered, a no-op elsewhere\n├── on_session_ready(callback) → void       # Video path is live\n├── on_client_disconnected(callback) → void # Transport disconnect\n│\n│   # Protocol tracing:\n├── set_trace_emitter(emitter | null) → void  # Set callback for emitting ProtocolTraces\n│\n├── capabilities: VideoCapability           # What the backend supports\n└── close() → void\n```",
+      "sha256": "829f85dff245581d739c4a71963fee743394fe42771ca0ab121874b4c730a702"
     },
     {
       "id": "RK-12.8.3-003",
@@ -32327,12 +32327,12 @@
     {
       "id": "RK-12.8.4-001",
       "kind": "structural",
-      "applies": "§12.8.4 Video Processing Pipeline, the video feature: VideoPipelineConfig and its ordered stages, an optional decoder (encoded to raw_rgb24), an optional resizer, the chained transforms and filters, an optional vision provider for periodic analysis, an optional recorder and its optional recording_config, with both of which VideoChannel starts the recorder for each session it binds. Enclosing capability conditions and §26 levels still apply.",
+      "applies": "§12.8.4 Video Processing Pipeline, the video feature: VideoPipelineConfig and its ordered stages, an optional decoder (encoded to raw_rgb24), an optional resizer, the chained transforms and filters, an optional vision provider for periodic analysis, an optional recorder and its optional recording_config, VideoChannel starting the recorder for a session it binds only with both. Enclosing capability conditions and §26 levels still apply.",
       "level": "must",
       "section": "12.8.4",
       "line": 15237,
       "text": "The video pipeline processes inbound frames through ordered stages:\n\n```\nVideoPipelineConfig\n├── decoder: VideoDecoderProvider | null     # Decode h264 → raw_rgb24\n├── resizer: VideoResizerProvider | null     # Scale to target dimensions\n├── transforms: list<VideoTransformProvider> # Pixel effects (chained)\n├── filters: list<VideoFilterProvider>       # Inspect/replace frames (chained)\n├── vision: VisionProvider | null            # Periodic frame analysis\n├── recorder: VideoRecorder | null           # Save to file\n└── recording_config: VideoRecordingConfig | null  # Recording parameters; VideoChannel\n                                             # starts the recorder only with both\n```",
-      "sha256": "c4139b9d0cb13c28f2ed3fca102f78c4e4738182071a703576fcf18c2c206cd2"
+      "sha256": "abbb263d085ea99519e9e9b3537fa702d0bbc4a3293560644f8d105006be0662"
     },
     {
       "id": "RK-12.8.4-004",
@@ -32451,8 +32451,8 @@
       "level": "must",
       "section": "12.8.4",
       "line": 15349,
-      "text": "A vision result the vision provider returns with an empty `description` is\nnot published, whatever labels, faces or text it carries: it fires no `ON_VISION_RESULT`, emits no\n`video_vision_result` framework event and reaches no AI turn. The filter\ncontext still takes it.",
-      "sha256": "9414f526107e202e979c2c4121fb776c2213fc486c6c071ff7afe07e9c010e6e"
+      "text": "A vision result the vision provider returns with an empty `description` is\nnot published, whatever labels, faces or text it carries: it fires no\n`ON_VISION_RESULT`, emits no `video_vision_result` framework event and\nreaches no AI turn. The filter context still takes it.",
+      "sha256": "25e7a5c0497a53c3a37d5ccb3f12a7632f368080adec1fb78af91121479abb80"
     },
     {
       "id": "RK-12.8.5-001",

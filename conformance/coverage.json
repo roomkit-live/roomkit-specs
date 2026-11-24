@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "rfc_sha256": "ca84b78b4d263a7de00b92b19847e360f2de7364b6d2347ac242a1bd2c3a84ab",
+  "rfc_sha256": "98392b5efa7b3a09e331941fde8564c7e7b3dd53bf53cef01e7bf73d328ee1ed",
   "corpus_sha256": "575c244067e5e21ee22a80ce7ad3369d794e20ea23da7627f28cc9f933552a14",
   "python_commit": "91320acb5d3fb53b50ea63d69764fdacc420297b",
   "scenario_count": 3421,
@@ -33947,7 +33947,7 @@
       "gap": {
         "class": "step",
         "card": "RMK-2062",
-        "note": "step: a late joiner on video.open with a read of the keyframe requests (PLI) the bridged sessions' backend received (VI2): when a session joins, every session already in the room is asked for a keyframe (RMK-2058)."
+        "note": "step: a late joiner on video.open with a read of the keyframe requests (PLI) the bridged sessions' backend received (VI2): when a session joins, every session already in the room is asked for a keyframe (RMK-2058); proven natively by tests/video/test_video_bridge.py::TestVideoBridge::test_a_joiner_is_served_by_a_keyframe_request_to_every_peer."
       }
     },
     {
@@ -33969,7 +33969,7 @@
       "gap": {
         "class": "step",
         "card": "RMK-2062",
-        "note": "step: the keyframe flag on video.frame (VI2; the runners send keyframes only): a new session receives no delta frame from a source before its first keyframe, until keyframe_wait_s passes (RMK-2059)."
+        "note": "step: the keyframe flag on video.frame (VI2; the runners send keyframes only): a session receives no delta frame from a source before that source's first keyframe reaches it, until keyframe_wait_s passes (RMK-2059); proven natively by tests/video/test_video_bridge.py."
       }
     },
     {

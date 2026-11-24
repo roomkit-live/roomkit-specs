@@ -3489,7 +3489,7 @@
     "RK-12.8.9-009": {
       "class": "step",
       "card": "RMK-2062",
-      "note": "step: a late joiner on video.open with a read of the keyframe requests (PLI) the bridged sessions' backend received (VI2): when a session joins, every session already in the room is asked for a keyframe (RMK-2058)."
+      "note": "step: a late joiner on video.open with a read of the keyframe requests (PLI) the bridged sessions' backend received (VI2): when a session joins, every session already in the room is asked for a keyframe (RMK-2058); proven natively by tests/video/test_video_bridge.py::TestVideoBridge::test_a_joiner_is_served_by_a_keyframe_request_to_every_peer."
     },
     "RK-12.8.9-010": {
       "class": "step",
@@ -3499,7 +3499,7 @@
     "RK-12.8.9-011": {
       "class": "step",
       "card": "RMK-2062",
-      "note": "step: the keyframe flag on video.frame (VI2; the runners send keyframes only): a new session receives no delta frame from a source before its first keyframe, until keyframe_wait_s passes (RMK-2059)."
+      "note": "step: the keyframe flag on video.frame (VI2; the runners send keyframes only): a session receives no delta frame from a source before that source's first keyframe reaches it, until keyframe_wait_s passes (RMK-2059); proven natively by tests/video/test_video_bridge.py."
     },
     "RK-12.8.9-014": {
       "class": "step",

@@ -15149,7 +15149,7 @@ VideoSession
 
 #### 12.8.3 VideoBackend Interface
 
-<!-- rfc: {"id": "RK-12.8.3-001", "kind": "structural", "applies": "§12.8.3 VideoBackend Interface, the video feature: the VideoBackend interface, its name, the session lifecycle (connect, accept of a connection that arrived from outside to a session, refused by a backend that takes none, disconnect, get_session and its alias get_video_session, list_sessions), the video transport (send_video of bytes or a stream of VideoChunk, send_video_sync for callbacks, request_keyframe for keyframe recovery, set_video_passthrough for bridge mode), the callbacks on_video_received, add_video_tap (an additional frame consumer beside on_video_received, which a backend may leave unsupported), on_session_ready and on_client_disconnected, set_trace_emitter(), its capabilities and close(). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+<!-- rfc: {"id": "RK-12.8.3-001", "kind": "structural", "applies": "§12.8.3 VideoBackend Interface, the video feature: the VideoBackend interface, its name, the session lifecycle (connect, accept of a connection that arrived from outside to a session, refused by a backend that takes none, disconnect, get_session and its alias get_video_session, list_sessions), the video transport (send_video of bytes or a stream of VideoChunk, send_video_sync for callbacks, request_keyframe for keyframe recovery, set_video_passthrough for bridge mode), the callbacks on_video_received, add_video_tap (an additional frame consumer beside on_video_received, taps adding up where a backend offers them, a no-op elsewhere), on_session_ready and on_client_disconnected, set_trace_emitter(), its capabilities and close(). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 VideoBackend (interface)
 ├── name: string (property)                 # Backend identifier
@@ -15173,8 +15173,8 @@ VideoBackend (interface)
 │   # Callbacks:
 ├── on_video_received(callback) → void      # Raw inbound video frames
 ├── add_video_tap(callback) → void          # Additional frame consumer (recording)
-│                                           # beside on_video_received; a no-op on
-│                                           # a backend that offers no taps
+│                                           # beside on_video_received; taps add up
+│                                           # where offered, a no-op elsewhere
 ├── on_session_ready(callback) → void       # Video path is live
 ├── on_client_disconnected(callback) → void # Transport disconnect
 │
@@ -15234,7 +15234,7 @@ path live, whichever comes last, and `ON_VIDEO_SESSION_ENDED` only after it.
 
 #### 12.8.4 Video Processing Pipeline
 
-<!-- rfc: {"id": "RK-12.8.4-001", "kind": "structural", "applies": "§12.8.4 Video Processing Pipeline, the video feature: VideoPipelineConfig and its ordered stages, an optional decoder (encoded to raw_rgb24), an optional resizer, the chained transforms and filters, an optional vision provider for periodic analysis, an optional recorder and its optional recording_config, with both of which VideoChannel starts the recorder for each session it binds. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+<!-- rfc: {"id": "RK-12.8.4-001", "kind": "structural", "applies": "§12.8.4 Video Processing Pipeline, the video feature: VideoPipelineConfig and its ordered stages, an optional decoder (encoded to raw_rgb24), an optional resizer, the chained transforms and filters, an optional vision provider for periodic analysis, an optional recorder and its optional recording_config, VideoChannel starting the recorder for a session it binds only with both. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The video pipeline processes inbound frames through ordered stages:
 
 ```
@@ -15348,9 +15348,9 @@ Backend emits VideoFrame
 
 <!-- rfc: {"id": "RK-12.8.4-015", "kind": "behavior", "applies": "§12.8.4 Inbound processing flow, the video feature: a vision result the vision provider returns with an empty description is not published: it fires no ON_VISION_RESULT, emits no video_vision_result framework event and reaches no AI turn, whatever labels, faces or text it carries; the filter context still takes it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A vision result the vision provider returns with an empty `description` is
-not published, whatever labels, faces or text it carries: it fires no `ON_VISION_RESULT`, emits no
-`video_vision_result` framework event and reaches no AI turn. The filter
-context still takes it.
+not published, whatever labels, faces or text it carries: it fires no
+`ON_VISION_RESULT`, emits no `video_vision_result` framework event and
+reaches no AI turn. The filter context still takes it.
 <!-- /rfc -->
 
 #### 12.8.5 Pipeline Stage Providers
