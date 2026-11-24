@@ -4498,8 +4498,8 @@
       "voice/a-backchannel-leaves-the-reply-playing": "5df2f294597cd25ec73ceb5b983eec40c26d81aa4f3819ec1a8b57b70eef0c4f"
     },
     "RK-12.3.13-026": {
-      "voice/an-echo-of-the-reply-s-opening-is-no-turn": "300573a314a90e69cd93b1c8f3f6ad7a95361a0ee0a28cc26abc80ad91d58ae4",
-      "voice/immediate-with-a-vad-cuts-before-words-can-tell-an-echo": "300573a314a90e69cd93b1c8f3f6ad7a95361a0ee0a28cc26abc80ad91d58ae4"
+      "voice/an-echo-of-the-reply-s-opening-is-no-turn": "81e3fcc39397040cf6dc25303d36e945ad579827fd1c7e71f4a932fa6ea1ff4f",
+      "voice/immediate-with-a-vad-cuts-before-words-can-tell-an-echo": "81e3fcc39397040cf6dc25303d36e945ad579827fd1c7e71f4a932fa6ea1ff4f"
     },
     "RK-12.3.13-027": {
       "voice/an-echo-is-heard-without-case-punctuation-or-accents": "9671aa3ead4f9f0849bb87208b442247efc913206544155c01c5f892a651343a"

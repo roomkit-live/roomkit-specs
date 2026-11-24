@@ -13330,11 +13330,12 @@ still playing, and the speech is processed as the user's turn.
 at a session's start it has heard none, and a response's opening words come
 back through the microphone, where an STT transcribes them as if someone had
 spoken. While the session has played less than `echo_guard_ms` of response
-audio in all, whatever the strategy, speech whose words are only words of the
-response being played (the text handed to the TTS so far), consecutive and in
-their order, is that response's echo. IMMEDIATE with a VAD is the exception:
-the VAD's speech start cuts the response before any word can tell its echo
-(its row above), and the speech is then an ordinary utterance. <!-- /rfc --><!-- rfc: {"id": "RK-12.3.13-027", "kind": "behavior", "applies": "§12.3.13 Echo guard, the voice feature: words are compared without case, punctuation or accents. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Words are compared without case,
+audio in all, whatever the strategy, IMMEDIATE with a VAD aside, speech whose
+words are only words of the response being played (the text handed to the TTS
+so far), consecutive and in their order, is that response's echo. Under
+IMMEDIATE with a VAD, the VAD's speech start cuts the response before any word
+can tell its echo (its row above), and the speech is then an ordinary
+utterance. <!-- /rfc --><!-- rfc: {"id": "RK-12.3.13-027", "kind": "behavior", "applies": "§12.3.13 Echo guard, the voice feature: words are compared without case, punctuation or accents. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Words are compared without case,
 punctuation or accents. <!-- /rfc --><!-- rfc: {"id": "RK-12.3.13-028", "kind": "behavior", "applies": "§12.3.13 Echo guard, the voice feature: in a partial transcript the last word heard may be the start of the response's word, but only after a whole word. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->In a partial transcript the last word heard may be the
 start of the response's, as a partial catches a word being said, but only after
 a whole word: a lone "No" is no echo of "not", nor "Stop" of "stopped". <!-- /rfc --><!-- rfc: {"id": "RK-12.3.13-029", "kind": "behavior", "applies": "§12.3.13 Echo guard, the voice feature: a final transcript is compared in whole words. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A final

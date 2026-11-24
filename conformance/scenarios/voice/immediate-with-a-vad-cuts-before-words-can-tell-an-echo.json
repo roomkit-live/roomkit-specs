@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "voice/immediate-with-a-vad-cuts-before-words-can-tell-an-echo",
-  "title": "Under IMMEDIATE with a VAD, speech start cuts the reply before its words are heard, and they are a turn",
+  "title": "Under IMMEDIATE with a VAD, speech start cuts the reply before any word, and its words are a turn",
   "rules": [
     "§12.3.13"
   ],
@@ -9,7 +9,7 @@
     "RK-12.3.13-009",
     "RK-12.3.13-026"
   ],
-  "notes": "voice.open without backchannels runs IMMEDIATE; the session has played nothing, so the echo guard is open when the speech starts.",
+  "notes": "voice.open without backchannels runs IMMEDIATE, and its recognizer gives its words only at the speech's end: the cut is heard after the speech-start frame alone, while the echo guard is open (the session has played nothing), and the echo's words, said over the reply, are the turn.",
   "requires_features": [
     "voice"
   ],
@@ -23,7 +23,12 @@
       {
         "name": "cut",
         "trigger": "on_barge_in",
-        "execution": "async"
+        "execution": "async",
+        "reactions": [
+          {
+            "gate": "cut-heard"
+          }
+        ]
       },
       {
         "name": "stopped",
@@ -49,9 +54,6 @@
           "type": "speech_end"
         }
       ],
-      "partials": [
-        "Your table"
-      ],
       "transcripts": [
         "your table for two"
       ]
@@ -72,7 +74,20 @@
       "channel_id": "phone",
       "participant_id": "alice",
       "frames": [
-        "AQI=",
+        "AQI="
+      ]
+    },
+    {
+      "wait_for": "cut-heard"
+    },
+    {
+      "open": "cut-heard"
+    },
+    {
+      "call": "voice.feed",
+      "channel_id": "phone",
+      "participant_id": "alice",
+      "frames": [
         "AQI="
       ]
     },
@@ -106,8 +121,7 @@
       "stopped": [
         {
           "voice": {
-            "participant_id": "alice",
-            "reason": "barge_in"
+            "participant_id": "alice"
           }
         }
       ]
