@@ -9162,6 +9162,9 @@ TurnBackend (interface)
 ├── submit(request: TurnRequest) → TurnLink
 │       # Owner side: start a turn. The link yields its frames in order,
 │       # and sends its control messages and its call answers
+├── submit_to(request: TurnRequest, executor) → TurnLink
+│       # Owner side: start a turn on the one executor a host names, by its
+│       # id and, when it names one, its process (§10.6.7)
 ├── control(message: ChannelControl) → ChannelResult | null
 │       # Owner side: a message about a channel's per-room state, naming its
 │       # channel and room (§10.6.3), or its build; null for room_attached,
@@ -10072,7 +10075,7 @@ took its last turn or channel call, while it serves and declares the
 channel. A channel control message is placed as §10.6.3 says.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-10.6.7-036", "kind": "behavior", "applies": "§10.6.7 A request submitted to one executor: which executor the backend delivers it to, and the conditions that executor meets, whoever holds the room's state. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+<!-- rfc: {"id": "RK-10.6.7-036", "kind": "behavior", "applies": "§10.6.7 A request submitted to one executor: which executor the backend delivers it to, the conditions that executor meets, and the executor an id alone names, whoever holds the room's state. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **A request submitted to one executor.** A host that places its turns by rules
 of its own (a slot it reserved on one worker) submits a request to the executor
 it chose, named by its id, and by its process when the host names one. The
@@ -10080,20 +10083,23 @@ backend MUST deliver such a request to that executor alone, and only when it
 would deliver it a request it places itself: the owner's own executor alone for
 a channel the owner holds live, else one that is alive, declares the request's
 channel, serves its room's organization and registered every name of its
-`room_hooks`. The executor holding the room's state is not tried in its
-place. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.7-037", "kind": "behavior", "applies": "§10.6.7 A request submitted to one executor: an executor that does not meet the conditions, one named in a process that does not serve it, an id several processes serve named with no process, and a process that refuses the request. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An executor that does not meet these conditions, one named in a
-process that does not serve it, and an id several processes serve when the host
-names none, fail the request with `no_executor` before it is handed: the
-request is not marked handed (§10.6.2), no other executor is given it, and the
-executor holding the room's state is left as it was. A process that refuses
-the request (its executor closed) fails it the same way: the mark is taken
-back, and the request is not placed again. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.7-038", "kind": "behavior", "applies": "§10.6.7 A request submitted to one executor: the room's state once the executor took the request. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Once the executor took the request, it
+`room_hooks`. Named by its id alone, the executor is the one of that id that
+meets these conditions. The executor holding the room's state is not tried in
+its place. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.7-037", "kind": "behavior", "applies": "§10.6.7 A request submitted to one executor: an executor that does not meet the conditions, one named in a process that does not serve it, an id under which executors of several processes meet them named with no process, and a process that refuses the request. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An executor that does not meet these conditions, one named in a
+process that does not serve it, and an id under which executors of several
+processes meet them when the host names no process, fail the request with
+`no_executor` before it is handed: the request is not marked handed (§10.6.2),
+no other executor is given it, and the executor holding the room's state is
+left as it was. A process that refuses the request (its executor closed) fails
+it the same way: the mark is taken back, and the request is not placed
+again. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.7-038", "kind": "behavior", "applies": "§10.6.7 A request submitted to one executor: the room's state once the executor took the request. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Once the executor took the request, it
 holds the room's state for the channel, as the executor that took the room's
 last turn does, so the room's next turns stay on it while it lives and takes
 them. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.7-039", "kind": "behavior", "applies": "§10.6.7 A request submitted to one executor: a request the executor does not answer within accept_timeout. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A request the executor does not answer within `accept_timeout` loses
 the turn (`executor_lost`) as a request the backend placed does: it stays
 marked handed, since the executor may have begun it, and it is never handed to
-another.
+another. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.7-040", "kind": "behavior", "applies": "§10.6.7 A request submitted to one executor: a backend that submits to no executor a host names. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A backend that submits to no executor a host names fails every
+such request with `no_executor`, nothing handed.
 <!-- /rfc -->
 
 <!-- rfc: {"id": "RK-10.6.7-027", "kind": "behavior", "applies": "§10.6.7 Which agents can answer: the executors a backend lists, the owner's own aside, what each entry carries, and a closed or silent executor. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->

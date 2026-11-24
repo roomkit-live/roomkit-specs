@@ -3187,12 +3187,12 @@
       "executors/a-declared-agent-s-turn-runs-on-the-executor-hosting-it": "745549e4c9b48be350812bdf82d4c30262070fedfb701d82782ba2a2c44e4557"
     },
     "RK-10.6.7-024": {
-      "executors/an-executor-that-never-answers-loses-the-turn-and-no-other-gets-it": "4e1d1c1bc922d5187978774e243254e286c8398ca2cf0aff651ec40cd4f9e0a2"
+      "executors/an-executor-that-never-answers-loses-the-turn-and-no-other-gets-it": "c9c084631bb5ece502a8cd9fbef2e43fe805c83b0f92522f849bce01249cbfb5"
     },
     "RK-10.6.7-025": {
-      "executors/a-room-s-turns-stay-on-the-executor-holding-its-state": "98926648ae9f6b994f92169903bcaf388510c085f7791da079a2fc5a1b75dbd9",
-      "executors/a-room-whose-executor-closed-moves-to-another": "98926648ae9f6b994f92169903bcaf388510c085f7791da079a2fc5a1b75dbd9",
-      "executors/after-a-lost-executor-the-room-s-next-turn-runs-elsewhere": "98926648ae9f6b994f92169903bcaf388510c085f7791da079a2fc5a1b75dbd9"
+      "executors/a-room-s-turns-stay-on-the-executor-holding-its-state": "baab91cad6d6bac5a468365470ae43f75087867cab1249bc989927bdf42f2f0c",
+      "executors/a-room-whose-executor-closed-moves-to-another": "baab91cad6d6bac5a468365470ae43f75087867cab1249bc989927bdf42f2f0c",
+      "executors/after-a-lost-executor-the-room-s-next-turn-runs-elsewhere": "baab91cad6d6bac5a468365470ae43f75087867cab1249bc989927bdf42f2f0c"
     },
     "RK-10.6.7-026": {
       "executors/a-channel-call-runs-on-the-executor-holding-the-room": "65c6ba55cfb21aa65cf3a27459483ef900fef08721acb3880aa4521fc6b763a0"
@@ -3244,6 +3244,21 @@
     },
     "RK-10.6.7-035": {
       "executors/owners-without-an-executor-catalogue-publish-only-live-agents": "934cdd7f65ec8c65bc00f4bb361b3ef9464f7100689dc7906d292987747280dd"
+    },
+    "RK-10.6.7-036": {
+      "executors/a-turn-submitted-to-a-reserved-executor-is-cancelled-through-its-link": "bac98c375a44d0c25552430403a39aeb28ae7350f12795cd87f18dd0efe25f99",
+      "executors/a-turn-submitted-to-a-reserved-executor-runs-on-it-alone": "bac98c375a44d0c25552430403a39aeb28ae7350f12795cd87f18dd0efe25f99"
+    },
+    "RK-10.6.7-037": {
+      "executors/a-turn-submitted-to-a-reserved-executor-lacking-the-room-s-hook-is-refused": "58ec7d5dd7f53b12d9cf349a21b1638ab6b1e92667f7921c08ae2f97df205343",
+      "executors/a-turn-submitted-to-a-reserved-executor-named-in-another-process-is-refused": "58ec7d5dd7f53b12d9cf349a21b1638ab6b1e92667f7921c08ae2f97df205343",
+      "executors/a-turn-submitted-to-a-reserved-executor-that-is-not-served-is-refused": "58ec7d5dd7f53b12d9cf349a21b1638ab6b1e92667f7921c08ae2f97df205343"
+    },
+    "RK-10.6.7-038": {
+      "executors/a-turn-submitted-to-a-reserved-executor-runs-on-it-alone": "62fa1321397ba2b7933d9cb1eed4a9e35ba40dec5e574688c5daa252cc2f5c42"
+    },
+    "RK-10.6.7-039": {
+      "executors/a-turn-submitted-to-a-reserved-executor-that-never-answers-goes-to-no-other": "9e4629a7cdb047b0ba13b36e4f20d38c8e61459194534e2d7d834bfcd090573a"
     },
     "RK-10.6.8-006": {
       "executors/a-slow-turn-apart-that-keeps-beating-is-never-failed": "f41e0a36f56b7d1d0f09f688bc68415394b32f9417dcbab29d28f99edb3b56d6",

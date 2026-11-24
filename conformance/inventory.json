@@ -429,9 +429,9 @@
     },
     {
       "section": "10.6",
-      "sha256": "bcb62ca6e528b59d97dc521ede76190cc27f654fe9dfd4781072951a76b4a486",
+      "sha256": "7bd1768d86d5aeb0d84579133dfec9ddf5f7e5cb3d63c5565c4e882eaebf6273",
       "classification": "normative",
-      "review": "Source inventory: Turn Execution, split to one obligation per unit (RMK-1780): the turn, the room owner's and the turn executor's roles, the default kit's in-memory executor, and the TurnBackend interface, which stays whole as one block (RK-10.6-009). Each unit keeps its conditions, exceptions and rationale. Running executors in any process is may (RK-10.6-008). Every unit carries its level."
+      "review": "Source inventory: Turn Execution, split to one obligation per unit (RMK-1780): the turn, the room owner's and the turn executor's roles, the default kit's in-memory executor, and the TurnBackend interface, which stays whole as one block (RK-10.6-009), its submit_to included (RMK-2098). Each unit keeps its conditions, exceptions and rationale. Running executors in any process is may (RK-10.6-008). Every unit carries its level."
     },
     {
       "section": "10.6.1",
@@ -471,9 +471,9 @@
     },
     {
       "section": "10.6.7",
-      "sha256": "b5c6b64a4fb4b6970aa768cfa4b12f953f9a9c754761ce55d8d63b71090e1c8d",
+      "sha256": "451d103049d5683f90ea232b985ab26b23f348e806b9b7c620f078ecf86f1d0d",
       "classification": "normative",
-      "review": "Source inventory: Placement, split to one obligation per unit (RMK-1780): what an executor declares, its channel and organization entries, the owner's own executor, one executor per request, the room's state holder, and which agents can answer. Each unit keeps its conditions, exceptions and rationale; context a unit needs from its neighbours is in its applies. A deployment's executor pool binds the deployment alone and is non_testable (RK-10.6.7-008); who may reach the backend's transport shares its sentence with what organizations keep apart and stays behavior (RK-10.6.7-016). Every unit carries its level."
+      "review": "Source inventory: Placement, split to one obligation per unit (RMK-1780): what an executor declares, its channel and organization entries, the owner's own executor, one executor per request, the room's state holder, a request submitted to one executor (RK-10.6.7-036 to RK-10.6.7-040, RMK-2098), and which agents can answer. Each unit keeps its conditions, exceptions and rationale; context a unit needs from its neighbours is in its applies. A deployment's executor pool binds the deployment alone and is non_testable (RK-10.6.7-008); who may reach the backend's transport shares its sentence with what organizations keep apart and stays behavior (RK-10.6.7-016). Every unit carries its level."
     },
     {
       "section": "10.6.8",
