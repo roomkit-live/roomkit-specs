@@ -14421,12 +14421,13 @@ ReasoningBackend (interface)
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.4.1-049", "kind": "behavior", "applies": "§12.4.1 Reasoning delegation, integrator backend, the realtime feature, a delegation the provider hands over: the ReasoningRequest the channel hands the backend carries the session, the delegation id (opaque, returned unchanged with every output), the transcript of both roles since the previous request (the whole conversation on the session's first request, which first says), the channel's declared catalogue as tools, the session tools the model is not offered with the refusal each call reads (unavailable, §21.1), execute_tool and execute_tool_call (one call through the gate and handler), report_refusal and report_call, and the session participant's role when the delegation was handed over. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+<!-- rfc: {"id": "RK-12.4.1-049", "kind": "behavior", "applies": "§12.4.1 Reasoning delegation, integrator backend, the realtime feature, a delegation the provider hands over: the ReasoningRequest the channel hands the backend carries the session, the delegation id (opaque, returned unchanged with every output), the transcript of both roles since the previous request (the whole conversation on the session's first request, which first says; empty unless the provider declares full_duplex), the channel's declared catalogue as tools, the session tools the model is not offered with the refusal each call reads (unavailable, §21.1), execute_tool and execute_tool_call (one call through the gate and handler), report_refusal and report_call, and the session participant's role when the delegation was handed over. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 ReasoningRequest
 ├── session: VoiceSession
 ├── delegation_id: string                   # Opaque; returned unchanged with every output
-├── transcript: list<TranscriptLine>        # Both roles, since the previous request
+├── transcript: list<TranscriptLine>        # Both roles, since the previous request;
+│                                           # empty unless the provider declares full_duplex
 ├── first: bool                             # First request of the session: the transcript is the whole conversation
 ├── tools: list<ToolDefinition>             # The channel's declared catalogue, for the backend's model
 ├── unavailable: map<string, string>        # Session tools the model is not offered, each with the refusal its call reads (Section 21.1)
@@ -14460,10 +14461,11 @@ ReasoningOutput
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.4.1-052", "kind": "behavior", "applies": "§12.4.1 Reasoning delegation, integrator backend, the realtime feature, a delegation the provider hands over: the channel hands the backend the transcript recorded since the previous request, user and assistant lines both, the backend's only account of what was asked. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+<!-- rfc: {"id": "RK-12.4.1-052", "kind": "behavior", "applies": "§12.4.1 Reasoning delegation, integrator backend, the realtime feature, a delegation the provider hands over: the channel hands the backend the transcript recorded since the previous request, user and assistant lines both, the backend's only account of what was asked, where the provider declares full_duplex (under another provider the transcript is empty). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The channel MUST hand the backend the transcript recorded since the previous
-request, user and assistant lines both — the backend has no other way to learn
-what was asked — <!-- /rfc --><!-- rfc: {"id": "RK-12.4.1-053", "kind": "behavior", "applies": "§12.4.1 Reasoning delegation, integrator backend, the realtime feature, a delegation the provider hands over: the channel returns every output of the backend through submit_delegation_output(session, delegation_id, text, spoken) as it arrives, so that a backend working in steps can tell the user what it learned on the way. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->and MUST return every output through
+request, user and assistant lines both, where the provider declares
+`full_duplex` (under another provider the transcript is empty) — the backend
+has no other way to learn what was asked — <!-- /rfc --><!-- rfc: {"id": "RK-12.4.1-053", "kind": "behavior", "applies": "§12.4.1 Reasoning delegation, integrator backend, the realtime feature, a delegation the provider hands over: the channel returns every output of the backend through submit_delegation_output(session, delegation_id, text, spoken) as it arrives, so that a backend working in steps can tell the user what it learned on the way. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->and MUST return every output through
 `submit_delegation_output(session, delegation_id, text, spoken)` as it
 arrives, so that a backend working in steps can tell the user what it learned
 on the way.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4.1-054", "kind": "behavior", "applies": "§12.4.1 Reasoning delegation, integrator backend, the realtime feature, a delegation the provider hands over: the transcript ledger is session state, not a RoomEvent, and is not stored. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The transcript ledger is session state, not a RoomEvent: it MUST

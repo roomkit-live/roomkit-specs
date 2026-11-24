@@ -2874,7 +2874,7 @@
     "RK-12.4.1-049": {
       "class": "step",
       "card": "RMK-2049",
-      "note": "step: a scripted ReasoningBackend that records each request it receives (S10)."
+      "note": "step: a scripted ReasoningBackend that records each request it receives, on a provider that declares full_duplex for the transcript (S10, S1)."
     },
     "RK-12.4.1-050": {
       "class": "step",
@@ -2884,7 +2884,7 @@
     "RK-12.4.1-052": {
       "class": "step",
       "card": "RMK-2049",
-      "note": "step: realtime.transcribe for both roles and a scripted ReasoningBackend that records its requests (S2, S10)."
+      "note": "step: the full_duplex trait in realtime.start, realtime.transcribe for both roles and a scripted ReasoningBackend that records its requests (S1, S2, S10)."
     },
     "RK-12.4.1-053": {
       "class": "step",
