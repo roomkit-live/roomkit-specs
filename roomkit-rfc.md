@@ -11394,7 +11394,7 @@ enters a room as any other audio.
 <!-- /rfc -->
 <!-- rfc: {"id": "RK-12.2-026", "kind": "behavior", "applies": "§12.2 Streaming AI → TTS path, steps 8s to 11s, the framework's and not the voice feature's (counted with the core): when an AI channel answers with a response stream, the text of its turn's tool loop (§6.4), the framework finds its streaming targets once the room is read, asking each transport the answer reaches whether it streams in that room (supports_streaming_delivery_for, supports_streaming_delivery by default), and delivers the answer whole to one that does not. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
---- Streaming AI → TTS path (framework-native, when AIProvider supports streaming) ---
+--- Streaming AI → TTS path (framework-native, whatever the AIProvider streams) ---
 8s. Route through normal inbound pipeline → Room broadcasts to AIChannel
 9s. AIChannel.on_event() returns ChannelOutput(response_stream=…), the text of the
     turn's tool loop (Section 6.4, One loop)
@@ -11621,11 +11621,11 @@ session's played audio counts, what was heard of it.
 
 <!-- rfc: {"id": "RK-12.2-042", "kind": "structural", "applies": "§12.2, the paragraph after the audio processing flow, the voice feature: a summary of the streaming path (steps 8s to 14s, the framework's), whose own rule is that the VoiceChannel stays a pure transport holding no AIProvider reference. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The streaming path flows through the framework's normal routing infrastructure.
-AIChannel returns a streaming handle, the framework pipes it to streaming-capable
-transport channels, accumulates the full text, stores the complete event, and
+AIChannel returns a streaming handle, the framework pipes it to its streaming
+target, accumulates the full text, stores the complete event, and
 re-broadcasts to non-streaming channels. This preserves multi-channel delivery,
-hooks, tool calling (falls back to non-streaming), and keeps VoiceChannel as
-pure transport with no AIProvider reference.
+hooks, tool calling (the calls run inside the streamed turn), and keeps
+VoiceChannel as pure transport with no AIProvider reference.
 <!-- /rfc -->
 
 #### 12.2.1 Packet Loss Handling (Lossy Transports)
@@ -14087,10 +14087,11 @@ stored.
 **Text from another channel (normative).** A text event another channel
 broadcast into the room reaches a realtime session (a realtime voice channel's,
 a conference's with a realtime model plugged in) as what it is: content
-someone else wrote.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-100", "kind": "behavior", "applies": "§12.4 Text from another channel, the realtime feature: such an event is injected with the user intent, never system nor assistant, its author named as a transcript names them (a person by their name and the channel they wrote through, anything else by its channel id) and its text quoted as §6.4 quotes a text from outside. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->It is injected with the `user` intent, never `system` nor
-`assistant`, its author named as a transcript names them (a person by their
-name and the channel they wrote through, anything else by its channel id) and
-its text quoted as Section 6.4 quotes a text from outside: `Marie · sms: “…”`.<!-- /rfc --><!-- rfc: {"id": "RK-12.4-101", "kind": "behavior", "applies": "§12.4 Text from another channel, the realtime feature: nothing the event carries chooses the intent, its metadata included. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+someone else wrote.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-100", "kind": "behavior", "applies": "§12.4 Text from another channel, the realtime feature: such an event is injected with the user intent, never system nor assistant, its author labelled as §6.4 labels a speaker (a person by their name, a sender with no name by its channel as the room addresses it) and its text quoted as §6.4 quotes a text from outside. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->It is injected with the `user` intent, never `system` nor
+`assistant`, its author labelled as Section 6.4 labels a speaker (a person by
+their name, a sender with no name by its channel as the room addresses it,
+`@sms1`) and its text quoted as Section 6.4 quotes a text from outside:
+`Marie: “…”`.<!-- /rfc --><!-- rfc: {"id": "RK-12.4-101", "kind": "behavior", "applies": "§12.4 Text from another channel, the realtime feature: nothing the event carries chooses the intent, its metadata included. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Nothing the event carries chooses the intent, its metadata included, which a
 remote client can write.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4-102", "kind": "behavior", "applies": "§12.4 Text from another channel, the realtime feature: an event a hook injects (§9.4), and an edit, a delete or an event that opens no turn (§10.3 rule 4), is injected the same way but silent, so the model, a hosted one included, takes it as context and is asked no answer. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An event a hook injects (Section 9.4) asks no
 agent, a hosted model included: it is injected the same way, `silent`, so
@@ -14138,33 +14139,23 @@ rewrites for a silent injection is set apart in a `<context>` block
 after the instructions.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.4-015", "kind": "structural", "applies": "§12.4 RealtimeAudioTransport interface, the realtime feature: name, accept(), send_audio(), send_message(), on_audio_received(), on_client_disconnected(), set_trace_emitter(), disconnect() and close(), audio reception pushed through on_audio_received(callback) rather than pulled from an iterator (the e.g. transport names and the rationale, informative, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
-**RealtimeAudioTransport interface:**
+<!-- rfc: {"id": "RK-12.4-015", "kind": "structural", "applies": "§12.4 Realtime transport, the realtime feature: the channel's transport is a VoiceBackend (§12.2) that implements accept(session, connection), and a backend that does not cannot start a session; a transport may add send_message(session, message), which the channel sends its client messages through where the transport has it and skips otherwise; audio reception is pushed through on_audio_received(callback), as on every VoiceBackend (the rationale, informative, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+**Realtime transport:** a realtime voice channel's transport is a VoiceBackend
+(Section 12.2) that implements `accept(session, connection)`; a backend that
+does not cannot start a session. A transport MAY add
+`send_message(session, message)`, a control or data message to the client,
+which the channel sends where the transport has it and skips otherwise.
 
-```
-RealtimeAudioTransport (interface)
-├── name: string                             # Transport name (e.g., "websocket", "webrtc")
-├── accept(session, connection) → void
-├── send_audio(session, audio_chunk) → void
-├── send_message(session, message) → void   # Send control/data message to client
-├── on_audio_received(callback) → void      # Push-based audio reception
-├── on_client_disconnected(callback) → void
-├── set_trace_emitter(emitter | null) → void  # Set callback for emitting ProtocolTraces
-├── disconnect(session) → void              # Disconnect a client session
-└── close() → void                          # Release resources
-```
-
-Audio reception uses a push-based model via `on_audio_received(callback)` rather
-than a pull-based async iterator. This aligns with the transport pattern used by
-`VoiceBackend` and avoids the complexity of managing iterator lifecycles across
-session boundaries.
+Audio reception is pushed through `on_audio_received(callback)`, as on every
+VoiceBackend, rather than pulled from an async iterator, which avoids managing
+iterator lifecycles across session boundaries.
 <!-- /rfc -->
 
 <!-- rfc: {"id": "RK-12.4-113", "kind": "behavior", "applies": "§12.4 Session lifecycle, the realtime feature: start_session reads the room scoped to its organization_id (§17.2); another organization's room is not found, and no session is created (the transport's accept and the call's parameters, steps 1 and 2, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Session lifecycle:**
 
 ```
-1. Client connects → RealtimeAudioTransport.accept()
+1. Client connects → the transport's accept()
 2. start_session(room_id, participant_id, connection, metadata, organization_id)
    ├── Read the room scoped to organization_id (§17.2); another
    │   organization's room is not found, and no session is created
@@ -14275,7 +14266,7 @@ through the pipeline before being forwarded to the provider.
 
 #### 12.4.1 Full-Duplex Providers and Reasoning Delegation
 
-<!-- rfc: {"id": "RK-12.4.1-011", "kind": "behavior", "applies": "§12.4.1 Full-Duplex Providers and Reasoning Delegation, the realtime feature's provider contract: a provider that listens and speaks at once and holds no tools (no response or speech boundaries, no request to respond and no interruption on its wire; reasoning and tool use handed to a backend model, a reasoning delegation) declares both traits with full_duplex = true, and §12.4.1 binds only providers that declare it (the definitions, informative, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+<!-- rfc: {"id": "RK-12.4.1-011", "kind": "behavior", "applies": "§12.4.1 Full-Duplex Providers and Reasoning Delegation, the realtime feature's provider contract: a provider that listens and speaks at once and holds no tools (no response or speech boundaries, no request to respond and no interruption on its wire; reasoning and tool use handed to a backend model, a reasoning delegation) declares both traits with full_duplex = true; what §12.4.1 asks of a provider binds only providers that declare it, and what it asks of the framework (a channel, a host, the orchestration) binds every realtime session, under the conditions each rule states (the definitions, informative, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Some speech-to-speech providers do not take turns. A **full-duplex provider**
 listens and speaks at the same time: it decides on its
 own when to answer, when to fall silent because the user spoke over it, and
@@ -14284,8 +14275,10 @@ transcript deltas in both directions and little else — no response start or
 end, no speech start or end, no request to respond, no interruption. The same
 providers hold no tools: the conversational model hands reasoning and tool use
 to a backend model, a **reasoning delegation**, and keeps talking while the
-backend works. A provider declares both traits with `full_duplex = true`, and
-this section binds only providers that declare it.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4.1-012", "kind": "behavior", "applies": "§12.4.1 Full-Duplex Providers and Reasoning Delegation, the realtime feature: support of full-duplex providers is optional within Conformance Level 3 (§26). Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->Support is OPTIONAL within
+backend works. A provider declares both traits with `full_duplex = true`.
+What this section asks of a provider binds only providers that declare it;
+what it asks of the framework (a channel, a host, the orchestration) binds
+every realtime session, under the conditions each rule states.<!-- /rfc --> <!-- rfc: {"id": "RK-12.4.1-012", "kind": "behavior", "applies": "§12.4.1 Full-Duplex Providers and Reasoning Delegation, the realtime feature: support of full-duplex providers is optional within Conformance Level 3 (§26). Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->Support is OPTIONAL within
 Conformance Level 3.<!-- /rfc -->
 
 <!-- rfc: {"id": "RK-12.4.1-013", "kind": "behavior", "applies": "§12.4.1 Full-Duplex Providers and Reasoning Delegation, the realtime feature, a delegation the provider hands over: its backend may itself delegate a task (§23), the integrator's choice, which the implementation honours (what sets a reasoning delegation apart from Task Delegation, informative, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
@@ -14812,9 +14805,10 @@ each participant a mix of everyone else's audio (excluding their own, to
 prevent echo).
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.7.2-004", "kind": "behavior", "applies": "§12.7.2 AudioBridge, the voice feature (audio bridging), thread safety: every bridge operation is thread-safe (forward() being called from audio callback threads, in the context of on_audio_received: the calling context, informative, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
-**Thread safety:** `forward()` is called from audio callback threads (same
-context as `on_audio_received`). All bridge operations MUST be thread-safe.
+<!-- rfc: {"id": "RK-12.7.2-004", "kind": "behavior", "applies": "§12.7.2 AudioBridge, the voice feature (audio bridging), thread safety: every bridge operation is thread-safe (forward() being called from the pipeline's frame callback, or, when a BEFORE_BRIDGE_AUDIO hook is registered, from a task on the event loop: the calling context, informative, folded in). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+**Thread safety:** `forward()` is called from the pipeline's frame callback,
+or, when a BEFORE_BRIDGE_AUDIO hook is registered, from a task on the event
+loop. All bridge operations MUST be thread-safe.
 <!-- /rfc -->
 
 #### 12.7.3 VoiceChannel Integration
@@ -14932,12 +14926,14 @@ VoiceChannel.add_backend(backend) → void
 
 #### 12.7.4 Sample Rate Handling
 
-<!-- rfc: {"id": "RK-12.7.4-002", "kind": "behavior", "applies": "§12.7.4 Sample Rate Handling, the voice feature (audio bridging): audio forwarded between sessions of different sample rates is converted to the target session's native rate by the outbound pipeline's resampler (sessions may have different rates; the SIP and WebRTC rates are examples). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+<!-- rfc: {"id": "RK-12.7.4-002", "kind": "behavior", "applies": "§12.7.4 Sample Rate Handling, the voice feature (audio bridging): audio forwarded between sessions of different sample rates is converted by the bridge to the target session's output rate, recorded when the session registers, before the target's outbound pipeline, whose resampler then converts it to the transport format that pipeline declares, where it declares one (sessions may have different rates; the SIP and WebRTC rates are examples). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Voice sessions MAY have different sample rates (e.g., SIP at 8kHz, WebRTC at
 48kHz). When forwarding audio between sessions with different rates, the
-outbound pipeline's resampler MUST convert the audio to the target session's
-native rate. <!-- /rfc --><!-- rfc: {"id": "RK-12.7.4-003", "kind": "behavior", "applies": "§12.7.4 Sample Rate Handling, the voice feature (audio bridging): the implementation tracks each session's sample rate when the session registers and resamples per target in the outbound path. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->Implementations SHOULD track each session's sample rate at
-registration time and apply resampling per-target in the outbound path.
+bridge MUST convert each frame to the target session's output rate, recorded
+when the session registers, before the target's outbound pipeline; where that
+pipeline declares a transport format, its resampler then converts the frame to
+that format. <!-- /rfc --><!-- rfc: {"id": "RK-12.7.4-003", "kind": "behavior", "applies": "§12.7.4 Sample Rate Handling, the voice feature (audio bridging): the implementation tracks each session's sample rate when the session registers and resamples per target. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->Implementations SHOULD track each session's sample rate at
+registration time and resample per target.
 <!-- /rfc -->
 
 #### 12.7.5 N-Party Mixing
@@ -14967,12 +14963,12 @@ forward silence-only mixes to save bandwidth.
 
 #### 12.7.6 Hooks
 
-<!-- rfc: {"id": "RK-12.7.6-001", "kind": "behavior", "applies": "§12.7.6 Hooks table, the voice feature (audio bridging), the BEFORE_BRIDGE_AUDIO row: the hook audio bridging adds, SYNC, fired by the AudioBridge to filter or modify audio before forwarding (gain and muting are examples; the hooks it reuses are RK-12.7.6-008 to RK-12.7.6-011). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+<!-- rfc: {"id": "RK-12.7.6-001", "kind": "behavior", "applies": "§12.7.6 Hooks table, the voice feature (audio bridging), the BEFORE_BRIDGE_AUDIO row: the hook audio bridging adds, SYNC, fired by the VoiceChannel to filter or modify audio before forwarding (gain and muting are examples; the hooks it reuses are RK-12.7.6-008 to RK-12.7.6-011). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Audio bridging introduces one new hook and reuses existing hooks:
 
 | Hook | Type | Use Case | Source |
 |---|---|---|---|
-| BEFORE_BRIDGE_AUDIO | SYNC | Filter or modify audio before forwarding (e.g., gain, muting) | AudioBridge |
+| BEFORE_BRIDGE_AUDIO | SYNC | Filter or modify audio before forwarding (e.g., gain, muting) | VoiceChannel |
 <!-- /rfc -->
 
 <!-- rfc: {"id": "RK-12.7.6-004", "kind": "behavior", "applies": "§12.7.6 Hooks, the voice feature (audio bridging), BEFORE_BRIDGE_AUDIO: it fires for each frame before that frame is forwarded to the other sessions. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
@@ -14991,10 +14987,12 @@ Existing hooks that fire normally during bridge mode:
 - `ON_SESSION_STARTED` — session lifecycle unchanged
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.7.6-012", "kind": "behavior", "applies": "§12.7.6 Hooks, the voice feature (audio bridging), BEFORE_BRIDGE_AUDIO: a SYNC hook that runs in the audio callback path. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
-**Note:** BEFORE_BRIDGE_AUDIO is a SYNC hook that runs in the audio callback
-path. <!-- /rfc --><!-- rfc: {"id": "RK-12.7.6-013", "kind": "behavior", "applies": "§12.7.6 Hooks, the voice feature (audio bridging), BEFORE_BRIDGE_AUDIO: implementations ensure its handlers complete quickly, under 1 ms, to avoid audio glitches. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Implementations MUST ensure hook handlers complete quickly (< 1ms) to
-avoid audio glitches. <!-- /rfc --><!-- rfc: {"id": "RK-12.7.6-014", "kind": "non_testable", "applies": "§12.7.6 Hooks, the voice feature (audio bridging), BEFORE_BRIDGE_AUDIO: a handler performs no long-running operation, which binds the integrator who writes it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Long-running operations MUST NOT be performed in this
+<!-- rfc: {"id": "RK-12.7.6-012", "kind": "behavior", "applies": "§12.7.6 Hooks, the voice feature (audio bridging), BEFORE_BRIDGE_AUDIO: a SYNC hook run for each frame outside the audio callback path, the frame forwarded once its hooks allow it, so that a hook that holds a frame lets the frames after it pass first; the filter that runs in the audio callback path is the channel's bridge filter (set_bridge_filter), which fires no hook. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->**Note:** BEFORE_BRIDGE_AUDIO is a SYNC hook run for each frame outside the
+audio callback path: the frame is forwarded once its hooks allow it, and a
+hook that holds a frame lets the frames after it pass first. The filter that
+runs in the audio callback path is the channel's bridge filter
+(`set_bridge_filter`), which fires no hook. <!-- /rfc --><!-- rfc: {"id": "RK-12.7.6-013", "kind": "non_testable", "applies": "§12.7.6 Hooks, the voice feature (audio bridging), BEFORE_BRIDGE_AUDIO: its handlers complete quickly, under 1 ms, since each frame waits for them, which binds the integrator who writes them. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Hook handlers MUST complete quickly (< 1ms): each frame
+waits for them. <!-- /rfc --><!-- rfc: {"id": "RK-12.7.6-014", "kind": "non_testable", "applies": "§12.7.6 Hooks, the voice feature (audio bridging), BEFORE_BRIDGE_AUDIO: a handler performs no long-running operation, which binds the integrator who writes it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Long-running operations MUST NOT be performed in this
 hook.
 <!-- /rfc -->
 
@@ -15036,8 +15034,8 @@ Implementations that support audio bridging MUST:
 <!-- /rfc -->
 <!-- rfc: {"id": "RK-12.7.8-008", "kind": "behavior", "applies": "§12.7.8 Conformance, where an implementation supports audio bridging (the voice feature): it supports N-party mixing for rooms with more than 2 voice sessions. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 Implementations SHOULD:
-- Support N-party mixing for rooms with more than 2 voice sessions.<!-- /rfc --><!-- rfc: {"id": "RK-12.7.8-009", "kind": "behavior", "applies": "§12.7.8 Conformance, where an implementation supports audio bridging (the voice feature): it handles cross-rate bridging through the outbound resampler. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
-- Handle cross-rate bridging via the outbound resampler.<!-- /rfc --><!-- rfc: {"id": "RK-12.7.8-010", "kind": "behavior", "applies": "§12.7.8 Conformance, where an implementation supports audio bridging (the voice feature): it supports the bridge and an STT operating at the same time. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
+- Support N-party mixing for rooms with more than 2 voice sessions.<!-- /rfc --><!-- rfc: {"id": "RK-12.7.8-009", "kind": "behavior", "applies": "§12.7.8 Conformance, where an implementation supports audio bridging (the voice feature): it handles cross-rate bridging per target, as §12.7.4 says. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
+- Handle cross-rate bridging per target, as Section 12.7.4 says.<!-- /rfc --><!-- rfc: {"id": "RK-12.7.8-010", "kind": "behavior", "applies": "§12.7.8 Conformance, where an implementation supports audio bridging (the voice feature): it supports the bridge and an STT operating at the same time. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 - Support concurrent bridge + STT operation.
 <!-- /rfc -->
 
@@ -25126,7 +25124,7 @@ A Level 3 implementation MAY additionally support audio and/or video real-time m
 - Realtime Voice channel (speech-to-speech)
 - RealtimeVoiceProvider interface
 - Full-duplex providers and reasoning delegation (OPTIONAL — Section 12.4.1)
-- RealtimeAudioTransport interface
+- A VoiceBackend that accepts connections, as the realtime transport
 - Realtime voice hooks (ON_TOOL_CALL, ON_REALTIME_TEXT_INJECTED, ON_PROTOCOL_TRACE)
 - Protocol trace infrastructure (ProtocolTrace, emit_trace, on_trace, pre-room buffering)
 
@@ -26084,11 +26082,11 @@ RealtimeVoiceChannel
 ├── media_types: [AUDIO, TEXT]               # text delivered to it enters its session
 ```
 <!-- /rfc -->
-<!-- rfc: {"id": "RK-A.11-003", "kind": "structural", "applies": "§A.11 Realtime Voice Channel (media feature realtime; Level 3, §26.4): the channel requires a RealtimeVoiceProvider and a RealtimeAudioTransport. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+<!-- rfc: {"id": "RK-A.11-003", "kind": "structural", "applies": "§A.11 Realtime Voice Channel (media feature realtime; Level 3, §26.4): the channel requires a RealtimeVoiceProvider and a VoiceBackend as its transport (§12.4). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 ├── requires:
 │   ├── provider: RealtimeVoiceProvider
-│   ├── transport: RealtimeAudioTransport
+│   ├── transport: VoiceBackend
 ```
 <!-- /rfc -->
 <!-- rfc: {"id": "RK-A.11-004", "kind": "behavior", "applies": "§A.11 Realtime Voice Channel (media feature realtime; Level 3, §26.4): an optional reasoning_backend, which serves integrator-side reasoning delegation (Section 12.4.1); the channel works with or without it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->

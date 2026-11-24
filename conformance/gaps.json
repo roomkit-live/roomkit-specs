@@ -2716,11 +2716,6 @@
       "card": "RMK-2045",
       "note": "realtime.end, then realtime.inject: nothing reaches the provider and ON_REALTIME_TEXT_INJECTED does not fire; the not_sent result needs realtime.inject to return the injection's result."
     },
-    "RK-12.4-100": {
-      "class": "writable",
-      "card": "RMK-2045",
-      "note": "a broadcast text reads role user in realtime.read's injections; asserting its quoted author waits for the decision on RMK-2043."
-    },
     "RK-12.4-101": {
       "class": "writable",
       "card": "RMK-2045",
@@ -2814,27 +2809,27 @@
     "RK-12.4.1-020": {
       "class": "step",
       "card": "RMK-2049",
-      "note": "step: realtime.response with the model's response start, and an observation of the host's idleness (S11); its scope is suspect RMK-2056."
+      "note": "step: realtime.response with the model's response start, and an observation of the host's idleness (S11)."
     },
     "RK-12.4.1-021": {
       "class": "step",
       "card": "RMK-2049",
-      "note": "step: realtime.response with a response start, audible assistant audio or a partial assistant transcript on a full-duplex provider, and an observation of the host's idleness (S11, S1); its scope is suspect RMK-2056."
+      "note": "step: realtime.response with a response start, audible assistant audio or a partial assistant transcript on a full-duplex provider, and an observation of the host's idleness (S11, S1)."
     },
     "RK-12.4.1-022": {
       "class": "step",
       "card": "RMK-2049",
-      "note": "step: realtime.response scripted to start before the send of the output returns, and an observation of the host's idleness (S11); its scope is suspect RMK-2056."
+      "note": "step: realtime.response scripted to start before the send of the output returns, and an observation of the host's idleness (S11)."
     },
     "RK-12.4.1-023": {
       "class": "step",
       "card": "RMK-2049",
-      "note": "step: an output the provider fails to take, and an observation of the host's idleness (S11); its scope is suspect RMK-2056."
+      "note": "step: an output the provider fails to take, and an observation of the host's idleness (S11)."
     },
     "RK-12.4.1-024": {
       "class": "step",
       "card": "RMK-2049",
-      "note": "step: realtime.response and the idleness of a conference with a realtime model beside the realtime voice channel's (S11); its scope is suspect RMK-2056."
+      "note": "step: realtime.response and the idleness of a conference with a realtime model beside the realtime voice channel's (S11)."
     },
     "RK-12.4.1-025": {
       "class": "step",
@@ -2864,7 +2859,7 @@
     "RK-12.4.1-034": {
       "class": "step",
       "card": "RMK-2049",
-      "note": "step: the provider's supports_mid_session_reconfigure trait in realtime.start, with a handoff or a skill activation on the realtime room (S1); its scope is suspect RMK-2056."
+      "note": "step: the provider's supports_mid_session_reconfigure trait in realtime.start, with a handoff or a skill activation on the realtime room (S1)."
     },
     "RK-12.4.1-042": {
       "class": "writable",
@@ -3054,7 +3049,7 @@
     "RK-12.4.2-010": {
       "class": "step",
       "card": "RMK-2049",
-      "note": "step: two reports by realtime.usage, and last_usage in realtime.read (S12, S8); the full-duplex provider writes single keys into the snapshot (suspect RMK-2055)."
+      "note": "step: two reports by realtime.usage, and last_usage in realtime.read (S12, S8); the full-duplex provider roomkit holds writes single keys into the snapshot, provider code noted on RMK-2055."
     },
     "RK-12.4.2-011": {
       "class": "step",
@@ -3069,7 +3064,7 @@
     "RK-12.4.2-015": {
       "class": "step",
       "card": "RMK-2049",
-      "note": "step: realtime.usage, a turn's end by realtime.response, and last_usage in realtime.read (S12, S11, S8); Python clears it only when telemetry opens a turn span (suspect RMK-2055)."
+      "note": "step: realtime.usage, a turn's end by realtime.response, and last_usage in realtime.read (S12, S11, S8)."
     },
     "RK-12.5-030": {
       "class": "step",
@@ -3279,12 +3274,12 @@
     "RK-12.7.4-002": {
       "class": "step",
       "card": "RMK-2054",
-      "note": "step: per-participant sample rates in voice.open and the audio format in voice.read (V2): a frame bridged to a session of another rate arrives at that rate (suspect RMK-2052)."
+      "note": "step: per-participant sample rates in voice.open and the audio format in voice.read (V2): a frame bridged to a session of another rate arrives at that session's output rate."
     },
     "RK-12.7.4-003": {
       "class": "step",
       "card": "RMK-2054",
-      "note": "step: per-participant sample rates in voice.open (V2): each target receives the frame resampled to its own rate (suspect RMK-2052)."
+      "note": "step: per-participant sample rates in voice.open (V2): each target receives the frame resampled to its own rate."
     },
     "RK-12.7.5-001": {
       "class": "step",
@@ -3346,16 +3341,6 @@
       "card": "RMK-2054",
       "note": "voice.open with bridge and an on_session_started hook: the hook fires for each joined participant."
     },
-    "RK-12.7.6-012": {
-      "class": "writable",
-      "card": "RMK-2054",
-      "note": "voice.open with bridge and a before_bridge_audio reaction held at a gate (gate, wait_for, open): two voice.feed calls run in the background and awaited after the gate opens, the frame fed while the first is held is forwarded after it; red on Python, which forwards the later frame first (suspect RMK-2050)."
-    },
-    "RK-12.7.6-013": {
-      "class": "phase6",
-      "card": "RMK-2054",
-      "note": "measurement: BEFORE_BRIDGE_AUDIO handler time per frame, under 1 ms (suspect RMK-2050)."
-    },
     "RK-12.7.8-005": {
       "class": "step",
       "card": "RMK-2054",
@@ -3369,7 +3354,7 @@
     "RK-12.7.8-009": {
       "class": "step",
       "card": "RMK-2054",
-      "note": "step: per-participant sample rates in voice.open (V2) (suspect RMK-2052)."
+      "note": "step: per-participant sample rates in voice.open (V2)."
     },
     "RK-12.7.8-010": {
       "class": "writable",

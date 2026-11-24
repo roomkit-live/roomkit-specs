@@ -4279,17 +4279,18 @@
       "voice/a-turn-waits-for-its-last-fragment": "843c41b4122856039fcb1f69ad437cac75f41aaba0e6cbea703cb83bf0e893be"
     },
     "RK-12.2-026": {
-      "store/reattached-binding-moves-behind-existing-streaming-targets": "79cf19345e48e30293306e33b2df07285a11b639f938023eca270375d20fe028",
-      "store/updated-bindings-keep-the-first-streaming-target": "79cf19345e48e30293306e33b2df07285a11b639f938023eca270375d20fe028",
-      "streaming/a-channel-streams-in-the-rooms-it-says": "79cf19345e48e30293306e33b2df07285a11b639f938023eca270375d20fe028",
-      "streaming/a-channel-that-declares-no-streaming-streams-in-the-rooms-it-says": "79cf19345e48e30293306e33b2df07285a11b639f938023eca270375d20fe028",
-      "streaming/a-stream-reaches-an-outbound-only-transport-and-no-inbound-only-one": "79cf19345e48e30293306e33b2df07285a11b639f938023eca270375d20fe028",
-      "streaming/a-stream-reaches-no-transport-its-agent-s-binding-excludes": "79cf19345e48e30293306e33b2df07285a11b639f938023eca270375d20fe028",
-      "streaming/a-stream-row-under-an-internal-answer-scope-is-stored-for-no-channel": "79cf19345e48e30293306e33b2df07285a11b639f938023eca270375d20fe028",
-      "streaming/an-answer-scope-of-none-streams-to-no-target": "79cf19345e48e30293306e33b2df07285a11b639f938023eca270375d20fe028",
-      "streaming/an-answer-scope-streams-only-to-a-target-it-names": "79cf19345e48e30293306e33b2df07285a11b639f938023eca270375d20fe028",
-      "streaming/an-answer-streams-to-its-first-streaming-target-and-is-delivered-whole-to-the-others": "79cf19345e48e30293306e33b2df07285a11b639f938023eca270375d20fe028",
-      "streaming/the-stream-goes-to-the-first-streaming-transport-bound": "79cf19345e48e30293306e33b2df07285a11b639f938023eca270375d20fe028"
+      "store/reattached-binding-moves-behind-existing-streaming-targets": "1eb058c1797a31640832b9580f0b46bd89e43465a92cd4710551208f1a656bac",
+      "store/updated-bindings-keep-the-first-streaming-target": "1eb058c1797a31640832b9580f0b46bd89e43465a92cd4710551208f1a656bac",
+      "streaming/a-channel-streams-in-the-rooms-it-says": "1eb058c1797a31640832b9580f0b46bd89e43465a92cd4710551208f1a656bac",
+      "streaming/a-channel-that-declares-no-streaming-streams-in-the-rooms-it-says": "1eb058c1797a31640832b9580f0b46bd89e43465a92cd4710551208f1a656bac",
+      "streaming/a-stream-reaches-an-outbound-only-transport-and-no-inbound-only-one": "1eb058c1797a31640832b9580f0b46bd89e43465a92cd4710551208f1a656bac",
+      "streaming/a-stream-reaches-no-transport-its-agent-s-binding-excludes": "1eb058c1797a31640832b9580f0b46bd89e43465a92cd4710551208f1a656bac",
+      "streaming/a-stream-row-under-an-internal-answer-scope-is-stored-for-no-channel": "1eb058c1797a31640832b9580f0b46bd89e43465a92cd4710551208f1a656bac",
+      "streaming/a-turn-with-a-call-streams-whatever-its-provider-streams": "1eb058c1797a31640832b9580f0b46bd89e43465a92cd4710551208f1a656bac",
+      "streaming/an-answer-scope-of-none-streams-to-no-target": "1eb058c1797a31640832b9580f0b46bd89e43465a92cd4710551208f1a656bac",
+      "streaming/an-answer-scope-streams-only-to-a-target-it-names": "1eb058c1797a31640832b9580f0b46bd89e43465a92cd4710551208f1a656bac",
+      "streaming/an-answer-streams-to-its-first-streaming-target-and-is-delivered-whole-to-the-others": "1eb058c1797a31640832b9580f0b46bd89e43465a92cd4710551208f1a656bac",
+      "streaming/the-stream-goes-to-the-first-streaming-transport-bound": "1eb058c1797a31640832b9580f0b46bd89e43465a92cd4710551208f1a656bac"
     },
     "RK-12.2-027": {
       "voice/a-streamed-reply-checks-each-sentence-before-synthesis": "e84955e2de8c6ace6705cb36637c7bc37ecb69cea7c665c99eb11581738f7af0"
@@ -4302,6 +4303,7 @@
     },
     "RK-12.2-032": {
       "streaming/a-streamed-answer-hands-its-end-after-its-last-row": "dd6885ddd8281b2fe62b130ff5dcf72db359e9761744d093e6690f5269eb03bc",
+      "streaming/a-turn-with-a-call-streams-whatever-its-provider-streams": "dd6885ddd8281b2fe62b130ff5dcf72db359e9761744d093e6690f5269eb03bc",
       "streaming/an-answer-streams-to-its-first-streaming-target-and-is-delivered-whole-to-the-others": "dd6885ddd8281b2fe62b130ff5dcf72db359e9761744d093e6690f5269eb03bc",
       "streaming/rows-reach-the-others": "dd6885ddd8281b2fe62b130ff5dcf72db359e9761744d093e6690f5269eb03bc",
       "streaming/what-a-target-s-outputs-leave-in-the-room": "dd6885ddd8281b2fe62b130ff5dcf72db359e9761744d093e6690f5269eb03bc"
@@ -4357,6 +4359,7 @@
       "streaming/a-streaming-target-made-write-only-mid-stream-reads-no-more": "43424542937f116bf95a83c82f43c123711695c7698ede99b47692fe6706a93a",
       "streaming/a-streaming-target-reads-each-tool-call-row-once-as-its-hook-left-it": "43424542937f116bf95a83c82f43c123711695c7698ede99b47692fe6706a93a",
       "streaming/a-transport-made-write-only-mid-stream-is-delivered-no-later-row": "43424542937f116bf95a83c82f43c123711695c7698ede99b47692fe6706a93a",
+      "streaming/a-turn-with-a-call-streams-whatever-its-provider-streams": "43424542937f116bf95a83c82f43c123711695c7698ede99b47692fe6706a93a",
       "streaming/an-answer-scope-streams-only-to-a-target-it-names": "43424542937f116bf95a83c82f43c123711695c7698ede99b47692fe6706a93a",
       "streaming/an-answer-streams-to-its-first-streaming-target-and-is-delivered-whole-to-the-others": "43424542937f116bf95a83c82f43c123711695c7698ede99b47692fe6706a93a",
       "streaming/reader-stops": "43424542937f116bf95a83c82f43c123711695c7698ede99b47692fe6706a93a",
@@ -4508,6 +4511,9 @@
       "realtime/a-correction-enters-the-session-silently": "87b3db0df2f7c17f1cb3e0de74b0344e2b56562542b8c8059142a444c41502d3",
       "realtime/a-hook-injection-enters-the-session-silently": "87b3db0df2f7c17f1cb3e0de74b0344e2b56562542b8c8059142a444c41502d3"
     },
+    "RK-12.4-100": {
+      "realtime/a-broadcast-text-enters-under-its-author-s-label": "e48d80e1892fa8abee7824e147a0488199443e7b5dae0a872115b3aff93ea1da"
+    },
     "RK-12.4-102": {
       "realtime/a-correction-enters-the-session-silently": "07bb270a89316cbe87de2e6610eb43335c4047e4eb380e604ce214f8e970bf1c",
       "realtime/a-hook-injection-enters-the-session-silently": "07bb270a89316cbe87de2e6610eb43335c4047e4eb380e604ce214f8e970bf1c"
@@ -4650,7 +4656,7 @@
       "voice/a-bridge-forwards-only-the-frame-the-hook-admits": "5f18fb16c8aa6a7b19c7ab1fd146e6f28788e912ba0c502ae71dbbfbe0c7f075"
     },
     "RK-12.7.6-001": {
-      "voice/a-bridge-forwards-only-the-frame-the-hook-admits": "7de72972eeb0c05fc9fcfb38d7ddaf6712fd02f91b97169e3441e2db0f21d90d"
+      "voice/a-bridge-forwards-only-the-frame-the-hook-admits": "22e2a4675e1474baa2c9192b4a31064458840adee96658d83dc68706b721b575"
     },
     "RK-12.7.6-004": {
       "voice/a-bridge-forwards-only-the-frame-the-hook-admits": "987eb0c240864f6f9ac50bcd368c55cda73d2bb6188176f25af726003a2e8e6e"
@@ -4660,6 +4666,9 @@
     },
     "RK-12.7.6-006": {
       "voice/a-bridge-forwards-only-the-frame-the-hook-admits": "58fcab74e831b5cbb9621d15a55e846381e0fc10160dd287dfb94785628deadb"
+    },
+    "RK-12.7.6-012": {
+      "voice/a-bridge-hook-runs-outside-the-call-that-delivers-the-frame": "a935f921082f241ab3f4fdd8b449a83cedfbb1f40a0e30f367a001c445427e3c"
     },
     "RK-12.7.8-003": {
       "voice/a-bridge-forwards-only-the-frame-the-hook-admits": "2d72a27969888059ea189545fda06d721a2dd9fe6c5343b7b5bb26bdc22bc2c2"
