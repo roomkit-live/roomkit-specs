@@ -5,6 +5,9 @@
   "rules": [
     "§10.6.7"
   ],
+  "requirements": [
+    "RK-10.6.7-036"
+  ],
   "notes": "Python: tests/test_turns_submit_to.py test_a_turn_submitted_to_an_executor_is_cancelled_through_its_link. The turn's link is the one a placed turn gets: the Cancel counts one loop reached, on reserved, while its model is held. other declares the channel too and runs nothing.",
   "setup": {
     "channels": [

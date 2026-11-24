@@ -5,6 +5,9 @@
   "rules": [
     "§10.6.7"
   ],
+  "requirements": [
+    "RK-10.6.7-039"
+  ],
   "notes": "Observes the uncertain end beside the refusal of a-turn-submitted-to-a-reserved-executor-that-is-not-served-is-refused: reserved takes the request (the submission returns its link, handed) and never accepts it, so the turn fails executor_lost at its accept bound. holder is given nothing meanwhile, and the next turn, on holder, names the lost turn: holder drops the state it held since the first turn (an on_room_detached before its on_event, RK-10.6.2-036), which it would not after a refusal. Not observed: a process that never answers the handing itself, which each implementation's own tests hold (Python: tests/test_turns_submit_to.py test_an_executor_whose_answer_to_the_hand_over_is_lost_leaves_the_turn_with_no_other).",
   "setup": {
     "kit": {

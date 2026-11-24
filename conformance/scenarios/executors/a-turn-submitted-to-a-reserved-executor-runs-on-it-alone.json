@@ -5,6 +5,10 @@
   "rules": [
     "§10.6.7"
   ],
+  "requirements": [
+    "RK-10.6.7-036",
+    "RK-10.6.7-038"
+  ],
   "notes": "Python: tests/test_turns_submit_to.py test_a_turn_submitted_to_an_executor_runs_on_it_alone_and_the_room_follows. holder ran the room's first turn, so a placed turn would stay on it (RK-10.6.7-025): the second, submitted to reserved, runs there once and nowhere else, and the third, placed as usual, follows it. A backend that placed the reserved turn by the room's holder would give holder three turns; one that left the holder as it was would give it the third.",
   "setup": {
     "channels": [

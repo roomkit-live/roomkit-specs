@@ -5,6 +5,9 @@
   "rules": [
     "§10.6.7"
   ],
+  "requirements": [
+    "RK-10.6.7-037"
+  ],
   "notes": "Python: tests/test_turns_submit_to.py test_an_executor_that_does_not_take_the_turn_refuses_it_before_it_is_handed[without the room's hook]. The room's enabled hook is defined by holder alone, so reserved takes none of the room's turns (RK-10.6.7-004): a reservation does not lift what a placed turn keeps. reserved builds nothing.",
   "setup": {
     "channels": [

@@ -5,6 +5,9 @@
   "rules": [
     "§10.6.7"
   ],
+  "requirements": [
+    "RK-10.6.7-037"
+  ],
   "notes": "Python: tests/test_turns_submit_to.py test_an_executor_that_does_not_take_the_turn_refuses_it_before_it_is_handed[closed]. reserved is never started. The submission fails with no_executor and the request unhanded; holder, which takes the channel's turns, is given none for it, and the third turn, placed as usual, runs on holder with no detach before it: the refused turn was never the room's previous one, and the room never left its holder. A backend that placed a refused reservation again would run the second turn on holder.",
   "setup": {
     "channels": [
