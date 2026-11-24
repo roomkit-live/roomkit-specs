@@ -2009,7 +2009,7 @@
     "RK-12.3.1-014": {
       "class": "step",
       "card": "RMK-2034",
-      "note": "step: voice.open pipeline contract (S19) and voice stage trace (S3): with a contract, every inbound scripted stage gets the internal format; a frame stage passing a frame in another format on unchanged with one warning is each stage's test (tests/voice/pipeline/test_speex_aec.py::TestSpeexAECProviderProcess::test_mismatched_pcm_format_passes_through), the built-in energy VAD and the sherpa-onnx VAD and diarization read a frame without that check (RMK-2089)."
+      "note": "step: voice.open pipeline contract (S19) and voice stage trace (S3): with a contract, every inbound scripted stage gets the internal format; a frame stage passing a frame in another format on unchanged with one warning is each stage's test (tests/voice/pipeline/test_speex_aec.py::TestSpeexAECProviderProcess::test_mismatched_pcm_format_passes_through); the built-in energy VAD and the sherpa-onnx VAD and diarization read a frame without that check (RMK-2089)."
     },
     "RK-12.3.1-016": {
       "class": "writable",

@@ -12186,7 +12186,7 @@ Different channels in the same room MAY have different pipeline configurations.
 
 ```
 AudioPipelineContract
-├── internal_format: AudioFormat             # All stages operate on this format
+├── internal_format: AudioFormat             # All inbound stages operate on this format
 ├── transport_inbound_format: AudioFormat    # Format received from transport
 └── transport_outbound_format: AudioFormat   # Format expected by transport
 
@@ -12354,8 +12354,8 @@ The internal format is the contract's `internal_format` (Section 12.3.1), an
 **Behavior:**
 
 - **Inbound:** After receiving a raw AudioFrame from transport, the resampler
-  converts it to the internal format before passing to downstream stages.<!-- /rfc --><!-- rfc: {"id": "RK-12.3.3-004", "kind": "behavior", "applies": "§12.3.3 Resampler behavior, the voice feature: outbound, after the postprocessors, the resampler converts from the internal format to the transport's format (sample rate, channels, codec). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
-- **Outbound:** After postprocessors, the resampler converts from internal format
+  converts it to the internal format before passing to downstream stages.<!-- /rfc --><!-- rfc: {"id": "RK-12.3.3-004", "kind": "behavior", "applies": "§12.3.3 Resampler behavior, the voice feature: outbound, after the postprocessors, the resampler converts the outbound audio to the transport's format (sample rate, channels, codec). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+- **Outbound:** After postprocessors, the resampler converts the outbound audio
   to the transport's expected format (sample rate, channels, codec).
 <!-- /rfc -->
 
