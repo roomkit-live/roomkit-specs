@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "d193fa7bea53f90dc939de5288688d5bec02f15ee1179e8c1f677d00ef865e48",
-  "corpus_sha256": "69670815809feb356ad5acbf46abe64aa6a019aa1a9c7044e35f7a035a81fff7",
+  "corpus_sha256": "477b10f9dab1a3076c49d37b5bb3f6b9346b1138931cd4f6cb4e7c06895aa7a8",
   "python_commit": "91320acb5d3fb53b50ea63d69764fdacc420297b",
-  "scenario_count": 3403,
+  "scenario_count": 3417,
   "sections": [
     {
       "section": "0",
@@ -889,6 +889,7 @@
       "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
+        "kit-close/what-a-channel-s-close-starts-is-cut-at-once",
         "media/an-emitted-protocol-trace-reaches-its-room-observer"
       ]
     },
@@ -921,6 +922,8 @@
         "broadcast/a-delivery-s-context-holds-its-event",
         "inbound/a-failed-turn-fires-on-error",
         "inbound/an-agent-s-task-is-created",
+        "kit-close/a-channel-whose-close-fails-holds-no-other-back-and-fails-the-close-last",
+        "kit-close/a-close-from-a-channel-s-close-returns-at-once",
         "rooms/a-channel-attached-once-its-refusal-is-over-is-bound",
         "rooms/a-channel-sends-into-the-room-it-is-told-of",
         "rooms/a-detach-of-nothing-tells-no-one",
@@ -2286,7 +2289,11 @@
         "step": 4
       },
       "unannotated_keyword_lines": [],
-      "candidate_scenarios": []
+      "candidate_scenarios": [
+        "kit-close/every-source-s-task-is-cut-whatever-its-stop-does",
+        "kit-close/the-kit-s-own-stop-steps-run-side-by-side-within-the-grace",
+        "kit-close/work-a-source-s-health-check-starts-is-no-read-once-the-kit-closed"
+      ]
     },
     {
       "section": "6.6",
@@ -3191,6 +3198,7 @@
         "inbound/a-transport-s-failure-fires-no-on-error",
         "inbound/a-turn-refused-before-its-stream-names-its-error-type-to-on-error",
         "inbound/on-error-holds-no-room-lock",
+        "kit-close/what-a-channel-s-close-starts-is-cut-at-once",
         "media/an-emitted-protocol-trace-reaches-its-room-observer",
         "observations/feedback-is-an-observation-the-hooks-observe",
         "orchestration/a-room-a-first-message-opens-is-announced-with-its-strategy-s-agents-and-not-the-sender-s-channel",
@@ -4842,6 +4850,7 @@
         "broadcast/one-event-reaches-twelve-transports",
         "delivery/a-call-cancelled-at-the-room-lock-waits-for-no-turn",
         "delivery/a-cancelled-call-returns-while-a-transport-still-delivers",
+        "delivery/a-delivery-the-closing-observer-placed-held-behind-another-process-s-set-is-dropped",
         "delivery/a-greeting-keeps-its-cursor-behind-its-held-delivery",
         "delivery/a-handle-cancel-returns-while-a-transport-still-delivers",
         "delivery/a-held-delivery-leaves-the-room-lock-to-the-next-message",
@@ -7117,7 +7126,7 @@
       },
       "decided_gaps": {
         "phase6": 1,
-        "step": 149,
+        "step": 138,
         "writable": 3
       },
       "unannotated_keyword_lines": [],
@@ -7137,6 +7146,7 @@
         "delivery/a-closing-kit-refuses-new-operations-and-ignores-cancellation",
         "delivery/a-cut-commit-whose-read-back-fails-is-reported-not-stored",
         "delivery/a-deferred-event-s-wait-after-the-close-reads-its-own-end",
+        "delivery/a-delivery-the-closing-observer-placed-held-behind-another-process-s-set-is-dropped",
         "delivery/a-delivery-whose-turn-the-closing-owner-gave-up-counts-its-cleanup-done",
         "delivery/a-later-event-s-answer-ready-first-is-stored-first",
         "delivery/a-set-the-kit-s-close-drops-still-stores-its-hooks-side-effects",
@@ -7151,6 +7161,19 @@
         "delivery/the-next-event-s-turn-runs-while-the-turn-before-it-is-held",
         "discussion/a-closed-kit-refuses-regeneration-before-reading-its-store",
         "executor-close/a-turn-closing-the-kit-sees-its-close-return",
+        "kit-close/a-channel-whose-close-fails-holds-no-other-back-and-fails-the-close-last",
+        "kit-close/a-close-after-its-shutdown-was-cut-says-the-shutdown-did-not-finish",
+        "kit-close/a-close-from-a-channel-s-close-returns-at-once",
+        "kit-close/a-closed-kit-s-channel-doors-refuse-a-realtime-session-and-a-conference-arrival",
+        "kit-close/a-store-the-integrator-owns-answers-the-kit-s-reads-after-the-close",
+        "kit-close/a-store-the-kit-closed-refuses-the-kit-s-reads-with-kit-closed",
+        "kit-close/a-turn-awaiting-a-close-it-started-on-a-task-of-its-own-is-cut-with-its-turn",
+        "kit-close/a-turn-s-cleanup-closing-the-kit-the-close-cut-joins-that-close",
+        "kit-close/entering-a-closed-kit-s-context-again-is-refused",
+        "kit-close/every-source-s-task-is-cut-whatever-its-stop-does",
+        "kit-close/the-kit-s-own-stop-steps-run-side-by-side-within-the-grace",
+        "kit-close/what-a-channel-s-close-starts-is-cut-at-once",
+        "kit-close/work-a-source-s-health-check-starts-is-no-read-once-the-kit-closed",
         "locks/the-hooks-side-effects-of-a-set-of-a-deleted-room-the-close-drops-stay-out-of-the-room-created-again",
         "providers/a-kit-s-close-leaves-open-the-provider-its-agent-was-handed",
         "status/a-status-posted-after-close-starts-no-room-hook",
@@ -7419,6 +7442,7 @@
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
+        "delivery/a-delivery-the-closing-observer-placed-held-behind-another-process-s-set-is-dropped",
         "delivery/a-greeting-keeps-its-cursor-behind-its-held-delivery",
         "delivery/a-handle-s-cancel-under-the-room-lock-is-refused",
         "delivery/a-held-delivery-leaves-the-room-lock-to-the-next-message",
@@ -7646,6 +7670,8 @@
       "candidate_scenarios": [
         "executors/a-turn-on-another-executor-whose-rows-the-store-fails-to-read-runs-without-them",
         "inbound/a-kit-s-inbound-rate-limit-refuses-a-channel-s-excess-messages",
+        "kit-close/a-store-the-integrator-owns-answers-the-kit-s-reads-after-the-close",
+        "kit-close/a-store-the-kit-closed-refuses-the-kit-s-reads-with-kit-closed",
         "reentrancy/a-named-refusal-at-the-cap-precedes-an-empty-rate-bucket",
         "reentrancy/a-named-refusal-at-the-cap-spends-no-inbound-rate-token",
         "reentrancy/a-rate-limited-named-call-still-spends-its-work-budget",
@@ -8988,6 +9014,7 @@
       "candidate_scenarios": [
         "host/a-turn-s-host-acts-for-its-room-alone",
         "host/a-turn-s-host-writes-its-room-s-metadata-status-and-observations",
+        "kit-close/work-a-source-s-health-check-starts-is-no-read-once-the-kit-closed",
         "orchestration/a-review-that-says-nothing-or-fails-approves-nothing",
         "status/a-status-hook-s-call-is-as-deep-as-the-poster",
         "status/a-status-reaches-the-hooks-of-the-room-it-names",
@@ -35557,12 +35584,7 @@
       "id": "RK-12.10.4-030",
       "section": "12.10.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2007",
-        "note": "step: a channel whose close fails: the channels after it still closed, the kit's close failing once its shutdown ran."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.4-031",
@@ -35572,7 +35594,7 @@
       "gap": {
         "class": "step",
         "card": "RMK-2007",
-        "note": "step: conference.fault: a channel's roster write held in the store as the channels close."
+        "note": "step: a channel's own store operation (a conference roster write, under the framework's hold on the store) held until the kit's close waits for it after the channels closed, and the store's release recorded against it; a store_fault gate holds the write, but no step orders the release after it."
       }
     },
     {
@@ -35583,7 +35605,7 @@
       "gap": {
         "class": "step",
         "card": "RMK-2007",
-        "note": "step: conference.fault: a channel's store write held past the close's last unwind; its log line is no step's to read."
+        "note": "step: a channel's own store operation held past the close's last unwind, the store released under it and its write failing; its log line is no step's to read."
       }
     },
     {
@@ -35594,7 +35616,7 @@
       "gap": {
         "class": "step",
         "card": "RMK-2007",
-        "note": "step: conference.fault: a participant callback parked in the backend past every closing budget, resuming after the close."
+        "note": "step: a channel's callback parked in its backend past every closing budget, holding no hold on the store, resuming after the store was sealed and refused naming the shutdown."
       }
     },
     {
@@ -35618,23 +35640,13 @@
       "id": "RK-12.10.4-035",
       "section": "12.10.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2007",
-        "note": "step: a store the kit closes in every backend: the memory store stays open after the close, so a read answers there."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.4-036",
       "section": "12.10.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2007",
-        "note": "step: a scripted source (source_provider) whose health check a read starts once the close started."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.4-037",
@@ -35672,12 +35684,7 @@
       "id": "RK-12.10.4-039",
       "section": "12.10.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2007",
-        "note": "step: a realtime session's start and a conference participant's arrival after the close; entering a closed kit's context again is Python's async with."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.4-040",
@@ -35742,12 +35749,7 @@
       "id": "RK-12.10.4-048",
       "section": "12.10.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2007",
-        "note": "step: a turn's call that starts the kit's close on a task of its own."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.4-049",
@@ -35759,12 +35761,7 @@
       "id": "RK-12.10.4-050",
       "section": "12.10.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2007",
-        "note": "step: a scripted source (source_provider) whose stop is held as the close runs."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.4-051",
@@ -35788,12 +35785,7 @@
       "id": "RK-12.10.4-054",
       "section": "12.10.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2007",
-        "note": "step: a channel whose close starts work, which the close cuts at once."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.4-055",
@@ -35832,7 +35824,7 @@
       "gap": {
         "class": "step",
         "card": "RMK-2007",
-        "note": "step: work that ignores its cancellation and writes once the close returned."
+        "note": "step: work that ignores its cut and writes once the close returned. A write a step makes through the store after the close shows only the store's own refusal or acceptance (the reads of RK-12.10.4-035 already show whether the kit closed it), and roomkit-rs drops a cut future, so no work outlives its cut there."
       }
     },
     {
@@ -35905,12 +35897,7 @@
       "id": "RK-12.10.4-071",
       "section": "12.10.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2007",
-        "note": "step: an error name for ShutdownCancelledError, and a step that cuts the shutdown itself."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.4-072",
@@ -35940,12 +35927,7 @@
       "id": "RK-12.10.4-076",
       "section": "12.10.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2007",
-        "note": "step: a tool whose cleanup closes the kit after the close cut its turn."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.4-077",
@@ -35957,12 +35939,7 @@
       "id": "RK-12.10.4-078",
       "section": "12.10.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2007",
-        "note": "A step that holds a room's lane before it takes a delivery placed while it was idle. Without it the unit holds on one thread only: on several workers the lane takes an AFTER_BROADCAST hook's send as soon as it is placed, before the hook's close starts, and that send then runs, no longer held."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.4-079",
@@ -35974,12 +35951,7 @@
       "id": "RK-12.10.4-080",
       "section": "12.10.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2007",
-        "note": "step: a channel whose close calls the kit's close."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.4-132",
