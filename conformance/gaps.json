@@ -606,6 +606,11 @@
       "card": "RMK-2007",
       "note": "measurement: the close's whole duration bound (the grace, the turn backend's budget, the closes, at most two unwinds of 1 second); no step reads elapsed time."
     },
+    "RK-12.10.4-059": {
+      "class": "step",
+      "card": "RMK-2007",
+      "note": "step: work that ignores its cut and writes once the close returned. A write a step makes through the store after the close shows only the store's own refusal or acceptance (the reads of RK-12.10.4-035 already show whether the kit closed it), and roomkit-rs drops a cut future, so no work outlives its cut there."
+    },
     "RK-12.10.4-081": {
       "class": "step",
       "card": "RMK-2076",

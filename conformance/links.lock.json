@@ -4040,8 +4040,8 @@
       "tasks/nonempty-task-and-observation-reads-remain-available-during-close": "b5e0e80a7cfaf4cb9c48e38a42a284be1ec560d33d8ec9f3590bfb1d1ca819ad"
     },
     "RK-12.10.4-035": {
-      "kit-close/a-store-the-integrator-owns-answers-reads-and-takes-writes-after-the-close": "2fff0021b183fa01219ea0e951f5becdbf727fd443eaed2b8653862f1368d3d2",
-      "kit-close/a-store-the-kit-closed-refuses-the-kit-s-reads-with-kit-closed-and-its-writes": "2fff0021b183fa01219ea0e951f5becdbf727fd443eaed2b8653862f1368d3d2"
+      "kit-close/a-store-the-integrator-owns-answers-the-kit-s-reads-after-the-close": "2fff0021b183fa01219ea0e951f5becdbf727fd443eaed2b8653862f1368d3d2",
+      "kit-close/a-store-the-kit-closed-refuses-the-kit-s-reads-with-kit-closed": "2fff0021b183fa01219ea0e951f5becdbf727fd443eaed2b8653862f1368d3d2"
     },
     "RK-12.10.4-036": {
       "kit-close/work-a-source-s-health-check-starts-is-no-read-once-the-kit-closed": "773886dbab23d71641e98fb6e1f0d229da0b865be9e835ced0cf3b26c3627165"
@@ -4133,10 +4133,6 @@
     },
     "RK-12.10.4-057": {
       "delivery/a-turn-still-open-once-the-close-s-grace-is-over-is-given-up": "3a86e60aafffdcf98bebd8d2df4a26a64bdeb84135f539d1465ac81c347afe40"
-    },
-    "RK-12.10.4-059": {
-      "kit-close/a-store-the-integrator-owns-answers-reads-and-takes-writes-after-the-close": "825b188f91e7dd7e3d92aa7a9fbb78b3465dd7580fe2d9c8791719b3e937c71b",
-      "kit-close/a-store-the-kit-closed-refuses-the-kit-s-reads-with-kit-closed-and-its-writes": "825b188f91e7dd7e3d92aa7a9fbb78b3465dd7580fe2d9c8791719b3e937c71b"
     },
     "RK-12.10.4-060": {
       "delivery/a-closing-kit-refuses-new-operations-and-ignores-cancellation": "58ac0148634772c6a074878b8e3211fb5bf126b7a74a3de1016318796543de42",

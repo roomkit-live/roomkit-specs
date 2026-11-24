@@ -801,7 +801,7 @@
           "$ref": "#/$defs/reactions"
         },
         "close": {
-          "description": "Reactions of the channel's `close` (\u00a76.1, \u00a712.10.4), tried once per call: `gate`, `do`, `spawn`, then `fail`, the close's failure. Every scripted channel's close is recorded under `channel_closes`.",
+          "description": "Reactions of the channel's `close` (\u00a76.1, \u00a712.10.4), tried once per call: `spawn`, `gate`, `do`, then `fail`, the close's failure. Every scripted channel's close is recorded under `channel_closes`.",
           "$ref": "#/$defs/reactions"
         },
         "model": {

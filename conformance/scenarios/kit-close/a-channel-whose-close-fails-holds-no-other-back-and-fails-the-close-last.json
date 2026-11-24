@@ -10,14 +10,19 @@
     "RK-12.10.4-030",
     "RK-12.10.4-070"
   ],
-  "notes": "Python: tests/test_framework.py::TestOneShutdown::test_a_close_after_a_failed_one_raises_the_same_failure. The order in which the kit closes its channels is open: channel_closes is unordered; both implementations close fails first here (roomkit in registration order, roomkit-rs in id order), so holds is a channel after it. The kit's store is one it closes: the read refused with kit_closed after the failed close shows the store was released before the failure was raised, the shutdown run to its end. A later close answers the same failure and closes no channel again.",
+  "notes": "Python: tests/test_framework.py::TestOneShutdown::test_a_close_after_a_failed_one_raises_the_same_failure. The order in which the kit closes its channels is open: channel_closes is unordered. The failing channel sits between two others, so that, unless the kit closes it last, a channel closes after it (roomkit closes them in registration order, roomkit-rs in id order: here both close b-fails second). The kit's store is one it closes: the read refused with kit_closed after the failed close shows the store was released before the failure was raised, the shutdown run to its end. A later close answers the same failure and closes no channel again.",
   "setup": {
     "kit": {
       "store_owner": "kit"
     },
     "channels": [
       {
-        "id": "fails",
+        "id": "a-sms",
+        "type": "sms",
+        "category": "transport"
+      },
+      {
+        "id": "b-fails",
         "type": "websocket",
         "category": "transport",
         "close": [
@@ -27,8 +32,8 @@
         ]
       },
       {
-        "id": "holds",
-        "type": "sms",
+        "id": "c-ws",
+        "type": "websocket",
         "category": "transport"
       }
     ],
@@ -37,10 +42,13 @@
         "id": "r",
         "bindings": [
           {
-            "channel_id": "fails"
+            "channel_id": "a-sms"
           },
           {
-            "channel_id": "holds"
+            "channel_id": "b-fails"
+          },
+          {
+            "channel_id": "c-ws"
           }
         ]
       }
@@ -70,8 +78,9 @@
   "expect": {
     "channel_closes": {
       "$unordered": [
-        "fails",
-        "holds"
+        "a-sms",
+        "b-fails",
+        "c-ws"
       ]
     }
   }

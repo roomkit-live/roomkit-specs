@@ -238,7 +238,7 @@ room callbacks of the setup are not compared.
     then reacts (`gate`, `do`, `fail`); with no reaction it does nothing;
   - `close` holds the reactions of its close (§6.1, §12.10.4): every
     scripted channel records each call of its close under `channel_closes`,
-    then reacts (`gate`, `do`, `spawn`, then `fail`, the close's failure,
+    then reacts (`spawn`, `gate`, `do`, then `fail`, the close's failure,
     which roomkit raises and roomkit-rs, whose close returns nothing,
     panics with); with no reaction it does nothing;
   - `update_binding: {}` enables its synchronous binding callback recorder (§7.2).
