@@ -1,9 +1,9 @@
 {
   "version": 1,
-  "rfc_sha256": "eea9b61e112ac59eb3f76cf63122fda76b79a9ca18ecb73ffd97d42c790ca61a",
-  "corpus_sha256": "477b10f9dab1a3076c49d37b5bb3f6b9346b1138931cd4f6cb4e7c06895aa7a8",
+  "rfc_sha256": "40ba7dc5e6da3cbd82842e80ecfc753e293d1b6529dd82f3a3255f3396f9904b",
+  "corpus_sha256": "e42358777da0538c971b0bf345e1a8a6f72eab8cf4209fe651ab3df624525fe0",
   "python_commit": "91320acb5d3fb53b50ea63d69764fdacc420297b",
-  "scenario_count": 3417,
+  "scenario_count": 3420,
   "sections": [
     {
       "section": "0",
@@ -1651,6 +1651,7 @@
         "provider-served/without-handler-stream",
         "provider-served/without-handler-whole",
         "providers/a-kit-s-close-leaves-open-the-provider-its-agent-was-handed",
+        "realtime/a-broadcast-text-enters-under-its-author-s-label",
         "reasoning/a-block-cut-before-its-signature-is-not-replayed",
         "reasoning/a-compaction-keeps-the-rounds-reasoning",
         "reasoning/a-cut-block-is-still-the-turn-s-reasoning",
@@ -1898,6 +1899,7 @@
         "streaming/a-text-window-of-zero-publishes-each-piece",
         "streaming/a-turn-of-its-room-publishes-no-text-though-asked",
         "streaming/a-turn-that-ends-on-a-call-hands-its-end-to-the-reader-last",
+        "streaming/a-turn-with-a-call-streams-whatever-its-provider-streams",
         "streaming/an-adopted-call-reads-the-record-on-its-row",
         "streaming/another-agent-s-message-in-a-task-s-room-publishes-no-text",
         "streaming/each-generation-tells-a-streaming-channel-what-it-used",
@@ -6311,6 +6313,7 @@
         "streaming/a-streaming-target-reads-each-tool-call-row-once-as-its-hook-left-it",
         "streaming/a-transport-made-write-only-mid-stream-is-delivered-no-later-row",
         "streaming/a-turn-that-ends-on-a-call-hands-its-end-to-the-reader-last",
+        "streaming/a-turn-with-a-call-streams-whatever-its-provider-streams",
         "streaming/an-answer-scope-of-none-streams-to-no-target",
         "streaming/an-answer-scope-streams-only-to-a-target-it-names",
         "streaming/an-answer-streams-to-its-first-streaming-target-and-is-delivered-whole-to-the-others",
@@ -6629,7 +6632,7 @@
       },
       "decided_gaps": {
         "step": 43,
-        "writable": 12
+        "writable": 11
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -6680,6 +6683,7 @@
         "provider-served/success-whole",
         "provider-served/without-handler-stream",
         "provider-served/without-handler-whole",
+        "realtime/a-broadcast-text-enters-under-its-author-s-label",
         "skills/a-stored-activation-under-a-held-id-leaves-out-the-one-refused",
         "skills/a-stored-activation-under-a-held-id-reads-the-call-that-ran",
         "tools/a-call-refused-under-a-held-id-is-no-repeat",
@@ -6703,12 +6707,12 @@
       "section": "12.4.1",
       "title": "Full-Duplex Providers and Reasoning Delegation",
       "review": "normative",
-      "requirements": 74,
+      "requirements": 75,
       "mapping": {
-        "unmapped": 74
+        "unmapped": 75
       },
       "decided_gaps": {
-        "step": 44,
+        "step": 45,
         "writable": 1
       },
       "unannotated_keyword_lines": [],
@@ -6851,12 +6855,13 @@
         "unmapped": 12
       },
       "decided_gaps": {
-        "phase6": 1,
         "step": 1,
-        "writable": 5
+        "writable": 4
       },
       "unannotated_keyword_lines": [],
-      "candidate_scenarios": []
+      "candidate_scenarios": [
+        "voice/a-bridge-hook-runs-outside-the-call-that-delivers-the-frame"
+      ]
     },
     {
       "section": "12.7.7",
@@ -31273,12 +31278,7 @@
       "id": "RK-12.4-100",
       "section": "12.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2045",
-        "note": "a broadcast text reads role user in realtime.read's injections; asserting its quoted author waits for the decision on RMK-2043."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4-101",
@@ -31599,7 +31599,7 @@
       "gap": {
         "class": "step",
         "card": "RMK-2049",
-        "note": "step: realtime.response with the model's response start, and an observation of the host's idleness (S11); its scope is suspect RMK-2056."
+        "note": "step: realtime.response with the model's response start, and an observation of the host's idleness (S11)."
       }
     },
     {
@@ -31610,7 +31610,7 @@
       "gap": {
         "class": "step",
         "card": "RMK-2049",
-        "note": "step: realtime.response with a response start, audible assistant audio or a partial assistant transcript on a full-duplex provider, and an observation of the host's idleness (S11, S1); its scope is suspect RMK-2056."
+        "note": "step: realtime.response with a response start, audible assistant audio or a partial assistant transcript on a full-duplex provider, and an observation of the host's idleness (S11, S1)."
       }
     },
     {
@@ -31621,7 +31621,7 @@
       "gap": {
         "class": "step",
         "card": "RMK-2049",
-        "note": "step: realtime.response scripted to start before the send of the output returns, and an observation of the host's idleness (S11); its scope is suspect RMK-2056."
+        "note": "step: realtime.response scripted to start before the send of the output returns, and an observation of the host's idleness (S11)."
       }
     },
     {
@@ -31632,7 +31632,7 @@
       "gap": {
         "class": "step",
         "card": "RMK-2049",
-        "note": "step: an output the provider fails to take, and an observation of the host's idleness (S11); its scope is suspect RMK-2056."
+        "note": "step: an output the provider fails to take, and an observation of the host's idleness (S11)."
       }
     },
     {
@@ -31643,7 +31643,7 @@
       "gap": {
         "class": "step",
         "card": "RMK-2049",
-        "note": "step: realtime.response and the idleness of a conference with a realtime model beside the realtime voice channel's (S11); its scope is suspect RMK-2056."
+        "note": "step: realtime.response and the idleness of a conference with a realtime model beside the realtime voice channel's (S11)."
       }
     },
     {
@@ -31733,7 +31733,7 @@
       "gap": {
         "class": "step",
         "card": "RMK-2049",
-        "note": "step: the provider's supports_mid_session_reconfigure trait in realtime.start, with a handoff or a skill activation on the realtime room (S1); its scope is suspect RMK-2056."
+        "note": "step: the provider's supports_mid_session_reconfigure trait in realtime.start, with a handoff or a skill activation on the realtime room (S1)."
       }
     },
     {
@@ -31844,7 +31844,7 @@
       "gap": {
         "class": "step",
         "card": "RMK-2049",
-        "note": "step: a scripted ReasoningBackend that records each request it receives (S10)."
+        "note": "step: a scripted ReasoningBackend that records each request it receives, on a provider that declares full_duplex for the transcript (S10, S1)."
       }
     },
     {
@@ -31872,7 +31872,7 @@
       "gap": {
         "class": "step",
         "card": "RMK-2049",
-        "note": "step: realtime.transcribe for both roles and a scripted ReasoningBackend that records its requests (S2, S10)."
+        "note": "step: the full_duplex trait in realtime.start, realtime.transcribe for both roles and a scripted ReasoningBackend that records its requests (S1, S2, S10)."
       }
     },
     {
@@ -31934,6 +31934,17 @@
         "class": "step",
         "card": "RMK-2049",
         "note": "step: an agent as the ReasoningBackend whose turn its round cap, deadline or budget cuts, and a backend that hangs past the run's bound, with an on_error hook (S10)."
+      }
+    },
+    {
+      "id": "RK-12.4.1-086",
+      "section": "12.4.1",
+      "mapping": "unmapped",
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2049",
+        "note": "step: a realtime channel with no ReasoningBackend whose model delegates to the integrator, and a read of the delegation outputs submitted to the provider (S8)."
       }
     },
     {
@@ -32266,7 +32277,7 @@
       "gap": {
         "class": "step",
         "card": "RMK-2049",
-        "note": "step: two reports by realtime.usage, and last_usage in realtime.read (S12, S8); the full-duplex provider writes single keys into the snapshot (suspect RMK-2055)."
+        "note": "step: two reports by realtime.usage, and last_usage in realtime.read (S12, S8); the full-duplex provider roomkit holds writes single keys into the snapshot, provider code noted on RMK-2055."
       }
     },
     {
@@ -32277,7 +32288,7 @@
       "gap": {
         "class": "step",
         "card": "RMK-2049",
-        "note": "step: realtime.usage, a turn's end by realtime.response, and last_usage in realtime.read (S12, S11, S8); Python clears it only when telemetry opens a turn span (suspect RMK-2055)."
+        "note": "step: realtime.usage, a turn's end by realtime.response, and last_usage in realtime.read (S12, S11, S8)."
       }
     },
     {
@@ -33061,7 +33072,7 @@
       "gap": {
         "class": "step",
         "card": "RMK-2054",
-        "note": "step: per-participant sample rates in voice.open and the audio format in voice.read (V2): a frame bridged to a session of another rate arrives at that rate (suspect RMK-2052)."
+        "note": "step: per-participant sample rates in voice.open and the audio format in voice.read (V2): a frame bridged to a session of another rate arrives at that session's output rate."
       }
     },
     {
@@ -33072,7 +33083,7 @@
       "gap": {
         "class": "step",
         "card": "RMK-2054",
-        "note": "step: per-participant sample rates in voice.open (V2): each target receives the frame resampled to its own rate (suspect RMK-2052)."
+        "note": "step: per-participant sample rates in voice.open (V2): each target receives the frame resampled to its own rate."
       }
     },
     {
@@ -33235,23 +33246,13 @@
       "id": "RK-12.7.6-012",
       "section": "12.7.6",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2054",
-        "note": "voice.open with bridge and a before_bridge_audio reaction held at a gate (gate, wait_for, open): two voice.feed calls run in the background and awaited after the gate opens, the frame fed while the first is held is forwarded after it; red on Python, which forwards the later frame first (suspect RMK-2050)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.7.6-013",
       "section": "12.7.6",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-2054",
-        "note": "measurement: BEFORE_BRIDGE_AUDIO handler time per frame, under 1 ms (suspect RMK-2050)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.7.6-014",
@@ -33337,7 +33338,7 @@
       "gap": {
         "class": "step",
         "card": "RMK-2054",
-        "note": "step: per-participant sample rates in voice.open (V2) (suspect RMK-2052)."
+        "note": "step: per-participant sample rates in voice.open (V2)."
       }
     },
     {
