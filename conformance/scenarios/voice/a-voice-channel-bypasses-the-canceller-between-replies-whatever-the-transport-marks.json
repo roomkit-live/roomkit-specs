@@ -8,7 +8,7 @@
   "requirements": [
     "RK-12.3.4-014"
   ],
-  "notes": "The resets are the session's start and end (§12.3.14). That the playback's end alone does not bypass the canceller is not told apart here: the echo tail's bypass follows it on a voice channel.",
+  "notes": "The resets are the session's start and end (§12.3.14). Only the voice channel's bypass after each reply is shown: that the playback's end alone does not bypass the canceller, and a channel keeping it active until the stream ends, are not.",
   "requires_features": [
     "voice"
   ],

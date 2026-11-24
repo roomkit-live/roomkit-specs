@@ -4664,13 +4664,13 @@
       "voice/each-played-block-feeds-the-canceller-once-as-it-plays": "e0f515456623654d3633717d25f09db8da4e335a716f661c48980c4e884f81ae"
     },
     "RK-12.3.4-014": {
-      "voice/a-voice-channel-bypasses-the-canceller-between-replies-whatever-the-transport-marks": "82c7461101768136daa532f2655bc5ff2c8642333a2900223d0007a5231786fa"
+      "voice/a-voice-channel-bypasses-the-canceller-between-replies-whatever-the-transport-marks": "5047547651de9eb262423aa040f8fd046812b732b3465aabf07545803c25e9e7"
     },
     "RK-12.3.4-015": {
       "voice/the-canceller-is-bypassed-between-replies-and-keeps-its-filter": "10eb337159d2e552a8842b12637a341961470193879f9f5128395ede09680094"
     },
     "RK-12.3.4-016": {
-      "voice/the-canceller-s-reference-arrives-in-its-capture-s-format": "cd3913fcf626524461ccabb7d67c3b99f3fcbc1ddb4a6a286341fbbc86c3f142"
+      "voice/the-canceller-s-reference-arrives-in-its-capture-s-format": "58d676ea7c016dba2fa3d6dd5c5c0a5878762e6590e0ebb50f612e9163b7451b"
     },
     "RK-12.3.4-017": {
       "voice/a-transport-s-own-canceller-and-gain-replace-the-pipeline-s": "b2f52426343e4a68871248944dadc8a120211ff434454b870c3be7e6652397c6"

@@ -8,7 +8,7 @@
   "requirements": [
     "RK-12.3.4-016"
   ],
-  "notes": "The implementation's own resampler converts the reference; its samples are not compared.",
+  "notes": "The implementation's own resampler converts the reference; its samples are not compared. The reference's frame size follows the synthesis and the capture's the transport (6 and 4 bytes here): a canceller needing fixed-size frames re-chunks the reference itself.",
   "requires_features": [
     "voice"
   ],
