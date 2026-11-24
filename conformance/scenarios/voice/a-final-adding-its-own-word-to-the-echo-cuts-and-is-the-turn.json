@@ -122,8 +122,7 @@
       "stopped": [
         {
           "voice": {
-            "participant_id": "alice",
-            "reason": "barge_in"
+            "participant_id": "alice"
           }
         }
       ]

@@ -16,13 +16,7 @@
       {
         "id": "rt",
         "type": "realtime_voice",
-        "realtime": {
-          "tools": {
-            "lookup": {
-              "result": "found"
-            }
-          }
-        }
+        "realtime": {}
       },
       {
         "id": "src",

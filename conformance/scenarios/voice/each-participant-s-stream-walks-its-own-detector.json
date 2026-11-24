@@ -87,30 +87,34 @@
   ],
   "expect": {
     "hooks": {
-      "start": [
-        {
-          "voice": {
-            "participant_id": "alice"
+      "start": {
+        "$unordered": [
+          {
+            "voice": {
+              "participant_id": "alice"
+            }
+          },
+          {
+            "voice": {
+              "participant_id": "bob"
+            }
           }
-        },
-        {
-          "voice": {
-            "participant_id": "bob"
+        ]
+      },
+      "end": {
+        "$unordered": [
+          {
+            "voice": {
+              "participant_id": "alice"
+            }
+          },
+          {
+            "voice": {
+              "participant_id": "bob"
+            }
           }
-        }
-      ],
-      "end": [
-        {
-          "voice": {
-            "participant_id": "alice"
-          }
-        },
-        {
-          "voice": {
-            "participant_id": "bob"
-          }
-        }
-      ]
+        ]
+      }
     }
   }
 }

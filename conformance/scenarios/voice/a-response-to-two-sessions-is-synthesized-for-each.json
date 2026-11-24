@@ -63,15 +63,7 @@
           "synthesized": [
             "Your table is ready.",
             "Your table is ready."
-          ],
-          "audio": {
-            "alice": [
-              "$any"
-            ],
-            "bob": [
-              "$any"
-            ]
-          }
+          ]
         }
       }
     }

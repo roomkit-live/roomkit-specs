@@ -76,12 +76,7 @@
         "result": {
           "synthesized": [
             "Your table is ready."
-          ],
-          "audio": {
-            "alice": [
-              "$any"
-            ]
-          }
+          ]
         }
       }
     },

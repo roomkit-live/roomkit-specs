@@ -542,7 +542,8 @@ waits at its optional `gate`, then returns its string `result`. An optional
 from a child task. To apply the reconfiguration, the provider reports the
 outstanding call ids from its previous connection as abandoned. A
 `realtime.reasoning_error` supplies an integrator-side backend whose turn
-raises with that message.
+raises with that message. On `realtime.tool_call`, an empty `call_id` is a
+call that came without an id, and an empty `name` a call that named no tool.
 
 ### Scripted agents
 
@@ -1297,14 +1298,17 @@ real channel input. The optional inputs on `voice.open` script its providers:
   pre-roll or utterance buffer.
 - `speakers` supplies diarization results (`speaker_id`, `confidence`,
   `is_new_speaker`). `tones` supplies detected digits (`digit`, `duration_ms`).
-- Each participant's stream walks the `vad`, `speakers` and `tones` scripts
-  from their start, whatever the other participants were fed (§12.3.1).
+- The scripted `vad`, `speakers` and `tones` providers keep one position in
+  their script per stream key the pipeline hands them, so a stream walks its
+  script from the start whatever the other streams were fed (§12.3.1).
 - `transcripts` supplies final STT text by utterance. With `partials`, the
   recognizer streams these partial words on the first audio of the segment and
   returns its final at the end of the segment.
 - `turns` supplies completeness decisions, one boolean per utterance.
   `backchannels` selects semantic interruption with the listed boolean
-  classifications of incoming words during playback.
+  classifications of incoming words during playback. Without it the
+  strategy is IMMEDIATE, cutting from the playback's first moment; the echo
+  guard keeps its defaults.
 - `bridge` forwards permitted frames to the other participants when true.
   `playback_gate` holds the playback at the transport until a step opens it,
   so speech or a barge-in can arrive while the reply is playing.

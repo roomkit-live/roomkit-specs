@@ -148,7 +148,9 @@
             "Your table by the window is ready now."
           ],
           "audio": {
-            "alice": "$any"
+            "alice": [
+              "$any"
+            ]
           }
         }
       }
