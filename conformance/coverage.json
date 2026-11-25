@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "4c50193ce0b648c20a2797927b117324fdefb384f370330906edd0ec7dfa79f4",
-  "corpus_sha256": "e71feb5ae2f4b07a858f4821bc1b27db80758a8547f0d43b0763f47ad366a4ee",
+  "corpus_sha256": "1c09326b661edefc3268304cc1a95ff0b75cb3d4a869e21e166f4395a93604e9",
   "python_commit": "452ae6397f70661e0ec0f2c8db3000398f904c41",
-  "scenario_count": 3748,
+  "scenario_count": 3782,
   "sections": [
     {
       "section": "0",
@@ -7473,11 +7473,14 @@
         "unmapped": 11
       },
       "decided_gaps": {
-        "step": 4
+        "step": 1
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
-        "conference/one-bot-session-carries-the-conference-s-media"
+        "conference/a-lane-s-utterance-is-one-room-event-attributed-to-its-publisher",
+        "conference/a-transcription-passes-the-room-s-hooks-permissions-and-broadcast",
+        "conference/one-bot-session-carries-the-conference-s-media",
+        "conference/two-tracks-speaking-at-once-are-each-transcribed-and-attributed"
       ]
     },
     {
@@ -7489,11 +7492,23 @@
         "unmapped": 46
       },
       "decided_gaps": {
-        "step": 26
+        "step": 8
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
-        "conference/an-arrival-with-no-address-stays-unknown"
+        "conference/a-backend-that-cannot-tell-provenance-yields-no-address",
+        "conference/a-dial-in-is-resolved-on-arrival-on-the-caller-number-its-sfu-asserts",
+        "conference/a-dial-in-reaches-the-identity-a-text-from-its-number-reaches",
+        "conference/a-provider-attribute-never-overwrites-the-integrator-s-field",
+        "conference/a-resolver-that-raises-keeps-no-one-out-of-the-conference",
+        "conference/a-screen-share-s-sound-is-transcribed-and-recorded-as-its-sharer-s-audio",
+        "conference/an-address-the-participant-s-own-client-supplied-is-never-resolved",
+        "conference/an-ambiguous-arrival-is-pending-and-a-rejected-one-unknown",
+        "conference/an-arrival-fires-no-identity-hook",
+        "conference/an-arrival-whose-resolution-times-out-joins-unknown",
+        "conference/an-arrival-with-no-address-stays-unknown",
+        "conference/an-asserted-caller-number-is-believed-over-an-unasserted-one-on-a-key-read-first",
+        "conference/the-number-a-caller-dialled-is-not-taken-for-the-caller"
       ]
     },
     {
@@ -7506,11 +7521,12 @@
       },
       "decided_gaps": {
         "phase6": 1,
-        "step": 9
+        "step": 8
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
-        "conference/a-lost-bot-rejoins-with-no-new-event"
+        "conference/a-lost-bot-rejoins-with-no-new-event",
+        "conference/a-reported-display-name-fills-a-record-that-has-none"
       ]
     },
     {
@@ -7524,7 +7540,7 @@
       },
       "decided_gaps": {
         "phase6": 1,
-        "step": 100
+        "step": 88
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -7533,8 +7549,13 @@
         "conference/a-conference-session-starts-once-however-many-participants-arrive",
         "conference/a-detach-from-an-announcement-s-handler-runs-its-teardown-after-it",
         "conference/a-detach-leaves-only-where-the-bot-joined",
+        "conference/a-lane-normalises-a-track-s-format-before-its-other-stages",
+        "conference/a-lane-s-speech-edges-name-the-participant-and-track",
+        "conference/a-lane-s-utterance-is-one-room-event-attributed-to-its-publisher",
         "conference/a-loss-under-a-closed-collection-gate-starts-no-rejoin",
         "conference/a-lost-bot-rejoins-with-no-new-event",
+        "conference/a-muted-binding-finalizes-the-conference-s-recordings",
+        "conference/a-muted-binding-hands-no-frame-to-a-lane",
         "conference/a-muted-binding-still-relays-the-sfu-s-signals",
         "conference/a-muted-binding-unsubscribes-and-its-unmute-subscribes-again",
         "conference/a-plug-into-an-occupied-slot-is-refused",
@@ -7543,6 +7564,7 @@
         "conference/a-read-only-binding-subscribes-no-track",
         "conference/a-realtime-model-is-plugged-and-unplugged-as-any-need",
         "conference/a-recording-plugged-with-no-recorder-is-refused",
+        "conference/a-resolved-participant-s-utterances-are-not-resolved-again",
         "conference/a-screen-track-announces-the-start-and-end-of-sharing",
         "conference/a-speaker-change-identifies-the-dominant-participant",
         "conference/a-speech-to-speech-bot-joins-to-listen-and-to-speak",
@@ -7558,12 +7580,15 @@
         "conference/explicit-grants-on-a-channel-with-no-need-join-nothing",
         "conference/grants-are-derived-at-the-join-from-the-plugs-made-before-it",
         "conference/grants-cover-the-needs-as-a-voice-is-plugged",
+        "conference/on-transcription-names-the-lane-s-track-and-participant",
         "conference/one-bot-session-carries-the-conference-s-media",
         "conference/only-the-audio-tracks-consumed-are-subscribed",
         "conference/plugging-a-recognizer-joins-an-occupied-conference-at-once",
         "conference/re-attaching-the-same-conference-is-an-ordinary-attach",
+        "conference/recognition-held-on-one-track-delays-no-other-track",
         "conference/the-bot-s-own-presence-and-tracks-are-not-relayed",
         "conference/the-last-consumer-s-unplug-unsubscribes-and-the-bot-stays",
+        "conference/two-tracks-speaking-at-once-are-each-transcribed-and-attributed",
         "conference/unplugging-an-empty-slot-changes-nothing",
         "delivery/a-call-in-its-hooks-as-the-kit-closes-is-stored-and-delivered-to-no-one",
         "delivery/a-call-the-close-finds-under-way-returns-kit-closed-while-its-adopted-call-s-stream-is-read",
@@ -7667,10 +7692,23 @@
         "unmapped": 29
       },
       "decided_gaps": {
-        "step": 23
+        "step": 6
       },
       "unannotated_keyword_lines": [],
-      "candidate_scenarios": []
+      "candidate_scenarios": [
+        "conference/a-frame-in-another-format-is-discarded-and-counted-as-loss",
+        "conference/a-held-recorder-write-delays-no-other-track",
+        "conference/a-muted-binding-finalizes-the-conference-s-recordings",
+        "conference/a-recording-s-reports-carry-the-room-track-and-participant",
+        "conference/a-recording-that-falls-behind-holds-a-bounded-backlog",
+        "conference/a-synchronous-hook-cannot-block-a-recording",
+        "conference/a-track-never-spoken-on-is-never-recorded",
+        "conference/a-track-s-recording-declares-the-format-its-frames-carry",
+        "conference/a-track-s-recording-ends-with-its-track-alone",
+        "conference/each-track-is-recorded-apart-and-attributed-to-its-publisher",
+        "conference/each-track-s-recording-takes-the-conference-s-recording-configuration",
+        "conference/what-a-track-s-recording-still-holds-is-written-before-it-is-finalized"
+      ]
     },
     {
       "section": "12.10.9",
@@ -7680,11 +7718,12 @@
       "mapping": {
         "unmapped": 5
       },
-      "decided_gaps": {
-        "step": 2
-      },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
-      "candidate_scenarios": []
+      "candidate_scenarios": [
+        "conference/a-dial-in-is-resolved-on-arrival-on-the-caller-number-its-sfu-asserts",
+        "conference/a-transcription-passes-the-room-s-hooks-permissions-and-broadcast"
+      ]
     },
     {
       "section": "12.10.10",
@@ -35455,23 +35494,13 @@
       "id": "RK-12.10.1-005",
       "section": "12.10.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2070",
-        "note": "step: conference.feed: speech on a participant's track stored as a RoomEvent of the room."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.1-006",
       "section": "12.10.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2070",
-        "note": "step: conference.feed: a transcription through BEFORE_BROADCAST, the room's permissions and the broadcast to its other channels, as any inbound event."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.1-007",
@@ -35495,12 +35524,7 @@
       "id": "RK-12.10.1-010",
       "section": "12.10.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2070",
-        "note": "step: conference.feed: two participants speaking on their own tracks, each transcription attributed to its track's publisher with no diarization stage."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.1-011",
@@ -35578,12 +35602,7 @@
       "id": "RK-12.10.2-024",
       "section": "12.10.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2070",
-        "note": "step: conference.feed: a screen share's sound, a track of kind audio, transcribed and recorded like any audio track, attributed to the participant sharing."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.2-025",
@@ -35624,23 +35643,13 @@
       "id": "RK-12.10.2-030",
       "section": "12.10.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2070",
-        "note": "step: conference.join metadata: an asserted caller number handed to identity resolution; the UNKNOWN record with the backend identity as external_id is writable today."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.2-031",
       "section": "12.10.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2070",
-        "note": "step: conference.join metadata: a dial-in's asserted caller number reaching the Identity a text from that number reaches."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.2-032",
@@ -35652,23 +35661,13 @@
       "id": "RK-12.10.2-033",
       "section": "12.10.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2070",
-        "note": "step: conference.join metadata: a participant arriving with an asserted address, resolved before it speaks."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.2-034",
       "section": "12.10.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2070",
-        "note": "step: conference.join metadata: the resolved Identity linked through identity_id on the record keyed on the backend identity."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.2-035",
@@ -35696,12 +35695,7 @@
       "id": "RK-12.10.2-036",
       "section": "12.10.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2070",
-        "note": "step: conference.join metadata: an arrival asserting only the number it dialled, left unresolved."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.2-037",
@@ -35713,34 +35707,19 @@
       "id": "RK-12.10.2-038",
       "section": "12.10.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2070",
-        "note": "step: conference.join metadata: an address the participant's client supplied, left unresolved."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.2-039",
       "section": "12.10.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2070",
-        "note": "step: conference.join metadata (provenance flag): a backend that cannot tell, its participant left unknown."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.2-040",
       "section": "12.10.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2070",
-        "note": "step: conference.join metadata: an asserted generic key resolved over an unasserted provider key."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.2-041",
@@ -35757,100 +35736,55 @@
       "id": "RK-12.10.2-042",
       "section": "12.10.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2070",
-        "note": "step: conference.join metadata: an unconfigured channel resolving nothing on an unasserted address."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.2-043",
       "section": "12.10.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2070",
-        "note": "step: conference.join metadata: the resolver's context carrying the unasserted attributes apart from the asserted ones, which the scripted resolver would record."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.2-044",
       "section": "12.10.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2070",
-        "note": "step: conference.join metadata: the provider attributes under one key of the Participant's metadata, an integrator's field beside them kept."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.2-045",
       "section": "12.10.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2070",
-        "note": "step: conference.join metadata: the record keeping asserted and unasserted attributes apart."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.2-046",
       "section": "12.10.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2070",
-        "note": "step: conference.join metadata: attributes past the bound or oversize left out of the record."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.2-047",
       "section": "12.10.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2070",
-        "note": "step: conference.join metadata: an arrival resolved on its address firing no ON_IDENTITY_* hook."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.2-048",
       "section": "12.10.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2070",
-        "note": "step: conference.join metadata: an ambiguous answer recorded as a pending identification with its candidates, a rejection leaving the participant unknown."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.2-049",
       "section": "12.10.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2070",
-        "note": "step: conference.join metadata: a resolver held past identity_timeout_ms, the participant joining unknown and identity_timeout emitted."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.2-050",
       "section": "12.10.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2070",
-        "note": "step: conference.join metadata: a resolver that fails, the participant still joining."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.2-051",
@@ -36194,12 +36128,7 @@
       "id": "RK-12.10.3-053",
       "section": "12.10.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2070",
-        "note": "step: conference.join metadata (display_name): a reported name filling a record that has none, never one the integrator set."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.3-054",
@@ -37456,34 +37385,19 @@
       "id": "RK-12.10.4-145",
       "section": "12.10.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "step: conference.feed: PCM frames on a track, a scripted lane VAD and STT; the transcription event's participant."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.4-146",
       "section": "12.10.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "step: conference.feed with a scripted identity resolver: two utterances of a resolved participant, no resolution per utterance and no on_identity_unknown."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.4-147",
       "section": "12.10.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "step: conference.feed: two tracks speaking at once, each utterance transcribed apart."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.4-148",
@@ -37495,23 +37409,13 @@
       "id": "RK-12.10.4-149",
       "section": "12.10.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "step: conference.feed with frames at another rate: the scripted VAD and STT receive the normalised format."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.4-150",
       "section": "12.10.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "step: conference.feed: an utterance of several frames gives one transcription event."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.4-151",
@@ -37528,23 +37432,13 @@
       "id": "RK-12.10.4-152",
       "section": "12.10.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "step: conference.feed: a lane with no AEC configured transcribes."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.4-153",
       "section": "12.10.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "step: conference.feed: a lane with no diarization configured transcribes, attributed by its track."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.4-154",
@@ -37556,45 +37450,25 @@
       "id": "RK-12.10.4-155",
       "section": "12.10.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "step: conference.feed: an on_transcription hook's context names the track and the participant."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.4-156",
       "section": "12.10.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "step: conference.feed: on_speech_start and on_speech_end hooks naming the participant and track."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.4-157",
       "section": "12.10.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "step: conference.feed after mute (the binding): no on_speech_start, no transcription."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.4-008",
       "section": "12.10.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "step: conference.feed with a gated recognizer: recognition held on one track while another track's utterance is transcribed."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.4-158",
@@ -37691,7 +37565,7 @@
       "gap": {
         "class": "step",
         "card": "RMK-2076",
-        "note": "step: conference.feed, recording.read per conference track: frames while the binding is muted reach neither."
+        "note": "step: conference.fault (the scripted SFU's unsubscribe_track held), with conference.feed and recording.read per conference track: frames delivered while the binding is muted and the track still subscribed reach neither a lane nor a recording."
       }
     },
     {
@@ -37702,7 +37576,7 @@
       "gap": {
         "class": "step",
         "card": "RMK-2076",
-        "note": "step: conference.feed: an utterance while the binding is muted stores no transcription."
+        "note": "step: conference.fault (the scripted SFU's unsubscribe_track held), with conference.feed and a recognition held across the mute: no transcription delivered once the binding is muted."
       }
     },
     {
@@ -37719,7 +37593,7 @@
       "gap": {
         "class": "step",
         "card": "RMK-2076",
-        "note": "step: conference.feed: a frame right after mute reaches no lane."
+        "note": "step: conference.fault (the scripted SFU's unsubscribe_track held), with conference.feed and conference.read: a frame right after the mute, its track still subscribed, reaches no lane."
       }
     },
     {
@@ -37743,12 +37617,7 @@
       "id": "RK-12.10.4-175",
       "section": "12.10.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "step: recording.read per conference track: the recordings finalized at mute."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.4-176",
@@ -38405,12 +38274,7 @@
       "id": "RK-12.10.8-006",
       "section": "12.10.8",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "step: recording.read per conference track: each track's recording receives the configuration's format and encryption; the record's shape and defaults are pinned by Python's public API snapshot (ConferenceRecordingConfig)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.8-007",
@@ -38444,34 +38308,19 @@
       "id": "RK-12.10.8-013",
       "section": "12.10.8",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "step: recording.read per conference track: two tracks, two recordings, each started with one track."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.8-014",
       "section": "12.10.8",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "step: recording.read per conference track: participant_id and channel_id of each track."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.8-015",
       "section": "12.10.8",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "step: conference.feed at two rates, recording.read per conference track: each track's declared format."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.8-016",
@@ -38488,45 +38337,25 @@
       "id": "RK-12.10.8-017",
       "section": "12.10.8",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "step: conference.unpublish, recording.read per conference track: one recording finalized, the other still written."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.8-018",
       "section": "12.10.8",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "step: mute (the binding), recording.read per conference track: the recordings stopped."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.8-019",
       "section": "12.10.8",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "step: conference.feed with a frame in another format, recording.read per conference track: not written."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.8-020",
       "section": "12.10.8",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "step: recording.read per conference track (loss): the frames in another format counted."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.8-021",
@@ -38538,12 +38367,7 @@
       "id": "RK-12.10.8-022",
       "section": "12.10.8",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "step: recording.read per conference track with a gate on the recorder's writes: another track's frames still delivered."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.8-023",
@@ -38555,12 +38379,7 @@
       "id": "RK-12.10.8-024",
       "section": "12.10.8",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "step: recording.read per conference track with a gate on the recorder's writes: frames past the bound discarded."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.8-025",
@@ -38583,34 +38402,19 @@
       "id": "RK-12.10.8-027",
       "section": "12.10.8",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "step: recording.read per conference track with a gate on the writes, then conference.unpublish: every queued frame written before the stop."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.8-028",
       "section": "12.10.8",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "step: recording.read per conference track with a recorder that stops draining: the teardown ends past the budget."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.8-029",
       "section": "12.10.8",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "step: recording.read per conference track (loss): the frames the budget left counted."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.8-030",
@@ -38638,45 +38442,25 @@
       "id": "RK-12.10.8-032",
       "section": "12.10.8",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "step: conference.feed on two tracks, conference.unpublish of one: its on_recording_stopped before the meeting ends."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.8-033",
       "section": "12.10.8",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "step: conference.feed, on_recording_started and on_recording_stopped hooks: room, track and participant."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.8-034",
       "section": "12.10.8",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "step: conference.feed with a sync on_recording_started hook that blocks: the recording goes on."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.8-035",
       "section": "12.10.8",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "step: conference.publish with no frame, recording.read per conference track: no recording, no hook."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.8-037",
@@ -38694,12 +38478,7 @@
       "id": "RK-12.10.9-002",
       "section": "12.10.9",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "step: conference.feed, a websocket binding: the transcription delivered to it."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.9-003",
@@ -38717,12 +38496,7 @@
       "id": "RK-12.10.9-005",
       "section": "12.10.9",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "step: conference.join metadata (an asserted caller number), a scripted identity resolver: the number resolved on arrival."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.9-006",
