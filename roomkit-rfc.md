@@ -11213,9 +11213,11 @@ SpeakerSegment
 
 <!-- rfc: {"id": "RK-12.2-057", "kind": "behavior", "applies": "§12.2 STTProvider interface, the voice feature, a provider's contract: a language passed on a call overrides the provider's configured language for that call only. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 `language` on a call overrides the provider's configured language for that
-call only. <!-- /rfc --><!-- rfc: {"id": "RK-12.2-058", "kind": "behavior", "applies": "§12.2 STTProvider interface, the voice feature: a provider that cannot honour a per-call language reports supports_language_override = false, and a Voice Channel passes no language to such a provider. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A provider that cannot honour it MUST report
+call only. <!-- /rfc --><!-- rfc: {"id": "RK-12.2-058", "kind": "behavior", "applies": "§12.2 STTProvider interface, the voice feature: a provider that cannot honour a per-call language reports supports_language_override = false, and a Voice Channel passes no language to such a provider, refusing a session language chosen for it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A provider that cannot honour it MUST report
 `supports_language_override = false`, and a Voice Channel MUST NOT pass a
-language to such a provider. <!-- /rfc --><!-- rfc: {"id": "RK-12.2-059", "kind": "behavior", "applies": "§12.2 STTProvider interface, the voice feature, a provider's contract: TranscriptionResult.language is what the provider reports, never back-filled from the request; null means the provider said nothing. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`TranscriptionResult.language` is what the
+language to such a provider: a session language chosen for it is refused, so
+that the integrator learns the choice cannot apply instead of seeing it
+dropped. <!-- /rfc --><!-- rfc: {"id": "RK-12.2-059", "kind": "behavior", "applies": "§12.2 STTProvider interface, the voice feature, a provider's contract: TranscriptionResult.language is what the provider reports, never back-filled from the request; null means the provider said nothing. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`TranscriptionResult.language` is what the
 provider reports — what it detected when it was asked to detect — and MUST NOT
 be back-filled from the request: null means the provider said nothing.
 <!-- /rfc -->

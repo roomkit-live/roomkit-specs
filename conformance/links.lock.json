@@ -4479,7 +4479,7 @@
       "voice/a-participant-who-comes-back-gets-a-new-session": "f07a095d9866f10f7e535b693752b658bbe6fc003aa07b5942fa7fc0aa8f0122"
     },
     "RK-12.2-058": {
-      "voice/no-language-reaches-a-recognizer-that-cannot-take-one": "24d58146239da338cfb1f5d4f45e50d73cfe509fc64a8d1b2111a50ca689e128"
+      "voice/no-language-reaches-a-recognizer-that-cannot-take-one": "19403f6a9ebe73e46c5eb9972c3382c3e665ed83d7dda22ceff6c89cc77cc693"
     },
     "RK-12.2-060": {
       "voice/a-session-s-stt-language-applies-from-its-next-stream": "ca53af8650112cf1acf6750c992845e1bf4511779e19929de5e3b90f0f33b6c7"
