@@ -11,7 +11,7 @@
   "requires_features": [
     "conference"
   ],
-  "notes": "Derived grants cover the recognizer (subscribe) and never ask for moderate, whose default is false; how the rest is derived is §12.10.3's SHOULD, not asserted.",
+  "notes": "Once cleared, the bot holds the grants it held before any explicit set, derived from the same configuration; what derivation gives is §12.10.3's, not asserted.",
   "setup": {
     "rooms": [
       {
@@ -35,6 +35,21 @@
             "$as": "first"
           },
           "room_id": "r1"
+        }
+      }
+    },
+    {
+      "call": "conference.read",
+      "channel_id": "conf",
+      "expect": {
+        "result": {
+          "bots": [
+            {
+              "grants": {
+                "$as": "derived"
+              }
+            }
+          ]
         }
       }
     },
@@ -78,8 +93,7 @@
           "bots": [
             {
               "grants": {
-                "subscribe": true,
-                "moderate": false
+                "$as": "derived"
               }
             }
           ]
