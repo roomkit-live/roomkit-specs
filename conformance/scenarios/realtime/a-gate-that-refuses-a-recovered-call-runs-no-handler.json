@@ -1,15 +1,17 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "realtime/a-gate-that-refuses-a-recovered-call-runs-no-handler",
-  "title": "BEFORE_TOOL_USE refuses a call recovered from the model's words as it refuses a provider's call: its handler never runs",
+  "title": "BEFORE_TOOL_USE refuses a call recovered from the model's words as it refuses a provider's call: its handler never runs, and the refusal returns as silent injected context",
   "rules": [
     "§12.4"
   ],
   "requirements": [
-    "RK-12.4-046"
+    "RK-12.4-046",
+    "RK-12.4-047"
   ],
   "requires_features": [
-    "realtime"
+    "realtime",
+    "call_recovery"
   ],
   "setup": {
     "channels": [

@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "realtime/an-injection-reports-what-the-provider-knows-of-its-sending",
-  "title": "A delivery into a realtime session reports the provider's injection result: sent, a retryable not_sent, unknown, and no result read as unknown",
+  "title": "A delivery into a realtime session reports the provider's injection result: sent, a not_sent retryable only when the provider says so, unknown, and no result read as unknown",
   "rules": [
     "§12.4"
   ],
@@ -20,6 +20,16 @@
       },
       {
         "id": "refused",
+        "type": "realtime_voice",
+        "realtime": {
+          "inject_result": {
+            "status": "not_sent",
+            "reason": "no_connection"
+          }
+        }
+      },
+      {
+        "id": "busy",
         "type": "realtime_voice",
         "realtime": {
           "inject_result": {
@@ -65,6 +75,9 @@
             "channel_id": "refused"
           },
           {
+            "channel_id": "busy"
+          },
+          {
             "channel_id": "uncertain"
           },
           {
@@ -84,6 +97,12 @@
     {
       "call": "realtime.start",
       "channel_id": "refused",
+      "room_id": "r1",
+      "participant_id": "alice"
+    },
+    {
+      "call": "realtime.start",
+      "channel_id": "busy",
       "room_id": "r1",
       "participant_id": "alice"
     },
@@ -115,6 +134,21 @@
       "room_id": "r1",
       "content": "Hello",
       "channel_id": "refused",
+      "expect": {
+        "result": {
+          "status": "failed",
+          "reason": "no_connection",
+          "error": {
+            "retryable": false
+          }
+        }
+      }
+    },
+    {
+      "call": "deliver",
+      "room_id": "r1",
+      "content": "Hello",
+      "channel_id": "busy",
       "expect": {
         "result": {
           "status": "failed",

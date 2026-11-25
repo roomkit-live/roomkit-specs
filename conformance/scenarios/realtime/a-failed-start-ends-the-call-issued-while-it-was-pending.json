@@ -11,7 +11,7 @@
   "requires_features": [
     "realtime"
   ],
-  "notes": "The call's handler is running when the start fails.",
+  "notes": "The call's handler is running when the start fails. A call whose handler has not started when the start fails is not covered (RMK-2129).",
   "setup": {
     "channels": [
       {

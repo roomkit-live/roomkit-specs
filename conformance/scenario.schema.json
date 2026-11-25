@@ -50,7 +50,8 @@
           "protocol_trace",
           "executor_media",
           "scoring",
-          "source_provider"
+          "source_provider",
+          "call_recovery"
         ]
       }
     },

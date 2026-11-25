@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "realtime/a-full-duplex-provider-keeps-the-pipeline-vad-to-observation",
-  "title": "On a full-duplex provider the pipeline VAD only observes: the server VAD stays on, and speech over the model fires ON_SPEECH_START but no barge-in, as it does on a provider that takes turns",
+  "title": "On a full-duplex provider the pipeline VAD leaves the server VAD on, and its speech start over the model fires ON_SPEECH_START and no barge-in, where a provider that takes turns gets one",
   "rules": [
     "§12.4"
   ],
@@ -11,6 +11,7 @@
   "requires_features": [
     "realtime"
   ],
+  "notes": "That the provider is neither interrupted nor sent activity signals is not read: it needs a read of the provider's interrupt and activity calls.",
   "setup": {
     "channels": [
       {

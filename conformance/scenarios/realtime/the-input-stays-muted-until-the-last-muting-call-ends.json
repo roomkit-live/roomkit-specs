@@ -89,6 +89,32 @@
       "open": "first"
     },
     {
+      "call": "realtime.wait_idle",
+      "channel_id": "rt",
+      "room_id": "r1",
+      "timeout_ms": 100,
+      "expect": {
+        "result": false
+      }
+    },
+    {
+      "call": "realtime.read",
+      "channel_id": "rt",
+      "expect": {
+        "result": {
+          "input_muted": [
+            true
+          ],
+          "results": [
+            {
+              "call_id": "c1",
+              "result": "one"
+            }
+          ]
+        }
+      }
+    },
+    {
       "open": "second"
     },
     {

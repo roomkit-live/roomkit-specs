@@ -33,6 +33,15 @@
         }
       },
       {
+        "id": "bare",
+        "type": "realtime_voice",
+        "realtime": {
+          "pipeline": {
+            "agc": {}
+          }
+        }
+      },
+      {
         "id": "plain",
         "type": "realtime_voice",
         "realtime": {}
@@ -56,6 +65,9 @@
             "channel_id": "duplex"
           },
           {
+            "channel_id": "bare"
+          },
+          {
             "channel_id": "plain"
           }
         ]
@@ -72,6 +84,12 @@
     {
       "call": "realtime.start",
       "channel_id": "duplex",
+      "room_id": "r1",
+      "participant_id": "alice"
+    },
+    {
+      "call": "realtime.start",
+      "channel_id": "bare",
       "room_id": "r1",
       "participant_id": "alice"
     },
@@ -97,6 +115,19 @@
     {
       "call": "realtime.read",
       "channel_id": "duplex",
+      "expect": {
+        "result": {
+          "connects": [
+            {
+              "server_vad": true
+            }
+          ]
+        }
+      }
+    },
+    {
+      "call": "realtime.read",
+      "channel_id": "bare",
       "expect": {
         "result": {
           "connects": [

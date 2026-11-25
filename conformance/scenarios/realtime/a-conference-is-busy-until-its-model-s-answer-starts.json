@@ -12,6 +12,7 @@
     "conference",
     "realtime"
   ],
+  "notes": "The full-duplex starts of an answer, audible audio and a partial transcript, are shown on a realtime voice channel only.",
   "setup": {
     "channels": [
       {

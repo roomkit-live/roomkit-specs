@@ -11,6 +11,7 @@
   "requires_features": [
     "realtime"
   ],
+  "notes": "No session is seen as no connect asked of the provider; the transport's accept is not read.",
   "setup": {
     "channels": [
       {

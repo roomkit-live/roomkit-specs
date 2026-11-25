@@ -12,6 +12,7 @@
   "requires_features": [
     "realtime"
   ],
+  "notes": "Identity verification and a channel that emits no transcription are not exercised.",
   "setup": {
     "channels": [
       {

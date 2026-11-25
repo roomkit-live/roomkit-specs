@@ -132,15 +132,17 @@ alone does not make it plain.
 
 A scenario can list the features it needs in `requires_features`. The defined
 names are `message_session`, `protocol_trace`, `voice`, `realtime`,
-`conference`, `video`, `recording`, `executor_media`, `scoring` and
-`source_provider`.
+`conference`, `video`, `recording`, `executor_media`, `scoring`,
+`source_provider` and `call_recovery`.
 `executor_media` requires a standalone executor that accepts both host media
 readers (§10.6.2). `scoring` requires a turn scoring hook that can attach to a
 kit or a standalone executor (§10.6.6). `source_provider` requires scripted
 sources on the source interface (§6.5), attached to the kit (`sources`,
-below). Three more names are reserved for the
-decided gaps that need them; no scenario uses them yet, so neither the schema
-nor a runner lists them:
+below). `call_recovery` requires a realtime channel that recovers a tool
+call the model spoke as assistant text instead of issuing it (§12.4, a
+MAY): Scripted realtime sessions write that text. Three more names are
+reserved for the decided gaps that need them; no scenario uses them yet, so
+neither the schema nor a runner lists them:
 `transport_provider`, the implementation's own channel of a platform type
 (Appendix A) over a scripted provider that implements that type's provider
 interface; `websocket_channel`, the implementation's WebSocket channel and its
@@ -613,12 +615,21 @@ The provider's traits and its scripted answers are members of `realtime` too:
 
 `realtime.start` may hold the start: with `gate`, the provider's connect
 holds there until a step opens it, the session already created and its
-transport's accept done; with `fail` too, the connect then fails with that
-message, and the start with `provider_failed`. While the start is held, the
-channel's other steps address the session it creates. The provider issues
+transport's accept done; with `fail`, the connect fails with that message,
+once past its `gate` when it has one, and the start with `provider_failed`.
+While the start is held, the channel's other steps address the session it
+creates. The provider issues
 `realtime.transcribe`, `realtime.speech`, `realtime.response` and, with
 `source` `provider`, `realtime.audio` as its own callbacks; with `source`
-`transport`, `realtime.audio` is the caller's audio the transport receives.
+`transport`, `realtime.audio` is the caller's audio the transport receives,
+and the step returns once the channel forwarded each frame to the provider,
+or retained it.
+
+A tool call the model speaks instead of issuing it is written, for a
+scenario that requires `call_recovery`, as the last sentence of a final
+assistant transcription: `call:<tool>{}`, or with the arguments inside the
+braces as `key:value` pairs separated by commas, `<tool>` a tool the
+session declares (`realtime.transcribe`).
 
 ### Scripted agents
 
@@ -1262,7 +1273,7 @@ run's own kit when absent.
 | `realtime.configure` | `channel_id`, `tools`: tool names, each declared as the channel's tools are | the channel's `configure` with those tools |
 | `realtime.transcribe` | `channel_id`, `text`, `role` (`user` or `assistant`), optional `is_final` (default true) | the provider transcribes the user's or the model's words (`on_transcription`) |
 | `realtime.speech` | `channel_id`, `edge` (`start` or `end`) | the provider detects the start or the end of the user's speech (`on_speech_start`, `on_speech_end`) |
-| `realtime.audio` | `channel_id`, `source` (`transport` or `provider`), `frames` (base64 PCM16) | with `transport`, the transport receives the caller's frames, in order (`on_audio_received`); with `provider`, the provider outputs them, in order (`on_audio`) |
+| `realtime.audio` | `channel_id`, `source` (`transport` or `provider`), `frames` (base64 PCM16) | with `transport`, the transport receives the caller's frames, in order (`on_audio_received`), and the step returns once the channel forwarded or retained each; with `provider`, the provider outputs them, in order (`on_audio`) |
 | `realtime.response` | `channel_id`, `edge` (`start` or `end`) | the provider's response starts or ends (`on_response_start`, `on_response_end`); `channel_id` may name a conference opened with `tools`, whose realtime model's response it is |
 | `realtime.wait_idle` | `channel_id`, `room_id`, `timeout_ms` | the channel's `wait_idle(room_id, timeout)`, a realtime voice channel's or a conference's opened with `tools`: true once the room's sessions are idle within the time, false when it passed first (§12.4.1) |
 | `parse_voice_session` | `session` (a voice session with `id`, `room_id`, `channel_id`, `participant_id` and optional `metadata`), `channel_id`, optional `metadata` | the InboundMessage made by the voice adapter (§5.12), including its session |
