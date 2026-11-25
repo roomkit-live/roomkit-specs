@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "realtime/a-skill-activation-on-a-fixed-session-reconfigures-nothing",
-  "title": "A skill activation on a provider that cannot be reconfigured mid-session is answered in the call's result and leaves the session as it started; on one that can, it reconfigures the session",
+  "title": "A skill activation on a provider that cannot be reconfigured mid-session is answered in the call's result and declares no new tool to the session; on one that can, a reconfiguration declares the skill's tool",
   "rules": [
     "§12.4.1"
   ],
@@ -11,7 +11,7 @@
   "requires_features": [
     "realtime"
   ],
-  "notes": "A handoff, the other change of a running agent, is not exercised.",
+  "notes": "A handoff, the other change of a running agent, is not exercised, nor a reconfiguration that declares no tools: realtime.read's declared lists only the declarations of tools.",
   "setup": {
     "channels": [
       {

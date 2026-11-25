@@ -600,7 +600,9 @@ The provider's traits and its scripted answers are members of `realtime` too:
 - `inject_result` is what the provider's `inject_text` returns: a
   VoiceInjectionResult, `status` (`sent`, `not_sent` or `unknown`), with
   optional `reason` and `retryable` (false by default) (§22.1), or null for
-  a provider that reports nothing. Absent, it reports `sent`.
+  a provider that reports nothing. Absent, it reports `sent`. A provider that
+  reports `not_sent` submitted nothing: `realtime.read`'s `injections` leaves
+  its text out.
 - `submit_gate`: the provider's submission of a tool result holds at that
   gate, nothing sent yet, until a step opens it. `submit_error`: the
   submission then fails with that message, nothing sent.
