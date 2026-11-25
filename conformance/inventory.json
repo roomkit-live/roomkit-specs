@@ -1275,9 +1275,9 @@
     },
     {
       "section": "19.7.3",
-      "sha256": "4e0b94fac0108924ec4432baa41db83f941226e584142575503e44926d373171",
+      "sha256": "b2dc06570ec3808609c975cfff33d5bf0859fe268239de685c1091c0f7e26ad3",
       "classification": "normative",
-      "review": "Supervisor execution separates team, child, status, timeout and cancellation behavior from optional parallelism, room/session hand-back, worker tool naming and formulation turns."
+      "review": "Supervisor execution separates team, child, status, timeout and cancellation behavior from optional parallelism, room/session hand-back, worker tool naming and formulation turns. A worker's end reason is scoped apart: what the strategy reads of it (RK-19.7.3-057) and what its run's failed entry names (RK-19.7.3-058)."
     },
     {
       "section": "19.7.4",
@@ -1407,15 +1407,15 @@
     },
     {
       "section": "23.3",
-      "sha256": "1cdf86581167f26bae7bb7151c1d565d25d5ef9b5260a82d8172ce743d79a1c6",
+      "sha256": "b04f1c7d5ab3c7cc29517fcd39024dd334d0232af99022229abd989763131db5",
       "classification": "normative",
-      "review": "The protocol separates child preparation, visibility, trace, worker outcome and reads, hand-back modes, structured results, cancellation, pre-announcement failures, bus state and progress. Voice, video and conference hand-backs have distinct applicability."
+      "review": "The protocol separates child preparation, visibility, trace, worker outcome and reads, hand-back modes, structured results, cancellation, pre-announcement failures, bus state and progress. Voice, video and conference hand-backs have distinct applicability. A task's end reason is scoped apart: the closed list and its words (RK-23.3-116 to RK-23.3-118), then each place that carries it (RK-23.3-119 to RK-23.3-123)."
     },
     {
       "section": "23.4",
-      "sha256": "57f4e4bc083bcd0b214d2f05d8517f75a640fc5f6c3bdc1c91bb70186f4e6bc6",
+      "sha256": "f37afba8ecf0f6ca0df0d5271c1f8234d87737595095293c994a9fac1d8ed0c0",
       "classification": "normative",
-      "review": "Delegation helpers, argument handling, sharing and quoting, cache and waiting, status, background work and cancellation are individually scoped. Task notes and room-context requirements distinguish normal text turns, standalone turns and realtime sessions."
+      "review": "Delegation helpers, argument handling, sharing and quoting, cache and waiting, status, background work and cancellation are individually scoped. Task notes and room-context requirements distinguish normal text turns, standalone turns and realtime sessions. The end reason an inline call, task_status and the notes give is scoped per reader (RK-23.4-069 to RK-23.4-071)."
     },
     {
       "section": "23.5",

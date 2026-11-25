@@ -2377,7 +2377,8 @@
       "executor-close/closing-refuses-new-turns-and-keeps-transports": "af2ea91ee5c199b811d7c9fd32a1917ad3d4d6980dd76095835e3f33f3cc96f0"
     },
     "RK-10.6.1-003": {
-      "executors/a-delegation-to-a-declared-worker-runs-on-its-executor": "934f95bff30bfcf73bae01caa3e7fc0031dcb0abc454c1c67f3adad3539b2ab1"
+      "executors/a-delegation-to-a-declared-worker-runs-on-its-executor": "934f95bff30bfcf73bae01caa3e7fc0031dcb0abc454c1c67f3adad3539b2ab1",
+      "executors/a-worker-cut-on-its-executor-tells-its-requester-why": "934f95bff30bfcf73bae01caa3e7fc0031dcb0abc454c1c67f3adad3539b2ab1"
     },
     "RK-10.6.1-004": {
       "hooks/an-injected-event-asks-no-agent": "2731200185348753906e69b58b85732d55d8f96cbb13c5a523b92114caca5ef7",
@@ -2405,7 +2406,8 @@
     },
     "RK-10.6.2-005": {
       "executors/a-declared-agent-s-turn-runs-on-the-executor-hosting-it": "14a3945a70f17b80e1d12649088d638fd108be1f10d3b3a9e28d8e5a1e1a5e8d",
-      "executors/a-delegation-to-a-declared-worker-runs-on-its-executor": "14a3945a70f17b80e1d12649088d638fd108be1f10d3b3a9e28d8e5a1e1a5e8d"
+      "executors/a-delegation-to-a-declared-worker-runs-on-its-executor": "14a3945a70f17b80e1d12649088d638fd108be1f10d3b3a9e28d8e5a1e1a5e8d",
+      "executors/a-worker-cut-on-its-executor-tells-its-requester-why": "14a3945a70f17b80e1d12649088d638fd108be1f10d3b3a9e28d8e5a1e1a5e8d"
     },
     "RK-10.6.2-007": {
       "executors/a-live-agent-s-turn-stays-on-the-kit-s-executor": "f5168cb2f1b161087fea6a4f2de9c58b08c399ac7c3449c38b68cbffe53a9fea"
@@ -8297,6 +8299,32 @@
     "RK-19.7.3-056": {
       "orchestration/a-supervisor-s-background-team-that-fails-hands-back-its-failure": "01b2676408abef94f9d1dea43c642a34379200f796c754b60c4b70434a2cc5be"
     },
+    "RK-19.7.3-057": {
+      "orchestration/a-background-worker-past-its-task-timeout-is-cut-and-told-as-not-completed": "426442e704d8b2abd58fbe84a7165c824a7ad9dbcff7d0035ac34b693a4482ee",
+      "orchestration/a-loop-whose-producer-is-cut-short-answers-nothing-and-says-why": "426442e704d8b2abd58fbe84a7165c824a7ad9dbcff7d0035ac34b693a4482ee",
+      "orchestration/a-review-that-says-nothing-or-fails-approves-nothing": "426442e704d8b2abd58fbe84a7165c824a7ad9dbcff7d0035ac34b693a4482ee",
+      "orchestration/a-step-whose-worker-fails-stops-the-chain-unreviewed": "426442e704d8b2abd58fbe84a7165c824a7ad9dbcff7d0035ac34b693a4482ee",
+      "orchestration/a-supervised-step-past-its-task-timeout-stops-the-chain-unreviewed": "426442e704d8b2abd58fbe84a7165c824a7ad9dbcff7d0035ac34b693a4482ee",
+      "orchestration/a-supervisor-s-worker-tool-reads-a-failed-worker-as-failed": "426442e704d8b2abd58fbe84a7165c824a7ad9dbcff7d0035ac34b693a4482ee",
+      "orchestration/a-team-worker-past-its-task-timeout-is-read-as-timed-out-beside-the-others": "426442e704d8b2abd58fbe84a7165c824a7ad9dbcff7d0035ac34b693a4482ee",
+      "orchestration/a-worker-past-its-task-timeout-is-cut-and-read-as-timed-out": "426442e704d8b2abd58fbe84a7165c824a7ad9dbcff7d0035ac34b693a4482ee"
+    },
+    "RK-19.7.3-058": {
+      "orchestration/a-background-worker-past-its-task-timeout-is-cut-and-told-as-not-completed": "9b7f09564b2c837716fa627044d765497e2f8b6ae3195e23f3924f47eb71581a",
+      "orchestration/a-delegation-its-call-bound-cuts-posts-the-worker-cancelled": "9b7f09564b2c837716fa627044d765497e2f8b6ae3195e23f3924f47eb71581a",
+      "orchestration/a-loop-s-parallel-review-that-raises-fails-at-once-and-cuts-the-other-reviews": "9b7f09564b2c837716fa627044d765497e2f8b6ae3195e23f3924f47eb71581a",
+      "orchestration/a-loop-whose-producer-is-cut-short-answers-nothing-and-says-why": "9b7f09564b2c837716fa627044d765497e2f8b6ae3195e23f3924f47eb71581a",
+      "orchestration/a-step-whose-worker-fails-stops-the-chain-unreviewed": "9b7f09564b2c837716fa627044d765497e2f8b6ae3195e23f3924f47eb71581a",
+      "orchestration/a-supervised-step-past-its-task-timeout-stops-the-chain-unreviewed": "9b7f09564b2c837716fa627044d765497e2f8b6ae3195e23f3924f47eb71581a",
+      "orchestration/a-team-call-its-bound-cuts-posts-each-worker-cancelled": "9b7f09564b2c837716fa627044d765497e2f8b6ae3195e23f3924f47eb71581a",
+      "orchestration/a-team-cut-after-announcement-reports-only-what-started": "9b7f09564b2c837716fa627044d765497e2f8b6ae3195e23f3924f47eb71581a",
+      "orchestration/a-team-cut-before-announcement-reports-only-what-started": "9b7f09564b2c837716fa627044d765497e2f8b6ae3195e23f3924f47eb71581a",
+      "orchestration/a-team-whose-worker-raises-answers-at-once": "9b7f09564b2c837716fa627044d765497e2f8b6ae3195e23f3924f47eb71581a",
+      "orchestration/a-team-worker-past-its-task-timeout-is-read-as-timed-out-beside-the-others": "9b7f09564b2c837716fa627044d765497e2f8b6ae3195e23f3924f47eb71581a",
+      "orchestration/a-worker-cut-after-announcement-reports-only-what-started": "9b7f09564b2c837716fa627044d765497e2f8b6ae3195e23f3924f47eb71581a",
+      "orchestration/a-worker-cut-before-announcement-reports-only-what-started": "9b7f09564b2c837716fa627044d765497e2f8b6ae3195e23f3924f47eb71581a",
+      "orchestration/a-worker-past-its-task-timeout-is-cut-and-read-as-timed-out": "9b7f09564b2c837716fa627044d765497e2f8b6ae3195e23f3924f47eb71581a"
+    },
     "RK-19.7.4-002": {
       "orchestration/a-loop-out-of-iterations-answers-its-last-output-not-approved": "6f32cac812a784310f17f15bb345a7a92daddea5cc3991068c6207728cc722a6",
       "orchestration/a-loop-reviewer-s-refusal-approves-nothing": "6f32cac812a784310f17f15bb345a7a92daddea5cc3991068c6207728cc722a6",
@@ -11480,15 +11508,19 @@
       "tasks/a-worker-whose-trace-holds-only-another-tool-s-call-ends-with-the-missing-payload": "f9dc339fde0dd019e2cb098fa21d5d121d43cda57711a42e464a15093bf34cff"
     },
     "RK-23.3-028": {
+      "executors/a-worker-cut-on-its-executor-tells-its-requester-why": "8aec3d9ce6b72d956486350360d51071270681ccef841d6fa4b993a66545d49b",
       "host/a-task-cut-short-hands-its-failure-to-wait-task": "8aec3d9ce6b72d956486350360d51071270681ccef841d6fa4b993a66545d49b",
       "tasks/a-buffered-turn-cut-short-fails-its-task-with-its-narration": "8aec3d9ce6b72d956486350360d51071270681ccef841d6fa4b993a66545d49b",
       "tasks/a-buffered-worker-whose-record-names-a-cut-fails-its-task": "8aec3d9ce6b72d956486350360d51071270681ccef841d6fa4b993a66545d49b",
       "tasks/a-delegated-turn-that-wrote-no-message-records-on-its-last-row": "8aec3d9ce6b72d956486350360d51071270681ccef841d6fa4b993a66545d49b",
       "tasks/a-task-cut-before-its-worker-wrote-any-text-fails-with-no-output": "8aec3d9ce6b72d956486350360d51071270681ccef841d6fa4b993a66545d49b",
+      "tasks/a-task-s-end-reason-tells-a-cut-a-cancel-an-error-and-a-success-apart": "8aec3d9ce6b72d956486350360d51071270681ccef841d6fa4b993a66545d49b",
       "tasks/a-task-whose-shared-transport-stopped-reading-its-answer-fails-cancelled": "8aec3d9ce6b72d956486350360d51071270681ccef841d6fa4b993a66545d49b",
       "tasks/a-task-whose-shared-transport-stopped-reading-while-its-model-reasoned-fails-cancelled": "8aec3d9ce6b72d956486350360d51071270681ccef841d6fa4b993a66545d49b",
+      "tasks/a-worker-cut-at-its-round-cap-tells-its-requester-why": "8aec3d9ce6b72d956486350360d51071270681ccef841d6fa4b993a66545d49b",
       "tasks/a-worker-owing-a-result-is-held-to-what-it-submitted-before-its-cut": "8aec3d9ce6b72d956486350360d51071270681ccef841d6fa4b993a66545d49b",
-      "tasks/an-inline-task-its-worker-s-round-cap-cut-fails-with-its-narration": "8aec3d9ce6b72d956486350360d51071270681ccef841d6fa4b993a66545d49b"
+      "tasks/an-inline-task-its-worker-s-round-cap-cut-fails-with-its-narration": "8aec3d9ce6b72d956486350360d51071270681ccef841d6fa4b993a66545d49b",
+      "tasks/delegate-task-answers-why-its-inline-task-failed": "8aec3d9ce6b72d956486350360d51071270681ccef841d6fa4b993a66545d49b"
     },
     "RK-23.3-029": {
       "tasks/a-delegation-keeps-its-agent-s-answer-when-another-agent-answers-first": "f17e330da14a2558a7ce80178a38a38f1f339ebd948be41c8599b4a6fd8bae9c",
@@ -11504,7 +11536,8 @@
       "tasks/a-delegated-turn-s-failure-is-reported-in-its-child-room": "53ff4f396605cc4dd4369ee7811acbd5aaf3ff938df612e9c04395438633e626",
       "tasks/a-delegated-turn-s-returned-error-is-reported-in-its-child-room": "53ff4f396605cc4dd4369ee7811acbd5aaf3ff938df612e9c04395438633e626",
       "tasks/a-failed-task-keeps-the-error-its-worker-s-turn-raised": "53ff4f396605cc4dd4369ee7811acbd5aaf3ff938df612e9c04395438633e626",
-      "tasks/a-failed-task-s-exception-keeps-its-attributes": "53ff4f396605cc4dd4369ee7811acbd5aaf3ff938df612e9c04395438633e626"
+      "tasks/a-failed-task-s-exception-keeps-its-attributes": "53ff4f396605cc4dd4369ee7811acbd5aaf3ff938df612e9c04395438633e626",
+      "tasks/a-task-s-end-reason-tells-a-cut-a-cancel-an-error-and-a-success-apart": "53ff4f396605cc4dd4369ee7811acbd5aaf3ff938df612e9c04395438633e626"
     },
     "RK-23.3-031": {
       "tasks/a-delegated-reply-that-fails-is-reported-once-on-either-path": "254ba6edeaf2bc71f903a555ed2f6ecb403bee0e543188768fd5109e54893b7d",
@@ -11614,6 +11647,8 @@
     },
     "RK-23.3-050": {
       "tasks/a-failed-task-with-nothing-to-say-is-handed-back-as-failed": "4023378c77ff16b6c4e0e7e2390259300b81d621b44b5ba8f76694d3d7d6a60a",
+      "tasks/a-task-s-end-reason-tells-a-cut-a-cancel-an-error-and-a-success-apart": "4023378c77ff16b6c4e0e7e2390259300b81d621b44b5ba8f76694d3d7d6a60a",
+      "tasks/a-worker-cut-at-its-round-cap-tells-its-requester-why": "4023378c77ff16b6c4e0e7e2390259300b81d621b44b5ba8f76694d3d7d6a60a",
       "tasks/the-kit-cancels-a-background-task-once": "4023378c77ff16b6c4e0e7e2390259300b81d621b44b5ba8f76694d3d7d6a60a"
     },
     "RK-23.3-051": {
@@ -11822,9 +11857,11 @@
       "tasks/a-delegated-turn-s-returned-error-is-reported-in-its-child-room": "58f21b18235764f5c31481b935a5fe39178f282129f535839e52d0b816b7ffd7",
       "tasks/a-delegation-whose-worker-fails-ends-failed": "58f21b18235764f5c31481b935a5fe39178f282129f535839e52d0b816b7ffd7",
       "tasks/a-failed-task-with-nothing-to-say-is-handed-back-as-failed": "58f21b18235764f5c31481b935a5fe39178f282129f535839e52d0b816b7ffd7",
+      "tasks/a-worker-cut-at-its-round-cap-tells-its-requester-why": "58f21b18235764f5c31481b935a5fe39178f282129f535839e52d0b816b7ffd7",
       "tasks/the-kit-cancels-a-background-task-once": "58f21b18235764f5c31481b935a5fe39178f282129f535839e52d0b816b7ffd7"
     },
     "RK-23.3-109": {
+      "tasks/a-worker-cut-at-its-round-cap-tells-its-requester-why": "528e6fb996497d5929c1c64b4c4352d9c765f821136f4b3b25c7cfa1bbaf1c01",
       "tasks/a-worker-s-progress-reaches-the-agent-s-next-turn": "528e6fb996497d5929c1c64b4c4352d9c765f821136f4b3b25c7cfa1bbaf1c01",
       "tasks/an-inline-delegation-runs-its-agent-in-a-child-room": "528e6fb996497d5929c1c64b4c4352d9c765f821136f4b3b25c7cfa1bbaf1c01",
       "tasks/the-kit-cancels-a-background-task-once": "528e6fb996497d5929c1c64b4c4352d9c765f821136f4b3b25c7cfa1bbaf1c01"
@@ -11849,6 +11886,46 @@
     "RK-23.3-115": {
       "tasks/a-turn-s-notes-list-the-room-s-tasks-and-how-far-each-got": "a6ddbceabb7fb8c6fd82ceef2ae5dad62293c2bafe8ebde2fd53f1ff00addbf6",
       "tasks/a-worker-s-progress-reaches-the-agent-s-next-turn": "a6ddbceabb7fb8c6fd82ceef2ae5dad62293c2bafe8ebde2fd53f1ff00addbf6"
+    },
+    "RK-23.3-116": {
+      "executors/a-worker-cut-on-its-executor-tells-its-requester-why": "b307a2ad4ae95c72a8adfe5e18959c100124e942e580183f4a562f491edcf11a",
+      "tasks/a-failed-task-with-nothing-to-say-is-handed-back-as-failed": "b307a2ad4ae95c72a8adfe5e18959c100124e942e580183f4a562f491edcf11a",
+      "tasks/a-task-s-end-reason-tells-a-cut-a-cancel-an-error-and-a-success-apart": "b307a2ad4ae95c72a8adfe5e18959c100124e942e580183f4a562f491edcf11a",
+      "tasks/a-worker-cut-at-its-round-cap-tells-its-requester-why": "b307a2ad4ae95c72a8adfe5e18959c100124e942e580183f4a562f491edcf11a",
+      "tasks/delegate-task-answers-why-its-inline-task-failed": "b307a2ad4ae95c72a8adfe5e18959c100124e942e580183f4a562f491edcf11a"
+    },
+    "RK-23.3-117": {
+      "tasks/a-task-s-end-reason-tells-a-cut-a-cancel-an-error-and-a-success-apart": "04fe72b7c450af14ee422bffc299ef124860dfc9931c46205d6ffb34a5bccad5",
+      "tasks/a-worker-cut-at-its-round-cap-tells-its-requester-why": "04fe72b7c450af14ee422bffc299ef124860dfc9931c46205d6ffb34a5bccad5"
+    },
+    "RK-23.3-118": {
+      "tasks/a-task-s-end-reason-tells-a-cut-a-cancel-an-error-and-a-success-apart": "ebf84e906b50644484edd8f1bab4a7771704f08b63daf59a25e9d62f07e00062",
+      "tasks/a-task-s-line-gives-a-reason-of-the-closed-list-alone": "ebf84e906b50644484edd8f1bab4a7771704f08b63daf59a25e9d62f07e00062",
+      "tasks/a-worker-cut-at-its-round-cap-tells-its-requester-why": "ebf84e906b50644484edd8f1bab4a7771704f08b63daf59a25e9d62f07e00062"
+    },
+    "RK-23.3-119": {
+      "executors/a-worker-cut-on-its-executor-tells-its-requester-why": "088c24b4f3a927774bcb89849e597246a1608c74400dde510ea3507daaf5398d",
+      "tasks/a-task-s-end-reason-tells-a-cut-a-cancel-an-error-and-a-success-apart": "088c24b4f3a927774bcb89849e597246a1608c74400dde510ea3507daaf5398d",
+      "tasks/a-worker-cut-at-its-round-cap-tells-its-requester-why": "088c24b4f3a927774bcb89849e597246a1608c74400dde510ea3507daaf5398d"
+    },
+    "RK-23.3-120": {
+      "executors/a-worker-cut-on-its-executor-tells-its-requester-why": "1c2bfa0e944a44fd4f913b78469c7f12742f1dcfe00b5de25dc42cea7f10f737",
+      "tasks/a-failed-task-with-nothing-to-say-is-handed-back-as-failed": "1c2bfa0e944a44fd4f913b78469c7f12742f1dcfe00b5de25dc42cea7f10f737",
+      "tasks/a-task-s-end-reason-tells-a-cut-a-cancel-an-error-and-a-success-apart": "1c2bfa0e944a44fd4f913b78469c7f12742f1dcfe00b5de25dc42cea7f10f737",
+      "tasks/a-worker-cut-at-its-round-cap-tells-its-requester-why": "1c2bfa0e944a44fd4f913b78469c7f12742f1dcfe00b5de25dc42cea7f10f737"
+    },
+    "RK-23.3-121": {
+      "executors/a-worker-cut-on-its-executor-tells-its-requester-why": "4b8ad936d281d4c1d9d94a4670aab63f828eaf212aa3f4ba9bd858bdb939c807",
+      "tasks/a-task-s-end-reason-tells-a-cut-a-cancel-an-error-and-a-success-apart": "4b8ad936d281d4c1d9d94a4670aab63f828eaf212aa3f4ba9bd858bdb939c807",
+      "tasks/a-worker-cut-at-its-round-cap-tells-its-requester-why": "4b8ad936d281d4c1d9d94a4670aab63f828eaf212aa3f4ba9bd858bdb939c807"
+    },
+    "RK-23.3-122": {
+      "tasks/a-posted-result-says-its-task-failed-or-was-cancelled-never-its-error": "568ee9e18f89ebda92b5037729ddeab91e22bce33d78d098cf29b53883512022"
+    },
+    "RK-23.3-123": {
+      "executors/a-worker-cut-on-its-executor-tells-its-requester-why": "283cbe9da49b5c4e4dab3b9d6d8312ec4cd1c530aa094cbd839608d4f592904f",
+      "tasks/a-task-s-end-reason-tells-a-cut-a-cancel-an-error-and-a-success-apart": "283cbe9da49b5c4e4dab3b9d6d8312ec4cd1c530aa094cbd839608d4f592904f",
+      "tasks/a-worker-cut-at-its-round-cap-tells-its-requester-why": "283cbe9da49b5c4e4dab3b9d6d8312ec4cd1c530aa094cbd839608d4f592904f"
     },
     "RK-23.4-003": {
       "executors/a-declared-agent-s-delegate-task-is-kept-by-the-owner-for-each-build": "91b52c482f044574f044d2b51115199de87160cf9722f8d47c494402029fcfbc",
@@ -11938,7 +12015,8 @@
       "tasks/delegate-task-hands-back-as-much-as-its-handler-allows": "d2d3c7d6426b9a17a157e724e9eaf714abeb4d055a5403062e3175e64fa8bfc7"
     },
     "RK-23.4-025": {
-      "tasks/a-worker-s-delegate-task-waits-for-its-task-on-the-handler-s-option": "96dcb8212234eaef861271040bce57706bf8f00714b2569a0ca597139b526929"
+      "tasks/a-worker-s-delegate-task-waits-for-its-task-on-the-handler-s-option": "96dcb8212234eaef861271040bce57706bf8f00714b2569a0ca597139b526929",
+      "tasks/delegate-task-answers-why-its-inline-task-failed": "96dcb8212234eaef861271040bce57706bf8f00714b2569a0ca597139b526929"
     },
     "RK-23.4-026": {
       "tasks/cancelling-a-worker-cancels-the-task-its-delegate-task-waits-for": "44a80778c234cca8577c011535b2bb887de3fac5311344cd3323ed8c9e60dc3e"
@@ -12104,6 +12182,20 @@
       "executors/a-turn-apart-s-delegation-and-segments-fire-their-hooks-on-the-room-owner": "48d1002aadf350299a9e5780be2d4cc086c89b8bd85811439fa57aa990298e9f",
       "tasks/a-worker-s-delegate-task-waits-for-its-task-on-the-handler-s-option": "48d1002aadf350299a9e5780be2d4cc086c89b8bd85811439fa57aa990298e9f",
       "tasks/cancelling-a-worker-cancels-the-task-its-delegate-task-waits-for": "48d1002aadf350299a9e5780be2d4cc086c89b8bd85811439fa57aa990298e9f"
+    },
+    "RK-23.4-069": {
+      "tasks/delegate-task-answers-why-its-inline-task-failed": "024532559f82fcdcc6c5403ebf49c534dfb1567dbbea205a81361089a9b9da8c"
+    },
+    "RK-23.4-070": {
+      "executors/a-worker-cut-on-its-executor-tells-its-requester-why": "8c4925487206d9bf41c2b93b5413ee975d1abc87972aa48f7b6d2e1215bf8b8d",
+      "tasks/a-task-s-end-reason-tells-a-cut-a-cancel-an-error-and-a-success-apart": "8c4925487206d9bf41c2b93b5413ee975d1abc87972aa48f7b6d2e1215bf8b8d",
+      "tasks/a-task-s-line-gives-a-reason-of-the-closed-list-alone": "8c4925487206d9bf41c2b93b5413ee975d1abc87972aa48f7b6d2e1215bf8b8d",
+      "tasks/a-worker-cut-at-its-round-cap-tells-its-requester-why": "8c4925487206d9bf41c2b93b5413ee975d1abc87972aa48f7b6d2e1215bf8b8d"
+    },
+    "RK-23.4-071": {
+      "executors/a-worker-cut-on-its-executor-tells-its-requester-why": "6dbfc008c0c79eac3a591c40edd14df95bbd8334677775e1f7de8879a14a35e9",
+      "tasks/a-task-s-line-gives-a-reason-of-the-closed-list-alone": "6dbfc008c0c79eac3a591c40edd14df95bbd8334677775e1f7de8879a14a35e9",
+      "tasks/a-worker-cut-at-its-round-cap-tells-its-requester-why": "6dbfc008c0c79eac3a591c40edd14df95bbd8334677775e1f7de8879a14a35e9"
     },
     "RK-23.5-002": {
       "executors/a-turn-apart-s-delegation-and-segments-fire-their-hooks-on-the-room-owner": "c38d8480c3a1dc42cbccf170222aff1cfb74c8bfa30b63a7cf5fd7b68e0cac66",

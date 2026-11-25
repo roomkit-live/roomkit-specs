@@ -13829,70 +13829,70 @@
           "scenario": "tasks/a-failed-task-with-nothing-to-say-is-handed-back-as-failed",
           "pointer": "/expect/rooms",
           "sha256": "22987d3036512c9a5cc9cda490671ed7ce3b015f01b44769490d8d67d13f885e",
-          "scenario_sha256": "7207c76f76bc588fb0d1a2dc7466049b37607ee20524e7859a5e8f2f1adb0e3d",
+          "scenario_sha256": "689bf68b420bdfee51b3404deb30695f032a1208975c36da3ee5e879522b4474",
           "proves": "Both child rooms keep their own task id, failed status and no stored task result."
         },
         {
           "scenario": "tasks/a-failed-task-with-nothing-to-say-is-handed-back-as-failed",
           "pointer": "/expect/turns/room-1/main",
-          "sha256": "15c2865b0d484491df10bb4029cb266331417b5fcad3383814a1b462c6dc81d4",
-          "scenario_sha256": "7207c76f76bc588fb0d1a2dc7466049b37607ee20524e7859a5e8f2f1adb0e3d",
+          "sha256": "36496a78a29cf9c6d5823b59432c43749309fd99be44cc75435bf12806c6a1ca",
+          "scenario_sha256": "689bf68b420bdfee51b3404deb30695f032a1208975c36da3ee5e879522b4474",
           "proves": "Each distinct failed task reaches the notified agent as its own private instruction saying No output."
         },
         {
           "scenario": "tasks/a-failed-task-with-nothing-to-say-is-handed-back-as-failed",
           "pointer": "/expect/timeline/room-1",
           "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
-          "scenario_sha256": "7207c76f76bc588fb0d1a2dc7466049b37607ee20524e7859a5e8f2f1adb0e3d",
+          "scenario_sha256": "689bf68b420bdfee51b3404deb30695f032a1208975c36da3ee5e879522b4474",
           "proves": "Neither hand-back is stored as words in the parent room."
         },
         {
           "scenario": "tasks/a-failed-task-with-nothing-to-say-is-handed-back-as-failed",
           "pointer": "/steps/10/expect",
           "sha256": "4c2b9527ae1ca5957ffbb6187de61ca642e7fdc56f901855bc252a5925d8585b",
-          "scenario_sha256": "7207c76f76bc588fb0d1a2dc7466049b37607ee20524e7859a5e8f2f1adb0e3d",
+          "scenario_sha256": "689bf68b420bdfee51b3404deb30695f032a1208975c36da3ee5e879522b4474",
           "proves": "Each task has a pending entry followed by its failed end on the status bus."
         },
         {
           "scenario": "tasks/a-failed-task-with-nothing-to-say-is-handed-back-as-failed",
           "pointer": "/steps/1/expect",
           "sha256": "9ebb69d12de4cbf6570af29cbdea027c0f2b7b5ed7f3bc7cfb712e78b663bbb4",
-          "scenario_sha256": "7207c76f76bc588fb0d1a2dc7466049b37607ee20524e7859a5e8f2f1adb0e3d",
+          "scenario_sha256": "689bf68b420bdfee51b3404deb30695f032a1208975c36da3ee5e879522b4474",
           "proves": "Waiting returns the same task and child room, still failed before and after the late cancellation."
         },
         {
           "scenario": "tasks/a-failed-task-with-nothing-to-say-is-handed-back-as-failed",
           "pointer": "/steps/2/expect",
           "sha256": "929701ed632814943e3df803ddd9e3f179ccf889c0ad7b7f3392bd8d109b174f",
-          "scenario_sha256": "7207c76f76bc588fb0d1a2dc7466049b37607ee20524e7859a5e8f2f1adb0e3d",
+          "scenario_sha256": "689bf68b420bdfee51b3404deb30695f032a1208975c36da3ee5e879522b4474",
           "proves": "A late host cancellation does not take this failed task."
         },
         {
           "scenario": "tasks/a-failed-task-with-nothing-to-say-is-handed-back-as-failed",
           "pointer": "/steps/3/expect",
           "sha256": "9ebb69d12de4cbf6570af29cbdea027c0f2b7b5ed7f3bc7cfb712e78b663bbb4",
-          "scenario_sha256": "7207c76f76bc588fb0d1a2dc7466049b37607ee20524e7859a5e8f2f1adb0e3d",
+          "scenario_sha256": "689bf68b420bdfee51b3404deb30695f032a1208975c36da3ee5e879522b4474",
           "proves": "Waiting returns the same task and child room, still failed before and after the late cancellation."
         },
         {
           "scenario": "tasks/a-failed-task-with-nothing-to-say-is-handed-back-as-failed",
           "pointer": "/steps/6/expect",
           "sha256": "d0b93add6753d0eea74a8d8c22bb0dcad15eb7c007908363bbee3947766c3602",
-          "scenario_sha256": "7207c76f76bc588fb0d1a2dc7466049b37607ee20524e7859a5e8f2f1adb0e3d",
+          "scenario_sha256": "689bf68b420bdfee51b3404deb30695f032a1208975c36da3ee5e879522b4474",
           "proves": "Waiting returns the same task and child room, still failed before and after the late cancellation."
         },
         {
           "scenario": "tasks/a-failed-task-with-nothing-to-say-is-handed-back-as-failed",
           "pointer": "/steps/7/expect",
           "sha256": "929701ed632814943e3df803ddd9e3f179ccf889c0ad7b7f3392bd8d109b174f",
-          "scenario_sha256": "7207c76f76bc588fb0d1a2dc7466049b37607ee20524e7859a5e8f2f1adb0e3d",
+          "scenario_sha256": "689bf68b420bdfee51b3404deb30695f032a1208975c36da3ee5e879522b4474",
           "proves": "A late host cancellation does not take this failed task."
         },
         {
           "scenario": "tasks/a-failed-task-with-nothing-to-say-is-handed-back-as-failed",
           "pointer": "/steps/8/expect",
           "sha256": "d0b93add6753d0eea74a8d8c22bb0dcad15eb7c007908363bbee3947766c3602",
-          "scenario_sha256": "7207c76f76bc588fb0d1a2dc7466049b37607ee20524e7859a5e8f2f1adb0e3d",
+          "scenario_sha256": "689bf68b420bdfee51b3404deb30695f032a1208975c36da3ee5e879522b4474",
           "proves": "Waiting returns the same task and child room, still failed before and after the late cancellation."
         }
       ],
@@ -13912,8 +13912,8 @@
         {
           "scenario": "tasks/a-failed-task-with-nothing-to-say-is-handed-back-as-failed",
           "pointer": "/expect/hooks/completed",
-          "sha256": "b557804b8451222d68fac42143ee1af47071f208d50dd69ca2d1f7010682cff6",
-          "scenario_sha256": "7207c76f76bc588fb0d1a2dc7466049b37607ee20524e7859a5e8f2f1adb0e3d",
+          "sha256": "9aab0ae58361d263196a0d28b6fd5617603e3b282a024b0f12ca477dc1c798bb",
+          "scenario_sha256": "689bf68b420bdfee51b3404deb30695f032a1208975c36da3ee5e879522b4474",
           "proves": "Exactly two failed completion hooks identify their respective task and child room; duplicating the first cannot satisfy the second."
         }
       ],
@@ -17405,98 +17405,98 @@
           "scenario": "orchestration/a-delegation-its-call-bound-cuts-posts-the-worker-cancelled",
           "pointer": "/expect",
           "sha256": "9662dc2552e8693e8c48986aa4ee213233edc3f7487c60522e7294a7a2a1c1fc",
-          "scenario_sha256": "d059a5d761c79fd6da9b516296ae1a1b173d9dafcf8553c4ee2c4c6ae0192722",
+          "scenario_sha256": "5d72896ae5f42af7a4a29f88f114822ff94c188307ce8c6f2b8389bd80c0330e",
           "proves": "The parent stores the supervisor's timeout answer, the child task is cancelled, and the recorded model calls carry the expected timeout result without a completed worker response."
         },
         {
           "scenario": "orchestration/a-delegation-its-call-bound-cuts-posts-the-worker-cancelled",
           "pointer": "/steps/5/expect",
-          "sha256": "345d5c122c8601fd9a98a2117ebdbae44e7cb8b3a545ff41f4362e8b87d0ceb3",
-          "scenario_sha256": "d059a5d761c79fd6da9b516296ae1a1b173d9dafcf8553c4ee2c4c6ae0192722",
+          "sha256": "9824a262706249b1cfa9b294f7a3b947d88437f169137e10e31552949b9a5c2b",
+          "scenario_sha256": "5d72896ae5f42af7a4a29f88f114822ff94c188307ce8c6f2b8389bd80c0330e",
           "proves": "The worker run posts pending then one terminal failed entry with its expected reason and the announced task_id."
         },
         {
           "scenario": "orchestration/a-team-call-its-bound-cuts-posts-each-worker-cancelled",
           "pointer": "/expect",
           "sha256": "473d24549e653263a005b37b9a925f2b713950890e4819fda974318f492be17e",
-          "scenario_sha256": "39eac2b1e3cd4a784f5e8d6eef1cb0b5526cca0006e585c966d4bee72ed98dcd",
+          "scenario_sha256": "add6825646c266163f4ab645609e993b6a16b89750ebdac483203ee360e26cf6",
           "proves": "The parent stores the supervisor's timeout answer, the child task is cancelled, and the recorded model calls carry the expected timeout result without a completed worker response."
         },
         {
           "scenario": "orchestration/a-team-call-its-bound-cuts-posts-each-worker-cancelled",
           "pointer": "/steps/5/expect",
-          "sha256": "0fdba046f2f3cdb1cee4034437ab019770362057b1f8c29c070f005fb07df47f",
-          "scenario_sha256": "39eac2b1e3cd4a784f5e8d6eef1cb0b5526cca0006e585c966d4bee72ed98dcd",
+          "sha256": "fc849b8fef4e25b0c5ef4408ddfe2312f1136f00119dda7ffd1642e2681d9d70",
+          "scenario_sha256": "add6825646c266163f4ab645609e993b6a16b89750ebdac483203ee360e26cf6",
           "proves": "The worker run posts pending then one terminal failed entry with its expected reason and the announced task_id."
         },
         {
           "scenario": "orchestration/a-worker-past-its-task-timeout-is-cut-and-read-as-timed-out",
           "pointer": "/expect",
           "sha256": "9ad0e8ca084496d32560597521c2d577ef0b517e62ed2235d7f3d00e5ebbdf15",
-          "scenario_sha256": "e1b2e80c1b056c5b6e841677705689773a04fda9871ad447493eb8a94e4add20",
+          "scenario_sha256": "2a431dea54d1567e31cf3af537126121957433788a8fa466f1706a0d7b606d8f",
           "proves": "The parent stores the supervisor's timeout answer, the child task is cancelled, and the recorded model calls carry the expected timeout result without a completed worker response."
         },
         {
           "scenario": "orchestration/a-worker-past-its-task-timeout-is-cut-and-read-as-timed-out",
           "pointer": "/steps/5/expect",
-          "sha256": "7a1a8e6281854f4c8e038e7dede8ce21ae569a0edaf778d1b9e0299612a349d3",
-          "scenario_sha256": "e1b2e80c1b056c5b6e841677705689773a04fda9871ad447493eb8a94e4add20",
+          "sha256": "791bc024da007e704ea0e0a55fe6c088675bca232c5f95d628ca3cef6d500179",
+          "scenario_sha256": "2a431dea54d1567e31cf3af537126121957433788a8fa466f1706a0d7b606d8f",
           "proves": "The worker run posts pending then one terminal failed entry with its expected reason and the announced task_id."
         },
         {
           "scenario": "orchestration/a-worker-cut-before-announcement-reports-only-what-started",
           "pointer": "/expect",
           "sha256": "e8550ad518951a84bb39c0cdc3ec0bd3fa0ffc18186a668a4fc3d623aa13f08d",
-          "scenario_sha256": "d31340b8485dc99eafcaa262c0858023437bc548f4dfd67bfd3c1d4c825fd161",
+          "scenario_sha256": "7e25de414c0dd492dd6a01242d7123e99745a4ab92b7c975b715e04d0edada57",
           "proves": "The worker model has no call, the supervisor has one call, and neither the delegated nor completed task hook fires."
         },
         {
           "scenario": "orchestration/a-worker-cut-before-announcement-reports-only-what-started",
           "pointer": "/steps/5/expect",
-          "sha256": "63f56b6546edb7e3c5ae4568ad91489b4b708ed31a03b62c6222049b88461f9a",
-          "scenario_sha256": "d31340b8485dc99eafcaa262c0858023437bc548f4dfd67bfd3c1d4c825fd161",
+          "sha256": "282ac20b811c9e869cfb1ba6fbd8a7e8485c05e7341c79478ced59013761d4d7",
+          "scenario_sha256": "7e25de414c0dd492dd6a01242d7123e99745a4ab92b7c975b715e04d0edada57",
           "proves": "The worker run posts pending then failed/cancelled once, with its run marker and no task_id before announcement."
         },
         {
           "scenario": "orchestration/a-worker-cut-after-announcement-reports-only-what-started",
           "pointer": "/expect",
           "sha256": "064840a923f0500193b545a1cb3c0648a30852be9331b1fd63291cf8bae01c71",
-          "scenario_sha256": "8cf7f73f96a9962be8f8ad8a317941cddd1d8bbfedae0030b6551adc883e1f72",
+          "scenario_sha256": "d15a295f1752d1b333e70b286cd83a62c2adf5a5c5da489cdcb2dc4d9aa0da20",
           "proves": "The worker model is called once; delegated and completed hooks each fire once, and the child room and completed hook report a cancelled task."
         },
         {
           "scenario": "orchestration/a-worker-cut-after-announcement-reports-only-what-started",
           "pointer": "/steps/5/expect",
-          "sha256": "0aaf3a066f9362e17b152778dd1e6b3faa3ec2e7ca9dc9afa5f8384eeb48624b",
-          "scenario_sha256": "8cf7f73f96a9962be8f8ad8a317941cddd1d8bbfedae0030b6551adc883e1f72",
+          "sha256": "1b567b0fca235719e36f25fd1aaed7a7b01557e2aa964ef5b660591c87c7d63a",
+          "scenario_sha256": "d15a295f1752d1b333e70b286cd83a62c2adf5a5c5da489cdcb2dc4d9aa0da20",
           "proves": "The worker run posts pending then one terminal failed entry with its expected reason and the announced task_id."
         },
         {
           "scenario": "orchestration/a-team-cut-before-announcement-reports-only-what-started",
           "pointer": "/expect",
           "sha256": "4cd450338888cdc30fc955acc4ca31c7b76ff971d3846471526f4eb993478757",
-          "scenario_sha256": "278a23151e629de3ebf01e62cffc4f34aab700ffc782664e40d053411bcc46ed",
+          "scenario_sha256": "9a64edd751b2a4cf52931e00343ee4148b12cbd1a00093b4f4ad488b950bd2b7",
           "proves": "The worker model has no call, the supervisor has one call, and neither the delegated nor completed task hook fires."
         },
         {
           "scenario": "orchestration/a-team-cut-before-announcement-reports-only-what-started",
           "pointer": "/steps/5/expect",
-          "sha256": "63f56b6546edb7e3c5ae4568ad91489b4b708ed31a03b62c6222049b88461f9a",
-          "scenario_sha256": "278a23151e629de3ebf01e62cffc4f34aab700ffc782664e40d053411bcc46ed",
+          "sha256": "282ac20b811c9e869cfb1ba6fbd8a7e8485c05e7341c79478ced59013761d4d7",
+          "scenario_sha256": "9a64edd751b2a4cf52931e00343ee4148b12cbd1a00093b4f4ad488b950bd2b7",
           "proves": "The worker run posts pending then failed/cancelled once, with its run marker and no task_id before announcement."
         },
         {
           "scenario": "orchestration/a-team-cut-after-announcement-reports-only-what-started",
           "pointer": "/expect",
           "sha256": "0356eb1d378a5bb03a13748e37dd8b3b68e2124ea2b1241b845c8bce1d476b83",
-          "scenario_sha256": "45dfee73828d866e6df1cfda772d5beb01980c4d49e08c8763f3ddfd4cf6d911",
+          "scenario_sha256": "5bbea3d87f09a4af728fa72942c7ce931f9f8f039f857719aec862a75ab98020",
           "proves": "The worker model is called once; delegated and completed hooks each fire once, and the child room and completed hook report a cancelled task."
         },
         {
           "scenario": "orchestration/a-team-cut-after-announcement-reports-only-what-started",
           "pointer": "/steps/5/expect",
-          "sha256": "0aaf3a066f9362e17b152778dd1e6b3faa3ec2e7ca9dc9afa5f8384eeb48624b",
-          "scenario_sha256": "45dfee73828d866e6df1cfda772d5beb01980c4d49e08c8763f3ddfd4cf6d911",
+          "sha256": "1b567b0fca235719e36f25fd1aaed7a7b01557e2aa964ef5b660591c87c7d63a",
+          "scenario_sha256": "5bbea3d87f09a4af728fa72942c7ce931f9f8f039f857719aec862a75ab98020",
           "proves": "The worker run posts pending then one terminal failed entry with its expected reason and the announced task_id."
         }
       ],
@@ -17524,56 +17524,56 @@
           "scenario": "orchestration/a-worker-cut-before-announcement-reports-only-what-started",
           "pointer": "/expect",
           "sha256": "e8550ad518951a84bb39c0cdc3ec0bd3fa0ffc18186a668a4fc3d623aa13f08d",
-          "scenario_sha256": "d31340b8485dc99eafcaa262c0858023437bc548f4dfd67bfd3c1d4c825fd161",
+          "scenario_sha256": "7e25de414c0dd492dd6a01242d7123e99745a4ab92b7c975b715e04d0edada57",
           "proves": "The worker model has no call, the supervisor has one call, and neither the delegated nor completed task hook fires."
         },
         {
           "scenario": "orchestration/a-worker-cut-before-announcement-reports-only-what-started",
           "pointer": "/steps/5/expect",
-          "sha256": "63f56b6546edb7e3c5ae4568ad91489b4b708ed31a03b62c6222049b88461f9a",
-          "scenario_sha256": "d31340b8485dc99eafcaa262c0858023437bc548f4dfd67bfd3c1d4c825fd161",
+          "sha256": "282ac20b811c9e869cfb1ba6fbd8a7e8485c05e7341c79478ced59013761d4d7",
+          "scenario_sha256": "7e25de414c0dd492dd6a01242d7123e99745a4ab92b7c975b715e04d0edada57",
           "proves": "The worker run posts pending then failed/cancelled once, with its run marker and no task_id before announcement."
         },
         {
           "scenario": "orchestration/a-worker-cut-after-announcement-reports-only-what-started",
           "pointer": "/expect",
           "sha256": "064840a923f0500193b545a1cb3c0648a30852be9331b1fd63291cf8bae01c71",
-          "scenario_sha256": "8cf7f73f96a9962be8f8ad8a317941cddd1d8bbfedae0030b6551adc883e1f72",
+          "scenario_sha256": "d15a295f1752d1b333e70b286cd83a62c2adf5a5c5da489cdcb2dc4d9aa0da20",
           "proves": "The worker model is called once; delegated and completed hooks each fire once, and the child room and completed hook report a cancelled task."
         },
         {
           "scenario": "orchestration/a-worker-cut-after-announcement-reports-only-what-started",
           "pointer": "/steps/5/expect",
-          "sha256": "0aaf3a066f9362e17b152778dd1e6b3faa3ec2e7ca9dc9afa5f8384eeb48624b",
-          "scenario_sha256": "8cf7f73f96a9962be8f8ad8a317941cddd1d8bbfedae0030b6551adc883e1f72",
+          "sha256": "1b567b0fca235719e36f25fd1aaed7a7b01557e2aa964ef5b660591c87c7d63a",
+          "scenario_sha256": "d15a295f1752d1b333e70b286cd83a62c2adf5a5c5da489cdcb2dc4d9aa0da20",
           "proves": "The worker run posts pending then one terminal failed entry with its expected reason and the announced task_id."
         },
         {
           "scenario": "orchestration/a-team-cut-before-announcement-reports-only-what-started",
           "pointer": "/expect",
           "sha256": "4cd450338888cdc30fc955acc4ca31c7b76ff971d3846471526f4eb993478757",
-          "scenario_sha256": "278a23151e629de3ebf01e62cffc4f34aab700ffc782664e40d053411bcc46ed",
+          "scenario_sha256": "9a64edd751b2a4cf52931e00343ee4148b12cbd1a00093b4f4ad488b950bd2b7",
           "proves": "The worker model has no call, the supervisor has one call, and neither the delegated nor completed task hook fires."
         },
         {
           "scenario": "orchestration/a-team-cut-before-announcement-reports-only-what-started",
           "pointer": "/steps/5/expect",
-          "sha256": "63f56b6546edb7e3c5ae4568ad91489b4b708ed31a03b62c6222049b88461f9a",
-          "scenario_sha256": "278a23151e629de3ebf01e62cffc4f34aab700ffc782664e40d053411bcc46ed",
+          "sha256": "282ac20b811c9e869cfb1ba6fbd8a7e8485c05e7341c79478ced59013761d4d7",
+          "scenario_sha256": "9a64edd751b2a4cf52931e00343ee4148b12cbd1a00093b4f4ad488b950bd2b7",
           "proves": "The worker run posts pending then failed/cancelled once, with its run marker and no task_id before announcement."
         },
         {
           "scenario": "orchestration/a-team-cut-after-announcement-reports-only-what-started",
           "pointer": "/expect",
           "sha256": "0356eb1d378a5bb03a13748e37dd8b3b68e2124ea2b1241b845c8bce1d476b83",
-          "scenario_sha256": "45dfee73828d866e6df1cfda772d5beb01980c4d49e08c8763f3ddfd4cf6d911",
+          "scenario_sha256": "5bbea3d87f09a4af728fa72942c7ce931f9f8f039f857719aec862a75ab98020",
           "proves": "The worker model is called once; delegated and completed hooks each fire once, and the child room and completed hook report a cancelled task."
         },
         {
           "scenario": "orchestration/a-team-cut-after-announcement-reports-only-what-started",
           "pointer": "/steps/5/expect",
-          "sha256": "0aaf3a066f9362e17b152778dd1e6b3faa3ec2e7ca9dc9afa5f8384eeb48624b",
-          "scenario_sha256": "45dfee73828d866e6df1cfda772d5beb01980c4d49e08c8763f3ddfd4cf6d911",
+          "sha256": "1b567b0fca235719e36f25fd1aaed7a7b01557e2aa964ef5b660591c87c7d63a",
+          "scenario_sha256": "5bbea3d87f09a4af728fa72942c7ce931f9f8f039f857719aec862a75ab98020",
           "proves": "The worker run posts pending then one terminal failed entry with its expected reason and the announced task_id."
         }
       ],
@@ -17595,56 +17595,56 @@
           "scenario": "orchestration/a-worker-cut-before-announcement-reports-only-what-started",
           "pointer": "/expect/rooms",
           "sha256": "a1db6d2e42fddce1320247b022b3a06ce451dc1339e0238b3fc2ea8c380b0f97",
-          "scenario_sha256": "d31340b8485dc99eafcaa262c0858023437bc548f4dfd67bfd3c1d4c825fd161",
+          "scenario_sha256": "7e25de414c0dd492dd6a01242d7123e99745a4ab92b7c975b715e04d0edada57",
           "proves": "The child stays active with task_status cancelled or failed, no result, and inherited application metadata."
         },
         {
           "scenario": "orchestration/a-worker-cut-before-announcement-reports-only-what-started",
           "pointer": "/expect/bindings",
           "sha256": "71fa912a351772d5533fc31542765c6ee38e16e326bee4894827b8e0ddab2f9d",
-          "scenario_sha256": "d31340b8485dc99eafcaa262c0858023437bc548f4dfd67bfd3c1d4c825fd161",
+          "scenario_sha256": "7e25de414c0dd492dd6a01242d7123e99745a4ab92b7c975b715e04d0edada57",
           "proves": "The worker intelligence binding remains attached with read_write access."
         },
         {
           "scenario": "orchestration/a-worker-cut-before-announcement-reports-only-what-started",
           "pointer": "/expect/hooks",
           "sha256": "e9252d68f54779ef15eb07ada57eb4ebb7113095cb7df7cafdc394b6dacf9336",
-          "scenario_sha256": "d31340b8485dc99eafcaa262c0858023437bc548f4dfd67bfd3c1d4c825fd161",
+          "scenario_sha256": "7e25de414c0dd492dd6a01242d7123e99745a4ab92b7c975b715e04d0edada57",
           "proves": "Neither task-delegated nor task-completed hooks run before announcement."
         },
         {
           "scenario": "orchestration/a-worker-cut-before-announcement-reports-only-what-started",
           "pointer": "/expect/models",
           "sha256": "a78a2061c5a492a45c032badf0c6afa2c8601a633b3fb1c2765662763bfb5434",
-          "scenario_sha256": "d31340b8485dc99eafcaa262c0858023437bc548f4dfd67bfd3c1d4c825fd161",
+          "scenario_sha256": "7e25de414c0dd492dd6a01242d7123e99745a4ab92b7c975b715e04d0edada57",
           "proves": "The worker model is never called; only the supervisor began its request."
         },
         {
           "scenario": "orchestration/a-team-cut-before-announcement-reports-only-what-started",
           "pointer": "/expect/rooms",
           "sha256": "a1db6d2e42fddce1320247b022b3a06ce451dc1339e0238b3fc2ea8c380b0f97",
-          "scenario_sha256": "278a23151e629de3ebf01e62cffc4f34aab700ffc782664e40d053411bcc46ed",
+          "scenario_sha256": "9a64edd751b2a4cf52931e00343ee4148b12cbd1a00093b4f4ad488b950bd2b7",
           "proves": "The child stays active with task_status cancelled or failed, no result, and inherited application metadata."
         },
         {
           "scenario": "orchestration/a-team-cut-before-announcement-reports-only-what-started",
           "pointer": "/expect/bindings",
           "sha256": "c66f23a5b066303472276622b4554d1478def9fa8c33f15e53513dc5aea534ea",
-          "scenario_sha256": "278a23151e629de3ebf01e62cffc4f34aab700ffc782664e40d053411bcc46ed",
+          "scenario_sha256": "9a64edd751b2a4cf52931e00343ee4148b12cbd1a00093b4f4ad488b950bd2b7",
           "proves": "The worker intelligence binding remains attached with read_write access."
         },
         {
           "scenario": "orchestration/a-team-cut-before-announcement-reports-only-what-started",
           "pointer": "/expect/hooks",
           "sha256": "e9252d68f54779ef15eb07ada57eb4ebb7113095cb7df7cafdc394b6dacf9336",
-          "scenario_sha256": "278a23151e629de3ebf01e62cffc4f34aab700ffc782664e40d053411bcc46ed",
+          "scenario_sha256": "9a64edd751b2a4cf52931e00343ee4148b12cbd1a00093b4f4ad488b950bd2b7",
           "proves": "Neither task-delegated nor task-completed hooks run before announcement."
         },
         {
           "scenario": "orchestration/a-team-cut-before-announcement-reports-only-what-started",
           "pointer": "/expect/models",
           "sha256": "65dbf5123bd4e9330ad8d248de64d07795f8eb113336f1c8111f085eed3fd3b8",
-          "scenario_sha256": "278a23151e629de3ebf01e62cffc4f34aab700ffc782664e40d053411bcc46ed",
+          "scenario_sha256": "9a64edd751b2a4cf52931e00343ee4148b12cbd1a00093b4f4ad488b950bd2b7",
           "proves": "The worker model is never called; only the supervisor began its request."
         },
         {

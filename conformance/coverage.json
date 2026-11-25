@@ -1,9 +1,9 @@
 {
   "version": 1,
-  "rfc_sha256": "bd57957b0df8341c0afd15ed5b46a02b3ef18650e1aa57ac9c2cf1be252ce2d1",
-  "corpus_sha256": "ed3bd66ac936021c6518fcdfeba711240c73c1cb2c9611a61306e41fef4bb7f9",
+  "rfc_sha256": "4c50193ce0b648c20a2797927b117324fdefb384f370330906edd0ec7dfa79f4",
+  "corpus_sha256": "191840743d036632a4fc24d5993ada87da7a2fef17b1d62fcc07daf74f355fff",
   "python_commit": "1ee7ec379dee1e17c49a1949ad7ce8756c132606",
-  "scenario_count": 3662,
+  "scenario_count": 3667,
   "sections": [
     {
       "section": "0",
@@ -3890,6 +3890,7 @@
         "tasks/a-delegated-turn-s-returned-error-is-reported-in-its-child-room",
         "tasks/a-posted-result-says-its-task-failed-or-was-cancelled-never-its-error",
         "tasks/a-shared-room-s-failed-streams-are-each-their-agent-s",
+        "tasks/a-task-s-end-reason-tells-a-cut-a-cancel-an-error-and-a-success-apart",
         "tasks/a-task-whose-end-is-being-told-reads-ended-at-once",
         "tasks/delegate-task-answers-its-model-with-the-task-or-why-not",
         "tasks/the-repeat-guard-holds-on-delegate-task",
@@ -5351,6 +5352,7 @@
       "candidate_scenarios": [
         "executors/a-delegation-to-a-declared-worker-runs-on-its-executor",
         "executors/a-supervisor-s-passes-are-turns-of-its-agent-on-the-executor-hosting-it",
+        "executors/a-worker-cut-on-its-executor-tells-its-requester-why",
         "executors/one-build-serving-two-rooms-takes-a-strategy-s-tools-in-its-room-alone",
         "orchestration/an-auto-delegating-supervisor-s-two-passes-carry-a-correlation-id-each",
         "rooms/a-response-whose-room-a-step-closes-during-its-turn-is-refused",
@@ -9067,10 +9069,10 @@
       "section": "19.7.3",
       "title": "Supervisor",
       "review": "normative",
-      "requirements": 55,
+      "requirements": 57,
       "mapping": {
         "mapped_partial": 2,
-        "unmapped": 53
+        "unmapped": 55
       },
       "decided_gaps": {
         "phase6": 2,
@@ -10356,10 +10358,10 @@
       "section": "23.3",
       "title": "Delegation Protocol",
       "review": "normative",
-      "requirements": 112,
+      "requirements": 120,
       "mapping": {
         "mapped_partial": 5,
-        "unmapped": 107
+        "unmapped": 115
       },
       "decided_gaps": {
         "phase6": 5,
@@ -10371,6 +10373,7 @@
         "delivery/a-task-delegated-from-a-delivery-is-not-its-turn-work",
         "executors/a-declared-worker-s-result-tool-rides-its-child-room-s-requests-alone",
         "executors/a-delegation-to-a-declared-worker-runs-on-its-executor",
+        "executors/a-worker-cut-on-its-executor-tells-its-requester-why",
         "host/a-task-cut-short-hands-its-failure-to-wait-task",
         "host/a-turn-s-host-delegates-and-waits-for-its-task",
         "host/a-turn-s-host-waits-for-its-task-at-most-its-timeout",
@@ -10494,8 +10497,11 @@
         "tasks/a-task-carries-its-worker-s-turn-record",
         "tasks/a-task-cut-before-its-worker-wrote-any-text-fails-with-no-output",
         "tasks/a-task-s-context-never-says-how-its-turn-ended",
+        "tasks/a-task-s-end-reason-tells-a-cut-a-cancel-an-error-and-a-success-apart",
+        "tasks/a-task-s-line-gives-a-reason-of-the-closed-list-alone",
         "tasks/a-task-whose-shared-transport-stopped-reading-its-answer-fails-cancelled",
         "tasks/a-task-whose-shared-transport-stopped-reading-while-its-model-reasoned-fails-cancelled",
+        "tasks/a-worker-cut-at-its-round-cap-tells-its-requester-why",
         "tasks/a-worker-owing-a-result-is-held-to-what-it-submitted-before-its-cut",
         "tasks/a-worker-s-delegate-task-waits-for-its-task-on-the-handler-s-option",
         "tasks/a-worker-s-output-cannot-close-its-block-past-a-combining-mark-of-any-script",
@@ -10511,6 +10517,7 @@
         "tasks/an-inline-task-its-worker-s-round-cap-cut-fails-with-its-narration",
         "tasks/cancelling-a-worker-cancels-the-task-its-delegate-task-waits-for",
         "tasks/delegate-task-answers-its-model-with-the-task-or-why-not",
+        "tasks/delegate-task-answers-why-its-inline-task-failed",
         "tasks/delegate-task-hands-back-as-much-as-its-handler-allows",
         "tasks/delegate-task-hands-its-worker-what-the-model-passed-as-data",
         "tasks/delegate-task-hands-over-what-its-calling-agent-may-read",
@@ -10528,10 +10535,10 @@
       "section": "23.4",
       "title": "Delegation Tools",
       "review": "normative",
-      "requirements": 66,
+      "requirements": 69,
       "mapping": {
         "mapped_partial": 2,
-        "unmapped": 64
+        "unmapped": 67
       },
       "decided_gaps": {
         "phase6": 2,
@@ -10544,6 +10551,7 @@
         "executors/a-declared-agent-s-delegate-task-is-kept-by-the-owner-for-each-build",
         "executors/a-turn-apart-calls-a-tool-the-room-owner-serves",
         "executors/a-turn-apart-s-delegation-and-segments-fire-their-hooks-on-the-room-owner",
+        "executors/a-worker-cut-on-its-executor-tells-its-requester-why",
         "executors/an-executor-refuses-a-turn-whose-channel-declares-an-owner-s-tool",
         "host/a-turn-s-host-delegates-and-waits-for-its-task",
         "orchestration/a-supervisor-given-task-status-is-pointed-at-it-by-its-dispatched-team",
@@ -10561,8 +10569,11 @@
         "tasks/a-result-past-the-summary-is-kept-whole-for-task-status",
         "tasks/a-strategy-s-unposted-task-is-never-a-room-s-to-cancel",
         "tasks/a-task-s-context-never-says-how-its-turn-ended",
+        "tasks/a-task-s-end-reason-tells-a-cut-a-cancel-an-error-and-a-success-apart",
+        "tasks/a-task-s-line-gives-a-reason-of-the-closed-list-alone",
         "tasks/a-task-whose-end-is-being-told-reads-ended-at-once",
         "tasks/a-turn-s-notes-list-the-room-s-tasks-and-how-far-each-got",
+        "tasks/a-worker-cut-at-its-round-cap-tells-its-requester-why",
         "tasks/a-worker-s-delegate-task-waits-for-its-task-on-the-handler-s-option",
         "tasks/a-worker-s-progress-reaches-the-agent-s-next-turn",
         "tasks/a-worker-s-words-in-the-tasks-note-are-quoted-and-its-name-and-ending-carry-none",
@@ -10574,6 +10585,7 @@
         "tasks/an-empty-start-task-hand-back-keeps-the-default-or-configured-mode",
         "tasks/cancelling-a-worker-cancels-the-task-its-delegate-task-waits-for",
         "tasks/delegate-task-answers-its-model-with-the-task-or-why-not",
+        "tasks/delegate-task-answers-why-its-inline-task-failed",
         "tasks/delegate-task-frames-and-bounds-what-the-model-passed",
         "tasks/delegate-task-hands-its-worker-the-room-s-previous-tasks-as-data",
         "tasks/delegate-task-hands-its-worker-what-the-model-passed-as-data",
@@ -10605,7 +10617,9 @@
       "candidate_scenarios": [
         "tasks/a-delegation-whose-worker-fails-ends-failed",
         "tasks/a-failed-task-with-nothing-to-say-is-handed-back-as-failed",
+        "tasks/a-task-s-end-reason-tells-a-cut-a-cancel-an-error-and-a-success-apart",
         "tasks/a-task-whose-end-is-being-told-reads-ended-at-once",
+        "tasks/a-worker-cut-at-its-round-cap-tells-its-requester-why",
         "tasks/an-inline-delegation-runs-its-agent-in-a-child-room",
         "tasks/the-kit-cancels-a-background-task-once"
       ]
@@ -42517,6 +42531,18 @@
       ]
     },
     {
+      "id": "RK-19.7.3-057",
+      "section": "19.7.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-19.7.3-058",
+      "section": "19.7.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
       "id": "RK-19.7.3-027",
       "section": "19.7.3",
       "mapping": "unmapped",
@@ -48370,7 +48396,31 @@
       "links": []
     },
     {
+      "id": "RK-23.3-116",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-117",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-118",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
       "id": "RK-23.3-039",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-119",
       "section": "23.3",
       "mapping": "unmapped",
       "links": []
@@ -48482,6 +48532,12 @@
       ]
     },
     {
+      "id": "RK-23.3-120",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
       "id": "RK-23.3-051",
       "section": "23.3",
       "mapping": "unmapped",
@@ -48523,6 +48579,12 @@
     },
     {
       "id": "RK-23.3-056",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-121",
       "section": "23.3",
       "mapping": "unmapped",
       "links": []
@@ -48589,6 +48651,12 @@
     },
     {
       "id": "RK-23.3-067",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.3-122",
       "section": "23.3",
       "mapping": "unmapped",
       "links": []
@@ -48949,6 +49017,12 @@
       "links": []
     },
     {
+      "id": "RK-23.3-123",
+      "section": "23.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
       "id": "RK-23.3-110",
       "section": "23.3",
       "mapping": "unmapped",
@@ -49128,6 +49202,12 @@
       "links": []
     },
     {
+      "id": "RK-23.4-069",
+      "section": "23.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
       "id": "RK-23.4-026",
       "section": "23.4",
       "mapping": "unmapped",
@@ -49226,6 +49306,12 @@
     },
     {
       "id": "RK-23.4-038",
+      "section": "23.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.4-070",
       "section": "23.4",
       "mapping": "unmapped",
       "links": []
@@ -49391,6 +49477,12 @@
     },
     {
       "id": "RK-23.4-063",
+      "section": "23.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-23.4-071",
       "section": "23.4",
       "mapping": "unmapped",
       "links": []
