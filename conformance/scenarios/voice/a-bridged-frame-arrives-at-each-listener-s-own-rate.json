@@ -10,7 +10,7 @@
     "RK-12.7.4-003",
     "RK-12.7.8-009"
   ],
-  "notes": "Alice's session registers at 16 kHz, Bob's at 8 kHz, Carol's at 32 kHz. The pipeline declares no transport format, so the frame reaches each transport at the rate the bridge converted it to; the converted samples are the resampler's.",
+  "notes": "Alice's session registers at 16 kHz; Bob's takes 16 kHz in and 8 kHz out, Carol's 8 kHz in and 32 kHz out. The pipeline declares no transport format, so the frame reaches each transport at the output rate the bridge converted it to; the converted samples are the resampler's. No session's rate changes after it registers.",
   "requires_features": [
     "voice"
   ],
@@ -37,11 +37,11 @@
           "input_sample_rate": 16000
         },
         "bob": {
-          "input_sample_rate": 8000,
+          "input_sample_rate": 16000,
           "output_sample_rate": 8000
         },
         "carol": {
-          "input_sample_rate": 32000,
+          "input_sample_rate": 8000,
           "output_sample_rate": 32000
         }
       }

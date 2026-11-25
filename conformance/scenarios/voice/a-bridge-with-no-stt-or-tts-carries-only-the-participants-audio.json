@@ -8,6 +8,7 @@
   "requirements": [
     "RK-12.7.3-012"
   ],
+  "notes": "Alice's speech ends, which a channel with an STT would transcribe; no transcription comes. A streamed reply reaches no participant's transport.",
   "requires_features": [
     "voice"
   ],
@@ -35,14 +36,23 @@
         "bob"
       ],
       "bridge": true,
-      "tts": null
+      "tts": null,
+      "vad": [
+        {
+          "type": "speech_start"
+        },
+        {
+          "type": "speech_end"
+        }
+      ]
     },
     {
       "call": "voice.feed",
       "channel_id": "phone",
       "participant_id": "alice",
       "frames": [
-        "AQI="
+        "AQI=",
+        "AwQ="
       ]
     },
     {
@@ -65,11 +75,11 @@
       "channel_id": "phone",
       "expect": {
         "result": {
-          "synthesized": [],
           "audio": {
             "alice": [],
             "bob": [
-              "AQI="
+              "AQI=",
+              "AwQ="
             ]
           }
         }

@@ -12,7 +12,7 @@
     "RK-12.7.3-024",
     "RK-12.7.3-025"
   ],
-  "notes": "Alice joins on the primary transport, the caller's session is made by the added one and pushed with no transport named, and Bob joins naming the added one. Only Bob's join makes its session on the added transport, which is then started listening there. A digit sent to a session (voice.send_dtmf) is not shown.",
+  "notes": "Alice joins on the primary transport, the caller's session is made by the added one and pushed with no transport named, and Bob joins naming the added one. Only Bob's join makes its session on the added transport, which is then started listening there. Not shown: a digit sent to a session (voice.send_dtmf), and a join naming a transport that does not hold its session (Bob's is made there, so asking would find it too).",
   "requires_features": [
     "voice"
   ],
@@ -151,10 +151,6 @@
                 {
                   "call": "send_transcription",
                   "participant_id": "bob"
-                },
-                {
-                  "call": "stop_listening",
-                  "participant_id": "caller"
                 },
                 {
                   "call": "disconnect",

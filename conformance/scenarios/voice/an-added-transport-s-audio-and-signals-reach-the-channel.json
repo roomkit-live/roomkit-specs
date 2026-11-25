@@ -9,7 +9,7 @@
     "RK-12.7.3-019",
     "RK-12.7.3-020"
   ],
-  "notes": "The caller's session is made by the added transport and pushed to the room; the scripted VAD of the channel's one pipeline receives its frames under its session's key. The client-disconnected signal and barge-in are in their own scenarios. A channel constructed with no transport refusing add_backend is not shown: voice.open always builds one.",
+  "notes": "The caller's session is made by the added transport and pushed to the room; the scripted VAD of the channel's one pipeline receives its frames under its session's key. The client-disconnected signal and barge-in are in their own scenarios. Not shown: a channel constructed with no transport refusing add_backend (voice.open always builds one), and the pipeline built for the primary transport's capabilities.",
   "requires_features": [
     "voice"
   ],

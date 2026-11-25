@@ -5266,7 +5266,6 @@
       "voice/a-mix-of-three-sources-is-scaled-for-headroom": "bae8bfb97a9b029e447a5cf7cca48adb2fa083b65488b9701511680a3c251a2b"
     },
     "RK-12.7.5-007": {
-      "voice/a-mix-bridge-sends-each-participant-a-mix-of-the-others": "cf618322c5cd2142f8d059d3e693a2d89c4d09ed74d1296b1ff9abeb5d0bdc12",
       "voice/a-mix-sums-the-others-samples-and-clamps-the-sum": "cf618322c5cd2142f8d059d3e693a2d89c4d09ed74d1296b1ff9abeb5d0bdc12"
     },
     "RK-12.7.6-001": {

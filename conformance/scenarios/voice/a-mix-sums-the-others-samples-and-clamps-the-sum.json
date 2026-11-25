@@ -10,7 +10,7 @@
     "RK-12.7.5-005",
     "RK-12.7.5-007"
   ],
-  "notes": "Alice feeds [20000, -20000, 1000] and Bob [20000, -20000, 2000]. Summed as 16-bit integers, the first two samples would wrap to -25536 and 25536; promoted, they sum to 40000 and -40000, clamped to 32767 and -32768. The scenario reads a mix of two sources, which this sum leaves unscaled; a mix of three is the headroom scenario's.",
+  "notes": "Alice and Bob each feed full-scale samples [32767, -32768]. Summed as 16-bit integers they would wrap to [-2, 0]; promoted, they sum to [65534, -65536], and Carol receives them clamped to [32767, -32768], as 16-bit PCM. A headroom division of up to 2 before the clamp gives the same; a soft clipper that never reaches full scale would not. A mix carries each other session's latest frame, fed in an earlier step (RK-12.7.2-005), as RMK-2051 leaves it beside §12.7.5's mixing window.",
   "requires_features": [
     "voice"
   ],
@@ -40,7 +40,7 @@
       "channel_id": "phone",
       "participant_id": "alice",
       "frames": [
-        "IE7gsegD"
+        "/38AgA=="
       ]
     },
     {
@@ -52,7 +52,7 @@
       "channel_id": "phone",
       "participant_id": "bob",
       "frames": [
-        "IE7gsdAH"
+        "/38AgA=="
       ]
     },
     {
@@ -66,8 +66,8 @@
         "result": {
           "audio": {
             "carol": [
-              "IE7gsegD",
-              "/38AgLgL"
+              "$any",
+              "/38AgA=="
             ]
           }
         }

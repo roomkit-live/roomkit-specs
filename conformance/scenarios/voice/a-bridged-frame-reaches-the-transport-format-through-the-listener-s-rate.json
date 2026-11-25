@@ -8,7 +8,7 @@
   "requirements": [
     "RK-12.7.4-002"
   ],
-  "notes": "Bob's session registers at 8 kHz; the pipeline declares a 16 kHz transport outbound format. The scripted postprocessor, first in Bob's outbound pipeline, receives the frame the bridge converted to 8 kHz; the pipeline's resampler then hands Bob's transport 16 kHz.",
+  "notes": "Bob's session registers 8 kHz out; the pipeline declares a 16 kHz transport outbound format. The scripted postprocessor, first in Bob's outbound pipeline, receives the frame the bridge converted to 8 kHz; the pipeline's resampler then hands Bob's transport 16 kHz.",
   "requires_features": [
     "voice"
   ],
@@ -34,7 +34,7 @@
           "input_sample_rate": 16000
         },
         "bob": {
-          "input_sample_rate": 8000,
+          "input_sample_rate": 16000,
           "output_sample_rate": 8000
         }
       },

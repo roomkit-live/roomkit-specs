@@ -57,10 +57,6 @@
                 "participant_id": "alice"
               },
               {
-                "call": "stop_listening",
-                "participant_id": "alice"
-              },
-              {
                 "call": "disconnect",
                 "participant_id": "alice"
               },

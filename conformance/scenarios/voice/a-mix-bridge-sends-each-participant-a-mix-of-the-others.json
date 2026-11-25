@@ -9,10 +9,9 @@
   "requirements": [
     "RK-12.7.2-014",
     "RK-12.7.5-001",
-    "RK-12.7.5-007",
     "RK-12.7.8-008"
   ],
-  "notes": "Frames are PCM16 little-endian. Alice feeds [1000, -2000], then Bob [300, 400]: Bob and Carol each receive Alice's frame alone, the only one buffered; then Alice receives Bob's, and Carol the sample-wise sum [1300, -1600], as 16-bit PCM.",
+  "notes": "Alice feeds a frame, then Bob another. Bob and Carol each receive the same mix of Alice's frame alone; Alice receives Bob's, never her own; Carol then receives a mix of both, unlike either alone. The samples a mix carries, scaled or not, are the clamp scenario's. A mix carries each other session's latest frame, fed in an earlier step (RK-12.7.2-005), as RMK-2051 leaves it beside §12.7.5's mixing window.",
   "requires_features": [
     "voice"
   ],
@@ -68,14 +67,22 @@
         "result": {
           "audio": {
             "alice": [
-              "LAGQAQ=="
+              {
+                "$as": "bob"
+              }
             ],
             "bob": [
-              "6AMw+A=="
+              {
+                "$as": "alice"
+              }
             ],
             "carol": [
-              "6AMw+A==",
-              "FAXA+Q=="
+              {
+                "$as": "alice"
+              },
+              {
+                "$as": "alice-and-bob"
+              }
             ]
           }
         }

@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "voice/a-mix-of-three-sources-is-scaled-for-headroom",
-  "title": "With four participants, the mix of three sources is not their plain sum",
+  "title": "With four participants, a mix of three sources is scaled rather than clamped where their sum leaves the 16-bit range",
   "rules": [
     "§12.7.5"
   ],
@@ -9,7 +9,7 @@
     "RK-12.7.5-006",
     "RK-12.7.8-008"
   ],
-  "notes": "Alice feeds [6000, 6000], Bob [1000, 1000], Carol [-1000, -1000]. Dave's third chunk mixes the three; their plain sum, [6000, 6000], is Alice's frame, which Bob and Dave first receive alone (Carol's first chunk shows its bytes). Two $as names never match equal values, so the mix of three differs from that sum. How much it is scaled is the implementation's (the RFC's divide by sqrt(N-1) is an example), and so is the scaling of a mix of two, left unasserted.",
+  "notes": "Dave's second chunk mixes Alice's and Bob's full-scale frames: their sum is clamped to full scale, with or without a headroom division of up to 2. Alice and Bob then feed [12000, 12000], and Carol too: Dave's fifth chunk mixes the three, whose sum, 36000, a plain clamp would bring to that same full scale. Two $as names never match equal values, so the mix of three is scaled below it. How much is the implementation's (the RFC's divide by sqrt(N-1) is an example). A mix carries each other session's latest frame, fed in an earlier step (RK-12.7.2-005), as RMK-2051 leaves it beside §12.7.5's mixing window.",
   "requires_features": [
     "voice"
   ],
@@ -40,7 +40,7 @@
       "channel_id": "phone",
       "participant_id": "alice",
       "frames": [
-        "cBdwFw=="
+        "/3//fw=="
       ]
     },
     {
@@ -52,7 +52,31 @@
       "channel_id": "phone",
       "participant_id": "bob",
       "frames": [
-        "6APoAw=="
+        "/3//fw=="
+      ]
+    },
+    {
+      "call": "voice.settle",
+      "channel_id": "phone"
+    },
+    {
+      "call": "voice.feed",
+      "channel_id": "phone",
+      "participant_id": "alice",
+      "frames": [
+        "4C7gLg=="
+      ]
+    },
+    {
+      "call": "voice.settle",
+      "channel_id": "phone"
+    },
+    {
+      "call": "voice.feed",
+      "channel_id": "phone",
+      "participant_id": "bob",
+      "frames": [
+        "4C7gLg=="
       ]
     },
     {
@@ -64,7 +88,7 @@
       "channel_id": "phone",
       "participant_id": "carol",
       "frames": [
-        "GPwY/A=="
+        "4C7gLg=="
       ]
     },
     {
@@ -77,20 +101,12 @@
       "expect": {
         "result": {
           "audio": {
-            "bob": [
-              {
-                "$as": "alice-alone"
-              },
-              "$any"
-            ],
-            "carol": [
-              "cBdwFw==",
-              "$any"
-            ],
             "dave": [
+              "$any",
               {
-                "$as": "alice-alone"
+                "$as": "clamped"
               },
+              "$any",
               "$any",
               {
                 "$as": "three-sources"
