@@ -1034,3 +1034,46 @@ again. These receipts give no credit to a store or a turn backend other than
 the in-memory defaults, to specialized tests or to a scenario a runner skips;
 the cases of another store the Python report also holds are not recorded. The 220 earlier
 execution receipts are unchanged.
+
+## Receipts after the voice and realtime families (2026-11-25)
+
+`python-rule-links-452ae63.xml` retains the cases of one run of clean,
+published Python `452ae6397f70661e0ec0f2c8db3000398f904c41`, on Linux with
+Python 3.14.9, pytest 9.1.1, pytest-asyncio 1.4.0 and pytest-xdist 3.8.0 (four
+workers), in-process turns, by the command of "Receipts after the B series
+(2026-11-21)", without its suite-lock and CPU-affinity wrappers. Its receipt,
+`python-rule-links-452ae63-memory`, records the 3719 memory cases: 3710 passed
+and 9 were skipped. The skipped cases need a distributed turn backend: seven
+scenarios of independent turn owners and two of an executor in a process of
+its own, each skip saying what it needs.
+
+`rust-01f8c78-memory-current-thread.xml` and
+`rust-01f8c78-memory-multi-thread-4.xml` retain the memory passes of
+roomkit-rs `01f8c789fb590ee393f20518f8cda906013a2938`, a clean commit of its
+main, run with Rust 1.99.1 through the local wrapper of "Core rule links:
+Python and roomkit-rs passes (2026-11-18)", by the memory command of
+"Recording receipts", with no distributed turn backend configured. Each
+holds the 3719 scenarios of the copy: 3265 passed, 454 skipped and none
+failed. The 454 are 339 scenarios that name a feature in `requires_features`
+that roomkit-rs's runner does not provide ("missing scenario features: voice"
+and so on): voice 175, realtime 111, conference 12, video 12, conference with
+realtime 7, recording 6, call_recovery with realtime 3, source_provider 3,
+message_session 2, protocol_trace 2, scoring 2, recording with voice 2,
+executor_media 1 and realtime with voice 1; and the 115 other scenarios with
+`setup.executors`, whose skip cites §10.6.7: the pass has no distributed turn
+executor. The runner provides none of those features; for the media of §12
+(voice, realtime voice, video, conference, recording), roomkit-rs has no
+code, as the phase 6 plan decided. No scenario fails: the runner's
+known-failure list is empty at this commit.
+
+Both copies are corpus `33d218450de9cdb5655007b7ad846250c8d55fdb`, after the
+media scenarios of phase 6 step 2b (voice, bridge, realtime, video,
+recording and conference) were added and §12 was amended with them, and
+after amendments of §10.6, §19.7.3, §23.3 and §23.4;
+the RFC is `f14cac4ce3db5003d064637d794fd5bbb86db8f4`. The evidence's
+`python_commit` moved to the Python commit first. No specialized test pinned
+by a link changed since `1ee7ec379dee1e17c49a1949ad7ce8756c132606`, so none
+was pinned again. These receipts give no credit to a store or a turn backend
+other than the in-memory defaults, to specialized tests or to a scenario a
+runner skips; the cases of another store the Python report also holds are
+not recorded. The 223 earlier execution receipts are unchanged.
