@@ -537,9 +537,10 @@ it.
 A `realtime_voice` channel with `realtime: {}` hosts a speech-to-speech
 model over a simulated provider and transport (§12.4). A step starts its
 session. Its handle stays available after the session ends so the provider
-can issue a late callback. A channel starts one session per room: another
-`realtime.start` names another room, and the steps address the channel's
-first session, but for `realtime.reconfigure`, which may name another's room.
+can issue a late callback. The fixture starts at most one session per room
+on a channel: another `realtime.start` names another room, and the steps
+address the channel's first session, but for `realtime.reconfigure`, which
+may name another's room.
 Under `realtime.tools`, each tool name maps to its handler script, and the
 channel declares the tool with its `parameters`, the JSON schema of its
 arguments (`{"type": "object", "properties": {}}` when absent), its name as

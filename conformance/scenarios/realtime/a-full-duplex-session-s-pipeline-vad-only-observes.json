@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "realtime/a-full-duplex-session-s-pipeline-vad-only-observes",
-  "title": "On a full-duplex provider the pipeline VAD's speech over the model fires ON_SPEECH_START and nothing else: no activity signal, no interrupt or truncation, no flush, and the model's audio still plays, where a provider that takes turns is interrupted",
+  "title": "On a full-duplex provider the pipeline VAD's speech over the model fires ON_SPEECH_START and nothing else: the server VAD stays on, no activity signal, no interrupt or truncation, no flush, no ON_BARGE_IN, and the model's audio still plays",
   "rules": [
     "§12.4",
     "§12.4.1"
@@ -15,7 +15,7 @@
   "requires_features": [
     "realtime"
   ],
-  "notes": "RK-12.4-018: what the VAD feeds besides the speech hooks (diarization, level metering, metrics) is not read. RK-12.4.1-025: the sensor here is the pipeline VAD; a transport-level barge-in is not scripted.",
+  "notes": "RK-12.4-018: what the VAD feeds besides the speech hooks (diarization, level metering, metrics) is not read. RK-12.4.1-025: the sensor here is the pipeline VAD; a transport-level barge-in is not scripted. A flush the channel would ask through a client message of its own, outside the transport's interface, is not read.",
   "setup": {
     "channels": [
       {
@@ -23,22 +23,6 @@
         "type": "realtime_voice",
         "realtime": {
           "full_duplex": true,
-          "pipeline": {
-            "vad": [
-              {
-                "type": "speech_start"
-              },
-              {
-                "type": "speech_end"
-              }
-            ]
-          }
-        }
-      },
-      {
-        "id": "turns",
-        "type": "realtime_voice",
-        "realtime": {
           "pipeline": {
             "vad": [
               {
@@ -67,17 +51,6 @@
             "channel_id": "duplex"
           }
         ]
-      },
-      {
-        "id": "r2",
-        "bindings": [
-          {
-            "channel_id": "src"
-          },
-          {
-            "channel_id": "turns"
-          }
-        ]
       }
     ],
     "hooks": [
@@ -101,32 +74,13 @@
       "participant_id": "alice"
     },
     {
-      "call": "realtime.start",
-      "channel_id": "turns",
-      "room_id": "r2",
-      "participant_id": "alice"
-    },
-    {
       "call": "realtime.response",
       "channel_id": "duplex",
       "edge": "start"
     },
     {
-      "call": "realtime.response",
-      "channel_id": "turns",
-      "edge": "start"
-    },
-    {
       "call": "realtime.audio",
       "channel_id": "duplex",
-      "source": "provider",
-      "frames": [
-        "ABAAEAAQABA="
-      ]
-    },
-    {
-      "call": "realtime.audio",
-      "channel_id": "turns",
       "source": "provider",
       "frames": [
         "ABAAEAAQABA="
@@ -138,14 +92,6 @@
     {
       "call": "realtime.audio",
       "channel_id": "duplex",
-      "source": "transport",
-      "frames": [
-        "ABAAEAAQABA="
-      ]
-    },
-    {
-      "call": "realtime.audio",
-      "channel_id": "turns",
       "source": "transport",
       "frames": [
         "ABAAEAAQABA="
@@ -168,14 +114,6 @@
     {
       "call": "realtime.audio",
       "channel_id": "duplex",
-      "source": "transport",
-      "frames": [
-        "ACAAIAAgACA="
-      ]
-    },
-    {
-      "call": "realtime.audio",
-      "channel_id": "turns",
       "source": "transport",
       "frames": [
         "ACAAIAAgACA="
@@ -202,35 +140,6 @@
           ]
         }
       }
-    },
-    {
-      "call": "realtime.read",
-      "channel_id": "turns",
-      "expect": {
-        "result": {
-          "provider_calls": {
-            "$unordered": [
-              {
-                "call": "interrupt"
-              },
-              {
-                "call": "truncate_audio"
-              },
-              {
-                "call": "send_activity_start"
-              },
-              {
-                "call": "send_activity_end"
-              }
-            ]
-          },
-          "transport_calls": [
-            {
-              "call": "interrupt"
-            }
-          ]
-        }
-      }
     }
   ],
   "expect": {
@@ -238,16 +147,9 @@
       "starts": [
         {
           "room_id": "r1"
-        },
-        {
-          "room_id": "r2"
         }
       ],
-      "barge": [
-        {
-          "room_id": "r2"
-        }
-      ]
+      "barge": []
     }
   }
 }

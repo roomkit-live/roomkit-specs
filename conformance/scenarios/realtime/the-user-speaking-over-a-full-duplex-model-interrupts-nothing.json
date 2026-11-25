@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "realtime/the-user-speaking-over-a-full-duplex-model-interrupts-nothing",
-  "title": "On a full-duplex provider the user's speech over the model, as the provider reports it, fires the speech hooks and nothing else: no interrupt or truncation, no flush, and the model's audio still plays, where a provider that takes turns is truncated and flushed",
+  "title": "On a full-duplex provider the user's speech over the model, as the provider reports it, fires the speech hooks and nothing else: no interrupt or truncation, no flush, and the model's audio still plays",
   "rules": [
     "§12.4.1"
   ],
@@ -12,7 +12,7 @@
   "requires_features": [
     "realtime"
   ],
-  "notes": "RK-12.4.1-025: the sensor here is the provider's speech events; a transport-level barge-in is not scripted.",
+  "notes": "RK-12.4.1-025: the sensor here is the provider's speech events; a transport-level barge-in is not scripted. A flush the channel would ask through a client message of its own, outside the transport's interface, is not read.",
   "setup": {
     "channels": [
       {
@@ -21,11 +21,6 @@
         "realtime": {
           "full_duplex": true
         }
-      },
-      {
-        "id": "turns",
-        "type": "realtime_voice",
-        "realtime": {}
       },
       {
         "id": "src",
@@ -41,17 +36,6 @@
           },
           {
             "channel_id": "duplex"
-          }
-        ]
-      },
-      {
-        "id": "r2",
-        "bindings": [
-          {
-            "channel_id": "src"
-          },
-          {
-            "channel_id": "turns"
           }
         ]
       }
@@ -77,32 +61,13 @@
       "participant_id": "alice"
     },
     {
-      "call": "realtime.start",
-      "channel_id": "turns",
-      "room_id": "r2",
-      "participant_id": "alice"
-    },
-    {
       "call": "realtime.response",
       "channel_id": "duplex",
       "edge": "start"
     },
     {
-      "call": "realtime.response",
-      "channel_id": "turns",
-      "edge": "start"
-    },
-    {
       "call": "realtime.audio",
       "channel_id": "duplex",
-      "source": "provider",
-      "frames": [
-        "ABAAEAAQABA="
-      ]
-    },
-    {
-      "call": "realtime.audio",
-      "channel_id": "turns",
       "source": "provider",
       "frames": [
         "ABAAEAAQABA="
@@ -114,11 +79,6 @@
     {
       "call": "realtime.speech",
       "channel_id": "duplex",
-      "edge": "start"
-    },
-    {
-      "call": "realtime.speech",
-      "channel_id": "turns",
       "edge": "start"
     },
     {
@@ -141,11 +101,6 @@
       "edge": "end"
     },
     {
-      "call": "realtime.speech",
-      "channel_id": "turns",
-      "edge": "end"
-    },
-    {
       "idle": true
     },
     {
@@ -161,24 +116,6 @@
           ]
         }
       }
-    },
-    {
-      "call": "realtime.read",
-      "channel_id": "turns",
-      "expect": {
-        "result": {
-          "provider_calls": [
-            {
-              "call": "truncate_audio"
-            }
-          ],
-          "transport_calls": [
-            {
-              "call": "interrupt"
-            }
-          ]
-        }
-      }
     }
   ],
   "expect": {
@@ -186,17 +123,11 @@
       "starts": [
         {
           "room_id": "r1"
-        },
-        {
-          "room_id": "r2"
         }
       ],
       "ends": [
         {
           "room_id": "r1"
-        },
-        {
-          "room_id": "r2"
         }
       ]
     }

@@ -987,7 +987,7 @@ class SchemaTests(unittest.TestCase):
         for member, value, valid in (
             ("system_prompt", "Be brief", True),
             ("system_prompt", None, False),
-            ("voice", "alloy", True),
+            ("voice", "calm", True),
             ("on_usage", {}, True),
             ("on_usage", {"gate": "billing", "fails": "down"}, True),
             ("on_usage", {"gate": 1}, False),

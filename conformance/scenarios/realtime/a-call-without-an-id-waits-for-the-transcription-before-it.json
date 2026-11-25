@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "realtime/a-call-without-an-id-waits-for-the-transcription-before-it",
-  "title": "A call without an id is refused only once the transcription the provider gave before it has been through its hooks",
+  "title": "A call without an id is refused and reported only once the transcription the provider gave before it has been through all its hooks",
   "rules": [
     "§12.4"
   ],
@@ -11,6 +11,7 @@
   "requires_features": [
     "realtime"
   ],
+  "notes": "The open response keeps the session busy: realtime.wait_idle's bound gives a call that would not wait 100 ms to be refused and reported while the transcription's first hook holds.",
   "setup": {
     "channels": [
       {
@@ -58,22 +59,12 @@
         "name": "second",
         "trigger": "on_transcription",
         "execution": "sync",
-        "priority": 10,
-        "reactions": [
-          {
-            "gate": "transcribed"
-          }
-        ]
+        "priority": 10
       },
       {
         "name": "reports",
         "trigger": "on_tool_call",
-        "execution": "async",
-        "reactions": [
-          {
-            "gate": "reporting"
-          }
-        ]
+        "execution": "async"
       }
     ]
   },
@@ -83,6 +74,11 @@
       "channel_id": "rt",
       "room_id": "r1",
       "participant_id": "alice"
+    },
+    {
+      "call": "realtime.response",
+      "channel_id": "rt",
+      "edge": "start"
     },
     {
       "call": "realtime.transcribe",
@@ -100,20 +96,16 @@
       "name": "lookup"
     },
     {
+      "call": "realtime.wait_idle",
+      "channel_id": "rt",
+      "room_id": "r1",
+      "timeout_ms": 100,
+      "expect": {
+        "result": false
+      }
+    },
+    {
       "open": "transcribing"
-    },
-    {
-      "wait_for": "transcribed"
-    },
-    {
-      "open": "transcribed"
-    },
-    {
-      "wait_for": "reporting",
-      "after": "transcribed"
-    },
-    {
-      "open": "reporting"
     },
     {
       "idle": true
@@ -129,6 +121,11 @@
           }
         }
       ]
-    }
+    },
+    "hook_order": [
+      "first",
+      "second",
+      "reports"
+    ]
   }
 }

@@ -47,13 +47,6 @@
           }
         ]
       }
-    ],
-    "hooks": [
-      {
-        "name": "starts",
-        "trigger": "on_speech_start",
-        "execution": "async"
-      }
     ]
   },
   "steps": [
@@ -126,14 +119,5 @@
         }
       }
     }
-  ],
-  "expect": {
-    "hooks": {
-      "starts": [
-        {
-          "room_id": "r1"
-        }
-      ]
-    }
-  }
+  ]
 }

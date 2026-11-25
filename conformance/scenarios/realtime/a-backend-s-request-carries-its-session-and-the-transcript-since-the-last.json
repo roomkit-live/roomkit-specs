@@ -126,16 +126,15 @@
     {
       "call": "realtime.transcribe",
       "channel_id": "duplex",
-      "text": "What is",
+      "text": "What is the weather?",
       "role": "user",
       "is_final": false
     },
     {
       "call": "realtime.transcribe",
       "channel_id": "duplex",
-      "text": " the weather?",
-      "role": "user",
-      "is_final": false
+      "text": "What is the weather?",
+      "role": "user"
     },
     {
       "call": "realtime.transcribe",
@@ -143,6 +142,12 @@
       "text": "Let me check.",
       "role": "assistant",
       "is_final": false
+    },
+    {
+      "call": "realtime.transcribe",
+      "channel_id": "duplex",
+      "text": "Let me check.",
+      "role": "assistant"
     },
     {
       "idle": true
@@ -162,6 +167,12 @@
       "text": "And tomorrow?",
       "role": "user",
       "is_final": false
+    },
+    {
+      "call": "realtime.transcribe",
+      "channel_id": "duplex",
+      "text": "And tomorrow?",
+      "role": "user"
     },
     {
       "idle": true
@@ -178,16 +189,15 @@
     {
       "call": "realtime.transcribe",
       "channel_id": "turns",
-      "text": "What is",
+      "text": "What is the weather?",
       "role": "user",
       "is_final": false
     },
     {
       "call": "realtime.transcribe",
       "channel_id": "turns",
-      "text": " the weather?",
-      "role": "user",
-      "is_final": false
+      "text": "What is the weather?",
+      "role": "user"
     },
     {
       "call": "realtime.transcribe",
@@ -195,6 +205,12 @@
       "text": "Let me check.",
       "role": "assistant",
       "is_final": false
+    },
+    {
+      "call": "realtime.transcribe",
+      "channel_id": "turns",
+      "text": "Let me check.",
+      "role": "assistant"
     },
     {
       "idle": true
@@ -214,6 +230,12 @@
       "text": "And tomorrow?",
       "role": "user",
       "is_final": false
+    },
+    {
+      "call": "realtime.transcribe",
+      "channel_id": "turns",
+      "text": "And tomorrow?",
+      "role": "user"
     },
     {
       "idle": true

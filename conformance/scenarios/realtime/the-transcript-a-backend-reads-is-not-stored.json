@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "realtime/the-transcript-a-backend-reads-is-not-stored",
-  "title": "The transcript a backend is handed is session state: the room stores no event of it",
+  "title": "The transcript a backend is handed is session state: the room stores no event of it beside the transcriptions themselves",
   "rules": [
     "§12.4.1"
   ],
@@ -11,6 +11,7 @@
   "requires_features": [
     "realtime"
   ],
+  "notes": "The room stores the two final transcriptions (RK-12.4-062) and nothing more.",
   "setup": {
     "channels": [
       {
@@ -66,9 +67,21 @@
     {
       "call": "realtime.transcribe",
       "channel_id": "rt",
+      "text": "Weather?",
+      "role": "user"
+    },
+    {
+      "call": "realtime.transcribe",
+      "channel_id": "rt",
       "text": "Checking.",
       "role": "assistant",
       "is_final": false
+    },
+    {
+      "call": "realtime.transcribe",
+      "channel_id": "rt",
+      "text": "Checking.",
+      "role": "assistant"
     },
     {
       "idle": true
@@ -107,7 +120,18 @@
   ],
   "expect": {
     "timeline": {
-      "r1": []
+      "r1": [
+        {
+          "content": {
+            "body": "Weather?"
+          }
+        },
+        {
+          "content": {
+            "body": "Checking."
+          }
+        }
+      ]
     }
   }
 }
