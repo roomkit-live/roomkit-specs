@@ -1164,3 +1164,57 @@ class SchemaTests(unittest.TestCase):
                 scenario = json.loads(fixture.read_text())
                 scenario["steps"].append(step)
                 self.assertEqual(validator.is_valid(scenario), valid)
+
+    def test_a_conference_states_its_media_arrivals_and_recordings(self) -> None:
+        schema = json.loads((ROOT / "scenario.schema.json").read_text())
+        validator = Draft202012Validator(schema)
+        fixture = (
+            ROOT
+            / "scenarios/conference/a-lane-s-utterance-is-one-room-event-attributed-to-its-publisher.json"
+        )
+        self.assertTrue(validator.is_valid(json.loads(fixture.read_text())))
+        for member, value, valid in (
+            ("vad", [None, {"type": "speech_end"}], True),
+            ("vad", [{"type": "loud"}], False),
+            ("stt", None, True),
+            ("stt", {"streams": [{"results": [{"text": "Hi"}], "gate": "held"}]}, True),
+            ("stt", "Hi", False),
+            ("agc", {"output": "AQI="}, True),
+            ("denoiser", {"gain": 2}, False),
+            ("recording", {}, True),
+            ("recording", {"format": "flac", "encryption": "vault", "write_gates": {"mic": "w"}}, True),
+            ("recording", {"write_gates": {"mic": 1}}, False),
+            ("recording", {"recorder": "named"}, False),
+            ("max_queued_frames", 2, True),
+            ("max_queued_frames", 0, False),
+            ("address_keys", ["caller_number"], True),
+            ("address_keys", "caller_number", False),
+        ):
+            with self.subTest(member=member, value=value):
+                scenario = json.loads(fixture.read_text())
+                scenario["steps"][0][member] = value
+                self.assertEqual(validator.is_valid(scenario), valid)
+        for step, valid in (
+            ({"call": "conference.join", "channel_id": "conf", "participant_id": "d1",
+              "display_name": "Dial-in", "metadata": {"phone_number": "+15550101"},
+              "client_metadata": {}, "asserts_provenance": False}, True),
+            ({"call": "conference.join", "channel_id": "conf", "participant_id": "d1",
+              "asserts_provenance": "no"}, False),
+            ({"call": "conference.feed", "channel_id": "conf", "track_id": "mic",
+              "frames": ["AQA="], "sample_rate": 48000, "channels": 2, "repeat": 3}, True),
+            ({"call": "conference.feed", "channel_id": "conf", "track_id": "mic"}, False),
+            ({"call": "conference.feed", "channel_id": "conf", "track_id": "mic",
+              "frames": ["AQA="], "sample_rate": 0}, False),
+            ({"call": "conference.settle", "channel_id": "conf", "track_ids": ["mic"]}, True),
+            ({"call": "conference.settle", "channel_id": "conf", "track_ids": []}, False),
+            ({"call": "conference.read", "channel_id": "conf"}, True),
+            ({"call": "conference.read"}, False),
+            ({"call": "recording.read", "channel_id": "conf"}, True),
+            ({"call": "recording.read", "recorder": "named"}, True),
+            ({"call": "recording.read", "recorder": "named", "channel_id": "conf"}, False),
+            ({"call": "recording.read"}, False),
+        ):
+            with self.subTest(step=step):
+                scenario = json.loads(fixture.read_text())
+                scenario["steps"].append(step)
+                self.assertEqual(validator.is_valid(scenario), valid)

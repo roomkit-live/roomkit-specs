@@ -2758,6 +2758,8 @@
             "conference.unmute",
             "conference.connection_quality",
             "conference.tool_call",
+            "conference.feed",
+            "conference.settle",
             "conference.read",
             "conference.ensure_bot",
             "conference.plug",
@@ -3049,6 +3051,240 @@
                 "additionalProperties": {
                   "type": "string"
                 }
+              },
+              "vad": {
+                "type": "array",
+                "items": {
+                  "oneOf": [
+                    {
+                      "type": "null"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "enum": [
+                            "speech_start",
+                            "speech_end",
+                            "audio_level",
+                            "silence"
+                          ]
+                        },
+                        "duration_ms": {
+                          "type": "number"
+                        },
+                        "confidence": {
+                          "type": "number"
+                        },
+                        "level_db": {
+                          "type": "number"
+                        }
+                      },
+                      "required": [
+                        "type"
+                      ],
+                      "additionalProperties": false
+                    }
+                  ]
+                }
+              },
+              "stt": {
+                "oneOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "supports_diarization": {
+                        "type": "boolean"
+                      },
+                      "keeps_stream_across_turns": {
+                        "type": "boolean"
+                      },
+                      "supports_language_override": {
+                        "type": "boolean"
+                      },
+                      "streams": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "results": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "text": {
+                                    "type": "string"
+                                  },
+                                  "final": {
+                                    "type": "boolean"
+                                  },
+                                  "language": {
+                                    "type": "string"
+                                  },
+                                  "speech_start": {
+                                    "type": "boolean"
+                                  },
+                                  "gate": {
+                                    "type": "string"
+                                  },
+                                  "segments": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "speaker": {
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ]
+                                        },
+                                        "text": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "required": [
+                                        "speaker",
+                                        "text"
+                                      ],
+                                      "additionalProperties": false
+                                    }
+                                  }
+                                },
+                                "required": [
+                                  "text"
+                                ],
+                                "additionalProperties": false
+                              }
+                            },
+                            "at_end": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "text": {
+                                    "type": "string"
+                                  },
+                                  "final": {
+                                    "type": "boolean"
+                                  },
+                                  "language": {
+                                    "type": "string"
+                                  },
+                                  "speech_start": {
+                                    "type": "boolean"
+                                  },
+                                  "segments": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "speaker": {
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ]
+                                        },
+                                        "text": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "required": [
+                                        "speaker",
+                                        "text"
+                                      ],
+                                      "additionalProperties": false
+                                    }
+                                  }
+                                },
+                                "required": [
+                                  "text"
+                                ],
+                                "additionalProperties": false
+                              }
+                            },
+                            "gate": {
+                              "type": "string"
+                            },
+                            "then": {
+                              "enum": [
+                                "end",
+                                "fail"
+                              ]
+                            }
+                          },
+                          "additionalProperties": false
+                        }
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                ]
+              },
+              "agc": {
+                "type": "object",
+                "properties": {
+                  "output": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "denoiser": {
+                "type": "object",
+                "properties": {
+                  "output": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "recording": {
+                "type": "object",
+                "properties": {
+                  "format": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "storage": {
+                    "type": "string"
+                  },
+                  "metadata": {
+                    "type": "object"
+                  },
+                  "encryption": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "minLength": 1
+                  },
+                  "storage_encrypted_at_rest": {
+                    "type": "boolean"
+                  },
+                  "write_gates": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  }
+                },
+                "additionalProperties": false
+              },
+              "max_queued_frames": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "address_keys": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
               }
             }
           }
@@ -3195,6 +3431,100 @@
               },
               "arguments": {
                 "type": "object"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "conference.join"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "display_name": {
+                "type": "string"
+              },
+              "metadata": {
+                "type": "object"
+              },
+              "client_metadata": {
+                "type": "object"
+              },
+              "asserts_provenance": {
+                "type": "boolean"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "conference.feed"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "channel_id",
+              "track_id",
+              "frames"
+            ],
+            "properties": {
+              "channel_id": {
+                "type": "string"
+              },
+              "track_id": {
+                "type": "string"
+              },
+              "frames": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "sample_rate": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "channels": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "repeat": {
+                "type": "integer",
+                "minimum": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "conference.settle"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "channel_id"
+            ],
+            "properties": {
+              "channel_id": {
+                "type": "string"
+              },
+              "track_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "minItems": 1,
+                "uniqueItems": true
               }
             }
           }
@@ -3725,11 +4055,24 @@
             }
           },
           "then": {
-            "required": [
-              "recorder"
+            "oneOf": [
+              {
+                "required": [
+                  "recorder"
+                ]
+              },
+              {
+                "required": [
+                  "channel_id"
+                ]
+              }
             ],
             "properties": {
               "recorder": {
+                "type": "string",
+                "minLength": 1
+              },
+              "channel_id": {
                 "type": "string",
                 "minLength": 1
               }

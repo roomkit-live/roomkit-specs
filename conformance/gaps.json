@@ -81,21 +81,6 @@
       "card": "RMK-2070",
       "note": "step: conference_already_attached error name: a second conference channel attached to a room already holding one, refused under a name no runner error table holds."
     },
-    "RK-12.10.1-005": {
-      "class": "step",
-      "card": "RMK-2070",
-      "note": "step: conference.feed: speech on a participant's track stored as a RoomEvent of the room."
-    },
-    "RK-12.10.1-006": {
-      "class": "step",
-      "card": "RMK-2070",
-      "note": "step: conference.feed: a transcription through BEFORE_BROADCAST, the room's permissions and the broadcast to its other channels, as any inbound event."
-    },
-    "RK-12.10.1-010": {
-      "class": "step",
-      "card": "RMK-2070",
-      "note": "step: conference.feed: two participants speaking on their own tracks, each transcription attributed to its track's publisher with no diarization stage."
-    },
     "RK-12.10.12-006": {
       "class": "step",
       "card": "RMK-2076",
@@ -286,110 +271,20 @@
       "card": "RMK-2076",
       "note": "step: conference.open options (tool_policy), the conference model steps' read of the declared tools."
     },
-    "RK-12.10.2-024": {
-      "class": "step",
-      "card": "RMK-2070",
-      "note": "step: conference.feed: a screen share's sound, a track of kind audio, transcribed and recorded like any audio track, attributed to the participant sharing."
-    },
     "RK-12.10.2-027": {
       "class": "step",
       "card": "RMK-2070",
       "note": "step: conference.mint, conference.read: the participant_id a mint hands the backend is the room Participant.id."
-    },
-    "RK-12.10.2-030": {
-      "class": "step",
-      "card": "RMK-2070",
-      "note": "step: conference.join metadata: an asserted caller number handed to identity resolution; the UNKNOWN record with the backend identity as external_id is writable today."
-    },
-    "RK-12.10.2-031": {
-      "class": "step",
-      "card": "RMK-2070",
-      "note": "step: conference.join metadata: a dial-in's asserted caller number reaching the Identity a text from that number reaches."
-    },
-    "RK-12.10.2-033": {
-      "class": "step",
-      "card": "RMK-2070",
-      "note": "step: conference.join metadata: a participant arriving with an asserted address, resolved before it speaks."
-    },
-    "RK-12.10.2-034": {
-      "class": "step",
-      "card": "RMK-2070",
-      "note": "step: conference.join metadata: the resolved Identity linked through identity_id on the record keyed on the backend identity."
     },
     "RK-12.10.2-035": {
       "class": "step",
       "card": "RMK-2070",
       "note": "step: conference.open options (identity_address_keys), conference.join metadata: keys an integrator configures read in place of the defaults; the documented keys are by review."
     },
-    "RK-12.10.2-036": {
-      "class": "step",
-      "card": "RMK-2070",
-      "note": "step: conference.join metadata: an arrival asserting only the number it dialled, left unresolved."
-    },
-    "RK-12.10.2-038": {
-      "class": "step",
-      "card": "RMK-2070",
-      "note": "step: conference.join metadata: an address the participant's client supplied, left unresolved."
-    },
-    "RK-12.10.2-039": {
-      "class": "step",
-      "card": "RMK-2070",
-      "note": "step: conference.join metadata (provenance flag): a backend that cannot tell, its participant left unknown."
-    },
-    "RK-12.10.2-040": {
-      "class": "step",
-      "card": "RMK-2070",
-      "note": "step: conference.join metadata: an asserted generic key resolved over an unasserted provider key."
-    },
     "RK-12.10.2-041": {
       "class": "step",
       "card": "RMK-2070",
       "note": "step: conference.open options (identity_trusts_unasserted_metadata), conference.join metadata: an unasserted address resolved once the integrator widens the default."
-    },
-    "RK-12.10.2-042": {
-      "class": "step",
-      "card": "RMK-2070",
-      "note": "step: conference.join metadata: an unconfigured channel resolving nothing on an unasserted address."
-    },
-    "RK-12.10.2-043": {
-      "class": "step",
-      "card": "RMK-2070",
-      "note": "step: conference.join metadata: the resolver's context carrying the unasserted attributes apart from the asserted ones, which the scripted resolver would record."
-    },
-    "RK-12.10.2-044": {
-      "class": "step",
-      "card": "RMK-2070",
-      "note": "step: conference.join metadata: the provider attributes under one key of the Participant's metadata, an integrator's field beside them kept."
-    },
-    "RK-12.10.2-045": {
-      "class": "step",
-      "card": "RMK-2070",
-      "note": "step: conference.join metadata: the record keeping asserted and unasserted attributes apart."
-    },
-    "RK-12.10.2-046": {
-      "class": "step",
-      "card": "RMK-2070",
-      "note": "step: conference.join metadata: attributes past the bound or oversize left out of the record."
-    },
-    "RK-12.10.2-047": {
-      "class": "step",
-      "card": "RMK-2070",
-      "note": "step: conference.join metadata: an arrival resolved on its address firing no ON_IDENTITY_* hook."
-    },
-    "RK-12.10.2-048": {
-      "class": "step",
-      "card": "RMK-2070",
-      "note": "step: conference.join metadata: an ambiguous answer recorded as a pending identification with its candidates, a rejection leaving the participant unknown."
-    },
-    "RK-12.10.2-049": {
-      "class": "step",
-      "card": "RMK-2070",
-      "note": "step: conference.join metadata: a resolver held past identity_timeout_ms, the participant joining unknown and identity_timeout emitted."
-    },
-    "RK-12.10.2-050": {
-      "class": "step",
-      "card": "RMK-2070",
-      "note": "step: conference.join metadata: a resolver that fails, the participant still joining."
     },
     "RK-12.10.2-052": {
       "class": "step",
@@ -446,11 +341,6 @@
       "card": "RMK-2070",
       "note": "step: conference.mint, conference.read: the display_name on record handed to mint_access."
     },
-    "RK-12.10.3-053": {
-      "class": "step",
-      "card": "RMK-2070",
-      "note": "step: conference.join metadata (display_name): a reported name filling a record that has none, never one the integrator set."
-    },
     "RK-12.10.3-056": {
       "class": "step",
       "card": "RMK-2070",
@@ -470,11 +360,6 @@
       "class": "step",
       "card": "RMK-2076",
       "note": "step: conference.open options: a recording without a recorder and a recorder without a recording refused, e2ee on a backend without E2EE refused, the binding's channel type read; the record's shape and defaults are pinned by Python's public API snapshot (ConferenceChannel), suspect twin RMK-1966."
-    },
-    "RK-12.10.4-008": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.feed with a gated recognizer: recognition held on one track while another track's utterance is transcribed."
     },
     "RK-12.10.4-019": {
       "class": "step",
@@ -731,60 +616,10 @@
       "card": "RMK-2076",
       "note": "step: conference.fault, conference.mint, close: a mint held as the kit closes returns no credential, and close_backend comes after its cancellation (conference.read)."
     },
-    "RK-12.10.4-145": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.feed: PCM frames on a track, a scripted lane VAD and STT; the transcription event's participant."
-    },
-    "RK-12.10.4-146": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.feed with a scripted identity resolver: two utterances of a resolved participant, no resolution per utterance and no on_identity_unknown."
-    },
-    "RK-12.10.4-147": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.feed: two tracks speaking at once, each utterance transcribed apart."
-    },
-    "RK-12.10.4-149": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.feed with frames at another rate: the scripted VAD and STT receive the normalised format."
-    },
-    "RK-12.10.4-150": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.feed: an utterance of several frames gives one transcription event."
-    },
     "RK-12.10.4-151": {
       "class": "step",
       "card": "RMK-2076",
       "note": "step: conference.open options: stt with a pipeline holding no VAD refused."
-    },
-    "RK-12.10.4-152": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.feed: a lane with no AEC configured transcribes."
-    },
-    "RK-12.10.4-153": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.feed: a lane with no diarization configured transcribes, attributed by its track."
-    },
-    "RK-12.10.4-155": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.feed: an on_transcription hook's context names the track and the participant."
-    },
-    "RK-12.10.4-156": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.feed: on_speech_start and on_speech_end hooks naming the participant and track."
-    },
-    "RK-12.10.4-157": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.feed after mute (the binding): no on_speech_start, no transcription."
     },
     "RK-12.10.4-158": {
       "class": "step",
@@ -801,30 +636,10 @@
       "card": "RMK-2076",
       "note": "step: conference.open options, conference.read: an audio track subscribed with stt, with recording and with realtime."
     },
-    "RK-12.10.4-169": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.feed, recording.read per conference track: frames while the binding is muted reach neither."
-    },
-    "RK-12.10.4-170": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.feed: an utterance while the binding is muted stores no transcription."
-    },
-    "RK-12.10.4-172": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.feed: a frame right after mute reaches no lane."
-    },
     "RK-12.10.4-174": {
       "class": "step",
       "card": "RMK-2076",
       "note": "step: conference.feed, conference.read: no lane left after mute."
-    },
-    "RK-12.10.4-175": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: recording.read per conference track: the recordings finalized at mute."
     },
     "RK-12.10.4-180": {
       "class": "step",
@@ -1051,11 +866,6 @@
       "card": "RMK-2076",
       "note": "step: framework_events media rows: conference_started and conference_ended paired by bot_session_id."
     },
-    "RK-12.10.8-006": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: recording.read per conference track: each track's recording receives the configuration's format and encryption; the record's shape and defaults are pinned by Python's public API snapshot (ConferenceRecordingConfig)."
-    },
     "RK-12.10.8-007": {
       "class": "step",
       "card": "RMK-2076",
@@ -1066,75 +876,15 @@
       "card": "RMK-2076",
       "note": "step: conference.open options (stt, recording, recorder), conference.read: one subscribe_track() per track."
     },
-    "RK-12.10.8-013": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: recording.read per conference track: two tracks, two recordings, each started with one track."
-    },
-    "RK-12.10.8-014": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: recording.read per conference track: participant_id and channel_id of each track."
-    },
-    "RK-12.10.8-015": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.feed at two rates, recording.read per conference track: each track's declared format."
-    },
     "RK-12.10.8-016": {
       "class": "step",
       "card": "RMK-2076",
       "note": "step: conference.open options (tts, recording, recorder), recording.read per conference track: the bot's track recorded apart."
     },
-    "RK-12.10.8-017": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.unpublish, recording.read per conference track: one recording finalized, the other still written."
-    },
-    "RK-12.10.8-018": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: mute (the binding), recording.read per conference track: the recordings stopped."
-    },
-    "RK-12.10.8-019": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.feed with a frame in another format, recording.read per conference track: not written."
-    },
-    "RK-12.10.8-020": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: recording.read per conference track (loss): the frames in another format counted."
-    },
-    "RK-12.10.8-022": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: recording.read per conference track with a gate on the recorder's writes: another track's frames still delivered."
-    },
-    "RK-12.10.8-024": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: recording.read per conference track with a gate on the recorder's writes: frames past the bound discarded."
-    },
     "RK-12.10.8-026": {
       "class": "step",
       "card": "RMK-2076",
       "note": "step: recording.read per conference track (loss), or conference.read (channel info): the discarded count."
-    },
-    "RK-12.10.8-027": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: recording.read per conference track with a gate on the writes, then conference.unpublish: every queued frame written before the stop."
-    },
-    "RK-12.10.8-028": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: recording.read per conference track with a recorder that stops draining: the teardown ends past the budget."
-    },
-    "RK-12.10.8-029": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: recording.read per conference track (loss): the frames the budget left counted."
     },
     "RK-12.10.8-030": {
       "class": "step",
@@ -1145,36 +895,6 @@
       "class": "step",
       "card": "RMK-2076",
       "note": "step: conference.open options (recording, recorder), conference.feed: on_recording_started and on_recording_stopped hooks."
-    },
-    "RK-12.10.8-032": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.feed on two tracks, conference.unpublish of one: its on_recording_stopped before the meeting ends."
-    },
-    "RK-12.10.8-033": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.feed, on_recording_started and on_recording_stopped hooks: room, track and participant."
-    },
-    "RK-12.10.8-034": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.feed with a sync on_recording_started hook that blocks: the recording goes on."
-    },
-    "RK-12.10.8-035": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.publish with no frame, recording.read per conference track: no recording, no hook."
-    },
-    "RK-12.10.9-002": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.feed, a websocket binding: the transcription delivered to it."
-    },
-    "RK-12.10.9-005": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.join metadata (an asserted caller number), a scripted identity resolver: the number resolved on arrival."
     },
     "RK-12.11-013": {
       "class": "step",
