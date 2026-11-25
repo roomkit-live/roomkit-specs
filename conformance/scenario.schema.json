@@ -476,6 +476,27 @@
           "description": "The channel's bound on a delegation's run, in milliseconds.",
           "type": "integer",
           "minimum": 1
+        },
+        "system_prompt": {
+          "description": "The channel's system prompt, which a session starts with unless it or its room sets one (\u00a712.4).",
+          "type": "string"
+        },
+        "voice": {
+          "description": "The channel's voice, which a session starts with unless it or its room sets one (\u00a712.4).",
+          "type": "string"
+        },
+        "on_usage": {
+          "description": "An on_usage callback registered on the provider (\u00a712.4.2): it records each call, then holds at its gate, then raises with its fails message.",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "gate": {
+              "type": "string"
+            },
+            "fails": {
+              "type": "string"
+            }
+          }
         }
       }
     },
@@ -2700,6 +2721,8 @@
             "realtime.audio",
             "realtime.response",
             "realtime.wait_idle",
+            "realtime.reconfigure",
+            "realtime.usage",
             "parse_voice_session",
             "emit_protocol_trace",
             "process_inbound",
@@ -4740,6 +4763,12 @@
               },
               "fail": {
                 "type": "string"
+              },
+              "system_prompt": {
+                "type": "string"
+              },
+              "voice": {
+                "type": "string"
               }
             }
           }
@@ -4970,6 +4999,12 @@
                 "items": {
                   "type": "string"
                 }
+              },
+              "system_prompt": {
+                "type": "string"
+              },
+              "voice": {
+                "type": "string"
               }
             }
           }
@@ -5117,6 +5152,74 @@
               "timeout_ms": {
                 "type": "integer",
                 "minimum": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "realtime.reconfigure"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "channel_id"
+            ],
+            "properties": {
+              "channel_id": {
+                "type": "string"
+              },
+              "room_id": {
+                "description": "The room whose session is reconfigured: the channel's first session's when absent.",
+                "type": "string"
+              },
+              "system_prompt": {
+                "type": "string"
+              },
+              "voice": {
+                "type": "string"
+              },
+              "tools": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "realtime.usage"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "channel_id",
+              "input_tokens",
+              "output_tokens"
+            ],
+            "properties": {
+              "channel_id": {
+                "type": "string"
+              },
+              "input_tokens": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "output_tokens": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "details": {
+                "description": "The provider's own keys, reported beside the two totals.",
+                "type": "object"
               }
             }
           }

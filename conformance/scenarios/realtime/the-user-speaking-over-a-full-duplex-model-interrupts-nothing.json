@@ -1,0 +1,204 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "realtime/the-user-speaking-over-a-full-duplex-model-interrupts-nothing",
+  "title": "On a full-duplex provider the user's speech over the model, as the provider reports it, fires the speech hooks and nothing else: no interrupt or truncation, no flush, and the model's audio still plays, where a provider that takes turns is truncated and flushed",
+  "rules": [
+    "§12.4.1"
+  ],
+  "requirements": [
+    "RK-12.4.1-018",
+    "RK-12.4.1-025"
+  ],
+  "requires_features": [
+    "realtime"
+  ],
+  "notes": "RK-12.4.1-025: the sensor here is the provider's speech events; a transport-level barge-in is not scripted.",
+  "setup": {
+    "channels": [
+      {
+        "id": "duplex",
+        "type": "realtime_voice",
+        "realtime": {
+          "full_duplex": true
+        }
+      },
+      {
+        "id": "turns",
+        "type": "realtime_voice",
+        "realtime": {}
+      },
+      {
+        "id": "src",
+        "type": "websocket"
+      }
+    ],
+    "rooms": [
+      {
+        "id": "r1",
+        "bindings": [
+          {
+            "channel_id": "src"
+          },
+          {
+            "channel_id": "duplex"
+          }
+        ]
+      },
+      {
+        "id": "r2",
+        "bindings": [
+          {
+            "channel_id": "src"
+          },
+          {
+            "channel_id": "turns"
+          }
+        ]
+      }
+    ],
+    "hooks": [
+      {
+        "name": "starts",
+        "trigger": "on_speech_start",
+        "execution": "async"
+      },
+      {
+        "name": "ends",
+        "trigger": "on_speech_end",
+        "execution": "async"
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "realtime.start",
+      "channel_id": "duplex",
+      "room_id": "r1",
+      "participant_id": "alice"
+    },
+    {
+      "call": "realtime.start",
+      "channel_id": "turns",
+      "room_id": "r2",
+      "participant_id": "alice"
+    },
+    {
+      "call": "realtime.response",
+      "channel_id": "duplex",
+      "edge": "start"
+    },
+    {
+      "call": "realtime.response",
+      "channel_id": "turns",
+      "edge": "start"
+    },
+    {
+      "call": "realtime.audio",
+      "channel_id": "duplex",
+      "source": "provider",
+      "frames": [
+        "ABAAEAAQABA="
+      ]
+    },
+    {
+      "call": "realtime.audio",
+      "channel_id": "turns",
+      "source": "provider",
+      "frames": [
+        "ABAAEAAQABA="
+      ]
+    },
+    {
+      "idle": true
+    },
+    {
+      "call": "realtime.speech",
+      "channel_id": "duplex",
+      "edge": "start"
+    },
+    {
+      "call": "realtime.speech",
+      "channel_id": "turns",
+      "edge": "start"
+    },
+    {
+      "idle": true
+    },
+    {
+      "call": "realtime.audio",
+      "channel_id": "duplex",
+      "source": "provider",
+      "frames": [
+        "ACAAIAAgACA="
+      ]
+    },
+    {
+      "idle": true
+    },
+    {
+      "call": "realtime.speech",
+      "channel_id": "duplex",
+      "edge": "end"
+    },
+    {
+      "call": "realtime.speech",
+      "channel_id": "turns",
+      "edge": "end"
+    },
+    {
+      "idle": true
+    },
+    {
+      "call": "realtime.read",
+      "channel_id": "duplex",
+      "expect": {
+        "result": {
+          "provider_calls": [],
+          "transport_calls": [],
+          "transport_audio": [
+            "ABAAEAAQABA=",
+            "ACAAIAAgACA="
+          ]
+        }
+      }
+    },
+    {
+      "call": "realtime.read",
+      "channel_id": "turns",
+      "expect": {
+        "result": {
+          "provider_calls": [
+            {
+              "call": "truncate_audio"
+            }
+          ],
+          "transport_calls": [
+            {
+              "call": "interrupt"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "expect": {
+    "hooks": {
+      "starts": [
+        {
+          "room_id": "r1"
+        },
+        {
+          "room_id": "r2"
+        }
+      ],
+      "ends": [
+        {
+          "room_id": "r1"
+        },
+        {
+          "room_id": "r2"
+        }
+      ]
+    }
+  }
+}
