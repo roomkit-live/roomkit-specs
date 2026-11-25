@@ -10,7 +10,7 @@
     "RK-12.7.5-005",
     "RK-12.7.5-007"
   ],
-  "notes": "Alice and Bob each feed full-scale samples [32767, -32768]. Summed as 16-bit integers they would wrap to [-2, 0]; promoted, they sum to [65534, -65536], and Carol receives them clamped to [32767, -32768], as 16-bit PCM. A headroom division of up to 2 before the clamp gives the same; a soft clipper that never reaches full scale would not. A mix carries each other session's latest frame, fed in an earlier step (RK-12.7.2-005), as RMK-2051 leaves it beside §12.7.5's mixing window.",
+  "notes": "Alice and Bob each feed full-scale samples [32767, -32768]. Summed as 16-bit integers they would wrap to [-2, 0]; promoted, they sum to [65534, -65536], and Carol receives them clamped to [32767, -32768], as 16-bit PCM. A headroom division of up to 2 before the clamp gives the same; a soft clipper that never reaches full scale would not. Bob's frame alone equals the clamped sum, so that a sum happened at all is the mix scenario's. A mix carries each other session's latest frame, fed in an earlier step (RK-12.7.2-005), as RMK-2051 leaves it beside §12.7.5's mixing window.",
   "requires_features": [
     "voice"
   ],
