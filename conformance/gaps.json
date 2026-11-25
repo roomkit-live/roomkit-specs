@@ -2031,11 +2031,6 @@
       "card": "RMK-2042",
       "note": "step: virtual clock (X-CLK): frames fed over one simulated second fire at most ten ON_INPUT_AUDIO_LEVEL; no Python test pins the throttle."
     },
-    "RK-12.7.2-007": {
-      "class": "step",
-      "card": "RMK-2054",
-      "note": "step: voice.open bridge as a config object (V1): a session past max_participants is not bridged, the refusal observable."
-    },
     "RK-12.7.5-008": {
       "class": "writable",
       "card": "RMK-2051",

@@ -1851,6 +1851,7 @@ refuses its value, a `ChannelId`).
 | `language_override_unsupported` | A session's STT language chosen on a voice channel whose recognizer reports `supports_language_override = false`, refused so that no language reaches it (§12.2) | `RuntimeError` from `VoiceChannel.set_stt_language` | — (no voice) |
 | `not_supported` | A method the voice transport or the TTS does not support: a digit sent through a transport that does not declare `dtmf_signaling` (§12.3.6), a dialogue asked of a TTS whose `max_dialogue_speakers` is 0 (§12.2) | `NotImplementedError` from `VoiceChannel.send_dtmf` or `TTSProvider.synthesize_dialogue` | — (no voice) |
 | `session_ended` | A digit sent on a voice session that ended (§12.3.6) | `RuntimeError` from `VoiceChannel.send_dtmf`, `Cannot send DTMF on ended session …` | — (no voice) |
+| `bridge_full` | A voice join to a room whose bridge holds `max_participants` sessions already, refused before the session is bound (§12.7.2) | `RuntimeError` from `RoomKit.join`, `Room … has reached max bridge participants (…)` | — (no voice) |
 | `shutdown_cancelled` | A close once the kit's shutdown was cut itself before it ended, to a caller nobody cancelled (§12.10.4) | `ShutdownCancelledError` | `RoomKitError::ShutdownCancelled` |
 
 ## Reentrancy cells

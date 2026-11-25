@@ -5360,6 +5360,9 @@
     "RK-12.7.2-006": {
       "voice/a-disabled-bridge-forwards-no-frame": "7177334a05cdca2ecafd13fab9bdbd37c47ac6ad573e87bccb0e3869b27053ff"
     },
+    "RK-12.7.2-007": {
+      "voice/a-room-bridges-no-more-sessions-than-max-participants": "58de0000962c84912efda46cf14b31410393f98b4b08554191569649e394d59d"
+    },
     "RK-12.7.2-008": {
       "voice/a-forward-bridge-sends-each-frame-unmixed-to-every-other-participant": "84be9abb9fa37605c6241d2de065fc2c6eafc3264b7b66b74caac95f7905c220"
     },

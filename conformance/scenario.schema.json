@@ -8096,7 +8096,8 @@
         "shutdown_cancelled",
         "language_override_unsupported",
         "not_supported",
-        "session_ended"
+        "session_ended",
+        "bridge_full"
       ]
     },
     "expect": {
