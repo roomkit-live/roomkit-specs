@@ -772,3 +772,67 @@ class SchemaTests(unittest.TestCase):
                 scenario = json.loads(fixture.read_text())
                 scenario["steps"].append(step)
                 self.assertEqual(validator.is_valid(scenario), valid)
+
+    def test_a_voice_bridge_states_its_configuration_and_transports(self) -> None:
+        schema = json.loads((ROOT / "scenario.schema.json").read_text())
+        validator = Draft202012Validator(schema)
+        fixture = ROOT / "scenarios/voice/each-session-is-served-by-its-own-transport.json"
+        self.assertTrue(validator.is_valid(json.loads(fixture.read_text())))
+        for member, value, valid in (
+            ("bridge", True, True),
+            ("bridge", {"mixing_strategy": "mix", "max_participants": 3}, True),
+            ("bridge", {"enabled": False}, True),
+            ("bridge", {"mixing_strategy": "sum"}, False),
+            ("bridge", {"max_participants": 0}, False),
+            ("bridge", {"mixer": "numpy"}, False),
+            ("tts", None, True),
+            ("tts", False, False),
+            ("sample_rates", {"bob": {"input_sample_rate": 8000}}, True),
+            ("sample_rates", {"bob": {"rate": 8000}}, False),
+            ("sample_rates", {"bob": {"output_sample_rate": 0}}, False),
+        ):
+            with self.subTest(member=member, value=value):
+                scenario = json.loads(fixture.read_text())
+                scenario["steps"][0][member] = value
+                self.assertEqual(validator.is_valid(scenario), valid)
+        for step, valid in (
+            ({"call": "voice.add_backend", "channel_id": "phone", "backend": "line"}, True),
+            (
+                {
+                    "call": "voice.add_backend",
+                    "channel_id": "phone",
+                    "backend": "line",
+                    "capabilities": ["native_aec"],
+                    "sample_rates": {"caller": {"input_sample_rate": 8000}},
+                },
+                True,
+            ),
+            ({"call": "voice.add_backend", "channel_id": "phone", "backend": "primary"}, False),
+            ({"call": "voice.add_backend", "channel_id": "phone"}, False),
+            ({"call": "voice.connect", "channel_id": "phone", "participant_id": "caller"}, True),
+            ({"call": "voice.connect", "channel_id": "phone", "backend": "line"}, False),
+            (
+                {"call": "voice.client_disconnected", "channel_id": "phone", "participant_id": "c"},
+                True,
+            ),
+            ({"call": "voice.client_disconnected", "channel_id": "phone"}, False),
+            (
+                {
+                    "call": "voice.join",
+                    "channel_id": "phone",
+                    "participant_id": "carol",
+                    "room_id": "r2",
+                    "backend": "line",
+                    "push": True,
+                },
+                True,
+            ),
+            (
+                {"call": "voice.join", "channel_id": "phone", "participant_id": "c", "push": 1},
+                False,
+            ),
+        ):
+            with self.subTest(step=step):
+                scenario = json.loads(fixture.read_text())
+                scenario["steps"].append(step)
+                self.assertEqual(validator.is_valid(scenario), valid)

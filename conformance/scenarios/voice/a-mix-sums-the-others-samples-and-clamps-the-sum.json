@@ -1,0 +1,78 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "voice/a-mix-sums-the-others-samples-and-clamps-the-sum",
+  "title": "A mix adds the others' samples without 16-bit overflow and clamps the sum to the 16-bit range",
+  "rules": [
+    "§12.7.5"
+  ],
+  "requirements": [
+    "RK-12.7.5-004",
+    "RK-12.7.5-005",
+    "RK-12.7.5-007"
+  ],
+  "notes": "Alice feeds [20000, -20000, 1000] and Bob [20000, -20000, 2000]. Summed as 16-bit integers, the first two samples would wrap to -25536 and 25536; promoted, they sum to 40000 and -40000, clamped to 32767 and -32768. The scenario reads a mix of two sources, which this sum leaves unscaled; a mix of three is the headroom scenario's.",
+  "requires_features": [
+    "voice"
+  ],
+  "setup": {
+    "rooms": [
+      {
+        "id": "r1"
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "voice.open",
+      "channel_id": "phone",
+      "room_id": "r1",
+      "participants": [
+        "alice",
+        "bob",
+        "carol"
+      ],
+      "bridge": {
+        "mixing_strategy": "mix"
+      }
+    },
+    {
+      "call": "voice.feed",
+      "channel_id": "phone",
+      "participant_id": "alice",
+      "frames": [
+        "IE7gsegD"
+      ]
+    },
+    {
+      "call": "voice.settle",
+      "channel_id": "phone"
+    },
+    {
+      "call": "voice.feed",
+      "channel_id": "phone",
+      "participant_id": "bob",
+      "frames": [
+        "IE7gsdAH"
+      ]
+    },
+    {
+      "call": "voice.settle",
+      "channel_id": "phone"
+    },
+    {
+      "call": "voice.read",
+      "channel_id": "phone",
+      "expect": {
+        "result": {
+          "audio": {
+            "carol": [
+              "IE7gsegD",
+              "/38AgLgL"
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "expect": {}
+}

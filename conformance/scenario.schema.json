@@ -2371,6 +2371,9 @@
             "voice.dtmf_received",
             "voice.set_stt_language",
             "voice.flush_stt",
+            "voice.add_backend",
+            "voice.connect",
+            "voice.client_disconnected",
             "realtime.start",
             "realtime.end",
             "realtime.read",
@@ -3148,7 +3151,33 @@
                 }
               },
               "bridge": {
-                "type": "boolean"
+                "oneOf": [
+                  {
+                    "type": "boolean"
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "enabled": {
+                        "type": "boolean"
+                      },
+                      "max_participants": {
+                        "type": "integer",
+                        "minimum": 1
+                      },
+                      "mixing_strategy": {
+                        "enum": [
+                          "forward",
+                          "mix"
+                        ]
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                ]
+              },
+              "tts": {
+                "type": "null"
               },
               "playback_gate": {
                 "type": "string"
@@ -3378,6 +3407,23 @@
                 "additionalProperties": {
                   "type": "string",
                   "minLength": 1
+                }
+              },
+              "sample_rates": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "object",
+                  "properties": {
+                    "input_sample_rate": {
+                      "type": "integer",
+                      "minimum": 1
+                    },
+                    "output_sample_rate": {
+                      "type": "integer",
+                      "minimum": 1
+                    }
+                  },
+                  "additionalProperties": false
                 }
               },
               "aec": {
@@ -3757,6 +3803,16 @@
               "session_id": {
                 "type": "string",
                 "minLength": 1
+              },
+              "backend": {
+                "type": "string",
+                "minLength": 1
+              },
+              "room_id": {
+                "type": "string"
+              },
+              "push": {
+                "type": "boolean"
               }
             }
           }
@@ -3871,6 +3927,128 @@
                 }
               }
             }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "voice.add_backend"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "channel_id",
+              "backend"
+            ],
+            "properties": {
+              "channel_id": {
+                "type": "string"
+              },
+              "backend": {
+                "type": "string",
+                "minLength": 1,
+                "not": {
+                  "const": "primary"
+                }
+              },
+              "capabilities": {
+                "type": "array",
+                "items": {
+                  "enum": [
+                    "interruption",
+                    "barge_in",
+                    "native_aec",
+                    "native_agc",
+                    "dtmf_inband",
+                    "dtmf_signaling",
+                    "native_bridge"
+                  ]
+                },
+                "uniqueItems": true
+              },
+              "session_ids": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "sample_rates": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "object",
+                  "properties": {
+                    "input_sample_rate": {
+                      "type": "integer",
+                      "minimum": 1
+                    },
+                    "output_sample_rate": {
+                      "type": "integer",
+                      "minimum": 1
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              },
+              "playback_gate": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "voice.connect"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "channel_id",
+              "participant_id"
+            ],
+            "properties": {
+              "channel_id": {
+                "type": "string"
+              },
+              "participant_id": {
+                "type": "string"
+              },
+              "backend": {
+                "type": "string",
+                "minLength": 1
+              },
+              "room_id": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "voice.client_disconnected"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "channel_id",
+              "participant_id"
+            ],
+            "properties": {
+              "channel_id": {
+                "type": "string"
+              },
+              "participant_id": {
+                "type": "string"
+              }
+            }
+          }
         },
         {
           "if": {

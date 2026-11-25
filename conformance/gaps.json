@@ -2336,145 +2336,20 @@
       "card": "RMK-2042",
       "note": "step: voice.open capabilities (S2) and an InterruptionConfig on voice.open (S1): a transport barge-in told apart from the VAD's own, under a strategy that does not act on the VAD's speech start; ON_BARGE_IN from the transport, then the speech edges."
     },
-    "RK-12.7.2-006": {
-      "class": "step",
-      "card": "RMK-2054",
-      "note": "step: voice.open bridge as a config object (V1): enabled false forwards nothing."
-    },
     "RK-12.7.2-007": {
       "class": "step",
       "card": "RMK-2054",
       "note": "step: voice.open bridge as a config object (V1): a session past max_participants is not bridged, the refusal observable."
     },
-    "RK-12.7.2-010": {
-      "class": "step",
-      "card": "RMK-2054",
-      "note": "step: one voice channel attached to two rooms (V6): frames reach only the sessions of their own room."
-    },
-    "RK-12.7.2-014": {
-      "class": "step",
-      "card": "RMK-2054",
-      "note": "step: mixing_strategy mix in voice.open (V1): with three participants, each receives the mix of the two others."
-    },
-    "RK-12.7.3-010": {
-      "class": "step",
-      "card": "RMK-2054",
-      "note": "step: voice.leave (V5): frames fed after a participant leaves no longer reach it."
-    },
-    "RK-12.7.3-012": {
-      "class": "step",
-      "card": "RMK-2054",
-      "note": "step: voice.open without a TTS provider (no audit family; the runners always give one): frames forwarded, nothing synthesized."
-    },
-    "RK-12.7.3-019": {
-      "class": "step",
-      "card": "RMK-2054",
-      "note": "step: a second transport on one voice channel and per-transport reads (V3): the added transport's inbound audio, session-ready signal, barge-in and DTMF reach the channel; tests/test_voice_add_backend.py proves it natively."
-    },
-    "RK-12.7.3-020": {
-      "class": "step",
-      "card": "RMK-2054",
-      "note": "step: a second transport on one voice channel and per-transport reads (V3): a channel built without a backend refuses add_backend, and the added transport's audio goes through the primary's pipeline."
-    },
-    "RK-12.7.3-021": {
-      "class": "step",
-      "card": "RMK-2054",
-      "note": "step: a second transport on one voice channel and per-transport reads (V3): each session is served by one transport only."
-    },
-    "RK-12.7.3-022": {
-      "class": "step",
-      "card": "RMK-2054",
-      "note": "step: a second transport on one voice channel and per-transport reads (V3): a join naming a backend, or none, lands the session on the named, the holding or the primary backend."
-    },
-    "RK-12.7.3-023": {
-      "class": "step",
-      "card": "RMK-2054",
-      "note": "step: a second transport on one voice channel and per-transport reads (V3): joining on a pull-model transport starts it listening."
-    },
-    "RK-12.7.3-024": {
-      "class": "step",
-      "card": "RMK-2054",
-      "note": "step: a second transport on one voice channel and per-transport reads (V3): bridged audio, TTS, transcriptions, a playback cancel, DTMF and the hang-up of a session go out on its own transport."
-    },
-    "RK-12.7.3-025": {
-      "class": "step",
-      "card": "RMK-2054",
-      "note": "step: a second transport on one voice channel and per-transport reads (V3): a response delivered to the room reaches the sessions of both transports."
-    },
-    "RK-12.7.3-026": {
-      "class": "step",
-      "card": "RMK-2054",
-      "note": "step: a second transport on one voice channel and per-transport reads (V3): an interruption cancels playback where the session's own backend has INTERRUPTION, and NATIVE_AEC is read on that backend."
-    },
-    "RK-12.7.3-027": {
-      "class": "step",
-      "card": "RMK-2054",
-      "note": "step: a second transport on one voice channel and per-transport reads (V3): adding the same transport twice wires it once."
-    },
-    "RK-12.7.3-028": {
-      "class": "step",
-      "card": "RMK-2054",
-      "note": "step: a second transport on one voice channel and per-transport reads (V3): closing the channel closes the added transport."
-    },
-    "RK-12.7.4-002": {
-      "class": "step",
-      "card": "RMK-2054",
-      "note": "step: per-participant sample rates in voice.open and the audio format in voice.read (V2): a frame bridged to a session of another rate arrives at that session's output rate."
-    },
-    "RK-12.7.4-003": {
-      "class": "step",
-      "card": "RMK-2054",
-      "note": "step: per-participant sample rates in voice.open (V2): each target receives the frame resampled to its own rate."
-    },
-    "RK-12.7.5-001": {
-      "class": "step",
-      "card": "RMK-2054",
-      "note": "step: mixing_strategy mix in voice.open (V1): with three participants, none receives its own audio."
-    },
-    "RK-12.7.5-004": {
-      "class": "step",
-      "card": "RMK-2054",
-      "note": "step: mixing_strategy mix in voice.open (V1): the third participant receives the sample-wise sum of the two others' frames, without overflow."
-    },
-    "RK-12.7.5-005": {
-      "class": "step",
-      "card": "RMK-2054",
-      "note": "step: mixing_strategy mix in voice.open (V1): two loud frames mix to a clamped or normalized result (sample values in voice.read)."
-    },
-    "RK-12.7.5-006": {
-      "class": "step",
-      "card": "RMK-2054",
-      "note": "step: mixing_strategy mix in voice.open (V1): a mix of three or more sources is scaled down for headroom."
-    },
-    "RK-12.7.5-007": {
-      "class": "step",
-      "card": "RMK-2054",
-      "note": "step: mixing_strategy mix in voice.open (V1): the mix reaches its target as 16-bit PCM."
-    },
     "RK-12.7.5-008": {
-      "class": "step",
-      "card": "RMK-2054",
-      "note": "step: mixing_strategy mix in voice.open (V1): a source silent in the mixing window adds nothing to the mix (suspect RMK-2051)."
+      "class": "writable",
+      "card": "RMK-2051",
+      "note": "writable: voice.open bridge with mixing_strategy mix; Python keeps a quiet source's last frame in every mix, left as is by the maintainer (RMK-2051)."
     },
     "RK-12.7.5-009": {
-      "class": "step",
-      "card": "RMK-2054",
-      "note": "step: mixing_strategy mix in voice.open (V1): a mix made only of silence is not sent (suspect RMK-2051)."
-    },
-    "RK-12.7.6-007": {
-      "class": "step",
-      "card": "RMK-2054",
-      "note": "step: a voice bridge hook that replaces the frame bytes (V7): the replaced frame is the one forwarded."
-    },
-    "RK-12.7.8-008": {
-      "class": "step",
-      "card": "RMK-2054",
-      "note": "step: mixing_strategy mix in voice.open (V1), with three participants."
-    },
-    "RK-12.7.8-009": {
-      "class": "step",
-      "card": "RMK-2054",
-      "note": "step: per-participant sample rates in voice.open (V2)."
+      "class": "writable",
+      "card": "RMK-2051",
+      "note": "writable: voice.open bridge with mixing_strategy mix; Python forwards a mix made only of silence, left as is by the maintainer (RMK-2051)."
     },
     "RK-12.8.10-010": {
       "class": "step",

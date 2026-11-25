@@ -1,0 +1,105 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "voice/a-mix-of-three-sources-is-scaled-for-headroom",
+  "title": "With four participants, the mix of three sources is not their plain sum",
+  "rules": [
+    "§12.7.5"
+  ],
+  "requirements": [
+    "RK-12.7.5-006",
+    "RK-12.7.8-008"
+  ],
+  "notes": "Alice feeds [6000, 6000], Bob [1000, 1000], Carol [-1000, -1000]. Dave's third chunk mixes the three; their plain sum, [6000, 6000], is Alice's frame, which Bob and Dave first receive alone (Carol's first chunk shows its bytes). Two $as names never match equal values, so the mix of three differs from that sum. How much it is scaled is the implementation's (the RFC's divide by sqrt(N-1) is an example), and so is the scaling of a mix of two, left unasserted.",
+  "requires_features": [
+    "voice"
+  ],
+  "setup": {
+    "rooms": [
+      {
+        "id": "r1"
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "voice.open",
+      "channel_id": "phone",
+      "room_id": "r1",
+      "participants": [
+        "alice",
+        "bob",
+        "carol",
+        "dave"
+      ],
+      "bridge": {
+        "mixing_strategy": "mix"
+      }
+    },
+    {
+      "call": "voice.feed",
+      "channel_id": "phone",
+      "participant_id": "alice",
+      "frames": [
+        "cBdwFw=="
+      ]
+    },
+    {
+      "call": "voice.settle",
+      "channel_id": "phone"
+    },
+    {
+      "call": "voice.feed",
+      "channel_id": "phone",
+      "participant_id": "bob",
+      "frames": [
+        "6APoAw=="
+      ]
+    },
+    {
+      "call": "voice.settle",
+      "channel_id": "phone"
+    },
+    {
+      "call": "voice.feed",
+      "channel_id": "phone",
+      "participant_id": "carol",
+      "frames": [
+        "GPwY/A=="
+      ]
+    },
+    {
+      "call": "voice.settle",
+      "channel_id": "phone"
+    },
+    {
+      "call": "voice.read",
+      "channel_id": "phone",
+      "expect": {
+        "result": {
+          "audio": {
+            "bob": [
+              {
+                "$as": "alice-alone"
+              },
+              "$any"
+            ],
+            "carol": [
+              "cBdwFw==",
+              "$any"
+            ],
+            "dave": [
+              {
+                "$as": "alice-alone"
+              },
+              "$any",
+              {
+                "$as": "three-sources"
+              }
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "expect": {}
+}

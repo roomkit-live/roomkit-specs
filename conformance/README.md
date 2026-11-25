@@ -1158,17 +1158,20 @@ run's own kit when absent.
 | `recording.read` | `recorder` | the base64 chunks this recorder actually received, in order |
 | `recording.stop` | `room_id` | stop the room's recordings, returning their `recording_id` and `url` |
 | `voice.open` | `room_id`, `channel_id`, `participants` and the optional provider inputs below | registers and attaches a voice channel, then joins the named participants to that room |
-| `voice.feed` | `channel_id`, `participant_id`, `frames` (base64 PCM16), optional `sample_rate` (16000 by default), `channels` (1 by default) and `timestamp_ms` (every frame of the step carries it; none by default), `repeat` (1 by default) | the transport delivers these inbound frames in order, in that format, the whole list `repeat` times over |
+| `voice.feed` | `channel_id`, `participant_id`, `frames` (base64 PCM16), optional `sample_rate` (16000 by default), `channels` (1 by default) and `timestamp_ms` (every frame of the step carries it; none by default), `repeat` (1 by default) | the participant's transport (the one holding its session) delivers these inbound frames in order, in that format, the whole list `repeat` times over |
 | `voice.say` | `channel_id`, `participant_id`, `text` | speak to the participant, awaiting playback |
 | `voice.stream` | `channel_id`, `chunks` (strings) | deliver a streamed reply to the channel |
-| `voice.barge_in` | `channel_id`, `participant_id` | the transport signals an interruption |
+| `voice.barge_in` | `channel_id`, `participant_id` | the participant's transport signals an interruption |
 | `voice.settle` | `channel_id` | wait for outstanding voice work after the utterance, playback or bridge frame; in continuous mode, until the recognizer was handed the audio fed and the work its results started has run, the session's own stream left open |
-| `voice.read` | `channel_id`, optional `stages` (stage names) and `calls` (call names) | `synthesized` (the sentences the TTS provider received); `audio` (per participant, the base64 chunks received by their transport, in order: each frame the bridge forwarded is one chunk, and so is each spoken reply, its streamed audio joined); `chunks` (per participant, each AudioChunk their transport received, in order, a reply's every chunk: `data`, `sample_rate`, `channels`); `sessions` (per participant, each session joined, in order: `session_id` and its `state` as the transport reports it, `active` or `ended`); `stages` (each call the scripted stages received, in order: only those of the named stages when `stages` is given, and only the named calls when `calls` is; see Scripted voice sessions); with `stt`, `stt_streams`: one entry per stream the recognizer was opened with, in order, its `language` (the language the channel passed, null for none) and the `sound_ms` and `silence_ms` of audio it received (a chunk with a nonzero sample is sound) |
+| `voice.read` | `channel_id`, optional `stages` (stage names) and `calls` (call names) | `synthesized` (the sentences the TTS provider received); `audio` (per participant, the base64 chunks received by their transport, in order: each frame the bridge forwarded is one chunk, and so is each spoken reply, its streamed audio joined); `chunks` (per participant, each AudioChunk their transport received, in order, a reply's every chunk: `data`, `sample_rate`, `channels`); `sessions` (per participant, each session joined, in order: `session_id` and its `state` as the transport reports it, `active` or `ended`); `stages` (each call the scripted stages received, in order: only those of the named stages when `stages` is given, and only the named calls when `calls` is; see Scripted voice sessions); with `stt`, `stt_streams`: one entry per stream the recognizer was opened with, in order, its `language` (the language the channel passed, null for none) and the `sound_ms` and `silence_ms` of audio it received (a chunk with a nonzero sample is sound); `transports` (per transport, `primary` and each `voice.add_backend` named, what it was asked to do: each distinct call once, in the order first made, `call` (`connect`, `start_listening`, `send_audio`, `send_audio_sync`, `send_transcription`, `cancel_audio`, `send_dtmf`, `stop_listening`, `disconnect`, `close`) and the `participant_id` of the session it names, none for `close`) |
 | `voice.set_stt_language` | `channel_id`, `participant_id`, `language` (a string, or null for the recognizer's own) | choose the session's STT language, from its next stream on (§12.2) |
 | `voice.flush_stt` | `channel_id`, `participant_id`, optional `route` (default false) | in batch mode, transcribe the session's buffered audio; with `route`, the transcript goes to the room as an utterance would; the result's `text` |
-| `voice.join` | `channel_id`, `participant_id`, optional `session_id` | joins the participant to the channel's room again (the kit's `join`), the transport naming the new session `session_id` when given: the participant's session is now that one |
+| `voice.join` | `channel_id`, `participant_id`, optional `session_id`, `backend`, `room_id` and `push` | joins the participant to the channel's room again (the kit's `join`), or to `room_id`, a room the channel is attached to; with `backend`, a transport `voice.add_backend` named, the join names it (`join(…, backend=)`). With `push: true`, it joins the session `voice.connect` made for the participant (the push model); otherwise the transport, `backend` or the primary, makes a new session, named `session_id` when given (the pull model). The participant's session is now that one |
 | `voice.leave` | `channel_id`, `participant_id` | the kit's `leave` of the participant's session |
-| `voice.dtmf_received` | `channel_id`, `participant_id`, `digit`, `duration_ms` | the transport receives the digit by signalling and calls the callbacks registered on its `on_dtmf_received` (§12.2) |
+| `voice.dtmf_received` | `channel_id`, `participant_id`, `digit`, `duration_ms` | the participant's transport receives the digit by signalling and calls the callbacks registered on its `on_dtmf_received` (§12.2) |
+| `voice.add_backend` | `channel_id`, `backend` (a name, never `primary`), optional `capabilities`, `session_ids`, `sample_rates` and `playback_gate`, as on `voice.open` | the channel's `add_backend` (§12.7.3) with the scripted transport of that name, built with those traits on its first add; a later add of the name adds that same transport again |
+| `voice.connect` | `channel_id`, `participant_id`, optional `backend` (`primary` by default) and `room_id` (the `voice.open` room by default) | the transport takes the participant's call on its own (its `connect`), as a transport an incoming call reaches does: the session it makes is the participant's, joined to no room until a `voice.join` with `push` |
+| `voice.client_disconnected` | `channel_id`, `participant_id` | the participant's transport reports its client gone: it calls the callbacks registered on its `on_client_disconnected` (§12.2) |
 | `realtime.start` | `channel_id`, `room_id`, `participant_id` | opens the realtime session |
 | `realtime.end` | `channel_id` | ends the session |
 | `realtime.read` | `channel_id` | the provider's `injections` (text, role, silent) and `results` (call_id, result), and the tool `handlers` (name, outcome of `returned` or `interrupted`), in observation order |
@@ -1342,8 +1345,14 @@ real channel input. The optional inputs on `voice.open` script its providers:
   strategy is IMMEDIATE, cutting from the playback's first moment; the echo
   guard keeps its defaults.
 - `bridge` forwards permitted frames to the other participants when true.
-  `playback_gate` holds the playback at the transport until a step opens it,
-  so speech or a barge-in can arrive while the reply is playing.
+  An object instead is the channel's AudioBridgeConfig (§12.7.2): `enabled`
+  (true by default), `max_participants` (10) and `mixing_strategy`
+  (`forward` or `mix`, `forward` by default); the mixer is the
+  implementation's own. `playback_gate` holds the playback at the transport
+  until a step opens it, so speech or a barge-in can arrive while the reply is
+  playing.
+- `tts: null` builds the channel with no TTS provider; otherwise the channel
+  has a scripted one, whose sentences `voice.read` reports as `synthesized`.
 
 The transport's traits (§12.2, §12.3.4):
 
@@ -1360,6 +1369,12 @@ The transport's traits (§12.2, §12.3.4):
   session the transport creates is `active`, and reads `ended` once the
   transport disconnects it: on a voice channel, a session's state is its
   transport's.
+- `sample_rates` maps a participant to the sample rates the transport records
+  on each session it makes for that participant (§12.7.4), as a transport
+  states its own: `input_sample_rate` (16000 by default) and
+  `output_sample_rate` (the input rate by default).
+- The transport is a pull-model one: it streams a session's audio once told to
+  (`start_listening`), and stops when told (`stop_listening`).
 - `feeds_aec_reference: true` declares that the transport feeds the AEC
   reference itself as it plays (`feeds_aec_reference`, strategy 1 of
   §12.3.4); the pipeline's AEC still processes the captured frames.
@@ -1412,7 +1427,8 @@ Voice hook observations under `expect.hooks` expose `voice.participant_id`
 from the session and the payload's scalar fields, such as the transcript's
 `text` or a detected tone's `digit`. The TTS hooks carry only `voice.text`.
 A synchronous transcription hook can replace the words with a `modify`
-result whose `event.text` holds the replacement.
+result whose `event.text` holds the replacement. A bridge hook can replace
+the frame bytes in `event.frame.data` (base64).
 
 ### Calls on the store
 

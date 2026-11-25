@@ -1,0 +1,86 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "voice/a-mix-bridge-sends-each-participant-a-mix-of-the-others",
+  "title": "With the mix strategy and three participants, each receives a mix of the others' latest frames and never its own",
+  "rules": [
+    "§12.7.2",
+    "§12.7.5"
+  ],
+  "requirements": [
+    "RK-12.7.2-014",
+    "RK-12.7.5-001",
+    "RK-12.7.5-007",
+    "RK-12.7.8-008"
+  ],
+  "notes": "Frames are PCM16 little-endian. Alice feeds [1000, -2000], then Bob [300, 400]: Bob and Carol each receive Alice's frame alone, the only one buffered; then Alice receives Bob's, and Carol the sample-wise sum [1300, -1600], as 16-bit PCM.",
+  "requires_features": [
+    "voice"
+  ],
+  "setup": {
+    "rooms": [
+      {
+        "id": "r1"
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "voice.open",
+      "channel_id": "phone",
+      "room_id": "r1",
+      "participants": [
+        "alice",
+        "bob",
+        "carol"
+      ],
+      "bridge": {
+        "mixing_strategy": "mix"
+      }
+    },
+    {
+      "call": "voice.feed",
+      "channel_id": "phone",
+      "participant_id": "alice",
+      "frames": [
+        "6AMw+A=="
+      ]
+    },
+    {
+      "call": "voice.settle",
+      "channel_id": "phone"
+    },
+    {
+      "call": "voice.feed",
+      "channel_id": "phone",
+      "participant_id": "bob",
+      "frames": [
+        "LAGQAQ=="
+      ]
+    },
+    {
+      "call": "voice.settle",
+      "channel_id": "phone"
+    },
+    {
+      "call": "voice.read",
+      "channel_id": "phone",
+      "expect": {
+        "result": {
+          "audio": {
+            "alice": [
+              "LAGQAQ=="
+            ],
+            "bob": [
+              "6AMw+A=="
+            ],
+            "carol": [
+              "6AMw+A==",
+              "FAXA+Q=="
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "expect": {}
+}

@@ -5155,11 +5155,17 @@
     "RK-12.7.1-007": {
       "voice/a-bridged-frame-walks-the-listener-s-outbound-stages": "8ded2791368fe54afe35648dee3f69ea89c3a6afd7b3833658c7ac55aac053b7"
     },
+    "RK-12.7.2-006": {
+      "voice/a-disabled-bridge-forwards-no-frame": "7177334a05cdca2ecafd13fab9bdbd37c47ac6ad573e87bccb0e3869b27053ff"
+    },
     "RK-12.7.2-008": {
       "voice/a-forward-bridge-sends-each-frame-unmixed-to-every-other-participant": "84be9abb9fa37605c6241d2de065fc2c6eafc3264b7b66b74caac95f7905c220"
     },
     "RK-12.7.2-009": {
       "voice/a-bridge-forwards-only-the-frame-the-hook-admits": "df19faf9a00b7117cefb20876252511bb38f9795499646a7210233c3f2758643"
+    },
+    "RK-12.7.2-010": {
+      "voice/one-voice-channel-bridges-each-of-its-rooms-apart": "891044600476f63ebd1607d36785544e04581931066888825874e0e1b129d44a"
     },
     "RK-12.7.2-011": {
       "voice/a-bridge-forwards-only-the-frame-the-hook-admits": "a3e6ba223ab689b39741bc36902f2fcd3a6a0440c1d3f6bb52cd72efd5d88a94"
@@ -5169,6 +5175,9 @@
     },
     "RK-12.7.2-013": {
       "voice/a-bridge-forwards-only-the-frame-the-hook-admits": "a2e552c592bb0e84bac5bec0a5fb42d2b983c0a86a3f2be9d9c8a5f3d2d33c81"
+    },
+    "RK-12.7.2-014": {
+      "voice/a-mix-bridge-sends-each-participant-a-mix-of-the-others": "147ce11f4650172b0192040da220348eb07132b2f96fec8b32a1f7f75c4db89c"
     },
     "RK-12.7.3-001": {
       "voice/a-bridge-forwards-only-the-frame-the-hook-admits": "49f865768be52345b64370253449ed92e7ec85f45a3c7664e369575c87d15b8a"
@@ -5185,6 +5194,12 @@
     "RK-12.7.3-009": {
       "voice/a-bridge-forwards-only-the-frame-the-hook-admits": "5f18fb16c8aa6a7b19c7ab1fd146e6f28788e912ba0c502ae71dbbfbe0c7f075"
     },
+    "RK-12.7.3-010": {
+      "voice/a-participant-who-left-receives-no-more-bridged-frames": "13493f88d7008830d6cb4f2b05612f8c13d6ea1f10591335eac9d78fa13b3e20"
+    },
+    "RK-12.7.3-012": {
+      "voice/a-bridge-with-no-stt-or-tts-carries-only-the-participants-audio": "5074f081309089801a9ef158e04354637c54b99430e42d37916476d1b1200b5f"
+    },
     "RK-12.7.3-013": {
       "voice/a-bridged-speaker-is-heard-detected-and-transcribed": "addfa1a59707e70d2dc12b57ff35f3f3404b927e2dea11653d4984e095dc6ae3"
     },
@@ -5197,6 +5212,63 @@
     "RK-12.7.3-016": {
       "voice/a-bridged-listener-hears-the-speaker-and-the-synthesized-reply": "97a8c20180479028449d6fd344edf26e5bce72ac67ea2867a1b6230d54204baf"
     },
+    "RK-12.7.3-019": {
+      "voice/an-added-transport-s-audio-and-signals-reach-the-channel": "c688f10e739aa083fb12820eb47526890cf405aa1974cec9c326068fc040fd9e",
+      "voice/an-added-transport-s-barge-in-cancels-the-playback-on-that-transport": "c688f10e739aa083fb12820eb47526890cf405aa1974cec9c326068fc040fd9e",
+      "voice/an-added-transport-s-hang-up-unbridges-its-session": "c688f10e739aa083fb12820eb47526890cf405aa1974cec9c326068fc040fd9e"
+    },
+    "RK-12.7.3-020": {
+      "voice/an-added-transport-s-audio-and-signals-reach-the-channel": "241822b3d5ddb2bf500c81db7a09ad01e10825dcbe5922d9d335cc83d806c309"
+    },
+    "RK-12.7.3-021": {
+      "voice/each-session-is-served-by-its-own-transport": "0a7a4679da32797adbc4f0567151947e5f2e8b8048f2de0fd6d5c809320e29c2"
+    },
+    "RK-12.7.3-022": {
+      "voice/each-session-is-served-by-its-own-transport": "f6208f72458045a75de142e22eb8a7f73adb4c7654ad18f4e68c0646f0d90da2"
+    },
+    "RK-12.7.3-023": {
+      "voice/each-session-is-served-by-its-own-transport": "ea29f610c35e13a6cfa04389035ddf5803999c066c6e1fa6651f3a8ec30318ea"
+    },
+    "RK-12.7.3-024": {
+      "voice/an-added-transport-s-barge-in-cancels-the-playback-on-that-transport": "a90b2327aa2680fc22364eb472b8108e73710beab71b701af4583120cae0cb03",
+      "voice/each-session-is-served-by-its-own-transport": "a90b2327aa2680fc22364eb472b8108e73710beab71b701af4583120cae0cb03"
+    },
+    "RK-12.7.3-025": {
+      "voice/each-session-is-served-by-its-own-transport": "58bfdfc2a654cb39aec3d8398181fcb306ca4890ecd45036b3f241d3b6c83a91"
+    },
+    "RK-12.7.3-026": {
+      "voice/a-transport-that-cancels-its-echo-ends-its-session-s-playback-at-once": "067a2f6b25c7aed220340017e35839e9f360e329dcfb050ca9f107d9b7207128",
+      "voice/an-added-transport-s-barge-in-cancels-the-playback-on-that-transport": "067a2f6b25c7aed220340017e35839e9f360e329dcfb050ca9f107d9b7207128"
+    },
+    "RK-12.7.3-027": {
+      "voice/adding-a-transport-twice-wires-it-once": "b6fff61ffb79a7b37b647e8c4ea765258e5e19455bce63602a07213ad7778d41"
+    },
+    "RK-12.7.3-028": {
+      "voice/closing-the-kit-closes-each-transport-of-a-voice-channel": "8367544a22f0d70ddf06d9922ee7d557d168ba280c9625b9cbabfab6cc899a99"
+    },
+    "RK-12.7.4-002": {
+      "voice/a-bridged-frame-arrives-at-each-listener-s-own-rate": "5987812b091c65fac22fb6976ff9a205e9bd17bac495419e8085e6bc4960ce5b",
+      "voice/a-bridged-frame-reaches-the-transport-format-through-the-listener-s-rate": "5987812b091c65fac22fb6976ff9a205e9bd17bac495419e8085e6bc4960ce5b"
+    },
+    "RK-12.7.4-003": {
+      "voice/a-bridged-frame-arrives-at-each-listener-s-own-rate": "0f223109f841d6a338ebddcc2475fced610834bbc9fe26d5386f8c9837accb91"
+    },
+    "RK-12.7.5-001": {
+      "voice/a-mix-bridge-sends-each-participant-a-mix-of-the-others": "0724c48d7046302db05a6111ffaf48044724ce8d02f6d6f37b6010a033cddcbe"
+    },
+    "RK-12.7.5-004": {
+      "voice/a-mix-sums-the-others-samples-and-clamps-the-sum": "34b9ab282ddd694c65460ef0fabe710b76969d7f9e127245af81a0e6fcb5dc01"
+    },
+    "RK-12.7.5-005": {
+      "voice/a-mix-sums-the-others-samples-and-clamps-the-sum": "8cdd6c829759bc5f8e6ab222ae29454e9bcf997d26ce9d682a9debba42e432ee"
+    },
+    "RK-12.7.5-006": {
+      "voice/a-mix-of-three-sources-is-scaled-for-headroom": "bae8bfb97a9b029e447a5cf7cca48adb2fa083b65488b9701511680a3c251a2b"
+    },
+    "RK-12.7.5-007": {
+      "voice/a-mix-bridge-sends-each-participant-a-mix-of-the-others": "cf618322c5cd2142f8d059d3e693a2d89c4d09ed74d1296b1ff9abeb5d0bdc12",
+      "voice/a-mix-sums-the-others-samples-and-clamps-the-sum": "cf618322c5cd2142f8d059d3e693a2d89c4d09ed74d1296b1ff9abeb5d0bdc12"
+    },
     "RK-12.7.6-001": {
       "voice/a-bridge-forwards-only-the-frame-the-hook-admits": "22e2a4675e1474baa2c9192b4a31064458840adee96658d83dc68706b721b575"
     },
@@ -5208,6 +5280,9 @@
     },
     "RK-12.7.6-006": {
       "voice/a-bridge-forwards-only-the-frame-the-hook-admits": "58fcab74e831b5cbb9621d15a55e846381e0fc10160dd287dfb94785628deadb"
+    },
+    "RK-12.7.6-007": {
+      "voice/a-bridge-hook-s-replaced-frame-is-the-one-forwarded": "912453a259d7fad345efd9fd18a2f1bdd5da1a5e3c84d3f5b6afdd4044e880ef"
     },
     "RK-12.7.6-008": {
       "voice/a-bridged-speaker-is-heard-detected-and-transcribed": "34a55a00aed2925c84896afa4fd4e64fe65230fdcfcdbca35c8bb4002e86760d"
@@ -5235,6 +5310,13 @@
     },
     "RK-12.7.8-006": {
       "voice/a-bridge-forwards-only-the-frame-the-hook-admits": "1e544e5c1512e8f1e1825076d0c50fe620b9eeec3792dd3d3bc57e90f8990bde"
+    },
+    "RK-12.7.8-008": {
+      "voice/a-mix-bridge-sends-each-participant-a-mix-of-the-others": "e10321f03b3c10d456aa6f9b101ff03e8513821dc0494b9d24437a06e570e45a",
+      "voice/a-mix-of-three-sources-is-scaled-for-headroom": "e10321f03b3c10d456aa6f9b101ff03e8513821dc0494b9d24437a06e570e45a"
+    },
+    "RK-12.7.8-009": {
+      "voice/a-bridged-frame-arrives-at-each-listener-s-own-rate": "438f4a60976160dc3197a1a4fe74ec89cfbb3f2a646ab16b56c80448c025ced6"
     },
     "RK-12.7.8-010": {
       "voice/a-bridged-speaker-is-heard-detected-and-transcribed": "24ececb69e9c964797954618f3bb28eae93928f06cc18b3b3ae6591458781940"
