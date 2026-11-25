@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "conference/an-asserted-caller-number-is-believed-over-an-unasserted-one-on-a-key-read-first",
-  "title": "A caller number the SFU asserts is resolved over one the participant's client supplied under a more specific key, read first",
+  "title": "A caller number the SFU asserts is resolved over one the participant's client supplied under a key read first",
   "rules": [
     "§12.10.2"
   ],

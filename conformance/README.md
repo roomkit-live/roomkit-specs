@@ -1428,21 +1428,21 @@ A conference's media inputs on `conference.open` (§12.10.4, §12.10.8):
   `then: fail`, and answers the first final of its results). `stt: null`
   builds the conference with no recognizer; absent, it has the
   implementation's mock one.
-- `recording` records the conference with a scripted recorder: `format`
-  (`wav` by default), `storage`, `metadata`, `encryption` (a name: a
-  scripted RecordingEncryption of that name, null for none) and
-  `storage_encrypted_at_rest` (false by default), the
-  ConferenceRecordingConfig (§12.10.8), each member absent the
-  implementation's default; and `write_gates`, per track id a gate each
-  write of that track's frames holds at until a step opens it, on the
-  thread the recorder is called on; a write the implementation makes on
-  the event loop's own thread cannot wait there, and only reaches the gate.
-  The recorder names its
-  recordings `rec1`, `rec2`... in the order it opens them, and gives each
-  the result URL `mock://<name>`.
+- `recording` records the conference with a scripted recorder: `format`,
+  `storage`, `metadata`, `encryption` (a name: a scripted
+  RecordingEncryption of that name, null for none) and
+  `storage_encrypted_at_rest`, the ConferenceRecordingConfig (§12.10.8),
+  a member left out taking the implementation's default, which the runner
+  never supplies (the RFC's are `wav` and false); and `write_gates`, per
+  track id a gate each write of that track's frames holds at until a step
+  opens it, on the thread the recorder is called on; a write the
+  implementation makes on the event loop's own thread cannot wait there,
+  and only reaches the gate. The recorder names its recordings `rec1`,
+  `rec2`... in the order it opens them, and gives each the result URL
+  `mock://<name>`.
 - `max_queued_frames` bounds the frames the channel holds for a track
-  whose lane or recording falls behind, beside the one being processed or
-  written (the implementation's default when absent).
+  whose lane or recording falls behind, beside those the lane or the
+  recording has already taken (the implementation's default when absent).
 - `address_keys` lists the keys the scripted SFU names a caller's address
   under, its own (`address_keys`, §12.10.2, §12.10.3), none when absent.
 
