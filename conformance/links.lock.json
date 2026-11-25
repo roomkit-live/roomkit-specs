@@ -5165,7 +5165,8 @@
       "realtime/a-gate-that-refuses-a-recovered-call-runs-no-handler": "f1b2209b9b8a2aa47afb0e3f9bf37d3c352206935bcede21c604bd6a71958cbf"
     },
     "RK-12.4-047": {
-      "realtime/a-call-recovered-from-speech-passes-the-gate-and-its-result-is-injected-fenced": "d1576a475d4355490ba26c038aabe8a7cb4b69dece54adad9c947c30d594d397"
+      "realtime/a-call-recovered-from-speech-passes-the-gate-and-its-result-is-injected-fenced": "d1576a475d4355490ba26c038aabe8a7cb4b69dece54adad9c947c30d594d397",
+      "realtime/a-gate-that-refuses-a-recovered-call-runs-no-handler": "d1576a475d4355490ba26c038aabe8a7cb4b69dece54adad9c947c30d594d397"
     },
     "RK-12.4-048": {
       "realtime/a-call-recovered-from-speech-passes-the-gate-and-its-result-is-injected-fenced": "ca412edf182fa91480164e8a584f909ac510725a5763c4961a712469b048c842"
@@ -5299,7 +5300,7 @@
       "realtime/a-pipeline-vad-takes-the-role-its-provider-sets": "8ea9ec628e36c52566bf92ccd8197468776bbb0cfbab1cfe1e3084ed07436237"
     },
     "RK-12.4-122": {
-      "realtime/a-pipeline-vad-that-endpoints-drives-the-speech-edges": "8686b84f8f64b8cb1d98fb7bc53bbbd1a5429641a283bc0fe1a21e1ba9be8ccd"
+      "realtime/a-pipeline-vad-that-endpoints-takes-the-speech-edges-from-the-provider": "8686b84f8f64b8cb1d98fb7bc53bbbd1a5429641a283bc0fe1a21e1ba9be8ccd"
     },
     "RK-12.4-125": {
       "realtime/a-full-duplex-provider-keeps-the-pipeline-vad-to-observation": "8961ca104031e23380eadb1c3b04f1a3db395efc525cf3372e0df67bac8c57bf"
