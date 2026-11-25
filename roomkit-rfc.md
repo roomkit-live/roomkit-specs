@@ -11180,7 +11180,7 @@ for an agent handoff does. <!-- /rfc --><!-- rfc: {"id": "RK-12.2-055", "kind": 
 session MUST be created if the participant reconnects.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.2-056", "kind": "structural", "applies": "§12.2 STTProvider interface, the voice feature: the STTProvider members, TranscriptionResult and SpeakerSegment, with their defaults. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+<!-- rfc: {"id": "RK-12.2-056", "kind": "structural", "applies": "§12.2 STTProvider interface, the voice feature: the STTProvider members, TranscriptionResult and SpeakerSegment, with their defaults, and what a Voice Channel does with a speech start the provider signals. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **STTProvider interface:**
 
 ```
@@ -11200,6 +11200,10 @@ TranscriptionResult
 ├── is_final: bool
 ├── confidence: float | null
 ├── language: string | null                 # The language the provider reports for the text
+├── is_speech_start: bool (default false)   # The provider detected the start of speech itself:
+│                                           # a Voice Channel fires its speech-start hooks and,
+│                                           # when nothing plays, ends the echo verdict
+│                                           # (Section 12.3.13, Echo guard)
 └── segments: list<SpeakerSegment>          # Who spoke which part of text (Section 12.2.3);
                                             # empty when the provider attributes nothing
 
