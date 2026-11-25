@@ -1,9 +1,9 @@
 {
   "version": 1,
-  "rfc_sha256": "9bc1675d8401c3d9b3f080bdea4306e0ac75ab72746a44f08878bb3a584bec63",
-  "corpus_sha256": "fa2cde3410cc16bb2734aafccfa4e10c4e472ac3be7c5d5496f593d165edf77f",
+  "rfc_sha256": "bd57957b0df8341c0afd15ed5b46a02b3ef18650e1aa57ac9c2cf1be252ce2d1",
+  "corpus_sha256": "57cd56644c3dd3df7867601d6f2feb98359a357e88d7702a695ca8c030a88f71",
   "python_commit": "1ee7ec379dee1e17c49a1949ad7ce8756c132606",
-  "scenario_count": 3620,
+  "scenario_count": 3621,
   "sections": [
     {
       "section": "0",
@@ -6742,7 +6742,7 @@
         "unmapped": 51
       },
       "decided_gaps": {
-        "step": 6
+        "step": 5
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -6763,6 +6763,7 @@
         "voice/a-new-voice-s-first-words-cut-the-reply-and-its-echo-final-does-not-undo-it",
         "voice/a-partial-ending-on-the-start-of-the-reply-s-next-word-is-echo",
         "voice/a-pending-verdict-leaves-the-reply-playing-until-the-next-words",
+        "voice/a-pending-verdict-on-a-final-is-no-reason-to-wait",
         "voice/a-reply-cut-after-part-of-its-audio-records-what-was-heard",
         "voice/a-reply-cut-before-any-of-its-audio-leaves-no-turn",
         "voice/a-streamed-answer-cut-while-synthesized-keeps-what-was-handed-to-the-tts",
@@ -29783,12 +29784,7 @@
       "id": "RK-12.3.13-045",
       "section": "12.3.13",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2042",
-        "note": "step: Python discards a final the backchannel detector answers pending (P6-VO3 probe: the held speech ends without a turn, no cut); HITL 4565b1f2 pending."
-      }
+      "links": []
     },
     {
       "id": "RK-12.3.13-057",
