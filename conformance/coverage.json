@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "4c50193ce0b648c20a2797927b117324fdefb384f370330906edd0ec7dfa79f4",
-  "corpus_sha256": "e56d66ca59f7187add29adfe2d84383470e25f1c701315bb4119b3e24ffdfff2",
+  "corpus_sha256": "40900c3cc0af83131a375a02f6e786ee31057611a20b87c2bbeeb9f7648149a6",
   "python_commit": "1ee7ec379dee1e17c49a1949ad7ce8756c132606",
-  "scenario_count": 3694,
+  "scenario_count": 3719,
   "sections": [
     {
       "section": "0",
@@ -1658,6 +1658,7 @@
         "realtime/a-call-the-agent-backend-s-policy-denies-is-refused-before-the-channel-s-gate",
         "realtime/a-call-the-agent-backend-s-provider-served-is-reported-once",
         "realtime/a-call-whose-arguments-came-as-text-is-refused-before-the-gate",
+        "realtime/a-call-without-an-id-through-call-tool-is-reported-under-the-tool-it-carries",
         "realtime/a-later-tool-under-a-name-the-agent-serves-is-not-declared",
         "realtime/a-session-s-delegations-run-one-at-a-time-each-reading-the-last",
         "realtime/an-agent-backend-asks-again-after-a-call-its-provider-could-not-parse",
@@ -3805,6 +3806,7 @@
         "realtime/a-hosted-backend-s-call-passes-the-gate",
         "realtime/a-late-cancellation-leaves-the-served-call-alone",
         "realtime/a-realtime-pipeline-refuses-the-agents-human-input",
+        "realtime/a-report-an-ending-catches-keeps-the-outcome-already-decided",
         "realtime/a-spared-handler-past-the-close-s-bound-is-cut-and-reported-once",
         "realtime/a-spared-handler-still-working-at-the-close-is-waited-for",
         "realtime/an-abandoned-call-interrupts-its-handler",
@@ -6868,9 +6870,7 @@
       "mapping": {
         "unmapped": 102
       },
-      "decided_gaps": {
-        "step": 9
-      },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "ai-external-handler/duplicate-pending-call-is-refused-before-its-cut-non-streaming",
@@ -6931,11 +6931,15 @@
         "realtime/a-call-served-by-hooks-or-the-channel-s-own-tools-passes-the-gate",
         "realtime/a-call-whose-arguments-came-as-text-is-refused-before-the-gate",
         "realtime/a-call-without-an-id-is-refused-and-reported-once",
+        "realtime/a-call-without-an-id-on-an-ended-session-is-reported-cancelled",
+        "realtime/a-call-without-an-id-through-call-tool-is-reported-under-the-tool-it-carries",
+        "realtime/a-call-without-an-id-waits-for-the-transcription-before-it",
         "realtime/a-denied-or-skill-closed-tool-is-refused-before-its-arguments-are-read",
         "realtime/a-denied-tool-is-not-declared-and-its-call-is-refused",
         "realtime/a-failed-start-discards-the-audio-it-retained",
         "realtime/a-failed-start-ends-the-call-issued-while-it-was-pending",
         "realtime/a-full-duplex-provider-keeps-the-pipeline-vad-to-observation",
+        "realtime/a-full-duplex-session-s-pipeline-vad-only-observes",
         "realtime/a-gate-that-refuses-a-recovered-call-runs-no-handler",
         "realtime/a-handler-that-closes-its-channel-runs-on-and-the-other-call-is-cut",
         "realtime/a-handler-that-closes-the-kit-runs-on-and-reaches-no-hook",
@@ -6944,7 +6948,10 @@
         "realtime/a-participant-the-store-lacks-has-the-base-rules-until-it-gets-a-role",
         "realtime/a-pipeline-vad-takes-the-role-its-provider-sets",
         "realtime/a-pipeline-vad-that-endpoints-takes-the-speech-edges-from-the-provider",
+        "realtime/a-provider-that-cannot-call-tools-is-declared-none",
+        "realtime/a-report-an-ending-catches-keeps-the-outcome-already-decided",
         "realtime/a-role-the-store-holds-at-the-start-shapes-the-declared-tools",
+        "realtime/a-session-starts-with-its-own-configuration-else-its-room-s-else-the-channel-s",
         "realtime/a-skill-activation-declares-no-denied-tool",
         "realtime/a-spared-handler-past-the-close-s-bound-is-cut-and-reported-once",
         "realtime/a-spared-handler-still-working-at-the-close-is-waited-for",
@@ -6953,11 +6960,14 @@
         "realtime/an-answer-to-an-injection-is-one-deeper-and-a-silent-one-changes-nothing",
         "realtime/an-ended-session-takes-no-injection",
         "realtime/an-ending-session-cancels-its-waiting-call-once",
+        "realtime/an-endpointing-pipeline-vad-signals-each-turn-to-the-provider",
         "realtime/an-event-s-metadata-chooses-no-injection-role",
         "realtime/an-injection-reports-what-the-provider-knows-of-its-sending",
         "realtime/an-instruction-enters-the-session-as-system",
         "realtime/an-undeclared-tool-is-refused-and-still-reported",
         "realtime/audio-received-while-the-provider-connects-reaches-it-in-order-before-the-session-starts",
+        "realtime/ending-a-session-disconnects-its-provider-and-its-transport",
+        "realtime/reconfiguring-a-session-changes-that-session-only",
         "realtime/run-skill-script-is-skill-gated-and-the-skill-tools-are-not",
         "realtime/the-caller-s-audio-reaches-the-provider-and-the-provider-s-reaches-the-transport",
         "realtime/the-channel-s-own-declared-tools-pass-the-declared-check",
@@ -6993,9 +7003,7 @@
       "mapping": {
         "unmapped": 75
       },
-      "decided_gaps": {
-        "step": 12
-      },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "realtime/a-backend-call-its-delegation-s-bound-cuts-is-reported-cancelled",
@@ -7003,14 +7011,19 @@
         "realtime/a-backend-call-that-ends-its-session-spares-itself-and-ends-its-delegation",
         "realtime/a-backend-may-delegate-a-task",
         "realtime/a-backend-reads-each-call-s-outcome",
+        "realtime/a-backend-s-request-carries-its-session-and-the-transcript-since-the-last",
+        "realtime/a-backend-that-gives-no-answer-is-answered-aloud-once",
         "realtime/a-call-a-cut-delegation-left-is-answered-before-the-next-generation",
         "realtime/a-call-the-agent-backend-s-policy-denies-is-refused-before-the-channel-s-gate",
         "realtime/a-call-the-agent-backend-s-provider-served-is-reported-once",
+        "realtime/a-channel-with-no-backend-answers-each-integrator-delegation-aloud",
         "realtime/a-conference-is-busy-until-its-model-s-answer-starts",
         "realtime/a-full-duplex-answer-starts-with-a-partial-transcript",
         "realtime/a-full-duplex-answer-starts-with-audible-audio",
         "realtime/a-full-duplex-provider-hears-the-pipeline-s-audio",
         "realtime/a-full-duplex-session-fires-no-barge-in",
+        "realtime/a-full-duplex-session-s-pipeline-vad-only-observes",
+        "realtime/a-host-that-sent-a-delegation-s-spoken-output-is-busy-until-the-answer-starts",
         "realtime/a-host-that-sent-a-result-is-busy-until-the-answer-starts",
         "realtime/a-hosted-backend-s-call-passes-the-gate",
         "realtime/a-later-tool-under-a-name-the-agent-serves-is-not-declared",
@@ -7031,9 +7044,14 @@
         "realtime/an-agent-backend-s-turn-is-traced-under-the-session-s-span",
         "realtime/an-agent-backend-serves-with-its-settings-and-the-session-s-catalogue",
         "realtime/an-agent-backend-turn-its-round-cap-cuts-fires-no-on-error",
+        "realtime/an-agent-backend-turn-that-did-not-complete-is-answered-as-a-failed-backend",
         "realtime/an-agent-with-tools-of-its-own-is-refused-as-a-backend",
         "realtime/an-answer-that-starts-during-the-send-is-not-missed",
-        "realtime/an-output-that-could-not-be-sent-is-not-waited-for"
+        "realtime/an-integrator-delegation-is-answered-by-the-channel-s-backend",
+        "realtime/an-output-that-could-not-be-sent-is-not-waited-for",
+        "realtime/each-backend-output-reaches-the-provider-as-it-arrives",
+        "realtime/the-transcript-a-backend-reads-is-not-stored",
+        "realtime/the-user-speaking-over-a-full-duplex-model-interrupts-nothing"
       ]
     },
     {
@@ -7044,11 +7062,16 @@
       "mapping": {
         "unmapped": 12
       },
-      "decided_gaps": {
-        "step": 8
-      },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
-      "candidate_scenarios": []
+      "candidate_scenarios": [
+        "realtime/a-failing-on-usage-callback-breaks-nothing",
+        "realtime/a-held-on-usage-callback-holds-up-nothing",
+        "realtime/last-usage-holds-what-the-provider-reported-last",
+        "realtime/on-usage-is-called-on-every-report-with-its-session-and-map",
+        "realtime/the-channel-clears-the-snapshot-at-each-turn-s-end",
+        "realtime/the-next-usage-report-replaces-the-snapshot"
+      ]
     },
     {
       "section": "12.5",
@@ -8687,6 +8710,7 @@
         "realtime/an-agent-backend-s-policy-resolves-for-the-participant-s-role",
         "realtime/an-agent-backend-serves-with-its-settings-and-the-session-s-catalogue",
         "realtime/an-agent-backend-turn-its-round-cap-cuts-fires-no-on-error",
+        "realtime/an-agent-backend-turn-that-did-not-complete-is-answered-as-a-failed-backend",
         "realtime/an-agent-with-tools-of-its-own-is-refused-as-a-backend"
       ]
     },
@@ -30318,12 +30342,7 @@
       "id": "RK-12.4-059",
       "section": "12.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2045",
-        "note": "step: supports_tools false in realtime.start and a read of the tools declared at connect (S1, S7)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4-060",
@@ -30389,23 +30408,13 @@
       "id": "RK-12.4-069",
       "section": "12.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2045",
-        "note": "step: realtime.reconfigure and a read of each session's prompt, voice and tools (S6, S8)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4-070",
       "section": "12.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2045",
-        "note": "step: realtime.reconfigure and a second session on the channel, the fixture starting one (S6)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4-071",
@@ -30537,12 +30546,7 @@
       "id": "RK-12.4-030",
       "section": "12.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2008",
-        "note": "step: realtime.read extensions with the observation order (S8): a report held while an ending arrives."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4-031",
@@ -30590,12 +30594,7 @@
       "id": "RK-12.4-038",
       "section": "12.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2008",
-        "note": "step: realtime.transcribe (S2) for the wait on the transcription, and Tool Search on a realtime channel (S7) for the call_tool transport; the ended session's part is writable."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4-039",
@@ -30805,12 +30804,7 @@
       "id": "RK-12.4-115",
       "section": "12.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2045",
-        "note": "step: a read of the system prompt, voice and tools connect received (S6, S8)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4-128",
@@ -30840,12 +30834,7 @@
       "id": "RK-12.4-119",
       "section": "12.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2045",
-        "note": "step: a read of the provider's and the transport's disconnections (S8)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4-120",
@@ -30863,12 +30852,7 @@
       "id": "RK-12.4-018",
       "section": "12.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2045",
-        "note": "step: a pipeline VAD on the realtime channel spec and a read of the activity signals (S13, S8)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4-122",
@@ -30880,12 +30864,7 @@
       "id": "RK-12.4-123",
       "section": "12.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2045",
-        "note": "step: a pipeline VAD on the realtime channel spec, realtime.speech, and a read of activity start and end (S13, S3, S8)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4-124",
@@ -30951,12 +30930,7 @@
       "id": "RK-12.4.1-018",
       "section": "12.4.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2049",
-        "note": "step: the provider's full_duplex trait in realtime.start, realtime.speech, and a read of the interrupt and truncate calls (S1, S3, S8)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4.1-019",
@@ -30998,12 +30972,7 @@
       "id": "RK-12.4.1-025",
       "section": "12.4.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2049",
-        "note": "step: the provider's full_duplex trait in realtime.start, realtime.speech, a transport barge-in, and a read of the interrupt and truncate calls and of the transport's audio (S1, S3, S4, S8)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4.1-026",
@@ -31027,12 +30996,7 @@
       "id": "RK-12.4.1-029",
       "section": "12.4.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2049",
-        "note": "step: a pipeline VAD on the realtime channel spec, the provider's full_duplex trait, and a read of the activity signals and interrupt calls (S13, S1, S8)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4.1-030",
@@ -31146,12 +31110,7 @@
       "id": "RK-12.4.1-047",
       "section": "12.4.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2049",
-        "note": "step: a scripted ReasoningBackend whose outputs realtime.read shows (S10, S8); realtime/a-reasoning-error-reaches-the-room only reaches a failing backend on its way to ON_ERROR."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4.1-048",
@@ -31163,12 +31122,7 @@
       "id": "RK-12.4.1-049",
       "section": "12.4.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2049",
-        "note": "step: a scripted ReasoningBackend that records each request it receives, on a provider that declares full_duplex for the transcript (S10, S1)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4.1-050",
@@ -31186,56 +31140,31 @@
       "id": "RK-12.4.1-052",
       "section": "12.4.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2049",
-        "note": "step: the full_duplex trait in realtime.start, realtime.transcribe for both roles and a scripted ReasoningBackend that records its requests (S1, S2, S10)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4.1-053",
       "section": "12.4.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2049",
-        "note": "step: a scripted ReasoningBackend that yields outputs in steps, and a read of the delegation outputs submitted to the provider (S10, S8)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4.1-054",
       "section": "12.4.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2049",
-        "note": "step: realtime.transcribe and a scripted ReasoningBackend, with a read of the room's stored events (S2, S10)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4.1-055",
       "section": "12.4.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2049",
-        "note": "step: a conference with a realtime model, its transcriptions and a scripted ReasoningBackend that records its requests (S2, S10)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4.1-056",
       "section": "12.4.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2049",
-        "note": "step: a scripted ReasoningBackend that yields nothing, fails or hangs past the run's bound, and a read of the delegation outputs (S10, S8)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4.1-057",
@@ -31253,12 +31182,7 @@
       "id": "RK-12.4.1-086",
       "section": "12.4.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2049",
-        "note": "step: a realtime channel with no ReasoningBackend whose model delegates to the integrator, and a read of the delegation outputs submitted to the provider (S8)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4.1-059",
@@ -31324,12 +31248,7 @@
       "id": "RK-12.4.1-069",
       "section": "12.4.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2049",
-        "note": "step: an agent as the ReasoningBackend whose turn does not complete, and a read of the delegation outputs (S10, S8)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4.1-070",
@@ -31425,34 +31344,19 @@
       "id": "RK-12.4.2-004",
       "section": "12.4.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2049",
-        "note": "step: realtime.usage, a report the provider records on the session, and last_usage in realtime.read (S12, S8)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4.2-005",
       "section": "12.4.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2049",
-        "note": "step: realtime.usage with a token-billed report, and last_usage in realtime.read (S12, S8)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4.2-006",
       "section": "12.4.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2049",
-        "note": "step: realtime.usage with the provider's own keys beside the totals, and last_usage in realtime.read (S12, S8)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4.2-007",
@@ -31464,12 +31368,7 @@
       "id": "RK-12.4.2-008",
       "section": "12.4.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2049",
-        "note": "step: realtime.usage and an on_usage callback whose calls a read shows (S12)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4.2-009",
@@ -31481,45 +31380,25 @@
       "id": "RK-12.4.2-010",
       "section": "12.4.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2049",
-        "note": "step: two reports by realtime.usage, and last_usage in realtime.read (S12, S8); the full-duplex provider roomkit holds writes single keys into the snapshot, provider code noted on RMK-2055."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4.2-015",
       "section": "12.4.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2049",
-        "note": "step: realtime.usage, a turn's end by realtime.response, and last_usage in realtime.read (S12, S11, S8)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4.2-011",
       "section": "12.4.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2049",
-        "note": "step: realtime.usage with an on_usage callback held at a gate, the session still served meanwhile (S12)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4.2-012",
       "section": "12.4.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2049",
-        "note": "step: realtime.usage with an on_usage callback that fails, and a read of the session after it (S12)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4.2-013",
