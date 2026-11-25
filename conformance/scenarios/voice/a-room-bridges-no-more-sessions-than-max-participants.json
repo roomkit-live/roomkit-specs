@@ -8,7 +8,7 @@
   "requirements": [
     "RK-12.7.2-007"
   ],
-  "notes": "Carol's session is made by the transport and pushed to the full room: the join is refused. Alice's one frame starts no speech of her own (her script's first entry is a speech start); Carol's two frames would end a speech that a bound session would have transcribed.",
+  "notes": "Carol's session is made by the transport and pushed to the full room: the join is refused, and her session, the caller's, stays open. Dave's join makes a session of its own, which the refusal disconnects. Alice's one frame starts no speech of her own (her script's first entry is a speech start); Carol's two frames would end a speech that a bound session would have transcribed.",
   "requires_features": [
     "voice"
   ],
@@ -65,6 +65,14 @@
       }
     },
     {
+      "call": "voice.join",
+      "channel_id": "phone",
+      "participant_id": "dave",
+      "expect": {
+        "error": "bridge_full"
+      }
+    },
+    {
       "call": "voice.feed",
       "channel_id": "phone",
       "participant_id": "alice",
@@ -100,6 +108,42 @@
               "AQI="
             ],
             "carol": []
+          },
+          "transports": {
+            "primary": [
+              {
+                "call": "connect",
+                "participant_id": "alice"
+              },
+              {
+                "call": "start_listening",
+                "participant_id": "alice"
+              },
+              {
+                "call": "connect",
+                "participant_id": "bob"
+              },
+              {
+                "call": "start_listening",
+                "participant_id": "bob"
+              },
+              {
+                "call": "connect",
+                "participant_id": "carol"
+              },
+              {
+                "call": "connect",
+                "participant_id": "dave"
+              },
+              {
+                "call": "disconnect",
+                "participant_id": "dave"
+              },
+              {
+                "call": "send_audio_sync",
+                "participant_id": "bob"
+              }
+            ]
           }
         }
       }
