@@ -918,6 +918,67 @@ class SchemaTests(unittest.TestCase):
                 scenario["steps"].append(step)
                 self.assertEqual(validator.is_valid(scenario), valid)
 
+    def test_a_realtime_session_states_its_traits_audio_and_answers(self) -> None:
+        schema = json.loads((ROOT / "scenario.schema.json").read_text())
+        validator = Draft202012Validator(schema)
+        fixture = ROOT / "scenarios/realtime/a-full-duplex-session-fires-no-barge-in.json"
+        self.assertTrue(validator.is_valid(json.loads(fixture.read_text())))
+        for member, value, valid in (
+            ("full_duplex", True, True),
+            ("full_duplex", "yes", False),
+            ("supports_tools", False, True),
+            ("supports_mid_session_reconfigure", False, True),
+            ("inject_result", None, True),
+            ("inject_result", {"status": "not_sent", "reason": "busy", "retryable": True}, True),
+            ("inject_result", {"status": "queued"}, False),
+            ("inject_result", {"reason": "busy"}, False),
+            ("submit_gate", "sending", True),
+            ("submit_error", 5, False),
+            ("mute_on_tool_call", True, True),
+            ("pipeline", {"vad": [{"type": "speech_start"}], "denoiser": {"output": "AQI="}}, True),
+            ("pipeline", {"recorder": {}}, True),
+            ("pipeline", {"postprocessors": []}, False),
+            ("pipeline", {"aec": {"gain": 2}}, False),
+            ("server_vad", False, False),
+        ):
+            with self.subTest(member=member, value=value):
+                scenario = json.loads(fixture.read_text())
+                scenario["setup"]["channels"][0]["realtime"][member] = value
+                self.assertEqual(validator.is_valid(scenario), valid)
+        for step, valid in (
+            ({"call": "realtime.start", "channel_id": "turns", "room_id": "r1",
+              "participant_id": "alice", "gate": "connecting", "fail": "refused"}, True),
+            ({"call": "realtime.start", "channel_id": "turns", "room_id": "r1",
+              "participant_id": "alice", "gate": 1}, False),
+            ({"call": "realtime.transcribe", "channel_id": "turns", "text": "Hi",
+              "role": "assistant", "is_final": False}, True),
+            ({"call": "realtime.transcribe", "channel_id": "turns", "text": "Hi",
+              "role": "system"}, False),
+            ({"call": "realtime.speech", "channel_id": "turns", "edge": "start"}, True),
+            ({"call": "realtime.speech", "channel_id": "turns", "edge": "middle"}, False),
+            ({"call": "realtime.audio", "channel_id": "turns", "source": "transport",
+              "frames": ["AQI="]}, True),
+            ({"call": "realtime.audio", "channel_id": "turns", "source": "client",
+              "frames": ["AQI="]}, False),
+            ({"call": "realtime.audio", "channel_id": "turns", "source": "provider",
+              "frames": []}, False),
+            ({"call": "realtime.response", "channel_id": "turns", "edge": "end"}, True),
+            ({"call": "realtime.response", "channel_id": "turns"}, False),
+            ({"call": "realtime.wait_idle", "channel_id": "turns", "room_id": "r1",
+              "timeout_ms": 100}, True),
+            ({"call": "realtime.wait_idle", "channel_id": "turns", "room_id": "r1",
+              "timeout_ms": 0}, False),
+            ({"call": "realtime.read", "channel_id": "turns", "stages": ["recorder"],
+              "calls": ["tap_outbound"]}, True),
+            ({"call": "realtime.read", "channel_id": "turns", "stages": "recorder"}, False),
+            ({"call": "realtime.start", "channel_id": "turns", "room_id": "r1",
+              "participant_id": "alice", "expect": {"error": "provider_failed"}}, True),
+        ):
+            with self.subTest(step=step):
+                scenario = json.loads(fixture.read_text())
+                scenario["steps"].append(step)
+                self.assertEqual(validator.is_valid(scenario), valid)
+
     def test_a_voice_bridge_states_its_configuration_and_transports(self) -> None:
         schema = json.loads((ROOT / "scenario.schema.json").read_text())
         validator = Draft202012Validator(schema)

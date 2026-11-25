@@ -142,6 +142,164 @@
       "type": "object",
       "additionalProperties": false,
       "properties": {
+        "full_duplex": {
+          "type": "boolean"
+        },
+        "supports_tools": {
+          "type": "boolean"
+        },
+        "supports_mid_session_reconfigure": {
+          "type": "boolean"
+        },
+        "inject_result": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "status"
+              ],
+              "properties": {
+                "status": {
+                  "enum": [
+                    "sent",
+                    "not_sent",
+                    "unknown"
+                  ]
+                },
+                "reason": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "retryable": {
+                  "type": "boolean"
+                }
+              }
+            }
+          ]
+        },
+        "submit_gate": {
+          "type": "string"
+        },
+        "submit_error": {
+          "type": "string"
+        },
+        "mute_on_tool_call": {
+          "type": "boolean"
+        },
+        "pipeline": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "vad": {
+              "type": "array",
+              "items": {
+                "oneOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "enum": [
+                          "speech_start",
+                          "speech_end",
+                          "audio_level",
+                          "silence"
+                        ]
+                      },
+                      "duration_ms": {
+                        "type": "number"
+                      },
+                      "confidence": {
+                        "type": "number"
+                      },
+                      "level_db": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "type"
+                    ],
+                    "additionalProperties": false
+                  }
+                ]
+              }
+            },
+            "speakers": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "speaker_id": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "confidence": {
+                    "type": "number"
+                  },
+                  "is_new_speaker": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "speaker_id",
+                  "confidence",
+                  "is_new_speaker"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "aec": {
+              "type": "object",
+              "properties": {
+                "output": {
+                  "type": "string"
+                }
+              },
+              "additionalProperties": false
+            },
+            "agc": {
+              "type": "object",
+              "properties": {
+                "output": {
+                  "type": "string"
+                }
+              },
+              "additionalProperties": false
+            },
+            "denoiser": {
+              "type": "object",
+              "properties": {
+                "output": {
+                  "type": "string"
+                }
+              },
+              "additionalProperties": false
+            },
+            "recorder": {
+              "type": "object",
+              "properties": {
+                "mode": {
+                  "enum": [
+                    "both",
+                    "inbound_only",
+                    "outbound_only"
+                  ]
+                }
+              },
+              "additionalProperties": false
+            }
+          }
+        },
         "reasoning_error": {
           "type": "string"
         },
@@ -2536,6 +2694,11 @@
             "realtime.delegate",
             "realtime.error",
             "realtime.configure",
+            "realtime.transcribe",
+            "realtime.speech",
+            "realtime.audio",
+            "realtime.response",
+            "realtime.wait_idle",
             "parse_voice_session",
             "emit_protocol_trace",
             "process_inbound",
@@ -4570,6 +4733,12 @@
                 "items": {
                   "type": "string"
                 }
+              },
+              "gate": {
+                "type": "string"
+              },
+              "fail": {
+                "type": "string"
               }
             }
           }
@@ -4608,6 +4777,18 @@
             "properties": {
               "channel_id": {
                 "type": "string"
+              },
+              "stages": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "calls": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
               }
             }
           }
@@ -4788,6 +4969,153 @@
                 "items": {
                   "type": "string"
                 }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "realtime.transcribe"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "channel_id",
+              "text",
+              "role"
+            ],
+            "properties": {
+              "channel_id": {
+                "type": "string"
+              },
+              "text": {
+                "type": "string"
+              },
+              "role": {
+                "enum": [
+                  "user",
+                  "assistant"
+                ]
+              },
+              "is_final": {
+                "type": "boolean"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "realtime.speech"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "channel_id",
+              "edge"
+            ],
+            "properties": {
+              "channel_id": {
+                "type": "string"
+              },
+              "edge": {
+                "enum": [
+                  "start",
+                  "end"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "realtime.audio"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "channel_id",
+              "source",
+              "frames"
+            ],
+            "properties": {
+              "channel_id": {
+                "type": "string"
+              },
+              "source": {
+                "enum": [
+                  "transport",
+                  "provider"
+                ]
+              },
+              "frames": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "minItems": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "realtime.response"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "channel_id",
+              "edge"
+            ],
+            "properties": {
+              "channel_id": {
+                "type": "string"
+              },
+              "edge": {
+                "enum": [
+                  "start",
+                  "end"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "realtime.wait_idle"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "channel_id",
+              "room_id",
+              "timeout_ms"
+            ],
+            "properties": {
+              "channel_id": {
+                "type": "string"
+              },
+              "room_id": {
+                "type": "string"
+              },
+              "timeout_ms": {
+                "type": "integer",
+                "minimum": 1
               }
             }
           }
@@ -8291,7 +8619,8 @@
         "language_override_unsupported",
         "not_supported",
         "session_ended",
-        "bridge_full"
+        "bridge_full",
+        "provider_failed"
       ]
     },
     "expect": {

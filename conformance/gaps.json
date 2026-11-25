@@ -1546,11 +1546,6 @@
       "card": "RMK-2045",
       "note": "step: a pipeline VAD on the realtime channel spec and a read of the activity signals (S13, S8)."
     },
-    "RK-12.4-029": {
-      "class": "step",
-      "card": "RMK-2008",
-      "note": "step: realtime.start with a connect gate or failure (S5)."
-    },
     "RK-12.4-030": {
       "class": "step",
       "card": "RMK-2008",
@@ -1561,50 +1556,10 @@
       "card": "RMK-2008",
       "note": "step: realtime.transcribe (S2) for the wait on the transcription, and Tool Search on a realtime channel (S7) for the call_tool transport; the ended session's part is writable."
     },
-    "RK-12.4-044": {
-      "class": "step",
-      "card": "RMK-2008",
-      "note": "step: realtime.audio, a read of the audio input (S4): no step shows the input muted while a call runs."
-    },
-    "RK-12.4-046": {
-      "class": "step",
-      "card": "RMK-2008",
-      "note": "step: realtime.transcribe, a call recovered from the assistant's text (S2)."
-    },
-    "RK-12.4-047": {
-      "class": "step",
-      "card": "RMK-2008",
-      "note": "step: realtime.transcribe, a call recovered from the assistant's text (S2)."
-    },
-    "RK-12.4-048": {
-      "class": "step",
-      "card": "RMK-2008",
-      "note": "step: realtime.transcribe, a call recovered from the assistant's text (S2)."
-    },
-    "RK-12.4-052": {
-      "class": "step",
-      "card": "RMK-2045",
-      "note": "step: a scripted inject_text result in realtime.start, null included, read through deliver's session_outcomes (S1)."
-    },
     "RK-12.4-059": {
       "class": "step",
       "card": "RMK-2045",
       "note": "step: supports_tools false in realtime.start and a read of the tools declared at connect (S1, S7)."
-    },
-    "RK-12.4-061": {
-      "class": "step",
-      "card": "RMK-2045",
-      "note": "step: realtime.audio, the provider's audio read at the transport (S4)."
-    },
-    "RK-12.4-062": {
-      "class": "step",
-      "card": "RMK-2045",
-      "note": "step: realtime.transcribe, a provider transcript, user or assistant (S2)."
-    },
-    "RK-12.4-063": {
-      "class": "step",
-      "card": "RMK-2045",
-      "note": "step: realtime.speech, the provider's speech start and end (S3)."
     },
     "RK-12.4-069": {
       "class": "step",
@@ -1616,130 +1571,40 @@
       "card": "RMK-2045",
       "note": "step: realtime.reconfigure and a second session on the channel, the fixture starting one (S6)."
     },
-    "RK-12.4-113": {
-      "class": "step",
-      "card": "RMK-2045",
-      "note": "step: realtime.start with an organization_id (S5)."
-    },
-    "RK-12.4-114": {
-      "class": "step",
-      "card": "RMK-2045",
-      "note": "step: realtime.audio while the provider connects, behind a held start (S4, S5); the 1 MiB drop and its log are a native check."
-    },
     "RK-12.4-115": {
       "class": "step",
       "card": "RMK-2045",
       "note": "step: a read of the system prompt, voice and tools connect received (S6, S8)."
-    },
-    "RK-12.4-116": {
-      "class": "step",
-      "card": "RMK-2045",
-      "note": "step: realtime.audio during a held start, a failed start, and the order against ON_SESSION_STARTED (S4, S5)."
-    },
-    "RK-12.4-117": {
-      "class": "step",
-      "card": "RMK-2045",
-      "note": "step: realtime.transcribe, read as RoomEvents with their chain_depth (S2)."
     },
     "RK-12.4-119": {
       "class": "step",
       "card": "RMK-2045",
       "note": "step: a read of the provider's and the transport's disconnections (S8)."
     },
-    "RK-12.4-120": {
-      "class": "step",
-      "card": "RMK-2045",
-      "note": "step: a scripted pipeline on the realtime channel spec, and realtime.audio (S13, S4)."
-    },
-    "RK-12.4-121": {
-      "class": "step",
-      "card": "RMK-2045",
-      "note": "step: a pipeline VAD on the realtime channel spec and the provider's full_duplex trait (S13, S1)."
-    },
-    "RK-12.4-122": {
-      "class": "step",
-      "card": "RMK-2045",
-      "note": "step: a pipeline VAD on the realtime channel spec and a read of connect's server_vad (S13, S1)."
-    },
     "RK-12.4-123": {
       "class": "step",
       "card": "RMK-2045",
       "note": "step: a pipeline VAD on the realtime channel spec, realtime.speech, and a read of activity start and end (S13, S3, S8)."
-    },
-    "RK-12.4-125": {
-      "class": "step",
-      "card": "RMK-2045",
-      "note": "step: the provider's full_duplex trait and a pipeline VAD on the realtime channel spec (S1, S13)."
-    },
-    "RK-12.4-127": {
-      "class": "step",
-      "card": "RMK-2045",
-      "note": "step: a scripted pipeline on the realtime channel spec and realtime.audio (S13, S4)."
-    },
-    "RK-12.4-128": {
-      "class": "step",
-      "card": "RMK-2045",
-      "note": "step: realtime.audio both ways, the transport's audio read at the provider and the provider's at the transport (S4)."
     },
     "RK-12.4.1-018": {
       "class": "step",
       "card": "RMK-2049",
       "note": "step: the provider's full_duplex trait in realtime.start, realtime.speech, and a read of the interrupt and truncate calls (S1, S3, S8)."
     },
-    "RK-12.4.1-020": {
-      "class": "step",
-      "card": "RMK-2049",
-      "note": "step: realtime.response with the model's response start, and an observation of the host's idleness (S11)."
-    },
-    "RK-12.4.1-021": {
-      "class": "step",
-      "card": "RMK-2049",
-      "note": "step: realtime.response with a response start, audible assistant audio or a partial assistant transcript on a full-duplex provider, and an observation of the host's idleness (S11, S1)."
-    },
-    "RK-12.4.1-022": {
-      "class": "step",
-      "card": "RMK-2049",
-      "note": "step: realtime.response scripted to start before the send of the output returns, and an observation of the host's idleness (S11)."
-    },
-    "RK-12.4.1-023": {
-      "class": "step",
-      "card": "RMK-2049",
-      "note": "step: an output the provider fails to take, and an observation of the host's idleness (S11)."
-    },
-    "RK-12.4.1-024": {
-      "class": "step",
-      "card": "RMK-2049",
-      "note": "step: realtime.response and the idleness of a conference with a realtime model beside the realtime voice channel's (S11)."
-    },
     "RK-12.4.1-025": {
       "class": "step",
       "card": "RMK-2049",
       "note": "step: the provider's full_duplex trait in realtime.start, realtime.speech, a transport barge-in, and a read of the interrupt and truncate calls and of the transport's audio (S1, S3, S4, S8)."
-    },
-    "RK-12.4.1-027": {
-      "class": "step",
-      "card": "RMK-2049",
-      "note": "step: the provider's full_duplex trait in realtime.start and realtime.speech, with an on_barge_in hook (S1, S3)."
-    },
-    "RK-12.4.1-028": {
-      "class": "step",
-      "card": "RMK-2049",
-      "note": "step: an audio pipeline on the realtime channel spec, realtime.audio and the provider's full_duplex trait (S13, S4, S1)."
     },
     "RK-12.4.1-029": {
       "class": "step",
       "card": "RMK-2049",
       "note": "step: a pipeline VAD on the realtime channel spec, the provider's full_duplex trait, and a read of the activity signals and interrupt calls (S13, S1, S8)."
     },
-    "RK-12.4.1-032": {
-      "class": "step",
-      "card": "RMK-2049",
-      "note": "step: paced provider audio with silence in realtime.audio, and a read of the pipeline recorder (S4)."
-    },
     "RK-12.4.1-034": {
       "class": "step",
       "card": "RMK-2049",
-      "note": "step: the provider's supports_mid_session_reconfigure trait in realtime.start, with a handoff or a skill activation on the realtime room (S1)."
+      "note": "step: skills on the realtime channel spec (S7), with a skill activation on a provider whose realtime spec declares supports_mid_session_reconfigure false (S1): a handoff reconfigures the session whatever the trait, so only an activation shows the choice of an append."
     },
     "RK-12.4.1-047": {
       "class": "step",

@@ -5112,6 +5112,9 @@
     "RK-12.4-028": {
       "realtime/a-handler-that-closes-the-kit-runs-on-and-reaches-no-hook": "99e160f7b763837f1a5fbea97e29c1709e9006d95d16b28f9578e38e4bb2f262"
     },
+    "RK-12.4-029": {
+      "realtime/a-failed-start-ends-the-call-issued-while-it-was-pending": "ac6fb916f7265cdf7bc30c1059268bf0716bafeb7bd2c8044b182936ad381722"
+    },
     "RK-12.4-031": {
       "realtime/a-call-id-names-one-call-until-its-result-goes-out": "9c69270c2e8e6e2580c27017bba3374bfc3abb4c7a2624aa9c024af87f4aad60"
     },
@@ -5153,11 +5156,37 @@
     "RK-12.4-040": {
       "realtime/a-call-naming-no-tool-is-answered-before-the-gate": "5df4147adfcd446fab5740c6dd2e773519a1bcaa11747f03f28e2a074ecef73b"
     },
+    "RK-12.4-044": {
+      "realtime/a-call-recovered-from-speech-mutes-no-input": "ac45d9c2fe2f13a09923cee0b00032f348d0acfb158f358e1a285c19938baa4b",
+      "realtime/the-input-stays-muted-until-the-last-muting-call-ends": "ac45d9c2fe2f13a09923cee0b00032f348d0acfb158f358e1a285c19938baa4b"
+    },
+    "RK-12.4-046": {
+      "realtime/a-call-recovered-from-speech-passes-the-gate-and-its-result-is-injected-fenced": "f1b2209b9b8a2aa47afb0e3f9bf37d3c352206935bcede21c604bd6a71958cbf",
+      "realtime/a-gate-that-refuses-a-recovered-call-runs-no-handler": "f1b2209b9b8a2aa47afb0e3f9bf37d3c352206935bcede21c604bd6a71958cbf"
+    },
+    "RK-12.4-047": {
+      "realtime/a-call-recovered-from-speech-passes-the-gate-and-its-result-is-injected-fenced": "d1576a475d4355490ba26c038aabe8a7cb4b69dece54adad9c947c30d594d397"
+    },
+    "RK-12.4-048": {
+      "realtime/a-call-recovered-from-speech-passes-the-gate-and-its-result-is-injected-fenced": "ca412edf182fa91480164e8a584f909ac510725a5763c4961a712469b048c842"
+    },
+    "RK-12.4-052": {
+      "realtime/an-injection-reports-what-the-provider-knows-of-its-sending": "252e4df7744f46f63fb966059d34dac0ce178115a424025b72352a5fa978e83b"
+    },
     "RK-12.4-055": {
       "realtime/a-call-whose-arguments-came-as-text-is-refused-before-the-gate": "64d93ef2e3622745a8cbb3b681c212e2f2fd5f0849f7b599bb56f748f34707fd"
     },
     "RK-12.4-056": {
       "realtime/a-late-cancellation-leaves-the-served-call-alone": "8d03c50f57284cdc6e14aa5a4791db060eb5cb41968355892592e5ff7c2da8af"
+    },
+    "RK-12.4-061": {
+      "realtime/the-caller-s-audio-reaches-the-provider-and-the-provider-s-reaches-the-transport": "3b63953d706477952e88573e7646ebbf07edb9b577bfdd0337f2314149826922"
+    },
+    "RK-12.4-062": {
+      "realtime/the-session-s-transcriptions-fire-their-hook-and-reach-the-room": "075263a5b641f6718fe7e2a84cb7ed25f84b341f616b855fd5908d0ae852a276"
+    },
+    "RK-12.4-063": {
+      "realtime/the-provider-s-speech-edges-fire-their-hooks": "6c1947fee3701f12c4483e52981be98254c7214a0e1d37c8c5b807bccd7c1f32"
     },
     "RK-12.4-064": {
       "realtime/a-handler-reconnects-through-its-child": "efbde4f388dec38b534373b1d265cacf7ab5cc5935d68f3d84a42e479d2602c8",
@@ -5245,12 +5274,70 @@
     "RK-12.4-105": {
       "realtime/an-instruction-enters-the-session-as-system": "f3c06bbe11cfb3d2036396503d7ac936ca7e086bf2caf4ac60644ce9b712c7f4"
     },
+    "RK-12.4-113": {
+      "realtime/a-start-for-another-organization-s-room-creates-no-session": "ca5685cf1643efe581232f6b65059eef33b98d8f16f0a7cab72d040bfca733c1"
+    },
+    "RK-12.4-114": {
+      "realtime/audio-received-while-the-provider-connects-reaches-it-in-order-before-the-session-starts": "05b46aad5b902d1a488f5be648aa8eb7b767917cfa4bdf1fbf50a7dfb4dbe532"
+    },
+    "RK-12.4-116": {
+      "realtime/a-failed-start-discards-the-audio-it-retained": "5ed18daac8ac07fda771fc217ca8405559a1231c93cde2178d8ff79201cefbdd",
+      "realtime/audio-received-while-the-provider-connects-reaches-it-in-order-before-the-session-starts": "5ed18daac8ac07fda771fc217ca8405559a1231c93cde2178d8ff79201cefbdd"
+    },
+    "RK-12.4-117": {
+      "realtime/an-answer-to-an-injection-is-one-deeper-and-a-silent-one-changes-nothing": "dc0a042ac40d465bff432c320c90da16f5b225029105f00b9d1f708a095733ed",
+      "realtime/the-session-s-transcriptions-fire-their-hook-and-reach-the-room": "dc0a042ac40d465bff432c320c90da16f5b225029105f00b9d1f708a095733ed"
+    },
     "RK-12.4-118": {
       "realtime/a-handler-reconnects-through-its-child": "17a76f486f659d828db2fb563f45190e33b8aa09c3a87a3e5eea2cfa1106b023",
       "realtime/a-late-cancellation-leaves-the-served-call-alone": "17a76f486f659d828db2fb563f45190e33b8aa09c3a87a3e5eea2cfa1106b023"
     },
+    "RK-12.4-120": {
+      "realtime/the-pipeline-processes-the-caller-s-audio-before-the-provider-hears-it": "4978567ba43e99c7205b1f3c730383f5997a0adacc9aebf217782f6c86122842"
+    },
+    "RK-12.4-121": {
+      "realtime/a-pipeline-vad-takes-the-role-its-provider-sets": "8ea9ec628e36c52566bf92ccd8197468776bbb0cfbab1cfe1e3084ed07436237"
+    },
+    "RK-12.4-122": {
+      "realtime/a-pipeline-vad-that-endpoints-drives-the-speech-edges": "8686b84f8f64b8cb1d98fb7bc53bbbd1a5429641a283bc0fe1a21e1ba9be8ccd"
+    },
+    "RK-12.4-125": {
+      "realtime/a-full-duplex-provider-keeps-the-pipeline-vad-to-observation": "8961ca104031e23380eadb1c3b04f1a3db395efc525cf3372e0df67bac8c57bf"
+    },
+    "RK-12.4-127": {
+      "realtime/the-pipeline-processes-the-caller-s-audio-before-the-provider-hears-it": "d0f8b94d399219f0343b75ad120cfed087955a8ee33a5a5f2bfd1d12fd7758ff"
+    },
+    "RK-12.4-128": {
+      "realtime/the-caller-s-audio-reaches-the-provider-and-the-provider-s-reaches-the-transport": "a0edacf304335864b98541381b542f48a8c0384d5a1312112469a951d67f129e"
+    },
     "RK-12.4.1-013": {
       "realtime/a-backend-may-delegate-a-task": "d56e5210316b5f3b494e34f63752c2afe75fa95cfd1b784bab24f3047911dcd3"
+    },
+    "RK-12.4.1-020": {
+      "realtime/a-host-that-sent-a-result-is-busy-until-the-answer-starts": "ffa86501d2f52b5d2306c361a6353953816b271163e6effce8894cbbd9408e02"
+    },
+    "RK-12.4.1-021": {
+      "realtime/a-full-duplex-answer-starts-with-a-partial-transcript": "83d48e2c93b429fafc731cbaf941ade76cb8603e08faefdedd6fa9264d5dff6d",
+      "realtime/a-full-duplex-answer-starts-with-audible-audio": "83d48e2c93b429fafc731cbaf941ade76cb8603e08faefdedd6fa9264d5dff6d",
+      "realtime/a-host-that-sent-a-result-is-busy-until-the-answer-starts": "83d48e2c93b429fafc731cbaf941ade76cb8603e08faefdedd6fa9264d5dff6d"
+    },
+    "RK-12.4.1-022": {
+      "realtime/an-answer-that-starts-during-the-send-is-not-missed": "4b0cd3bcd5fcc8cfadc77be420a6496b164e30c78cf9986b4510ce73991b3204"
+    },
+    "RK-12.4.1-023": {
+      "realtime/an-output-that-could-not-be-sent-is-not-waited-for": "4538c01f67b340f359949b50807f3f10f3388f3a03d4935baf365633fbf3fd41"
+    },
+    "RK-12.4.1-024": {
+      "realtime/a-conference-is-busy-until-its-model-s-answer-starts": "ee7e152249c599ca9ab73db749b987ad4a3ac8b24e587b4aadf113753db25597"
+    },
+    "RK-12.4.1-027": {
+      "realtime/a-full-duplex-session-fires-no-barge-in": "3b2365811a54a70b9cb2a02c4c655690652e8efab8dc4b25888bdd6ce4511ce0"
+    },
+    "RK-12.4.1-028": {
+      "realtime/a-full-duplex-provider-hears-the-pipeline-s-audio": "b1077ba78f7abfb4cc165cee97ac0633acbba5d1c2a7f4e7720ae32d00e6aac2"
+    },
+    "RK-12.4.1-032": {
+      "realtime/a-recorder-keeps-a-full-duplex-provider-s-silence": "4ed5c7068333862b8eb99b8e7ee4e1555adaec8a065c476a3cec0745994f07b8"
     },
     "RK-12.4.1-042": {
       "realtime/a-hosted-backend-s-call-passes-the-gate": "0aeb6de00e4c52425ff001a0c41587425269ee051579a209135384cc4e9078bc"
