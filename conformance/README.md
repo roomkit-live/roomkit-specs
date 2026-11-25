@@ -1910,6 +1910,28 @@ its room through its host, `host.*`). Its idle wait also waits for the work
 a turn began that reaches the owner after the turn across the transport
 (§10.6.3), as an ASYNC hook whose timeout falls after its turn.
 
+## On a transport written on the contract alone
+
+A transport written outside the implementation, on the public contract of
+the core's turn interface alone, serves a kit as a backend the
+implementation provides does. A runner therefore runs a second time each
+scenario whose kit it builds with a transport, that transport behind the
+runner's own as `kit.turn_backend_contract_only` gives it. The scenario
+expects the same of both runs, and the runner's known failures are the same.
+A scenario whose kit the runner already serves by a transport of its own
+runs once. The second run records no receipt.
+
+roomkit runs it in the suite's turn mode, as the cases
+`test_scenario_on_the_contract_alone[<id>]` of
+`tests/conformance/test_conformance.py`. roomkit-rs runs it in its core
+runner, across its Redis turn executor, as the test
+`every_scenario_with_executors_gives_the_same_on_the_contract_alone`.
+
+The second run compares the final state, as the first does: it does not see
+what such a transport gives late. What a transport must give at once is a
+scenario of its own, as
+`executors/an-agent-s-presence-is-published-at-once-on-a-transport-written-on-the-contract-alone`.
+
 ## Known failures
 
 A known failure is a scenario whose observable result breaks the RFC. Its
