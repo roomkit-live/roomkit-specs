@@ -1,0 +1,166 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "voice/with-a-streaming-stt-the-detector-waits-for-the-first-words",
+  "title": "Under SEMANTIC with a streaming STT, the detector is not consulted on duration while transcript_wait_ms runs: it waits for the first partial, past min_speech_ms",
+  "rules": [
+    "§12.3.13"
+  ],
+  "requirements": [
+    "RK-12.3.13-018"
+  ],
+  "notes": "The speech never ends; the recognizer holds its first words at a gate while four hundred silent frames are fed, long past the 1 ms minimum and well within the 3 s wait: the detector is not consulted until the words come. The bound max(min_speech_ms, transcript_wait_ms) itself is not reached here.",
+  "requires_features": [
+    "voice"
+  ],
+  "setup": {
+    "rooms": [
+      {
+        "id": "r1"
+      }
+    ],
+    "hooks": [
+      {
+        "name": "cut",
+        "trigger": "on_barge_in",
+        "execution": "async"
+      },
+      {
+        "name": "stopped",
+        "trigger": "on_tts_cancelled",
+        "execution": "async"
+      },
+      {
+        "name": "ack",
+        "trigger": "on_backchannel",
+        "execution": "async",
+        "reactions": [
+          {
+            "gate": "acknowledged"
+          }
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "voice.open",
+      "channel_id": "phone",
+      "room_id": "r1",
+      "participants": [
+        "alice"
+      ],
+      "playback_gates": [
+        "playing"
+      ],
+      "vad": [
+        {
+          "type": "speech_start"
+        }
+      ],
+      "stt": {
+        "streams": [
+          {
+            "results": [
+              {
+                "text": "Ouais",
+                "final": false,
+                "gate": "words"
+              }
+            ]
+          }
+        ]
+      },
+      "interruption": {
+        "min_speech_ms": 1,
+        "transcript_wait_ms": 3000
+      },
+      "backchannel_decisions": [
+        {
+          "is_backchannel": true
+        }
+      ]
+    },
+    {
+      "call": "voice.say",
+      "channel_id": "phone",
+      "participant_id": "alice",
+      "text": "Your table is ready.",
+      "background": true,
+      "as": "reply"
+    },
+    {
+      "wait_for": "playing"
+    },
+    {
+      "call": "voice.feed",
+      "channel_id": "phone",
+      "participant_id": "alice",
+      "frames": [
+        "AQI="
+      ]
+    },
+    {
+      "wait_for": "words"
+    },
+    {
+      "call": "voice.feed",
+      "channel_id": "phone",
+      "participant_id": "alice",
+      "frames": [
+        "AAA="
+      ],
+      "repeat": 400
+    },
+    {
+      "call": "voice.read",
+      "channel_id": "phone",
+      "expect": {
+        "result": {
+          "backchannel_contexts": []
+        }
+      }
+    },
+    {
+      "open": "words"
+    },
+    {
+      "wait_for": "acknowledged"
+    },
+    {
+      "call": "voice.read",
+      "channel_id": "phone",
+      "expect": {
+        "result": {
+          "backchannel_contexts": [
+            {
+              "transcript": "Ouais",
+              "is_final": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "open": "acknowledged"
+    },
+    {
+      "open": "playing"
+    },
+    {
+      "await": "reply"
+    }
+  ],
+  "expect": {
+    "hooks": {
+      "cut": [],
+      "stopped": [],
+      "ack": [
+        {
+          "voice": {
+            "text": "Ouais"
+          }
+        }
+      ]
+    }
+  }
+}

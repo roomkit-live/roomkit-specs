@@ -1471,41 +1471,6 @@
       "card": "RMK-2066",
       "note": "step: CS1 and S4: the frames captured from the mark, the wake word's included, reach the provider whole."
     },
-    "RK-12.2-021": {
-      "class": "step",
-      "card": "RMK-2008",
-      "note": "step: voice TTS options (S7): no voice.open key sets a TTS that consumes context, and voice.read reports no recorded turn."
-    },
-    "RK-12.2-024": {
-      "class": "step",
-      "card": "RMK-2008",
-      "note": "step: interruption configuration and max_sentences (S1): no voice.open key sets a sentence budget."
-    },
-    "RK-12.2-025": {
-      "class": "step",
-      "card": "RMK-2008",
-      "note": "step: voice TTS options, a failing synthesis (S7): no voice.open key makes a session's synthesis or playback fail."
-    },
-    "RK-12.2-031": {
-      "class": "step",
-      "card": "RMK-2008",
-      "note": "step: interruption configuration and max_sentences (S1): no voice.open key sets a sentence budget."
-    },
-    "RK-12.2-037": {
-      "class": "step",
-      "card": "RMK-2008",
-      "note": "step: voice.play (S12) and a gate holding a streamed reply mid-way (S20); say() cutting a playback is writable with voice.say and the playback gate."
-    },
-    "RK-12.2-041": {
-      "class": "step",
-      "card": "RMK-2008",
-      "note": "step: voice TTS options (S7): no voice.open key sets a TTS that consumes context."
-    },
-    "RK-12.2-046": {
-      "class": "step",
-      "card": "RMK-2019",
-      "note": "step: voice.open TTS options (S7): a scripted TTS chunk format; the transport's send_audio receives decoded PCM only, never an encoded chunk."
-    },
     "RK-12.2-053": {
       "class": "step",
       "card": "RMK-2019",
@@ -1516,95 +1481,10 @@
       "card": "RMK-2019",
       "note": "step: a realtime session's state read once its provider reconnects (renegotiate) and once it ended (realtime family): on a voice channel roomkit never writes a session's state, its transport does."
     },
-    "RK-12.2-076": {
-      "class": "step",
-      "card": "RMK-2019",
-      "note": "step: voice.open TTS options (S7): a TTS chunk whose format is mp3; the session's synthesis is refused with an error naming the format, reported as tts_error, and the transport received nothing."
-    },
-    "RK-12.2-078": {
-      "class": "step",
-      "card": "RMK-2019",
-      "note": "step: voice.open TTS options (S7): a TTS whose context_level is NONE; voice.read shows it received no context."
-    },
-    "RK-12.2-081": {
-      "class": "step",
-      "card": "RMK-2019",
-      "note": "step: TTS catalog (S10): list_voices on a scripted TTS that keeps the default; its curated catalog comes back filtered."
-    },
-    "RK-12.2-082": {
-      "class": "step",
-      "card": "RMK-2019",
-      "note": "step: TTS catalog (S10): list_voices with language, gender and query filters on a scripted catalog, a voice of unknown language or gender matching none."
-    },
-    "RK-12.2-086": {
-      "class": "step",
-      "card": "RMK-2019",
-      "note": "step: TTS catalog (S10): synthesize_dialogue on a scripted TTS with no dialogue, then with too many or unmapped speakers, raising before any call."
-    },
     "RK-12.2.2-008": {
       "class": "step",
       "card": "RMK-2023",
       "note": "step: conference TTS read (S17): a conference whose TTS records the context it receives gets none; Python's conference synthesizes without one, and no test pins it."
-    },
-    "RK-12.2.2-009": {
-      "class": "step",
-      "card": "RMK-2023",
-      "note": "step: voice.open TTS options (S7): a scripted TTS at each context_level; voice.read shows what each received, its own played turns at SELF, both roles' text at TEXT, the audio too at AUDIO."
-    },
-    "RK-12.2.2-012": {
-      "class": "step",
-      "card": "RMK-2023",
-      "note": "step: voice.open TTS options (S7): a TTSContextConfig with enabled false, then a small max_turns or max_audio_seconds; voice.read shows no context, then the oldest turns dropped, the oldest audio dropped with its text kept."
-    },
-    "RK-12.2.2-013": {
-      "class": "step",
-      "card": "RMK-2023",
-      "note": "step: voice.open TTS options (S7): a TTS at NONE receives no context; one at AUDIO receives audio only with include_audio, else every audio null."
-    },
-    "RK-12.2.2-015": {
-      "class": "step",
-      "card": "RMK-2023",
-      "note": "step: voice.open TTS options (S7): two sessions, one spoken to alone; voice.read shows each session's context holds its own dialogue only."
-    },
-    "RK-12.2.2-017": {
-      "class": "step",
-      "card": "RMK-2023",
-      "note": "step: voice.open TTS options (S7): a TTS at TEXT, or at AUDIO with include_audio; the next call's context holds the user turn with the transcript an ON_TRANSCRIPTION hook left, and its utterance."
-    },
-    "RK-12.2.2-018": {
-      "class": "step",
-      "card": "RMK-2023",
-      "note": "step: voice.open TTS options (S7): an ON_TRANSCRIPTION hook that redacts the transcript, with include_audio; the user turn in the next context has no audio."
-    },
-    "RK-12.2.2-019": {
-      "class": "step",
-      "card": "RMK-2023",
-      "note": "step: voice.open TTS options (S7): a speech segment the scripted backchannel detector classifies as a backchannel; the next context holds no turn for it."
-    },
-    "RK-12.2.2-020": {
-      "class": "step",
-      "card": "RMK-2023",
-      "note": "step: voice.open TTS options (S7): a BEFORE_TTS hook that changes the text; the next context's assistant turn holds the changed text under the previous call's next_turn_id, with its played_ms."
-    },
-    "RK-12.2.2-021": {
-      "class": "step",
-      "card": "RMK-2023",
-      "note": "step: voice.open TTS options (S7): with include_audio, the assistant turn in the next context carries the synthesized audio."
-    },
-    "RK-12.2.2-022": {
-      "class": "step",
-      "card": "RMK-2023",
-      "note": "step: voice.open TTS options (S7): a playback cut (playback_gate, voice.barge_in) before any of its audio is played; the next context holds no turn for it."
-    },
-    "RK-12.2.2-023": {
-      "class": "step",
-      "card": "RMK-2023",
-      "note": "step: voice.open TTS options (S7): a playback cut after part of its audio; the next context's turn records interrupted true and played_ms, its audio cut there."
-    },
-    "RK-12.2.2-028": {
-      "class": "step",
-      "card": "RMK-2023",
-      "note": "step: voice.end (S4) and voice.open TTS options (S7): a session unbound or ended; voice.read shows release_context called with its id (what the provider then drops is the provider's own contract, which it proves in its own tests, outside roomkit's conformance)."
     },
     "RK-12.2.3-020": {
       "class": "step",
@@ -1616,75 +1496,20 @@
       "card": "RMK-2023",
       "note": "measurement: the audio a kept diarizing stream receives against the wall clock through a pause or a lossy stretch (Python's tests are wallclock); no step reads elapsed time."
     },
-    "RK-12.2.3-023": {
-      "class": "step",
-      "card": "RMK-2023",
-      "note": "step: voice.open STT options (S5) and interruption configuration (S1): a transcript discarded as echo of the playback; voice.read still counts one stream."
-    },
-    "RK-12.3-007": {
-      "class": "step",
-      "card": "RMK-2034",
-      "note": "step: voice stage trace (S3) and the session recorder (S8): the stages a frame goes through in order, the recorder handed the resampled frame unchanged, the DTMF detector beside the chain."
-    },
     "RK-12.3.12-016": {
       "class": "step",
       "card": "RMK-2042",
       "note": "step: a sync once the channel applied the detector's verdict, or the virtual clock (X-CLK): turn_decisions (S15) holds a verdict at a gate, but no hook fires when a complete verdict is held because speech resumed, so no step can make the resumed speech end only after the verdict was applied."
-    },
-    "RK-12.3.12-017": {
-      "class": "step",
-      "card": "RMK-2042",
-      "note": "step: a gate holding a reply's synthesis mid-way (S20), with a scripted agent in the voice room: speech that starts before the reply's first audio holds it, none of it reaches the transport while the speech lasts, no ON_BARGE_IN fires and the speech is the user's turn; no step today gives a point at which the held reply can be read."
-    },
-    "RK-12.3.12-018": {
-      "class": "step",
-      "card": "RMK-2042",
-      "note": "step: voice.open interruption (S1), min_speech_ms among its inputs, with a scripted agent whose round waits at a gate: the held reply is cancelled as superseded, every stored response event of the turn carries metadata.cancelled true and cancellation_reason superseded, and the model's next request reads both user messages."
     },
     "RK-12.3.12-022": {
       "class": "phase6",
       "card": "RMK-2042",
       "note": "measurement: turn detector fast-path latency."
     },
-    "RK-12.3.13-010": {
-      "class": "step",
-      "card": "RMK-2042",
-      "note": "step: voice.open interruption (S1): CONFIRMED; speech shorter than min_speech_ms leaves the reply playing, sustained speech cuts it."
-    },
-    "RK-12.3.13-012": {
-      "class": "step",
-      "card": "RMK-2042",
-      "note": "step: voice.open interruption (S1): DISABLED; speech during playback cuts nothing and is processed once the reply ends."
-    },
-    "RK-12.3.13-017": {
-      "class": "step",
-      "card": "RMK-2042",
-      "note": "step: voice.open backchannels (S1b): the contexts the scripted detector was given, read back, none at an onset with neither words nor duration."
-    },
-    "RK-12.3.13-018": {
-      "class": "step",
-      "card": "RMK-2042",
-      "note": "step: voice.open interruption (S1) and backchannels (S1b): transcript_wait_ms and min_speech_ms set, a first partial that comes late, and the context the detector was given."
-    },
-    "RK-12.3.13-019": {
-      "class": "step",
-      "card": "RMK-2042",
-      "note": "step: voice.open interruption (S1) and backchannels (S1b): min_speech_ms set, and the speech duration in the context the detector was given."
-    },
-    "RK-12.3.13-020": {
-      "class": "step",
-      "card": "RMK-2042",
-      "note": "step: voice.open backchannels (S1b): the context the scripted detector was given holds no transcript and the speech's duration."
-    },
-    "RK-12.3.13-031": {
-      "class": "step",
-      "card": "RMK-2042",
-      "note": "step: voice.open interruption (S1) and the virtual clock (X-CLK): an echo's final more than 10 seconds after playback ended is judged anew, and speech starting once nothing plays is nobody's echo."
-    },
     "RK-12.3.13-032": {
       "class": "step",
       "card": "RMK-2042",
-      "note": "step: voice.open interruption (S1) and a gate holding a reply mid-way (S20): an echo's later words cut neither the response that followed the echoed one nor the next."
+      "note": "step: S1 and S20 are in place; a scenario needs an echo whose words go on over the response that cut the echoed one short, then over the next (a scripted agent answering twice within one kept utterance), not written by P6-VO3."
     },
     "RK-12.3.13-033": {
       "class": "step",
@@ -1694,87 +1519,12 @@
     "RK-12.3.13-035": {
       "class": "step",
       "card": "RMK-2042",
-      "note": "step: voice.open interruption (S1): transcript_wait_ms set, speech without words during playback cuts only once the wait has passed."
-    },
-    "RK-12.3.13-036": {
-      "class": "step",
-      "card": "RMK-2042",
-      "note": "step: voice.play (S12): a file played whole before a reply moves the session past echo_guard_ms, and the reply's own words then cut it."
-    },
-    "RK-12.3.13-037": {
-      "class": "step",
-      "card": "RMK-2042",
-      "note": "step: voice.open interruption (S1): a small echo_guard_ms the session's played audio passes, then the reply's own words cut it and are the turn."
-    },
-    "RK-12.3.13-038": {
-      "class": "step",
-      "card": "RMK-2042",
-      "note": "step: voice.open interruption (S1): echo_guard_ms 0, the reply's own words cut it at once."
-    },
-    "RK-12.3.13-043": {
-      "class": "step",
-      "card": "RMK-2042",
-      "note": "step: voice.open backchannels (S1b): the is_final flag the scripted detector was given for each partial and the final."
-    },
-    "RK-12.3.13-044": {
-      "class": "step",
-      "card": "RMK-2042",
-      "note": "step: voice.open backchannels (S1b): a pending verdict scripted for a partial; the reply plays on and the next partial is judged."
+      "note": "step: the continuous-mode energy run: ten loud frames with transcript_wait_ms 1 during playback cut nothing in the P6-VO3 probe, so the cut on duration once the wait has passed is not reached by a scripted stream; the wait itself (no cut while transcript_wait_ms runs) is then unobservable."
     },
     "RK-12.3.13-045": {
       "class": "step",
       "card": "RMK-2042",
-      "note": "step: voice.open backchannels (S1b): a pending verdict scripted for a final neither holds the speech nor waits for more words; the final is judged as it is."
-    },
-    "RK-12.3.13-046": {
-      "class": "step",
-      "card": "RMK-2042",
-      "note": "step: a gate holding a reply's synthesis mid-way and the transport's cancel_audio calls in voice.read (S20): the unplayed audio is dropped at the cut."
-    },
-    "RK-12.3.13-049": {
-      "class": "step",
-      "card": "RMK-2042",
-      "note": "step: a gate holding a streamed reply or its synthesis mid-way (S20): a reply cut while still synthesized carries played_ms and no played_percentage."
-    },
-    "RK-12.3.13-050": {
-      "class": "step",
-      "card": "RMK-2042",
-      "note": "step: a gate holding a streamed reply mid-way (S20): the partial record holds only the sentences handed to the TTS before the cut."
-    },
-    "RK-12.3.13-053": {
-      "class": "step",
-      "card": "RMK-2042",
-      "note": "step: voice.open TTS options (S7): a TTS consuming context, and the interrupted turn it received with its played_ms in voice.read."
-    },
-    "RK-12.3.13-056": {
-      "class": "step",
-      "card": "RMK-2042",
-      "note": "step: voice.open backchannels (S1b) with a playback_gate: speech held during the wait reaches no room and fires no ON_TRANSCRIPTION before the detector's verdict."
-    },
-    "RK-12.3.13-057": {
-      "class": "step",
-      "card": "RMK-2042",
-      "note": "step: voice.open backchannels (S1b): a partial left pending, then a final judged no backchannel cuts the reply and is the turn."
-    },
-    "RK-12.3.14-007": {
-      "class": "step",
-      "card": "RMK-2042",
-      "note": "step: voice session recorder (S8): a recorder and a recording_config on voice.open; its start and ON_RECORDING_STARTED."
-    },
-    "RK-12.3.14-009": {
-      "class": "step",
-      "card": "RMK-2042",
-      "note": "step: voice.end (S4) and voice session recorder (S8): the recorder's stop and ON_RECORDING_STOPPED with its result."
-    },
-    "RK-12.3.14-012": {
-      "class": "step",
-      "card": "RMK-2042",
-      "note": "step: voice session recorder (S8): the inbound frames the recorder received, after resampling."
-    },
-    "RK-12.3.14-022": {
-      "class": "step",
-      "card": "RMK-2042",
-      "note": "step: voice session recorder (S8): the outbound frames the recorder received, after the postprocessors."
+      "note": "step: written by P6-VO3 (voice/a-pending-verdict-on-a-final-is-no-reason-to-wait): Python discards a final the detector answers pending; HITL 4565b1f2."
     },
     "RK-12.3.15-020": {
       "class": "phase6",
@@ -1785,51 +1535,6 @@
       "class": "phase6",
       "card": "RMK-2034",
       "note": "measurement: resampling quality, the artifacts a resampler leaves for VAD and STT (Python's default is linear interpolation, suspect RMK-2029)."
-    },
-    "RK-12.3.6-010": {
-      "class": "step",
-      "card": "RMK-2034",
-      "note": "step: voice.send_dtmf (S9): a digit outside 0 to 9, *, # and A to D is refused, the valid ones sent."
-    },
-    "RK-12.3.6-011": {
-      "class": "step",
-      "card": "RMK-2034",
-      "note": "step: voice.send_dtmf (S9): a digit sent with no duration reaches the backend with 160 ms."
-    },
-    "RK-12.3.6-012": {
-      "class": "step",
-      "card": "RMK-2034",
-      "note": "step: voice.send_dtmf (S9) and voice.open capabilities (S2): a backend without DTMF_SIGNALING refuses the digit (NotImplementedError in Python, an error class for Rust)."
-    },
-    "RK-12.3.6-013": {
-      "class": "step",
-      "card": "RMK-2034",
-      "note": "step: voice.send_dtmf (S9): a duration outside 1 to 10000 ms, an invalid digit and an ended session are refused by the channel."
-    },
-    "RK-12.3.7-003": {
-      "class": "step",
-      "card": "RMK-2034",
-      "note": "step: the voice session recorder (S8): with INBOUND_ONLY or OUTBOUND_ONLY, voice.read shows the recorder handed one direction only."
-    },
-    "RK-12.3.7-019": {
-      "class": "step",
-      "card": "RMK-2034",
-      "note": "step: the voice session recorder (S8) and voice stage trace (S3): the recorder is handed the resampled inbound frame before the AEC and the outbound frame after the postprocessors."
-    },
-    "RK-12.3.7-021": {
-      "class": "step",
-      "card": "RMK-2034",
-      "note": "step: the voice session recorder (S8) and voice stage trace (S3): tap_inbound between the inbound resampler and the AEC, tap_outbound between the postprocessors and the outbound resampler."
-    },
-    "RK-12.3.7-022": {
-      "class": "step",
-      "card": "RMK-2034",
-      "note": "step: the voice session recorder (S8): ON_RECORDING_STARTED fires when the session's recording starts."
-    },
-    "RK-12.3.7-023": {
-      "class": "step",
-      "card": "RMK-2034",
-      "note": "step: the voice session recorder (S8) and voice.end (S4): ON_RECORDING_STOPPED fires with the RecordingResult when the session ends."
     },
     "RK-12.4-018": {
       "class": "step",
@@ -2315,26 +2020,6 @@
       "class": "step",
       "card": "RMK-2042",
       "note": "step: virtual clock (X-CLK): frames fed over one simulated second fire at most ten ON_INPUT_AUDIO_LEVEL; no Python test pins the throttle."
-    },
-    "RK-12.6-006": {
-      "class": "step",
-      "card": "RMK-2042",
-      "note": "step: a gate holding a reply's synthesis mid-way and the transport's cancel_audio calls in voice.read (S20): the unplayed audio is dropped at the cut."
-    },
-    "RK-12.6-008": {
-      "class": "step",
-      "card": "RMK-2042",
-      "note": "step: voice.open TTS options (S7): a TTS consuming context, and the truncated turn it received in voice.read."
-    },
-    "RK-12.6-013": {
-      "class": "step",
-      "card": "RMK-2042",
-      "note": "step: voice.open interruption (S1): allow_during_first_ms set, a barge-in before that much of the reply played cuts nothing."
-    },
-    "RK-12.6-016": {
-      "class": "step",
-      "card": "RMK-2042",
-      "note": "step: voice.open capabilities (S2) and an InterruptionConfig on voice.open (S1): a transport barge-in told apart from the VAD's own, under a strategy that does not act on the VAD's speech start; ON_BARGE_IN from the transport, then the speech edges."
     },
     "RK-12.7.2-007": {
       "class": "step",

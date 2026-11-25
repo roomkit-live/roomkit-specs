@@ -2374,6 +2374,10 @@
             "voice.add_backend",
             "voice.connect",
             "voice.client_disconnected",
+            "voice.send_dtmf",
+            "voice.play",
+            "voice.list_voices",
+            "voice.synthesize_dialogue",
             "realtime.start",
             "realtime.end",
             "realtime.read",
@@ -3176,9 +3180,6 @@
                   }
                 ]
               },
-              "tts": {
-                "type": "null"
-              },
               "playback_gate": {
                 "type": "string"
               },
@@ -3215,6 +3216,9 @@
                                 },
                                 "speech_start": {
                                   "type": "boolean"
+                                },
+                                "gate": {
+                                  "type": "string"
                                 },
                                 "segments": {
                                   "type": "array",
@@ -3474,7 +3478,15 @@
               },
               "recorder": {
                 "type": "object",
-                "properties": {},
+                "properties": {
+                  "mode": {
+                    "enum": [
+                      "both",
+                      "inbound_only",
+                      "outbound_only"
+                    ]
+                  }
+                },
                 "additionalProperties": false
               },
               "vad_config": {
@@ -3551,6 +3563,185 @@
                   }
                 },
                 "additionalProperties": false
+              },
+              "interruption": {
+                "type": "object",
+                "properties": {
+                  "strategy": {
+                    "enum": [
+                      "immediate",
+                      "confirmed",
+                      "semantic",
+                      "disabled"
+                    ]
+                  },
+                  "min_speech_ms": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "allow_during_first_ms": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "transcript_wait_ms": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "echo_guard_ms": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "flush_partial_tts": {
+                    "type": "boolean"
+                  },
+                  "keep_partial_transcript": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "max_sentences": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "backchannel_decisions": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "is_backchannel": {
+                      "type": "boolean"
+                    },
+                    "pending": {
+                      "type": "boolean"
+                    },
+                    "transcript": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "is_backchannel"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "tts": {
+                "type": [
+                  "object",
+                  "null"
+                ],
+                "properties": {
+                  "context_level": {
+                    "enum": [
+                      "none",
+                      "self",
+                      "text",
+                      "audio"
+                    ]
+                  },
+                  "format": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "word_ms": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "fails": {
+                    "type": "string"
+                  },
+                  "gates": {
+                    "type": "array",
+                    "items": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "voices": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "name": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "language": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "gender": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "description": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "id"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "max_dialogue_speakers": {
+                    "type": "integer",
+                    "minimum": 0
+                  }
+                },
+                "additionalProperties": false
+              },
+              "tts_context": {
+                "type": "object",
+                "properties": {
+                  "enabled": {
+                    "type": "boolean"
+                  },
+                  "include_audio": {
+                    "type": "boolean"
+                  },
+                  "max_turns": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "max_audio_seconds": {
+                    "type": "number",
+                    "exclusiveMinimum": 0
+                  }
+                },
+                "additionalProperties": false
+              },
+              "playback_gates": {
+                "type": "array",
+                "items": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "minItems": 1
+              },
+              "playback_fails": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "uniqueItems": true
               }
             },
             "dependentRequired": {
@@ -3563,6 +3754,20 @@
               ]
             },
             "dependentSchemas": {
+                "backchannel_decisions": {
+                  "not": {
+                    "required": [
+                      "backchannels"
+                    ]
+                  }
+                },
+                "playback_gates": {
+                  "not": {
+                    "required": [
+                      "playback_gate"
+                    ]
+                  }
+                },
                 "backchannels": {
                   "anyOf": [
                     {
@@ -3924,6 +4129,141 @@
                 },
                 "route": {
                   "type": "boolean"
+                }
+              }
+            }
+        },
+        {
+            "if": {
+              "properties": {
+                "call": {
+                  "const": "voice.send_dtmf"
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "channel_id",
+                "participant_id",
+                "digit"
+              ],
+              "properties": {
+                "channel_id": {
+                  "type": "string"
+                },
+                "participant_id": {
+                  "type": "string"
+                },
+                "digit": {
+                  "type": "string"
+                },
+                "duration_ms": {
+                  "type": "integer"
+                }
+              }
+            }
+        },
+        {
+            "if": {
+              "properties": {
+                "call": {
+                  "const": "voice.play"
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "channel_id",
+                "participant_id",
+                "audio"
+              ],
+              "properties": {
+                "channel_id": {
+                  "type": "string"
+                },
+                "participant_id": {
+                  "type": "string"
+                },
+                "audio": {
+                  "type": "string",
+                  "contentEncoding": "base64"
+                },
+                "text": {
+                  "type": "string"
+                }
+              }
+            }
+        },
+        {
+            "if": {
+              "properties": {
+                "call": {
+                  "const": "voice.list_voices"
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "channel_id"
+              ],
+              "properties": {
+                "channel_id": {
+                  "type": "string"
+                },
+                "language": {
+                  "type": "string"
+                },
+                "gender": {
+                  "type": "string"
+                },
+                "query": {
+                  "type": "string"
+                }
+              }
+            }
+        },
+        {
+            "if": {
+              "properties": {
+                "call": {
+                  "const": "voice.synthesize_dialogue"
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "channel_id",
+                "turns",
+                "voices"
+              ],
+              "properties": {
+                "channel_id": {
+                  "type": "string"
+                },
+                "turns": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "speaker": {
+                        "type": "string"
+                      },
+                      "text": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "speaker",
+                      "text"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "voices": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  }
                 }
               }
             }
@@ -7754,7 +8094,9 @@
         "cleanup_incomplete",
         "channel_close_failed",
         "shutdown_cancelled",
-        "language_override_unsupported"
+        "language_override_unsupported",
+        "not_supported",
+        "session_ended"
       ]
     },
     "expect": {
@@ -8079,6 +8421,13 @@
         },
         "ai_events": {
           "description": "Per room, the framework events an AI channel's turn emits (\u00a78.2, Level 1: `before_ai_generation`, `ai_response`), in emission order, matched as `framework_events`.",
+          "type": "object",
+          "additionalProperties": {
+            "type": "array"
+          }
+        },
+        "voice_events": {
+          "description": "Per room, the framework events of a voice session's failed synthesis or playback (\u00a78.2, \u00a712.2: `tts_error`), in emission order, matched as `framework_events`.",
           "type": "object",
           "additionalProperties": {
             "type": "array"

@@ -4351,11 +4351,21 @@
       "voice/a-failed-transcription-hook-withholds-the-utterance": "caacde3738bb176697322d4dabafcb06e7de5c02362487230d83a06a0425a51c",
       "voice/the-transcription-hook-replaces-the-routed-words": "caacde3738bb176697322d4dabafcb06e7de5c02362487230d83a06a0425a51c"
     },
+    "RK-12.2-021": {
+      "voice/a-tts-consuming-text-receives-both-roles-of-the-session-s-dialogue": "6fa49d87103159d1093d01668370bfc64a5143267896df1a6a824fc9587fd112"
+    },
     "RK-12.2-022": {
       "voice/a-turn-waits-for-its-last-fragment": "843c41b4122856039fcb1f69ad437cac75f41aaba0e6cbea703cb83bf0e893be"
     },
     "RK-12.2-023": {
       "voice/a-text-from-another-channel-is-spoken": "6ef7071bf462e5ed98ec380080958629ce0cfea4821ec568345a6eccf0a6d66e"
+    },
+    "RK-12.2-024": {
+      "voice/a-text-delivered-whole-is-spoken-up-to-the-sentence-budget": "0d60db8a0dc7a8784018c8e8559b33c53c59bdb4eda7f5fee53ae9842e7731f0"
+    },
+    "RK-12.2-025": {
+      "voice/a-session-whose-playback-fails-is-reported-and-the-served-one-fires-after-tts": "56ea04378fabb81395b88d1bd9377649e396407d29d1e7ec28d1a9ee9500d1fd",
+      "voice/no-session-served-fires-no-after-tts": "56ea04378fabb81395b88d1bd9377649e396407d29d1e7ec28d1a9ee9500d1fd"
     },
     "RK-12.2-026": {
       "store/reattached-binding-moves-behind-existing-streaming-targets": "1eb058c1797a31640832b9580f0b46bd89e43465a92cd4710551208f1a656bac",
@@ -4382,6 +4392,10 @@
     },
     "RK-12.2-030": {
       "voice/a-streamed-reply-reaches-every-session-sentence-by-sentence": "44a9b2c7468e125c8e280f026047fc08650481264c61693ee8dc8af973f1a9ed"
+    },
+    "RK-12.2-031": {
+      "voice/a-streamed-reply-of-exactly-its-sentence-budget-is-not-cut": "e41998ad5fa56d0ccc85180f6eb319dd053a9ced7251cc3dc6aa3956013d4d76",
+      "voice/a-streamed-reply-stops-once-its-sentence-budget-is-said": "e41998ad5fa56d0ccc85180f6eb319dd053a9ced7251cc3dc6aa3956013d4d76"
     },
     "RK-12.2-032": {
       "streaming/a-streamed-answer-hands-its-end-after-its-last-row": "dd6885ddd8281b2fe62b130ff5dcf72db359e9761744d093e6690f5269eb03bc",
@@ -4455,6 +4469,10 @@
     "RK-12.2-036": {
       "voice/after-tts-reports-the-sentences-before-tts-let-through": "5e44bb0e99cf6e1c49940b13235bf59834f0a779ff3d076a014539bec1c33f31"
     },
+    "RK-12.2-037": {
+      "voice/a-response-waits-for-the-playback-under-way-then-plays-whole": "943c471e6325f48392e41b543d16322e20ecc1f9136790c64bdb32c71713ae82",
+      "voice/say-and-play-cut-the-playback-under-way-and-a-response-cuts-a-play": "943c471e6325f48392e41b543d16322e20ecc1f9136790c64bdb32c71713ae82"
+    },
     "RK-12.2-038": {
       "voice/a-reply-walks-the-outbound-stages-in-their-order": "f3897ee91e73702d43106502b2729e87d35387ca47303d3308a3bffbdc579382"
     },
@@ -4466,8 +4484,15 @@
       "voice/a-backchannel-leaves-the-reply-playing": "d8873a89a00dc7d77ebf96e66d165ad5b483c384982f6bcdd3232e0648b0c4c3",
       "voice/a-transport-barge-in-cancels-active-playback": "d8873a89a00dc7d77ebf96e66d165ad5b483c384982f6bcdd3232e0648b0c4c3"
     },
+    "RK-12.2-041": {
+      "voice/a-reply-cut-after-part-of-its-audio-records-what-was-heard": "1c5e335df73a850d3c248928b5b9f0d9b2df02f6550d59dfe5d5c65e680a13b3",
+      "voice/a-tts-consuming-text-receives-both-roles-of-the-session-s-dialogue": "1c5e335df73a850d3c248928b5b9f0d9b2df02f6550d59dfe5d5c65e680a13b3"
+    },
     "RK-12.2-043": {
       "voice/a-reply-walks-the-outbound-stages-in-their-order": "070fe1b9a17684193fb42f9369ebcd8aecdd2679120a8b4265bad86f41b86cc1"
+    },
+    "RK-12.2-046": {
+      "voice/an-encoded-tts-chunk-never-reaches-the-transport": "7e06a2b84536ae65ed07458a58460d8257947cad2bedec5fc54b332c337818d6"
     },
     "RK-12.2-051": {
       "voice/a-transport-s-own-canceller-and-gain-replace-the-pipeline-s": "489ccfee9ad07dfef89912ac8c4301774fc2f729b102e31c52aa92dfe3f0a55a"
@@ -4477,6 +4502,10 @@
     },
     "RK-12.2-055": {
       "voice/a-participant-who-comes-back-gets-a-new-session": "f07a095d9866f10f7e535b693752b658bbe6fc003aa07b5942fa7fc0aa8f0122"
+    },
+    "RK-12.2-056": {
+      "voice/a-recognizer-s-speech-start-fires-the-speech-start-hooks": "6ab6605bd9528fb75f59a936e63173c87f863e11ece402e077ddae2d64461e47",
+      "voice/speech-the-recognizer-starts-once-nothing-plays-is-nobody-s-echo": "6ab6605bd9528fb75f59a936e63173c87f863e11ece402e077ddae2d64461e47"
     },
     "RK-12.2-058": {
       "voice/no-language-reaches-a-recognizer-that-cannot-take-one": "19403f6a9ebe73e46c5eb9972c3382c3e665ed83d7dda22ceff6c89cc77cc693"
@@ -4513,8 +4542,67 @@
     "RK-12.2-069": {
       "voice/audio-carried-between-streams-is-bounded-to-the-newest": "be985338d186ed846f97bc052a798d021719b56fed17cada669d823dc862ef01"
     },
+    "RK-12.2-076": {
+      "voice/an-encoded-tts-chunk-never-reaches-the-transport": "57b38aaff20a03100252a670b4582ebe1a89a38a285477d75576c75ae28aefc0"
+    },
+    "RK-12.2-078": {
+      "voice/a-tts-consuming-nothing-receives-no-context": "840afcc539708411fdf1b02df22824e64527f594a791ebfcba39a94991aaf2e7"
+    },
+    "RK-12.2-081": {
+      "voice/a-tts-without-a-voices-endpoint-lists-its-curated-catalog": "a9a0832dee763cd2e5a1da72890d0a43bf460573702f6f5f8d5b10919f38810f"
+    },
+    "RK-12.2-082": {
+      "voice/voice-filters-match-a-language-prefix-a-gender-and-a-name-or-description": "47057cfb6649f1628104dff0f3fee5ebd9b32df4372975cf9e0990f0a0448b1b"
+    },
+    "RK-12.2-086": {
+      "voice/a-dialogue-is-refused-before-any-call-it-cannot-voice": "e777a21e6cf8fba1cfdadcebea5382cfbb65b94217408f47aa57d83c7e79da48"
+    },
+    "RK-12.2.2-009": {
+      "voice/a-tts-consuming-audio-receives-what-was-said-and-played": "4a51db2cd89bf46659420418d6da7b81b885dac09ba28b31ba864bde628d3b61",
+      "voice/a-tts-consuming-self-receives-its-own-played-turns-only": "4a51db2cd89bf46659420418d6da7b81b885dac09ba28b31ba864bde628d3b61",
+      "voice/a-tts-consuming-text-receives-both-roles-of-the-session-s-dialogue": "4a51db2cd89bf46659420418d6da7b81b885dac09ba28b31ba864bde628d3b61"
+    },
+    "RK-12.2.2-012": {
+      "voice/a-context-drops-its-oldest-audio-past-max-audio-seconds-and-keeps-its-text": "5a51649f3e7df2f2f9167e26e41c835ca4393e7855ab9c8c93747b1988f76215",
+      "voice/a-context-keeps-its-newest-turns-up-to-max-turns": "5a51649f3e7df2f2f9167e26e41c835ca4393e7855ab9c8c93747b1988f76215",
+      "voice/a-disabled-context-reaches-no-tts": "5a51649f3e7df2f2f9167e26e41c835ca4393e7855ab9c8c93747b1988f76215"
+    },
+    "RK-12.2.2-013": {
+      "voice/a-tts-consuming-audio-receives-what-was-said-and-played": "2f729e5b474fc283699e20b036395c48ac799bd4e5bd450dc5d6465973cb8cb9",
+      "voice/a-tts-consuming-nothing-receives-no-context": "2f729e5b474fc283699e20b036395c48ac799bd4e5bd450dc5d6465973cb8cb9",
+      "voice/an-audio-tts-without-include-audio-receives-the-text-only": "2f729e5b474fc283699e20b036395c48ac799bd4e5bd450dc5d6465973cb8cb9"
+    },
+    "RK-12.2.2-015": {
+      "voice/each-session-s-context-holds-its-own-dialogue": "c8e5b004bafbbff22aca93397ab8d8bb358a15594c18ec5cecd0202419fe17d9"
+    },
     "RK-12.2.2-016": {
       "voice/a-response-to-two-sessions-is-synthesized-for-each": "8f454b9876b682e33edbc1127bc2e168e1232812389bc561ba6cdb293b2ae1c9"
+    },
+    "RK-12.2.2-017": {
+      "voice/a-redacted-transcript-reaches-the-context-without-its-audio": "4e0e2f540253bff6c990b5a8a88b724bcf4fe803faf692aac53dcee5bc42ab9f",
+      "voice/a-tts-consuming-audio-receives-what-was-said-and-played": "4e0e2f540253bff6c990b5a8a88b724bcf4fe803faf692aac53dcee5bc42ab9f",
+      "voice/a-tts-consuming-text-receives-both-roles-of-the-session-s-dialogue": "4e0e2f540253bff6c990b5a8a88b724bcf4fe803faf692aac53dcee5bc42ab9f"
+    },
+    "RK-12.2.2-018": {
+      "voice/a-redacted-transcript-reaches-the-context-without-its-audio": "59a590d54dc30bcf4e276b0172cf5b28007d67e6dff4939d0071995707c226be"
+    },
+    "RK-12.2.2-019": {
+      "voice/a-backchannel-leaves-no-turn-in-the-context": "95da9c869e50f32e90640db4269a97ce6d10ca2f8d12b6f4f4e918a5b08d29ea"
+    },
+    "RK-12.2.2-020": {
+      "voice/a-tts-consuming-text-receives-both-roles-of-the-session-s-dialogue": "e09ce4b623d21f0f6b6322703e26642dd6747246b292374c4ffa8163e26b9909"
+    },
+    "RK-12.2.2-021": {
+      "voice/a-tts-consuming-audio-receives-what-was-said-and-played": "76a2ee3a67d8c59435fa635051b3b63450c5a37a69191e92799d5b2a9584e3ea"
+    },
+    "RK-12.2.2-022": {
+      "voice/a-reply-cut-before-any-of-its-audio-leaves-no-turn": "c7785faf61fe70407672fefe4784735a6f3304c166f7f42b9e7c96c28d9099ec"
+    },
+    "RK-12.2.2-023": {
+      "voice/a-reply-cut-after-part-of-its-audio-records-what-was-heard": "a2f29ce671304cd2e79c314e38aad451c6973e39858e6f4e2d0de1c0b9f5e4be"
+    },
+    "RK-12.2.2-028": {
+      "voice/an-ended-session-s-context-is-released": "191f05630f2064efff0828b3146961dddf760660c0a232621dc5909391916ed9"
     },
     "RK-12.2.3-009": {
       "voice/the-stt-label-names-the-transcript-while-the-stage-keeps-firing": "14ec26496c51dc31d03b9cca19accd2fd0cfe14665ecc38cd8b12e86ff3c0ece"
@@ -4526,6 +4614,9 @@
       "voice/a-diarizing-stream-lasts-until-its-provider-ends-it-and-labels-start-a-new-epoch": "2bc60ff5ac04768f5af5600c6d14f9ee0dd52615e2942c6d8276798c91ba9324",
       "voice/a-failed-diarizing-stream-is-opened-again": "2bc60ff5ac04768f5af5600c6d14f9ee0dd52615e2942c6d8276798c91ba9324",
       "voice/a-language-chosen-mid-session-ends-a-diarizing-stream": "2bc60ff5ac04768f5af5600c6d14f9ee0dd52615e2942c6d8276798c91ba9324"
+    },
+    "RK-12.2.3-023": {
+      "voice/a-final-discarded-as-echo-leaves-a-kept-stream-open": "065b3afd22636200f87371a7fb6507d01e1a7bfc175a26d1beb3581f24d8716e"
     },
     "RK-12.2.3-024": {
       "voice/a-diarizing-stream-lasts-until-its-provider-ends-it-and-labels-start-a-new-epoch": "4de6e70df44dcc479d03acca8ebc068812764eeb02077cb143340c3ead64ac16"
@@ -4613,6 +4704,9 @@
     "RK-12.2.3-052": {
       "voice/a-stage-s-speaker-is-read-as-a-recognizer-label": "43b642bc6d70ee781a00c043f78b8ea2388f9db04b4b90824286dcae2c1c1fcd"
     },
+    "RK-12.3-007": {
+      "voice/the-recorder-taps-the-resampled-capture-and-the-processed-reply": "f3eb9a19ba17cb6ffc7e02e821b56925a607d2215adc66c707f9626cc25517c7"
+    },
     "RK-12.3-008": {
       "voice/a-reply-walks-the-outbound-stages-in-their-order": "08b459f4204656177bc71697057f40f48f0e7f71e8b642b0f1f7655df865a3da",
       "voice/a-transport-feeding-its-own-canceller-gets-no-reference-from-the-pipeline": "08b459f4204656177bc71697057f40f48f0e7f71e8b642b0f1f7655df865a3da"
@@ -4661,6 +4755,12 @@
     "RK-12.3.12-015": {
       "voice/an-incomplete-turn-is-routed-once-its-wait-passes-in-silence": "aeaac06ae41820a2b6b802a840778eb803692da56d089edc8d4023511f67a73b"
     },
+    "RK-12.3.12-017": {
+      "voice/speech-that-starts-before-the-reply-is-heard-holds-it-as-a-user-turn": "44c82589864b4032dabd6d717d248dc5bdb595a43aaef0d685b717390eb759c0"
+    },
+    "RK-12.3.12-018": {
+      "voice/speech-that-resumes-past-min-speech-ms-supersedes-the-unheard-reply": "2fc55421ae6db234ac707c8699bdb92f1060557f4823ae7b7b6291d56220b9fa"
+    },
     "RK-12.3.12-019": {
       "voice/blocked-speech-before-the-reply-is-heard-releases-it": "91807de488a08132d09510361bf4985905dff9d3f93b5006d5f59e729b5e32e6"
     },
@@ -4676,8 +4776,27 @@
     "RK-12.3.13-009": {
       "voice/immediate-with-a-vad-cuts-before-words-can-tell-an-echo": "fd9d46ba2baab8f9b4de7d53b62c4dcb2daaa6913d020895bc62beea2e7a5f34"
     },
+    "RK-12.3.13-010": {
+      "voice/confirmed-speech-shorter-than-min-speech-ms-leaves-the-reply-playing": "c1a15a0b5e73a02947014fee5a52a82c6610968a82bbde9461b9e5138a207eb5",
+      "voice/confirmed-speech-that-lasts-min-speech-ms-cuts-the-reply": "c1a15a0b5e73a02947014fee5a52a82c6610968a82bbde9461b9e5138a207eb5"
+    },
     "RK-12.3.13-011": {
       "voice/a-backchannel-leaves-the-reply-playing": "06c720db201a0fb45b7a1c7b133d100b8910d712f2d0699d75a9e5b2f7ef2b12"
+    },
+    "RK-12.3.13-012": {
+      "voice/disabled-speech-during-playback-waits-for-the-reply-to-end": "f2abb0ad4b3bc49f9f985637536a23dbc5f2dcfc7f738bf55093512dbcce54ed"
+    },
+    "RK-12.3.13-017": {
+      "voice/the-detector-is-told-a-partial-from-the-final-and-never-asked-at-an-empty-onset": "dcdf9797cdb74895d9a858ed14e600ad38d6dfe8d555546a7706de7041677eee"
+    },
+    "RK-12.3.13-018": {
+      "voice/with-a-streaming-stt-the-detector-waits-for-the-first-words": "0e21e38f37c1cac0826112dabe556b6f972e9beb4b66f422782c9705603bd1ac"
+    },
+    "RK-12.3.13-019": {
+      "voice/without-a-streaming-stt-the-detector-judges-the-duration-once-min-speech-ms-has-passed": "0811496f482d24829fce284c12880b85fd395af49f5425db423ca03e5bf0d469"
+    },
+    "RK-12.3.13-020": {
+      "voice/without-a-streaming-stt-the-detector-judges-the-duration-once-min-speech-ms-has-passed": "41ad271ca444512a5a0f606e1cd9aaa4e94bf4f7410d4c68b043a5da450bd6f7"
     },
     "RK-12.3.13-023": {
       "voice/a-backchannel-leaves-the-reply-playing": "5df2f294597cd25ec73ceb5b983eec40c26d81aa4f3819ec1a8b57b70eef0c4f"
@@ -4708,8 +4827,21 @@
       "voice/a-final-adding-a-word-after-the-reply-ended-is-the-turn": "d75c8f34f168da4f0a7b9aa6b1d40c60d50836d71bb847eb726e16f2bd158680",
       "voice/an-echo-of-the-reply-s-opening-is-no-turn": "d75c8f34f168da4f0a7b9aa6b1d40c60d50836d71bb847eb726e16f2bd158680"
     },
+    "RK-12.3.13-031": {
+      "voice/an-echo-verdict-outlives-the-reply-until-its-final": "83cfde0530da6b787fd8f101f0564a6be4a8ac84a78f198fa0fcb22a1594dfe4",
+      "voice/speech-the-recognizer-starts-once-nothing-plays-is-nobody-s-echo": "83cfde0530da6b787fd8f101f0564a6be4a8ac84a78f198fa0fcb22a1594dfe4"
+    },
     "RK-12.3.13-034": {
       "voice/a-final-adding-its-own-word-to-the-echo-cuts-and-is-the-turn": "3345f3e433e888f87f9422bd839332920785d2754dce888c2384078a6be29952"
+    },
+    "RK-12.3.13-036": {
+      "voice/a-file-played-whole-counts-toward-the-echo-guard": "5098bf0705279bf23638512397f6dfa6a3b9817f34a19909b7775393be5d224c"
+    },
+    "RK-12.3.13-037": {
+      "voice/past-echo-guard-ms-of-played-audio-the-reply-s-own-words-cut-it": "b8346053dcc744586a6780e25e38bdcd96dd9a9baf20eac07535f8599ca22437"
+    },
+    "RK-12.3.13-038": {
+      "voice/with-the-echo-guard-off-the-reply-s-own-words-cut-it": "c5b15b316969f27e1c34ca51acf9050424ee9ec42e7931a046b5c1a64b990052"
     },
     "RK-12.3.13-039": {
       "voice/a-new-voice-repeating-the-reply-it-spoke-over-is-no-turn": "1635d777f1f5227ca5d36d3e7272a24341e6ac2ebf30cc2215371cca8c3c1adc",
@@ -4725,14 +4857,32 @@
       "voice/an-acknowledged-stretch-is-cut-only-by-words-that-are-no-backchannel": "f7e7a9a8ea961b6f5198c4fe4028d0d0db1a86eea6aa6bba5cb2ae3005033b39",
       "voice/an-acknowledged-stretch-is-not-cut-on-its-duration": "f7e7a9a8ea961b6f5198c4fe4028d0d0db1a86eea6aa6bba5cb2ae3005033b39"
     },
+    "RK-12.3.13-043": {
+      "voice/the-detector-is-told-a-partial-from-the-final-and-never-asked-at-an-empty-onset": "951ddd705115ef1c9547b05d555347a0a40f1e11143cdb36cad16809ef835850"
+    },
+    "RK-12.3.13-044": {
+      "voice/a-pending-verdict-leaves-the-reply-playing-until-the-next-words": "947a1561a6ce7f23c9aae9d1efe800be0db334fe7d7424fa8ce3b1ef5fd5f8b6"
+    },
+    "RK-12.3.13-046": {
+      "voice/a-cut-drops-the-unplayed-audio-unless-flush-partial-tts-is-off": "0fce8b6802218fe17120e086b42aa8d79fd462d8c728cb88bcd80a7cc43c6ab3"
+    },
     "RK-12.3.13-047": {
       "voice/a-cut-reply-is-stored-as-interrupted-with-how-far-it-played": "73037a3097c3803a33cb1b787c04b10242375a490a32c683524b20541d79bd35"
     },
     "RK-12.3.13-048": {
       "voice/a-cut-reply-is-stored-as-interrupted-with-how-far-it-played": "950873d93b01a8cc23a42c396a02c089d14b15d2b06c4ef94072773b3129c68e"
     },
+    "RK-12.3.13-049": {
+      "voice/a-streamed-answer-cut-while-synthesized-keeps-what-was-handed-to-the-tts": "ce6bff846ddc686836d704dc3ee250d79ed0b158a5640a7fbc0e52503bb6e109"
+    },
+    "RK-12.3.13-050": {
+      "voice/a-streamed-answer-cut-while-synthesized-keeps-what-was-handed-to-the-tts": "92d5130e6f7b82c1fe067d5c87dc23ec570880b85130c46821214d7415e4d62b"
+    },
     "RK-12.3.13-052": {
       "voice/a-cut-answer-s-record-names-the-answer-not-the-listener": "903cc81a4a075c9e0db9bb84ff0239e79c7f3548cd39048deea8be98a1b210c0"
+    },
+    "RK-12.3.13-053": {
+      "voice/a-reply-cut-after-part-of-its-audio-records-what-was-heard": "aa419906afa452dec391f654f4cd600154a6b2813448452b446234ea2b972695"
     },
     "RK-12.3.13-054": {
       "voice/speech-that-cuts-the-reply-is-the-user-s-turn": "37bf6693c40154b0f4fc799dc88796998b6f1eb16c76d7e053d098953f883375"
@@ -4740,20 +4890,35 @@
     "RK-12.3.13-055": {
       "voice/a-new-voice-s-first-words-cut-the-reply-and-its-echo-final-does-not-undo-it": "3ccbb8b9a1f681416c6f8e9145922c7917ef34abfe56fb5e8925477b4bfa3161"
     },
+    "RK-12.3.13-056": {
+      "voice/speech-held-for-the-detector-s-verdict-reaches-no-room-before-it": "580bf37116b38384811c47bfd7abf6515c27be90ec8bdaff11bd42b80fab7db6"
+    },
+    "RK-12.3.13-057": {
+      "voice/a-final-after-a-pending-partial-that-is-no-backchannel-cuts-and-is-the-turn": "70f2a1478b179613e1d225597f8da1c8d07059b8d52e271d78aa21d1306ac368"
+    },
     "RK-12.3.14-005": {
       "voice/a-session-s-frame-stages-are-reset-at-its-start-and-at-its-end": "c9a845810dadcb56163514a1729d2be2bf19a75290ffa1f9b31895c8f7853c95"
     },
     "RK-12.3.14-006": {
       "voice/each-joined-session-reports-its-start-once": "547b90252ed5a37ae446f4bbc83c186381ee53f3398ed8f042332180160bf691"
     },
+    "RK-12.3.14-007": {
+      "voice/a-session-s-recording-starts-and-stops-with-its-hooks": "b1d4811a5b74d9311a6878eb49f6ba902c4df4b036524c6442712b91725cedc4"
+    },
     "RK-12.3.14-008": {
       "voice/a-session-s-frame-stages-are-reset-at-its-start-and-at-its-end": "bafb156b7662f3ee594dbf4aa8dfcadebdfd7205f493fe6aa74428c477ab88c4"
+    },
+    "RK-12.3.14-009": {
+      "voice/a-session-s-recording-starts-and-stops-with-its-hooks": "9207e0faf1133c81c0ce3cb0220010c0fefc762219ba2ad3d3afb6a3e69d53e8"
     },
     "RK-12.3.14-010": {
       "voice/stages-close-with-the-channel-never-with-a-session": "2b63775502638e46f6ce6c8e7ea8fe9df461390dcb8e8b5419afe5db5aae7074"
     },
     "RK-12.3.14-011": {
       "voice/a-contract-hands-every-inbound-stage-the-internal-format": "ff9c1986a5485ebcee9d8f903aa64efa4bbdcafa3fbdd638f69fb6854ac5bb20"
+    },
+    "RK-12.3.14-012": {
+      "voice/the-recorder-taps-the-resampled-capture-and-the-processed-reply": "6c3006b80a7928cbd337bc3d158495d4a008f56458785986853e41472526643a"
     },
     "RK-12.3.14-013": {
       "voice/a-detected-tone-reaches-the-dtmf-hook": "5434cb7b63e67c08c4d02686386e2fdad53c34e4fabf543feac1a6856d89b407"
@@ -4782,6 +4947,9 @@
     },
     "RK-12.3.14-021": {
       "voice/a-reply-walks-the-outbound-stages-in-their-order": "7451e524777888ccdccf12048a5bf34f5fa47a93278c6b6985541272dc410d30"
+    },
+    "RK-12.3.14-022": {
+      "voice/the-recorder-taps-the-resampled-capture-and-the-processed-reply": "3beaacf2383283af5f48e98f05ee0cb615365feff12041f6844a510e134e88bc"
     },
     "RK-12.3.14-023": {
       "voice/a-reply-walks-the-outbound-stages-in-their-order": "77a3d1398d3b8876a31b3e325f12118038b6c21bf2084d0026d012c89f121b60",
@@ -4853,6 +5021,34 @@
     },
     "RK-12.3.6-007": {
       "voice/a-detected-tone-reaches-the-dtmf-hook": "04672654acfebd3fcde1980e0b889285f95c9c5c335111934bd98bbff77e023c"
+    },
+    "RK-12.3.6-010": {
+      "voice/each-dtmf-digit-is-sent-with-its-duration-or-160-ms": "497a5b7c6dc1997d70012358facd8f4166a599391d9d3746e10f70cccddb7521",
+      "voice/the-channel-refuses-a-digit-a-duration-or-a-session-it-cannot-send": "497a5b7c6dc1997d70012358facd8f4166a599391d9d3746e10f70cccddb7521"
+    },
+    "RK-12.3.6-011": {
+      "voice/each-dtmf-digit-is-sent-with-its-duration-or-160-ms": "96defaebcf2a534ad73d2df4cfc60da24625cc97e2b1e3ec372cc64b7df0e5c2"
+    },
+    "RK-12.3.6-012": {
+      "voice/a-transport-without-dtmf-signalling-refuses-a-sent-digit": "e92f4892459133c297e903d73984a1266f786a52da328684c36efe9ed42f21f5"
+    },
+    "RK-12.3.6-013": {
+      "voice/the-channel-refuses-a-digit-a-duration-or-a-session-it-cannot-send": "a7e4ba24fed51b44ba3468fd019aafb28371d42fcabdf62a61e3a7b8485249e0"
+    },
+    "RK-12.3.7-003": {
+      "voice/a-recording-mode-records-one-direction-only": "8a5feb9d4c2f59acb330d176cba668064f05e199f512c07d50761205142bb182"
+    },
+    "RK-12.3.7-019": {
+      "voice/the-recorder-taps-the-resampled-capture-and-the-processed-reply": "dd96c01b78b7fcb600b83d00f46e9199c97943f18f58af61201a3db4dc3c4c9a"
+    },
+    "RK-12.3.7-021": {
+      "voice/the-recorder-taps-the-resampled-capture-and-the-processed-reply": "faf9cf8e8d8e2d688fb0fe6381c9264f67922a402770bedc6087d2c73fcdcd52"
+    },
+    "RK-12.3.7-022": {
+      "voice/a-session-s-recording-starts-and-stops-with-its-hooks": "776c290f54b5c3891ce958bb82cc1cbfa9efc89096b95b9a374788489fa690af"
+    },
+    "RK-12.3.7-023": {
+      "voice/a-session-s-recording-starts-and-stops-with-its-hooks": "c4dfbf8de4f99126ea45ff9428d06d78c22290f1faf4e0c89761bd005c3c47ad"
     },
     "RK-12.3.8-001": {
       "voice/speech-edges-bracket-an-utterance": "9d32c972fb5debfc2c74513e9cb4f9a5ea5946900e99801817262f9990de6a47",
@@ -5104,8 +5300,14 @@
     "RK-12.6-005": {
       "voice/a-transport-barge-in-cancels-active-playback": "a0af278bfb58ccaaf185b5f3e43114aa44bc1df9c83b57137f5e46c69fd84070"
     },
+    "RK-12.6-006": {
+      "voice/a-cut-drops-the-unplayed-audio-unless-flush-partial-tts-is-off": "5c561a448536735989194717dceeea6545613dcdf844e1690d3ab5adb2f98683"
+    },
     "RK-12.6-007": {
       "voice/a-cut-reply-is-stored-as-interrupted-with-how-far-it-played": "9589a2ab50d8d5ba8539dfffeac2eb48d7b6627f41101a4e8fc2a792d67e92da"
+    },
+    "RK-12.6-008": {
+      "voice/a-reply-cut-after-part-of-its-audio-records-what-was-heard": "ac00251c4b98ee6b9d1e56b3b764f1b1e75c56c006dbc89c1b25a96a8e81ddd6"
     },
     "RK-12.6-009": {
       "voice/a-transport-barge-in-cancels-active-playback": "59b19804eb54e47e202d3df46fd667193c65bedf670094a51ca1458b80551cec"
@@ -5119,11 +5321,17 @@
     "RK-12.6-012": {
       "voice/a-backchannel-leaves-the-reply-playing": "23d48a26b21a699842e075f96a078c32769c8bb73eedc623204ce9f18f49b5c4"
     },
+    "RK-12.6-013": {
+      "voice/a-barge-in-before-allow-during-first-ms-of-playback-cuts-nothing": "7c519c07a43d4ec36075a627fa73a72f5e5b51394278e8a94025e2fa46f299d5"
+    },
     "RK-12.6-014": {
       "voice/a-transport-barge-in-cancels-active-playback": "fcf8d159fb72aec4dd8f323beef863e3d113b51b5a969b09066569ea7b1b08c0"
     },
     "RK-12.6-015": {
       "voice/speech-that-cuts-the-reply-is-the-user-s-turn": "2328e86cb7e97611e3f391837bd721523a0557e0451c86c2f38ba3ad9aef7ada"
+    },
+    "RK-12.6-016": {
+      "voice/a-transport-barge-in-is-the-strategy-s-to-act-on-while-the-vad-hears-the-speech": "716986d15981192b2b9fefadd0b8493bc4c0ae22e8ce16787fd052abdecad2d1"
     },
     "RK-12.6-017": {
       "voice/speech-that-cuts-the-reply-is-the-user-s-turn": "9daefc4efa212cc74cbf2905d0c954e72c0e4faa1bf0ef8aa87c6e3c7440e659"

@@ -697,6 +697,86 @@ class SchemaTests(unittest.TestCase):
                 scenario["setup"]["channels"][1]["model"]["chat_dialect"] = dialect
                 self.assertEqual(validator.is_valid(scenario), valid)
 
+    def test_a_voice_session_scripts_its_interruption_synthesis_and_outbound_calls(self) -> None:
+        validator = Draft202012Validator(json.loads((ROOT / "scenario.schema.json").read_text()))
+        fixture = ROOT / "scenarios/voice/a-reply-walks-the-outbound-stages-in-their-order.json"
+        for member, value, valid in (
+            ("interruption", {"strategy": "confirmed", "min_speech_ms": 1}, True),
+            ("interruption", {"strategy": "polite"}, False),
+            ("interruption", {"echo_guard_ms": -1}, False),
+            ("interruption", {"backchannel_detector": "phrases"}, False),
+            ("max_sentences", 2, True),
+            ("max_sentences", 0, False),
+            ("backchannel_decisions", [{"is_backchannel": False, "pending": True}], True),
+            ("backchannel_decisions", [{"pending": True}], False),
+            ("backchannel_decisions", [{"transcript": "Ou", "is_backchannel": False, "pending": True}], True),
+            ("stt", {"streams": [{"results": [{"text": "Ou", "final": False, "gate": "words"}]}]}, True),
+            ("stt", {"streams": [{"results": [{"text": "Ou", "gate": 1}]}]}, False),
+            ("tts", {"context_level": "audio", "word_ms": 1, "gates": [None, "g"]}, True),
+            ("tts", {"context_level": "prosody"}, False),
+            ("tts", {"voices": [{"id": "v", "language": None}], "max_dialogue_speakers": 2}, True),
+            ("tts", {"voices": [{"name": "nameless"}]}, False),
+            ("tts", {"vendor": "any"}, False),
+            ("tts_context", {"include_audio": True, "max_audio_seconds": 0.5}, True),
+            ("tts_context", {"max_turns": 0}, False),
+            ("playback_gates", [None, "playing"], True),
+            ("playback_gates", [], False),
+            ("playback_fails", ["alice"], True),
+            ("playback_fails", "alice", False),
+        ):
+            with self.subTest(member=member, value=value):
+                scenario = json.loads(fixture.read_text())
+                scenario["steps"][0][member] = value
+                self.assertEqual(validator.is_valid(scenario), valid)
+        scenario = json.loads(fixture.read_text())
+        scenario["steps"][0]["playback_gate"] = "playing"
+        scenario["steps"][0]["playback_gates"] = ["playing"]
+        self.assertFalse(validator.is_valid(scenario))
+        for step, valid in (
+            ({"call": "voice.send_dtmf", "channel_id": "phone", "participant_id": "alice", "digit": "#"}, True),
+            ({"call": "voice.send_dtmf", "channel_id": "phone", "participant_id": "alice", "digit": "1", "duration_ms": 80}, True),
+            ({"call": "voice.send_dtmf", "channel_id": "phone", "participant_id": "alice"}, False),
+            ({"call": "voice.play", "channel_id": "phone", "participant_id": "alice", "audio": "UklGRg=="}, True),
+            ({"call": "voice.play", "channel_id": "phone", "participant_id": "alice"}, False),
+            ({"call": "voice.list_voices", "channel_id": "phone", "language": "fr", "query": "warm"}, True),
+            ({"call": "voice.list_voices", "language": "fr"}, False),
+            (
+                {
+                    "call": "voice.synthesize_dialogue",
+                    "channel_id": "phone",
+                    "turns": [{"speaker": "a", "text": "Hi."}],
+                    "voices": {"a": "v"},
+                },
+                True,
+            ),
+            (
+                {
+                    "call": "voice.synthesize_dialogue",
+                    "channel_id": "phone",
+                    "turns": [{"speaker": "a"}],
+                    "voices": {"a": "v"},
+                },
+                False,
+            ),
+            (
+                {
+                    "call": "voice.send_dtmf",
+                    "channel_id": "phone",
+                    "participant_id": "alice",
+                    "digit": "1",
+                    "expect": {"error": {"name": "session_ended"}},
+                },
+                True,
+            ),
+        ):
+            with self.subTest(step=step):
+                scenario = json.loads(fixture.read_text())
+                scenario["steps"].append(step)
+                self.assertEqual(validator.is_valid(scenario), valid)
+        scenario = json.loads(fixture.read_text())
+        scenario["expect"] = {"voice_events": {"r1": [{"event": "tts_error"}]}}
+        self.assertTrue(validator.is_valid(scenario))
+
     def test_a_voice_pipeline_states_its_stages_transport_and_sessions(self) -> None:
         schema = json.loads((ROOT / "scenario.schema.json").read_text())
         validator = Draft202012Validator(schema)
@@ -709,7 +789,9 @@ class SchemaTests(unittest.TestCase):
             ("aec", {"output": 5}, False),
             ("agc", {"gain": 2}, False),
             ("postprocessors", [{"output": "AQI="}], False),
-            ("recorder", {"mode": "both"}, False),
+            ("recorder", {"mode": "inbound_only"}, True),
+            ("recorder", {"mode": "stereo"}, False),
+            ("recorder", {"trigger": "always"}, False),
             ("vad_config", {"silence_threshold_ms": 300}, True),
             ("vad_config", {"threshold": 0.5}, False),
             ("contract", {"internal_format": {"sample_rate": 8000}}, True),
