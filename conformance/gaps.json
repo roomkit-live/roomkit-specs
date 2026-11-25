@@ -1531,11 +1531,6 @@
       "card": "RMK-2042",
       "note": "step: the continuous-mode energy run: ten loud frames with transcript_wait_ms 1 during playback cut nothing in the P6-VO3 probe, so the cut on duration once the wait has passed is not reached by a scripted stream; the wait itself (no cut while transcript_wait_ms runs) is then unobservable."
     },
-    "RK-12.3.13-045": {
-      "class": "step",
-      "card": "RMK-2042",
-      "note": "step: Python discards a final the backchannel detector answers pending (P6-VO3 probe: the held speech ends without a turn, no cut); HITL 4565b1f2 pending."
-    },
     "RK-12.3.15-020": {
       "class": "phase6",
       "card": "RMK-2042",

@@ -4857,6 +4857,9 @@
     "RK-12.3.13-044": {
       "voice/a-pending-verdict-leaves-the-reply-playing-until-the-next-words": "947a1561a6ce7f23c9aae9d1efe800be0db334fe7d7424fa8ce3b1ef5fd5f8b6"
     },
+    "RK-12.3.13-045": {
+      "voice/a-pending-verdict-on-a-final-is-no-reason-to-wait": "063c992b1c00134cfbbb3a393de82259f3fb112ea6c491d6716748a77c7a92d5"
+    },
     "RK-12.3.13-046": {
       "voice/a-cut-drops-the-unplayed-audio-unless-flush-partial-tts-is-off": "0fce8b6802218fe17120e086b42aa8d79fd462d8c728cb88bcd80a7cc43c6ab3"
     },
