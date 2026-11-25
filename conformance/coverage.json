@@ -1,9 +1,9 @@
 {
   "version": 1,
-  "rfc_sha256": "eb594c1471e30e6d9a04ee84b044a39d20e800fa19ba702e7ffec2e989c28b15",
-  "corpus_sha256": "f38c4d3b896c80f22c0845a4447e55a2c07251f41176948d39c70255cd48a766",
+  "rfc_sha256": "9bc1675d8401c3d9b3f080bdea4306e0ac75ab72746a44f08878bb3a584bec63",
+  "corpus_sha256": "fa2cde3410cc16bb2734aafccfa4e10c4e472ac3be7c5d5496f593d165edf77f",
   "python_commit": "1ee7ec379dee1e17c49a1949ad7ce8756c132606",
-  "scenario_count": 3619,
+  "scenario_count": 3620,
   "sections": [
     {
       "section": "0",
@@ -7023,14 +7023,13 @@
       "mapping": {
         "unmapped": 11
       },
-      "decided_gaps": {
-        "step": 1
-      },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "voice/a-disabled-bridge-forwards-no-frame",
         "voice/a-forward-bridge-sends-each-frame-unmixed-to-every-other-participant",
         "voice/a-mix-bridge-sends-each-participant-a-mix-of-the-others",
+        "voice/a-room-bridges-no-more-sessions-than-max-participants",
         "voice/one-voice-channel-bridges-each-of-its-rooms-apart"
       ]
     },
@@ -32061,12 +32060,7 @@
       "id": "RK-12.7.2-007",
       "section": "12.7.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2054",
-        "note": "step: voice.open bridge as a config object (V1): a session past max_participants is not bridged, the refusal observable."
-      }
+      "links": []
     },
     {
       "id": "RK-12.7.2-008",
