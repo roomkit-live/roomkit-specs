@@ -759,9 +759,9 @@
     },
     {
       "section": "12.7.2",
-      "sha256": "6a598a7e3d76fcb82cf9a83f5070736bdd9782845d00b4fcd9bf428878de0e77",
+      "sha256": "5da06e63aff84d9a27d3c9a45377e95fd82b45f104833ee453bf126c577057bc",
       "classification": "normative",
-      "review": "Source inventory: AudioBridge, split to one obligation per unit, each with its level (RMK-2048): RK-12.7.2-005, the AudioBridge interface (structural); RK-12.7.2-006 to 008, the AudioBridgeConfig fields enabled, max_participants and mixing_strategy with their defaults (structural; the config block is cut at its fields by closing and reopening its fence, four bare fence lines); RK-12.7.2-009 to 011, session management (join and leave, grouping by room_id, forwarding at once); RK-12.7.2-012 to 014, audio forwarding (to every other session, the forward and the mix strategies); RK-12.7.2-004, thread safety (forward() called from the frame callback, or from a task on the event loop under a BEFORE_BRIDGE_AUDIO hook, RMK-2050). Every unit carries its level."
+      "review": "Source inventory: AudioBridge, split to one obligation per unit, each with its level (RMK-2048): RK-12.7.2-005, the AudioBridge interface (structural); RK-12.7.2-006 to 008, the AudioBridgeConfig fields enabled, max_participants and mixing_strategy with their defaults (structural; the config block is cut at its fields by closing and reopening its fence, four bare fence lines); RK-12.7.2-009 to 011, session management (join and leave, grouping by room_id, forwarding at once); RK-12.7.2-012 to 014, audio forwarding (to every other session, the forward and the mix strategies); RK-12.7.2-004, thread safety (forward() called from the frame callback, or from a task on the event loop under a BEFORE_BRIDGE_AUDIO hook, RMK-2050). Every unit carries its level. Amended on the probe of lot P6-VO4 (RMK-2121): a join past max_participants is refused before the session is bound to the room, and a session the join made is disconnected (RK-12.7.2-007)."
     },
     {
       "section": "12.7.3",

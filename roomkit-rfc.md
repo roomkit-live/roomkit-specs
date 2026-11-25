@@ -14850,9 +14850,11 @@ AudioBridgeConfig
 ├── enabled: bool = true
 ```
 <!-- /rfc -->
-<!-- rfc: {"id": "RK-12.7.2-007", "kind": "structural", "applies": "§12.7.2 AudioBridgeConfig, the voice feature (audio bridging): the max_participants field, 10 by default; a room bridges at most that many sessions. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+<!-- rfc: {"id": "RK-12.7.2-007", "kind": "structural", "applies": "§12.7.2 AudioBridgeConfig, the voice feature (audio bridging): the max_participants field, 10 by default; a room bridges at most that many sessions, a join past it being refused before the session is bound to the room, and a session the join made disconnected. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 ├── max_participants: int = 10         # Maximum sessions per room
+│       # A join that would bridge one more is refused before the session
+│       # is bound to the room; a session the join made is disconnected
 ```
 <!-- /rfc -->
 <!-- rfc: {"id": "RK-12.7.2-008", "kind": "structural", "applies": "§12.7.2 AudioBridgeConfig, the voice feature (audio bridging): the mixing_strategy field, forward by default; forward sends each frame unmixed to every other session, one send per source per target with more than two sessions, and mix mixes the parties additively with clipping protection. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
