@@ -5088,6 +5088,27 @@
     "RK-12.4-022": {
       "realtime/an-ending-session-cancels-its-waiting-call-once": "d0c128b9323510d97d380045f8fa2858114eee49200163ec96b77d008b67e3b9"
     },
+    "RK-12.4-023": {
+      "realtime/a-handler-that-closes-its-channel-runs-on-and-the-other-call-is-cut": "4d00c0c7e79ca92622fda18b86a3533438c19835f19b538e670e06f2cbf36bd0",
+      "realtime/a-handler-that-ends-its-session-from-a-task-it-starts-runs-on": "4d00c0c7e79ca92622fda18b86a3533438c19835f19b538e670e06f2cbf36bd0",
+      "realtime/a-handler-that-ends-its-session-runs-on-and-the-other-call-is-cut": "4d00c0c7e79ca92622fda18b86a3533438c19835f19b538e670e06f2cbf36bd0"
+    },
+    "RK-12.4-024": {
+      "realtime/a-handler-that-ends-its-session-from-a-task-it-starts-runs-on": "4b4d3c510acd9e620de78ef873f4e911a5649e03d67a8d7eb6af3df182a80ed8"
+    },
+    "RK-12.4-025": {
+      "realtime/a-backend-call-that-ends-its-session-spares-itself-and-ends-its-delegation": "62ec833a88860d3b3c0e936d442a00fcbabac64fbc03a58a75dcd2ceb4a0b22d",
+      "realtime/an-agent-backend-s-call-that-closes-the-channel-is-spared-by-the-agent-s-close": "62ec833a88860d3b3c0e936d442a00fcbabac64fbc03a58a75dcd2ceb4a0b22d"
+    },
+    "RK-12.4-026": {
+      "realtime/an-agent-backend-s-call-that-closes-the-channel-is-spared-by-the-agent-s-close": "7a7b8e4feb2758a90e23099270ed03391af93ff581d205d5f7b72adf7e552be3"
+    },
+    "RK-12.4-027": {
+      "realtime/a-spared-handler-still-working-at-the-close-is-waited-for": "e660f3f2a2f0da97a42266e0393d30daabb79029d695af31f4aa9035967529c4"
+    },
+    "RK-12.4-028": {
+      "realtime/a-handler-that-closes-the-kit-runs-on-and-reaches-no-hook": "99e160f7b763837f1a5fbea97e29c1709e9006d95d16b28f9578e38e4bb2f262"
+    },
     "RK-12.4-031": {
       "realtime/a-call-id-names-one-call-until-its-result-goes-out": "9c69270c2e8e6e2580c27017bba3374bfc3abb4c7a2624aa9c024af87f4aad60"
     },
@@ -5129,6 +5150,9 @@
     "RK-12.4-040": {
       "realtime/a-call-naming-no-tool-is-answered-before-the-gate": "5df4147adfcd446fab5740c6dd2e773519a1bcaa11747f03f28e2a074ecef73b"
     },
+    "RK-12.4-055": {
+      "realtime/a-call-whose-arguments-came-as-text-is-refused-before-the-gate": "64d93ef2e3622745a8cbb3b681c212e2f2fd5f0849f7b599bb56f748f34707fd"
+    },
     "RK-12.4-056": {
       "realtime/a-late-cancellation-leaves-the-served-call-alone": "8d03c50f57284cdc6e14aa5a4791db060eb5cb41968355892592e5ff7c2da8af"
     },
@@ -5146,14 +5170,42 @@
     "RK-12.4-068": {
       "realtime/a-provider-error-reaches-the-room": "7eb92ec57745eda1d216b0bb92fdb35c377a7feb721869fe5c353b17687d9924"
     },
+    "RK-12.4-071": {
+      "realtime/a-denied-tool-is-not-declared-and-its-call-is-refused": "3663e4d35d1c0d2273339feb3642ae0e9fb5ebb0e92a168cd92876c16ab8ca66"
+    },
+    "RK-12.4-072": {
+      "realtime/a-backend-call-passes-the-channel-s-policy-gate-and-bound": "0d653f87f9c32a28f9d40b30d60ec553f7f7eaa34ce0c7c86ca40887d532e699",
+      "realtime/a-denied-tool-is-not-declared-and-its-call-is-refused": "0d653f87f9c32a28f9d40b30d60ec553f7f7eaa34ce0c7c86ca40887d532e699",
+      "realtime/a-skill-activation-declares-no-denied-tool": "0d653f87f9c32a28f9d40b30d60ec553f7f7eaa34ce0c7c86ca40887d532e699",
+      "realtime/tool-search-never-names-a-denied-tool": "0d653f87f9c32a28f9d40b30d60ec553f7f7eaa34ce0c7c86ca40887d532e699"
+    },
+    "RK-12.4-073": {
+      "realtime/a-participant-the-store-lacks-has-the-base-rules-until-it-gets-a-role": "e37e1a944e782c85ad8921d1f964d43e05799aed12ef31c4175f1ce2ee8c673b",
+      "realtime/a-role-the-store-holds-at-the-start-shapes-the-declared-tools": "e37e1a944e782c85ad8921d1f964d43e05799aed12ef31c4175f1ce2ee8c673b"
+    },
+    "RK-12.4-074": {
+      "realtime/a-participant-the-store-lacks-has-the-base-rules-until-it-gets-a-role": "0fd48ae8d2863bc6603a567b8acc2efd20ae72955ac30a44d435f8b199d7ded6"
+    },
     "RK-12.4-075": {
       "realtime/an-undeclared-tool-is-refused-and-still-reported": "cc74ff252420631f2cb925ee1cd4cca4c6e838eb7ac8c84807c0e62e3ea69985"
+    },
+    "RK-12.4-076": {
+      "realtime/a-denied-or-skill-closed-tool-is-refused-before-its-arguments-are-read": "73abcd01ac72130468d044a137d871b0c85e6ab7f1c757ac927edf5c7b927b4e"
+    },
+    "RK-12.4-077": {
+      "realtime/a-call-served-by-hooks-or-the-channel-s-own-tools-passes-the-gate": "f15c2ef825443128efe9fdd5705b9d84444774a3e69810f3605c294a431d068c"
     },
     "RK-12.4-078": {
       "realtime/an-undeclared-tool-is-refused-and-still-reported": "9a6f7a3e694ce28f77f8cdcfec7ffceb0215f1c91497989e0938b57547392ff1"
     },
+    "RK-12.4-079": {
+      "realtime/the-channel-s-own-declared-tools-pass-the-declared-check": "5368fad6670072510753f4403c33e137d00f6f34348c2b0c9fde9aca8deb19c9"
+    },
     "RK-12.4-080": {
       "realtime/an-undeclared-tool-is-refused-and-still-reported": "a3d68c5ea8b16f0983a116d6c19ea75e30653fc205010751129f13d5bda6aaf8"
+    },
+    "RK-12.4-081": {
+      "realtime/run-skill-script-is-skill-gated-and-the-skill-tools-are-not": "55cfaaddbf124a16c919c9788498d879ce09dbe6df2024f278325bfe266edbb6"
     },
     "RK-12.4-090": {
       "realtime/a-session-takes-its-instruction-directly": "009c339981e8a6708ac630409dfbaa14b781e00750a18109d2939c84db03fac4"
@@ -5194,11 +5246,87 @@
       "realtime/a-handler-reconnects-through-its-child": "17a76f486f659d828db2fb563f45190e33b8aa09c3a87a3e5eea2cfa1106b023",
       "realtime/a-late-cancellation-leaves-the-served-call-alone": "17a76f486f659d828db2fb563f45190e33b8aa09c3a87a3e5eea2cfa1106b023"
     },
+    "RK-12.4.1-013": {
+      "realtime/a-backend-may-delegate-a-task": "d56e5210316b5f3b494e34f63752c2afe75fa95cfd1b784bab24f3047911dcd3"
+    },
     "RK-12.4.1-042": {
       "realtime/a-hosted-backend-s-call-passes-the-gate": "0aeb6de00e4c52425ff001a0c41587425269ee051579a209135384cc4e9078bc"
     },
+    "RK-12.4.1-050": {
+      "realtime/a-backend-reads-each-call-s-outcome": "5fb04ae312c2c34f74ebdccc74f0f2c843974913b101f045d0ae85a80ba2b6b6"
+    },
     "RK-12.4.1-057": {
       "realtime/a-reasoning-error-reaches-the-room": "87c7e3cd566baff3b21c5b72cd17390630693ad890e859cfd3eee80534cbcbc4"
+    },
+    "RK-12.4.1-058": {
+      "realtime/a-backend-call-its-delegation-s-bound-cuts-is-reported-cancelled": "6eb572c9fb9514687eff0701e78e5182d7b8b41527b7f0fcd83d7ac6c6fa5a55",
+      "realtime/an-agent-backend-turn-its-round-cap-cuts-fires-no-on-error": "6eb572c9fb9514687eff0701e78e5182d7b8b41527b7f0fcd83d7ac6c6fa5a55"
+    },
+    "RK-12.4.1-060": {
+      "realtime/a-backend-call-passes-the-channel-s-policy-gate-and-bound": "479535f6ecf6b5d79be9797c14143cc78cf1df8bcd04a330fd9f08c04361f345"
+    },
+    "RK-12.4.1-061": {
+      "realtime/an-agent-backend-s-call-runs-through-the-channel-s-gate-and-handler": "9ea47f386dccabbb34a26ebe5378115bdc8df21001f1bdb231675178c66982b5"
+    },
+    "RK-12.4.1-062": {
+      "realtime/a-backend-reads-each-call-s-outcome": "a02f0ab606f9ca5e376fb344d2e6318d34f4b480f374b76c9c5b9c7709d7e78f",
+      "realtime/an-agent-backend-reads-a-call-the-gate-refuses-as-refused": "a02f0ab606f9ca5e376fb344d2e6318d34f4b480f374b76c9c5b9c7709d7e78f"
+    },
+    "RK-12.4.1-063": {
+      "realtime/an-agent-backend-reads-a-call-the-gate-refuses-as-refused": "88a680e69a75b167e985699d795ff37a67a689af21ae4c6df5beeae2a8dbf24e"
+    },
+    "RK-12.4.1-064": {
+      "realtime/an-agent-backend-asks-again-after-a-call-its-provider-could-not-parse": "c33a54b06325a2b460f1136e22681cc9682fa1744bf80f1b037644994da9fc95",
+      "realtime/an-agent-backend-asks-again-after-an-empty-answer": "c33a54b06325a2b460f1136e22681cc9682fa1744bf80f1b037644994da9fc95"
+    },
+    "RK-12.4.1-065": {
+      "realtime/an-agent-backend-s-call-whose-arguments-do-not-read-is-refused-and-reported": "d36409a9a935919656a0265a1334b6e127546aa3709b03736c95317e56888876"
+    },
+    "RK-12.4.1-066": {
+      "realtime/an-agent-backend-s-call-whose-arguments-do-not-read-is-refused-and-reported": "8b9d01bc0785c9032f4ce880dae8a88bc54c48b0349fd3c594a949626b782ff7"
+    },
+    "RK-12.4.1-067": {
+      "realtime/a-call-the-agent-backend-s-provider-served-is-reported-once": "aff2ac6aaff007e7373309f90ba975e53a9f9f278d88d62b989a5369fb63c44c"
+    },
+    "RK-12.4.1-068": {
+      "realtime/an-agent-backend-s-call-runs-through-the-channel-s-gate-and-handler": "125ec8a968a020f177a23a2004ec5db415f2ce6b086572cdb3ac2223f2398f4a",
+      "realtime/an-agent-backend-s-call-with-no-id-is-reported-under-one-minted-in-its-delegation": "125ec8a968a020f177a23a2004ec5db415f2ce6b086572cdb3ac2223f2398f4a"
+    },
+    "RK-12.4.1-070": {
+      "realtime/a-backend-call-its-delegation-s-bound-cuts-is-reported-cancelled": "1ab6c9c1154f143f9db2eef178b83b572e1074dcb8a63513e92f34aca41581a3"
+    },
+    "RK-12.4.1-071": {
+      "realtime/an-agent-backend-serves-with-its-settings-and-the-session-s-catalogue": "90da425a72773b74b61b6f9a1d90a46fbb5c52a97892f13bcbd6609d5ab3c0df"
+    },
+    "RK-12.4.1-072": {
+      "realtime/an-agent-backend-s-own-call-bound-does-not-apply": "e636824acad3c2d7f1bcd33b1f44b84a73669d6da9b1d5df393dde4576994050"
+    },
+    "RK-12.4.1-073": {
+      "realtime/an-agent-backend-re-reads-a-stored-result-in-its-own-loop": "88bca30f7c5a715fdcf0713c593700f2cf09b5072500f336ce6b39be8b0c9e28"
+    },
+    "RK-12.4.1-074": {
+      "realtime/an-agent-with-tools-of-its-own-is-refused-as-a-backend": "c3243d0b0ef3933360e9a07b1d5bd6768ed5bca170c9b92d54bb799a2ddb6ba5"
+    },
+    "RK-12.4.1-075": {
+      "realtime/a-session-tool-under-a-name-the-agent-serves-is-refused": "491674e38e291135ef97591181644040b687223c90cc4bf88aebbe49ed74bfc7"
+    },
+    "RK-12.4.1-076": {
+      "realtime/a-later-tool-under-a-name-the-agent-serves-is-not-declared": "c52f91a38cb303d35137784b1eac7d54cd16a8026cca1f69f31d462f91b8f885"
+    },
+    "RK-12.4.1-077": {
+      "realtime/an-agent-backend-s-policy-resolves-for-the-participant-s-role": "c90aa084699d2a3573321752845c949a0163a76423230d9658b67682bd6d782f"
+    },
+    "RK-12.4.1-078": {
+      "realtime/a-call-the-agent-backend-s-policy-denies-is-refused-before-the-channel-s-gate": "be57883a192104acf39683692fd047560a3bbfd582e669e8b689944a4ed9130c"
+    },
+    "RK-12.4.1-079": {
+      "realtime/a-call-a-cut-delegation-left-is-answered-before-the-next-generation": "d3f4d7c6be8503398c1c73d0e91aa4c2aa644bee272553b3b0e889971e2bd620"
+    },
+    "RK-12.4.1-080": {
+      "realtime/a-session-s-delegations-run-one-at-a-time-each-reading-the-last": "423786ad9ee1ac18e5de5b6fc260d954ec527c8774520fd4713b7142c1cb12a2"
+    },
+    "RK-12.4.1-081": {
+      "realtime/an-agent-backend-s-turn-is-traced-under-the-session-s-span": "e76bce217d4dba2ce30b1e2d5e6d95911a8a5ebbe96a14d619a3caefcfa18bb2"
     },
     "RK-12.4.1-082": {
       "realtime/a-hosted-delegation-reaches-its-room": "7d87247375124000cf77b216cb4e8c5e021bfd0d7892307efb666a7e0e5ee225"

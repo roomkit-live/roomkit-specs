@@ -150,8 +150,17 @@
           "additionalProperties": {
             "type": "object",
             "additionalProperties": false,
-            "required": [
-              "result"
+            "anyOf": [
+              {
+                "required": [
+                  "result"
+                ]
+              },
+              {
+                "required": [
+                  "fails"
+                ]
+              }
             ],
             "properties": {
               "gate": {
@@ -165,9 +174,147 @@
                   "handler",
                   "child"
                 ]
+              },
+              "parameters": {
+                "description": "The JSON schema of the tool's arguments, declared to the session; an empty object's when absent.",
+                "type": "object"
+              },
+              "action": {
+                "description": "What the handler does on its own session once past its gate (§12.4): end it, close the channel, or close the kit.",
+                "enum": [
+                  "end_session",
+                  "close",
+                  "close_kit"
+                ]
+              },
+              "in_task": {
+                "description": "The handler makes its action from a task it starts and awaits.",
+                "const": "awaited"
+              },
+              "after_gate": {
+                "description": "A gate the handler holds at after its action, before it returns.",
+                "type": "string"
+              },
+              "fails": {
+                "description": "The handler raises with this message in place of returning its result (§9.3).",
+                "type": "string"
               }
             }
           }
+        },
+        "tool_policy": {
+          "$ref": "#/$defs/channel/properties/tool_policy"
+        },
+        "skills": {
+          "$ref": "#/$defs/channel/properties/skills"
+        },
+        "script_executor": {
+          "$ref": "#/$defs/script_executor"
+        },
+        "tool_search": {
+          "$ref": "#/$defs/channel/properties/tool_search"
+        },
+        "tool_search_pinned": {
+          "$ref": "#/$defs/channel/properties/tool_search_pinned"
+        },
+        "tool_search_threshold": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "tool_result_max_length": {
+          "description": "The channel's bound on what the model reads of a result, in characters (§21.5).",
+          "type": "integer",
+          "minimum": 1
+        },
+        "tool_handler": {
+          "description": "false: the channel has no tool handler; its calls fall to the ON_TOOL_CALL hooks (§21.4).",
+          "const": false
+        },
+        "reasoning": {
+          "description": "The integrator-side backend a delegation runs (§12.4.1): scripted runs, an agent of its own, or the agent of a channel the kit holds.",
+          "type": "object",
+          "additionalProperties": false,
+          "minProperties": 1,
+          "maxProperties": 1,
+          "properties": {
+            "runs": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "minProperties": 1,
+                  "properties": {
+                    "call": {
+                      "description": "A call of the session's tool of that name.",
+                      "type": "string"
+                    },
+                    "arguments": {
+                      "$ref": "#/$defs/record"
+                    },
+                    "via": {
+                      "enum": [
+                        "execute_tool",
+                        "execute_tool_call"
+                      ]
+                    },
+                    "task": {
+                      "description": "The call runs in a task of its own, under this label.",
+                      "type": "string"
+                    },
+                    "join": {
+                      "description": "Awaits the call labelled so.",
+                      "type": "string"
+                    },
+                    "wait_for": {
+                      "description": "Waits until this gate is reached.",
+                      "type": "string"
+                    },
+                    "say": {
+                      "description": "An output of this text.",
+                      "type": "string"
+                    },
+                    "spoken": {
+                      "type": "boolean"
+                    },
+                    "final": {
+                      "type": "boolean"
+                    },
+                    "delegate": {
+                      "description": "A task the backend delegates through the kit (§23), from the session's room.",
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "agent_id",
+                        "task"
+                      ],
+                      "properties": {
+                        "agent_id": {
+                          "type": "string"
+                        },
+                        "task": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "agent": {
+              "$ref": "#/$defs/channel"
+            },
+            "agent_of": {
+              "type": "string"
+            }
+          }
+        },
+        "reasoning_timeout_ms": {
+          "description": "The channel's bound on a delegation's run, in milliseconds.",
+          "type": "integer",
+          "minimum": 1
         }
       }
     },
@@ -2386,6 +2533,7 @@
             "realtime.cancel",
             "realtime.delegate",
             "realtime.error",
+            "realtime.configure",
             "parse_voice_session",
             "emit_protocol_trace",
             "process_inbound",
@@ -4413,6 +4561,13 @@
               },
               "participant_id": {
                 "type": "string"
+              },
+              "tools": {
+                "description": "The names of the session's own tools, which it opens with.",
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
               }
             }
           }
@@ -4512,7 +4667,17 @@
               },
               "arguments": {
                 "$ref": "#/$defs/record"
+              },
+              "arguments_text": {
+                "description": "The arguments as the model wrote them, in place of arguments, read as a provider reads its wire (\u00a712.4).",
+                "type": "string"
               }
+            },
+            "not": {
+              "required": [
+                "arguments",
+                "arguments_text"
+              ]
             }
           }
         },
@@ -4595,6 +4760,32 @@
               },
               "message": {
                 "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "realtime.configure"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "channel_id",
+              "tools"
+            ],
+            "properties": {
+              "channel_id": {
+                "type": "string"
+              },
+              "tools": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
               }
             }
           }
@@ -7915,7 +8106,8 @@
                   "framework.broadcast",
                   "llm.generate",
                   "hook.sync",
-                  "llm.tool_call"
+                  "llm.tool_call",
+                  "realtime.session"
                 ]
               }
             }

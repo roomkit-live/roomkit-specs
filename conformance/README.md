@@ -536,14 +536,59 @@ A `realtime_voice` channel with `realtime: {}` hosts a speech-to-speech
 model over a simulated provider and transport (§12.4). A step starts its
 session. Its handle stays available after the session ends so the provider
 can issue a late callback. The fixture starts one session per channel.
-Under `realtime.tools`, each tool name maps to its handler script. The handler
+Under `realtime.tools`, each tool name maps to its handler script, and the
+channel declares the tool with its `parameters`, the JSON schema of its
+arguments (`{"type": "object", "properties": {}}` when absent), its name as
+its description. The handler
 waits at its optional `gate`, then returns its string `result`. An optional
 `reconnect` of `handler` or `child` first reconfigures the session directly or
 from a child task. To apply the reconfiguration, the provider reports the
-outstanding call ids from its previous connection as abandoned. A
+outstanding call ids from its previous connection as abandoned. Past its gate
+and its reconnect, the handler makes its optional `action` on its own session
+(§12.4): `end_session` ends the session, `close` closes the channel,
+`close_kit` closes the kit; with `in_task: "awaited"`, it makes it from a task
+it starts and awaits, which inherits its execution context. It then holds at
+its optional `after_gate`, then returns its `result`, or, with `fails`, raises
+with that message in its place, a call that failed (§9.3). A
 `realtime.reasoning_error` supplies an integrator-side backend whose turn
 raises with that message. On `realtime.tool_call`, an empty `call_id` is a
 call that came without an id, and an empty `name` a call that named no tool.
+
+The channel's other settings, each the implementation's default when absent
+(§12.4, §21): `tool_policy`, its ToolPolicy, written as an agent's
+(`allow`, `deny`, `role_overrides`, §21.1); `skills`, its skill registry,
+written as an agent's (§24.3), with `script_executor` its executor fixture,
+whose calls `expect.script_executors` reads under the channel's id;
+`tool_search`, `tool_search_pinned` and `tool_search_threshold`, its Tool
+Search (§6.4); `tool_result_max_length`, its bound on what the model reads of
+a result (§21.5); and `tool_handler: false`, a channel with no tool handler,
+whose calls fall to the ON_TOOL_CALL hooks (§21.4).
+
+`realtime.reasoning` is the integrator-side backend a delegation to
+`integrator` runs (§12.4.1), and `realtime.reasoning_timeout_ms` the
+channel's bound on its run. It is one of:
+
+- `runs`: a scripted ReasoningBackend. Its n-th delegation makes the actions
+  of the n-th run in order, the last run repeating. An action is one of:
+  `call`, a call of the session's tool of that name with its `arguments`
+  (`{}` by default) through the request's `execute_tool_call`, or through
+  its `execute_tool` with `via: "execute_tool"`, the call made with no id of
+  the backend's model; with `task`, a label, the call runs in a task of its
+  own, started in the delegation's execution context, which a later `join`
+  of that label awaits; `wait_for`, waiting until the gate it names is
+  reached; `say`, an output of that text, `spoken` (true by default) and
+  `final` (false by default); `delegate`, a task the backend delegates
+  through the kit (§23), `agent_id` and `task`, from the session's room.
+- `agent`: an agent as the backend (§12.4.1, §19), a scripted agent written
+  as an `ai` channel with a `model` (its `id` among its members), built as
+  the setup builds one, never registered with the kit; `expect.models` reads
+  its generations under its id. Given `tools`, it gets their scripted handler
+  as a setup's agent does; without, it has no tool handler of the host's.
+- `agent_of`: the id of an `ai` channel the setup registered with the kit,
+  whose agent is the backend.
+
+A backend the implementation refuses refuses the channel: a
+`register_channel` that names it fails with `invalid_argument`.
 
 ### Scripted agents
 
@@ -1176,14 +1221,15 @@ run's own kit when absent.
 | `voice.play` | `channel_id`, `participant_id`, `audio` (base64 of a WAV file), optional `text` | the channel's `play` of the file to the participant's session, awaiting playback (§12.2) |
 | `voice.list_voices` | `channel_id`, optional `language`, `gender` and `query` | the channel's TTS's `list_voices` with those filters; the result's `voices`, each `id`, `name`, `language`, `gender` and `description`, in order (§12.2) |
 | `voice.synthesize_dialogue` | `channel_id`, `turns` (each `speaker` and `text`), `voices` (a voice id per speaker) | the channel's TTS's `synthesize_dialogue`; the result's `transcript` (§12.2) |
-| `realtime.start` | `channel_id`, `room_id`, `participant_id` | opens the realtime session |
+| `realtime.start` | `channel_id`, `room_id`, `participant_id`, optional `tools`: the names of the session's own tools, which it opens with, each declared as the channel's tools are, its handler script the channel's tool of that name | opens the realtime session |
 | `realtime.end` | `channel_id` | ends the session |
-| `realtime.read` | `channel_id` | the provider's `injections` (text, role, silent) and `results` (call_id, result), and the tool `handlers` (name, outcome of `returned` or `interrupted`), in observation order |
+| `realtime.read` | `channel_id` | the provider's `injections` (text, role, silent) and `results` (call_id, result), and the tool `handlers` (name, outcome of `returned`, `interrupted` or `raised`), in observation order; `declared`, one entry per declaration of the session's tools to the provider, its connection and then each reconfiguration that declares tools, in order, each naming every tool it declares by its position; with a scripted backend, `backend_requests`, each request it was handed, in order (`delegation_id`, `first`, `participant_role`, `tools` naming each tool offered by its position, `unavailable` naming each tool not offered with the refusal its call reads), and `backend_calls`, each of its calls once it returned, in that order (`name`, `text`, and through `execute_tool_call` `is_error` and `refused`), a call cut before it returned as `{name, cut: true}` |
 | `realtime.inject` | `channel_id`, `text`, `role` | injects the text into the live session |
-| `realtime.tool_call` | `channel_id`, `call_id`, `name`, optional `arguments` | the provider issues the call |
+| `realtime.tool_call` | `channel_id`, `call_id`, `name`, optional `arguments`, or optional `arguments_text`, the arguments as the model wrote them, which the provider reads as a provider reads its wire (§12.4): text that reads as an object is that object, any other text reaches the channel as text | the provider issues the call |
 | `realtime.cancel` | `channel_id`, `call_ids` | the provider reports that it abandoned these calls |
 | `realtime.delegate` | `channel_id`, `delegation_id`, `target` (`hosted` or `integrator`) | the model hands work to the backend |
 | `realtime.error` | `channel_id`, `code`, `message` | the provider reports a session error |
+| `realtime.configure` | `channel_id`, `tools`: tool names, each declared as the channel's tools are | the channel's `configure` with those tools |
 | `parse_voice_session` | `session` (a voice session with `id`, `room_id`, `channel_id`, `participant_id` and optional `metadata`), `channel_id`, optional `metadata` | the InboundMessage made by the voice adapter (§5.12), including its session |
 | `emit_protocol_trace` | `trace`, a §5.14 record for a registered channel; its optional `raw` is text, null, or `{"base64": "..."}` for bytes | emits through the channel; the kit supplies the timestamp and dispatches the trace to its room's hooks (§9.2) |
 | `process_inbound` | `message` (an InboundMessage; its optional `session` uses the same form as `parse_voice_session`), `room_id` | an InboundResult: `event`, `blocked`, `duplicate`, `reason`, `error` (its message), `response_metadata`, `response_events`, `unavailable_targets`, `delivery_results`, `cancellation_reason` |
@@ -1259,7 +1305,7 @@ run's own kit when absent.
 | `owner.kill` | none: the run's kit, the owner of its turns, falls silent on each turn's link as a killed process does: it sends nothing more there, releases nothing and reads nothing more, its turns left to the executors' liveness checks (§10.6.8); the rest of the kit runs on, its node of a distributed backend included, and no scenario observes what it does of those turns; a kit with `turn_backend_faults` or `executor_catalogue: false` takes none | null |
 | `executor.pause`, `executor.resume` | `executor`: it stops declaring its channels, or declares them again, keeping what it holds (§10.6.7) | null |
 | `executor.reserve` | `executor`, an id of `setup.executors`, or null; `process`, an id of `setup.processes`, or `main`: from now the run's kit submits each of its turns to that executor alone, as a host that reserved it by rules of its own does (§10.6.7), named by its id, and in that process when `process` names one, which is unreadable outside a distributed turn backend; an executor not served, paused or closed is reserved as any other, and the submission then fails; null: the kit's turns are placed as usual again | null |
-| `telemetry.spans` | `site` (`owner` or `executor/<id>`), `kind` (`framework.broadcast`, `llm.generate`, `hook.sync` or `llm.tool_call`), optional exact `attributes` to select matching spans | completed spans at that site, each with `name`, `span_id` and `parent_id` |
+| `telemetry.spans` | `site` (`owner` or `executor/<id>`), `kind` (`framework.broadcast`, `llm.generate`, `hook.sync`, `llm.tool_call` or `realtime.session`), optional exact `attributes` to select matching spans | completed spans at that site, each with `name`, `span_id` and `parent_id` |
 | `executor.calls` | `executor`: what it did so far, as `expect.executors` reads it; a turn's reaction may make it, to read that at a point of the turn | the list |
 | `channel.publish` | `executor`, `channel_id`, `room_id`, `kind` (an ephemeral event's type), `data`, `gate`: in a reaction's `after_turn`, work the turn began publishes on the channel's realtime, once held at `gate` when it names one; the call returns once the room owner took it, or refused it (§10.6.3) | null |
 | `acp.close` | `channel_id`: close the local ACP channel directly, leaving the kit alive so its shutdown cannot hide a pending channel preparation | null |

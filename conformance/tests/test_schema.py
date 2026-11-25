@@ -855,6 +855,67 @@ class SchemaTests(unittest.TestCase):
                 scenario["steps"].append(step)
                 self.assertEqual(validator.is_valid(scenario), valid)
 
+    def test_a_realtime_channel_states_its_tools_policy_and_backend(self) -> None:
+        schema = json.loads((ROOT / "scenario.schema.json").read_text())
+        validator = Draft202012Validator(schema)
+        fixture = ROOT / "scenarios/realtime/a-backend-reads-each-call-s-outcome.json"
+        self.assertTrue(validator.is_valid(json.loads(fixture.read_text())))
+        agent = {"id": "a", "type": "ai", "model": {"rounds": [{"text": "x"}]}}
+        for member, value, valid in (
+            ("tool_policy", {"deny": ["secret"]}, True),
+            ("tool_policy", {"block": ["secret"]}, False),
+            ("tool_result_max_length", 100, True),
+            ("tool_result_max_length", 0, False),
+            ("tool_handler", False, True),
+            ("tool_handler", True, False),
+            ("reasoning", {"agent": agent}, True),
+            ("reasoning", {"agent_of": "helper"}, True),
+            ("reasoning", {"runs": [[{"call": "lookup", "via": "execute"}]]}, False),
+            ("reasoning", {"runs": [[{"say": "x", "loud": True}]]}, False),
+            ("reasoning", {"runs": [[{"delegate": {"agent_id": "w"}}]]}, False),
+            ("reasoning", {"agent_of": "helper", "runs": [[]]}, False),
+            ("reasoning_timeout_ms", 0, False),
+        ):
+            with self.subTest(member=member, value=value):
+                scenario = json.loads(fixture.read_text())
+                scenario["setup"]["channels"][0]["realtime"][member] = value
+                self.assertEqual(validator.is_valid(scenario), valid)
+        for tool, valid in (
+            ({"fails": "down"}, True),
+            ({"action": "end_session", "in_task": "awaited", "after_gate": "g", "result": "x"}, True),
+            ({"action": "detach", "result": "x"}, False),
+            ({"in_task": "unawaited", "result": "x"}, False),
+            ({"gate": "g"}, False),
+            ({"parameters": {"type": "object"}, "result": "x"}, True),
+        ):
+            with self.subTest(tool=tool):
+                scenario = json.loads(fixture.read_text())
+                scenario["setup"]["channels"][0]["realtime"]["tools"]["broken"] = tool
+                self.assertEqual(validator.is_valid(scenario), valid)
+        call = {"call": "realtime.tool_call", "channel_id": "rt", "call_id": "c", "name": "n"}
+        for step, valid in (
+            ({**call, "arguments_text": "[1]"}, True),
+            ({**call, "arguments_text": "[1]", "arguments": {}}, False),
+            ({**call, "arguments_text": {}}, False),
+            ({"call": "realtime.configure", "channel_id": "rt", "tools": ["lookup"]}, True),
+            ({"call": "realtime.configure", "channel_id": "rt"}, False),
+            (
+                {
+                    "call": "realtime.start",
+                    "channel_id": "rt",
+                    "room_id": "r1",
+                    "participant_id": "p",
+                    "tools": ["lookup"],
+                },
+                True,
+            ),
+            ({"call": "telemetry.spans", "site": "owner", "kind": "realtime.session"}, True),
+        ):
+            with self.subTest(step=step):
+                scenario = json.loads(fixture.read_text())
+                scenario["steps"].append(step)
+                self.assertEqual(validator.is_valid(scenario), valid)
+
     def test_a_voice_bridge_states_its_configuration_and_transports(self) -> None:
         schema = json.loads((ROOT / "scenario.schema.json").read_text())
         validator = Draft202012Validator(schema)
