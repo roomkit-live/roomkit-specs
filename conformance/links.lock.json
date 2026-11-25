@@ -4789,14 +4789,8 @@
     "RK-12.3.13-017": {
       "voice/the-detector-is-told-a-partial-from-the-final-and-never-asked-at-an-empty-onset": "dcdf9797cdb74895d9a858ed14e600ad38d6dfe8d555546a7706de7041677eee"
     },
-    "RK-12.3.13-018": {
-      "voice/with-a-streaming-stt-the-detector-waits-for-the-first-words": "0e21e38f37c1cac0826112dabe556b6f972e9beb4b66f422782c9705603bd1ac"
-    },
-    "RK-12.3.13-019": {
-      "voice/without-a-streaming-stt-the-detector-judges-the-duration-once-min-speech-ms-has-passed": "0811496f482d24829fce284c12880b85fd395af49f5425db423ca03e5bf0d469"
-    },
     "RK-12.3.13-020": {
-      "voice/without-a-streaming-stt-the-detector-judges-the-duration-once-min-speech-ms-has-passed": "41ad271ca444512a5a0f606e1cd9aaa4e94bf4f7410d4c68b043a5da450bd6f7"
+      "voice/without-words-the-detector-judges-the-speech-on-its-duration-alone": "41ad271ca444512a5a0f606e1cd9aaa4e94bf4f7410d4c68b043a5da450bd6f7"
     },
     "RK-12.3.13-023": {
       "voice/a-backchannel-leaves-the-reply-playing": "5df2f294597cd25ec73ceb5b983eec40c26d81aa4f3819ec1a8b57b70eef0c4f"

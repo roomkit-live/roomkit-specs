@@ -10,6 +10,7 @@
   "requirements": [
     "RK-12.2-025"
   ],
+  "notes": "That the sessions play in parallel, and that each error is reported once its playback is released, are not shown.",
   "requires_features": [
     "voice"
   ],

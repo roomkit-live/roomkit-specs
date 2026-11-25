@@ -9,6 +9,7 @@
   "requirements": [
     "RK-12.2.2-012"
   ],
+  "notes": "The defaults of TTSContextConfig (20 turns, 120 s of audio) are not shown.",
   "requires_features": [
     "voice"
   ],

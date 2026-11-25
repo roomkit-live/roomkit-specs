@@ -10,7 +10,7 @@
     "RK-12.2-046",
     "RK-12.2-076"
   ],
-  "notes": "pcm is the alias of pcm_s16le the RFC admits.",
+  "notes": "pcm is the alias of pcm_s16le the RFC admits. No outbound stage is configured, so the refusal coming before the outbound pipeline is not shown apart from before the transport.",
   "requires_features": [
     "voice"
   ],

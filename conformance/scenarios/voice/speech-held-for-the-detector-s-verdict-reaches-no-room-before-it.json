@@ -9,7 +9,7 @@
   "requirements": [
     "RK-12.3.13-056"
   ],
-  "notes": "The recognizer holds the speech's words at a gate until the speech has ended: the speech waits, held, for the verdict on those words, and only then is it a turn.",
+  "notes": "The recognizer holds the speech's words at a gate until the speech has ended: the speech waits, held, for the verdict on those words, the detector consulted on them alone, and only then is it a turn.",
   "requires_features": [
     "voice"
   ],
@@ -138,6 +138,19 @@
     {
       "call": "voice.settle",
       "channel_id": "phone"
+    },
+    {
+      "call": "voice.read",
+      "channel_id": "phone",
+      "expect": {
+        "result": {
+          "backchannel_contexts": [
+            {
+              "transcript": "Stop please"
+            }
+          ]
+        }
+      }
     }
   ],
   "expect": {

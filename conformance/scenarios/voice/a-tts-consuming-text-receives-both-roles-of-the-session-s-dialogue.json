@@ -14,7 +14,7 @@
     "RK-12.2.2-017",
     "RK-12.2.2-020"
   ],
-  "notes": "Each scripted word carries 20 ms of audio, so the checked reply, four words played whole, records 80 ms. The audio half of the user turn (RK-12.2.2-017) is in voice/a-tts-consuming-audio-receives-what-was-said-and-played.",
+  "notes": "Each scripted word carries 20 ms of audio, so the checked reply, four words played whole, records 80 ms. The audio half of the user turn (RK-12.2.2-017) is in voice/a-tts-consuming-audio-receives-what-was-said-and-played. A text filter (the channel's tts_filter) before the turn's text is not shown.",
   "requires_features": [
     "voice"
   ],

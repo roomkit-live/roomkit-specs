@@ -9,6 +9,7 @@
   "requirements": [
     "RK-12.2.2-015"
   ],
+  "notes": "Sessions of one channel are shown apart; another channel of the room is not shown.",
   "requires_features": [
     "voice"
   ],

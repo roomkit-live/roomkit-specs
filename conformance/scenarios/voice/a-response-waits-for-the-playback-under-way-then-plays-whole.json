@@ -8,6 +8,7 @@
   "requirements": [
     "RK-12.2-037"
   ],
+  "notes": "Several responses waiting in turn, a playback sent whole taken over rather than cut, and what a cut play() reports are not shown.",
   "requires_features": [
     "voice"
   ],

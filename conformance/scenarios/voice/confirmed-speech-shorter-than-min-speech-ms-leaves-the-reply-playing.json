@@ -9,7 +9,7 @@
   "requirements": [
     "RK-12.3.13-010"
   ],
-  "notes": "The speech ends at once, long before its 1 s minimum: when the strategy looks again, it has not sustained.",
+  "notes": "The speech ends at once; the reply is still playing when the strategy looks again, 50 ms after the onset (settle), and finds the speech did not sustain.",
   "requires_features": [
     "voice"
   ],
@@ -45,7 +45,7 @@
       ],
       "interruption": {
         "strategy": "confirmed",
-        "min_speech_ms": 1000
+        "min_speech_ms": 50
       },
       "vad": [
         {
@@ -78,6 +78,10 @@
         "AQI=",
         "AQI="
       ]
+    },
+    {
+      "call": "voice.settle",
+      "channel_id": "phone"
     },
     {
       "open": "playing"

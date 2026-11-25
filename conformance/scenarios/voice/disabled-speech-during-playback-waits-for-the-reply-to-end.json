@@ -9,6 +9,7 @@
   "requirements": [
     "RK-12.3.13-012"
   ],
+  "notes": "AFTER_TTS fires once the reply was played whole; the speech said during it is transcribed only after.",
   "requires_features": [
     "voice"
   ],
@@ -27,6 +28,11 @@
       {
         "name": "stopped",
         "trigger": "on_tts_cancelled",
+        "execution": "async"
+      },
+      {
+        "name": "spoken",
+        "trigger": "after_tts",
         "execution": "async"
       },
       {
@@ -83,6 +89,10 @@
       ]
     },
     {
+      "call": "voice.settle",
+      "channel_id": "phone"
+    },
+    {
       "call": "voice.read",
       "channel_id": "phone",
       "expect": {
@@ -111,6 +121,13 @@
     "hooks": {
       "cut": [],
       "stopped": [],
+      "spoken": [
+        {
+          "voice": {
+            "text": "Your table is ready."
+          }
+        }
+      ],
       "heard": [
         {
           "voice": {
@@ -120,6 +137,10 @@
         }
       ]
     },
+    "hook_order": [
+      "spoken",
+      "heard"
+    ],
     "timeline": {
       "r1": [
         {

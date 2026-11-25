@@ -8,6 +8,7 @@
   "requirements": [
     "RK-12.2-024"
   ],
+  "notes": "The text comes from another channel; an agent's response delivered whole is not shown.",
   "requires_features": [
     "voice"
   ],

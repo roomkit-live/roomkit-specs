@@ -1506,6 +1506,16 @@
       "card": "RMK-2042",
       "note": "measurement: turn detector fast-path latency."
     },
+    "RK-12.3.13-018": {
+      "class": "step",
+      "card": "RMK-2042",
+      "note": "step: a bounded time step or the virtual clock (X-CLK): with a streaming STT, the wait for the first partial must be shown to outlast min_speech_ms; a gate holding the recognizer's first words gives the event loop no time, so the strategy's second look never runs before the words (P6-VO3 review)."
+    },
+    "RK-12.3.13-019": {
+      "class": "step",
+      "card": "RMK-2042",
+      "note": "step: a bounded time step or the virtual clock (X-CLK): without a streaming STT, the duration-only verdict must be shown to come only once min_speech_ms of speech has passed; the format cannot tell a 0 ms context from a later one (P6-VO3 review)."
+    },
     "RK-12.3.13-032": {
       "class": "step",
       "card": "RMK-2042",
@@ -1524,7 +1534,7 @@
     "RK-12.3.13-045": {
       "class": "step",
       "card": "RMK-2042",
-      "note": "step: written by P6-VO3 (voice/a-pending-verdict-on-a-final-is-no-reason-to-wait): Python discards a final the detector answers pending; HITL 4565b1f2."
+      "note": "step: Python discards a final the backchannel detector answers pending (P6-VO3 probe: the held speech ends without a turn, no cut); HITL 4565b1f2 pending."
     },
     "RK-12.3.15-020": {
       "class": "phase6",

@@ -8,6 +8,7 @@
   "requirements": [
     "RK-12.3.13-057"
   ],
+  "notes": "Only the branch where the final is no backchannel is shown, not a final that is one being discarded; \"past any minimum duration\" is not exercised (the speech is already past the default minimum).",
   "requires_features": [
     "voice"
   ],

@@ -8,7 +8,7 @@
   "requirements": [
     "RK-12.3.12-017"
   ],
-  "notes": "The reply's synthesis holds at a gate until the second speech has started; the transport is read while that speech lasts. The speech is shorter than its 60 s minimum, so the held reply is not superseded (RK-12.3.12-018 is).",
+  "notes": "The reply's synthesis holds at a gate until the second speech has started; the transport is read while that speech lasts. The speech is shorter than its 60 s minimum, so the held reply is not superseded (RK-12.3.12-018 is). Speech over audible audio keeping its echo guard is not shown.",
   "requires_features": [
     "voice"
   ],

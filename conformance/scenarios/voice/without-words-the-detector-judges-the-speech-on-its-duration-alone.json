@@ -1,15 +1,14 @@
 {
   "$schema": "../../scenario.schema.json",
-  "id": "voice/without-a-streaming-stt-the-detector-judges-the-duration-once-min-speech-ms-has-passed",
-  "title": "Under SEMANTIC without a streaming STT, the detector is consulted once min_speech_ms of speech has passed, with no transcript, on the speech's duration",
+  "id": "voice/without-words-the-detector-judges-the-speech-on-its-duration-alone",
+  "title": "Under SEMANTIC without a streaming STT, speech that gives no words is judged on its duration alone, the detector given no transcript",
   "rules": [
     "§12.3.13"
   ],
   "requirements": [
-    "RK-12.3.13-019",
     "RK-12.3.13-020"
   ],
-  "notes": "The speech never ends and no word comes: the verdict is on its duration alone. How long the wait lasted is not measured.",
+  "notes": "The speech never ends and no word comes: the verdict is on its duration alone. That it waited min_speech_ms first is not shown (RK-12.3.13-019 stays a gap).",
   "requires_features": [
     "voice"
   ],
@@ -105,7 +104,7 @@
         "result": {
           "backchannel_contexts": [
             {
-              "transcript": "",
+              "transcript": null,
               "speech_duration_ms": {
                 "$present": true
               }

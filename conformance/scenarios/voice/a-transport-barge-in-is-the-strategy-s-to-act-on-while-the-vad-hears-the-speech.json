@@ -9,7 +9,7 @@
   "requirements": [
     "RK-12.6-016"
   ],
-  "notes": "The VAD hears no speech during playback (its first decision is null), so the cut is the transport's barge-in, acted on by CONFIRMED once its second look comes; the speech edges and the transcript then come from the VAD's processing, once the cut is done (ON_TTS_CANCELLED).",
+  "notes": "The VAD hears no speech during playback (its first decision is null), so the cut is the transport's barge-in, acted on by CONFIRMED once its second look comes; the speech edges and the transcript then come from the VAD's processing, once the cut is done (ON_TTS_CANCELLED). The VAD hearing the same audio while the barge-in is still being judged (\"meanwhile\") is not shown: a speech start arriving while the confirmed barge-in runs its ON_BARGE_IN hooks loses the cut in Python (RMK-2124).",
   "requires_features": [
     "voice"
   ],

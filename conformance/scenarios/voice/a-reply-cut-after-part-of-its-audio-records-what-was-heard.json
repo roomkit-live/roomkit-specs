@@ -14,7 +14,7 @@
     "RK-12.3.13-053",
     "RK-12.6-008"
   ],
-  "notes": "The reply is one second of audio, all of it handed to the transport, which holds the playback; four hundred frames the VAD hears no speech in are fed before the barge-in, so that some of it was heard: the turn's played_ms and its audio stop there. That the audio is cut at played_ms is not compared byte for byte (the time heard is measured).",
+  "notes": "The reply is one second of audio, all of it handed to the transport, which holds the playback; four hundred frames the VAD hears no speech in are fed before the barge-in, so that some of it was heard: the turn's played_ms and its audio stop there. played_ms is above 0 only through the real time those frames take, a wide margin; that the audio is cut at played_ms is not compared byte for byte (the time heard is measured).",
   "requires_features": [
     "voice"
   ],
