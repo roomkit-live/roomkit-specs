@@ -9,7 +9,8 @@
     "RK-12.10.4-187"
   ],
   "requires_features": [
-    "conference"
+    "conference",
+    "recording"
   ],
   "setup": {
     "rooms": [
@@ -119,8 +120,7 @@
       "channel_id": "conf",
       "calls": [
         "subscribe_track",
-        "unsubscribe_track",
-        "leave"
+        "unsubscribe_track"
       ],
       "expect": {
         "result": {
@@ -135,12 +135,6 @@
             {
               "call": "unsubscribe_track",
               "track_id": "t1",
-              "session": {
-                "$as": "bot"
-              }
-            },
-            {
-              "call": "leave",
               "session": {
                 "$as": "bot"
               }

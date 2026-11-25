@@ -1040,6 +1040,7 @@ class SchemaTests(unittest.TestCase):
             ({"call": "conference.read", "channel_id": "conf", "calls": ["leave"]}, True),
             ({"call": "conference.read", "channel_id": "conf", "calls": "leave"}, False),
             ({"call": "conference.read", "channel_id": "conf", "calls": ["leave", "leave"]}, False),
+            ({"call": "conference.read", "channel_id": "conf", "calls": ["leaves"]}, False),
             ({"call": "conference.ensure_bot", "channel_id": "conf", "room_id": "r1"}, True),
             ({"call": "conference.ensure_bot", "channel_id": "conf"}, False),
             ({"call": "conference.plug", "channel_id": "conf", "kind": "stt"}, True),

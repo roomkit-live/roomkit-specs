@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "conference/plugging-a-recognizer-joins-an-occupied-conference-at-once",
-  "title": "A recognizer plugged into a channel with no session asks for the occupancy again and joins the conference it finds occupied",
+  "title": "A recognizer plugged into a channel with no session joins the conference it finds occupied before the plug returns",
   "rules": [
     "§12.10.4"
   ],

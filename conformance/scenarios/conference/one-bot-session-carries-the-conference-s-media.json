@@ -12,6 +12,7 @@
   "requires_features": [
     "conference"
   ],
+  "notes": "That the subscribed tracks feed the pipelines is not observed: no frame is fed.",
   "setup": {
     "rooms": [
       {

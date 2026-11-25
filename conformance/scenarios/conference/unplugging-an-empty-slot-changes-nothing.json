@@ -61,20 +61,18 @@
     {
       "call": "conference.read",
       "channel_id": "conf",
+      "calls": [
+        "leave",
+        "unsubscribe_track",
+        "update_bot_grants",
+        "stop_playback",
+        "close_room"
+      ],
       "expect": {
         "result": {
-          "calls": [
+          "calls": [],
+          "bots": [
             {
-              "call": "ensure_room",
-              "room_id": "r1"
-            },
-            {
-              "call": "list_participants",
-              "room_id": "r1"
-            },
-            {
-              "call": "join_as_bot",
-              "room_id": "r1",
               "session": {
                 "$as": "bot"
               }

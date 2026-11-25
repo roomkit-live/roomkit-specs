@@ -3218,8 +3218,24 @@
               "calls": {
                 "type": "array",
                 "items": {
-                  "type": "string",
-                  "minLength": 1
+                  "enum": [
+                    "ensure_room",
+                    "close_room",
+                    "list_participants",
+                    "join_as_bot",
+                    "update_bot_grants",
+                    "leave",
+                    "stop_playback",
+                    "subscribe_track",
+                    "unsubscribe_track",
+                    "publish_audio",
+                    "publish_video",
+                    "mint_access",
+                    "remove_participant",
+                    "mute_track",
+                    "unmute_track",
+                    "close"
+                  ]
                 },
                 "uniqueItems": true
               }

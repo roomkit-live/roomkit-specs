@@ -11,7 +11,7 @@
   "requires_features": [
     "conference"
   ],
-  "notes": "The backend cannot update grants in place, so each change is a re-join.",
+  "notes": "The backend cannot update grants in place, so each change is carried by a new session: bots lists the live one.",
   "setup": {
     "rooms": [
       {
@@ -50,6 +50,22 @@
       }
     },
     {
+      "call": "conference.read",
+      "channel_id": "conf",
+      "expect": {
+        "result": {
+          "bots": [
+            {
+              "grants": {
+                "moderate": true,
+                "publish_audio": false
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
       "call": "conference.set_bot_grants",
       "channel_id": "conf",
       "grants": {
@@ -63,53 +79,10 @@
     {
       "call": "conference.read",
       "channel_id": "conf",
-      "calls": [
-        "join_as_bot",
-        "leave"
-      ],
       "expect": {
         "result": {
-          "calls": [
+          "bots": [
             {
-              "call": "join_as_bot",
-              "room_id": "r1",
-              "session": {
-                "$as": "first"
-              },
-              "grants": {
-                "moderate": false,
-                "publish_audio": false
-              }
-            },
-            {
-              "call": "leave",
-              "session": {
-                "$as": "first"
-              }
-            },
-            {
-              "call": "join_as_bot",
-              "room_id": "r1",
-              "session": {
-                "$as": "second"
-              },
-              "grants": {
-                "moderate": true,
-                "publish_audio": false
-              }
-            },
-            {
-              "call": "leave",
-              "session": {
-                "$as": "second"
-              }
-            },
-            {
-              "call": "join_as_bot",
-              "room_id": "r1",
-              "session": {
-                "$as": "third"
-              },
               "grants": {
                 "moderate": false,
                 "publish_audio": true

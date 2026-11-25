@@ -13,7 +13,7 @@
   "requires_features": [
     "conference"
   ],
-  "notes": "The second read is unordered: the RFC does not order the subscriptions the reopening makes, and the first read already shows the unsubscription came before them.",
+  "notes": "Reads are unordered where the RFC orders nothing: the subscriptions one change makes. Each read follows the change it observes.",
   "setup": {
     "rooms": [
       {
@@ -45,55 +45,11 @@
       "kind": "audio"
     },
     {
-      "idle": true
-    },
-    {
-      "call": "mute",
-      "room_id": "r1",
-      "channel_id": "conf"
-    },
-    {
       "call": "conference.publish",
       "channel_id": "conf",
       "participant_id": "bob",
       "track_id": "t2",
       "kind": "audio"
-    },
-    {
-      "idle": true
-    },
-    {
-      "call": "conference.read",
-      "channel_id": "conf",
-      "calls": [
-        "subscribe_track",
-        "unsubscribe_track"
-      ],
-      "expect": {
-        "result": {
-          "calls": [
-            {
-              "call": "subscribe_track",
-              "track_id": "t1",
-              "session": {
-                "$as": "bot"
-              }
-            },
-            {
-              "call": "unsubscribe_track",
-              "track_id": "t1",
-              "session": {
-                "$as": "bot"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "call": "unmute",
-      "room_id": "r1",
-      "channel_id": "conf"
     },
     {
       "idle": true
@@ -117,8 +73,118 @@
                 }
               },
               {
+                "call": "subscribe_track",
+                "track_id": "t2",
+                "session": {
+                  "$as": "bot"
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "call": "mute",
+      "room_id": "r1",
+      "channel_id": "conf"
+    },
+    {
+      "call": "conference.publish",
+      "channel_id": "conf",
+      "participant_id": "alice",
+      "track_id": "t3",
+      "kind": "audio"
+    },
+    {
+      "idle": true
+    },
+    {
+      "call": "conference.read",
+      "channel_id": "conf",
+      "calls": [
+        "unsubscribe_track"
+      ],
+      "expect": {
+        "result": {
+          "calls": {
+            "$unordered": [
+              {
                 "call": "unsubscribe_track",
                 "track_id": "t1",
+                "session": {
+                  "$as": "bot"
+                }
+              },
+              {
+                "call": "unsubscribe_track",
+                "track_id": "t2",
+                "session": {
+                  "$as": "bot"
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "call": "conference.read",
+      "channel_id": "conf",
+      "calls": [
+        "subscribe_track"
+      ],
+      "expect": {
+        "result": {
+          "calls": {
+            "$unordered": [
+              {
+                "call": "subscribe_track",
+                "track_id": "t1",
+                "session": {
+                  "$as": "bot"
+                }
+              },
+              {
+                "call": "subscribe_track",
+                "track_id": "t2",
+                "session": {
+                  "$as": "bot"
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "call": "unmute",
+      "room_id": "r1",
+      "channel_id": "conf"
+    },
+    {
+      "idle": true
+    },
+    {
+      "call": "conference.read",
+      "channel_id": "conf",
+      "calls": [
+        "subscribe_track"
+      ],
+      "expect": {
+        "result": {
+          "calls": {
+            "$unordered": [
+              {
+                "call": "subscribe_track",
+                "track_id": "t1",
+                "session": {
+                  "$as": "bot"
+                }
+              },
+              {
+                "call": "subscribe_track",
+                "track_id": "t2",
                 "session": {
                   "$as": "bot"
                 }
@@ -133,6 +199,13 @@
               {
                 "call": "subscribe_track",
                 "track_id": "t2",
+                "session": {
+                  "$as": "bot"
+                }
+              },
+              {
+                "call": "subscribe_track",
+                "track_id": "t3",
                 "session": {
                   "$as": "bot"
                 }

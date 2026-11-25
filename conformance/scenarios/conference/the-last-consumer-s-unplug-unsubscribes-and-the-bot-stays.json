@@ -11,6 +11,7 @@
   "requires_features": [
     "conference"
   ],
+  "notes": "Whether the narrower needs keep the session or replace it is left open (§12.10.4: narrowed in place where the backend can, else left standing or not); a bot stays either way.",
   "setup": {
     "rooms": [
       {
@@ -56,21 +57,12 @@
       "call": "conference.read",
       "channel_id": "conf",
       "calls": [
-        "join_as_bot",
         "subscribe_track",
-        "unsubscribe_track",
-        "leave"
+        "unsubscribe_track"
       ],
       "expect": {
         "result": {
           "calls": [
-            {
-              "call": "join_as_bot",
-              "room_id": "r1",
-              "session": {
-                "$as": "bot"
-              }
-            },
             {
               "call": "subscribe_track",
               "track_id": "t1",
@@ -89,10 +81,7 @@
           "info": {
             "rooms": {
               "r1": {
-                "bot_present": true,
-                "bot_session_id": {
-                  "$as": "bot"
-                }
+                "bot_present": true
               }
             }
           }
