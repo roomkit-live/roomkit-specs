@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "8438bd1e411ee0a18cc550984c4dbcb44e89f3e3216da2851d66a48fb335eaa1",
-  "corpus_sha256": "19de9e2a33d0d21f329125c59baf04b953d77e79f1cf9af4d2884e8be854b50d",
+  "corpus_sha256": "3a75d5724612246b8345471125d9486b8cd6aefe6cee9d920b3e434a0b1effba",
   "python_commit": "1ee7ec379dee1e17c49a1949ad7ce8756c132606",
-  "scenario_count": 3550,
+  "scenario_count": 3567,
   "sections": [
     {
       "section": "0",
@@ -6938,11 +6938,14 @@
         "unmapped": 11
       },
       "decided_gaps": {
-        "step": 4
+        "step": 1
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
-        "voice/a-forward-bridge-sends-each-frame-unmixed-to-every-other-participant"
+        "voice/a-disabled-bridge-forwards-no-frame",
+        "voice/a-forward-bridge-sends-each-frame-unmixed-to-every-other-participant",
+        "voice/a-mix-bridge-sends-each-participant-a-mix-of-the-others",
+        "voice/one-voice-channel-bridges-each-of-its-rooms-apart"
       ]
     },
     {
@@ -6953,15 +6956,22 @@
       "mapping": {
         "unmapped": 24
       },
-      "decided_gaps": {
-        "step": 12
-      },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
+        "voice/a-bridge-with-no-stt-or-tts-carries-only-the-participants-audio",
         "voice/a-bridged-frame-walks-the-listener-s-outbound-stages",
         "voice/a-bridged-listener-hears-the-speaker-and-the-synthesized-reply",
         "voice/a-bridged-speaker-is-heard-detected-and-transcribed",
         "voice/a-held-hook-on-one-path-leaves-the-other-path-running",
+        "voice/a-participant-who-left-receives-no-more-bridged-frames",
+        "voice/a-transport-that-cancels-its-echo-ends-its-session-s-playback-at-once",
+        "voice/adding-a-transport-twice-wires-it-once",
+        "voice/an-added-transport-s-audio-and-signals-reach-the-channel",
+        "voice/an-added-transport-s-barge-in-cancels-the-playback-on-that-transport",
+        "voice/an-added-transport-s-hang-up-unbridges-its-session",
+        "voice/closing-the-kit-closes-each-transport-of-a-voice-channel",
+        "voice/each-session-is-served-by-its-own-transport",
         "voice/without-a-bridge-no-frame-reaches-another-participant"
       ]
     },
@@ -6973,11 +6983,12 @@
       "mapping": {
         "unmapped": 2
       },
-      "decided_gaps": {
-        "step": 2
-      },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
-      "candidate_scenarios": []
+      "candidate_scenarios": [
+        "voice/a-bridged-frame-arrives-at-each-listener-s-own-rate",
+        "voice/a-bridged-frame-reaches-the-transport-format-through-the-listener-s-rate"
+      ]
     },
     {
       "section": "12.7.5",
@@ -6988,10 +6999,14 @@
         "unmapped": 7
       },
       "decided_gaps": {
-        "step": 7
+        "writable": 2
       },
       "unannotated_keyword_lines": [],
-      "candidate_scenarios": []
+      "candidate_scenarios": [
+        "voice/a-mix-bridge-sends-each-participant-a-mix-of-the-others",
+        "voice/a-mix-of-three-sources-is-scaled-for-headroom",
+        "voice/a-mix-sums-the-others-samples-and-clamps-the-sum"
+      ]
     },
     {
       "section": "12.7.6",
@@ -7001,12 +7016,11 @@
       "mapping": {
         "unmapped": 12
       },
-      "decided_gaps": {
-        "step": 1
-      },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "voice/a-bridge-hook-runs-outside-the-call-that-delivers-the-frame",
+        "voice/a-bridge-hook-s-replaced-frame-is-the-one-forwarded",
         "voice/a-bridged-call-s-room-recordings-are-announced-and-capture-the-speaker",
         "voice/a-bridged-session-starts-as-any-session-does",
         "voice/a-bridged-speaker-is-heard-detected-and-transcribed"
@@ -7032,9 +7046,7 @@
       "mapping": {
         "unmapped": 9
       },
-      "decided_gaps": {
-        "step": 2
-      },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "voice/a-bridged-frame-walks-the-listener-s-outbound-stages",
@@ -32262,12 +32274,7 @@
       "id": "RK-12.7.2-006",
       "section": "12.7.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2054",
-        "note": "step: voice.open bridge as a config object (V1): enabled false forwards nothing."
-      }
+      "links": []
     },
     {
       "id": "RK-12.7.2-007",
@@ -32296,12 +32303,7 @@
       "id": "RK-12.7.2-010",
       "section": "12.7.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2054",
-        "note": "step: one voice channel attached to two rooms (V6): frames reach only the sessions of their own room."
-      }
+      "links": []
     },
     {
       "id": "RK-12.7.2-011",
@@ -32325,12 +32327,7 @@
       "id": "RK-12.7.2-014",
       "section": "12.7.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2054",
-        "note": "step: mixing_strategy mix in voice.open (V1): with three participants, each receives the mix of the two others."
-      }
+      "links": []
     },
     {
       "id": "RK-12.7.2-004",
@@ -32372,12 +32369,7 @@
       "id": "RK-12.7.3-010",
       "section": "12.7.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2054",
-        "note": "step: voice.leave (V5): frames fed after a participant leaves no longer reach it."
-      }
+      "links": []
     },
     {
       "id": "RK-12.7.3-011",
@@ -32389,12 +32381,7 @@
       "id": "RK-12.7.3-012",
       "section": "12.7.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2054",
-        "note": "step: voice.open without a TTS provider (no audit family; the runners always give one): frames forwarded, nothing synthesized."
-      }
+      "links": []
     },
     {
       "id": "RK-12.7.3-013",
@@ -32436,188 +32423,103 @@
       "id": "RK-12.7.3-019",
       "section": "12.7.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2054",
-        "note": "step: a second transport on one voice channel and per-transport reads (V3): the added transport's inbound audio, session-ready signal, barge-in and DTMF reach the channel; tests/test_voice_add_backend.py proves it natively."
-      }
+      "links": []
     },
     {
       "id": "RK-12.7.3-020",
       "section": "12.7.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2054",
-        "note": "step: a second transport on one voice channel and per-transport reads (V3): a channel built without a backend refuses add_backend, and the added transport's audio goes through the primary's pipeline."
-      }
+      "links": []
     },
     {
       "id": "RK-12.7.3-021",
       "section": "12.7.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2054",
-        "note": "step: a second transport on one voice channel and per-transport reads (V3): each session is served by one transport only."
-      }
+      "links": []
     },
     {
       "id": "RK-12.7.3-022",
       "section": "12.7.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2054",
-        "note": "step: a second transport on one voice channel and per-transport reads (V3): a join naming a backend, or none, lands the session on the named, the holding or the primary backend."
-      }
+      "links": []
     },
     {
       "id": "RK-12.7.3-023",
       "section": "12.7.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2054",
-        "note": "step: a second transport on one voice channel and per-transport reads (V3): joining on a pull-model transport starts it listening."
-      }
+      "links": []
     },
     {
       "id": "RK-12.7.3-024",
       "section": "12.7.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2054",
-        "note": "step: a second transport on one voice channel and per-transport reads (V3): bridged audio, TTS, transcriptions, a playback cancel, DTMF and the hang-up of a session go out on its own transport."
-      }
+      "links": []
     },
     {
       "id": "RK-12.7.3-025",
       "section": "12.7.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2054",
-        "note": "step: a second transport on one voice channel and per-transport reads (V3): a response delivered to the room reaches the sessions of both transports."
-      }
+      "links": []
     },
     {
       "id": "RK-12.7.3-026",
       "section": "12.7.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2054",
-        "note": "step: a second transport on one voice channel and per-transport reads (V3): an interruption cancels playback where the session's own backend has INTERRUPTION, and NATIVE_AEC is read on that backend."
-      }
+      "links": []
     },
     {
       "id": "RK-12.7.3-027",
       "section": "12.7.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2054",
-        "note": "step: a second transport on one voice channel and per-transport reads (V3): adding the same transport twice wires it once."
-      }
+      "links": []
     },
     {
       "id": "RK-12.7.3-028",
       "section": "12.7.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2054",
-        "note": "step: a second transport on one voice channel and per-transport reads (V3): closing the channel closes the added transport."
-      }
+      "links": []
     },
     {
       "id": "RK-12.7.4-002",
       "section": "12.7.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2054",
-        "note": "step: per-participant sample rates in voice.open and the audio format in voice.read (V2): a frame bridged to a session of another rate arrives at that session's output rate."
-      }
+      "links": []
     },
     {
       "id": "RK-12.7.4-003",
       "section": "12.7.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2054",
-        "note": "step: per-participant sample rates in voice.open (V2): each target receives the frame resampled to its own rate."
-      }
+      "links": []
     },
     {
       "id": "RK-12.7.5-001",
       "section": "12.7.5",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2054",
-        "note": "step: mixing_strategy mix in voice.open (V1): with three participants, none receives its own audio."
-      }
+      "links": []
     },
     {
       "id": "RK-12.7.5-004",
       "section": "12.7.5",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2054",
-        "note": "step: mixing_strategy mix in voice.open (V1): the third participant receives the sample-wise sum of the two others' frames, without overflow."
-      }
+      "links": []
     },
     {
       "id": "RK-12.7.5-005",
       "section": "12.7.5",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2054",
-        "note": "step: mixing_strategy mix in voice.open (V1): two loud frames mix to a clamped or normalized result (sample values in voice.read)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.7.5-006",
       "section": "12.7.5",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2054",
-        "note": "step: mixing_strategy mix in voice.open (V1): a mix of three or more sources is scaled down for headroom."
-      }
+      "links": []
     },
     {
       "id": "RK-12.7.5-007",
       "section": "12.7.5",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2054",
-        "note": "step: mixing_strategy mix in voice.open (V1): the mix reaches its target as 16-bit PCM."
-      }
+      "links": []
     },
     {
       "id": "RK-12.7.5-008",
@@ -32625,9 +32527,9 @@
       "mapping": "unmapped",
       "links": [],
       "gap": {
-        "class": "step",
-        "card": "RMK-2054",
-        "note": "step: mixing_strategy mix in voice.open (V1): a source silent in the mixing window adds nothing to the mix (suspect RMK-2051)."
+        "class": "writable",
+        "card": "RMK-2051",
+        "note": "writable: voice.open bridge with mixing_strategy mix; Python keeps a quiet source's last frame in every mix, left as is by the maintainer (RMK-2051)."
       }
     },
     {
@@ -32636,9 +32538,9 @@
       "mapping": "unmapped",
       "links": [],
       "gap": {
-        "class": "step",
-        "card": "RMK-2054",
-        "note": "step: mixing_strategy mix in voice.open (V1): a mix made only of silence is not sent (suspect RMK-2051)."
+        "class": "writable",
+        "card": "RMK-2051",
+        "note": "writable: voice.open bridge with mixing_strategy mix; Python forwards a mix made only of silence, left as is by the maintainer (RMK-2051)."
       }
     },
     {
@@ -32669,12 +32571,7 @@
       "id": "RK-12.7.6-007",
       "section": "12.7.6",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2054",
-        "note": "step: a voice bridge hook that replaces the frame bytes (V7): the replaced frame is the one forwarded."
-      }
+      "links": []
     },
     {
       "id": "RK-12.7.6-008",
@@ -32776,23 +32673,13 @@
       "id": "RK-12.7.8-008",
       "section": "12.7.8",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2054",
-        "note": "step: mixing_strategy mix in voice.open (V1), with three participants."
-      }
+      "links": []
     },
     {
       "id": "RK-12.7.8-009",
       "section": "12.7.8",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2054",
-        "note": "step: per-participant sample rates in voice.open (V2)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.7.8-010",
