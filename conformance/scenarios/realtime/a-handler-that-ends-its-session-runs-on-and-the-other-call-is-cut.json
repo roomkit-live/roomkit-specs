@@ -9,6 +9,7 @@
   "requirements": [
     "RK-12.4-023"
   ],
+  "notes": "A conference's detach and unplug are not shown.",
   "requires_features": [
     "realtime"
   ],

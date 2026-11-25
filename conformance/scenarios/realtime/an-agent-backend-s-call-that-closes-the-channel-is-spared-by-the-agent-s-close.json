@@ -126,7 +126,12 @@
         "$unordered": [
           {
             "tool_call": {
-              "tool_call_id": "d1:b1",
+              "tool_call_id": {
+                "$contains": [
+                  "d1",
+                  "b1"
+                ]
+              },
               "name": "lookup",
               "is_error": true,
               "cancelled": true
@@ -134,7 +139,12 @@
           },
           {
             "tool_call": {
-              "tool_call_id": "d1:b2",
+              "tool_call_id": {
+                "$contains": [
+                  "d1",
+                  "b2"
+                ]
+              },
               "name": "hangup",
               "result": "bye",
               "is_error": false

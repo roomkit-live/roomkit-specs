@@ -10,7 +10,7 @@
   "requirements": [
     "RK-12.4.1-058"
   ],
-  "notes": "The cap stops the turn at its second round of calls, which do not run.",
+  "notes": "The cap stops the turn at its second round of calls, which do not run. A turn its deadline or its budget cut is not shown.",
   "requires_features": [
     "realtime"
   ],

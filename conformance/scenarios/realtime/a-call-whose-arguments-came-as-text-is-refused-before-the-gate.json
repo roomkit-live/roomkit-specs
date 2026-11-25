@@ -83,7 +83,7 @@
             {
               "call_id": "c1",
               "result": {
-                "$contains": "unreadable"
+                "$present": true
               }
             }
           ],

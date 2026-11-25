@@ -9,7 +9,7 @@
   "requirements": [
     "RK-12.4.1-075"
   ],
-  "notes": "The agent's re-read of a stored result is read_stored_result.",
+  "notes": "The agent's re-read of a stored result is read_stored_result. Tool Search's names and a human-input tool are not shown.",
   "requires_features": [
     "realtime"
   ],

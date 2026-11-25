@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
-  "id": "realtime/an-agent-backend-s-call-with-no-id-is-reported-under-one-minted-in-its-delegation",
-  "title": "An agent backend's call that came with no id is reported under one minted within its delegation's",
+  "id": "realtime/an-agent-backend-s-calls-with-no-id-are-reported-under-ids-of-their-own",
+  "title": "An agent backend's calls that came with no id are each reported under an id of their own",
   "rules": [
     "§12.4.1",
     "§19",
@@ -10,6 +10,7 @@
   "requirements": [
     "RK-12.4.1-068"
   ],
+  "notes": "Two calls with no id in one round are reported under two distinct ids; whether the second runs is left open.",
   "requires_features": [
     "realtime"
   ],
@@ -38,6 +39,10 @@
                       {
                         "id": "",
                         "name": "lookup"
+                      },
+                      {
+                        "id": "",
+                        "name": "weather"
                       }
                     ]
                   },
@@ -95,17 +100,27 @@
   ],
   "expect": {
     "hooks": {
-      "reports": [
-        {
-          "tool_call": {
-            "tool_call_id": {
-              "$starts_with": "d1:"
-            },
-            "name": "lookup",
-            "is_error": false
+      "reports": {
+        "$unordered": [
+          {
+            "tool_call": {
+              "tool_call_id": {
+                "$as": "first"
+              },
+              "name": "lookup",
+              "is_error": false
+            }
+          },
+          {
+            "tool_call": {
+              "tool_call_id": {
+                "$as": "second"
+              },
+              "name": "weather"
+            }
           }
-        }
-      ]
+        ]
+      }
     }
   }
 }

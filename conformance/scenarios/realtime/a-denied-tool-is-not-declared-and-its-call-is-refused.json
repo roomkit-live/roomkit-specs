@@ -11,6 +11,7 @@
     "RK-12.4-071",
     "RK-12.4-072"
   ],
+  "notes": "The exempt names and a call recovered from spoken text are not shown.",
   "requires_features": [
     "realtime"
   ],
@@ -78,6 +79,9 @@
       "channel_id": "rt",
       "call_id": "c1",
       "name": "secret"
+    },
+    {
+      "idle": true
     },
     {
       "call": "realtime.tool_call",

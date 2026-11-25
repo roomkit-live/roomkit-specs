@@ -566,7 +566,7 @@ whose calls fall to the ON_TOOL_CALL hooks (§21.4).
 
 `realtime.reasoning` is the integrator-side backend a delegation to
 `integrator` runs (§12.4.1), and `realtime.reasoning_timeout_ms` the
-channel's bound on its run. It is one of:
+channel's bound on its run. It is either:
 
 - `runs`: a scripted ReasoningBackend. Its n-th delegation makes the actions
   of the n-th run in order, the last run repeating. An action is one of:
@@ -580,12 +580,11 @@ channel's bound on its run. It is one of:
   `final` (false by default); `delegate`, a task the backend delegates
   through the kit (§23), `agent_id` and `task`, from the session's room.
 - `agent`: an agent as the backend (§12.4.1, §19), a scripted agent written
-  as an `ai` channel with a `model` (its `id` among its members), built as
-  the setup builds one, never registered with the kit; `expect.models` reads
-  its generations under its id. Given `tools`, it gets their scripted handler
-  as a setup's agent does; without, it has no tool handler of the host's.
-- `agent_of`: the id of an `ai` channel the setup registered with the kit,
-  whose agent is the backend.
+  as an `ai` channel with a `model` (its `id` and `type` among its members),
+  built as the setup builds one, with the run's recorders, and never
+  registered with the kit; `expect.models` reads its generations under its
+  id. Given `tools`, it gets their scripted handler as a setup's agent does;
+  without, it has no tool handler of the host's.
 
 A backend the implementation refuses refuses the channel: a
 `register_channel` that names it fails with `invalid_argument`.

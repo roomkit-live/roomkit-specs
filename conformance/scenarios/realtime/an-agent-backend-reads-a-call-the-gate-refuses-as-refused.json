@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "realtime/an-agent-backend-reads-a-call-the-gate-refuses-as-refused",
-  "title": "An agent backend's call the gate refuses is reported once and read by its model as failed",
+  "title": "An agent backend's call the gate refuses is reported once, refused, and read by its model as an error",
   "rules": [
     "§12.4.1",
     "§19",
@@ -99,7 +99,12 @@
       "reports": [
         {
           "tool_call": {
-            "tool_call_id": "d1:b1",
+            "tool_call_id": {
+              "$contains": [
+                "d1",
+                "b1"
+              ]
+            },
             "name": "missing",
             "is_error": true,
             "refused": true

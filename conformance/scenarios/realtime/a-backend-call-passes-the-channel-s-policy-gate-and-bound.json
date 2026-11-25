@@ -23,7 +23,7 @@
         "realtime": {
           "tools": {
             "lookup": {
-              "result": "found: detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail "
+              "result": "found: detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail END-OF-RESULT"
             },
             "secret": {
               "result": "s3cret"
@@ -123,7 +123,9 @@
             },
             {
               "name": "lookup",
-              "text": "found: detail detail detail detail detail detail deta\n... [truncated: the result was 182 characters]",
+              "text": {
+                "$starts_with": "found: detail"
+              },
               "is_error": false,
               "refused": false
             }
@@ -132,6 +134,23 @@
             {
               "name": "lookup",
               "outcome": "returned"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "call": "realtime.read",
+      "channel_id": "rt",
+      "expect": {
+        "result": {
+          "backend_calls": [
+            "$any",
+            {
+              "name": "lookup",
+              "text": {
+                "$lacks": "END-OF-RESULT"
+              }
             }
           ]
         }
@@ -152,7 +171,7 @@
           {
             "tool_call": {
               "tool_call_id": {
-                "$starts_with": "d1:"
+                "$contains": "d1"
               },
               "name": "secret",
               "is_error": true,
@@ -162,7 +181,7 @@
           {
             "tool_call": {
               "tool_call_id": {
-                "$starts_with": "d1:"
+                "$contains": "d1"
               },
               "name": "lookup",
               "is_error": false

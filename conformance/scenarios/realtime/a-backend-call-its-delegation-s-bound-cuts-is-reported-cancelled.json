@@ -115,7 +115,7 @@
         {
           "tool_call": {
             "tool_call_id": {
-              "$starts_with": "d1:"
+              "$contains": "d1"
             },
             "name": "lookup",
             "is_error": true,

@@ -10,7 +10,7 @@
   "requirements": [
     "RK-12.4.1-076"
   ],
-  "notes": "The session is opened with its own tools, read_stored_result and forecast.",
+  "notes": "The session is opened with its own tools, read_stored_result and forecast. The warning, a room's tools and a reconfiguration are not shown.",
   "requires_features": [
     "realtime"
   ],

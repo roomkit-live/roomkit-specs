@@ -10,7 +10,7 @@
   "requirements": [
     "RK-12.4-027"
   ],
-  "notes": "The handler is held at a gate after its ending until the kit's close is under way; the close's bound (past which the call is cut and reported cancelled) is not reached.",
+  "notes": "The handler is held at a gate after its ending until the kit's close is under way, then let go within the close's grace. The channel's own close, while the kit lives, is not shown.",
   "requires_features": [
     "realtime"
   ],

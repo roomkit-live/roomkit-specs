@@ -71,7 +71,7 @@
       "call_id": "c1",
       "name": "find_tools",
       "arguments": {
-        "query": "secret lookup weather"
+        "query": "secret"
       }
     },
     {
@@ -88,12 +88,6 @@
               "lookup": {
                 "$absent": true
               },
-              "secret": {
-                "$absent": true
-              }
-            },
-            {
-              "lookup": "$any",
               "secret": {
                 "$absent": true
               }

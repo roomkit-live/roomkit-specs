@@ -10,6 +10,7 @@
   "requirements": [
     "RK-12.4.1-067"
   ],
+  "notes": "A provider-side call that failed is not shown.",
   "requires_features": [
     "realtime"
   ],
@@ -116,7 +117,12 @@
       "reports": [
         {
           "tool_call": {
-            "tool_call_id": "d1:b1",
+            "tool_call_id": {
+              "$contains": [
+                "d1",
+                "b1"
+              ]
+            },
             "name": "web_search",
             "result": "three hits",
             "is_error": false

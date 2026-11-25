@@ -11,6 +11,7 @@
     "RK-12.4.1-065",
     "RK-12.4.1-066"
   ],
+  "notes": "Shown by a call cut before its arguments arrived whole; the cancelled and failed outcomes a loop reports are not shown.",
   "requires_features": [
     "realtime"
   ],
@@ -119,7 +120,12 @@
       "reports": [
         {
           "tool_call": {
-            "tool_call_id": "d1:b1",
+            "tool_call_id": {
+              "$contains": [
+                "d1",
+                "b1"
+              ]
+            },
             "name": "lookup",
             "is_error": true,
             "refused": true

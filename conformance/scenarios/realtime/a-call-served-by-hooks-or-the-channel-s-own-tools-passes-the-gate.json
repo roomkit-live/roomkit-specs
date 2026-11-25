@@ -101,6 +101,9 @@
       "name": "lookup"
     },
     {
+      "idle": true
+    },
+    {
       "call": "realtime.tool_call",
       "channel_id": "rt",
       "call_id": "c2",
@@ -108,6 +111,9 @@
       "arguments": {
         "query": "lookup"
       }
+    },
+    {
+      "idle": true
     },
     {
       "call": "realtime.tool_call",

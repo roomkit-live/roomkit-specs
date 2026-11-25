@@ -10,6 +10,7 @@
   "requirements": [
     "RK-12.4.1-077"
   ],
+  "notes": "Its composition with the channel's own policy is not shown.",
   "requires_features": [
     "realtime"
   ],
@@ -131,7 +132,12 @@
       "reports": [
         {
           "tool_call": {
-            "tool_call_id": "d1:b1",
+            "tool_call_id": {
+              "$contains": [
+                "d1",
+                "b1"
+              ]
+            },
             "name": "lookup",
             "is_error": true,
             "refused": true

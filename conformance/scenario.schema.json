@@ -231,7 +231,7 @@
           "const": false
         },
         "reasoning": {
-          "description": "The integrator-side backend a delegation runs (§12.4.1): scripted runs, an agent of its own, or the agent of a channel the kit holds.",
+          "description": "The integrator-side backend a delegation runs (§12.4.1): scripted runs or an agent of its own.",
           "type": "object",
           "additionalProperties": false,
           "minProperties": 1,
@@ -305,9 +305,6 @@
             },
             "agent": {
               "$ref": "#/$defs/channel"
-            },
-            "agent_of": {
-              "type": "string"
             }
           }
         },

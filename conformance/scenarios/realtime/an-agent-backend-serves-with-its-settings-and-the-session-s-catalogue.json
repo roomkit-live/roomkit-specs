@@ -10,6 +10,7 @@
   "requirements": [
     "RK-12.4.1-071"
   ],
+  "notes": "The agent's turn budget is not shown.",
   "requires_features": [
     "realtime"
   ],

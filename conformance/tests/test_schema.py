@@ -869,11 +869,11 @@ class SchemaTests(unittest.TestCase):
             ("tool_handler", False, True),
             ("tool_handler", True, False),
             ("reasoning", {"agent": agent}, True),
-            ("reasoning", {"agent_of": "helper"}, True),
+            ("reasoning", {"agent_of": "helper"}, False),
             ("reasoning", {"runs": [[{"call": "lookup", "via": "execute"}]]}, False),
             ("reasoning", {"runs": [[{"say": "x", "loud": True}]]}, False),
             ("reasoning", {"runs": [[{"delegate": {"agent_id": "w"}}]]}, False),
-            ("reasoning", {"agent_of": "helper", "runs": [[]]}, False),
+            ("reasoning", {"agent": agent, "runs": [[]]}, False),
             ("reasoning_timeout_ms", 0, False),
         ):
             with self.subTest(member=member, value=value):
