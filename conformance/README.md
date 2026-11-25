@@ -548,8 +548,9 @@ and its reconnect, the handler makes its optional `action` on its own session
 (§12.4): `end_session` ends the session, `close` closes the channel,
 `close_kit` closes the kit; with `in_task: "awaited"`, it makes it from a task
 it starts and awaits, which inherits its execution context. It then holds at
-its optional `after_gate`, then returns its `result`, or, with `fails`, raises
-with that message in its place, a call that failed (§9.3). A
+its optional `after_gate`, waits its optional `delay_ms`, then returns its
+`result`, or, with `fails`, raises with that message in its place, a call that
+failed (§9.3). A
 `realtime.reasoning_error` supplies an integrator-side backend whose turn
 raises with that message. On `realtime.tool_call`, an empty `call_id` is a
 call that came without an id, and an empty `name` a call that named no tool.

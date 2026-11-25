@@ -195,6 +195,11 @@
                 "description": "A gate the handler holds at after its action, before it returns.",
                 "type": "string"
               },
+              "delay_ms": {
+                "description": "Milliseconds the handler waits past its action and its after_gate, before it returns.",
+                "type": "integer",
+                "minimum": 1
+              },
               "fails": {
                 "description": "The handler raises with this message in place of returning its result (§9.3).",
                 "type": "string"

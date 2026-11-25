@@ -10,7 +10,7 @@
   "requirements": [
     "RK-12.4-027"
   ],
-  "notes": "The handler is held at a gate after its ending until the kit's close is under way, then let go within the close's grace. The channel's own close, while the kit lives, is not shown.",
+  "notes": "The handler is held at a gate after its ending until the kit's close is under way, then works 300 ms more while its channel closes. The channel's own close, while the kit lives, is not shown.",
   "requires_features": [
     "realtime"
   ],
@@ -28,6 +28,7 @@
             "hangup": {
               "action": "end_session",
               "after_gate": "working",
+              "delay_ms": 300,
               "result": "bye"
             }
           }

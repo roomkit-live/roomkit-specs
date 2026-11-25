@@ -5104,7 +5104,7 @@
       "realtime/an-agent-backend-s-call-that-closes-the-channel-is-spared-by-the-agent-s-close": "7a7b8e4feb2758a90e23099270ed03391af93ff581d205d5f7b72adf7e552be3"
     },
     "RK-12.4-027": {
-      "realtime/a-spared-handler-past-the-close-s-grace-is-cut-and-reported-once": "e660f3f2a2f0da97a42266e0393d30daabb79029d695af31f4aa9035967529c4",
+      "realtime/a-spared-handler-past-the-close-s-bound-is-cut-and-reported-once": "e660f3f2a2f0da97a42266e0393d30daabb79029d695af31f4aa9035967529c4",
       "realtime/a-spared-handler-still-working-at-the-close-is-waited-for": "e660f3f2a2f0da97a42266e0393d30daabb79029d695af31f4aa9035967529c4"
     },
     "RK-12.4-028": {

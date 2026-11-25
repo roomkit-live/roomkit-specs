@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
-  "id": "realtime/a-spared-handler-past-the-close-s-grace-is-cut-and-reported-once",
-  "title": "A handler that ended its session and still works past the kit's close grace is cut and reported once, cancelled",
+  "id": "realtime/a-spared-handler-past-the-close-s-bound-is-cut-and-reported-once",
+  "title": "A handler that ended its session and still works past its channel close's bound is cut and reported once, cancelled",
   "rules": [
     "§12.4",
     "§12.10.4",
@@ -10,14 +10,11 @@
   "requirements": [
     "RK-12.4-027"
   ],
-  "notes": "The handler holds at a gate no step opens, past the kit's close grace of 50 ms. The channel's own close, while the kit lives, is not shown.",
+  "notes": "The handler holds at a gate no step opens: the scenario waits out the close's bound, the implementation's own. The channel's own close, while the kit lives, is not shown.",
   "requires_features": [
     "realtime"
   ],
   "setup": {
-    "kit": {
-      "close_grace_ms": 50
-    },
     "channels": [
       {
         "id": "rt",

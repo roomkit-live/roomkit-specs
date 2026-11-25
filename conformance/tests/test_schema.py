@@ -887,6 +887,8 @@ class SchemaTests(unittest.TestCase):
             ({"in_task": "unawaited", "result": "x"}, False),
             ({"gate": "g"}, False),
             ({"parameters": {"type": "object"}, "result": "x"}, True),
+            ({"action": "end_session", "delay_ms": 300, "result": "x"}, True),
+            ({"delay_ms": 0, "result": "x"}, False),
         ):
             with self.subTest(tool=tool):
                 scenario = json.loads(fixture.read_text())

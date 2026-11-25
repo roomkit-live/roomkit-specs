@@ -36,7 +36,7 @@
             ]
           },
           "tool_search": true,
-          "tool_search_threshold": 1
+          "tool_search_threshold": 2
         }
       },
       {
@@ -71,7 +71,7 @@
       "call_id": "c1",
       "name": "find_tools",
       "arguments": {
-        "query": "secret"
+        "query": "secret weather"
       }
     },
     {
@@ -82,12 +82,34 @@
       "channel_id": "rt",
       "expect": {
         "result": {
+          "results": [
+            {
+              "call_id": "c1",
+              "result": {
+                "$contains": "\"weather\""
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "call": "realtime.read",
+      "channel_id": "rt",
+      "expect": {
+        "result": {
           "declared": [
             {
               "find_tools": "$any",
-              "lookup": {
+              "weather": {
                 "$absent": true
               },
+              "secret": {
+                "$absent": true
+              }
+            },
+            {
+              "weather": "$any",
               "secret": {
                 "$absent": true
               }
