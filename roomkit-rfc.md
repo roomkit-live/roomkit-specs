@@ -11373,9 +11373,10 @@ which filters its curated catalog. <!-- /rfc --><!-- rfc: {"id": "RK-12.2-082", 
 comes from, server side or on the results, so a caller gets the same answer
 from every provider: `language` matches a voice whose tag equals it or
 starts with it and a hyphen (`"fr"` matches `fr-CA`, and `fr-CA` does not
-match `fr-FR`); `gender` matches exactly; `query` matches, without regard to
-case, a substring of the name or the description. A voice whose language or
-gender is unknown does not match a filter on it. <!-- /rfc --><!-- rfc: {"id": "RK-12.2-083", "kind": "behavior", "applies": "§12.2 Voices, the voice feature, a provider's contract: VoiceInfo fields a vendor does not report are null or absent, never inferred from another voice; attributes carries what the vendor reports beyond the common fields, under its own names. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`VoiceInfo` fields a vendor
+match `fr-FR`); `gender` matches its whole value, without regard to case;
+`query` matches, without regard to case, a substring of the name or the
+description. A voice whose language or gender is unknown does not match a
+filter on it. <!-- /rfc --><!-- rfc: {"id": "RK-12.2-083", "kind": "behavior", "applies": "§12.2 Voices, the voice feature, a provider's contract: VoiceInfo fields a vendor does not report are null or absent, never inferred from another voice; attributes carries what the vendor reports beyond the common fields, under its own names. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`VoiceInfo` fields a vendor
 does not report are null or absent, and MUST NOT be inferred from another
 voice; `attributes` carries what a vendor reports beyond the common fields,
 under the vendor's own names. <!-- /rfc --><!-- rfc: {"id": "RK-12.2-084", "kind": "structural", "applies": "§12.2 Voices, the voice and realtime features: the RealtimeVoiceProvider catalog (§12.4) uses the same VoiceInfo. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The `RealtimeVoiceProvider` catalog (Section
