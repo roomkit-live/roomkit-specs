@@ -4478,14 +4478,140 @@
     "RK-12.2-055": {
       "voice/a-participant-who-comes-back-gets-a-new-session": "f07a095d9866f10f7e535b693752b658bbe6fc003aa07b5942fa7fc0aa8f0122"
     },
+    "RK-12.2-058": {
+      "voice/no-language-reaches-a-recognizer-that-cannot-take-one": "24d58146239da338cfb1f5d4f45e50d73cfe509fc64a8d1b2111a50ca689e128"
+    },
+    "RK-12.2-060": {
+      "voice/a-session-s-stt-language-applies-from-its-next-stream": "ca53af8650112cf1acf6750c992845e1bf4511779e19929de5e3b90f0f33b6c7"
+    },
+    "RK-12.2-061": {
+      "voice/a-language-chosen-mid-session-ends-a-diarizing-stream": "b46c5be05ae61542d44d037eea92655bc7595786fdbd82ab397f7cbaa5695140",
+      "voice/a-session-s-stt-language-applies-from-its-next-stream": "b46c5be05ae61542d44d037eea92655bc7595786fdbd82ab397f7cbaa5695140"
+    },
+    "RK-12.2-062": {
+      "voice/a-plain-recognizer-gets-a-stream-per-turn": "b5ecbbdd60091f541cec2fefb965b3089d54bf1841d2ddebeaaa170c4c404fe8"
+    },
+    "RK-12.2-063": {
+      "voice/a-diarizing-stream-lasts-until-its-provider-ends-it-and-labels-start-a-new-epoch": "2a734b8ae59c2d52c2806209ebf552aa586949c5067efd6f195c2c53d15f4fda",
+      "voice/a-failed-diarizing-stream-is-opened-again": "2a734b8ae59c2d52c2806209ebf552aa586949c5067efd6f195c2c53d15f4fda",
+      "voice/a-kept-stream-carries-turn-after-turn-until-the-provider-ends-it": "2a734b8ae59c2d52c2806209ebf552aa586949c5067efd6f195c2c53d15f4fda",
+      "voice/a-language-chosen-mid-session-ends-a-diarizing-stream": "2a734b8ae59c2d52c2806209ebf552aa586949c5067efd6f195c2c53d15f4fda"
+    },
+    "RK-12.2-064": {
+      "voice/a-kept-stream-s-finals-reach-the-room-in-the-order-produced": "7d9028c9d140b405c11967b1f799a5f561127303306f5db7bfdd4146d7faa46e",
+      "voice/a-reply-still-produced-holds-back-no-kept-stream-final": "7d9028c9d140b405c11967b1f799a5f561127303306f5db7bfdd4146d7faa46e"
+    },
+    "RK-12.2-066": {
+      "voice/a-transcription-hook-can-pin-the-language-a-stream-reported": "8064d9340f55adcf21e5a1e2ea44ec2d3db93c1311706c710296d36dee853030"
+    },
+    "RK-12.2-067": {
+      "voice/frames-between-two-streams-reach-the-next-one": "b17624889fb1be7eb4ef79a135d8790d8f2a9f7d275ec4557caff9a2eee73c3c"
+    },
+    "RK-12.2-068": {
+      "voice/audio-carried-between-streams-is-bounded-to-the-newest": "89a5ca65020ad450c6bff21bbdb05a9dcaecd86e94efee9bff98b63399b32707"
+    },
+    "RK-12.2-069": {
+      "voice/audio-carried-between-streams-is-bounded-to-the-newest": "be985338d186ed846f97bc052a798d021719b56fed17cada669d823dc862ef01"
+    },
     "RK-12.2.2-016": {
       "voice/a-response-to-two-sessions-is-synthesized-for-each": "8f454b9876b682e33edbc1127bc2e168e1232812389bc561ba6cdb293b2ae1c9"
+    },
+    "RK-12.2.3-009": {
+      "voice/the-stt-label-names-the-transcript-while-the-stage-keeps-firing": "14ec26496c51dc31d03b9cca19accd2fd0cfe14665ecc38cd8b12e86ff3c0ece"
+    },
+    "RK-12.2.3-019": {
+      "voice/a-diarizing-recognizer-is-refused-where-labels-cannot-hold": "5a06c912b72cfe99c202784cf252316835c647e36c63707cd9225f4b53a4cd40"
+    },
+    "RK-12.2.3-021": {
+      "voice/a-diarizing-stream-lasts-until-its-provider-ends-it-and-labels-start-a-new-epoch": "2bc60ff5ac04768f5af5600c6d14f9ee0dd52615e2942c6d8276798c91ba9324",
+      "voice/a-failed-diarizing-stream-is-opened-again": "2bc60ff5ac04768f5af5600c6d14f9ee0dd52615e2942c6d8276798c91ba9324",
+      "voice/a-language-chosen-mid-session-ends-a-diarizing-stream": "2bc60ff5ac04768f5af5600c6d14f9ee0dd52615e2942c6d8276798c91ba9324"
+    },
+    "RK-12.2.3-024": {
+      "voice/a-diarizing-stream-lasts-until-its-provider-ends-it-and-labels-start-a-new-epoch": "4de6e70df44dcc479d03acca8ebc068812764eeb02077cb143340c3ead64ac16"
+    },
+    "RK-12.2.3-025": {
+      "voice/a-diarizing-stream-lasts-until-its-provider-ends-it-and-labels-start-a-new-epoch": "2ce57cfc64bc13849d6fd92f6a8a25a1badc1ba5b86e0507d664cb93db5b20d9"
+    },
+    "RK-12.2.3-026": {
+      "voice/each-segment-of-a-final-is-its-own-message-in-order": "4bdb6136d3baa71ef946f070e13c4ce4824fb713d6be4ee0c1be5f33542426f6"
+    },
+    "RK-12.2.3-027": {
+      "voice/each-segment-of-a-final-is-its-own-message-in-order": "2b400323ee466c959bd3d8aa52fe6bff5abf8162d6166b0d52a4cc38a0f48ebe"
+    },
+    "RK-12.2.3-028": {
+      "voice/a-reply-still-produced-holds-back-no-next-segment": "dea53dd96c610ff9c9426de7ce070f3d269fd39b81c8022e1091ea8021f1bfb2"
+    },
+    "RK-12.2.3-029": {
+      "voice/a-change-of-speaker-ends-the-pending-turn": "42ce012305198de4626afba89c8d1f27935707e44e410360354da8ede39070a0"
+    },
+    "RK-12.2.3-030": {
+      "voice/a-transcription-hook-names-the-participant-a-voice-is": "094a359a8619f918dbcfa283ddb456c0be936bb057ff8b67d0e1e401c6bff093",
+      "voice/each-segment-of-a-final-is-its-own-message-in-order": "094a359a8619f918dbcfa283ddb456c0be936bb057ff8b67d0e1e401c6bff093"
+    },
+    "RK-12.2.3-031": {
+      "voice/a-transcription-hook-names-the-participant-a-voice-is": "661593cdecda156b48583bf73eafb7733bb3983dd4e6078ef326ce64d847de94"
+    },
+    "RK-12.2.3-032": {
+      "voice/a-voice-named-like-a-participant-stays-the-stream-owner-s": "325416aec434396ae34e732bde66343d98e8c338aa35546f514c28f073721dd4"
+    },
+    "RK-12.2.3-033": {
+      "voice/a-participant-not-reached-on-the-voice-channel-is-not-the-speaker": "e8399cf2433541b20514ab9e3bef8db9c657e27dda1d88682834e7f76116077a"
+    },
+    "RK-12.2.3-034": {
+      "voice/each-segment-of-a-final-is-its-own-message-in-order": "7bc988a51af1776d89ec4c3c9505977ef2088797241ebfa6fa19b0db8971a8e4"
+    },
+    "RK-12.2.3-035": {
+      "voice/a-diarizing-stream-lasts-until-its-provider-ends-it-and-labels-start-a-new-epoch": "ac11c55fba3af4f04a6454497f1832126e4c7a05a0b891d990c553bc0dc87677"
+    },
+    "RK-12.2.3-036": {
+      "voice/an-unattributed-segment-is-an-unknown-speaker-and-changes-no-speaker": "45639acc9483cb088f95d902669702a2b60fab90b1c4cd3e203a76c5a2e8fe95"
     },
     "RK-12.2.3-037": {
       "memory/two-voices-labelled-on-one-stream-are-two-speakers": "8e3a89b266419f4902797b35c71b88777eee494b38cfa83491053dd6d74d25f8"
     },
+    "RK-12.2.3-038": {
+      "voice/an-unattributed-segment-is-an-unknown-speaker-and-changes-no-speaker": "719b2f69b1f4e203d8ffede4e5ebdd8116c546b121d1de21d152373212acf9cf"
+    },
+    "RK-12.2.3-039": {
+      "voice/a-diarizing-stream-lasts-until-its-provider-ends-it-and-labels-start-a-new-epoch": "bc32a11220b5fdc0ff9e1e2625a0f1d166981bc06e9ff2c5badb5b2465a4f00b"
+    },
+    "RK-12.2.3-040": {
+      "voice/a-diarizing-stream-lasts-until-its-provider-ends-it-and-labels-start-a-new-epoch": "47567a7fd74e5b32bd219559cf8f2e5242ef7d475ba37ce9961545ecee78bd9a",
+      "voice/each-segment-of-a-final-is-its-own-message-in-order": "47567a7fd74e5b32bd219559cf8f2e5242ef7d475ba37ce9961545ecee78bd9a"
+    },
     "RK-12.2.3-041": {
       "voice/diarization-reports-a-new-speaker": "365c51edf8417c1cafa21e0b59d389c8ace248bcfcb85951812459589b19d003"
+    },
+    "RK-12.2.3-043": {
+      "voice/the-naming-option-is-refused-without-a-stage-or-in-batch-mode": "d90f2594a666b63f81ba4ebdf3e2b9212859e3cd7ef8d08fe3d0711eabd6fdef"
+    },
+    "RK-12.2.3-044": {
+      "voice/a-transcript-takes-the-voice-the-stage-heard-the-longest": "e0ff4e2620283f24e2d5fd2768b30721045568c8e87afabb1199f9b84565d347"
+    },
+    "RK-12.2.3-045": {
+      "voice/the-stage-s-verdict-on-the-speech-end-frame-names-the-utterance": "e5062e0d519b05a49a46d0f01d7f58ca2f1c3f06676163ed954c9eecaa6cbf90"
+    },
+    "RK-12.2.3-046": {
+      "voice/a-stage-s-speaker-is-read-as-a-recognizer-label": "355db49d355a15eb454cadc61cfe3d227c3a4b3e9f1315d8c739397556963ef5"
+    },
+    "RK-12.2.3-047": {
+      "voice/a-voice-the-stage-attributed-to-nobody-heard-the-longest-is-unknown": "b238f41e823fde36a0a0b8dc4226b7360a6abab7848f1adefc77cb9817dc94b4"
+    },
+    "RK-12.2.3-048": {
+      "voice/an-utterance-the-stage-gave-no-result-over-carries-no-speaker": "d4b4e5fc634e3bc83cc8ceb5cf1dd64dc46c981748eda11c57595514a02f8855"
+    },
+    "RK-12.2.3-049": {
+      "voice/a-stage-s-speaker-is-read-as-a-recognizer-label": "5d2e8da91270b06bb66f6eed67d08cecab0e44e81fd6b6f55ce5fb9f5f881c3b"
+    },
+    "RK-12.2.3-050": {
+      "voice/a-transcript-takes-the-voice-the-stage-heard-the-longest": "e08f71564cd60343c7440cf2653e1292882ff4ab174bfdfe819dac3eb1da81d2"
+    },
+    "RK-12.2.3-051": {
+      "voice/a-transcript-takes-the-voice-the-stage-heard-the-longest": "27bbafdb09e76e84a1dd50dba1bfe976473a095a326541473b39c5e9385feeb3"
+    },
+    "RK-12.2.3-052": {
+      "voice/a-stage-s-speaker-is-read-as-a-recognizer-label": "43b642bc6d70ee781a00c043f78b8ea2388f9db04b4b90824286dcae2c1c1fcd"
     },
     "RK-12.3-008": {
       "voice/a-reply-walks-the-outbound-stages-in-their-order": "08b459f4204656177bc71697057f40f48f0e7f71e8b642b0f1f7655df865a3da",
@@ -4520,8 +4646,20 @@
     "RK-12.3.12-004": {
       "voice/a-turn-waits-for-its-last-fragment": "a47e66c81702a2b1490ba95f377ce1aeb1d9003bfd679f4e62389db59729ff4b"
     },
+    "RK-12.3.12-010": {
+      "voice/an-incomplete-turn-is-routed-once-its-wait-passes-in-silence": "5fd393996ac40343ae1e3774a405f625a4d5fc71b27c9aef04253a7320d3a1b9"
+    },
+    "RK-12.3.12-011": {
+      "voice/speech-that-starts-while-a-turn-is-judged-keeps-it-open": "e0cd637810b30e7b5fa033882803a54b6bcb6174ace26566d45c7e98c7ad15f4"
+    },
     "RK-12.3.12-012": {
       "voice/a-turn-waits-for-its-last-fragment": "48922766e7814709fbcb0bc60605116a6b31131ebd46af9033ae84fcc8e7ee18"
+    },
+    "RK-12.3.12-013": {
+      "voice/a-turn-s-wait-takes-in-the-transcript-of-speech-that-ended": "f174e41fbef564488f69467a144d1e1d91ef2dac0d3219d5fe44191bcac9cead"
+    },
+    "RK-12.3.12-015": {
+      "voice/an-incomplete-turn-is-routed-once-its-wait-passes-in-silence": "aeaac06ae41820a2b6b802a840778eb803692da56d089edc8d4023511f67a73b"
     },
     "RK-12.3.12-019": {
       "voice/blocked-speech-before-the-reply-is-heard-releases-it": "91807de488a08132d09510361bf4985905dff9d3f93b5006d5f59e729b5e32e6"
@@ -4544,6 +4682,14 @@
     "RK-12.3.13-023": {
       "voice/a-backchannel-leaves-the-reply-playing": "5df2f294597cd25ec73ceb5b983eec40c26d81aa4f3819ec1a8b57b70eef0c4f"
     },
+    "RK-12.3.13-024": {
+      "voice/a-backchannel-heard-only-with-its-final-leaves-the-reply-playing": "ca17aed9ada98c8e2267ff65b29caadcc9dc98a706f6564ab9c24fdfb6f4c9a8",
+      "voice/a-word-heard-only-with-its-final-that-is-no-backchannel-cuts-the-reply": "ca17aed9ada98c8e2267ff65b29caadcc9dc98a706f6564ab9c24fdfb6f4c9a8"
+    },
+    "RK-12.3.13-025": {
+      "voice/a-backchannel-heard-only-with-its-final-leaves-the-reply-playing": "a2cb5e89805f76a36c7cb2f0fc386aa7b74cd4577f39e9e372bc4767024431b4",
+      "voice/a-word-heard-only-with-its-final-that-is-no-backchannel-cuts-the-reply": "a2cb5e89805f76a36c7cb2f0fc386aa7b74cd4577f39e9e372bc4767024431b4"
+    },
     "RK-12.3.13-026": {
       "voice/an-echo-of-the-reply-s-opening-is-no-turn": "81e3fcc39397040cf6dc25303d36e945ad579827fd1c7e71f4a932fa6ea1ff4f",
       "voice/immediate-with-a-vad-cuts-before-words-can-tell-an-echo": "81e3fcc39397040cf6dc25303d36e945ad579827fd1c7e71f4a932fa6ea1ff4f"
@@ -4565,6 +4711,20 @@
     "RK-12.3.13-034": {
       "voice/a-final-adding-its-own-word-to-the-echo-cuts-and-is-the-turn": "3345f3e433e888f87f9422bd839332920785d2754dce888c2384078a6be29952"
     },
+    "RK-12.3.13-039": {
+      "voice/a-new-voice-repeating-the-reply-it-spoke-over-is-no-turn": "1635d777f1f5227ca5d36d3e7272a24341e6ac2ebf30cc2215371cca8c3c1adc",
+      "voice/a-new-voice-s-first-words-cut-the-reply-and-its-echo-final-does-not-undo-it": "1635d777f1f5227ca5d36d3e7272a24341e6ac2ebf30cc2215371cca8c3c1adc"
+    },
+    "RK-12.3.13-040": {
+      "voice/a-voice-heard-alone-is-nobody-on-the-next-stream": "0ad0b4544d1e222cc7c8c98b35ed3906a84eca4bacf0f45c1c29d47f925c3446"
+    },
+    "RK-12.3.13-041": {
+      "voice/a-transport-barge-in-is-judged-on-the-words-heard-so-far": "97c0d877bed48c1ab2c7bdbe17727789bd8e04096bb365cc56d3ae6fd8b8de71"
+    },
+    "RK-12.3.13-042": {
+      "voice/an-acknowledged-stretch-is-cut-only-by-words-that-are-no-backchannel": "f7e7a9a8ea961b6f5198c4fe4028d0d0db1a86eea6aa6bba5cb2ae3005033b39",
+      "voice/an-acknowledged-stretch-is-not-cut-on-its-duration": "f7e7a9a8ea961b6f5198c4fe4028d0d0db1a86eea6aa6bba5cb2ae3005033b39"
+    },
     "RK-12.3.13-047": {
       "voice/a-cut-reply-is-stored-as-interrupted-with-how-far-it-played": "73037a3097c3803a33cb1b787c04b10242375a490a32c683524b20541d79bd35"
     },
@@ -4576,6 +4736,9 @@
     },
     "RK-12.3.13-054": {
       "voice/speech-that-cuts-the-reply-is-the-user-s-turn": "37bf6693c40154b0f4fc799dc88796998b6f1eb16c76d7e053d098953f883375"
+    },
+    "RK-12.3.13-055": {
+      "voice/a-new-voice-s-first-words-cut-the-reply-and-its-echo-final-does-not-undo-it": "3ccbb8b9a1f681416c6f8e9145922c7917ef34abfe56fb5e8925477b4bfa3161"
     },
     "RK-12.3.14-005": {
       "voice/a-session-s-frame-stages-are-reset-at-its-start-and-at-its-end": "c9a845810dadcb56163514a1729d2be2bf19a75290ffa1f9b31895c8f7853c95"
@@ -4696,6 +4859,9 @@
       "voice/vad-reports-a-silence": "9d32c972fb5debfc2c74513e9cb4f9a5ea5946900e99801817262f9990de6a47",
       "voice/vad-reports-its-measured-level": "9d32c972fb5debfc2c74513e9cb4f9a5ea5946900e99801817262f9990de6a47"
     },
+    "RK-12.3.8-005": {
+      "voice/without-a-vad-the-recognizer-or-a-flush-ends-the-speech": "65d688789d601e11c14a4ab592628e9e1b7ef1cb2acfd7dcaccaa45916db1c6c"
+    },
     "RK-12.3.8-007": {
       "voice/vad-reports-a-silence": "b7b6a523c4747718f28a38802d437bb4185ef9c63e088460e5a303c0cc0dc432",
       "voice/vad-reports-its-measured-level": "b7b6a523c4747718f28a38802d437bb4185ef9c63e088460e5a303c0cc0dc432"
@@ -4710,6 +4876,12 @@
     },
     "RK-12.3.9-005": {
       "voice/diarization-reports-a-new-speaker": "9a966d1df518ca2859351d312f29d7f8c22d971e66b47d59ba00322fabf646e2"
+    },
+    "RK-12.3.9-006": {
+      "voice/a-stage-result-naming-nobody-changes-no-speaker": "5a8cf82b6ab1e3ae28930b767aacbf0b4eb431ee5e385d255e9f1c8c78f67b2e"
+    },
+    "RK-12.3.9-007": {
+      "voice/a-voice-the-stage-attributed-to-nobody-heard-the-longest-is-unknown": "1074a8efa96604fd143ff1e582a572c2141bffefd7ec1f0117cd6a5048efa5f6"
     },
     "RK-12.3.9-008": {
       "voice/diarization-reports-a-new-speaker": "b51b1aa1168489f34a619f331c435ff5f5749b91bd0be9b27b7179d50606b4e9"
@@ -4958,6 +5130,10 @@
     },
     "RK-12.6-018": {
       "voice/a-backchannel-leaves-the-reply-playing": "daba9a47c53389de33c6ff50af0d33c410be0a91e139b06880ab89837c1a616f"
+    },
+    "RK-12.6-019": {
+      "voice/a-backchannel-heard-only-with-its-final-leaves-the-reply-playing": "39af85240941d507a990d6bfd5c52724538e8136e4b3c626765b9fbf7d7a2921",
+      "voice/a-word-heard-only-with-its-final-that-is-no-backchannel-cuts-the-reply": "39af85240941d507a990d6bfd5c52724538e8136e4b3c626765b9fbf7d7a2921"
     },
     "RK-12.7.1-002": {
       "voice/a-bridged-listener-hears-the-speaker-and-the-synthesized-reply": "5e727550ea42868b086f9998ba03097864a80aeef31136e3190cb7c8f7e7fc33",

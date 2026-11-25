@@ -432,6 +432,41 @@ class SchemaTests(unittest.TestCase):
         del scenario["steps"][0]["detections"][0]["frame_sequence"]
         self.assertFalse(validator.is_valid(scenario))
 
+    def test_a_scripted_recognizer_replaces_the_transcripts_and_scripts_its_streams(
+        self,
+    ) -> None:
+        validator = Draft202012Validator(json.loads((ROOT / "scenario.schema.json").read_text()))
+        fixture = (
+            ROOT
+            / "scenarios/voice/a-kept-stream-carries-turn-after-turn-until-the-provider-ends-it.json"
+        )
+        self.assertTrue(validator.is_valid(json.loads(fixture.read_text())))
+        changes = (
+            lambda step: step.update(transcripts=["hello"]),
+            lambda step: step["stt"]["streams"][0].update(then="close"),
+            lambda step: step["stt"]["streams"][0]["results"][0].pop("text"),
+            lambda step: step["stt"]["streams"][0]["results"][0].update(
+                segments=[{"text": "who"}]
+            ),
+            lambda step: step["stt"].update(supports_streaming=True),
+            lambda step: step.update(turns=[True], turn_decisions=[{"is_complete": True}]),
+            lambda step: step.update(turn_decisions=[{"suggested_wait_ms": 10}]),
+        )
+        for index, change in enumerate(changes):
+            with self.subTest(change=index):
+                scenario = json.loads(fixture.read_text())
+                change(scenario["steps"][0])
+                self.assertFalse(validator.is_valid(scenario))
+
+    def test_a_diarization_result_attributes_the_audio_to_nobody_as_null(self) -> None:
+        validator = Draft202012Validator(json.loads((ROOT / "scenario.schema.json").read_text()))
+        fixture = ROOT / "scenarios/voice/a-stage-result-naming-nobody-changes-no-speaker.json"
+        scenario = json.loads(fixture.read_text())
+        self.assertIn(None, [s["speaker_id"] for s in scenario["steps"][0]["speakers"]])
+        self.assertTrue(validator.is_valid(scenario))
+        scenario["steps"][0]["speakers"][0]["speaker_id"] = 7
+        self.assertFalse(validator.is_valid(scenario))
+
     def test_the_kit_s_close_grace_is_a_positive_whole_number_of_ms(self) -> None:
         schema = json.loads((ROOT / "scenario.schema.json").read_text())
         validator = Draft202012Validator(schema)

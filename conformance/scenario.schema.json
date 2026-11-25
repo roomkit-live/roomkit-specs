@@ -2369,6 +2369,8 @@
             "voice.join",
             "voice.leave",
             "voice.dtmf_received",
+            "voice.set_stt_language",
+            "voice.flush_stt",
             "realtime.start",
             "realtime.end",
             "realtime.read",
@@ -3097,7 +3099,7 @@
                   "type": "object",
                   "properties": {
                     "speaker_id": {
-                      "type": "string"
+                      "type": ["string", "null"]
                     },
                     "confidence": {
                       "type": "number"
@@ -3151,6 +3153,166 @@
               "playback_gate": {
                 "type": "string"
               },
+                "stt": {
+                  "type": "object",
+                  "properties": {
+                    "supports_diarization": {
+                      "type": "boolean"
+                    },
+                    "keeps_stream_across_turns": {
+                      "type": "boolean"
+                    },
+                    "supports_language_override": {
+                      "type": "boolean"
+                    },
+                    "streams": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "results": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "text": {
+                                  "type": "string"
+                                },
+                                "final": {
+                                  "type": "boolean"
+                                },
+                                "language": {
+                                  "type": "string"
+                                },
+                                "speech_start": {
+                                  "type": "boolean"
+                                },
+                                "segments": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "speaker": {
+                                        "type": [
+                                          "string",
+                                          "null"
+                                        ]
+                                      },
+                                      "text": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "speaker",
+                                      "text"
+                                    ],
+                                    "additionalProperties": false
+                                  }
+                                }
+                              },
+                              "required": [
+                                "text"
+                              ],
+                              "additionalProperties": false
+                            }
+                          },
+                          "at_end": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "text": {
+                                  "type": "string"
+                                },
+                                "final": {
+                                  "type": "boolean"
+                                },
+                                "language": {
+                                  "type": "string"
+                                },
+                                "speech_start": {
+                                  "type": "boolean"
+                                },
+                                "segments": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "speaker": {
+                                        "type": [
+                                          "string",
+                                          "null"
+                                        ]
+                                      },
+                                      "text": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "speaker",
+                                      "text"
+                                    ],
+                                    "additionalProperties": false
+                                  }
+                                }
+                              },
+                              "required": [
+                                "text"
+                              ],
+                              "additionalProperties": false
+                            }
+                          },
+                          "gate": {
+                            "type": "string"
+                          },
+                          "then": {
+                            "enum": [
+                              "end",
+                              "fail"
+                            ]
+                          }
+                        },
+                        "additionalProperties": false
+                      }
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "batch_mode": {
+                  "type": "boolean"
+                },
+                "pipeline_speakers": {
+                  "type": "boolean"
+                },
+                "turn_decisions": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "is_complete": {
+                        "type": "boolean"
+                      },
+                      "confidence": {
+                        "type": "number"
+                      },
+                      "suggested_wait_ms": {
+                        "type": "number",
+                        "minimum": 0
+                      },
+                      "gate": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "is_complete"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "turn_incomplete_wait_ms": {
+                  "type": "number",
+                  "minimum": 0
+                },
               "vad": {
                 "type": "array",
                 "items": {
@@ -3348,13 +3510,50 @@
             "dependentRequired": {
               "partials": [
                 "transcripts"
-              ],
-              "backchannels": [
-                "partials"
+
               ],
               "reference_continues": [
                 "playback_callback"
               ]
+            },
+            "dependentSchemas": {
+                "backchannels": {
+                  "anyOf": [
+                    {
+                      "required": [
+                        "partials"
+                      ]
+                    },
+                    {
+                      "required": [
+                        "stt"
+                      ]
+                    }
+                  ]
+                },
+                "stt": {
+                  "not": {
+                    "anyOf": [
+                      {
+                        "required": [
+                          "transcripts"
+                        ]
+                      },
+                      {
+                        "required": [
+                          "partials"
+                        ]
+                      }
+                    ]
+                  }
+                },
+                "turn_decisions": {
+                  "not": {
+                    "required": [
+                      "turns"
+                    ]
+                  }
+                }
             }
           }
         },
@@ -3396,6 +3595,10 @@
               },
               "timestamp_ms": {
                 "type": "number"
+              },
+              "repeat": {
+                "type": "integer",
+                "minimum": 1
               }
             }
           }
@@ -3612,6 +3815,62 @@
               }
             }
           }
+        },
+        {
+            "if": {
+              "properties": {
+                "call": {
+                  "const": "voice.set_stt_language"
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "channel_id",
+                "participant_id",
+                "language"
+              ],
+              "properties": {
+                "channel_id": {
+                  "type": "string"
+                },
+                "participant_id": {
+                  "type": "string"
+                },
+                "language": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              }
+            }
+        },
+        {
+            "if": {
+              "properties": {
+                "call": {
+                  "const": "voice.flush_stt"
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "channel_id",
+                "participant_id"
+              ],
+              "properties": {
+                "channel_id": {
+                  "type": "string"
+                },
+                "participant_id": {
+                  "type": "string"
+                },
+                "route": {
+                  "type": "boolean"
+                }
+              }
+            }
         },
         {
           "if": {
@@ -7316,7 +7575,8 @@
         "store_failed",
         "cleanup_incomplete",
         "channel_close_failed",
-        "shutdown_cancelled"
+        "shutdown_cancelled",
+        "language_override_unsupported"
       ]
     },
     "expect": {

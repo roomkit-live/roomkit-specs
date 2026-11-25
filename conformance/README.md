@@ -1158,12 +1158,14 @@ run's own kit when absent.
 | `recording.read` | `recorder` | the base64 chunks this recorder actually received, in order |
 | `recording.stop` | `room_id` | stop the room's recordings, returning their `recording_id` and `url` |
 | `voice.open` | `room_id`, `channel_id`, `participants` and the optional provider inputs below | registers and attaches a voice channel, then joins the named participants to that room |
-| `voice.feed` | `channel_id`, `participant_id`, `frames` (base64 PCM16), optional `sample_rate` (16000 by default), `channels` (1 by default) and `timestamp_ms` (every frame of the step carries it; none by default) | the transport delivers these inbound frames in order, in that format |
+| `voice.feed` | `channel_id`, `participant_id`, `frames` (base64 PCM16), optional `sample_rate` (16000 by default), `channels` (1 by default) and `timestamp_ms` (every frame of the step carries it; none by default), `repeat` (1 by default) | the transport delivers these inbound frames in order, in that format, the whole list `repeat` times over |
 | `voice.say` | `channel_id`, `participant_id`, `text` | speak to the participant, awaiting playback |
 | `voice.stream` | `channel_id`, `chunks` (strings) | deliver a streamed reply to the channel |
 | `voice.barge_in` | `channel_id`, `participant_id` | the transport signals an interruption |
-| `voice.settle` | `channel_id` | wait for outstanding voice work after the utterance, playback or bridge frame |
-| `voice.read` | `channel_id`, optional `stages` (stage names) and `calls` (call names) | `synthesized` (the sentences the TTS provider received); `audio` (per participant, the base64 chunks received by their transport, in order: each frame the bridge forwarded is one chunk, and so is each spoken reply, its streamed audio joined); `chunks` (per participant, each AudioChunk their transport received, in order, a reply's every chunk: `data`, `sample_rate`, `channels`); `sessions` (per participant, each session joined, in order: `session_id` and its `state` as the transport reports it, `active` or `ended`); `stages` (each call the scripted stages received, in order: only those of the named stages when `stages` is given, and only the named calls when `calls` is; see Scripted voice sessions) |
+| `voice.settle` | `channel_id` | wait for outstanding voice work after the utterance, playback or bridge frame; in continuous mode, until the recognizer was handed the audio fed and the work its results started has run, the session's own stream left open |
+| `voice.read` | `channel_id`, optional `stages` (stage names) and `calls` (call names) | `synthesized` (the sentences the TTS provider received); `audio` (per participant, the base64 chunks received by their transport, in order: each frame the bridge forwarded is one chunk, and so is each spoken reply, its streamed audio joined); `chunks` (per participant, each AudioChunk their transport received, in order, a reply's every chunk: `data`, `sample_rate`, `channels`); `sessions` (per participant, each session joined, in order: `session_id` and its `state` as the transport reports it, `active` or `ended`); `stages` (each call the scripted stages received, in order: only those of the named stages when `stages` is given, and only the named calls when `calls` is; see Scripted voice sessions); with `stt`, `stt_streams`: one entry per stream the recognizer was opened with, in order, its `language` (the language the channel passed, null for none) and the `sound_ms` and `silence_ms` of audio it received (a chunk with a nonzero sample is sound) |
+| `voice.set_stt_language` | `channel_id`, `participant_id`, `language` (a string, or null for the recognizer's own) | choose the session's STT language, from its next stream on (§12.2) |
+| `voice.flush_stt` | `channel_id`, `participant_id`, optional `route` (default false) | in batch mode, transcribe the session's buffered audio; with `route`, the transcript goes to the room as an utterance would; the result's `text` |
 | `voice.join` | `channel_id`, `participant_id`, optional `session_id` | joins the participant to the channel's room again (the kit's `join`), the transport naming the new session `session_id` when given: the participant's session is now that one |
 | `voice.leave` | `channel_id`, `participant_id` | the kit's `leave` of the participant's session |
 | `voice.dtmf_received` | `channel_id`, `participant_id`, `digit`, `duration_ms` | the transport receives the digit by signalling and calls the callbacks registered on its `on_dtmf_received` (§12.2) |
@@ -1300,15 +1302,42 @@ real channel input. The optional inputs on `voice.open` script its providers:
   `duration_ms`, `confidence` and `level_db`. Speech edges carry a nonempty
   pre-roll or utterance buffer.
 - `speakers` supplies diarization results (`speaker_id`, `confidence`,
-  `is_new_speaker`). `tones` supplies detected digits (`digit`, `duration_ms`).
+  `is_new_speaker`), one per frame the stage processes, then none; a null or
+  empty `speaker_id` attributes the audio to nobody (§12.3.9). `tones`
+  supplies detected digits (`digit`, `duration_ms`).
 - The scripted `vad`, `speakers` and `tones` providers keep one position in
   their script per stream key the pipeline hands them, so a stream walks its
   script from the start whatever the other streams were fed (§12.3.1).
 - `transcripts` supplies final STT text by utterance. With `partials`, the
   recognizer streams these partial words on the first audio of the segment and
   returns its final at the end of the segment.
+- `stt`, in place of `transcripts`, scripts a streaming recognizer: its
+  `supports_diarization`, `keeps_stream_across_turns` and
+  `supports_language_override` (all false by default), and in `streams` one
+  entry per stream the channel opens, in order (a stream past them hears and
+  answers nothing). A stream gives its next `results` item on each chunk with
+  a nonzero sample it receives: a result has `text`, optional `final`
+  (default true), `language` (what the recognizer reports), `speech_start`
+  (it signals the start of speech) and `segments` (`speaker`, a label or null
+  for nobody, and `text`, §12.2.3). Once its results are given (at once when
+  it has none), a stream with `then` holds at its `gate`, reading no more
+  audio, then ends (`end`) or fails (`fail`), as a provider does; one without
+  reads its audio to the end, holds at its `gate`, then gives its `at_end`
+  results. A batch call, a flush, takes the next entry as a stream of one
+  chunk: it holds at the entry's `gate`, fails on `then: fail`, and answers
+  with the first final of its `results`, then of its `at_end`, or an empty
+  text when it has none. Without `vad` the channel
+  runs in continuous mode, the recognizer finding the end of each utterance;
+  a frame of 100 ms (3,200 bytes) reaches it as it is fed. `batch_mode` runs
+  the channel in batch mode, where `voice.flush_stt` ends an utterance.
+  `pipeline_speakers` names each transcript's speaker from the diarization
+  stage (§12.2.3).
 - `turns` supplies completeness decisions, one boolean per utterance.
-  `backchannels` selects semantic interruption with the listed boolean
+  `turn_decisions`, in place of `turns`, supplies them as objects:
+  `is_complete`, optional `confidence` (default 1.0) and `suggested_wait_ms`, and a `gate`
+  the verdict holds at before the channel reads it. `turn_incomplete_wait_ms`
+  is the wait for an incomplete turn whose decision gives none (§12.3.12).
+  `backchannels` (with `partials` or `stt`) selects semantic interruption with the listed boolean
   classifications of incoming words during playback. Without it the
   strategy is IMMEDIATE, cutting from the playback's first moment; the echo
   guard keeps its defaults.
@@ -1727,7 +1756,7 @@ refuses its value, a `ChannelId`).
 | Name | RFC meaning | roomkit (Python) | roomkit-rs |
 |---|---|---|---|
 | `kit_closed` | A new operation refused once the kit's shutdown started (§12.10.4) | `KitClosedError` | `RoomKitError::KitClosed` |
-| `invalid_argument` | An argument refused before anything is read or written: the visibility `internal` (§7.3), a channel id the grammar refuses (§7.3), `standalone` on another type and an instruction's refusals on a direct injection (§10.1.1), a record naming another room (§10.5), a post from a channel that is not a host channel, a message on a host channel (§10.5), a host channel bound as an intelligence channel, a reserved room metadata key (§5.1), a hook registration §9.1 refuses, a tool set up on an agent under a name it serves already (§21.1), a tool set up for a channel whose turns do not take the owner's tools (§10.6.5), a strategy for a room that holds one, or that the strategy refuses (§19.7), `listen_only` or `talk_again` for a room holding no discussion (§19.7.5), content holding a sixth composite level (§5.3), a media URL the content model refuses (§6.4), a country code that is none, a channel's or one a number is written with (§5.7) | `ValueError` | `InboundError::{NotAHostChannel, InboundOnHostChannel, HostAsIntelligence, StandaloneOutsideInstruction, InternalVisibility}`, `Refused` with an instruction's reason, `LifecycleError::{InternalVisibility, HostAsIntelligence, ReservedMetadataKey}`, `MutationError::OtherRoom`, `KitError::{Config, Registration}`, `RoomKitError::ToolNameCollision`, a `ChannelId` refused, `ModelError::CompositeTooDeep` from `CompositeContent::new`, a URL `MediaContent::new` refuses, `InvalidCountryCode` from `CountryCode::new` |
+| `invalid_argument` | An argument refused before anything is read or written: the visibility `internal` (§7.3), a channel id the grammar refuses (§7.3), `standalone` on another type and an instruction's refusals on a direct injection (§10.1.1), a record naming another room (§10.5), a post from a channel that is not a host channel, a message on a host channel (§10.5), a host channel bound as an intelligence channel, a reserved room metadata key (§5.1), a hook registration §9.1 refuses, a tool set up on an agent under a name it serves already (§21.1), a tool set up for a channel whose turns do not take the owner's tools (§10.6.5), a strategy for a room that holds one, or that the strategy refuses (§19.7), `listen_only` or `talk_again` for a room holding no discussion (§19.7.5), content holding a sixth composite level (§5.3), a media URL the content model refuses (§6.4), a country code that is none, a channel's or one a number is written with (§5.7), a voice channel built with a diarizing recognizer behind a VAD or in batch mode, or naming speakers from a diarization stage it lacks or in batch mode (§12.2.3) | `ValueError` | `InboundError::{NotAHostChannel, InboundOnHostChannel, HostAsIntelligence, StandaloneOutsideInstruction, InternalVisibility}`, `Refused` with an instruction's reason, `LifecycleError::{InternalVisibility, HostAsIntelligence, ReservedMetadataKey}`, `MutationError::OtherRoom`, `KitError::{Config, Registration}`, `RoomKitError::ToolNameCollision`, a `ChannelId` refused, `ModelError::CompositeTooDeep` from `CompositeContent::new`, a URL `MediaContent::new` refuses, `InvalidCountryCode` from `CountryCode::new` |
 | `channel_not_registered` | The channel named is not registered (§10.1 step 1, §10.5) | `ChannelNotRegisteredError` | `InboundError::UnknownChannel`, `KitError::UnknownChannel` |
 | `room_not_found` | No such room, or another organization's (§17.2) | `RoomNotFoundError` | `InboundError::{RoomNotFound, OtherOrganization}`, `LifecycleError::RoomNotFound`, `MutationError::RoomNotFound` |
 | `channel_not_bound` | The room does not bind the channel: a direct injection or a post from it (§10.5), a detach or a binding change of it (§7.2) | `ChannelNotFoundError`; `detach_channel()` answering `False` | `Refused { reason: "source_unbound" }`, `LifecycleError::ChannelNotBound` |
@@ -1758,6 +1787,7 @@ refuses its value, a `ChannelId`).
 | `already_set_up` | A handoff's tool set up again where it is declared, or an install over an agent whose handoff is set up already (§19.6); `delegate_task` set up again on an agent (§23.4) | `RuntimeError`, `setup_handoff() already called`, `setup_delegation() already called` | `RoomKitError::Runtime` |
 | `store_failed` | A store operation that failed, as a store fault (`store_fault`) makes it fail, or as a store the kit closed refuses it (`store_owner`), the store's own failure, which the call is handed (§14.1) | the store fault's error, raised as it is | `RoomKitError::Store` |
 | `channel_close_failed` | The kit's close once one or more of its channels failed to close, raised once the rest of its shutdown ran, and the same failure answered to every later close (§12.10.4) | `ExceptionGroup` from `RoomKit.close` | `RoomKitError::ExceptionGroup` |
+| `language_override_unsupported` | A session's STT language chosen on a voice channel whose recognizer reports `supports_language_override = false`, refused so that no language reaches it (§12.2) | `RuntimeError` from `VoiceChannel.set_stt_language` | — (no voice) |
 | `shutdown_cancelled` | A close once the kit's shutdown was cut itself before it ended, to a caller nobody cancelled (§12.10.4) | `ShutdownCancelledError` | `RoomKitError::ShutdownCancelled` |
 
 ## Reentrancy cells
