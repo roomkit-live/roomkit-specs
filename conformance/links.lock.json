@@ -5340,6 +5340,9 @@
     "RK-12.4.1-032": {
       "realtime/a-recorder-keeps-a-full-duplex-provider-s-silence": "4ed5c7068333862b8eb99b8e7ee4e1555adaec8a065c476a3cec0745994f07b8"
     },
+    "RK-12.4.1-034": {
+      "realtime/a-skill-activation-on-a-fixed-session-reconfigures-nothing": "e08415a611f0aa92f3168b440bd7ea11bcf86207c53e367c68d05ac8b8b04fce"
+    },
     "RK-12.4.1-042": {
       "realtime/a-hosted-backend-s-call-passes-the-gate": "0aeb6de00e4c52425ff001a0c41587425269ee051579a209135384cc4e9078bc"
     },

@@ -1601,11 +1601,6 @@
       "card": "RMK-2049",
       "note": "step: a pipeline VAD on the realtime channel spec, the provider's full_duplex trait, and a read of the activity signals and interrupt calls (S13, S1, S8)."
     },
-    "RK-12.4.1-034": {
-      "class": "step",
-      "card": "RMK-2049",
-      "note": "step: skills on the realtime channel spec (S7), with a skill activation on a provider whose realtime spec declares supports_mid_session_reconfigure false (S1): a handoff reconfigures the session whatever the trait, so only an activation shows the choice of an append."
-    },
     "RK-12.4.1-047": {
       "class": "step",
       "card": "RMK-2049",
