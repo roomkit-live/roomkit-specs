@@ -1,9 +1,9 @@
 {
   "version": 1,
-  "rfc_sha256": "8791cf2e24261894f79ebd237cdee3069330678798ef7021b2664c25087792bb",
-  "corpus_sha256": "8bb420b6682b5e0367a1d1097c98fb9f20e70f99a88db1fdc34e52f3a1a966fe",
+  "rfc_sha256": "8438bd1e411ee0a18cc550984c4dbcb44e89f3e3216da2851d66a48fb335eaa1",
+  "corpus_sha256": "19de9e2a33d0d21f329125c59baf04b953d77e79f1cf9af4d2884e8be854b50d",
   "python_commit": "1ee7ec379dee1e17c49a1949ad7ce8756c132606",
-  "scenario_count": 3510,
+  "scenario_count": 3550,
   "sections": [
     {
       "section": "0",
@@ -6268,7 +6268,7 @@
         "unmapped": 77
       },
       "decided_gaps": {
-        "step": 24
+        "step": 14
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -6363,15 +6363,27 @@
         "tools/a-call-that-ended-before-its-reader-stopped-keeps-its-outcome",
         "tools/a-call-that-ended-before-its-round-was-cut-keeps-its-outcome",
         "voice/a-contract-hands-every-inbound-stage-the-internal-format",
+        "voice/a-diarizing-stream-lasts-until-its-provider-ends-it-and-labels-start-a-new-epoch",
+        "voice/a-failed-diarizing-stream-is-opened-again",
+        "voice/a-kept-stream-carries-turn-after-turn-until-the-provider-ends-it",
+        "voice/a-kept-stream-s-finals-reach-the-room-in-the-order-produced",
+        "voice/a-language-chosen-mid-session-ends-a-diarizing-stream",
         "voice/a-participant-who-comes-back-gets-a-new-session",
+        "voice/a-plain-recognizer-gets-a-stream-per-turn",
+        "voice/a-reply-still-produced-holds-back-no-kept-stream-final",
         "voice/a-reply-walks-the-outbound-stages-in-their-order",
+        "voice/a-session-s-stt-language-applies-from-its-next-stream",
         "voice/a-signalled-digit-and-an-in-band-tone-reach-one-dtmf-hook",
         "voice/a-streamed-reply-reaches-every-session-sentence-by-sentence",
         "voice/a-text-from-another-channel-is-spoken",
+        "voice/a-transcription-hook-can-pin-the-language-a-stream-reported",
         "voice/a-transport-s-own-canceller-and-gain-replace-the-pipeline-s",
         "voice/after-tts-reports-the-sentences-before-tts-let-through",
         "voice/an-inbound-frame-walks-the-stages-in-their-order",
-        "voice/each-played-block-feeds-the-canceller-once-as-it-plays"
+        "voice/audio-carried-between-streams-is-bounded-to-the-newest",
+        "voice/each-played-block-feeds-the-canceller-once-as-it-plays",
+        "voice/frames-between-two-streams-reach-the-next-one",
+        "voice/no-language-reaches-a-recognizer-that-cannot-take-one"
       ]
     },
     {
@@ -6412,11 +6424,29 @@
       },
       "decided_gaps": {
         "phase6": 1,
-        "step": 32
+        "step": 2
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
-        "memory/two-voices-labelled-on-one-stream-are-two-speakers"
+        "memory/two-voices-labelled-on-one-stream-are-two-speakers",
+        "voice/a-change-of-speaker-ends-the-pending-turn",
+        "voice/a-diarizing-recognizer-is-refused-where-labels-cannot-hold",
+        "voice/a-diarizing-stream-lasts-until-its-provider-ends-it-and-labels-start-a-new-epoch",
+        "voice/a-failed-diarizing-stream-is-opened-again",
+        "voice/a-language-chosen-mid-session-ends-a-diarizing-stream",
+        "voice/a-participant-not-reached-on-the-voice-channel-is-not-the-speaker",
+        "voice/a-reply-still-produced-holds-back-no-next-segment",
+        "voice/a-stage-s-speaker-is-read-as-a-recognizer-label",
+        "voice/a-transcript-takes-the-voice-the-stage-heard-the-longest",
+        "voice/a-transcription-hook-names-the-participant-a-voice-is",
+        "voice/a-voice-named-like-a-participant-stays-the-stream-owner-s",
+        "voice/a-voice-the-stage-attributed-to-nobody-heard-the-longest-is-unknown",
+        "voice/an-unattributed-segment-is-an-unknown-speaker-and-changes-no-speaker",
+        "voice/an-utterance-the-stage-gave-no-result-over-carries-no-speaker",
+        "voice/each-segment-of-a-final-is-its-own-message-in-order",
+        "voice/the-naming-option-is-refused-without-a-stage-or-in-batch-mode",
+        "voice/the-stage-s-verdict-on-the-speech-end-frame-names-the-utterance",
+        "voice/the-stt-label-names-the-transcript-while-the-stage-keeps-firing"
       ]
     },
     {
@@ -6575,11 +6605,11 @@
       "mapping": {
         "unmapped": 5
       },
-      "decided_gaps": {
-        "step": 1
-      },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
-      "candidate_scenarios": []
+      "candidate_scenarios": [
+        "voice/without-a-vad-the-recognizer-or-a-flush-ends-the-speech"
+      ]
     },
     {
       "section": "12.3.9",
@@ -6589,11 +6619,12 @@
       "mapping": {
         "unmapped": 7
       },
-      "decided_gaps": {
-        "step": 2
-      },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
-      "candidate_scenarios": []
+      "candidate_scenarios": [
+        "voice/a-stage-result-naming-nobody-changes-no-speaker",
+        "voice/a-voice-the-stage-attributed-to-nobody-heard-the-longest-is-unknown"
+      ]
     },
     {
       "section": "12.3.10",
@@ -6631,12 +6662,15 @@
       },
       "decided_gaps": {
         "phase6": 1,
-        "step": 7
+        "step": 3
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "memory/history-omits-only-responses-marked-superseded",
-        "voice/blocked-speech-before-the-reply-is-heard-releases-it"
+        "voice/a-turn-s-wait-takes-in-the-transcript-of-speech-that-ended",
+        "voice/an-incomplete-turn-is-routed-once-its-wait-passes-in-silence",
+        "voice/blocked-speech-before-the-reply-is-heard-releases-it",
+        "voice/speech-that-starts-while-a-turn-is-judged-keeps-it-open"
       ]
     },
     {
@@ -6648,17 +6682,25 @@
         "unmapped": 51
       },
       "decided_gaps": {
-        "step": 29
+        "step": 22
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
+        "voice/a-backchannel-heard-only-with-its-final-leaves-the-reply-playing",
         "voice/a-cut-answer-s-record-names-the-answer-not-the-listener",
         "voice/a-cut-reply-is-stored-as-interrupted-with-how-far-it-played",
         "voice/a-final-adding-a-word-after-the-reply-ended-is-the-turn",
         "voice/a-final-adding-its-own-word-to-the-echo-cuts-and-is-the-turn",
         "voice/a-final-ending-on-part-of-the-reply-s-word-is-no-echo",
         "voice/a-lone-partial-word-starting-the-reply-s-first-word-cuts",
+        "voice/a-new-voice-repeating-the-reply-it-spoke-over-is-no-turn",
+        "voice/a-new-voice-s-first-words-cut-the-reply-and-its-echo-final-does-not-undo-it",
         "voice/a-partial-ending-on-the-start-of-the-reply-s-next-word-is-echo",
+        "voice/a-transport-barge-in-is-judged-on-the-words-heard-so-far",
+        "voice/a-voice-heard-alone-is-nobody-on-the-next-stream",
+        "voice/a-word-heard-only-with-its-final-that-is-no-backchannel-cuts-the-reply",
+        "voice/an-acknowledged-stretch-is-cut-only-by-words-that-are-no-backchannel",
+        "voice/an-acknowledged-stretch-is-not-cut-on-its-duration",
         "voice/an-echo-is-heard-without-case-punctuation-or-accents",
         "voice/an-echo-of-the-reply-s-opening-is-no-turn",
         "voice/immediate-with-a-vad-cuts-before-words-can-tell-an-echo",
@@ -6845,11 +6887,13 @@
         "unmapped": 17
       },
       "decided_gaps": {
-        "step": 5
+        "step": 4
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
+        "voice/a-backchannel-heard-only-with-its-final-leaves-the-reply-playing",
         "voice/a-cut-reply-is-stored-as-interrupted-with-how-far-it-played",
+        "voice/a-word-heard-only-with-its-final-that-is-no-backchannel-cuts-the-reply",
         "voice/speech-that-cuts-the-reply-is-the-user-s-turn"
       ]
     },
@@ -27720,12 +27764,7 @@
       "id": "RK-12.2-058",
       "section": "12.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2019",
-        "note": "step: voice.open STT options (S5) and voice.set_language (S6): a provider reporting supports_language_override false in a session whose language is chosen; the streams the channel opens are passed none (the flag itself is the provider's contract)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.2-059",
@@ -27737,56 +27776,31 @@
       "id": "RK-12.2-060",
       "section": "12.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2019",
-        "note": "step: voice.set_language (S6): a session's STT language chosen at runtime."
-      }
+      "links": []
     },
     {
       "id": "RK-12.2-061",
       "section": "12.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2019",
-        "note": "step: voice.set_language (S6): a language chosen mid-session; the next stream opened is passed it, the open one is not."
-      }
+      "links": []
     },
     {
       "id": "RK-12.2-062",
       "section": "12.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2019",
-        "note": "step: voice.open STT options (S5): continuous mode with a provider that neither diarizes nor keeps its stream; voice.read counts a stream per turn."
-      }
+      "links": []
     },
     {
       "id": "RK-12.2-063",
       "section": "12.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2019",
-        "note": "step: voice.open STT options (S5): continuous mode with keeps_stream_across_turns; voice.read counts one stream across turns, a new one after an error or a language change."
-      }
+      "links": []
     },
     {
       "id": "RK-12.2-064",
       "section": "12.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2019",
-        "note": "step: voice.open STT options (S5): a kept stream giving two finals while the first one's hook is held; both reach the room in the order produced."
-      }
+      "links": []
     },
     {
       "id": "RK-12.2-065",
@@ -27798,45 +27812,25 @@
       "id": "RK-12.2-066",
       "section": "12.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2019",
-        "note": "step: voice.set_language (S6): a hook that reads the reported language and pins the session's next streams to it."
-      }
+      "links": []
     },
     {
       "id": "RK-12.2-067",
       "section": "12.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2019",
-        "note": "step: voice.open STT options (S5): continuous mode with an STT reconnect held; the frames fed meanwhile reach the next stream."
-      }
+      "links": []
     },
     {
       "id": "RK-12.2-068",
       "section": "12.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2019",
-        "note": "step: voice.open STT options (S5): continuous mode with an STT reconnect held past the bound; the next stream receives no more than the bound."
-      }
+      "links": []
     },
     {
       "id": "RK-12.2-069",
       "section": "12.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2019",
-        "note": "step: voice.open STT options (S5): an STT reconnect held past the bound; the next stream receives the newest frames (the amount dropped is a log line in Python, which no step reads)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.2-070",
@@ -28460,12 +28454,7 @@
       "id": "RK-12.2.3-052",
       "section": "12.2.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2023",
-        "note": "step: voice.open pipeline naming option (S5b): a stage speaker_id \"speaker_1\"; the message's speaker_label is \"1\" and its sender_name \"Speaker 1\"."
-      }
+      "links": []
     },
     {
       "id": "RK-12.2.3-015",
@@ -28489,23 +28478,13 @@
       "id": "RK-12.2.3-018",
       "section": "12.2.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2023",
-        "note": "step: voice.open STT options (S5): a diarizing STT whose later result revises a label; the message already routed keeps its label."
-      }
+      "links": []
     },
     {
       "id": "RK-12.2.3-019",
       "section": "12.2.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2023",
-        "note": "step: voice.open STT options (S5) and batch_mode (S18): a diarizing STT behind a VAD, then in batch mode; voice.open fails with an error that says so."
-      }
+      "links": []
     },
     {
       "id": "RK-12.2.3-020",
@@ -28522,12 +28501,7 @@
       "id": "RK-12.2.3-021",
       "section": "12.2.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2023",
-        "note": "step: voice.open STT options (S5): continuous mode with a diarizing STT; voice.read counts one stream across turns, a new one only when the provider ends it, on an error or on a language change."
-      }
+      "links": []
     },
     {
       "id": "RK-12.2.3-022",
@@ -28555,144 +28529,79 @@
       "id": "RK-12.2.3-024",
       "section": "12.2.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2023",
-        "note": "step: voice.open STT options (S5): a diarizing stream the provider ends; the first stream's labels carry epoch 0, the next one's epoch 1."
-      }
+      "links": []
     },
     {
       "id": "RK-12.2.3-025",
       "section": "12.2.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2023",
-        "note": "step: voice.open STT options (S5): segments from two streams; each ON_TRANSCRIPTION event and message carries its epoch, and the default names tell the epochs apart."
-      }
+      "links": []
     },
     {
       "id": "RK-12.2.3-026",
       "section": "12.2.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2023",
-        "note": "step: voice.open STT options (S5): a final with two segments; ON_SPEECH_END fires once."
-      }
+      "links": []
     },
     {
       "id": "RK-12.2.3-027",
       "section": "12.2.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2023",
-        "note": "step: voice.open STT options (S5): finals with several segments; one message per segment, in the order produced."
-      }
+      "links": []
     },
     {
       "id": "RK-12.2.3-028",
       "section": "12.2.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2023",
-        "note": "step: voice.open STT options (S5): a reply still being produced (an agent held at a gate) when the next segment comes; that segment is committed without waiting for it."
-      }
+      "links": []
     },
     {
       "id": "RK-12.2.3-029",
       "section": "12.2.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2023",
-        "note": "step: voice.open STT options (S5): two speakers' segments while a scripted turn detector holds the turn incomplete; two messages, never one."
-      }
+      "links": []
     },
     {
       "id": "RK-12.2.3-030",
       "section": "12.2.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2023",
-        "note": "step: voice.open STT options (S5): ON_TRANSCRIPTION fires per segment with speaker, speaker_epoch and sender_name; a hook that renames the voice or names a participant is honoured on the message."
-      }
+      "links": []
     },
     {
       "id": "RK-12.2.3-031",
       "section": "12.2.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2023",
-        "note": "step: voice.open STT options (S5): a segment no hook maps keeps the stream owner as sender; one a hook maps to a participant is theirs, sender_name left out unless the hook named the voice."
-      }
+      "links": []
     },
     {
       "id": "RK-12.2.3-032",
       "section": "12.2.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2023",
-        "note": "step: voice.open STT options (S5): a hook that names a voice like a participant without matching it; the message keeps the stream owner and its label carries a rank."
-      }
+      "links": []
     },
     {
       "id": "RK-12.2.3-033",
       "section": "12.2.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2023",
-        "note": "step: voice.open STT options (S5): a hook that names a participant not reached on the voice channel; the message stays the stream owner's."
-      }
+      "links": []
     },
     {
       "id": "RK-12.2.3-034",
       "section": "12.2.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2023",
-        "note": "step: voice.open STT options (S5): a routed segment's message carries metadata.speaker_label, speaker_epoch and sender_name."
-      }
+      "links": []
     },
     {
       "id": "RK-12.2.3-035",
       "section": "12.2.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2023",
-        "note": "step: voice.open STT options (S5): sender_name \"Speaker A\" in epoch 0, then \"Speaker A#1\" in epoch 1."
-      }
+      "links": []
     },
     {
       "id": "RK-12.2.3-036",
       "section": "12.2.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2023",
-        "note": "step: voice.open STT options (S5): a segment with a null speaker; its message carries no speaker_label and sender_name \"Unknown speaker\"."
-      }
+      "links": []
     },
     {
       "id": "RK-12.2.3-037",
@@ -28704,34 +28613,19 @@
       "id": "RK-12.2.3-038",
       "section": "12.2.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2023",
-        "note": "step: voice.open STT options (S5): a segment with a null speaker between two labelled ones; no ON_SPEAKER_CHANGE for it, and the last label kept."
-      }
+      "links": []
     },
     {
       "id": "RK-12.2.3-039",
       "section": "12.2.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2023",
-        "note": "step: voice.open STT options (S5): labels A, A, B in one epoch, then A in the next; ON_SPEAKER_CHANGE with source stt on the first A, on B, and on the next epoch's A."
-      }
+      "links": []
     },
     {
       "id": "RK-12.2.3-040",
       "section": "12.2.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2023",
-        "note": "step: voice.open STT options (S5): the ON_SPEAKER_CHANGE event's speaker_id, speaker_epoch and is_new_speaker, and its confidence null when the provider reports none."
-      }
+      "links": []
     },
     {
       "id": "RK-12.2.3-041",
@@ -28743,12 +28637,7 @@
       "id": "RK-12.2.3-009",
       "section": "12.2.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2023",
-        "note": "step: voice.open STT options (S5): a diarizing STT with the speakers script; the transcript carries the STT's label, and the stage's ON_SPEAKER_CHANGE still fires with source pipeline."
-      }
+      "links": []
     },
     {
       "id": "RK-12.2.3-042",
@@ -28760,100 +28649,55 @@
       "id": "RK-12.2.3-043",
       "section": "12.2.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2023",
-        "note": "step: voice.open pipeline naming option (S5b) and batch_mode (S18): the option without a diarization stage, then in batch mode; voice.open fails."
-      }
+      "links": []
     },
     {
       "id": "RK-12.2.3-044",
       "section": "12.2.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2023",
-        "note": "step: voice.open pipeline naming option (S5b): two stage results over one utterance; the transcript takes the one heard the longest."
-      }
+      "links": []
     },
     {
       "id": "RK-12.2.3-045",
       "section": "12.2.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2023",
-        "note": "step: voice.open pipeline naming option (S5b): a stage that identifies only on the SPEECH_END frame; the utterance takes that speaker."
-      }
+      "links": []
     },
     {
       "id": "RK-12.2.3-046",
       "section": "12.2.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2023",
-        "note": "step: voice.open pipeline naming option (S5b): a stage speaker_id given as an integer; the message's speaker_label is its string."
-      }
+      "links": []
     },
     {
       "id": "RK-12.2.3-047",
       "section": "12.2.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2023",
-        "note": "step: voice.open pipeline naming option (S5b), voice diarization speakers with a null or empty speaker_id: a voice attributed to nobody heard the longest; the message carries no label and sender_name \"Unknown speaker\"."
-      }
+      "links": []
     },
     {
       "id": "RK-12.2.3-048",
       "section": "12.2.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2023",
-        "note": "step: voice.open pipeline naming option (S5b): an utterance over which the stage gave no result; its message carries no speaker."
-      }
+      "links": []
     },
     {
       "id": "RK-12.2.3-049",
       "section": "12.2.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2023",
-        "note": "step: voice.open pipeline naming option (S5b): labels across several utterances of one session; epoch 0 throughout."
-      }
+      "links": []
     },
     {
       "id": "RK-12.2.3-050",
       "section": "12.2.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2023",
-        "note": "step: voice.open pipeline naming option (S5b): the transcript reaches the room as one message; ON_TRANSCRIPTION carries the speaker and may rename it, the message carries speaker_label, speaker_epoch and sender_name."
-      }
+      "links": []
     },
     {
       "id": "RK-12.2.3-051",
       "section": "12.2.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2023",
-        "note": "step: voice.open pipeline naming option (S5b): no ON_SPEAKER_CHANGE with source stt for the transcript, only the stage's own."
-      }
+      "links": []
     },
     {
       "id": "RK-12.2.4-005",
@@ -29526,12 +29370,7 @@
       "id": "RK-12.3.8-005",
       "section": "12.3.8",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2034",
-        "note": "step: voice.open STT options (S5) and batch_mode (S18): a Voice Channel with no VAD, a streaming STT that finds the end of speech (continuous mode), then in batch mode a flush; each transcript reaches the room."
-      }
+      "links": []
     },
     {
       "id": "RK-12.3.8-006",
@@ -29573,23 +29412,13 @@
       "id": "RK-12.3.9-006",
       "section": "12.3.9",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2034",
-        "note": "step: voice diarization speakers with a null speaker_id, which the scenario format takes only as a string: no ON_SPEAKER_CHANGE, the last speaker kept."
-      }
+      "links": []
     },
     {
       "id": "RK-12.3.9-007",
       "section": "12.3.9",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2034",
-        "note": "step: voice.open naming the transcript's speaker from the diarization stage (S5b): an unattributed result heard the longest gives the transcript the sender_name Unknown speaker."
-      }
+      "links": []
     },
     {
       "id": "RK-12.3.9-008",
@@ -29679,23 +29508,13 @@
       "id": "RK-12.3.12-010",
       "section": "12.3.12",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2042",
-        "note": "step: voice.open turns as objects (S15): a turn judged incomplete with a suggested_wait_ms, and one with none under a configured default wait, each routed once its silence lasts it."
-      }
+      "links": []
     },
     {
       "id": "RK-12.3.12-011",
       "section": "12.3.12",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2042",
-        "note": "step: voice.open turns as objects (S15), with a gate on the scripted verdict: speech that starts during the wait, or while the detector judges, keeps the turn open until its own silence lasts the wait."
-      }
+      "links": []
     },
     {
       "id": "RK-12.3.12-012",
@@ -29707,12 +29526,7 @@
       "id": "RK-12.3.12-013",
       "section": "12.3.12",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2042",
-        "note": "step: voice.open turns as objects (S15) and STT options (S5): a final transcript that comes after the silence lasted the wait still joins the turn before it is routed."
-      }
+      "links": []
     },
     {
       "id": "RK-12.3.12-014",
@@ -29724,12 +29538,7 @@
       "id": "RK-12.3.12-015",
       "section": "12.3.12",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2042",
-        "note": "step: voice.open turns as objects (S15): a default wait a scenario reaches, and the turn's confidence in the ON_TURN_COMPLETE payload."
-      }
+      "links": []
     },
     {
       "id": "RK-12.3.12-016",
@@ -29739,7 +29548,7 @@
       "gap": {
         "class": "step",
         "card": "RMK-2042",
-        "note": "step: voice.open turns as objects (S15), with a gate on the scripted verdict: speech that starts while the detector judges the turn complete holds it, and the joined turn is routed once."
+        "note": "step: a sync once the channel applied the detector's verdict, or the virtual clock (X-CLK): turn_decisions (S15) holds a verdict at a gate, but no hook fires when a complete verdict is held because speech resumed, so no step can make the resumed speech end only after the verdict was applied."
       }
     },
     {
@@ -29940,23 +29749,13 @@
       "id": "RK-12.3.13-024",
       "section": "12.3.13",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2042",
-        "note": "step: voice.open STT options (S5): a streaming STT whose words come only with its final, after the speech ended."
-      }
+      "links": []
     },
     {
       "id": "RK-12.3.13-025",
       "section": "12.3.13",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2042",
-        "note": "step: voice.open STT options (S5): a streaming STT whose words come only with its final; an okay leaves the reply playing, a stop cuts it and is the turn."
-      }
+      "links": []
     },
     {
       "id": "RK-12.3.13-026",
@@ -30018,7 +29817,7 @@
       "gap": {
         "class": "step",
         "card": "RMK-2042",
-        "note": "step: voice.open STT options (S5) and the virtual clock (X-CLK): an STT stream that never closes an echoed utterance, past the verdict's 10 seconds."
+        "note": "step: the virtual clock (X-CLK): voice.open stt (S5) scripts an STT stream that never closes an echoed utterance, but the verdict lapses only after 10 seconds."
       }
     },
     {
@@ -30075,56 +29874,31 @@
       "id": "RK-12.3.13-039",
       "section": "12.3.13",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2042",
-        "note": "step: voice.open STT options (S5), transcripts with speaker segments: a new voice repeating the reply over it is no turn; a voice first heard alone is."
-      }
+      "links": []
     },
     {
       "id": "RK-12.3.13-055",
       "section": "12.3.13",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2042",
-        "note": "step: voice.open STT options (S5), transcripts with speaker segments: a new voice repeating the reply over it cuts it on its first words, and its final, discarded as echo, does not undo the cut."
-      }
+      "links": []
     },
     {
       "id": "RK-12.3.13-040",
       "section": "12.3.13",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2042",
-        "note": "step: voice.open STT options (S5), keeps_stream_across_turns and speaker segments: a voice heard alone on a closed stream is nobody on the next."
-      }
+      "links": []
     },
     {
       "id": "RK-12.3.13-041",
       "section": "12.3.13",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2042",
-        "note": "step: voice.open STT options (S5), continuous mode: a transport barge-in during playback is judged on the words heard so far."
-      }
+      "links": []
     },
     {
       "id": "RK-12.3.13-042",
       "section": "12.3.13",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2042",
-        "note": "step: voice.open STT options (S5), continuous mode, with backchannels: an acknowledged stretch running on is not cut, and its later words that are no backchannel cut."
-      }
+      "links": []
     },
     {
       "id": "RK-12.3.13-043",
@@ -32422,12 +32196,7 @@
       "id": "RK-12.6-019",
       "section": "12.6",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2042",
-        "note": "step: voice.open STT options (S5): a streaming STT whose words come only with its final; a short stop is classified and cuts."
-      }
+      "links": []
     },
     {
       "id": "RK-12.6-020",
