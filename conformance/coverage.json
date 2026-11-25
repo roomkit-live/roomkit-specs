@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "bd57957b0df8341c0afd15ed5b46a02b3ef18650e1aa57ac9c2cf1be252ce2d1",
-  "corpus_sha256": "57cd56644c3dd3df7867601d6f2feb98359a357e88d7702a695ca8c030a88f71",
+  "corpus_sha256": "ef57d9ccb7bf5b732ef3e3df697cf7ead767934be0effc24e088c0f3000e34dd",
   "python_commit": "1ee7ec379dee1e17c49a1949ad7ce8756c132606",
-  "scenario_count": 3621,
+  "scenario_count": 3661,
   "sections": [
     {
       "section": "0",
@@ -1654,6 +1654,24 @@
         "provider-served/without-handler-whole",
         "providers/a-kit-s-close-leaves-open-the-provider-its-agent-was-handed",
         "realtime/a-broadcast-text-enters-under-its-author-s-label",
+        "realtime/a-call-a-cut-delegation-left-is-answered-before-the-next-generation",
+        "realtime/a-call-the-agent-backend-s-policy-denies-is-refused-before-the-channel-s-gate",
+        "realtime/a-call-the-agent-backend-s-provider-served-is-reported-once",
+        "realtime/a-call-whose-arguments-came-as-text-is-refused-before-the-gate",
+        "realtime/a-later-tool-under-a-name-the-agent-serves-is-not-declared",
+        "realtime/a-session-s-delegations-run-one-at-a-time-each-reading-the-last",
+        "realtime/an-agent-backend-asks-again-after-a-call-its-provider-could-not-parse",
+        "realtime/an-agent-backend-asks-again-after-an-empty-answer",
+        "realtime/an-agent-backend-re-reads-a-stored-result-in-its-own-loop",
+        "realtime/an-agent-backend-reads-a-call-the-gate-refuses-as-refused",
+        "realtime/an-agent-backend-s-call-runs-through-the-channel-s-gate-and-handler",
+        "realtime/an-agent-backend-s-call-whose-arguments-do-not-read-is-refused-and-reported",
+        "realtime/an-agent-backend-s-call-with-no-id-is-reported-under-one-minted-in-its-delegation",
+        "realtime/an-agent-backend-s-own-call-bound-does-not-apply",
+        "realtime/an-agent-backend-s-policy-resolves-for-the-participant-s-role",
+        "realtime/an-agent-backend-serves-with-its-settings-and-the-session-s-catalogue",
+        "realtime/an-agent-backend-turn-its-round-cap-cuts-fires-no-on-error",
+        "realtime/tool-search-never-names-a-denied-tool",
         "reasoning/a-block-cut-before-its-signature-is-not-replayed",
         "reasoning/a-compaction-keeps-the-rounds-reasoning",
         "reasoning/a-cut-block-is-still-the-turn-s-reasoning",
@@ -3772,11 +3790,24 @@
         "provider-served/success-whole",
         "provider-served/without-handler-stream",
         "provider-served/without-handler-whole",
+        "realtime/a-backend-call-its-delegation-s-bound-cuts-is-reported-cancelled",
+        "realtime/a-backend-call-passes-the-channel-s-policy-gate-and-bound",
+        "realtime/a-backend-call-that-ends-its-session-spares-itself-and-ends-its-delegation",
+        "realtime/a-backend-reads-each-call-s-outcome",
+        "realtime/a-call-served-by-hooks-or-the-channel-s-own-tools-passes-the-gate",
+        "realtime/a-call-whose-arguments-came-as-text-is-refused-before-the-gate",
+        "realtime/a-denied-tool-is-not-declared-and-its-call-is-refused",
         "realtime/a-handler-reconnects-through-its-child",
+        "realtime/a-handler-that-closes-its-channel-runs-on-and-the-other-call-is-cut",
+        "realtime/a-handler-that-closes-the-kit-runs-on-and-reaches-no-hook",
+        "realtime/a-handler-that-ends-its-session-from-a-task-it-starts-runs-on",
+        "realtime/a-handler-that-ends-its-session-runs-on-and-the-other-call-is-cut",
         "realtime/a-hosted-backend-s-call-passes-the-gate",
         "realtime/a-late-cancellation-leaves-the-served-call-alone",
         "realtime/a-realtime-pipeline-refuses-the-agents-human-input",
+        "realtime/a-spared-handler-still-working-at-the-close-is-waited-for",
         "realtime/an-abandoned-call-interrupts-its-handler",
+        "realtime/an-agent-backend-s-call-that-closes-the-channel-is-spared-by-the-agent-s-close",
         "realtime/an-ended-session-reports-a-late-call-once",
         "realtime/an-undeclared-tool-is-refused-and-still-reported",
         "recording/a-recorder-joins-the-live-feed-after-consent",
@@ -6835,7 +6866,7 @@
         "unmapped": 102
       },
       "decided_gaps": {
-        "step": 43
+        "step": 28
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -6887,16 +6918,33 @@
         "provider-served/success-whole",
         "provider-served/without-handler-stream",
         "provider-served/without-handler-whole",
+        "realtime/a-backend-call-that-ends-its-session-spares-itself-and-ends-its-delegation",
         "realtime/a-blank-text-reaches-no-session",
         "realtime/a-broadcast-text-enters-under-its-author-s-label",
         "realtime/a-call-id-names-one-call-until-its-result-goes-out",
         "realtime/a-call-naming-no-tool-is-answered-before-the-gate",
+        "realtime/a-call-served-by-hooks-or-the-channel-s-own-tools-passes-the-gate",
+        "realtime/a-call-whose-arguments-came-as-text-is-refused-before-the-gate",
         "realtime/a-call-without-an-id-is-refused-and-reported-once",
+        "realtime/a-denied-or-skill-closed-tool-is-refused-before-its-arguments-are-read",
+        "realtime/a-denied-tool-is-not-declared-and-its-call-is-refused",
+        "realtime/a-handler-that-closes-its-channel-runs-on-and-the-other-call-is-cut",
+        "realtime/a-handler-that-closes-the-kit-runs-on-and-reaches-no-hook",
+        "realtime/a-handler-that-ends-its-session-from-a-task-it-starts-runs-on",
+        "realtime/a-handler-that-ends-its-session-runs-on-and-the-other-call-is-cut",
+        "realtime/a-participant-the-store-lacks-has-the-base-rules-until-it-gets-a-role",
+        "realtime/a-role-the-store-holds-at-the-start-shapes-the-declared-tools",
+        "realtime/a-skill-activation-declares-no-denied-tool",
+        "realtime/a-spared-handler-still-working-at-the-close-is-waited-for",
+        "realtime/an-agent-backend-s-call-that-closes-the-channel-is-spared-by-the-agent-s-close",
         "realtime/an-ended-session-takes-no-injection",
         "realtime/an-ending-session-cancels-its-waiting-call-once",
         "realtime/an-event-s-metadata-chooses-no-injection-role",
         "realtime/an-instruction-enters-the-session-as-system",
         "realtime/an-undeclared-tool-is-refused-and-still-reported",
+        "realtime/run-skill-script-is-skill-gated-and-the-skill-tools-are-not",
+        "realtime/the-channel-s-own-declared-tools-pass-the-declared-check",
+        "realtime/tool-search-never-names-a-denied-tool",
         "skills/a-stored-activation-under-a-held-id-leaves-out-the-one-refused",
         "skills/a-stored-activation-under-a-held-id-reads-the-call-that-ran",
         "tools/a-call-refused-under-a-held-id-is-no-repeat",
@@ -6925,11 +6973,36 @@
         "unmapped": 75
       },
       "decided_gaps": {
-        "step": 45
+        "step": 21
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
-        "realtime/a-hosted-backend-s-call-passes-the-gate"
+        "realtime/a-backend-call-its-delegation-s-bound-cuts-is-reported-cancelled",
+        "realtime/a-backend-call-passes-the-channel-s-policy-gate-and-bound",
+        "realtime/a-backend-call-that-ends-its-session-spares-itself-and-ends-its-delegation",
+        "realtime/a-backend-may-delegate-a-task",
+        "realtime/a-backend-reads-each-call-s-outcome",
+        "realtime/a-call-a-cut-delegation-left-is-answered-before-the-next-generation",
+        "realtime/a-call-the-agent-backend-s-policy-denies-is-refused-before-the-channel-s-gate",
+        "realtime/a-call-the-agent-backend-s-provider-served-is-reported-once",
+        "realtime/a-hosted-backend-s-call-passes-the-gate",
+        "realtime/a-later-tool-under-a-name-the-agent-serves-is-not-declared",
+        "realtime/a-session-s-delegations-run-one-at-a-time-each-reading-the-last",
+        "realtime/a-session-tool-under-a-name-the-agent-serves-is-refused",
+        "realtime/an-agent-backend-asks-again-after-a-call-its-provider-could-not-parse",
+        "realtime/an-agent-backend-asks-again-after-an-empty-answer",
+        "realtime/an-agent-backend-re-reads-a-stored-result-in-its-own-loop",
+        "realtime/an-agent-backend-reads-a-call-the-gate-refuses-as-refused",
+        "realtime/an-agent-backend-s-call-runs-through-the-channel-s-gate-and-handler",
+        "realtime/an-agent-backend-s-call-that-closes-the-channel-is-spared-by-the-agent-s-close",
+        "realtime/an-agent-backend-s-call-whose-arguments-do-not-read-is-refused-and-reported",
+        "realtime/an-agent-backend-s-call-with-no-id-is-reported-under-one-minted-in-its-delegation",
+        "realtime/an-agent-backend-s-own-call-bound-does-not-apply",
+        "realtime/an-agent-backend-s-policy-resolves-for-the-participant-s-role",
+        "realtime/an-agent-backend-s-turn-is-traced-under-the-session-s-span",
+        "realtime/an-agent-backend-serves-with-its-settings-and-the-session-s-catalogue",
+        "realtime/an-agent-backend-turn-its-round-cap-cuts-fires-no-on-error",
+        "realtime/an-agent-with-tools-of-its-own-is-refused-as-a-backend"
       ]
     },
     {
@@ -7447,6 +7520,8 @@
         "kit-close/work-a-source-s-health-check-starts-is-no-read-once-the-kit-closed",
         "locks/the-hooks-side-effects-of-a-set-of-a-deleted-room-the-close-drops-stay-out-of-the-room-created-again",
         "providers/a-kit-s-close-leaves-open-the-provider-its-agent-was-handed",
+        "realtime/a-handler-that-closes-the-kit-runs-on-and-reaches-no-hook",
+        "realtime/a-spared-handler-still-working-at-the-close-is-waited-for",
         "status/a-status-posted-after-close-starts-no-room-hook",
         "tasks/nonempty-task-and-observation-reads-remain-available-during-close"
       ]
@@ -8274,7 +8349,9 @@
       },
       "decided_gaps": {},
       "unannotated_keyword_lines": [],
-      "candidate_scenarios": []
+      "candidate_scenarios": [
+        "realtime/an-agent-backend-s-turn-is-traced-under-the-session-s-span"
+      ]
     },
     {
       "section": "16.1",
@@ -8561,7 +8638,25 @@
       },
       "decided_gaps": {},
       "unannotated_keyword_lines": [],
-      "candidate_scenarios": []
+      "candidate_scenarios": [
+        "realtime/a-call-a-cut-delegation-left-is-answered-before-the-next-generation",
+        "realtime/a-call-the-agent-backend-s-policy-denies-is-refused-before-the-channel-s-gate",
+        "realtime/a-call-the-agent-backend-s-provider-served-is-reported-once",
+        "realtime/a-later-tool-under-a-name-the-agent-serves-is-not-declared",
+        "realtime/a-session-s-delegations-run-one-at-a-time-each-reading-the-last",
+        "realtime/an-agent-backend-asks-again-after-a-call-its-provider-could-not-parse",
+        "realtime/an-agent-backend-asks-again-after-an-empty-answer",
+        "realtime/an-agent-backend-re-reads-a-stored-result-in-its-own-loop",
+        "realtime/an-agent-backend-reads-a-call-the-gate-refuses-as-refused",
+        "realtime/an-agent-backend-s-call-runs-through-the-channel-s-gate-and-handler",
+        "realtime/an-agent-backend-s-call-whose-arguments-do-not-read-is-refused-and-reported",
+        "realtime/an-agent-backend-s-call-with-no-id-is-reported-under-one-minted-in-its-delegation",
+        "realtime/an-agent-backend-s-own-call-bound-does-not-apply",
+        "realtime/an-agent-backend-s-policy-resolves-for-the-participant-s-role",
+        "realtime/an-agent-backend-serves-with-its-settings-and-the-session-s-catalogue",
+        "realtime/an-agent-backend-turn-its-round-cap-cuts-fires-no-on-error",
+        "realtime/an-agent-with-tools-of-its-own-is-refused-as-a-backend"
+      ]
     },
     {
       "section": "19.1",
@@ -9509,6 +9604,16 @@
         "orchestration/a-supervisor-s-own-tools-stay-its-own",
         "planning/sandbox-declarations-precede-the-planner-non-streaming",
         "planning/sandbox-declarations-precede-the-planner-streaming",
+        "realtime/a-backend-call-passes-the-channel-s-policy-gate-and-bound",
+        "realtime/a-call-served-by-hooks-or-the-channel-s-own-tools-passes-the-gate",
+        "realtime/a-denied-or-skill-closed-tool-is-refused-before-its-arguments-are-read",
+        "realtime/a-denied-tool-is-not-declared-and-its-call-is-refused",
+        "realtime/a-participant-the-store-lacks-has-the-base-rules-until-it-gets-a-role",
+        "realtime/a-role-the-store-holds-at-the-start-shapes-the-declared-tools",
+        "realtime/a-skill-activation-declares-no-denied-tool",
+        "realtime/run-skill-script-is-skill-gated-and-the-skill-tools-are-not",
+        "realtime/the-channel-s-own-declared-tools-pass-the-declared-check",
+        "realtime/tool-search-never-names-a-denied-tool",
         "role-policy/a-later-turn-reads-the-new-role-non-streaming",
         "role-policy/a-later-turn-reads-the-new-role-streaming",
         "role-policy/a-skill-hint-keeps-the-role-restriction-non-streaming",
@@ -10016,6 +10121,8 @@
         "memory/a-compaction-between-rounds-stores-the-earlier-rounds-long-results",
         "provider-served/bounded-mixed-round-stream",
         "provider-served/bounded-mixed-round-whole",
+        "realtime/a-backend-call-passes-the-channel-s-policy-gate-and-bound",
+        "realtime/a-session-tool-under-a-name-the-agent-serves-is-refused",
         "tool-search/list-tools-lists-the-re-read-of-stored-results",
         "tools/a-compaction-keeps-a-skill-s-instructions-and-a-page-read-back-whole",
         "tools/a-compaction-stores-the-older-rounds-long-results",
@@ -10205,7 +10312,9 @@
       },
       "decided_gaps": {},
       "unannotated_keyword_lines": [],
-      "candidate_scenarios": []
+      "candidate_scenarios": [
+        "realtime/a-backend-may-delegate-a-task"
+      ]
     },
     {
       "section": "23.1",
@@ -10539,6 +10648,9 @@
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
+        "realtime/a-denied-or-skill-closed-tool-is-refused-before-its-arguments-are-read",
+        "realtime/a-skill-activation-declares-no-denied-tool",
+        "realtime/run-skill-script-is-skill-gated-and-the-skill-tools-are-not",
         "role-policy/activation-cannot-bypass-role-non-streaming",
         "role-policy/activation-cannot-bypass-role-streaming",
         "role-policy/denied-prerequisite-non-streaming",
@@ -10918,6 +11030,7 @@
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
+        "realtime/the-channel-s-own-declared-tools-pass-the-declared-check",
         "role-policy/script-denied-non-streaming",
         "role-policy/script-denied-streaming",
         "role-policy/script-owner-replaces-base-non-streaming",
@@ -30142,12 +30255,7 @@
       "id": "RK-12.4-055",
       "section": "12.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2045",
-        "note": "step: realtime.tool_call with arguments that are not an object, which the schema types as an object (S9)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4-056",
@@ -30279,45 +30387,25 @@
       "id": "RK-12.4-071",
       "section": "12.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2045",
-        "note": "step: tool_policy on the realtime channel spec (S7)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4-072",
       "section": "12.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2045",
-        "note": "step: tool_policy on the realtime channel spec and a read of the tools declared at connect and reconfigure (S7)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4-073",
       "section": "12.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2045",
-        "note": "step: tool_policy with a role override on the realtime channel spec, and a role changed during the session (S7)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4-074",
       "section": "12.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2045",
-        "note": "step: tool_policy with a role override on the realtime channel spec, for a participant the store does not hold (S7)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4-075",
@@ -30329,23 +30417,13 @@
       "id": "RK-12.4-076",
       "section": "12.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2045",
-        "note": "step: tool_policy and skills on the realtime channel spec (S7)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4-077",
       "section": "12.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2045",
-        "note": "step: a realtime channel served by an ON_TOOL_CALL hook (no handler), Tool Search or skills (S7)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4-078",
@@ -30357,12 +30435,7 @@
       "id": "RK-12.4-079",
       "section": "12.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2045",
-        "note": "step: Tool Search, or skills with an executor, on the realtime channel spec (S7)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4-080",
@@ -30374,12 +30447,7 @@
       "id": "RK-12.4-081",
       "section": "12.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2045",
-        "note": "step: skills with an executor on the realtime channel spec (S7)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4-020",
@@ -30403,67 +30471,37 @@
       "id": "RK-12.4-023",
       "section": "12.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2008",
-        "note": "step: handler script actions (S9): no scripted handler ends its session, detaches its room or closes its channel or the kit."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4-024",
       "section": "12.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2008",
-        "note": "step: handler script actions (S9): a handler that ends its session from a task of its own."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4-025",
       "section": "12.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2008",
-        "note": "step: handler script actions (S9) and a scripted reasoning backend (S10) whose delegation holds the sparing call."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4-026",
       "section": "12.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2008",
-        "note": "step: an agent as a scripted reasoning backend (S10), whose AI channel's close cuts its turn."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4-027",
       "section": "12.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2008",
-        "note": "step: handler script actions (S9): a spared handler still running when its channel closes."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4-028",
       "section": "12.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2008",
-        "note": "step: handler script actions (S9): a handler that closes the kit."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4-029",
@@ -30940,12 +30978,7 @@
       "id": "RK-12.4.1-013",
       "section": "12.4.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2049",
-        "note": "step: a scripted ReasoningBackend (S10) whose run delegates a task (§23)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4.1-014",
@@ -31237,12 +31270,7 @@
       "id": "RK-12.4.1-050",
       "section": "12.4.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2049",
-        "note": "step: a scripted ReasoningBackend whose execute_tool_call reads a refused, a failed and a served call (S10)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4.1-051",
@@ -31315,12 +31343,7 @@
       "id": "RK-12.4.1-058",
       "section": "12.4.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2049",
-        "note": "step: an agent as the ReasoningBackend whose turn its round cap, deadline or budget cuts, and a backend that hangs past the run's bound, with an on_error hook (S10)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4.1-086",
@@ -31343,100 +31366,55 @@
       "id": "RK-12.4.1-060",
       "section": "12.4.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2049",
-        "note": "step: a scripted ReasoningBackend whose execute_tool runs a call through the realtime spec's tool_policy, BEFORE_TOOL_USE, ON_TOOL_CALL and result truncation (S10, S7)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4.1-061",
       "section": "12.4.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2049",
-        "note": "step: an agent as the ReasoningBackend whose model calls a tool, with the channel's handler and hooks observed (S10)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4.1-062",
       "section": "12.4.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2049",
-        "note": "step: a scripted ReasoningBackend that reads execute_tool_call's outcome for a refused and a failed call (S10)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4.1-063",
       "section": "12.4.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2049",
-        "note": "step: an agent as the ReasoningBackend whose model calls a refused tool and reads it refused (S10)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4.1-064",
       "section": "12.4.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2049",
-        "note": "step: an agent as the ReasoningBackend, its scripted model answering with an unparseable call or nothing (S10)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4.1-065",
       "section": "12.4.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2049",
-        "note": "step: an agent as the ReasoningBackend, its scripted model calling a tool with arguments that do not read (S10)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4.1-066",
       "section": "12.4.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2049",
-        "note": "step: an agent as the ReasoningBackend whose loop ends a call before the gate, with an on_tool_call hook (S10)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4.1-067",
       "section": "12.4.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2049",
-        "note": "step: an agent as the ReasoningBackend whose provider serves a provider-side tool, with an on_tool_call hook (S10)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4.1-068",
       "section": "12.4.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2049",
-        "note": "step: an agent as the ReasoningBackend, its model's call ids and a call without one, and the ids on_tool_call reads (S10)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4.1-069",
@@ -31453,133 +31431,73 @@
       "id": "RK-12.4.1-070",
       "section": "12.4.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2049",
-        "note": "step: a scripted ReasoningBackend that hangs in a call past the run's bound, with an on_tool_call hook (S10)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4.1-071",
       "section": "12.4.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2049",
-        "note": "step: an agent as the ReasoningBackend, its settings, turn budget and catalogue read on its turn (S10)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4.1-072",
       "section": "12.4.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2049",
-        "note": "step: an agent as the ReasoningBackend with call bounds of its own, and a tool that waits past them (S10)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4.1-073",
       "section": "12.4.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2049",
-        "note": "step: an agent as the ReasoningBackend whose loop re-reads a stored result (S10)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4.1-074",
       "section": "12.4.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2049",
-        "note": "step: an agent with tools of its own, or registered with a kit, given as the ReasoningBackend in setup (S10)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4.1-075",
       "section": "12.4.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2049",
-        "note": "step: an agent as the ReasoningBackend and a session tool under a name it serves, at construction and at configure (S10)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4.1-076",
       "section": "12.4.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2049",
-        "note": "step: an agent as the ReasoningBackend and a session or room tool under a name it serves that arrives after start (S10)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4.1-077",
       "section": "12.4.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2049",
-        "note": "step: an agent as the ReasoningBackend with a tool_policy and role overrides, and the session participant's role (S10)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4.1-078",
       "section": "12.4.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2049",
-        "note": "step: an agent as the ReasoningBackend whose tool_policy denies a call, with an on_tool_call hook (S10)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4.1-079",
       "section": "12.4.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2049",
-        "note": "step: an agent as the ReasoningBackend whose delegation is cut with a call unanswered, then a second delegation (S10)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4.1-080",
       "section": "12.4.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2049",
-        "note": "step: an agent as the ReasoningBackend and two delegations of one session, the second reading the first's work (S10)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4.1-081",
       "section": "12.4.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2049",
-        "note": "step: an agent as the ReasoningBackend (S10), and the voice session's span among the kinds telemetry.spans reads."
-      }
+      "links": []
     },
     {
       "id": "RK-12.4.1-082",
