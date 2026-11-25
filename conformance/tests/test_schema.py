@@ -1200,6 +1200,10 @@ class SchemaTests(unittest.TestCase):
               "client_metadata": {}, "asserts_provenance": False}, True),
             ({"call": "conference.join", "channel_id": "conf", "participant_id": "d1",
               "asserts_provenance": "no"}, False),
+            ({"call": "conference.join", "channel_id": "conf", "participant_id": "d1",
+              "metadata": ["caller_number"]}, False),
+            ({"call": "conference.join", "channel_id": "conf", "participant_id": "d1",
+              "client_metadata": "caller"}, False),
             ({"call": "conference.feed", "channel_id": "conf", "track_id": "mic",
               "frames": ["AQA="], "sample_rate": 48000, "channels": 2, "repeat": 3}, True),
             ({"call": "conference.feed", "channel_id": "conf", "track_id": "mic"}, False),
@@ -1212,6 +1216,7 @@ class SchemaTests(unittest.TestCase):
             ({"call": "recording.read", "channel_id": "conf"}, True),
             ({"call": "recording.read", "recorder": "named"}, True),
             ({"call": "recording.read", "recorder": "named", "channel_id": "conf"}, False),
+            ({"call": "recording.read", "channel_id": ""}, False),
             ({"call": "recording.read"}, False),
         ):
             with self.subTest(step=step):

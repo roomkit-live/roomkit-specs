@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
-  "id": "conference/an-asserted-generic-key-is-believed-over-an-unasserted-provider-key",
-  "title": "A caller number asserted on a generic key is resolved over a client-supplied one on the SFU's own address key",
+  "id": "conference/an-asserted-caller-number-is-believed-over-an-unasserted-one-on-a-key-read-first",
+  "title": "A caller number the SFU asserts is resolved over one the participant's client supplied under a more specific key, read first",
   "rules": [
     "§12.10.2"
   ],
@@ -54,7 +54,8 @@
       "channel_id": "conf",
       "room_id": "r1",
       "address_keys": [
-        "sfu_caller_number"
+        "sfu_caller_number",
+        "caller_number"
       ]
     },
     {
@@ -62,7 +63,7 @@
       "channel_id": "conf",
       "participant_id": "dial-in-1",
       "metadata": {
-        "phone_number": "+15550101"
+        "caller_number": "+15550101"
       },
       "client_metadata": {
         "sfu_caller_number": "+15550199"

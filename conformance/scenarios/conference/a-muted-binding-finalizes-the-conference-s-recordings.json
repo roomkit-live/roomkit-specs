@@ -1,13 +1,12 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "conference/a-muted-binding-finalizes-the-conference-s-recordings",
-  "title": "Muting the conference's binding finalizes its recordings, and frames arriving after it are written to none",
+  "title": "Muting the conference's binding stops and finalizes its recordings, and frames fed after it are written to none",
   "rules": [
     "§12.10.4",
     "§12.10.8"
   ],
   "requirements": [
-    "RK-12.10.4-169",
     "RK-12.10.4-175",
     "RK-12.10.8-018"
   ],

@@ -4113,7 +4113,7 @@
       "conference/a-backend-that-cannot-tell-provenance-yields-no-address": "bae71706d23ecb582547a8e13bd424af09334519e8bf33e27493cbea50b952b7"
     },
     "RK-12.10.2-040": {
-      "conference/an-asserted-generic-key-is-believed-over-an-unasserted-provider-key": "853be620614708be00a9a2d505a0fff48a47727050e2a259a9a53baf889acc4f"
+      "conference/an-asserted-caller-number-is-believed-over-an-unasserted-one-on-a-key-read-first": "853be620614708be00a9a2d505a0fff48a47727050e2a259a9a53baf889acc4f"
     },
     "RK-12.10.2-042": {
       "conference/an-address-the-participant-s-own-client-supplied-is-never-resolved": "152d0eb38d8a3d747749d510af7606f02c39465cf909151039b23f1b3f821a28"
@@ -4447,18 +4447,8 @@
       "conference/a-muted-binding-unsubscribes-and-its-unmute-subscribes-again": "7c3f0e6ef72aaffaa48cbab1fc8dac42183111c9e09c9c6964e12610e0d4f2af",
       "conference/a-read-only-binding-subscribes-no-track": "7c3f0e6ef72aaffaa48cbab1fc8dac42183111c9e09c9c6964e12610e0d4f2af"
     },
-    "RK-12.10.4-169": {
-      "conference/a-muted-binding-finalizes-the-conference-s-recordings": "a84afa299889127571bf2f999112b7c6ab0da5d220b964e07613b3d2214636c5",
-      "conference/a-muted-binding-hands-no-frame-to-a-lane": "a84afa299889127571bf2f999112b7c6ab0da5d220b964e07613b3d2214636c5"
-    },
-    "RK-12.10.4-170": {
-      "conference/a-muted-binding-hands-no-frame-to-a-lane": "2372be4cdaf75ad6ddd805c596f8e8f5d6484de2174da53e86b9d997b558601d"
-    },
     "RK-12.10.4-171": {
       "conference/a-loss-under-a-closed-collection-gate-starts-no-rejoin": "28e97a09ac02142cf6476a570d8836c924a4aa14bf6ba4ea65fbb6bdc84b9604"
-    },
-    "RK-12.10.4-172": {
-      "conference/a-muted-binding-hands-no-frame-to-a-lane": "1c9a37c11c65f012a87e8840a14c11cc9bb8476c3b1ef6feb8d0c45ea375af4a"
     },
     "RK-12.10.4-173": {
       "conference/a-muted-binding-unsubscribes-and-its-unmute-subscribes-again": "e128f209a59208cc07ca4672e16010a98340e0bea75fc177e52fd8fdad74b207"

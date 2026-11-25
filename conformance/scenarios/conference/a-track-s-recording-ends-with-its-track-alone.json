@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "conference/a-track-s-recording-ends-with-its-track-alone",
-  "title": "Unpublishing one track finalizes and reports its recording while the other track's recording goes on, reported only once the conference ends",
+  "title": "Unpublishing one track finalizes and reports its recording at once, while the other track's recording goes on and is reported only once the conference ends",
   "rules": [
     "§12.10.8"
   ],
@@ -22,6 +22,11 @@
       {
         "name": "stopped",
         "trigger": "on_recording_stopped",
+        "execution": "async"
+      },
+      {
+        "name": "arrived",
+        "trigger": "on_conference_participant_joined",
         "execution": "async"
       }
     ]
@@ -86,6 +91,14 @@
       "call": "conference.unpublish",
       "channel_id": "conf",
       "track_id": "a-mic"
+    },
+    {
+      "idle": true
+    },
+    {
+      "call": "conference.join",
+      "channel_id": "conf",
+      "participant_id": "carol"
     },
     {
       "call": "conference.feed",
@@ -156,6 +169,13 @@
           }
         }
       ]
-    }
+    },
+    "hook_order": [
+      "arrived",
+      "arrived",
+      "stopped",
+      "arrived",
+      "stopped"
+    ]
   }
 }

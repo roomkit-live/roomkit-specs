@@ -1420,23 +1420,29 @@ A conference's media inputs on `conference.open` (§12.10.4, §12.10.8):
   `vad`; each track's lane walks the script from its start (a track's id is
   its stream key, §12.10.4). `agc` and `denoiser` script those stages as
   `voice.open`'s do. Any of them builds the lanes' pipeline with these
-  stages; without them the lanes run the implementation's own VAD.
+  stages and the scripted VAD, one that decides nothing when `vad` is
+  absent; without any of them the lanes run the implementation's own VAD.
 - `stt` scripts the lanes' recognizer as `voice.open`'s `stt` does: a lane
-  asks it once per utterance, a batch call, which takes the next `streams`
-  entry, holds at its `gate`, fails on `then: fail`, and answers the first
-  final of its results. `stt: null` builds the conference with no
-  recognizer; absent, it has the implementation's mock one.
+  asks it once per utterance, as a batch call or as a stream, each taking
+  the next `streams` entry (a batch call holds at its `gate`, fails on
+  `then: fail`, and answers the first final of its results). `stt: null`
+  builds the conference with no recognizer; absent, it has the
+  implementation's mock one.
 - `recording` records the conference with a scripted recorder: `format`
   (`wav` by default), `storage`, `metadata`, `encryption` (a name: a
   scripted RecordingEncryption of that name, null for none) and
   `storage_encrypted_at_rest` (false by default), the
-  ConferenceRecordingConfig (§12.10.8), and `write_gates`, per track id a
-  gate each write of that track's frames holds at until a step opens it,
-  on the thread the recorder is called on. The recorder names its
+  ConferenceRecordingConfig (§12.10.8), each member absent the
+  implementation's default; and `write_gates`, per track id a gate each
+  write of that track's frames holds at until a step opens it, on the
+  thread the recorder is called on; a write the implementation makes on
+  the event loop's own thread cannot wait there, and only reaches the gate.
+  The recorder names its
   recordings `rec1`, `rec2`... in the order it opens them, and gives each
   the result URL `mock://<name>`.
-- `max_queued_frames` bounds what the channel holds for a track whose lane
-  or recording falls behind (the implementation's default when absent).
+- `max_queued_frames` bounds the frames the channel holds for a track
+  whose lane or recording falls behind, beside the one being processed or
+  written (the implementation's default when absent).
 - `address_keys` lists the keys the scripted SFU names a caller's address
   under, its own (`address_keys`, §12.10.2, §12.10.3), none when absent.
 

@@ -1,15 +1,12 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "conference/a-muted-binding-hands-no-frame-to-a-lane",
-  "title": "Once the conference's binding is muted, a track's frames reach no lane at once: no speech edge, no recognition and no transcription",
+  "title": "Once the conference's binding is muted, its track has no lane: frames fed then give no speech edge and no transcription",
   "rules": [
     "§12.10.4"
   ],
   "requirements": [
-    "RK-12.10.4-157",
-    "RK-12.10.4-169",
-    "RK-12.10.4-170",
-    "RK-12.10.4-172"
+    "RK-12.10.4-157"
   ],
   "requires_features": [
     "conference"
@@ -113,36 +110,6 @@
     {
       "call": "conference.settle",
       "channel_id": "conf"
-    },
-    {
-      "call": "conference.read",
-      "channel_id": "conf",
-      "expect": {
-        "result": {
-          "stages": [
-            {
-              "stage": "vad",
-              "call": "process",
-              "stream": "mic"
-            },
-            {
-              "stage": "vad",
-              "call": "process",
-              "stream": "mic"
-            },
-            {
-              "stage": "vad",
-              "call": "reset",
-              "stream": "mic"
-            }
-          ],
-          "stt_streams": [
-            {
-              "language": null
-            }
-          ]
-        }
-      }
     }
   ],
   "expect": {

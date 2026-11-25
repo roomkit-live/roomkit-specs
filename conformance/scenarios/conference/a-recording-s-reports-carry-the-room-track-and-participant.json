@@ -54,14 +54,17 @@
       "channel_id": "conf",
       "room_id": "r1",
       "stt": null,
-      "recording": {}
+      "recording": {},
+      "address_keys": [
+        "caller_number"
+      ]
     },
     {
       "call": "conference.join",
       "channel_id": "conf",
       "participant_id": "dial-in-1",
       "metadata": {
-        "phone_number": "+15550101"
+        "caller_number": "+15550101"
       }
     },
     {

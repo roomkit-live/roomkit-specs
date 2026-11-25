@@ -636,6 +636,21 @@
       "card": "RMK-2076",
       "note": "step: conference.open options, conference.read: an audio track subscribed with stt, with recording and with realtime."
     },
+    "RK-12.10.4-169": {
+      "class": "step",
+      "card": "RMK-2076",
+      "note": "step: conference.fault (the scripted SFU's unsubscribe_track held), with conference.feed and recording.read per conference track: frames delivered while the binding is muted and the track still subscribed reach neither a lane nor a recording."
+    },
+    "RK-12.10.4-170": {
+      "class": "step",
+      "card": "RMK-2076",
+      "note": "step: conference.fault (the scripted SFU's unsubscribe_track held), with conference.feed and a recognition held across the mute: no transcription delivered once the binding is muted."
+    },
+    "RK-12.10.4-172": {
+      "class": "step",
+      "card": "RMK-2076",
+      "note": "step: conference.fault (the scripted SFU's unsubscribe_track held), with conference.feed and conference.read: a frame right after the mute, its track still subscribed, reaches no lane."
+    },
     "RK-12.10.4-174": {
       "class": "step",
       "card": "RMK-2076",

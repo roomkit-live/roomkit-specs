@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "conference/a-resolved-participant-s-utterances-are-not-resolved-again",
-  "title": "A dial-in resolved on arrival speaks twice: identity resolution does not run per utterance and no unknown-identity hook fires",
+  "title": "A dial-in resolved on arrival speaks twice and a guest with no address speaks once: identity resolution does not run per utterance and no unknown-identity hook fires",
   "rules": [
     "§12.10.4"
   ],
@@ -77,23 +77,45 @@
                 "text": "Second point"
               }
             ]
+          },
+          {
+            "results": [
+              {
+                "text": "Guest point"
+              }
+            ]
           }
         ]
-      }
+      },
+      "address_keys": [
+        "caller_number"
+      ]
     },
     {
       "call": "conference.join",
       "channel_id": "conf",
       "participant_id": "dial-in-1",
       "metadata": {
-        "phone_number": "+15550101"
+        "caller_number": "+15550101"
       }
+    },
+    {
+      "call": "conference.join",
+      "channel_id": "conf",
+      "participant_id": "guest"
     },
     {
       "call": "conference.publish",
       "channel_id": "conf",
       "participant_id": "dial-in-1",
       "track_id": "mic",
+      "kind": "audio"
+    },
+    {
+      "call": "conference.publish",
+      "channel_id": "conf",
+      "participant_id": "guest",
+      "track_id": "g-mic",
       "kind": "audio"
     },
     {
@@ -116,6 +138,19 @@
       "frames": [
         "AwA=",
         "BAA="
+      ]
+    },
+    {
+      "call": "conference.settle",
+      "channel_id": "conf"
+    },
+    {
+      "call": "conference.feed",
+      "channel_id": "conf",
+      "track_id": "g-mic",
+      "frames": [
+        "AQA=",
+        "AgA="
       ]
     },
     {
@@ -156,6 +191,17 @@
           "source": {
             "channel_id": "conf",
             "participant_id": "dial-in-1"
+          }
+        },
+        {
+          "type": "message",
+          "content": {
+            "type": "text",
+            "body": "Guest point"
+          },
+          "source": {
+            "channel_id": "conf",
+            "participant_id": "guest"
           }
         }
       ]
