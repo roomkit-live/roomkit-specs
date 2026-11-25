@@ -68,7 +68,7 @@
       {
         "name": "reports",
         "trigger": "on_tool_call",
-        "execution": "sync",
+        "execution": "async",
         "reactions": [
           {
             "gate": "reporting"
