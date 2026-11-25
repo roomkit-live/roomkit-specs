@@ -21522,7 +21522,17 @@ Each worker's delegation, within the turn or in the background, is bounded
 by the strategy's per-task timeout: a worker past it is cut, its task ended
 cancelled, and it reads as failed. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.3-026", "kind": "behavior", "applies": "A worker posts pending then exactly one terminal status for completion, failure, timeout, a raised error or caller cancellation.", "level": "must"} -->The worker is posted `pending` on the
 status bus, then one terminal entry however the delegation ends: completed,
-failed, timed out, raised, or cancelled by its caller. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.3-027", "kind": "behavior", "applies": "Once a worker task exists, its terminal entry names its task ID and ends its status line, including progress and Loop actions.", "level": "must"} -->That entry names the
+failed, timed out, raised, or cancelled by its caller. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.3-057", "kind": "behavior", "applies": "A strategy reads a worker's failed task with its end reason, and a worker its own bound cut as timed out by that bound.", "level": "must"} -->What the
+strategy reads of a worker's task that failed says why, by its end reason
+(Section 23.3 step 6) in the runtime's words then its code (`The task
+failed: it reached its limit of tool rounds before giving an answer
+(max_rounds).`); a worker the strategy's own bound cut reads as timed out,
+by that bound (`The task timed out after 30s.`). <!-- /rfc --><!-- rfc: {"id": "RK-19.7.3-058", "kind": "behavior", "applies": "A run's failed terminal entry names why under task_end_reason: its task's end reason, timeout, cancelled or error.", "level": "must"} -->A run's terminal entry
+that is `failed` names why, `task_end_reason`, as a task's own entry does
+(Section 23.3): its task's end reason when its delegation returned a task
+that did not complete, `timeout` when the strategy's bound cut it, whatever
+its task then ended with, `cancelled` when its caller cut it, and `error`
+when it raised. <!-- /rfc --><!-- rfc: {"id": "RK-19.7.3-027", "kind": "behavior", "applies": "Once a worker task exists, its terminal entry names its task ID and ends its status line, including progress and Loop actions.", "level": "must"} -->That entry names the
 task (`task_id`) once the task exists, whatever ended it, so the task's line
 on the bus (Section 23.4) ends with it, the progress its worker posted
 meanwhile included, whatever action the run posts under (a Loop's
@@ -23794,8 +23804,42 @@ called:<!-- /rfc --><!-- rfc: {"id": "RK-23.3-005", "kind": "behavior", "applies
    A result the agent submitted through a result tool before the cut or the
    failure still counts; without one, the task fails without a re-prompt.<!-- /rfc --><!-- rfc: {"id": "RK-23.3-038", "kind": "behavior", "applies": "Consumers receive no work from a failed task even if the result keeps narration.", "level": "must"} -->
    What reads a task's work (an orchestration strategy, the notified agent)
-   reads none from a failed task, its output whatever it keeps.<!-- /rfc --><!-- rfc: {"id": "RK-23.3-039", "kind": "behavior", "applies": "The parent receives ON_TASK_COMPLETED.", "level": "must"} -->
-7. Fire `ON_TASK_COMPLETED` hook in the parent room.<!-- /rfc --><!-- rfc: {"id": "RK-23.3-040", "kind": "behavior", "applies": "A notified result uses the framework's proactive delivery strategy, hooks and backend.", "level": "must"} -->
+   reads none from a failed task, its output whatever it keeps.<!-- /rfc --><!-- rfc: {"id": "RK-23.3-116", "kind": "behavior", "applies": "A task that did not complete has one end reason of a closed list, read off its result; a completed task has none.", "level": "must"} -->
+   A task that did not complete has an end reason, one code of a closed
+   list, read off its result: how its agent's turn ended when a cut ended
+   it and the list names that end (`max_rounds`, `timeout`,
+   `budget_exceeded`, `truncated`, `empty_response`, `unfinished`,
+   `force_stopped`, `cancelled`, and an ACP agent's `max_tokens`,
+   `max_turn_requests`, `refusal` and `interrupted`); `cancelled` for a
+   task cancelled from outside; `empty_response` for a task that failed
+   with no error, its agent's turn having answered nothing, as a turn whose
+   raise its delivery kept from the task does; `error` for any other
+   failure, a turn that failed after it began and a cut by a reason off the
+   list among them. A task that completed has none.<!-- /rfc --><!-- rfc: {"id": "RK-23.3-117", "kind": "behavior", "applies": "A hand-back, a delegate_task answer, task_status, a turn's notes and a strategy's reading name a task's end reason, never its error, its provider's words or its narration.", "level": "must"} -->
+   The end reason is all a model reads of why a task did not complete:
+   its hand-back, a `delegate_task` call's answer, `task_status` and a
+   turn's notes (Section 23.4), and what a strategy reads of a worker's
+   task that failed (Section 19.7.3) name the reason, by its code, in the
+   runtime's words for it, or both, and never the task's error (§9.3),
+   what its agent's model or provider said, nor the narration its output
+   keeps: those stay the host's, on the task's result and on
+   `ON_TASK_COMPLETED`.<!-- /rfc --><!-- rfc: {"id": "RK-23.3-118", "kind": "behavior", "applies": "Each end reason reads in the runtime's own fixed words, the same wherever a model reads them.", "level": "must"} -->
+   Each reason reads in the runtime's own words, the same wherever a model
+   reads them: `max_rounds`, "it reached its limit of tool rounds before
+   giving an answer"; `timeout`, "it ran out of time before giving an
+   answer"; `budget_exceeded`, "it used up its token budget before giving
+   an answer"; `truncated` and `max_tokens`, "its answer was cut at its
+   model's output limit"; `empty_response`, "it gave no answer";
+   `unfinished`, "it stopped before doing what it had announced";
+   `force_stopped`, "it was stopped before giving an answer";
+   `max_turn_requests`, "it reached its limit of model requests before
+   giving an answer"; `refusal`, "its model refused to answer";
+   `interrupted`, "it was interrupted before giving an answer";
+   `cancelled`, "it was cancelled before giving an answer"; `error`, "an
+   error ended it".<!-- /rfc --><!-- rfc: {"id": "RK-23.3-039", "kind": "behavior", "applies": "The parent receives ON_TASK_COMPLETED.", "level": "must"} -->
+7. Fire `ON_TASK_COMPLETED` hook in the parent room.<!-- /rfc --><!-- rfc: {"id": "RK-23.3-119", "kind": "behavior", "applies": "ON_TASK_COMPLETED carries the end reason of a task that did not complete under task_end_reason.", "level": "must"} -->
+   For a task that did not complete, the hook's event carries its end
+   reason in its metadata, `task_end_reason`, beside the task's status.<!-- /rfc --><!-- rfc: {"id": "RK-23.3-040", "kind": "behavior", "applies": "A notified result uses the framework's proactive delivery strategy, hooks and backend.", "level": "must"} -->
 8. If `notify` is set, hand the result back through `deliver()` (§22) with
    the framework's delivery strategy, so `BEFORE_DELIVER`, `AFTER_DELIVER` and
    the delivery backend apply to it as to any proactive delivery, <!-- /rfc --><!-- rfc: {"id": "RK-23.3-041", "kind": "behavior", "applies": "The hand-back is an instruction for a notified intelligence channel.", "level": "must"} -->and with
@@ -23816,7 +23860,10 @@ called:<!-- /rfc --><!-- rfc: {"id": "RK-23.3-005", "kind": "behavior", "applies
    a host whose agents need more of a worker's answer raises it, and a value below 1 is invalid. <!-- /rfc --><!-- rfc: {"id": "RK-23.3-050", "kind": "behavior", "applies": "A relayed failed or cancelled task identifies its status without exposing its error or remaining output.", "level": "must"} -->A task that
    did not complete says it failed or was
    cancelled, without its error (§9.3), whatever output or error text it
-   left. <!-- /rfc --><!-- rfc: {"id": "RK-23.3-051", "kind": "behavior", "applies": "Relay identifies the quoted original request and sanitized worker identifier.", "level": "must"} -->It names the task as the delegating agent wrote it (`task`, quoted
+   left. <!-- /rfc --><!-- rfc: {"id": "RK-23.3-120", "kind": "behavior", "applies": "A relayed failed task says why: its end reason in the runtime's words, then its code in parentheses.", "level": "must"} -->One that
+   failed says why: its end reason in the runtime's words, then its code in
+   parentheses (`failed: it reached its limit of tool rounds before giving
+   an answer (max_rounds)`). <!-- /rfc --><!-- rfc: {"id": "RK-23.3-051", "kind": "behavior", "applies": "Relay identifies the quoted original request and sanitized worker identifier.", "level": "must"} -->It names the task as the delegating agent wrote it (`task`, quoted
    as Section 6.4 quotes a text from outside), and the worker by its id kept
    to an identifier's characters, so the notified agent says the result for
    what was asked, not for what the conversation moved on to meanwhile.<!-- /rfc --><!-- rfc: {"id": "RK-23.3-052", "kind": "behavior", "applies": "An intelligence relay includes the result-only instruction in the language of the conversation.", "level": "must"} -->
@@ -23836,7 +23883,9 @@ called:<!-- /rfc --><!-- rfc: {"id": "RK-23.3-005", "kind": "behavior", "applies
    worker), `task_status` and `task` (what was asked, bounded), whichever
    channel it reaches, so a hook that sees it (`BEFORE_BROADCAST`,
    `BEFORE_DELIVER`) tells a task's result from any other instruction and
-   names the task without reading its text.<!-- /rfc --><!-- rfc: {"id": "RK-23.3-057", "kind": "behavior", "applies": "A relayed instruction is stored as the addressed AI's private history record.", "level": "must"} -->
+   names the task without reading its text.<!-- /rfc --><!-- rfc: {"id": "RK-23.3-121", "kind": "behavior", "applies": "The delivery of a task that did not complete carries its end reason under task_end_reason.", "level": "must"} -->
+   For a task that did not complete, that metadata carries its end reason
+   too, `task_end_reason`.<!-- /rfc --><!-- rfc: {"id": "RK-23.3-057", "kind": "behavior", "applies": "A relayed instruction is stored as the addressed AI's private history record.", "level": "must"} -->
    An instruction is not stored as the room's: the AI channel it directs
    keeps it as its own record (§10.1.1, The instruction a turn read), so the
    result reads in that agent's later turns where its turn read it, in no
@@ -23866,7 +23915,11 @@ called:<!-- /rfc --><!-- rfc: {"id": "RK-23.3-005", "kind": "behavior", "applies
    refused when called. <!-- /rfc --><!-- rfc: {"id": "RK-23.3-066", "kind": "behavior", "applies": "Post identifies and quotes the task before the result.", "level": "must"} -->The message names the task (`task`, quoted as
    Section 6.4 quotes a text from outside) before the result, so the room
    tells what it answers; <!-- /rfc --><!-- rfc: {"id": "RK-23.3-067", "kind": "behavior", "applies": "An unsuccessful post reports failure or cancellation without the error text.", "level": "must"} -->a task that did not complete posts that it failed
-   or was cancelled, without its error (§9.3); <!-- /rfc --><!-- rfc: {"id": "RK-23.3-068", "kind": "behavior", "applies": "Post suppresses an empty successful result and a task cancelled by its own notified agent.", "level": "must"} -->a completed task with
+   or was cancelled, without its error (§9.3); <!-- /rfc --><!-- rfc: {"id": "RK-23.3-122", "kind": "behavior", "applies": "A posted failed task says why in the runtime's words, and its message carries the end reason in its metadata.", "level": "must"} -->one that failed
+   posts why, its end reason in the runtime's words (`The task … failed: it
+   reached its limit of tool rounds before giving an answer.`), and the
+   message of a task that did not complete carries `task_end_reason` in its
+   metadata; <!-- /rfc --><!-- rfc: {"id": "RK-23.3-068", "kind": "behavior", "applies": "Post suppresses an empty successful result and a task cancelled by its own notified agent.", "level": "must"} -->a completed task with
    nothing to say posts nothing, and a task the agent cancelled itself
    posts nothing either. <!-- /rfc --><!-- rfc: {"id": "RK-23.3-069", "kind": "behavior", "applies": "Posted results pass the sender's gate, access and visibility and enter the room's shared history.", "level": "must"} -->The message is committed as the notified agent's
    response is (§10.1 steps 9 to 14): it crosses `BEFORE_BROADCAST` and the
@@ -23984,7 +24037,9 @@ bounded, with the whole result in `metadata.result` when the detail was cut
 (Section 19.8), <!-- /rfc --><!-- rfc: {"id": "RK-23.3-108", "kind": "behavior", "applies": "Failed and cancelled terminal bus entries use failed status, identify the task outcome and withhold the error.", "level": "must"} -->or `failed` for a task that failed or was cancelled, its detail
 saying which and never the error's text (Section 9.3). <!-- /rfc --><!-- rfc: {"id": "RK-23.3-109", "kind": "behavior", "applies": "Pending and terminal bus entries identify the parent, task and child; the terminal one adds status and duration.", "level": "must"} -->Both entries carry in
 their metadata `room_id`, the parent room, `task_id` and `child_room_id`; the
-terminal one adds `task_status` and `duration_ms`. <!-- /rfc --><!-- rfc: {"id": "RK-23.3-110", "kind": "behavior", "applies": "post_status false suppresses delegation bus entries for a caller that manages its own status.", "level": "must"} -->A caller that follows its
+terminal one adds `task_status` and `duration_ms`. <!-- /rfc --><!-- rfc: {"id": "RK-23.3-123", "kind": "behavior", "applies": "The terminal bus entry of a task that did not complete adds its end reason under task_end_reason, its detail unchanged.", "level": "must"} -->The terminal entry of
+a task that did not complete adds its end reason, `task_end_reason`, its
+detail unchanged. <!-- /rfc --><!-- rfc: {"id": "RK-23.3-110", "kind": "behavior", "applies": "post_status false suppresses delegation bus entries for a caller that manages its own status.", "level": "must"} -->A caller that follows its
 tasks on the bus itself (an orchestration strategy's worker run, Section
 19.7.3) delegates with `post_status = false`, and the delegation posts
 nothing, so a task never shows twice.
@@ -24083,7 +24138,10 @@ Implementations SHOULD provide helpers for AI-driven delegation:<!-- /rfc --><!-
   handler itself, delegates inline (Section 23.3): the call answers once the
   task ended, with the task's receipt, its `status` the status the task ended
   with, and its `result`, the task's work bounded by `max_result_chars` as a
-  relayed result is (empty for a task that failed). <!-- /rfc --><!-- rfc: {"id": "RK-23.4-026", "kind": "behavior", "applies": "An inline delegation inherits its worker's lifetime, so cancelling that worker cuts the nested task.", "level": "must"} -->The task runs within the
+  relayed result is (empty for a task that failed). <!-- /rfc --><!-- rfc: {"id": "RK-23.4-069", "kind": "behavior", "applies": "An inline delegate_task call answers the end reason of a task that did not complete, and the runtime's words for it, before its result.", "level": "must"} -->A task that did not
+  complete answers its end reason too, `end_reason`, with the runtime's
+  words for it, `end_reason_text` (Section 23.3 step 6), before its
+  `result`. <!-- /rfc --><!-- rfc: {"id": "RK-23.4-026", "kind": "behavior", "applies": "An inline delegation inherits its worker's lifetime, so cancelling that worker cuts the nested task.", "level": "must"} -->The task runs within the
   call: one a worker's turn made ends with that turn, so cancelling the worker's
   task cancels it, and the worker is not asked again. <!-- /rfc --><!-- rfc: {"id": "RK-23.4-027", "kind": "behavior", "applies": "Outside a qualifying child or without the option the handler returns immediately with a background receipt.", "level": "must"} -->Without it, and from any
   other room with it, a call starts a background task and answers with its
@@ -24123,7 +24181,13 @@ Implementations SHOULD provide helpers for AI-driven delegation:<!-- /rfc --><!-
   rule 4, as the worker's brief, the tool's answer that starts a task, the
   relayed result and the tasks' block of a turn's notes name it), <!-- /rfc --><!-- rfc: {"id": "RK-23.4-038", "kind": "behavior", "applies": "Status includes the original task, outcome, latest progress and time, and result or failure.", "level": "must"} -->the task,
   its status, its latest progress and when it was posted (Section 23.3), its
-  whole result (Section 19.8) or that it failed, and when it was posted; <!-- /rfc --><!-- rfc: {"id": "RK-23.4-039", "kind": "behavior", "applies": "Supplying task_id filters status to one task.", "level": "must"} -->a
+  whole result (Section 19.8) or that it failed, and when it was posted; <!-- /rfc --><!-- rfc: {"id": "RK-23.4-070", "kind": "behavior", "applies": "task_status lists a task that did not complete with its end reason and the runtime's words, read from its terminal entry only when the closed list names it.", "level": "must"} -->a
+  task that did not complete is listed with its end reason, `end_reason`,
+  and the runtime's words for it, `end_reason_text`, read from its terminal
+  entry's `task_end_reason` when the list of Section 23.3 step 6 names it:
+  a reason the list does not name, or one that is no text, gives the line
+  none, so an entry posted from elsewhere gives a model no words of its
+  own; <!-- /rfc --><!-- rfc: {"id": "RK-23.4-039", "kind": "behavior", "applies": "Supplying task_id filters status to one task.", "level": "must"} -->a
   `task_id` argument narrows the answer to one task. <!-- /rfc --><!-- rfc: {"id": "RK-23.4-040", "kind": "behavior", "applies": "Task-status results are confined to the calling room.", "level": "must"} -->It reads the bus for that
   room only: one room's tasks never show in another. <!-- /rfc --><!-- rfc: {"id": "RK-23.4-041", "kind": "behavior", "applies": "A dispatch receipt names task_status only when the agent has that tool.", "level": "must"} -->A tool reply that tells
   its agent to follow the work (a strategy's background dispatch, Section
@@ -24215,7 +24279,10 @@ worker's text: each is quoted as Section 6.4 quotes a text from outside (on
 one line, bounded, between marks it cannot close), set apart as data. <!-- /rfc --><!-- rfc: {"id": "RK-23.4-063", "kind": "behavior", "applies": "Sanitize the worker identifier and restrict the displayed end states.", "level": "must"} -->What
 the notes give unquoted carries no text of its own: a worker's name keeps to an
 identifier's characters, and a task's ending is `completed`, `failed`,
-`cancelled`, or else `ended`. <!-- /rfc --><!-- rfc: {"id": "RK-23.4-064", "kind": "behavior", "applies": "Read current task notes anew at turn construction and persist none of them.", "level": "must"} -->The notes are read
+`cancelled`, or else `ended`. <!-- /rfc --><!-- rfc: {"id": "RK-23.4-071", "kind": "behavior", "applies": "After failed, the notes give the end reason a task's line names, in the runtime's words then by its code, none of it a worker's text.", "level": "must"} -->After
+`failed`, a task whose line names an end reason reads it too, in the
+runtime's words then by its code (`failed: it reached its limit of tool
+rounds before giving an answer (max_rounds)`), none of it a worker's text. <!-- /rfc --><!-- rfc: {"id": "RK-23.4-064", "kind": "behavior", "applies": "Read current task notes anew at turn construction and persist none of them.", "level": "must"} -->The notes are read
 from the bus as the turn is built, and nothing is stored: a task the bus no
 longer lists is no longer in them. <!-- /rfc --><!-- rfc: {"id": "RK-23.4-065", "kind": "behavior", "applies": "A standalone turn has no task notes.", "level": "must"} -->A standalone turn carries none (Section
 10.1.1), <!-- /rfc --><!-- rfc: {"id": "RK-23.4-066", "kind": "behavior", "applies": "Realtime feature: a session without a turn has no task notes.", "level": "must"} -->and a realtime session, which builds no turn, carries none either.
