@@ -2661,6 +2661,85 @@
         }
       }
     },
+    "scripted_tts": {
+      "description": "A scripted synthesizer (README, Scripted voice sessions, `tts`).",
+      "type": "object",
+      "properties": {
+        "context_level": {
+          "enum": [
+            "none",
+            "self",
+            "text",
+            "audio"
+          ]
+        },
+        "format": {
+          "type": "string",
+          "minLength": 1
+        },
+        "word_ms": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "fails": {
+          "type": "string"
+        },
+        "gates": {
+          "type": "array",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "voices": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "name": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "language": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "gender": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "description": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "max_dialogue_speakers": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "additionalProperties": false
+    },
     "call": {
       "type": "object",
       "required": [
@@ -2679,6 +2758,13 @@
             "conference.unmute",
             "conference.connection_quality",
             "conference.tool_call",
+            "conference.read",
+            "conference.ensure_bot",
+            "conference.plug",
+            "conference.unplug",
+            "conference.set_bot_grants",
+            "conference.bot_lost",
+            "conference.echo",
             "video.open",
             "video.frame",
             "video.disconnect",
@@ -3109,6 +3195,266 @@
               },
               "arguments": {
                 "type": "object"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "conference.read"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "channel_id"
+            ],
+            "properties": {
+              "channel_id": {
+                "type": "string"
+              },
+              "calls": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "conference.ensure_bot"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "channel_id",
+              "room_id"
+            ],
+            "properties": {
+              "channel_id": {
+                "type": "string"
+              },
+              "room_id": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "conference.plug"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "channel_id",
+              "kind"
+            ],
+            "properties": {
+              "channel_id": {
+                "type": "string"
+              },
+              "kind": {
+                "enum": [
+                  "stt",
+                  "tts",
+                  "recording",
+                  "realtime"
+                ]
+              },
+              "tts": {
+                "$ref": "#/$defs/scripted_tts"
+              },
+              "recorder": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "minLength": 1
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "kind": {
+                      "const": "recording"
+                    }
+                  }
+                },
+                "then": {
+                  "required": [
+                    "recorder"
+                  ]
+                },
+                "else": {
+                  "not": {
+                    "required": [
+                      "recorder"
+                    ]
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "kind": {
+                      "const": "tts"
+                    }
+                  }
+                },
+                "then": {},
+                "else": {
+                  "not": {
+                    "required": [
+                      "tts"
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "conference.unplug"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "channel_id",
+              "kind"
+            ],
+            "properties": {
+              "channel_id": {
+                "type": "string"
+              },
+              "kind": {
+                "enum": [
+                  "stt",
+                  "tts",
+                  "recording",
+                  "realtime"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "conference.set_bot_grants"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "channel_id",
+              "grants"
+            ],
+            "properties": {
+              "channel_id": {
+                "type": "string"
+              },
+              "grants": {
+                "type": [
+                  "object",
+                  "null"
+                ],
+                "properties": {
+                  "publish_audio": {
+                    "type": "boolean"
+                  },
+                  "publish_video": {
+                    "type": "boolean"
+                  },
+                  "publish_screen_share": {
+                    "type": "boolean"
+                  },
+                  "publish_screen_share_audio": {
+                    "type": "boolean"
+                  },
+                  "subscribe": {
+                    "type": "boolean"
+                  },
+                  "moderate": {
+                    "type": "boolean"
+                  },
+                  "hidden": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "conference.bot_lost"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "channel_id",
+              "room_id"
+            ],
+            "properties": {
+              "channel_id": {
+                "type": "string"
+              },
+              "room_id": {
+                "type": "string"
+              },
+              "reason": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "conference.echo"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "channel_id",
+              "room_id",
+              "track_id"
+            ],
+            "properties": {
+              "channel_id": {
+                "type": "string"
+              },
+              "room_id": {
+                "type": "string"
+              },
+              "track_id": {
+                "type": "string",
+                "minLength": 1
               }
             }
           }
@@ -3963,85 +4309,14 @@
                 }
               },
               "tts": {
-                "type": [
-                  "object",
-                  "null"
-                ],
-                "properties": {
-                  "context_level": {
-                    "enum": [
-                      "none",
-                      "self",
-                      "text",
-                      "audio"
-                    ]
+                "anyOf": [
+                  {
+                    "type": "null"
                   },
-                  "format": {
-                    "type": "string",
-                    "minLength": 1
-                  },
-                  "word_ms": {
-                    "type": "integer",
-                    "minimum": 1
-                  },
-                  "fails": {
-                    "type": "string"
-                  },
-                  "gates": {
-                    "type": "array",
-                    "items": {
-                      "type": [
-                        "string",
-                        "null"
-                      ]
-                    }
-                  },
-                  "voices": {
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "id": {
-                          "type": "string",
-                          "minLength": 1
-                        },
-                        "name": {
-                          "type": [
-                            "string",
-                            "null"
-                          ]
-                        },
-                        "language": {
-                          "type": [
-                            "string",
-                            "null"
-                          ]
-                        },
-                        "gender": {
-                          "type": [
-                            "string",
-                            "null"
-                          ]
-                        },
-                        "description": {
-                          "type": [
-                            "string",
-                            "null"
-                          ]
-                        }
-                      },
-                      "required": [
-                        "id"
-                      ],
-                      "additionalProperties": false
-                    }
-                  },
-                  "max_dialogue_speakers": {
-                    "type": "integer",
-                    "minimum": 0
+                  {
+                    "$ref": "#/$defs/scripted_tts"
                   }
-                },
-                "additionalProperties": false
+                ]
               },
               "tts_context": {
                 "type": "object",

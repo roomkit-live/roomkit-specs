@@ -91,11 +91,6 @@
       "card": "RMK-2070",
       "note": "step: conference.feed: a transcription through BEFORE_BROADCAST, the room's permissions and the broadcast to its other channels, as any inbound event."
     },
-    "RK-12.10.1-008": {
-      "class": "step",
-      "card": "RMK-2070",
-      "note": "step: conference.read: one join_as_bot per conference, its subscriptions and the bot's publications on that one session."
-    },
     "RK-12.10.1-010": {
       "class": "step",
       "card": "RMK-2070",
@@ -230,16 +225,6 @@
       "class": "step",
       "card": "RMK-2076",
       "note": "step: conference.read and the conference model steps: one provider connect per bot session."
-    },
-    "RK-12.10.12-044": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.read (bot grants): subscribe and publish_audio at the join of a realtime channel."
-    },
-    "RK-12.10.12-045": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.plug and conference.unplug of realtime, conference.read."
     },
     "RK-12.10.12-046": {
       "class": "step",
@@ -441,11 +426,6 @@
       "card": "RMK-2070",
       "note": "step: conference.bot_lost, conference.read, framework_events media rows: the session off the books, conference_ended announced, its lanes closed and recordings finalized, the next need re-joining."
     },
-    "RK-12.10.3-028": {
-      "class": "step",
-      "card": "RMK-2070",
-      "note": "step: conference.bot_lost, conference.read: a reported end followed by a bounded, backed-off re-join with no new external event."
-    },
     "RK-12.10.3-036": {
       "class": "phase6",
       "card": "RMK-2070",
@@ -459,7 +439,7 @@
     "RK-12.10.3-049": {
       "class": "step",
       "card": "RMK-2070",
-      "note": "step: conference.set_bot_grants, conference.read: concealing a visible bot replaces its session, even on a backend able to update grants in place."
+      "note": "step: conference.open backend capabilities (BOT_GRANT_UPDATE); then conference.set_bot_grants concealing a visible bot, conference.read: leave() and join_as_bot(), no update_bot_grants()."
     },
     "RK-12.10.3-050": {
       "class": "step",
@@ -556,11 +536,6 @@
       "card": "RMK-2007",
       "note": "measurement: the close's whole duration bound (the grace, the turn backend's budget, the closes, at most two unwinds of 1 second); no step reads elapsed time."
     },
-    "RK-12.10.4-081": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.read: the scripted backend's ensure_room() call at the attach."
-    },
     "RK-12.10.4-082": {
       "class": "step",
       "card": "RMK-2076",
@@ -600,26 +575,6 @@
       "class": "step",
       "card": "RMK-2076",
       "note": "step: conference.fault: list_participants() failing at the attach, the attach returning the binding and a later arrival bringing the bot in."
-    },
-    "RK-12.10.4-091": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.read: an attach over an empty conference makes no join_as_bot() call."
-    },
-    "RK-12.10.4-092": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.ensure_bot: the call brings the bot in on an empty conference."
-    },
-    "RK-12.10.4-093": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.ensure_bot: the bot's session returned once joined, the same one when live."
-    },
-    "RK-12.10.4-094": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.ensure_bot, conference.bot_lost: a second join after the backend reports the bot's end."
     },
     "RK-12.10.4-095": {
       "class": "step",
@@ -676,16 +631,6 @@
       "card": "RMK-2076",
       "note": "step: conference.feed, conference.read: frames after the unpublication produce no transcript, the lane gone."
     },
-    "RK-12.10.4-111": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.read: unsubscribe_track() for a subscribed track once unpublished."
-    },
-    "RK-12.10.4-113": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.read: leave() at the detach after a join, none with no bot."
-    },
     "RK-12.10.4-114": {
       "class": "step",
       "card": "RMK-2076",
@@ -706,20 +651,10 @@
       "card": "RMK-2076",
       "note": "step: conference.fault, conference.mint: a mint held past the detach's budget is taken back."
     },
-    "RK-12.10.4-118": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: a hook of a conference announcement whose do detaches the channel (conference.read): the detach returns, the teardown runs after the hook."
-    },
     "RK-12.10.4-119": {
       "class": "step",
       "card": "RMK-2076",
       "note": "step: conference.read, framework_events media rows: the order of the closes, leave() and conference_ended at a detach."
-    },
-    "RK-12.10.4-124": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.echo: the backend reports the bot's own track muted; no hook fires."
     },
     "RK-12.10.4-125": {
       "class": "step",
@@ -735,21 +670,6 @@
       "class": "step",
       "card": "RMK-2076",
       "note": "step: error name conference_already_attached, conference.fault: the attach refused at once while the teardown is held, accepted once it ends."
-    },
-    "RK-12.10.4-129": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.echo: the backend reports the bot as a participant and publisher; no conference hook fires for it."
-    },
-    "RK-12.10.4-130": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.echo: the participants expectation holds no record for the bot."
-    },
-    "RK-12.10.4-131": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.echo, conference.read: no subscribe_track() for the bot's echoed track."
     },
     "RK-12.10.4-132": {
       "class": "step",
@@ -874,37 +794,12 @@
     "RK-12.10.4-160": {
       "class": "step",
       "card": "RMK-2076",
-      "note": "step: conference.read (lane drops): the count of frames a full lane discarded."
-    },
-    "RK-12.10.4-161": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.read: the subscriptions the scripted backend recorded hold only consumed tracks."
-    },
-    "RK-12.10.4-162": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.read: subscribe_track() called for a consumed track on the scripted backend, which subscribes nothing by itself."
+      "note": "step: conference.feed past a full lane, and a lane-drop member of conference.read: the count of frames a full lane discarded."
     },
     "RK-12.10.4-163": {
       "class": "step",
       "card": "RMK-2076",
       "note": "step: conference.open options, conference.read: an audio track subscribed with stt, with recording and with realtime."
-    },
-    "RK-12.10.4-164": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.read: a video and a screen-share track published, no subscribe_track() for either."
-    },
-    "RK-12.10.4-167": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.unplug, conference.read: unsubscribe_track() once the last consumer of a track is unplugged and the bot stays."
-    },
-    "RK-12.10.4-168": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.read: mute or set_access READ_ONLY, then a published audio track: no subscribe_track()."
     },
     "RK-12.10.4-169": {
       "class": "step",
@@ -916,20 +811,10 @@
       "card": "RMK-2076",
       "note": "step: conference.feed: an utterance while the binding is muted stores no transcription."
     },
-    "RK-12.10.4-171": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.bot_lost while the binding is muted, conference.read: no join_as_bot()."
-    },
     "RK-12.10.4-172": {
       "class": "step",
       "card": "RMK-2076",
       "note": "step: conference.feed: a frame right after mute reaches no lane."
-    },
-    "RK-12.10.4-173": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.read: unsubscribe_track() for every subscribed track after mute."
     },
     "RK-12.10.4-174": {
       "class": "step",
@@ -941,26 +826,6 @@
       "card": "RMK-2076",
       "note": "step: recording.read per conference track: the recordings finalized at mute."
     },
-    "RK-12.10.4-176": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.read: unmute (the binding) subscribes the consumed tracks again."
-    },
-    "RK-12.10.4-177": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.plug and conference.unplug per kind."
-    },
-    "RK-12.10.4-178": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.plug on a pure-transport channel whose conference holds participants, conference.read: list_participants() then join_as_bot()."
-    },
-    "RK-12.10.4-179": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.plug over an empty conference, conference.read: no join_as_bot() until an arrival."
-    },
     "RK-12.10.4-180": {
       "class": "step",
       "card": "RMK-2076",
@@ -970,21 +835,6 @@
       "class": "step",
       "card": "RMK-2076",
       "note": "step: conference.open options (e2ee), conference.plug: stt and recording refused."
-    },
-    "RK-12.10.4-182": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.plug: a recording with no recorder refused."
-    },
-    "RK-12.10.4-183": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.plug twice for one kind: the second refused."
-    },
-    "RK-12.10.4-184": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.unplug of an empty slot: nothing changes (conference.read)."
     },
     "RK-12.10.4-185": {
       "class": "step",
@@ -996,11 +846,6 @@
       "card": "RMK-2076",
       "note": "step: conference.plug of stt after a track was published, conference.read and conference.feed: the track subscribed and transcribed."
     },
-    "RK-12.10.4-187": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.unplug, conference.read: unsubscribe_track() for tracks no other consumer holds, none for those recording still holds."
-    },
     "RK-12.10.4-188": {
       "class": "step",
       "card": "RMK-2076",
@@ -1009,7 +854,7 @@
     "RK-12.10.4-189": {
       "class": "step",
       "card": "RMK-2076",
-      "note": "step: conference.unplug of tts during a held utterance, conference.read: stop_playback() and a final chunk."
+      "note": "step: conference.fault holding publish_audio after an utterance's first chunk; then conference.unplug of tts, conference.read: stop_playback() and a final chunk."
     },
     "RK-12.10.4-190": {
       "class": "step",
@@ -1026,16 +871,6 @@
       "card": "RMK-2076",
       "note": "step: conference.unplug of the last need, then conference.join and conference.mint: no join, the roster written."
     },
-    "RK-12.10.4-193": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.read (bot grants): subscribe and publish_audio as stt and tts are plugged."
-    },
-    "RK-12.10.4-194": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.plug before the join, conference.read: the grants of the join cover the plug."
-    },
     "RK-12.10.4-195": {
       "class": "step",
       "card": "RMK-2076",
@@ -1049,42 +884,22 @@
     "RK-12.10.4-197": {
       "class": "step",
       "card": "RMK-2076",
-      "note": "step: conference.unplug on a backend with BOT_GRANT_UPDATE, conference.read: update_bot_grants() with the narrower set."
+      "note": "step: conference.open backend capabilities (BOT_GRANT_UPDATE); then conference.unplug narrowing the needs, conference.read: update_bot_grants() with the narrower set."
     },
     "RK-12.10.4-199": {
       "class": "step",
       "card": "RMK-2076",
       "note": "step: conference.open options (bot_grants), conference.plug, conference.read: no update_bot_grants(), no re-join."
     },
-    "RK-12.10.4-200": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.set_bot_grants on a running channel, conference.read."
-    },
     "RK-12.10.4-201": {
       "class": "step",
       "card": "RMK-2076",
       "note": "step: conference.set_bot_grants issued while a plug is held (conference.fault): applied after it."
     },
-    "RK-12.10.4-202": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.set_bot_grants withdrawing subscribe under a plugged stt: accepted (conference.read)."
-    },
-    "RK-12.10.4-203": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.set_bot_grants with null, conference.read: the derived grants applied."
-    },
-    "RK-12.10.4-204": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.set_bot_grants on a pure-transport channel, conference.read: no join_as_bot()."
-    },
     "RK-12.10.4-205": {
       "class": "step",
       "card": "RMK-2076",
-      "note": "step: conference.set_bot_grants narrowing on a backend with BOT_GRANT_UPDATE, conference.read: update_bot_grants() with the new set."
+      "note": "step: conference.open backend capabilities (BOT_GRANT_UPDATE); then conference.set_bot_grants narrowing, conference.read: update_bot_grants() with the new set."
     },
     "RK-12.10.4-206": {
       "class": "step",
@@ -1094,17 +909,17 @@
     "RK-12.10.4-208": {
       "class": "step",
       "card": "RMK-2076",
-      "note": "step: conference.read (channel info): whether a grant change would apply in place."
+      "note": "step: conference.open backend capabilities (BOT_GRANT_UPDATE); conference.read's info: bot_grant_update_in_place true with it, false without."
     },
     "RK-12.10.4-209": {
       "class": "step",
       "card": "RMK-2076",
-      "note": "step: conference.set_bot_grants revealing a hidden bot on a backend with BOT_GRANT_UPDATE, conference.read: update_bot_grants(), no re-join."
+      "note": "step: conference.open backend capabilities (BOT_GRANT_UPDATE); then conference.set_bot_grants revealing a hidden bot, conference.read: update_bot_grants(), no re-join."
     },
     "RK-12.10.4-210": {
       "class": "step",
       "card": "RMK-2076",
-      "note": "step: conference.set_bot_grants hiding a visible bot on a backend with BOT_GRANT_UPDATE, conference.read: leave() and join_as_bot()."
+      "note": "step: conference.open backend capabilities (BOT_GRANT_UPDATE); then conference.set_bot_grants hiding a visible bot, conference.read: leave() and join_as_bot(), no update_bot_grants()."
     },
     "RK-12.10.4-211": {
       "class": "step",
@@ -1115,11 +930,6 @@
       "class": "step",
       "card": "RMK-2076",
       "note": "step: framework_events media rows: no conference_bot_grants_changed after a set equal to the grants in force."
-    },
-    "RK-12.10.4-213": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.plug, conference.read (channel info): stt reported configured from the plug, not after an unplug."
     },
     "RK-12.10.4-214": {
       "class": "step",

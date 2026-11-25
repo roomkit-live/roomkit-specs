@@ -1,0 +1,117 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "conference/clearing-the-explicit-grants-returns-to-derived-ones",
+  "title": "Explicit grants cleared on a running channel give way to the grants derived from its configuration",
+  "rules": [
+    "§12.10.4"
+  ],
+  "requirements": [
+    "RK-12.10.4-203"
+  ],
+  "requires_features": [
+    "conference"
+  ],
+  "setup": {
+    "rooms": [
+      {
+        "id": "r1"
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "conference.open",
+      "channel_id": "conf",
+      "room_id": "r1"
+    },
+    {
+      "call": "conference.ensure_bot",
+      "channel_id": "conf",
+      "room_id": "r1",
+      "expect": {
+        "result": {
+          "id": {
+            "$as": "first"
+          },
+          "room_id": "r1"
+        }
+      }
+    },
+    {
+      "call": "conference.set_bot_grants",
+      "channel_id": "conf",
+      "grants": {
+        "publish_audio": true,
+        "publish_video": false,
+        "publish_screen_share": false,
+        "subscribe": true,
+        "moderate": true
+      }
+    },
+    {
+      "call": "conference.set_bot_grants",
+      "channel_id": "conf",
+      "grants": null
+    },
+    {
+      "call": "conference.read",
+      "channel_id": "conf",
+      "calls": [
+        "join_as_bot",
+        "leave"
+      ],
+      "expect": {
+        "result": {
+          "calls": [
+            {
+              "call": "join_as_bot",
+              "room_id": "r1",
+              "session": {
+                "$as": "first"
+              },
+              "grants": {
+                "publish_audio": false,
+                "moderate": false
+              }
+            },
+            {
+              "call": "leave",
+              "session": {
+                "$as": "first"
+              }
+            },
+            {
+              "call": "join_as_bot",
+              "room_id": "r1",
+              "session": {
+                "$as": "second"
+              },
+              "grants": {
+                "publish_audio": true,
+                "moderate": true
+              }
+            },
+            {
+              "call": "leave",
+              "session": {
+                "$as": "second"
+              }
+            },
+            {
+              "call": "join_as_bot",
+              "room_id": "r1",
+              "session": {
+                "$as": "third"
+              },
+              "grants": {
+                "subscribe": true,
+                "publish_audio": false,
+                "moderate": false
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

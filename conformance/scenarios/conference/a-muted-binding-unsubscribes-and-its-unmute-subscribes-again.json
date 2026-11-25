@@ -1,0 +1,146 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "conference/a-muted-binding-unsubscribes-and-its-unmute-subscribes-again",
+  "title": "Muting the binding unsubscribes every track and subscribes none published meanwhile; unmuting subscribes them all",
+  "rules": [
+    "§12.10.4"
+  ],
+  "requirements": [
+    "RK-12.10.4-168",
+    "RK-12.10.4-173",
+    "RK-12.10.4-176"
+  ],
+  "requires_features": [
+    "conference"
+  ],
+  "notes": "The second read is unordered: the RFC does not order the subscriptions the reopening makes, and the first read already shows the unsubscription came before them.",
+  "setup": {
+    "rooms": [
+      {
+        "id": "r1"
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "conference.open",
+      "channel_id": "conf",
+      "room_id": "r1"
+    },
+    {
+      "call": "conference.join",
+      "channel_id": "conf",
+      "participant_id": "alice"
+    },
+    {
+      "call": "conference.join",
+      "channel_id": "conf",
+      "participant_id": "bob"
+    },
+    {
+      "call": "conference.publish",
+      "channel_id": "conf",
+      "participant_id": "alice",
+      "track_id": "t1",
+      "kind": "audio"
+    },
+    {
+      "idle": true
+    },
+    {
+      "call": "mute",
+      "room_id": "r1",
+      "channel_id": "conf"
+    },
+    {
+      "call": "conference.publish",
+      "channel_id": "conf",
+      "participant_id": "bob",
+      "track_id": "t2",
+      "kind": "audio"
+    },
+    {
+      "idle": true
+    },
+    {
+      "call": "conference.read",
+      "channel_id": "conf",
+      "calls": [
+        "subscribe_track",
+        "unsubscribe_track"
+      ],
+      "expect": {
+        "result": {
+          "calls": [
+            {
+              "call": "subscribe_track",
+              "track_id": "t1",
+              "session": {
+                "$as": "bot"
+              }
+            },
+            {
+              "call": "unsubscribe_track",
+              "track_id": "t1",
+              "session": {
+                "$as": "bot"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "call": "unmute",
+      "room_id": "r1",
+      "channel_id": "conf"
+    },
+    {
+      "idle": true
+    },
+    {
+      "call": "conference.read",
+      "channel_id": "conf",
+      "calls": [
+        "subscribe_track",
+        "unsubscribe_track"
+      ],
+      "expect": {
+        "result": {
+          "calls": {
+            "$unordered": [
+              {
+                "call": "subscribe_track",
+                "track_id": "t1",
+                "session": {
+                  "$as": "bot"
+                }
+              },
+              {
+                "call": "unsubscribe_track",
+                "track_id": "t1",
+                "session": {
+                  "$as": "bot"
+                }
+              },
+              {
+                "call": "subscribe_track",
+                "track_id": "t1",
+                "session": {
+                  "$as": "bot"
+                }
+              },
+              {
+                "call": "subscribe_track",
+                "track_id": "t2",
+                "session": {
+                  "$as": "bot"
+                }
+              }
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

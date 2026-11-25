@@ -1,0 +1,234 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "conference/each-kind-is-plugged-and-unplugged-on-a-running-channel",
+  "title": "Recognition, voice, recording and a realtime model are each plugged into and unplugged from a running channel, and the disclosure follows",
+  "rules": [
+    "§12.10.4"
+  ],
+  "requirements": [
+    "RK-12.10.4-177",
+    "RK-12.10.4-213"
+  ],
+  "requires_features": [
+    "conference"
+  ],
+  "setup": {
+    "rooms": [
+      {
+        "id": "r1"
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "conference.open",
+      "channel_id": "conf",
+      "room_id": "r1"
+    },
+    {
+      "call": "conference.read",
+      "channel_id": "conf",
+      "expect": {
+        "result": {
+          "info": {
+            "stt_configured": true,
+            "realtime_configured": false,
+            "recording_configured": false
+          }
+        }
+      }
+    },
+    {
+      "call": "conference.unplug",
+      "channel_id": "conf",
+      "kind": "stt"
+    },
+    {
+      "call": "conference.read",
+      "channel_id": "conf",
+      "expect": {
+        "result": {
+          "info": {
+            "stt_configured": false
+          }
+        }
+      }
+    },
+    {
+      "call": "conference.plug",
+      "channel_id": "conf",
+      "kind": "tts"
+    },
+    {
+      "call": "conference.ensure_bot",
+      "channel_id": "conf",
+      "room_id": "r1",
+      "expect": {
+        "result": {
+          "id": {
+            "$as": "bot"
+          },
+          "room_id": "r1"
+        }
+      }
+    },
+    {
+      "call": "conference.read",
+      "channel_id": "conf",
+      "calls": [
+        "join_as_bot"
+      ],
+      "expect": {
+        "result": {
+          "calls": [
+            {
+              "call": "join_as_bot",
+              "room_id": "r1",
+              "session": {
+                "$as": "bot"
+              },
+              "grants": {
+                "publish_audio": true,
+                "subscribe": false
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "call": "conference.plug",
+      "channel_id": "conf",
+      "kind": "recording",
+      "recorder": "rec"
+    },
+    {
+      "call": "conference.read",
+      "channel_id": "conf",
+      "expect": {
+        "result": {
+          "info": {
+            "recording_configured": true
+          }
+        }
+      }
+    },
+    {
+      "call": "conference.unplug",
+      "channel_id": "conf",
+      "kind": "recording"
+    },
+    {
+      "call": "conference.read",
+      "channel_id": "conf",
+      "expect": {
+        "result": {
+          "info": {
+            "recording_configured": false
+          }
+        }
+      }
+    },
+    {
+      "call": "conference.unplug",
+      "channel_id": "conf",
+      "kind": "tts"
+    },
+    {
+      "call": "conference.read",
+      "channel_id": "conf",
+      "calls": [
+        "join_as_bot",
+        "leave"
+      ],
+      "expect": {
+        "result": {
+          "calls": [
+            {
+              "call": "join_as_bot",
+              "room_id": "r1",
+              "session": {
+                "$as": "bot"
+              },
+              "grants": {
+                "publish_audio": true,
+                "subscribe": false
+              }
+            },
+            {
+              "call": "leave",
+              "session": {
+                "$as": "bot"
+              }
+            },
+            {
+              "call": "join_as_bot",
+              "room_id": "r1",
+              "session": {
+                "$as": "recording"
+              },
+              "grants": {
+                "publish_audio": true,
+                "subscribe": true
+              }
+            },
+            {
+              "call": "leave",
+              "session": {
+                "$as": "recording"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "call": "conference.plug",
+      "channel_id": "conf",
+      "kind": "realtime"
+    },
+    {
+      "call": "conference.read",
+      "channel_id": "conf",
+      "expect": {
+        "result": {
+          "info": {
+            "realtime_configured": true
+          }
+        }
+      }
+    },
+    {
+      "call": "conference.unplug",
+      "channel_id": "conf",
+      "kind": "realtime"
+    },
+    {
+      "call": "conference.read",
+      "channel_id": "conf",
+      "expect": {
+        "result": {
+          "info": {
+            "realtime_configured": false
+          }
+        }
+      }
+    },
+    {
+      "call": "conference.plug",
+      "channel_id": "conf",
+      "kind": "stt"
+    },
+    {
+      "call": "conference.read",
+      "channel_id": "conf",
+      "expect": {
+        "result": {
+          "info": {
+            "stt_configured": true
+          }
+        }
+      }
+    }
+  ]
+}

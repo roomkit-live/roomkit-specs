@@ -4048,11 +4048,20 @@
     "RK-12.10.1-004": {
       "conference/a-call-reports-presence-without-changing-room-membership": "89d1167aa0cbaf0ec4501107dabe7c564d3a110bce39de077134917f9feff86f"
     },
+    "RK-12.10.1-008": {
+      "conference/one-bot-session-carries-the-conference-s-media": "7ecc41dda06b3f9e37b426d2bc7ab82e7899d5ba0322d216914e0516058351c1"
+    },
     "RK-12.10.12-027": {
       "conference/a-delivery-before-the-model-connects-is-unavailable": "35150786b21d586c022484eef3a7acc7156d376345dc18f231aaf7d23eb85731"
     },
     "RK-12.10.12-029": {
       "conference/a-delivery-into-the-conference-model-fires-the-injection-hook": "46eb4ebeb227099a85a22973f7fc7d7f2426b582c25fcfb4b18eb5330a2c6056"
+    },
+    "RK-12.10.12-044": {
+      "conference/a-speech-to-speech-bot-joins-to-listen-and-to-speak": "ca5232ad53648f59f1b3004d925868f939a8c1dac6fe33bc9e806379c858cc92"
+    },
+    "RK-12.10.12-045": {
+      "conference/a-realtime-model-is-plugged-and-unplugged-as-any-need": "548d0c6f6a242236ac5641598bb5f532ead7f0b290be67f8cab09c0b5a0505d3"
     },
     "RK-12.10.12-053": {
       "conference/a-conference-tool-call-passes-the-pre-execution-gate": "261ade75252b1b7ff2852411719941103492616d232c7c71af852bf0300885e3"
@@ -4069,6 +4078,9 @@
     },
     "RK-12.10.2-037": {
       "conference/an-arrival-with-no-address-stays-unknown": "0dad5be985eb01fc0872e6ed2094d5eaf1fc28369beb3a38f7fe0da0a17d523f"
+    },
+    "RK-12.10.3-028": {
+      "conference/a-lost-bot-rejoins-with-no-new-event": "c1ad2b369847d9e69bd1232bb7b1571ed67dcae744aa65d63a80c3d95e23bc0f"
     },
     "RK-12.10.4-030": {
       "kit-close/a-channel-whose-close-fails-holds-no-other-back-and-fails-the-close-last": "724d726b8be24a8d918606e10b1501cfc32378dc29b4f7c728486ecc46b84fba"
@@ -4259,8 +4271,23 @@
     "RK-12.10.4-080": {
       "kit-close/a-close-from-a-channel-s-close-returns-at-once": "c46020e2e295db87e3a589e3fe5d28ae1f96d48b077a4f77e64d8d4077e6c87e"
     },
+    "RK-12.10.4-081": {
+      "conference/an-attach-over-an-empty-conference-joins-nothing": "66b7783790bfa4322d96e68334a8de0609128347604ce2b3a2b4837be84b7f22"
+    },
     "RK-12.10.4-083": {
       "conference/a-conference-session-starts-once-however-many-participants-arrive": "3c12472ae69776c130c092ae0a46194ecf3c4f3c212aa96224c370437ee7815a"
+    },
+    "RK-12.10.4-091": {
+      "conference/an-attach-over-an-empty-conference-joins-nothing": "8f9cb7f7c449bc7129ae6a5733c334c0b6f8ce23da07ffb1626e333fb97d80a0"
+    },
+    "RK-12.10.4-092": {
+      "conference/ensure-bot-joins-an-empty-conference-and-returns-its-session": "18014586f8a2c73a59d87b94edc13412d9e72507d3c6dba854070433e7dd7727"
+    },
+    "RK-12.10.4-093": {
+      "conference/ensure-bot-joins-an-empty-conference-and-returns-its-session": "77fec9ec9e90a6067b6877ed5d2d2d345b00f5885561efb5cc01a4a29ecc7b50"
+    },
+    "RK-12.10.4-094": {
+      "conference/ensure-bot-joins-again-once-the-bot-was-lost": "bc33ce6e20b90337a26845baa26c21247af423bb6f90a964800cb19f04e008e2"
     },
     "RK-12.10.4-105": {
       "conference/a-call-reports-presence-without-changing-room-membership": "bbe0e2422341203b13e72306dfdcd7c495348e4bf72b3ea3fe7a8f71e99fb4ab"
@@ -4274,8 +4301,17 @@
     "RK-12.10.4-109": {
       "conference/a-screen-track-announces-the-start-and-end-of-sharing": "af149361f417069d6318e30987c27ad9da999b69ca3c77bea923a0ade94666fd"
     },
+    "RK-12.10.4-111": {
+      "conference/an-unpublished-track-is-unsubscribed-if-subscribed": "983c02392844604617eec01a7975caaefe2f88d384c52a04df7316b8c5d0f6e2"
+    },
     "RK-12.10.4-112": {
       "conference/a-screen-track-announces-the-start-and-end-of-sharing": "8274e7bf87dea77e69324372223fe44707eb139f6a67da6e4145b59e8b34239c"
+    },
+    "RK-12.10.4-113": {
+      "conference/a-detach-leaves-only-where-the-bot-joined": "fb19329de5125f14a24a17bf6b4ed4a83b0fec12a701ae05f1407ab1a36af33c"
+    },
+    "RK-12.10.4-118": {
+      "conference/a-detach-from-an-announcement-s-handler-runs-its-teardown-after-it": "1fce894a177e4d80e1f0e70c91395163a32cf8e48a1f25231b2c265232ed62a8"
     },
     "RK-12.10.4-120": {
       "conference/a-speaker-change-identifies-the-dominant-participant": "d30b8b89cf9f46a21877e5eabc3e4c1e85b399de1e8ee58057e12f2015a44627"
@@ -4289,8 +4325,87 @@
     "RK-12.10.4-123": {
       "conference/a-muted-binding-still-relays-the-sfu-s-signals": "cd06053f3341064bafdfb3a2de8fd5e08909f1f9522c9ba21caadfb8a857e5f3"
     },
+    "RK-12.10.4-124": {
+      "conference/the-bot-s-own-presence-and-tracks-are-not-relayed": "4d2f9b386ccb330f51146bbda80714d9b8fe260c8da9c448fe3c5a640a2aaa40"
+    },
     "RK-12.10.4-126": {
       "conference/re-attaching-the-same-conference-is-an-ordinary-attach": "598a9e0d6c0974af2de14539395df0c93ef18b5ac4b0f7ed77f9b9ee29a09b95"
+    },
+    "RK-12.10.4-129": {
+      "conference/the-bot-s-own-presence-and-tracks-are-not-relayed": "287b9aae61312593bc108c1b5abd0ffd150e9cb94b3c391f69c8511c064981f5"
+    },
+    "RK-12.10.4-130": {
+      "conference/the-bot-s-own-presence-and-tracks-are-not-relayed": "64f01cee2321604fbd2b0b18f9110224890646cad70a9b6c96b6e9a9d631e76d"
+    },
+    "RK-12.10.4-131": {
+      "conference/the-bot-s-own-presence-and-tracks-are-not-relayed": "b893c27fb92dc550eabb33e3a84bbf5a8bea71856948f9515e1d6dc0f3dbfc36"
+    },
+    "RK-12.10.4-161": {
+      "conference/only-the-audio-tracks-consumed-are-subscribed": "73b9a647b6d8d8eea10e94231832d2c2e14be5ab268573677ed1d6870c4bb09f"
+    },
+    "RK-12.10.4-162": {
+      "conference/only-the-audio-tracks-consumed-are-subscribed": "c012cee3d2a8b4f9ff7439bee52a3a04ff0a6aab3a261dd1ee96378170da7cae"
+    },
+    "RK-12.10.4-164": {
+      "conference/only-the-audio-tracks-consumed-are-subscribed": "a6b97c2758458dfab6d145a0fc292ffabde4f287e53c266e90c4ae0d6578600b"
+    },
+    "RK-12.10.4-167": {
+      "conference/the-last-consumer-s-unplug-unsubscribes-and-the-bot-stays": "64656300628a906f99b18f4da38714e32073332cb20d733a04c228169bd71bb9"
+    },
+    "RK-12.10.4-168": {
+      "conference/a-muted-binding-unsubscribes-and-its-unmute-subscribes-again": "7c3f0e6ef72aaffaa48cbab1fc8dac42183111c9e09c9c6964e12610e0d4f2af",
+      "conference/a-read-only-binding-subscribes-no-track": "7c3f0e6ef72aaffaa48cbab1fc8dac42183111c9e09c9c6964e12610e0d4f2af"
+    },
+    "RK-12.10.4-171": {
+      "conference/a-loss-under-a-closed-collection-gate-starts-no-rejoin": "28e97a09ac02142cf6476a570d8836c924a4aa14bf6ba4ea65fbb6bdc84b9604"
+    },
+    "RK-12.10.4-173": {
+      "conference/a-muted-binding-unsubscribes-and-its-unmute-subscribes-again": "e128f209a59208cc07ca4672e16010a98340e0bea75fc177e52fd8fdad74b207"
+    },
+    "RK-12.10.4-176": {
+      "conference/a-muted-binding-unsubscribes-and-its-unmute-subscribes-again": "1f6172769227129c7c28d511cf3449a1279c892d777209132158f7ccd545c329"
+    },
+    "RK-12.10.4-177": {
+      "conference/each-kind-is-plugged-and-unplugged-on-a-running-channel": "08187de56c92e94fa5f0566a996fe9b48ae94000e559f691c083d9f75865c1ae"
+    },
+    "RK-12.10.4-178": {
+      "conference/plugging-a-recognizer-joins-an-occupied-conference-at-once": "d07d6544a04ac47a67477a199ce00286f228ba9fe6fd22516643e72696605b78"
+    },
+    "RK-12.10.4-179": {
+      "conference/a-plug-over-an-empty-conference-joins-at-the-first-arrival": "d9f45e5497a8256e4d34257ff012766bcadf5da1c162796afb0f22a71857ceac"
+    },
+    "RK-12.10.4-182": {
+      "conference/a-recording-plugged-with-no-recorder-is-refused": "f6eda4bc934733aa8eb1e8e903c010a347aee750d7a71a4d2c80262af429d806"
+    },
+    "RK-12.10.4-183": {
+      "conference/a-plug-into-an-occupied-slot-is-refused": "84dc168e71987962d0d8267403e77ae6204946fe1d1f388023bbc0b52dce9627"
+    },
+    "RK-12.10.4-184": {
+      "conference/unplugging-an-empty-slot-changes-nothing": "56e0896737a3f405bc5d2151a559fe593548aaa51fff90a2b4525df2ffd97557"
+    },
+    "RK-12.10.4-187": {
+      "conference/an-unplug-unsubscribes-only-what-nothing-else-consumes": "080fe92a8d72b82c82022fd6b3a3fb0bff59c367fe68f130a35fd98fdb7b062b"
+    },
+    "RK-12.10.4-193": {
+      "conference/grants-cover-the-needs-as-a-voice-is-plugged": "fbe27c87f1b0a58b2c9930425059f7919c61b7d572b6fd2bd2885d7e3932f853"
+    },
+    "RK-12.10.4-194": {
+      "conference/grants-are-derived-at-the-join-from-the-plugs-made-before-it": "ec2827fb3e3d1c8ad9580e7719103a7d08c69df0fd18f62cd2253598cda7996f"
+    },
+    "RK-12.10.4-200": {
+      "conference/explicit-bot-grants-are-replaced-on-a-running-channel": "2beefe75d057b17a12e10ec3927e0c30e46c0900d4beefd7ae43fe6e77fa99ff"
+    },
+    "RK-12.10.4-202": {
+      "conference/an-explicit-set-that-does-not-cover-the-needs-is-accepted": "f5be181316030350b4d684591c2fd1a4e74affe31dde349cb5aa622b797f982b"
+    },
+    "RK-12.10.4-203": {
+      "conference/clearing-the-explicit-grants-returns-to-derived-ones": "de2f25c3f2f5ac59f65023a1a75e9f7b733e5534043b161e15ecc097b0eb36e7"
+    },
+    "RK-12.10.4-204": {
+      "conference/explicit-grants-on-a-channel-with-no-need-join-nothing": "b3132934e3f38135c1a1f493b27f2d45c6dd5d7b92bfe6d5684c2cf2b7074bc0"
+    },
+    "RK-12.10.4-213": {
+      "conference/each-kind-is-plugged-and-unplugged-on-a-running-channel": "bedc5e79197bff5d9cf1015f02e74f182f9b97cb1694fb52b9eb8f0b094f35b1"
     },
     "RK-12.10.7-004": {
       "conference/a-call-reports-presence-without-changing-room-membership": "8ed4550dffd59938be0b5826a08a98f1f9110ac574752b3934441c1754c8170f",

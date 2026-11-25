@@ -1030,6 +1030,76 @@ class SchemaTests(unittest.TestCase):
                 scenario["steps"].append(step)
                 self.assertEqual(validator.is_valid(scenario), valid)
 
+    def test_a_conference_bot_is_read_plugged_granted_and_reported(self) -> None:
+        schema = json.loads((ROOT / "scenario.schema.json").read_text())
+        validator = Draft202012Validator(schema)
+        fixture = ROOT / "scenarios/conference/each-kind-is-plugged-and-unplugged-on-a-running-channel.json"
+        self.assertTrue(validator.is_valid(json.loads(fixture.read_text())))
+        for step, valid in (
+            ({"call": "conference.read", "channel_id": "conf"}, True),
+            ({"call": "conference.read", "channel_id": "conf", "calls": ["leave"]}, True),
+            ({"call": "conference.read", "channel_id": "conf", "calls": "leave"}, False),
+            ({"call": "conference.read", "channel_id": "conf", "calls": ["leave", "leave"]}, False),
+            ({"call": "conference.ensure_bot", "channel_id": "conf", "room_id": "r1"}, True),
+            ({"call": "conference.ensure_bot", "channel_id": "conf"}, False),
+            ({"call": "conference.plug", "channel_id": "conf", "kind": "stt"}, True),
+            ({"call": "conference.plug", "channel_id": "conf", "kind": "vision"}, False),
+            ({"call": "conference.plug", "channel_id": "conf", "kind": "tts", "tts": {}}, True),
+            (
+                {"call": "conference.plug", "channel_id": "conf", "kind": "tts",
+                 "tts": {"gates": [None, "g"]}},
+                True,
+            ),
+            ({"call": "conference.plug", "channel_id": "conf", "kind": "tts", "tts": None}, False),
+            ({"call": "conference.plug", "channel_id": "conf", "kind": "stt", "tts": {}}, False),
+            (
+                {"call": "conference.plug", "channel_id": "conf", "kind": "recording",
+                 "recorder": "rec"},
+                True,
+            ),
+            (
+                {"call": "conference.plug", "channel_id": "conf", "kind": "recording",
+                 "recorder": None},
+                True,
+            ),
+            ({"call": "conference.plug", "channel_id": "conf", "kind": "recording"}, False),
+            (
+                {"call": "conference.plug", "channel_id": "conf", "kind": "stt", "recorder": "r"},
+                False,
+            ),
+            ({"call": "conference.unplug", "channel_id": "conf", "kind": "realtime"}, True),
+            ({"call": "conference.unplug", "channel_id": "conf"}, False),
+            (
+                {"call": "conference.set_bot_grants", "channel_id": "conf",
+                 "grants": {"subscribe": False, "hidden": True}},
+                True,
+            ),
+            ({"call": "conference.set_bot_grants", "channel_id": "conf", "grants": None}, True),
+            (
+                {"call": "conference.set_bot_grants", "channel_id": "conf",
+                 "grants": {"vision": True}},
+                False,
+            ),
+            ({"call": "conference.set_bot_grants", "channel_id": "conf"}, False),
+            ({"call": "conference.bot_lost", "channel_id": "conf", "room_id": "r1"}, True),
+            (
+                {"call": "conference.bot_lost", "channel_id": "conf", "room_id": "r1",
+                 "reason": "gone"},
+                True,
+            ),
+            ({"call": "conference.bot_lost", "channel_id": "conf"}, False),
+            (
+                {"call": "conference.echo", "channel_id": "conf", "room_id": "r1",
+                 "track_id": "b1"},
+                True,
+            ),
+            ({"call": "conference.echo", "channel_id": "conf", "room_id": "r1"}, False),
+        ):
+            with self.subTest(step=step):
+                scenario = json.loads(fixture.read_text())
+                scenario["steps"].append(step)
+                self.assertEqual(validator.is_valid(scenario), valid)
+
     def test_a_voice_bridge_states_its_configuration_and_transports(self) -> None:
         schema = json.loads((ROOT / "scenario.schema.json").read_text())
         validator = Draft202012Validator(schema)
