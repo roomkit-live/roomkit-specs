@@ -1,9 +1,9 @@
 {
   "version": 1,
-  "rfc_sha256": "c2be06eb6e80ef551b70f942e382d0625373570833af28c0a64ef04806423ce5",
-  "corpus_sha256": "9f0feace71d66007505fc33227079ca568927d217943759af665aa275c728dc5",
+  "rfc_sha256": "8791cf2e24261894f79ebd237cdee3069330678798ef7021b2664c25087792bb",
+  "corpus_sha256": "8bb420b6682b5e0367a1d1097c98fb9f20e70f99a88db1fdc34e52f3a1a966fe",
   "python_commit": "1ee7ec379dee1e17c49a1949ad7ce8756c132606",
-  "scenario_count": 3512,
+  "scenario_count": 3510,
   "sections": [
     {
       "section": "0",
@@ -6268,7 +6268,7 @@
         "unmapped": 77
       },
       "decided_gaps": {
-        "step": 22
+        "step": 24
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -6365,7 +6365,6 @@
         "voice/a-contract-hands-every-inbound-stage-the-internal-format",
         "voice/a-participant-who-comes-back-gets-a-new-session",
         "voice/a-reply-walks-the-outbound-stages-in-their-order",
-        "voice/a-session-is-active-from-its-start-and-ended-once-left",
         "voice/a-signalled-digit-and-an-in-band-tone-reach-one-dtmf-hook",
         "voice/a-streamed-reply-reaches-every-session-sentence-by-sentence",
         "voice/a-text-from-another-channel-is-spoken",
@@ -6846,12 +6845,11 @@
         "unmapped": 17
       },
       "decided_gaps": {
-        "step": 4
+        "step": 5
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "voice/a-cut-reply-is-stored-as-interrupted-with-how-far-it-played",
-        "voice/a-transport-barge-in-leaves-the-vad-hearing-the-speech",
         "voice/speech-that-cuts-the-reply-is-the-user-s-turn"
       ]
     },
@@ -27682,13 +27680,23 @@
       "id": "RK-12.2-053",
       "section": "12.2",
       "mapping": "unmapped",
-      "links": []
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2019",
+        "note": "step: a realtime session's state read (realtime family): on a voice channel a session's state is its transport's, which roomkit never writes, so no voice scenario observes roomkit's transitions; PAUSED set by the integrator has no step either."
+      }
     },
     {
       "id": "RK-12.2-054",
       "section": "12.2",
       "mapping": "unmapped",
-      "links": []
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2019",
+        "note": "step: a realtime session's state read once its provider reconnects (renegotiate) and once it ended (realtime family): on a voice channel roomkit never writes a session's state, its transport does."
+      }
     },
     {
       "id": "RK-12.2-055",
@@ -32391,7 +32399,12 @@
       "id": "RK-12.6-016",
       "section": "12.6",
       "mapping": "unmapped",
-      "links": []
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2042",
+        "note": "step: voice.open capabilities (S2) and an InterruptionConfig on voice.open (S1): a transport barge-in told apart from the VAD's own, under a strategy that does not act on the VAD's speech start; ON_BARGE_IN from the transport, then the speech edges."
+      }
     },
     {
       "id": "RK-12.6-017",
