@@ -979,6 +979,57 @@ class SchemaTests(unittest.TestCase):
                 scenario["steps"].append(step)
                 self.assertEqual(validator.is_valid(scenario), valid)
 
+    def test_a_realtime_session_states_its_configuration_and_usage(self) -> None:
+        schema = json.loads((ROOT / "scenario.schema.json").read_text())
+        validator = Draft202012Validator(schema)
+        fixture = ROOT / "scenarios/realtime/reconfiguring-a-session-changes-that-session-only.json"
+        self.assertTrue(validator.is_valid(json.loads(fixture.read_text())))
+        for member, value, valid in (
+            ("system_prompt", "Be brief", True),
+            ("system_prompt", None, False),
+            ("voice", "alloy", True),
+            ("on_usage", {}, True),
+            ("on_usage", {"gate": "billing", "fails": "down"}, True),
+            ("on_usage", {"gate": 1}, False),
+            ("on_usage", {"blocks": True}, False),
+        ):
+            with self.subTest(member=member, value=value):
+                scenario = json.loads(fixture.read_text())
+                scenario["setup"]["channels"][0]["realtime"][member] = value
+                self.assertEqual(validator.is_valid(scenario), valid)
+        start = {"call": "realtime.start", "channel_id": "rt", "room_id": "r1", "participant_id": "p"}
+        usage = {"call": "realtime.usage", "channel_id": "rt", "input_tokens": 3, "output_tokens": 4}
+        for step, valid in (
+            ({**start, "system_prompt": "Own", "voice": "own"}, True),
+            ({**start, "voice": 3}, False),
+            ({"call": "realtime.reconfigure", "channel_id": "rt"}, True),
+            (
+                {
+                    "call": "realtime.reconfigure",
+                    "channel_id": "rt",
+                    "room_id": "r2",
+                    "system_prompt": "Handoff",
+                    "voice": "other",
+                    "tools": ["lookup"],
+                },
+                True,
+            ),
+            ({"call": "realtime.reconfigure", "channel_id": "rt", "tools": "lookup"}, False),
+            (
+                {"call": "realtime.configure", "channel_id": "rt", "tools": [], "voice": "v"},
+                True,
+            ),
+            ({"call": "realtime.configure", "channel_id": "rt", "system_prompt": "x"}, False),
+            (usage, True),
+            ({**usage, "details": {"cached_tokens": 2}}, True),
+            ({**usage, "input_tokens": -1}, False),
+            ({"call": "realtime.usage", "channel_id": "rt", "input_tokens": 3}, False),
+        ):
+            with self.subTest(step=step):
+                scenario = json.loads(fixture.read_text())
+                scenario["steps"].append(step)
+                self.assertEqual(validator.is_valid(scenario), valid)
+
     def test_a_voice_bridge_states_its_configuration_and_transports(self) -> None:
         schema = json.loads((ROOT / "scenario.schema.json").read_text())
         validator = Draft202012Validator(schema)
