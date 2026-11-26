@@ -5059,8 +5059,31 @@
     "RK-12.10.9-005": {
       "conference/a-dial-in-is-resolved-on-arrival-on-the-caller-number-its-sfu-asserts": "c7ddffa6357e812a1738efacd6fbf5bce551a19dea650963f6a75113df4b2f22"
     },
+    "RK-12.11-013": {
+      "recording/a-room-s-recorders-start-before-it-is-written-and-are-announced-once-it-exists": "bb0990f7689ad06a1ca0d2593d152ba6b612d3d9c402c1d7a305ff470e5e3c53",
+      "recording/a-room-whose-recorder-refuses-its-start-is-not-created": "bb0990f7689ad06a1ca0d2593d152ba6b612d3d9c402c1d7a305ff470e5e3c53"
+    },
+    "RK-12.11-014": {
+      "recording/a-room-whose-recorder-refuses-its-start-is-not-created": "9ff8518ed326baf4bc9bcf087174867d6e7fb2319ca1b7d2032c515002df7d15"
+    },
+    "RK-12.11-015": {
+      "recording/a-room-whose-recorder-refuses-its-start-is-not-created": "7444513c82c9b5e98efdb0a1bcefda8eaf7477a0999a8ac8cfda14cc5d19e6d0"
+    },
+    "RK-12.11-016": {
+      "recording/a-room-whose-write-fails-stops-the-recordings-started-for-it": "69b73143f9ba7363ade9b2dbb462b3bbf58ad7559c3c25a7202d2c2c92431a4d"
+    },
+    "RK-12.11-017": {
+      "recording/a-failed-creation-leaves-the-recordings-of-the-room-holding-its-id-running": "04436c36b4eb8e81cd1f0cf666036788dcc7a16ea62422bb342c8673b48c7111"
+    },
+    "RK-12.11-018": {
+      "recording/a-room-s-recorders-start-before-it-is-written-and-are-announced-once-it-exists": "a02d92bb05579400eabf8a96e981466e29e7e9b8ba6caec3002074b90d6ae53e"
+    },
     "RK-12.11-019": {
       "recording/a-recording-on-a-missing-or-closed-room-is-refused": "87b8b00f9e6e328ebde49aacb10d937911d23227a0f200ddad9b4c9e59d6891a"
+    },
+    "RK-12.11-020": {
+      "recording/a-start-on-an-existing-room-waits-for-the-room-lock": "599b504a45de09d668677f39eb3fcd19262eb5bd2f2e16f04f0afefd84596f66",
+      "recording/recorders-started-on-an-existing-room-start-all-or-nothing": "599b504a45de09d668677f39eb3fcd19262eb5bd2f2e16f04f0afefd84596f66"
     },
     "RK-12.11-021": {
       "recording/a-recorder-joins-the-live-feed-after-consent": "aaf543dd04a03870fc2083caa63bc44c528100ce4c7084855377c41bf762556d"
@@ -5077,20 +5100,52 @@
     "RK-12.11-025": {
       "recording/only-a-voice-session-that-joined-while-the-room-records-is-recorded": "6aad7f150b8ab78079ff0da48cb939906f33c3df9bb4d8a939cf4e829b4251b1"
     },
+    "RK-12.11-026": {
+      "recording/a-recording-resumed-after-a-restart-is-announced-again": "0ca3551e26f83718bbd7c095bcbd12396a03c77cfea80e06872d29c8fac17738"
+    },
     "RK-12.11-028": {
       "recording/a-stopped-recorder-announces-its-file": "3863212fb691eb5835b14b631351259be7788a69864d717a63eb15982eed2068"
     },
     "RK-12.11-029": {
       "recording/a-stopped-recorder-announces-its-file": "c301ec17cc04f9c65291cdf6e5329e8884bc6c2d7a1c46528b5fb3960f411644"
     },
+    "RK-12.11-030": {
+      "recording/a-stop-naming-another-organization-is-refused-and-stops-nothing": "c307639499536983c91c55725ae422d41d604b5e5619354e943939a06a487b61"
+    },
     "RK-12.11-031": {
       "recording/a-gone-room-s-running-recordings-stop-on-an-explicit-stop": "3f896fe1890cc72600041272258124e79732ebd84c554b991e6a0b2eba3521df"
+    },
+    "RK-12.11-032": {
+      "recording/a-stop-naming-another-organization-is-refused-and-stops-nothing": "4543bde488fa6c7c9b9e3a64b86a728e592796cdbc2452caf388d1918bf2fa99"
     },
     "RK-12.11-033": {
       "recording/stopping-a-gone-room-that-records-nothing-is-not-found": "3cdba3826d56b1976773eb63caaa767d5d317be338fbd556139318804255cfbb"
     },
+    "RK-12.11-034": {
+      "recording/a-gone-room-s-recordings-are-refused-to-another-organization": "8673e4de75dc8ef73eb4560041b43fcbd8f372145e0bf0f3d70f4638cab10c9c"
+    },
+    "RK-12.11-036": {
+      "recording/a-gone-room-s-recordings-are-listed-and-fed-for-their-own-organization-alone": "b034cf9cb92d5f6d1bfb57a2d20d675678113c1885f06cde29159725665ba2a1",
+      "recording/listing-or-feeding-a-room-s-recordings-for-another-organization-is-refused": "b034cf9cb92d5f6d1bfb57a2d20d675678113c1885f06cde29159725665ba2a1"
+    },
     "RK-12.11-051": {
       "recording/one-recording-s-media-arrives-in-the-order-it-was-fed": "3dacba414c3fe83cfec83c57eebf86edfeaec17ce4413e37104e72895144509e"
+    },
+    "RK-12.11-054": {
+      "conference/a-held-finalization-lets-the-bot-leave-and-the-recorder-is-released-once-it-returns": "dc4607828b2752bc646b072ca5d0acb978f3d2822ee8d22c838e69bb3997ec62"
+    },
+    "RK-12.11-055": {
+      "conference/a-close-reports-a-recording-whose-finalization-it-stopped-waiting-for": "2f72f05036f767e7e46bbc8bfa5de74c8bc0f680a6d93a17ce11b4b6214bca45"
+    },
+    "RK-12.11-057": {
+      "conference/a-held-finalization-lets-the-bot-leave-and-the-recorder-is-released-once-it-returns": "3b754d268322b513464855a1022c63816c72ebe32c744221f86ccc5632394c75",
+      "conference/a-recorder-a-call-still-runs-in-past-the-release-wait-is-left-unreleased": "3b754d268322b513464855a1022c63816c72ebe32c744221f86ccc5632394c75"
+    },
+    "RK-12.11-058": {
+      "conference/a-held-finalization-lets-the-bot-leave-and-the-recorder-is-released-once-it-returns": "36c161704746e1f64fb45cc83bf121f09e94324ea4a117e4e169c417f1a6a65d"
+    },
+    "RK-12.11-059": {
+      "conference/a-recorder-a-call-still-runs-in-past-the-release-wait-is-left-unreleased": "0765532a280afec4e6ba26da9efe64a1181179fdd185e07879bc49a57a88d87f"
     },
     "RK-12.2-017": {
       "voice/a-contract-hands-every-inbound-stage-the-internal-format": "e9e6ee137ea6eefa6d675ba5796faa77b5906755634af63549f5ad4792f41a96",

@@ -1261,11 +1261,13 @@ run's own kit when absent.
 | `video.frame` | `channel_id`, `participant_id`, `sequence`, `data` | the transport delivers one self-contained 1×1 RGB24 frame (three bytes in base64) |
 | `video.disconnect` | `channel_id`, `participant_id` | the transport signals the end of this session |
 | `video.read` | `channel_id` | `forwarded`, the base64 frames received by each peer, and `vision`, the analyses published by the channel |
-| `recording.start` | `room_id`, `recorder` | start a named recorder on an existing room |
+| `recording.start` | `room_id`, and `recorder`, a recorder's name, or `recorders`, a list as `create_room`'s (Video sessions and room recording); optional `kit` | start the named recorders on an existing room, together |
 | `recording.track` | `room_id`, `track_id` | add a live PCM16 audio track to the room's recordings |
 | `recording.feed` | `room_id`, `track_id`, `data` | send a base64 chunk through that track's feed |
 | `recording.read` | `recorder`, or `channel_id`, a conference opened with `recording` | with `recorder`, the base64 chunks this recorder actually received, in order; with `channel_id`, `recordings`, each recording the conference's scripted recorder opened, in the order opened: `tracks`, each track added to it (`track_id`, `kind`, `channel_id`, `participant_id`, `codec`, `sample_rate`, `channels`), `config`, the recording configuration it was opened with (`format`, `storage`, `metadata`, `encryption`, the scripted encryption's name or null, `storage_encrypted_at_rest`), `chunks`, the base64 frames written to it, in order, and `stopped`, whether it was finalized; and `dropped`, how many frames the conference's recordings of its room discarded, as the implementation exposes that loss (§12.10.8) |
 | `recording.stop` | `room_id` | stop the room's recordings, returning their `recording_id` and `url` |
+| `recording.list` | `room_id` | the recordings the room runs, in the order they started, each `{recording_id, room_id}` (its handle's `id` and `room_id`) |
+| `recording.calls` | `recorder`, a room recorder's name, or `channel_id`, a conference opened with `recording`; optional `calls` (call names) | the calls of the MediaRecorder interface (§12.11) the recorder received, in the order made, only the named ones when `calls` is given: each `{call, recording_id}`, `recording_id` the handle's id (null for an `on_recording_start` the recorder refused), and `track` for `on_track_added` and `on_track_removed` (the track as `recording.read` reads one), `track_id` and `data` (base64) for `on_data`; `close` names no recording |
 | `voice.open` | `room_id`, `channel_id`, `participants` and the optional provider inputs below | registers and attaches a voice channel, then joins the named participants to that room |
 | `voice.feed` | `channel_id`, `participant_id`, `frames` (base64 PCM16), optional `sample_rate` (16000 by default), `channels` (1 by default) and `timestamp_ms` (every frame of the step carries it; none by default), `repeat` (1 by default) | the participant's transport (the one holding its session) delivers these inbound frames in order, in that format, the whole list `repeat` times over |
 | `voice.say` | `channel_id`, `participant_id`, `text` | speak to the participant, awaiting playback |
@@ -1314,7 +1316,7 @@ run's own kit when absent.
 | `commit_event` | `room_id`, `event` (a template) | the event |
 | `update_event` | `room_id`, `event_id`, `content`, `source`, `metadata` | the event, or null |
 | `delete_event` | `room_id`, `event_id`, `cascade_replies` (default true) | the ids removed |
-| `create_room` | `room`: `id`, `organization_id`, `metadata`, `timers`; `orchestration`, a scripted strategy's id, `null` for none, the kit's default when absent (§19.7); optional `kit` | the room |
+| `create_room` | `room`: `id`, `organization_id`, `metadata`, `timers`; `orchestration`, a scripted strategy's id, `null` for none, the kit's default when absent (§19.7); optional `recorders`, the recorders bound at its creation (Video sessions and room recording); optional `kit` | the room |
 | `attach_channel` | `room_id`, `channel_id`, and a binding's `category`, `access`, `visibility`, `muted`, `metadata`, `participant_id`; optional `kit` | the binding |
 | `detach_channel` | `room_id`, `channel_id` | unspecified |
 | `mute`, `unmute` | `room_id`, `channel_id` | the binding |
@@ -1413,7 +1415,11 @@ bridge frame's `sequence`, the filter's detection fields or the provider's
 A room recording scenario requires `recording`. The recorder uses its given
 name as its handle's id and returns `mock://<name>` as its result URL. A
 track declared while the room records can keep feeding media when a second
-recorder starts. Under `expect.hooks`, `recording` carries `recording_id`
+recorder starts. A recorder of `recorders` is its name, or an object:
+`name`, and `refuses`, a message its `on_recording_start` refuses with, as
+the recorder's own failure, which the caller is handed (`provider_failed`).
+`create_room` binds its `recorders` with the implementation's default
+recording configuration, as `recording.start` starts them. Under `expect.hooks`, `recording` carries `recording_id`
 and `room_id`, plus `urls` when the recording stops.
 
 ### Scripted conference media
@@ -1441,9 +1447,12 @@ A conference's media inputs on `conference.open` (§12.10.4, §12.10.8):
   track id a gate each write of that track's frames holds at until a step
   opens it, on the thread the recorder is called on; a write the
   implementation makes on the event loop's own thread cannot wait there,
-  and only reaches the gate. The recorder names its recordings `rec1`,
-  `rec2`... in the order it opens them, and gives each the result URL
-  `mock://<name>`.
+  and only reaches the gate; and `call_gates`, per recorder call
+  (`on_track_removed`, `on_recording_stop` or `close`), a gate each such
+  call holds at until a step opens it, on the thread the recorder is
+  called on, as a write holds at its track's. The recorder names its
+  recordings `rec1`, `rec2`... in the order it opens them, and gives each
+  the result URL `mock://<name>`.
 - `max_queued_frames` bounds the frames the channel holds for a track
   whose lane or recording falls behind, beside those the lane or the
   recording has already taken (the implementation's default when absent).
@@ -2157,7 +2166,7 @@ refuses its value, a `ChannelId`).
 | `capability_missing` | A conference operation that needs a capability the backend, or the channel's configuration, lacks: an end-to-end encrypted room asked of a backend without the E2EE capability (§12.10.2), a bot asked of a channel configured with nothing to consume or say (§12.10.4) | `ConferenceCapabilityError` | — (no conference) |
 | `session_ended` | A digit sent on a voice session that ended (§12.3.6) | `RuntimeError` from `VoiceChannel.send_dtmf`, `Cannot send DTMF on ended session …` | — (no voice) |
 | `bridge_full` | A voice join to a room whose bridge holds `max_participants` sessions already, refused before the session is bound (§12.7.2) | `RuntimeError` from `RoomKit.join`, `Room … has reached max bridge participants (…)` | — (no voice) |
-| `provider_failed` | A scripted provider's own failure, which the caller is handed: a realtime provider's connect failing the session's start (§12.4) | the scripted provider's error, raised as it is | — (no realtime) |
+| `provider_failed` | A scripted provider's own failure, which the caller is handed: a realtime provider's connect failing the session's start (§12.4), a scripted recorder refusing its start (§12.11) | the scripted provider's error, raised as it is | — (no realtime, no recording) |
 | `shutdown_cancelled` | A close once the kit's shutdown was cut itself before it ended, to a caller nobody cancelled (§12.10.4) | `ShutdownCancelledError` | `RoomKitError::ShutdownCancelled` |
 | `conference_already_attached` | A conference channel attached to a room another conference channel still holds: bound to it, or with a teardown still releasing its session there (§12.10.1, §12.10.4) | `ConferenceAlreadyAttachedError` | — (no conference) |
 | `room_not_attached` | A conference channel's operation on a room it is not, or no longer, attached to: a mint, `ensure_bot()` (§12.10.4) | `RoomNotAttachedError` | — (no conference) |

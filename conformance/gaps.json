@@ -86,95 +86,10 @@
       "card": "RMK-2007",
       "note": "measurement: the close's whole duration bound (the grace, the turn backend's budget, the closes, at most two unwinds of 1 second); no step reads elapsed time."
     },
-    "RK-12.11-013": {
-      "class": "step",
-      "card": "RMK-2066",
-      "note": "step: create_room with recorders (R1): the bound recorders start before the room is written, all or nothing."
-    },
-    "RK-12.11-014": {
-      "class": "step",
-      "card": "RMK-2066",
-      "note": "step: create_room with recorders (R1), one a scripted recorder that refuses its start (R2): the recordings already started for the room are stopped."
-    },
-    "RK-12.11-015": {
-      "class": "step",
-      "card": "RMK-2066",
-      "note": "step: create_room with recorders (R1), one refusing its start (R2): create_room fails with the refusal and get_room finds no room."
-    },
-    "RK-12.11-016": {
-      "class": "step",
-      "card": "RMK-2066",
-      "note": "step: create_room with recorders (R1) and a store_fault on create_room: the recordings started for the room are stopped."
-    },
-    "RK-12.11-017": {
-      "class": "step",
-      "card": "RMK-2066",
-      "note": "step: create_room with recorders (R1) on an id a recording room already holds: that room's recorder still receives its feed."
-    },
-    "RK-12.11-018": {
-      "class": "step",
-      "card": "RMK-2066",
-      "note": "step: create_room with recorders (R1): ON_RECORDING_STARTED fires for each once the room exists, and the recorder reads nothing before a track is added."
-    },
-    "RK-12.11-020": {
-      "class": "step",
-      "card": "RMK-2066",
-      "note": "step: recording.start with several recorders, one a scripted recorder that refuses its start (R2): none is started and no ON_RECORDING_STARTED fires."
-    },
-    "RK-12.11-026": {
-      "class": "step",
-      "card": "RMK-2066",
-      "note": "step: restart_process, and the recording calls naming kit, an argument README does not give them: recording.start on the restarted process announces ON_RECORDING_STARTED again (a second start on one kit shows no restart)."
-    },
-    "RK-12.11-030": {
-      "class": "step",
-      "card": "RMK-2066",
-      "note": "step: the recording calls forwarding organization_id, which the Python runner drops: recording.stop naming another organization is refused and the recorder keeps receiving its feed."
-    },
-    "RK-12.11-032": {
-      "class": "step",
-      "card": "RMK-2066",
-      "note": "step: the recording calls forwarding organization_id, which the Python runner drops: recording.stop naming another organization fails with room_not_found."
-    },
-    "RK-12.11-034": {
-      "class": "step",
-      "card": "RMK-2066",
-      "note": "step: the recording calls forwarding organization_id, which the Python runner drops: after store.delete_room, recording.stop naming another organization is refused and the recorder keeps receiving its feed."
-    },
-    "RK-12.11-036": {
-      "class": "step",
-      "card": "RMK-2066",
-      "note": "step: recording.list (R3) and the recording calls forwarding organization_id, which the Python runner drops: listing a room's recordings and recording.track naming another organization are refused, a gone room's recordings listed and fed for their own."
-    },
     "RK-12.11-038": {
       "class": "step",
       "card": "RMK-2066",
       "note": "step: the description of the tracks a recorder was told (R4): a voice session's track names its participant_id."
-    },
-    "RK-12.11-054": {
-      "class": "step",
-      "card": "RMK-2066",
-      "note": "step: conference.open with recording and a recorder whose calls a gate holds (LINK-P6U-3: conference.open options, recording.read per conference track): with the recorder's stop held, detach_channel ends and the bot leaves; room recordings are unbounded, to be fixed (RMK-2094)."
-    },
-    "RK-12.11-055": {
-      "class": "step",
-      "card": "RMK-2066",
-      "note": "step: conference.open with recording and a recorder whose calls a gate holds (LINK-P6U-3: conference.open options, recording.read per conference track): with the finalization held past its budget, ON_RECORDING_STOPPED gives that track no url and the channel's close names the recording unfinished."
-    },
-    "RK-12.11-057": {
-      "class": "step",
-      "card": "RMK-2066",
-      "note": "step: conference.open with recording and a recorder whose calls a gate holds (LINK-P6U-3: conference.open options, recording.read per conference track), and a read of the recorder's calls: close() is not called while a held call runs."
-    },
-    "RK-12.11-058": {
-      "class": "step",
-      "card": "RMK-2066",
-      "note": "step: conference.open with recording and a recorder whose calls a gate holds (LINK-P6U-3: conference.open options, recording.read per conference track): the bot leaves before the wait to release the recorder ends."
-    },
-    "RK-12.11-059": {
-      "class": "step",
-      "card": "RMK-2066",
-      "note": "step: conference.open with recording and a recorder whose calls a gate holds (LINK-P6U-3: conference.open options, recording.read per conference track): with a call held past the release wait, the recorder is not closed and the channel's close fails naming it."
     },
     "RK-12.12-030": {
       "class": "step",

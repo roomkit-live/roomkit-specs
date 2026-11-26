@@ -2780,6 +2780,8 @@
             "recording.feed",
             "recording.read",
             "recording.stop",
+            "recording.list",
+            "recording.calls",
             "voice.open",
             "voice.feed",
             "voice.say",
@@ -3025,7 +3027,7 @@
           ]
         },
         "kit": {
-          "description": "The process of `setup.processes` the call runs on; the run's own kit when absent. Taken by `process_inbound`, `create_room`, `attach_channel`, `add_room_hook`, `subscribe_room`, `publish_typing`, `steer`, `agent_presence`, `install_strategy`, `uninstall_strategy`, `claim_room_strategy`, `room_strategy`, `room_strategy_is_current`, `speak_queue`, `listen_only`, `talk_again` and `close`.",
+          "description": "The process of `setup.processes` the call runs on; the run's own kit when absent. Taken by `process_inbound`, `create_room`, `recording.start`, `attach_channel`, `add_room_hook`, `subscribe_room`, `publish_typing`, `steer`, `agent_presence`, `install_strategy`, `uninstall_strategy`, `claim_room_strategy`, `room_strategy`, `room_strategy_is_current`, `speak_queue`, `listen_only`, `talk_again` and `close`.",
           "$ref": "#/$defs/label"
         }
       },
@@ -3309,6 +3311,20 @@
                   },
                   "write_gates": {
                     "type": "object",
+                    "additionalProperties": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "call_gates": {
+                    "type": "object",
+                    "propertyNames": {
+                      "enum": [
+                        "on_track_removed",
+                        "on_recording_stop",
+                        "close"
+                      ]
+                    },
                     "additionalProperties": {
                       "type": "string",
                       "minLength": 1
@@ -4418,8 +4434,19 @@
           },
           "then": {
             "required": [
-              "room_id",
-              "recorder"
+              "room_id"
+            ],
+            "oneOf": [
+              {
+                "required": [
+                  "recorder"
+                ]
+              },
+              {
+                "required": [
+                  "recorders"
+                ]
+              }
             ],
             "properties": {
               "room_id": {
@@ -4429,6 +4456,36 @@
               "recorder": {
                 "type": "string",
                 "minLength": 1
+              },
+              "recorders": {
+                "description": "The recorders, each a name or an object naming it and the message its start refuses with (Video sessions and room recording).",
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "name"
+                      ],
+                      "properties": {
+                        "name": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "refuses": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      },
+                      "additionalProperties": false
+                    }
+                  ]
+                }
               }
             }
           }
@@ -4537,6 +4594,74 @@
               "room_id": {
                 "type": "string",
                 "minLength": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "recording.list"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "room_id"
+            ],
+            "properties": {
+              "room_id": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "recording.calls"
+              }
+            }
+          },
+          "then": {
+            "oneOf": [
+              {
+                "required": [
+                  "recorder"
+                ]
+              },
+              {
+                "required": [
+                  "channel_id"
+                ]
+              }
+            ],
+            "properties": {
+              "recorder": {
+                "type": "string",
+                "minLength": 1
+              },
+              "channel_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "calls": {
+                "type": "array",
+                "minItems": 1,
+                "uniqueItems": true,
+                "items": {
+                  "enum": [
+                    "on_recording_start",
+                    "on_track_added",
+                    "on_track_removed",
+                    "on_data",
+                    "on_recording_stop",
+                    "close"
+                  ]
+                }
               }
             }
           }
@@ -6457,7 +6582,39 @@
           "then": {
             "required": [
               "room"
-            ]
+            ],
+            "properties": {
+              "recorders": {
+                "description": "The recorders, each a name or an object naming it and the message its start refuses with (Video sessions and room recording).",
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "name"
+                      ],
+                      "properties": {
+                        "name": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "refuses": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      },
+                      "additionalProperties": false
+                    }
+                  ]
+                }
+              }
+            }
           }
         },
         {
