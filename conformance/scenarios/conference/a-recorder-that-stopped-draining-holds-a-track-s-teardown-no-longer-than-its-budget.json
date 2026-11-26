@@ -9,7 +9,7 @@
     "RK-12.10.8-028",
     "RK-12.10.8-029"
   ],
-  "notes": "The recorder holds its first write at a gate, so it stops draining: two frames are still queued when the track is unpublished. Each wait the teardown makes on the clock is passed (the queued frames', then the write in flight's); the unpublish returns with the write still held, and the recording is finalized without the two frames, counted in dropped. What the held write leaves in the recording once released is not read.",
+  "notes": "The recorder holds its first write at a gate, so it stops draining: two frames are still queued when the track is unpublished. The advance passes every wait the teardown makes on the clock (the queued frames', the write in flight's, and the finalization's, which the scenario does not read), assuming they add up to a minute at most; the unpublish returns with the write still held, and the recording is finalized without the two frames, counted in dropped. What the held write leaves in the recording once released is not read.",
   "requires_features": [
     "conference"
   ],

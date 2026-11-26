@@ -1,14 +1,14 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "video/by-default-the-bridge-asks-for-keyframes-every-five-seconds",
-  "title": "With the default bridge configuration, the periodic keyframe requests come 5 s apart",
+  "title": "With the default bridge configuration, a session that sends frames is asked for a keyframe again 5 s apart",
   "rules": [
     "§12.8.9"
   ],
   "requirements": [
     "RK-12.8.9-007"
   ],
-  "notes": "The first request comes with the first frame the bridge forwards; bob's join added one to alice.",
+  "notes": "Only bob sends. Each read names bob's count of requests: unchanged 4.9 s after the first frame, changed by 5.1 s. Whether the first forwarded frame starts the interval with a request the RFC does not say, and the scenario does not read.",
   "requires_features": [
     "video"
   ],
@@ -34,7 +34,7 @@
     {
       "call": "video.frame",
       "channel_id": "camera",
-      "participant_id": "alice",
+      "participant_id": "bob",
       "sequence": 1,
       "data": "AQID"
     },
@@ -44,8 +44,9 @@
       "expect": {
         "result": {
           "keyframe_requests": {
-            "alice": 2,
-            "bob": 1
+            "bob": {
+              "$as": "first"
+            }
           }
         }
       }
@@ -57,7 +58,7 @@
     {
       "call": "video.frame",
       "channel_id": "camera",
-      "participant_id": "alice",
+      "participant_id": "bob",
       "sequence": 2,
       "data": "BAUG"
     },
@@ -67,8 +68,9 @@
       "expect": {
         "result": {
           "keyframe_requests": {
-            "alice": 2,
-            "bob": 1
+            "bob": {
+              "$as": "first"
+            }
           }
         }
       }
@@ -80,7 +82,7 @@
     {
       "call": "video.frame",
       "channel_id": "camera",
-      "participant_id": "alice",
+      "participant_id": "bob",
       "sequence": 3,
       "data": "BwgJ"
     },
@@ -90,8 +92,9 @@
       "expect": {
         "result": {
           "keyframe_requests": {
-            "alice": 3,
-            "bob": 2
+            "bob": {
+              "$as": "second"
+            }
           }
         }
       }

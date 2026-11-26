@@ -8,7 +8,7 @@
   "requirements": [
     "RK-12.8.9-014"
   ],
-  "notes": "keyframe_interval_s 0: no periodic request. The warning the bridge logs once is not read.",
+  "notes": "keyframe_interval_s 0: no periodic request. The first delta comes 500 ms after the join: the wait runs from that delta, not from the join. The warning the bridge logs once is not read.",
   "requires_features": [
     "video"
   ],
@@ -32,6 +32,10 @@
       "bridge": {
         "keyframe_interval_s": 0
       }
+    },
+    {
+      "call": "clock.advance",
+      "ms": 500
     },
     {
       "call": "video.frame",

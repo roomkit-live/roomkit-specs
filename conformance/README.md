@@ -486,16 +486,24 @@ room callbacks of the setup are not compared.
   `clock.advance` moves. These media durations are measured and waited out
   on it: the waits of the interruption strategy and the length of the speech
   they judge (`min_speech_ms`, `transcript_wait_ms`, §12.3.13); the 10
-  seconds an echo verdict outlives the playback, and the echo tail an echo
-  canceller is given once a playback ended (§12.3.13); the wait of a turn
-  held for speech that resumed (§12.3.12); the video bridge's
+  seconds an echo verdict outlives the playback (§12.3.13); a turn's waits
+  (§12.3.12): the wait for an incomplete turn or one held for speech that
+  resumed, the silence it counts, the wait for a transcript still due, and
+  the length of speech that holds a reply not heard yet; the video bridge's
   `keyframe_interval_s` and `keyframe_wait_s` (§12.8.9); the vision
-  interval (§12.8.4); and a conference recording's flush budget (§12.10.8).
-  A runner's own bounds (a call's 10 s, a gate's 5 s, the idle wait) stay on
-  real time, and so does work handed to another thread: the clock decides
-  when a wait ends, never how long a thread takes. Under it, `voice.settle`
-  takes work waiting on the clock for waiting, not for running. A scenario
-  that sets it requires `voice`, `realtime`, `conference` or `video`.
+  interval (§12.8.4); and a conference recording's flush budget
+  (§12.10.8). An implementation's own delays on those paths (an echo
+  canceller's tail once a playback ended) follow it too. Others stay on
+  real time, and a scenario does not advance past them: the audio a session
+  has played (what `echo_guard_ms` and `allow_during_first_ms` measure), a
+  playback's drain without an echo canceller, an STT stream's inactivity,
+  the throttles of audio-level events and of inbound frames. So do a
+  runner's own bounds (a call's 10 s, a gate's 5 s, the idle wait), and work
+  handed to another thread: the clock decides when a wait ends, never how
+  long a thread takes. Under it, `voice.settle` takes work waiting on the
+  clock for waiting, not for running; `conference.settle` and the idle wait
+  do not. A scenario that sets it requires `voice`, `realtime`, `conference`
+  or `video`.
 
 ### Identity resolution
 
@@ -2418,8 +2426,8 @@ or a skip to a passing result.
   that run side by side end, and start, in either order on several threads:
   assert their order only where the RFC gives one.
 - Keep timing out of it: a gate orders two calls, never a delay, and a media
-  duration the RFC sets is passed with `clock.advance` under `virtual_clock`,
-  never waited for. A hook's or a
+  duration the virtual clock governs is better passed with `clock.advance`
+  (`virtual_clock`) than waited for. A hook's or a
   call's timeout, when the scenario is about it, must leave enough margin for
   any work expected to complete within the same budget, including store I/O
   and CI scheduling. Hold the worker expected to time out at a gate no step

@@ -118,7 +118,9 @@
       "channel_id": "phone",
       "expect": {
         "result": {
-          "cancel_audio": {}
+          "cancel_audio": {
+            "alice": 0
+          }
         }
       }
     },

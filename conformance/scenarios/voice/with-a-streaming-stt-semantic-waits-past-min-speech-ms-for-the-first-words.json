@@ -108,7 +108,9 @@
       "expect": {
         "result": {
           "backchannel_contexts": [],
-          "cancel_audio": {}
+          "cancel_audio": {
+            "alice": 0
+          }
         }
       }
     },

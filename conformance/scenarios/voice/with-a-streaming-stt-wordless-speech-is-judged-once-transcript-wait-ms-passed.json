@@ -8,7 +8,7 @@
   "requirements": [
     "RK-12.3.13-018"
   ],
-  "notes": "No word ever comes: 900 ms into the speech, past min_speech_ms but inside transcript_wait_ms, nothing is judged; by 1100 ms the speech is judged on its duration and the reply cut.",
+  "notes": "No word ever comes: 900 ms into the speech, past min_speech_ms but inside transcript_wait_ms, nothing is judged and the reply plays on; by 1050 ms, past max(min_speech_ms, transcript_wait_ms) but short of their sum, the speech is judged on its duration and the reply cut.",
   "requires_features": [
     "voice"
   ],
@@ -97,13 +97,15 @@
       "expect": {
         "result": {
           "backchannel_contexts": [],
-          "cancel_audio": {}
+          "cancel_audio": {
+            "alice": 0
+          }
         }
       }
     },
     {
       "call": "clock.advance",
-      "ms": 200
+      "ms": 150
     },
     {
       "wait_for": "cutting"

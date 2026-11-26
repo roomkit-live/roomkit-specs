@@ -542,7 +542,7 @@ class SchemaTests(unittest.TestCase):
         fixture = (
             ROOT
             / "scenarios/video"
-            / "the-bridge-asks-every-session-for-a-keyframe-once-per-keyframe-interval.json"
+            / "the-bridge-asks-for-keyframes-again-once-per-keyframe-interval.json"
         )
         self.assertTrue(validator.is_valid(json.loads(fixture.read_text())))
         for change, valid in (
@@ -550,11 +550,11 @@ class SchemaTests(unittest.TestCase):
             (lambda s: s.update(requires_features=["recording"]), False),
             (lambda s: s.pop("requires_features"), False),
             (lambda s: s["setup"].update(virtual_clock=False), False),
-            (lambda s: s["steps"][4].update(waiters=2), True),
-            (lambda s: s["steps"][4].update(waiters=0), False),
-            (lambda s: s["steps"][4].update(ms=-1), False),
-            (lambda s: s["steps"][4].update(ms=1.5), False),
-            (lambda s: s["steps"][4].pop("ms"), False),
+            (lambda s: s["steps"][3].update(waiters=2), True),
+            (lambda s: s["steps"][3].update(waiters=0), False),
+            (lambda s: s["steps"][3].update(ms=-1), False),
+            (lambda s: s["steps"][3].update(ms=1.5), False),
+            (lambda s: s["steps"][3].pop("ms"), False),
         ):
             with self.subTest(change=change):
                 candidate = json.loads(fixture.read_text())

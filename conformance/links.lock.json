@@ -6820,14 +6820,14 @@
     },
     "RK-12.8.9-007": {
       "video/by-default-the-bridge-asks-for-keyframes-every-five-seconds": "1191d17f73a69f16cc34bec0acc413266dd740d28cb527dcdf1fb2c7e47a3605",
-      "video/the-bridge-asks-every-session-for-a-keyframe-once-per-keyframe-interval": "1191d17f73a69f16cc34bec0acc413266dd740d28cb527dcdf1fb2c7e47a3605",
+      "video/the-bridge-asks-for-keyframes-again-once-per-keyframe-interval": "1191d17f73a69f16cc34bec0acc413266dd740d28cb527dcdf1fb2c7e47a3605",
       "video/with-no-periodic-interval-only-a-join-asks-for-a-keyframe": "1191d17f73a69f16cc34bec0acc413266dd740d28cb527dcdf1fb2c7e47a3605"
     },
     "RK-12.8.9-009": {
       "video/a-joiner-has-every-session-already-in-the-room-asked-for-a-keyframe": "1c8055c78cd28895084ffb589a33febb8a5163f281a6970ff2a4fc6f4ca97389"
     },
     "RK-12.8.9-010": {
-      "video/the-bridge-asks-every-session-for-a-keyframe-once-per-keyframe-interval": "03a57e0b3b6e79ac5b769484c49853337cab913b9a0bb5a767390e41832e9c5b"
+      "video/the-bridge-asks-for-keyframes-again-once-per-keyframe-interval": "03a57e0b3b6e79ac5b769484c49853337cab913b9a0bb5a767390e41832e9c5b"
     },
     "RK-12.8.9-011": {
       "video/a-source-s-delta-frames-wait-for-its-first-keyframe-at-each-target": "accf1f2b952ad078c074c8d4ace9c59f815a8c091346599749c5981fc002a5bc",

@@ -8,7 +8,7 @@
   "requirements": [
     "RK-12.3.12-016"
   ],
-  "notes": "As the previous scenario, but the new speech gives no words: the held turn waits turn_incomplete_wait_ms (500 ms) of silence from the end of that speech, and is routed then, alone.",
+  "notes": "As the previous scenario, but the new speech ends 300 ms after the verdict and gives no words: the held turn waits turn_incomplete_wait_ms (500 ms) of silence from the end of that speech, not from the verdict, and is routed then, alone.",
   "requires_features": [
     "voice"
   ],
@@ -92,6 +92,10 @@
       "call": "clock.advance",
       "ms": 0,
       "waiters": 1
+    },
+    {
+      "call": "clock.advance",
+      "ms": 300
     },
     {
       "call": "voice.feed",

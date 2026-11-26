@@ -1,14 +1,14 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "video/a-frame-past-the-vision-interval-is-analysed",
-  "title": "With a vision interval, the first frame once the interval passed since the last analysed one is analysed",
+  "title": "With a vision interval, the first frame once the interval passed since the last analysed one is analysed, and the frames inside the interval it starts are not",
   "rules": [
     "§12.8.4"
   ],
   "requirements": [
     "RK-12.8.4-005"
   ],
-  "notes": "No frame carries a timestamp: the interval is measured on the clock.",
+  "notes": "No frame carries a timestamp: the interval is measured on the clock, from each analysis.",
   "requires_features": [
     "video"
   ],
@@ -62,6 +62,17 @@
       "participant_id": "alice",
       "sequence": 3,
       "data": "BwgJ"
+    },
+    {
+      "call": "clock.advance",
+      "ms": 100
+    },
+    {
+      "call": "video.frame",
+      "channel_id": "camera",
+      "participant_id": "alice",
+      "sequence": 4,
+      "data": "CgsM"
     },
     {
       "call": "video.read",
