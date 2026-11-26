@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "f73e8090fe7e39cb56cfb5b71dcd2e49070574bf3b2dd580bfd1e5e038e6ec9e",
-  "corpus_sha256": "9b7efa7673001a526f80c7621f942b690bf2cb44af67e09bb36acfae961a2d06",
+  "corpus_sha256": "8dd18b2c504390ee6a0b4786a6a6e7858de965feb9653c33dc30102a46f7ecc1",
   "python_commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
-  "scenario_count": 3961,
+  "scenario_count": 3976,
   "sections": [
     {
       "section": "0",
@@ -3454,8 +3454,10 @@
         "voice/diarization-reports-a-new-speaker",
         "voice/each-joined-session-reports-its-start-once",
         "voice/input-frames-report-an-audio-level",
+        "voice/input-levels-fire-at-most-ten-a-second-per-session",
         "voice/no-session-served-fires-no-after-tts",
         "voice/outbound-speech-reports-an-audio-level",
+        "voice/output-levels-fire-at-most-once-per-100-ms",
         "voice/partial-speech-is-observed-before-its-final",
         "voice/speech-edges-bracket-an-utterance",
         "voice/speech-held-for-the-detector-s-verdict-reaches-no-room-before-it",
@@ -6456,7 +6458,11 @@
         "voice/a-tts-without-a-voices-endpoint-lists-its-curated-catalog",
         "voice/after-tts-reports-the-sentences-before-tts-let-through",
         "voice/an-audio-tts-without-include-audio-receives-the-text-only",
+        "voice/an-echo-verdict-ends-with-its-utterance-s-final",
+        "voice/an-echo-verdict-ends-with-the-stream-that-heard-its-words",
+        "voice/an-echo-verdict-lapses-ten-seconds-after-the-reply-ended",
         "voice/an-echo-verdict-outlives-the-reply-until-its-final",
+        "voice/an-echo-verdict-still-holds-just-under-ten-seconds-after-the-reply-ended",
         "voice/an-encoded-tts-chunk-never-reaches-the-transport",
         "voice/an-ended-session-s-context-is-released",
         "voice/an-inbound-frame-walks-the-stages-in-their-order",
@@ -6817,8 +6823,12 @@
         "voice/an-acknowledged-stretch-is-not-cut-on-its-duration",
         "voice/an-echo-is-heard-without-case-punctuation-or-accents",
         "voice/an-echo-of-the-reply-s-opening-is-no-turn",
+        "voice/an-echo-verdict-ends-with-its-utterance-s-final",
+        "voice/an-echo-verdict-ends-with-the-stream-that-heard-its-words",
+        "voice/an-echo-verdict-lapses-ten-seconds-after-the-reply-ended",
         "voice/an-echo-verdict-outlives-the-reply-until-its-final",
         "voice/an-echo-verdict-s-words-decide-no-barge-in-on-the-reply-that-cut-it-short-or-the-next",
+        "voice/an-echo-verdict-still-holds-just-under-ten-seconds-after-the-reply-ended",
         "voice/an-echo-verdict-that-lapses-with-its-utterance-open-takes-its-words-with-it",
         "voice/confirmed-speech-shorter-than-min-speech-ms-leaves-the-reply-playing",
         "voice/confirmed-speech-that-lasts-min-speech-ms-cuts-the-reply",
@@ -7101,11 +7111,12 @@
       "mapping": {
         "unmapped": 29
       },
-      "decided_gaps": {
-        "step": 1
-      },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
-      "candidate_scenarios": []
+      "candidate_scenarios": [
+        "voice/input-levels-fire-at-most-ten-a-second-per-session",
+        "voice/output-levels-fire-at-most-once-per-100-ms"
+      ]
     },
     {
       "section": "12.6",
@@ -7996,6 +8007,15 @@
       "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
+        "capture/a-mark-replays-from-its-position-before-anything-live",
+        "capture/a-source-s-lifetime-is-its-start-and-stop-alone",
+        "capture/a-stale-mark-replays-what-remains-and-reports-it-truncated",
+        "capture/a-subscriber-that-leaves-takes-no-frame-from-the-others",
+        "capture/a-subscriber-that-raises-is-caught-and-the-capture-goes-on",
+        "capture/a-subscription-reports-the-bytes-it-replayed-whatever-its-mark",
+        "capture/each-subscriber-receives-the-frames-raw-in-the-source-s-one-format",
+        "capture/frames-captured-during-a-replay-reach-the-subscriber-after-it",
+        "capture/the-backlog-keeps-the-newest-frames-within-its-byte-and-duration-bounds",
         "realtime/an-utterance-replayed-from-its-mark-is-discarded-when-the-handshake-fails",
         "realtime/an-utterance-replayed-from-its-mark-reaches-the-provider-ahead-of-the-live-audio"
       ]
@@ -34347,12 +34367,7 @@
       "id": "RK-12.5-030",
       "section": "12.5",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2042",
-        "note": "step: virtual clock (X-CLK): frames fed over one simulated second fire at most ten ON_INPUT_AUDIO_LEVEL; no Python test pins the throttle."
-      }
+      "links": []
     },
     {
       "id": "RK-12.5-031",
