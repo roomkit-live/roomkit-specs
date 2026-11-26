@@ -1030,6 +1030,64 @@ class SchemaTests(unittest.TestCase):
                 scenario["steps"].append(step)
                 self.assertEqual(validator.is_valid(scenario), valid)
 
+    def test_a_capture_source_and_a_realtime_session_s_state(self) -> None:
+        schema = json.loads((ROOT / "scenario.schema.json").read_text())
+        validator = Draft202012Validator(schema)
+        fixture = (
+            ROOT
+            / "scenarios/realtime/an-utterance-replayed-from-its-mark-reaches-the-provider-ahead-of-the-live-audio.json"
+        )
+        self.assertTrue(validator.is_valid(json.loads(fixture.read_text())))
+        for member, value, valid in (
+            ("capture_source", "mic", True),
+            ("capture_source", 1, False),
+            ("reconnects_on_reconfigure", True, True),
+            ("reconnects_on_reconfigure", "yes", False),
+        ):
+            with self.subTest(member=member, value=value):
+                scenario = json.loads(fixture.read_text())
+                scenario["setup"]["channels"][0]["realtime"][member] = value
+                self.assertEqual(validator.is_valid(scenario), valid)
+        for sources, valid in (
+            ([{"id": "mic"}, {"id": "desk"}], True),
+            ([], False),
+            ([{}], False),
+            ([{"id": "mic", "backlog_seconds": 2}], False),
+        ):
+            with self.subTest(sources=sources):
+                scenario = json.loads(fixture.read_text())
+                scenario["setup"]["capture_sources"] = sources
+                self.assertEqual(validator.is_valid(scenario), valid)
+        start = {"call": "realtime.start", "channel_id": "rt", "room_id": "r1", "participant_id": "p"}
+        for step, valid in (
+            ({"call": "capture.mark", "source_id": "mic", "mark": "wake"}, True),
+            ({"call": "capture.mark", "source_id": "mic"}, False),
+            ({"call": "capture.mark", "source_id": "mic", "mark": ""}, False),
+            ({"call": "capture.feed", "source_id": "mic", "frames": ["AQI="]}, True),
+            ({"call": "capture.feed", "source_id": "mic", "frames": []}, False),
+            ({"call": "capture.feed", "frames": ["AQI="]}, False),
+            ({**start, "capture_since": "wake"}, True),
+            ({**start, "capture_since": 1}, False),
+            ({"call": "realtime.set_state", "channel_id": "rt", "state": "paused"}, True),
+            ({"call": "realtime.set_state", "channel_id": "rt", "state": "held"}, False),
+            ({"call": "realtime.set_state", "channel_id": "rt"}, False),
+            (
+                {"call": "voice.set_state", "channel_id": "phone", "participant_id": "a",
+                 "state": "active"},
+                True,
+            ),
+            ({"call": "voice.set_state", "channel_id": "phone", "state": "active"}, False),
+            ({"call": "realtime.reconfigure", "channel_id": "rt", "gate": "reconnecting"}, True),
+            ({"call": "realtime.reconfigure", "channel_id": "rt", "gate": 1}, False),
+        ):
+            with self.subTest(step=step):
+                scenario = json.loads(fixture.read_text())
+                scenario["steps"].append(step)
+                self.assertEqual(validator.is_valid(scenario), valid)
+        scenario = json.loads(fixture.read_text())
+        scenario["requires_features"] = ["realtime", "capture_sources"]
+        self.assertFalse(validator.is_valid(scenario))
+
     def test_a_conference_bot_is_read_plugged_granted_and_reported(self) -> None:
         schema = json.loads((ROOT / "scenario.schema.json").read_text())
         validator = Draft202012Validator(schema)

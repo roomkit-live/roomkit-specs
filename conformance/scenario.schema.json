@@ -51,7 +51,8 @@
           "executor_media",
           "scoring",
           "source_provider",
-          "call_recovery"
+          "call_recovery",
+          "capture_source"
         ]
       }
     },
@@ -191,6 +192,14 @@
           "type": "string"
         },
         "mute_on_tool_call": {
+          "type": "boolean"
+        },
+        "capture_source": {
+          "description": "The id of the capture source the channel's transport subscribes each session it accepts to, from the mark the session's metadata carries (\u00a712.12).",
+          "type": "string"
+        },
+        "reconnects_on_reconfigure": {
+          "description": "The provider reconfigures a session as the provider interface's default does: it disconnects the session and connects it again (\u00a712.2, \u00a712.4).",
           "type": "boolean"
         },
         "pipeline": {
@@ -1003,6 +1012,24 @@
               },
               "healthcheck": {
                 "$ref": "#/$defs/reactions"
+              }
+            }
+          }
+        },
+        "capture_sources": {
+          "description": "Scripted capture sources (\u00a712.12), each named by its id, in the implementation's default format and backlog, which a realtime channel's transport subscribes to (README, Scripted capture sources); a scenario that has them requires capture_source.",
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
               }
             }
           }
@@ -2801,6 +2828,7 @@
             "voice.read",
             "voice.join",
             "voice.leave",
+            "voice.set_state",
             "voice.dtmf_received",
             "voice.set_stt_language",
             "voice.flush_stt",
@@ -2828,6 +2856,9 @@
             "realtime.reconfigure",
             "realtime.usage",
             "realtime.vision",
+            "realtime.set_state",
+            "capture.mark",
+            "capture.feed",
             "parse_voice_session",
             "emit_protocol_trace",
             "process_inbound",
@@ -6288,6 +6319,10 @@
               },
               "voice": {
                 "type": "string"
+              },
+              "capture_since": {
+                "description": "A mark capture.mark named, passed in the session's metadata (\u00a712.12).",
+                "type": "string"
               }
             }
           }
@@ -6706,6 +6741,121 @@
                 "items": {
                   "type": "string"
                 }
+              },
+              "gate": {
+                "description": "Where the connect of a provider that reconnects_on_reconfigure holds.",
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "realtime.set_state"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "channel_id",
+              "state"
+            ],
+            "properties": {
+              "channel_id": {
+                "type": "string"
+              },
+              "state": {
+                "enum": [
+                  "connecting",
+                  "active",
+                  "paused",
+                  "ended"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "voice.set_state"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "channel_id",
+              "participant_id",
+              "state"
+            ],
+            "properties": {
+              "channel_id": {
+                "type": "string"
+              },
+              "participant_id": {
+                "type": "string"
+              },
+              "state": {
+                "enum": [
+                  "connecting",
+                  "active",
+                  "paused",
+                  "ended"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "capture.mark"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "source_id",
+              "mark"
+            ],
+            "properties": {
+              "source_id": {
+                "type": "string"
+              },
+              "mark": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "capture.feed"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "source_id",
+              "frames"
+            ],
+            "properties": {
+              "source_id": {
+                "type": "string"
+              },
+              "frames": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "minItems": 1
               }
             }
           }

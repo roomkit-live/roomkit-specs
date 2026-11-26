@@ -91,31 +91,6 @@
       "card": "RMK-2066",
       "note": "measurement: the bot leaves once the teardown's budget is spent, before the wait to release the recorder ends; no gate orders the end of that wait, so only a duration tells a release wait made apart from one made inside the teardown (conference/a-held-finalization-lets-the-bot-leave-and-the-recorder-is-released-once-it-returns shows the leave while the call runs)."
     },
-    "RK-12.12-030": {
-      "class": "step",
-      "card": "RMK-2066",
-      "note": "step: a scripted capture source and a transport that subscribes with the mark passed in realtime.start's metadata (CS1, feature capture_source proposed), and the audio the provider receives (S4): the frames captured from the mark reach the provider after the handshake, ahead of the live ones."
-    },
-    "RK-12.12-031": {
-      "class": "step",
-      "card": "RMK-2066",
-      "note": "step: CS1 and S4, with a realtime start whose handshake fails (S5): no replayed frame reaches the provider."
-    },
-    "RK-12.12-032": {
-      "class": "step",
-      "card": "RMK-2066",
-      "note": "step: CS1 and S4: the frames captured from the mark, the wake word's included, reach the provider whole."
-    },
-    "RK-12.2-053": {
-      "class": "step",
-      "card": "RMK-2019",
-      "note": "step: a realtime session's state read (realtime family): on a voice channel a session's state is its transport's, which roomkit never writes, so no voice scenario observes roomkit's transitions; PAUSED set by the integrator has no step either."
-    },
-    "RK-12.2-054": {
-      "class": "step",
-      "card": "RMK-2019",
-      "note": "step: a realtime session's state read once its provider reconnects (renegotiate) and once it ended (realtime family): on a voice channel roomkit never writes a session's state, its transport does."
-    },
     "RK-12.2.3-022": {
       "class": "phase6",
       "card": "RMK-2023",

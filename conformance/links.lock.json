@@ -5147,6 +5147,15 @@
     "RK-12.11-059": {
       "conference/a-recorder-a-call-still-runs-in-past-the-release-wait-is-left-unreleased": "0765532a280afec4e6ba26da9efe64a1181179fdd185e07879bc49a57a88d87f"
     },
+    "RK-12.12-030": {
+      "realtime/an-utterance-replayed-from-its-mark-reaches-the-provider-ahead-of-the-live-audio": "3b0de77c0cfe7d478125ee88d9957a5c15829d7e7f7f569e8b44a6de7a4684c7"
+    },
+    "RK-12.12-031": {
+      "realtime/an-utterance-replayed-from-its-mark-is-discarded-when-the-handshake-fails": "d7738c0e9abca7659a8fbc4d5eb6a874fc3990158fade0d8e1348eb5a9e027cf"
+    },
+    "RK-12.12-032": {
+      "realtime/an-utterance-replayed-from-its-mark-reaches-the-provider-ahead-of-the-live-audio": "170520047937e38d6e8b55dbde68eb41876c8e42a28f444875fb0dad6f304aef"
+    },
     "RK-12.2-017": {
       "voice/a-contract-hands-every-inbound-stage-the-internal-format": "e9e6ee137ea6eefa6d675ba5796faa77b5906755634af63549f5ad4792f41a96",
       "voice/an-inbound-frame-walks-the-stages-in-their-order": "e9e6ee137ea6eefa6d675ba5796faa77b5906755634af63549f5ad4792f41a96"
@@ -5310,6 +5319,17 @@
     },
     "RK-12.2-052": {
       "voice/a-signalled-digit-and-an-in-band-tone-reach-one-dtmf-hook": "ed9dc8c48ed1867d364a62a286ac98f3a0b2aef7a4b073ed0b68fb484253e83d"
+    },
+    "RK-12.2-053": {
+      "realtime/a-paused-session-forwards-none-of-the-caller-s-audio-until-it-is-resumed": "b429687f3a378e199699419a73681e96c85cf6f369d6d7bcc60f28c31ac5179a",
+      "realtime/a-session-ended-while-paused-is-ended": "b429687f3a378e199699419a73681e96c85cf6f369d6d7bcc60f28c31ac5179a",
+      "realtime/a-session-is-connecting-until-its-provider-is-ready-then-active-until-it-ends": "b429687f3a378e199699419a73681e96c85cf6f369d6d7bcc60f28c31ac5179a",
+      "realtime/a-start-whose-provider-fails-to-connect-ends-its-session": "b429687f3a378e199699419a73681e96c85cf6f369d6d7bcc60f28c31ac5179a",
+      "voice/a-paused-session-s-speech-is-still-transcribed": "b429687f3a378e199699419a73681e96c85cf6f369d6d7bcc60f28c31ac5179a"
+    },
+    "RK-12.2-054": {
+      "realtime/a-reconfiguration-that-reconnects-the-provider-returns-the-session-to-connecting": "a78fd7c814d9b92ea282384485bc8a23341f0e8a2950c86b3f76afb4e9ac5dd9",
+      "realtime/an-ended-session-takes-no-other-state": "a78fd7c814d9b92ea282384485bc8a23341f0e8a2950c86b3f76afb4e9ac5dd9"
     },
     "RK-12.2-055": {
       "voice/a-participant-who-comes-back-gets-a-new-session": "f07a095d9866f10f7e535b693752b658bbe6fc003aa07b5942fa7fc0aa8f0122"

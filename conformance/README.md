@@ -133,14 +133,17 @@ alone does not make it plain.
 A scenario can list the features it needs in `requires_features`. The defined
 names are `message_session`, `protocol_trace`, `voice`, `realtime`,
 `conference`, `video`, `recording`, `executor_media`, `scoring`,
-`source_provider` and `call_recovery`.
+`source_provider`, `call_recovery` and `capture_source`.
 `executor_media` requires a standalone executor that accepts both host media
 readers (§10.6.2). `scoring` requires a turn scoring hook that can attach to a
 kit or a standalone executor (§10.6.6). `source_provider` requires scripted
 sources on the source interface (§6.5), attached to the kit (`sources`,
 below). `call_recovery` requires a realtime channel that recovers a tool
 call the model spoke as assistant text instead of issuing it (§12.4, a
-MAY): Scripted realtime sessions write that text. Three more names are
+MAY): Scripted realtime sessions write that text. `capture_source` requires
+scripted capture sources (`capture_sources`, below) and a realtime channel's
+transport that subscribes to one (§12.12, Scripted capture sources); a
+scenario that requires it also requires `realtime`. Three more names are
 reserved for the decided gaps that need them; no scenario uses them yet, so
 neither the schema nor a runner lists them:
 `transport_provider`, the implementation's own channel of a platform type
@@ -465,6 +468,10 @@ room callbacks of the setup are not compared.
   each call of its `stop` and `healthcheck`, and each of its `start` once
   the setup is made, under `sources`, and `cut` when its start's task is
   cut. A scenario that has `sources` requires `source_provider`.
+- `capture_sources`: each a **scripted capture source** (§12.12), named by
+  its `id`, in the implementation's default format and backlog: the
+  integrator's own, held apart from every session, which a realtime
+  channel's transport subscribes to (Scripted capture sources).
 - `event_handlers`: **framework-event handlers** (§8.2), each registered on
   the kit after the hooks, in order, for the events of its `event` type (a
   framework event's name: `before_tool_use`, `tool_call`, `ai_response`...).
@@ -624,6 +631,16 @@ The provider's traits and its scripted answers are members of `realtime` too:
   `realtime.read`'s `stages` lists the calls these stages received, as
   `voice.read`'s does.
 
+- `reconnects_on_reconfigure`: the provider reconfigures a session as the
+  provider interface's default does (§12.4): it disconnects the session,
+  which leaves it ENDED, the session is renegotiated (§12.2), and the
+  provider connects it again, held at the `gate` of the
+  `realtime.reconfigure` that asked it when it names one. False by default:
+  a reconfiguration then connects nothing.
+
+A session's state (§12.2) is read by `realtime.read`'s `state`, and set as
+the integrator sets it, on the session itself, by `realtime.set_state`.
+
 `realtime.start` may hold the start: with `gate`, the provider's connect
 holds there until a step opens it, the session already created and its
 transport's accept done; with `fail`, the connect fails with that message,
@@ -641,6 +658,21 @@ scenario that requires `call_recovery`, as the last sentence of a final
 assistant transcription: `call:<tool>{}`, or with the arguments inside the
 braces as `key:value` pairs separated by commas, `<tool>` a tool the
 session declares (`realtime.transcribe`).
+
+### Scripted capture sources
+
+A scenario that requires `capture_source` names its capture sources under
+`setup.capture_sources` (§12.12). `capture.feed` has a source capture
+frames, which it keeps in its backlog and hands its subscribers;
+`capture.mark` names a position in that backlog, a `mark` a later step
+names. A realtime channel's `realtime.capture_source` names the source its
+transport captures from: as the transport accepts a session, before the
+provider's connect, it subscribes the session to that source from the mark
+the session's metadata carries, which `realtime.start`'s `capture_since`
+names (live only, without one), and it hands each frame the subscription
+delivers to the channel through its ordinary inbound callback, in order, as
+the transport's received audio (`realtime.audio` with `source`
+`transport`). It unsubscribes the session at its disconnect.
 
 ### Scripted agents
 
@@ -1287,6 +1319,7 @@ run's own kit when absent.
 | `voice.flush_stt` | `channel_id`, `participant_id`, optional `route` (default false) | in batch mode, transcribe the session's buffered audio; with `route`, the transcript goes to the room as an utterance would; the result's `text` |
 | `voice.join` | `channel_id`, `participant_id`, optional `session_id`, `backend`, `room_id` and `push` | joins the participant to the channel's room again (the kit's `join`), or to `room_id`, a room the channel is attached to; with `backend`, a transport's name (`primary` or one `voice.add_backend` named), the join names it (`join(…, backend=)`). With `push: true`, it joins the session `voice.connect` made for the participant (the push model); otherwise the transport, `backend` or the primary, makes a new session, named `session_id` when given (the pull model). The participant's session is now that one |
 | `voice.leave` | `channel_id`, `participant_id` | the kit's `leave` of the participant's session |
+| `voice.set_state` | `channel_id`, `participant_id`, `state` (`connecting`, `active`, `paused` or `ended`) | sets the state of the participant's session, as the integrator sets it: on the session itself (§12.2) |
 | `voice.dtmf_received` | `channel_id`, `participant_id`, `digit`, `duration_ms` | the participant's transport receives the digit by signalling and calls the callbacks registered on its `on_dtmf_received` (§12.2) |
 | `voice.add_backend` | `channel_id`, `backend` (a name, never `primary`), optional `capabilities`, `session_ids`, `sample_rates` and `playback_gate`, as on `voice.open` | the channel's `add_backend` (§12.7.3) with the scripted transport of that name, built with those traits on its first add; a later add of the name adds that same transport again |
 | `voice.connect` | `channel_id`, `participant_id`, optional `backend` (`primary` by default) and `room_id` (the `voice.open` room by default) | the transport takes the participant's call on its own (its `connect`), as a transport an incoming call reaches does: the session it makes is the participant's, joined to no room until a `voice.join` with `push` |
@@ -1295,9 +1328,10 @@ run's own kit when absent.
 | `voice.play` | `channel_id`, `participant_id`, `audio` (base64 of a WAV file), optional `text` | the channel's `play` of the file to the participant's session, awaiting playback (§12.2) |
 | `voice.list_voices` | `channel_id`, optional `language`, `gender` and `query` | the channel's TTS's `list_voices` with those filters; the result's `voices`, each `id`, `name`, `language`, `gender` and `description`, in order (§12.2) |
 | `voice.synthesize_dialogue` | `channel_id`, `turns` (each `speaker` and `text`), `voices` (a voice id per speaker) | the channel's TTS's `synthesize_dialogue`; the result's `transcript` (§12.2) |
-| `realtime.start` | `channel_id`, `room_id`, `participant_id`, optional `tools`: the names of the session's own tools, which it opens with, each declared as the channel's tools are, its handler script the channel's tool of that name, optional `system_prompt` and `voice`, the session's own, which it opens with, and optional `gate` and `fail` (Scripted realtime sessions) | opens the realtime session (`start_session`) |
+| `realtime.start` | `channel_id`, `room_id`, `participant_id`, optional `tools`: the names of the session's own tools, which it opens with, each declared as the channel's tools are, its handler script the channel's tool of that name, optional `system_prompt` and `voice`, the session's own, which it opens with, optional `gate` and `fail` (Scripted realtime sessions), and optional `capture_since`, a mark `capture.mark` named, passed in the session's metadata (Scripted capture sources) | opens the realtime session (`start_session`) |
 | `realtime.end` | `channel_id` | ends the session |
-| `realtime.read` | `channel_id`, optional `stages` (stage names) and `calls` (call names) | the provider's `injections` (text, role, silent) and `results` (call_id, result), and the tool `handlers` (name, outcome of `returned`, `interrupted` or `raised`), in observation order; `declared`, one entry per declaration of the session's tools to the provider, its connection and then each reconfiguration that declares tools, in order, each naming every tool it declares by its position; with a scripted backend, `backend_requests`, each request it was handed, in order (`delegation_id`, `first`, `session` (`room_id`, `participant_id`), `transcript` (each line `role`, `text`), `participant_role`, `tools` naming each tool offered by its position, `unavailable` naming each tool not offered with the refusal its call reads), and `backend_calls`, each of its calls once it returned, in that order (`name`, `text`, and through `execute_tool_call` `is_error` and `refused`), a call cut before it returned as `{name, cut: true}`; `provider_audio`, the base64 chunks the provider received (its `send_audio`), in order; `transport_audio`, the base64 chunks the transport received (its `send_audio`), in order; `input_muted`, each mute or unmute the transport's input received (its `set_input_muted`), in order; `connects`, one entry per connect the provider was asked, in order: `server_vad`, and the session's `room_id` and the `system_prompt` and `voice` it was connected with; `stages`, each call the pipeline's scripted stages received, in order, only those of the named stages and calls when `stages` or `calls` is given; `reconfigures`, one entry per reconfiguration the provider was asked, in order: the session's `room_id` and the `system_prompt` and `voice` it was asked; `provider_calls`, each call the provider received of `interrupt`, `truncate_audio`, `send_activity_start`, `send_activity_end` and `disconnect`, in order, as `{call}`, a truncation with its `audio_end_ms`; `transport_calls`, each call the transport received of `interrupt` and `disconnect`, in order, as `{call}`; `delegation_outputs`, each output the provider received for a delegation (its `submit_delegation_output`), in order: `delegation_id`, `text`, `spoken`; `last_usage`, the first session's `last_usage`, null while it holds nothing; `usage_reports`, each call of the channel's `on_usage` callback, in order: `session` (`room_id`, `participant_id`) and `usage`, the map it was handed |
+| `realtime.read` | `channel_id`, optional `stages` (stage names) and `calls` (call names) | the provider's `injections` (text, role, silent) and `results` (call_id, result), and the tool `handlers` (name, outcome of `returned`, `interrupted` or `raised`), in observation order; `declared`, one entry per declaration of the session's tools to the provider, its connection and then each reconfiguration that declares tools, in order, each naming every tool it declares by its position; with a scripted backend, `backend_requests`, each request it was handed, in order (`delegation_id`, `first`, `session` (`room_id`, `participant_id`), `transcript` (each line `role`, `text`), `participant_role`, `tools` naming each tool offered by its position, `unavailable` naming each tool not offered with the refusal its call reads), and `backend_calls`, each of its calls once it returned, in that order (`name`, `text`, and through `execute_tool_call` `is_error` and `refused`), a call cut before it returned as `{name, cut: true}`; `provider_audio`, the base64 chunks the provider received (its `send_audio`), in order; `transport_audio`, the base64 chunks the transport received (its `send_audio`), in order; `input_muted`, each mute or unmute the transport's input received (its `set_input_muted`), in order; `connects`, one entry per connect the provider was asked, in order: `server_vad`, and the session's `room_id` and the `system_prompt` and `voice` it was connected with; `stages`, each call the pipeline's scripted stages received, in order, only those of the named stages and calls when `stages` or `calls` is given; `reconfigures`, one entry per reconfiguration the provider was asked, in order: the session's `room_id` and the `system_prompt` and `voice` it was asked; `provider_calls`, each call the provider received of `interrupt`, `truncate_audio`, `send_activity_start`, `send_activity_end` and `disconnect`, in order, as `{call}`, a truncation with its `audio_end_ms`; `transport_calls`, each call the transport received of `interrupt` and `disconnect`, in order, as `{call}`; `delegation_outputs`, each output the provider received for a delegation (its `submit_delegation_output`), in order: `delegation_id`, `text`, `spoken`; `last_usage`, the first session's `last_usage`, null while it holds nothing; `usage_reports`, each call of the channel's `on_usage` callback, in order: `session` (`room_id`, `participant_id`) and `usage`, the map it was handed; `state`, the state of the session the steps address (`connecting`, `active`, `paused` or `ended`, §12.2), null before any start |
+| `realtime.set_state` | `channel_id`, `state` (`connecting`, `active`, `paused` or `ended`) | sets the state of the session the steps address, as the integrator sets it: on the session itself (§12.2) |
 | `realtime.inject` | `channel_id`, `text`, `role` | injects the text into the live session |
 | `realtime.tool_call` | `channel_id`, `call_id`, `name`, optional `arguments`, or optional `arguments_text`, the arguments as the model wrote them, which the provider reads as a provider reads its wire (§12.4): text that reads as an object is that object, any other text reaches the channel as text | the provider issues the call |
 | `realtime.cancel` | `channel_id`, `call_ids` | the provider reports that it abandoned these calls |
@@ -1309,8 +1343,10 @@ run's own kit when absent.
 | `realtime.audio` | `channel_id`, `source` (`transport` or `provider`), `frames` (base64 PCM16) | with `transport`, the transport receives the caller's frames, in order (`on_audio_received`), and the step returns once the channel forwarded or retained each; with `provider`, the provider outputs them, in order (`on_audio`); `channel_id` may name a conference opened with `tools`, its source `provider`: its realtime model's response audio |
 | `realtime.response` | `channel_id`, `edge` (`start` or `end`) | the provider's response starts or ends (`on_response_start`, `on_response_end`); `channel_id` may name a conference opened with `tools`, whose realtime model's response it is |
 | `realtime.wait_idle` | `channel_id`, `room_id`, `timeout_ms` | the channel's `wait_idle(room_id, timeout)`, a realtime voice channel's or a conference's opened with `tools`: true once the room's sessions are idle within the time, false when it passed first (§12.4.1) |
-| `realtime.reconfigure` | `channel_id`, optional `room_id` (the session of that room, the channel's first when absent), optional `system_prompt`, `voice` and `tools` (tool names, each declared as the channel's tools are) | the channel's `reconfigure_session` of that session (§12.4) |
+| `realtime.reconfigure` | `channel_id`, optional `room_id` (the session of that room, the channel's first when absent), optional `system_prompt`, `voice` and `tools` (tool names, each declared as the channel's tools are), and optional `gate`, where the connect of a provider that `reconnects_on_reconfigure` holds | the channel's `reconfigure_session` of that session (§12.4) |
 | `realtime.usage` | `channel_id`, `input_tokens`, `output_tokens`, optional `details` (the provider's own keys and their values) | the provider reports what the channel's first session consumed (§12.4.2): the two totals, and `details` beside them |
+| `capture.mark` | `source_id`, `mark` | names the source's current position in its backlog `mark` (its `mark()`, §12.12) |
+| `capture.feed` | `source_id`, `frames` (base64 PCM16) | the source captures the frames, in order, each kept in its backlog and handed to its subscribers; the step returns once each realtime channel whose transport captures from the source forwarded or retained each frame it was handed (Scripted capture sources) |
 | `realtime.vision` | `channel_id`, `room_id`, optional `context_prefix` | gives the realtime channel's sessions in the room what the room's video channels see (§12.8.7): each vision result a video channel publishes there reaches them as a silent injection (`setup_realtime_vision`), under `context_prefix` when given, a result whose description repeats the last one injected reaching them once |
 | `parse_voice_session` | `session` (a voice session with `id`, `room_id`, `channel_id`, `participant_id` and optional `metadata`), `channel_id`, optional `metadata` | the InboundMessage made by the voice adapter (§5.12), including its session |
 | `emit_protocol_trace` | `trace`, a §5.14 record for a registered channel; its optional `raw` is text, null, or `{"base64": "..."}` for bytes | emits through the channel; the kit supplies the timestamp and dispatches the trace to its room's hooks (§9.2) |
@@ -2219,7 +2255,7 @@ refuses its value, a `ChannelId`).
 | `language_override_unsupported` | A session's STT language chosen on a voice channel whose recognizer reports `supports_language_override = false`, refused so that no language reaches it (§12.2) | `RuntimeError` from `VoiceChannel.set_stt_language` | — (no voice) |
 | `not_supported` | A method the voice transport, the TTS or the video of a combined transport does not support: a digit sent through a transport that does not declare `dtmf_signaling` (§12.3.6), a dialogue asked of a TTS whose `max_dialogue_speakers` is 0 (§12.2), a session asked of the `video` facet, which creates none (§12.8.3) | `NotImplementedError` from `VoiceChannel.send_dtmf`, `TTSProvider.synthesize_dialogue` or `CallVideoBackend.connect` | — (no voice) |
 | `capability_missing` | A conference operation that needs a capability the backend, or the channel's configuration, lacks: an end-to-end encrypted room asked of a backend without the E2EE capability (§12.10.2), a bot asked of a channel configured with nothing to consume or say (§12.10.4) | `ConferenceCapabilityError` | — (no conference) |
-| `session_ended` | A digit sent on a voice session that ended (§12.3.6) | `RuntimeError` from `VoiceChannel.send_dtmf`, `Cannot send DTMF on ended session …` | — (no voice) |
+| `session_ended` | A digit sent on a voice session that ended (§12.3.6); a state set on a session that ended, which only its renegotiation leaves (§12.2) | `RuntimeError` from `VoiceChannel.send_dtmf`, `Cannot send DTMF on ended session …`; `VoiceSessionEndedError` | — (no voice) |
 | `bridge_full` | A join to a room whose bridge holds `max_participants` sessions already: a voice join, refused before the session is bound (§12.7.2), a video join (§12.8.9) | `RuntimeError` from `RoomKit.join`, `Room … has reached max bridge participants (…)` | — (no voice or video) |
 | `provider_failed` | A scripted provider's own failure, which the caller is handed: a realtime provider's connect failing the session's start (§12.4), a scripted recorder refusing its start (§12.11), a session video recorder refusing to start a recording, failing the session's join (§12.8.10) | the scripted provider's error, raised as it is | — (no realtime, no recording, no video) |
 | `shutdown_cancelled` | A close once the kit's shutdown was cut itself before it ended, to a caller nobody cancelled (§12.10.4) | `ShutdownCancelledError` | `RoomKitError::ShutdownCancelled` |
