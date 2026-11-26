@@ -1413,3 +1413,58 @@ class SchemaTests(unittest.TestCase):
         self.assertTrue(validator.is_valid(scenario))
         scenario["expect"] = {"media_events": ["conference_started"]}
         self.assertFalse(validator.is_valid(scenario))
+
+    def test_a_video_channel_scripts_its_stages_bridge_recorder_and_calls(self) -> None:
+        schema = json.loads((ROOT / "scenario.schema.json").read_text())
+        validator = Draft202012Validator(schema)
+        fixture = ROOT / "scenarios/video/transforms-run-chained-in-their-configured-order.json"
+        self.assertTrue(validator.is_valid(json.loads(fixture.read_text())))
+        for member, value, valid in (
+            ("vision_labels", [["cat", "mat"], []], True),
+            ("vision_labels", ["cat"], False),
+            ("vision_interval_ms", 0, True),
+            ("vision_interval_ms", -1, False),
+            ("transforms", [{"name": "first"}, {"name": "second", "data": "AAAA"}], True),
+            ("transforms", [{"data": "AAAA"}], False),
+            ("filters", [{"name": "cover", "data": "AA=="}], False),
+            ("filters", [{"name": "cover", "replace": "AAAA"}], False),
+            ("recorder", {}, True),
+            ("recorder", {"refuses": ["bob"]}, True),
+            ("recorder", {"refuses": "bob"}, False),
+            ("bridge", {"enabled": False, "max_participants": 2}, True),
+            ("bridge", {"keyframe_interval_s": 0, "keyframe_wait_s": 0.5}, True),
+            ("bridge", {"keyframe_wait_s": -1}, False),
+            ("bridge", {"mixing_strategy": "mix"}, False),
+        ):
+            with self.subTest(member=member, value=value):
+                scenario = json.loads(fixture.read_text())
+                scenario["steps"][0][member] = value
+                self.assertEqual(validator.is_valid(scenario), valid)
+        for step, valid in (
+            ({"call": "video.frame", "channel_id": "camera", "participant_id": "alice",
+              "sequence": 2, "data": "BAUG", "keyframe": False}, True),
+            ({"call": "video.frame", "channel_id": "camera", "participant_id": "alice",
+              "sequence": 2, "data": "BAUG", "keyframe": "no"}, False),
+            ({"call": "video.join", "channel_id": "camera", "participant_id": "carol"}, True),
+            ({"call": "video.join", "channel_id": "camera"}, False),
+            ({"call": "av.open", "room_id": "r1", "channel_id": "phone",
+              "participants": ["alice"], "video": ["alice"], "video_later": ["alice"],
+              "avatar": True, "tts": None}, True),
+            ({"call": "av.open", "room_id": "r1", "channel_id": "phone",
+              "participants": []}, False),
+            ({"call": "av.open", "room_id": "r1", "channel_id": "phone",
+              "participants": ["alice"], "avatar": "yes"}, False),
+            ({"call": "av.video_live", "channel_id": "phone", "participant_id": "alice"}, True),
+            ({"call": "av.video_connect", "channel_id": "phone", "participant_id": "dave",
+              "expect": {"error": "not_supported"}}, True),
+            ({"call": "av.video_disconnect", "channel_id": "phone"}, False),
+            ({"call": "av.read", "channel_id": "phone"}, True),
+            ({"call": "av.read"}, False),
+            ({"call": "realtime.vision", "channel_id": "rt", "room_id": "r1",
+              "context_prefix": "The camera shows:"}, True),
+            ({"call": "realtime.vision", "channel_id": "rt"}, False),
+        ):
+            with self.subTest(step=step):
+                scenario = json.loads(fixture.read_text())
+                scenario["steps"].append(step)
+                self.assertEqual(validator.is_valid(scenario), valid)

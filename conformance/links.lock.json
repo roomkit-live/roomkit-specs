@@ -6651,6 +6651,9 @@
     "RK-12.7.8-010": {
       "voice/a-bridged-speaker-is-heard-detected-and-transcribed": "24ececb69e9c964797954618f3bb28eae93928f06cc18b3b3ae6591458781940"
     },
+    "RK-12.8.10-010": {
+      "video/a-recording-its-recorder-refuses-fails-the-join-before-the-session-is-bound": "3e3c2a960c730663503f56aa6e9e98d6008fef953998257ce3b3a5c79c98ec99"
+    },
     "RK-12.8.11-002": {
       "video/a-video-session-announces-its-start-and-end": "59c79af19203eabdc51797d53b2baa460d9b058463f2352ef98c1ff026b8994b"
     },
@@ -6673,17 +6676,33 @@
     "RK-12.8.11-010": {
       "video/the-bridge-obeys-the-frame-hook": "4631d08c08ec8f0aa754aefd1b6954bc553d611889fc65ccab30cd5672a49e23"
     },
+    "RK-12.8.3-013": {
+      "video/the-video-of-a-call-creates-no-session-and-its-disconnect-ends-the-call": "6af9deaa34e4bd6d654684fc856f74bdbd87ca333053f5babbc9a5f8d8b74a18"
+    },
+    "RK-12.8.3-014": {
+      "video/a-call-s-video-going-live-after-its-join-is-reported-started-then": "a6205a77bb29a053063f001ec9cbae5d92ca3bd91e59c422f56794353d2babf3",
+      "video/a-call-s-video-live-before-its-join-is-reported-once-bound-and-ended-once": "a6205a77bb29a053063f001ec9cbae5d92ca3bd91e59c422f56794353d2babf3"
+    },
     "RK-12.8.4-004": {
       "video/a-frame-filter-reports-its-detection": "fb46c7a69f9f0c954ba6471f5da17eb06d2e3338fb74971d16902777cba029f0"
     },
+    "RK-12.8.4-005": {
+      "video/a-frame-inside-the-vision-interval-is-not-analysed": "67761f2569ffc0d1b38500c258e93e9e0fc86dd5c8240914712a20176e3addc1"
+    },
     "RK-12.8.4-006": {
       "video/a-frame-filter-reports-its-detection": "898728c828e89783e3f0fee7e36b8a55f0c738ee0dceda7898b6aec050235fb0"
+    },
+    "RK-12.8.4-007": {
+      "video/a-filter-reads-the-latest-vision-result-on-the-frames-that-follow": "3e1ea76aee91a06d6cbd16b9f3995cbd646dd2732f0c9289b72da30504f76d7b"
     },
     "RK-12.8.4-009": {
       "video/a-frame-filter-reports-its-detection": "5f0a3f32993a9b7c9d2d2e2acb9d3ba601d62432534f06e4c3e005dfa3e58d5b"
     },
     "RK-12.8.4-010": {
       "video/a-vision-hook-controls-the-result-that-is-published": "e8b54e21a98c87f311f7c3ffe1278a2134a1078ac42b56dc39172248f658922d"
+    },
+    "RK-12.8.4-011": {
+      "video/a-filter-reads-the-latest-vision-result-on-the-frames-that-follow": "3dca9cbacff8e8ac505b6a3aafe03513c756d9c373496726f659f376cda76950"
     },
     "RK-12.8.4-012": {
       "video/a-vision-hook-controls-the-result-that-is-published": "f8f15c9c8e0cbfde515bb8e71303d5282ebc28aff445ff85ef1b96764f380451",
@@ -6692,8 +6711,20 @@
     "RK-12.8.4-013": {
       "video/a-vision-result-rides-the-turn-of-the-room-s-agent": "85fc0b2b73797b0bfc5147b00d157f957b06516c1f92ca4a8b71514184328820"
     },
+    "RK-12.8.4-014": {
+      "video/every-frame-of-a-recorded-session-reaches-its-recorder": "af4e2be24371d17419a2c7a33ac109d7b90e4495dcebb35837f36e0378457bde"
+    },
     "RK-12.8.4-015": {
       "video/a-vision-result-with-no-description-is-not-published": "25e7a5c0497a53c3a37d5ccb3f12a7632f368080adec1fb78af91121479abb80"
+    },
+    "RK-12.8.5-010": {
+      "video/transforms-run-chained-in-their-configured-order": "98cf093f99c1fae0d06d6be34243cf70634370f06dbaff4107687dbb422ba82c"
+    },
+    "RK-12.8.5-012": {
+      "video/a-filter-s-replacement-is-the-frame-the-bridge-and-vision-receive": "236aff2f50c6990749918169ab9c320cab36d2e6bf9875f6aec64c549c57fce5"
+    },
+    "RK-12.8.5-013": {
+      "video/a-filter-reads-the-latest-vision-result-on-the-frames-that-follow": "096b10d55f1792423d3f68c37fed721ec1af54bb6079cd9dcf95f8a062ba1521"
     },
     "RK-12.8.7-011": {
       "video/a-vision-result-rides-the-turn-of-the-room-s-agent": "612de6fc5197a8c15c6491a19fe9a9a7f140e952253cba113799eb2e1da4b8b9"
@@ -6711,17 +6742,39 @@
     "RK-12.8.7-015": {
       "video/a-view-ends-with-its-video-session": "d50d48ba2dcf5b9de5946543913508d355453167c4c4988bae61935eaa9b2c15"
     },
+    "RK-12.8.7-016": {
+      "video/a-realtime-session-given-what-the-camera-sees-takes-it-as-a-silent-vision-block": "a6be8541d9d1e7b8323e2307ce7d1ce30763dd02a72b8c8e1b24810f8b5b57c8"
+    },
     "RK-12.8.7-018": {
       "video/an-empty-vision-result-ends-the-session-s-view": "1fc0332eadb69f0908e1934b12fc20fc7257cc6fbf55fe7ac41072f5110bb313"
+    },
+    "RK-12.8.8-005": {
+      "video/an-audio-video-channel-feeds-its-avatar-the-speech-it-sends": "d45d2fa122a4575f6f2dd96311a574d46e4865cca4b88f6789c5031f84ea734e"
     },
     "RK-12.8.9-003": {
       "video/the-bridge-obeys-the-frame-hook": "22e4d10c114a9a61b4cc1618844ba350b1b124628c90481d9a2bc65a7b605a75"
     },
+    "RK-12.8.9-004": {
+      "video/a-bridge-forwards-only-while-enabled-which-it-is-by-default": "1ebe464e905872c3b58fb1bbf745ff5fb5249243109fce812d1b531eb2927722"
+    },
     "RK-12.8.9-006": {
       "video/a-forward-bridge-sends-each-frame-to-every-other-participant": "739a4e2744c1de82a2370ebdd588e59c06677cff6415991c5660785c9d5df1df"
     },
+    "RK-12.8.9-007": {
+      "video/with-no-periodic-interval-only-a-join-asks-for-a-keyframe": "1191d17f73a69f16cc34bec0acc413266dd740d28cb527dcdf1fb2c7e47a3605"
+    },
+    "RK-12.8.9-009": {
+      "video/a-joiner-has-every-session-already-in-the-room-asked-for-a-keyframe": "1c8055c78cd28895084ffb589a33febb8a5163f281a6970ff2a4fc6f4ca97389"
+    },
+    "RK-12.8.9-011": {
+      "video/a-source-s-delta-frames-wait-for-its-first-keyframe-at-each-target": "accf1f2b952ad078c074c8d4ace9c59f815a8c091346599749c5981fc002a5bc"
+    },
     "RK-12.8.9-013": {
       "video/the-bridge-obeys-the-frame-hook": "49c08141a6528a6e19da193505b023f84ccdc16740b4a8ee72fcf805e5b367bb"
+    },
+    "RK-12.8.9-014": {
+      "video/a-source-s-delta-frames-wait-for-its-first-keyframe-at-each-target": "a27a854553d7994a26aefbce05b52933b9ee98b4530fd92bc31d2c62c20c9f38",
+      "video/with-no-keyframe-wait-a-delta-frame-is-forwarded-at-once": "a27a854553d7994a26aefbce05b52933b9ee98b4530fd92bc31d2c62c20c9f38"
     },
     "RK-13.2-004": {
       "delivery/a-retried-delivery-keeps-its-successful-provider-receipt": "8504abca107b13da520b70284632b270c3d86c86a32db7cb46bd3f96555880da"

@@ -186,120 +186,20 @@
       "card": "RMK-2051",
       "note": "writable: voice.open bridge with mixing_strategy mix; Python forwards a mix made only of silence, left as is by the maintainer (RMK-2051)."
     },
-    "RK-12.8.10-010": {
-      "class": "step",
-      "card": "RMK-2062",
-      "note": "step: video.open with a scripted session recorder that refuses to start (VI3): the VideoChannel join fails and the session is never bound, ON_VIDEO_SESSION_STARTED never firing. The .. half is the file recorders' (validate_storage_path, src/roomkit/video/recorder/base.py, which no runner reaches), proven by tests/test_video_recording.py::TestVideoChannelRecordingFailures::test_a_refused_recording_refuses_the_session_before_binding_it with the storage a/../b."
-    },
-    "RK-12.8.3-010": {
-      "class": "step",
-      "card": "RMK-2062",
-      "note": "step: av.open, an audio/video channel over a scripted combined backend (VI4): every call, with or without video, reports its start and its end through the voice lifecycle."
-    },
-    "RK-12.8.3-011": {
-      "class": "step",
-      "card": "RMK-2062",
-      "note": "step: av.open, an audio/video channel over a scripted combined backend (VI4): a call that negotiated video reports its video session under the call's id, ready once its video path is live and ended with the call."
-    },
-    "RK-12.8.3-012": {
-      "class": "step",
-      "card": "RMK-2062",
-      "note": "step: av.open, an audio/video channel over a scripted combined backend (VI4): a call without video never reports a video session."
-    },
-    "RK-12.8.3-013": {
-      "class": "step",
-      "card": "RMK-2062",
-      "note": "step: av.open, an audio/video channel over a scripted combined backend (VI4): disconnecting the video facet ends the call, and the facet's connect is refused."
-    },
-    "RK-12.8.3-014": {
-      "class": "step",
-      "card": "RMK-2062",
-      "note": "step: av.open, an audio/video channel over a scripted combined backend (VI4): ON_SESSION_STARTED for the call, ON_VIDEO_SESSION_STARTED once the session is bound and its video live, whichever comes last, and ON_VIDEO_SESSION_ENDED after it, each once, the video ones only for a call with video."
-    },
-    "RK-12.8.4-005": {
-      "class": "step",
-      "card": "RMK-2062",
-      "note": "step: a pipeline vision provider and vision_interval_ms on video.open (VI1; the runners analyse every frame): a frame inside the interval is not analysed."
-    },
-    "RK-12.8.4-007": {
-      "class": "step",
-      "card": "RMK-2062",
-      "note": "step: a scripted filter that reads its FilterContext on video.open (VI1): after a vision result, the filter's context holds it."
-    },
-    "RK-12.8.4-011": {
-      "class": "step",
-      "card": "RMK-2062",
-      "note": "step: a scripted filter that reads its FilterContext on video.open (VI1): the frame after a vision result sees it in last_vision_result and labels_detected."
-    },
-    "RK-12.8.4-014": {
-      "class": "step",
-      "card": "RMK-2062",
-      "note": "step: video.open with a scripted session recorder and a read of its result (VI3): every frame of a recorded session reaches the recorder."
-    },
-    "RK-12.8.5-010": {
-      "class": "step",
-      "card": "RMK-2062",
-      "note": "step: scripted transforms on video.open (VI1): two transforms run in their configured order on each frame."
-    },
-    "RK-12.8.5-012": {
-      "class": "step",
-      "card": "RMK-2062",
-      "note": "step: a scripted filter that replaces the frame on video.open (VI1): the replacement is what the bridge and the vision provider receive."
-    },
-    "RK-12.8.5-013": {
-      "class": "step",
-      "card": "RMK-2062",
-      "note": "step: a scripted filter that reads its FilterContext on video.open (VI1): it holds the latest vision result."
-    },
-    "RK-12.8.7-016": {
-      "class": "step",
-      "card": "RMK-2062",
-      "note": "step: a realtime session given the video channel's vision results (Python's setup_realtime_vision), with video.open and realtime.start: realtime.read shows the <vision> block as a silent injection (requires video and realtime)."
-    },
-    "RK-12.8.8-005": {
-      "class": "step",
-      "card": "RMK-2062",
-      "note": "step: av.open with a scripted avatar (VI4): the TTS audio of a reply reaches the avatar's feed_audio()."
-    },
     "RK-12.8.8-006": {
       "class": "step",
       "card": "RMK-2062",
-      "note": "step: av.open with a scripted avatar and a read of the video sent (VI4): the avatar's frames are encoded and sent through the video backend."
-    },
-    "RK-12.8.9-004": {
-      "class": "step",
-      "card": "RMK-2062",
-      "note": "step: video.open bridge as a config object (the runners take a boolean): enabled false forwards nothing."
+      "note": "step: av.open with avatar (VI4) is in place, and its scenario (the avatar's one frame, encoded as its bytes, sent through the call's video facet) fails on Python: the audio/video channel sends the avatar's frames only through one transport's own private path, never the facet's send_video or send_video_sync; decision pending with the maintainer (P6-VI)."
     },
     "RK-12.8.9-005": {
       "class": "step",
       "card": "RMK-2062",
-      "note": "step: video.open bridge as a config object (the runners take a boolean): a session past max_participants is not bridged, the refusal observable."
-    },
-    "RK-12.8.9-007": {
-      "class": "step",
-      "card": "RMK-2062",
-      "note": "step: a read of the keyframe requests (PLI) the bridged sessions' backend received (VI2): one request per keyframe_interval_s."
-    },
-    "RK-12.8.9-009": {
-      "class": "step",
-      "card": "RMK-2062",
-      "note": "step: a late joiner on video.open with a read of the keyframe requests (PLI) the bridged sessions' backend received (VI2): when a session joins, every session already in the room is asked for a keyframe (RMK-2058); proven natively by tests/video/test_video_bridge.py::TestVideoBridge::test_a_joiner_is_served_by_a_keyframe_request_to_every_peer."
+      "note": "step: the bridge configuration and video.join (VI2) are in place; whether a video join the full bridge refuses must be refused before its session is bound, as a voice join is (RK-12.7.2-007), is pending with the maintainer (P6-VI): Python binds the session first."
     },
     "RK-12.8.9-010": {
       "class": "step",
       "card": "RMK-2062",
-      "note": "step: a read of the keyframe requests (PLI) the bridged sessions' backend received (VI2): the bridge requests keyframes periodically."
-    },
-    "RK-12.8.9-011": {
-      "class": "step",
-      "card": "RMK-2062",
-      "note": "step: the keyframe flag on video.frame (VI2; the runners send keyframes only): a session receives no delta frame from a source before that source's first keyframe reaches it, until keyframe_wait_s passes (RMK-2059); proven natively by tests/video/test_video_bridge.py."
-    },
-    "RK-12.8.9-014": {
-      "class": "step",
-      "card": "RMK-2062",
-      "note": "step: video.open bridge as a config object and the keyframe flag on video.frame (VI2): with keyframe_wait_s 0 a new session's first delta frame is forwarded at once."
+      "note": "step: the virtual clock (X-CLK): with keyframe_interval_s set, a second periodic keyframe request comes once the interval passed, which no scenario can wait for without a delay; video.read.keyframe_requests and the bridge configuration (VI2) are in place. The same clock would cover the parts the P6-VI citations leave out: RK-12.8.9-007's 5.0 s default and one request per interval, RK-12.8.9-011's forwarding past keyframe_wait_s and its one warning, RK-12.8.9-014's 1.0 s default, and RK-12.8.4-005's analysis once the interval passed."
     },
     "RK-13.1-001": {
       "class": "step",
