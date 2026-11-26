@@ -1,9 +1,9 @@
 {
   "version": 1,
-  "rfc_sha256": "f11279ccbbde1043727704d570a7b8b5c7e9cb62cf6b79ef0f257316f1cf046e",
-  "corpus_sha256": "83236f900843d33b4c0aff9a44da1e5d4a6bc3c99a2d4f75841102ed4941b508",
+  "rfc_sha256": "cf46b96711b90723710eb43f1484ab4cf8cec873fa0a6bbffcfffb8d302e1ee3",
+  "corpus_sha256": "d3888806f77773934fbf6e91f68f9e2e00ba94c89946561f48e3f62e2d94b70b",
   "python_commit": "452ae6397f70661e0ec0f2c8db3000398f904c41",
-  "scenario_count": 3934,
+  "scenario_count": 3937,
   "sections": [
     {
       "section": "0",
@@ -7408,12 +7408,11 @@
       "mapping": {
         "unmapped": 5
       },
-      "decided_gaps": {
-        "step": 1
-      },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
-        "video/an-audio-video-channel-feeds-its-avatar-the-speech-it-sends"
+        "video/an-audio-video-channel-feeds-its-avatar-the-speech-it-sends",
+        "video/an-avatar-s-frames-are-encoded-and-sent-through-the-video-of-the-call"
       ]
     },
     {
@@ -7425,14 +7424,16 @@
         "unmapped": 12
       },
       "decided_gaps": {
-        "step": 2
+        "step": 1
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "video/a-bridge-forwards-only-while-enabled-which-it-is-by-default",
         "video/a-forward-bridge-sends-each-frame-to-every-other-participant",
         "video/a-joiner-has-every-session-already-in-the-room-asked-for-a-keyframe",
+        "video/a-room-bridges-no-more-sessions-than-max-participants",
         "video/a-source-s-delta-frames-wait-for-its-first-keyframe-at-each-target",
+        "video/a-video-bridge-holds-ten-sessions-by-default",
         "video/with-no-keyframe-wait-a-delta-frame-is-forwarded-at-once",
         "video/with-no-periodic-interval-only-a-join-asks-for-a-keyframe"
       ]
@@ -32816,12 +32817,7 @@
       "id": "RK-12.8.8-006",
       "section": "12.8.8",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2062",
-        "note": "step: av.open with avatar (VI4) is in place, and its scenario (the avatar's one frame, encoded as its bytes, sent through the call's video facet) fails on Python: the audio/video channel sends the avatar's frames only through one transport's own private path, never the facet's send_video or send_video_sync; decision pending with the maintainer (P6-VI)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.8.9-003",
@@ -32839,12 +32835,7 @@
       "id": "RK-12.8.9-005",
       "section": "12.8.9",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2062",
-        "note": "step: the bridge configuration and video.join (VI2) are in place; whether a video join the full bridge refuses must be refused before its session is bound, as a voice join is (RK-12.7.2-007), is pending with the maintainer (P6-VI): Python binds the session first."
-      }
+      "links": []
     },
     {
       "id": "RK-12.8.9-006",
