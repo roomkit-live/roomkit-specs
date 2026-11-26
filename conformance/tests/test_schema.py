@@ -1267,3 +1267,63 @@ class SchemaTests(unittest.TestCase):
                 scenario = json.loads(fixture.read_text())
                 scenario["steps"].append(step)
                 self.assertEqual(validator.is_valid(scenario), valid)
+
+    def test_a_conference_backend_is_faulted_minted_closed_and_announced(self) -> None:
+        schema = json.loads((ROOT / "scenario.schema.json").read_text())
+        validator = Draft202012Validator(schema)
+        fixture = (
+            ROOT
+            / "scenarios/conference/a-mint-held-past-the-detach-s-budget-is-taken-back.json"
+        )
+        self.assertTrue(validator.is_valid(json.loads(fixture.read_text())))
+        for member, value, valid in (
+            ("faults", [{"method": "list_participants", "gate": "probing"}], True),
+            ("faults", [{"method": "leave", "fail": "refused", "after": 1}], True),
+            ("faults", [{"method": "list_participants"}], False),
+            ("faults", [{"method": "participants", "fail": "refused"}], False),
+            ("faults", [{"method": "leave", "gate": ""}], False),
+            ("bot_joined_at", "2026-01-01T00:00:00", True),
+            ("bot_joined_at", "", False),
+        ):
+            with self.subTest(member=member, value=value):
+                scenario = json.loads(fixture.read_text())
+                scenario["steps"][0][member] = value
+                self.assertEqual(validator.is_valid(scenario), valid)
+        for step, valid in (
+            ({"call": "conference.fault", "channel_id": "conf", "method": "leave",
+              "gate": "leaving", "ignores_cancel": True}, True),
+            ({"call": "conference.fault", "channel_id": "conf", "method": "publish_audio",
+              "gate": "publishing", "fail": "gone", "after": 1}, True),
+            ({"call": "conference.fault", "channel_id": "conf", "method": "leave"}, False),
+            ({"call": "conference.fault", "channel_id": "conf", "method": "leave",
+              "fail": "refused", "after": -1}, False),
+            ({"call": "conference.fault", "method": "leave", "fail": "refused"}, False),
+            ({"call": "conference.mint", "channel_id": "conf", "room_id": "r1",
+              "participant_id": "alice", "grants": {"moderate": True},
+              "attributes": {"seat": "3"}, "organization_id": "org-a"}, True),
+            ({"call": "conference.mint", "channel_id": "conf", "room_id": "r1",
+              "participant_id": "alice", "grants": {"vision": True}}, False),
+            ({"call": "conference.mint", "channel_id": "conf", "room_id": "r1",
+              "participant_id": "alice", "attributes": {"seat": 3}}, False),
+            ({"call": "conference.mint", "channel_id": "conf", "room_id": "r1"}, False),
+            ({"call": "conference.close", "channel_id": "conf",
+              "expect": {"error": "conference_close_failed"}}, True),
+            ({"call": "conference.close"}, False),
+            ({"call": "conference.read", "channel_id": "conf", "stage_calls": ["process"]}, True),
+            ({"call": "conference.read", "channel_id": "conf", "stage_calls": []}, False),
+            ({"call": "conference.ensure_bot", "channel_id": "conf", "room_id": "r1",
+              "expect": {"error": "backend_failed"}}, True),
+            ({"call": "conference.mint", "channel_id": "conf", "room_id": "r1",
+              "participant_id": "alice", "expect": {"error": "room_not_attached"}}, True),
+            ({"call": "conference.open", "channel_id": "conf2", "room_id": "r1",
+              "expect": {"error": "conference_already_attached"}}, True),
+        ):
+            with self.subTest(step=step):
+                scenario = json.loads(fixture.read_text())
+                scenario["steps"].append(step)
+                self.assertEqual(validator.is_valid(scenario), valid)
+        scenario = json.loads(fixture.read_text())
+        scenario["expect"] = {"media_events": {"r1": ["conference_started"]}}
+        self.assertTrue(validator.is_valid(scenario))
+        scenario["expect"] = {"media_events": ["conference_started"]}
+        self.assertFalse(validator.is_valid(scenario))

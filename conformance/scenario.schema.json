@@ -2768,6 +2768,9 @@
             "conference.set_bot_grants",
             "conference.bot_lost",
             "conference.echo",
+            "conference.fault",
+            "conference.mint",
+            "conference.close",
             "video.open",
             "video.frame",
             "video.disconnect",
@@ -3480,6 +3483,18 @@
                   ],
                   "exclusiveMinimum": 0
                 }
+              },
+              "faults": {
+                "description": "Faults armed on the scripted SFU before the attach, each as a conference.fault's (README, Scripted conference faults).",
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/conference_fault"
+                }
+              },
+              "bot_joined_at": {
+                "description": "The joined_at the scripted SFU gives each bot session it returns: an RFC 3339 instant, or a date and time with no offset.",
+                "type": "string",
+                "minLength": 1
               }
             }
           }
@@ -3791,6 +3806,15 @@
                   ]
                 },
                 "uniqueItems": true
+              },
+              "stage_calls": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "minItems": 1,
+                "uniqueItems": true
               }
             }
           }
@@ -4024,6 +4048,113 @@
               "track_id": {
                 "type": "string",
                 "minLength": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "conference.fault"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "channel_id",
+              "method"
+            ],
+            "properties": {
+              "channel_id": {
+                "type": "string"
+              }
+            },
+            "allOf": [
+              {
+                "$ref": "#/$defs/conference_fault"
+              }
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "conference.mint"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "channel_id",
+              "room_id",
+              "participant_id"
+            ],
+            "properties": {
+              "channel_id": {
+                "type": "string"
+              },
+              "room_id": {
+                "type": "string"
+              },
+              "participant_id": {
+                "type": "string"
+              },
+              "grants": {
+                "type": "object",
+                "properties": {
+                  "publish_audio": {
+                    "type": "boolean"
+                  },
+                  "publish_video": {
+                    "type": "boolean"
+                  },
+                  "publish_screen_share": {
+                    "type": "boolean"
+                  },
+                  "publish_screen_share_audio": {
+                    "type": "boolean"
+                  },
+                  "subscribe": {
+                    "type": "boolean"
+                  },
+                  "moderate": {
+                    "type": "boolean"
+                  },
+                  "hidden": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "attributes": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              },
+              "organization_id": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "conference.close"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "channel_id"
+            ],
+            "properties": {
+              "channel_id": {
+                "type": "string"
               }
             }
           }
@@ -9541,6 +9672,61 @@
         "list_observations"
       ]
     },
+    "conference_fault": {
+      "description": "A fault on the conference's scripted SFU (README, Scripted conference faults): the call of `method` it takes holds at `gate` once received, then fails with `fail`.",
+      "type": "object",
+      "required": [
+        "method"
+      ],
+      "properties": {
+        "method": {
+          "enum": [
+            "ensure_room",
+            "close_room",
+            "list_participants",
+            "join_as_bot",
+            "update_bot_grants",
+            "leave",
+            "stop_playback",
+            "subscribe_track",
+            "unsubscribe_track",
+            "publish_audio",
+            "publish_video",
+            "mint_access",
+            "remove_participant",
+            "mute_track",
+            "unmute_track",
+            "close"
+          ]
+        },
+        "fail": {
+          "type": "string"
+        },
+        "gate": {
+          "type": "string",
+          "minLength": 1
+        },
+        "after": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "ignores_cancel": {
+          "type": "boolean"
+        }
+      },
+      "anyOf": [
+        {
+          "required": [
+            "fail"
+          ]
+        },
+        {
+          "required": [
+            "gate"
+          ]
+        }
+      ]
+    },
     "error_name": {
       "description": "What a call fails with, by its meaning in the RFC (README, \"Errors\").",
       "enum": [
@@ -9582,7 +9768,11 @@
         "capability_missing",
         "session_ended",
         "bridge_full",
-        "provider_failed"
+        "provider_failed",
+        "conference_already_attached",
+        "room_not_attached",
+        "backend_failed",
+        "conference_close_failed"
       ]
     },
     "expect": {
@@ -9914,6 +10104,13 @@
         },
         "voice_events": {
           "description": "Per room, the framework events of a voice session's failed synthesis or playback (\u00a78.2, \u00a712.2: `tts_error`), in emission order, matched as `framework_events`.",
+          "type": "object",
+          "additionalProperties": {
+            "type": "array"
+          }
+        },
+        "media_events": {
+          "description": "Per room, the framework events of the media features (\u00a78.2, Level 3: voice_session_*, stt_error, recording_*, video_*, conference_*), in emission order, matched as `framework_events`.",
           "type": "object",
           "additionalProperties": {
             "type": "array"

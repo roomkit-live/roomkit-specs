@@ -76,11 +76,6 @@
       "card": "RMK-1942",
       "note": "Two attempts at a request's last one count once: racing them needs a gate inside a verification transition."
     },
-    "RK-12.10.1-003": {
-      "class": "step",
-      "card": "RMK-2070",
-      "note": "step: conference_already_attached error name: a second conference channel attached to a room already holding one, refused under a name no runner error table holds."
-    },
     "RK-12.10.12-014": {
       "class": "step",
       "card": "RMK-2076",
@@ -231,170 +226,15 @@
       "card": "RMK-2076",
       "note": "step: conference.open options (tool_policy), the conference model steps' read of the declared tools."
     },
-    "RK-12.10.2-027": {
-      "class": "step",
-      "card": "RMK-2070",
-      "note": "step: conference.mint, conference.read: the participant_id a mint hands the backend is the room Participant.id."
-    },
-    "RK-12.10.2-052": {
-      "class": "step",
-      "card": "RMK-2070",
-      "note": "step: framework_events media rows: conference_ended's duration_ms measured from the bot session's joined_at."
-    },
-    "RK-12.10.2-055": {
-      "class": "step",
-      "card": "RMK-2070",
-      "note": "step: framework_events media rows, a backend handing back a session whose joined_at is naive: conference_ended still announced with its duration."
-    },
-    "RK-12.10.3-020": {
-      "class": "step",
-      "card": "RMK-2070",
-      "note": "step: conference.mint, conference.read: a mint alone bringing the bot in, with no presence reported before the join."
-    },
-    "RK-12.10.3-023": {
-      "class": "step",
-      "card": "RMK-2070",
-      "note": "step: conference.bot_lost, conference.read, framework_events media rows: the session off the books, conference_ended announced, its lanes closed and recordings finalized, the next need re-joining."
-    },
     "RK-12.10.3-036": {
       "class": "phase6",
       "card": "RMK-2070",
       "note": "measurement: the residue of a stop, the bot audio a backend still plays out after stop_playback()."
     },
-    "RK-12.10.3-050": {
-      "class": "step",
-      "card": "RMK-2070",
-      "note": "step: conference.mint, conference.read: the display_name on record handed to mint_access."
-    },
-    "RK-12.10.3-056": {
-      "class": "step",
-      "card": "RMK-2070",
-      "note": "step: conference.mint, conference.read: a mint asking for no attribute hands the backend none, whatever the participant's record holds."
-    },
-    "RK-12.10.3-057": {
-      "class": "step",
-      "card": "RMK-2070",
-      "note": "step: conference.mint: an attribute the room would not keep, refused."
-    },
-    "RK-12.10.3-058": {
-      "class": "step",
-      "card": "RMK-2070",
-      "note": "step: conference.mint: an oversize attribute refused, not truncated."
-    },
-    "RK-12.10.4-019": {
-      "class": "step",
-      "card": "RMK-2007",
-      "note": "step: conference.fault: a backend call held past its budget as the channel closes."
-    },
-    "RK-12.10.4-020": {
-      "class": "step",
-      "card": "RMK-2007",
-      "note": "step: conference.read, conference.fault: the order of the backend calls a close makes, one of them held past its budget."
-    },
-    "RK-12.10.4-021": {
-      "class": "step",
-      "card": "RMK-2007",
-      "note": "step: conference.fault, conference.read: a call abandoned past its budget, and what the close frees on its account."
-    },
-    "RK-12.10.4-022": {
-      "class": "step",
-      "card": "RMK-2007",
-      "note": "step: conference.fault: two closes of one conference channel overlapping, the first one held, then cancelled."
-    },
-    "RK-12.10.4-023": {
-      "class": "step",
-      "card": "RMK-2007",
-      "note": "step: conference.fault: a close the backend fails, then a later close of the same channel."
-    },
-    "RK-12.10.4-024": {
-      "class": "step",
-      "card": "RMK-2007",
-      "note": "step: conference.read, conference.fault: a detach and a close asking for one session's departure at once."
-    },
-    "RK-12.10.4-025": {
-      "class": "step",
-      "card": "RMK-2007",
-      "note": "step: conference.fault, conference.read: a backend call that swallows its cancellation, and when its resource is closed."
-    },
-    "RK-12.10.4-026": {
-      "class": "step",
-      "card": "RMK-2007",
-      "note": "step: conference.fault: a close that abandons a call reports the resource it retains and fails."
-    },
-    "RK-12.10.4-027": {
-      "class": "step",
-      "card": "RMK-2007",
-      "note": "step: conference.fault: a close one of whose four conditions does not hold fails."
-    },
-    "RK-12.10.4-028": {
-      "class": "step",
-      "card": "RMK-2007",
-      "note": "step: conference.fault: a leave() the backend refuses, raised by name at the end of the close."
-    },
-    "RK-12.10.4-029": {
-      "class": "step",
-      "card": "RMK-2007",
-      "note": "step: conference.fault, conference.read: the session a failed close left, still reported by the channel."
-    },
     "RK-12.10.4-056": {
       "class": "phase6",
       "card": "RMK-2007",
       "note": "measurement: the close's whole duration bound (the grace, the turn backend's budget, the closes, at most two unwinds of 1 second); no step reads elapsed time."
-    },
-    "RK-12.10.4-082": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.read, conference.mint: no join_as_bot() at the attach, one at the first mint, delivery or arrival."
-    },
-    "RK-12.10.4-084": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: framework_events media rows: conference_started at the lazy join."
-    },
-    "RK-12.10.4-085": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.mint, conference.read: a mint on a backend that reports no arrival brings the bot in."
-    },
-    "RK-12.10.4-086": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.fault, conference.mint: join_as_bot() held while the mint answers."
-    },
-    "RK-12.10.4-087": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.fault, conference.mint: join_as_bot() failing, the mint's credential returned."
-    },
-    "RK-12.10.4-089": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.fault: list_participants() or join_as_bot() held while the attach returns."
-    },
-    "RK-12.10.4-090": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.fault: list_participants() failing at the attach, the attach returning the binding and a later arrival bringing the bot in."
-    },
-    "RK-12.10.4-095": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.ensure_bot, conference.fault, conference.read: ensure_bot() racing an arrival's join, one join_as_bot()."
-    },
-    "RK-12.10.4-096": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.ensure_bot, framework_events media rows: the hook and conference_started before the call returns."
-    },
-    "RK-12.10.4-097": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.ensure_bot: on a room the channel is not attached to, and with a detach during a held join (conference.fault)."
-    },
-    "RK-12.10.4-098": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.ensure_bot, conference.fault: join_as_bot() failing, its error raised."
     },
     "RK-12.10.4-100": {
       "class": "step",
@@ -406,165 +246,30 @@
       "card": "RMK-2076",
       "note": "step: conference.open options (no consumer, no voice), conference.mint, conference.read: ensure_room() called, a credential minted, the arrival's participant record written."
     },
-    "RK-12.10.4-114": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: framework_events media rows: conference_ended at the detach after a join, none with no bot."
-    },
-    "RK-12.10.4-116": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.fault: a mint or a publication held as the detach runs; the detach waits for it within its budget."
-    },
-    "RK-12.10.4-117": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.fault, conference.mint: a mint held past the detach's budget is taken back."
-    },
-    "RK-12.10.4-119": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.read, framework_events media rows: the order of the closes, leave() and conference_ended at a detach."
-    },
     "RK-12.10.4-125": {
       "class": "step",
       "card": "RMK-2076",
       "note": "step: error name conference_already_attached in the Errors table: a second conference.open on the room refused."
     },
-    "RK-12.10.4-127": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: error name conference_already_attached, conference.fault: a second conference attached while the first one's deferred teardown is held."
-    },
-    "RK-12.10.4-128": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: error name conference_already_attached, conference.fault: the attach refused at once while the teardown is held, accepted once it ends."
-    },
     "RK-12.10.4-132": {
       "class": "step",
       "card": "RMK-2076",
-      "note": "step: conference.mint, conference.read: the grants the backend was asked to mint, defaults and an override."
-    },
-    "RK-12.10.4-134": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.mint (attributes), conference.read: the attributes the backend received."
-    },
-    "RK-12.10.4-135": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.mint with attributes over the bound, conference.read: what the backend received, bounded."
-    },
-    "RK-12.10.4-136": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.mint, conference.read: the backend received exactly the caller's attributes."
-    },
-    "RK-12.10.4-137": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.mint with organization_id: room_not_found for another organization's room, no backend call (conference.read)."
-    },
-    "RK-12.10.4-138": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.mint after detach_channel: refused, no credential."
-    },
-    "RK-12.10.4-139": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.fault, conference.mint: a mint held in the backend while the channel detaches returns no credential."
-    },
-    "RK-12.10.4-140": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.fault, conference.mint: a detach during a held mint waits for it within its budget."
-    },
-    "RK-12.10.4-141": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.fault, conference.mint, conference.read: a mint held past the detach's deadline, its backend request cancelled."
-    },
-    "RK-12.10.4-142": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.fault: a mint whose backend call ignores its cancellation and returns after the detach: no credential returned."
-    },
-    "RK-12.10.4-143": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.mint, conference.fault: a mint whose backend call outlives the detach's deadline; the refusal says it is no revocation (Python says so in its log and in the refusal's message, src/roomkit/channels/_conference_access.py)."
-    },
-    "RK-12.10.4-144": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.fault, conference.mint, close: a mint held as the kit closes returns no credential, and close_backend comes after its cancellation (conference.read)."
-    },
-    "RK-12.10.4-169": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.fault (the scripted SFU's unsubscribe_track held), with conference.feed and recording.read per conference track: frames delivered while the binding is muted and the track still subscribed reach neither a lane nor a recording."
-    },
-    "RK-12.10.4-170": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.fault (the scripted SFU's unsubscribe_track held), with conference.feed and a recognition held across the mute: no transcription delivered once the binding is muted."
-    },
-    "RK-12.10.4-172": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.fault (the scripted SFU's unsubscribe_track held), with conference.feed and conference.read: a frame right after the mute, its track still subscribed, reaches no lane."
-    },
-    "RK-12.10.4-180": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.plug, conference.fault: join_as_bot() failing, the plug returning."
-    },
-    "RK-12.10.4-185": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.plug held in the backend (conference.fault) while a second plug is issued: applied one after the other."
-    },
-    "RK-12.10.4-189": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.fault holding publish_audio after an utterance's first chunk; then conference.unplug of tts, conference.read: stop_playback() and a final chunk."
-    },
-    "RK-12.10.4-191": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.unplug of the last need, conference.read, framework_events media rows: leave() and conference_ended."
-    },
-    "RK-12.10.4-192": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.unplug of the last need, then conference.join and conference.mint: no join, the roster written."
+      "note": "step: conference.open's default_grants, which no step names yet, with conference.mint: the grants the backend is asked to mint when the caller names none. The caller's override is read by conference/a-mint-carries-the-caller-s-grants-and-attributes."
     },
     "RK-12.10.4-196": {
       "class": "step",
       "card": "RMK-2076",
-      "note": "step: conference.plug on a backend without BOT_GRANT_UPDATE, conference.read, framework_events media rows: leave(), join_as_bot(), conference_ended, conference_started."
-    },
-    "RK-12.10.4-201": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.set_bot_grants issued while a plug is held (conference.fault): applied after it."
+      "note": "step: none missing (conference.plug, conference.read, expect.media_events); the scenario waits on HITL 01527428 (P6-CF4): a plug's re-join on a backend without BOT_GRANT_UPDATE emits no conference_bot_grants_changed in Python, so the room's event list after its leave(), join_as_bot(), conference_ended and conference_started cannot be written before the answer."
     },
     "RK-12.10.4-206": {
       "class": "step",
       "card": "RMK-2076",
-      "note": "step: conference.set_bot_grants on a backend without the capability, and with update_bot_grants() failing (conference.fault): leave() and join_as_bot()."
+      "note": "step: conference.open's capabilities with BOT_GRANT_UPDATE (P6-CF3) and conference.fault failing update_bot_grants (P6-CF4), both on main, for P6-CF5: conference.set_bot_grants then re-joins, leave() and join_as_bot(). The re-join on a backend without the capability is read by conference/a-grant-change-carried-by-a-re-join-is-announced-with-the-session."
     },
     "RK-12.10.4-211": {
       "class": "step",
       "card": "RMK-2076",
-      "note": "step: framework_events media rows: conference_bot_grants_changed after a set applied in place and after a re-join."
-    },
-    "RK-12.10.4-212": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: framework_events media rows: no conference_bot_grants_changed after a set equal to the grants in force."
+      "note": "step: conference.open's capabilities with BOT_GRANT_UPDATE (P6-CF3) and expect.media_events (P6-CF4), both on main, for P6-CF5: conference_bot_grants_changed after a set applied in place. The one a re-join carries is read by conference/a-grant-change-carried-by-a-re-join-is-announced-with-the-session."
     },
     "RK-12.10.4-216": {
       "class": "step",
@@ -590,41 +295,6 @@
       "class": "step",
       "card": "RMK-2076",
       "note": "step: a second utterance waiting at the conference while the first is held, then conference.feed for the barge-in; conference.read: the waiting one never published. The room's broadcasts reach the conference binding one at a time, and a delivery addressed to the conference is published from it, not spoken: it needs a streaming response consumed outside that serialization (§12.10.4), or conference.fault (P6-CF4) holding publish_audio."
-    },
-    "RK-12.10.7-008": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: framework_events media rows: conference_started at the join."
-    },
-    "RK-12.10.7-009": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: framework_events media rows, conference.bot_lost: conference_ended at a detach and at the backend's report."
-    },
-    "RK-12.10.7-010": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: framework_events media rows: conference_participant_joined at conference.join."
-    },
-    "RK-12.10.7-011": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: framework_events media rows: conference_participant_left at conference.leave."
-    },
-    "RK-12.10.7-012": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: framework_events media rows, conference.set_bot_grants: the event's bot_session_id and hidden."
-    },
-    "RK-12.10.7-013": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: framework_events media rows: conference_ended's bot_session_id after a re-attach."
-    },
-    "RK-12.10.7-014": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: framework_events media rows: conference_started and conference_ended paired by bot_session_id."
     },
     "RK-12.11-013": {
       "class": "step",
