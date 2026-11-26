@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "cf46b96711b90723710eb43f1484ab4cf8cec873fa0a6bbffcfffb8d302e1ee3",
-  "corpus_sha256": "d3888806f77773934fbf6e91f68f9e2e00ba94c89946561f48e3f62e2d94b70b",
+  "corpus_sha256": "f9644d9b33ff38f011621833cf3f507cf5fd633498b1d9decf06ef1841d6d6fc",
   "python_commit": "452ae6397f70661e0ec0f2c8db3000398f904c41",
-  "scenario_count": 3937,
+  "scenario_count": 3946,
   "sections": [
     {
       "section": "0",
@@ -6313,9 +6313,7 @@
       "mapping": {
         "unmapped": 77
       },
-      "decided_gaps": {
-        "step": 2
-      },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "delivery/a-key-cut-after-a-round-that-spoke-tells-its-caller-the-turn-s-end",
@@ -6324,6 +6322,12 @@
         "delivery/an-adopted-call-s-handle-cuts-its-turn-while-a-target-reads",
         "delivery/an-adopted-call-s-key-cuts-its-turn-while-a-target-reads",
         "inbound/a-headless-turn-s-provider-error-reaches-the-caller-and-on-error",
+        "realtime/a-paused-session-forwards-none-of-the-caller-s-audio-until-it-is-resumed",
+        "realtime/a-reconfiguration-that-reconnects-the-provider-returns-the-session-to-connecting",
+        "realtime/a-session-ended-while-paused-is-ended",
+        "realtime/a-session-is-connecting-until-its-provider-is-ready-then-active-until-it-ends",
+        "realtime/a-start-whose-provider-fails-to-connect-ends-its-session",
+        "realtime/an-ended-session-takes-no-other-state",
         "recording/a-voice-session-s-recorded-track-names-its-participant",
         "rooms/a-room-archived-mid-stream-refuses-later-rows",
         "rooms/a-room-closed-outside-the-kit-before-the-first-streamed-row-refuses-it",
@@ -6423,6 +6427,7 @@
         "voice/a-kept-stream-s-finals-reach-the-room-in-the-order-produced",
         "voice/a-language-chosen-mid-session-ends-a-diarizing-stream",
         "voice/a-participant-who-comes-back-gets-a-new-session",
+        "voice/a-paused-session-s-speech-is-still-transcribed",
         "voice/a-plain-recognizer-gets-a-stream-per-turn",
         "voice/a-recognizer-s-speech-start-fires-the-speech-start-hooks",
         "voice/a-redacted-transcript-reaches-the-context-without-its-audio",
@@ -6967,6 +6972,8 @@
         "realtime/an-injection-reports-what-the-provider-knows-of-its-sending",
         "realtime/an-instruction-enters-the-session-as-system",
         "realtime/an-undeclared-tool-is-refused-and-still-reported",
+        "realtime/an-utterance-replayed-from-its-mark-is-discarded-when-the-handshake-fails",
+        "realtime/an-utterance-replayed-from-its-mark-reaches-the-provider-ahead-of-the-live-audio",
         "realtime/audio-received-while-the-provider-connects-reaches-it-in-order-before-the-session-starts",
         "realtime/ending-a-session-disconnects-its-provider-and-its-transport",
         "realtime/reconfiguring-a-session-changes-that-session-only",
@@ -7975,11 +7982,12 @@
       "mapping": {
         "unmapped": 25
       },
-      "decided_gaps": {
-        "step": 3
-      },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
-      "candidate_scenarios": []
+      "candidate_scenarios": [
+        "realtime/an-utterance-replayed-from-its-mark-is-discarded-when-the-handshake-fails",
+        "realtime/an-utterance-replayed-from-its-mark-reaches-the-provider-ahead-of-the-live-audio"
+      ]
     },
     {
       "section": "13",
@@ -28260,23 +28268,13 @@
       "id": "RK-12.2-053",
       "section": "12.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2019",
-        "note": "step: a realtime session's state read (realtime family): on a voice channel a session's state is its transport's, which roomkit never writes, so no voice scenario observes roomkit's transitions; PAUSED set by the integrator has no step either."
-      }
+      "links": []
     },
     {
       "id": "RK-12.2-054",
       "section": "12.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2019",
-        "note": "step: a realtime session's state read once its provider reconnects (renegotiate) and once it ended (realtime family): on a voice channel roomkit never writes a session's state, its transport does."
-      }
+      "links": []
     },
     {
       "id": "RK-12.2-055",
@@ -36089,34 +36087,19 @@
       "id": "RK-12.12-030",
       "section": "12.12",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2066",
-        "note": "step: a scripted capture source and a transport that subscribes with the mark passed in realtime.start's metadata (CS1, feature capture_source proposed), and the audio the provider receives (S4): the frames captured from the mark reach the provider after the handshake, ahead of the live ones."
-      }
+      "links": []
     },
     {
       "id": "RK-12.12-031",
       "section": "12.12",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2066",
-        "note": "step: CS1 and S4, with a realtime start whose handshake fails (S5): no replayed frame reaches the provider."
-      }
+      "links": []
     },
     {
       "id": "RK-12.12-032",
       "section": "12.12",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2066",
-        "note": "step: CS1 and S4: the frames captured from the mark, the wake word's included, reach the provider whole."
-      }
+      "links": []
     },
     {
       "id": "RK-13.1-001",
