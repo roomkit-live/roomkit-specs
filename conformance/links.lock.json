@@ -6755,6 +6755,9 @@
     "RK-12.8.8-005": {
       "video/an-audio-video-channel-feeds-its-avatar-the-speech-it-sends": "d45d2fa122a4575f6f2dd96311a574d46e4865cca4b88f6789c5031f84ea734e"
     },
+    "RK-12.8.8-006": {
+      "video/an-avatar-s-frames-are-encoded-and-sent-through-the-video-of-the-call": "1de2ea369a9452be4e0b813ec85f61036b548756b80886ad0e13ab3082c8f8ed"
+    },
     "RK-12.8.9-003": {
       "video/the-bridge-obeys-the-frame-hook": "22e4d10c114a9a61b4cc1618844ba350b1b124628c90481d9a2bc65a7b605a75"
     },

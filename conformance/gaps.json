@@ -181,11 +181,6 @@
       "card": "RMK-2051",
       "note": "writable: voice.open bridge with mixing_strategy mix; Python forwards a mix made only of silence, left as is by the maintainer (RMK-2051)."
     },
-    "RK-12.8.8-006": {
-      "class": "step",
-      "card": "RMK-2062",
-      "note": "step: av.open with avatar (VI4) is in place, and its scenario (the avatar's one frame, encoded as its bytes, sent through the call's video facet) fails on Python: the audio/video channel sends the avatar's frames only through one transport's own private path, never the facet's send_video or send_video_sync; decision pending with the maintainer (P6-VI)."
-    },
     "RK-12.8.9-005": {
       "class": "step",
       "card": "RMK-2062",
