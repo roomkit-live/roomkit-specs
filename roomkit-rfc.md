@@ -15698,9 +15698,11 @@ VideoBridgeConfig
 ├── enabled: bool (default true)
 ```
 <!-- /rfc -->
-<!-- rfc: {"id": "RK-12.8.9-005", "kind": "structural", "applies": "§12.8.9 VideoBridgeConfig, the video feature: the max_participants field, 10 by default; a room bridges at most that many sessions. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+<!-- rfc: {"id": "RK-12.8.9-005", "kind": "structural", "applies": "§12.8.9 VideoBridgeConfig, the video feature: the max_participants field, 10 by default; a room bridges at most that many sessions, a join past it being refused before the session is bound to the room, and a session the join made disconnected. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 ├── max_participants: int (default 10)
+│       # A join that would bridge one more is refused before the session
+│       # is bound to the room; a session the join made is disconnected
 ```
 <!-- /rfc -->
 <!-- rfc: {"id": "RK-12.8.9-006", "kind": "structural", "applies": "§12.8.9 VideoBridgeConfig, the video feature: the forwarding_strategy field, forward: each frame is forwarded directly. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->

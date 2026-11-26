@@ -6764,6 +6764,10 @@
     "RK-12.8.9-004": {
       "video/a-bridge-forwards-only-while-enabled-which-it-is-by-default": "1ebe464e905872c3b58fb1bbf745ff5fb5249243109fce812d1b531eb2927722"
     },
+    "RK-12.8.9-005": {
+      "video/a-room-bridges-no-more-sessions-than-max-participants": "1f9dcee5d4b724351ceac54b100bfe419b66e84435668a8ea5847df9e7eb681c",
+      "video/a-video-bridge-holds-ten-sessions-by-default": "1f9dcee5d4b724351ceac54b100bfe419b66e84435668a8ea5847df9e7eb681c"
+    },
     "RK-12.8.9-006": {
       "video/a-forward-bridge-sends-each-frame-to-every-other-participant": "739a4e2744c1de82a2370ebdd588e59c06677cff6415991c5660785c9d5df1df"
     },

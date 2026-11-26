@@ -181,11 +181,6 @@
       "card": "RMK-2051",
       "note": "writable: voice.open bridge with mixing_strategy mix; Python forwards a mix made only of silence, left as is by the maintainer (RMK-2051)."
     },
-    "RK-12.8.9-005": {
-      "class": "step",
-      "card": "RMK-2062",
-      "note": "step: the bridge configuration and video.join (VI2) are in place; whether a video join the full bridge refuses must be refused before its session is bound, as a voice join is (RK-12.7.2-007), is pending with the maintainer (P6-VI): Python binds the session first."
-    },
     "RK-12.8.9-010": {
       "class": "step",
       "card": "RMK-2062",
