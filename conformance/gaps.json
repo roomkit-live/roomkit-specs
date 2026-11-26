@@ -86,11 +86,6 @@
       "card": "RMK-2007",
       "note": "measurement: the close's whole duration bound (the grace, the turn backend's budget, the closes, at most two unwinds of 1 second); no step reads elapsed time."
     },
-    "RK-12.10.5-003": {
-      "class": "writable",
-      "card": "RMK-2076",
-      "note": "writable: conference/any-participant-s-speech-cuts-the-bot-off observes the plain case. Held by HITL 93033b15: in Python, a track whose previous utterance is still being routed does not interrupt the bot, its lane waiting for that routing, the answer's delivery to the conference included."
-    },
     "RK-12.11-013": {
       "class": "step",
       "card": "RMK-2066",

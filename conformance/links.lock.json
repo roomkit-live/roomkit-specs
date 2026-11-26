@@ -4923,6 +4923,9 @@
     "RK-12.10.4-225": {
       "conference/only-ai-text-is-spoken-unless-speak-text-events": "05985c7ca1a4043831759422a43d84fd178b901f912458e4b2f188f21fea2dcd"
     },
+    "RK-12.10.5-003": {
+      "conference/the-asker-can-cut-the-answer-to-their-question": "5242e89de77989850c45bffc231ba303bae655fc55edc90d5d523b4ec2464018"
+    },
     "RK-12.10.5-004": {
       "conference/scope-none-lets-the-bot-finish": "eac2da77ea8a597d8bf507a7875fdb9830956bf0fadc7dcbbc8419030ae86fbe"
     },
