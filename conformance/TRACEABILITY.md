@@ -366,10 +366,12 @@ python conformance/record.py rust --rust-repo ../roomkit-rs \
   -- env ROOMKIT_CONFORMANCE_JUNIT=target/conformance cargo test -p roomkit --test conformance
 ```
 
-roomkit-rs runs the scenarios with `setup.executors` only across a
-distributed turn executor; its memory passes report them skipped. A pass
-that runs them crosses a distributed backend's transport, so it is that
-backend's own test, not a receipt of the core.
+roomkit-rs runs the scenarios with `setup.executors`, in its memory passes,
+on nodes of a distributed turn backend that share an in-memory broker and
+registry. Python runs them on its in-memory turn backend, and those with
+`processes` or an executor in a process of its own on such nodes. A pass
+that runs them across another backend's transport is that backend's own
+test, not a receipt of the core.
 
 Rust's aggregate cargo summary (format `cargo`) stays refused: two passes can
 emit the same summary, and equal scenario counts do not identify the

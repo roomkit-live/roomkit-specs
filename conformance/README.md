@@ -424,9 +424,8 @@ room callbacks of the setup are not compared.
   make no action other than a `host.<verb>`, what the run's gates and
   records share staying on the run's own loop; `executor.kill`,
   `executor.pause`, `executor.resume` and `channel.publish` do not name it;
-  a runner that cannot run it so skips the scenario: roomkit outside its
-  distributed turn mode, roomkit-rs outside its distributed-turn executor
-  pass). The channels it runs are the ones
+  a runner that cannot run it so skips the scenario). The channels it runs
+  are the ones
   the setup marks `declared`: each executor builds its own copy, and a
   scripted agent answers from the one model of its channel id, whichever
   executor runs its turn. `kit.turn_timeouts` gives the bounds of a turn
@@ -2377,7 +2376,8 @@ store's `main.rs`, which may name a list `scenarios.rs` shares, beside the
 list its shared loop reads on every store; its shared
 loop, `scenarios.rs`, runs the `executors/` area on every store, the room's
 owner and its executors nodes of one distributed backend over an in-memory
-broker and registry, as roomkit's runner does out of its Redis turn mode).
+broker and registry, as roomkit's runner does, out of its Redis turn mode,
+for a setup with `processes` or an executor in a process of its own).
 Strict
 expected failures fail the suite when they start passing; timing exceptions
 can pass on a particular run. Neither exception policy establishes conformity.

@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "python_commit": "452ae6397f70661e0ec0f2c8db3000398f904c41",
+  "python_commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
   "retired": [
     "RK-1.4-001",
     "RK-10.1-002",
@@ -34405,6 +34405,101 @@
         "skipped": 454
       },
       "results_sha256": "4baf48c0067b8e1468b3d2877bd67505d75da10526b12c301ffbf861f40c2baa"
+    },
+    {
+      "id": "python-rule-links-49f1236-memory",
+      "implementation": "python",
+      "implementation_commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+      "rfc_commit": "a3ad90b48e7bc6e0339c04a565bdbddbe33066d9",
+      "corpus_commit": "a3ad90b48e7bc6e0339c04a565bdbddbe33066d9",
+      "rfc_sha256": "f73e8090fe7e39cb56cfb5b71dcd2e49070574bf3b2dd580bfd1e5e038e6ec9e",
+      "backend": "memory",
+      "runtime": "asyncio",
+      "command": [
+        "env",
+        "-u",
+        "POSTGRES_DSN",
+        "ROOMKIT_TEST_TURN_BACKEND=memory",
+        "uv",
+        "run",
+        "pytest",
+        "tests/conformance",
+        "-q",
+        "-n",
+        "4",
+        "-p",
+        "no:cacheprovider",
+        "--junitxml=python-conformance.xml"
+      ],
+      "artifact": {
+        "path": "conformance/executions/python-rule-links-49f1236.xml",
+        "format": "pytest_junit",
+        "sha256": "85a9c83381896a4253a084b5d0b88742790958c8a8dbcb6dd56bf28876a38e2c"
+      },
+      "counts": {
+        "passed": 3961
+      },
+      "results_sha256": "4e5dd76f3dbd161563236107f8fe5e24abbd62a8bb9a689a016fbf07e271e0b7"
+    },
+    {
+      "id": "rust-c836db4-memory-current-thread",
+      "implementation": "rust",
+      "implementation_commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+      "rfc_commit": "a3ad90b48e7bc6e0339c04a565bdbddbe33066d9",
+      "corpus_commit": "a3ad90b48e7bc6e0339c04a565bdbddbe33066d9",
+      "rfc_sha256": "f73e8090fe7e39cb56cfb5b71dcd2e49070574bf3b2dd580bfd1e5e038e6ec9e",
+      "backend": "memory",
+      "runtime": "current_thread",
+      "command": [
+        "env",
+        "ROOMKIT_CONFORMANCE_JUNIT=target/conformance",
+        "cargo",
+        "test",
+        "-p",
+        "roomkit",
+        "--test",
+        "conformance"
+      ],
+      "artifact": {
+        "path": "conformance/executions/rust-c836db4-memory-current-thread.xml",
+        "format": "cargo_junit",
+        "sha256": "878debd9b9d6a45687826a4eadb5784b11493cc380c89112abf2f517a7c185f8"
+      },
+      "counts": {
+        "passed": 3381,
+        "skipped": 580
+      },
+      "results_sha256": "a93f07fc344d1a87935abc86721cfcfcf3e8af5d4d39dcf951022754d32364ef"
+    },
+    {
+      "id": "rust-c836db4-memory-multi-thread-4",
+      "implementation": "rust",
+      "implementation_commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+      "rfc_commit": "a3ad90b48e7bc6e0339c04a565bdbddbe33066d9",
+      "corpus_commit": "a3ad90b48e7bc6e0339c04a565bdbddbe33066d9",
+      "rfc_sha256": "f73e8090fe7e39cb56cfb5b71dcd2e49070574bf3b2dd580bfd1e5e038e6ec9e",
+      "backend": "memory",
+      "runtime": "multi_thread_4",
+      "command": [
+        "env",
+        "ROOMKIT_CONFORMANCE_JUNIT=target/conformance",
+        "cargo",
+        "test",
+        "-p",
+        "roomkit",
+        "--test",
+        "conformance"
+      ],
+      "artifact": {
+        "path": "conformance/executions/rust-c836db4-memory-multi-thread-4.xml",
+        "format": "cargo_junit",
+        "sha256": "09585e2f10efede05586fdedebc769192bc17eccc4d6e1e136091a5e8528c239"
+      },
+      "counts": {
+        "passed": 3381,
+        "skipped": 580
+      },
+      "results_sha256": "a93f07fc344d1a87935abc86721cfcfcf3e8af5d4d39dcf951022754d32364ef"
     }
   ]
 }

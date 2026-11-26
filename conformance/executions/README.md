@@ -324,10 +324,12 @@ uv run --no-project --python 3.13 --with jsonschema==4.26.0 \
      cargo test -p roomkit --test conformance
 ```
 
-The scenarios with `setup.executors` run only across a distributed turn
-executor: the memory passes report them skipped. A pass that runs them
-crosses that backend's transport, so it is the backend's own test, not a
-receipt of the core.
+The scenarios with `setup.executors` run in the memory passes of both
+runners: roomkit-rs's on nodes of a distributed turn backend that share an
+in-memory broker and registry, Python's on its in-memory turn backend, and
+on such nodes for a setup with `processes` or an executor in a process of
+its own. A pass that runs them across another backend's transport is that
+backend's own test, not a receipt of the core.
 
 ## PostgreSQL and the Redis turn mode
 
@@ -1077,3 +1079,53 @@ was pinned again. These receipts give no credit to a store or a turn backend
 other than the in-memory defaults, to specialized tests or to a scenario a
 runner skips; the cases of another store the Python report also holds are
 not recorded. The 223 earlier execution receipts are unchanged.
+
+## Receipts after phase 6 step 2b (2026-11-26)
+
+`python-rule-links-49f1236.xml` retains the cases of one run of clean,
+published Python `49f123680f443c1d81841d7a194929d2f53fc03b`, on Linux with
+Python 3.14.9, pytest 9.1.1, pytest-asyncio 1.4.0 and pytest-xdist 3.8.0 (four
+workers), in-process turns, by the command of "Receipts after the B series
+(2026-11-21)", without its suite-lock and CPU-affinity wrappers. Its receipt,
+`python-rule-links-49f1236-memory`, records the 3961 memory cases: all 3961
+passed. The nine skipped in the previous receipts, those with `processes`
+or an executor in a process of its own, needed a distributed turn backend;
+they now run on nodes of one that share an in-memory broker and registry.
+The 108 other scenarios with `setup.executors` run, as before, on the
+in-memory turn backend.
+
+`rust-c836db4-memory-current-thread.xml` and
+`rust-c836db4-memory-multi-thread-4.xml` retain the memory passes of
+roomkit-rs `c836db491c70386aab07ade0c83ddedf84da0e12`, a clean commit of its
+main, run with Rust 1.99.1 through the local wrapper of "Core rule links:
+Python and roomkit-rs passes (2026-11-18)", by the memory command of
+"Recording receipts". Each holds the 3961 scenarios of the copy: 3381
+passed, 580 skipped and none failed. The 580 name a feature in
+`requires_features` that roomkit-rs's runner does not provide ("missing
+scenario features: voice" and so on): voice 184, conference 156, realtime
+117, conference with realtime 43, video 30, recording 17, conference with
+recording 6, video with voice 5, call_recovery with realtime 3,
+source_provider 3, recording with voice 3, message_session 2,
+protocol_trace 2, scoring 2, capture_source with realtime 2, executor_media
+1, conference with realtime and recording 1, realtime with video 1,
+realtime with recording 1 and realtime with voice 1. The runner provides
+none of those features; for the media of §12 (voice, realtime voice, video,
+conference, recording, capture), roomkit-rs has no code, as the phase 6
+plan decided. The 115 scenarios with `setup.executors` and no such feature,
+which the previous memory passes skipped (§10.6.7), now run and pass, on
+nodes of a distributed turn backend that share a broker and a registry of
+the process. No scenario fails: the runner's known-failure list is empty at
+this commit.
+
+Both copies are corpus `a3ad90b48e7bc6e0339c04a565bdbddbe33066d9`, after the
+scenarios of the conference lots, of video, AV and recording, of the voice
+leftovers, of capture sources and of the virtual clock were added, and
+after amendments of §12.10.4 (RK-12.10.4-145), §12.8.9 (RK-12.8.9-005),
+§10.6 (RK-10.6.7-031 and RK-10.6.9-011) and §6.4 (RK-6.4-544); the RFC is
+`a3ad90b48e7bc6e0339c04a565bdbddbe33066d9`. The evidence's `python_commit`
+moved to the Python commit first. No specialized test pinned by a link
+changed since `452ae6397f70661e0ec0f2c8db3000398f904c41`, so none was pinned
+again. These receipts give no credit to a store or a turn backend other
+than the in-memory defaults, to specialized tests or to a scenario a runner
+skips; the cases of another store the Python report also holds are not
+recorded. The 226 earlier execution receipts are unchanged.
