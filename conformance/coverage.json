@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "4c50193ce0b648c20a2797927b117324fdefb384f370330906edd0ec7dfa79f4",
-  "corpus_sha256": "110aba6fc027ef046d75196a2b9466d2f1b9e03dc7eab3f6f80e72ee7ee9067a",
+  "corpus_sha256": "207bc9494ffcaa244ba9355e3842e30333b9ef3294847fe2ecf90a40d8d0d1cc",
   "python_commit": "452ae6397f70661e0ec0f2c8db3000398f904c41",
-  "scenario_count": 3871,
+  "scenario_count": 3900,
   "sections": [
     {
       "section": "0",
@@ -6877,6 +6877,8 @@
         "ai-external-handler/reused-call-ids-in-the-next-round-get-new-reports-non-streaming",
         "ai-external-handler/reused-call-ids-in-the-next-round-get-new-reports-streaming",
         "conference/a-conference-tool-call-passes-the-pre-execution-gate",
+        "conference/a-delivery-to-the-conference-is-injected-into-its-model-with-its-intent",
+        "conference/a-refused-conference-tool-call-is-on-the-wire-before-its-report",
         "eviction/a-call-under-an-id-its-round-holds-is-refused-unstored",
         "provider-served/absent-is-pending-stream",
         "provider-served/absent-is-pending-whole",
@@ -7005,6 +7007,9 @@
       "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
+        "conference/a-delegation-issued-while-the-model-connects-is-answered-once-connected",
+        "conference/a-delivery-waiting-for-idle-waits-out-the-model-s-tool-call-its-answer-and-what-it-hears",
+        "conference/a-model-delegation-fires-the-hook-and-is-answered-with-the-spoken-fallback",
         "realtime/a-backend-call-its-delegation-s-bound-cuts-is-reported-cancelled",
         "realtime/a-backend-call-passes-the-channel-s-policy-gate-and-bound",
         "realtime/a-backend-call-that-ends-its-session-spares-itself-and-ends-its-delegation",
@@ -7215,6 +7220,8 @@
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
+        "conference/a-window-no-track-spoke-in-is-never-sent-to-the-model",
+        "conference/the-model-hears-each-window-of-its-tracks-mixed-with-headroom",
         "voice/a-mix-bridge-sends-each-participant-a-mix-of-the-others",
         "voice/a-mix-of-three-sources-is-scaled-for-headroom",
         "voice/a-mix-sums-the-others-samples-and-clamps-the-sum"
@@ -7547,11 +7554,12 @@
       },
       "decided_gaps": {
         "phase6": 1,
-        "step": 10
+        "step": 1
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "conference/a-backend-that-fails-its-close-fails-the-channel-s-close-for-good",
+        "conference/a-barge-in-on-the-model-s-voice-names-the-speaker-and-closes-the-utterance",
         "conference/a-call-reports-presence-without-changing-room-membership",
         "conference/a-camera-toggle-reaches-the-mute-and-unmute-observers",
         "conference/a-channel-with-nothing-to-do-probes-no-occupancy",
@@ -7560,6 +7568,8 @@
         "conference/a-closed-collection-gate-closes-the-lanes",
         "conference/a-conference-is-refused-while-the-last-one-s-deferred-teardown-holds-the-room",
         "conference/a-conference-session-starts-once-however-many-participants-arrive",
+        "conference/a-conference-that-hears-and-says-nothing-never-joins",
+        "conference/a-conference-that-never-joins-still-admits-and-keeps-the-roster",
         "conference/a-delivery-is-published-on-the-bot-s-one-track",
         "conference/a-delivery-is-synthesized-once-between-the-tts-hooks",
         "conference/a-detach-closes-the-lanes-and-the-recordings-before-the-leave-and-announces-the-end-last",
@@ -7568,7 +7578,9 @@
         "conference/a-detach-waits-for-a-held-mint-which-returns-no-credential",
         "conference/a-detach-with-no-bot-announces-no-end",
         "conference/a-failed-probe-fails-no-attach-and-the-lazy-join-stays-behind-it",
+        "conference/a-grant-change-applied-in-place-is-announced",
         "conference/a-grant-change-carried-by-a-re-join-is-announced-with-the-session",
+        "conference/a-grant-change-not-applied-in-place-re-joins-whichever-way-it-goes",
         "conference/a-grant-set-equal-to-the-grants-in-force-emits-nothing",
         "conference/a-lane-normalises-a-track-s-format-before-its-other-stages",
         "conference/a-lane-s-speech-edges-name-the-participant-and-track",
@@ -7578,12 +7590,15 @@
         "conference/a-loss-under-a-closed-collection-gate-starts-no-rejoin",
         "conference/a-lost-bot-rejoins-with-no-new-event",
         "conference/a-mint-after-the-detach-is-refused",
+        "conference/a-mint-applies-the-channel-s-default-grants-unless-the-caller-overrides-them",
         "conference/a-mint-carries-the-caller-s-grants-and-attributes",
         "conference/a-mint-for-another-organization-s-room-finds-no-room",
         "conference/a-mint-hands-the-backend-the-room-s-participant-and-its-name-and-no-attribute",
         "conference/a-mint-held-as-the-kit-closes-is-taken-back-before-the-backend-closes",
         "conference/a-mint-held-past-the-detach-s-budget-is-taken-back",
         "conference/a-mint-on-a-backend-that-reports-no-arrival-brings-the-bot-in",
+        "conference/a-model-response-is-one-utterance-its-end-closes",
+        "conference/a-model-response-the-conference-leaves-mid-utterance-ends-with-no-terminal-chunk",
         "conference/a-muted-binding-finalizes-the-conference-s-recordings",
         "conference/a-muted-binding-hands-no-frame-to-a-lane",
         "conference/a-muted-binding-still-relays-the-sfu-s-signals",
@@ -7603,6 +7618,7 @@
         "conference/a-resolved-participant-s-utterances-are-not-resolved-again",
         "conference/a-screen-track-announces-the-start-and-end-of-sharing",
         "conference/a-second-conference-channel-is-refused-on-a-room-that-has-one",
+        "conference/a-second-model-response-waits-for-the-first-to-end-on-the-bot-track",
         "conference/a-speaker-change-identifies-the-dominant-participant",
         "conference/a-speech-to-speech-bot-joins-to-listen-and-to-speak",
         "conference/a-voice-plugged-onto-a-listening-bot-widens-its-grants-in-place",
@@ -7718,12 +7734,14 @@
         "unmapped": 9
       },
       "decided_gaps": {
-        "step": 1,
         "writable": 1
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
+        "conference/a-barge-in-drops-the-model-response-waiting-for-its-turn",
+        "conference/a-barge-in-on-the-model-s-voice-names-the-speaker-and-closes-the-utterance",
         "conference/a-short-acknowledgement-cuts-the-bot-off-as-the-strategy-says",
+        "conference/a-speaker-the-scope-does-not-admit-cuts-nothing-whatever-the-model-does",
         "conference/any-participant-s-speech-cuts-the-bot-off",
         "conference/confirmed-waits-for-one-track-s-sustained-speech",
         "conference/scope-allowlist-lets-only-listed-participants-cut-the-bot",
@@ -7756,7 +7774,9 @@
       "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
+        "conference/a-grant-change-applied-in-place-is-announced",
         "conference/a-grant-change-carried-by-a-re-join-is-announced-with-the-session",
+        "conference/a-grant-change-not-applied-in-place-re-joins-whichever-way-it-goes",
         "conference/a-mint-on-a-backend-that-reports-no-arrival-brings-the-bot-in",
         "conference/an-end-the-sfu-reports-closes-the-session-s-media-and-the-next-need-re-joins",
         "conference/conference-ended-names-the-session-that-left-across-a-re-attach",
@@ -7841,27 +7861,49 @@
       "mapping": {
         "unmapped": 51
       },
-      "decided_gaps": {
-        "step": 30
-      },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
+        "conference/a-barge-in-drops-the-model-response-waiting-for-its-turn",
+        "conference/a-barge-in-on-the-model-s-voice-names-the-speaker-and-closes-the-utterance",
         "conference/a-conference-handler-that-raises-reads-as-a-failure-not-its-text",
         "conference/a-conference-model-receives-the-gated-tool-result",
         "conference/a-conference-model-s-tool-policy-refuses-a-denied-tool",
         "conference/a-conference-tool-call-passes-the-pre-execution-gate",
         "conference/a-conference-tool-handler-is-cut-at-its-bound",
         "conference/a-conference-tool-result-is-bounded-as-a-realtime-one",
+        "conference/a-delegation-issued-while-the-model-connects-is-answered-once-connected",
         "conference/a-delivery-before-the-model-connects-is-unavailable",
         "conference/a-delivery-into-the-conference-model-fires-the-injection-hook",
+        "conference/a-delivery-to-the-conference-is-injected-into-its-model-with-its-intent",
+        "conference/a-delivery-waiting-for-idle-waits-for-the-model-s-answer-to-reach-the-bot-track",
+        "conference/a-delivery-waiting-for-idle-waits-out-the-model-s-tool-call-its-answer-and-what-it-hears",
+        "conference/a-model-delegation-fires-the-hook-and-is-answered-with-the-spoken-fallback",
+        "conference/a-model-response-is-one-utterance-its-end-closes",
+        "conference/a-model-response-the-conference-leaves-mid-utterance-ends-with-no-terminal-chunk",
+        "conference/a-model-that-cannot-connect-fails-neither-the-join-nor-the-plug",
+        "conference/a-model-that-cannot-connect-is-not-asked-again-on-every-window",
         "conference/a-realtime-model-is-plugged-and-unplugged-as-any-need",
+        "conference/a-refused-conference-tool-call-is-on-the-wire-before-its-report",
+        "conference/a-second-model-response-waits-for-the-first-to-end-on-the-bot-track",
         "conference/a-served-conference-call-abandoned-late-is-not-reported-again",
+        "conference/a-speaker-the-scope-does-not-admit-cuts-nothing-whatever-the-model-does",
         "conference/a-speech-model-with-no-recognizer-runs-each-track-s-vad",
         "conference/a-speech-to-speech-bot-joins-to-listen-and-to-speak",
         "conference/a-synthesizer-and-a-speech-model-are-never-held-together",
+        "conference/a-user-transcription-of-the-mix-is-discarded-and-names-no-one",
+        "conference/a-window-no-track-spoke-in-is-never-sent-to-the-model",
         "conference/an-abandoned-conference-call-interrupts-its-handler-and-sends-nothing",
+        "conference/an-assistant-final-transcription-is-the-channel-s-event-and-is-not-said-again",
+        "conference/one-model-session-serves-one-bot-session",
         "conference/the-lanes-stay-on-beside-a-speech-model",
-        "conference/the-meeting-is-transcribed-beside-the-speech-model"
+        "conference/the-meeting-is-transcribed-beside-the-speech-model",
+        "conference/the-mix-reaches-the-model-at-the-rate-it-declared",
+        "conference/the-model-connects-only-once-there-is-something-to-hear-or-say",
+        "conference/the-model-hears-each-window-of-its-tracks-mixed-with-headroom",
+        "conference/the-model-s-own-speech-detection-interrupts-nothing",
+        "conference/the-model-session-ends-with-a-detach-an-unplug-and-a-close",
+        "conference/the-tool-policy-filters-what-is-declared-to-the-model-by-its-base-rules"
       ]
     },
     {
@@ -9814,6 +9856,7 @@
       "candidate_scenarios": [
         "ai-external-handler/read-stored-result-stays-local-non-streaming",
         "ai-external-handler/read-stored-result-stays-local-streaming",
+        "conference/the-tool-policy-filters-what-is-declared-to-the-model-by-its-base-rules",
         "eviction/reading-a-result-the-room-does-not-store-is-a-refusal",
         "executors/a-turn-apart-runs-the-host-s-tool-on-its-executor",
         "mcp/a-bare-name-never-runs-on-a-server-the-policy-keeps-out",
@@ -10427,6 +10470,9 @@
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
+        "conference/a-delivery-to-the-conference-is-injected-into-its-model-with-its-intent",
+        "conference/a-delivery-waiting-for-idle-waits-for-the-model-s-answer-to-reach-the-bot-track",
+        "conference/a-delivery-waiting-for-idle-waits-out-the-model-s-tool-call-its-answer-and-what-it-hears",
         "delivery/a-before-broadcast-refusal-is-reported-to-the-caller-and-after-deliver",
         "delivery/a-before-deliver-refusal-is-reported-to-the-caller-and-after-deliver",
         "delivery/a-delivery-enters-the-room-as-the-framework-s-message",
@@ -36340,12 +36386,7 @@
       "id": "RK-12.10.4-100",
       "section": "12.10.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "step: conference.open options (no stt, tts, recording or realtime), conference.mint, conference.read: no join_as_bot()."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.4-101",
@@ -36363,12 +36404,7 @@
       "id": "RK-12.10.4-103",
       "section": "12.10.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "step: conference.open options (no consumer, no voice), conference.mint, conference.read: ensure_room() called, a credential minted, the arrival's participant record written."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.4-104",
@@ -36500,12 +36536,7 @@
       "id": "RK-12.10.4-125",
       "section": "12.10.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "step: error name conference_already_attached in the Errors table: a second conference.open on the room refused."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.4-126",
@@ -37066,12 +37097,7 @@
       "id": "RK-12.10.4-132",
       "section": "12.10.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "step: conference.open's default_grants, which no step names yet, with conference.mint: the grants the backend is asked to mint when the caller names none. The caller's override is read by conference/a-mint-carries-the-caller-s-grants-and-attributes."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.4-133",
@@ -37532,12 +37558,7 @@
       "id": "RK-12.10.4-206",
       "section": "12.10.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "step: conference.open's capabilities with BOT_GRANT_UPDATE (P6-CF3) and conference.fault failing update_bot_grants (P6-CF4), both on main, for P6-CF5: conference.set_bot_grants then re-joins, leave() and join_as_bot(). The re-join on a backend without the capability is read by conference/a-grant-change-carried-by-a-re-join-is-announced-with-the-session."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.4-207",
@@ -37567,12 +37588,7 @@
       "id": "RK-12.10.4-211",
       "section": "12.10.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "step: conference.open's capabilities with BOT_GRANT_UPDATE (P6-CF3) and expect.media_events (P6-CF4), both on main, for P6-CF5: conference_bot_grants_changed after a set applied in place. The one a re-join carries is read by conference/a-grant-change-carried-by-a-re-join-is-announced-with-the-session."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.4-212",
@@ -37602,23 +37618,13 @@
       "id": "RK-12.10.4-216",
       "section": "12.10.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "step: conference.fault (P6-CF4) holding the scripted SFU's publish_audio after an utterance's first chunk while a second delivery arrives; conference.read: the second utterance's chunks only after the first's final one. The scripted synthesizer holds only before an utterance's first chunk, and the bot's turn then hides any interleaving."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.4-217",
       "section": "12.10.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "step: conference.fault (P6-CF4) holding publish_audio after an utterance's first chunk, then conference.feed for the barge-in; conference.read: the cut utterance closed by a chunk with is_final. Cut before its first chunk, an utterance has published nothing to close."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.4-218",
@@ -37648,12 +37654,7 @@
       "id": "RK-12.10.4-222",
       "section": "12.10.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "step: conference.fault (P6-CF4) holding publish_audio after an utterance's first chunk, then detach_channel; conference.read: no chunk with is_final after it. Before its first chunk, an utterance has published nothing a terminal chunk could follow."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.4-223",
@@ -37724,12 +37725,7 @@
       "id": "RK-12.10.5-009",
       "section": "12.10.5",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "step: a second utterance waiting at the conference while the first is held, then conference.feed for the barge-in; conference.read: the waiting one never published. The room's broadcasts reach the conference binding one at a time, and a delivery addressed to the conference is published from it, not spoken: it needs a streaming response consumed outside that serialization (§12.10.4), or conference.fault (P6-CF4) holding publish_audio."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.5-010",
@@ -38047,34 +38043,19 @@
       "id": "RK-12.10.12-014",
       "section": "12.10.12",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "step: conference.feed on two tracks, the conference model steps' read of what the provider received: the mixed windows."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.12-015",
       "section": "12.10.12",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "step: conference.feed with a pause, the conference model steps' read: no window for the silence."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.12-016",
       "section": "12.10.12",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "step: conference.feed at 16 kHz, the conference model steps' read: audio at the provider's input rate."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.12-017",
@@ -38092,34 +38073,19 @@
       "id": "RK-12.10.12-019",
       "section": "12.10.12",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "step: the conference model steps (a user transcript): the timeline holds no event for it."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.12-020",
       "section": "12.10.12",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "step: conference.active_speaker then a user transcript (conference model steps): nothing names the participant."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.12-021",
       "section": "12.10.12",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "step: the conference model steps (a user transcript): no event, no delivery, no hook carries it."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.12-022",
@@ -38137,34 +38103,19 @@
       "id": "RK-12.10.12-024",
       "section": "12.10.12",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "step: the conference model steps (an assistant final transcript): the event's channel and no participant."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.12-025",
       "section": "12.10.12",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "step: the conference model steps (an assistant final transcript), conference.read: nothing injected or published for it."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.12-026",
       "section": "12.10.12",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "step: deliver to the conference with a connected model, the conference model steps' read of the injections."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.12-027",
@@ -38176,12 +38127,7 @@
       "id": "RK-12.10.12-028",
       "section": "12.10.12",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "step: conference model activity for the idle wait: deliver with wait_for_idle during a held answer and a held tool call."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.12-029",
@@ -38193,34 +38139,19 @@
       "id": "RK-12.10.12-030",
       "section": "12.10.12",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "step: the conference model steps (a delegation): an on_realtime_delegation hook."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.12-031",
       "section": "12.10.12",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "step: the conference model steps (an integrator delegation): the fallback the provider received."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.12-032",
       "section": "12.10.12",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "step: the conference model steps (a delegation during a held connect): answered after it."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.12-006",
@@ -38232,34 +38163,19 @@
       "id": "RK-12.10.12-033",
       "section": "12.10.12",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "step: the conference model steps (a response's audio), conference.read: the utterance's chunks and final chunk."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.12-034",
       "section": "12.10.12",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "step: the conference model steps (two responses at once), conference.read: two utterances, in turn."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.12-035",
       "section": "12.10.12",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "step: the conference model steps (a response's audio): before_tts and after_tts hooks never fire."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.12-036",
@@ -38271,78 +38187,43 @@
       "id": "RK-12.10.12-037",
       "section": "12.10.12",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "step: the conference model steps, conference.feed: on_barge_in naming the speaker's participant."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.12-038",
       "section": "12.10.12",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "step: the conference model steps (the provider reports speech started): no on_barge_in, no stop_playback()."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.12-039",
       "section": "12.10.12",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "step: the conference model steps, conference.feed for a barge-in, conference.read: the closing chunk, stop_playback() and no later chunk."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.12-040",
       "section": "12.10.12",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "step: the conference model steps' read of what the provider received: a cancel after the barge-in."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.12-041",
       "section": "12.10.12",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "step: conference.open options (interruption none), the conference model steps' read of the session configuration."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.12-042",
       "section": "12.10.12",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "step: conference.open options (interruption allowlist), the conference model steps, conference.feed: an unlisted speaker fires no on_barge_in whatever the provider does."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.12-043",
       "section": "12.10.12",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "step: conference.read and the conference model steps: one provider connect per bot session."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.12-044",
@@ -38360,56 +38241,31 @@
       "id": "RK-12.10.12-046",
       "section": "12.10.12",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "step: the conference model steps' read: no connect before a track or a delivery, one after."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.12-047",
       "section": "12.10.12",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "step: the conference model steps (a connect failure), conference.plug: the plug returns."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.12-048",
       "section": "12.10.12",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "step: the conference model steps (a connect failure), conference.feed: one retry per cooldown, not per window."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.12-049",
       "section": "12.10.12",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "step: the conference model steps (a connect failure): an on_error hook with its category and type."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.12-050",
       "section": "12.10.12",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "step: detach_channel and conference.bot_lost, the conference model steps' read: the provider disconnected."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.12-051",
@@ -38439,12 +38295,7 @@
       "id": "RK-12.10.12-055",
       "section": "12.10.12",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "step: conference.tool_call refused, an on_tool_call hook held at a gate (conference model steps' read): the refusal on the wire first."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.12-056",
@@ -38480,12 +38331,7 @@
       "id": "RK-12.10.12-061",
       "section": "12.10.12",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "step: conference.open options (tool_policy), the conference model steps' read of the declared tools."
-      }
+      "links": []
     },
     {
       "id": "RK-12.11-008",
