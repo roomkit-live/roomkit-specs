@@ -14,7 +14,7 @@
     "realtime",
     "capture_source"
   ],
-  "notes": "The setup starts the source. Its last subscriber leaving stops nothing: the frame captured while nobody listens is in its backlog, which a later subscriber replays. Once stop() stopped it, a subscriber arriving does not start it; only start() does. Only start() and stop() change the source's state: what a source acquires or releases of a real device, which the scripted source has none of, is left to each source's own tests.",
+  "notes": "The setup starts the source. Its last subscriber leaving stops nothing: the frame captured while nobody listens is in its backlog, which a later subscriber replays. Once that one left too and stop() stopped the source, a subscriber arriving, the count going from none to one, does not start it; only start() does. Only start() and stop() change the source's state: what a source acquires or releases of a real device, which the scripted source has none of, is left to each source's own tests.",
   "setup": {
     "capture_sources": [
       {
@@ -78,6 +78,10 @@
       "since": "alone"
     },
     {
+      "call": "capture.unsubscribe",
+      "subscriber": "later"
+    },
+    {
       "call": "capture.stop",
       "source_id": "mic"
     },
@@ -109,7 +113,7 @@
                 }
               ],
               "replayed_bytes": 4,
-              "active": true
+              "active": false
             },
             "while-stopped": {
               "frames": [],

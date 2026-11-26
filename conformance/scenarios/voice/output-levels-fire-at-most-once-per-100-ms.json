@@ -12,7 +12,7 @@
   "requires_features": [
     "voice"
   ],
-  "notes": "Three replies of a chunk per word, played at once each: the first at 0 ms on the virtual clock, the second at 50 ms, the third at 110 ms. Unthrottled, eight levels. The first reply's chunks fire one; the second's none, within 100 ms of it; the third's one. The pipeline's canceller ends each playback as soon as it was sent.",
+  "notes": "Three replies of a chunk per word, played at once each: the first at 0 ms on the virtual clock, the second at 70 ms, the third at 110 ms. Unthrottled, eight levels. The first reply's chunks fire one; the second's none, within 100 ms of it; the third's one, past them. The pipeline's canceller ends each playback as soon as it was sent.",
   "setup": {
     "virtual_clock": true,
     "rooms": [
@@ -46,7 +46,7 @@
     },
     {
       "call": "clock.advance",
-      "ms": 50
+      "ms": 70
     },
     {
       "call": "voice.say",
@@ -56,7 +56,7 @@
     },
     {
       "call": "clock.advance",
-      "ms": 60
+      "ms": 40
     },
     {
       "call": "voice.say",

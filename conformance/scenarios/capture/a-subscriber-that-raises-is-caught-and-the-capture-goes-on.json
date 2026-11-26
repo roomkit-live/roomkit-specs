@@ -13,7 +13,7 @@
     "realtime",
     "capture_source"
   ],
-  "notes": "The raising subscribers record each frame, then raise. Capturing does not fail; each subscriber, the raising ones included, receives every frame, and a raising subscriber's replay goes on past its first frame. The log line the catch writes is not read.",
+  "notes": "The raising subscribers record each frame, then raise, on every frame they receive. Capturing does not fail; each subscriber, the raising ones included, receives every frame, and a raising subscriber's replay goes on past its first frame. The log line the catch writes is not read.",
   "setup": {
     "capture_sources": [
       {
@@ -79,6 +79,7 @@
                   "data": "AwADAA=="
                 }
               ],
+              "raised": 3,
               "active": true
             },
             "quiet": {
@@ -93,6 +94,7 @@
                   "data": "AwADAA=="
                 }
               ],
+              "raised": 0,
               "active": true
             },
             "raising-replay": {
@@ -108,6 +110,7 @@
                 }
               ],
               "replayed_bytes": 8,
+              "raised": 3,
               "active": true
             }
           }
