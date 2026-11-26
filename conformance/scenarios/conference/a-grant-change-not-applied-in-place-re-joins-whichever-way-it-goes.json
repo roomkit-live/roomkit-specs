@@ -238,17 +238,21 @@
           }
         },
         {
-          "event": "conference_started",
-          "bot_session_id": {
-            "$as": "second"
-          }
-        },
-        {
-          "event": "conference_bot_grants_changed",
-          "bot_session_id": {
-            "$as": "second"
-          },
-          "hidden": false
+          "$unordered": [
+            {
+              "event": "conference_started",
+              "bot_session_id": {
+                "$as": "second"
+              }
+            },
+            {
+              "event": "conference_bot_grants_changed",
+              "bot_session_id": {
+                "$as": "second"
+              },
+              "hidden": false
+            }
+          ]
         },
         {
           "event": "conference_ended",
@@ -257,17 +261,21 @@
           }
         },
         {
-          "event": "conference_started",
-          "bot_session_id": {
-            "$as": "third"
-          }
-        },
-        {
-          "event": "conference_bot_grants_changed",
-          "bot_session_id": {
-            "$as": "third"
-          },
-          "hidden": false
+          "$unordered": [
+            {
+              "event": "conference_started",
+              "bot_session_id": {
+                "$as": "third"
+              }
+            },
+            {
+              "event": "conference_bot_grants_changed",
+              "bot_session_id": {
+                "$as": "third"
+              },
+              "hidden": false
+            }
+          ]
         }
       ],
       "r2": [
@@ -291,17 +299,21 @@
           }
         },
         {
-          "event": "conference_started",
-          "bot_session_id": {
-            "$as": "narrow"
-          }
-        },
-        {
-          "event": "conference_bot_grants_changed",
-          "bot_session_id": {
-            "$as": "narrow"
-          },
-          "hidden": false
+          "$unordered": [
+            {
+              "event": "conference_started",
+              "bot_session_id": {
+                "$as": "narrow"
+              }
+            },
+            {
+              "event": "conference_bot_grants_changed",
+              "bot_session_id": {
+                "$as": "narrow"
+              },
+              "hidden": false
+            }
+          ]
         }
       ]
     }

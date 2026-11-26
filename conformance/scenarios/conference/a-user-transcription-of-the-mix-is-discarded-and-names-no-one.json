@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "conference/a-user-transcription-of-the-mix-is-discarded-and-names-no-one",
-  "title": "The model's user-role transcriptions are discarded: no room event, no broadcast, no hook, and no participant named, even beside an active speaker and a lane's speech",
+  "title": "The model's user-role transcriptions are discarded: no room event, no broadcast hook, and no participant named, even beside an active speaker and a lane's speech",
   "rules": [
     "§12.10.12"
   ],
