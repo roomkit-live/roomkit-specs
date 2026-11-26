@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "rfc_sha256": "4c50193ce0b648c20a2797927b117324fdefb384f370330906edd0ec7dfa79f4",
+  "rfc_sha256": "f11279ccbbde1043727704d570a7b8b5c7e9cb62cf6b79ef0f257316f1cf046e",
   "sections": [
     {
       "section": "0",
@@ -1225,7 +1225,7 @@
       "section": "12.10.4",
       "title": "ConferenceChannel",
       "line": 16612,
-      "sha256": "ed3f0d3887cbc457508f9bc49ddb096b3da2c508d292439e67b606d643722754",
+      "sha256": "7c99826fe647c50999b7ab08be779139770ec0d36a09604dad60b9c0abcbdbcc",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
     },
@@ -35576,12 +35576,12 @@
     {
       "id": "RK-12.10.4-145",
       "kind": "behavior",
-      "applies": "§12.10.4 ConferenceChannel, the conference feature, Per-track audio lanes: one lane per AUDIO track runs Resampler, AGC and Denoiser where configured, VAD and streaming STT in the inbound stage order of Section 12.3, without AEC and diarization, and its transcription RoomEvents are attributed to the publishing participant. Enclosing capability conditions and §26 levels still apply.",
+      "applies": "§12.10.4 ConferenceChannel, the conference feature, Per-track audio lanes: one lane per AUDIO track runs Resampler, AGC and Denoiser where configured, VAD and STT, asked once per utterance the VAD delimits, in the inbound stage order of Section 12.3, without AEC and diarization, and its transcription RoomEvents are attributed to the publishing participant. Enclosing capability conditions and §26 levels still apply.",
       "level": "must",
       "section": "12.10.4",
       "line": 17129,
-      "text": "**Per-track audio lanes:**\n\n```\non_track_audio (one lane per AUDIO track)\n  → Resampler → [AGC] → [Denoiser] → VAD → STT (streaming)\n  → transcription RoomEvents attributed to the publishing participant\n```\n\nThe lane preserves the inbound stage ordering of Section 12.3, minus the\nstages a conference makes unnecessary: AEC (no server-side echo path) and\nDiarization (track identity already attributes speech).",
-      "sha256": "d0a8733831a0f4feef3e1b8d71f30eb23bce6eae2fbb1428a50b3e0b7ea5df97"
+      "text": "**Per-track audio lanes:**\n\n```\non_track_audio (one lane per AUDIO track)\n  → Resampler → [AGC] → [Denoiser] → VAD → STT (once per utterance the VAD delimits)\n  → transcription RoomEvents attributed to the publishing participant\n```\n\nThe lane preserves the inbound stage ordering of Section 12.3, minus the\nstages a conference makes unnecessary: AEC (no server-side echo path) and\nDiarization (track identity already attributes speech).",
+      "sha256": "850b467af9f3b33399d6aa958fbe578ddaf425bd4d815d4849b6aa440d086f27"
     },
     {
       "id": "RK-12.10.4-146",

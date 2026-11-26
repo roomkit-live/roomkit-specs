@@ -17126,12 +17126,12 @@ whether it needs revoking there. <!-- /rfc --><!-- rfc: {"id": "RK-12.10.4-144",
 before it closes the backend.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.10.4-145", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Per-track audio lanes: one lane per AUDIO track runs Resampler, AGC and Denoiser where configured, VAD and streaming STT in the inbound stage order of Section 12.3, without AEC and diarization, and its transcription RoomEvents are attributed to the publishing participant. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+<!-- rfc: {"id": "RK-12.10.4-145", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel, the conference feature, Per-track audio lanes: one lane per AUDIO track runs Resampler, AGC and Denoiser where configured, VAD and STT, asked once per utterance the VAD delimits, in the inbound stage order of Section 12.3, without AEC and diarization, and its transcription RoomEvents are attributed to the publishing participant. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Per-track audio lanes:**
 
 ```
 on_track_audio (one lane per AUDIO track)
-  → Resampler → [AGC] → [Denoiser] → VAD → STT (streaming)
+  → Resampler → [AGC] → [Denoiser] → VAD → STT (once per utterance the VAD delimits)
   → transcription RoomEvents attributed to the publishing participant
 ```
 
