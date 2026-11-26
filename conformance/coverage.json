@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "f11279ccbbde1043727704d570a7b8b5c7e9cb62cf6b79ef0f257316f1cf046e",
-  "corpus_sha256": "36811d38774bb51238c5313ba4360c25f51816e9f137db762e314771bacc9a50",
+  "corpus_sha256": "4b8bba55058aa3bc3fb7c5b706cfe044a38730a7d190644b2438476cd3751248",
   "python_commit": "452ae6397f70661e0ec0f2c8db3000398f904c41",
-  "scenario_count": 3902,
+  "scenario_count": 3916,
   "sections": [
     {
       "section": "0",
@@ -7563,6 +7563,7 @@
         "conference/a-camera-toggle-reaches-the-mute-and-unmute-observers",
         "conference/a-channel-with-nothing-to-do-probes-no-occupancy",
         "conference/a-close-abandons-a-leave-past-its-budget-and-keeps-the-backend-open",
+        "conference/a-close-reports-a-recording-whose-finalization-it-stopped-waiting-for",
         "conference/a-close-reports-the-backend-a-mint-still-holds-and-closes-it-once-the-mint-ends",
         "conference/a-closed-collection-gate-closes-the-lanes",
         "conference/a-conference-is-refused-while-the-last-one-s-deferred-teardown-holds-the-room",
@@ -7581,6 +7582,7 @@
         "conference/a-grant-change-carried-by-a-re-join-is-announced-with-the-session",
         "conference/a-grant-change-not-applied-in-place-re-joins-whichever-way-it-goes",
         "conference/a-grant-set-equal-to-the-grants-in-force-emits-nothing",
+        "conference/a-held-finalization-lets-the-bot-leave-and-the-recorder-is-released-once-it-returns",
         "conference/a-lane-normalises-a-track-s-format-before-its-other-stages",
         "conference/a-lane-s-speech-edges-name-the-participant-and-track",
         "conference/a-lane-s-utterance-is-one-room-event-attributed-to-its-publisher",
@@ -7613,6 +7615,7 @@
         "conference/a-recognition-held-across-the-mute-delivers-no-transcription",
         "conference/a-recognizer-plugged-mid-meeting-subscribes-what-is-already-published",
         "conference/a-recognizer-with-no-vad-is-refused",
+        "conference/a-recorder-a-call-still-runs-in-past-the-release-wait-is-left-unreleased",
         "conference/a-recording-and-its-recorder-are-refused-apart",
         "conference/a-recording-plugged-with-no-recorder-is-refused",
         "conference/a-resolved-participant-s-utterances-are-not-resolved-again",
@@ -7797,7 +7800,9 @@
       "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
+        "conference/a-close-reports-a-recording-whose-finalization-it-stopped-waiting-for",
         "conference/a-frame-in-another-format-is-discarded-and-counted-as-loss",
+        "conference/a-held-finalization-lets-the-bot-leave-and-the-recorder-is-released-once-it-returns",
         "conference/a-held-recorder-write-delays-no-other-track",
         "conference/a-muted-binding-finalizes-the-conference-s-recordings",
         "conference/a-recording-s-reports-carry-the-room-track-and-participant",
@@ -7915,16 +7920,31 @@
         "unmapped": 52
       },
       "decided_gaps": {
-        "step": 18
+        "phase6": 1,
+        "step": 1
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
+        "conference/a-close-reports-a-recording-whose-finalization-it-stopped-waiting-for",
+        "conference/a-held-finalization-lets-the-bot-leave-and-the-recorder-is-released-once-it-returns",
+        "conference/a-recorder-a-call-still-runs-in-past-the-release-wait-is-left-unreleased",
+        "recording/a-failed-creation-leaves-the-recordings-of-the-room-holding-its-id-running",
+        "recording/a-gone-room-s-recordings-are-listed-and-fed-for-their-own-organization-alone",
+        "recording/a-gone-room-s-recordings-are-refused-to-another-organization",
         "recording/a-gone-room-s-running-recordings-stop-on-an-explicit-stop",
         "recording/a-recorder-joins-the-live-feed-after-consent",
         "recording/a-recording-on-a-missing-or-closed-room-is-refused",
+        "recording/a-recording-resumed-after-a-restart-is-announced-again",
+        "recording/a-room-s-recorders-start-before-it-is-written-and-are-announced-once-it-exists",
+        "recording/a-room-whose-recorder-refuses-its-start-is-not-created",
+        "recording/a-room-whose-write-fails-stops-the-recordings-started-for-it",
+        "recording/a-start-on-an-existing-room-waits-for-the-room-lock",
+        "recording/a-stop-naming-another-organization-is-refused-and-stops-nothing",
         "recording/a-stopped-recorder-announces-its-file",
+        "recording/listing-or-feeding-a-room-s-recordings-for-another-organization-is-refused",
         "recording/one-recording-s-media-arrives-in-the-order-it-was-fed",
         "recording/only-a-voice-session-that-joined-while-the-room-records-is-recorded",
+        "recording/recorders-started-on-an-existing-room-start-all-or-nothing",
         "recording/stopping-a-gone-room-that-records-nothing-is-not-found",
         "voice/a-bridged-call-s-room-recordings-are-announced-and-capture-the-speaker"
       ]
@@ -8151,6 +8171,7 @@
         "orchestration/an-install-sends-into-the-room-it-holds",
         "orchestration/an-uninstall-from-the-install-itself-answers-false",
         "orchestration/an-uninstall-under-the-room-s-lock-does-not-wait-for-an-install",
+        "recording/a-start-on-an-existing-room-waits-for-the-room-lock",
         "reentrancy/a-call-under-a-lock-the-host-holds-commits-what-its-hooks-inject-once-the-host-released-it",
         "reentrancy/a-delivery-mutes-a-channel",
         "reentrancy/a-locked-hook-commits-a-record",
@@ -8293,6 +8314,8 @@
         "kit-close/a-channel-s-write-still-in-the-store-past-the-close-s-unwind-fails-under-it",
         "kit-close/a-store-the-integrator-owns-answers-the-kit-s-reads-after-the-close",
         "kit-close/a-store-the-kit-closed-refuses-the-kit-s-reads-with-kit-closed",
+        "recording/a-failed-creation-leaves-the-recordings-of-the-room-holding-its-id-running",
+        "recording/a-room-whose-write-fails-stops-the-recordings-started-for-it",
         "reentrancy/a-named-refusal-at-the-cap-precedes-an-empty-rate-bucket",
         "reentrancy/a-named-refusal-at-the-cap-spends-no-inbound-rate-token",
         "reentrancy/a-rate-limited-named-call-still-spends-its-work-budget",
@@ -8739,6 +8762,10 @@
         "observations/feedback-is-an-observation-the-hooks-observe",
         "orchestration/the-room-strategy-is-read-within-a-tenant",
         "permissions/an-output-mute-fires-nothing",
+        "recording/a-gone-room-s-recordings-are-listed-and-fed-for-their-own-organization-alone",
+        "recording/a-gone-room-s-recordings-are-refused-to-another-organization",
+        "recording/a-stop-naming-another-organization-is-refused-and-stops-nothing",
+        "recording/listing-or-feeding-a-room-s-recordings-for-another-organization-is-refused",
         "regenerate/a-regeneration-is-scoped-to-its-caller-s-organization",
         "rooms/a-metadata-update-merges-the-caller-s-keys",
         "rooms/a-timer-check-does-not-change-another-due-room",
@@ -8851,7 +8878,10 @@
         "phase6": 15
       },
       "unannotated_keyword_lines": [],
-      "candidate_scenarios": []
+      "candidate_scenarios": [
+        "recording/a-recording-resumed-after-a-restart-is-announced-again",
+        "recording/a-room-s-recorders-start-before-it-is-written-and-are-announced-once-it-exists"
+      ]
     },
     {
       "section": "17.7",
@@ -35732,67 +35762,37 @@
       "id": "RK-12.11-013",
       "section": "12.11",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2066",
-        "note": "step: create_room with recorders (R1): the bound recorders start before the room is written, all or nothing."
-      }
+      "links": []
     },
     {
       "id": "RK-12.11-014",
       "section": "12.11",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2066",
-        "note": "step: create_room with recorders (R1), one a scripted recorder that refuses its start (R2): the recordings already started for the room are stopped."
-      }
+      "links": []
     },
     {
       "id": "RK-12.11-015",
       "section": "12.11",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2066",
-        "note": "step: create_room with recorders (R1), one refusing its start (R2): create_room fails with the refusal and get_room finds no room."
-      }
+      "links": []
     },
     {
       "id": "RK-12.11-016",
       "section": "12.11",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2066",
-        "note": "step: create_room with recorders (R1) and a store_fault on create_room: the recordings started for the room are stopped."
-      }
+      "links": []
     },
     {
       "id": "RK-12.11-017",
       "section": "12.11",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2066",
-        "note": "step: create_room with recorders (R1) on an id a recording room already holds: that room's recorder still receives its feed."
-      }
+      "links": []
     },
     {
       "id": "RK-12.11-018",
       "section": "12.11",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2066",
-        "note": "step: create_room with recorders (R1): ON_RECORDING_STARTED fires for each once the room exists, and the recorder reads nothing before a track is added."
-      }
+      "links": []
     },
     {
       "id": "RK-12.11-019",
@@ -35804,12 +35804,7 @@
       "id": "RK-12.11-020",
       "section": "12.11",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2066",
-        "note": "step: recording.start with several recorders, one a scripted recorder that refuses its start (R2): none is started and no ON_RECORDING_STARTED fires."
-      }
+      "links": []
     },
     {
       "id": "RK-12.11-021",
@@ -35845,12 +35840,7 @@
       "id": "RK-12.11-026",
       "section": "12.11",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2066",
-        "note": "step: restart_process, and the recording calls naming kit, an argument README does not give them: recording.start on the restarted process announces ON_RECORDING_STARTED again (a second start on one kit shows no restart)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.11-027",
@@ -35874,12 +35864,7 @@
       "id": "RK-12.11-030",
       "section": "12.11",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2066",
-        "note": "step: the recording calls forwarding organization_id, which the Python runner drops: recording.stop naming another organization is refused and the recorder keeps receiving its feed."
-      }
+      "links": []
     },
     {
       "id": "RK-12.11-031",
@@ -35891,12 +35876,7 @@
       "id": "RK-12.11-032",
       "section": "12.11",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2066",
-        "note": "step: the recording calls forwarding organization_id, which the Python runner drops: recording.stop naming another organization fails with room_not_found."
-      }
+      "links": []
     },
     {
       "id": "RK-12.11-033",
@@ -35908,12 +35888,7 @@
       "id": "RK-12.11-034",
       "section": "12.11",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2066",
-        "note": "step: the recording calls forwarding organization_id, which the Python runner drops: after store.delete_room, recording.stop naming another organization is refused and the recorder keeps receiving its feed."
-      }
+      "links": []
     },
     {
       "id": "RK-12.11-035",
@@ -35925,12 +35900,7 @@
       "id": "RK-12.11-036",
       "section": "12.11",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2066",
-        "note": "step: recording.list (R3) and the recording calls forwarding organization_id, which the Python runner drops: listing a room's recordings and recording.track naming another organization are refused, a gone room's recordings listed and fed for their own."
-      }
+      "links": []
     },
     {
       "id": "RK-12.11-037",
@@ -36043,23 +36013,13 @@
       "id": "RK-12.11-054",
       "section": "12.11",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2066",
-        "note": "step: conference.open with recording and a recorder whose calls a gate holds (LINK-P6U-3: conference.open options, recording.read per conference track): with the recorder's stop held, detach_channel ends and the bot leaves; room recordings are unbounded, to be fixed (RMK-2094)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.11-055",
       "section": "12.11",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2066",
-        "note": "step: conference.open with recording and a recorder whose calls a gate holds (LINK-P6U-3: conference.open options, recording.read per conference track): with the finalization held past its budget, ON_RECORDING_STOPPED gives that track no url and the channel's close names the recording unfinished."
-      }
+      "links": []
     },
     {
       "id": "RK-12.11-056",
@@ -36071,12 +36031,7 @@
       "id": "RK-12.11-057",
       "section": "12.11",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2066",
-        "note": "step: conference.open with recording and a recorder whose calls a gate holds (LINK-P6U-3: conference.open options, recording.read per conference track), and a read of the recorder's calls: close() is not called while a held call runs."
-      }
+      "links": []
     },
     {
       "id": "RK-12.11-058",
@@ -36084,21 +36039,16 @@
       "mapping": "unmapped",
       "links": [],
       "gap": {
-        "class": "step",
+        "class": "phase6",
         "card": "RMK-2066",
-        "note": "step: conference.open with recording and a recorder whose calls a gate holds (LINK-P6U-3: conference.open options, recording.read per conference track): the bot leaves before the wait to release the recorder ends."
+        "note": "measurement: the bot leaves once the teardown's budget is spent, before the wait to release the recorder ends; no gate orders the end of that wait, so only a duration tells a release wait made apart from one made inside the teardown (conference/a-held-finalization-lets-the-bot-leave-and-the-recorder-is-released-once-it-returns shows the leave while the call runs)."
       }
     },
     {
       "id": "RK-12.11-059",
       "section": "12.11",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2066",
-        "note": "step: conference.open with recording and a recorder whose calls a gate holds (LINK-P6U-3: conference.open options, recording.read per conference track): with a call held past the release wait, the recorder is not closed and the channel's close fails naming it."
-      }
+      "links": []
     },
     {
       "id": "RK-12.12-008",
