@@ -117,6 +117,55 @@
           }
         }
       }
+    },
+    {
+      "if": {
+        "required": [
+          "setup"
+        ],
+        "properties": {
+          "setup": {
+            "required": [
+              "capture_sources"
+            ]
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "requires_features"
+        ],
+        "properties": {
+          "requires_features": {
+            "contains": {
+              "const": "capture_source"
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "required": [
+          "requires_features"
+        ],
+        "properties": {
+          "requires_features": {
+            "contains": {
+              "const": "capture_source"
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "requires_features": {
+            "contains": {
+              "const": "realtime"
+            }
+          }
+        }
+      }
     }
   ],
   "$defs": {

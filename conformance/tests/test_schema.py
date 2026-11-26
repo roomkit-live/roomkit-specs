@@ -1084,9 +1084,16 @@ class SchemaTests(unittest.TestCase):
                 scenario = json.loads(fixture.read_text())
                 scenario["steps"].append(step)
                 self.assertEqual(validator.is_valid(scenario), valid)
-        scenario = json.loads(fixture.read_text())
-        scenario["requires_features"] = ["realtime", "capture_sources"]
-        self.assertFalse(validator.is_valid(scenario))
+        for features, valid in (
+            (["realtime", "capture_source"], True),
+            (["realtime", "capture_sources"], False),
+            (["realtime"], False),
+            (["capture_source"], False),
+        ):
+            with self.subTest(features=features):
+                scenario = json.loads(fixture.read_text())
+                scenario["requires_features"] = features
+                self.assertEqual(validator.is_valid(scenario), valid)
 
     def test_a_conference_bot_is_read_plugged_granted_and_reported(self) -> None:
         schema = json.loads((ROOT / "scenario.schema.json").read_text())
