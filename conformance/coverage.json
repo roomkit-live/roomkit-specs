@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "f11279ccbbde1043727704d570a7b8b5c7e9cb62cf6b79ef0f257316f1cf046e",
-  "corpus_sha256": "60e9c91893c41ab8f9252ae0db2118057bc14f2657302faba6e952858523735c",
+  "corpus_sha256": "904e2286ba538e5a64904076665bf270628ef2569d1451b25135e70d435f2c7b",
   "python_commit": "452ae6397f70661e0ec0f2c8db3000398f904c41",
-  "scenario_count": 3900,
+  "scenario_count": 3901,
   "sections": [
     {
       "section": "0",
@@ -7553,8 +7553,7 @@
         "unmapped": 207
       },
       "decided_gaps": {
-        "phase6": 1,
-        "step": 1
+        "phase6": 1
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -7605,6 +7604,7 @@
         "conference/a-muted-binding-unsubscribes-and-its-unmute-subscribes-again",
         "conference/a-plug-into-an-occupied-slot-is-refused",
         "conference/a-plug-over-an-empty-conference-joins-at-the-first-arrival",
+        "conference/a-plug-the-backend-cannot-apply-in-place-re-joins-announced",
         "conference/a-plug-waits-for-the-configuration-change-before-it",
         "conference/a-plug-whose-join-fails-still-returns-and-the-lazy-join-stays-behind",
         "conference/a-quality-report-identifies-the-affected-participant",
@@ -7778,6 +7778,7 @@
         "conference/a-grant-change-carried-by-a-re-join-is-announced-with-the-session",
         "conference/a-grant-change-not-applied-in-place-re-joins-whichever-way-it-goes",
         "conference/a-mint-on-a-backend-that-reports-no-arrival-brings-the-bot-in",
+        "conference/a-plug-the-backend-cannot-apply-in-place-re-joins-announced",
         "conference/an-end-the-sfu-reports-closes-the-session-s-media-and-the-next-need-re-joins",
         "conference/conference-ended-names-the-session-that-left-across-a-re-attach",
         "conference/conference-events-follow-the-participants-and-the-bot",
@@ -34868,12 +34869,7 @@
       "id": "RK-12.10.4-196",
       "section": "12.10.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2076",
-        "note": "step: none missing (conference.plug, conference.read, expect.media_events); the scenario waits on HITL 01527428 (P6-CF4): a plug's re-join on a backend without BOT_GRANT_UPDATE emits no conference_bot_grants_changed in Python, so the room's event list after its leave(), join_as_bot(), conference_ended and conference_started cannot be written before the answer."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.4-197",
