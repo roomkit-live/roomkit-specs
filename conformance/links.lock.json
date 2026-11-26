@@ -5153,6 +5153,46 @@
     "RK-12.11-059": {
       "conference/a-recorder-a-call-still-runs-in-past-the-release-wait-is-left-unreleased": "0765532a280afec4e6ba26da9efe64a1181179fdd185e07879bc49a57a88d87f"
     },
+    "RK-12.12-011": {
+      "capture/a-source-s-lifetime-is-its-start-and-stop-alone": "174d36227decc52d42813b5f9588f9b353866d1fe0af46fdb9a2291707b75806"
+    },
+    "RK-12.12-012": {
+      "capture/a-source-s-lifetime-is-its-start-and-stop-alone": "db230d0a7e508e3bc3dd809ac35e2a9973f56fd7ea0dca21a43eadd1822b3d6e"
+    },
+    "RK-12.12-013": {
+      "capture/a-source-s-lifetime-is-its-start-and-stop-alone": "f85fadb0a67310e76543241e28d95386ee7057f72c70aecf902ac26cc02fb85d",
+      "capture/a-subscriber-that-leaves-takes-no-frame-from-the-others": "f85fadb0a67310e76543241e28d95386ee7057f72c70aecf902ac26cc02fb85d"
+    },
+    "RK-12.12-014": {
+      "capture/each-subscriber-receives-the-frames-raw-in-the-source-s-one-format": "bf9b9b66f8897b2e1691a97bbcf9822f24acc3ac9fbdf7d0684fd8390b83dfa7"
+    },
+    "RK-12.12-017": {
+      "capture/each-subscriber-receives-the-frames-raw-in-the-source-s-one-format": "333da3495e9a251361c1f2cb5364dd2e11a0432f22c07f2935beca7a2afa9050"
+    },
+    "RK-12.12-021": {
+      "capture/a-subscriber-that-raises-is-caught-and-the-capture-goes-on": "ac701cc77af88ff60b9e2e0be989af5e4df4ebd5b73419f200d4748689e3aca1"
+    },
+    "RK-12.12-022": {
+      "capture/a-subscriber-that-raises-is-caught-and-the-capture-goes-on": "9a0aafc8a149d38b0ff3a737aa6f2be88c4ffe435ebfcd1574588b6cd16483e9"
+    },
+    "RK-12.12-023": {
+      "capture/the-backlog-keeps-the-newest-frames-within-its-byte-and-duration-bounds": "c996c7e2cdab09668351972ae2514222d84a16497aed0bfdf09df7ff67e3915b"
+    },
+    "RK-12.12-024": {
+      "capture/a-mark-replays-from-its-position-before-anything-live": "50cc264ade2f2f2f44d7c42ece57a95a9faa65f5df10e5d4b4b6c1e24f18d60a"
+    },
+    "RK-12.12-025": {
+      "capture/frames-captured-during-a-replay-reach-the-subscriber-after-it": "9dde5e4ef0c1fc4c548017d32cfea215a60c41049d19c5c6e4a5f708871078c4"
+    },
+    "RK-12.12-027": {
+      "capture/a-stale-mark-replays-what-remains-and-reports-it-truncated": "5bbbd7587c6ca5e262cc5e9b9e546b25740a0ea9e4753754fb0a39a66710c583"
+    },
+    "RK-12.12-028": {
+      "capture/a-stale-mark-replays-what-remains-and-reports-it-truncated": "3a8fac7f56cdc8981c8877dd27df3a15eff7615bce2277e3cce27379cd857cab"
+    },
+    "RK-12.12-029": {
+      "capture/a-subscription-reports-the-bytes-it-replayed-whatever-its-mark": "c8343fcbcb482bdec7310212901f38c6846bcec9bbf04e0c691e28edbdca4974"
+    },
     "RK-12.12-030": {
       "realtime/an-utterance-replayed-from-its-mark-reaches-the-provider-ahead-of-the-live-audio": "3b0de77c0cfe7d478125ee88d9957a5c15829d7e7f7f569e8b44a6de7a4684c7"
     },
@@ -5676,7 +5716,10 @@
       "voice/an-echo-of-the-reply-s-opening-is-no-turn": "d75c8f34f168da4f0a7b9aa6b1d40c60d50836d71bb847eb726e16f2bd158680"
     },
     "RK-12.3.13-031": {
+      "voice/an-echo-verdict-ends-with-the-stream-that-heard-its-words": "83cfde0530da6b787fd8f101f0564a6be4a8ac84a78f198fa0fcb22a1594dfe4",
+      "voice/an-echo-verdict-lapses-ten-seconds-after-the-reply-ended": "83cfde0530da6b787fd8f101f0564a6be4a8ac84a78f198fa0fcb22a1594dfe4",
       "voice/an-echo-verdict-outlives-the-reply-until-its-final": "83cfde0530da6b787fd8f101f0564a6be4a8ac84a78f198fa0fcb22a1594dfe4",
+      "voice/an-echo-verdict-still-holds-just-under-ten-seconds-after-the-reply-ended": "83cfde0530da6b787fd8f101f0564a6be4a8ac84a78f198fa0fcb22a1594dfe4",
       "voice/speech-the-recognizer-starts-once-nothing-plays-is-nobody-s-echo": "83cfde0530da6b787fd8f101f0564a6be4a8ac84a78f198fa0fcb22a1594dfe4"
     },
     "RK-12.3.13-032": {
@@ -6459,6 +6502,10 @@
     "RK-12.5-029": {
       "voice/input-frames-report-an-audio-level": "cf2f25ca101f3d0eb9ac34f9de14adebbf1174ac99b6b716fe0d62cae8401ac3",
       "voice/outbound-speech-reports-an-audio-level": "cf2f25ca101f3d0eb9ac34f9de14adebbf1174ac99b6b716fe0d62cae8401ac3"
+    },
+    "RK-12.5-030": {
+      "voice/input-levels-fire-at-most-ten-a-second-per-session": "71f5307687b874b231e36fdb894be620c8407ed847ad39b1b7757c311aa67d44",
+      "voice/output-levels-fire-at-most-once-per-100-ms": "71f5307687b874b231e36fdb894be620c8407ed847ad39b1b7757c311aa67d44"
     },
     "RK-12.5-031": {
       "voice/input-frames-report-an-audio-level": "9b2b0201e0ec16eeb702f3220b5758f22ea1ec70e83025bd0773088517320ea3",
