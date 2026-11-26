@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "1b6c59f650eb470ceb1014a7aff5d9ce1e9c4d3a79d17abdb491cb15e2ce097f",
-  "corpus_sha256": "f9644d9b33ff38f011621833cf3f507cf5fd633498b1d9decf06ef1841d6d6fc",
+  "corpus_sha256": "8e0f1fed82470c96135efa883f8b47b6db0afac838cdbcbab63116127e1ac550",
   "python_commit": "452ae6397f70661e0ec0f2c8db3000398f904c41",
-  "scenario_count": 3946,
+  "scenario_count": 3960,
   "sections": [
     {
       "section": "0",
@@ -6760,12 +6760,13 @@
         "unmapped": 18
       },
       "decided_gaps": {
-        "phase6": 1,
-        "step": 1
+        "phase6": 1
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "memory/history-omits-only-responses-marked-superseded",
+        "voice/a-turn-held-for-speech-that-resumed-is-routed-once-its-wait-ends-in-silence",
+        "voice/a-turn-judged-complete-while-the-user-speaks-again-is-held-and-joined-by-the-new-speech",
         "voice/a-turn-s-wait-takes-in-the-transcript-of-speech-that-ended",
         "voice/an-incomplete-turn-is-routed-once-its-wait-passes-in-silence",
         "voice/blocked-speech-before-the-reply-is-heard-releases-it",
@@ -6782,9 +6783,7 @@
       "mapping": {
         "unmapped": 51
       },
-      "decided_gaps": {
-        "step": 5
-      },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "voice/a-backchannel-heard-only-with-its-final-leaves-the-reply-playing",
@@ -6817,16 +6816,22 @@
         "voice/an-echo-is-heard-without-case-punctuation-or-accents",
         "voice/an-echo-of-the-reply-s-opening-is-no-turn",
         "voice/an-echo-verdict-outlives-the-reply-until-its-final",
+        "voice/an-echo-verdict-s-words-decide-no-barge-in-on-the-reply-that-cut-it-short-or-the-next",
+        "voice/an-echo-verdict-that-lapses-with-its-utterance-open-takes-its-words-with-it",
         "voice/confirmed-speech-shorter-than-min-speech-ms-leaves-the-reply-playing",
         "voice/confirmed-speech-that-lasts-min-speech-ms-cuts-the-reply",
         "voice/disabled-speech-during-playback-waits-for-the-reply-to-end",
         "voice/immediate-with-a-vad-cuts-before-words-can-tell-an-echo",
+        "voice/loud-audio-with-no-words-waits-transcript-wait-ms-before-it-cuts-on-its-duration",
         "voice/past-echo-guard-ms-of-played-audio-the-reply-s-own-words-cut-it",
         "voice/speech-held-for-the-detector-s-verdict-reaches-no-room-before-it",
         "voice/speech-that-cuts-the-reply-is-the-user-s-turn",
         "voice/speech-the-recognizer-starts-once-nothing-plays-is-nobody-s-echo",
         "voice/the-detector-is-told-a-partial-from-the-final-and-never-asked-at-an-empty-onset",
+        "voice/with-a-streaming-stt-semantic-waits-past-min-speech-ms-for-the-first-words",
+        "voice/with-a-streaming-stt-wordless-speech-is-judged-once-transcript-wait-ms-passed",
         "voice/with-the-echo-guard-off-the-reply-s-own-words-cut-it",
+        "voice/without-a-streaming-stt-semantic-speech-is-judged-once-min-speech-ms-passed",
         "voice/without-words-the-detector-judges-the-speech-on-its-duration-alone"
       ]
     },
@@ -7353,6 +7358,7 @@
         "video/a-filter-reads-the-latest-vision-result-on-the-frames-that-follow",
         "video/a-filter-s-replacement-is-the-frame-the-bridge-and-vision-receive",
         "video/a-frame-inside-the-vision-interval-is-not-analysed",
+        "video/a-frame-past-the-vision-interval-is-analysed",
         "video/a-vision-result-rides-the-turn-of-the-room-s-agent",
         "video/an-empty-vision-result-ends-the-session-s-view",
         "video/every-frame-of-a-recorded-session-reaches-its-recorder",
@@ -7430,9 +7436,7 @@
       "mapping": {
         "unmapped": 12
       },
-      "decided_gaps": {
-        "step": 1
-      },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "video/a-bridge-forwards-only-while-enabled-which-it-is-by-default",
@@ -7441,6 +7445,10 @@
         "video/a-room-bridges-no-more-sessions-than-max-participants",
         "video/a-source-s-delta-frames-wait-for-its-first-keyframe-at-each-target",
         "video/a-video-bridge-holds-ten-sessions-by-default",
+        "video/by-default-a-source-s-delta-frames-wait-one-second-for-its-keyframe",
+        "video/by-default-the-bridge-asks-for-keyframes-every-five-seconds",
+        "video/past-keyframe-wait-s-a-source-s-delta-frames-reach-the-target-without-a-keyframe",
+        "video/the-bridge-asks-for-keyframes-again-once-per-keyframe-interval",
         "video/with-no-keyframe-wait-a-delta-frame-is-forwarded-at-once",
         "video/with-no-periodic-interval-only-a-join-asks-for-a-keyframe"
       ]
@@ -7829,6 +7837,7 @@
         "conference/a-held-finalization-lets-the-bot-leave-and-the-recorder-is-released-once-it-returns",
         "conference/a-held-recorder-write-delays-no-other-track",
         "conference/a-muted-binding-finalizes-the-conference-s-recordings",
+        "conference/a-recorder-that-stopped-draining-holds-a-track-s-teardown-no-longer-than-its-budget",
         "conference/a-recording-s-reports-carry-the-room-track-and-participant",
         "conference/a-recording-that-falls-behind-holds-a-bounded-backlog",
         "conference/a-synchronous-hook-cannot-block-a-recording",
@@ -29904,12 +29913,7 @@
       "id": "RK-12.3.12-016",
       "section": "12.3.12",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2042",
-        "note": "step: a sync once the channel applied the detector's verdict, or the virtual clock (X-CLK): turn_decisions (S15) holds a verdict at a gate, but no hook fires when a complete verdict is held because speech resumed, so no step can make the resumed speech end only after the verdict was applied."
-      }
+      "links": []
     },
     {
       "id": "RK-12.3.12-017",
@@ -30028,23 +30032,13 @@
       "id": "RK-12.3.13-018",
       "section": "12.3.13",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2042",
-        "note": "step: a bounded time step or the virtual clock (X-CLK): with a streaming STT, the wait for the first partial must be shown to outlast min_speech_ms; a gate holding the recognizer's first words gives the event loop no time, so the strategy's second look never runs before the words (P6-VO3 review)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.3.13-019",
       "section": "12.3.13",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2042",
-        "note": "step: a bounded time step or the virtual clock (X-CLK): without a streaming STT, the duration-only verdict must be shown to come only once min_speech_ms of speech has passed; the format cannot tell a 0 ms context from a later one (P6-VO3 review)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.3.13-020",
@@ -30122,23 +30116,13 @@
       "id": "RK-12.3.13-032",
       "section": "12.3.13",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2042",
-        "note": "step: S1 and S20 are in place; a scenario needs an echo whose words go on over the response that cut the echoed one short, then over the next (a scripted agent answering twice within one kept utterance), not written by P6-VO3."
-      }
+      "links": []
     },
     {
       "id": "RK-12.3.13-033",
       "section": "12.3.13",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2042",
-        "note": "step: the virtual clock (X-CLK): voice.open stt (S5) scripts an STT stream that never closes an echoed utterance, but the verdict lapses only after 10 seconds."
-      }
+      "links": []
     },
     {
       "id": "RK-12.3.13-034",
@@ -30150,12 +30134,7 @@
       "id": "RK-12.3.13-035",
       "section": "12.3.13",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2042",
-        "note": "step: the continuous-mode energy run: ten loud frames with transcript_wait_ms 1 during playback cut nothing in the P6-VO3 probe, so the cut on duration once the wait has passed is not reached by a scripted stream; the wait itself (no cut while transcript_wait_ms runs) is then unobservable."
-      }
+      "links": []
     },
     {
       "id": "RK-12.3.13-036",
@@ -32875,12 +32854,7 @@
       "id": "RK-12.8.9-010",
       "section": "12.8.9",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-2062",
-        "note": "step: the virtual clock (X-CLK): with keyframe_interval_s set, a second periodic keyframe request comes once the interval passed, which no scenario can wait for without a delay; video.read.keyframe_requests and the bridge configuration (VI2) are in place. The same clock would cover the parts the P6-VI citations leave out: RK-12.8.9-007's 5.0 s default and one request per interval, RK-12.8.9-011's forwarding past keyframe_wait_s and its one warning, RK-12.8.9-014's 1.0 s default, and RK-12.8.4-005's analysis once the interval passed."
-      }
+      "links": []
     },
     {
       "id": "RK-12.8.9-011",
