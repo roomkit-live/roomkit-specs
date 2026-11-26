@@ -2,7 +2,7 @@
   "version": 1,
   "rfc_sha256": "f73e8090fe7e39cb56cfb5b71dcd2e49070574bf3b2dd580bfd1e5e038e6ec9e",
   "corpus_sha256": "9b7efa7673001a526f80c7621f942b690bf2cb44af67e09bb36acfae961a2d06",
-  "python_commit": "452ae6397f70661e0ec0f2c8db3000398f904c41",
+  "python_commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
   "scenario_count": 3961,
   "sections": [
     {
@@ -12552,7 +12552,32 @@
           "missing": [
             "Streaming, externally changed status, regeneration and replacement records are supplied by the complementary lifecycle link. Optional voice entry paths need their own capability evidence."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            }
+          ]
         },
         {
           "id": "core-room-remaining-write-gates",
@@ -12561,7 +12586,32 @@
           "missing": [
             "Optional voice/conference entry paths require capability-specific evidence. Internal read-count optimizations are permitted, not required, by §5.1."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -12650,7 +12700,32 @@
             "The public read matrix and retained-channel gates are supplied by the complementary lifecycle links. Optional voice paths need their own capability evidence.",
             "Snapshot equality alone cannot prove absence of identical writes on every persistent backend; specialized effect tests retain that responsibility."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -12672,7 +12747,32 @@
           "missing": [
             "This read link does not by itself prove every retained-channel write gate; those are covered by the complementary refusal links. Optional voice session teardown is outside the Level 0 scope."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -12796,7 +12896,32 @@
           "missing": [
             "The complementary timer link supplies direct gates, sweeps, cancellation and concurrent-write source evidence. Atomic persistent-store transactions and paused sender/group routing retain their separate store/routing evidence."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            }
+          ]
         },
         {
           "id": "core-room-timer-completion",
@@ -12805,7 +12930,32 @@
           "missing": [
             "The shared runner cannot force a store-write interleaving or caller cancellation; the specialized source tests and corresponding Rust runtime tests are required alongside these receipts. Atomic persistent-store commits and paused automatic routing are covered in the store/routing areas rather than certified by this timer link."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -13649,7 +13799,32 @@
           "missing": [
             "Real provider adapters and cancellation exception forms are specialized tests. A scripted output is not a proof that a vendor accepted or rejected a send. Generic transport-provider parity is outside this bounded lot."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -14163,7 +14338,32 @@
             "Wall-clock coalescing is not covered here; forced consumer abandonment and cross-family order have separate native source evidence.",
             "The rest of this broad clause, including all stored tool outcome combinations, remains outside this link."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -15964,7 +16164,32 @@
             "The native received-RPC/abandoned-reader and late-response races are separate proofs and are not credited to these sequential scenarios.",
             "No standalone-session, service backend, remote-executor or overall conformance-level claim follows from these assertions."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -16268,7 +16493,32 @@
             "Rewritten, removed or ambiguously relocated inputs are covered separately by deferred-hook-context-protection.",
             "Other memory providers, external agents and distributed recovery remain outside these cases."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         },
         {
           "id": "deferred-hook-copy-overflow",
@@ -16278,7 +16528,32 @@
             "Rewritten, removed or ambiguously relocated inputs are covered separately by deferred-hook-context-protection.",
             "Other memory providers, external agents and distributed recovery remain outside these cases."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -16325,7 +16600,32 @@
             "Rewritten, removed or ambiguously relocated inputs are covered separately by deferred-hook-context-protection.",
             "Other memory providers, external agents and distributed recovery remain outside these cases."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         },
         {
           "id": "deferred-hook-copy-compaction",
@@ -16335,7 +16635,32 @@
             "Rewritten, removed or ambiguously relocated inputs are covered separately by deferred-hook-context-protection.",
             "Other memory providers, external agents and distributed recovery remain outside these cases."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -16392,7 +16717,32 @@
           "missing": [
             "Multipart input matching and deferred-tool reopening combined with ambiguous inputs are outside these shared scenarios."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -17462,7 +17812,32 @@
             "Updates outside an active turn, standalone calls and permission callbacks remain separate.",
             "Shared turn-record access from ACP hooks is handled in a separate following lot; this corpus does not prove it."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -17480,7 +17855,32 @@
             "Updates and permission callbacks with no active turn remain outside this proof.",
             "Preparation cancellation, standalone sessions and the rest of RK-6.4-037 retain their separate contracts."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -17504,7 +17904,32 @@
             "Close is distinct from the public cancel/steer operation: the observed turn-link error and absence of an ACP interrupted marker are recorded, without claiming the cancellation-marker clauses from this close scenario.",
             "This link does not claim all requirements grouped in RK-6.4-037, or synchronous active-turn count changes before the consumer drains."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -17524,7 +17949,32 @@
             "Transport-start and final-cleanup boundaries have native regression tests, not shared scenario execution receipts. This link does not claim parity of activity counters during cleanup.",
             "Permissions, complete notifications, room context and instructions, usage provenance and previously deferred shutdown cases are outside this link."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -17578,7 +18028,32 @@
             "Native Rust tests establish actual room-lock contention and stream terminal/drop boundaries; they are not formal scenario execution receipts. They do not establish remote release acknowledgement before every following turn after cancellation.",
             "The activity scenarios test only the prohibition of replay after an update or a permission request. They do not claim complete support for those update types."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -17660,7 +18135,32 @@
             "The remainder of session setup in RK-6.4-038 keeps its separate links and outstanding contracts.",
             "Python iterable materialization and the approved Rust callback/list language forms have native tests, not additional formal scenario receipts."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -17680,7 +18180,32 @@
             "Agent-originated configuration updates and ephemeral publication remain outside this link.",
             "Rust results are retained as native and aggregate cargo logs, not formal execution receipts; exact warning text is not paired here."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         },
         {
           "id": "acp-rebuilt-session-required-settings",
@@ -17690,7 +18215,32 @@
             "Standalone setup, per-room MCP sources and remote executor replacement remain outside these assertions. This is local session reconstruction on one connection.",
             "Configuration publication callbacks and agent-originated setting persistence are not established by these scenarios."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         },
         {
           "id": "acp-standalone-required-setup",
@@ -17700,7 +18250,32 @@
             "Persistent and remote-executor configuration recovery, host-call races and every room-session setup case remain separate evidence.",
             "These ordered wire assertions establish requested values and prompt/close behavior, not agent-side execution policy or successful application of a refused setting."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -17724,7 +18299,32 @@
             "Authorized invalidation/rebuild, standalone, per-room MCP sources and directories, detach/cancellation matrices and agent-originated publications remain separate contracts.",
             "Local reconnection does not prove remote executor loss or recovery. Native retired-lock and cleanup-warning checks are retained in the implementation, not represented as scenario receipts."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -17773,7 +18373,32 @@
             "Catch-up content and notification-publication boundaries have separate contracts; this lot establishes fresh sessions, not their complete room context.",
             "Native lifecycle regressions do not create shared scenario execution receipts."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -17814,7 +18439,32 @@
             "Configured external handler dispatch and approval remain separate contracts.",
             "This link does not establish detach behavior, filesystem/terminal support, or transient plan/tool progress in the same RFC source unit."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -17837,7 +18487,32 @@
             "This does not certify detachment, filesystem/terminal requests, plans, CUSTOM events or every ACP contract in this source unit.",
             "Native lifecycle, concurrency, cancellation and standalone tests are separate proofs; no native or service-specific execution receipt is inferred."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -17872,7 +18547,32 @@
             "Constructor-time handles, absent/empty/whitespace identity values and declaration.identity=None are separate native tests; these shared assertions do not certify those boundaries.",
             "Standing instruction placement, recovery and first-prompt-only behavior have prior-lot evidence; no host UI, remote executor or complete identity contract is certified here."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -17890,7 +18590,32 @@
             "The native received-RPC/abandoned-reader and late-response races are separate proofs and are not credited to these sequential scenarios.",
             "No standalone-session, service backend, remote-executor or overall conformance-level claim follows from these assertions."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -17914,7 +18639,32 @@
             "The hold scenario covers a scripted open prompt, not cancellation while opening, an uncooperative server or a remote executor.",
             "History catch-up, silent-answer suppression, every copied-header input source and the whole Discussion state machine remain separate evidence. No service-backend or overall conformance-level claim follows."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -18384,7 +19134,32 @@
             "The shared interleaving assertions do not claim all recent_events or author_register values; the native full-snapshot test supplies that separate evidence.",
             "Native Rust executions are retained separately and create no backend/runtime execution receipt in this inventory."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -18468,7 +19243,32 @@
             "Permission callbacks, updates outside a turn, standalone sessions and distant public executors remain separate contracts.",
             "The returned cancelled stop reason and abandoning the reader are distinct native cases; this link does not establish every external cancellation path."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -18920,7 +19720,32 @@
           "missing": [
             "Buffered and streamed response permissions, regenerated answers and permission changes during an in-flight turn are not exhaustively mapped by this link."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -18954,7 +19779,32 @@
           "missing": [
             "Streaming mute transitions, unread stream closure, output_muted and mute/unmute lifecycle semantics remain outside this link."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -19072,7 +19922,32 @@
           "missing": [
             "Framework-created internal records and all non-public event producers are not covered by this public-door matrix."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -19086,7 +19961,32 @@
           "scope": "Public visibility inputs, committed text events and per-agent model context on the in-memory backend.",
           "coverage": "complete",
           "missing": [],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -19100,7 +20000,32 @@
           "scope": "Public visibility inputs, committed text events and per-agent model context on the in-memory backend.",
           "coverage": "complete",
           "missing": [],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -19114,7 +20039,32 @@
           "scope": "Public visibility inputs, committed text events and per-agent model context on the in-memory backend.",
           "coverage": "complete",
           "missing": [],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -19128,7 +20078,32 @@
           "scope": "Public visibility inputs, committed text events and per-agent model context on the in-memory backend.",
           "coverage": "complete",
           "missing": [],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -19142,7 +20117,32 @@
           "scope": "Public visibility inputs, committed text events and per-agent model context on the in-memory backend.",
           "coverage": "complete",
           "missing": [],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -19156,7 +20156,32 @@
           "scope": "Public visibility inputs, committed text events and per-agent model context on the in-memory backend.",
           "coverage": "complete",
           "missing": [],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -19178,7 +20203,32 @@
           "missing": [
             "Framework-created record paths across voice/media and outside-pipeline commits are not exhaustively linked; warning logs are checked only by specialized Python tests."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -19219,7 +20269,32 @@
             "EDIT/DELETE target visibility narrowing, non-text content and every refusal/reentry path remain outside this mapping.",
             "Streaming permission changes and all memory summarizer inputs need separate proofs."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -19327,7 +20402,32 @@
             "Rule 2 response paths, hooks changing permissions, streaming transitions and unbound sources are outside the matrices.",
             "Rule 3 hook-returned effects on refused messages are outside this link."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -19487,7 +20587,32 @@
           "missing": [
             "This does not cover every permission rule, live permission transitions during a stream, arbitrary memory providers or distributed stores. Hook contexts and pure structural views use specialized tests, not shared scenario observations."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -19557,7 +20682,32 @@
           "missing": [
             "A persistent-store uniqueness constraint and atomic allocation across independent connection owners require specialized store tests, beyond the shared runner. The model compatibility check is specialized too; a scenario receipt does not execute it."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -20367,7 +21517,32 @@
           "missing": [
             "Other budget entry points, off-lock adoption, task lifetimes and concurrent deadlines retain their own specialized tests and existing scenarios."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            }
+          ]
         },
         {
           "id": "acp-tool-observer-reentry-budget",
@@ -20377,7 +21552,32 @@
             "The budget fixture is in-process: it calls its captured kit, not a remote TurnHost. Other-room posts, background work after contexts end and the remote host path are not exercised here.",
             "The native context guard separately checks inherited depth and expired admission."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -20429,7 +21629,32 @@
           "missing": [
             "Streaming segments and notices above the hook cap are separate Python variants, not proven by this buffered case. Optional voice and orchestration paths and mutation-hook recursion remain outside this link."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -20463,7 +21688,32 @@
             "This broad unit also covers separate hook-call budgets, mutation loops, spawned work and optional realtime observers; these ACP cases do not establish all those paths.",
             "No remote or Redis executor context is claimed. Historical receipts of the prior scenario revisions remain historical, not credited to the strengthened cases."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -20683,7 +21933,32 @@
             "Other ephemeral event types and channel kinds retain their own coverage.",
             "These two scenarios do not measure the preview length limit or an interrupted call."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -20749,7 +22024,32 @@
             "Tools, hooks and other ephemeral families retain their separate contracts.",
             "Direct channel calls and a revocation during model generation are outside these two ACP scenarios."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -20765,7 +22065,32 @@
           "missing": [
             "A bound turn and work continuing after the prompt, a deleted or recreated room, other permission changes and other ephemeral event families remain outside this scenario."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -20792,7 +22117,32 @@
           "missing": [
             "This scenario does not cover answer-text publications, reasoning, hook modifications or other channels."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -20934,7 +22284,32 @@
           "missing": [
             "Transport-produced answers, instruction and delegation cascade boundaries, concurrent binding changes and every streamed tool-row path remain outside this link."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -21082,7 +22457,32 @@
           "missing": [
             "This link does not establish every trigger, filter, off-lock ordering rule or distributed registration path of the broad clause."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -21788,7 +23188,32 @@
           "missing": [
             "Other lifecycle triggers retain their separate evidence; this link covers timer contexts only. The concurrent interleaving is proven by specialized source/runtime tests, not by a shared scenario receipt."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -21834,7 +23259,32 @@
           "missing": [
             "Other SYNC triggers and wrong payload types; exception-specific logging is not exhaustively asserted."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -21893,7 +23343,32 @@
             "Other channel doors, pre-execution hook triggers and all exception classes are separate contracts.",
             "Native lifecycle, concurrency, cancellation and standalone tests are separate proofs; no native or service-specific execution receipt is inferred."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -21915,7 +23390,32 @@
           "missing": [
             "Other SYNC chain triggers and wrong payload types."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -21937,7 +23437,32 @@
           "missing": [
             "Falsy modifications and their propagation on string/dict payloads; wrong types."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -21971,7 +23496,32 @@
           "missing": [
             "Other invalid-result forms and triggers; sixth-level composite exception."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -22039,7 +23589,32 @@
             "The broad RFC source unit remains partial; local-handler result override rules and unrelated tool paths are not completed by provider-owned reports.",
             "Native Rust logs are retained separately; no aggregate Rust/backend/runtime execution receipt is synthesized."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -22128,7 +23703,32 @@
             "ExternalToolHandler policy and permission decisions are not covered.",
             "This link does not credit local tool result replacement, structured-copy clearing or every hook error mode."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         },
         {
           "id": "acp-handler-report-chain",
@@ -22138,7 +23738,32 @@
             "This does not certify local tool service dispatch, every HookResult form, or structured result replacement.",
             "Native lifecycle, concurrency, cancellation and standalone tests are separate proofs; no native or service-specific execution receipt is inferred."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         },
         {
           "id": "phase4-provider-served-original-reports",
@@ -22151,7 +23776,32 @@
             "The broad RFC source unit remains partial; local-handler result override rules and unrelated tool paths are not completed by provider-owned reports.",
             "Native Rust logs are retained separately; no aggregate Rust/backend/runtime execution receipt is synthesized."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -22170,7 +23820,32 @@
             "MCP bounds, shared map aliases, kept tasks, exact empty dictionaries and private Python dispatcher/context fault injections have no shared execution credit here.",
             "No actual text-eviction execution is credited."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -22271,7 +23946,32 @@
             "Custom handler decisions, decision failures, report failures, re-approval and callback overrides remain separate contracts.",
             "No native test or service-specific execution is inferred; out-of-turn and standalone callbacks remain separate."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -22294,7 +23994,32 @@
             "No credit is claimed for Python dynamic keyword introspection, local AI or realtime execution, remote owners or all outcomes across every backend.",
             "Native lifecycle, concurrency, cancellation and standalone tests are separate proofs; no native or service-specific execution receipt is inferred."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -22542,7 +24267,32 @@
           "missing": [
             "Voice and conference doors; handler-native retention and lifecycle proofs are outside these shared assertions."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -22648,7 +24398,32 @@
           "missing": [
             "Replacement identity, authority fields, instruction marks and every hook trigger remain outside this scope. Framework voice record creation is Level 3; its visibility protection is specialized source evidence."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -22696,7 +24471,32 @@
             "Gate refusal is sampled at duplicate detection and room closure, with timeout after collection; this does not exhaust every pre-storage gate or every mutation revalidation race.",
             "The interleaving fixtures do not establish queue ordering or fairness for a distributed lock manager."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -22794,7 +24594,32 @@
           "scope": "An INSTRUCTION returned by BEFORE_BROADCAST is dropped before its own pass; ordinary injections, tasks and observations remain.",
           "coverage": "complete",
           "missing": [],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -22822,7 +24647,32 @@
           "missing": [
             "End-to-end warning assertions for each typed turn and voice caller remain outside this mapping. Rust has no BEFORE_BRIDGE_AUDIO, BEFORE_BRIDGE_VIDEO, ON_SPEAK_DECISION or ON_VISION_RESULT; the Python engine tests do not certify those Rust features."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -23307,7 +25157,32 @@
             "The rest of the inbound pipeline and its failure paths are outside this preflight slice.",
             "Native tests are source references here; their executions and Rust local gates are retained separately, not treated as scenario execution receipts."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -23359,7 +25234,32 @@
           "missing": [
             "The rest of the inbound pipeline has separate links and is not completed here. Ordering at parse/identity/commit boundaries, lifecycle completion, locks and cancellation retain specialized tests and previous lots. No complete credit is claimed for this composite unit."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -23945,7 +25845,32 @@
           "missing": [
             "Caller-task cancellation, Python async finalizer ordering, cancellation suppression, setup failure, handed-over turns and close deadlines require specialized proofs. Shared background waits guarantee final outcomes, not that every waiter was polled before cancellation. Distributed backends are not certified."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -24334,7 +26259,32 @@
             "These assertions cover the scripted ACP channel only; memory-provider and other intelligence-channel reads, Discussion and model-generated output are not certified.",
             "Reader abandonment, exact cancellation boundaries, log contents and hook ordering are outside these assertions; no service-backend, remote-executor or overall conformance-level claim follows."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -24452,7 +26402,32 @@
           "missing": [
             "The source Python test also injects an internal lane plan directly. Multi-worker persistence and lock deadlines require the separate distributed suites; no performance bound is inferred."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -24474,7 +26449,32 @@
           "missing": [
             "Other broadcast steps, capabilities, retries, rates, concurrent delivery and intelligence execution are covered separately or remain unmapped."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            }
+          ]
         },
         {
           "id": "storage-delivery-targets",
@@ -24483,7 +26483,32 @@
           "missing": [
             "Provider-specific normalization remains specialized, with RMK-1392 retaining its existing corners. Broadcast concurrency is checked for twelve targets, not a throughput claim. Rate limiting, breaker state transitions and all retry policies retain specialized suites."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -24499,7 +26524,32 @@
           "missing": [
             "No certification of every intelligence memory backend or provider history rendering."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -24761,7 +26811,32 @@
           "missing": [
             "All native provider references and channel_data, every parse/delivery history boundary, arbitrary media content, window eviction and distributed stores are not exhaustively covered by these assertions."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -24987,7 +27062,32 @@
           "missing": [
             "Custom-router authentication depends on integrator policy and needs operational review. Identity lookup counts and stale reads require specialized tests. Provider normalization corners remain on RMK-1392; callback binding replacement ordering remains on RMK-1422."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -25015,7 +27115,32 @@
           "missing": [
             "Shared cases do not cover every participant status and connected_via variant. Specialized source and Rust store tests retain those assertions. Stored-recipient normalization differences remain on RMK-1374."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -25091,7 +27216,32 @@
           "missing": [
             "Paging, real lock deadlines, exact default-router and identity-store call counts, creation conflicts, and attach-then-wait ordering require specialized tests. The unreadable-recipient scenario covers a boolean; the specialized Python matrix covers objects, lists and floats, both routing strategies and log privacy. RMK-1422 retains the callback ordering edge."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -25251,7 +27401,32 @@
           "missing": [
             "Webhook parsing remains provider-specific. This link does not certify every tenant/custom-address implementation or hook scheduling primitive."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -25303,7 +27478,32 @@
           "missing": [
             "Cross-number store queries and some identity connected_via variants are specialized evidence, not per-scenario executions. Provider-specific forms retain their separate contract tests."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -25331,7 +27531,32 @@
           "missing": [
             "The operational obligation for integrators to authenticate a custom strategy or supply a trusted explicit room needs review outside the library."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -25353,7 +27578,32 @@
           "missing": [
             "Specialized backend query tests remain necessary; shared in-memory and SQLite executions are not a proof for every backend. Custom strategy determinism itself is the integrator responsibility."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -25980,7 +28230,32 @@
             "Remote placement, process restart and every cache owned by a concrete channel remain outside this local contract.",
             "The Rust JSON value boundary cannot construct arbitrary unserializable Python objects; the native serialization ordering is reviewed separately."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -26015,7 +28290,32 @@
             "No guarantee of ordering, delivery or durability of remote backend replies is established. This link proves the previously omitted state report under the gated ordering asserted by each scenario.",
             "Native direct-channel/read-only and lifecycle checks supplement these assertions without becoming formal execution receipts."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -26031,7 +28331,32 @@
           "missing": [
             "The reserved metadata namespace write filters and restoration on a different process are not established by this link."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -26162,7 +28487,32 @@
             "Public remote executor construction, build retirement/replacement, distributed fanout and execution across processes remain deferred in Rust.",
             "Other channel controls and the complete shutdown contract are not established by this link."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -26221,7 +28571,32 @@
             "Distributed placement, executor factories, replacement and process transport remain deferred in Rust.",
             "Committed-event delivery and channel release are distinct controls, not established by these scenarios."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -26826,7 +29201,32 @@
             "Remote executors, declaration-only channels and every executor placement outcome remain outside this local proof.",
             "Planner, speaking-policy and thinker triggers remain explicit API gaps; executor-only close has its separate local lifecycle evidence link."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -27010,7 +29410,32 @@
           "missing": [
             "Distributed placement, declaration-only channels, committed events and public channel_call are outside this link."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -27267,7 +29692,32 @@
             "Remote executor construction, transport shutdown and executor-owned channel factories remain deferred in Rust and are not established by these local scenarios.",
             "Native source references complement the scenarios; they are not additional shared-scenario execution receipts."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            }
+          ]
         },
         {
           "id": "executor-close-cancellation",
@@ -27276,7 +29726,32 @@
           "missing": [
             "Other cancellation sources, arbitrary external executors and every distributed drainage condition of §10.6.8 are not established by this link."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         },
         {
           "id": "channel-call-inherited-turn",
@@ -27285,7 +29760,32 @@
           "missing": [
             "Other executor closure paths have separate evidence; distributed control transport is not established here."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -27365,7 +29865,32 @@
             "The general owner fallback, multiple owner processes and remote public executor/backend surface are not established by this ACP link.",
             "Native lifecycle regressions do not create shared scenario execution receipts."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -34077,7 +36602,32 @@
             "The shutdown annex still tracks delegation completion, response placement, commit-before-observer ordering, work added during close and hand-back composition.",
             "Media, service-backed and remote-executor variants are not credited by local memory-store witnesses; existing maintainer deferrals remain explicit."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -34112,7 +36662,32 @@
             "The rest of the shutdown matrix still needs assertion-by-assertion audit: retained delivery and cursor holes, stubborn cleanup, delegation and callbacks, streaming partial responses and adapter-specific resources.",
             "Previously deferred status-bus and failed delivery-record boundaries remain deferred by their maintainer decisions; this scenario proves none of them."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            }
+          ]
         },
         {
           "id": "discussion-regeneration-close-boundaries",
@@ -34121,7 +36696,32 @@
           "missing": [
             "Shutdown of other operations, services and separate processes is outside this link."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -34156,7 +36756,32 @@
             "Commit-before-observer ordering, held writes, work added during close, post-cut cleanup and streamed hand-back composition remain in the shutdown annex.",
             "Media, service-backed and remote-executor variants are not credited by local native witnesses; existing maintainer deferrals remain explicit."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -36347,7 +38972,32 @@
           "missing": [
             "Task-result publication keys, proactive publication namespaces, and replay beyond the reentry budget retain their separate task/delivery/injection evidence. A store unable to resolve a held key and a caller disappearing during commit require the linked specialized tests."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -36463,7 +39113,32 @@
           "missing": [
             "Other operations and external lock-manager failures are not proven by this link."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -36688,7 +39363,32 @@
           "missing": [
             "The shared scenario alone covers the parser. Native source proofs cover the listed additional regions, while subscription lifetime, every adoption schedule and post-commit cancellation are separate obligations."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -37304,7 +40004,32 @@
           "missing": [
             "get_conversation tails and visibility-argument precedence are specialized tests. The shared model does not expose every store read or count operation; no complete store-interface claim."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -37429,7 +40154,32 @@
           "missing": [
             "Ordering when concurrent attachment transactions race across independent processes is not established by this evidence."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -37475,7 +40225,32 @@
           "missing": [
             "The rest of the store consistency clause (other record updates, metadata merging and delivery-result ownership) keeps its own evidence. A commit failure, a slow store, and caller cancellation are specialized source/runtime tests. Shared scenarios alone cannot prove transaction isolation for every backend."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -37619,7 +40394,32 @@
           "missing": [
             "This composite clause also includes atomicity, idempotency, lifecycle and other records covered by previous lots. Failed-set recording reentrancy and shutdown lock timing remain explicitly deferred in RMK-1340 and RMK-1342."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -38442,7 +41242,32 @@
           "missing": [
             "Other room operations, identity, media admissions and distributed organization placement are outside this link."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -39498,7 +42323,32 @@
             "Host contribution defaults and fail-open/cancellation behavior are captured by scenarios and native tests, with no new normative coverage assigned while the ACP area amendment is still pending.",
             "No global conformance level, standalone turn implementation, remote Rust executor, or service-specific execution is inferred."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -40337,7 +43187,32 @@
             "Realtime sessions, voice strategies and active-agent session configuration remain outside these text scenarios.",
             "Not every strategy, handoff configuration, cancellation or cross-process interleaving is exercised by these links."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -40558,7 +43433,32 @@
             "Full discussion replacement and lifecycle across processes, every built-in strategy configuration and voice/media execution remain outside these reviewed assertions.",
             "Store-failure and cancellation seams need native tests; shared scenario receipts do not execute them."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -40908,7 +43808,32 @@
           "missing": [
             "Other supervisor strategies, timeout and cancellation paths, and its internal release callback are outside these shared assertions."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -41041,7 +43966,32 @@
             "Other supervisor scheduling, dispatch, delivery and failure contracts in this broad unit retain separate evidence.",
             "These scenarios establish outcomes, not a PostgreSQL preparation latency guarantee."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -41898,7 +44848,32 @@
             "External process failure, distributed stores and executors are not proven by these local scenarios.",
             "Only eight methods of the 90-method candidate inventory are audited in this lot."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -41915,7 +44890,32 @@
             "Other rules in the broad Discussion clause remain outside this link.",
             "Exact model context history, tool rounds, signed markers and cross-process failure recovery need their own evidence."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -42065,7 +45065,32 @@
             "Other rules in the broad Discussion clause remain outside this link.",
             "Memory windows and summaries, speak-policy recent history, external-agent unread history and cross-process recovery need separate evidence."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -43237,7 +46262,32 @@
             "Custom-memory returns of the current event are covered separately by custom-memory-current-input; these four scenarios still exercise an inner memory that omits it.",
             "Compaction between tool rounds, emergency compaction, external-agent history and distributed recovery remain outside these retrieval scenarios."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         },
         {
           "id": "custom-memory-current-input",
@@ -43247,7 +46297,32 @@
             "Compaction between tool rounds, emergency compaction, external-agent history and distributed recovery remain outside these retrieval scenarios.",
             "Arbitrary synthetic messages returned by a custom memory are not matched to event IDs or rewritten by this protection."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -43264,7 +46339,32 @@
             "Rewritten, removed or ambiguously relocated inputs are covered separately by deferred-hook-context-protection.",
             "Other memory providers, external agents and distributed recovery remain outside these cases."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -43602,7 +46702,32 @@
           "missing": [
             "Other own-note producers, tool declaration and replay costs, media accounting, between-round compaction and distributed recovery are outside this assertion."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -43887,7 +47012,32 @@
             "This does not certify a local AI tool catalogue, skill gating, MCP serving or every glob pattern.",
             "Native lifecycle, concurrency, cancellation and standalone tests are separate proofs; no native or service-specific execution receipt is inferred."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -44083,7 +47233,32 @@
             "This link does not cover all host/built-in/tool-server collisions, turn-supplied tools, Tool Search filtering or discovery inventories.",
             "Execution receipts for shared scenarios do not establish execution of the specialized reinstallation test."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -44201,7 +47376,32 @@
             "Sandbox, planner, reasoning backends, realtime and media policy paths are outside this text-turn slice.",
             "No Rust, specialized-test, SQL-store or Redis-turn execution credit is inferred from the Python memory receipt."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -44402,7 +47602,32 @@
             "The Python filter callback raising an exception is not certified by Rust server-listing cleanup.",
             "Server-aware tool policy and listing size, duplicate-name and warning bounds are outside this host-access link."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            }
+          ]
         },
         {
           "id": "phase4-mcp-tool-dictionaries",
@@ -44414,7 +47639,32 @@
             "Served-skill discovery, registry and execution are not established by dictionary snapshots.",
             "No Rust, specialized-test, SQL-store or Redis-turn execution receipt is inferred from the targeted Python memory receipt."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -44645,7 +47895,32 @@
             "Served-skills wire helpers, fingerprint and verification chains remain open: the named mixed sources receive only their host-access assertions.",
             "No complete MCP transport, model-result or RFC-section coverage is inferred."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -45033,7 +48308,32 @@
             "Native preparation/consumption lifetime, None/empty and explicit-scope tests are not shared scenario execution evidence.",
             "Other context accessors, realtime, owner-served remote calls, handler result shapes and other obligations of the composite clause are outside this mapping."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -45130,7 +48430,32 @@
           "missing": [
             "Other context accessors, realtime calls, handler result shapes and arbitrary custom handlers are outside this mapping."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -47020,7 +50345,32 @@
           "missing": [
             "Other delegation protocol steps, realtime session delivery, lifecycle cancellation and internal completion callbacks are outside this assertion set."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -47042,7 +50392,32 @@
           "missing": [
             "Other delegation pipeline steps, callbacks, runner refusal, telemetry and voice-session delivery are outside this shared assertion set."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -47425,7 +50800,32 @@
             "Structured results, task-runner rejection, completion callbacks and shutdown paths have separate evidence.",
             "Preparation cleanup and persistence failure are linked separately; this boundary link does not establish them."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -47448,7 +50848,32 @@
             "Repeated cancellation, late writes, cleanup storage failure and shutdown limits are linked through native tests separately.",
             "Other structured-result and announced-task obligations of this broad unit are outside this link."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -47815,7 +51240,32 @@
           "missing": [
             "Other delegation-tool obligations, human input, background setup changes during a turn, and external executor/backend configurations are outside this mapping."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -47903,7 +51353,32 @@
           "missing": [
             "Other delegation tools, cancellation, concurrent setup replacement and external executor configurations are outside this mapping."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -48060,7 +51535,32 @@
           "missing": [
             "Task creation hooks, completed and cancelled task variants are outside this mapping."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -48372,7 +51872,32 @@
           "missing": [
             "Served MCP registration and execution tool patterns remain under RMK-1709. This link claims only local in-memory registration, not complete registry coverage or direct-file API parity."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -48471,7 +51996,32 @@
             "Realtime/media and concurrent per-turn registry replacement receive no coverage credit.",
             "Full instruction lifetime, bounded prompt truncation, retirement/restart and reference/script access obligations are not established by this mapping."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -48641,7 +52191,32 @@
             "Unavailable/closed gates, requires, MCP/scripts, realtime and reasoning-backend paths remain outside this slice.",
             "Concurrent per-turn configuration, the unknown-skill hint branch and unasserted prompt/body contents receive no credit."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -50874,7 +54449,32 @@
             "The many other ACP contracts grouped in this requirement need their own proofs; this is a partial link for directories only.",
             "Constructor rejection of relative paths and current-user HOME expansion have native tests, not assertions in these shared scenarios."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -50945,7 +54545,32 @@
             "Callbacks outside an active turn and standalone session handling are not covered.",
             "This link does not claim generic thinking-block segmentation, ON_AI_THINKING or coalescing from RK-8.4-001."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -50962,7 +54587,32 @@
             "Permissions, plans, CUSTOM progress, usage and standalone sessions retain separate contracts.",
             "These shared cases do not establish binary bounds; the two source/native bound tests are recorded separately."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-rule-links-49f1236-memory",
+              "implementation": "python",
+              "commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-current-thread",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "rust-c836db4-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -53792,6 +57442,33 @@
       "implementation_commit": "01f8c789fb590ee393f20518f8cda906013a2938",
       "rfc_commit": "f14cac4ce3db5003d064637d794fd5bbb86db8f4",
       "corpus_commit": "33d218450de9cdb5655007b7ad846250c8d55fdb",
+      "backend": "memory",
+      "runtime": "multi_thread_4"
+    },
+    {
+      "id": "python-rule-links-49f1236-memory",
+      "implementation": "python",
+      "implementation_commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
+      "rfc_commit": "a3ad90b48e7bc6e0339c04a565bdbddbe33066d9",
+      "corpus_commit": "a3ad90b48e7bc6e0339c04a565bdbddbe33066d9",
+      "backend": "memory",
+      "runtime": "asyncio"
+    },
+    {
+      "id": "rust-c836db4-memory-current-thread",
+      "implementation": "rust",
+      "implementation_commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+      "rfc_commit": "a3ad90b48e7bc6e0339c04a565bdbddbe33066d9",
+      "corpus_commit": "a3ad90b48e7bc6e0339c04a565bdbddbe33066d9",
+      "backend": "memory",
+      "runtime": "current_thread"
+    },
+    {
+      "id": "rust-c836db4-memory-multi-thread-4",
+      "implementation": "rust",
+      "implementation_commit": "c836db491c70386aab07ade0c83ddedf84da0e12",
+      "rfc_commit": "a3ad90b48e7bc6e0339c04a565bdbddbe33066d9",
+      "corpus_commit": "a3ad90b48e7bc6e0339c04a565bdbddbe33066d9",
       "backend": "memory",
       "runtime": "multi_thread_4"
     }
