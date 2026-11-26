@@ -4849,6 +4849,9 @@
     "RK-12.10.4-195": {
       "conference/a-voice-plugged-onto-a-listening-bot-widens-its-grants-in-place": "6ff6584dcfcb766e17f42f13b169f4df872bae41c0a35917007f2709b662e958"
     },
+    "RK-12.10.4-196": {
+      "conference/a-plug-the-backend-cannot-apply-in-place-re-joins-announced": "315254db5db6b4ef3aca230c4896472b5444f05332ebd1ca4a712edb6816cf4e"
+    },
     "RK-12.10.4-197": {
       "conference/an-unplug-narrows-the-grants-in-place": "9000b2e60b4b607485706adec913a9be43c0c80582e95bff204944a2f22311e8"
     },
@@ -4962,6 +4965,7 @@
     },
     "RK-12.10.7-009": {
       "conference/a-grant-change-carried-by-a-re-join-is-announced-with-the-session": "3b7d48ce07dde453b3a9802fb48396ed52809653fb63aa55177d7893b497340f",
+      "conference/a-plug-the-backend-cannot-apply-in-place-re-joins-announced": "3b7d48ce07dde453b3a9802fb48396ed52809653fb63aa55177d7893b497340f",
       "conference/an-end-the-sfu-reports-closes-the-session-s-media-and-the-next-need-re-joins": "3b7d48ce07dde453b3a9802fb48396ed52809653fb63aa55177d7893b497340f",
       "conference/conference-events-follow-the-participants-and-the-bot": "3b7d48ce07dde453b3a9802fb48396ed52809653fb63aa55177d7893b497340f",
       "conference/unplugging-the-last-need-takes-the-bot-out-and-stands-down": "3b7d48ce07dde453b3a9802fb48396ed52809653fb63aa55177d7893b497340f"
@@ -4973,7 +4977,8 @@
       "conference/conference-events-follow-the-participants-and-the-bot": "97d9b37345217a69b8a3161cbcad796fbfaa147d76fd84dca3afb0f1d62eab0d"
     },
     "RK-12.10.7-012": {
-      "conference/a-grant-change-carried-by-a-re-join-is-announced-with-the-session": "a65fba65c34d8a5b72c51f818f7034547d012134ee756bcc61b2f6f09846ca97"
+      "conference/a-grant-change-carried-by-a-re-join-is-announced-with-the-session": "a65fba65c34d8a5b72c51f818f7034547d012134ee756bcc61b2f6f09846ca97",
+      "conference/a-plug-the-backend-cannot-apply-in-place-re-joins-announced": "a65fba65c34d8a5b72c51f818f7034547d012134ee756bcc61b2f6f09846ca97"
     },
     "RK-12.10.7-013": {
       "conference/conference-ended-names-the-session-that-left-across-a-re-attach": "89de412b312b9e6415c89a8329c5c2dd8986bee9f5faccbbcfcd681340cb2b0c"

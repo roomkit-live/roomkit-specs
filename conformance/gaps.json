@@ -86,11 +86,6 @@
       "card": "RMK-2007",
       "note": "measurement: the close's whole duration bound (the grace, the turn backend's budget, the closes, at most two unwinds of 1 second); no step reads elapsed time."
     },
-    "RK-12.10.4-196": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: none missing (conference.plug, conference.read, expect.media_events); the scenario waits on HITL 01527428 (P6-CF4): a plug's re-join on a backend without BOT_GRANT_UPDATE emits no conference_bot_grants_changed in Python, so the room's event list after its leave(), join_as_bot(), conference_ended and conference_started cannot be written before the answer."
-    },
     "RK-12.10.5-003": {
       "class": "writable",
       "card": "RMK-2076",
