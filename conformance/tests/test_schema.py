@@ -1266,6 +1266,50 @@ class SchemaTests(unittest.TestCase):
                 scenario["steps"].append(step)
                 self.assertEqual(validator.is_valid(scenario), valid)
 
+    def test_a_room_records_with_its_recorders_and_reads_their_calls(self) -> None:
+        schema = json.loads((ROOT / "scenario.schema.json").read_text())
+        validator = Draft202012Validator(schema)
+        fixture = (
+            ROOT / "scenarios/recording/recorders-started-on-an-existing-room-start-all-or-nothing.json"
+        )
+        self.assertTrue(validator.is_valid(json.loads(fixture.read_text())))
+        created = {"call": "create_room", "room": {"id": "r2"}}
+        for step, valid in (
+            ({**created, "recorders": ["a", {"name": "b", "refuses": "no storage"}]}, True),
+            ({**created, "recorders": []}, False),
+            ({**created, "recorders": [{"refuses": "no storage"}]}, False),
+            ({**created, "recorders": [{"name": "b", "fails": "no storage"}]}, False),
+            ({"call": "recording.start", "room_id": "r1", "recorder": "a"}, True),
+            ({"call": "recording.start", "room_id": "r1", "recorders": ["a", "b"]}, True),
+            ({"call": "recording.start", "room_id": "r1", "recorder": "a", "recorders": ["b"]}, False),
+            ({"call": "recording.start", "room_id": "r1"}, False),
+            ({"call": "recording.list", "room_id": "r1"}, True),
+            ({"call": "recording.list"}, False),
+            ({"call": "recording.calls", "recorder": "a"}, True),
+            ({"call": "recording.calls", "channel_id": "conf", "calls": ["close"]}, True),
+            ({"call": "recording.calls", "recorder": "a", "channel_id": "conf"}, False),
+            ({"call": "recording.calls", "recorder": "a", "calls": ["on_frame"]}, False),
+            ({"call": "recording.calls", "recorder": "a", "calls": []}, False),
+        ):
+            with self.subTest(step=step):
+                scenario = json.loads(fixture.read_text())
+                scenario["steps"].append(step)
+                self.assertEqual(validator.is_valid(scenario), valid)
+        conference = (
+            ROOT
+            / "scenarios/conference/a-lane-s-utterance-is-one-room-event-attributed-to-its-publisher.json"
+        )
+        for gates, valid in (
+            ({"on_recording_stop": "stopping", "close": "releasing"}, True),
+            ({"on_track_removed": "flushing"}, True),
+            ({"on_data": "writing"}, False),
+            ({"close": 1}, False),
+        ):
+            with self.subTest(call_gates=gates):
+                scenario = json.loads(conference.read_text())
+                scenario["steps"][0]["recording"] = {"call_gates": gates}
+                self.assertEqual(validator.is_valid(scenario), valid)
+
     def test_a_conference_opens_with_its_options_and_cancels_calls(self) -> None:
         schema = json.loads((ROOT / "scenario.schema.json").read_text())
         validator = Draft202012Validator(schema)
