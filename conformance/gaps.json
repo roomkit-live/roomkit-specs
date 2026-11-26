@@ -111,11 +111,6 @@
       "card": "RMK-2034",
       "note": "measurement: resampling quality, the artifacts a resampler leaves for VAD and STT (Python's default is linear interpolation, suspect RMK-2029)."
     },
-    "RK-12.5-030": {
-      "class": "step",
-      "card": "RMK-2042",
-      "note": "step: virtual clock (X-CLK): frames fed over one simulated second fire at most ten ON_INPUT_AUDIO_LEVEL; no Python test pins the throttle."
-    },
     "RK-12.7.5-008": {
       "class": "writable",
       "card": "RMK-2051",

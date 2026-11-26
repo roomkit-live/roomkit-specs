@@ -468,10 +468,11 @@ room callbacks of the setup are not compared.
   the setup is made, under `sources`, and `cut` when its start's task is
   cut. A scenario that has `sources` requires `source_provider`.
 - `capture_sources`: each a **scripted capture source** (§12.12), named by
-  its `id`, in the implementation's default format and backlog: the
-  integrator's own, held apart from every session, which a realtime
-  channel's transport subscribes to (Scripted capture sources). A scenario
-  that has `capture_sources` requires `capture_source`.
+  its `id`, in the implementation's default format and backlog unless it
+  names its own (Scripted capture sources): the integrator's own, held apart
+  from every session, which a realtime channel's transport or a scripted
+  subscriber subscribes to. A scenario that has `capture_sources` requires
+  `capture_source`.
 - `event_handlers`: **framework-event handlers** (§8.2), each registered on
   the kit after the hooks, in order, for the events of its `event` type (a
   framework event's name: `before_tool_use`, `tool_call`, `ai_response`...).
@@ -490,13 +491,15 @@ room callbacks of the setup are not compared.
   resumed, the silence it counts, the wait for a transcript still due, and
   the length of speech that holds a reply not heard yet; the video bridge's
   `keyframe_interval_s` and `keyframe_wait_s` (§12.8.9); the vision
-  interval (§12.8.4); and a conference recording's flush budget
-  (§12.10.8). An implementation's own delays on those paths (an echo
+  interval (§12.8.4); a conference recording's flush budget (§12.10.8);
+  and the interval between two audio levels of a voice session (§12.5).
+  An implementation's own delays on those paths (an echo
   canceller's tail once a playback ended) follow it too. Others stay on
   real time, and a scenario does not advance past them: the audio a session
   has played (what `echo_guard_ms` and `allow_during_first_ms` measure), a
   playback's drain without an echo canceller, an STT stream's inactivity,
-  the throttles of audio-level events and of inbound frames. So do a
+  a realtime session's audio-level throttle and the throttle of inbound
+  frames. So do a
   runner's own bounds (a call's 10 s, a gate's 5 s, the idle wait), and work
   handed to another thread: the clock decides when a wait ends, never how
   long a thread takes. Under it, `voice.settle` takes work waiting on the
@@ -695,6 +698,21 @@ names (live only, without one), and it hands each frame the subscription
 delivers to the channel through its ordinary inbound callback, in order, as
 the transport's received audio (`realtime.audio` with `source`
 `transport`). It unsubscribes the session at its disconnect.
+
+A source starts once the setup is made. Its frames are 16-bit PCM in its
+format: a source may name its `sample_rate` (16000 by default) and
+`channels` (1), its `block_duration_ms` (20), and its backlog's bounds,
+`backlog_seconds` (10) and `max_backlog_bytes` (none), each as the
+source's constructor reads it. `capture.subscribe` attaches a **scripted
+subscriber**, named by its `subscriber`, from a `mark` when it names one in
+`since`, its replay done before the step returns: its callback records each
+frame it is handed, in order, and returns, or, with `raises`, records it
+and raises. With `captures_during_replay`, as the subscriber records its
+first replayed frame, the source captures these frames on another thread,
+which the callback waits for before it returns: frames captured while the
+replay is under way. `capture.unsubscribe` detaches the subscriber,
+`capture.start` and `capture.stop` start and stop the source, and
+`capture.read` reads the source and its scripted subscribers.
 
 ### Scripted agents
 
@@ -1371,6 +1389,10 @@ run's own kit when absent.
 | `realtime.vision` | `channel_id`, `room_id`, optional `context_prefix` | gives the realtime channel's sessions in the room what the room's video channels see (§12.8.7): each vision result a video channel publishes there reaches them as a silent injection (`setup_realtime_vision`), under `context_prefix` when given, a result whose description repeats the last one injected reaching them once |
 | `capture.mark` | `source_id`, `mark` | names the source's current position in its backlog `mark` (its `mark()`, §12.12) |
 | `capture.feed` | `source_id`, `frames` (base64 PCM16) | the source captures the frames, in order, each kept in its backlog and handed to its subscribers; the step returns once each realtime channel whose transport captures from the source forwarded or retained each frame it was handed (Scripted capture sources) |
+| `capture.subscribe` | `source_id`, `subscriber`, optional `since` (a mark `capture.mark` named), `raises` (false by default) and `captures_during_replay` (base64 PCM16) | attaches the scripted subscriber `subscriber` to the source (its `subscribe(callback, since=…, name=subscriber)`, §12.12), from the mark when it names one; returns once the replay, if any, ended (Scripted capture sources); null |
+| `capture.unsubscribe` | `subscriber` | detaches the scripted subscriber (its subscription's `unsubscribe()`); null |
+| `capture.start`, `capture.stop` | `source_id` | starts or stops the source (its `start()` or `stop()`); null |
+| `capture.read` | `source_id` | the source as it stands: `started`, whether it is capturing; `start_count`, how many times its start acquired the device, the setup's included; and `subscribers`, per scripted subscriber of the source, by its name: `frames`, each frame its callback was handed, in order (`data` in base64, `sample_rate`, `channels`, `sample_width`), and what its subscription reports: `replayed_bytes`, `truncated` and `active` |
 | `parse_voice_session` | `session` (a voice session with `id`, `room_id`, `channel_id`, `participant_id` and optional `metadata`), `channel_id`, optional `metadata` | the InboundMessage made by the voice adapter (§5.12), including its session |
 | `emit_protocol_trace` | `trace`, a §5.14 record for a registered channel; its optional `raw` is text, null, or `{"base64": "..."}` for bytes | emits through the channel; the kit supplies the timestamp and dispatches the trace to its room's hooks (§9.2) |
 | `process_inbound` | `message` (an InboundMessage; its optional `session` uses the same form as `parse_voice_session`), `room_id` | an InboundResult: `event`, `blocked`, `duplicate`, `reason`, `error` (its message), `response_metadata`, `response_events`, `unavailable_targets`, `delivery_results`, `cancellation_reason` |
