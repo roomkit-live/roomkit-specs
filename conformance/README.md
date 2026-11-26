@@ -482,6 +482,20 @@ room callbacks of the setup are not compared.
   makes its `do` actions in order, in the execution context the kit runs the
   handler in, `$room` naming the event's room (only for an event that names
   one).
+- `virtual_clock`: true runs the scenario on a **virtual clock**, which only
+  `clock.advance` moves. These media durations are measured and waited out
+  on it: the waits of the interruption strategy and the length of the speech
+  they judge (`min_speech_ms`, `transcript_wait_ms`, §12.3.13); the 10
+  seconds an echo verdict outlives the playback, and the echo tail an echo
+  canceller is given once a playback ended (§12.3.13); the wait of a turn
+  held for speech that resumed (§12.3.12); the video bridge's
+  `keyframe_interval_s` and `keyframe_wait_s` (§12.8.9); the vision
+  interval (§12.8.4); and a conference recording's flush budget (§12.10.8).
+  A runner's own bounds (a call's 10 s, a gate's 5 s, the idle wait) stay on
+  real time, and so does work handed to another thread: the clock decides
+  when a wait ends, never how long a thread takes. Under it, `voice.settle`
+  takes work waiting on the clock for waiting, not for running. A scenario
+  that sets it requires `voice`, `realtime`, `conference` or `video`.
 
 ### Identity resolution
 
@@ -1309,6 +1323,7 @@ run's own kit when absent.
 | `recording.stop` | `room_id` | stop the room's recordings, returning their `recording_id` and `url` |
 | `recording.list` | `room_id` | the recordings the room runs, each `{recording_id, room_id}` (its handle's `id` and `room_id`) |
 | `recording.calls` | `recorder`, a room recorder's name, or `channel_id`, a conference opened with `recording`; optional `calls` (call names) | the calls of the MediaRecorder interface (§12.11) the recorder received, in the order made, only the named ones when `calls` is given: each `{call, recording_id}`, `recording_id` the handle's id (null for an `on_recording_start` the recorder refused), and `track` for `on_track_added` and `on_track_removed` (the track as `recording.read` reads one), `track_id` and `data` (base64) for `on_data`; `close` names no recording |
+| `clock.advance` | `ms`, optional `waiters` | moves the virtual clock (`setup.virtual_clock`) `ms` milliseconds forward. With `waiters`, it first waits until at least that many waits on the clock are pending (a runner fails after 5 s). Every wait due by the new time ends, in the order they fall due, each at its due time; the work each resumes runs until it waits again before the clock moves on, so a wait it starts within the advance ends in it too. Work it leaves running, a `voice.settle` or `conference.settle` waits for; null |
 | `voice.open` | `room_id`, `channel_id`, `participants` and the optional provider inputs below | registers and attaches a voice channel, then joins the named participants to that room |
 | `voice.feed` | `channel_id`, `participant_id`, `frames` (base64 PCM16), optional `sample_rate` (16000 by default), `channels` (1 by default) and `timestamp_ms` (every frame of the step carries it; none by default), `repeat` (1 by default) | the participant's transport (the one holding its session) delivers these inbound frames in order, in that format, the whole list `repeat` times over |
 | `voice.say` | `channel_id`, `participant_id`, `text` | speak to the participant, awaiting playback |
@@ -2402,7 +2417,9 @@ or a skip to a passing result.
   (roomkit-rs runs the suite on both) give the same outcomes. Two things
   that run side by side end, and start, in either order on several threads:
   assert their order only where the RFC gives one.
-- Keep timing out of it: a gate orders two calls, never a delay. A hook's or a
+- Keep timing out of it: a gate orders two calls, never a delay, and a media
+  duration the RFC sets is passed with `clock.advance` under `virtual_clock`,
+  never waited for. A hook's or a
   call's timeout, when the scenario is about it, must leave enough margin for
   any work expected to complete within the same budget, including store I/O
   and CI scheduling. Hold the worker expected to time out at a gate no step

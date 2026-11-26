@@ -96,40 +96,10 @@
       "card": "RMK-2023",
       "note": "measurement: the audio a kept diarizing stream receives against the wall clock through a pause or a lossy stretch (Python's tests are wallclock); no step reads elapsed time."
     },
-    "RK-12.3.12-016": {
-      "class": "step",
-      "card": "RMK-2042",
-      "note": "step: a sync once the channel applied the detector's verdict, or the virtual clock (X-CLK): turn_decisions (S15) holds a verdict at a gate, but no hook fires when a complete verdict is held because speech resumed, so no step can make the resumed speech end only after the verdict was applied."
-    },
     "RK-12.3.12-022": {
       "class": "phase6",
       "card": "RMK-2042",
       "note": "measurement: turn detector fast-path latency."
-    },
-    "RK-12.3.13-018": {
-      "class": "step",
-      "card": "RMK-2042",
-      "note": "step: a bounded time step or the virtual clock (X-CLK): with a streaming STT, the wait for the first partial must be shown to outlast min_speech_ms; a gate holding the recognizer's first words gives the event loop no time, so the strategy's second look never runs before the words (P6-VO3 review)."
-    },
-    "RK-12.3.13-019": {
-      "class": "step",
-      "card": "RMK-2042",
-      "note": "step: a bounded time step or the virtual clock (X-CLK): without a streaming STT, the duration-only verdict must be shown to come only once min_speech_ms of speech has passed; the format cannot tell a 0 ms context from a later one (P6-VO3 review)."
-    },
-    "RK-12.3.13-032": {
-      "class": "step",
-      "card": "RMK-2042",
-      "note": "step: S1 and S20 are in place; a scenario needs an echo whose words go on over the response that cut the echoed one short, then over the next (a scripted agent answering twice within one kept utterance), not written by P6-VO3."
-    },
-    "RK-12.3.13-033": {
-      "class": "step",
-      "card": "RMK-2042",
-      "note": "step: the virtual clock (X-CLK): voice.open stt (S5) scripts an STT stream that never closes an echoed utterance, but the verdict lapses only after 10 seconds."
-    },
-    "RK-12.3.13-035": {
-      "class": "step",
-      "card": "RMK-2042",
-      "note": "step: the continuous-mode energy run: ten loud frames with transcript_wait_ms 1 during playback cut nothing in the P6-VO3 probe, so the cut on duration once the wait has passed is not reached by a scripted stream; the wait itself (no cut while transcript_wait_ms runs) is then unobservable."
     },
     "RK-12.3.15-020": {
       "class": "phase6",
@@ -155,11 +125,6 @@
       "class": "writable",
       "card": "RMK-2051",
       "note": "writable: voice.open bridge with mixing_strategy mix; Python forwards a mix made only of silence, left as is by the maintainer (RMK-2051)."
-    },
-    "RK-12.8.9-010": {
-      "class": "step",
-      "card": "RMK-2062",
-      "note": "step: the virtual clock (X-CLK): with keyframe_interval_s set, a second periodic keyframe request comes once the interval passed, which no scenario can wait for without a delay; video.read.keyframe_requests and the bridge configuration (VI2) are in place. The same clock would cover the parts the P6-VI citations leave out: RK-12.8.9-007's 5.0 s default and one request per interval, RK-12.8.9-011's forwarding past keyframe_wait_s and its one warning, RK-12.8.9-014's 1.0 s default, and RK-12.8.4-005's analysis once the interval passed."
     },
     "RK-13.1-001": {
       "class": "step",

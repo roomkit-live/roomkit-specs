@@ -5035,6 +5035,12 @@
     "RK-12.10.8-027": {
       "conference/what-a-track-s-recording-still-holds-is-written-before-it-is-finalized": "5e62af249f9c47b38d1b8bb4b942008e9a47bc8b6b7a2a738ea4a774262dafcf"
     },
+    "RK-12.10.8-028": {
+      "conference/a-recorder-that-stopped-draining-holds-a-track-s-teardown-no-longer-than-its-budget": "c5dde496f6d8a3fedc91a80af2805389337906bd2d98a18fed6243b7377dfef8"
+    },
+    "RK-12.10.8-029": {
+      "conference/a-recorder-that-stopped-draining-holds-a-track-s-teardown-no-longer-than-its-budget": "fdb6870b68939f0ff07517fb8be9765c5030b717bb8e0c35024682b8859eb125"
+    },
     "RK-12.10.8-030": {
       "conference/a-recording-s-reports-carry-the-room-track-and-participant": "2ac3fbf3ae59cf65c333ae93df916950830714221112cefab95a384d3c24a668"
     },
@@ -5592,6 +5598,10 @@
     "RK-12.3.12-015": {
       "voice/an-incomplete-turn-is-routed-once-its-wait-passes-in-silence": "aeaac06ae41820a2b6b802a840778eb803692da56d089edc8d4023511f67a73b"
     },
+    "RK-12.3.12-016": {
+      "voice/a-turn-held-for-speech-that-resumed-is-routed-once-its-wait-ends-in-silence": "742b69b0ba5e8eac6da03aa93b7d38f7b833ee641fb7b5592fac3046aa8b7081",
+      "voice/a-turn-judged-complete-while-the-user-speaks-again-is-held-and-joined-by-the-new-speech": "742b69b0ba5e8eac6da03aa93b7d38f7b833ee641fb7b5592fac3046aa8b7081"
+    },
     "RK-12.3.12-017": {
       "voice/speech-that-starts-before-the-reply-is-heard-holds-it-as-a-user-turn": "44c82589864b4032dabd6d717d248dc5bdb595a43aaef0d685b717390eb759c0"
     },
@@ -5625,6 +5635,13 @@
     },
     "RK-12.3.13-017": {
       "voice/the-detector-is-told-a-partial-from-the-final-and-never-asked-at-an-empty-onset": "dcdf9797cdb74895d9a858ed14e600ad38d6dfe8d555546a7706de7041677eee"
+    },
+    "RK-12.3.13-018": {
+      "voice/with-a-streaming-stt-semantic-waits-past-min-speech-ms-for-the-first-words": "0e21e38f37c1cac0826112dabe556b6f972e9beb4b66f422782c9705603bd1ac",
+      "voice/with-a-streaming-stt-wordless-speech-is-judged-once-transcript-wait-ms-passed": "0e21e38f37c1cac0826112dabe556b6f972e9beb4b66f422782c9705603bd1ac"
+    },
+    "RK-12.3.13-019": {
+      "voice/without-a-streaming-stt-semantic-speech-is-judged-once-min-speech-ms-passed": "0811496f482d24829fce284c12880b85fd395af49f5425db423ca03e5bf0d469"
     },
     "RK-12.3.13-020": {
       "voice/without-words-the-detector-judges-the-speech-on-its-duration-alone": "41ad271ca444512a5a0f606e1cd9aaa4e94bf4f7410d4c68b043a5da450bd6f7"
@@ -5662,8 +5679,17 @@
       "voice/an-echo-verdict-outlives-the-reply-until-its-final": "83cfde0530da6b787fd8f101f0564a6be4a8ac84a78f198fa0fcb22a1594dfe4",
       "voice/speech-the-recognizer-starts-once-nothing-plays-is-nobody-s-echo": "83cfde0530da6b787fd8f101f0564a6be4a8ac84a78f198fa0fcb22a1594dfe4"
     },
+    "RK-12.3.13-032": {
+      "voice/an-echo-verdict-s-words-decide-no-barge-in-on-the-reply-that-cut-it-short-or-the-next": "7e0da27f9359834b0825a38fd3935a37d51bbc539efd9516ca43814d16b57a47"
+    },
+    "RK-12.3.13-033": {
+      "voice/an-echo-verdict-that-lapses-with-its-utterance-open-takes-its-words-with-it": "f49b5a2c45a7a2e249fce9e6e4aef9bdc08b9fccbbbc712994d044f9113e7e06"
+    },
     "RK-12.3.13-034": {
       "voice/a-final-adding-its-own-word-to-the-echo-cuts-and-is-the-turn": "3345f3e433e888f87f9422bd839332920785d2754dce888c2384078a6be29952"
+    },
+    "RK-12.3.13-035": {
+      "voice/loud-audio-with-no-words-waits-transcript-wait-ms-before-it-cuts-on-its-duration": "d8273d458f0a701795e0d8fcba41dd28c7eb1148c595dde34b60f8a4bb3ce123"
     },
     "RK-12.3.13-036": {
       "voice/a-file-played-whole-counts-toward-the-echo-guard": "5098bf0705279bf23638512397f6dfa6a3b9817f34a19909b7775393be5d224c"
@@ -6711,7 +6737,8 @@
       "video/a-frame-filter-reports-its-detection": "fb46c7a69f9f0c954ba6471f5da17eb06d2e3338fb74971d16902777cba029f0"
     },
     "RK-12.8.4-005": {
-      "video/a-frame-inside-the-vision-interval-is-not-analysed": "67761f2569ffc0d1b38500c258e93e9e0fc86dd5c8240914712a20176e3addc1"
+      "video/a-frame-inside-the-vision-interval-is-not-analysed": "67761f2569ffc0d1b38500c258e93e9e0fc86dd5c8240914712a20176e3addc1",
+      "video/a-frame-past-the-vision-interval-is-analysed": "67761f2569ffc0d1b38500c258e93e9e0fc86dd5c8240914712a20176e3addc1"
     },
     "RK-12.8.4-006": {
       "video/a-frame-filter-reports-its-detection": "898728c828e89783e3f0fee7e36b8a55f0c738ee0dceda7898b6aec050235fb0"
@@ -6792,19 +6819,26 @@
       "video/a-forward-bridge-sends-each-frame-to-every-other-participant": "739a4e2744c1de82a2370ebdd588e59c06677cff6415991c5660785c9d5df1df"
     },
     "RK-12.8.9-007": {
+      "video/by-default-the-bridge-asks-for-keyframes-every-five-seconds": "1191d17f73a69f16cc34bec0acc413266dd740d28cb527dcdf1fb2c7e47a3605",
+      "video/the-bridge-asks-every-session-for-a-keyframe-once-per-keyframe-interval": "1191d17f73a69f16cc34bec0acc413266dd740d28cb527dcdf1fb2c7e47a3605",
       "video/with-no-periodic-interval-only-a-join-asks-for-a-keyframe": "1191d17f73a69f16cc34bec0acc413266dd740d28cb527dcdf1fb2c7e47a3605"
     },
     "RK-12.8.9-009": {
       "video/a-joiner-has-every-session-already-in-the-room-asked-for-a-keyframe": "1c8055c78cd28895084ffb589a33febb8a5163f281a6970ff2a4fc6f4ca97389"
     },
+    "RK-12.8.9-010": {
+      "video/the-bridge-asks-every-session-for-a-keyframe-once-per-keyframe-interval": "03a57e0b3b6e79ac5b769484c49853337cab913b9a0bb5a767390e41832e9c5b"
+    },
     "RK-12.8.9-011": {
-      "video/a-source-s-delta-frames-wait-for-its-first-keyframe-at-each-target": "accf1f2b952ad078c074c8d4ace9c59f815a8c091346599749c5981fc002a5bc"
+      "video/a-source-s-delta-frames-wait-for-its-first-keyframe-at-each-target": "accf1f2b952ad078c074c8d4ace9c59f815a8c091346599749c5981fc002a5bc",
+      "video/past-keyframe-wait-s-a-source-s-delta-frames-reach-the-target-without-a-keyframe": "accf1f2b952ad078c074c8d4ace9c59f815a8c091346599749c5981fc002a5bc"
     },
     "RK-12.8.9-013": {
       "video/the-bridge-obeys-the-frame-hook": "49c08141a6528a6e19da193505b023f84ccdc16740b4a8ee72fcf805e5b367bb"
     },
     "RK-12.8.9-014": {
       "video/a-source-s-delta-frames-wait-for-its-first-keyframe-at-each-target": "a27a854553d7994a26aefbce05b52933b9ee98b4530fd92bc31d2c62c20c9f38",
+      "video/by-default-a-source-s-delta-frames-wait-one-second-for-its-keyframe": "a27a854553d7994a26aefbce05b52933b9ee98b4530fd92bc31d2c62c20c9f38",
       "video/with-no-keyframe-wait-a-delta-frame-is-forwarded-at-once": "a27a854553d7994a26aefbce05b52933b9ee98b4530fd92bc31d2c62c20c9f38"
     },
     "RK-13.2-004": {

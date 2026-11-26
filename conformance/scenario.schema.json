@@ -166,6 +166,37 @@
           }
         }
       }
+    },
+    {
+      "if": {
+        "required": [
+          "setup"
+        ],
+        "properties": {
+          "setup": {
+            "required": [
+              "virtual_clock"
+            ]
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "requires_features"
+        ],
+        "properties": {
+          "requires_features": {
+            "contains": {
+              "enum": [
+                "voice",
+                "realtime",
+                "conference",
+                "video"
+              ]
+            }
+          }
+        }
+      }
     }
   ],
   "$defs": {
@@ -1031,6 +1062,10 @@
           "items": {
             "$ref": "#/$defs/event_handler"
           }
+        },
+        "virtual_clock": {
+          "description": "The scenario runs on a virtual clock that only clock.advance moves: the media durations the README lists under Setup are measured and waited out on it. A scenario that sets it requires voice, realtime, conference or video.",
+          "const": true
         },
         "sources": {
           "description": "Scripted sources attached to the kit (\u00a76.5), each for a channel of the setup; a scenario that has them requires source_provider.",
@@ -2868,6 +2903,7 @@
             "recording.stop",
             "recording.list",
             "recording.calls",
+            "clock.advance",
             "voice.open",
             "voice.feed",
             "voice.say",
@@ -4770,6 +4806,32 @@
               "participant_id": {
                 "type": "string",
                 "minLength": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "clock.advance"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "ms"
+            ],
+            "properties": {
+              "ms": {
+                "description": "How far the virtual clock moves, in milliseconds.",
+                "type": "integer",
+                "minimum": 0
+              },
+              "waiters": {
+                "description": "How many waits on the clock must be pending before it moves; a runner fails after 5 s.",
+                "type": "integer",
+                "minimum": 1
               }
             }
           }

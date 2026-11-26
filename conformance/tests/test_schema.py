@@ -536,6 +536,31 @@ class SchemaTests(unittest.TestCase):
                 change(candidate)
                 self.assertEqual(validator.is_valid(candidate), valid)
 
+    def test_a_virtual_clock_needs_a_media_feature_and_advances_by_ms(self) -> None:
+        schema = json.loads((ROOT / "scenario.schema.json").read_text())
+        validator = Draft202012Validator(schema)
+        fixture = (
+            ROOT
+            / "scenarios/video"
+            / "the-bridge-asks-every-session-for-a-keyframe-once-per-keyframe-interval.json"
+        )
+        self.assertTrue(validator.is_valid(json.loads(fixture.read_text())))
+        for change, valid in (
+            (lambda s: s.update(requires_features=["realtime"]), True),
+            (lambda s: s.update(requires_features=["recording"]), False),
+            (lambda s: s.pop("requires_features"), False),
+            (lambda s: s["setup"].update(virtual_clock=False), False),
+            (lambda s: s["steps"][4].update(waiters=2), True),
+            (lambda s: s["steps"][4].update(waiters=0), False),
+            (lambda s: s["steps"][4].update(ms=-1), False),
+            (lambda s: s["steps"][4].update(ms=1.5), False),
+            (lambda s: s["steps"][4].pop("ms"), False),
+        ):
+            with self.subTest(change=change):
+                candidate = json.loads(fixture.read_text())
+                change(candidate)
+                self.assertEqual(validator.is_valid(candidate), valid)
+
     def test_a_turn_s_cleanup_and_an_action_on_its_own_task_make_actions(self) -> None:
         schema = json.loads((ROOT / "scenario.schema.json").read_text())
         validator = Draft202012Validator(schema)
