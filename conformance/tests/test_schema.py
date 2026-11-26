@@ -1101,6 +1101,48 @@ class SchemaTests(unittest.TestCase):
                 scenario["steps"].append(step)
                 self.assertEqual(validator.is_valid(scenario), valid)
 
+    def test_a_conference_model_is_scripted_settled_and_plugged(self) -> None:
+        schema = json.loads((ROOT / "scenario.schema.json").read_text())
+        validator = Draft202012Validator(schema)
+        fixture = (
+            ROOT
+            / "scenarios/conference/the-model-hears-each-window-of-its-tracks-mixed-with-headroom.json"
+        )
+        self.assertTrue(validator.is_valid(json.loads(fixture.read_text())))
+        for member, value, valid in (
+            ("realtime", {"full_duplex": True, "input_sample_rate": 24000}, True),
+            ("realtime", {"connects": [{"gate": "c"}, {"fail": "down", "error_type": "Down"}]}, True),
+            ("realtime", {"connects": [{"fail": "down"}]}, False),
+            ("realtime", {"connects": [{"error_type": "Down"}]}, False),
+            ("realtime", {"input_sample_rate": 0}, False),
+            ("realtime", {"voice": "alloy"}, False),
+            ("default_grants", {"publish_audio": False, "moderate": True}, True),
+            ("default_grants", {"vision": True}, False),
+            ("tool_policy", {"deny": ["x"], "role_overrides": {"owner": {"allow": ["x"],
+                                                                          "mode": "replace"}}}, True),
+            ("tool_policy", {"role_overrides": {"owner": {"mode": "merge"}}}, False),
+        ):
+            with self.subTest(member=member, value=value):
+                scenario = json.loads(fixture.read_text())
+                scenario["steps"][0][member] = value
+                self.assertEqual(validator.is_valid(scenario), valid)
+        for step, valid in (
+            ({"call": "conference.feed", "channel_id": "conf", "track_id": "mic-a",
+              "frames": [], "pause_ms": 200}, True),
+            ({"call": "conference.feed", "channel_id": "conf", "track_id": "mic-a",
+              "frames": [], "pause_ms": 0}, False),
+            ({"call": "conference.settle", "channel_id": "conf", "mix": True}, True),
+            ({"call": "conference.settle", "channel_id": "conf", "mix": "yes"}, False),
+            ({"call": "conference.plug", "channel_id": "conf", "kind": "realtime",
+              "realtime": {"connects": [{"fail": "down", "error_type": "Down"}]}}, True),
+            ({"call": "conference.plug", "channel_id": "conf", "kind": "stt",
+              "realtime": {}}, False),
+        ):
+            with self.subTest(step=step):
+                scenario = json.loads(fixture.read_text())
+                scenario["steps"].append(step)
+                self.assertEqual(validator.is_valid(scenario), valid)
+
     def test_a_voice_bridge_states_its_configuration_and_transports(self) -> None:
         schema = json.loads((ROOT / "scenario.schema.json").read_text())
         validator = Draft202012Validator(schema)

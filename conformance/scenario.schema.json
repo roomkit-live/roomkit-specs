@@ -3463,6 +3463,34 @@
                     "items": {
                       "type": "string"
                     }
+                  },
+                  "role_overrides": {
+                    "description": "Overrides by participant role, as an agent's (§21.1); the mix names no participant, so none applies (§12.10.12).",
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "allow": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "deny": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "mode": {
+                          "enum": [
+                            "restrict",
+                            "replace"
+                          ]
+                        }
+                      }
+                    }
                   }
                 },
                 "additionalProperties": false
@@ -3495,6 +3523,37 @@
                 "description": "The joined_at the scripted SFU gives each bot session it returns: an RFC 3339 instant, or a date and time with no offset.",
                 "type": "string",
                 "minLength": 1
+              },
+              "realtime": {
+                "$ref": "#/$defs/conference_model"
+              },
+              "default_grants": {
+                "description": "The channel's default_grants, which a mint applies when its caller names none (README, Scripted conference model).",
+                "type": "object",
+                "properties": {
+                  "publish_audio": {
+                    "type": "boolean"
+                  },
+                  "publish_video": {
+                    "type": "boolean"
+                  },
+                  "publish_screen_share": {
+                    "type": "boolean"
+                  },
+                  "publish_screen_share_audio": {
+                    "type": "boolean"
+                  },
+                  "subscribe": {
+                    "type": "boolean"
+                  },
+                  "moderate": {
+                    "type": "boolean"
+                  },
+                  "hidden": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
               }
             }
           }
@@ -3736,6 +3795,11 @@
               "repeat": {
                 "type": "integer",
                 "minimum": 1
+              },
+              "pause_ms": {
+                "description": "How long the track stays silent before the frames (README, Scripted conference model).",
+                "type": "integer",
+                "minimum": 1
               }
             }
           }
@@ -3763,6 +3827,10 @@
                 },
                 "minItems": 1,
                 "uniqueItems": true
+              },
+              "mix": {
+                "description": "Then waits until the mix sent the conference's model what its tracks hold (README, Scripted conference model).",
+                "type": "boolean"
               }
             }
           }
@@ -3876,6 +3944,9 @@
                   "null"
                 ],
                 "minLength": 1
+              },
+              "realtime": {
+                "$ref": "#/$defs/conference_model"
               }
             },
             "allOf": [
@@ -3913,6 +3984,23 @@
                   "not": {
                     "required": [
                       "tts"
+                    ]
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "kind": {
+                      "const": "realtime"
+                    }
+                  }
+                },
+                "then": {},
+                "else": {
+                  "not": {
+                    "required": [
+                      "realtime"
                     ]
                   }
                 }
@@ -9671,6 +9759,49 @@
         "add_observation",
         "list_observations"
       ]
+    },
+    "conference_model": {
+      "description": "A conference's scripted realtime model (README, Scripted conference model): the provider's trait, the input rate the configuration declares, and what each connect does.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "full_duplex": {
+          "type": "boolean"
+        },
+        "input_sample_rate": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "connects": {
+          "description": "The n-th connect the provider is asked does the n-th entry's: it holds at gate, then fails with fail, an error whose type is named error_type; past the list, a connect connects.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "gate": {
+                "type": "string",
+                "minLength": 1
+              },
+              "fail": {
+                "type": "string"
+              },
+              "error_type": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "dependentRequired": {
+              "fail": [
+                "error_type"
+              ],
+              "error_type": [
+                "fail"
+              ]
+            }
+          }
+        }
+      }
     },
     "conference_fault": {
       "description": "A fault on the conference's scripted SFU (README, Scripted conference faults): the call of `method` it takes holds at `gate` once received, then fails with `fail`.",

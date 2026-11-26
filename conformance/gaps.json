@@ -76,156 +76,6 @@
       "card": "RMK-1942",
       "note": "Two attempts at a request's last one count once: racing them needs a gate inside a verification transition."
     },
-    "RK-12.10.12-014": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.feed on two tracks, the conference model steps' read of what the provider received: the mixed windows."
-    },
-    "RK-12.10.12-015": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.feed with a pause, the conference model steps' read: no window for the silence."
-    },
-    "RK-12.10.12-016": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.feed at 16 kHz, the conference model steps' read: audio at the provider's input rate."
-    },
-    "RK-12.10.12-019": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: the conference model steps (a user transcript): the timeline holds no event for it."
-    },
-    "RK-12.10.12-020": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.active_speaker then a user transcript (conference model steps): nothing names the participant."
-    },
-    "RK-12.10.12-021": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: the conference model steps (a user transcript): no event, no delivery, no hook carries it."
-    },
-    "RK-12.10.12-024": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: the conference model steps (an assistant final transcript): the event's channel and no participant."
-    },
-    "RK-12.10.12-025": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: the conference model steps (an assistant final transcript), conference.read: nothing injected or published for it."
-    },
-    "RK-12.10.12-026": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: deliver to the conference with a connected model, the conference model steps' read of the injections."
-    },
-    "RK-12.10.12-028": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference model activity for the idle wait: deliver with wait_for_idle during a held answer and a held tool call."
-    },
-    "RK-12.10.12-030": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: the conference model steps (a delegation): an on_realtime_delegation hook."
-    },
-    "RK-12.10.12-031": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: the conference model steps (an integrator delegation): the fallback the provider received."
-    },
-    "RK-12.10.12-032": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: the conference model steps (a delegation during a held connect): answered after it."
-    },
-    "RK-12.10.12-033": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: the conference model steps (a response's audio), conference.read: the utterance's chunks and final chunk."
-    },
-    "RK-12.10.12-034": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: the conference model steps (two responses at once), conference.read: two utterances, in turn."
-    },
-    "RK-12.10.12-035": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: the conference model steps (a response's audio): before_tts and after_tts hooks never fire."
-    },
-    "RK-12.10.12-037": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: the conference model steps, conference.feed: on_barge_in naming the speaker's participant."
-    },
-    "RK-12.10.12-038": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: the conference model steps (the provider reports speech started): no on_barge_in, no stop_playback()."
-    },
-    "RK-12.10.12-039": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: the conference model steps, conference.feed for a barge-in, conference.read: the closing chunk, stop_playback() and no later chunk."
-    },
-    "RK-12.10.12-040": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: the conference model steps' read of what the provider received: a cancel after the barge-in."
-    },
-    "RK-12.10.12-041": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.open options (interruption none), the conference model steps' read of the session configuration."
-    },
-    "RK-12.10.12-042": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.open options (interruption allowlist), the conference model steps, conference.feed: an unlisted speaker fires no on_barge_in whatever the provider does."
-    },
-    "RK-12.10.12-043": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.read and the conference model steps: one provider connect per bot session."
-    },
-    "RK-12.10.12-046": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: the conference model steps' read: no connect before a track or a delivery, one after."
-    },
-    "RK-12.10.12-047": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: the conference model steps (a connect failure), conference.plug: the plug returns."
-    },
-    "RK-12.10.12-048": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: the conference model steps (a connect failure), conference.feed: one retry per cooldown, not per window."
-    },
-    "RK-12.10.12-049": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: the conference model steps (a connect failure): an on_error hook with its category and type."
-    },
-    "RK-12.10.12-050": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: detach_channel and conference.bot_lost, the conference model steps' read: the provider disconnected."
-    },
-    "RK-12.10.12-055": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.tool_call refused, an on_tool_call hook held at a gate (conference model steps' read): the refusal on the wire first."
-    },
-    "RK-12.10.12-061": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.open options (tool_policy), the conference model steps' read of the declared tools."
-    },
     "RK-12.10.3-036": {
       "class": "phase6",
       "card": "RMK-2070",
@@ -236,65 +86,15 @@
       "card": "RMK-2007",
       "note": "measurement: the close's whole duration bound (the grace, the turn backend's budget, the closes, at most two unwinds of 1 second); no step reads elapsed time."
     },
-    "RK-12.10.4-100": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.open options (no stt, tts, recording or realtime), conference.mint, conference.read: no join_as_bot()."
-    },
-    "RK-12.10.4-103": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.open options (no consumer, no voice), conference.mint, conference.read: ensure_room() called, a credential minted, the arrival's participant record written."
-    },
-    "RK-12.10.4-125": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: error name conference_already_attached in the Errors table: a second conference.open on the room refused."
-    },
-    "RK-12.10.4-132": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.open's default_grants, which no step names yet, with conference.mint: the grants the backend is asked to mint when the caller names none. The caller's override is read by conference/a-mint-carries-the-caller-s-grants-and-attributes."
-    },
     "RK-12.10.4-196": {
       "class": "step",
       "card": "RMK-2076",
       "note": "step: none missing (conference.plug, conference.read, expect.media_events); the scenario waits on HITL 01527428 (P6-CF4): a plug's re-join on a backend without BOT_GRANT_UPDATE emits no conference_bot_grants_changed in Python, so the room's event list after its leave(), join_as_bot(), conference_ended and conference_started cannot be written before the answer."
     },
-    "RK-12.10.4-206": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.open's capabilities with BOT_GRANT_UPDATE (P6-CF3) and conference.fault failing update_bot_grants (P6-CF4), both on main, for P6-CF5: conference.set_bot_grants then re-joins, leave() and join_as_bot(). The re-join on a backend without the capability is read by conference/a-grant-change-carried-by-a-re-join-is-announced-with-the-session."
-    },
-    "RK-12.10.4-211": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.open's capabilities with BOT_GRANT_UPDATE (P6-CF3) and expect.media_events (P6-CF4), both on main, for P6-CF5: conference_bot_grants_changed after a set applied in place. The one a re-join carries is read by conference/a-grant-change-carried-by-a-re-join-is-announced-with-the-session."
-    },
-    "RK-12.10.4-216": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.fault (P6-CF4) holding the scripted SFU's publish_audio after an utterance's first chunk while a second delivery arrives; conference.read: the second utterance's chunks only after the first's final one. The scripted synthesizer holds only before an utterance's first chunk, and the bot's turn then hides any interleaving."
-    },
-    "RK-12.10.4-217": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.fault (P6-CF4) holding publish_audio after an utterance's first chunk, then conference.feed for the barge-in; conference.read: the cut utterance closed by a chunk with is_final. Cut before its first chunk, an utterance has published nothing to close."
-    },
-    "RK-12.10.4-222": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: conference.fault (P6-CF4) holding publish_audio after an utterance's first chunk, then detach_channel; conference.read: no chunk with is_final after it. Before its first chunk, an utterance has published nothing a terminal chunk could follow."
-    },
     "RK-12.10.5-003": {
       "class": "writable",
       "card": "RMK-2076",
       "note": "writable: conference/any-participant-s-speech-cuts-the-bot-off observes the plain case. Held by HITL 93033b15: in Python, a track whose previous utterance is still being routed does not interrupt the bot, its lane waiting for that routing, the answer's delivery to the conference included."
-    },
-    "RK-12.10.5-009": {
-      "class": "step",
-      "card": "RMK-2076",
-      "note": "step: a second utterance waiting at the conference while the first is held, then conference.feed for the barge-in; conference.read: the waiting one never published. The room's broadcasts reach the conference binding one at a time, and a delivery addressed to the conference is published from it, not spoken: it needs a streaming response consumed outside that serialization (§12.10.4), or conference.fault (P6-CF4) holding publish_audio."
     },
     "RK-12.11-013": {
       "class": "step",

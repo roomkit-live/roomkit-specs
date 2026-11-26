@@ -4070,20 +4070,104 @@
       "conference/a-conference-model-s-tool-policy-refuses-a-denied-tool": "e4a74366265df5ef26142790494c4ac781cb87625b7c08e17b0b17718c211a7f",
       "conference/a-conference-tool-handler-is-cut-at-its-bound": "e4a74366265df5ef26142790494c4ac781cb87625b7c08e17b0b17718c211a7f"
     },
+    "RK-12.10.12-014": {
+      "conference/the-model-hears-each-window-of-its-tracks-mixed-with-headroom": "8b7a593259bda3f34ccfac178d2cb51cd0b9dd660b35179588a8f38dd21a2556"
+    },
+    "RK-12.10.12-015": {
+      "conference/a-window-no-track-spoke-in-is-never-sent-to-the-model": "268afab4bb95aa54907f14f110d9468fac670f3d91170534fd5101ab50ad11ba"
+    },
+    "RK-12.10.12-016": {
+      "conference/the-mix-reaches-the-model-at-the-rate-it-declared": "e90f1f76c5b9ebbf04001a81de1913db01f77f15496dc446ff7a05f270d0d25b"
+    },
+    "RK-12.10.12-019": {
+      "conference/a-user-transcription-of-the-mix-is-discarded-and-names-no-one": "acd9891da04beec45ddd4d40f69c408397feb5a18c6d964d04a6fa0ac0fbfade"
+    },
+    "RK-12.10.12-020": {
+      "conference/a-user-transcription-of-the-mix-is-discarded-and-names-no-one": "58079588b1949972f6e53c23253e65f1312d678aa5bb16fe5c54e1312ee26cbe"
+    },
+    "RK-12.10.12-021": {
+      "conference/a-user-transcription-of-the-mix-is-discarded-and-names-no-one": "ced78ac081d49ec56785f8cf4327c761dec0d450e1fb9979b1637df12af399f1"
+    },
     "RK-12.10.12-023": {
       "conference/the-meeting-is-transcribed-beside-the-speech-model": "e36f83666fa8466109ca3c2281ab643aacccca0de443e9b3dcb94952972dc428"
+    },
+    "RK-12.10.12-024": {
+      "conference/an-assistant-final-transcription-is-the-channel-s-event-and-is-not-said-again": "220449e999caa4670b7198835c07b8f653486700639c683624a4a0a49c56db02"
+    },
+    "RK-12.10.12-025": {
+      "conference/an-assistant-final-transcription-is-the-channel-s-event-and-is-not-said-again": "bcb9aac93fe0298a1b91186a2d9843516853dd781f03678977efb60e13495718"
+    },
+    "RK-12.10.12-026": {
+      "conference/a-delivery-to-the-conference-is-injected-into-its-model-with-its-intent": "0f827496779da62d9df972bba320e441baadcc8b5d752d6f56bcb37bed64ffac"
     },
     "RK-12.10.12-027": {
       "conference/a-delivery-before-the-model-connects-is-unavailable": "35150786b21d586c022484eef3a7acc7156d376345dc18f231aaf7d23eb85731"
     },
+    "RK-12.10.12-028": {
+      "conference/a-delivery-waiting-for-idle-waits-for-the-model-s-answer-to-reach-the-bot-track": "1cb5d45a4629f22f2f3808d4c806b91e7d1be23ba71069da9efb6cbe7b72bed5",
+      "conference/a-delivery-waiting-for-idle-waits-out-the-model-s-tool-call-its-answer-and-what-it-hears": "1cb5d45a4629f22f2f3808d4c806b91e7d1be23ba71069da9efb6cbe7b72bed5"
+    },
     "RK-12.10.12-029": {
       "conference/a-delivery-into-the-conference-model-fires-the-injection-hook": "46eb4ebeb227099a85a22973f7fc7d7f2426b582c25fcfb4b18eb5330a2c6056"
+    },
+    "RK-12.10.12-030": {
+      "conference/a-model-delegation-fires-the-hook-and-is-answered-with-the-spoken-fallback": "0e02b980211e5c69c02028c8cc58a5e7146f55120920f1d36f41b0a0bbf3066e"
+    },
+    "RK-12.10.12-031": {
+      "conference/a-model-delegation-fires-the-hook-and-is-answered-with-the-spoken-fallback": "99d7a5cc4864f9df3cb7dbbc9e8c4b8c65643d4c42d644069c76e28d8d0b07ee"
+    },
+    "RK-12.10.12-032": {
+      "conference/a-delegation-issued-while-the-model-connects-is-answered-once-connected": "b07441229564d7c5506f65c6afe81b7f36e15a41df4218d8482c92b07e3b6d82"
+    },
+    "RK-12.10.12-033": {
+      "conference/a-model-response-is-one-utterance-its-end-closes": "026868aa98210f720ab71c4b4618cdd21bca083f0126a32150e5ee6f80d2bcd0",
+      "conference/a-model-response-the-conference-leaves-mid-utterance-ends-with-no-terminal-chunk": "026868aa98210f720ab71c4b4618cdd21bca083f0126a32150e5ee6f80d2bcd0"
+    },
+    "RK-12.10.12-034": {
+      "conference/a-second-model-response-waits-for-the-first-to-end-on-the-bot-track": "659b65149b5509e79359ae62ca722a82de1ce8867cb2adede808a7ca542f26a6"
+    },
+    "RK-12.10.12-035": {
+      "conference/a-model-response-is-one-utterance-its-end-closes": "f8dc93bc81528225bade875244e7bc60c1797b026ea45ca6d88fbe7b2d2260fa"
+    },
+    "RK-12.10.12-037": {
+      "conference/a-barge-in-on-the-model-s-voice-names-the-speaker-and-closes-the-utterance": "4e5813c6a7a9518049d1c29410db6dd45e2deb98f214394a4fe95879a23abab0"
+    },
+    "RK-12.10.12-038": {
+      "conference/the-model-s-own-speech-detection-interrupts-nothing": "2fd84bfbee89c95c65d66c1e79eda19079fee6de777f5412d63775c7927ea45e"
+    },
+    "RK-12.10.12-039": {
+      "conference/a-barge-in-on-the-model-s-voice-names-the-speaker-and-closes-the-utterance": "9c72e3af05c6cca95d0dba8cc0174157527b3413a10bc45e82e33902e2daae41"
+    },
+    "RK-12.10.12-040": {
+      "conference/a-barge-in-on-the-model-s-voice-names-the-speaker-and-closes-the-utterance": "27e8afa679bb0a6b092b886a47f858488a8b9b9351085145aafd87feb61d08dd"
+    },
+    "RK-12.10.12-042": {
+      "conference/a-speaker-the-scope-does-not-admit-cuts-nothing-whatever-the-model-does": "de29f46c7c1690f043b356669a4613dc5a51c95c90d37539bc7ef4cc5fa863af"
+    },
+    "RK-12.10.12-043": {
+      "conference/one-model-session-serves-one-bot-session": "a4f4d42c011347de8f1b0e2a2bcc463ab2355abbd786520f026390c6a55344b4"
     },
     "RK-12.10.12-044": {
       "conference/a-speech-to-speech-bot-joins-to-listen-and-to-speak": "ca5232ad53648f59f1b3004d925868f939a8c1dac6fe33bc9e806379c858cc92"
     },
     "RK-12.10.12-045": {
       "conference/a-realtime-model-is-plugged-and-unplugged-as-any-need": "548d0c6f6a242236ac5641598bb5f532ead7f0b290be67f8cab09c0b5a0505d3"
+    },
+    "RK-12.10.12-046": {
+      "conference/the-model-connects-only-once-there-is-something-to-hear-or-say": "07b43529555ca735542ceb0898abac358199d317eac71d547883c83b2abadb90"
+    },
+    "RK-12.10.12-047": {
+      "conference/a-model-that-cannot-connect-fails-neither-the-join-nor-the-plug": "317ef37834eda3c28661147bd532565854f4872a1f2486f04486e91902c53436"
+    },
+    "RK-12.10.12-048": {
+      "conference/a-model-that-cannot-connect-is-not-asked-again-on-every-window": "cf4c32bf8d1bd5a53dbc2c5d12fe45cc77117ad701adb86e592321e636f80d96"
+    },
+    "RK-12.10.12-049": {
+      "conference/a-model-that-cannot-connect-fails-neither-the-join-nor-the-plug": "39dc67b3aa6fa507734191dd1e1fce8f6e2f34742d887edde84975f41f8c2c43"
+    },
+    "RK-12.10.12-050": {
+      "conference/one-model-session-serves-one-bot-session": "90db26cded974843344c37bcb36fa3299e56951214e92dcfdaae40ec42bea905",
+      "conference/the-model-session-ends-with-a-detach-an-unplug-and-a-close": "90db26cded974843344c37bcb36fa3299e56951214e92dcfdaae40ec42bea905"
     },
     "RK-12.10.12-051": {
       "conference/the-lanes-stay-on-beside-a-speech-model": "d66790a51dc35105d3f9c30d8fc23559a08f57a221bfc24246fb14c892d30840"
@@ -4097,6 +4181,9 @@
     "RK-12.10.12-054": {
       "conference/a-conference-model-receives-the-gated-tool-result": "b63c6061217c386add5c958ba510f32b99051a97a422646a63e1f16a0184bf12"
     },
+    "RK-12.10.12-055": {
+      "conference/a-refused-conference-tool-call-is-on-the-wire-before-its-report": "b03f50fc936194c224f581ad9134cb01fdb8f93ee7ef0d095b556be2c4cc8bbd"
+    },
     "RK-12.10.12-056": {
       "conference/a-conference-tool-result-is-bounded-as-a-realtime-one": "be0aae91ff6b99aad1c53e02c344bb9911e11a76734dde8b3ec01126cc05de65"
     },
@@ -4108,6 +4195,9 @@
     },
     "RK-12.10.12-060": {
       "conference/a-conference-handler-that-raises-reads-as-a-failure-not-its-text": "146fa8e00183a09d362383aeeec168aa76df8055d8cfe7eada16a41e6031b6b2"
+    },
+    "RK-12.10.12-061": {
+      "conference/the-tool-policy-filters-what-is-declared-to-the-model-by-its-base-rules": "e2cd895ea36c23817d70492866f919fc0da347bc78b3f820fc3402f0ee0866de"
     },
     "RK-12.10.2-001": {
       "conference/a-camera-toggle-reaches-the-mute-and-unmute-observers": "1817a3fa716ab52cbb5ae1b38649d61716135d3f1780edb1ed9cdd68c24b74c1",
@@ -4494,11 +4584,17 @@
     "RK-12.10.4-099": {
       "conference/ensure-bot-is-refused-to-a-channel-with-nothing-to-do": "669f7d175b5a4b258816b59f9790b4fe07dc76b33a0174727bc9d454175430a6"
     },
+    "RK-12.10.4-100": {
+      "conference/a-conference-that-hears-and-says-nothing-never-joins": "6316a6c06fd4eea02055f8f68eed91f6ac9530bb88ea1827d8e5aaa6dc45dfb0"
+    },
     "RK-12.10.4-101": {
       "conference/a-channel-with-nothing-to-do-probes-no-occupancy": "a94bd9e67b1aef859d2ffcfe879a219c0fa4d09e6b173b0320947c13970e30c3"
     },
     "RK-12.10.4-102": {
       "conference/explicit-grants-alone-make-no-need-to-join": "3016b5d412cbbd9636519478325b1ab86c601fee86ec148fa89001e5ede30cbb"
+    },
+    "RK-12.10.4-103": {
+      "conference/a-conference-that-never-joins-still-admits-and-keeps-the-roster": "582e9a252eeadb9742f0d0498a5ba131b48b049b3827f6fb42a9ff58847d8daf"
     },
     "RK-12.10.4-105": {
       "conference/a-call-reports-presence-without-changing-room-membership": "bbe0e2422341203b13e72306dfdcd7c495348e4bf72b3ea3fe7a8f71e99fb4ab"
@@ -4561,6 +4657,9 @@
     "RK-12.10.4-124": {
       "conference/the-bot-s-own-presence-and-tracks-are-not-relayed": "4d2f9b386ccb330f51146bbda80714d9b8fe260c8da9c448fe3c5a640a2aaa40"
     },
+    "RK-12.10.4-125": {
+      "conference/a-second-conference-channel-is-refused-on-a-room-that-has-one": "2cfca261261ae175363b60384e36da6b6a8666f4d661611e4334e21f8c654453"
+    },
     "RK-12.10.4-126": {
       "conference/re-attaching-the-same-conference-is-an-ordinary-attach": "598a9e0d6c0974af2de14539395df0c93ef18b5ac4b0f7ed77f9b9ee29a09b95"
     },
@@ -4578,6 +4677,9 @@
     },
     "RK-12.10.4-131": {
       "conference/the-bot-s-own-presence-and-tracks-are-not-relayed": "b893c27fb92dc550eabb33e3a84bbf5a8bea71856948f9515e1d6dc0f3dbfc36"
+    },
+    "RK-12.10.4-132": {
+      "conference/a-mint-applies-the-channel-s-default-grants-unless-the-caller-overrides-them": "02b4fbf49324ed040ed6616a0254444a92b3b1a0730c928acc9e71e35f169926"
     },
     "RK-12.10.4-134": {
       "conference/a-mint-carries-the-caller-s-grants-and-attributes": "d117ccabf6fd7108b8caf5d6743d346eb4ca14af434103cb72d24d948e3ee257"
@@ -4770,6 +4872,9 @@
     "RK-12.10.4-205": {
       "conference/the-setter-s-narrowing-is-applied-in-place": "431d7aee94ae4aeb8bfbabc77aefb3d74375883db935e703985e3d5148d50721"
     },
+    "RK-12.10.4-206": {
+      "conference/an-in-place-grant-update-that-fails-re-joins-whichever-way-the-grants-change": "ddc1cb55aa1bcb87a472832ee5d193ed4c8f02d8939103bbfeb1bc43c2b4c2a2"
+    },
     "RK-12.10.4-208": {
       "conference/the-disclosure-surface-says-whether-grants-update-in-place": "81ec8458851dfd3b34fe170c5f005a3c1b70df2b8eb3dd65fe2da894350bbea4"
     },
@@ -4778,6 +4883,9 @@
     },
     "RK-12.10.4-210": {
       "conference/hiding-a-visible-bot-replaces-its-session-even-where-grants-update-in-place": "a4004c0084dd679c896235512d1da7dcc3e115d5fbd65b35096baf58f0654f61"
+    },
+    "RK-12.10.4-211": {
+      "conference/a-grant-change-applied-in-place-is-announced": "3c8fc88df904c7622da1b60aa5b4d573697bab2a2edd8afe9636a1ac856b66d0"
     },
     "RK-12.10.4-212": {
       "conference/a-grant-set-equal-to-the-grants-in-force-emits-nothing": "5bea4701b34882393188b95a2a405f24bff98a7b24785def04641b96975443aa"
@@ -4791,8 +4899,17 @@
     "RK-12.10.4-215": {
       "conference/a-delivery-is-published-on-the-bot-s-one-track": "e6eb4843f89a83a0d18a79a78fe413f41828f85f47c29326c757902ad3c6d656"
     },
+    "RK-12.10.4-216": {
+      "conference/a-second-model-response-waits-for-the-first-to-end-on-the-bot-track": "3b66fd657ca91c26b7cc32f1f6b7b20221894bc9288f631a0adb2fb26580b347"
+    },
+    "RK-12.10.4-217": {
+      "conference/a-barge-in-on-the-model-s-voice-names-the-speaker-and-closes-the-utterance": "4be1abe14962f5145f33c7d71a4c5810892d685ab23820542e58e224e30b406d"
+    },
     "RK-12.10.4-221": {
       "conference/any-participant-s-speech-cuts-the-bot-off": "9751c9fd4470afe52b3a4ef0292b0cec2e171212001ca775038f25c07e1ff4c5"
+    },
+    "RK-12.10.4-222": {
+      "conference/a-model-response-the-conference-leaves-mid-utterance-ends-with-no-terminal-chunk": "c9d4b410be3b331cbef60064b1d0f03b88965d6b3e6ec08ec4cf89fe2c0d3cbe"
     },
     "RK-12.10.4-224": {
       "conference/only-ai-text-is-spoken-unless-speak-text-events": "897f003e5e5a8d207ad036f881b66f950da9fa88b6e170fa58805de32e95d981",
@@ -4815,6 +4932,9 @@
     },
     "RK-12.10.5-008": {
       "conference/a-short-acknowledgement-cuts-the-bot-off-as-the-strategy-says": "2af44dd0c9c5ae4fa1364a39e80c46067db2af9f04c72932d5e03796ed5ee87e"
+    },
+    "RK-12.10.5-009": {
+      "conference/a-barge-in-drops-the-model-response-waiting-for-its-turn": "fba0b09cdd9a319dc2b80b6caa13f5f8edb32239844338485912d6bc2f501d59"
     },
     "RK-12.10.5-010": {
       "conference/any-participant-s-speech-cuts-the-bot-off": "a9ded99c5a3506a3549e140c0ae508c2a1a43b24b447c1d78f06012caccf492f"
