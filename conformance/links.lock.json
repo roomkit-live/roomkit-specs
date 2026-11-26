@@ -18495,6 +18495,9 @@
       "tasks/a-delegated-turn-s-trace-is-stored-as-its-responses": "16c9b06c5745f0f6188134e21b9ff9f311b3c1bf2d503e52a88de10b8fb0276b",
       "tools/a-round-that-only-replays-the-prefix-is-delivered-whole": "16c9b06c5745f0f6188134e21b9ff9f311b3c1bf2d503e52a88de10b8fb0276b"
     },
+    "RK-6.4-544": {
+      "steering/an-instruction-while-an-instructed-turn-runs-waits-a-turn-of-its-own": "066884a636f58dfc9c3be580461aade48e7432953eed33a50bf884c03599b2b5"
+    },
     "RK-6.6-005": {
       "transcoding/a-composite-flattens-to-one-text": "cc8097d852b621c93252ac57876376a15f9719258e41bae857a3561b5fcd6c9e",
       "transcoding/a-file-a-media-channel-does-not-take-reaches-it-as-its-text": "cc8097d852b621c93252ac57876376a15f9719258e41bae857a3561b5fcd6c9e",

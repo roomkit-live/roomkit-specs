@@ -1,9 +1,9 @@
 {
   "version": 1,
-  "rfc_sha256": "1b6c59f650eb470ceb1014a7aff5d9ce1e9c4d3a79d17abdb491cb15e2ce097f",
-  "corpus_sha256": "8e0f1fed82470c96135efa883f8b47b6db0afac838cdbcbab63116127e1ac550",
+  "rfc_sha256": "f73e8090fe7e39cb56cfb5b71dcd2e49070574bf3b2dd580bfd1e5e038e6ec9e",
+  "corpus_sha256": "9b7efa7673001a526f80c7621f942b690bf2cb44af67e09bb36acfae961a2d06",
   "python_commit": "452ae6397f70661e0ec0f2c8db3000398f904c41",
-  "scenario_count": 3960,
+  "scenario_count": 3961,
   "sections": [
     {
       "section": "0",
@@ -1001,10 +1001,10 @@
       "section": "6.4",
       "title": "Intelligence Channels",
       "review": "normative",
-      "requirements": 497,
+      "requirements": 498,
       "mapping": {
         "mapped_partial": 22,
-        "unmapped": 475
+        "unmapped": 476
       },
       "decided_gaps": {
         "phase6": 4,
@@ -1877,6 +1877,7 @@
         "steering/a-message-during-the-answer-is-answered-by-the-same-turn",
         "steering/a-message-handed-to-a-turn-then-cut-waits-for-the-next-turn",
         "steering/an-edit-during-a-tool-round-is-not-handed-to-the-running-turn",
+        "steering/an-instruction-while-an-instructed-turn-runs-waits-a-turn-of-its-own",
         "steering/another-person-s-message-is-served-under-its-own-role-s-tools",
         "steering/another-person-s-message-waits-a-turn-of-its-own",
         "steering/off-a-second-message-starts-a-turn-beside-the-first",
@@ -4885,6 +4886,7 @@
         "skills/a-standalone-activation-in-a-room-already-read-rides-its-next",
         "skills/a-standalone-activation-of-an-active-skill-delivers-its-body",
         "skills/a-standalone-turn-reads-the-room-s-stored-rows-first",
+        "steering/an-instruction-while-an-instructed-turn-runs-waits-a-turn-of-its-own",
         "tasks/a-background-delegation-relays-its-result-to-the-notified-agent",
         "tasks/the-tasks-note-lists-the-latest-six-tasks-and-a-standalone-turn-none",
         "tool-search/a-standalone-instruction-reads-none-of-the-room-s-tools",
@@ -10267,6 +10269,7 @@
         "steering/a-message-handed-to-a-turn-then-cut-waits-for-the-next-turn",
         "steering/a-steer-reaches-the-room-it-names-alone",
         "steering/an-edit-during-a-tool-round-is-not-handed-to-the-running-turn",
+        "steering/an-instruction-while-an-instructed-turn-runs-waits-a-turn-of-its-own",
         "steering/another-person-s-message-is-served-under-its-own-role-s-tools",
         "steering/another-person-s-message-waits-a-turn-of-its-own",
         "streaming/a-generation-a-fallback-serves-names-it-on-what-it-told-and-on-its-cut",
@@ -17411,6 +17414,12 @@
     },
     {
       "id": "RK-6.4-465",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-544",
       "section": "6.4",
       "mapping": "unmapped",
       "links": []

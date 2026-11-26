@@ -3971,6 +3971,14 @@ the running turn: it waits its place as such a message does, and no turn
 answers it; while it waits, a message that comes after it waits a turn of
 its own too.
 <!-- /rfc -->
+<!-- rfc: {"id": "RK-6.4-544", "kind": "behavior", "applies": "§6.4 A message for the running turn, with steering on: an instruction is no message for the running turn, whoever opened it, and waits a turn of its own, which reads it as an instruction. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+Nor is an instruction (Section 10.1.1), whoever opened the running turn,
+another instruction included, whose author it has. Its text is the input of
+a turn it opens, marked as the application's and never attributed to a
+speaker (Section 10.1.1, rule 6); steered into a running turn, it would read
+as a speaker's words. It waits a turn of its own, as a message from someone
+else does.
+<!-- /rfc -->
 
 <!-- rfc: {"id": "RK-6.4-466", "kind": "structural", "applies": "§6.4 ACP agent channel (the integration's scope, RoomKit as the ACP client): its channel type, category and direction. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **ACP Agent Channel:**
