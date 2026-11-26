@@ -1257,10 +1257,16 @@ run's own kit when absent.
 | `conference.fault` | `channel_id`, `method` (a call `conference.read` lists), and `fail` (a message), `gate`, or both; optional `after` (0 by default) and `ignores_cancel` (false by default) | arms a fault on the scripted SFU, as Scripted conference faults says: the call of `method` it takes holds at `gate` once received, then, with `fail`, fails as the backend's own failure (`backend_failed`) |
 | `conference.mint` | `channel_id`, `room_id`, `participant_id`, optional `grants` (a grant set, each member it omits at ConferenceGrants' default), `attributes` (a map of strings) and `organization_id` | the channel's `mint_access()` (§12.10.4 Admitting participants): the ConferenceAccess the scripted SFU minted, serialized (§12.10.2): `url`, `token`, `expires_at` and `provider_data` |
 | `conference.close` | `channel_id` | the channel's own `close()` (§12.10.4 Closing and shared state): null once its one shutdown ended clean; `conference_close_failed` once it failed |
-| `video.open` | `room_id`, `channel_id`, `participants`, optional `bridge`, `vision`, `detections` | attach the video channel and join the participants to it |
-| `video.frame` | `channel_id`, `participant_id`, `sequence`, `data` | the transport delivers one self-contained 1×1 RGB24 frame (three bytes in base64) |
+| `video.open` | `room_id`, `channel_id`, `participants`, optional `bridge`, `vision`, `detections`, and the scripted stages of Video sessions and room recording: `vision_labels`, `vision_interval_ms`, `transforms`, `filters` and `recorder` | attach the video channel and join the participants to it |
+| `video.frame` | `channel_id`, `participant_id`, `sequence`, `data`, optional `keyframe` (default true) | the transport delivers one 1×1 RGB24 frame (three bytes in base64) of the participant's session: a keyframe, or with `keyframe: false` a delta frame |
+| `video.join` | `channel_id`, `participant_id` | the kit's `join` of the participant to the channel's room, the transport making its session; the session is the participant's for `video.frame` and `video.read` even when the join is refused |
 | `video.disconnect` | `channel_id`, `participant_id` | the transport signals the end of this session |
-| `video.read` | `channel_id` | `forwarded`, the base64 frames received by each peer, and `vision`, the analyses published by the channel |
+| `video.read` | `channel_id` | `forwarded`, the base64 frames received by each peer, and `vision`, the analyses published by the channel; `analysed`, the base64 frames the vision provider was handed, in order; `transforms` and `filters`, per scripted stage `name`, the frames it was handed, in order: a transform's as base64, a filter's each `sequence`, `data` (base64), and what its FilterContext held, `vision`, the description of its last vision result, null for none, and `labels`, its labels detected, sorted; `keyframe_requests`, per participant, how many keyframe requests the transport received for its session; and `recorded`, per participant whose session the scripted recorder records, the base64 frames it was tapped, in order |
+| `av.open` | `room_id`, `channel_id`, `participants`, optional `video`, `video_later`, `avatar` and `tts` (Video sessions and room recording) | registers and attaches an audio/video channel over a scripted combined transport, then joins each participant, the transport taking its call |
+| `av.video_live` | `channel_id`, `participant_id` | the transport reports the video path of the participant's call live |
+| `av.video_connect` | `channel_id`, `participant_id` | the `connect` of the transport's `video` facet for the participant, in the channel's room |
+| `av.video_disconnect` | `channel_id`, `participant_id` | the `disconnect` of the participant's video session, through the transport's `video` facet |
+| `av.read` | `channel_id` | once the avatar's work settled: `avatar_audio`, the base64 of the PCM the avatar was fed, joined in order, and `sent`, per participant, the base64 frames the `video` facet sent the participant's call, in order |
 | `recording.start` | `room_id`, and `recorder`, a recorder's name, or `recorders`, a list as `create_room`'s (Video sessions and room recording); optional `kit` | start the named recorders on an existing room, together |
 | `recording.track` | `room_id`, `track_id` | add a live PCM16 audio track to the room's recordings |
 | `recording.feed` | `room_id`, `track_id`, `data` | send a base64 chunk through that track's feed |
@@ -1303,6 +1309,7 @@ run's own kit when absent.
 | `realtime.wait_idle` | `channel_id`, `room_id`, `timeout_ms` | the channel's `wait_idle(room_id, timeout)`, a realtime voice channel's or a conference's opened with `tools`: true once the room's sessions are idle within the time, false when it passed first (§12.4.1) |
 | `realtime.reconfigure` | `channel_id`, optional `room_id` (the session of that room, the channel's first when absent), optional `system_prompt`, `voice` and `tools` (tool names, each declared as the channel's tools are) | the channel's `reconfigure_session` of that session (§12.4) |
 | `realtime.usage` | `channel_id`, `input_tokens`, `output_tokens`, optional `details` (the provider's own keys and their values) | the provider reports what the channel's first session consumed (§12.4.2): the two totals, and `details` beside them |
+| `realtime.vision` | `channel_id`, `room_id`, optional `context_prefix` | gives the realtime channel's sessions in the room what the room's video channels see (§12.8.7): each vision result a video channel publishes there reaches them as a silent injection (`setup_realtime_vision`), under `context_prefix` when given, a result whose description repeats the last one injected reaching them once |
 | `parse_voice_session` | `session` (a voice session with `id`, `room_id`, `channel_id`, `participant_id` and optional `metadata`), `channel_id`, optional `metadata` | the InboundMessage made by the voice adapter (§5.12), including its session |
 | `emit_protocol_trace` | `trace`, a §5.14 record for a registered channel; its optional `raw` is text, null, or `{"base64": "..."}` for bytes | emits through the channel; the kit supplies the timestamp and dispatches the trace to its room's hooks (§9.2) |
 | `process_inbound` | `message` (an InboundMessage; its optional `session` uses the same form as `parse_voice_session`), `room_id` | an InboundResult: `event`, `blocked`, `duplicate`, `reason`, `error` (its message), `response_metadata`, `response_events`, `unavailable_targets`, `delivery_results`, `cancellation_reason` |
@@ -1411,6 +1418,51 @@ bridge frame's `sequence`, the filter's detection fields or the provider's
 `description` and `labels`. A bridge hook can replace the frame bytes in
 `event.frame.data` (base64). A vision hook can patch the analysis fields.
 `video.read.vision` reports the number of faces in each published result.
+
+The scripted stages of `video.open` (§12.8.4, §12.8.5, §12.8.9, §12.8.10):
+
+- `vision_labels` gives each vision result its labels, in the order of
+  `vision`, starting over when it is shorter; absent, the scripted
+  provider's own, which a scenario does not rely on. `vision_interval_ms` is
+  the channel's vision interval (§12.8.4); absent, 0: every frame is
+  analysed.
+- `transforms` and `filters` are the pipeline's transforms and filters, in
+  their order, each with a `name` and an optional `data` (three bytes in
+  base64): a stage with `data` hands on, in place of each frame, a frame of
+  those bytes, one without hands the frame on unchanged; each records what
+  it was handed, which `video.read` reports. The `detections` filter, when
+  given, runs before the `filters`.
+- `recorder` records each session with a scripted session recorder
+  (§12.8.10), started with a VideoRecordingConfig at the implementation's
+  defaults; `refuses` lists the participants whose recording it refuses to
+  start, failing with its own error (`provider_failed`).
+- `bridge: true` bridges the channel's sessions with the RFC's defaults;
+  absent or false, the channel has no bridge. An object instead is the
+  channel's VideoBridgeConfig (§12.8.9): `enabled`, `max_participants`,
+  `keyframe_interval_s` and `keyframe_wait_s`, each absent member the RFC's
+  default.
+
+The transport counts the keyframe requests it receives per session
+(`video.read.keyframe_requests`).
+
+An audio/video scenario (`av.open`, §12.8.3, §12.8.8) requires `video` and
+`voice`. Its transport is a voice transport whose calls may carry video, its
+`video` facet the implementation's own, which serves the video of the calls
+under each call's session id and which the transport tells when a call's
+video starts, goes live and ends. A participant in `video` has a call that
+negotiates video: the transport reports its video live as it takes the
+call, before the join binds it, or, for one in `video_later` (a subset of
+`video`), at each of its `av.video_live` steps. When a call ends (`voice.client_disconnected`) the
+transport reports its video ended, then its client gone. `avatar: true`
+gives the channel a scripted avatar, started, whose first `feed_audio`
+returns one 1×1 frame of the bytes `BwcH` in base64, every later one none,
+and which has no idle frame, and a scripted encoder that encodes a frame as
+its bytes. `av.read` waits until the avatar was fed every byte of audio the
+calls were sent and the frames it made were sent, or until a bound of the
+runner's passes (two seconds in roomkit's), and reads then. `tts` scripts the channel's TTS as `voice.open`'s does. The voice
+steps take the channel's id: `voice.say`, `voice.connect`, `voice.join`,
+`voice.client_disconnected` and `voice.read`, whose `transports` are the
+calls the combined transport received.
 
 A room recording scenario requires `recording`. The recorder uses its given
 name as its handle's id and returns `mock://<name>` as its result URL. A
@@ -2163,11 +2215,11 @@ refuses its value, a `ChannelId`).
 | `store_failed` | A store operation that failed, as a store fault (`store_fault`) makes it fail, or as a store the kit closed refuses it (`store_owner`), the store's own failure, which the call is handed (§14.1) | the store fault's error, raised as it is | `RoomKitError::Store` |
 | `channel_close_failed` | The kit's close once one or more of its channels failed to close, raised once the rest of its shutdown ran, and the same failure answered to every later close (§12.10.4) | `ExceptionGroup` from `RoomKit.close` | `RoomKitError::ExceptionGroup` |
 | `language_override_unsupported` | A session's STT language chosen on a voice channel whose recognizer reports `supports_language_override = false`, refused so that no language reaches it (§12.2) | `RuntimeError` from `VoiceChannel.set_stt_language` | — (no voice) |
-| `not_supported` | A method the voice transport or the TTS does not support: a digit sent through a transport that does not declare `dtmf_signaling` (§12.3.6), a dialogue asked of a TTS whose `max_dialogue_speakers` is 0 (§12.2) | `NotImplementedError` from `VoiceChannel.send_dtmf` or `TTSProvider.synthesize_dialogue` | — (no voice) |
+| `not_supported` | A method the voice transport, the TTS or the video of a combined transport does not support: a digit sent through a transport that does not declare `dtmf_signaling` (§12.3.6), a dialogue asked of a TTS whose `max_dialogue_speakers` is 0 (§12.2), a session asked of the `video` facet, which creates none (§12.8.3) | `NotImplementedError` from `VoiceChannel.send_dtmf`, `TTSProvider.synthesize_dialogue` or `CallVideoBackend.connect` | — (no voice) |
 | `capability_missing` | A conference operation that needs a capability the backend, or the channel's configuration, lacks: an end-to-end encrypted room asked of a backend without the E2EE capability (§12.10.2), a bot asked of a channel configured with nothing to consume or say (§12.10.4) | `ConferenceCapabilityError` | — (no conference) |
 | `session_ended` | A digit sent on a voice session that ended (§12.3.6) | `RuntimeError` from `VoiceChannel.send_dtmf`, `Cannot send DTMF on ended session …` | — (no voice) |
-| `bridge_full` | A voice join to a room whose bridge holds `max_participants` sessions already, refused before the session is bound (§12.7.2) | `RuntimeError` from `RoomKit.join`, `Room … has reached max bridge participants (…)` | — (no voice) |
-| `provider_failed` | A scripted provider's own failure, which the caller is handed: a realtime provider's connect failing the session's start (§12.4), a scripted recorder refusing its start (§12.11) | the scripted provider's error, raised as it is | — (no realtime, no recording) |
+| `bridge_full` | A join to a room whose bridge holds `max_participants` sessions already: a voice join, refused before the session is bound (§12.7.2), a video join (§12.8.9) | `RuntimeError` from `RoomKit.join`, `Room … has reached max bridge participants (…)` | — (no voice or video) |
+| `provider_failed` | A scripted provider's own failure, which the caller is handed: a realtime provider's connect failing the session's start (§12.4), a scripted recorder refusing its start (§12.11), a session video recorder refusing to start a recording, failing the session's join (§12.8.10) | the scripted provider's error, raised as it is | — (no realtime, no recording, no video) |
 | `shutdown_cancelled` | A close once the kit's shutdown was cut itself before it ended, to a caller nobody cancelled (§12.10.4) | `ShutdownCancelledError` | `RoomKitError::ShutdownCancelled` |
 | `conference_already_attached` | A conference channel attached to a room another conference channel still holds: bound to it, or with a teardown still releasing its session there (§12.10.1, §12.10.4) | `ConferenceAlreadyAttachedError` | — (no conference) |
 | `room_not_attached` | A conference channel's operation on a room it is not, or no longer, attached to: a mint, `ensure_bot()` (§12.10.4) | `RoomNotAttachedError` | — (no conference) |

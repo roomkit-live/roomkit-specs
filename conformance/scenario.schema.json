@@ -2775,6 +2775,12 @@
             "video.frame",
             "video.disconnect",
             "video.read",
+            "video.join",
+            "av.open",
+            "av.video_live",
+            "av.video_connect",
+            "av.video_disconnect",
+            "av.read",
             "recording.start",
             "recording.track",
             "recording.feed",
@@ -2817,6 +2823,7 @@
             "realtime.wait_idle",
             "realtime.reconfigure",
             "realtime.usage",
+            "realtime.vision",
             "parse_voice_session",
             "emit_protocol_trace",
             "process_inbound",
@@ -4296,7 +4303,32 @@
                 "uniqueItems": true
               },
               "bridge": {
-                "type": "boolean"
+                "oneOf": [
+                  {
+                    "type": "boolean"
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "enabled": {
+                        "type": "boolean"
+                      },
+                      "max_participants": {
+                        "type": "integer",
+                        "minimum": 1
+                      },
+                      "keyframe_interval_s": {
+                        "type": "number",
+                        "minimum": 0
+                      },
+                      "keyframe_wait_s": {
+                        "type": "number",
+                        "minimum": 0
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                ]
               },
               "vision": {
                 "type": "array",
@@ -4304,6 +4336,77 @@
                   "type": "string"
                 },
                 "minItems": 1
+              },
+              "vision_labels": {
+                "type": "array",
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "minItems": 1
+              },
+              "vision_interval_ms": {
+                "type": "number",
+                "minimum": 0
+              },
+              "transforms": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "name"
+                  ],
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "data": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z0-9+/]{4}$"
+                    }
+                  }
+                },
+                "minItems": 1
+              },
+              "filters": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "name"
+                  ],
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "data": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z0-9+/]{4}$"
+                    }
+                  }
+                },
+                "minItems": 1
+              },
+              "recorder": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "refuses": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "uniqueItems": true
+                  }
+                }
               },
               "detections": {
                 "type": "array",
@@ -4375,6 +4478,9 @@
               "data": {
                 "type": "string",
                 "pattern": "^[A-Za-z0-9+/]{4}$"
+              },
+              "keyframe": {
+                "type": "boolean"
               }
             }
           }
@@ -4420,6 +4526,214 @@
               "channel_id": {
                 "type": "string",
                 "minLength": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "video.join"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "channel_id",
+              "participant_id"
+            ],
+            "properties": {
+              "channel_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "participant_id": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "av.open"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "room_id",
+              "channel_id",
+              "participants"
+            ],
+            "properties": {
+              "room_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "channel_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "participants": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "minItems": 1,
+                "uniqueItems": true
+              },
+              "video": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              },
+              "video_later": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              },
+              "avatar": {
+                "type": "boolean"
+              },
+              "tts": {
+                "type": [
+                  "object",
+                  "null"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "av.video_live"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "channel_id",
+              "participant_id"
+            ],
+            "properties": {
+              "channel_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "participant_id": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "av.video_connect"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "channel_id",
+              "participant_id"
+            ],
+            "properties": {
+              "channel_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "participant_id": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "av.video_disconnect"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "channel_id",
+              "participant_id"
+            ],
+            "properties": {
+              "channel_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "participant_id": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "av.read"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "channel_id"
+            ],
+            "properties": {
+              "channel_id": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "realtime.vision"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "channel_id",
+              "room_id"
+            ],
+            "properties": {
+              "channel_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "room_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "context_prefix": {
+                "type": "string"
               }
             }
           }
