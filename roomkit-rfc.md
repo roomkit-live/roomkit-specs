@@ -10117,10 +10117,10 @@ channel id. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.7-030", "kind": "behavior", "
 ephemerals of §8.4 (`presence_online` / `presence_offline`, `user_id` the
 agent's channel id): as the agent is attached there, and, for an agent it
 holds by its declaration, in each active or paused room the agent is attached
-to when the executors covering it change. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.7-031", "kind": "behavior", "applies": "§10.6.7 Which agents can answer: when the owner looks at the executors, and an executor's silence. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->It looks at the executors at each
-heartbeat interval, and at once when an executor of its process other than its
-own is served or closes, so an executor's silence turns its agents offline at
-`heartbeat_timeout`, never at one late beat. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.7-032", "kind": "behavior", "applies": "§10.6.7 Which agents can answer: the presence a backend keeps per agent and room, the owners that see one change, an owner restarting. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A backend keeps the presence last
+to when the executors covering it change. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.7-031", "kind": "behavior", "applies": "§10.6.7 Which agents can answer: what a backend tells its owner of the executors of its process, when the owner looks at the executors, and an executor's silence. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A backend tells its owner when an executor
+of its process other than the owner's own is served or closes. The owner looks
+at the executors then, and at each heartbeat interval, so an executor's silence
+turns its agents offline at `heartbeat_timeout`, never at one late beat. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.7-032", "kind": "behavior", "applies": "§10.6.7 Which agents can answer: the presence a backend keeps per agent and room, the owners that see one change, an owner restarting. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A backend keeps the presence last
 published per agent and room, and each change is published by the owner that
 records it there first: of the owners that see the same change, one alone
 publishes it, and, where the backend keeps it beyond the owner's process (a
@@ -10331,6 +10331,17 @@ boundary: the executor ids and owner addresses its messages carry are not
 authenticated beyond it, so whoever can write to the transport can act as an
 executor or an owner, as whoever can read it reads the rooms' turns. It is
 restricted as the rooms are (credentials, encryption in transit).
+<!-- /rfc -->
+
+<!-- rfc: {"id": "RK-10.6.9-011", "kind": "non_testable", "applies": "§10.6.9 Telemetry and prerequisites: the two services a distributed backend reaches the other processes through, and what each keeps; a description of the transport, which each implementation's own checks of the two services hold. Enclosing capability conditions and §26 levels still apply."} -->
+**Services.** A distributed backend reaches the other processes through
+two services: a broker, which carries the messages, one inbox a process, read
+in the order posted (the messages of one post in theirs) until they are let go
+of; and a registry, which keeps what the processes share: each process's beat,
+written at the registry's time (the time of day, in milliseconds) as one
+change, a beat older than the process's last one changing nothing; the
+executor holding a room's state for a channel; the presence last published per
+agent and room. One service may give both.
 <!-- /rfc -->
 
 <!-- rfc: {"id": "RK-10.6.9-004", "kind": "behavior", "applies": "§10.6.9 Telemetry and prerequisites: what the owner keeps, read off the frames: ordering, reentry, chain depth, streamed segments, streaming targets, the turn record and the caller's turns. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->

@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "rfc_sha256": "cf46b96711b90723710eb43f1484ab4cf8cec873fa0a6bbffcfffb8d302e1ee3",
+  "rfc_sha256": "1b6c59f650eb470ceb1014a7aff5d9ce1e9c4d3a79d17abdb491cb15e2ce097f",
   "corpus_sha256": "f9644d9b33ff38f011621833cf3f507cf5fd633498b1d9decf06ef1841d6d6fc",
   "python_commit": "452ae6397f70661e0ec0f2c8db3000398f904c41",
   "scenario_count": 3946,
@@ -5916,9 +5916,9 @@
       "section": "10.6.9",
       "title": "Telemetry and prerequisites",
       "review": "normative",
-      "requirements": 8,
+      "requirements": 9,
       "mapping": {
-        "unmapped": 8
+        "unmapped": 9
       },
       "decided_gaps": {},
       "unannotated_keyword_lines": [],
@@ -27455,6 +27455,12 @@
     },
     {
       "id": "RK-10.6.9-010",
+      "section": "10.6.9",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.9-011",
       "section": "10.6.9",
       "mapping": "unmapped",
       "links": []

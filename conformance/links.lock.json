@@ -3231,10 +3231,10 @@
       "local-presence/automatic-publications-follow-local-changes": "0dbcc568f8540e2adb3a00256dc4c84a9ee2208e5ee19916fafde7917611ae06"
     },
     "RK-10.6.7-031": {
-      "executors/a-room-hook-no-executor-defines-takes-its-agent-offline-in-that-room": "359e511ccf1e5ddb1761d7702569119bc43ae3de62d1295ee83bdca865f93a7e",
-      "executors/an-agent-is-offline-in-a-room-of-an-organization-its-executors-do-not-serve": "359e511ccf1e5ddb1761d7702569119bc43ae3de62d1295ee83bdca865f93a7e",
-      "executors/an-agent-s-presence-is-published-at-once-on-a-transport-written-on-the-contract-alone": "359e511ccf1e5ddb1761d7702569119bc43ae3de62d1295ee83bdca865f93a7e",
-      "executors/an-agent-s-presence-is-published-in-its-rooms-on-attach-and-when-its-coverage-changes": "359e511ccf1e5ddb1761d7702569119bc43ae3de62d1295ee83bdca865f93a7e"
+      "executors/a-room-hook-no-executor-defines-takes-its-agent-offline-in-that-room": "32defc751879d5f06e97a60a6646dec448247205845f9caa688c21b58d4a3eef",
+      "executors/an-agent-is-offline-in-a-room-of-an-organization-its-executors-do-not-serve": "32defc751879d5f06e97a60a6646dec448247205845f9caa688c21b58d4a3eef",
+      "executors/an-agent-s-presence-is-published-at-once-on-a-transport-written-on-the-contract-alone": "32defc751879d5f06e97a60a6646dec448247205845f9caa688c21b58d4a3eef",
+      "executors/an-agent-s-presence-is-published-in-its-rooms-on-attach-and-when-its-coverage-changes": "32defc751879d5f06e97a60a6646dec448247205845f9caa688c21b58d4a3eef"
     },
     "RK-10.6.7-032": {
       "executors/owners-publish-a-coverage-change-once-across-a-restart": "e03d3b10df0f8fdcc347d3dda229fbe54988b33ff0dbd2a412f77a1e1ea5593b"

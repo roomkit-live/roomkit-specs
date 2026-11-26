@@ -2336,8 +2336,8 @@ runs once. The second run records no receipt.
 roomkit runs it in the suite's turn mode, as the cases
 `test_scenario_on_the_contract_alone[<id>]` of
 `tests/conformance/test_conformance.py`. roomkit-rs runs it in its core
-runner, across its Redis turn executor, as the test
-`every_scenario_with_executors_gives_the_same_on_the_contract_alone`.
+runner, on its distributed backend over an in-memory broker and registry, as
+the test `every_scenario_with_executors_gives_the_same_on_the_contract_alone`.
 
 The second run compares the final state, as the first does: it does not see
 what such a transport gives late. What a transport must give at once is a
@@ -2352,8 +2352,10 @@ runner names the scenario and broken rule at an implementation revision
 roomkit-rs's lists in `crates/roomkit/tests/conformance/main.rs` and each
 store's `main.rs`, which may name a list `scenarios.rs` shares, beside the
 list its shared loop reads on every store; its shared
-loop, `scenarios.rs`, reports the `executors/` area without running it, having
-no executor beside the kit). Strict
+loop, `scenarios.rs`, runs the `executors/` area on every store, the room's
+owner and its executors nodes of one distributed backend over an in-memory
+broker and registry, as roomkit's runner does out of its Redis turn mode).
+Strict
 expected failures fail the suite when they start passing; timing exceptions
 can pass on a particular run. Neither exception policy establishes conformity.
 

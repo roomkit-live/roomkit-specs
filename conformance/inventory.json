@@ -471,9 +471,9 @@
     },
     {
       "section": "10.6.7",
-      "sha256": "451d103049d5683f90ea232b985ab26b23f348e806b9b7c620f078ecf86f1d0d",
+      "sha256": "0e7a5e12e25a110a4c60e763d38c1d4f2f1645ca5be73bfd839d06866a0b6091",
       "classification": "normative",
-      "review": "Source inventory: Placement, split to one obligation per unit (RMK-1780): what an executor declares, its channel and organization entries, the owner's own executor, one executor per request, the room's state holder, a request submitted to one executor (RK-10.6.7-036 to RK-10.6.7-040, RMK-2098), and which agents can answer. Each unit keeps its conditions, exceptions and rationale; context a unit needs from its neighbours is in its applies. A deployment's executor pool binds the deployment alone and is non_testable (RK-10.6.7-008); who may reach the backend's transport shares its sentence with what organizations keep apart and stays behavior (RK-10.6.7-016). Every unit carries its level."
+      "review": "Source inventory: Placement, split to one obligation per unit (RMK-1780): what an executor declares, its channel and organization entries, the owner's own executor, one executor per request, the room's state holder, a request submitted to one executor (RK-10.6.7-036 to RK-10.6.7-040, RMK-2098), and which agents can answer. Each unit keeps its conditions, exceptions and rationale; context a unit needs from its neighbours is in its applies. A deployment's executor pool binds the deployment alone and is non_testable (RK-10.6.7-008); who may reach the backend's transport shares its sentence with what organizations keep apart and stays behavior (RK-10.6.7-016). RK-10.6.7-031 says that a backend tells its owner of the executors of its process served or closed, which the owner looks at then (RMK-2012). Every unit carries its level."
     },
     {
       "section": "10.6.8",
@@ -483,9 +483,9 @@
     },
     {
       "section": "10.6.9",
-      "sha256": "22fc022a1465bc6be025f026f1fe13d60af03f1e8c19700da92e45aa3c927e0b",
+      "sha256": "c8fba771229863d48fb338f7d65e4550ff69e58d8eb21275c4e21c5ac36cc8bf",
       "classification": "normative",
-      "review": "Source inventory: Telemetry and prerequisites, split to one obligation per unit (RMK-1780). The same timeouts in every process of a backend and the transport's trust boundary bind the deployment alone and are non_testable (RK-10.6.9-007, RK-10.6.9-010). Every unit carries its level."
+      "review": "Source inventory: Telemetry and prerequisites, split to one obligation per unit (RMK-1780). The same timeouts in every process of a backend and the transport's trust boundary bind the deployment alone and are non_testable (RK-10.6.9-007, RK-10.6.9-010). The two services a distributed backend reaches the other processes through describe its transport, which each implementation's own checks of the two services hold, and are non_testable with no level (RK-10.6.9-011, RMK-2012). Every other unit carries its level."
     },
     {
       "section": "11",
