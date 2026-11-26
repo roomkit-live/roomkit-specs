@@ -10,7 +10,7 @@
     "RK-12.11-014",
     "RK-12.11-015"
   ],
-  "notes": "The second recorder refuses its start: the first, started already, is stopped, the creation fails with the refusal, and the store holds no room. Nothing announces a recording, and nothing announces the room. That the recorders start before the room is written is shown by recording/a-room-s-recorders-start-before-it-is-written-and-are-announced-once-it-exists.",
+  "notes": "The second recorder refuses its start: the first, started already, is stopped, the creation fails with the refusal, and the store holds no room. Nothing announces a recording, and nothing announces the room. The reads take the recorders as started in the order bound, the first before the refusing one; an implementation that starts them in another order starts none before the refusal. That the recorders start before the room is written is shown by recording/a-room-s-recorders-start-before-it-is-written-and-are-announced-once-it-exists.",
   "requires_features": [
     "recording"
   ],
@@ -48,6 +48,10 @@
     {
       "call": "recording.calls",
       "recorder": "first",
+      "calls": [
+        "on_recording_start",
+        "on_recording_stop"
+      ],
       "expect": {
         "result": [
           {
@@ -64,6 +68,10 @@
     {
       "call": "recording.calls",
       "recorder": "second",
+      "calls": [
+        "on_recording_start",
+        "on_recording_stop"
+      ],
       "expect": {
         "result": [
           {

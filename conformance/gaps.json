@@ -91,6 +91,11 @@
       "card": "RMK-2066",
       "note": "step: the description of the tracks a recorder was told (R4): a voice session's track names its participant_id."
     },
+    "RK-12.11-058": {
+      "class": "phase6",
+      "card": "RMK-2066",
+      "note": "measurement: the bot leaves once the teardown's budget is spent, before the wait to release the recorder ends; no gate orders the end of that wait, so only a duration tells a release wait made apart from one made inside the teardown (conference/a-held-finalization-lets-the-bot-leave-and-the-recorder-is-released-once-it-returns shows the leave while the call runs)."
+    },
     "RK-12.12-030": {
       "class": "step",
       "card": "RMK-2066",

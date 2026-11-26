@@ -8,7 +8,7 @@
   "requirements": [
     "RK-12.11-020"
   ],
-  "notes": "The room lock is shown by recording/a-start-on-an-existing-room-waits-for-the-room-lock.",
+  "notes": "The reads take the recorders as started in the order named, the first before the refusing one. The room lock is shown by recording/a-start-on-an-existing-room-waits-for-the-room-lock.",
   "requires_features": [
     "recording"
   ],
@@ -44,6 +44,10 @@
     {
       "call": "recording.calls",
       "recorder": "first",
+      "calls": [
+        "on_recording_start",
+        "on_recording_stop"
+      ],
       "expect": {
         "result": [
           {

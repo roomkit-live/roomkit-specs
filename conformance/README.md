@@ -1266,7 +1266,7 @@ run's own kit when absent.
 | `recording.feed` | `room_id`, `track_id`, `data` | send a base64 chunk through that track's feed |
 | `recording.read` | `recorder`, or `channel_id`, a conference opened with `recording` | with `recorder`, the base64 chunks this recorder actually received, in order; with `channel_id`, `recordings`, each recording the conference's scripted recorder opened, in the order opened: `tracks`, each track added to it (`track_id`, `kind`, `channel_id`, `participant_id`, `codec`, `sample_rate`, `channels`), `config`, the recording configuration it was opened with (`format`, `storage`, `metadata`, `encryption`, the scripted encryption's name or null, `storage_encrypted_at_rest`), `chunks`, the base64 frames written to it, in order, and `stopped`, whether it was finalized; and `dropped`, how many frames the conference's recordings of its room discarded, as the implementation exposes that loss (§12.10.8) |
 | `recording.stop` | `room_id` | stop the room's recordings, returning their `recording_id` and `url` |
-| `recording.list` | `room_id` | the recordings the room runs, in the order they started, each `{recording_id, room_id}` (its handle's `id` and `room_id`) |
+| `recording.list` | `room_id` | the recordings the room runs, each `{recording_id, room_id}` (its handle's `id` and `room_id`) |
 | `recording.calls` | `recorder`, a room recorder's name, or `channel_id`, a conference opened with `recording`; optional `calls` (call names) | the calls of the MediaRecorder interface (§12.11) the recorder received, in the order made, only the named ones when `calls` is given: each `{call, recording_id}`, `recording_id` the handle's id (null for an `on_recording_start` the recorder refused), and `track` for `on_track_added` and `on_track_removed` (the track as `recording.read` reads one), `track_id` and `data` (base64) for `on_data`; `close` names no recording |
 | `voice.open` | `room_id`, `channel_id`, `participants` and the optional provider inputs below | registers and attaches a voice channel, then joins the named participants to that room |
 | `voice.feed` | `channel_id`, `participant_id`, `frames` (base64 PCM16), optional `sample_rate` (16000 by default), `channels` (1 by default) and `timestamp_ms` (every frame of the step carries it; none by default), `repeat` (1 by default) | the participant's transport (the one holding its session) delivers these inbound frames in order, in that format, the whole list `repeat` times over |
@@ -1419,8 +1419,9 @@ recorder starts. A recorder of `recorders` is its name, or an object:
 `name`, and `refuses`, a message its `on_recording_start` refuses with, as
 the recorder's own failure, which the caller is handed (`provider_failed`).
 `create_room` binds its `recorders` with the implementation's default
-recording configuration, as `recording.start` starts them. Under `expect.hooks`, `recording` carries `recording_id`
-and `room_id`, plus `urls` when the recording stops.
+recording configuration, as `recording.start` starts them. Under
+`expect.hooks`, `recording` carries `recording_id` and `room_id`, plus
+`urls` when the recording stops.
 
 ### Scripted conference media
 

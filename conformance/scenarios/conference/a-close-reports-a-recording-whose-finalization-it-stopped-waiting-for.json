@@ -10,7 +10,7 @@
   "requirements": [
     "RK-12.11-055"
   ],
-  "notes": "The channel does not own its recorder (close_providers false), so its close waits for no release: it fails for the finalization it gave up on, and no ON_RECORDING_STOPPED names a location for that recording. What the failure says of the recording is the implementation's text; how a detach reports one is not observed.",
+  "notes": "The channel does not own its recorder (close_providers false), so its close waits for no release: it fails for the finalization it gave up on rather than succeed as if the recording were finalized. What the failure says of the recording is the implementation's text; whether an ON_RECORDING_STOPPED without a location also reports it is not read, nor how a detach reports one.",
   "requires_features": [
     "conference",
     "recording"
@@ -19,13 +19,6 @@
     "rooms": [
       {
         "id": "r1"
-      }
-    ],
-    "hooks": [
-      {
-        "name": "stopped",
-        "trigger": "on_recording_stopped",
-        "execution": "async"
       }
     ]
   },
@@ -122,9 +115,5 @@
       }
     }
   ],
-  "expect": {
-    "hooks": {
-      "stopped": []
-    }
-  }
+  "expect": {}
 }

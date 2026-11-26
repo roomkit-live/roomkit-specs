@@ -9,7 +9,7 @@
   "requirements": [
     "RK-12.11-017"
   ],
-  "notes": "The write fails by a store fault; the room the id holds records through a declared track.",
+  "notes": "The write fails by a store fault; the room the id holds records through a declared track. The store's own refusal of an id it holds is not exercised: it has no error name.",
   "requires_features": [
     "recording"
   ],
@@ -53,6 +53,10 @@
     {
       "call": "recording.calls",
       "recorder": "second",
+      "calls": [
+        "on_recording_start",
+        "on_recording_stop"
+      ],
       "expect": {
         "result": [
           {

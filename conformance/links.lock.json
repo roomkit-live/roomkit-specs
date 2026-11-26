@@ -5138,11 +5138,7 @@
       "conference/a-close-reports-a-recording-whose-finalization-it-stopped-waiting-for": "2f72f05036f767e7e46bbc8bfa5de74c8bc0f680a6d93a17ce11b4b6214bca45"
     },
     "RK-12.11-057": {
-      "conference/a-held-finalization-lets-the-bot-leave-and-the-recorder-is-released-once-it-returns": "3b754d268322b513464855a1022c63816c72ebe32c744221f86ccc5632394c75",
       "conference/a-recorder-a-call-still-runs-in-past-the-release-wait-is-left-unreleased": "3b754d268322b513464855a1022c63816c72ebe32c744221f86ccc5632394c75"
-    },
-    "RK-12.11-058": {
-      "conference/a-held-finalization-lets-the-bot-leave-and-the-recorder-is-released-once-it-returns": "36c161704746e1f64fb45cc83bf121f09e94324ea4a117e4e169c417f1a6a65d"
     },
     "RK-12.11-059": {
       "conference/a-recorder-a-call-still-runs-in-past-the-release-wait-is-left-unreleased": "0765532a280afec4e6ba26da9efe64a1181179fdd185e07879bc49a57a88d87f"

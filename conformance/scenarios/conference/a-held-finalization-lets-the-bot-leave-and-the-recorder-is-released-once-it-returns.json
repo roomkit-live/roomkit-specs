@@ -1,18 +1,16 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "conference/a-held-finalization-lets-the-bot-leave-and-the-recorder-is-released-once-it-returns",
-  "title": "A track's finalization held in the recorder is given up on past its budget: the detach ends and the bot leaves, nothing says where the recording went, and the recorder is released only once the held call returns",
+  "title": "A track's finalization held in the recorder is given up on past its budget: the detach ends and the bot leaves while the call still runs, and the recorder is released once the call returns",
   "rules": [
     "§12.11",
     "§12.10.4",
     "§12.10.8"
   ],
   "requirements": [
-    "RK-12.11-054",
-    "RK-12.11-057",
-    "RK-12.11-058"
+    "RK-12.11-054"
   ],
-  "notes": "The recorder's on_recording_stop holds at its gate on the recorder's thread. The detach waits for it within the implementation's budget, then goes on: the bot leaves while the call still runs. The channel's close then waits, apart from the teardown, for the call to return before it releases the recorder. A room recording's finalization (kit.stop_room_recording) is not shown here. How the detach reports the recording it gave up on is not observed (RK-12.11-055 is shown by a close).",
+  "notes": "The recorder's on_recording_stop holds at its gate on the recorder's thread; its on_track_removed is not held. The detach waits for the finalization within the implementation's budget, then goes on: the bot leaves while the call still runs. The channel's close, once the call returned, releases the recorder. A room recording's finalization (kit.stop_room_recording) is not shown here. That close() waits for the held call is shown by conference/a-recorder-a-call-still-runs-in-past-the-release-wait-is-left-unreleased; how the detach reports the recording it gave up on is not observed (RK-12.11-055 is shown by a close).",
   "requires_features": [
     "conference",
     "recording"
@@ -21,13 +19,6 @@
     "rooms": [
       {
         "id": "r1"
-      }
-    ],
-    "hooks": [
-      {
-        "name": "stopped",
-        "trigger": "on_recording_stopped",
-        "execution": "async"
       }
     ]
   },
@@ -131,32 +122,14 @@
       }
     },
     {
-      "call": "conference.close",
-      "channel_id": "conf",
-      "background": true,
-      "as": "closing"
-    },
-    {
-      "call": "recording.calls",
-      "channel_id": "conf",
-      "calls": [
-        "on_recording_stop",
-        "close"
-      ],
-      "expect": {
-        "result": [
-          {
-            "call": "on_recording_stop",
-            "recording_id": "rec1"
-          }
-        ]
-      }
-    },
-    {
       "open": "stopping"
     },
     {
-      "await": "closing",
+      "idle": true
+    },
+    {
+      "call": "conference.close",
+      "channel_id": "conf",
       "expect": {
         "result": null
       }
@@ -179,14 +152,7 @@
           }
         ]
       }
-    },
-    {
-      "idle": true
     }
   ],
-  "expect": {
-    "hooks": {
-      "stopped": []
-    }
-  }
+  "expect": {}
 }

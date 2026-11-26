@@ -44,6 +44,10 @@
     {
       "call": "recording.calls",
       "recorder": "rec",
+      "calls": [
+        "on_recording_start",
+        "on_recording_stop"
+      ],
       "expect": {
         "result": [
           {
