@@ -1236,7 +1236,7 @@ run's own kit when absent.
 
 | Call | Arguments | Result |
 |---|---|---|
-| `conference.open` | `channel_id`, `room_id`, optional `tools`, the optional media inputs of Scripted conference media: `vad`, `stt`, `agc`, `denoiser`, `recording`, `max_queued_frames` and `address_keys`, and the optional settings of Scripted conference options: `tts`, `speak_text_events`, `interruption`, `e2ee`, `capabilities`, `occupants`, `bot_identity`, `bot_grants`, `close_room_on_detach`, `close_providers`, `identity_address_keys`, `identity_trusts_unasserted_metadata`, `recorder`, `tool_policy`, `tool_timeout_seconds` and `tool_timeouts`, the optional `faults` and `bot_joined_at` of Scripted conference faults, and the optional `realtime` and `default_grants` of Scripted conference model | attaches a conference backed by a scripted SFU to the room. Its channel speaks the text events of the room's other channels, unless `speak_text_events` says otherwise, and, without `tools`, holds a mock recognizer, or the scripted one `stt` names (Scripted conference media). With a map of tool names to handler-result strings, or to handler scripts (Scripted conference options), it holds a realtime model instead, which connects when a text broadcast arrives. A channel the implementation refuses to build, or whose attach it refuses, fails the step with the refusal's error |
+| `conference.open` | `channel_id`, `room_id`, optional `tools`, the optional media inputs of Scripted conference media: `vad`, `stt`, `agc`, `denoiser`, `recording`, `max_queued_frames` and `address_keys`, and the optional settings of Scripted conference options: `tts`, `speak_text_events`, `interruption`, `e2ee`, `capabilities`, `occupants`, `bot_identity`, `bot_grants`, `close_room_on_detach`, `close_providers`, `identity_address_keys`, `identity_trusts_unasserted_metadata`, `recorder`, `tool_policy`, `tool_timeout_seconds` and `tool_timeouts`, the optional `faults` and `bot_joined_at` of Scripted conference faults, and the optional `realtime` and `default_grants` of Scripted conference model | attaches a conference backed by a scripted SFU to the room. Its channel speaks the text events of the room's other channels, unless `speak_text_events` says otherwise, and, without `tools`, holds a mock recognizer, or the scripted one `stt` names (Scripted conference media). With a map of tool names to handler-result strings, or to handler scripts (Scripted conference options), it holds a realtime model instead, which connects once there is something for it to hear or say: a text broadcast, or the mix's first window (Scripted conference model). A channel the implementation refuses to build, or whose attach it refuses, fails the step with the refusal's error |
 | `conference.join` | `channel_id`, `participant_id`, optional `display_name`, `metadata` (the attributes the SFU itself asserts), `client_metadata` (those the participant's client supplied at join) and `asserts_provenance` (true by default) | the SFU reports a participant arriving (§12.10.2): its `metadata` holds both sets, a key in both the SFU's, and its `asserted_metadata` the first set, or null with `asserts_provenance: false`, a backend that cannot tell the two apart |
 | `conference.leave` | `channel_id`, `participant_id` | the SFU reports a participant departing |
 | `conference.feed` | `channel_id`, `track_id`, `frames` (base64 PCM16), optional `sample_rate` (16000 by default), `channels` (1 by default), `repeat` (1 by default) and `pause_ms` (Scripted conference model) | the SFU delivers these frames on the published track, in order, in that format, the whole list `repeat` times over (its `on_track_audio`); a track the bot did not subscribe to is delivered nothing. The step returns once the channel's callback returned for each frame, not once the channel processed it |
@@ -1565,8 +1565,10 @@ implementation's default when absent:
 The provider's own callbacks are the `realtime.*` steps that name the
 conference: `realtime.response`, `realtime.audio` (with `source` `provider`,
 the response's audio), `realtime.transcribe`, `realtime.speech` and
-`realtime.delegate`, each on the room's session, the one connected or, while
-its connect holds, the one it establishes. Publishing a response on the bot
+`realtime.delegate`, each on the room's session: the one connected, or, while
+its connect holds, the one it establishes, or, once the room let its session
+go (a detach, an unplug), the last one connected, whose late callback the
+channel discards. Publishing a response on the bot
 track is work an `idle` step waits for while the response has audio, or its
 end, to publish in its turn; a response that waits for the provider's next
 audio, or for its turn behind such a response, is not.
@@ -1578,7 +1580,8 @@ for a conference with no model:
   `room_id`, `input_sample_rate`, `tools` (the names it declares, in order)
   and `failed`;
 - `audio`, each window of the mix it was sent (its `send_audio`): `session`,
-  `data` (base64) and `samples` (the window's 16-bit samples);
+  `data` (base64) and `samples` (the window's 16-bit samples); and `heard`,
+  all of them as one stream, whatever the windows: `data` and `samples`;
 - `injections`, each text injected: `session`, `text`, `role` and `silent`;
 - `results`, each tool result submitted: `session`, `call_id` and `result`;
 - `delegation_outputs`, each output for a delegation: `session`,
@@ -1590,9 +1593,12 @@ for a conference with no model:
 each full window its tracks held, or found no session to send it to: a
 connect held at its gate holds it too. `conference.feed`'s `pause_ms` first
 leaves the track silent that many milliseconds: the silence the mix's own
-clock reads (§12.10.12), not an order between two calls. A
-`conference.plug` of `realtime` may take a `realtime` too, for the model it
-plugs, which declares no tools. `conference.open`'s `default_grants` are the
+clock reads (§12.10.12), not an order between two calls. The RFC sets no
+length for a mixing window (§12.7.5): a scenario reads `heard` where the
+windows do not matter, and one that reads `audio` window by window says, in
+its notes, the window it takes, one 20 ms frame of those it feeds. A
+`conference.plug` of `realtime` plugs such a model, which declares no tools,
+scripted by its optional `realtime`. `conference.open`'s `default_grants` are the
 channel's (§12.10.4 Admitting participants), a grant set as
 `conference.set_bot_grants` writes one.
 

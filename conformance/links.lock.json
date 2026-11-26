@@ -4120,6 +4120,7 @@
       "conference/a-delegation-issued-while-the-model-connects-is-answered-once-connected": "b07441229564d7c5506f65c6afe81b7f36e15a41df4218d8482c92b07e3b6d82"
     },
     "RK-12.10.12-033": {
+      "conference/a-barge-in-on-the-model-s-voice-names-the-speaker-and-closes-the-utterance": "026868aa98210f720ab71c4b4618cdd21bca083f0126a32150e5ee6f80d2bcd0",
       "conference/a-model-response-is-one-utterance-its-end-closes": "026868aa98210f720ab71c4b4618cdd21bca083f0126a32150e5ee6f80d2bcd0",
       "conference/a-model-response-the-conference-leaves-mid-utterance-ends-with-no-terminal-chunk": "026868aa98210f720ab71c4b4618cdd21bca083f0126a32150e5ee6f80d2bcd0"
     },
@@ -4873,7 +4874,7 @@
       "conference/the-setter-s-narrowing-is-applied-in-place": "431d7aee94ae4aeb8bfbabc77aefb3d74375883db935e703985e3d5148d50721"
     },
     "RK-12.10.4-206": {
-      "conference/an-in-place-grant-update-that-fails-re-joins-whichever-way-the-grants-change": "ddc1cb55aa1bcb87a472832ee5d193ed4c8f02d8939103bbfeb1bc43c2b4c2a2"
+      "conference/a-grant-change-not-applied-in-place-re-joins-whichever-way-it-goes": "ddc1cb55aa1bcb87a472832ee5d193ed4c8f02d8939103bbfeb1bc43c2b4c2a2"
     },
     "RK-12.10.4-208": {
       "conference/the-disclosure-surface-says-whether-grants-update-in-place": "81ec8458851dfd3b34fe170c5f005a3c1b70df2b8eb3dd65fe2da894350bbea4"
@@ -4885,7 +4886,8 @@
       "conference/hiding-a-visible-bot-replaces-its-session-even-where-grants-update-in-place": "a4004c0084dd679c896235512d1da7dcc3e115d5fbd65b35096baf58f0654f61"
     },
     "RK-12.10.4-211": {
-      "conference/a-grant-change-applied-in-place-is-announced": "3c8fc88df904c7622da1b60aa5b4d573697bab2a2edd8afe9636a1ac856b66d0"
+      "conference/a-grant-change-applied-in-place-is-announced": "3c8fc88df904c7622da1b60aa5b4d573697bab2a2edd8afe9636a1ac856b66d0",
+      "conference/a-grant-change-not-applied-in-place-re-joins-whichever-way-it-goes": "3c8fc88df904c7622da1b60aa5b4d573697bab2a2edd8afe9636a1ac856b66d0"
     },
     "RK-12.10.4-212": {
       "conference/a-grant-set-equal-to-the-grants-in-force-emits-nothing": "5bea4701b34882393188b95a2a405f24bff98a7b24785def04641b96975443aa"

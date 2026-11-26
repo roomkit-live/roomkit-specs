@@ -14,7 +14,7 @@
     "conference",
     "realtime"
   ],
-  "notes": "RK-12.10.12-033 in part: the utterance's opening and its end are read by conference/a-model-response-is-one-utterance-its-end-closes, its barge-in by conference/a-barge-in-on-the-model-s-voice-names-the-speaker-and-closes-the-utterance.",
+  "notes": "RK-12.10.12-033 in part, the leave: the utterance's opening and its end are read by conference/a-model-response-is-one-utterance-its-end-closes, its barge-in by conference/a-barge-in-on-the-model-s-voice-names-the-speaker-and-closes-the-utterance.",
   "setup": {
     "channels": [
       {

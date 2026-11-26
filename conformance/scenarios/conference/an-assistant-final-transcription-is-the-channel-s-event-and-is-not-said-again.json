@@ -13,7 +13,7 @@
     "conference",
     "realtime"
   ],
-  "notes": "The partial transcription makes no event; the final one is the conference's own, which the model is not handed back and the bot track does not carry.",
+  "notes": "The final transcription is the conference's own event, which the model is not handed back and the bot track does not carry.",
   "setup": {
     "channels": [
       {
@@ -55,13 +55,6 @@
     },
     {
       "idle": true
-    },
-    {
-      "call": "realtime.transcribe",
-      "channel_id": "conf",
-      "text": "It is",
-      "role": "assistant",
-      "is_final": false
     },
     {
       "call": "realtime.transcribe",

@@ -14,6 +14,7 @@
     "conference",
     "realtime"
   ],
+  "notes": "RK-12.10.12-033 in part, the response's opening and end: its barge-in is read by conference/a-barge-in-on-the-model-s-voice-names-the-speaker-and-closes-the-utterance, its leave by conference/a-model-response-the-conference-leaves-mid-utterance-ends-with-no-terminal-chunk.",
   "setup": {
     "channels": [
       {

@@ -12,7 +12,7 @@
     "conference",
     "realtime"
   ],
-  "notes": "A 20 ms frame at 16 kHz holds 320 samples; the window the model receives holds the 480 of 20 ms at the 24 kHz it declared.",
+  "notes": "A 20 ms frame at 16 kHz holds 320 samples; what the model receives of it holds the 480 of 20 ms at the 24 kHz it declared.",
   "setup": {
     "channels": [
       {
@@ -90,11 +90,9 @@
                 "input_sample_rate": 24000
               }
             ],
-            "audio": [
-              {
-                "samples": 480
-              }
-            ]
+            "heard": {
+              "samples": 480
+            }
           }
         }
       }

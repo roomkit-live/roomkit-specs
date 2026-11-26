@@ -14,7 +14,7 @@
     "conference",
     "realtime"
   ],
-  "notes": "The tool call holds at its handler's gate; once its result is sent, the room waits for the model's answer, which starts and ends while the model still hears someone: only the end of that speech lets the delivery in.",
+  "notes": "The room is not idle while the tool call holds at its handler's gate, nor once its result is sent and the model's answer has not started, nor while that answer is open: the delivery goes in once it ends. Then, while the model hears someone speak, the room is not idle until the speech ends. The idle wait is read with a short bound only where something holds the room busy.",
   "setup": {
     "channels": [
       {
@@ -83,9 +83,13 @@
       "as": "delivery"
     },
     {
-      "call": "realtime.speech",
+      "call": "realtime.wait_idle",
       "channel_id": "conf",
-      "edge": "start"
+      "room_id": "r1",
+      "timeout_ms": 150,
+      "expect": {
+        "result": false
+      }
     },
     {
       "open": "looking"
@@ -97,20 +101,12 @@
       }
     },
     {
-      "call": "conference.read",
+      "call": "realtime.wait_idle",
       "channel_id": "conf",
+      "room_id": "r1",
+      "timeout_ms": 150,
       "expect": {
-        "result": {
-          "model": {
-            "injections": [
-              {
-                "text": {
-                  "$contains": "Connect the model."
-                }
-              }
-            ]
-          }
-        }
+        "result": false
       }
     },
     {
@@ -119,6 +115,15 @@
       "edge": "start"
     },
     {
+      "call": "realtime.wait_idle",
+      "channel_id": "conf",
+      "room_id": "r1",
+      "timeout_ms": 150,
+      "expect": {
+        "result": false
+      }
+    },
+    {
       "call": "conference.read",
       "channel_id": "conf",
       "expect": {
@@ -137,28 +142,6 @@
     },
     {
       "call": "realtime.response",
-      "channel_id": "conf",
-      "edge": "end"
-    },
-    {
-      "call": "conference.read",
-      "channel_id": "conf",
-      "expect": {
-        "result": {
-          "model": {
-            "injections": [
-              {
-                "text": {
-                  "$contains": "Connect the model."
-                }
-              }
-            ]
-          }
-        }
-      }
-    },
-    {
-      "call": "realtime.speech",
       "channel_id": "conf",
       "edge": "end"
     },
@@ -188,6 +171,34 @@
             ]
           }
         }
+      }
+    },
+    {
+      "call": "realtime.speech",
+      "channel_id": "conf",
+      "edge": "start"
+    },
+    {
+      "call": "realtime.wait_idle",
+      "channel_id": "conf",
+      "room_id": "r1",
+      "timeout_ms": 150,
+      "expect": {
+        "result": false
+      }
+    },
+    {
+      "call": "realtime.speech",
+      "channel_id": "conf",
+      "edge": "end"
+    },
+    {
+      "call": "realtime.wait_idle",
+      "channel_id": "conf",
+      "room_id": "r1",
+      "timeout_ms": 2000,
+      "expect": {
+        "result": true
       }
     }
   ],

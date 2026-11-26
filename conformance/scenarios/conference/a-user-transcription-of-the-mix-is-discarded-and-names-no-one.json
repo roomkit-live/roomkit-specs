@@ -14,7 +14,7 @@
     "conference",
     "realtime"
   ],
-  "notes": "Alice is the active speaker and her lane hears her speak while the model transcribes what it heard: the timeline holds only the text that connected the model, nothing is broadcast for the transcription, and no transcription hook names anyone.",
+  "notes": "Alice is the active speaker and her lane hears her speak while the model transcribes what it heard: the timeline holds only the text that connected the model, and nothing is broadcast for the transcription. What an implementation may surface of it to observability (RK-12.10.12-022) is not read.",
   "setup": {
     "channels": [
       {
@@ -45,11 +45,6 @@
       {
         "name": "speech",
         "trigger": "on_speech_start",
-        "execution": "async"
-      },
-      {
-        "name": "heard",
-        "trigger": "on_transcription",
         "execution": "async"
       }
     ]
@@ -163,8 +158,7 @@
             "participant_id": "alice"
           }
         }
-      ],
-      "heard": []
+      ]
     }
   }
 }

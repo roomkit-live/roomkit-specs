@@ -175,6 +175,22 @@
           ]
         }
       }
+    },
+    {
+      "call": "conference.read",
+      "channel_id": "conf",
+      "calls": [
+        "stop_playback"
+      ],
+      "expect": {
+        "result": {
+          "calls": [
+            {
+              "call": "stop_playback"
+            }
+          ]
+        }
+      }
     }
   ],
   "expect": {
