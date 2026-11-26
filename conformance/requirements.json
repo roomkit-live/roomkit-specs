@@ -658,7 +658,7 @@
       "section": "10.6.9",
       "title": "Telemetry and prerequisites",
       "line": 10306,
-      "sha256": "c8fba771229863d48fb338f7d65e4550ff69e58d8eb21275c4e21c5ac36cc8bf",
+      "sha256": "12e813fbefc73199fe77238a24477e83693142746169651d968f76e85b4df17c",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
     },
@@ -24170,6 +24170,7 @@
       "id": "RK-10.6.9-011",
       "kind": "non_testable",
       "applies": "§10.6.9 Telemetry and prerequisites: the two services a distributed backend reaches the other processes through, and what each keeps; a description of the transport, which each implementation's own checks of the two services hold. Enclosing capability conditions and §26 levels still apply.",
+      "level": "may",
       "section": "10.6.9",
       "line": 10336,
       "text": "**Services.** A distributed backend reaches the other processes through\ntwo services: a broker, which carries the messages, one inbox a process, read\nin the order posted (the messages of one post in theirs) until they are let go\nof; and a registry, which keeps what the processes share: each process's beat,\nwritten at the registry's time (the time of day, in milliseconds) as one\nchange, a beat older than the process's last one changing nothing; the\nexecutor holding a room's state for a channel; the presence last published per\nagent and room. One service may give both.",

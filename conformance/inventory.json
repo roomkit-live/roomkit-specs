@@ -483,9 +483,9 @@
     },
     {
       "section": "10.6.9",
-      "sha256": "c8fba771229863d48fb338f7d65e4550ff69e58d8eb21275c4e21c5ac36cc8bf",
+      "sha256": "12e813fbefc73199fe77238a24477e83693142746169651d968f76e85b4df17c",
       "classification": "normative",
-      "review": "Source inventory: Telemetry and prerequisites, split to one obligation per unit (RMK-1780). The same timeouts in every process of a backend and the transport's trust boundary bind the deployment alone and are non_testable (RK-10.6.9-007, RK-10.6.9-010). The two services a distributed backend reaches the other processes through describe its transport, which each implementation's own checks of the two services hold, and are non_testable with no level (RK-10.6.9-011, RMK-2012). Every other unit carries its level."
+      "review": "Source inventory: Telemetry and prerequisites, split to one obligation per unit (RMK-1780). The same timeouts in every process of a backend and the transport's trust boundary bind the deployment alone and are non_testable (RK-10.6.9-007, RK-10.6.9-010). The two services a distributed backend reaches the other processes through describe its transport, which each implementation's own checks of the two services hold, and are non_testable, at level may (RK-10.6.9-011, RMK-2012). Every unit carries its level."
     },
     {
       "section": "11",

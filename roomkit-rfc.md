@@ -10333,7 +10333,7 @@ executor or an owner, as whoever can read it reads the rooms' turns. It is
 restricted as the rooms are (credentials, encryption in transit).
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-10.6.9-011", "kind": "non_testable", "applies": "§10.6.9 Telemetry and prerequisites: the two services a distributed backend reaches the other processes through, and what each keeps; a description of the transport, which each implementation's own checks of the two services hold. Enclosing capability conditions and §26 levels still apply."} -->
+<!-- rfc: {"id": "RK-10.6.9-011", "kind": "non_testable", "applies": "§10.6.9 Telemetry and prerequisites: the two services a distributed backend reaches the other processes through, and what each keeps; a description of the transport, which each implementation's own checks of the two services hold. Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->
 **Services.** A distributed backend reaches the other processes through
 two services: a broker, which carries the messages, one inbox a process, read
 in the order posted (the messages of one post in theirs) until they are let go
