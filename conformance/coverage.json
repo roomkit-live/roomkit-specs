@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "f11279ccbbde1043727704d570a7b8b5c7e9cb62cf6b79ef0f257316f1cf046e",
-  "corpus_sha256": "904e2286ba538e5a64904076665bf270628ef2569d1451b25135e70d435f2c7b",
+  "corpus_sha256": "36811d38774bb51238c5313ba4360c25f51816e9f137db762e314771bacc9a50",
   "python_commit": "452ae6397f70661e0ec0f2c8db3000398f904c41",
-  "scenario_count": 3901,
+  "scenario_count": 3902,
   "sections": [
     {
       "section": "0",
@@ -7733,9 +7733,7 @@
       "mapping": {
         "unmapped": 9
       },
-      "decided_gaps": {
-        "writable": 1
-      },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "conference/a-barge-in-drops-the-model-response-waiting-for-its-turn",
@@ -7746,7 +7744,8 @@
         "conference/confirmed-waits-for-one-track-s-sustained-speech",
         "conference/scope-allowlist-lets-only-listed-participants-cut-the-bot",
         "conference/scope-none-lets-the-bot-finish",
-        "conference/semantic-interruption-is-refused-in-a-conference"
+        "conference/semantic-interruption-is-refused-in-a-conference",
+        "conference/the-asker-can-cut-the-answer-to-their-question"
       ]
     },
     {
@@ -35055,12 +35054,7 @@
       "id": "RK-12.10.5-003",
       "section": "12.10.5",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-2076",
-        "note": "writable: conference/any-participant-s-speech-cuts-the-bot-off observes the plain case. Held by HITL 93033b15: in Python, a track whose previous utterance is still being routed does not interrupt the bot, its lane waiting for that routing, the answer's delivery to the conference included."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.5-004",
