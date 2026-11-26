@@ -86,11 +86,6 @@
       "card": "RMK-2007",
       "note": "measurement: the close's whole duration bound (the grace, the turn backend's budget, the closes, at most two unwinds of 1 second); no step reads elapsed time."
     },
-    "RK-12.11-038": {
-      "class": "step",
-      "card": "RMK-2066",
-      "note": "step: the description of the tracks a recorder was told (R4): a voice session's track names its participant_id."
-    },
     "RK-12.11-058": {
       "class": "phase6",
       "card": "RMK-2066",

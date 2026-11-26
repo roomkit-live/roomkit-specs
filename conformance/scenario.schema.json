@@ -477,6 +477,10 @@
           "type": "integer",
           "minimum": 1
         },
+        "recording": {
+          "description": "true: a room that records records the channel's sessions' audio, each session's a track of its own (\u00a712.11).",
+          "type": "boolean"
+        },
         "system_prompt": {
           "description": "The channel's system prompt, which a session starts with unless it or its room sets one (\u00a712.4).",
           "type": "string"

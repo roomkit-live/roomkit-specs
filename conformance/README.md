@@ -567,7 +567,9 @@ written as an agent's (§24.3), with `script_executor` its executor fixture,
 whose calls `expect.script_executors` reads under the channel's id;
 `tool_search`, `tool_search_pinned` and `tool_search_threshold`, its Tool
 Search (§6.4); `tool_result_max_length`, its bound on what the model reads of
-a result (§21.5); `tool_handler: false`, a channel with no tool handler,
+a result (§21.5); `recording: true`, a channel whose sessions' audio a
+room that records records, each session's a track (§12.11); `tool_handler:
+false`, a channel with no tool handler,
 whose calls fall to the ON_TOOL_CALL hooks (§21.4); `system_prompt` and
 `voice`, the channel's, which a session starts with unless it or its room
 sets its own (§12.4); and `on_usage`, a callback registered with the
