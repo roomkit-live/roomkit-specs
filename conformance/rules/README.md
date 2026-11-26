@@ -36,7 +36,7 @@ proof: a scenario can cite a unit without covering all of it.
 | [§9 Hook System](section-9.md) | 350 | 343 | 3 | 4 | 0 | 333 | 1342 | 0 | 0 | 0 | 0 | 0 |
 | [§10 Processing Pipelines](section-10.md) | 651 | 631 | 7 | 13 | 0 | 592 | 2275 | 0 | 0 | 0 | 0 | 0 |
 | [§11 Identity Resolution](section-11.md) | 110 | 108 | 2 | 0 | 0 | 91 | 381 | 0 | 11 | 5 | 4 | 2 |
-| [§12 Voice and Realtime Media](section-12.md) | 1299 | 1185 | 73 | 38 | 3 | 822 | 1090 | 0 | 18 | 2 | 16 | 7 |
+| [§12 Voice and Realtime Media](section-12.md) | 1299 | 1185 | 73 | 38 | 3 | 823 | 1092 | 0 | 17 | 2 | 15 | 7 |
 | [§13 Resilience and Error Handling](section-13.md) | 97 | 88 | 7 | 2 | 0 | 58 | 255 | 0 | 29 | 16 | 15 | 0 |
 | [§14 Storage Interface](section-14.md) | 110 | 107 | 1 | 2 | 0 | 69 | 146 | 0 | 31 | 8 | 23 | 0 |
 | [§15 Observability](section-15.md) | 71 | 58 | 11 | 1 | 1 | 35 | 59 | 0 | 19 | 6 | 11 | 5 |
