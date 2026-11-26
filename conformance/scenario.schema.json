@@ -2758,6 +2758,7 @@
             "conference.unmute",
             "conference.connection_quality",
             "conference.tool_call",
+            "conference.cancel",
             "conference.feed",
             "conference.settle",
             "conference.read",
@@ -3049,44 +3050,83 @@
               "tools": {
                 "type": "object",
                 "additionalProperties": {
-                  "type": "string"
-                }
-              },
-              "vad": {
-                "type": "array",
-                "items": {
                   "oneOf": [
                     {
-                      "type": "null"
+                      "type": "string"
                     },
                     {
                       "type": "object",
                       "properties": {
-                        "type": {
-                          "enum": [
-                            "speech_start",
-                            "speech_end",
-                            "audio_level",
-                            "silence"
-                          ]
+                        "gate": {
+                          "type": "string",
+                          "minLength": 1
                         },
-                        "duration_ms": {
-                          "type": "number"
+                        "result": {
+                          "type": "string"
                         },
-                        "confidence": {
-                          "type": "number"
-                        },
-                        "level_db": {
-                          "type": "number"
+                        "fails": {
+                          "type": "string"
                         }
                       },
-                      "required": [
-                        "type"
+                      "oneOf": [
+                        {
+                          "required": [
+                            "result"
+                          ]
+                        },
+                        {
+                          "required": [
+                            "fails"
+                          ]
+                        }
                       ],
                       "additionalProperties": false
                     }
                   ]
                 }
+              },
+              "vad": {
+                "oneOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "type": "array",
+                    "items": {
+                      "oneOf": [
+                        {
+                          "type": "null"
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "enum": [
+                                "speech_start",
+                                "speech_end",
+                                "audio_level",
+                                "silence"
+                              ]
+                            },
+                            "duration_ms": {
+                              "type": "number"
+                            },
+                            "confidence": {
+                              "type": "number"
+                            },
+                            "level_db": {
+                              "type": "number"
+                            }
+                          },
+                          "required": [
+                            "type"
+                          ],
+                          "additionalProperties": false
+                        }
+                      ]
+                    }
+                  }
+                ]
               },
               "stt": {
                 "oneOf": [
@@ -3285,6 +3325,161 @@
                   "minLength": 1
                 },
                 "uniqueItems": true
+              },
+              "tts": {
+                "$ref": "#/$defs/scripted_tts"
+              },
+              "speak_text_events": {
+                "type": [
+                  "boolean",
+                  "null"
+                ]
+              },
+              "interruption": {
+                "type": "object",
+                "properties": {
+                  "strategy": {
+                    "enum": [
+                      "immediate",
+                      "confirmed",
+                      "semantic",
+                      "disabled"
+                    ]
+                  },
+                  "scope": {
+                    "enum": [
+                      "any",
+                      "none",
+                      "allowlist"
+                    ]
+                  },
+                  "allowlist": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "uniqueItems": true
+                  }
+                },
+                "additionalProperties": false
+              },
+              "e2ee": {
+                "type": "boolean"
+              },
+              "capabilities": {
+                "type": "array",
+                "items": {
+                  "enum": [
+                    "screen_share",
+                    "sip_gateway",
+                    "active_speaker",
+                    "connection_quality",
+                    "video_publish",
+                    "remote_unmute",
+                    "bot_grant_update",
+                    "e2ee"
+                  ]
+                },
+                "uniqueItems": true
+              },
+              "occupants": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              },
+              "bot_identity": {
+                "type": "string",
+                "minLength": 1
+              },
+              "bot_grants": {
+                "type": "object",
+                "properties": {
+                  "publish_audio": {
+                    "type": "boolean"
+                  },
+                  "publish_video": {
+                    "type": "boolean"
+                  },
+                  "publish_screen_share": {
+                    "type": "boolean"
+                  },
+                  "publish_screen_share_audio": {
+                    "type": "boolean"
+                  },
+                  "subscribe": {
+                    "type": "boolean"
+                  },
+                  "moderate": {
+                    "type": "boolean"
+                  },
+                  "hidden": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "close_room_on_detach": {
+                "type": "boolean"
+              },
+              "close_providers": {
+                "type": "boolean"
+              },
+              "identity_address_keys": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              },
+              "identity_trusts_unasserted_metadata": {
+                "type": "boolean"
+              },
+              "recorder": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "minLength": 1
+              },
+              "tool_policy": {
+                "type": "object",
+                "properties": {
+                  "allow": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "deny": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "additionalProperties": false
+              },
+              "tool_timeout_seconds": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "exclusiveMinimum": 0
+              },
+              "tool_timeouts": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": [
+                    "number",
+                    "null"
+                  ],
+                  "exclusiveMinimum": 0
+                }
               }
             }
           }
@@ -3431,6 +3626,34 @@
               },
               "arguments": {
                 "type": "object"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "conference.cancel"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "channel_id",
+              "call_ids"
+            ],
+            "properties": {
+              "channel_id": {
+                "type": "string"
+              },
+              "call_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "minItems": 1
               }
             }
           }
@@ -9356,6 +9579,7 @@
         "shutdown_cancelled",
         "language_override_unsupported",
         "not_supported",
+        "capability_missing",
         "session_ended",
         "bridge_full",
         "provider_failed"

@@ -1223,3 +1223,47 @@ class SchemaTests(unittest.TestCase):
                 scenario = json.loads(fixture.read_text())
                 scenario["steps"].append(step)
                 self.assertEqual(validator.is_valid(scenario), valid)
+
+    def test_a_conference_opens_with_its_options_and_cancels_calls(self) -> None:
+        schema = json.loads((ROOT / "scenario.schema.json").read_text())
+        validator = Draft202012Validator(schema)
+        fixture = (
+            ROOT / "scenarios/conference/an-abandoned-conference-call-interrupts-its-handler-and-sends-nothing.json"
+        )
+        self.assertTrue(validator.is_valid(json.loads(fixture.read_text())))
+        opened = {"call": "conference.open", "channel_id": "conf", "room_id": "r1"}
+        for step, valid in (
+            ({**opened, "tts": {"gates": ["held"]}, "speak_text_events": False}, True),
+            ({**opened, "interruption": {"strategy": "confirmed", "scope": "allowlist",
+                                         "allowlist": ["alice"]}}, True),
+            ({**opened, "interruption": {"strategy": "eventually"}}, False),
+            ({**opened, "interruption": {"scope": "some"}}, False),
+            ({**opened, "e2ee": True, "capabilities": ["e2ee", "bot_grant_update"]}, True),
+            ({**opened, "capabilities": ["vision"]}, False),
+            ({**opened, "occupants": ["alice"], "bot_identity": "assistant"}, True),
+            ({**opened, "bot_grants": {"subscribe": True, "hidden": True}}, True),
+            ({**opened, "bot_grants": {"vision": True}}, False),
+            ({**opened, "close_room_on_detach": True, "close_providers": False}, True),
+            ({**opened, "identity_address_keys": ["badge"],
+              "identity_trusts_unasserted_metadata": True}, True),
+            ({**opened, "recorder": None, "recording": {}}, True),
+            ({**opened, "recorder": ""}, False),
+            ({**opened, "vad": None}, True),
+            ({**opened, "tools": {"lookup": {"gate": "held", "result": "found"}}}, True),
+            ({**opened, "tools": {"lookup": {"fails": "no"}}, "speak_text_events": None}, True),
+            ({**opened, "tools": {"lookup": {"gate": "held"}}}, False),
+            ({**opened, "tools": {"lookup": {"result": "found", "fails": "no"}}}, False),
+            ({**opened, "tools": {"lookup": {"returns": "found"}}}, False),
+            ({**opened, "tool_policy": {"deny": ["erase"]}, "tool_timeout_seconds": None,
+              "tool_timeouts": {"slow": 0.05}}, True),
+            ({**opened, "tool_timeouts": {"slow": 0}}, False),
+            ({"call": "conference.cancel", "channel_id": "conf", "call_ids": ["c1"]}, True),
+            ({"call": "conference.cancel", "channel_id": "conf", "call_ids": []}, False),
+            ({"call": "conference.cancel", "channel_id": "conf"}, False),
+            ({"call": "conference.ensure_bot", "channel_id": "conf", "room_id": "r1",
+              "expect": {"error": {"name": "capability_missing"}}}, True),
+        ):
+            with self.subTest(step=step):
+                scenario = json.loads(fixture.read_text())
+                scenario["steps"].append(step)
+                self.assertEqual(validator.is_valid(scenario), valid)
