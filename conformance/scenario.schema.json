@@ -15689,6 +15689,12 @@
             "sse"
           ]
         },
+        "era": {
+          "description": "The MCP revision the peer speaks: absent, a server of an earlier revision (it refuses server/discover and takes the initialize handshake); 2026-07-28, a server that answers server/discover, takes no handshake and keeps no session.",
+          "enum": [
+            "2026-07-28"
+          ]
+        },
         "initializations": {
           "type": "array",
           "minItems": 1,
