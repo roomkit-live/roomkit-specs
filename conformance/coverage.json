@@ -72,7 +72,7 @@
         "unmapped": 12
       },
       "decided_gaps": {
-        "step": 4
+        "step": 1
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -1008,7 +1008,7 @@
       },
       "decided_gaps": {
         "phase6": 4,
-        "step": 53,
+        "step": 51,
         "writable": 73
       },
       "unannotated_keyword_lines": [],
@@ -2315,7 +2315,7 @@
         "unmapped": 4
       },
       "decided_gaps": {
-        "step": 4
+        "step": 2
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -2367,7 +2367,7 @@
         "unmapped": 70
       },
       "decided_gaps": {
-        "step": 7,
+        "step": 5,
         "writable": 9
       },
       "unannotated_keyword_lines": [],
@@ -2489,9 +2489,7 @@
       "mapping": {
         "unmapped": 10
       },
-      "decided_gaps": {
-        "step": 8
-      },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -2794,7 +2792,7 @@
         "unmapped": 10
       },
       "decided_gaps": {
-        "step": 2,
+        "step": 1,
         "writable": 2
       },
       "unannotated_keyword_lines": [],
@@ -8925,7 +8923,7 @@
         "unmapped": 28
       },
       "decided_gaps": {
-        "phase6": 15
+        "phase6": 12
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -11783,7 +11781,7 @@
         "unmapped": 6
       },
       "decided_gaps": {
-        "step": 4
+        "step": 3
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
@@ -12142,7 +12140,7 @@
         "unmapped": 6
       },
       "decided_gaps": {
-        "step": 4
+        "step": 3
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
@@ -12357,12 +12355,7 @@
       "id": "RK-1.4-005",
       "section": "1.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1965",
-        "note": "The matcher reads an absent member as null, so a null field written cannot be told from one left out."
-      }
+      "links": []
     },
     {
       "id": "RK-1.4-006",
@@ -12398,23 +12391,13 @@
       "id": "RK-1.4-011",
       "section": "1.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1965",
-        "note": "No record a shared step reads holds a bytes field outside protocol traces and media frames."
-      }
+      "links": []
     },
     {
       "id": "RK-1.4-012",
       "section": "1.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1965",
-        "note": "The runners rewrite every instant to @n before matching, so a datetime's UTC form is not compared as written."
-      }
+      "links": []
     },
     {
       "id": "RK-1.4-013",
@@ -16332,12 +16315,7 @@
       "id": "RK-6.4-306",
       "section": "6.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1940",
-        "note": "Needs a scripted transport provider that opens a string as a local path, in both runners, and a requires_features name such as transport_provider (decision D1)."
-      }
+      "links": []
     },
     {
       "id": "RK-6.4-307",
@@ -18103,12 +18081,7 @@
       "id": "RK-6.4-486",
       "section": "6.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1951",
-        "note": "Needs a real stdio launch of an ACP agent command in both runners."
-      }
+      "links": []
     },
     {
       "id": "RK-6.4-487",
@@ -18724,23 +18697,13 @@
       "id": "RK-6.5-003",
       "section": "6.5",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1955",
-        "note": "Needs a scripted source provider in both runners; roomkit-rs has no sources (tier 1b), feature name source_provider proposed."
-      }
+      "links": []
     },
     {
       "id": "RK-6.5-004",
       "section": "6.5",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1955",
-        "note": "Needs a scripted source provider in both runners; roomkit-rs has no sources (tier 1b), feature name source_provider proposed."
-      }
+      "links": []
     },
     {
       "id": "RK-6.5-005",
@@ -19046,23 +19009,13 @@
       "id": "RK-6.7-021",
       "section": "6.7",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1955",
-        "note": "Needs a step that lists a provider's models."
-      }
+      "links": []
     },
     {
       "id": "RK-6.7-022",
       "section": "6.7",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1955",
-        "note": "Needs a step that lists a provider's models."
-      }
+      "links": []
     },
     {
       "id": "RK-6.7-023",
@@ -19625,89 +19578,49 @@
       "id": "RK-6.8-003",
       "section": "6.8",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1955",
-        "note": "Needs a step that asks a classifier its questions (a scripted or mock classifier) in both runners; feature name classifier_dispatch proposed."
-      }
+      "links": []
     },
     {
       "id": "RK-6.8-004",
       "section": "6.8",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1955",
-        "note": "Needs a step that asks a classifier its questions (a scripted or mock classifier) in both runners; feature name classifier_dispatch proposed."
-      }
+      "links": []
     },
     {
       "id": "RK-6.8-005",
       "section": "6.8",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1955",
-        "note": "Needs a step that asks a classifier its questions (a scripted or mock classifier) in both runners; feature name classifier_dispatch proposed."
-      }
+      "links": []
     },
     {
       "id": "RK-6.8-006",
       "section": "6.8",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1955",
-        "note": "Needs a step that asks a classifier its questions (a scripted or mock classifier) in both runners; feature name classifier_dispatch proposed."
-      }
+      "links": []
     },
     {
       "id": "RK-6.8-007",
       "section": "6.8",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1955",
-        "note": "Needs a step that asks a classifier its questions (a scripted or mock classifier) in both runners; feature name classifier_dispatch proposed."
-      }
+      "links": []
     },
     {
       "id": "RK-6.8-008",
       "section": "6.8",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1955",
-        "note": "Needs a step that asks a classifier its questions (a scripted or mock classifier) in both runners; feature name classifier_dispatch proposed."
-      }
+      "links": []
     },
     {
       "id": "RK-6.8-009",
       "section": "6.8",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1955",
-        "note": "Needs a step that asks a classifier its questions (a scripted or mock classifier) in both runners; feature name classifier_dispatch proposed."
-      }
+      "links": []
     },
     {
       "id": "RK-6.8-010",
       "section": "6.8",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1955",
-        "note": "Needs a step that asks a classifier its questions (a scripted or mock classifier) in both runners; feature name classifier_dispatch proposed."
-      }
+      "links": []
     },
     {
       "id": "RK-6.8-011",
@@ -20740,12 +20653,7 @@
       "id": "RK-8.1-008",
       "section": "8.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1912",
-        "note": "Needs a persistent store shared by two connections or processes."
-      }
+      "links": []
     },
     {
       "id": "RK-8.1-009",
@@ -41458,12 +41366,7 @@
       "id": "RK-17.6-014",
       "section": "17.6",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1986",
-        "note": "step: recording.start encryption options: a recorder that fails closed when neither encryption setting is set, a recording of video alone included."
-      }
+      "links": []
     },
     {
       "id": "RK-17.6-015",
@@ -41564,12 +41467,7 @@
       "id": "RK-17.6-025",
       "section": "17.6",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1986",
-        "note": "step: a scripted voice-replication provider: a custom voice's recordings handed to the synthesizer for the call and kept nowhere."
-      }
+      "links": []
     },
     {
       "id": "RK-17.6-026",
@@ -41586,12 +41484,7 @@
       "id": "RK-17.6-027",
       "section": "17.6",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1986",
-        "note": "step: a scripted voice-replication provider: no custom voice created without the consent of the person it belongs to."
-      }
+      "links": []
     },
     {
       "id": "RK-17.6-028",
@@ -53797,12 +53690,7 @@
       "id": "RK-A.4-004",
       "section": "A.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1961",
-        "note": "Needs a scripted source provider in the runners; roomkit-rs has no sources (tier 1b), feature name source_provider proposed."
-      }
+      "links": []
     },
     {
       "id": "RK-A.4-005",
@@ -55064,12 +54952,7 @@
       "id": "RK-A.13-007",
       "section": "A.13",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1961",
-        "note": "Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed."
-      }
+      "links": []
     },
     {
       "id": "RK-A.14-002",

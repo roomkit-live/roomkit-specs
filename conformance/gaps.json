@@ -1,21 +1,6 @@
 {
   "version": 1,
   "units": {
-    "RK-1.4-005": {
-      "class": "step",
-      "card": "RMK-1965",
-      "note": "The matcher reads an absent member as null, so a null field written cannot be told from one left out."
-    },
-    "RK-1.4-011": {
-      "class": "step",
-      "card": "RMK-1965",
-      "note": "No record a shared step reads holds a bytes field outside protocol traces and media frames."
-    },
-    "RK-1.4-012": {
-      "class": "step",
-      "card": "RMK-1965",
-      "note": "The runners rewrite every instant to @n before matching, so a datetime's UTC form is not compared as written."
-    },
     "RK-1.4-013": {
       "class": "step",
       "card": "RMK-1965",
@@ -576,11 +561,6 @@
       "card": "RMK-1986",
       "note": "step: a consent mode on recording.start: a recording started only once the parties its mode names consented; no implementation offers consent modes (suspect RMK-1985)."
     },
-    "RK-17.6-014": {
-      "class": "phase6",
-      "card": "RMK-1986",
-      "note": "step: recording.start encryption options: a recorder that fails closed when neither encryption setting is set, a recording of video alone included."
-    },
     "RK-17.6-017": {
       "class": "phase6",
       "card": "RMK-1986",
@@ -616,20 +596,10 @@
       "card": "RMK-1986",
       "note": "step: voice.read of the TTS call, voice.open TTS options: under DTMF redaction, a user turn with detected DTMF keeps no context audio."
     },
-    "RK-17.6-025": {
-      "class": "phase6",
-      "card": "RMK-1986",
-      "note": "step: a scripted voice-replication provider: a custom voice's recordings handed to the synthesizer for the call and kept nowhere."
-    },
     "RK-17.6-026": {
       "class": "phase6",
       "card": "RMK-1986",
       "note": "step: a scripted voice-replication provider: a custom voice's evidence kept as metadata."
-    },
-    "RK-17.6-027": {
-      "class": "phase6",
-      "card": "RMK-1986",
-      "note": "step: a scripted voice-replication provider: no custom voice created without the consent of the person it belongs to."
     },
     "RK-17.6-030": {
       "class": "phase6",
@@ -3169,11 +3139,6 @@
       "card": "RMK-1940",
       "note": "A standalone instruction's turn on an agent with a memory provider, no memory in its request."
     },
-    "RK-6.4-306": {
-      "class": "step",
-      "card": "RMK-1940",
-      "note": "Needs a scripted transport provider that opens a string as a local path, in both runners, and a requires_features name such as transport_provider (decision D1)."
-    },
     "RK-6.4-316": {
       "class": "step",
       "card": "RMK-1940",
@@ -3344,11 +3309,6 @@
       "card": "RMK-1951",
       "note": "The scripted agent answers initialize with another protocol version (acp.agent.initialize.protocol_version): the channel fails clearly."
     },
-    "RK-6.4-486": {
-      "class": "step",
-      "card": "RMK-1951",
-      "note": "Needs a real stdio launch of an ACP agent command in both runners."
-    },
     "RK-6.4-488": {
       "class": "writable",
       "card": "RMK-1951",
@@ -3395,16 +3355,6 @@
       "note": "Needs a step that reads a channel's provider and provider_name."
     },
     "RK-6.5-001": {
-      "class": "step",
-      "card": "RMK-1955",
-      "note": "Needs a scripted source provider in both runners; roomkit-rs has no sources (tier 1b), feature name source_provider proposed."
-    },
-    "RK-6.5-003": {
-      "class": "step",
-      "card": "RMK-1955",
-      "note": "Needs a scripted source provider in both runners; roomkit-rs has no sources (tier 1b), feature name source_provider proposed."
-    },
-    "RK-6.5-004": {
       "class": "step",
       "card": "RMK-1955",
       "note": "Needs a scripted source provider in both runners; roomkit-rs has no sources (tier 1b), feature name source_provider proposed."
@@ -3469,16 +3419,6 @@
       "card": "RMK-1955",
       "note": "Needs a scripted model that streams text only (generate_stream), in both runners."
     },
-    "RK-6.7-021": {
-      "class": "step",
-      "card": "RMK-1955",
-      "note": "Needs a step that lists a provider's models."
-    },
-    "RK-6.7-022": {
-      "class": "step",
-      "card": "RMK-1955",
-      "note": "Needs a step that lists a provider's models."
-    },
     "RK-6.7-070": {
       "class": "writable",
       "card": "RMK-1955",
@@ -3538,51 +3478,6 @@
       "class": "step",
       "card": "RMK-1955",
       "note": "Needs a scripted model that streams text only (generate_stream), in both runners."
-    },
-    "RK-6.8-003": {
-      "class": "step",
-      "card": "RMK-1955",
-      "note": "Needs a step that asks a classifier its questions (a scripted or mock classifier) in both runners; feature name classifier_dispatch proposed."
-    },
-    "RK-6.8-004": {
-      "class": "step",
-      "card": "RMK-1955",
-      "note": "Needs a step that asks a classifier its questions (a scripted or mock classifier) in both runners; feature name classifier_dispatch proposed."
-    },
-    "RK-6.8-005": {
-      "class": "step",
-      "card": "RMK-1955",
-      "note": "Needs a step that asks a classifier its questions (a scripted or mock classifier) in both runners; feature name classifier_dispatch proposed."
-    },
-    "RK-6.8-006": {
-      "class": "step",
-      "card": "RMK-1955",
-      "note": "Needs a step that asks a classifier its questions (a scripted or mock classifier) in both runners; feature name classifier_dispatch proposed."
-    },
-    "RK-6.8-007": {
-      "class": "step",
-      "card": "RMK-1955",
-      "note": "Needs a step that asks a classifier its questions (a scripted or mock classifier) in both runners; feature name classifier_dispatch proposed."
-    },
-    "RK-6.8-008": {
-      "class": "step",
-      "card": "RMK-1955",
-      "note": "Needs a step that asks a classifier its questions (a scripted or mock classifier) in both runners; feature name classifier_dispatch proposed."
-    },
-    "RK-6.8-009": {
-      "class": "step",
-      "card": "RMK-1955",
-      "note": "Needs a step that asks a classifier its questions (a scripted or mock classifier) in both runners; feature name classifier_dispatch proposed."
-    },
-    "RK-6.8-010": {
-      "class": "step",
-      "card": "RMK-1955",
-      "note": "Needs a step that asks a classifier its questions (a scripted or mock classifier) in both runners; feature name classifier_dispatch proposed."
-    },
-    "RK-8.1-008": {
-      "class": "step",
-      "card": "RMK-1912",
-      "note": "Needs a persistent store shared by two connections or processes."
     },
     "RK-8.1-009": {
       "class": "step",
@@ -3964,11 +3859,6 @@
       "card": "RMK-1961",
       "note": "Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed. The text differs from Python's signature (RMK-1966)."
     },
-    "RK-A.13-007": {
-      "class": "step",
-      "card": "RMK-1961",
-      "note": "Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed."
-    },
     "RK-A.14-002": {
       "class": "step",
       "card": "RMK-1961",
@@ -4108,11 +3998,6 @@
       "class": "step",
       "card": "RMK-1961",
       "note": "Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed."
-    },
-    "RK-A.4-004": {
-      "class": "step",
-      "card": "RMK-1961",
-      "note": "Needs a scripted source provider in the runners; roomkit-rs has no sources (tier 1b), feature name source_provider proposed."
     },
     "RK-A.4-005": {
       "class": "step",

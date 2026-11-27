@@ -25,14 +25,14 @@ proof: a scenario can cite a unit without covering all of it.
 | Section | Units | must | should | may | No level | Cited units | Citations | To reread | Gaps | Decided writable | Decided step | Decided phase6 |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 | [§0 Preface (Abstract and contents)](section-0.md) | 1 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| [§1 Conventions and Terminology](section-1.md) | 15 | 11 | 0 | 1 | 3 | 6 | 7 | 0 | 4 | 0 | 4 | 0 |
+| [§1 Conventions and Terminology](section-1.md) | 15 | 11 | 0 | 1 | 3 | 6 | 7 | 0 | 1 | 0 | 1 | 0 |
 | [§2 Introduction](section-2.md) | 4 | 0 | 0 | 0 | 4 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | [§3 Architecture Overview](section-3.md) | 3 | 0 | 0 | 0 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | [§4 Core Concepts](section-4.md) | 11 | 0 | 0 | 0 | 11 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | [§5 Data Models](section-5.md) | 184 | 171 | 9 | 4 | 0 | 169 | 676 | 0 | 0 | 0 | 0 | 0 |
-| [§6 Channel System](section-6.md) | 661 | 644 | 7 | 10 | 0 | 425 | 2692 | 0 | 181 | 98 | 81 | 4 |
+| [§6 Channel System](section-6.md) | 661 | 644 | 7 | 10 | 0 | 425 | 2692 | 0 | 167 | 98 | 67 | 4 |
 | [§7 Permission Model](section-7.md) | 85 | 84 | 0 | 1 | 0 | 83 | 339 | 0 | 0 | 0 | 0 | 0 |
-| [§8 Event System](section-8.md) | 177 | 176 | 1 | 0 | 0 | 119 | 1211 | 0 | 55 | 20 | 16 | 19 |
+| [§8 Event System](section-8.md) | 177 | 176 | 1 | 0 | 0 | 119 | 1211 | 0 | 54 | 20 | 15 | 19 |
 | [§9 Hook System](section-9.md) | 350 | 343 | 3 | 4 | 0 | 333 | 1342 | 0 | 0 | 0 | 0 | 0 |
 | [§10 Processing Pipelines](section-10.md) | 652 | 631 | 7 | 14 | 0 | 592 | 2275 | 0 | 0 | 0 | 0 | 0 |
 | [§11 Identity Resolution](section-11.md) | 110 | 108 | 2 | 0 | 0 | 91 | 381 | 0 | 11 | 5 | 4 | 2 |
@@ -41,7 +41,7 @@ proof: a scenario can cite a unit without covering all of it.
 | [§14 Storage Interface](section-14.md) | 110 | 107 | 1 | 2 | 0 | 69 | 146 | 0 | 31 | 8 | 23 | 0 |
 | [§15 Observability](section-15.md) | 71 | 58 | 11 | 1 | 1 | 35 | 59 | 0 | 19 | 6 | 11 | 5 |
 | [§16 Integration Surfaces](section-16.md) | 12 | 4 | 8 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| [§17 Security Considerations](section-17.md) | 78 | 62 | 16 | 0 | 0 | 24 | 165 | 0 | 31 | 0 | 14 | 20 |
+| [§17 Security Considerations](section-17.md) | 78 | 62 | 16 | 0 | 0 | 24 | 165 | 0 | 28 | 0 | 14 | 17 |
 | [§18 Design Principles](section-18.md) | 1 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | [§19 Multi-Agent Orchestration](section-19.md) | 569 | 562 | 3 | 3 | 1 | 419 | 1848 | 0 | 139 | 73 | 20 | 46 |
 | [§20 Memory System](section-20.md) | 63 | 62 | 0 | 1 | 0 | 48 | 234 | 0 | 12 | 10 | 2 | 0 |
@@ -51,4 +51,4 @@ proof: a scenario can cite a unit without covering all of it.
 | [§24 Skills Framework](section-24.md) | 184 | 174 | 3 | 6 | 1 | 106 | 733 | 0 | 71 | 42 | 24 | 5 |
 | [§25 Image Generation](section-25.md) | 38 | 30 | 0 | 7 | 1 | 1 | 15 | 0 | 19 | 0 | 19 | 0 |
 | [§26 Conformance Levels](section-26.md) | 24 | 21 | 0 | 0 | 3 | 20 | 229 | 0 | 0 | 0 | 0 | 0 |
-| [Appendix A: Channel Reference](appendix-A.md) | 202 | 200 | 0 | 2 | 0 | 98 | 267 | 0 | 83 | 17 | 44 | 22 |
+| [Appendix A: Channel Reference](appendix-A.md) | 202 | 200 | 0 | 2 | 0 | 98 | 267 | 0 | 81 | 17 | 42 | 22 |

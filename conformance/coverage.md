@@ -28,7 +28,7 @@ See [requirements.json](requirements.json) for exact clauses and applicability,
 | §1.1 Key Words | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | §1.2 Definitions | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | §1.3 Notation | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| §1.4 Serialized Form | normative | 12 | 12 | 0 | 0 | 1 | 0 | 0 | 4 | 0 |
+| §1.4 Serialized Form | normative | 12 | 12 | 0 | 0 | 1 | 0 | 0 | 1 | 0 |
 | §2 Introduction | informative | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | §2.1 Problem Statement | informative | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | §2.2 Scope | normative | 3 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
@@ -62,11 +62,11 @@ See [requirements.json](requirements.json) for exact clauses and applicability,
 | §6.1 Channel Interface | normative | 25 | 25 | 0 | 0 | 46 | 0 | 1 | 4 | 0 |
 | §6.2 ChannelType | normative | 11 | 11 | 0 | 0 | 0 | 0 | 5 | 1 | 0 |
 | §6.3 Transport Channels | normative | 7 | 7 | 0 | 0 | 0 | 0 | 2 | 3 | 0 |
-| §6.4 Intelligence Channels | normative | 498 | 476 | 22 | 0 | 1291 | 0 | 73 | 53 | 4 |
-| §6.5 Source Providers | normative | 4 | 4 | 0 | 0 | 3 | 0 | 0 | 4 | 0 |
+| §6.4 Intelligence Channels | normative | 498 | 476 | 22 | 0 | 1291 | 0 | 73 | 51 | 4 |
+| §6.5 Source Providers | normative | 4 | 4 | 0 | 0 | 3 | 0 | 0 | 2 | 0 |
 | §6.6 Content Transcoding | normative | 32 | 32 | 0 | 0 | 17 | 0 | 8 | 1 | 0 |
-| §6.7 Provider Abstraction | normative | 74 | 70 | 4 | 0 | 107 | 0 | 9 | 7 | 0 |
-| §6.8 Classifiers | normative | 10 | 10 | 0 | 0 | 0 | 0 | 0 | 8 | 0 |
+| §6.7 Provider Abstraction | normative | 74 | 70 | 4 | 0 | 107 | 0 | 9 | 5 | 0 |
+| §6.8 Classifiers | normative | 10 | 10 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | §7 Permission Model | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | §7.1 Access | normative | 4 | 3 | 1 | 0 | 2 | 0 | 0 | 0 | 0 |
 | §7.2 Muting | normative | 11 | 10 | 1 | 0 | 39 | 0 | 0 | 0 | 0 |
@@ -74,7 +74,7 @@ See [requirements.json](requirements.json) for exact clauses and applicability,
 | §7.4 Named Patterns | normative | 1 | 1 | 0 | 0 | 2 | 0 | 0 | 0 | 0 |
 | §7.5 Permission Rules | normative | 35 | 33 | 2 | 0 | 114 | 0 | 0 | 0 | 0 |
 | §8 Event System | informative | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| §8.1 Room Events | normative | 11 | 10 | 1 | 0 | 24 | 0 | 2 | 2 | 0 |
+| §8.1 Room Events | normative | 11 | 10 | 1 | 0 | 24 | 0 | 2 | 1 | 0 |
 | §8.2 Framework Events | normative | 63 | 63 | 0 | 0 | 96 | 0 | 0 | 10 | 15 |
 | §8.3 Event Chain Depth | normative | 46 | 43 | 3 | 0 | 78 | 0 | 11 | 1 | 3 |
 | §8.4 Realtime / Ephemeral Events | normative | 35 | 31 | 4 | 0 | 41 | 0 | 2 | 3 | 0 |
@@ -219,7 +219,7 @@ See [requirements.json](requirements.json) for exact clauses and applicability,
 | §17.3 Sensitive Data | normative | 3 | 3 | 0 | 0 | 0 | 0 | 0 | 1 | 0 |
 | §17.4 Rate Limiting | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 1 | 0 |
 | §17.5 Chain Depth | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| §17.6 Voice and Audio Security | normative | 28 | 28 | 0 | 0 | 2 | 0 | 0 | 0 | 15 |
+| §17.6 Voice and Audio Security | normative | 28 | 28 | 0 | 0 | 2 | 0 | 0 | 0 | 12 |
 | §17.7 Conference Access Security | normative | 9 | 9 | 0 | 0 | 0 | 0 | 0 | 0 | 3 |
 | §17.8 Skill-Bundled Files | normative | 6 | 6 | 0 | 0 | 0 | 0 | 0 | 3 | 0 |
 | §18 Design Principles | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
@@ -285,7 +285,7 @@ See [requirements.json](requirements.json) for exact clauses and applicability,
 | §A.1 SMS Channel | normative | 4 | 4 | 0 | 0 | 0 | 0 | 0 | 3 | 0 |
 | §A.2 Email Channel | normative | 5 | 5 | 0 | 0 | 0 | 0 | 0 | 4 | 0 |
 | §A.3 WhatsApp Channel | normative | 4 | 4 | 0 | 0 | 0 | 0 | 0 | 3 | 0 |
-| §A.4 WhatsApp Personal Channel | normative | 6 | 6 | 0 | 0 | 0 | 0 | 0 | 4 | 0 |
+| §A.4 WhatsApp Personal Channel | normative | 6 | 6 | 0 | 0 | 0 | 0 | 0 | 3 | 0 |
 | §A.5 Messenger Channel | normative | 4 | 4 | 0 | 0 | 0 | 0 | 0 | 3 | 0 |
 | §A.6 Teams Channel | normative | 6 | 6 | 0 | 0 | 0 | 0 | 0 | 4 | 0 |
 | §A.7 RCS Channel | normative | 5 | 5 | 0 | 0 | 0 | 0 | 0 | 4 | 0 |
@@ -295,7 +295,7 @@ See [requirements.json](requirements.json) for exact clauses and applicability,
 | §A.10 Voice Channel | normative | 15 | 15 | 0 | 0 | 0 | 0 | 5 | 0 | 4 |
 | §A.11 Realtime Voice Channel | normative | 8 | 8 | 0 | 0 | 0 | 0 | 2 | 0 | 0 |
 | §A.12 Video Channel | normative | 14 | 14 | 0 | 0 | 0 | 0 | 2 | 0 | 3 |
-| §A.13 Telegram Channel | normative | 6 | 6 | 0 | 0 | 0 | 0 | 0 | 4 | 0 |
+| §A.13 Telegram Channel | normative | 6 | 6 | 0 | 0 | 0 | 0 | 0 | 3 | 0 |
 | §A.14 CLI Channel | normative | 2 | 2 | 0 | 0 | 0 | 0 | 0 | 2 | 0 |
 | §A.14.1 Host Channel | normative | 5 | 5 | 0 | 0 | 0 | 0 | 1 | 0 | 0 |
 | §A.15 Conference Channel | normative | 29 | 29 | 0 | 0 | 0 | 0 | 1 | 0 | 15 |
@@ -316,9 +316,6 @@ Units [gaps.json](gaps.json) lists: a scenario can test each, and none cites it 
 
 | Source unit | Section | Class | Card | Note |
 |---|---|---|---|---|
-| RK-1.4-005 | §1.4 | step | RMK-1965 | The matcher reads an absent member as null, so a null field written cannot be told from one left out. |
-| RK-1.4-011 | §1.4 | step | RMK-1965 | No record a shared step reads holds a bytes field outside protocol traces and media frames. |
-| RK-1.4-012 | §1.4 | step | RMK-1965 | The runners rewrite every instant to @n before matching, so a datetime's UTC form is not compared as written. |
 | RK-1.4-013 | §1.4 | step | RMK-1965 | The runners rewrite every instant to @n before matching, so the offset a datetime is written with is not compared. |
 | RK-6.1-006 | §6.1 | step | RMK-1955 | Needs a scripted streaming channel that keeps deliver_stream's default, which the runners' streaming channels replace with their own reader. |
 | RK-6.1-007 | §6.1 | step | RMK-1955 | Needs a scripted streaming channel that keeps deliver_stream's default and a stream that raises, which the runners' streaming channels replace with their own reader. |
@@ -422,7 +419,6 @@ Units [gaps.json](gaps.json) lists: a scenario can test each, and none cites it 
 | RK-6.4-298 | §6.4 | writable | RMK-1940 | Two turns over one participant's copy of a mark, the same replacement in both requests. |
 | RK-6.4-299 | §6.4 | writable | RMK-1940 | A tool's result and the agent's text between calls holding a mark's words, replayed as written. |
 | RK-6.4-301 | §6.4 | writable | RMK-1940 | A standalone instruction's turn on an agent with a memory provider, no memory in its request. |
-| RK-6.4-306 | §6.4 | step | RMK-1940 | Needs a scripted transport provider that opens a string as a local path, in both runners, and a requires_features name such as transport_provider (decision D1). |
 | RK-6.4-316 | §6.4 | step | RMK-1940 | Needs an attached-media reader that fails, in both runners. |
 | RK-6.4-326 | §6.4 | writable | RMK-1940 | A memory budget counting an author's image and a media's mention. |
 | RK-6.4-342 | §6.4 | writable | RMK-1940 | A memory compaction between rounds, then an overflow, the call's compacted replay kept. |
@@ -461,14 +457,11 @@ Units [gaps.json](gaps.json) lists: a scenario can test each, and none cites it 
 | RK-6.4-458 | §6.4 | writable | RMK-1951 | Steering with two people under one sender id, or two senders signing one name: neither is the running turn's author. |
 | RK-6.4-461 | §6.4 | writable | RMK-1951 | Steering with no running turn, or several, of the channel in the room: the message waits a turn of its own. |
 | RK-6.4-485 | §6.4 | writable | RMK-1951 | The scripted agent answers initialize with another protocol version (acp.agent.initialize.protocol_version): the channel fails clearly. |
-| RK-6.4-486 | §6.4 | step | RMK-1951 | Needs a real stdio launch of an ACP agent command in both runners. |
 | RK-6.4-488 | §6.4 | writable | RMK-1951 | An ACP agent channel hosted on a turn executor (setup.executors): its sessions stay that executor's, and the room's turns are placed there. |
 | RK-6.4-495 | §6.4 | writable | RMK-1951 | A mode the scripted ACP agent switches to itself is not set on the Room's next session. |
 | RK-6.4-513 | §6.4 | writable | RMK-1951 | An ACP discussion turn sends only what the agent has not read, up to its start, and its notes name the event and who asked. |
 | RK-6.4-515 | §6.4 | writable | RMK-1951 | A silent ACP discussion answer is held back and blocked as rule 13 says. |
 | RK-6.5-001 | §6.5 | step | RMK-1955 | Needs a scripted source provider in both runners; roomkit-rs has no sources (tier 1b), feature name source_provider proposed. |
-| RK-6.5-003 | §6.5 | step | RMK-1955 | Needs a scripted source provider in both runners; roomkit-rs has no sources (tier 1b), feature name source_provider proposed. |
-| RK-6.5-004 | §6.5 | step | RMK-1955 | Needs a scripted source provider in both runners; roomkit-rs has no sources (tier 1b), feature name source_provider proposed. |
 | RK-6.5-005 | §6.5 | step | RMK-1955 | Needs a scripted source provider in both runners; roomkit-rs has no sources (tier 1b), feature name source_provider proposed. |
 | RK-6.6-006 | §6.6 | writable | RMK-1955 | A text reaches a scripted channel whose media_types name no TEXT (location alone) unchanged, and a rich text as its plain text. |
 | RK-6.6-007 | §6.6 | writable | RMK-1955 | A text reaches a rich, a media and a text-only transport unchanged. |
@@ -481,8 +474,6 @@ Units [gaps.json](gaps.json) lists: a scenario can test each, and none cites it 
 | RK-6.6-036 | §6.6 | step | RMK-1955 | Needs a step that installs an integrator's transcoding strategy; neither implementation exposes one (suspect RMK-1952). |
 | RK-6.7-110 | §6.7 | step | RMK-1955 | Needs a scripted model that streams text only (generate_stream), in both runners. |
 | RK-6.7-019 | §6.7 | step | RMK-1955 | Needs a scripted model that streams text only (generate_stream), in both runners. |
-| RK-6.7-021 | §6.7 | step | RMK-1955 | Needs a step that lists a provider's models. |
-| RK-6.7-022 | §6.7 | step | RMK-1955 | Needs a step that lists a provider's models. |
 | RK-6.7-070 | §6.7 | writable | RMK-1955 | A binding's schema whose type is a list, or a type outside the six, fails the turn before its model is asked. |
 | RK-6.7-071 | §6.7 | writable | RMK-1955 | A binding's schema whose object lacks properties fails the turn before its model is asked. |
 | RK-6.7-072 | §6.7 | writable | RMK-1955 | A binding's schema whose required list misses a property fails the turn before its model is asked. |
@@ -495,15 +486,6 @@ Units [gaps.json](gaps.json) lists: a scenario can test each, and none cites it 
 | RK-6.7-094 | §6.7 | step | RMK-1955 | A tool name is refused when the tool is defined, before any step: needs a step that defines a tool and reads the refusal. |
 | RK-6.7-016 | §6.7 | step | RMK-1955 | Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed. Python's SMSProvider.send takes from_ as optional, as RMK-1953 records for email. |
 | RK-6.7-107 | §6.7 | step | RMK-1955 | Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed. The audit's suspect on send()'s from is RMK-1953. |
-| RK-6.8-003 | §6.8 | step | RMK-1955 | Needs a step that asks a classifier its questions (a scripted or mock classifier) in both runners; feature name classifier_dispatch proposed. |
-| RK-6.8-004 | §6.8 | step | RMK-1955 | Needs a step that asks a classifier its questions (a scripted or mock classifier) in both runners; feature name classifier_dispatch proposed. |
-| RK-6.8-005 | §6.8 | step | RMK-1955 | Needs a step that asks a classifier its questions (a scripted or mock classifier) in both runners; feature name classifier_dispatch proposed. |
-| RK-6.8-006 | §6.8 | step | RMK-1955 | Needs a step that asks a classifier its questions (a scripted or mock classifier) in both runners; feature name classifier_dispatch proposed. |
-| RK-6.8-007 | §6.8 | step | RMK-1955 | Needs a step that asks a classifier its questions (a scripted or mock classifier) in both runners; feature name classifier_dispatch proposed. |
-| RK-6.8-008 | §6.8 | step | RMK-1955 | Needs a step that asks a classifier its questions (a scripted or mock classifier) in both runners; feature name classifier_dispatch proposed. |
-| RK-6.8-009 | §6.8 | step | RMK-1955 | Needs a step that asks a classifier its questions (a scripted or mock classifier) in both runners; feature name classifier_dispatch proposed. |
-| RK-6.8-010 | §6.8 | step | RMK-1955 | Needs a step that asks a classifier its questions (a scripted or mock classifier) in both runners; feature name classifier_dispatch proposed. |
-| RK-8.1-008 | §8.1 | step | RMK-1912 | Needs a persistent store shared by two connections or processes. |
 | RK-8.1-009 | §8.1 | step | RMK-1912 | Needs an error name for a duplicate (room_id, index) in the runners' table. |
 | RK-8.1-012 | §8.1 | writable | RMK-1912 | Hooks read the inbound id it is committed with, and a reused id gets a fresh one. |
 | RK-8.1-013 | §8.1 | writable | RMK-1912 | process_webhook reaches it, but its scenario keeps the provider's id in external_id: suspect RMK-1913. |
@@ -669,7 +651,6 @@ Units [gaps.json](gaps.json) lists: a scenario can test each, and none cites it 
 | RK-17.3-002 | §17.3 | step | RMK-1986 | Neither implementation offers configurable redaction or encryption of raw_payload at rest, so no step configures one. |
 | RK-17.4-001 | §17.4 | step | RMK-1986 | Neither implementation offers per-organization rate limits, so no step configures one. |
 | RK-17.6-010 | §17.6 | phase6 | RMK-1986 | step: a consent mode on recording.start: a recording started only once the parties its mode names consented; no implementation offers consent modes (suspect RMK-1985). |
-| RK-17.6-014 | §17.6 | phase6 | RMK-1986 | step: recording.start encryption options: a recorder that fails closed when neither encryption setting is set, a recording of video alone included. |
 | RK-17.6-017 | §17.6 | phase6 | RMK-1986 | step: a room retention or redaction policy over voice: voice session metadata under the room's retention and redaction policies. |
 | RK-17.6-018 | §17.6 | phase6 | RMK-1986 | step: voice.read of the TTS call, voice.open TTS options: TTS context audio kept in memory only. |
 | RK-17.6-019 | §17.6 | phase6 | RMK-1986 | step: voice.read of the TTS call, voice.open TTS options: TTS context audio within max_turns and max_audio_seconds, dropped with its session. |
@@ -677,9 +658,7 @@ Units [gaps.json](gaps.json) lists: a scenario can test each, and none cites it 
 | RK-17.6-021 | §17.6 | phase6 | RMK-1986 | step: voice.read of the TTS call, voice.open TTS options: the TTS context's text read from the stored transcript. |
 | RK-17.6-022 | §17.6 | phase6 | RMK-1986 | step: voice.read of the TTS call, voice.open TTS options: a user turn whose transcript a hook modified keeps no context audio. |
 | RK-17.6-023 | §17.6 | phase6 | RMK-1986 | step: voice.read of the TTS call, voice.open TTS options: under DTMF redaction, a user turn with detected DTMF keeps no context audio. |
-| RK-17.6-025 | §17.6 | phase6 | RMK-1986 | step: a scripted voice-replication provider: a custom voice's recordings handed to the synthesizer for the call and kept nowhere. |
 | RK-17.6-026 | §17.6 | phase6 | RMK-1986 | step: a scripted voice-replication provider: a custom voice's evidence kept as metadata. |
-| RK-17.6-027 | §17.6 | phase6 | RMK-1986 | step: a scripted voice-replication provider: no custom voice created without the consent of the person it belongs to. |
 | RK-17.6-030 | §17.6 | phase6 | RMK-1986 | step: a TTS scripted on voice.open to return a marked file: voice.read shows the file at the transport as the synthesizer produced it, not rebuilt from its samples. |
 | RK-17.6-032 | §17.6 | phase6 | RMK-1986 | step: voice.open DTMF redaction: configurable DTMF redaction in stored events and logs. |
 | RK-17.6-033 | §17.6 | phase6 | RMK-1986 | step: voice.open DTMF redaction: under DTMF redaction, no raw digit in raw_payload, transcripts or log output. |
@@ -1104,7 +1083,6 @@ Units [gaps.json](gaps.json) lists: a scenario can test each, and none cites it 
 | RK-A.3-004 | §A.3 | step | RMK-1961 | Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed. The text differs from Python's signature (RMK-1966). |
 | RK-A.4-002 | §A.4 | step | RMK-1961 | Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed. |
 | RK-A.4-003 | §A.4 | step | RMK-1961 | Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed. |
-| RK-A.4-004 | §A.4 | step | RMK-1961 | Needs a scripted source provider in the runners; roomkit-rs has no sources (tier 1b), feature name source_provider proposed. |
 | RK-A.4-005 | §A.4 | step | RMK-1961 | Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed. |
 | RK-A.5-002 | §A.5 | step | RMK-1961 | Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed. |
 | RK-A.5-003 | §A.5 | step | RMK-1961 | Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed. |
@@ -1155,7 +1133,6 @@ Units [gaps.json](gaps.json) lists: a scenario can test each, and none cites it 
 | RK-A.13-002 | §A.13 | step | RMK-1961 | Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed. |
 | RK-A.13-003 | §A.13 | step | RMK-1961 | Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed. |
 | RK-A.13-004 | §A.13 | step | RMK-1961 | Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed. The text differs from Python's signature (RMK-1966). |
-| RK-A.13-007 | §A.13 | step | RMK-1961 | Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed. |
 | RK-A.14-002 | §A.14 | step | RMK-1961 | Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed. |
 | RK-A.14-003 | §A.14 | step | RMK-1961 | Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed. |
 | RK-A.14.1-003 | §A.14.1 | writable | RMK-1961 | A scenario can assert the host binding's direction, inbound, and that no delivery reaches the host channel. |
