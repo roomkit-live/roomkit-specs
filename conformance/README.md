@@ -2554,7 +2554,8 @@ closes every connection and bounds each request body to 4 MiB.
 Operations name `connect`, `close`, `connected`, `tool_names`, `tool_meta`,
 `server_info`, `server_extensions`, `request` or `read_resource`. Request
 uses `name` for its method and optional `params`; resource reads take `uri`.
-Both accept `timeout_ms`, passed to the public deadline option. Snapshot
+Both accept `timeout_ms`, passed to the public deadline option; 0 gives a
+call no time at all. Snapshot
 operations may carry `mutate: {path: [key, ...], value: ...}`: mutate the
 returned object before recording it, so the next read proves whether it was
 an owned copy. No provider private state is read.
@@ -2610,6 +2611,11 @@ case on this wire observation; values, duplicate occurrences and their order
 are preserved. Only names supplied by the scenario are selected, excluding
 client-generated headers. This records the actual endpoint path and query,
 including initialized notifications, rather than inferring them from MCP calls.
+They also return `messages`: each JSON-RPC message the client posted to its
+announced endpoint, in the order the peer received them, as sent (its `id`,
+`method` and `params` where present), notifications included. A
+`notifications/cancelled` is seen there only: `requests` holds what the peer
+answers.
 
 ### Direct text prompts
 
