@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "f73e8090fe7e39cb56cfb5b71dcd2e49070574bf3b2dd580bfd1e5e038e6ec9e",
-  "corpus_sha256": "a3e5aed79245fce499759b4e493b3a7a3fe52a0fffedbc0bc2815d2ccdb6984e",
+  "corpus_sha256": "8965ac2811d68438438fb5f5ad22ea8d685ec24fd99dab34975540853f323d26",
   "python_commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
-  "scenario_count": 4113,
+  "scenario_count": 4142,
   "sections": [
     {
       "section": "0",
@@ -592,7 +592,8 @@
         "routing/an-advisor-s-resolution-does-not-open-the-room-of-the-key-s-recipient",
         "routing/an-advisor-s-resolution-names-the-identity-on-the-binding-delivering-to-the-participant",
         "routing/an-advisor-s-resolution-on-an-unregistered-channel-does-not-open-the-room-of-the-key-s-recipient",
-        "store/a-participant-id-the-room-has-is-refused-and-an-update-rewrites-a-record"
+        "store/a-participant-id-the-room-has-is-refused-and-an-update-rewrites-a-record",
+        "verification/an-identity-s-id-on-a-channel-it-was-never-resolved-on-carries-no-verification"
       ]
     },
     {
@@ -1517,6 +1518,7 @@
         "instructions/an-instruction-that-opened-the-room-opens-its-later-history",
         "mcp/a-tool-description-reaches-the-model-as-the-server-wrote-it",
         "memory/a-blank-input-s-notes-join-the-last-user-message",
+        "memory/a-budget-charges-an-earlier-tool-round-to-the-turn-it-belongs-to",
         "memory/a-budget-counts-a-labelled-turn-as-it-is-sent",
         "memory/a-compacting-memory-never-summarizes-a-returned-current-input",
         "memory/a-compacting-memory-summarizes-what-it-trims",
@@ -1541,7 +1543,10 @@
         "memory/a-memory-s-notes-follow-the-turn-s-input",
         "memory/a-memory-s-user-text-joins-the-turn-after-it",
         "memory/a-memory-summary-keeps-the-deferred-compaction-boundary",
+        "memory/a-memory-that-does-not-compact-leaves-a-tool-turn-as-it-is",
         "memory/a-memory-that-fails-to-compact-leaves-the-turn-as-it-was",
+        "memory/a-memory-that-rebuilds-the-result-of-the-one-it-wraps-carries-its-notes",
+        "memory/a-memory-that-wraps-another-hands-it-the-compaction",
         "memory/a-name-that-reads-like-an-earlier-sender-s-is-labelled-with-the-name-it-is-not",
         "memory/a-name-that-reads-like-two-others-ranks-after-both-and-renumbers-neither",
         "memory/a-participant-renamed-later-keeps-on-earlier-turns-the-name-they-spoke-under",
@@ -1558,6 +1563,7 @@
         "memory/a-returned-current-input-survives-budget-trimming",
         "memory/a-runtime-mark-split-over-two-text-parts-of-a-memory-s-message-is-replaced",
         "memory/a-split-mark-keeps-memory-speaker-labels",
+        "memory/a-summarizing-memory-applies-no-first-threshold-between-two-tool-rounds",
         "memory/a-summarizing-memory-compacts-a-turn-past-its-threshold-between-two-calls",
         "memory/a-summarizing-memory-never-summarizes-a-returned-current-input",
         "memory/a-summary-cut-summarizes-the-turn-that-passes-it",
@@ -3322,6 +3328,7 @@
         "inbound/on-error-holds-no-room-lock",
         "kit-close/what-a-channel-s-close-starts-is-cut-at-once",
         "media/an-emitted-protocol-trace-reaches-its-room-observer",
+        "memory/what-a-generation-hook-adds-after-the-memory-read-is-not-measured",
         "observations/feedback-is-an-observation-the-hooks-observe",
         "orchestration/a-room-a-first-message-opens-is-announced-with-its-strategy-s-agents-and-not-the-sender-s-channel",
         "orchestration/an-auto-delegating-supervisor-s-two-passes-carry-a-correlation-id-each",
@@ -4121,6 +4128,7 @@
       "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
+        "addressing/an-agent-an-injected-event-s-visibility-names-reads-it-at-its-next-turn",
         "appendix-b/b2-block-and-inject",
         "delivery/a-call-adopted-after-the-decision-ends-at-its-own-deadline",
         "delivery/an-event-injected-by-a-cancelled-delivery-starts-no-turn",
@@ -4385,6 +4393,7 @@
         "routing/a-message-a-delivery-sent-leaves-its-new-room-for-one-that-exists",
         "streaming/a-streamed-row-s-hooks-read-the-room-at-the-row",
         "streaming/a-streamed-row-s-hooks-run-without-the-room-lock",
+        "verification/a-deferred-code-reply-from-a-locked-hook-is-answered-after-the-hook-s-work",
         "verification/a-release-from-a-hook-keeps-its-answer-named",
         "verification/a-release-from-a-hook-that-allows-its-event-is-answered-first",
         "verification/a-release-from-a-hook-that-closes-the-room-is-answered-by-no-agent",
@@ -4885,7 +4894,9 @@
         "verification/a-code-reply-releases-the-held-message",
         "verification/a-code-reply-s-release-is-answered-past-its-budget",
         "verification/a-code-sent-in-another-room-is-an-ordinary-message",
+        "verification/a-deferred-code-reply-from-a-locked-hook-is-answered-after-the-hook-s-work",
         "verification/a-deferred-code-reply-returns-before-its-release",
+        "verification/a-handle-reaches-a-held-message-while-its-delivery-set-runs-and-the-key-after",
         "verification/a-held-message-a-hook-blocked-is-named-no-more",
         "verification/a-held-message-a-policy-keeps-held-is-named-no-more",
         "verification/a-held-message-cancelled-after-its-call-is-released-with-no-answer",
@@ -6095,13 +6106,12 @@
       "mapping": {
         "unmapped": 22
       },
-      "decided_gaps": {
-        "writable": 1
-      },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "identity/a-challenge-is-delivered-and-the-message-held",
         "identity/a-challenge-runs-the-before-broadcast-hooks",
+        "identity/a-hook-s-status-its-trigger-does-not-act-on-reads-as-null",
         "identity/a-member-the-host-left-pending-keeps-their-record",
         "identity/a-pending-sender-cannot-take-an-identity-s-record",
         "identity/a-rejection-blocks-the-message",
@@ -6131,6 +6141,7 @@
       "candidate_scenarios": [
         "identity/a-challenge-is-delivered-and-the-message-held",
         "identity/a-challenge-runs-the-before-broadcast-hooks",
+        "identity/a-hook-s-status-its-trigger-does-not-act-on-reads-as-null",
         "identity/a-rejection-blocks-the-message",
         "identity/a-resolver-s-rejection-holds-the-message-no-hook-answers",
         "identity/an-ambiguous-sender-s-hook-names-it",
@@ -6202,12 +6213,11 @@
       "mapping": {
         "unmapped": 1
       },
-      "decided_gaps": {
-        "writable": 1
-      },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
-        "inbound/a-response-keeps-what-its-channel-wrote-of-its-own-source-and-nothing-of-another-s"
+        "inbound/a-response-keeps-what-its-channel-wrote-of-its-own-source-and-nothing-of-another-s",
+        "verification/a-sender-not-identified-is-neither-labelled-nor-held"
       ]
     },
     {
@@ -6252,7 +6262,8 @@
         "verification/an-unanswered-request-ends-when-it-expires",
         "verification/an-unanswered-request-leaves-the-verification-in-force",
         "verification/asking-a-verified-identity-again-keeps-it-verified",
-        "verification/the-last-wrong-secret-fails-the-request"
+        "verification/the-last-wrong-secret-fails-the-request",
+        "verification/two-attempts-at-a-request-s-last-one-count-once"
       ]
     },
     {
@@ -6264,8 +6275,7 @@
         "unmapped": 19
       },
       "decided_gaps": {
-        "phase6": 1,
-        "writable": 1
+        "phase6": 1
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -6281,10 +6291,12 @@
         "verification/a-marker-a-sender-supplies-releases-nothing",
         "verification/a-new-request-goes-out-once-the-first-expired-unanswered",
         "verification/a-policy-that-does-not-hold-only-labels",
+        "verification/a-sender-not-identified-is-neither-labelled-nor-held",
         "verification/a-sender-s-held-mark-is-dropped",
         "verification/a-verification-hook-past-process-timeout-expires-its-message",
         "verification/a-verification-labels-only-its-organization-s-rooms",
         "verification/a-verified-sender-s-message-reaches-the-agents",
+        "verification/an-identity-s-id-on-a-channel-it-was-never-resolved-on-carries-no-verification",
         "verification/an-unlabelled-event-has-no-sender-verification",
         "verification/an-unverified-sender-s-edit-is-refused",
         "verification/an-unverified-sender-s-message-is-held-from-the-agents",
@@ -6309,6 +6321,7 @@
         "verification/a-code-reply-s-release-is-answered-past-its-budget",
         "verification/a-code-request-is-completed-with-its-code",
         "verification/a-code-sent-in-another-room-is-an-ordinary-message",
+        "verification/a-deferred-code-reply-from-a-locked-hook-is-answered-after-the-hook-s-work",
         "verification/a-deferred-code-reply-returns-before-its-release",
         "verification/a-reply-of-other-digits-is-a-wrong-code",
         "verification/digits-with-no-code-request-open-are-an-ordinary-message"
@@ -6349,15 +6362,15 @@
       "mapping": {
         "unmapped": 15
       },
-      "decided_gaps": {
-        "writable": 2
-      },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "verification/a-cancel-during-the-released-answer-cuts-it",
         "verification/a-code-reply-releases-the-held-message",
         "verification/a-code-reply-s-release-is-answered-past-its-budget",
+        "verification/a-deferred-code-reply-from-a-locked-hook-is-answered-after-the-hook-s-work",
         "verification/a-deferred-code-reply-returns-before-its-release",
+        "verification/a-handle-reaches-a-held-message-while-its-delivery-set-runs-and-the-key-after",
         "verification/a-held-message-a-hook-blocked-is-named-no-more",
         "verification/a-held-message-a-policy-keeps-held-is-named-no-more",
         "verification/a-held-message-cancelled-after-its-call-is-released-with-no-answer",
@@ -6398,9 +6411,7 @@
       "mapping": {
         "unmapped": 9
       },
-      "decided_gaps": {
-        "step": 1
-      },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "store/a-verification-is-read-by-its-identity-within-its-organization",
@@ -6411,7 +6422,8 @@
         "verification/an-unanswered-request-ends-when-it-expires",
         "verification/organizations-are-kept-apart",
         "verification/revoking-a-pending-identity-kills-its-link",
-        "verification/the-last-wrong-secret-fails-the-request"
+        "verification/the-last-wrong-secret-fails-the-request",
+        "verification/two-attempts-at-a-request-s-last-one-count-once"
       ]
     },
     {
@@ -7887,11 +7899,14 @@
         "kit-close/what-a-channel-s-close-starts-is-cut-at-once",
         "kit-close/work-a-source-s-health-check-starts-is-no-read-once-the-kit-closed",
         "locks/the-hooks-side-effects-of-a-set-of-a-deleted-room-the-close-drops-stay-out-of-the-room-created-again",
+        "orchestration/a-background-run-asked-for-once-the-kit-began-closing-does-not-start",
+        "orchestration/a-supervisor-s-background-team-ends-with-the-kit-s-close",
         "providers/a-kit-s-close-leaves-open-the-provider-its-agent-was-handed",
         "realtime/a-handler-that-closes-the-kit-runs-on-and-reaches-no-hook",
         "realtime/a-spared-handler-past-the-close-s-bound-is-cut-and-reported-once",
         "realtime/a-spared-handler-still-working-at-the-close-is-waited-for",
         "status/a-status-posted-after-close-starts-no-room-hook",
+        "status/a-task-the-close-cuts-reaches-the-status-hooks-before-the-store-is-sealed",
         "tasks/nonempty-task-and-observation-reads-remain-available-during-close"
       ]
     },
@@ -8352,6 +8367,7 @@
         "locks/the-side-effects-of-an-injected-event-s-set-of-a-deleted-room-stay-out-of-the-room-created-again",
         "locks/the-streamed-answer-of-a-set-of-a-deleted-room-is-not-read",
         "locks/the-streamed-answer-of-a-set-of-a-deleted-room-stays-out-of-the-room-created-again",
+        "orchestration/a-close-does-not-wait-for-an-install-under-way-which-then-finds-the-room-closed",
         "orchestration/an-install-holds-the-room-until-it-is-over",
         "orchestration/an-install-sends-into-the-room-it-holds",
         "orchestration/an-uninstall-from-the-install-itself-answers-false",
@@ -8372,7 +8388,8 @@
         "streaming/a-streamed-row-s-hooks-run-without-the-room-lock",
         "tasks/a-delegated-turn-s-metadata-updates-wait-for-the-room-s-lock",
         "tasks/a-delegated-turn-s-shared-answer-follows-its-metadata-updates",
-        "verification/a-rerun-whose-room-is-created-again-in-the-lane-is-refused"
+        "verification/a-rerun-whose-room-is-created-again-in-the-lane-is-refused",
+        "verification/two-attempts-at-a-request-s-last-one-count-once"
       ]
     },
     {
@@ -9154,7 +9171,7 @@
       "decided_gaps": {
         "phase6": 3,
         "step": 1,
-        "writable": 4
+        "writable": 2
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -9188,6 +9205,7 @@
         "orchestration/a-handoff-greeting-is-the-active-agent-s-line",
         "orchestration/a-handoff-greeting-takes-the-handler-s-event-channel",
         "orchestration/a-handoff-greeting-with-nothing-to-say-stores-nothing",
+        "orchestration/a-handoff-s-language-change-writes-the-agent-s-identity-in-that-language",
         "orchestration/an-agent-s-turn-prompt-ends-with-its-identity"
       ]
     },
@@ -9222,14 +9240,15 @@
         "unmapped": 15
       },
       "decided_gaps": {
-        "phase6": 1,
-        "writable": 1
+        "phase6": 1
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "addressing/a-sender-s-interruption-marker-asks-its-agents",
         "addressing/an-address-does-not-show-an-event-its-visibility-hides",
         "addressing/an-address-names-the-agents-asked",
+        "addressing/an-agent-an-injected-event-s-visibility-names-reads-it-at-its-next-turn",
+        "addressing/an-agent-s-address-to-another-is-answered-by-it-alone-under-either-policy",
         "addressing/an-empty-address-asks-nobody",
         "addressing/an-unbound-name-asks-nobody",
         "delivery/an-address-names-who-acts-and-stays-on-the-event",
@@ -9250,15 +9269,15 @@
       "mapping": {
         "unmapped": 12
       },
-      "decided_gaps": {
-        "writable": 1
-      },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
+        "addressing/an-agent-s-address-to-another-is-answered-by-it-alone-under-either-policy",
         "addressing/set-agent-response-policy-stops-an-agent-s-answer-asking-the-others",
         "appendix-b/b4-agent-chain",
         "instructions/an-agent-not-asked-after-an-instruction-s-answer-records-no-fingerprint",
-        "instructions/an-answer-to-an-instruction-s-answer-carries-no-fingerprint"
+        "instructions/an-answer-to-an-instruction-s-answer-carries-no-fingerprint",
+        "orchestration/a-supervisor-watches-an-agent-s-unaddressed-answer-under-addressed-only"
       ]
     },
     {
@@ -9321,8 +9340,7 @@
         "unmapped": 21
       },
       "decided_gaps": {
-        "step": 1,
-        "writable": 2
+        "step": 1
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -9334,11 +9352,13 @@
         "orchestration/a-router-asks-its-default-agent-alone",
         "orchestration/a-router-s-install-hooks-at-its-priority",
         "orchestration/a-router-with-nothing-to-route-asks-every-agent",
+        "orchestration/a-rule-matches-the-channels-a-message-comes-from",
         "orchestration/a-rule-routes-by-the-room-s-phase",
         "orchestration/a-sender-s-intent-reaches-the-router-s-rules",
         "orchestration/a-sender-s-routing-stamps-are-dropped",
         "orchestration/a-supervisor-is-asked-beside-the-routed-agent",
         "orchestration/a-supervisor-watches-an-addressed-message",
+        "orchestration/a-supervisor-watches-an-agent-s-unaddressed-answer-under-addressed-only",
         "orchestration/an-addressed-message-is-left-to-its-address",
         "orchestration/an-inbound-after-a-handoff-to-a-human-asks-no-agent",
         "orchestration/rules-are-tried-lowest-priority-first",
@@ -9383,8 +9403,7 @@
       },
       "decided_gaps": {
         "phase6": 5,
-        "step": 3,
-        "writable": 1
+        "step": 2
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -9401,6 +9420,7 @@
         "orchestration/a-handoff-picks-its-target-and-its-phase",
         "orchestration/a-handoff-reads-an-empty-phase-and-a-blank-reason-as-none",
         "orchestration/a-handoff-s-caller-holds-the-room-s-phase",
+        "orchestration/a-handoff-s-language-change-writes-the-agent-s-identity-in-that-language",
         "orchestration/a-handoff-s-language-is-the-room-s-state",
         "orchestration/a-handoff-s-record-reaches-the-room-s-transports",
         "orchestration/a-handoff-to-a-room-s-transport-is-refused",
@@ -9433,8 +9453,7 @@
       },
       "decided_gaps": {
         "phase6": 6,
-        "step": 1,
-        "writable": 5
+        "step": 1
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -9450,6 +9469,7 @@
         "discussion/the-same-agents-hold-a-queue-of-their-own-in-each-room",
         "kit-executor/named-hooks-refuse-invalid-registrations",
         "kit-executor/uninstalling-a-strategy-removes-only-its-activation",
+        "orchestration/a-close-does-not-wait-for-an-install-under-way-which-then-finds-the-room-closed",
         "orchestration/a-hosts-own-strategy-is-taken-back-out-whole",
         "orchestration/a-kit-s-pipeline-is-installed-in-the-rooms-it-creates",
         "orchestration/a-loop-leaves-its-producer-the-events-that-are-no-task",
@@ -9480,6 +9500,7 @@
         "orchestration/an-install-attaches-its-agents-as-intelligence-channels",
         "orchestration/an-install-holds-the-room-until-it-is-over",
         "orchestration/an-install-sends-into-the-room-it-holds",
+        "orchestration/an-install-whose-first-read-fails-keeps-the-room-until-an-uninstall-frees-it",
         "orchestration/an-uninstall-during-an-install-takes-it-back-once-it-is-over",
         "orchestration/an-uninstall-from-the-install-itself-answers-false",
         "orchestration/an-uninstall-runs-the-strategy-s-own-step-first",
@@ -9497,6 +9518,7 @@
         "orchestration/each-room-s-loop-runs-with-its-own-reviewer",
         "orchestration/each-room-s-per-worker-tools-run-with-its-own-install",
         "orchestration/each-room-s-per-worker-tools-run-with-its-own-install-without-streaming",
+        "orchestration/installs-and-turns-leave-a-binding-the-supervisor-shares-as-it-was",
         "orchestration/the-kit-s-default-strategy-unless-the-room-names-another-or-none",
         "orchestration/the-room-strategy-is-read-within-a-tenant",
         "tasks/a-result-tool-is-declared-in-the-child-room-only",
@@ -9557,13 +9579,13 @@
       },
       "decided_gaps": {
         "phase6": 2,
-        "step": 2,
-        "writable": 4
+        "step": 1
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "executors/a-supervisor-s-passes-are-turns-of-its-agent-on-the-executor-hosting-it",
         "executors/one-build-serving-two-rooms-takes-a-strategy-s-tools-in-its-room-alone",
+        "orchestration/a-background-run-asked-for-once-the-kit-began-closing-does-not-start",
         "orchestration/a-background-worker-busy-in-one-room-is-free-in-another",
         "orchestration/a-background-worker-past-its-task-timeout-is-cut-and-told-as-not-completed",
         "orchestration/a-background-worker-tool-answers-at-once-and-hands-the-outcome-back",
@@ -9571,6 +9593,7 @@
         "orchestration/a-first-pass-cut-short-streams-nothing-and-its-fallback-is-delivered",
         "orchestration/a-first-pass-cut-while-its-call-runs-records-on-none-of-its-rows",
         "orchestration/a-first-pass-that-wrote-no-text-records-on-none-of-its-rows",
+        "orchestration/a-one-pass-supervisor-answers-alone-what-its-team-s-tasks-cannot-carry",
         "orchestration/a-rejected-step-is-done-again-with-the-supervisor-s-feedback",
         "orchestration/a-repeated-team-call-reads-the-room-s-last-answer",
         "orchestration/a-step-out-of-revisions-stops-the-chain-unvalidated",
@@ -9579,11 +9602,13 @@
         "orchestration/a-supervised-team-has-each-step-framed-and-checked",
         "orchestration/a-supervised-team-s-digest-names-who-asked-for-its-task",
         "orchestration/a-supervisor-given-task-status-is-pointed-at-it-by-its-dispatched-team",
+        "orchestration/a-supervisor-s-background-team-ends-with-the-kit-s-close",
         "orchestration/a-supervisor-s-background-team-past-its-task-timeout-is-told-as-not-completed",
         "orchestration/a-supervisor-s-background-team-that-fails-hands-back-its-failure",
         "orchestration/a-supervisor-s-background-team-whose-results-nobody-hears-posts-its-run-failed",
         "orchestration/a-supervisor-s-dispatch-answering-its-team-s-results-starts-anew",
         "orchestration/a-supervisor-s-own-tools-stay-its-own",
+        "orchestration/a-supervisor-s-task-formulation-instruction-reaches-no-other-room-s-turn",
         "orchestration/a-supervisor-s-team-call-names-who-asked-for-its-task",
         "orchestration/a-supervisor-s-team-tool-in-the-background-answers-at-once-and-hands-the-results-back",
         "orchestration/a-supervisor-s-team-tool-runs-its-workers-at-once",
@@ -9641,8 +9666,7 @@
       },
       "decided_gaps": {
         "phase6": 11,
-        "step": 1,
-        "writable": 1
+        "step": 1
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -9881,6 +9905,7 @@
         "memory/an-ambiguous-input-only-compacts-new-tool-results",
         "memory/an-ambiguous-input-refuses-an-unsafe-compaction",
         "memory/an-ambiguous-input-relieves-overflow-with-new-tool-results",
+        "memory/another-process-s-summarizing-memory-starts-from-its-window",
         "tasks/a-background-task-names-its-agent-by-the-discussion-s-handle",
         "tasks/a-background-tool-keeps-its-turns-name-before-a-post",
         "tasks/a-background-tool-keeps-its-turns-name-before-a-relay",
@@ -9898,8 +9923,7 @@
         "unmapped": 21
       },
       "decided_gaps": {
-        "step": 5,
-        "writable": 1
+        "step": 4
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -9907,8 +9931,10 @@
         "host/a-turn-s-host-writes-its-room-s-metadata-status-and-observations",
         "kit-close/work-a-source-s-health-check-starts-is-no-read-once-the-kit-closed",
         "orchestration/a-review-that-says-nothing-or-fails-approves-nothing",
+        "orchestration/a-supervisor-s-background-team-ends-with-the-kit-s-close",
         "status/a-status-hook-s-call-is-as-deep-as-the-poster",
         "status/a-status-reaches-the-hooks-of-the-room-it-names",
+        "status/a-task-the-close-cuts-reaches-the-status-hooks-before-the-store-is-sealed",
         "status/observers-start-in-firing-order-while-earlier-bodies-wait",
         "status/recent-reads-the-newest-entries-by-agent-and-status",
         "status/the-bus-reads-its-recent-entries-as-text",
@@ -9948,9 +9974,7 @@
         "mapped_partial": 2,
         "unmapped": 6
       },
-      "decided_gaps": {
-        "writable": 2
-      },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "discussion/a-queued-turn-reads-the-room-when-it-starts",
@@ -9975,7 +9999,9 @@
         "memory/a-hook-rewriting-the-deferred-input-protects-its-context",
         "memory/a-memory-compacts-the-history-between-two-tool-rounds",
         "memory/a-memory-summary-keeps-the-deferred-compaction-boundary",
+        "memory/a-memory-that-does-not-compact-leaves-a-tool-turn-as-it-is",
         "memory/a-memory-that-fails-to-compact-leaves-the-turn-as-it-was",
+        "memory/a-memory-that-wraps-another-hands-it-the-compaction",
         "memory/a-queued-turn-keeps-its-question-out-of-compaction",
         "memory/a-queued-turn-keeps-its-question-out-of-the-summary",
         "memory/a-queued-turn-keeps-its-question-outside-the-window",
@@ -10001,16 +10027,16 @@
       "mapping": {
         "unmapped": 13
       },
-      "decided_gaps": {
-        "writable": 2
-      },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "executors/a-committed-event-reaches-the-memory-before-its-agent-s-next-turn",
         "memory/a-blank-input-s-notes-join-the-last-user-message",
+        "memory/a-budget-pays-for-the-notes-of-the-memory-it-wraps-out-of-the-history",
         "memory/a-compacting-memory-summarizes-what-it-trims",
         "memory/a-memory-s-notes-follow-the-turn-s-input",
         "memory/a-memory-s-user-text-joins-the-turn-after-it",
+        "memory/a-memory-that-rebuilds-the-result-of-the-one-it-wraps-carries-its-notes",
         "memory/a-passage-retrieved-from-a-turn-reads-after-its-author-s-label",
         "memory/a-runtime-mark-split-over-two-text-parts-of-a-memory-s-message-is-replaced",
         "memory/a-split-mark-keeps-memory-speaker-labels",
@@ -10031,15 +10057,17 @@
         "unmapped": 40
       },
       "decided_gaps": {
-        "step": 2,
-        "writable": 6
+        "step": 2
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "instructions/a-memory-s-window-does-not-count-a-kept-instruction",
         "instructions/a-summary-quotes-a-kept-instruction-as-the-application-s",
+        "memory/a-budget-charges-an-earlier-tool-round-to-the-turn-it-belongs-to",
         "memory/a-budget-counts-a-labelled-turn-as-it-is-sent",
         "memory/a-budget-keeps-the-latest-events-that-fit",
+        "memory/a-budget-pays-for-the-notes-of-the-memory-it-wraps-out-of-the-history",
+        "memory/a-budget-s-given-reserve-is-a-floor-on-the-measured-input",
         "memory/a-compacting-memory-never-summarizes-a-returned-current-input",
         "memory/a-compacting-memory-summarizes-what-it-trims",
         "memory/a-deferred-memory-reserves-discussion-notes",
@@ -10056,6 +10084,8 @@
         "memory/a-hook-removing-the-deferred-input-protects-its-context",
         "memory/a-hook-rewriting-the-deferred-input-protects-its-context",
         "memory/a-memory-summary-keeps-the-deferred-compaction-boundary",
+        "memory/a-memory-that-rebuilds-the-result-of-the-one-it-wraps-carries-its-notes",
+        "memory/a-memory-that-wraps-another-hands-it-the-compaction",
         "memory/a-person-named-like-an-agent-s-label-reads-as-a-participant-in-a-summary-line",
         "memory/a-queued-turn-keeps-its-question-out-of-compaction",
         "memory/a-queued-turn-keeps-its-question-out-of-the-summary",
@@ -10063,8 +10093,10 @@
         "memory/a-queued-turn-keeps-its-question-through-budget-trimming",
         "memory/a-returned-current-input-reads-once-in-a-deferred-turn",
         "memory/a-returned-current-input-survives-budget-trimming",
+        "memory/a-summarizing-memory-applies-no-first-threshold-between-two-tool-rounds",
         "memory/a-summarizing-memory-compacts-a-turn-past-its-threshold-between-two-calls",
         "memory/a-summarizing-memory-never-summarizes-a-returned-current-input",
+        "memory/a-summarizing-memory-past-its-first-threshold-shortens-older-long-texts",
         "memory/a-summary-cut-summarizes-the-turn-that-passes-it",
         "memory/a-summary-ends-once-a-turn-it-covers-is-deleted",
         "memory/a-summary-ends-once-a-turn-it-covers-is-edited",
@@ -10077,8 +10109,10 @@
         "memory/an-ambiguous-input-refuses-an-unsafe-compaction",
         "memory/an-ambiguous-input-relieves-overflow-with-new-tool-results",
         "memory/an-author-s-image-counts-in-the-budget-and-a-media-as-its-mention",
+        "memory/another-process-s-summarizing-memory-starts-from-its-window",
         "memory/the-window-counts-no-tool-row",
         "memory/the-window-holds-the-turn-s-event",
+        "memory/what-a-generation-hook-adds-after-the-memory-read-is-not-measured",
         "tools/a-round-older-than-the-history-window-is-not-replayed"
       ]
     },
@@ -10945,6 +10979,7 @@
         "orchestration/each-room-s-per-worker-tools-run-with-its-own-install",
         "orchestration/each-room-s-per-worker-tools-run-with-its-own-install-without-streaming",
         "orchestration/each-room-s-supervisor-install-runs-its-own-team",
+        "status/a-task-the-close-cuts-reaches-the-status-hooks-before-the-store-is-sealed",
         "streaming/a-call-closes-the-text-window",
         "streaming/a-delegated-answer-publishes-each-round-s-text-under-its-round",
         "streaming/a-delegated-answer-publishes-its-text-by-size",
@@ -29910,12 +29945,7 @@
       "id": "RK-11.2-017",
       "section": "11.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1942",
-        "note": "An identity hook that answers a status its trigger does not act on, as AMBIGUOUS on ON_IDENTITY_UNKNOWN, is read as null."
-      }
+      "links": []
     },
     {
       "id": "RK-11.2-018",
@@ -30091,12 +30121,7 @@
       "id": "RK-11.7-001",
       "section": "11.7",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1942",
-        "note": "An unknown or pending sender under a verification policy: no label, no hold and no ON_VERIFICATION_REQUIRED."
-      }
+      "links": []
     },
     {
       "id": "RK-11.7.1-002",
@@ -30192,12 +30217,7 @@
       "id": "RK-11.7.3-003",
       "section": "11.7.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1942",
-        "note": "An IDENTIFIED participant's id arriving through a channel it was never resolved on: the event carries no verification."
-      }
+      "links": []
     },
     {
       "id": "RK-11.7.3-004",
@@ -30394,12 +30414,7 @@
       "id": "RK-11.7.6-008",
       "section": "11.7.6",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1942",
-        "note": "A deferred code reply sent from a hook's locked section has its released message answered after that hook's work is delivered."
-      }
+      "links": []
     },
     {
       "id": "RK-11.7.6-009",
@@ -30435,12 +30450,7 @@
       "id": "RK-11.7.6-014",
       "section": "11.7.6",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1942",
-        "note": "A completion handle's cancel (delivery.cancel) reaches a held message while its delivery set runs, and nothing once it ran."
-      }
+      "links": []
     },
     {
       "id": "RK-11.7.6-015",
@@ -30488,12 +30498,7 @@
       "id": "RK-11.7.7-007",
       "section": "11.7.7",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1942",
-        "note": "Two attempts at a request's last one count once: racing them needs a gate inside a verification transition."
-      }
+      "links": []
     },
     {
       "id": "RK-11.7.7-008",
@@ -41526,12 +41531,7 @@
       "id": "RK-19.1-011",
       "section": "19.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1925",
-        "note": "Set a room's language through its handoff handler, then assert the new language in that agent's next system prompt."
-      }
+      "links": []
     },
     {
       "id": "RK-19.1-012",
@@ -41709,12 +41709,7 @@
       "id": "RK-19.1-039",
       "section": "19.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1925",
-        "note": "Exercise the reference 10,000-room bound and oldest-tenth eviction on subsequent starts."
-      }
+      "links": []
     },
     {
       "id": "RK-19.1-040",
@@ -41826,12 +41821,7 @@
       "id": "RK-19.3-012",
       "section": "19.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1925",
-        "note": "Deliver an injected event visible to an agent that is skipped, then assert its content in that agent's later model history."
-      }
+      "links": []
     },
     {
       "id": "RK-19.3-013",
@@ -41908,12 +41898,7 @@
       "id": "RK-19.3.1-007",
       "section": "19.3.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1925",
-        "note": "Issue an explicitly addressed event from a bound intelligence channel under each response policy and assert that only its named peer answers. An installed discussion supersedes the room policy."
-      }
+      "links": []
     },
     {
       "id": "RK-19.3.1-008",
@@ -42065,12 +42050,7 @@
       "id": "RK-19.4-012",
       "section": "19.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1925",
-        "note": "Route otherwise identical events from two named source channels and assert the selected rule."
-      }
+      "links": []
     },
     {
       "id": "RK-19.4-013",
@@ -42117,12 +42097,7 @@
       "id": "RK-19.4-019",
       "section": "19.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1925",
-        "note": "Observe the supervisor on unaddressed agent output with ADDRESSED_ONLY explicitly selected."
-      }
+      "links": []
     },
     {
       "id": "RK-19.4-020",
@@ -42455,12 +42430,7 @@
       "id": "RK-19.6-011",
       "section": "19.6",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1925",
-        "note": "Add a public HandoffRequest construction or inspection step to assert the urgent=false default; the stock model tool does not expose urgent."
-      }
+      "links": []
     },
     {
       "id": "RK-19.6-003",
@@ -42558,9 +42528,9 @@
       "mapping": "unmapped",
       "links": [],
       "gap": {
-        "class": "writable",
+        "class": "step",
         "card": "RMK-1925",
-        "note": "Inspect the target's next model request for the framed conversation summary attributed to the sanitized previous agent ID; stored state alone is not that request."
+        "note": "The summary reaches the target's model through the implementation's handoff memory (HandoffMemoryProvider), which no strategy installs and no runner offers: a step family wrapping a scripted agent's memory in the handoff memory (a scripted memory member), so that handoff.handle's summary shows in the target's next request."
       }
     },
     {
@@ -42718,12 +42688,7 @@
       "id": "RK-19.6-048",
       "section": "19.6",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1925",
-        "note": "Invoke the installed tool outside the bound async tool context; the available handoff.handle step supplies an explicit room and bypasses the tool."
-      }
+      "links": []
     },
     {
       "id": "RK-19.6-049",
@@ -42945,12 +42910,7 @@
       "id": "RK-19.7-070",
       "section": "19.7",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1929",
-        "note": "Read a shared binding's original options before and after strategy install and work in a second room. Tests of selected child transport bindings do not read back the original binding."
-      }
+      "links": []
     },
     {
       "id": "RK-19.7-023",
@@ -43039,23 +42999,13 @@
       "id": "RK-19.7-036",
       "section": "19.7",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1929",
-        "note": "Set store_fault on the initial list_bindings snapshot, assert the returned error and the retained install claim. The native Python case test_an_uninstall_after_an_install_the_store_cut_short_frees_the_room identifies this boundary."
-      }
+      "links": []
     },
     {
       "id": "RK-19.7-037",
       "section": "19.7",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1929",
-        "note": "After failing the snapshot with store_fault, explicitly uninstall under a bound and install a replacement."
-      }
+      "links": []
     },
     {
       "id": "RK-19.7-038",
@@ -43193,12 +43143,7 @@
       "id": "RK-19.7-054",
       "section": "19.7",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1929",
-        "note": "Hold a claimed installation, close the room in another call and check that close returns before the installation resumes."
-      }
+      "links": []
     },
     {
       "id": "RK-19.7-055",
@@ -43221,12 +43166,7 @@
       "id": "RK-19.7-057",
       "section": "19.7",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1929",
-        "note": "Race a gated strategy claim against closing the room and verify the installer does not land after close."
-      }
+      "links": []
     },
     {
       "id": "RK-19.7-058",
@@ -43408,12 +43348,7 @@
       "id": "RK-19.7.3-004",
       "section": "19.7.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1929",
-        "note": "Send media, a composite and empty text to a one-pass supervisor and check its channel answers each with no worker. The comparable existing no-task scenario installs Loop."
-      }
+      "links": []
     },
     {
       "id": "RK-19.7.3-005",
@@ -43508,12 +43443,7 @@
       "id": "RK-19.7.3-014",
       "section": "19.7.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1929",
-        "note": "Observe the original background exception in the application log independently of the generic instruction and the bus entry."
-      }
+      "links": []
     },
     {
       "id": "RK-19.7.3-056",
@@ -43589,12 +43519,7 @@
       "id": "RK-19.7.3-024",
       "section": "19.7.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1929",
-        "note": "Start a gated background team, close the framework, and inspect worker terminal entries before the run's failure, with no hand-back."
-      }
+      "links": []
     },
     {
       "id": "RK-19.7.3-025",
@@ -43695,12 +43620,7 @@
       "id": "RK-19.7.3-032",
       "section": "19.7.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1929",
-        "note": "Begin framework shutdown around a gated background run, then dispatch another and observe that it starts no workers."
-      }
+      "links": []
     },
     {
       "id": "RK-19.7.3-033",
@@ -43748,12 +43668,7 @@
       "id": "RK-19.7.3-040",
       "section": "19.7.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1929",
-        "note": "Gate a formulation turn and inspect a simultaneous ordinary request from a second room on the shared supervisor, checking its prompt and configuration."
-      }
+      "links": []
     },
     {
       "id": "RK-19.7.3-041",
@@ -44066,12 +43981,7 @@
       "id": "RK-19.7.4-027",
       "section": "19.7.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1929",
-        "note": "Hold a Loop producer and its reviewer independently past a run bound, release them and verify that no strategy per-task timeout cut either delegation."
-      }
+      "links": []
     },
     {
       "id": "RK-19.7.4-032",
@@ -45643,12 +45553,7 @@
       "id": "RK-19.8-009",
       "section": "19.8",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1925",
-        "note": "Expose the bus's close operation independently of framework close, with a subscriber or resource that observes its effect."
-      }
+      "links": []
     },
     {
       "id": "RK-19.8-010",
@@ -45702,12 +45607,7 @@
       "id": "RK-19.8-018",
       "section": "19.8",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1925",
-        "note": "Close the framework while a task is active and assert its terminal status hook fires before the store is sealed; a post after close is a different boundary."
-      }
+      "links": []
     },
     {
       "id": "RK-19.8-019",
@@ -45886,23 +45786,13 @@
       "id": "RK-20.1-008",
       "section": "20.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1917",
-        "note": "Use the default sliding-window memory with nonempty history before a tool round. Both implementations inherit the default compact on that provider. Compare exact history before and after the round; the injected scripted memory instead implements compact even with no answers configured."
-      }
+      "links": []
     },
     {
       "id": "RK-20.1-009",
       "section": "20.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1917",
-        "note": "Wrap a scripted compaction in the existing budget, compacting or retrieval memory. Assert expect.compacted and the next request. Native coverage includes Python tests/test_memory_wrappers.py::test_compaction_reaches_inner and Rust crates/roomkit-ai/src/memory/mod.rs::a_decorator_hands_the_compaction_to_the_memory_it_wraps."
-      }
+      "links": []
     },
     {
       "id": "RK-20.2-002",
@@ -45974,23 +45864,13 @@
       "id": "RK-20.2-012",
       "section": "20.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1917",
-        "note": "Configure notes on the scripted inner memory and a wrapper that rebuilds its result, then assert the note on the model request."
-      }
+      "links": []
     },
     {
       "id": "RK-20.2-013",
       "section": "20.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1917",
-        "note": "Give BudgetAwareMemory long inner notes and a window that fits an additional event only if those notes are omitted. Assert intact notes and the shortened history."
-      }
+      "links": []
     },
     {
       "id": "RK-20.3-008",
@@ -46056,12 +45936,7 @@
       "id": "RK-20.3-018",
       "section": "20.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1917",
-        "note": "Use tier1_ratio, tier2_ratio and truncate_chars to put a long history between thresholds, then assert the shortened messages and the absence of a summarizer call."
-      }
+      "links": []
     },
     {
       "id": "RK-20.3-019",
@@ -46102,12 +45977,7 @@
       "id": "RK-20.3-047",
       "section": "20.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1917",
-        "note": "Use existing distributed executor placement to start the same room on a fresh agent build after forming a summary, then inspect that its summarizer starts from the window."
-      }
+      "links": []
     },
     {
       "id": "RK-20.3-024",
@@ -46149,12 +46019,7 @@
       "id": "RK-20.3-030",
       "section": "20.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1917",
-        "note": "Configure a tool round whose usage exceeds tier one alone, with older long messages, then assert that neither the model request nor the summarizer record changes."
-      }
+      "links": []
     },
     {
       "id": "RK-20.3-031",
@@ -46249,12 +46114,7 @@
       "id": "RK-20.3-039",
       "section": "20.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1917",
-        "note": "Size a budget around an older turn with a large replayed tool result or instruction. Assert that only its owning event pays the replay cost and both are kept or cut together."
-      }
+      "links": []
     },
     {
       "id": "RK-20.3-040",
@@ -46283,12 +46143,7 @@
       "id": "RK-20.3-043",
       "section": "20.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1917",
-        "note": "The budget_aware fixture accepts reserved_tokens. Set nonzero values below, at and above the measured input and distinguish max from addition by the retained history."
-      }
+      "links": []
     },
     {
       "id": "RK-20.3-044",
@@ -46306,12 +46161,7 @@
       "id": "RK-20.3-046",
       "section": "20.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1917",
-        "note": "Have BEFORE_AI_GENERATION append a large user message after a budgeted read; the retained pre-hook history and hook addition can be read in the model request."
-      }
+      "links": []
     },
     {
       "id": "RK-21.1-001",
