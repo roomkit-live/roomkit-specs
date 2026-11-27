@@ -45,10 +45,10 @@ proof: a scenario can cite a unit without covering all of it.
 | [§18 Design Principles](section-18.md) | 1 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | [§19 Multi-Agent Orchestration](section-19.md) | 569 | 562 | 3 | 3 | 1 | 446 | 1879 | 0 | 112 | 46 | 20 | 46 |
 | [§20 Memory System](section-20.md) | 63 | 62 | 0 | 1 | 0 | 48 | 234 | 0 | 12 | 10 | 2 | 0 |
-| [§21 Tool Access Control](section-21.md) | 214 | 199 | 13 | 2 | 0 | 127 | 881 | 0 | 71 | 18 | 30 | 28 |
-| [§22 Delivery Strategies](section-22.md) | 144 | 130 | 5 | 8 | 1 | 72 | 268 | 0 | 52 | 21 | 5 | 27 |
-| [§23 Task Delegation](section-23.md) | 207 | 205 | 1 | 0 | 1 | 170 | 592 | 0 | 33 | 8 | 18 | 7 |
-| [§24 Skills Framework](section-24.md) | 184 | 174 | 3 | 6 | 1 | 140 | 770 | 0 | 37 | 8 | 24 | 5 |
-| [§25 Image Generation](section-25.md) | 38 | 30 | 0 | 7 | 1 | 1 | 15 | 0 | 19 | 0 | 19 | 0 |
+| [§21 Tool Access Control](section-21.md) | 214 | 199 | 13 | 2 | 0 | 127 | 881 | 0 | 70 | 18 | 29 | 28 |
+| [§22 Delivery Strategies](section-22.md) | 144 | 130 | 5 | 8 | 1 | 72 | 268 | 0 | 50 | 21 | 3 | 27 |
+| [§23 Task Delegation](section-23.md) | 207 | 205 | 1 | 0 | 1 | 170 | 592 | 0 | 31 | 8 | 16 | 7 |
+| [§24 Skills Framework](section-24.md) | 184 | 174 | 3 | 6 | 1 | 140 | 770 | 0 | 30 | 8 | 17 | 5 |
+| [§25 Image Generation](section-25.md) | 38 | 30 | 0 | 7 | 1 | 1 | 15 | 0 | 0 | 0 | 0 | 0 |
 | [§26 Conformance Levels](section-26.md) | 24 | 21 | 0 | 0 | 3 | 20 | 229 | 0 | 0 | 0 | 0 | 0 |
 | [Appendix A: Channel Reference](appendix-A.md) | 202 | 200 | 0 | 2 | 0 | 98 | 267 | 0 | 81 | 17 | 42 | 22 |

@@ -245,19 +245,19 @@ See [requirements.json](requirements.json) for exact clauses and applicability,
 | §20.3 Built-in Implementations | normative | 41 | 40 | 1 | 0 | 43 | 0 | 6 | 2 | 0 |
 | §21 Tool Access Control | informative | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | §21.1 ToolPolicy | normative | 69 | 66 | 3 | 0 | 240 | 0 | 5 | 4 | 12 |
-| §21.2 MCP Tool Provider | normative | 53 | 51 | 2 | 0 | 57 | 0 | 5 | 19 | 5 |
+| §21.2 MCP Tool Provider | normative | 53 | 51 | 2 | 0 | 57 | 0 | 5 | 18 | 5 |
 | §21.3 AI Steering Directives | normative | 15 | 15 | 0 | 0 | 27 | 0 | 3 | 1 | 0 |
 | §21.4 Tool Call Context | normative | 42 | 39 | 3 | 0 | 121 | 0 | 1 | 2 | 9 |
 | §21.5 Large Tool Results | normative | 19 | 19 | 0 | 0 | 30 | 0 | 3 | 3 | 0 |
 | §21.6 Tool Call Timeout | normative | 16 | 16 | 0 | 0 | 27 | 0 | 1 | 1 | 2 |
 | §22 Delivery Strategies | normative | 1 | 1 | 0 | 0 | 1 | 0 | 0 | 0 | 0 |
 | §22.1 DeliveryStrategy Interface | normative | 99 | 99 | 0 | 0 | 50 | 0 | 10 | 2 | 21 |
-| §22.2 Built-in Strategies | normative | 31 | 31 | 0 | 0 | 12 | 0 | 10 | 3 | 6 |
+| §22.2 Built-in Strategies | normative | 31 | 31 | 0 | 0 | 12 | 0 | 10 | 1 | 6 |
 | §22.3 Delivery Hooks | normative | 13 | 13 | 0 | 0 | 8 | 0 | 1 | 0 | 0 |
 | §23 Task Delegation | normative | 1 | 1 | 0 | 0 | 1 | 0 | 0 | 0 | 0 |
 | §23.1 TaskRunner Interface | normative | 8 | 8 | 0 | 0 | 4 | 0 | 0 | 4 | 0 |
-| §23.2 DelegatedTask | normative | 7 | 7 | 0 | 0 | 0 | 0 | 0 | 1 | 0 |
-| §23.3 Delegation Protocol | normative | 120 | 115 | 5 | 0 | 160 | 0 | 6 | 10 | 5 |
+| §23.2 DelegatedTask | normative | 7 | 7 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §23.3 Delegation Protocol | normative | 120 | 115 | 5 | 0 | 160 | 0 | 6 | 9 | 5 |
 | §23.4 Delegation Tools | normative | 69 | 67 | 2 | 0 | 54 | 0 | 2 | 3 | 2 |
 | §23.5 Delegation Hooks | normative | 2 | 1 | 1 | 0 | 7 | 0 | 0 | 0 | 0 |
 | §24 Skills Framework | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
@@ -265,17 +265,17 @@ See [requirements.json](requirements.json) for exact clauses and applicability,
 | §24.2 SkillMetadata | normative | 8 | 7 | 1 | 0 | 94 | 0 | 0 | 0 | 0 |
 | §24.3 SkillRegistry | normative | 36 | 32 | 4 | 0 | 116 | 0 | 0 | 5 | 1 |
 | §24.4 Activation Lifecycle | normative | 25 | 24 | 1 | 0 | 107 | 0 | 4 | 0 | 2 |
-| §24.5 Loading Failures | normative | 20 | 19 | 1 | 0 | 5 | 0 | 0 | 10 | 0 |
-| §24.6 Access to Bundled Files | normative | 10 | 7 | 3 | 0 | 37 | 0 | 2 | 5 | 0 |
-| §24.7 Skills Served over MCP | normative | 73 | 73 | 0 | 0 | 60 | 0 | 2 | 2 | 2 |
+| §24.5 Loading Failures | normative | 20 | 19 | 1 | 0 | 5 | 0 | 0 | 6 | 0 |
+| §24.6 Access to Bundled Files | normative | 10 | 7 | 3 | 0 | 37 | 0 | 2 | 3 | 0 |
+| §24.7 Skills Served over MCP | normative | 73 | 73 | 0 | 0 | 60 | 0 | 2 | 1 | 2 |
 | §25 Image Generation | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| §25.1 A Surface of Its Own | normative | 4 | 4 | 0 | 0 | 0 | 0 | 0 | 4 | 0 |
-| §25.2 ImageProvider | normative | 9 | 9 | 0 | 0 | 0 | 0 | 0 | 6 | 0 |
-| §25.3 ImageResult | normative | 8 | 8 | 0 | 0 | 0 | 0 | 0 | 3 | 0 |
-| §25.4 Editing | normative | 6 | 6 | 0 | 0 | 0 | 0 | 0 | 1 | 0 |
-| §25.5 Usage Accounting | normative | 5 | 5 | 0 | 0 | 0 | 0 | 0 | 1 | 0 |
+| §25.1 A Surface of Its Own | normative | 4 | 4 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §25.2 ImageProvider | normative | 9 | 9 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §25.3 ImageResult | normative | 8 | 8 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §25.4 Editing | normative | 6 | 6 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| §25.5 Usage Accounting | normative | 5 | 5 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | §25.6 Model Catalogue | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| §25.7 Non-Goals | normative | 4 | 4 | 0 | 0 | 0 | 0 | 0 | 4 | 0 |
+| §25.7 Non-Goals | normative | 4 | 4 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | §26 Conformance Levels | informative | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | §26.1 Level 0: Core (REQUIRED) | normative | 21 | 21 | 0 | 0 | 70 | 0 | 0 | 0 | 0 |
 | §26.2 Level 1: Transport (RECOMMENDED) | normative | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
@@ -752,7 +752,6 @@ Units [gaps.json](gaps.json) lists: a scenario can test each, and none cites it 
 | RK-21.1-066 | §21.1 | writable | RMK-1918 | Deny or gate the orchestration-injected handoff or delegated tool while Tool Search is active; assert both its declaration and its dispatch outcome. |
 | RK-21.2-005 | §21.2 | step | RMK-1918 | Observe process start and exit across connect and close of a public command-backed provider. |
 | RK-21.2-006 | §21.2 | step | RMK-1918 | Capture the argument vector of a harmless fixture process as launched by the public stdio provider. |
-| RK-21.2-009 | §21.2 | step | RMK-1918 | Supply a stdio child with observable shutdown states and verify input closure, grace, termination and final escalation. |
 | RK-21.2-010 | §21.2 | step | RMK-1918 | Pass a selected URL into the constructor and capture construction errors independently of opening a scripted peer. |
 | RK-21.2-011 | §21.2 | step | RMK-1918 | Pass invalid header configurations and capture the public constructor's rejection before a connection attempt. |
 | RK-21.2-012 | §21.2 | step | RMK-1918 | Capture validation of server labels at public construction and compare a valid host label with the different identity announced at handshake. |
@@ -838,11 +837,9 @@ Units [gaps.json](gaps.json) lists: a scenario can test each, and none cites it 
 | RK-22.1-093 | §22.1 | phase6 | RMK-1917 | step: several realtime sessions per channel and across rooms: return mixed statuses including duplicates, failures and unknown for different sessions. |
 | RK-22.1-094 | §22.1 | phase6 | RMK-1917 | step: several realtime sessions per channel and across rooms: retry multi-session work with some prior successful or unresolved reservations. |
 | RK-22.1-095 | §22.1 | phase6 | RMK-1917 | step: several realtime sessions per channel and across rooms: attach or replace sessions between enqueue and execution; observe the selected sessions at execution. |
-| RK-22.2-005 | §22.2 | step | RMK-1917 | A scenario can select WaitForIdle but cannot inspect its constructor settings or advance a controlled playback clock to observe both defaults. Python tests/test_delivery_strategies.py::TestWaitForIdleStrategy::test_init_defaults and Rust crates/roomkit/tests/delivery_queue.rs::the_strategies_take_python_s_defaults verify the values. |
 | RK-22.2-006 | §22.2 | writable | RMK-1917 | deliver with wait_for_idle while a voice playback is held at its playback_gate: delivered only once the gate opens (requires voice). |
 | RK-22.2-007 | §22.2 | phase6 | RMK-1917 | step: realtime model activity for idle waits: exercise pending answers, speech, tools and audio forwarding before real-time sessions become idle. |
 | RK-22.2-009 | §22.2 | phase6 | RMK-1917 | step: deliver playback_timeout with a held playback: exceed the media playback bound and observe delivery despite activity. |
-| RK-22.2-010 | §22.2 | step | RMK-1917 | A scenario can select Queued but cannot inspect its constructor settings or advance a controlled playback clock to observe both defaults. Python tests/test_delivery_strategies.py::TestQueuedStrategy::test_init_defaults and Rust crates/roomkit/tests/delivery_queue.rs::the_strategies_take_python_s_defaults verify the values. |
 | RK-22.2-011 | §22.2 | writable | RMK-1917 | Use concurrent calls with the shared queued strategy. The current queued-strategy scenario only checks a lone item. Reading a custom separator or controlling the inactivity clock may need a fixture. |
 | RK-22.2-012 | §22.2 | phase6 | RMK-1917 | step: deliver playback_timeout with a held playback: run a queued batch during ongoing media playback or model activity and past the timeout. |
 | RK-22.2-014 | §22.2 | phase6 | RMK-1917 | step: realtime model activity for idle waits: observe both active speech and answer; in voice, inspect TTS activity. |
@@ -862,7 +859,6 @@ Units [gaps.json](gaps.json) lists: a scenario can test each, and none cites it 
 | RK-23.1-009 | §23.1 | step | RMK-1922 | Create an in-memory runner directly, submit work and close it, observing its tasks cancelled and resources released independently of kit.close(). |
 | RK-23.1-005 | §23.1 | step | RMK-1922 | Install a runner whose public submission raises without taking the task and observe exactly one completion from delegation. |
 | RK-23.1-006 | §23.1 | step | RMK-1922 | Cancel the caller while the runner's cancel awaits completion and observe that the original completion finishes. |
-| RK-23.2-007 | §23.2 | step | RMK-1922 | Construct a public result without giving its duration and read the default. Durations measured on completed delegations exercise elapsed time instead. |
 | RK-23.3-018 | §23.3 | writable | RMK-1922 | Have a private worker publish structured content on a served tool call and inspect the structured copy of its stored child end row. |
 | RK-23.3-042 | §23.3 | phase6 | RMK-1922 | step: setup_realtime_delegation: observe the instruction flag on a delegation hand-back to a channel hosting a realtime model. |
 | RK-23.3-044 | §23.3 | phase6 | RMK-1922 | step: setup_realtime_delegation: observe private system-intent injection on the delegating realtime voice session and the sole session when delegation is outside a call. |
@@ -873,7 +869,6 @@ Units [gaps.json](gaps.json) lists: a scenario can test each, and none cites it 
 | RK-23.3-085 | §23.3 | writable | RMK-1922 | Hold inline and background workers at model gates, call framework close and observe cancellation and completion before the store is released. |
 | RK-23.3-086 | §23.3 | step | RMK-1922 | Expose an instrumented task completion callback and shutdown grace/unwind observations, including the callback that persists after cancellation and its log. |
 | RK-23.3-087 | §23.3 | writable | RMK-1922 | Hold a newly announced task at the announcement/worker boundary, close the kit, then verify terminal status and no worker invocation. |
-| RK-23.3-090 | §23.3 | step | RMK-1922 | Observe ordered log level and cause for recipient turn failure followed by the undelivered hand-back note. |
 | RK-23.3-091 | §23.3 | writable | RMK-1922 | Close a kit holding a notified task, observe the completion hook and absence of a new recipient turn; the diagnostic log additionally needs a log observer. |
 | RK-23.3-092 | §23.3 | writable | RMK-1922 | Gate a recipient model already handling a hand-back, close the kit and inspect the cancelled response, waiter and absence of subsequent stored output. |
 | RK-23.3-094 | §23.3 | step | RMK-1922 | The telemetry fixture must expose delegation spans and their terminal status to compare success, worker failure and cancellation. |
@@ -910,15 +905,9 @@ Units [gaps.json](gaps.json) lists: a scenario can test each, and none cites it 
 | RK-24.5-005 | §24.5 | step | RMK-1939 | Shared local setup cannot capture a failing discovery result identifying the skill and its cause. |
 | RK-24.5-006 | §24.5 | step | RMK-1939 | The local fixture always supplies a generated directory and cannot observe discovery of an unscannable one. |
 | RK-24.5-008 | §24.5 | step | RMK-1939 | No observed local discovery operation can select and compare the explicit lenient and default modes. |
-| RK-24.5-009 | §24.5 | step | RMK-1939 | No common discovery operation exposes log records for each skipped skill. |
 | RK-24.5-010 | §24.5 | step | RMK-1939 | The shared fixture does not observe the local registry before and after a failing discovery. |
-| RK-24.5-018 | §24.5 | step | RMK-1939 | The shared fixture exposes serialized metadata, never a caller alias to a live mutable metadata object. |
-| RK-24.5-020 | §24.5 | step | RMK-1939 | A live external metadata alias and intermediate oversized repair state are not exposed. |
-| RK-24.5-021 | §24.5 | step | RMK-1939 | The shared fixture cannot construct an oversized live source via a caller alias to examine repair by replacement or subset. |
 | RK-24.6-003 | §24.6 | step | RMK-1939 | The local fixture supplies ordinary files and no linked directory entries for observing resolved containment. |
 | RK-24.6-004 | §24.6 | step | RMK-1939 | The shared filesystem fixture cannot observe regular-file and checked-path identity at read time. |
-| RK-24.6-005 | §24.6 | step | RMK-1939 | The shared fixture does not expose whether the platform can establish the open file's location or its refusal when unavailable. |
-| RK-24.6-006 | §24.6 | step | RMK-1939 | The shared fixture cannot distinguish the checked open file from a later lookup by name. |
 | RK-24.6-007 | §24.6 | step | RMK-1939 | Local setup generates an ordinary SKILL.md and does not expose the file identity or failure at discovery and load. |
 | RK-24.6-008 | §24.6 | writable | RMK-1939 | Text tools accept a reference or script name, but no shared case observes normalization before validation. |
 | RK-24.6-009 | §24.6 | writable | RMK-1939 | Existing text-tool calls can observe refusal of an absolute name; no shared case checks platform-recognized forms. |
@@ -927,26 +916,6 @@ Units [gaps.json](gaps.json) lists: a scenario can test each, and none cites it 
 | RK-24.7-053 | §24.7 | phase6 | RMK-1939 | step: a realtime fixture skills option: no shared fixed-instructions realtime provider demonstrates the attributed body in an activation result. |
 | RK-24.7-062 | §24.7 | writable | RMK-1939 | The shared registry can inspect an active entry and resource requests. No case requests a file omitted from that entry; inactive-reference refusal is a different condition. |
 | RK-24.7-068 | §24.7 | phase6 | RMK-1939 | step: a realtime fixture skills option: no shared realtime inline_full session asserts refusal and the reason for a served entry. |
-| RK-24.7-079 | §24.7 | step | RMK-1939 | The built-in served cache is in memory, and the shared runner offers no deployment with a persistent disk cache in which to inspect these conditional properties. |
-| RK-25.1-002 | §25.1 | step | RMK-1934 | Inspect the image and chat provider contracts on an implementation that provides both, using a provider descriptor or independent adapter fixture. Rust currently has no image provider. |
-| RK-25.1-003 | §25.1 | step | RMK-1934 | Configure a conversational provider and a separately instrumented image provider with distinct vendor identifiers, credentials and instances, and observe independent calls. |
-| RK-25.1-004 | §25.1 | step | RMK-1934 | Run a conversational agent whose tool or host invokes a different image provider and check which provider actually serves each request. |
-| RK-25.1-005 | §25.1 | step | RMK-1934 | Inspect the declared public AIResponse.content type in each implementation and assert it is exclusively text. Native declarations specify str in Python and String in Rust. Existing response examples returning text cannot distinguish an additional allowed image type; the Python public API snapshot records parameter names without type annotations. No image generation call is necessary. |
-| RK-25.2-002 | §25.2 | step | RMK-1934 | Read the image provider's public name independently of the selected model. |
-| RK-25.2-032 | §25.2 | step | RMK-1934 | Select an image model and read the active model identifier from its provider. |
-| RK-25.2-003 | §25.2 | step | RMK-1934 | Read the provider's editing capability on configurations that do and do not accept references. |
-| RK-25.2-004 | §25.2 | step | RMK-1934 | List an image provider's model information without making a network request. |
-| RK-25.2-005 | §25.2 | step | RMK-1934 | Call the public generation operation with a prompt, size, requested count and references and inspect its image results. |
-| RK-25.2-006 | §25.2 | step | RMK-1934 | Close a constructed image provider and observe release of its instrumented resources. |
-| RK-25.3-002 | §25.3 | step | RMK-1934 | Read an ImageResult's encoded data and media type through a shared result or provider fixture. |
-| RK-25.3-019 | §25.3 | step | RMK-1934 | Read the optional revised prompt from a constructed or returned ImageResult. |
-| RK-25.3-020 | §25.3 | step | RMK-1934 | Read the image-generation usage map on a returned ImageResult. |
-| RK-25.4-002 | §25.4 | step | RMK-1934 | Use the same generate entry point for prompt-only and reference-image calls and read the edited result. |
-| RK-25.5-003 | §25.5 | step | RMK-1934 | Inspect the four integer text and image input and output counters on generation usage. Conversational usage fixtures provide preassembled counts. |
-| RK-25.7-002 | §25.7 | step | RMK-1934 | Observe an ordinary inbound and broadcast pass while an enabled image provider records whether it was invoked as a stage. |
-| RK-25.7-003 | §25.7 | step | RMK-1934 | Expose the implementation's complete public hook trigger vocabulary and compare it with the ordinary hooks. Scoped observed hook lists cannot establish the absence of a trigger. |
-| RK-25.7-004 | §25.7 | step | RMK-1934 | Invoke the actual image provider from a tool handler or application and assert its recorded generation request. |
-| RK-25.7-005 | §25.7 | step | RMK-1934 | Feed actual generated output through the public room integration path and observe inbound processing, delivery and visibility. Starting with a manually supplied image already on the ordinary route cannot detect a separate generation route. |
 | RK-A.1-002 | §A.1 | step | RMK-1961 | Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed. |
 | RK-A.1-003 | §A.1 | step | RMK-1961 | Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed. |
 | RK-A.1-004 | §A.1 | step | RMK-1961 | Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed. Python's SMSProvider.send takes from_ as optional (RMK-1953). |
