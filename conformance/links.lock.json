@@ -5150,6 +5150,9 @@
     "RK-12.11-057": {
       "conference/a-recorder-a-call-still-runs-in-past-the-release-wait-is-left-unreleased": "3b754d268322b513464855a1022c63816c72ebe32c744221f86ccc5632394c75"
     },
+    "RK-12.11-058": {
+      "conference/a-recorder-s-release-waits-on-a-budget-of-its-own-once-the-bot-has-left": "36c161704746e1f64fb45cc83bf121f09e94324ea4a117e4e169c417f1a6a65d"
+    },
     "RK-12.11-059": {
       "conference/a-recorder-a-call-still-runs-in-past-the-release-wait-is-left-unreleased": "0765532a280afec4e6ba26da9efe64a1181179fdd185e07879bc49a57a88d87f"
     },
@@ -5497,6 +5500,9 @@
       "voice/a-diarizing-stream-lasts-until-its-provider-ends-it-and-labels-start-a-new-epoch": "2bc60ff5ac04768f5af5600c6d14f9ee0dd52615e2942c6d8276798c91ba9324",
       "voice/a-failed-diarizing-stream-is-opened-again": "2bc60ff5ac04768f5af5600c6d14f9ee0dd52615e2942c6d8276798c91ba9324",
       "voice/a-language-chosen-mid-session-ends-a-diarizing-stream": "2bc60ff5ac04768f5af5600c6d14f9ee0dd52615e2942c6d8276798c91ba9324"
+    },
+    "RK-12.2.3-022": {
+      "voice/a-kept-stream-s-pause-is-filled-with-silence-level-with-the-clock": "0f9551c8a5f3417ef8e63e227af9ce9719b495ee460b119296447d09c14dcca2"
     },
     "RK-12.2.3-023": {
       "voice/a-final-discarded-as-echo-leaves-a-kept-stream-open": "065b3afd22636200f87371a7fb6507d01e1a7bfc175a26d1beb3581f24d8716e"

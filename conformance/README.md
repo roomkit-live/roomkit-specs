@@ -491,9 +491,11 @@ room callbacks of the setup are not compared.
   resumed, the silence it counts, the wait for a transcript still due, and
   the length of speech that holds a reply not heard yet; the video bridge's
   `keyframe_interval_s` and `keyframe_wait_s` (§12.8.9); the vision
-  interval (§12.8.4); a conference recording's flush budget (§12.10.8);
-  and the interval between two audio levels of a voice or realtime session
-  (§12.5).
+  interval (§12.8.4); a conference recording's flush budget (§12.10.8),
+  and the wait, before its recorder is released, for a call still running
+  in it (§12.11); the interval between two audio levels of a voice or
+  realtime session (§12.5); and the pacing of an STT stream kept across
+  turns, filled with silence to stay level with the clock (§12.2.3).
   An implementation's own delays on those paths (an echo
   canceller's tail once a playback ended) follow it too. Others stay on
   real time, and a scenario does not advance past them: the audio a session

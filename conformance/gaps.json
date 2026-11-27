@@ -76,41 +76,6 @@
       "card": "RMK-1942",
       "note": "Two attempts at a request's last one count once: racing them needs a gate inside a verification transition."
     },
-    "RK-12.10.3-036": {
-      "class": "phase6",
-      "card": "RMK-2070",
-      "note": "measurement: the residue of a stop, the bot audio a backend still plays out after stop_playback()."
-    },
-    "RK-12.10.4-056": {
-      "class": "phase6",
-      "card": "RMK-2007",
-      "note": "measurement: the close's whole duration bound (the grace, the turn backend's budget, the closes, at most two unwinds of 1 second); no step reads elapsed time."
-    },
-    "RK-12.11-058": {
-      "class": "phase6",
-      "card": "RMK-2066",
-      "note": "measurement: the bot leaves once the teardown's budget is spent, before the wait to release the recorder ends; no gate orders the end of that wait, so only a duration tells a release wait made apart from one made inside the teardown (conference/a-held-finalization-lets-the-bot-leave-and-the-recorder-is-released-once-it-returns shows the leave while the call runs)."
-    },
-    "RK-12.2.3-022": {
-      "class": "phase6",
-      "card": "RMK-2023",
-      "note": "measurement: the audio a kept diarizing stream receives against the wall clock through a pause or a lossy stretch (Python's tests are wallclock); no step reads elapsed time."
-    },
-    "RK-12.3.12-022": {
-      "class": "phase6",
-      "card": "RMK-2042",
-      "note": "measurement: turn detector fast-path latency."
-    },
-    "RK-12.3.15-020": {
-      "class": "phase6",
-      "card": "RMK-2042",
-      "note": "measurement: debug tap write latency on the audio path; Python writes each frame on the pipeline's path."
-    },
-    "RK-12.3.3-007": {
-      "class": "phase6",
-      "card": "RMK-2034",
-      "note": "measurement: resampling quality, the artifacts a resampler leaves for VAD and STT (Python's default is linear interpolation, suspect RMK-2029)."
-    },
     "RK-12.7.5-008": {
       "class": "writable",
       "card": "RMK-2051",
