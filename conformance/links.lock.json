@@ -3569,6 +3569,9 @@
     "RK-11.2-016": {
       "identity/identity-hooks-run-in-order-on-the-events-they-filter": "ff66267a7bd339bac1b7f504055e563615c933ad53f415d3e824ffb97ce3679a"
     },
+    "RK-11.2-017": {
+      "identity/a-hook-s-status-its-trigger-does-not-act-on-reads-as-null": "836da1f10926e7288fb75f9e4ba207454b1e052f0e3a119bd97a080b41e7c36a"
+    },
     "RK-11.2-018": {
       "identity/a-resolver-s-rejection-holds-the-message-no-hook-answers": "e6e8ce6f4164f62f8d4c6e7c0b55d93d3caa4d629a941f907ee9b4c28524a368",
       "identity/an-ambiguous-sender-s-hook-names-it": "e6e8ce6f4164f62f8d4c6e7c0b55d93d3caa4d629a941f907ee9b4c28524a368",
@@ -3662,6 +3665,9 @@
       "identity/the-framework-s-own-delivery-is-not-challenged": "a0de82fddaaacebdf2d7beae63936804f367f8cc18bc42333e9a3d0cb730ba1d",
       "identity/the-framework-s-own-delivery-is-not-resolved": "a0de82fddaaacebdf2d7beae63936804f367f8cc18bc42333e9a3d0cb730ba1d",
       "members/a-resolved-pending-sender-keeps-their-room": "a0de82fddaaacebdf2d7beae63936804f367f8cc18bc42333e9a3d0cb730ba1d"
+    },
+    "RK-11.7-001": {
+      "verification/a-sender-not-identified-is-neither-labelled-nor-held": "9c73aba38efc496aa0a7cbc1e1ea9bb4d0aefffb5f47fd10738b296f02465721"
     },
     "RK-11.7.1-002": {
       "store/a-verification-is-read-by-its-identity-within-its-organization": "e2203713a864a5318effc685303b78672604067e19a095bb37c7c70533b5ec07",
@@ -3771,6 +3777,9 @@
       "verification/only-a-message-the-pipeline-held-is-released": "cd79237217d299081cfcbe199e0bc9c67650c828a3a5bd85756628e39837726c",
       "verification/only-the-request-s-window-is-released": "cd79237217d299081cfcbe199e0bc9c67650c828a3a5bd85756628e39837726c",
       "verification/the-release-keeps-to-its-bound": "cd79237217d299081cfcbe199e0bc9c67650c828a3a5bd85756628e39837726c"
+    },
+    "RK-11.7.3-003": {
+      "verification/an-identity-s-id-on-a-channel-it-was-never-resolved-on-carries-no-verification": "b4677e4e237940b8f7c89f9783da60492ce7218de4b6dd90ca82cde6a2e84123"
     },
     "RK-11.7.3-004": {
       "verification/a-blocked-message-is-observed-by-no-hook": "175cd12628bce038273bef44b356b3f6f8c9c9c61dafad7f0be70fcee09ed4a9",
@@ -3964,6 +3973,9 @@
     "RK-11.7.6-007": {
       "verification/a-deferred-code-reply-returns-before-its-release": "353251a80282afb55cda5446b3085348fdbc3f50a983ac833d89781d2dda8d5d"
     },
+    "RK-11.7.6-008": {
+      "verification/a-deferred-code-reply-from-a-locked-hook-is-answered-after-the-hook-s-work": "dbe23f8d6b77e29591fdda13610a807c3b6e2c73dce0ab3266d593c0434bd980"
+    },
     "RK-11.7.6-009": {
       "verification/a-release-from-a-hook-keeps-its-answer-named": "e744a45e5d9b785173669fcfa825c00ea15b9e00c648626eff498aaee047419f",
       "verification/a-release-from-a-hook-that-allows-its-event-is-answered-first": "e744a45e5d9b785173669fcfa825c00ea15b9e00c648626eff498aaee047419f",
@@ -4003,6 +4015,9 @@
       "verification/only-the-last-released-message-s-cancellation-silences-the-release-last": "08554544e82322fba3e0e97b071485127c64bd9dffccc8cd4b131d56231b5a79",
       "verification/the-handle-s-cancel-reaches-a-held-message-while-its-delivery-set-runs": "08554544e82322fba3e0e97b071485127c64bd9dffccc8cd4b131d56231b5a79"
     },
+    "RK-11.7.6-014": {
+      "verification/a-handle-reaches-a-held-message-while-its-delivery-set-runs-and-the-key-after": "5d434529011b3779fd7d81fe3d91e552949aba7721ef78cd2756793ceae70919"
+    },
     "RK-11.7.6-015": {
       "verification/a-released-message-s-turn-reads-what-came-after-it": "1b62db97a107c372dfa2d642b56ea51b6bcc19ae31e262b0369e727c8d251a7c"
     },
@@ -4032,6 +4047,9 @@
       "verification/an-unanswered-request-ends-when-it-expires": "caf57b1c4e7420df2c92ad9afd0ce534bfe5b63da11b3419be0faeec86029a1e",
       "verification/revoking-a-pending-identity-kills-its-link": "caf57b1c4e7420df2c92ad9afd0ce534bfe5b63da11b3419be0faeec86029a1e",
       "verification/the-last-wrong-secret-fails-the-request": "caf57b1c4e7420df2c92ad9afd0ce534bfe5b63da11b3419be0faeec86029a1e"
+    },
+    "RK-11.7.7-007": {
+      "verification/two-attempts-at-a-request-s-last-one-count-once": "ba87a924687b319914d4ebc85d27b83ee39e5953d5f15ad70e68a12f867059ee"
     },
     "RK-11.7.7-009": {
       "store/a-verification-is-read-by-its-identity-within-its-organization": "9eadedecb389867d61d9f1986f47c93f17441c1598bd0bd7658b6a42e2ffa1df",
@@ -7967,6 +7985,9 @@
       "orchestration/an-agent-s-turn-prompt-ends-with-its-identity": "6f04949f26034b3dfe44312bf5fd74048da8156b0cfe3a678f909eed09c2e491",
       "tool-search/the-preamble-comes-before-an-agent-s-identity": "6f04949f26034b3dfe44312bf5fd74048da8156b0cfe3a678f909eed09c2e491"
     },
+    "RK-19.1-011": {
+      "orchestration/a-handoff-s-language-change-writes-the-agent-s-identity-in-that-language": "9ce682153c792a7ba3e3965465f45fbff494f2b662469184460e35feca14ba07"
+    },
     "RK-19.1-013": {
       "orchestration/an-agent-s-turn-prompt-ends-with-its-identity": "da29e6d678ab216290f0f506f25c3df1090316c3b42a8c061c1af7144cc8178a"
     },
@@ -8209,6 +8230,9 @@
       "discussion/a-hook-s-injected-instruction-gives-no-turn": "5f3aae0f06c42c15d3a0eff2dd116cf0386dbdd0e8bebe2e39077424e700b081",
       "hooks/an-injected-event-asks-no-agent": "5f3aae0f06c42c15d3a0eff2dd116cf0386dbdd0e8bebe2e39077424e700b081"
     },
+    "RK-19.3-012": {
+      "addressing/an-agent-an-injected-event-s-visibility-names-reads-it-at-its-next-turn": "f9df268b9e4fc114a86417754452bb36635139ae3b6cde2918f68311680bc683"
+    },
     "RK-19.3-013": {
       "orchestration/a-router-asks-its-default-agent-alone": "8fbb245f647be9c390d18754752795751815cfdcfe9ca636c644ea7bd73ab21d",
       "orchestration/a-router-with-nothing-to-route-asks-every-agent": "8fbb245f647be9c390d18754752795751815cfdcfe9ca636c644ea7bd73ab21d",
@@ -8260,6 +8284,9 @@
     "RK-19.3.1-006": {
       "addressing/an-address-names-the-agents-asked": "d71d9091ab5ada064a9584077c40413a871d6aa1010c65bede3b2797311c1e19",
       "appendix-b/b4-agent-chain": "d71d9091ab5ada064a9584077c40413a871d6aa1010c65bede3b2797311c1e19"
+    },
+    "RK-19.3.1-007": {
+      "addressing/an-agent-s-address-to-another-is-answered-by-it-alone-under-either-policy": "3c1728f948b0d8f63b2ea1bbf7a33f65facb2bde5e72e622b73f6de37e59a5e0"
     },
     "RK-19.3.1-008": {
       "discussion/a-custom-handle-queues-its-agent-and-its-id-names-nobody": "9036cdb97c32182b613c5de772e03858dcc9122c963061baa5383f40d38abe88",
@@ -8366,6 +8393,9 @@
       "orchestration/a-sender-s-intent-reaches-the-router-s-rules": "c46331433d38f7a5bf62aa5af994eb819dcd260a3c8aef04b6600a42f84d6bbf",
       "orchestration/rules-are-tried-lowest-priority-first": "c46331433d38f7a5bf62aa5af994eb819dcd260a3c8aef04b6600a42f84d6bbf"
     },
+    "RK-19.4-012": {
+      "orchestration/a-rule-matches-the-channels-a-message-comes-from": "e06a684e1a0391e1caf9177ffe7cf146c7fccdbe7a79ce26f97bafb4e20f7e85"
+    },
     "RK-19.4-014": {
       "orchestration/a-supervisor-watches-an-addressed-message": "e58af19ad03653968c56a53cfc538290a1dc6dd8f7ce8fa014d8156818fde9aa",
       "orchestration/an-addressed-message-is-left-to-its-address": "e58af19ad03653968c56a53cfc538290a1dc6dd8f7ce8fa014d8156818fde9aa"
@@ -8390,6 +8420,9 @@
       "orchestration/a-room-held-for-a-human-asks-no-supervisor-without-an-address": "25e00547cbae318f5d6eb00b52d59a6b04b6a8adb449fc0c3af656ada09bc480",
       "orchestration/a-supervisor-is-asked-beside-the-routed-agent": "25e00547cbae318f5d6eb00b52d59a6b04b6a8adb449fc0c3af656ada09bc480",
       "orchestration/a-supervisor-watches-an-addressed-message": "25e00547cbae318f5d6eb00b52d59a6b04b6a8adb449fc0c3af656ada09bc480"
+    },
+    "RK-19.4-019": {
+      "orchestration/a-supervisor-watches-an-agent-s-unaddressed-answer-under-addressed-only": "1d12b2d30180b6fd3140990ee33ee0da394f0fab0c35beec7b56e389b17abf70"
     },
     "RK-19.4-020": {
       "orchestration/a-room-held-for-a-human-asks-no-supervisor-without-an-address": "414a880ea2e1cc7a7cd60cd973957cd30172bcf4081424cc00bb29ee029964d7",
@@ -8986,6 +9019,12 @@
       "discussion/a-discussion-installed-on-a-live-room-reads-its-history": "cbed4b9ed19d00214cb98a22121e413fa95eb4b9d8c5ea7099201c371767c4f1",
       "orchestration/a-swarm-hands-the-room-from-agent-to-agent": "cbed4b9ed19d00214cb98a22121e413fa95eb4b9d8c5ea7099201c371767c4f1"
     },
+    "RK-19.7-036": {
+      "orchestration/an-install-whose-first-read-fails-keeps-the-room-until-an-uninstall-frees-it": "4a0d007f7d9d968ee9fd814f84442249bf6cc1a9d1e2860c722d07ed3c86f1a1"
+    },
+    "RK-19.7-037": {
+      "orchestration/an-install-whose-first-read-fails-keeps-the-room-until-an-uninstall-frees-it": "d28cdc5ebc206432244ec1aed8f21f011e5539a361aed551d3f593ad0e277b0d"
+    },
     "RK-19.7-038": {
       "discussion/a-process-that-never-read-the-room-claims-it-for-no-other-strategy": "036f03f1d0db997a0708f188a7f3f0a7d92a442c7c085df13b5a095f4b636e1e",
       "discussion/a-room-moves-from-a-swarm-to-a-discussion-and-back": "036f03f1d0db997a0708f188a7f3f0a7d92a442c7c085df13b5a095f4b636e1e",
@@ -9086,8 +9125,14 @@
     "RK-19.7-053": {
       "orchestration/closing-a-room-takes-its-strategy-back-out": "ef8074065b365dffd7127d5c9e2970cec519009f49927e68b22c9b03c44d826e"
     },
+    "RK-19.7-054": {
+      "orchestration/a-close-does-not-wait-for-an-install-under-way-which-then-finds-the-room-closed": "ad1f0b66ff7cc2052f99b4353c6a72142bd41c24990fa1d7e0739c214d94f670"
+    },
     "RK-19.7-056": {
       "orchestration/closing-a-room-takes-its-strategy-back-out": "775394fd1c98c1e3dfa959c3af9f3f22d774d132ca7812d4e114196ccc5fb428"
+    },
+    "RK-19.7-057": {
+      "orchestration/a-close-does-not-wait-for-an-install-under-way-which-then-finds-the-room-closed": "e6fd5a81bc25d01495243aab38d8ed4ded94ecdce2a9c3d8f5cb4101e400fcb0"
     },
     "RK-19.7-058": {
       "orchestration/closing-a-room-takes-its-strategy-back-out": "a6cb546e04d3841f92c41240695b59a664e38342e9687c3cbbbc731061cb6bf3"
@@ -9137,6 +9182,9 @@
     },
     "RK-19.7-068": {
       "discussion/asking-about-a-strategy-not-stored-with-the-room-is-refused": "b177bc39d0ed0172820cf04620aeda3c1097c1919190b445006401f3326fcb96"
+    },
+    "RK-19.7-070": {
+      "orchestration/installs-and-turns-leave-a-binding-the-supervisor-shares-as-it-was": "312675ba49d32b58816a0701515391a735a1375849c19f33eb4df7a9dd451541"
     },
     "RK-19.7.1-002": {
       "orchestration/a-pipeline-chains-its-agents-and-starts-at-the-first": "2a794367236fdf0edaaf68461ce0074004c4d1ecec992cd98ca356fea2327b7b",
@@ -9213,6 +9261,9 @@
       "orchestration/each-room-s-background-team-runs-its-own-workers-without-streaming": "80ed09c87b8c032f067c5e8e211ba2d6b529414b07164c6e2b47423392ae0365",
       "orchestration/each-room-s-per-worker-tools-run-with-its-own-install": "80ed09c87b8c032f067c5e8e211ba2d6b529414b07164c6e2b47423392ae0365",
       "orchestration/each-room-s-per-worker-tools-run-with-its-own-install-without-streaming": "80ed09c87b8c032f067c5e8e211ba2d6b529414b07164c6e2b47423392ae0365"
+    },
+    "RK-19.7.3-004": {
+      "orchestration/a-one-pass-supervisor-answers-alone-what-its-team-s-tasks-cannot-carry": "d9dda9220cd4709e17240fa160d77643039e713063bbc4afec33e72ea3524d4a"
     },
     "RK-19.7.3-005": {
       "orchestration/a-rejected-step-is-done-again-with-the-supervisor-s-feedback": "45d40b88bc0fce28f9f02f044f86869ace26c7cf426ed7047380d09d2c5632c7",
@@ -9299,6 +9350,9 @@
     "RK-19.7.3-023": {
       "orchestration/a-background-worker-past-its-task-timeout-is-cut-and-told-as-not-completed": "37fbef093ab70ec033fb9af639c51898db2648cd3bf94d30ff554ebeee49ae2c",
       "orchestration/a-background-worker-tool-answers-at-once-and-hands-the-outcome-back": "37fbef093ab70ec033fb9af639c51898db2648cd3bf94d30ff554ebeee49ae2c"
+    },
+    "RK-19.7.3-024": {
+      "orchestration/a-supervisor-s-background-team-ends-with-the-kit-s-close": "791e4ccbeb99d09862203dd4e00ff457be9cc095318e7b9376d29d2cdd50a68f"
     },
     "RK-19.7.3-025": {
       "orchestration/a-background-worker-past-its-task-timeout-is-cut-and-told-as-not-completed": "85a9c12ae13e6de93efdf1a3a98e0c7bd2c0b8023b2116c544591e6647159f07",
@@ -9433,6 +9487,9 @@
       "orchestration/an-auto-delegating-supervisor-refines-with-its-own-instruction-and-supervises-a-sequential-team": "8e2eaa8de1a97ff9870e014d4c304eafbb5eaab8560708ada99cc3d2642c5da7",
       "orchestration/an-auto-delegating-supervisor-turns-the-request-into-its-team-s-task-then-answers-from-their-results": "8e2eaa8de1a97ff9870e014d4c304eafbb5eaab8560708ada99cc3d2642c5da7",
       "orchestration/an-empty-refine-instruction-gives-the-first-pass-the-implementation-s-own": "8e2eaa8de1a97ff9870e014d4c304eafbb5eaab8560708ada99cc3d2642c5da7"
+    },
+    "RK-19.7.3-040": {
+      "orchestration/a-supervisor-s-task-formulation-instruction-reaches-no-other-room-s-turn": "872dd617636ad7590590189a9464838a4e4af73136222118837ab4de9cb97abf"
     },
     "RK-19.7.3-041": {
       "orchestration/an-auto-delegating-supervisor-whose-first-pass-fails-after-a-tool-round-reports-its-rows-correlation-id": "9084eb3d14f75dda1423e1dc0ca535d195bb88cbb71d4f2e25ddc97520f2e10c",
@@ -10689,6 +10746,9 @@
     "RK-19.8-017": {
       "status/a-status-hook-s-call-is-as-deep-as-the-poster": "3376caf3e9f4de7a87f316a7d0ac1a5fd84100e88361a4c90c1768d4df341b31"
     },
+    "RK-19.8-018": {
+      "status/a-task-the-close-cuts-reaches-the-status-hooks-before-the-store-is-sealed": "50a7838a87f4d50594d6c02c3ab5216992fdd7d47e471c84ec4edc92f95680a2"
+    },
     "RK-19.8-019": {
       "status/a-status-reaches-the-hooks-of-the-room-it-names": "6979a48ec77473075e2e200aead6f29d321641b852a07a9a954a25ead1012fd7"
     },
@@ -10793,6 +10853,12 @@
       "memory/a-memory-summary-keeps-the-deferred-compaction-boundary": "221e59fe09359d1023aea959f21ad9f1f9ac8469ba5d388cef27d5a548ee687f",
       "memory/a-memory-that-fails-to-compact-leaves-the-turn-as-it-was": "221e59fe09359d1023aea959f21ad9f1f9ac8469ba5d388cef27d5a548ee687f"
     },
+    "RK-20.1-008": {
+      "memory/a-memory-that-does-not-compact-leaves-a-tool-turn-as-it-is": "b75c6885b5c29f40119802c017f5bd12df70630bd9f46d52c28db64c2d026487"
+    },
+    "RK-20.1-009": {
+      "memory/a-memory-that-wraps-another-hands-it-the-compaction": "007304b5a12c687d8337ea4340ba01eb38b5e1c5ca7978c17b56e8c531c493a9"
+    },
     "RK-20.2-002": {
       "memory/a-blank-input-s-notes-join-the-last-user-message": "0b6569a268754ca93a109fc03093ef1076a9236e45e1274dc568abb86c131c10",
       "memory/a-memory-s-notes-follow-the-turn-s-input": "0b6569a268754ca93a109fc03093ef1076a9236e45e1274dc568abb86c131c10",
@@ -10864,6 +10930,12 @@
       "memory/a-passage-retrieved-from-a-turn-reads-after-its-author-s-label": "d94812b0040c545c79d885ecf31f3ab032e43ed72a782bdbb081cd06b95b866f",
       "memory/knowledge-passages-ride-the-turn-s-notes": "d94812b0040c545c79d885ecf31f3ab032e43ed72a782bdbb081cd06b95b866f"
     },
+    "RK-20.2-012": {
+      "memory/a-memory-that-rebuilds-the-result-of-the-one-it-wraps-carries-its-notes": "f94a5d834866548e4c82f11bbae5d727714928ff435f927fbfc7e2f3a74cf676"
+    },
+    "RK-20.2-013": {
+      "memory/a-budget-pays-for-the-notes-of-the-memory-it-wraps-out-of-the-history": "b7ed24c82db37cbf096e5ad97f0b5adaff66626812a2cbb035a1f1558488482a"
+    },
     "RK-20.2-014": {
       "memory/a-passage-retrieved-from-a-turn-reads-after-its-author-s-label": "5480602aa8a59968f48edea2645938091e42417feac33b6a0e5c04dd45121637"
     },
@@ -10934,6 +11006,9 @@
       "memory/a-summary-cut-summarizes-the-turn-that-passes-it": "2d8b727a9f246d0124327e964a4fd3aff137e62be59ce7dd36d86a1a6749e5a5",
       "memory/a-summary-stands-for-the-older-turns": "2d8b727a9f246d0124327e964a4fd3aff137e62be59ce7dd36d86a1a6749e5a5"
     },
+    "RK-20.3-018": {
+      "memory/a-summarizing-memory-past-its-first-threshold-shortens-older-long-texts": "66e0d3f8a6bb431dab8c583f163947befad12064ef6fbb27a15a1ebd446a4da8"
+    },
     "RK-20.3-019": {
       "memory/a-deferred-memory-reserves-discussion-notes": "13968820089860eb14cb6bfbc075e571bb517c2fc74f8dc2cf338a1ebc84d7a7",
       "memory/a-queued-turn-keeps-its-question-out-of-the-summary": "13968820089860eb14cb6bfbc075e571bb517c2fc74f8dc2cf338a1ebc84d7a7",
@@ -10995,6 +11070,9 @@
     "RK-20.3-029": {
       "memory/a-summary-set-before-an-assistant-turn-is-one-of-the-messages-at-the-next-compaction": "26a0f2110d9912de210ffc7ddbae604cbf64b183c8c9c35961a4b5d67a9ba07b"
     },
+    "RK-20.3-030": {
+      "memory/a-summarizing-memory-applies-no-first-threshold-between-two-tool-rounds": "cc7e2519b3ae5b7a9094386d1cdaec0e101f9885647d357feb37d54c86faee46"
+    },
     "RK-20.3-031": {
       "memory/a-summarizing-memory-compacts-a-turn-past-its-threshold-between-two-calls": "327823312216645cb29dc1b96231387a9c564417d67481e09098dc0ce01f5fe9"
     },
@@ -11025,6 +11103,9 @@
       "memory/a-summary-cut-summarizes-the-turn-that-passes-it": "ae5da6b6218c02a25882904abb6b59de314a9e7df36c9088b7b5531fd6ec7a91",
       "memory/a-summary-stands-for-the-older-turns": "ae5da6b6218c02a25882904abb6b59de314a9e7df36c9088b7b5531fd6ec7a91"
     },
+    "RK-20.3-039": {
+      "memory/a-budget-charges-an-earlier-tool-round-to-the-turn-it-belongs-to": "cb1f53c011bd8a32c6a7b8a23cce6143bacb8d2fb6ff32ebd4fb715dad18bd95"
+    },
     "RK-20.3-041": {
       "memory/a-budget-counts-a-labelled-turn-as-it-is-sent": "cbc6f327619692580917a46341b51294004f3425ccf5fa3b38d55ca3568d464c",
       "memory/a-budget-keeps-the-latest-events-that-fit": "cbc6f327619692580917a46341b51294004f3425ccf5fa3b38d55ca3568d464c"
@@ -11037,6 +11118,9 @@
       "memory/a-summary-cut-summarizes-the-turn-that-passes-it": "d616535a376fe846401cf4c16f3428fb82dfbffd6f6fcaa2880c2908f20ad8af",
       "memory/a-summary-stands-for-the-older-turns": "d616535a376fe846401cf4c16f3428fb82dfbffd6f6fcaa2880c2908f20ad8af"
     },
+    "RK-20.3-043": {
+      "memory/a-budget-s-given-reserve-is-a-floor-on-the-measured-input": "9246816d57609e82dc45c86ac4959e3a6aede70829d89a52e5099c2a1dfa9dcb"
+    },
     "RK-20.3-044": {
       "memory/a-budget-keeps-the-latest-events-that-fit": "f386e3fe5c547d9eca7d84ac976a6c9bb3c229d34858685671a9100c4e274039",
       "memory/a-compacting-memory-summarizes-what-it-trims": "f386e3fe5c547d9eca7d84ac976a6c9bb3c229d34858685671a9100c4e274039"
@@ -11044,6 +11128,12 @@
     "RK-20.3-045": {
       "memory/a-summarizing-memory-never-summarizes-a-returned-current-input": "79dfdc2ecf1ef49120ee886dd5fba92a487af278a53988a94de0b111ed220533",
       "memory/a-summary-stands-for-the-older-turns": "79dfdc2ecf1ef49120ee886dd5fba92a487af278a53988a94de0b111ed220533"
+    },
+    "RK-20.3-046": {
+      "memory/what-a-generation-hook-adds-after-the-memory-read-is-not-measured": "9f3db908d08668626c2f030466262554890d7e87916e980e45b2a9757e8e5f40"
+    },
+    "RK-20.3-047": {
+      "memory/another-process-s-summarizing-memory-starts-from-its-window": "4cc61923529336f9fc656bf17ceed871ec34d86cfb01c95929c84f06190d08b5"
     },
     "RK-21.1-008": {
       "acp/handler-policy-deny": "b7db799acbc370ccd4358ea309307220419d64aa08514efcd9a2c001c9c226cb",
