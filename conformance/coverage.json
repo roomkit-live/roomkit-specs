@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "f73e8090fe7e39cb56cfb5b71dcd2e49070574bf3b2dd580bfd1e5e038e6ec9e",
-  "corpus_sha256": "15974e7988d1f3ea4501bfc430f1431ec13853c3d30e661764104e70bc533ae6",
+  "corpus_sha256": "506a17fe7002bb3a5ce9f7381fcf0e3527e23f98bb465cf3f76ca774a078636f",
   "python_commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
-  "scenario_count": 4060,
+  "scenario_count": 4084,
   "sections": [
     {
       "section": "0",
@@ -11123,11 +11123,14 @@
         "unmapped": 11
       },
       "decided_gaps": {
-        "step": 2,
-        "writable": 4
+        "step": 2
       },
       "unannotated_keyword_lines": [],
-      "candidate_scenarios": []
+      "candidate_scenarios": [
+        "served-skills/frontmatter-brackets-open-at-once-are-read-to-64-quoted-ones-counted",
+        "served-skills/frontmatter-is-read-to-65536-characters-and-no-more",
+        "served-skills/frontmatter-nesting-is-read-to-64-levels-and-no-deeper"
+      ]
     },
     {
       "section": "24.2",
@@ -11138,9 +11141,7 @@
         "mapped_partial": 1,
         "unmapped": 7
       },
-      "decided_gaps": {
-        "writable": 3
-      },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "realtime/a-denied-or-skill-closed-tool-is-refused-before-its-arguments-are-read",
@@ -11152,6 +11153,7 @@
         "role-policy/denied-prerequisite-streaming",
         "sandbox/is-hidden-and-refused-by-an-inactive-skill-non-streaming",
         "sandbox/is-hidden-and-refused-by-an-inactive-skill-streaming",
+        "served-skills/metadata-keeps-license-compatibility-and-every-other-key-as-text",
         "skill-gating/a-blocked-activation-never-references-a-held-tool-non-streaming",
         "skill-gating/a-blocked-activation-never-references-a-held-tool-streaming",
         "skill-gating/a-blocked-activation-opens-no-gate-non-streaming",
@@ -11264,6 +11266,7 @@
         "role-policy/script-owner-replaces-base-streaming",
         "sandbox/a-missing-skill-does-not-hint-at-a-sandbox-command-non-streaming",
         "sandbox/a-missing-skill-does-not-hint-at-a-sandbox-command-streaming",
+        "served-skills/a-served-skill-s-requires-is-read-as-any-skill-s",
         "skill-prerequisites/a-absent-prerequisite-refuses-activation-non-streaming",
         "skill-prerequisites/a-absent-prerequisite-refuses-activation-streaming",
         "skill-prerequisites/a-candidate-opens-a-shared-closed-pattern-non-streaming",
@@ -11504,11 +11507,16 @@
         "unmapped": 19
       },
       "decided_gaps": {
-        "step": 10,
-        "writable": 7
+        "step": 10
       },
       "unannotated_keyword_lines": [],
-      "candidate_scenarios": []
+      "candidate_scenarios": [
+        "served-skills/a-copy-that-cannot-record-a-shared-refusal-serves-nothing-and-undoes-nothing",
+        "served-skills/a-copy-that-would-list-past-the-bound-fails-and-leaves-its-source",
+        "served-skills/a-replacement-is-checked-once-the-replaced-name-s-marks-are-gone",
+        "served-skills/each-operation-that-would-pass-the-manifest-bound-fails-before-it-changes-anything",
+        "served-skills/the-manifest-may-take-65536-characters-and-no-more"
+      ]
     },
     {
       "section": "24.6",
@@ -11575,10 +11583,26 @@
       "decided_gaps": {
         "phase6": 2,
         "step": 2,
-        "writable": 22
+        "writable": 2
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
+        "served-skills/a-copy-that-cannot-record-a-shared-refusal-serves-nothing-and-undoes-nothing",
+        "served-skills/a-copy-that-would-list-past-the-bound-fails-and-leaves-its-source",
+        "served-skills/a-copy-without-the-names-its-source-marks-unavailable-never-asks-for-them",
+        "served-skills/a-dynamic-skill-a-host-allows-is-taken-unverified",
+        "served-skills/a-dynamic-skill-s-approval-is-told-it-has-no-fingerprint",
+        "served-skills/a-label-another-server-holds-is-refused",
+        "served-skills/a-lookup-the-server-refuses-answers-that-it-serves-no-such-skill",
+        "served-skills/a-replacement-is-checked-once-the-replaced-name-s-marks-are-gone",
+        "served-skills/a-served-skill-s-read-never-reaches-another-server",
+        "served-skills/a-served-skill-s-requires-is-read-as-any-skill-s",
+        "served-skills/a-server-without-the-skills-extension-is-refused",
+        "served-skills/a-skill-marked-unavailable-is-never-activated-one-loaded-before-included",
+        "served-skills/a-skill-md-inside-a-served-skill-is-one-of-its-files",
+        "served-skills/an-entry-past-512-files-or-16-mib-is-registered-unavailable",
+        "served-skills/an-entry-the-extension-does-not-allow-is-registered-unavailable",
+        "served-skills/each-operation-that-would-pass-the-manifest-bound-fails-before-it-changes-anything",
         "served-skills/execution-absent-approval",
         "served-skills/execution-approved-approval",
         "served-skills/execution-failed-approval",
@@ -11594,6 +11618,9 @@
         "served-skills/frontmatter-accepts-scalar-types",
         "served-skills/frontmatter-accepts-sets",
         "served-skills/frontmatter-accepts-timestamps",
+        "served-skills/frontmatter-brackets-open-at-once-are-read-to-64-quoted-ones-counted",
+        "served-skills/frontmatter-is-read-to-65536-characters-and-no-more",
+        "served-skills/frontmatter-nesting-is-read-to-64-levels-and-no-deeper",
         "served-skills/frontmatter-refuses-alias",
         "served-skills/frontmatter-refuses-broken-yaml",
         "served-skills/frontmatter-refuses-extra-field",
@@ -11606,14 +11633,19 @@
         "served-skills/load-refuses-digest",
         "served-skills/load-refuses-frontmatter",
         "served-skills/load-refuses-size",
+        "served-skills/metadata-keeps-license-compatibility-and-every-other-key-as-text",
         "served-skills/only-full-copies-fetch-unlisted",
+        "served-skills/registering-a-server-again-retires-what-it-no-longer-offers-everywhere",
         "served-skills/relisting-preserves-the-loaded-entry",
+        "served-skills/run-skill-script-refuses-a-served-skill",
         "served-skills/text-activation-keeps-server-content-apart",
         "served-skills/text-blocked-activation-leaves-no-prompt-content",
         "served-skills/text-file-mismatch-retires-active-content",
         "served-skills/text-inactive-reference-is-refused",
         "served-skills/text-reference-carries-its-origin",
         "served-skills/text-repeated-activation-acknowledges-server-content",
+        "served-skills/the-manifest-may-take-65536-characters-and-no-more",
+        "served-skills/two-entries-of-one-name-keep-their-own-paths",
         "served-skills/verified-files-and-shared-cache"
       ]
     },
@@ -51161,45 +51193,25 @@
       "id": "RK-24.1-004",
       "section": "24.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1939",
-        "note": "The served registry fixture accepts raw content, but no shared case checks the 64-level boundary. Local input is generated from structured fields."
-      }
+      "links": []
     },
     {
       "id": "RK-24.1-005",
       "section": "24.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1939",
-        "note": "No served frontmatter case checks the open-delimiter limit or its quoted-character counting. Local input is generated."
-      }
+      "links": []
     },
     {
       "id": "RK-24.1-006",
       "section": "24.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1939",
-        "note": "No served-content case checks the frontmatter character limit and its exact boundary. The local fixture supplies generated frontmatter."
-      }
+      "links": []
     },
     {
       "id": "RK-24.1-007",
       "section": "24.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1939",
-        "note": "Raw served content is available, but no shared case exceeds a numeric parser bound and asserts verification refusal. Local source and failure capture require fixture support."
-      }
+      "links": []
     },
     {
       "id": "RK-24.1-008",
@@ -51251,23 +51263,13 @@
       "id": "RK-24.2-009",
       "section": "24.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1939",
-        "note": "The registry snapshot can inspect a served entry's optional license; no case asserts the value or its absent form."
-      }
+      "links": []
     },
     {
       "id": "RK-24.2-003",
       "section": "24.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1939",
-        "note": "A served entry and its manifest can be inspected with skill_registry_session. No case checks compatibility and license rendering."
-      }
+      "links": []
     },
     {
       "id": "RK-24.2-004",
@@ -51307,12 +51309,7 @@
       "id": "RK-24.2-008",
       "section": "24.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1939",
-        "note": "A registry snapshot returns metadata for a served entry. The cases do not assert retained extra values or comma joining."
-      }
+      "links": []
     },
     {
       "id": "RK-24.3-002",
@@ -51973,78 +51970,43 @@
           ],
           "executions": []
         }
-      ],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1939",
-        "note": "The served registry snapshot renders the manifest. No scenario checks the exact final Unicode limit, including escaping, reasons, wrappers and origins."
-      }
+      ]
     },
     {
       "id": "RK-24.5-012",
       "section": "24.5",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1939",
-        "note": "The served registry session supports listing, fetch, unavailable marks and copies. No case checks prospective manifest errors and rollback; local registration and discovery operations also need fixture exposure."
-      }
+      "links": []
     },
     {
       "id": "RK-24.5-013",
       "section": "24.5",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1939",
-        "note": "The registry session can copy with or without marks and inspect the source after failure. No shared case observes a failed copy."
-      }
+      "links": []
     },
     {
       "id": "RK-24.5-014",
       "section": "24.5",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1939",
-        "note": "The registry session supports served replacement and marks, but no case observes replacement near the manifest bound. Local replace is not a shared operation."
-      }
+      "links": []
     },
     {
       "id": "RK-24.5-015",
       "section": "24.5",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1939",
-        "note": "A shared server registry can exercise refusal on a listing or fetch and inspect both catalogues. Existing cases do not assert a size-limit refusal."
-      }
+      "links": []
     },
     {
       "id": "RK-24.5-016",
       "section": "24.5",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1939",
-        "note": "A registry and its copies can be inspected after a shared refusal that exceeds the local bound. No case asserts that transaction."
-      }
+      "links": []
     },
     {
       "id": "RK-24.5-017",
       "section": "24.5",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1939",
-        "note": "The shared registry supports snapshots, copies and reference verification. No case verifies shared state after local manifest pressure."
-      }
+      "links": []
     },
     {
       "id": "RK-24.5-018",
@@ -52244,23 +52206,13 @@
       "id": "RK-24.7-015",
       "section": "24.7",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1939",
-        "note": "The registry fixture supports multiple providers and labels; none of its scenarios attempts reassignment of a label between providers."
-      }
+      "links": []
     },
     {
       "id": "RK-24.7-016",
       "section": "24.7",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1939",
-        "note": "The scripted server supports extension declarations but no shared case asserts error for a missing Skills extension."
-      }
+      "links": []
     },
     {
       "id": "RK-24.7-017",
@@ -52289,12 +52241,7 @@
       "id": "RK-24.7-020",
       "section": "24.7",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1939",
-        "note": "The registry session can relist a changed server and inspect the prior entry across copies. The existing relisting scenario retains its entry."
-      }
+      "links": []
     },
     {
       "id": "RK-24.7-021",
@@ -52318,12 +52265,7 @@
       "id": "RK-24.7-024",
       "section": "24.7",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1939",
-        "note": "The registry session can mark an entry unavailable, copy a subset and count server requests, but no scenario compares this exclusion."
-      }
+      "links": []
     },
     {
       "id": "RK-24.7-025",
@@ -52335,67 +52277,37 @@
       "id": "RK-24.7-026",
       "section": "24.7",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1939",
-        "note": "The scripted listing supports individual entries and observable refusal reasons; no case asserts a frontmatter-name and URI directory mismatch."
-      }
+      "links": []
     },
     {
       "id": "RK-24.7-027",
       "section": "24.7",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1939",
-        "note": "No shared listing observes an entry rejected for omitting its own SKILL.md."
-      }
+      "links": []
     },
     {
       "id": "RK-24.7-028",
       "section": "24.7",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1939",
-        "note": "No shared served listing asserts refusal of a resource outside its declared directory."
-      }
+      "links": []
     },
     {
       "id": "RK-24.7-081",
       "section": "24.7",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1939",
-        "note": "No shared listing asserts duplicate resource names within one entry; duplicate entries across cursor pages exercise another rule."
-      }
+      "links": []
     },
     {
       "id": "RK-24.7-029",
       "section": "24.7",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1939",
-        "note": "No shared listing case asserts the resource-count limit for a single entry."
-      }
+      "links": []
     },
     {
       "id": "RK-24.7-082",
       "section": "24.7",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1939",
-        "note": "No shared listing case asserts the entry's aggregate declared byte limit."
-      }
+      "links": []
     },
     {
       "id": "RK-24.7-030",
@@ -52413,12 +52325,7 @@
       "id": "RK-24.7-032",
       "section": "24.7",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1939",
-        "note": "The registry fixture supports dynamic registration and resource reads but no shared case asserts acceptance of an allowed dynamic resource or its cumulative read limit."
-      }
+      "links": []
     },
     {
       "id": "RK-24.7-033",
@@ -52430,23 +52337,13 @@
       "id": "RK-24.7-034",
       "section": "24.7",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1939",
-        "note": "The registry session can check collisions between served origins, while admitting a local name to that same session needs a new operation. No shared case observes a conflict refusal."
-      }
+      "links": []
     },
     {
       "id": "RK-24.7-035",
       "section": "24.7",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1939",
-        "note": "Shared listing and snapshot can inspect distinct paths with the same frontmatter name; the existing paging case repeats an identical URI."
-      }
+      "links": []
     },
     {
       "id": "RK-24.7-036",
@@ -52464,12 +52361,7 @@
       "id": "RK-24.7-038",
       "section": "24.7",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1939",
-        "note": "The served registry session can exercise turn activation with declared prerequisites. Local prerequisite cases do not register a served skill."
-      }
+      "links": []
     },
     {
       "id": "RK-24.7-039",
@@ -52581,12 +52473,7 @@
       "id": "RK-24.7-055",
       "section": "24.7",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1939",
-        "note": "No shared activation compares the held entry with a later lookup or refuses a previously loaded skill that has since been marked unavailable. A blocked tool hook exercises a different condition."
-      }
+      "links": []
     },
     {
       "id": "RK-24.7-056",
@@ -52610,12 +52497,7 @@
       "id": "RK-24.7-059",
       "section": "24.7",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1939",
-        "note": "The registry session supports a lookup error under a known label. No shared case observes the missing-skill diagnostic following that lookup."
-      }
+      "links": []
     },
     {
       "id": "RK-24.7-060",
@@ -52662,12 +52544,7 @@
       "id": "RK-24.7-066",
       "section": "24.7",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1939",
-        "note": "The scripted registry accepts multiple servers and records each request. No case asserts that a reference read on one produces no request on the other."
-      }
+      "links": []
     },
     {
       "id": "RK-24.7-067",
@@ -52696,23 +52573,13 @@
       "id": "RK-24.7-070",
       "section": "24.7",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1939",
-        "note": "The served registry can list and read a nested metadata file. No case asserts it remains an ordinary file with no nested activation."
-      }
+      "links": []
     },
     {
       "id": "RK-24.7-071",
       "section": "24.7",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1939",
-        "note": "Shared served skills can run through an installed text channel. No case asserts run_skill_script refuses execution of a served skill."
-      }
+      "links": []
     },
     {
       "id": "RK-24.7-072",
@@ -52748,12 +52615,7 @@
       "id": "RK-24.7-077",
       "section": "24.7",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1939",
-        "note": "The server fixture supports dynamic entries and captured approvals but no scenario asserts the missing fingerprint for one."
-      }
+      "links": []
     },
     {
       "id": "RK-24.7-078",

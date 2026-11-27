@@ -48,7 +48,7 @@ proof: a scenario can cite a unit without covering all of it.
 | [§21 Tool Access Control](section-21.md) | 214 | 199 | 13 | 2 | 0 | 127 | 881 | 0 | 71 | 18 | 30 | 28 |
 | [§22 Delivery Strategies](section-22.md) | 144 | 130 | 5 | 8 | 1 | 72 | 268 | 0 | 52 | 21 | 5 | 27 |
 | [§23 Task Delegation](section-23.md) | 207 | 205 | 1 | 0 | 1 | 170 | 592 | 0 | 33 | 8 | 18 | 7 |
-| [§24 Skills Framework](section-24.md) | 184 | 174 | 3 | 6 | 1 | 106 | 733 | 0 | 71 | 42 | 24 | 5 |
+| [§24 Skills Framework](section-24.md) | 184 | 174 | 3 | 6 | 1 | 140 | 770 | 0 | 37 | 8 | 24 | 5 |
 | [§25 Image Generation](section-25.md) | 38 | 30 | 0 | 7 | 1 | 1 | 15 | 0 | 19 | 0 | 19 | 0 |
 | [§26 Conformance Levels](section-26.md) | 24 | 21 | 0 | 0 | 3 | 20 | 229 | 0 | 0 | 0 | 0 | 0 |
 | [Appendix A: Channel Reference](appendix-A.md) | 202 | 200 | 0 | 2 | 0 | 98 | 267 | 0 | 81 | 17 | 42 | 22 |
