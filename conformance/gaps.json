@@ -2230,28 +2230,12 @@
       "card": "RMK-1911",
       "note": "step: a scripted realtime reasoning backend: an agent with the option that a realtime session delegates to."
     },
-    "RK-6.4-133": {
-      "class": "writable",
-      "card": "RMK-1911"
-    },
     "RK-6.4-144": {
       "class": "step",
       "card": "RMK-1911",
       "note": "Needs a classifier fixture: scripted classifier answers behind the provided speak policy."
     },
     "RK-6.4-146": {
-      "class": "writable",
-      "card": "RMK-1911"
-    },
-    "RK-6.4-150": {
-      "class": "writable",
-      "card": "RMK-1911"
-    },
-    "RK-6.4-151": {
-      "class": "writable",
-      "card": "RMK-1911"
-    },
-    "RK-6.4-152": {
       "class": "writable",
       "card": "RMK-1911"
     },
@@ -2354,22 +2338,6 @@
       "class": "step",
       "card": "RMK-1911",
       "note": "Needs a step that builds the provided answer-only policy around a scripted one."
-    },
-    "RK-6.4-185": {
-      "class": "writable",
-      "card": "RMK-1911"
-    },
-    "RK-6.4-191": {
-      "class": "writable",
-      "card": "RMK-1911"
-    },
-    "RK-6.4-193": {
-      "class": "writable",
-      "card": "RMK-1911"
-    },
-    "RK-6.4-194": {
-      "class": "writable",
-      "card": "RMK-1911"
     },
     "RK-6.4-201": {
       "class": "step",
@@ -2486,120 +2454,20 @@
       "card": "RMK-1940",
       "note": "step: a realtime call recovered from speech: the headers a realtime host injects into its own session are no marks."
     },
-    "RK-6.4-298": {
-      "class": "writable",
-      "card": "RMK-1940",
-      "note": "Two turns over one participant's copy of a mark, the same replacement in both requests."
-    },
-    "RK-6.4-299": {
-      "class": "writable",
-      "card": "RMK-1940",
-      "note": "A tool's result and the agent's text between calls holding a mark's words, replayed as written."
-    },
-    "RK-6.4-301": {
-      "class": "writable",
-      "card": "RMK-1940",
-      "note": "A standalone instruction's turn on an agent with a memory provider, no memory in its request."
-    },
     "RK-6.4-316": {
       "class": "step",
       "card": "RMK-1940",
       "note": "Needs an attached-media reader that fails, in both runners."
-    },
-    "RK-6.4-326": {
-      "class": "writable",
-      "card": "RMK-1940",
-      "note": "A memory budget counting an author's image and a media's mention."
-    },
-    "RK-6.4-342": {
-      "class": "writable",
-      "card": "RMK-1940",
-      "note": "A memory compaction between rounds, then an overflow, the call's compacted replay kept."
-    },
-    "RK-6.4-355": {
-      "class": "writable",
-      "card": "RMK-1940",
-      "note": "A text cut short through a block, naming the block instead."
-    },
-    "RK-6.4-357": {
-      "class": "writable",
-      "card": "RMK-1940",
-      "note": "A tool whose description holds a block tag, declared as written and never framed."
-    },
-    "RK-6.4-362": {
-      "class": "writable",
-      "card": "RMK-1940",
-      "note": "A participant's message with a carriage return and a Unicode line separator, each line labelled."
-    },
-    "RK-6.4-365": {
-      "class": "writable",
-      "card": "RMK-1940",
-      "note": "An ACP agent's request from two participants, each line labelled."
-    },
-    "RK-6.4-366": {
-      "class": "writable",
-      "card": "RMK-1940",
-      "note": "One room read by the conversation and an ACP agent, the same labels at the same threshold."
     },
     "RK-6.4-368": {
       "class": "writable",
       "card": "RMK-1940",
       "note": "conference.join: the participants expectation shows the person the conference keeps on its roster; the labelled first turn needs pipeline_speakers on voice.open and an on_transcription hook naming the participant (requires conference and voice)."
     },
-    "RK-6.4-372": {
-      "class": "writable",
-      "card": "RMK-1940",
-      "note": "SpeakTurn.people in a speak policy's snapshot with two people taking part."
-    },
-    "RK-6.4-374": {
-      "class": "writable",
-      "card": "RMK-1940",
-      "note": "Two requests in one ACP session, the second labelled and the note given once."
-    },
-    "RK-6.4-376": {
-      "class": "writable",
-      "card": "RMK-1940",
-      "note": "A memory summary joined to a labelled turn, its label out of the quote in the compaction's rendering."
-    },
-    "RK-6.4-380": {
-      "class": "writable",
-      "card": "RMK-1940",
-      "note": "Three senders, one name reading like the two others, ranked after both."
-    },
-    "RK-6.4-382": {
-      "class": "writable",
-      "card": "RMK-1940",
-      "note": "A participant renamed after a turn, the earlier turn keeping its recorded name."
-    },
-    "RK-6.4-391": {
-      "class": "writable",
-      "card": "RMK-1940",
-      "note": "A deferred-loading model and a compaction that summarizes a referencing result away."
-    },
-    "RK-6.4-394": {
-      "class": "writable",
-      "card": "RMK-1940",
-      "note": "A reopening exchange under a deferred-loading model, absent from the timeline and the tool counts."
-    },
-    "RK-6.4-395": {
-      "class": "writable",
-      "card": "RMK-1940",
-      "note": "A standalone instruction's turn under a deferred-loading model, no reopening and no room declaration kept."
-    },
-    "RK-6.4-396": {
-      "class": "writable",
-      "card": "RMK-1940",
-      "note": "A deferred-loading room whose tool a policy denies on a later turn, and a room with no known declaration."
-    },
     "RK-6.4-399": {
       "class": "step",
       "card": "RMK-1940",
       "note": "Needs a scripted model that streams text alone (generate_stream), in both runners."
-    },
-    "RK-6.4-401": {
-      "class": "writable",
-      "card": "RMK-1940",
-      "note": "A standalone instruction's turn in a room whose earlier turns read instructions, none replayed."
     },
     "RK-6.4-407": {
       "class": "writable",

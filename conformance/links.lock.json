@@ -16568,6 +16568,9 @@
       "speaking/speak-includes-the-decision-notes-non-streaming": "5660f3b6e18839571919bde85a3b6bb9eb5084e179939d3c6aa49a32255fad98",
       "speaking/speak-includes-the-decision-notes-streaming": "5660f3b6e18839571919bde85a3b6bb9eb5084e179939d3c6aa49a32255fad98"
     },
+    "RK-6.4-133": {
+      "speaking/an-event-withheld-from-the-agent-is-not-among-what-its-policy-reads": "66daba82b294812e6e920712033eb7abfc346fc77f301abab4ae3631d67ae4fb"
+    },
     "RK-6.4-134": {
       "executors/a-thought-a-build-let-go-past-the-bound-held-starts-anew": "540d16a4a1bce2c4e5330fb99e5ea18db53ce5de44d0fc69bbdfb08bcac9a38b",
       "speaking/a-block-silences-the-agent-non-streaming": "540d16a4a1bce2c4e5330fb99e5ea18db53ce5de44d0fc69bbdfb08bcac9a38b",
@@ -16736,6 +16739,17 @@
       "speaking/a-failed-open-hook-keeps-the-decision-non-streaming": "e1efbdc8c72c796620f50575ab96aba5006c5a1c788bbb753a299adece7bd5f6",
       "speaking/a-failed-open-hook-keeps-the-decision-streaming": "e1efbdc8c72c796620f50575ab96aba5006c5a1c788bbb753a299adece7bd5f6"
     },
+    "RK-6.4-150": {
+      "speaking/a-silence-a-hook-leaves-is-thought-about": "21cf0b3a6fa04165659a7a9250181c4bd0d0d51c3705e2f34db176cbab94ad26"
+    },
+    "RK-6.4-151": {
+      "speaking/the-people-a-policy-reads-are-the-voices-of-one-microphone-when-more": "37c20d77475be072e33f4dd6fa2c58749febb5cf958dade54fcad0be9e664b8e",
+      "speaking/the-people-a-policy-reads-are-those-taking-part-named-as-their-turns-name-them": "37c20d77475be072e33f4dd6fa2c58749febb5cf958dade54fcad0be9e664b8e"
+    },
+    "RK-6.4-152": {
+      "speaking/the-people-a-policy-reads-are-the-voices-of-one-microphone-when-more": "9b3e184084173b0dc45a864ef4072c09a0e5622dac2890c47f96c422b4ad8adc",
+      "speaking/the-people-a-policy-reads-are-those-taking-part-named-as-their-turns-name-them": "9b3e184084173b0dc45a864ef4072c09a0e5622dac2890c47f96c422b4ad8adc"
+    },
     "RK-6.4-176": {
       "speaking/silence-thinks-without-a-new-request-non-streaming": "73e3a0f0c00079faddd7a4d0dc55de7d5fbc47f0351357d82f63d1f384518e85",
       "speaking/silence-thinks-without-a-new-request-streaming": "73e3a0f0c00079faddd7a4d0dc55de7d5fbc47f0351357d82f63d1f384518e85"
@@ -16787,6 +16801,9 @@
       "speaking/a-replaced-generation-context-reaches-the-thinker-non-streaming": "37678e1b1358f4b74c1545b96e2d735b4f29bad2335672a1aa3853755fe6d2cc",
       "speaking/a-replaced-generation-context-reaches-the-thinker-streaming": "37678e1b1358f4b74c1545b96e2d735b4f29bad2335672a1aa3853755fe6d2cc"
     },
+    "RK-6.4-185": {
+      "speaking/one-thinker-call-at-a-time-and-the-next-one-reads-the-latest-context": "1844862a044aec34bc8bc716e0b00a36e98782d1c0415c58ac9040895357602a"
+    },
     "RK-6.4-186": {
       "speaking/a-late-offer-is-observed-without-a-generation-non-streaming": "6ae5475e9e595e286c53bc4861e5841a24a3d8d52f8f5f94ac0d5cafc8b6ff9d",
       "speaking/a-late-offer-is-observed-without-a-generation-streaming": "6ae5475e9e595e286c53bc4861e5841a24a3d8d52f8f5f94ac0d5cafc8b6ff9d",
@@ -16823,11 +16840,21 @@
       "speaking/a-late-speak-decision-runs-no-turn-non-streaming": "99525d33d52a36fbe565c03fbb39653ba121f1b1525187155e45c5b46d080f5e",
       "speaking/a-late-speak-decision-runs-no-turn-streaming": "99525d33d52a36fbe565c03fbb39653ba121f1b1525187155e45c5b46d080f5e"
     },
+    "RK-6.4-191": {
+      "speaking/a-later-event-reads-the-thought-and-no-late-decision-is-owed-to-the-earlier-one": "d1c1b4413eab64951d516ab9e5fb81cc8868a928ebd058c3c01ba9d4cb47121c"
+    },
     "RK-6.4-192": {
       "speaking/a-thought-in-time-is-marked-as-another-decision-non-streaming": "5699de01f052b07ba8a385fd1ba8d92b6875bb6dfa78a828169d3841c368cc4f",
       "speaking/a-thought-in-time-is-marked-as-another-decision-streaming": "5699de01f052b07ba8a385fd1ba8d92b6875bb6dfa78a828169d3841c368cc4f",
       "speaking/a-thought-in-time-offers-and-is-emptied-non-streaming": "5699de01f052b07ba8a385fd1ba8d92b6875bb6dfa78a828169d3841c368cc4f",
       "speaking/a-thought-in-time-offers-and-is-emptied-streaming": "5699de01f052b07ba8a385fd1ba8d92b6875bb6dfa78a828169d3841c368cc4f"
+    },
+    "RK-6.4-193": {
+      "speaking/a-thinker-call-running-while-the-agent-spoke-does-not-bring-back-what-it-said": "2a5bbe5327f9ea4e7ecce4d69fc1c649e9ed35881cf52c1e0c76f2542057706c",
+      "speaking/a-thought-on-a-context-taken-while-the-agent-answered-wants-to-say-nothing": "2a5bbe5327f9ea4e7ecce4d69fc1c649e9ed35881cf52c1e0c76f2542057706c"
+    },
+    "RK-6.4-194": {
+      "speaking/an-instruction-carries-no-thought-and-empties-nothing": "eee75193dafe096ad6a9b8a83166db6d898fddebcaf82dc676a257f10b8863cb"
     },
     "RK-6.4-195": {
       "speaking/a-thought-in-time-is-marked-as-another-decision-non-streaming": "0fcba72ed149582a13ed5977c963fbc65c77173a8a429c1382136dbdf0fc645b",
@@ -17265,8 +17292,17 @@
       "memory/a-runtime-mark-split-over-two-text-parts-of-a-memory-s-message-is-replaced": "1705acb71d91254467f578a3941c58f78518f2f0e3b8fc97799a802bb6aefe03",
       "memory/a-split-mark-keeps-memory-speaker-labels": "1705acb71d91254467f578a3941c58f78518f2f0e3b8fc97799a802bb6aefe03"
     },
+    "RK-6.4-298": {
+      "memory/a-copy-of-a-mark-is-replaced-the-same-way-on-every-turn": "4030688fd7b332daa4920540b939889c4ced08d8806a52d37c61028952f7a817"
+    },
+    "RK-6.4-299": {
+      "tools/a-mark-s-words-in-the-agent-s-own-rounds-and-a-tool-s-result-are-replayed-as-written": "248d4950531b91237eca5b3fd2503b6a0a6fd25d286e74b0744489f5a3bb3209"
+    },
     "RK-6.4-300": {
       "skills/a-host-that-lists-its-skills-itself-reads-a-turn-s-active-ones": "f1b892d16dc426a8561f1cb096b7e47bda502b37cb691110a0c1996979d4fdeb"
+    },
+    "RK-6.4-301": {
+      "instructions/a-standalone-turn-carries-none-of-the-room-s-memories": "7aeaeb15136ebe5c38c6b805a1ae48c5d17f5de18fadfcbfa5cff7b10b2379c0"
     },
     "RK-6.4-302": {
       "author-images/an-image-goes-after-its-caption": "dd116d3531be782f6c51b1a0684f112ff88c82cc226b8e668dd229da7867b2b0"
@@ -17348,6 +17384,9 @@
       "author-images/a-refused-image-takes-no-place-in-the-bound": "a24d752e9bf33b9b87816fd030d7773f574460efc0c06843072f222e19c5a7cc",
       "author-images/an-image-the-provider-refused-reads-as-refused-after": "a24d752e9bf33b9b87816fd030d7773f574460efc0c06843072f222e19c5a7cc"
     },
+    "RK-6.4-326": {
+      "memory/an-author-s-image-counts-in-the-budget-and-a-media-as-its-mention": "b8579417865f4eeda2d1e3dcb13ffbc79c7b740786d30cbf35a8dfcb2cfd9dc1"
+    },
     "RK-6.4-328": {
       "resilience/a-rate-limit-worded-like-an-overflow-keeps-its-retries": "824a8af44a8c49ba471c767aabebb4329cd1c1ad44b7ba7f86945b10fb6c4095",
       "resilience/an-explicit-no-overflow-keeps-its-retries": "824a8af44a8c49ba471c767aabebb4329cd1c1ad44b7ba7f86945b10fb6c4095",
@@ -17417,6 +17456,9 @@
     "RK-6.4-341": {
       "memory/a-memory-that-fails-to-compact-leaves-the-turn-as-it-was": "87f4443cece707f3fd992f25c35a4ac931857fb614d873e7d2734f30d37e19f6"
     },
+    "RK-6.4-342": {
+      "memory/a-compaction-between-rounds-leaves-a-later-overflow-its-compacted-replay": "3d54e4551dc2ab83cc3648dd1b6445de158149adc99185160a1c8debe55cfbc7"
+    },
     "RK-6.4-343": {
       "ai-router/a-generation-that-spoke-is-not-handed-over": "e59034a6019df3e41eed260527a33c30e75f196b4004bbdd496d439c9cd88d14",
       "resilience/a-done-event-alone-counts-as-handed": "e59034a6019df3e41eed260527a33c30e75f196b4004bbdd496d439c9cd88d14",
@@ -17477,10 +17519,16 @@
     "RK-6.4-353": {
       "tasks/delegate-task-frames-and-bounds-what-the-model-passed": "0b97212694dee6fd4223d78dc4fd1f6e10dcacb42db112019383c3508fda5635"
     },
+    "RK-6.4-355": {
+      "speaking/a-thought-cut-short-names-the-block-it-holds": "afb3c53c6ecec3deee4d03884dc2f77976088427fba1ec78ac4880ecac3ad81a"
+    },
     "RK-6.4-356": {
       "status/the-bus-reads-its-recent-entries-as-text": "4941d3d523555c788bf083f8632d23f9cdf52304df7b674b3f5098e6c1948057",
       "tasks/a-worker-s-words-in-the-tasks-note-are-quoted-and-its-name-and-ending-carry-none": "4941d3d523555c788bf083f8632d23f9cdf52304df7b674b3f5098e6c1948057",
       "tasks/delegate-task-hands-its-worker-the-room-s-previous-tasks-as-data": "4941d3d523555c788bf083f8632d23f9cdf52304df7b674b3f5098e6c1948057"
+    },
+    "RK-6.4-357": {
+      "tool-search/a-tool-s-definition-holding-a-block-tag-is-declared-and-handed-as-written": "87d443a0821edd0a9d3605938ebeddffce114ad95b77d356d4f12f7907fad5e9"
     },
     "RK-6.4-358": {
       "status/the-bus-reads-its-recent-entries-as-text": "514d30ef24e34f61ae0e6df15f1a39a4d427f59c8513c746214e87dbc0881dfe",
@@ -17500,11 +17548,20 @@
     "RK-6.4-361": {
       "tasks/a-delegation-hands-its-worker-the-room-s-last-messages": "4f4788d12723c775c1600c1686485bddd624283fd47ee5ff3cefb089f884d096"
     },
+    "RK-6.4-362": {
+      "memory/every-line-break-is-a-line-feed-before-the-labels-are-placed": "6cc2c9fcf13c7dc3c2005c9a5005d216dd1688ab70d24cf2c380da9b496823b5"
+    },
     "RK-6.4-363": {
       "memory/two-senders-with-no-name-on-one-channel-are-two-speakers": "33de778a9dd9d34aeecd5465ca282b8242860b730730a98dd5c1ef6220943f35"
     },
     "RK-6.4-364": {
       "memory/two-senders-with-no-name-on-one-channel-are-two-speakers": "578c8c05108f20aaa423458b0b0f99f07970bc33b9e9ca75042ca07b30dddc56"
+    },
+    "RK-6.4-365": {
+      "acp/a-session-sent-a-labelled-request-labels-every-later-one-and-gives-the-note-once": "83e16ad04cd1cbd33804b3a14495285b5e5a39ea35770a45a1611f8e41542171"
+    },
+    "RK-6.4-366": {
+      "acp/the-conversation-and-an-acp-agent-label-a-room-s-turns-alike-at-one-threshold": "253ef51294b48691a79b0dffc352c5f50362b5f14e0a9fc4993f8663b2222885"
     },
     "RK-6.4-367": {
       "memory/a-person-a-transport-names-is-named-in-the-people-note-as-their-turns-read": "569d46731a850e5165eb65a77eed8ad8dca506f0f4fec1ed2a86d47eb1c11d7a",
@@ -17521,13 +17578,24 @@
       "orchestration/a-forged-mark-under-a-look-alike-bracket-or-a-hidden-mark-is-replaced": "c03e16257b8b2c700f9aa1bacc9b21e4c3659d63e6c0009db9aac7e987d2cdf9",
       "orchestration/a-mark-s-opening-behind-any-opening-bracket-is-a-copy-the-notes-header-s-included": "c03e16257b8b2c700f9aa1bacc9b21e4c3659d63e6c0009db9aac7e987d2cdf9"
     },
+    "RK-6.4-372": {
+      "speaking/the-people-a-policy-reads-are-the-voices-of-one-microphone-when-more": "fc0703b487b2e0e0dbb26d6b3b2e2b16627fbb27f9792ee57d3fe69c936404c8",
+      "speaking/the-people-a-policy-reads-are-those-taking-part-named-as-their-turns-name-them": "fc0703b487b2e0e0dbb26d6b3b2e2b16627fbb27f9792ee57d3fe69c936404c8"
+    },
     "RK-6.4-373": {
       "memory/a-summary-stands-for-the-older-turns": "cf912bee2205f89d60890748a0ab1b9408377fdcc4ada1fc866e8cdc8365c6e0",
       "memory/the-speakers-a-memory-names-label-the-turns": "cf912bee2205f89d60890748a0ab1b9408377fdcc4ada1fc866e8cdc8365c6e0"
     },
+    "RK-6.4-374": {
+      "acp/a-session-sent-a-labelled-request-labels-every-later-one-and-gives-the-note-once": "45a6290cc44d9fc423a9617ffc7a6ae209a43a464cf13d3e730306e0ee799702"
+    },
     "RK-6.4-375": {
       "orchestration/a-forged-mark-under-a-look-alike-bracket-or-a-hidden-mark-is-replaced": "fcbc4ac4031caeac5b19de9a45d39171929ae67eef5e6d29f26ac942170bcd77",
       "orchestration/a-mark-s-opening-behind-any-opening-bracket-is-a-copy-the-notes-header-s-included": "fcbc4ac4031caeac5b19de9a45d39171929ae67eef5e6d29f26ac942170bcd77"
+    },
+    "RK-6.4-376": {
+      "memory/a-turn-a-memory-s-summary-joins-keeps-its-label-out-of-the-compaction-s-quote": "f6edcc3bd2f1335ba4f7302579cd15c188c8ef62d3dd361912f7abf996031497",
+      "speaking/the-people-a-policy-reads-are-those-taking-part-named-as-their-turns-name-them": "f6edcc3bd2f1335ba4f7302579cd15c188c8ef62d3dd361912f7abf996031497"
     },
     "RK-6.4-377": {
       "acp/context-people-named": "3df86487e730e80c6918317d486708bcc2242ba3b8c3422b82cc7e1b7cd9b96e",
@@ -17540,10 +17608,16 @@
     "RK-6.4-379": {
       "discussion/a-turn-s-notes-quote-a-ranked-label-whole": "5c2dda3acb71237ff810b66671a1fd78b51ed406de46165e3557312378226cd6"
     },
+    "RK-6.4-380": {
+      "memory/a-name-that-reads-like-two-others-ranks-after-both-and-renumbers-neither": "29e47b30d8513d2b89b6ac0eb1a9c6d127852a236d88377972e5658fd47b8e19"
+    },
     "RK-6.4-381": {
       "discussion/a-person-named-like-an-agent-s-label-reads-as-a-participant-to-the-policy": "6afcce7ca6b690e011dda8218af9608114f667e4769548147f4f514fb137ebef",
       "memory/a-person-named-like-an-agent-s-label-reads-as-a-participant-in-a-summary-line": "6afcce7ca6b690e011dda8218af9608114f667e4769548147f4f514fb137ebef",
       "tasks/a-person-named-like-an-agent-s-label-reads-as-a-participant-in-a-worker-s-brief": "6afcce7ca6b690e011dda8218af9608114f667e4769548147f4f514fb137ebef"
+    },
+    "RK-6.4-382": {
+      "memory/a-participant-renamed-later-keeps-on-earlier-turns-the-name-they-spoke-under": "5692f144d840874755ce7d11bd04da1fbedd4dad2cb2e4009033f6b0584ba48d"
     },
     "RK-6.4-383": {
       "tools/a-tool-image-s-label-quotes-no-runtime-mark": "baff09b149ef0c4de6976e13810c58942e78fbc15176da11da391c9b9219ef3c"
@@ -17588,11 +17662,24 @@
     "RK-6.4-390": {
       "tool-search/a-fallback-receives-referenced-tools-without-deferred-loading": "350cef6408edcaa7459905af7f54ba9d9c678aace3767dc84c0928078a03e951"
     },
+    "RK-6.4-391": {
+      "tool-search/a-compaction-that-summarizes-a-referencing-result-away-declares-its-tools": "82f4c87f67d2f614fa5dce492908de0f66d007aa7fddeac77bfc285e82819667"
+    },
     "RK-6.4-392": {
       "tool-search/a-later-turn-reopens-the-room-s-held-tools": "017616a773005295e6a32aee3a4b50b463362f363c38cb0f20222bc98cbba20b"
     },
     "RK-6.4-393": {
       "tool-search/a-later-turn-reopens-the-room-s-held-tools": "6444fc81b2f3be3d8f1b2cbb5190c3bc7f835eb0537479551b480ba29dab0024"
+    },
+    "RK-6.4-394": {
+      "tool-search/a-provider-that-holds-no-tool-receives-the-reopened-tools-declared-plainly": "8e94d7ceeb315425e0cb0c1b3357f4a8319000e480648db1ce4cc414a4333396",
+      "tool-search/a-reopening-exchange-is-no-event-of-the-room": "8e94d7ceeb315425e0cb0c1b3357f4a8319000e480648db1ce4cc414a4333396"
+    },
+    "RK-6.4-395": {
+      "tool-search/a-standalone-turn-neither-reads-nor-keeps-the-room-s-declaration": "1a216ff86780f327003e34a021a668cee021fd074b49d88edd29a17f9a0c84ea"
+    },
+    "RK-6.4-396": {
+      "tool-search/a-tool-the-turn-no-longer-shows-leaves-the-declaration-and-a-new-room-takes-its-own": "5d56ade22e74bf8145e5f4e9725be849367f42b10725a88b735f5be9b31a805b"
     },
     "RK-6.4-397": {
       "ai-context/a-disabled-target-still-supplies-capabilities-non-streaming": "e6a1c9d3f49334282f61ee0ed137e3e5e974278f56a23a825323eb6ac3145842",
@@ -17895,6 +17982,9 @@
     },
     "RK-6.4-400": {
       "tool-search/a-tool-the-generation-hook-added-stays-declared-and-is-never-named": "aad0253bdeade41c51041336384094fca651d47355f07bd4b1f2208d45ffeb90"
+    },
+    "RK-6.4-401": {
+      "instructions/a-standalone-turn-replays-no-instruction-an-earlier-turn-read": "104294e894194fddecbe6e8cae9713f774c299378fd44f83199a4fb929b8fba1"
     },
     "RK-6.4-402": {
       "served-skills/text-activation-keeps-server-content-apart": "87fc00eed59a65554e2ac2468186aeab0ffe80d16cabe958a07224c40a641d7a"
