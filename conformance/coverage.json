@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "f73e8090fe7e39cb56cfb5b71dcd2e49070574bf3b2dd580bfd1e5e038e6ec9e",
-  "corpus_sha256": "1a0575502c06113538b090d0b4cbd13767ae6a3569251ae5bf566e2d04a2c77b",
+  "corpus_sha256": "695e1169b67be3b44913d390dd914041295a23f91f89b3c1db769e7b21e09d0a",
   "python_commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
-  "scenario_count": 3976,
+  "scenario_count": 3977,
   "sections": [
     {
       "section": "0",
@@ -3280,6 +3280,7 @@
         "realtime/a-reasoning-error-reaches-the-room",
         "realtime/a-session-takes-its-instruction-directly",
         "realtime/an-ended-session-takes-no-injection",
+        "realtime/each-session-of-a-channel-fires-its-own-audio-levels-once-per-100-ms",
         "reasoning/a-generation-hook-reads-a-message-s-parts",
         "recording/a-recorder-joins-the-live-feed-after-consent",
         "recording/a-stopped-recorder-announces-its-file",
@@ -7114,6 +7115,7 @@
       "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
+        "realtime/each-session-of-a-channel-fires-its-own-audio-levels-once-per-100-ms",
         "voice/input-levels-fire-at-most-ten-a-second-per-session",
         "voice/output-levels-fire-at-most-once-per-100-ms"
       ]
