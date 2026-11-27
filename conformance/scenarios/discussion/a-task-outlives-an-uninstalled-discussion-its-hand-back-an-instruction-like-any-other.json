@@ -226,6 +226,9 @@
           "trigger": "on_task_completed",
           "room_id": "r1",
           "event": {
+            "content": {
+              "body": "Findings: 12 tickets."
+            },
             "metadata": {
               "task_status": "completed"
             }

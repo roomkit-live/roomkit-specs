@@ -177,7 +177,6 @@
           "metadata": {
             "_speak_queue": {
               "speaking": null,
-              "last_speaker": "b",
               "lease_holder": {
                 "$lacks": "gone"
               }

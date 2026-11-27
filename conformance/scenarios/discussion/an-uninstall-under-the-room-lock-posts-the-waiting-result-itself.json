@@ -7,9 +7,10 @@
     "§13.5"
   ],
   "requirements": [
+    "RK-19.7.5-182",
     "RK-19.7.5-185"
   ],
-  "notes": "Python: test_discussion_background.py test_a_result_queued_when_the_strategy_is_uninstalled_is_posted_before_its_agent_leaves[under_the_lock]; _posts.py post_all in the uninstall's own task. comms's result is queued behind sre's turn; the host takes the room lock and uninstalls under it: the call returns, the result posted as comms's message, then comms and sre detached, sre's turn cut. Not observed: a post turn's commit already waiting for the lock the host holds (test_a_result_being_posted_when_the_strategy_is_uninstalled_is_posted_once_first), which no step stages.",
+  "notes": "Python: test_discussion_background.py test_a_result_queued_when_the_strategy_is_uninstalled_is_posted_before_its_agent_leaves[under_the_lock]; _posts.py post_all in the uninstall's own task. comms's result is queued behind sre's turn; the host takes the room lock and uninstalls under it: the call returns, the result posted as comms's message, then comms and sre detached, sre's turn cut. For RK-19.7.5-182, the result queued when the discussion is uninstalled is posted. Not observed: a post turn's commit already waiting for the lock the host holds (test_a_result_being_posted_when_the_strategy_is_uninstalled_is_posted_once_first), which no step stages; for RK-19.7.5-182, the wait for the floor.",
   "setup": {
     "channels": [
       {

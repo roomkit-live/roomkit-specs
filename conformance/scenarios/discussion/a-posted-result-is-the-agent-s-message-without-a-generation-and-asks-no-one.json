@@ -1,15 +1,16 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "discussion/a-posted-result-is-the-agent-s-message-without-a-generation-and-asks-no-one",
-  "title": "A posted result waits behind the turn under way, then is posted as the agent's message without running its model, and the names it carries ask no one",
+  "title": "A posted result takes a hand-back's place at the front of the queue and waits behind the turn under way, then is posted as the agent's message without running its model, and the names it carries ask no one",
   "rules": [
     "§19.7.5 rule 19",
+    "§19.7.5 rule 8",
     "§23.3"
   ],
   "requirements": [
     "RK-19.7.5-178"
   ],
-  "notes": "Python: test_discussion_background.py test_a_posted_result_is_the_agent_s_message_without_a_generation, test_a_posted_result_waits_for_the_turn_under_way, test_the_names_a_posted_result_carries_ask_no_one. comms's turn starts the task and holds before its sentence; the worker answers at once. Once ON_SPEAK_QUEUE reports the result queued, the queue shows comms speaking and comms queued again: the post waits for the turn under way. It is then posted after comms's sentence, comms's model asked twice only, and the @sre it carries asks no one.",
+  "notes": "Python: test_discussion_background.py test_a_posted_result_is_the_agent_s_message_without_a_generation, test_a_posted_result_waits_for_the_turn_under_way, test_the_names_a_posted_result_carries_ask_no_one; _queue.py queue_instruction(post=True), at the front. sre's turn, held, answers @dev, which queues dev at the back (rule 8); comms's turn then starts the task and holds before its sentence, the worker answering at once. Once ON_SPEAK_QUEUE reports the result queued (its seventh call), the queue reads comms speaking and comms queued before dev: the post waits for the turn under way, ahead of the agent queued at the back. It is posted after comms's sentence and before dev's turn, comms's model asked twice only, and the @sre it carries asks no one.",
   "setup": {
     "channels": [
       {
@@ -46,7 +47,19 @@
         "model": {
           "rounds": [
             {
-              "text": "sre should not be asked"
+              "gate": "sre-speaking",
+              "text": "@dev please check the logs"
+            }
+          ]
+        }
+      },
+      {
+        "id": "dev",
+        "type": "ai",
+        "model": {
+          "rounds": [
+            {
+              "text": "dev here"
             }
           ]
         }
@@ -79,7 +92,8 @@
         "discussion": {
           "agents": [
             "comms",
-            "sre"
+            "sre",
+            "dev"
           ]
         }
       }
@@ -90,6 +104,10 @@
         "trigger": "on_speak_queue",
         "execution": "async",
         "reactions": [
+          {},
+          {},
+          {},
+          {},
           {},
           {},
           {
@@ -119,11 +137,39 @@
         "sender_id": "oncall",
         "content": {
           "type": "text",
+          "body": "@sre status?"
+        }
+      },
+      "expect": {
+        "result": {
+          "blocked": false,
+          "error": null
+        }
+      }
+    },
+    {
+      "wait_for": "sre-speaking"
+    },
+    {
+      "call": "process_inbound",
+      "room_id": "r1",
+      "message": {
+        "channel_id": "ops",
+        "sender_id": "oncall",
+        "content": {
+          "type": "text",
           "body": "@comms please go through the tickets"
         }
       },
-      "background": true,
-      "as": "incoming"
+      "expect": {
+        "result": {
+          "blocked": false,
+          "error": null
+        }
+      }
+    },
+    {
+      "open": "sre-speaking"
     },
     {
       "wait_for": "comms-saying"
@@ -138,7 +184,8 @@
         "result": {
           "speaking": "comms",
           "queue": [
-            "comms"
+            "comms",
+            "dev"
           ]
         }
       }
@@ -148,15 +195,6 @@
     },
     {
       "open": "comms-saying"
-    },
-    {
-      "await": "incoming",
-      "expect": {
-        "result": {
-          "blocked": false,
-          "error": null
-        }
-      }
     },
     {
       "idle": true
@@ -180,7 +218,23 @@
             "channel_id": "ops"
           },
           "content": {
+            "body": "@sre status?"
+          }
+        },
+        {
+          "source": {
+            "channel_id": "ops"
+          },
+          "content": {
             "body": "@comms please go through the tickets"
+          }
+        },
+        {
+          "source": {
+            "channel_id": "sre"
+          },
+          "content": {
+            "body": "@dev please check the logs"
           }
         },
         {
@@ -216,13 +270,26 @@
               ]
             }
           }
+        },
+        {
+          "source": {
+            "channel_id": "dev"
+          },
+          "content": {
+            "body": "dev here"
+          }
         }
       ]
     },
     "models": {
-      "sre": [],
       "comms": [
         {},
+        {}
+      ],
+      "sre": [
+        {}
+      ],
+      "dev": [
         {}
       ]
     }

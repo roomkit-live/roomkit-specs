@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "discussion/a-task-s-result-to-post-is-posted-for-an-agent-no-executor-serves",
-  "title": "A task's result to post is the agent's message whatever its presence: posted for an agent no executor online serves, never a turn skipped",
+  "title": "A task's result to post is the agent's message whatever its presence: it is posted for an agent no executor online serves",
   "rules": [
     "§19.7.5 rule 7",
     "§19.7.5 rule 19",

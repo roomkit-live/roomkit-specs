@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "discussion/an-agent-that-starts-a-task-says-so-and-its-turn-ends-there",
-  "title": "An agent that starts a background task is told to say once, in a sentence, that the work is under way and to end its turn: its turn ends with that sentence, and the next agent's turn comes while the work runs",
+  "title": "An agent that starts a background task is told to say in one sentence that the work is under way and to end its turn: its turn ends with that sentence, and the next agent's turn comes while the work runs",
   "rules": [
     "§19.7.5 rule 19",
     "§23.4"
@@ -9,7 +9,7 @@
   "requirements": [
     "RK-19.7.5-203"
   ],
-  "notes": "Python: tasks/background.py BACKGROUND_TOOL_DEF (its description) and background_tool_server (its answer). comms is named before sre: it starts the task and says it is on it, and its model is asked no more in that turn; sre answers while the worker holds, then the result is posted. Not observed: that a model says it once, in one sentence; a scripted model says what it is scripted to.",
+  "notes": "Python: tasks/background.py background_tool_server (its answer; its words are pinned whole by tasks/an-agent-starts-its-work-in-the-background). comms is named before sre: it starts the task and says it is on it, and its model is asked no more in that turn; sre answers while the worker holds, then the result is posted. Not observed: that a model says it once, in one sentence; a scripted model says what it is scripted to.",
   "setup": {
     "channels": [
       {
@@ -200,18 +200,7 @@
     },
     "models": {
       "comms": [
-        {
-          "tool_definitions": {
-            "work_in_background": {
-              "description": {
-                "$contains": [
-                  "one short sentence",
-                  "end your turn"
-                ]
-              }
-            }
-          }
-        },
+        {},
         {
           "tool_results": [
             {

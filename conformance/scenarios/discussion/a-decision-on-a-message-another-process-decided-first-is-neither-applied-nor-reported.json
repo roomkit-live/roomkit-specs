@@ -9,7 +9,7 @@
   "requirements": [
     "RK-19.7.5-168"
   ],
-  "notes": "Python: test_discussion_dispatch.py test_a_decision_another_process_took_first_is_neither_applied_nor_reported; _dispatching.py, a decision applied only to a message still waiting. While the kit's policy holds its decision at its gate, the stored queue is written as a process that took the lease over and decided the message leaves it: the message no longer waits, the lease is that process's until 2100. Once the gate opens, the kit's decision (sre) queues no one and fires no ON_DISPATCH_DECISION.",
+  "notes": "Python: test_discussion_dispatch.py test_a_decision_another_process_took_first_is_neither_applied_nor_reported; _dispatching.py, a decision applied only to a message still waiting. While the kit's policy holds its decision at its gate, the stored queue is written as a process that took the lease over and decided the message leaves it: the message no longer waits, the lease is that process's until 2100. Once the gate opens, the kit's decision (sre) queues no one and fires no ON_DISPATCH_DECISION: each message reported once is observed as a stale decision not reported a second time, the first decision being the staged write's, which reports nothing.",
   "setup": {
     "channels": [
       {
@@ -124,8 +124,7 @@
           "entries": [],
           "dispatching": [],
           "lease_holder": "other",
-          "lease_expires": 4102444800.0,
-          "version": 1000
+          "lease_expires": 4102444800.0
         }
       }
     },

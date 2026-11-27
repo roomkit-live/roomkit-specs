@@ -10,7 +10,7 @@
   "requirements": [
     "RK-19.7.5-181"
   ],
-  "notes": "Python: test_discussion_background.py (the results that land once over); core/mixins/delegation.py _complete (ON_TASK_COMPLETED, the StatusBus, then the hand-back). max_turns 1: comms's turn, which starts the task, is the last, and the discussion is over once it is given. The relayed result reaches no agent: comms is not asked again and the room holds nothing more, but the hook and the bus keep it. The uninstalled half is discussion/a-task-outlives-an-uninstalled-discussion-its-hand-back-an-instruction-like-any-other.",
+  "notes": "Python: test_discussion_background.py (the results that land once over); core/mixins/delegation.py _complete (ON_TASK_COMPLETED, the StatusBus, then the hand-back). max_turns 1: comms's turn, which starts the task, is the last, and the discussion is over once it is given. The relayed result is refused: it is never queued (ON_SPEAK_QUEUE reports comms's one turn and the end of the discussion, in an order the RFC does not fix), comms is not asked again and the room holds nothing more, while ON_TASK_COMPLETED and the bus keep the result. The uninstalled half is discussion/a-task-outlives-an-uninstalled-discussion-its-hand-back-an-instruction-like-any-other.",
   "setup": {
     "channels": [
       {
@@ -85,6 +85,11 @@
       {
         "name": "completed",
         "trigger": "on_task_completed",
+        "execution": "async"
+      },
+      {
+        "name": "follow",
+        "trigger": "on_speak_queue",
         "execution": "async"
       }
     ]
@@ -192,11 +197,56 @@
       "sre": []
     },
     "hooks": {
+      "follow": {
+        "$unordered": [
+          {
+            "trigger": "on_speak_queue",
+            "room_id": "r1",
+            "speak_queue": {
+              "change": "queued",
+              "channel_ids": [
+                "comms"
+              ]
+            }
+          },
+          {
+            "trigger": "on_speak_queue",
+            "room_id": "r1",
+            "speak_queue": {
+              "change": "turn_given",
+              "channel_ids": [
+                "comms"
+              ]
+            }
+          },
+          {
+            "trigger": "on_speak_queue",
+            "room_id": "r1",
+            "speak_queue": {
+              "change": "over",
+              "channel_ids": []
+            }
+          },
+          {
+            "trigger": "on_speak_queue",
+            "room_id": "r1",
+            "speak_queue": {
+              "change": "turn_ended",
+              "channel_ids": [
+                "comms"
+              ]
+            }
+          }
+        ]
+      },
       "completed": [
         {
           "trigger": "on_task_completed",
           "room_id": "r1",
           "event": {
+            "content": {
+              "body": "Findings: 12 tickets."
+            },
             "metadata": {
               "task_status": "completed"
             }

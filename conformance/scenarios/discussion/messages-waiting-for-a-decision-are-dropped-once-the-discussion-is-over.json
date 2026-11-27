@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "discussion/messages-waiting-for-a-decision-are-dropped-once-the-discussion-is-over",
-  "title": "Once the discussion is over, the messages waiting for a decision are dropped with its queue: the policy is not asked about them and no agent answers",
+  "title": "Once the discussion is over, the messages waiting for a decision are dropped with its queue: no agent answers them",
   "rules": [
     "§19.7.5 rule 18",
     "§19.7.5 rule 15"
@@ -9,7 +9,7 @@
   "requirements": [
     "RK-19.7.5-162"
   ],
-  "notes": "Python: _driver.py _next_turn (done asked first), _waiting_decision(done=True), the queue dropped as rule 15 says. The policy holds its decision on the first message while the second waits; done then holds, and the gate opens: the second is never decided, the first's pick never takes its turn, and the stored queue holds no message waiting.",
+  "notes": "Python: _driver.py _next_turn (done asked first), _waiting_decision(done=True), the queue dropped as rule 15 says. The policy holds its decision on the first message while the second waits; done then holds, and the gate opens: neither message's pick takes a turn, and the stored queue holds no message waiting. Whether the policy is asked about the second before the holder finds the discussion over is not asserted: the RFC asks done before each turn is given.",
   "setup": {
     "channels": [
       {
@@ -166,17 +166,6 @@
     }
   ],
   "expect": {
-    "dispatch_turns": {
-      "d": [
-        {
-          "event": {
-            "content": {
-              "body": "first: the error rate"
-            }
-          }
-        }
-      ]
-    },
     "timeline": {
       "r1": [
         {

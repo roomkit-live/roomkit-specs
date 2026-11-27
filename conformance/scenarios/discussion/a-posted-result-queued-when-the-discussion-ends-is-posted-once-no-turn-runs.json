@@ -9,7 +9,7 @@
   "requirements": [
     "RK-19.7.5-182"
   ],
-  "notes": "Python: test_discussion_background.py test_a_result_back_once_over_waits_for_the_last_turn; _posts.py post_later (once no turn runs). The result is queued behind sre's turn (ON_SPEAK_QUEUE reports it), then done holds: sre's turn ends as it would, the discussion is over, and the result is posted after sre's answer.",
+  "notes": "Python: _driver.py (done asked before the next turn), _room.py, _posts.py post_later. The result is queued behind sre's turn (ON_SPEAK_QUEUE reports it), then done holds: sre's turn ends as it would, the discussion is over and its queue dropped, and the result is posted all the same, after sre's answer. The uninstalled half is discussion/an-uninstall-under-the-room-lock-posts-the-waiting-result-itself's. Not observed: the wait for the floor, a result that comes back once the discussion is over while its last turn runs (test_discussion_background.py test_a_result_back_once_over_waits_for_the_last_turn), which no step can stage: nothing reports such a result waiting.",
   "setup": {
     "channels": [
       {

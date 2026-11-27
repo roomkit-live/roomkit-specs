@@ -9,7 +9,7 @@
   "requirements": [
     "RK-19.7.5-186"
   ],
-  "notes": "Python: _posts.py post_held (the holder posts what it held once the queue is gone), tasks/posting.py send_posted (keyed by the result's id, a replay once posted). As discussion/an-uninstall-in-another-process-posts-the-result-another-holds-before-the-agents-leave, but comms is bound by the host, so the uninstall leaves it: the run's kit, reading the uninstall, posts the result it held again, a replay. ops is delivered the result once. Not observed: a commit under way once the lock is released.",
+  "notes": "Python: _posts.py post_held (the holder posts what it held once the queue is gone), tasks/posting.py send_posted (keyed by the result's id, a replay once posted). As discussion/an-uninstall-in-another-process-posts-the-result-another-holds-before-the-agents-leave, but comms is bound by the host, so the uninstall leaves it: the run's kit, reading the uninstall, posts the result it held again, a replay. ops is delivered the result once. Not observed: a commit under way once the lock is released, and the holder's post once its agent was detached (in discussion/an-uninstall-in-another-process-posts-the-result-another-holds-before-the-agents-leave, where comms is detached, a replay and a refusal for the detached agent store the same).",
   "setup": {
     "channels": [
       {

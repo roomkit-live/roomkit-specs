@@ -9,7 +9,7 @@
   "requirements": [
     "RK-19.7.5-187"
   ],
-  "notes": "Python: test_discussion_background.py test_a_result_a_closing_kit_did_not_post_is_posted_by_the_next_uninstall; _posts.py post (a closing kit posts nothing), keep. The run's kit holds comms's result, queued behind sre's turn, and closes. p2 installs the discussion, gives sre a turn: still nothing posted. p2's uninstall posts the result, after sre's answer. Not observed: a result whose post failed.",
+  "notes": "Python: test_discussion_background.py test_a_result_a_closing_kit_did_not_post_is_posted_by_the_next_uninstall; _posts.py post (a closing kit posts nothing), keep. The run's kit holds comms's result, queued behind sre's turn, and closes. p2 installs the discussion and gives sre a turn, then a person's message addressed to no one is committed: the result is posted neither at the reinstall nor at the end of that turn, but by p2's uninstall, after the room's later messages. Not observed: a result whose post failed.",
   "setup": {
     "channels": [
       {
@@ -234,6 +234,29 @@
       "idle": true
     },
     {
+      "call": "process_inbound",
+      "room_id": "r1",
+      "message": {
+        "channel_id": "ops",
+        "sender_id": "oncall",
+        "content": {
+          "type": "text",
+          "body": "Noted, thanks."
+        },
+        "addressed_to": []
+      },
+      "kit": "p2",
+      "expect": {
+        "result": {
+          "blocked": false,
+          "error": null
+        }
+      }
+    },
+    {
+      "idle": true
+    },
+    {
       "call": "uninstall_strategy",
       "room_id": "r1",
       "kit": "p2",
@@ -298,6 +321,14 @@
           },
           "content": {
             "body": "sre again"
+          }
+        },
+        {
+          "source": {
+            "channel_id": "ops"
+          },
+          "content": {
+            "body": "Noted, thanks."
           }
         },
         {

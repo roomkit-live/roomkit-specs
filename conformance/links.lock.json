@@ -10691,7 +10691,8 @@
       "discussion/a-task-outlives-an-uninstalled-discussion-its-hand-back-an-instruction-like-any-other": "3a68f6e628d8466e59631011989455a9f6d2f9353d0116de1df09486e95a357a"
     },
     "RK-19.7.5-182": {
-      "discussion/a-posted-result-queued-when-the-discussion-ends-is-posted-once-no-turn-runs": "53559206499209c21c0694f73fcd041826774794125b0b10306a26e3601a115e"
+      "discussion/a-posted-result-queued-when-the-discussion-ends-is-posted-once-no-turn-runs": "53559206499209c21c0694f73fcd041826774794125b0b10306a26e3601a115e",
+      "discussion/an-uninstall-under-the-room-lock-posts-the-waiting-result-itself": "53559206499209c21c0694f73fcd041826774794125b0b10306a26e3601a115e"
     },
     "RK-19.7.5-183": {
       "discussion/an-uninstall-in-another-process-posts-the-result-another-holds-before-the-agents-leave": "bd8d714d181b007f361567ca7f859de80b88295634e3a987e111670c45248f2f"
