@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "f73e8090fe7e39cb56cfb5b71dcd2e49070574bf3b2dd580bfd1e5e038e6ec9e",
-  "corpus_sha256": "506a17fe7002bb3a5ce9f7381fcf0e3527e23f98bb465cf3f76ca774a078636f",
+  "corpus_sha256": "5a2b486c729719e517499835570a7e4daacdc38373bd690aaeabbfae93acbc9c",
   "python_commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
-  "scenario_count": 4084,
+  "scenario_count": 4113,
   "sections": [
     {
       "section": "0",
@@ -1015,7 +1015,7 @@
       "decided_gaps": {
         "phase6": 4,
         "step": 51,
-        "writable": 50
+        "writable": 22
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -1025,6 +1025,7 @@
         "acp/a-message-with-no-text-prompts-nothing",
         "acp/a-prompt-the-agent-fails-fails-the-turn",
         "acp/a-room-keeps-its-session-across-turns",
+        "acp/a-session-sent-a-labelled-request-labels-every-later-one-and-gives-the-note-once",
         "acp/a-stop-reason-other-than-end-turn-is-named-on-the-turn",
         "acp/a-truncated-turn-preserves-max-tokens",
         "acp/an-external-agent-s-call-carries-no-intent",
@@ -1257,6 +1258,7 @@
         "acp/steer-ignores-other-directives",
         "acp/steer-isolates-running-rooms",
         "acp/steer-running-prompt-keeps-its-outcome",
+        "acp/the-conversation-and-an-acp-agent-label-a-room-s-turns-alike-at-one-threshold",
         "acp/thinking-abandoned-stream-closes-window",
         "acp/thinking-cancelled-prompt-closes-window",
         "acp/thinking-empty-and-non-text-ignored",
@@ -1508,7 +1510,9 @@
         "instructions/a-later-turn-replays-an-instruction-where-its-turn-read-it",
         "instructions/a-memory-s-window-does-not-count-a-kept-instruction",
         "instructions/a-standalone-instruction-is-not-kept",
+        "instructions/a-standalone-turn-carries-none-of-the-room-s-memories",
         "instructions/a-standalone-turn-keeps-the-agent-s-prompt-tools-and-skills",
+        "instructions/a-standalone-turn-replays-no-instruction-an-earlier-turn-read",
         "instructions/a-summary-quotes-a-kept-instruction-as-the-application-s",
         "instructions/an-instruction-that-opened-the-room-opens-its-later-history",
         "mcp/a-tool-description-reaches-the-model-as-the-server-wrote-it",
@@ -1516,7 +1520,9 @@
         "memory/a-budget-counts-a-labelled-turn-as-it-is-sent",
         "memory/a-compacting-memory-never-summarizes-a-returned-current-input",
         "memory/a-compacting-memory-summarizes-what-it-trims",
+        "memory/a-compaction-between-rounds-leaves-a-later-overflow-its-compacted-replay",
         "memory/a-compaction-between-rounds-stores-the-earlier-rounds-long-results",
+        "memory/a-copy-of-a-mark-is-replaced-the-same-way-on-every-turn",
         "memory/a-deferred-memory-reserves-discussion-notes",
         "memory/a-deferred-turn-compacts-only-the-history-before-its-input",
         "memory/a-deferred-turn-keeps-compacting-after-an-overflow",
@@ -1537,6 +1543,8 @@
         "memory/a-memory-summary-keeps-the-deferred-compaction-boundary",
         "memory/a-memory-that-fails-to-compact-leaves-the-turn-as-it-was",
         "memory/a-name-that-reads-like-an-earlier-sender-s-is-labelled-with-the-name-it-is-not",
+        "memory/a-name-that-reads-like-two-others-ranks-after-both-and-renumbers-neither",
+        "memory/a-participant-renamed-later-keeps-on-earlier-turns-the-name-they-spoke-under",
         "memory/a-passage-retrieved-from-a-turn-reads-after-its-author-s-label",
         "memory/a-person-a-transport-names-is-named-in-the-people-note-as-their-turns-read",
         "memory/a-person-named-like-an-agent-s-label-reads-as-a-participant-in-a-summary-line",
@@ -1555,10 +1563,13 @@
         "memory/a-summary-cut-summarizes-the-turn-that-passes-it",
         "memory/a-summary-set-before-an-assistant-turn-is-one-of-the-messages-at-the-next-compaction",
         "memory/a-summary-stands-for-the-older-turns",
+        "memory/a-turn-a-memory-s-summary-joins-keeps-its-label-out-of-the-compaction-s-quote",
         "memory/an-agent-participant-is-named-among-the-people-taking-part",
         "memory/an-ambiguous-input-only-compacts-new-tool-results",
         "memory/an-ambiguous-input-refuses-an-unsafe-compaction",
         "memory/an-ambiguous-input-relieves-overflow-with-new-tool-results",
+        "memory/an-author-s-image-counts-in-the-budget-and-a-media-as-its-mention",
+        "memory/every-line-break-is-a-line-feed-before-the-labels-are-placed",
         "memory/history-omits-only-responses-marked-superseded",
         "memory/knowledge-passages-ride-the-turn-s-notes",
         "memory/people-with-no-name-on-one-channel-are-told-apart-in-the-people-note",
@@ -1855,20 +1866,28 @@
         "speaking/a-late-offer-is-observed-without-a-generation-streaming",
         "speaking/a-late-speak-decision-runs-no-turn-non-streaming",
         "speaking/a-late-speak-decision-runs-no-turn-streaming",
+        "speaking/a-later-event-reads-the-thought-and-no-late-decision-is-owed-to-the-earlier-one",
         "speaking/a-replaced-generation-context-reaches-the-thinker-non-streaming",
         "speaking/a-replaced-generation-context-reaches-the-thinker-streaming",
+        "speaking/a-silence-a-hook-leaves-is-thought-about",
+        "speaking/a-thinker-call-running-while-the-agent-spoke-does-not-bring-back-what-it-said",
+        "speaking/a-thought-cut-short-names-the-block-it-holds",
         "speaking/a-thought-in-time-is-marked-as-another-decision-non-streaming",
         "speaking/a-thought-in-time-is-marked-as-another-decision-streaming",
         "speaking/a-thought-in-time-offers-and-is-emptied-non-streaming",
         "speaking/a-thought-in-time-offers-and-is-emptied-streaming",
+        "speaking/a-thought-on-a-context-taken-while-the-agent-answered-wants-to-say-nothing",
+        "speaking/an-event-withheld-from-the-agent-is-not-among-what-its-policy-reads",
         "speaking/an-instruction-bypasses-the-policy-non-streaming",
         "speaking/an-instruction-bypasses-the-policy-streaming",
+        "speaking/an-instruction-carries-no-thought-and-empties-nothing",
         "speaking/an-unchanged-thought-is-not-reported-twice-non-streaming",
         "speaking/an-unchanged-thought-is-not-reported-twice-streaming",
         "speaking/no-policy-runs-without-a-decision-report-non-streaming",
         "speaking/no-policy-runs-without-a-decision-report-streaming",
         "speaking/offer-adds-its-own-note-after-the-decision-notes-non-streaming",
         "speaking/offer-adds-its-own-note-after-the-decision-notes-streaming",
+        "speaking/one-thinker-call-at-a-time-and-the-next-one-reads-the-latest-context",
         "speaking/policy-failure-falls-back-to-speak-non-streaming",
         "speaking/policy-failure-falls-back-to-speak-streaming",
         "speaking/policy-timeout-falls-back-to-speak-non-streaming",
@@ -1885,6 +1904,8 @@
         "speaking/strategy-bypasses-policy-and-thinker-one-pass-streaming",
         "speaking/strategy-bypasses-policy-and-thinker-two-passes-non-streaming",
         "speaking/strategy-bypasses-policy-and-thinker-two-passes-streaming",
+        "speaking/the-people-a-policy-reads-are-the-voices-of-one-microphone-when-more",
+        "speaking/the-people-a-policy-reads-are-those-taking-part-named-as-their-turns-name-them",
         "status/the-bus-reads-its-recent-entries-as-text",
         "steering/a-message-delivered-after-a-cut-gets-a-turn-of-its-own",
         "steering/a-message-during-a-tool-round-is-read-by-the-running-turn",
@@ -2017,6 +2038,7 @@
         "tool-search/a-call-to-find-tools-where-nothing-is-hidden-is-refused",
         "tool-search/a-cancel-after-a-round-reports-no-tool-no-request-declared",
         "tool-search/a-cancel-after-revealing-reports-referenced-tools",
+        "tool-search/a-compaction-that-summarizes-a-referencing-result-away-declares-its-tools",
         "tool-search/a-denied-tool-is-not-held",
         "tool-search/a-denied-tool-is-not-recovered",
         "tool-search/a-failed-held-tool-is-not-referenced-or-reported",
@@ -2038,6 +2060,7 @@
         "tool-search/a-pinned-tool-counts-toward-the-tool-count",
         "tool-search/a-pinned-tool-does-not-count-toward-the-schemas",
         "tool-search/a-plural-query-meets-a-singular-name-and-camel-case-splits",
+        "tool-search/a-provider-that-holds-no-tool-receives-the-reopened-tools-declared-plainly",
         "tool-search/a-query-adds-its-words-in-one-order",
         "tool-search/a-query-that-is-a-name-finds-that-tool-first",
         "tool-search/a-recovered-call-is-repaired-as-a-declared-one",
@@ -2048,9 +2071,11 @@
         "tool-search/a-recovery-whose-result-on-tool-call-withheld-keeps-the-tool-revealed",
         "tool-search/a-refused-recovery-leaves-a-search-of-its-round",
         "tool-search/a-refused-recovery-leaves-a-served-one-of-its-round",
+        "tool-search/a-reopening-exchange-is-no-event-of-the-room",
         "tool-search/a-replaced-search-still-reveals-its-matches",
         "tool-search/a-revealed-tool-is-referenced-without-changing-the-declaration",
         "tool-search/a-room-past-the-rooms-bound-forgets-what-it-found",
+        "tool-search/a-room-whose-declaration-is-not-known-takes-the-one-its-turn-shows",
         "tool-search/a-round-that-declares-nothing-still-recovers-a-kept-tool",
         "tool-search/a-search-that-finds-nothing-keeps-the-window",
         "tool-search/a-search-that-finds-nothing-reads-the-host-s-hint",
@@ -2059,11 +2084,14 @@
         "tool-search/a-served-recovery-survives-a-search-of-its-round-search-first",
         "tool-search/a-served-search-reveals-for-the-next-round-and-the-next-turn",
         "tool-search/a-standalone-instruction-reads-none-of-the-room-s-tools",
+        "tool-search/a-standalone-turn-neither-reads-nor-keeps-the-room-s-declaration",
         "tool-search/a-tag-finds-a-tool-its-own-words-do-not-name",
+        "tool-search/a-tool-s-definition-holding-a-block-tag-is-declared-and-handed-as-written",
         "tool-search/a-tool-the-generation-hook-added-stays-declared-and-is-never-named",
         "tool-search/a-tool-the-generation-hook-withdrew-from-the-first-round-stays-withdrawn",
         "tool-search/a-tool-the-generation-hook-withdrew-is-neither-found-nor-listed-nor-run",
         "tool-search/a-tool-the-store-says-was-used-stays-declared",
+        "tool-search/a-tool-the-turn-no-longer-shows-leaves-the-room-s-declaration",
         "tool-search/a-tool-withdrawn-after-a-round-is-neither-found-nor-listed-nor-run",
         "tool-search/a-turn-past-a-call-names-no-find-tools-while-nothing-is-hidden",
         "tool-search/a-turn-s-own-tools-are-its-catalogue",
@@ -2146,6 +2174,7 @@
         "tools/a-later-turn-s-request-extends-the-previous-turn-s",
         "tools/a-malformed-call-is-told-and-tried-again-on-the-first-round",
         "tools/a-malformed-call-past-its-retries-ends-the-turn-empty",
+        "tools/a-mark-s-words-in-the-agent-s-own-rounds-and-a-tool-s-result-are-replayed-as-written",
         "tools/a-memory-s-text-joins-the-input-before-the-tool-images",
         "tools/a-model-that-does-not-see-reads-a-tool-s-parts-as-text",
         "tools/a-model-that-ignores-the-guard-is-force-stopped",
@@ -2791,6 +2820,7 @@
         "routing/a-hook-closing-a-room-another-was-routed-into-refuses-the-first-message",
         "routing/a-room-the-host-opened-for-its-member-keeps-out-a-stranger-writing-after-her",
         "routing/two-customers-on-one-number-keep-a-conversation-each",
+        "speaking/an-event-withheld-from-the-agent-is-not-among-what-its-policy-reads",
         "streaming/a-reader-stopped-at-the-last-row-is-handed-no-end",
         "streaming/a-room-closed-mid-stream-ends-its-target-s-stream",
         "streaming/a-row-stored-after-its-agent-is-detached-is-blocked",
@@ -3375,12 +3405,16 @@
         "speaking/a-late-offer-is-observed-without-a-generation-streaming",
         "speaking/a-late-speak-decision-runs-no-turn-non-streaming",
         "speaking/a-late-speak-decision-runs-no-turn-streaming",
+        "speaking/a-later-event-reads-the-thought-and-no-late-decision-is-owed-to-the-earlier-one",
         "speaking/a-replaced-generation-context-reaches-the-thinker-non-streaming",
         "speaking/a-replaced-generation-context-reaches-the-thinker-streaming",
+        "speaking/a-silence-a-hook-leaves-is-thought-about",
+        "speaking/a-thinker-call-running-while-the-agent-spoke-does-not-bring-back-what-it-said",
         "speaking/a-thought-in-time-is-marked-as-another-decision-non-streaming",
         "speaking/a-thought-in-time-is-marked-as-another-decision-streaming",
         "speaking/a-thought-in-time-offers-and-is-emptied-non-streaming",
         "speaking/a-thought-in-time-offers-and-is-emptied-streaming",
+        "speaking/a-thought-on-a-context-taken-while-the-agent-answered-wants-to-say-nothing",
         "speaking/an-instruction-bypasses-the-policy-non-streaming",
         "speaking/an-instruction-bypasses-the-policy-streaming",
         "speaking/an-unchanged-thought-is-not-reported-twice-non-streaming",
@@ -4643,6 +4677,8 @@
         "locks/the-streamed-answer-of-a-set-of-a-deleted-room-stays-out-of-the-room-created-again",
         "media/an-inbound-session-connects-after-the-hook-allows-it",
         "memory/a-name-that-reads-like-an-earlier-sender-s-is-labelled-with-the-name-it-is-not",
+        "memory/a-name-that-reads-like-two-others-ranks-after-both-and-renumbers-neither",
+        "memory/a-participant-renamed-later-keeps-on-earlier-turns-the-name-they-spoke-under",
         "orchestration/a-room-a-first-message-opens-is-announced-with-its-strategy-s-agents-and-not-the-sender-s-channel",
         "orchestration/a-sender-s-internal-mark-is-dropped",
         "orchestration/a-session-auditor-records-the-sessions-and-the-tool-calls",
@@ -4939,7 +4975,9 @@
         "instructions/a-parser-cannot-make-a-message-an-instruction",
         "instructions/a-standalone-instruction-is-not-kept",
         "instructions/a-standalone-instruction-s-target-and-hooks-are-handed-the-room-s-context",
+        "instructions/a-standalone-turn-carries-none-of-the-room-s-memories",
         "instructions/a-standalone-turn-keeps-the-agent-s-prompt-tools-and-skills",
+        "instructions/a-standalone-turn-replays-no-instruction-an-earlier-turn-read",
         "instructions/a-summary-quotes-a-kept-instruction-as-the-application-s",
         "instructions/an-agent-an-instruction-cannot-ask-at-the-depth-limit-records-no-fingerprint",
         "instructions/an-agent-not-asked-after-an-instruction-s-answer-records-no-fingerprint",
@@ -4967,10 +5005,12 @@
         "skills/a-standalone-activation-in-a-room-already-read-rides-its-next",
         "skills/a-standalone-activation-of-an-active-skill-delivers-its-body",
         "skills/a-standalone-turn-reads-the-room-s-stored-rows-first",
+        "speaking/an-instruction-carries-no-thought-and-empties-nothing",
         "steering/an-instruction-while-an-instructed-turn-runs-waits-a-turn-of-its-own",
         "tasks/a-background-delegation-relays-its-result-to-the-notified-agent",
         "tasks/the-tasks-note-lists-the-latest-six-tasks-and-a-standalone-turn-none",
         "tool-search/a-standalone-instruction-reads-none-of-the-room-s-tools",
+        "tool-search/a-standalone-turn-neither-reads-nor-keeps-the-room-s-declaration",
         "video/a-standalone-turn-reads-no-view"
       ]
     },
@@ -6621,6 +6661,7 @@
       "candidate_scenarios": [
         "conference/a-conference-refuses-a-diarizing-recognizer",
         "memory/two-voices-labelled-on-one-stream-are-two-speakers",
+        "speaking/the-people-a-policy-reads-are-the-voices-of-one-microphone-when-more",
         "voice/a-change-of-speaker-ends-the-pending-turn",
         "voice/a-diarizing-recognizer-is-refused-where-labels-cannot-hold",
         "voice/a-diarizing-stream-lasts-until-its-provider-ends-it-and-labels-start-a-new-epoch",
@@ -9894,6 +9935,7 @@
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "executors/one-build-serving-two-rooms-reads-each-turn-s-room-alone",
+        "instructions/a-standalone-turn-carries-none-of-the-room-s-memories",
         "turn-record/a-memory-s-write-rides-the-reply"
       ]
     },
@@ -9916,6 +9958,7 @@
         "discussion/a-turn-replays-its-round-with-no-later-message",
         "memory/a-budget-keeps-the-latest-events-that-fit",
         "memory/a-compacting-memory-never-summarizes-a-returned-current-input",
+        "memory/a-compaction-between-rounds-leaves-a-later-overflow-its-compacted-replay",
         "memory/a-compaction-between-rounds-stores-the-earlier-rounds-long-results",
         "memory/a-deferred-memory-reserves-discussion-notes",
         "memory/a-deferred-turn-compacts-only-the-history-before-its-input",
@@ -9942,10 +9985,12 @@
         "memory/a-returned-current-input-survives-budget-trimming",
         "memory/a-summarizing-memory-compacts-a-turn-past-its-threshold-between-two-calls",
         "memory/a-summarizing-memory-never-summarizes-a-returned-current-input",
+        "memory/a-turn-a-memory-s-summary-joins-keeps-its-label-out-of-the-compaction-s-quote",
         "memory/an-ambiguous-input-only-compacts-new-tool-results",
         "memory/an-ambiguous-input-refuses-an-unsafe-compaction",
         "memory/an-ambiguous-input-relieves-overflow-with-new-tool-results",
-        "memory/the-window-holds-the-turn-s-event"
+        "memory/the-window-holds-the-turn-s-event",
+        "tool-search/a-compaction-that-summarizes-a-referencing-result-away-declares-its-tools"
       ]
     },
     {
@@ -10031,6 +10076,7 @@
         "memory/an-ambiguous-input-only-compacts-new-tool-results",
         "memory/an-ambiguous-input-refuses-an-unsafe-compaction",
         "memory/an-ambiguous-input-relieves-overflow-with-new-tool-results",
+        "memory/an-author-s-image-counts-in-the-budget-and-a-media-as-its-mention",
         "memory/the-window-counts-no-tool-row",
         "memory/the-window-holds-the-turn-s-event",
         "tools/a-round-older-than-the-history-window-is-not-replayed"
@@ -10252,6 +10298,7 @@
         "tool-search/a-binding-tool-under-a-discovery-name-yields-to-the-channel-s",
         "tool-search/a-call-to-a-hidden-tool-runs-and-reveals-it",
         "tool-search/a-call-to-find-tools-where-nothing-is-hidden-is-refused",
+        "tool-search/a-compaction-that-summarizes-a-referencing-result-away-declares-its-tools",
         "tool-search/a-denied-tool-is-not-recovered",
         "tool-search/a-generation-hook-cannot-declare-a-discovery-name-while-nothing-is-hidden",
         "tool-search/a-generation-hook-cannot-redefine-a-discovery-tool",
@@ -10261,8 +10308,14 @@
         "tool-search/a-max-results-past-every-integer-width-is-bounded",
         "tool-search/a-person-s-tool-does-not-count-toward-the-catalogue",
         "tool-search/a-person-s-tool-stays-declared-while-the-catalogue-is-hidden",
+        "tool-search/a-provider-that-holds-no-tool-receives-the-reopened-tools-declared-plainly",
         "tool-search/a-recovered-call-is-repaired-as-a-declared-one",
+        "tool-search/a-reopening-exchange-is-no-event-of-the-room",
+        "tool-search/a-room-whose-declaration-is-not-known-takes-the-one-its-turn-shows",
+        "tool-search/a-standalone-turn-neither-reads-nor-keeps-the-room-s-declaration",
+        "tool-search/a-tool-s-definition-holding-a-block-tag-is-declared-and-handed-as-written",
         "tool-search/a-tool-the-generation-hook-added-stays-declared-and-is-never-named",
+        "tool-search/a-tool-the-turn-no-longer-shows-leaves-the-room-s-declaration",
         "tool-search/a-turn-s-own-tools-are-its-catalogue",
         "tool-search/an-injected-tool-does-not-count-toward-the-catalogue",
         "tool-search/an-injected-tool-is-reported-always-even-once-used",
@@ -15008,11 +15061,7 @@
       "id": "RK-6.4-133",
       "section": "6.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1911"
-      }
+      "links": []
     },
     {
       "id": "RK-6.4-134",
@@ -15123,31 +15172,19 @@
       "id": "RK-6.4-150",
       "section": "6.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1911"
-      }
+      "links": []
     },
     {
       "id": "RK-6.4-151",
       "section": "6.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1911"
-      }
+      "links": []
     },
     {
       "id": "RK-6.4-152",
       "section": "6.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1911"
-      }
+      "links": []
     },
     {
       "id": "RK-6.4-153",
@@ -15445,11 +15482,7 @@
       "id": "RK-6.4-185",
       "section": "6.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1911"
-      }
+      "links": []
     },
     {
       "id": "RK-6.4-186",
@@ -15485,11 +15518,7 @@
       "id": "RK-6.4-191",
       "section": "6.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1911"
-      }
+      "links": []
     },
     {
       "id": "RK-6.4-192",
@@ -15501,21 +15530,13 @@
       "id": "RK-6.4-193",
       "section": "6.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1911"
-      }
+      "links": []
     },
     {
       "id": "RK-6.4-194",
       "section": "6.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1911"
-      }
+      "links": []
     },
     {
       "id": "RK-6.4-195",
@@ -16113,12 +16134,7 @@
       "id": "RK-6.4-401",
       "section": "6.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1940",
-        "note": "A standalone instruction's turn in a room whose earlier turns read instructions, none replayed."
-      }
+      "links": []
     },
     {
       "id": "RK-6.4-276",
@@ -16308,23 +16324,13 @@
       "id": "RK-6.4-298",
       "section": "6.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1940",
-        "note": "Two turns over one participant's copy of a mark, the same replacement in both requests."
-      }
+      "links": []
     },
     {
       "id": "RK-6.4-299",
       "section": "6.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1940",
-        "note": "A tool's result and the agent's text between calls holding a mark's words, replayed as written."
-      }
+      "links": []
     },
     {
       "id": "RK-6.4-300",
@@ -16342,12 +16348,7 @@
       "id": "RK-6.4-301",
       "section": "6.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1940",
-        "note": "A standalone instruction's turn on an agent with a memory provider, no memory in its request."
-      }
+      "links": []
     },
     {
       "id": "RK-6.4-302",
@@ -16502,12 +16503,7 @@
       "id": "RK-6.4-326",
       "section": "6.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1940",
-        "note": "A memory budget counting an author's image and a media's mention."
-      }
+      "links": []
     },
     {
       "id": "RK-6.4-327",
@@ -16745,12 +16741,7 @@
       "id": "RK-6.4-342",
       "section": "6.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1940",
-        "note": "A memory compaction between rounds, then an overflow, the call's compacted replay kept."
-      }
+      "links": []
     },
     {
       "id": "RK-6.4-528",
@@ -17020,12 +17011,7 @@
           ],
           "executions": []
         }
-      ],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1940",
-        "note": "A text cut short through a block, naming the block instead."
-      }
+      ]
     },
     {
       "id": "RK-6.4-356",
@@ -17037,12 +17023,7 @@
       "id": "RK-6.4-357",
       "section": "6.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1940",
-        "note": "A tool whose description holds a block tag, declared as written and never framed."
-      }
+      "links": []
     },
     {
       "id": "RK-6.4-358",
@@ -17072,12 +17053,7 @@
       "id": "RK-6.4-362",
       "section": "6.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1940",
-        "note": "A participant's message with a carriage return and a Unicode line separator, each line labelled."
-      }
+      "links": []
     },
     {
       "id": "RK-6.4-363",
@@ -17095,23 +17071,13 @@
       "id": "RK-6.4-365",
       "section": "6.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1940",
-        "note": "An ACP agent's request from two participants, each line labelled."
-      }
+      "links": []
     },
     {
       "id": "RK-6.4-366",
       "section": "6.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1940",
-        "note": "One room read by the conversation and an ACP agent, the same labels at the same threshold."
-      }
+      "links": []
     },
     {
       "id": "RK-6.4-367",
@@ -17152,12 +17118,7 @@
       "id": "RK-6.4-372",
       "section": "6.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1940",
-        "note": "SpeakTurn.people in a speak policy's snapshot with two people taking part."
-      }
+      "links": []
     },
     {
       "id": "RK-6.4-373",
@@ -17169,12 +17130,7 @@
       "id": "RK-6.4-374",
       "section": "6.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1940",
-        "note": "Two requests in one ACP session, the second labelled and the note given once."
-      }
+      "links": []
     },
     {
       "id": "RK-6.4-375",
@@ -17186,12 +17142,7 @@
       "id": "RK-6.4-376",
       "section": "6.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1940",
-        "note": "A memory summary joined to a labelled turn, its label out of the quote in the compaction's rendering."
-      }
+      "links": []
     },
     {
       "id": "RK-6.4-377",
@@ -17215,12 +17166,7 @@
       "id": "RK-6.4-380",
       "section": "6.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1940",
-        "note": "Three senders, one name reading like the two others, ranked after both."
-      }
+      "links": []
     },
     {
       "id": "RK-6.4-381",
@@ -17232,12 +17178,7 @@
       "id": "RK-6.4-382",
       "section": "6.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1940",
-        "note": "A participant renamed after a turn, the earlier turn keeping its recorded name."
-      }
+      "links": []
     },
     {
       "id": "RK-6.4-383",
@@ -17291,12 +17232,7 @@
       "id": "RK-6.4-391",
       "section": "6.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1940",
-        "note": "A deferred-loading model and a compaction that summarizes a referencing result away."
-      }
+      "links": []
     },
     {
       "id": "RK-6.4-392",
@@ -17314,34 +17250,19 @@
       "id": "RK-6.4-394",
       "section": "6.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1940",
-        "note": "A reopening exchange under a deferred-loading model, absent from the timeline and the tool counts."
-      }
+      "links": []
     },
     {
       "id": "RK-6.4-395",
       "section": "6.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1940",
-        "note": "A standalone instruction's turn under a deferred-loading model, no reopening and no room declaration kept."
-      }
+      "links": []
     },
     {
       "id": "RK-6.4-396",
       "section": "6.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1940",
-        "note": "A deferred-loading room whose tool a policy denies on a later turn, and a room with no known declaration."
-      }
+      "links": []
     },
     {
       "id": "RK-6.4-397",
