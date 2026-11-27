@@ -9,7 +9,7 @@
   "requirements": [
     "RK-21.5-020"
   ],
-  "notes": "Python: channels/_tool_event_result.py (TOOL_EVENT_IMAGE_MAX_CHARS, 512 KiB of payload characters); roomkit-rs: roomkit-ai tools/row_bound.rs. The image is a data URL of more than 512 KiB of characters: the bound is the reference's, the RFC asks only for one (RK-21.5-019). Its last characters show the model's copy whole.",
+  "notes": "Python: channels/_tool_event_result.py (TOOL_EVENT_IMAGE_MAX_CHARS, 512 KiB of payload characters); roomkit-rs: roomkit-ai tools/row_bound.rs. The image is a data URL of more than 512 KiB of characters: the bound is the reference's, the RFC asks only for one (RK-21.5-019). Its last characters show the model's copy whole; the row holds a text part in the image's place, whose words are the reference's and are not asserted.",
   "setup": {
     "channels": [
       {
@@ -147,7 +147,7 @@
               {
                 "type": "text",
                 "text": {
-                  "$contains": "not kept in the event"
+                  "$lacks": "AXRhaWwtb2YtdGhlLXNob3QC"
                 }
               }
             ]

@@ -154,7 +154,7 @@
     "RK-14.1-021": {
       "class": "step",
       "card": "RMK-1976",
-      "note": "No store.get_delivered_index step; the room record's delivered_index, which \u00a713.5's scenarios read, is the cursor, not this operation."
+      "note": "No store.get_delivered_index step; the room record's delivered_index, which §13.5's scenarios read, is the cursor, not this operation."
     },
     "RK-14.1-022": {
       "class": "step",
@@ -174,12 +174,12 @@
     "RK-14.1-026": {
       "class": "step",
       "card": "RMK-1976",
-      "note": "No store.find_room_id_by_binding step: routing reaches it through the default router, whose scenarios cite \u00a710.4."
+      "note": "No store.find_room_id_by_binding step: routing reaches it through the default router, whose scenarios cite §10.4."
     },
     "RK-14.1-027": {
       "class": "step",
       "card": "RMK-1976",
-      "note": "No store.find_room_id_by_participant step: routing reaches it through the default router, whose scenarios cite \u00a710.4."
+      "note": "No store.find_room_id_by_participant step: routing reaches it through the default router, whose scenarios cite §10.4."
     },
     "RK-14.1-028": {
       "class": "step",
@@ -934,7 +934,7 @@
     "RK-21.1-056": {
       "class": "step",
       "card": "RMK-1918",
-      "note": "step: a strategy's own install on a room it is installed in (Python's Orchestration.install(kit, room_id)): install_strategy refuses a room that holds a strategy (invalid_argument) before the strategy installs again, and no other call installs one."
+      "note": "step: a strategy's own install on a room it is installed in (Python's Orchestration.install(kit, room_id)): install_strategy refuses a room that holds a strategy (invalid_argument) before the strategy installs again (a Discussion takes the place of one, but sets up no tools), and no other call installs one."
     },
     "RK-21.1-058": {
       "class": "phase6",
@@ -1429,7 +1429,7 @@
     "RK-23.1-002": {
       "class": "step",
       "card": "RMK-1922",
-      "note": "Observe task submission via a runner fixture. The RFC diagram names run but the public Python and Rust runner interfaces and \u00a723.3 name submit (RMK-1923)."
+      "note": "Observe task submission via a runner fixture. The RFC diagram names run but the public Python and Rust runner interfaces and §23.3 name submit (RMK-1923)."
     },
     "RK-23.1-005": {
       "class": "step",

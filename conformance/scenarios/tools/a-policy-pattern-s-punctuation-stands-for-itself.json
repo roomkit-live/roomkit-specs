@@ -1,14 +1,14 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "tools/a-policy-pattern-s-punctuation-stands-for-itself",
-  "title": "A policy pattern's characters other than * and ? stand for themselves: orders.lookup denies that tool and not orders_lookup, and a+, ^b$, get.* and (c) deny no tool a pattern language would read them to cover",
+  "title": "A policy pattern's characters other than * and ? stand for themselves: orders.lookup denies that tool and not orders_lookup, a+, ^b$, get.* and (c) deny no tool a pattern language would read them to cover, and AA does not deny aa",
   "rules": [
     "§21.1"
   ],
   "requirements": [
     "RK-21.1-012"
   ],
-  "notes": "Python: tools/policy.py matches_any_pattern (each other character re.escape'd); roomkit-rs: roomkit-ai tools/policy.rs. A host tool's name may hold a dot (§6.7), so the dot is shown both ways: it denies the name that holds it, and stands for no other character. The model calls every tool: the denied one is refused with the policy's text (RK-21.1-048), the others run.",
+  "notes": "Python: tools/policy.py matches_any_pattern (each other character re.escape'd); roomkit-rs: roomkit-ai tools/policy.rs. A host tool's name may hold a dot (§6.7), so the dot is shown both ways; a letter stands for itself in its case: it denies the name that holds it, and stands for no other character. The model calls every tool: the denied one is refused with the policy's text (RK-21.1-048), the others run.",
   "setup": {
     "channels": [
       {
@@ -26,7 +26,8 @@
             "a+",
             "^b$",
             "get.*",
-            "(c)"
+            "(c)",
+            "AA"
           ]
         },
         "tools": [

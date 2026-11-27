@@ -9,7 +9,7 @@
   "requirements": [
     "RK-24.4-013"
   ],
-  "notes": "Python: channels/_skill_activation.py seed (a stored activate_skill whose result is no readable answer, an ON_TOOL_CALL override here, is never replayed). The second process holds a channel object of its own over the same store: its record is lost, and what the store holds cannot restore it, so it delivers the body. A stored activation it can read restores the record (skills/a-stored-activation-reads-the-turn-s-registry).",
+  "notes": "Python: channels/_skill_activation.py seed (a stored activate_skill whose result is no readable answer, an ON_TOOL_CALL override here, is never replayed). The second process holds a channel object of its own over the same store: its record is lost, and what the store holds cannot restore it, so it delivers the body. That a stored activation a hook rewrote restores nothing is the reference's criterion; the RFC asks only that a lost record deliver the body. A stored activation it can read restores the record (skills/a-stored-activation-reads-the-turn-s-registry).",
   "setup": {
     "channels": [
       {

@@ -9,7 +9,7 @@
   "requirements": [
     "RK-24.4-021"
   ],
-  "notes": "Python: channels/_ai_tools.py _handle_activate_skill (tools_hint, then _defer_reveal and _reveal: the window swapped, what Tool Search never defers left out, record_revealed for the room); roomkit-rs: roomkit-ai skills. The first round's search reveals x5; the activation's hint then replaces it with spotify_play and spotify_pause; spotify_search, pinned, stays declared. Not observed: that the hint leaves out of the window what is declared anyway, which no declaration shows apart from the pinned tool declared as before.",
+  "notes": "Python: channels/_ai_tools.py _handle_activate_skill (tools_hint, then _defer_reveal and _reveal: the window swapped, what Tool Search never defers left out, record_revealed for the room); roomkit-rs: roomkit-ai skills. The first round's search reveals x5; the activation's hint then replaces it with player_play and player_pause; player_search, pinned, stays declared. Not observed: that the hint leaves out of the window what is declared anyway, which no declaration shows apart from the pinned tool declared as before.",
   "setup": {
     "channels": [
       {
@@ -22,7 +22,7 @@
         "type": "ai",
         "tool_search": true,
         "tool_search_pinned": [
-          "spotify_search"
+          "player_search"
         ],
         "skills": [
           {
@@ -33,24 +33,24 @@
         ],
         "tools": [
           {
-            "name": "spotify_play",
-            "description": "Play a song on spotify.",
+            "name": "player_play",
+            "description": "Play a song on the player.",
             "parameters": {
               "type": "object"
             },
             "returns": "{\"ok\": true}"
           },
           {
-            "name": "spotify_pause",
-            "description": "Pause spotify.",
+            "name": "player_pause",
+            "description": "Pause the player.",
             "parameters": {
               "type": "object"
             },
             "returns": "{\"ok\": true}"
           },
           {
-            "name": "spotify_search",
-            "description": "Search spotify.",
+            "name": "player_search",
+            "description": "Search the player's songs.",
             "parameters": {
               "type": "object"
             },
@@ -108,7 +108,7 @@
                   "id": "c2",
                   "name": "activate_skill",
                   "arguments": {
-                    "name": "spotify"
+                    "name": "player"
                   }
                 }
               ]
@@ -187,7 +187,7 @@
       "agent": [
         {
           "tools": {
-            "spotify_play": {
+            "player_play": {
               "$absent": true
             },
             "x5": {
@@ -200,20 +200,20 @@
             "x5": {
               "$present": true
             },
-            "spotify_play": {
+            "player_play": {
               "$absent": true
             }
           }
         },
         {
           "tools": {
-            "spotify_play": {
+            "player_play": {
               "$present": true
             },
-            "spotify_pause": {
+            "player_pause": {
               "$present": true
             },
-            "spotify_search": {
+            "player_search": {
               "$present": true
             },
             "x5": {
@@ -225,7 +225,7 @@
             {
               "tool_call_id": "c2",
               "content": {
-                "$contains": "spotify_play"
+                "$contains": "player_play"
               },
               "is_error": false
             }
@@ -233,10 +233,10 @@
         },
         {
           "tools": {
-            "spotify_play": {
+            "player_play": {
               "$present": true
             },
-            "spotify_pause": {
+            "player_pause": {
               "$present": true
             }
           }

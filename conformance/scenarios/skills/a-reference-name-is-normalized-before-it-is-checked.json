@@ -8,7 +8,7 @@
   "requirements": [
     "RK-24.6-008"
   ],
-  "notes": "Python: skills/paths.py safe_join_filename (NFKC before every check); roomkit-rs: roomkit-ai skills/paths.rs. Checked on the raw text, none of these names holds a separator, a root or a drive: each would be looked up as a file and not found. The reference the skill has is read, as a check that the call reaches the reader.",
+  "notes": "Python: skills/paths.py safe_join_filename (NFKC before every check); roomkit-rs: roomkit-ai skills/paths.rs. Checked on the raw text, none of these names holds a separator, a root or a drive: each would be looked up as a file and not found, or refused for another cause. The refusal's words, and the order of its causes (an absolute name before a separator), are the reference's. The reference the skill has is read, as a check that the call reaches the reader.",
   "setup": {
     "channels": [
       {

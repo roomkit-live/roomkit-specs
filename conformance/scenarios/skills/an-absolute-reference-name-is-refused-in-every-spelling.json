@@ -8,7 +8,7 @@
   "requirements": [
     "RK-24.6-009"
   ],
-  "notes": "Python: skills/paths.py _is_absolute_anywhere (POSIX root, a Windows drive or UNC, on every platform); roomkit-rs: roomkit-ai skills/paths.rs.",
+  "notes": "Python: skills/paths.py _is_absolute_anywhere (POSIX root, a Windows drive or UNC, on every platform); roomkit-rs: roomkit-ai skills/paths.rs. That the Windows spellings are refused on every host, the refusal's words, and the order of its causes (an absolute name before a separator) are the reference's; the RFC asks that every spelling the host recognises be refused.",
   "setup": {
     "channels": [
       {

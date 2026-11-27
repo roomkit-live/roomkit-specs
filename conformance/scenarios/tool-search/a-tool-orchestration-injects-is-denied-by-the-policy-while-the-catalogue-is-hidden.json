@@ -9,7 +9,7 @@
   "requirements": [
     "RK-21.1-066"
   ],
-  "notes": "Python: channels/_ai_tools.py (an injected tool kept declared, always, then filtered by _policy_allows). The other half of RK-21.1-066, skill gating, is tool-search/a-tool-orchestration-injects-is-gated-by-a-skill-while-the-catalogue-is-hidden.",
+  "notes": "Python: channels/_ai_tools.py (an injected tool kept declared, always, then filtered by _policy_allows); roomkit-rs: roomkit-ai tool_search. The other half of RK-21.1-066, skill gating, is tool-search/a-tool-orchestration-injects-is-gated-by-a-skill-while-the-catalogue-is-hidden. Not observed: the other tools orchestration injects (a handoff tool, a strategy's own), observed here on a delegation tool.",
   "setup": {
     "channels": [
       {

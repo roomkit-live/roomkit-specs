@@ -22,7 +22,7 @@
         "type": "ai",
         "tool_search": true,
         "tool_search_pinned": [
-          "spotify_search"
+          "player_search"
         ],
         "skills": [
           {
@@ -33,24 +33,24 @@
         ],
         "tools": [
           {
-            "name": "spotify_play",
-            "description": "Play a song on spotify.",
+            "name": "player_play",
+            "description": "Play a song on the player.",
             "parameters": {
               "type": "object"
             },
             "returns": "{\"ok\": true}"
           },
           {
-            "name": "spotify_pause",
-            "description": "Pause spotify.",
+            "name": "player_pause",
+            "description": "Pause the player.",
             "parameters": {
               "type": "object"
             },
             "returns": "{\"ok\": true}"
           },
           {
-            "name": "spotify_search",
-            "description": "Search spotify.",
+            "name": "player_search",
+            "description": "Search the player's songs.",
             "parameters": {
               "type": "object"
             },
@@ -97,7 +97,7 @@
                   "id": "c1",
                   "name": "activate_skill",
                   "arguments": {
-                    "name": "spotify"
+                    "name": "player"
                   }
                 }
               ]
@@ -190,17 +190,17 @@
       "agent": [
         {
           "tools": {
-            "spotify_play": {
+            "player_play": {
               "$absent": true
             }
           }
         },
         {
           "tools": {
-            "spotify_play": {
+            "player_play": {
               "$absent": true
             },
-            "spotify_pause": {
+            "player_pause": {
               "$absent": true
             }
           },
@@ -214,10 +214,10 @@
         },
         {
           "tools": {
-            "spotify_play": {
+            "player_play": {
               "$absent": true
             },
-            "spotify_pause": {
+            "player_pause": {
               "$absent": true
             }
           }
