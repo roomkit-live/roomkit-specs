@@ -20,6 +20,12 @@
     "RK-1.4-010": {
       "store/every-content-type-is-read-back-as-it-was-stored": "cb18e4ea91c32831a1ad5b5c227c4861fa45998cdff03f2fa9b9a6b0e8ff050e"
     },
+    "RK-1.4-013": {
+      "inbound/a-field-the-parse-set-stands": "8734aefdaeb43d05b31a2589a215087a797984ab563a8e5e5435d17d7b152940",
+      "rooms/a-blocked-record-does-not-resume-or-refresh-a-paused-room": "8734aefdaeb43d05b31a2589a215087a797984ab563a8e5e5435d17d7b152940",
+      "rooms/set-room-timers-replaces-a-room-s-timers-and-keeps-its-activity": "8734aefdaeb43d05b31a2589a215087a797984ab563a8e5e5435d17d7b152940",
+      "store/a-thread-summary-counts-the-replies-received-and-the-last": "8734aefdaeb43d05b31a2589a215087a797984ab563a8e5e5435d17d7b152940"
+    },
     "RK-10.1-001": {
       "appendix-b/b1-customer-and-ai": "549cfa9a0eb85644c67c4a5563ae994d671ab51e4eb2142a73b1e6b3ada7dca8",
       "inbound/a-message-reaches-the-other-transports": "549cfa9a0eb85644c67c4a5563ae994d671ab51e4eb2142a73b1e6b3ada7dca8"
@@ -16053,8 +16059,20 @@
     "RK-6.2-006": {
       "injection/the-host-s-voice-is-never-an-intelligence-channel": "a3f4fd81db6f90fbac14266581928f3852e74a27f8186ac4e95846e9822671e0"
     },
+    "RK-6.2-007": {
+      "inbound/a-channel-of-a-type-no-table-lists-keeps-that-type-on-its-records": "0cd2c804c2a11693bca020ec4d023161e963c3b6ed2876e984f83e385f113e16"
+    },
+    "RK-6.2-008": {
+      "inbound/a-channel-of-a-type-no-table-lists-keeps-that-type-on-its-records": "ea4443f3697f8bf9705b4acfac2424c05c5ba6267231da2cf94cd4c6eddb26fc"
+    },
     "RK-6.2-010": {
       "routing/each-channel-type-writes-its-addresses-in-its-own-form-under-its-own-keys": "a0247a8defba335364d748e0840b645fc2e7346b8734a213a5dbcc576cffa596"
+    },
+    "RK-6.2-011": {
+      "permissions/a-channel-claiming-the-system-type-is-refused": "974ce7343d9221ebee1a2ce66757458a48db44ddc48cb27552922b0d0f5c7fe5"
+    },
+    "RK-6.2-012": {
+      "hooks/a-channel-types-filter-naming-a-type-no-table-lists-runs-for-its-events": "8d7fcb32aac3f74674bcedb164908230c9d51a83080b4caf0ac2bd58555392cb"
     },
     "RK-6.3-008": {
       "transcoding/a-long-text-is-cut-with-a-marker": "cb9d00c34b1e7a83044743adf4f01540da7a600e21bb5234e8ab335b04ebc51f"
@@ -18116,6 +18134,9 @@
       "response-schema/a-schema-turn-the-provider-interrupts-after-a-round-fails-truncated": "9ab9ead085899d21a8e9aa41606ab125a0314ab20e9d1b5de345250b98c8917b",
       "tools/a-round-that-fails-after-a-round-of-calls-reports-what-it-said": "9ab9ead085899d21a8e9aa41606ab125a0314ab20e9d1b5de345250b98c8917b"
     },
+    "RK-6.4-407": {
+      "tools/a-turn-cut-short-after-a-round-delivers-nothing-again": "a47cd929a2ac5b8079c4c33b2ceef33b25becf2f9cb1fb217a2a3f51e936644d"
+    },
     "RK-6.4-408": {
       "orchestration/an-auto-delegating-supervisor-whose-first-pass-fails-after-a-tool-round-reports-its-rows-correlation-id": "bcb888d5a8789e7eec227413341452441eb38eb4732abc2b58ce0ce1f059ecf4",
       "tasks/a-delegated-stream-failing-after-a-tool-round-is-reported-once": "bcb888d5a8789e7eec227413341452441eb38eb4732abc2b58ce0ce1f059ecf4"
@@ -18316,6 +18337,9 @@
       "streaming/a-row-updated-before-the-turn-s-record-keeps-the-update": "14e958897651becfc7098056cf7a90eca61834e8e971089842ef36f9fcd42437",
       "streaming/an-adopted-call-reads-the-record-on-its-row": "14e958897651becfc7098056cf7a90eca61834e8e971089842ef36f9fcd42437"
     },
+    "RK-6.4-432": {
+      "turn-record/a-turn-whose-record-update-fails-keeps-its-outcome": "4141a203849d460bf67e1f918b6f0e0210aa6cc57f58843fd4682f4984ffecfc"
+    },
     "RK-6.4-433": {
       "streaming/a-failed-stream-hands-its-end-before-its-failure": "02d98eb081c70824d3f9346c0f85d870284d35ee64ed4dd19210520f1b6a27fc",
       "streaming/a-streamed-answer-hands-its-end-after-its-last-row": "02d98eb081c70824d3f9346c0f85d870284d35ee64ed4dd19210520f1b6a27fc",
@@ -18385,12 +18409,30 @@
       "regenerate/a-regenerated-turn-past-the-first-event-reads-no-message-committed-after-the-choice": "77b213a54a9dd3702ea98caf60d76e5c9cdbd853875bb7cbe91edcd0205f9cf7",
       "regenerate/a-regenerated-turn-reads-no-message-committed-after-the-choice": "77b213a54a9dd3702ea98caf60d76e5c9cdbd853875bb7cbe91edcd0205f9cf7"
     },
+    "RK-6.4-446": {
+      "turn-record/a-waiting-turn-leaves-the-room-s-delivery-lane-to-the-turn-before-it": "707872a04bad4fcd3e815da13673b7d9d29e75dd69097e5a7013ea757ff4dae0"
+    },
     "RK-6.4-447": {
       "regenerate/a-regenerated-turn-past-the-first-event-reads-no-message-committed-after-the-choice": "dbef2720f2deb29c48264a0c28223ac5ed0fae6867cfb14418d189cc02c77d1e",
       "regenerate/a-regenerated-turn-reads-no-message-committed-after-the-choice": "dbef2720f2deb29c48264a0c28223ac5ed0fae6867cfb14418d189cc02c77d1e"
     },
     "RK-6.4-448": {
       "steering/a-message-delivered-after-a-cut-gets-a-turn-of-its-own": "965e89e4a8f54beeed74b350ef6a709e5c2c10e78d06536541eb9effd0d21f48"
+    },
+    "RK-6.4-449": {
+      "turn-record/a-waiting-turn-whose-agent-leaves-the-room-never-starts": "c95d1ce94454f289623dffaaec81164dba56c31cd4ec43b4cf458528717d7300"
+    },
+    "RK-6.4-450": {
+      "turn-record/a-muted-agent-takes-no-place-in-the-room-s-line": "700ca7646551ec55276d0ba2a68a58635e018258584a1c23df881dfe3264f178"
+    },
+    "RK-6.4-451": {
+      "turn-record/a-message-a-turn-sends-into-its-own-room-is-answered-after-it": "0e02acf6e8189d17c0c24c05fc92e2ec88d238514f741821b36c1443ce48d850"
+    },
+    "RK-6.4-452": {
+      "orchestration/a-loop-orders-its-serialized-producer-s-generations-itself": "104b3a415c2f80591791cc6ee75c5004d762bb69f744d82156255bcc54877a87"
+    },
+    "RK-6.4-453": {
+      "turn-record/two-processes-each-handed-a-message-run-their-turns-side-by-side": "afb8c63146bcf25d3e4ef3e1b31aa4194505195165c5097c3849fb23e9b86545"
     },
     "RK-6.4-454": {
       "steering/off-a-second-message-starts-a-turn-beside-the-first": "b1b554beb63b671e08b7f668c9fa7bc6126953b46774378e456c5b9a8d794906"
@@ -18403,6 +18445,9 @@
       "steering/a-message-during-a-tool-round-is-read-by-the-running-turn": "73ad0c2b4b45e63b81719d6274450984a47788b0f640dc59463cf0b9753e544e",
       "steering/a-message-during-the-answer-is-answered-by-the-same-turn": "73ad0c2b4b45e63b81719d6274450984a47788b0f640dc59463cf0b9753e544e"
     },
+    "RK-6.4-458": {
+      "steering/one-sender-id-under-two-names-or-two-senders-under-one-are-two-authors": "ca18e547d864f3a6d46e6329f2bc558198964cb3e4783ee330ecde22f8b93fef"
+    },
     "RK-6.4-459": {
       "steering/another-person-s-message-is-served-under-its-own-role-s-tools": "089cfe8325e58a6f4456731cb36eff47f1654cc058f2b46e89883f8fd8a75400",
       "steering/another-person-s-message-waits-a-turn-of-its-own": "089cfe8325e58a6f4456731cb36eff47f1654cc058f2b46e89883f8fd8a75400"
@@ -18410,6 +18455,9 @@
     "RK-6.4-460": {
       "steering/another-person-s-message-is-served-under-its-own-role-s-tools": "83c9f65803b9bc043cf097c9bb84453f8fec0001e93687b81268e510c3caf7d7",
       "steering/another-person-s-message-waits-a-turn-of-its-own": "83c9f65803b9bc043cf097c9bb84453f8fec0001e93687b81268e510c3caf7d7"
+    },
+    "RK-6.4-461": {
+      "steering/a-message-in-a-room-the-agent-runs-no-turn-in-gets-a-turn-of-its-own": "0d9e5720ba44ce20f637792c157d1c16e1f56a90378ff315a6ca598925ac3c31"
     },
     "RK-6.4-462": {
       "steering/a-message-handed-to-a-turn-then-cut-waits-for-the-next-turn": "3664dc80ceb61692507484db072d627a5c434ce01d15b3dd67c8edc3a4d8237c"
@@ -18700,6 +18748,12 @@
       "acp/mcp-per-room-sync": "7ec4f6c32b5d0c10ecc47ffaa70417b764cc2cee69a63b93a82f145b6fb1bc2b",
       "acp/mcp-reuse": "7ec4f6c32b5d0c10ecc47ffaa70417b764cc2cee69a63b93a82f145b6fb1bc2b"
     },
+    "RK-6.4-485": {
+      "acp/an-agent-that-selects-another-protocol-version-fails-the-turn": "30c14fc748589536e594d721dba68f9bf4db9dda1bf7f63a30624aa7827196d2"
+    },
+    "RK-6.4-488": {
+      "executors/an-acp-session-is-the-executor-s-that-opened-it-and-the-room-s-turns-follow-it": "70245ab3b4fb7ac9f84bf50ff765066b2d3fc040d92c2391cdd3e4e01377a1c3"
+    },
     "RK-6.4-490": {
       "acp/mcp-after-rebuild": "0f9625c0c7bb6d57a3473b1cbf9955e7df5fc13d5ae87b663757935040a6c9e9",
       "acp/mcp-after-reconnect": "0f9625c0c7bb6d57a3473b1cbf9955e7df5fc13d5ae87b663757935040a6c9e9",
@@ -18734,6 +18788,9 @@
     },
     "RK-6.4-494": {
       "acp/config-stored-host-values-override-defaults": "e6ff045e6d341d177bb49c6e419829d08a3ad761929c940d353aa3fb11445391"
+    },
+    "RK-6.4-495": {
+      "acp/a-mode-the-agent-switches-to-itself-is-not-set-on-the-room-s-next-session": "de3e5a51922d2fb9ee020557546b072161c1fdfcf763e122f190b91e580d40a0"
     },
     "RK-6.4-496": {
       "acp/session-reconnect-refusal-never-prompts-and-can-be-replaced": "664e17d758c1c84c60148e81a2575b8f487a7423999ea89252cc48ae7141f0f7"
@@ -18931,14 +18988,23 @@
       "discussion/acp-trusted-notes": "85b922005b5354de72bbf51914a704eb698cd7a08f295a6592109f3ffed12f59",
       "discussion/acp-trusted-notes-with-empty-request": "85b922005b5354de72bbf51914a704eb698cd7a08f295a6592109f3ffed12f59"
     },
+    "RK-6.4-513": {
+      "discussion/acp-turn-sends-what-the-agent-has-not-read-and-its-request": "6456615cf348c49bfa88962956a85aa0fac058510300a3f6da51673527e37b97"
+    },
     "RK-6.4-514": {
       "discussion/acp-hold-cancels-prompt": "ec834069993e10e97f55b0ba2c826614f06c87e990eceb964677c9c99e81235b"
+    },
+    "RK-6.4-515": {
+      "discussion/acp-silent-answer-is-held-back-and-blocked": "93bda09484c3a6091f91e6a1651280c056e7f1d029c46ee3958c2d2fc6ae73a4"
     },
     "RK-6.4-517": {
       "ai-router/the-router-picks-each-turn-s-model-and-its-rounds-stay-on-it": "1e95b0c17ebff3b39afa2eea4fe77e65516ad8838ea10ed00a05deba3c9a121c",
       "ai-router/the-turn-s-context-is-built-for-the-model-the-router-picks": "1e95b0c17ebff3b39afa2eea4fe77e65516ad8838ea10ed00a05deba3c9a121c",
       "turn-tool-timeouts/route-before-bound-stream": "1e95b0c17ebff3b39afa2eea4fe77e65516ad8838ea10ed00a05deba3c9a121c",
       "turn-tool-timeouts/route-before-bound-whole": "1e95b0c17ebff3b39afa2eea4fe77e65516ad8838ea10ed00a05deba3c9a121c"
+    },
+    "RK-6.4-518": {
+      "ai-router/a-thought-asks-the-router-as-a-turn-s-start-does": "1720a8188ab4e185956d65772771cc5e5770c89a1825d83bcb1b700b5cba2b88"
     },
     "RK-6.4-520": {
       "ai-router/a-generation-that-spoke-is-not-handed-over": "a74da47b4ebf60eca3412b59f5d2170736caed65d3174f906d21644b5e79db1b",
@@ -18955,6 +19021,9 @@
       "ai-router/before-ai-generation-names-the-model-the-router-picks": "156464f48f6294dbea6906adc085007e65f207f887efc488751a4384ac600785",
       "turn-record/a-generation-back-on-its-provider-names-it-on-the-record": "156464f48f6294dbea6906adc085007e65f207f887efc488751a4384ac600785",
       "turn-record/a-generation-the-fallback-served-names-it-on-the-record": "156464f48f6294dbea6906adc085007e65f207f887efc488751a4384ac600785"
+    },
+    "RK-6.4-523": {
+      "ai-router/a-worker-s-turn-inside-a-supervisor-s-asks-its-own-router": "c52003b8d772085986d9d07d9cb5c500dbbe17d8be93f4206fc4224914308a3a"
     },
     "RK-6.4-524": {
       "resilience/a-generation-that-only-reasoned-on-every-try-asks-the-fallback": "6a7e3126c3d39c146df8a8af27724c3ac21be1e014d0c82fac1113856cd6b2f0",
@@ -19060,6 +19129,12 @@
       "transcoding/a-template-reaches-a-text-channel-as-its-body": "cc8097d852b621c93252ac57876376a15f9719258e41bae857a3561b5fcd6c9e",
       "transcoding/rich-text-reaches-a-text-channel-as-its-plain-text": "cc8097d852b621c93252ac57876376a15f9719258e41bae857a3561b5fcd6c9e"
     },
+    "RK-6.6-006": {
+      "transcoding/a-text-reaches-every-channel-unchanged-whatever-it-declares": "2e92b166469d5fa04ffcf01a943a7dba17835c989d301e0fa174e768175f5a84"
+    },
+    "RK-6.6-007": {
+      "transcoding/a-text-reaches-every-channel-unchanged-whatever-it-declares": "8ee0f9d2e8b31dd07d4035bdf28ba04615500a0e348ebea6734efd66ee3396e4"
+    },
     "RK-6.6-008": {
       "transcoding/rich-text-reaches-a-text-channel-as-its-plain-text": "f7f0d40f37b6ae52ba75c5aa5baffc0eef889630ea511c92c4b4af060d89d680"
     },
@@ -19097,6 +19172,9 @@
     "RK-6.6-017": {
       "injection/a-system-content-is-stored-and-delivered-as-given": "109a8facd3fd4ac8a2d146fcc9870acb366972f218c5bc96d1654d9ea0c18bee"
     },
+    "RK-6.6-018": {
+      "transcoding/a-tool-call-content-reaches-a-text-only-channel-unchanged": "afb154ef0fd09f29a634fd126271d35bae853e8a2b1c44bf7f876e153949ea91"
+    },
     "RK-6.6-019": {
       "transcoding/a-composite-flattens-to-one-text": "ea740c5c78e87e96d078984656c8afcaba3fbfd08c57022f7b831428424e4446",
       "transcoding/a-file-a-media-channel-does-not-take-reaches-it-as-its-text": "ea740c5c78e87e96d078984656c8afcaba3fbfd08c57022f7b831428424e4446"
@@ -19105,11 +19183,17 @@
       "transcoding/a-composite-flattens-to-one-text": "181260137b06bb5cfeeba71c4a513c34fe8d0cc56144fe8ac8ca3cb256b94035",
       "transcoding/a-file-a-media-channel-does-not-take-reaches-it-as-its-text": "181260137b06bb5cfeeba71c4a513c34fe8d0cc56144fe8ac8ca3cb256b94035"
     },
+    "RK-6.6-021": {
+      "transcoding/a-composite-a-channel-takes-in-part-keeps-its-parts-in-order": "08fba0bd50cbf1f427ee041bc08569e79f3d02b3bd24ee4fbb977560193a83c5"
+    },
     "RK-6.6-022": {
       "ai-context/a-content-without-text-reads-in-later-history-as-its-turn-read-it": "fae6894fe9f4d2809e63a80c17bcc92529e449ac0764a8b55e397310be597f81"
     },
     "RK-6.6-023": {
       "ai-context/a-content-without-text-reads-in-later-history-as-its-turn-read-it": "858b0596a49624902b0154b51b25995e7fd128288fd2f19469a4adfbbe9f7c5b"
+    },
+    "RK-6.6-024": {
+      "transcoding/an-edit-and-a-delete-read-as-their-text-form-whatever-the-channel-takes": "f4f96dbbb69f7674dadadab349a99e1277a11ba59f7170466e83c32826cd5005"
     },
     "RK-6.6-025": {
       "ai-context/a-content-without-text-reads-in-later-history-as-its-turn-read-it": "3da7ef5267a370d2338ef7bb57ce7ccb8baed07273978a7cf07b7354274fff7d",
@@ -19129,8 +19213,17 @@
       "appendix-b/b6-edit-with-fallback": "e0338748b3dfb764d0021e84c9d1a25c9031061f66c0e298042e3afbad0ea310",
       "appendix-b/b7-delete-with-fallback": "e0338748b3dfb764d0021e84c9d1a25c9031061f66c0e298042e3afbad0ea310"
     },
+    "RK-6.6-029": {
+      "acp/a-catch-up-reads-each-message-by-its-text-form": "90b4a4cc73799830500df36cbf0a44349a6118d9f8afeaba384be06935754292"
+    },
+    "RK-6.6-030": {
+      "discussion/an-agent-named-in-a-file-name-is-not-addressed": "805faa8845f9a075581c675c4687bbd8056f03c34daef58c1732ac01ac69b130"
+    },
     "RK-6.6-031": {
       "transcoding/a-long-text-is-cut-with-a-marker": "96db2ad88a7bd3d7fffff714524eb69d1bd19436b06dd75f75286c8454213d02"
+    },
+    "RK-6.6-032": {
+      "transcoding/a-limit-counts-code-points-and-a-cut-splits-none": "462bf8c55db9b280b76b6fe4a8a7236060bb6f87a9244fbf57d8ecb3e5e14fe3"
     },
     "RK-6.6-033": {
       "transcoding/a-long-text-is-cut-with-a-marker": "5df55f18fc66efeed07b12ceb0d52acab7e95cb384543fe0969c0432c2673d19"
