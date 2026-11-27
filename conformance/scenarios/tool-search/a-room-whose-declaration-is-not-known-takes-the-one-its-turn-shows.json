@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
-  "id": "tool-search/a-tool-the-turn-no-longer-shows-leaves-the-declaration-and-a-new-room-takes-its-own",
-  "title": "A tool the turn no longer shows leaves the room's declaration, and a room whose declaration is not known takes the one its turn shows",
+  "id": "tool-search/a-room-whose-declaration-is-not-known-takes-the-one-its-turn-shows",
+  "title": "A room whose declaration is not known takes the one its first turn shows, not another room's",
   "rules": [
     "§6.4",
     "§21.1"
@@ -9,7 +9,7 @@
   "requirements": [
     "RK-6.4-396"
   ],
-  "notes": "Room 1's first turn, by a member, reveals track_shipment. Its second turn is an observer's, whose role the policy denies track_shipment: the tool leaves the declaration, neither held, reopened nor declared. Room 2's first turn comes after room 1 revealed track_shipment: its declaration is not known, and it takes the one its own turn shows (track_shipment and refund held, nothing reopened), which it keeps on its second turn. Not observed: a skill that closes, a restarted process. Python: channels/_tool_reopen.py.",
+  "notes": "The observer's role denies the pinned tool lookup. Room 1's first turn is the observer's: its declaration holds no lookup. Room 2, a new room whose declaration is not known, then takes the one its own first turn, the member's, shows: lookup shown, the rest held, nothing reopened. Not observed: a restarted process. Python: channels/_tool_reopen.py room_declaration.",
   "setup": {
     "channels": [
       {
@@ -42,36 +42,10 @@
           "deferred_tools": true,
           "rounds": [
             {
-              "calls": [
-                {
-                  "id": "c0",
-                  "name": "find_tools",
-                  "arguments": {
-                    "query": "track shipment",
-                    "max_results": 1
-                  }
-                }
-              ]
+              "text": "Seen 0."
             },
             {
-              "calls": [
-                {
-                  "id": "c1",
-                  "name": "track_shipment"
-                }
-              ]
-            },
-            {
-              "text": "Done."
-            },
-            {
-              "text": "Hello."
-            },
-            {
-              "text": "Seen."
-            },
-            {
-              "text": "Hello again."
+              "text": "Seen 1."
             }
           ]
         },
@@ -83,7 +57,7 @@
           "role_overrides": {
             "observer": {
               "deny": [
-                "track_shipment"
+                "lookup"
               ]
             }
           }
@@ -125,6 +99,18 @@
             "channel_id": "agent",
             "category": "intelligence"
           }
+        ],
+        "participants": [
+          {
+            "id": "dev",
+            "channel_id": "ws",
+            "role": "member"
+          },
+          {
+            "id": "obs",
+            "channel_id": "ws",
+            "role": "observer"
+          }
         ]
       }
     ]
@@ -135,10 +121,10 @@
       "room_id": "room-1",
       "message": {
         "channel_id": "ws",
-        "sender_id": "dev",
+        "sender_id": "obs",
         "content": {
           "type": "text",
-          "body": "go"
+          "body": "status?"
         }
       },
       "expect": {
@@ -171,75 +157,24 @@
     },
     {
       "idle": true
-    },
-    {
-      "call": "process_inbound",
-      "room_id": "room-1",
-      "message": {
-        "channel_id": "ws",
-        "sender_id": "obs",
-        "content": {
-          "type": "text",
-          "body": "status?"
-        }
-      },
-      "expect": {
-        "result": {
-          "blocked": false,
-          "error": null
-        }
-      }
-    },
-    {
-      "idle": true
-    },
-    {
-      "call": "process_inbound",
-      "room_id": "room-2",
-      "message": {
-        "channel_id": "ws",
-        "sender_id": "dev",
-        "content": {
-          "type": "text",
-          "body": "hello again"
-        }
-      },
-      "expect": {
-        "result": {
-          "blocked": false,
-          "error": null
-        }
-      }
-    },
-    {
-      "idle": true
     }
   ],
   "expect": {
     "models": {
       "agent": [
-        {},
-        {},
-        {},
         {
-          "deferred_tools": [
-            "track_shipment",
-            "refund"
-          ],
-          "reopened_tools": []
-        },
-        {
-          "deferred_tools": [
-            "refund"
-          ],
-          "reopened_tools": [],
           "tools": {
-            "track_shipment": {
+            "lookup": {
               "$absent": true
             }
           }
         },
         {
+          "tools": {
+            "lookup": {
+              "$present": true
+            }
+          },
           "deferred_tools": [
             "track_shipment",
             "refund"

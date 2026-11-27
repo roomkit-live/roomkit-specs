@@ -232,9 +232,7 @@
                 "round": [
                   {
                     "call": "$any",
-                    "arguments": {
-                      "query": "tools this conversation can call"
-                    },
+                    "arguments": "$any",
                     "metadata": {}
                   }
                 ]

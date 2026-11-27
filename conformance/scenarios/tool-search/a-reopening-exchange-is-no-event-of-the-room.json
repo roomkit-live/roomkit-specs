@@ -9,7 +9,7 @@
   "requirements": [
     "RK-6.4-394"
   ],
-  "notes": "The room's first turn reveals track_shipment; the second turn reopens it with an exchange placed before its input. That exchange is no event of the room: the timeline holds no row of it, the streaming channel is delivered none, and the turn's response counts no tool call. Python: channels/_tool_reopen.py.",
+  "notes": "The room's first turn reveals track_shipment; the second turn reopens it with an exchange placed before its input. That exchange is no event of the room: the timeline holds no row of it, the streaming channel is delivered none, the room's subscribers read no tool event of it, and the turn's response counts no tool call. Python: channels/_tool_reopen.py.",
   "setup": {
     "channels": [
       {
@@ -167,6 +167,96 @@
           }
         }
       ]
+    },
+    "tool_events": {
+      "room-1": [
+        {
+          "type": "tool_call_start",
+          "tool_calls": [
+            {
+              "name": "find_tools"
+            }
+          ],
+          "round": 0
+        },
+        {
+          "type": "tool_call_end",
+          "tool_calls": [
+            {
+              "name": "find_tools",
+              "status": "completed"
+            }
+          ],
+          "round": 0
+        },
+        {
+          "type": "tool_call_start",
+          "tool_calls": [
+            {
+              "name": "track_shipment"
+            }
+          ],
+          "round": 1
+        },
+        {
+          "type": "tool_call_end",
+          "tool_calls": [
+            {
+              "name": "track_shipment",
+              "status": "completed"
+            }
+          ],
+          "round": 1
+        }
+      ]
+    },
+    "streamed": {
+      "room-1": {
+        "ws": [
+          {
+            "row": {
+              "type": "tool_call_start"
+            }
+          },
+          {
+            "row": {
+              "type": "tool_call_end"
+            }
+          },
+          {
+            "row": {
+              "type": "tool_call_start"
+            }
+          },
+          {
+            "row": {
+              "type": "tool_call_end"
+            }
+          },
+          {
+            "text": "Done."
+          },
+          {
+            "row": {
+              "type": "message",
+              "content": {
+                "body": "Done."
+              }
+            }
+          },
+          {
+            "text": "Again."
+          },
+          {
+            "row": {
+              "type": "message",
+              "content": {
+                "body": "Again."
+              }
+            }
+          }
+        ]
+      }
     },
     "timeline": {
       "room-1": [

@@ -17679,7 +17679,8 @@
       "tool-search/a-standalone-turn-neither-reads-nor-keeps-the-room-s-declaration": "1a216ff86780f327003e34a021a668cee021fd074b49d88edd29a17f9a0c84ea"
     },
     "RK-6.4-396": {
-      "tool-search/a-tool-the-turn-no-longer-shows-leaves-the-declaration-and-a-new-room-takes-its-own": "5d56ade22e74bf8145e5f4e9725be849367f42b10725a88b735f5be9b31a805b"
+      "tool-search/a-room-whose-declaration-is-not-known-takes-the-one-its-turn-shows": "5d56ade22e74bf8145e5f4e9725be849367f42b10725a88b735f5be9b31a805b",
+      "tool-search/a-tool-the-turn-no-longer-shows-leaves-the-room-s-declaration": "5d56ade22e74bf8145e5f4e9725be849367f42b10725a88b735f5be9b31a805b"
     },
     "RK-6.4-397": {
       "ai-context/a-disabled-target-still-supplies-capabilities-non-streaming": "e6a1c9d3f49334282f61ee0ed137e3e5e974278f56a23a825323eb6ac3145842",

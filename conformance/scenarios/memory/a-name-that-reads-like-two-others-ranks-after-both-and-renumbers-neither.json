@@ -9,7 +9,7 @@
   "requirements": [
     "RK-6.4-380"
   ],
-  "notes": "Three senders, each named by the name its transport stamps: Lan, then ian, then Ian, which reads like Lan (I and l are confusable) and like ian (in case), while Lan and ian read like neither. Ian ranks after both, 2, and the two earlier senders keep their rank, 1, on their later turns too. Python: core/_authors.py AuthorRegister.rank; tests/test_author_register.py::TestAuthorRegister::test_a_name_alike_two_others_ranks_after_both_and_renumbers_neither.",
+  "notes": "Three senders, each named by the name its transport stamps: Lan, then ian, then Ian, which reads like Lan (I and l are confusable) and like ian (in case), while Lan and ian read like neither. Ian ranks after both, 2, and the two earlier senders keep their rank, 1, on their later turns too. Room 2 tells \"after both\" from \"after one\": ian, then iAN, which reads like it (2), then Lan (1), then Ian, which reads like the ian group, whose ranks are 1 and 2, and like Lan: it ranks 3, after both groups. Python: core/_authors.py AuthorRegister.rank; tests/test_author_register.py::TestAuthorRegister::test_a_name_alike_two_others_ranks_after_both_and_renumbers_neither.",
   "setup": {
     "channels": [
       {
@@ -36,6 +36,18 @@
             },
             {
               "text": "Seen 4."
+            },
+            {
+              "text": "Seen 5."
+            },
+            {
+              "text": "Seen 6."
+            },
+            {
+              "text": "Seen 7."
+            },
+            {
+              "text": "Seen 8."
             }
           ]
         }
@@ -44,6 +56,18 @@
     "rooms": [
       {
         "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          },
+          {
+            "channel_id": "agent",
+            "category": "intelligence"
+          }
+        ]
+      },
+      {
+        "id": "room-2",
         "bindings": [
           {
             "channel_id": "sms"
@@ -176,6 +200,102 @@
     },
     {
       "idle": true
+    },
+    {
+      "call": "process_inbound",
+      "room_id": "room-2",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15550000011",
+        "content": {
+          "type": "text",
+          "body": "One."
+        },
+        "metadata": {
+          "sender_name": "ian"
+        }
+      },
+      "expect": {
+        "result": {
+          "blocked": false,
+          "error": null
+        }
+      }
+    },
+    {
+      "idle": true
+    },
+    {
+      "call": "process_inbound",
+      "room_id": "room-2",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15550000012",
+        "content": {
+          "type": "text",
+          "body": "Two."
+        },
+        "metadata": {
+          "sender_name": "iAN"
+        }
+      },
+      "expect": {
+        "result": {
+          "blocked": false,
+          "error": null
+        }
+      }
+    },
+    {
+      "idle": true
+    },
+    {
+      "call": "process_inbound",
+      "room_id": "room-2",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15550000013",
+        "content": {
+          "type": "text",
+          "body": "Three."
+        },
+        "metadata": {
+          "sender_name": "Lan"
+        }
+      },
+      "expect": {
+        "result": {
+          "blocked": false,
+          "error": null
+        }
+      }
+    },
+    {
+      "idle": true
+    },
+    {
+      "call": "process_inbound",
+      "room_id": "room-2",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15550000014",
+        "content": {
+          "type": "text",
+          "body": "Four."
+        },
+        "metadata": {
+          "sender_name": "Ian"
+        }
+      },
+      "expect": {
+        "result": {
+          "blocked": false,
+          "error": null
+        }
+      }
+    },
+    {
+      "idle": true
     }
   ],
   "expect": {
@@ -222,6 +342,44 @@
             "author": {
               "name": "ian",
               "rank": 1
+            }
+          }
+        },
+        {}
+      ],
+      "room-2": [
+        {
+          "metadata": {
+            "author": {
+              "name": "ian",
+              "rank": 1
+            }
+          }
+        },
+        {},
+        {
+          "metadata": {
+            "author": {
+              "name": "iAN",
+              "rank": 2
+            }
+          }
+        },
+        {},
+        {
+          "metadata": {
+            "author": {
+              "name": "Lan",
+              "rank": 1
+            }
+          }
+        },
+        {},
+        {
+          "metadata": {
+            "author": {
+              "name": "Ian",
+              "rank": 3
             }
           }
         },
@@ -275,7 +433,11 @@
               }
             }
           ]
-        }
+        },
+        {},
+        {},
+        {},
+        {}
       ]
     }
   }
