@@ -34,10 +34,10 @@ proof: a scenario can cite a unit without covering all of it.
 | [§7 Permission Model](section-7.md) | 85 | 84 | 0 | 1 | 0 | 83 | 339 | 0 | 0 | 0 | 0 | 0 |
 | [§8 Event System](section-8.md) | 177 | 176 | 1 | 0 | 0 | 141 | 1235 | 0 | 32 | 4 | 15 | 13 |
 | [§9 Hook System](section-9.md) | 350 | 343 | 3 | 4 | 0 | 333 | 1342 | 0 | 0 | 0 | 0 | 0 |
-| [§10 Processing Pipelines](section-10.md) | 652 | 631 | 7 | 14 | 0 | 592 | 2275 | 0 | 0 | 0 | 0 | 0 |
+| [§10 Processing Pipelines](section-10.md) | 652 | 631 | 7 | 14 | 0 | 592 | 2278 | 0 | 0 | 0 | 0 | 0 |
 | [§11 Identity Resolution](section-11.md) | 110 | 108 | 2 | 0 | 0 | 97 | 387 | 0 | 5 | 0 | 3 | 2 |
 | [§12 Voice and Realtime Media](section-12.md) | 1299 | 1185 | 73 | 38 | 3 | 855 | 1144 | 0 | 1 | 2 | 0 | 0 |
-| [§13 Resilience and Error Handling](section-13.md) | 97 | 88 | 7 | 2 | 0 | 74 | 274 | 0 | 13 | 0 | 15 | 0 |
+| [§13 Resilience and Error Handling](section-13.md) | 97 | 88 | 7 | 2 | 0 | 74 | 276 | 0 | 13 | 0 | 15 | 0 |
 | [§14 Storage Interface](section-14.md) | 110 | 107 | 1 | 2 | 0 | 76 | 153 | 0 | 24 | 1 | 23 | 0 |
 | [§15 Observability](section-15.md) | 71 | 58 | 11 | 1 | 1 | 36 | 60 | 0 | 18 | 5 | 11 | 5 |
 | [§16 Integration Surfaces](section-16.md) | 12 | 4 | 8 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
@@ -45,7 +45,7 @@ proof: a scenario can cite a unit without covering all of it.
 | [§18 Design Principles](section-18.md) | 1 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | [§19 Multi-Agent Orchestration](section-19.md) | 569 | 562 | 3 | 3 | 1 | 486 | 1921 | 0 | 66 | 3 | 17 | 46 |
 | [§20 Memory System](section-20.md) | 63 | 62 | 0 | 1 | 0 | 58 | 244 | 0 | 2 | 0 | 2 | 0 |
-| [§21 Tool Access Control](section-21.md) | 214 | 199 | 13 | 2 | 0 | 142 | 898 | 0 | 55 | 1 | 31 | 28 |
+| [§21 Tool Access Control](section-21.md) | 214 | 199 | 13 | 2 | 0 | 144 | 901 | 0 | 53 | 0 | 30 | 28 |
 | [§22 Delivery Strategies](section-22.md) | 144 | 130 | 5 | 8 | 1 | 72 | 268 | 0 | 50 | 21 | 3 | 27 |
 | [§23 Task Delegation](section-23.md) | 207 | 205 | 1 | 0 | 1 | 170 | 592 | 0 | 31 | 8 | 16 | 7 |
 | [§24 Skills Framework](section-24.md) | 184 | 174 | 3 | 6 | 1 | 146 | 776 | 0 | 24 | 2 | 17 | 5 |

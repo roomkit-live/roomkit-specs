@@ -1026,11 +1026,6 @@
       "card": "RMK-1918",
       "note": "step: a read of a realtime or conference tool handler's context: inspect tool-handler policy on a conference call using a labelled provider."
     },
-    "RK-21.3-004": {
-      "class": "writable",
-      "card": "RMK-1918",
-      "note": "Hold the provider's generation at a gate, send Cancel, and observe completion while the gate remains closed. The announcement, tool-loop and ACP cancellation cases release the pending work before observing the outcome. See RMK-1764."
-    },
     "RK-21.3-012": {
       "class": "step",
       "card": "RMK-1918",
@@ -1100,11 +1095,6 @@
       "class": "step",
       "card": "RMK-1918",
       "note": "Make capacity small enough to force competing evictions, read an older stored value, and verify it survives according to its updated use."
-    },
-    "RK-21.5-017": {
-      "class": "step",
-      "card": "RMK-1918",
-      "note": "Resume a persisted history with an empty result store and inspect rebuilt summaries for invalid read-back references."
     },
     "RK-21.6-003": {
       "class": "phase6",

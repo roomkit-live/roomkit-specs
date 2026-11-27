@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "33537d69e3a9184b9823e418ee3590c952b76c8289b7720b141fbbe13dd1fbf0",
-  "corpus_sha256": "47d5cc5427f7fc0af38e2a09a18d41583d08c161e63932434e467bcbb2dccedb",
+  "corpus_sha256": "2675d546cb168655201460fb8a99a8d73ed2be6200aef6aa48c5590d5d033a71",
   "python_commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
-  "scenario_count": 4234,
+  "scenario_count": 4238,
   "sections": [
     {
       "section": "0",
@@ -459,6 +459,7 @@
         "inbound/a-parse-writing-responds-to-answers-nothing",
         "inbound/a-response-keeps-what-its-channel-wrote-of-its-own-source-and-nothing-of-another-s",
         "inbound/a-thread-parent-is-rooted",
+        "injection/a-direct-event-names-no-provider-its-call-does-not-name",
         "store/a-read-leaves-the-message-delivered",
         "store/every-stored-event-type-is-read-back-by-its-value",
         "streaming/a-text-follows-the-row-the-room-held-when-its-writing-began"
@@ -933,6 +934,7 @@
         "broadcast/a-delivery-s-context-holds-its-event",
         "inbound/a-failed-turn-fires-on-error",
         "inbound/an-agent-s-task-is-created",
+        "injection/a-direct-event-names-no-provider-its-call-does-not-name",
         "kit-close/a-channel-whose-close-fails-holds-no-other-back-and-fails-the-close-last",
         "kit-close/a-close-from-a-channel-s-close-returns-at-once",
         "rooms/a-channel-attached-once-its-refusal-is-over-is-bound",
@@ -1490,6 +1492,7 @@
         "discussion/acp-turn-sends-what-the-agent-has-not-read-and-its-request",
         "discussion/an-external-agent-in-a-discussion-is-wired-none-of-the-room-s-tools",
         "eviction/a-generation-hook-sees-the-re-read-once-its-room-stores-a-result",
+        "eviction/a-kit-started-again-offers-no-id-its-store-no-longer-holds",
         "eviction/a-result-of-parts-keeps-its-images",
         "eviction/a-room-the-agent-joins-again-keeps-no-stored-result",
         "eviction/a-stored-result-of-parts-read-as-text-is-never-noted-as-a-repeat",
@@ -4789,6 +4792,7 @@
         "rooms/a-due-close-refuses-the-next-message",
         "rooms/a-hook-that-closes-the-room-refuses-its-event",
         "rooms/a-injected-closed-by-its-own-hook-is-refused",
+        "rooms/a-message-whose-deadline-passes-while-its-room-is-created-starts-no-session",
         "rooms/a-refused-automatic-attach-fails-the-message",
         "rooms/a-response-after-room-deletion-reports-a-null-status",
         "rooms/a-response-closed-by-its-own-hook-is-refused",
@@ -5478,6 +5482,7 @@
         "inbound/a-sent-event-s-failed-set-is-recorded",
         "inbound/every-path-that-commits-an-event-roots-its-parent",
         "injection/a-direct-call-holding-six-composite-levels-raises-before-any-read",
+        "injection/a-direct-event-names-no-provider-its-call-does-not-name",
         "injection/a-first-post-waits-for-the-room-lock-within-process-timeout",
         "injection/a-host-binding-made-by-the-first-post-s-section-is-kept",
         "injection/a-message-on-the-host-channel-is-refused-before-anything-is-read",
@@ -6110,6 +6115,7 @@
         "host/a-task-cut-short-hands-its-failure-to-wait-task",
         "inbound/a-failed-turn-fires-on-error",
         "inbound/an-agent-s-provider-refusal-keeps-its-retryability",
+        "steering/a-cancel-aborts-a-generation-its-provider-holds",
         "steering/a-cancel-for-a-channel-without-steering-cuts-its-turn",
         "steering/a-steer-reaches-the-room-it-names-alone",
         "streaming/a-gated-reader-leaves-while-its-pulled-call-runs",
@@ -8543,6 +8549,7 @@
         "resilience/a-committed-event-stays-delivered-past-process-timeout",
         "resilience/process-timeout-covers-the-inbound-parser",
         "resilience/process-timeout-stores-nothing",
+        "rooms/a-message-whose-deadline-passes-while-its-room-is-created-starts-no-session",
         "rooms/a-room-step-2-creates-is-completed-when-its-caller-leaves",
         "verification/a-code-reply-s-release-is-answered-past-its-budget",
         "verification/a-link-s-release-is-answered-past-the-budget",
@@ -10592,8 +10599,7 @@
         "unmapped": 15
       },
       "decided_gaps": {
-        "step": 1,
-        "writable": 1
+        "step": 1
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -10607,6 +10613,7 @@
         "reasoning/a-steered-answer-keeps-its-reasoning",
         "reasoning/a-steered-answer-s-reasoning-reaches-no-chat-request",
         "reasoning/an-answer-of-reasoning-alone-goes-back-empty-on-chat",
+        "steering/a-cancel-aborts-a-generation-its-provider-holds",
         "steering/a-cancel-for-a-channel-without-steering-cuts-its-turn",
         "steering/a-message-delivered-after-a-cut-gets-a-turn-of-its-own",
         "steering/a-message-during-a-tool-round-is-read-by-the-running-turn",
@@ -10779,7 +10786,7 @@
         "unmapped": 19
       },
       "decided_gaps": {
-        "step": 3
+        "step": 2
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -10790,6 +10797,7 @@
         "eviction/a-call-under-an-id-its-round-holds-is-refused-unstored",
         "eviction/a-generation-hook-sees-the-re-read-once-its-room-stores-a-result",
         "eviction/a-hook-s-refusal-and-its-override-past-the-threshold-are-stored",
+        "eviction/a-kit-started-again-offers-no-id-its-store-no-longer-holds",
         "eviction/a-refusal-and-a-failure-past-the-threshold-are-stored-too",
         "eviction/a-refusal-past-the-threshold-reaches-its-observer-whole",
         "eviction/a-result-of-parts-keeps-its-images",
@@ -43831,12 +43839,7 @@
       "id": "RK-21.3-004",
       "section": "21.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1918",
-        "note": "Hold the provider's generation at a gate, send Cancel, and observe completion while the gate remains closed. The announcement, tool-loop and ACP cancellation cases release the pending work before observing the outcome. See RMK-1764."
-      }
+      "links": []
     },
     {
       "id": "RK-21.3-005",
@@ -44374,12 +44377,7 @@
       "id": "RK-21.5-017",
       "section": "21.5",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1918",
-        "note": "Resume a persisted history with an empty result store and inspect rebuilt summaries for invalid read-back references."
-      }
+      "links": []
     },
     {
       "id": "RK-21.5-018",

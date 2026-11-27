@@ -270,6 +270,8 @@
       "greeting/two-agents-greet-before-the-message": "6cb455dbbda09e1d2a139791aca7c98bd107f07c398014592023e09961c1f1a0",
       "locks/a-message-refused-room-taken-carries-its-claim-s-failed-release": "6cb455dbbda09e1d2a139791aca7c98bd107f07c398014592023e09961c1f1a0",
       "orchestration/a-session-auditor-records-the-sessions-and-the-tool-calls": "6cb455dbbda09e1d2a139791aca7c98bd107f07c398014592023e09961c1f1a0",
+      "rooms/a-message-whose-deadline-passes-while-its-room-is-created-starts-no-session": "6cb455dbbda09e1d2a139791aca7c98bd107f07c398014592023e09961c1f1a0",
+      "rooms/a-room-step-2-creates-is-completed-when-its-caller-leaves": "6cb455dbbda09e1d2a139791aca7c98bd107f07c398014592023e09961c1f1a0",
       "routing/a-hook-binding-every-new-room-to-another-refuses-the-message": "6cb455dbbda09e1d2a139791aca7c98bd107f07c398014592023e09961c1f1a0",
       "routing/a-hook-closing-a-room-another-was-routed-into-refuses-the-first-message": "6cb455dbbda09e1d2a139791aca7c98bd107f07c398014592023e09961c1f1a0",
       "routing/a-message-past-its-deadline-in-its-room-s-hooks-is-not-routed-again": "6cb455dbbda09e1d2a139791aca7c98bd107f07c398014592023e09961c1f1a0",
@@ -2239,6 +2241,7 @@
       "injection/a-sent-event-keeps-its-answer-scope": "55358a83a4d574f66d0afe2916e4a3bec3a0c1f0c880a553a796a10d0cbf371a"
     },
     "RK-10.5-015": {
+      "injection/a-direct-event-names-no-provider-its-call-does-not-name": "824631675b38362288965eb1162f6a484246939a5de80ab1c30b862c464e5327",
       "injection/an-agent-s-injection-goes-out": "824631675b38362288965eb1162f6a484246939a5de80ab1c30b862c464e5327"
     },
     "RK-10.5-016": {
@@ -7319,7 +7322,8 @@
     "RK-13.6-022": {
       "delivery/a-gated-caller-leaves-before-its-decision": "bb45e17a9e8d7c16b65a119ebe5f7accd0edb73282db600031d7f04c09ee1253",
       "reentrancy/a-gated-caller-leaves-its-nested-call-to-the-event-deadline": "bb45e17a9e8d7c16b65a119ebe5f7accd0edb73282db600031d7f04c09ee1253",
-      "reentrancy/a-gated-caller-leaves-while-a-nested-call-holds-the-lock": "bb45e17a9e8d7c16b65a119ebe5f7accd0edb73282db600031d7f04c09ee1253"
+      "reentrancy/a-gated-caller-leaves-while-a-nested-call-holds-the-lock": "bb45e17a9e8d7c16b65a119ebe5f7accd0edb73282db600031d7f04c09ee1253",
+      "rooms/a-room-step-2-creates-is-completed-when-its-caller-leaves": "bb45e17a9e8d7c16b65a119ebe5f7accd0edb73282db600031d7f04c09ee1253"
     },
     "RK-13.6-023": {
       "reentrancy/a-gated-caller-leaves-while-a-nested-call-holds-the-lock": "a463d6d7d50dd192a6f003de755d1d6010accd5d04be100ac5d3d589320b897c"
@@ -7328,6 +7332,7 @@
       "reentrancy/a-gated-caller-leaves-while-a-nested-call-holds-the-lock": "37d152f4eef24aa2e8dd7fbfa25360b8666008b98cae519a2a8316f1b13bf6e4"
     },
     "RK-13.6-025": {
+      "rooms/a-message-whose-deadline-passes-while-its-room-is-created-starts-no-session": "f4dca85687f07d9cc648a8e2d6adb30ca4c85f2835fce5ed004bf20a67f2d972",
       "rooms/a-room-step-2-creates-is-completed-when-its-caller-leaves": "f4dca85687f07d9cc648a8e2d6adb30ca4c85f2835fce5ed004bf20a67f2d972"
     },
     "RK-13.6-026": {
@@ -12009,6 +12014,9 @@
     "RK-21.2-051": {
       "mcp-host/a-content-the-model-is-not-shown-reads-as-a-note-of-its-kind-and-type": "dbdad2c21669687939588ac7b9034de58fb52a73ebf5c3f3fdcfea8465623e9c"
     },
+    "RK-21.3-004": {
+      "steering/a-cancel-aborts-a-generation-its-provider-holds": "d945d22457d5d6f02dfd0ec6ba46c83f2baa8f94e24f0400ed35c9ce5833b173"
+    },
     "RK-21.3-005": {
       "steering/an-update-of-the-system-prompt-reaches-the-turn-s-next-round": "3a2d00bab34f757dfe8f28e06219fab6ad7c03cbc81c497ddaa2fd95b1f20c79"
     },
@@ -12320,6 +12328,10 @@
     "RK-21.5-016": {
       "eviction/a-call-id-reused-in-a-later-turn-is-stored-under-a-new-id": "be07471d0b9c26347ba542734a6c3f2c7226263fcf5980063914a08bf77b2ea2",
       "eviction/a-call-under-an-id-its-round-holds-is-refused-unstored": "be07471d0b9c26347ba542734a6c3f2c7226263fcf5980063914a08bf77b2ea2"
+    },
+    "RK-21.5-017": {
+      "eviction/a-kit-started-again-offers-no-id-its-store-no-longer-holds": "5e44c129dcce9363c57acbd49f5424f1c0eab63c459ffade40f8b8fb2fa50cca",
+      "eviction/a-room-the-agent-joins-again-keeps-no-stored-result": "5e44c129dcce9363c57acbd49f5424f1c0eab63c459ffade40f8b8fb2fa50cca"
     },
     "RK-21.5-018": {
       "tools/a-tool-s-parts-reach-the-model-intact": "3e8bc6a74e9d020060ed8417ad951717ed4b51fa056b1ffd1109a02882a00ca1",
