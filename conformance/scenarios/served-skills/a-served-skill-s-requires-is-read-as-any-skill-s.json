@@ -214,20 +214,22 @@
             {
               "status": "ok",
               "result": {
-                "metadata": [
-                  {
-                    "name": "docs:calendar",
-                    "extra_metadata": {
-                      "requires": "calendar_read"
+                "metadata": {
+                  "$unordered": [
+                    {
+                      "name": "docs:calendar",
+                      "extra_metadata": {
+                        "requires": "calendar_read"
+                      }
+                    },
+                    {
+                      "name": "docs:planner",
+                      "extra_metadata": {
+                        "requires": "calendar_write"
+                      }
                     }
-                  },
-                  {
-                    "name": "docs:planner",
-                    "extra_metadata": {
-                      "requires": "calendar_write"
-                    }
-                  }
-                ]
+                  ]
+                }
               }
             },
             {
