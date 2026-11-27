@@ -10,7 +10,7 @@
   "requirements": [
     "RK-6.4-395"
   ],
-  "notes": "The observer's role denies the pinned tool lookup. The room's first turn is the observer's: the room's declaration, fixed then, holds no lookup. A standalone instruction's turn, whose sender's role admits lookup, takes its own declaration: lookup shown, the rest held, nothing reopened, as if the room had none. The member's next turn reads the room's declaration, which the standalone turn left as it was: lookup is beyond it, so the turn reopens it. Python: channels/_ai_policy.py _open_turn_declaration (standalone).",
+  "notes": "The observer's role denies the pinned tool lookup. The room's first turn is the observer's: the room's declaration, fixed then, holds no lookup. A standalone instruction's turn, whose sender's role admits lookup, takes its own declaration: lookup shown, the rest held, nothing reopened, as if the room had none. The member's next turn reads the room's declaration, which the standalone turn left as it was: lookup is beyond it, so the turn reopens it. The pinned tool is held like any other tool the room's declaration does not show (RK-6.4-392: every other tool the turn declares is held), as both implementations hold it. Python: channels/_ai_policy.py _open_turn_declaration (standalone).",
   "setup": {
     "channels": [
       {

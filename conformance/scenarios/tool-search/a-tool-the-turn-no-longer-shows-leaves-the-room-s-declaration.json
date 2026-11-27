@@ -9,7 +9,7 @@
   "requirements": [
     "RK-6.4-396"
   ],
-  "notes": "The observer's role denies the pinned tool lookup. The member's first turn fixes the room's declaration, lookup shown. The observer's turn no longer shows lookup: it leaves the declaration, neither shown, held nor reopened. The member's next turn shows it again, beyond the room's declaration now, and reopens it. Not observed: a skill that closes. Python: channels/_tool_reopen.py room_declaration.",
+  "notes": "The observer's role denies the pinned tool lookup. The member's first turn fixes the room's declaration, lookup shown. The observer's turn no longer shows lookup: it leaves the declaration, neither shown, held nor reopened. The member's next turn shows it again, beyond the room's declaration now, and reopens it. The pinned tool is held like any other tool the room's declaration does not show (RK-6.4-392: every other tool the turn declares is held), as both implementations hold it. Not observed: a skill that closes. Python: channels/_tool_reopen.py room_declaration.",
   "setup": {
     "channels": [
       {
