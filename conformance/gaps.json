@@ -121,110 +121,30 @@
       "card": "RMK-1965",
       "note": "Needs circuit_breaker_opened among the framework events the runners record."
     },
-    "RK-13.2-002": {
-      "class": "writable",
-      "card": "RMK-1965",
-      "note": "store.update_binding sets a binding's retry_policy, whose fields and exponential_base default the call's result or a bindings expectation reads."
-    },
     "RK-13.2-003": {
       "class": "step",
       "card": "RMK-1965",
       "note": "Needs a scripted clock to read the delay before each retry; the runners only see that a retry happened."
-    },
-    "RK-13.2-005": {
-      "class": "writable",
-      "card": "RMK-1965",
-      "note": "A binding with a retry_policy whose transport refuses with retryable false (a scripted refuse) is attempted once, whatever the policy names."
     },
     "RK-13.2-006": {
       "class": "step",
       "card": "RMK-1965",
       "note": "Needs delivery errors of named types and a subtype in the runners, which script a refusal or a failure message only."
     },
-    "RK-13.3-002": {
-      "class": "writable",
-      "card": "RMK-1965",
-      "note": "store.update_binding sets a binding's rate_limit with its three bounds."
-    },
-    "RK-13.3-003": {
-      "class": "writable",
-      "card": "RMK-1965",
-      "note": "store.update_binding sets a binding's rate_limit, whose first bound set gives the rate, none set no limit."
-    },
     "RK-13.3-004": {
       "class": "step",
       "card": "RMK-1965",
       "note": "Needs a scripted clock to count the deliveries a full bucket lets through at once and its refill."
-    },
-    "RK-13.3-005": {
-      "class": "writable",
-      "card": "RMK-1965",
-      "note": "Deliveries past a binding's rate_limit set by store.update_binding are queued and delivered, none dropped."
     },
     "RK-13.4-004": {
       "class": "step",
       "card": "RMK-1965",
       "note": "Needs a step that makes a task's posted result commit a second time, by another process or by its holder."
     },
-    "RK-13.4-010": {
-      "class": "writable",
-      "card": "RMK-1965",
-      "note": "A keyed message past the reentry budget, whose key the room holds, is refused with nothing stored, never answered as a replay."
-    },
-    "RK-13.5-007": {
-      "class": "writable",
-      "card": "RMK-1965",
-      "note": "While a streamed row's BEFORE_BROADCAST hook is held, another message takes the room lock and commits."
-    },
-    "RK-13.5-022": {
-      "class": "writable",
-      "card": "RMK-1965",
-      "note": "create_room with a room id holding a NUL character is refused invalid_argument, nothing written."
-    },
-    "RK-13.5-029": {
-      "class": "writable",
-      "card": "RMK-1965",
-      "note": "A store_fault on advance_delivered_index: the set's aftermath runs, its call is not cancelled, and the lane's next set runs at once."
-    },
-    "RK-13.5-030": {
-      "class": "writable",
-      "card": "RMK-1965",
-      "note": "With processes, another process's lane waits on an index whose cursor write failed and skips it past delivery_gap_timeout_ms."
-    },
     "RK-13.5-031": {
       "class": "step",
       "card": "RMK-1965",
       "note": "Needs the lock manager's holds observable, to show a lane never holds the delivery claim and the room lock together."
-    },
-    "RK-13.5-034": {
-      "class": "writable",
-      "card": "RMK-1965",
-      "note": "A store_fault on the latest-index read of an instruction's set: the set runs behind its own process's sets and its call carries the failure."
-    },
-    "RK-13.5-036": {
-      "class": "writable",
-      "card": "RMK-1965",
-      "note": "With processes and delivery_gap_timeout_ms, a lane whose held set another process skipped drops it."
-    },
-    "RK-13.6-004": {
-      "class": "writable",
-      "card": "RMK-1965",
-      "note": "A hook's BLOCK whose record commit a store_fault gate holds past process_timeout: the BLOCKED record is still committed."
-    },
-    "RK-13.6-017": {
-      "class": "writable",
-      "card": "RMK-1965",
-      "note": "A cascade stopped by a failed turn still delivers every event it committed, a nested one included."
-    },
-    "RK-13.6-025": {
-      "class": "writable",
-      "card": "RMK-1965",
-      "note": "A caller that leaves (the cancel step) while step 2 creates its room: the room, its hooks and its attach are completed."
-    },
-    "RK-13.6-027": {
-      "class": "writable",
-      "card": "RMK-1965",
-      "note": "A regeneration waiting for the room lock past process_timeout: blocked process_timeout and the process_timeout event with operation regenerate."
     },
     "RK-14.1-007": {
       "class": "step",
@@ -3341,11 +3261,6 @@
       "card": "RMK-1912",
       "note": "Needs an error name for a duplicate (room_id, index) in the runners' table."
     },
-    "RK-8.1-012": {
-      "class": "writable",
-      "card": "RMK-1912",
-      "note": "Hooks read the inbound id it is committed with, and a reused id gets a fresh one."
-    },
     "RK-8.1-013": {
       "class": "writable",
       "card": "RMK-1912",
@@ -3481,35 +3396,10 @@
       "card": "RMK-1912",
       "note": "step: a hook or handler body that sends or injects: the depth of a call made while a realtime or conference tool call runs outside a turn."
     },
-    "RK-8.3-015": {
-      "class": "writable",
-      "card": "RMK-1912",
-      "note": "An ASYNC body's direct change fires triggers whose hooks send under the same floor."
-    },
-    "RK-8.3-016": {
-      "class": "writable",
-      "card": "RMK-1912",
-      "note": "A task a post-delivery hook body spawns calls at its own depth once the body is over."
-    },
-    "RK-8.3-018": {
-      "class": "writable",
-      "card": "RMK-1912",
-      "note": "A task a hook body spawns has the floor while the body runs, its own depth after."
-    },
-    "RK-8.3-019": {
-      "class": "writable",
-      "card": "RMK-1912",
-      "note": "A hook a turn executor fires carries its floor with the host verb it makes."
-    },
     "RK-8.3-021": {
       "class": "step",
       "card": "RMK-1912",
       "note": "Needs a framework-event handler reaction that spawns a task."
-    },
-    "RK-8.3-030": {
-      "class": "writable",
-      "card": "RMK-1912",
-      "note": "A non-intelligence channel's responses at the limit are stored BLOCKED."
     },
     "RK-8.3-031": {
       "class": "writable",
@@ -3531,11 +3421,6 @@
       "card": "RMK-1912",
       "note": "step: a read of a realtime or conference tool handler's context: the depth a realtime or conference tool call carries at the limit."
     },
-    "RK-8.3-044": {
-      "class": "writable",
-      "card": "RMK-1912",
-      "note": "Work a hook body spawns has its own depth and, once the delivery is over, its own budget."
-    },
     "RK-8.3-046": {
       "class": "writable",
       "card": "RMK-1912",
@@ -3546,20 +3431,10 @@
       "card": "RMK-1912",
       "note": "A scripted agent answering into a voice channel and an after_tts hook whose do posts at each answer: the chain ends at the limit; voice.feed with a transcript while a playback_gate holds the reply: the user's message stored at depth 0, not at the reply's depth (requires voice)."
     },
-    "RK-8.3-051": {
-      "class": "writable",
-      "card": "RMK-1912",
-      "note": "A channel whose responses are blocked at the limit still has its side effects collected."
-    },
     "RK-8.4-010": {
       "class": "step",
       "card": "RMK-1912",
       "note": "Needs the in-memory realtime backend's options (its queue bound)."
-    },
-    "RK-8.4-014": {
-      "class": "writable",
-      "card": "RMK-1912",
-      "note": "A subscription made while no room held the id reads the room created under it."
     },
     "RK-8.4-015": {
       "class": "step",
@@ -3571,40 +3446,10 @@
       "card": "RMK-1912",
       "note": "Needs a slow or stuck realtime backend."
     },
-    "RK-8.4-036": {
-      "class": "writable",
-      "card": "RMK-1912",
-      "note": "A turn whose ephemerals are withheld still emits its framework events."
-    },
-    "RK-8.5-011": {
-      "class": "writable",
-      "card": "RMK-1912",
-      "note": "A buffered answer whose channel named responds_to keeps it."
-    },
     "RK-8.5-013": {
       "class": "phase6",
       "card": "RMK-1912",
       "note": "step: realtime transcripts: a speech-to-speech channel's answers, not bound by the rule yet (Planned)."
-    },
-    "RK-8.5-016": {
-      "class": "writable",
-      "card": "RMK-1912",
-      "note": "A response that claims another source gets the responder's."
-    },
-    "RK-8.5-017": {
-      "class": "writable",
-      "card": "RMK-1912",
-      "note": "A response under its own source keeps the fields its channel wrote."
-    },
-    "RK-8.5-018": {
-      "class": "writable",
-      "card": "RMK-1912",
-      "note": "A verified sender's message is answered with verification cleared."
-    },
-    "RK-8.5-021": {
-      "class": "writable",
-      "card": "RMK-1912",
-      "note": "Work that leaves a scoped cascade is not scoped."
     },
     "RK-A.1-002": {
       "class": "step",

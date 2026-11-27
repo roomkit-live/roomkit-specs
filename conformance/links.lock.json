@@ -6896,8 +6896,26 @@
       "video/by-default-a-source-s-delta-frames-wait-one-second-for-its-keyframe": "a27a854553d7994a26aefbce05b52933b9ee98b4530fd92bc31d2c62c20c9f38",
       "video/with-no-keyframe-wait-a-delta-frame-is-forwarded-at-once": "a27a854553d7994a26aefbce05b52933b9ee98b4530fd92bc31d2c62c20c9f38"
     },
+    "RK-13.2-002": {
+      "delivery/a-declared-retryable-error-is-believed-whatever-the-binding-s-retry-policy-names": "3867cca1470777e4521ac8cc7f504c624ff6996402c7cb533005c937cd7ed850"
+    },
     "RK-13.2-004": {
       "delivery/a-retried-delivery-keeps-its-successful-provider-receipt": "8504abca107b13da520b70284632b270c3d86c86a32db7cb46bd3f96555880da"
+    },
+    "RK-13.2-005": {
+      "delivery/a-declared-retryable-error-is-believed-whatever-the-binding-s-retry-policy-names": "d22135727fe885d760a6a31b18098232b3907dc8dc3c18993493b5b0249f9f0b"
+    },
+    "RK-13.3-002": {
+      "delivery/deliveries-past-a-binding-s-rate-limit-are-queued-not-dropped": "94b984dddec8c4da0466dad473228c9faf6299f674ecf0c564c0613525501b14"
+    },
+    "RK-13.3-003": {
+      "inbound/a-rate-limit-s-per-minute-bound-sets-its-rate-before-the-per-hour-one": "bcc2c31bd96938e6a23a42bb6aca4c21bbd80d8c183939d1497938c8f6fbc067",
+      "inbound/a-rate-limit-s-per-second-bound-sets-its-rate-before-the-others": "bcc2c31bd96938e6a23a42bb6aca4c21bbd80d8c183939d1497938c8f6fbc067",
+      "inbound/a-rate-limit-that-sets-no-bound-limits-nothing": "bcc2c31bd96938e6a23a42bb6aca4c21bbd80d8c183939d1497938c8f6fbc067"
+    },
+    "RK-13.3-005": {
+      "delivery/deliveries-past-a-binding-s-rate-limit-are-queued-not-dropped": "954f2dccad267ad957137211666203652c05871750bb8d4b238dacc1ef0a9f5f",
+      "inbound/a-rate-limit-s-per-second-bound-sets-its-rate-before-the-others": "954f2dccad267ad957137211666203652c05871750bb8d4b238dacc1ef0a9f5f"
     },
     "RK-13.4-002": {
       "idempotency/a-key-belongs-to-its-room-and-source-channel": "35448e1a2672c1f5a372fdc1340d5b9dee6a125487228b35cf49184a5356b992",
@@ -6946,6 +6964,9 @@
       "reentrancy/a-post-replayed-from-the-room-s-work-draws-no-pass": "511eb6b52db15d54abc374a11a2c4343fb0b743a741c870dcd4fe47878905153",
       "reentrancy/replays-draw-nothing-on-a-hook-s-budget": "511eb6b52db15d54abc374a11a2c4343fb0b743a741c870dcd4fe47878905153"
     },
+    "RK-13.4-010": {
+      "idempotency/a-keyed-message-past-the-reentry-budget-is-refused-not-replayed": "8438ca125862bfd60ddd47e7effcbf32a5f18defbc785348687cc24ea76babb8"
+    },
     "RK-13.4-011": {
       "idempotency/a-hard-delete-releases-the-key-and-keeps-its-index-spent": "6812e963ec81c972bb16a61d95552d8c95f65219cf2144338b7048b2e2f2bf9b",
       "idempotency/an-unstored-event-reserves-neither-key-nor-index": "6812e963ec81c972bb16a61d95552d8c95f65219cf2144338b7048b2e2f2bf9b"
@@ -6967,6 +6988,9 @@
     "RK-13.5-006": {
       "idempotency/overlapping-messages-with-one-key-commit-and-deliver-once": "ba2d7429b091934d22b1cd95c7db902e4d482b092edfda73340c15ac17d58359",
       "resilience/concurrent-messages-take-their-own-index": "ba2d7429b091934d22b1cd95c7db902e4d482b092edfda73340c15ac17d58359"
+    },
+    "RK-13.5-007": {
+      "streaming/a-streamed-row-s-hooks-run-without-the-room-lock": "722934c1582c2f2830868296310b2457b3ee996d2e402692b294fbc18d8b297b"
     },
     "RK-13.5-008": {
       "delivery/a-held-delivery-leaves-the-room-lock-to-the-next-message": "91aecc070cb6de27949af8eddacb0b1e4829b47e81423edddf3063d5714e892b",
@@ -7052,6 +7076,9 @@
       "reentrancy/a-locked-hook-updates-an-earlier-event": "9e5549b01aad803657ac032df5f41ac43094377f5ab3961f2518ff3f7717c1de",
       "rooms/a-hook-that-closes-the-room-refuses-its-event": "9e5549b01aad803657ac032df5f41ac43094377f5ab3961f2518ff3f7717c1de"
     },
+    "RK-13.5-022": {
+      "locks/a-room-id-holding-a-nul-character-is-refused-before-anything-is-written": "aff0f626049a855affc1d6b86b06451a000035f4a12060bdc904e87e1d6c8dad"
+    },
     "RK-13.5-023": {
       "reentrancy/a-call-under-a-lock-the-host-holds-commits-what-its-hooks-inject-once-the-host-released-it": "4a4715ed6b246b0b68e34a8ac0c88b04be73dcfcb4ad3ed1a95e7e8a07c1cee7"
     },
@@ -7067,14 +7094,26 @@
       "delivery/a-streamed-segment-keeps-its-cursor-behind-delivery": "c93382862786ac001979239a76b5c2da510a0be01b20ec4462436505bf6ba895",
       "delivery/an-ai-cascade-has-advanced-its-cursor-when-the-call-returns": "c93382862786ac001979239a76b5c2da510a0be01b20ec4462436505bf6ba895"
     },
+    "RK-13.5-029": {
+      "locks/a-cursor-write-the-store-fails-leaves-the-set-as-it-ran-and-the-lane-goes-on": "fefc608312fe0e6353e462ed87b4d566d153a614cbbbab00ce370d8711e61ef0"
+    },
+    "RK-13.5-030": {
+      "locks/a-cursor-write-the-store-fails-leaves-the-set-as-it-ran-and-the-lane-goes-on": "80c0952ea324ad053b86161c066658d51b676a964dc09d87e8d8ca00fa4bb64e"
+    },
     "RK-13.5-032": {
       "idempotency/a-record-behind-a-delivery-passes-the-lane-at-its-turn": "396eb2364a0163f940eb55a3102a5325c78c5b2c1a16ae7465bcd973d4794510"
     },
     "RK-13.5-033": {
       "locks/an-instruction-s-set-waits-for-the-index-another-process-committed-before-it": "5bd72c255310ffa1dba0a7adda49f3bd0f9af935f70038db35b6de76333b352e"
     },
+    "RK-13.5-034": {
+      "locks/an-instruction-whose-latest-index-read-fails-waits-for-no-other-index": "9d64d1b1fe275533fc83bd19cbf76be7eb810bc046b0df8cdaa061747d9c7352"
+    },
     "RK-13.5-035": {
       "locks/a-cursor-hole-no-lane-runs-is-skipped-after-the-gap-timeout": "902bcaae4941402e7e566e2334cd12f51f26e8dbb1789643645f35c084781379"
+    },
+    "RK-13.5-036": {
+      "locks/a-cursor-hole-no-lane-runs-is-skipped-after-the-gap-timeout": "1683bf16a189b0914d27328e95e1964cb673c45c0f05a20efe2bebc71dd22c78"
     },
     "RK-13.5-037": {
       "locks/a-set-another-process-queued-in-a-deleted-room-takes-its-turn-once-the-room-is-created-again": "d8d42245471a642c802382e0f068edbcd75804a1d9387d2a6670c20879641d83",
@@ -7116,6 +7155,9 @@
     },
     "RK-13.6-003": {
       "resilience/process-timeout-stores-nothing": "8b4e46343ac75349721de672803d0d49f367bf8254afbe4c17029b84f29c8108"
+    },
+    "RK-13.6-004": {
+      "resilience/a-blocked-record-is-committed-outside-the-process-timeout": "716ce2bbf67838b04f53650d1219bd9c1931fc0d888a11bda5ce686efbf117ad"
     },
     "RK-13.6-005": {
       "delivery/a-call-a-parse-awaits-before-its-commit-ends-at-its-message-s-deadline": "d726d9c4e804365c7d8c7c1867fb774d8211e6f3f276879e5b0dce8ef441a169",
@@ -7233,6 +7275,9 @@
       "inbound/a-failed-turn-fires-on-error": "88f341ff053ac428f0cc60f99aead726a0cb87202980946fcb4773014521e0d2",
       "inbound/an-unregistered-target-is-skipped-or-reported": "88f341ff053ac428f0cc60f99aead726a0cb87202980946fcb4773014521e0d2"
     },
+    "RK-13.6-017": {
+      "delivery/a-cascade-a-failed-commit-stops-still-delivers-what-it-committed": "77c3f101ea11878a10d7fab46ad1af0c99992f1150b422623e935561dffd1403"
+    },
     "RK-13.6-018": {
       "inbound/a-failed-turn-fires-on-error": "0833d56e397da4eda3891afed9800f0dcbe97a14302e2fc35bf9ff0751776927",
       "instructions/an-instruction-whose-turn-fails-stays-the-result-s-event": "0833d56e397da4eda3891afed9800f0dcbe97a14302e2fc35bf9ff0751776927"
@@ -7258,10 +7303,16 @@
     "RK-13.6-024": {
       "reentrancy/a-gated-caller-leaves-while-a-nested-call-holds-the-lock": "37d152f4eef24aa2e8dd7fbfa25360b8666008b98cae519a2a8316f1b13bf6e4"
     },
+    "RK-13.6-025": {
+      "rooms/a-room-step-2-creates-is-completed-when-its-caller-leaves": "f4dca85687f07d9cc648a8e2d6adb30ca4c85f2835fce5ed004bf20a67f2d972"
+    },
     "RK-13.6-026": {
       "regenerate/the-room-takes-a-message-while-its-agent-regenerates": "f859d3a3a9cb8a764bdd3522a6403094f91943431057768db32b290e9b3d8760",
       "verification/a-code-reply-s-release-is-answered-past-its-budget": "f859d3a3a9cb8a764bdd3522a6403094f91943431057768db32b290e9b3d8760",
       "verification/a-link-s-release-is-answered-past-the-budget": "f859d3a3a9cb8a764bdd3522a6403094f91943431057768db32b290e9b3d8760"
+    },
+    "RK-13.6-027": {
+      "regenerate/a-regeneration-past-process-timeout-is-refused-process-timeout": "0d1138cc53cec8194ae5c90a1a95f14e002223f6854496410e06800acd873f49"
     },
     "RK-13.6-028": {
       "verification/a-release-from-a-hook-that-closes-the-room-is-answered-by-no-agent": "ec58689c5ec831b7256c7ccfa0f241893b149acbf057ac3e2c1e46ce2a0be3b9",
@@ -19828,6 +19879,9 @@
     "RK-8.1-011": {
       "inbound/a-parsed-event-takes-the-framework-s-id": "8df45eb9feee3f863720aefc1e78d549799b3247408b89f3977c46bd23865508"
     },
+    "RK-8.1-012": {
+      "inbound/a-response-and-the-events-hooks-inject-take-fresh-ids-whatever-id-they-carry": "eada1eb22b69f7f9484cef461096dcfd97251e002748d28a9a8448bf404e0a3f"
+    },
     "RK-8.1-014": {
       "inbound/every-path-that-commits-an-event-roots-its-parent": "2a0cd33f4769dc2a84b7f55246a1113ee2f2cdba62b8fc2a23a89f9c02cba8c3"
     },
@@ -20514,9 +20568,22 @@
       "reentrancy/a-hook-queuing-another-answer-stops-at-the-depth-limit": "f55a64bb14996bebb706a4fad808857beca590aa8182e89ce0e9018b0e3e5be5",
       "reentrancy/a-hook-regenerating-every-answer-stops-at-the-depth-limit": "f55a64bb14996bebb706a4fad808857beca590aa8182e89ce0e9018b0e3e5be5"
     },
+    "RK-8.3-015": {
+      "chain/a-direct-change-s-hooks-run-under-the-floor-of-the-hook-body-that-made-it": "6454ae066326dbbf00dcc9b346c4ddf9a969326abec25cd3bf60379cbab3066e"
+    },
+    "RK-8.3-016": {
+      "reentrancy/a-task-an-async-hook-starts-has-its-floor-only-while-the-body-runs": "f13c46d0e3e707542f28c3a78c216885e4fbe1738a2dbc12918d0edf6e3df9a6"
+    },
     "RK-8.3-017": {
       "reentrancy/an-on-ai-response-hook-posting-after-each-answer-stops-at-the-depth-limit": "2970a66bc624f2699c40422f78ca9f4ad8c8687bb4886676c6892d46edf856d3",
       "status/a-status-hook-s-call-is-as-deep-as-the-poster": "2970a66bc624f2699c40422f78ca9f4ad8c8687bb4886676c6892d46edf856d3"
+    },
+    "RK-8.3-018": {
+      "reentrancy/a-task-an-async-hook-starts-has-its-floor-only-while-the-body-runs": "e484161ee8b657fd2545d7399f518ae237e87b71a6bcdc835f97beeb6ba68075"
+    },
+    "RK-8.3-019": {
+      "executors/an-executor-s-hook-sends-through-the-host-after-the-turn-at-its-answer-s-depth": "148318f686d31a5b720edc11e9b7d5c2ed8582d5b8559df2f82d0847b8595647",
+      "executors/an-executor-s-hook-sends-through-the-host-at-the-depth-of-the-turn-s-answer": "148318f686d31a5b720edc11e9b7d5c2ed8582d5b8559df2f82d0847b8595647"
     },
     "RK-8.3-020": {
       "reentrancy/a-before-ai-generation-handler-sends-as-deep-as-the-turn": "d05ede80bbd715a255026ba9461f1c72e20a510c7c124cd6a3b6f2c99b38a35d",
@@ -20635,6 +20702,9 @@
     "RK-8.3-029": {
       "chain/a-notice-past-the-depth-limit-leaves-no-record": "d18e0f844133807826cd67683f3ec40d95a0517b6337ca02ed4fb8a7216336a2"
     },
+    "RK-8.3-030": {
+      "chain/a-transport-s-responses-at-the-depth-limit-are-stored-blocked-and-its-side-effects-kept": "43f4527167d22cd22d0a3404940614952e14e882635c928a505d63ae3d9307e7"
+    },
     "RK-8.3-035": {
       "acp/handler-before-tool-use-observer-reentry-bound": "d0bd22882199f118df9ac63021f7acd43e3d01f3d100ae091cceda0e1c534189",
       "acp/handler-on-tool-call-observer-reentry-bound": "d0bd22882199f118df9ac63021f7acd43e3d01f3d100ae091cceda0e1c534189",
@@ -20721,6 +20791,9 @@
       "reentrancy/hook-bodies-that-update-stop-at-the-hook-calls": "83faeadaaece143ab89f4bb47e6bcf276d7448433f39e1301492006d5d6a6caa",
       "verification/a-hook-updating-a-released-message-again-stops-at-the-cap": "83faeadaaece143ab89f4bb47e6bcf276d7448433f39e1301492006d5d6a6caa"
     },
+    "RK-8.3-044": {
+      "reentrancy/a-task-an-async-hook-starts-has-its-floor-only-while-the-body-runs": "1895ee88dcc66f333de4d8ccadfdb9b9ec904dfc1a84e89b2c2582017d51aa3a"
+    },
     "RK-8.3-045": {
       "acp/handler-before-tool-use-observer-reentry-bound": "4fd5375cc8f7fd8e69c19a459f7f66a112a4c009ef995a7fd065679db951137b",
       "acp/handler-on-tool-call-observer-reentry-bound": "4fd5375cc8f7fd8e69c19a459f7f66a112a4c009ef995a7fd065679db951137b",
@@ -20759,6 +20832,9 @@
       "reentrancy/a-hook-regenerating-every-answer-stops-at-the-depth-limit": "466c1c15de9b6f143a76bb08786913f19d6affbb7379b38b4dd1c2e15b8a5e60",
       "regenerate/past-the-depth-limit-a-regeneration-asks-no-agent": "466c1c15de9b6f143a76bb08786913f19d6affbb7379b38b4dd1c2e15b8a5e60"
     },
+    "RK-8.3-051": {
+      "chain/a-transport-s-responses-at-the-depth-limit-are-stored-blocked-and-its-side-effects-kept": "dd74ab6c171233d9dc4ad4a3c46c1c3aa216ce890fa0679ee01a6bb7e7e2787d"
+    },
     "RK-8.3-052": {
       "appendix-b/b4-agent-chain": "fddf97924832667d5f828cc8187cac658df664c8427188162e45d22624884147",
       "regenerate/past-the-depth-limit-a-regeneration-asks-no-agent": "fddf97924832667d5f828cc8187cac658df664c8427188162e45d22624884147",
@@ -20794,6 +20870,9 @@
     "RK-8.4-013": {
       "tenancy/a-deleted-room-s-subscription-reads-nothing-of-the-room-created-again": "ecd2f350f7740b3809be185c3d39aab9eef0b30639b3be519df60e6891c448a3",
       "tenancy/a-deleted-room-s-turn-publishes-nothing-in-the-room-its-process-creates-again": "ecd2f350f7740b3809be185c3d39aab9eef0b30639b3be519df60e6891c448a3"
+    },
+    "RK-8.4-014": {
+      "tenancy/a-subscription-made-before-its-room-exists-is-the-room-s-created-under-its-id": "1b799e8229351180891ebaaf9e90dcb4d86b50583085c595fc9d3b117b68a47a"
     },
     "RK-8.4-016": {
       "tenancy/a-deleted-room-s-subscription-reads-nothing-of-the-room-created-again": "8803f645317e1df7ae7af601ab8e69e41732f2f154581099e1fea5876b7de5eb"
@@ -21047,6 +21126,9 @@
     "RK-8.4-035": {
       "streaming/a-directly-wired-prompt-rechecks-its-room-audience": "24a1c5f52b9c1d7e0f00e914193c730d36901b81d774e492f07259a29f839e3a"
     },
+    "RK-8.4-036": {
+      "tools/a-narrowed-binding-s-turn-still-emits-its-framework-events": "2af5aa79003660e45369f0613446da42dc0f6118f902a9925780c702cdc6722e"
+    },
     "RK-8.4-037": {
       "acp/tool-publication-default": "98a752f11689b61c2ffedc83b5c66a0315b1c2c0a9a2aadc5f4706c35de97304",
       "tools/a-room-s-subscriber-reads-no-call-arguments-or-result-by-default": "98a752f11689b61c2ffedc83b5c66a0315b1c2c0a9a2aadc5f4706c35de97304"
@@ -21181,6 +21263,9 @@
       "regenerate/a-regeneration-hands-no-transport-the-message-again": "db446d81bbff7e3745b17dc1f57dc76e02d9f918d1dbae2528689cab87b0335c",
       "regenerate/the-room-takes-a-message-while-its-agent-regenerates": "db446d81bbff7e3745b17dc1f57dc76e02d9f918d1dbae2528689cab87b0335c"
     },
+    "RK-8.5-011": {
+      "inbound/a-response-keeps-what-its-channel-wrote-of-its-own-source-and-nothing-of-another-s": "a8c331174f85ddd02c4ccc8182398bda008051c365bae4f410dcd543d5b20461"
+    },
     "RK-8.5-012": {
       "inbound/every-path-that-commits-an-event-roots-its-parent": "9ccc10f84be1d90db810be7db6c5df9f8591290b511329fe2267f26a326ae57e",
       "streaming/a-streamed-row-is-rooted-at-its-own-commit": "9ccc10f84be1d90db810be7db6c5df9f8591290b511329fe2267f26a326ae57e"
@@ -21190,6 +21275,15 @@
     },
     "RK-8.5-015": {
       "discussion/an-agent-s-answer-typed-instruction-gives-no-turn": "a37c9d6adae074bb0a3217da9ecab574e50010288e7b83364f89c6e21ac7aefd"
+    },
+    "RK-8.5-016": {
+      "inbound/a-response-keeps-what-its-channel-wrote-of-its-own-source-and-nothing-of-another-s": "759b52e8b70bb05f7bd5222643b1ec7d6c099d1c90f58c394d9735184e6eaab6"
+    },
+    "RK-8.5-017": {
+      "inbound/a-response-keeps-what-its-channel-wrote-of-its-own-source-and-nothing-of-another-s": "004a7c6955a56b2a59dd2350dbd9b5ea21748ee10cab73c279b364f2c37e7aca"
+    },
+    "RK-8.5-018": {
+      "inbound/a-response-keeps-what-its-channel-wrote-of-its-own-source-and-nothing-of-another-s": "e389e93b8daeb109ed8fb1cb8dc7a7aa91b6d0e1ce279ba19665fc1f68484d31"
     },
     "RK-8.5-019": {
       "permissions/only-the-framework-may-mark-an-answer-internal": "1791bbcb50c810fc41295db9ed0491333a33b85873683cf84d69425011d5f2eb"
@@ -21201,6 +21295,9 @@
       "streaming/a-stream-row-under-an-internal-answer-scope-is-stored-for-no-channel": "2038066162567bb2dc4b7a754f6ec6ffc5c5942a2774e34da1f7269b3d5ed227",
       "streaming/an-answer-scope-of-none-streams-to-no-target": "2038066162567bb2dc4b7a754f6ec6ffc5c5942a2774e34da1f7269b3d5ed227",
       "streaming/an-answer-scope-streams-only-to-a-target-it-names": "2038066162567bb2dc4b7a754f6ec6ffc5c5942a2774e34da1f7269b3d5ed227"
+    },
+    "RK-8.5-021": {
+      "permissions/work-that-leaves-a-scoped-cascade-is-not-scoped": "ce09296e22d8d5b8fa1cc222bab72f86e9344c27eb32170ec5bd8d962a1c16fa"
     },
     "RK-8.5-022": {
       "permissions/an-answer-intersects-its-own-visibility-with-the-trigger-s-scope": "b7ce6c68d1681253d814e848cd17ce1926c6617736e734434aae5adcd1fdfc4d",
