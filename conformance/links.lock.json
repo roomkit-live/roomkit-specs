@@ -15485,6 +15485,7 @@
       "inbound/a-channel-s-echo-of-its-own-output-speaks-as-no-participant": "1afcbc737750e2970f2db9f9412b1290082ac66a9680dcb38deadcd4b1eeded9"
     },
     "RK-5.2-010": {
+      "delivery/a-webhook-message-keeps-its-raw-payload": "144cfbe0f490e6d027b2e705005fdf4125e5c0aa12adb00fd1ed4c83643b211d",
       "permissions/model-history-withholds-deleted-text-and-keeps-live-edits": "144cfbe0f490e6d027b2e705005fdf4125e5c0aa12adb00fd1ed4c83643b211d"
     },
     "RK-5.2-015": {
@@ -20425,6 +20426,9 @@
     },
     "RK-8.1-012": {
       "inbound/a-response-and-the-events-hooks-inject-take-fresh-ids-whatever-id-they-carry": "eada1eb22b69f7f9484cef461096dcfd97251e002748d28a9a8448bf404e0a3f"
+    },
+    "RK-8.1-013": {
+      "delivery/a-webhook-message-keeps-its-provider-s-id-as-its-provider-message-id": "3e4cc4570a4c6fc124ff555105ac9d147d3392cf52102c3de23385b2b979f0a7"
     },
     "RK-8.1-014": {
       "inbound/every-path-that-commits-an-event-roots-its-parent": "2a0cd33f4769dc2a84b7f55246a1113ee2f2cdba62b8fc2a23a89f9c02cba8c3"

@@ -1854,7 +1854,7 @@
     "RK-6.3-005": {
       "class": "step",
       "card": "RMK-1955",
-      "note": "Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed. The audit's suspect on the Telegram row is RMK-1954."
+      "note": "Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed. Python's channel of this row declares its buttons (RMK-2190)."
     },
     "RK-6.3-006": {
       "class": "writable",
@@ -2207,12 +2207,7 @@
     "RK-8.1-009": {
       "class": "step",
       "card": "RMK-1912",
-      "note": "Needs an error name for a duplicate (room_id, index) in the runners' table."
-    },
-    "RK-8.1-013": {
-      "class": "writable",
-      "card": "RMK-1912",
-      "note": "process_webhook reaches it, but its scenario keeps the provider's id in external_id: suspect RMK-1913."
+      "note": "Python's stores raise EventIndexTakenError and roomkit-rs's StoreError::EventIndexTaken (RMK-2190); needs that error's name in the runners' table, read from store.add_event."
     },
     "RK-8.2-012": {
       "class": "step",
@@ -2227,7 +2222,7 @@
     "RK-8.2-014": {
       "class": "step",
       "card": "RMK-1912",
-      "note": "Needs a scripted source provider; roomkit-rs lacks sources."
+      "note": "Python emits it once the source reports it connected (RMK-2190); needs a scripted source provider whose connection a step drives, and source events in framework_events; roomkit-rs lacks sources."
     },
     "RK-8.2-015": {
       "class": "step",
