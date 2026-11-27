@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "f73e8090fe7e39cb56cfb5b71dcd2e49070574bf3b2dd580bfd1e5e038e6ec9e",
-  "corpus_sha256": "695e1169b67be3b44913d390dd914041295a23f91f89b3c1db769e7b21e09d0a",
+  "corpus_sha256": "a1dab0e50e4bfe9e311e5e67ff19d350133a09cc93a28b2c1512794dd4b3dd5c",
   "python_commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
-  "scenario_count": 3977,
+  "scenario_count": 3979,
   "sections": [
     {
       "section": "0",
@@ -6430,6 +6430,7 @@
         "voice/a-final-discarded-as-echo-leaves-a-kept-stream-open",
         "voice/a-kept-stream-carries-turn-after-turn-until-the-provider-ends-it",
         "voice/a-kept-stream-s-finals-reach-the-room-in-the-order-produced",
+        "voice/a-kept-stream-s-pause-is-filled-with-silence-level-with-the-clock",
         "voice/a-language-chosen-mid-session-ends-a-diarizing-stream",
         "voice/a-participant-who-comes-back-gets-a-new-session",
         "voice/a-paused-session-s-speech-is-still-transcribed",
@@ -6527,9 +6528,7 @@
       "mapping": {
         "unmapped": 43
       },
-      "decided_gaps": {
-        "phase6": 1
-      },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "conference/a-conference-refuses-a-diarizing-recognizer",
@@ -6539,6 +6538,7 @@
         "voice/a-diarizing-stream-lasts-until-its-provider-ends-it-and-labels-start-a-new-epoch",
         "voice/a-failed-diarizing-stream-is-opened-again",
         "voice/a-final-discarded-as-echo-leaves-a-kept-stream-open",
+        "voice/a-kept-stream-s-pause-is-filled-with-silence-level-with-the-clock",
         "voice/a-language-chosen-mid-session-ends-a-diarizing-stream",
         "voice/a-participant-not-reached-on-the-voice-channel-is-not-the-speaker",
         "voice/a-reply-still-produced-holds-back-no-next-segment",
@@ -6624,9 +6624,7 @@
       "mapping": {
         "unmapped": 8
       },
-      "decided_gaps": {
-        "phase6": 1
-      },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "voice/a-contract-hands-every-inbound-stage-the-internal-format",
@@ -6768,9 +6766,7 @@
       "mapping": {
         "unmapped": 18
       },
-      "decided_gaps": {
-        "phase6": 1
-      },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "memory/history-omits-only-responses-marked-superseded",
@@ -6879,9 +6875,7 @@
       "mapping": {
         "unmapped": 19
       },
-      "decided_gaps": {
-        "phase6": 1
-      },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
     },
@@ -7576,9 +7570,7 @@
       "mapping": {
         "unmapped": 53
       },
-      "decided_gaps": {
-        "phase6": 1
-      },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "conference/a-lost-bot-rejoins-with-no-new-event",
@@ -7599,9 +7591,7 @@
         "mapped_partial": 3,
         "unmapped": 207
       },
-      "decided_gaps": {
-        "phase6": 1
-      },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "conference/a-backend-that-fails-its-close-fails-the-channel-s-close-for-good",
@@ -7663,6 +7653,7 @@
         "conference/a-recognizer-plugged-mid-meeting-subscribes-what-is-already-published",
         "conference/a-recognizer-with-no-vad-is-refused",
         "conference/a-recorder-a-call-still-runs-in-past-the-release-wait-is-left-unreleased",
+        "conference/a-recorder-s-release-waits-on-a-budget-of-its-own-once-the-bot-has-left",
         "conference/a-recording-and-its-recorder-are-refused-apart",
         "conference/a-recording-plugged-with-no-recorder-is-refused",
         "conference/a-resolved-participant-s-utterances-are-not-resolved-again",
@@ -7852,6 +7843,7 @@
         "conference/a-held-finalization-lets-the-bot-leave-and-the-recorder-is-released-once-it-returns",
         "conference/a-held-recorder-write-delays-no-other-track",
         "conference/a-muted-binding-finalizes-the-conference-s-recordings",
+        "conference/a-recorder-s-release-waits-on-a-budget-of-its-own-once-the-bot-has-left",
         "conference/a-recorder-that-stopped-draining-holds-a-track-s-teardown-no-longer-than-its-budget",
         "conference/a-recording-s-reports-carry-the-room-track-and-participant",
         "conference/a-recording-that-falls-behind-holds-a-bounded-backlog",
@@ -7967,14 +7959,13 @@
       "mapping": {
         "unmapped": 52
       },
-      "decided_gaps": {
-        "phase6": 1
-      },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "conference/a-close-reports-a-recording-whose-finalization-it-stopped-waiting-for",
         "conference/a-held-finalization-lets-the-bot-leave-and-the-recorder-is-released-once-it-returns",
         "conference/a-recorder-a-call-still-runs-in-past-the-release-wait-is-left-unreleased",
+        "conference/a-recorder-s-release-waits-on-a-budget-of-its-own-once-the-bot-has-left",
         "recording/a-failed-creation-leaves-the-recordings-of-the-room-holding-its-id-running",
         "recording/a-gone-room-s-recordings-are-listed-and-fed-for-their-own-organization-alone",
         "recording/a-gone-room-s-recordings-are-refused-to-another-organization",
@@ -31487,12 +31478,7 @@
       "id": "RK-12.2.3-022",
       "section": "12.2.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-2023",
-        "note": "measurement: the audio a kept diarizing stream receives against the wall clock through a pause or a lossy stretch (Python's tests are wallclock); no step reads elapsed time."
-      }
+      "links": []
     },
     {
       "id": "RK-12.2.3-023",
@@ -31942,12 +31928,7 @@
       "id": "RK-12.3.3-007",
       "section": "12.3.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-2034",
-        "note": "measurement: resampling quality, the artifacts a resampler leaves for VAD and STT (Python's default is linear interpolation, suspect RMK-2029)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.3.3-008",
@@ -32505,12 +32486,7 @@
       "id": "RK-12.3.12-022",
       "section": "12.3.12",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-2042",
-        "note": "measurement: turn detector fast-path latency."
-      }
+      "links": []
     },
     {
       "id": "RK-12.3.12-023",
@@ -33026,12 +33002,7 @@
       "id": "RK-12.3.15-020",
       "section": "12.3.15",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-2042",
-        "note": "measurement: debug tap write latency on the audio path; Python writes each frame on the pipeline's path."
-      }
+      "links": []
     },
     {
       "id": "RK-12.3.15-021",
@@ -36017,12 +35988,7 @@
       "id": "RK-12.10.3-036",
       "section": "12.10.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-2070",
-        "note": "measurement: the residue of a stop, the bot audio a backend still plays out after stop_playback()."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.3-037",
@@ -36884,12 +36850,7 @@
       "id": "RK-12.10.4-056",
       "section": "12.10.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-2007",
-        "note": "measurement: the close's whole duration bound (the grace, the turn backend's budget, the closes, at most two unwinds of 1 second); no step reads elapsed time."
-      }
+      "links": []
     },
     {
       "id": "RK-12.10.4-057",
@@ -38569,12 +38530,7 @@
       "id": "RK-12.11-058",
       "section": "12.11",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-2066",
-        "note": "measurement: the bot leaves once the teardown's budget is spent, before the wait to release the recorder ends; no gate orders the end of that wait, so only a duration tells a release wait made apart from one made inside the teardown (conference/a-held-finalization-lets-the-bot-leave-and-the-recorder-is-released-once-it-returns shows the leave while the call runs)."
-      }
+      "links": []
     },
     {
       "id": "RK-12.11-059",
