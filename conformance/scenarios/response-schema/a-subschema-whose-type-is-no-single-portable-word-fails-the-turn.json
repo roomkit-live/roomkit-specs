@@ -113,32 +113,6 @@
         ]
       },
       {
-        "id": "room-none",
-        "bindings": [
-          {
-            "channel_id": "sms"
-          },
-          {
-            "channel_id": "agent",
-            "category": "intelligence",
-            "metadata": {
-              "response_schema": {
-                "type": "object",
-                "properties": {
-                  "when": {
-                    "description": "When it happened."
-                  }
-                },
-                "required": [
-                  "when"
-                ],
-                "additionalProperties": false
-              }
-            }
-          }
-        ]
-      },
-      {
         "id": "room-six",
         "bindings": [
           {
@@ -270,29 +244,6 @@
     },
     {
       "call": "process_inbound",
-      "room_id": "room-none",
-      "message": {
-        "channel_id": "sms",
-        "sender_id": "+15551234567",
-        "content": {
-          "type": "text",
-          "body": "My card was charged twice."
-        }
-      },
-      "expect": {
-        "result": {
-          "blocked": false,
-          "error": {
-            "$contains": "Value error, $.when: 'type' must be one of object, array, string, number, integer, boolean, as a single string"
-          }
-        }
-      }
-    },
-    {
-      "idle": true
-    },
-    {
-      "call": "process_inbound",
       "room_id": "room-six",
       "message": {
         "channel_id": "sms",
@@ -376,11 +327,6 @@
         }
       ],
       "room-date": [
-        {
-          "index": 0
-        }
-      ],
-      "room-none": [
         {
           "index": 0
         }

@@ -77,6 +77,11 @@
       {
         "name": "before",
         "trigger": "before_tool_use"
+      },
+      {
+        "name": "ran",
+        "trigger": "on_tool_call",
+        "execution": "async"
       }
     ]
   },
@@ -165,6 +170,20 @@
           "tool_call": {
             "name": "shell",
             "tool_call_id": "c1",
+            "arguments": {
+              "command": "ls",
+              "_roomkit_intent": "Je liste les fichiers."
+            }
+          }
+        }
+      ],
+      "ran": [
+        {
+          "trigger": "on_tool_call",
+          "tool_call": {
+            "name": "shell",
+            "tool_call_id": "c1",
+            "result": "a.txt",
             "arguments": {
               "command": "ls",
               "_roomkit_intent": "Je liste les fichiers."

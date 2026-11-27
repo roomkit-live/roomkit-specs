@@ -76,21 +76,17 @@
                 "type": "object",
                 "properties": {
                   "card": {
-                    "$ref": "#/$defs/card"
+                    "type": "object",
+                    "properties": {},
+                    "required": [],
+                    "additionalProperties": false,
+                    "$ref": "#/card"
                   }
                 },
                 "required": [
                   "card"
                 ],
-                "additionalProperties": false,
-                "$defs": {
-                  "card": {
-                    "type": "object",
-                    "properties": {},
-                    "required": [],
-                    "additionalProperties": false
-                  }
-                }
+                "additionalProperties": false
               }
             }
           }
@@ -228,7 +224,7 @@
         "result": {
           "blocked": false,
           "error": {
-            "$contains": "Value error, $: ['$defs'] not portable on a 'object' schema"
+            "$contains": "Value error, $.card: ['$ref'] not portable on a 'object' schema"
           }
         }
       }

@@ -9,7 +9,7 @@
   "requirements": [
     "RK-6.4-119"
   ],
-  "notes": "Python: models/tool_call.py ToolCallEvent.intent (a hook cannot change it); channels/_ai_tools.py takes the property once, as a call enters the loop. RK-6.4-119 is cited in part: a hook rewrites a call's arguments and result through the runners' modify patch, which names no intent member, so a hook that sets the payload's intent directly is not observed here.",
+  "notes": "Python: models/tool_call.py ToolCallEvent.intent (a hook cannot change it); channels/_ai_tools.py takes the property once, as a call enters the loop. RK-6.4-119 is cited in part: the scenario's hook rewrites the call's arguments, the members of a tool call's modify patch both runners take; a hook that sets the payload's intent directly is not observed here, roomkit-rs's runner taking no such patch member.",
   "setup": {
     "channels": [
       {

@@ -10,7 +10,7 @@
     "RK-6.4-102",
     "RK-6.4-103"
   ],
-  "notes": "Python: providers/ai/tool_intent.py presented_tools, _takes_intent; tests/test_channels/test_tool_call_intents.py test_a_call_s_intent_rides_apart_from_its_arguments. RK-6.4-103 is cited in part: the log line a schema shown as it is gets is not observed. RK-6.4-102: the schema a call's arguments are checked against is read through a closed schema that runs a call carrying the property (RK-6.4-110), and the one a hook reads and the turn reports as declared through ON_AI_RESPONSE's declared_tools.",
+  "notes": "Python: providers/ai/tool_intent.py presented_tools, _takes_intent; tests/test_channels/test_tool_call_intents.py test_a_call_s_intent_rides_apart_from_its_arguments. RK-6.4-101 is cited in part: an object matches in part, so a second property added to the request's copy would go unseen; the scenario asserts the one property and that it is not required. RK-6.4-102 is cited in part: the schema the turn reports as declared is read on ON_AI_RESPONSE's declared_tools, and the one a call's arguments are checked against through a closed schema that runs a call carrying the property (RK-6.4-110); the schema a BEFORE_AI_GENERATION hook reads is not observed, its record naming the tools alone. RK-6.4-103 is cited in part: the log line a schema shown as it is gets is not observed.",
   "setup": {
     "channels": [
       {

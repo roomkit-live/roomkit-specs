@@ -9,7 +9,7 @@
   "requirements": [
     "RK-6.4-120"
   ],
-  "notes": "Python: channels/_acp_turn.py reports the agent's calls as it gives them; an ACP channel shows no schema of its agent's tools. RK-6.4-120 is cited in part: a provider-served call is provider-served/a-call-its-provider-served-carries-no-intent, and a realtime session's own calls need the realtime feature.",
+  "notes": "Python: channels/_acp_turn.py reports the agent's calls as it gives them; an ACP channel shows no schema of its agent's tools and has no tool_call_intents option, so its calls carry none whatever an AI channel asks. RK-6.4-120 is cited in part: a provider-served call is provider-served/a-call-its-provider-served-carries-no-intent, and a realtime session's own calls need the realtime feature.",
   "setup": {
     "channels": [
       {

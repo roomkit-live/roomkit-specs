@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "response-schema/an-answer-that-fails-its-schema-is-not-tried-again",
-  "title": "Under a retry policy, a constrained answer that fails its schema fails the turn at its first try, whether the model streams it or answers whole: a schema's error is never retryable, and the model is asked once",
+  "title": "Under a retry policy, a constrained answer that fails its schema fails the turn at its first try, whether the model streams it or answers whole, and whether it is no JSON document, a refusal or an answer cut for room: a schema's error is never retryable, and the model is asked once",
   "rules": [
     "§6.7",
     "§6.4"
@@ -88,6 +88,80 @@
             }
           ]
         }
+      },
+      {
+        "id": "refusing-agent",
+        "type": "ai",
+        "response_schema": {
+          "type": "object",
+          "properties": {
+            "department": {
+              "type": "string",
+              "enum": [
+                "billing",
+                "other"
+              ]
+            }
+          },
+          "required": [
+            "department"
+          ],
+          "additionalProperties": false
+        },
+        "retry_policy": {
+          "max_retries": 2,
+          "base_delay_ms": 1
+        },
+        "model": {
+          "response_schema": true,
+          "streaming": true,
+          "rounds": [
+            {
+              "text": "I can't help with that.",
+              "finish_reason": "refusal"
+            },
+            {
+              "text": "{\"department\": \"billing\"}"
+            }
+          ]
+        }
+      },
+      {
+        "id": "truncated-agent",
+        "type": "ai",
+        "response_schema": {
+          "type": "object",
+          "properties": {
+            "department": {
+              "type": "string",
+              "enum": [
+                "billing",
+                "other"
+              ]
+            }
+          },
+          "required": [
+            "department"
+          ],
+          "additionalProperties": false
+        },
+        "retry_policy": {
+          "max_retries": 2,
+          "base_delay_ms": 1
+        },
+        "model": {
+          "response_schema": true,
+          "streaming": true,
+          "rounds": [
+            {
+              "text": "{\"department\": \"bil",
+              "finish_reason": "length"
+            },
+            {
+              "text": "{\"department\": \"billing\"}"
+            }
+          ]
+        }
       }
     ],
     "rooms": [
@@ -111,6 +185,30 @@
           },
           {
             "channel_id": "whole-agent",
+            "category": "intelligence"
+          }
+        ]
+      },
+      {
+        "id": "room-refusal",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          },
+          {
+            "channel_id": "refusing-agent",
+            "category": "intelligence"
+          }
+        ]
+      },
+      {
+        "id": "room-truncated",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          },
+          {
+            "channel_id": "truncated-agent",
             "category": "intelligence"
           }
         ]
@@ -163,6 +261,52 @@
     },
     {
       "idle": true
+    },
+    {
+      "call": "process_inbound",
+      "room_id": "room-refusal",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "My card was charged twice."
+        }
+      },
+      "expect": {
+        "result": {
+          "blocked": false,
+          "error": {
+            "$contains": "the model declined to answer"
+          }
+        }
+      }
+    },
+    {
+      "idle": true
+    },
+    {
+      "call": "process_inbound",
+      "room_id": "room-truncated",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "My card was charged twice."
+        }
+      },
+      "expect": {
+        "result": {
+          "blocked": false,
+          "error": {
+            "$contains": "the JSON answer was cut (length)"
+          }
+        }
+      }
+    },
+    {
+      "idle": true
     }
   ],
   "expect": {
@@ -208,6 +352,48 @@
             "additionalProperties": false
           }
         }
+      ],
+      "refusing-agent": [
+        {
+          "method": "generate_structured_stream",
+          "response_schema": {
+            "type": "object",
+            "properties": {
+              "department": {
+                "type": "string",
+                "enum": [
+                  "billing",
+                  "other"
+                ]
+              }
+            },
+            "required": [
+              "department"
+            ],
+            "additionalProperties": false
+          }
+        }
+      ],
+      "truncated-agent": [
+        {
+          "method": "generate_structured_stream",
+          "response_schema": {
+            "type": "object",
+            "properties": {
+              "department": {
+                "type": "string",
+                "enum": [
+                  "billing",
+                  "other"
+                ]
+              }
+            },
+            "required": [
+              "department"
+            ],
+            "additionalProperties": false
+          }
+        }
       ]
     },
     "timeline": {
@@ -217,6 +403,16 @@
         }
       ],
       "room-whole": [
+        {
+          "index": 0
+        }
+      ],
+      "room-refusal": [
+        {
+          "index": 0
+        }
+      ],
+      "room-truncated": [
         {
           "index": 0
         }
