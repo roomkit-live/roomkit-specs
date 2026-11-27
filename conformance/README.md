@@ -2537,17 +2537,25 @@ No SDK request/resource method is replaced by a fake.
 The peer answers `initialize` with MCP `2025-11-25` (the last protocol
 version using that handshake), resources capability and its optional `server_info`, `extensions`
 and `instructions`. As a server of an earlier revision, it refuses the
-`server/discover` probe a provider sends first with JSON-RPC error `-32601`;
-both are recorded by method only. A peer with `era: "2026-07-28"` is a server
+`server/discover` probe a provider sends first with JSON-RPC error `-32601`,
+or, with `refuse_discovery: "http"`, with HTTP 400 carrying JSON-RPC error
+`-32600` (a stateful mcp 1.x server answering a request without a session);
+the refusal opens no session, and both requests are recorded by method only. A peer with `era: "2026-07-28"` is a server
 of that revision instead: it answers `server/discover` with those
 capabilities and `instructions`, `supportedVersions: ["2026-07-28"]`, the
 `resultType`, `ttlMs` and `cacheScope` of a complete result and `server_info`
 under `_meta["io.modelcontextprotocol/serverInfo"]`; it takes no `initialize`
 (a fixture error) and sends no `Mcp-Session-Id`. Each later request must
 carry, in `_meta`, the revision `2026-07-28`, the client's information and
-its capabilities, and its HTTP request must name its method in `Mcp-Method`:
-the peer checks them, then leaves those three entries out of the observation,
-with a `_meta` and a `params` they leave empty. `replies` is an ordered script of `{method, params?,
+its capabilities, and its HTTP request must name its method in `Mcp-Method`,
+the revision in `Mcp-Protocol-Version`, what a `tools/call`, `resources/read`
+or `prompts/get` acts on (its `name` or `uri`) in `Mcp-Name`, and, for a
+`tools/call`, each argument the listed tool's top-level input properties
+annotate with `x-mcp-header` in `Mcp-Param-<annotation>` (a boolean as
+`true`/`false`, another scalar as its text, base64-wrapped as
+`=?base64?...?=` where HTTP could not carry it). The peer checks them, then
+leaves the three `_meta` entries out of the observation, with a `_meta` and a
+`params` they leave empty. `replies` is an ordered script of `{method, params?,
 result|error|hold}`. Each request must match the next method and params:
 omitted script params mean a request sent with no `params` member, which is
 how a request without parameters goes out, an empty set or an empty or null

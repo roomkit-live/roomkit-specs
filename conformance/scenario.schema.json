@@ -15695,6 +15695,12 @@
             "2026-07-28"
           ]
         },
+        "refuse_discovery": {
+          "description": "How a peer of an earlier revision refuses server/discover: absent, by a JSON-RPC error; http, by HTTP 400 carrying a JSON-RPC error, as a stateful mcp 1.x server answers a request without a session.",
+          "enum": [
+            "http"
+          ]
+        },
         "initializations": {
           "type": "array",
           "minItems": 1,
