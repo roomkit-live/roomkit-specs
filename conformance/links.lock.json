@@ -9698,6 +9698,9 @@
       "discussion/a-name-is-never-decided": "4aebf9eebcef0395fa9f18ae91eef7324854c8e700938cf3432ceff9f5fc3356",
       "discussion/the-policy-picks-who-takes-an-unaddressed-message": "4aebf9eebcef0395fa9f18ae91eef7324854c8e700938cf3432ceff9f5fc3356"
     },
+    "RK-19.7.5-016": {
+      "discussion/a-policy-that-does-not-decide-is-given-five-seconds-by-default": "f1c93baab35ddd06519c7326d2a4695676fd7e41427a80dd891d5406e52b667d"
+    },
     "RK-19.7.5-017": {
       "discussion/a-person-s-message-ends-the-wait-even-asking-no-one": "721720726e3bea97f3fa4a4cd9404539278d8709ea1db46b734d9f4662aba44a",
       "discussion/a-regenerated-turn-runs-while-waiting-and-listening": "721720726e3bea97f3fa4a4cd9404539278d8709ea1db46b734d9f4662aba44a",
@@ -9717,6 +9720,12 @@
     },
     "RK-19.7.5-019": {
       "discussion/a-room-with-a-voice-channel-is-refused": "39acc20407b921fc054d8a9d93c30c71e8c94ef411e6fa2abedd5dbea7d6ab3d"
+    },
+    "RK-19.7.5-020": {
+      "discussion/a-room-with-a-realtime-channel-is-refused": "21376bf6d570c4ba52b390c21eb87d473268e7ce25896787280ad71e070b47e0"
+    },
+    "RK-19.7.5-021": {
+      "discussion/a-room-with-an-agent-that-thinks-while-it-listens-is-refused": "2bdd6c3f2b026b826e28f940639f41df99c291d5ee855efa0e22676ffba020cb"
     },
     "RK-19.7.5-022": {
       "discussion/a-room-holding-a-discussion-refuses-what-it-cannot-share": "5e1fd58e7b32658f61991a4794b4a227629bb635d847e810574beff88f4836a9"
@@ -9753,6 +9762,10 @@
       "discussion/a-person-naming-an-agent-asks-that-agent-alone": "2527c0e0b9edde6a95c22d2b29a8a2de0b35ba1fc04fc5e8b4ae130ecb2eb776",
       "discussion/an-agent-asking-a-person-is-answered-by-their-next-message": "2527c0e0b9edde6a95c22d2b29a8a2de0b35ba1fc04fc5e8b4ae130ecb2eb776",
       "discussion/an-unaddressed-message-asks-everyone-one-at-a-time": "2527c0e0b9edde6a95c22d2b29a8a2de0b35ba1fc04fc5e8b4ae130ecb2eb776"
+    },
+    "RK-19.7.5-030": {
+      "discussion/a-bot-or-a-delivery-naming-an-agent-queues-it-at-the-back": "fe29574850acc603cd9b79ba90ed6447e07521e564c40b06acafea61d3665e90",
+      "discussion/a-delivery-is-no-person-s-answer-and-asks-no-agent": "fe29574850acc603cd9b79ba90ed6447e07521e564c40b06acafea61d3665e90"
     },
     "RK-19.7.5-031": {
       "discussion/a-hook-s-injected-instruction-gives-no-turn": "48d188d18d5bddcd6bf8d7984fa431ec298d9621f42ae4d2392523deef4e8b00",
@@ -9876,13 +9889,23 @@
     "RK-19.7.5-051": {
       "discussion/a-person-named-like-a-handle-is-addressed-by-no-name": "f33a9ce9e6b5a1cbea3878e1e01131af4bf1626f0af29136830ea3424c962190"
     },
+    "RK-19.7.5-052": {
+      "discussion/a-name-a-person-and-an-agent-share-is-the-agent-s": "6076240f1a4545691106f0e3909b14c3c32c4cb1dc36c16bc456063a48f821ab"
+    },
     "RK-19.7.5-053": {
       "discussion/an-agent-naming-another-queues-it-once-its-turn-has-ended": "2f144cce534ffd749b0735977b92e1b45dc514c5ba2516beec5577423b90a19e"
+    },
+    "RK-19.7.5-054": {
+      "discussion/an-agent-named-in-three-segments-of-a-turn-is-queued-once": "9dc15b6d584e871b2cd9064539ae27f8dff89ba133f9493c496515b0cee7c2bb"
     },
     "RK-19.7.5-055": {
       "discussion/an-agent-naming-another-queues-it-once-its-turn-has-ended": "1f1564cd633072560c510ba46def5e421e5f81675c0486877eda1645716c8099",
       "discussion/an-unaddressed-message-asks-everyone-one-at-a-time": "1f1564cd633072560c510ba46def5e421e5f81675c0486877eda1645716c8099",
       "discussion/listen-only-cuts-the-turn-its-agent-is-taking": "1f1564cd633072560c510ba46def5e421e5f81675c0486877eda1645716c8099"
+    },
+    "RK-19.7.5-056": {
+      "discussion/a-failed-turn-keeps-what-it-committed-and-whom-it-named": "18d64c31d41db818587d16dac0544c0a21160a307de147c6b67a5616b01128b1",
+      "discussion/a-turn-its-round-cap-cuts-keeps-what-it-committed-and-whom-it-named": "18d64c31d41db818587d16dac0544c0a21160a307de147c6b67a5616b01128b1"
     },
     "RK-19.7.5-057": {
       "discussion/a-regenerated-turn-runs-while-waiting-and-listening": "246244f23467c4bccb47f133f93c8d00f38aa6ed1d5ecdc8c99a254662311530",
@@ -9891,6 +9914,9 @@
       "discussion/everyone-opens-in-the-host-s-order": "246244f23467c4bccb47f133f93c8d00f38aa6ed1d5ecdc8c99a254662311530",
       "discussion/regenerated-turns-run-before-ordinary-pending-turns": "246244f23467c4bccb47f133f93c8d00f38aa6ed1d5ecdc8c99a254662311530",
       "discussion/talking-again-ends-a-wait-that-was-for-it": "246244f23467c4bccb47f133f93c8d00f38aa6ed1d5ecdc8c99a254662311530"
+    },
+    "RK-19.7.5-058": {
+      "discussion/the-agent-whose-turn-ended-yields-to-another-a-person-put-after-it": "943906d73d466dce5ac1c4e1b03362b72a0205accfecf9d72127850b04449e75"
     },
     "RK-19.7.5-059": {
       "discussion/a-regenerated-answer-is-a-discussion-turn-of-its-own": "18a4761d5a9fd865744a504086e907bdc7fdfca0d9e46aeeac0908bb36bc0bc9",
@@ -9924,6 +9950,9 @@
       "discussion/a-person-s-message-ends-the-wait-even-asking-no-one": "9b5e15494880d6a63ae384c5d86276d9bda7aff81cc4dc3cfda27917873fc9d6",
       "discussion/a-regenerated-turn-runs-while-waiting-and-listening": "9b5e15494880d6a63ae384c5d86276d9bda7aff81cc4dc3cfda27917873fc9d6"
     },
+    "RK-19.7.5-063": {
+      "discussion/front-requests-are-served-in-the-order-they-came": "56c0a62cb9ae678d2c87fe02c0485074487c34b6bd70970983cda58f99198baa"
+    },
     "RK-19.7.5-064": {
       "discussion/an-offline-agent-s-turn-is-skipped-not-failed": "504fc63691a97d64b5893f1e88e138a58b7d155f2400810ec1618c84f54c8946"
     },
@@ -9945,6 +9974,10 @@
       "discussion/an-unaddressed-message-asks-everyone-one-at-a-time": "8060e23153ac865d42b222db8fc5ef5d969ac8cc91ce050707c30ed8d5254f35",
       "discussion/everyone-opens-in-the-host-s-order": "8060e23153ac865d42b222db8fc5ef5d969ac8cc91ce050707c30ed8d5254f35"
     },
+    "RK-19.7.5-071": {
+      "discussion/an-answer-to-an-ask-goes-only-to-the-askers-it-reaches": "c923a73d78cac5fa6779389467155b1814cfd0fa63a207b782dd7daef5d3c8ee",
+      "discussion/an-unaddressed-message-asks-only-the-agents-it-reaches": "c923a73d78cac5fa6779389467155b1814cfd0fa63a207b782dd7daef5d3c8ee"
+    },
     "RK-19.7.5-072": {
       "discussion/an-agent-asking-a-person-is-answered-by-their-next-message": "a6c8859695e0e36e05ebc3932dfa6e3d2aef2d31f90cc2eb76075cecaaa0b4ed"
     },
@@ -9957,6 +9990,10 @@
       "discussion/a-person-named-like-a-handle-is-addressed-by-no-name": "b562614cbcc74854df49dcc6a237fcd5284c0133b5ceb52dfab929729b004536",
       "discussion/a-person-s-message-ends-the-wait-even-asking-no-one": "b562614cbcc74854df49dcc6a237fcd5284c0133b5ceb52dfab929729b004536",
       "discussion/discussion-regeneration-falls-back-to-empty-address": "b562614cbcc74854df49dcc6a237fcd5284c0133b5ceb52dfab929729b004536"
+    },
+    "RK-19.7.5-075": {
+      "discussion/a-bot-or-a-delivery-naming-an-agent-queues-it-at-the-back": "92abb6cd0b33a0c5db1f1e99a1da0ab01526a5d24e2b5fb19b3bb84bc486352b",
+      "discussion/a-delivery-is-no-person-s-answer-and-asks-no-agent": "92abb6cd0b33a0c5db1f1e99a1da0ab01526a5d24e2b5fb19b3bb84bc486352b"
     },
     "RK-19.7.5-076": {
       "discussion/a-hook-s-injected-instruction-gives-no-turn": "c724c76dcbfc27a07b20e24f5c60a8b32734c1a93f9cb8ca1f9636a95035c4b4"
@@ -10014,6 +10051,9 @@
       "memory/a-returned-current-input-survives-budget-trimming": "996f052c256c2043156ef2b0b60d2728eed14e4764c2247573da239a36c109e8",
       "memory/a-summarizing-memory-never-summarizes-a-returned-current-input": "996f052c256c2043156ef2b0b60d2728eed14e4764c2247573da239a36c109e8"
     },
+    "RK-19.7.5-082": {
+      "discussion/a-speak-policy-reads-what-was-said-while-its-turn-waited": "bb66130cfa1a767609dd72ff553f4aa3a71eba6798179d955424dc1b3d601793"
+    },
     "RK-19.7.5-083": {
       "discussion/a-queued-turn-reads-the-room-when-it-starts": "702d8ecf80de1bf4338260a94dae2d07760d6fa279e177036f11c788e3c7ae95",
       "discussion/a-turn-keeps-its-round-before-later-messages": "702d8ecf80de1bf4338260a94dae2d07760d6fa279e177036f11c788e3c7ae95",
@@ -10052,6 +10092,9 @@
       "discussion/a-message-after-an-agent-s-question-is-decided-knowing-who-waits": "d1f3c15512e456d1356d333bad77b8efab983338d66a7fd8db272292b4e5c7c2",
       "discussion/undecided-a-message-after-a-question-goes-to-the-agent-that-asked": "d1f3c15512e456d1356d333bad77b8efab983338d66a7fd8db272292b4e5c7c2"
     },
+    "RK-19.7.5-088": {
+      "discussion/with-addressed-only-an-answer-naming-nobody-clears-no-ask": "60c82421295c6180e6cf94591292456600afc1479ebb2eec54439853eb6a9327"
+    },
     "RK-19.7.5-089": {
       "discussion/a-person-s-message-ends-the-wait-even-asking-no-one": "94f0a256d7e08acd9ef893215284fee2359795de7ac0359413be4f88cb31c92e",
       "discussion/a-regenerated-turn-runs-while-waiting-and-listening": "94f0a256d7e08acd9ef893215284fee2359795de7ac0359413be4f88cb31c92e",
@@ -10088,6 +10131,12 @@
       "discussion/the-depth-limit-stops-a-turn-once-and-a-person-resumes-it": "4fdafa9a85d379e91ec31a71c25ac239ed1698d3148ca08d899a036eb0df1142",
       "discussion/the-observation-of-a-turn-the-depth-limit-stops-is-stored-with-its-record": "4fdafa9a85d379e91ec31a71c25ac239ed1698d3148ca08d899a036eb0df1142"
     },
+    "RK-19.7.5-096": {
+      "discussion/a-turn-a-spent-budget-asks-for-has-a-budget-of-its-own": "5b712610becb061109e6b65bb28ccff1aee2a4bdda0741d1e8552b75892a72f7"
+    },
+    "RK-19.7.5-097": {
+      "discussion/a-hook-asking-again-after-each-answer-stops-at-the-depth-limit": "29d4bc255f40560dbad51f2dab77ae4516ee37518aaf66e1a3252ed40034bb40"
+    },
     "RK-19.7.5-098": {
       "discussion/a-regenerated-discussion-turn-past-the-depth-limit-is-recorded-and-dropped": "86828a5ac96d0c07ae84f8a5ff3a7b6f6029d4db5f227b4fae9b202f990d4bac",
       "discussion/an-instruction-past-the-depth-limit-is-dropped-and-reported": "86828a5ac96d0c07ae84f8a5ff3a7b6f6029d4db5f227b4fae9b202f990d4bac"
@@ -10112,12 +10161,24 @@
       "discussion/an-agent-that-only-listens-answers-only-a-person-naming-it": "df06460f668479f5d3cfb5c2d912912b4327fbe2adf2e2631ee6a43b6a086d0b",
       "discussion/talking-again-ends-a-wait-that-was-for-it": "df06460f668479f5d3cfb5c2d912912b4327fbe2adf2e2631ee6a43b6a086d0b"
     },
+    "RK-19.7.5-104": {
+      "discussion/a-speak-policy-and-listen-only-each-silence-the-agent": "cd4e685c52c2a71ee951eb93a431b89f792138414b32b4b16286886ebd5e38b1"
+    },
     "RK-19.7.5-105": {
       "discussion/acp-hold-cancels-prompt": "38873c644d8358f6f09e539d7058df5174ded576eefc690042bc981ed6dd7484",
       "discussion/listen-only-cuts-the-turn-its-agent-is-taking": "38873c644d8358f6f09e539d7058df5174ded576eefc690042bc981ed6dd7484"
     },
     "RK-19.7.5-106": {
       "discussion/listen-only-on-a-turn-given-but-not-started-cuts-it": "2b55eea58a1b57862259bd75cc45d56d453083e7ff6d00fae7f694f5c696f51a"
+    },
+    "RK-19.7.5-107": {
+      "discussion/talking-again-an-agent-reads-the-whole-room": "5ca80ca14b0911eb129732fd89c7b0f04be6a87589613cc7a44afdea5607c1b8"
+    },
+    "RK-19.7.5-108": {
+      "discussion/a-message-s-turn-asks-the-speak-policy-and-an-instruction-s-does-not": "90ef65a4613b615e70ffc97410e60104e00856aceb8a6bb2bd587c0ff65dbcc8"
+    },
+    "RK-19.7.5-109": {
+      "discussion/a-message-s-turn-asks-the-speak-policy-and-an-instruction-s-does-not": "ccd97c604fac61d78aa36c91e67d77f6c7cb064fb35865e8dc0a36bd60e625ed"
     },
     "RK-19.7.5-110": {
       "discussion/a-silence-after-a-tool-round-is-held-back-on-its-own": "07118dcfe7821ec69809b37db6381674d76fdd4e6f1ef728369a6443ead43f70",
@@ -10134,6 +10195,12 @@
       "discussion/a-silence-after-a-tool-round-is-held-back-on-its-own": "6303c15d60601b8944d10047c43e464aac3b957722aec8bc9fbbbeef2a2cbfea",
       "discussion/a-start-after-a-silent-round-is-held-then-released-whole": "6303c15d60601b8944d10047c43e464aac3b957722aec8bc9fbbbeef2a2cbfea",
       "discussion/a-streamed-silence-never-reaches-a-live-transport": "6303c15d60601b8944d10047c43e464aac3b957722aec8bc9fbbbeef2a2cbfea"
+    },
+    "RK-19.7.5-113": {
+      "discussion/a-turn-with-no-text-leaves-no-row": "3d46ef2c13a10cd6dc26872a17f3e74a070e0a8ebb71d56889ff0ab27c698e0b"
+    },
+    "RK-19.7.5-114": {
+      "discussion/a-silent-turn-counts-against-max-turns": "a9d6b67143b7ec0145ff7c86488bd6587a41e5412cd39695331754bdac351dc6"
     },
     "RK-19.7.5-115": {
       "discussion/a-queued-turn-reads-the-room-when-it-starts": "07571f42b725c199e620858312287cd333ec21ac00bc51f6b929d3097649ceec",
@@ -10216,6 +10283,9 @@
       "memory/a-queued-turn-keeps-its-question-out-of-the-summary": "eb9897219bcb857f1312bfaf0776bb10559c1aecde8c9ab8d9ad712f59f813eb",
       "memory/a-queued-turn-keeps-its-question-outside-the-window": "eb9897219bcb857f1312bfaf0776bb10559c1aecde8c9ab8d9ad712f59f813eb",
       "memory/a-queued-turn-keeps-its-question-through-budget-trimming": "eb9897219bcb857f1312bfaf0776bb10559c1aecde8c9ab8d9ad712f59f813eb"
+    },
+    "RK-19.7.5-118": {
+      "discussion/the-host-s-rules-name-another-agent-s-handle-and-the-silence-token": "79d48b279de7f1a4ecbcb824166329a0856d116fc64a3077ec49f4d105955ca8"
     },
     "RK-19.7.5-119": {
       "memory/a-deferred-turn-compacts-only-the-history-before-its-input": "a678e71c4a7412a8c99c505c19e16668b0af851a155cfa723c0eab7e1f41b4fd",
@@ -10460,6 +10530,9 @@
       "discussion/everyone-orders-and-bounds-the-candidates": "bb489a6de51721ccb28e5bb9593ad0832a7a24edb185c6f95cf1c2020fad5ccc",
       "discussion/the-dispatch-policy-reads-agents-by-their-handles": "bb489a6de51721ccb28e5bb9593ad0832a7a24edb185c6f95cf1c2020fad5ccc"
     },
+    "RK-19.7.5-156": {
+      "discussion/with-no-candidate-the-policy-is-not-asked": "3fb9ffbe5d6f13f83e70ae1746985a52ea5d6d015c9df416343cd9b0dc18244b"
+    },
     "RK-19.7.5-157": {
       "discussion/a-decision-keeps-to-the-candidates-each-once": "1fdc9ab66b9645158d1cb0531fa8e35bf38e643d7ca5797ed43c5736ba709ed6",
       "discussion/the-agents-answer-in-the-order-decided": "1fdc9ab66b9645158d1cb0531fa8e35bf38e643d7ca5797ed43c5736ba709ed6",
@@ -10502,6 +10575,9 @@
     "RK-19.7.5-177": {
       "tasks/a-relayed-task-result-names-its-worker-by-the-discussion-handle": "2243e3af3c585765d7bc5197c66e37145752878b744d816e16199ba816a0f6fc"
     },
+    "RK-19.7.5-189": {
+      "discussion/the-same-agents-hold-a-queue-of-their-own-in-each-room": "f18d31206f7c733ecca094e5b3d48fbe8f472f5b09eb89f71eff8c2bb3b571d8"
+    },
     "RK-19.7.5-191": {
       "discussion/an-unaddressed-message-asks-everyone-one-at-a-time": "2ce78e3a4416537f1901c1f538368397898ded9e63614b4540f36815015b490e",
       "discussion/everyone-opens-in-the-host-s-order": "2ce78e3a4416537f1901c1f538368397898ded9e63614b4540f36815015b490e",
@@ -10510,6 +10586,15 @@
     "RK-19.7.5-192": {
       "discussion/a-silence-after-a-tool-round-is-held-back-on-its-own": "a4f0cdf0109cc57465def36e66024cae31cbb4c57b21970befd8b46fa95fa9e0",
       "discussion/a-start-after-a-silent-round-is-held-then-released-whole": "a4f0cdf0109cc57465def36e66024cae31cbb4c57b21970befd8b46fa95fa9e0"
+    },
+    "RK-19.7.5-193": {
+      "discussion/an-agent-waiting-on-a-person-can-still-be-named-by-another": "61d3c6e6c15524ab9ebba60bfadc1096a3554c62a7521ae253f4f2599dc25f32"
+    },
+    "RK-19.7.5-194": {
+      "discussion/an-agent-s-message-naming-nobody-is-not-dispatched": "e0941b3c52fb2e7aa480796127de3d2aa642550ee4869571f13e403c82549faa"
+    },
+    "RK-19.7.5-195": {
+      "discussion/threads-share-one-queue-and-each-turn-reads-the-whole-room": "983d1de28e44b914d19ab0fd7560ecad5d53868dc33658ac4034e20ce2d9d51a"
     },
     "RK-19.7.5-196": {
       "discussion/a-room-moves-from-a-swarm-to-a-discussion-and-back": "cc9b4ace9fed8dd61e47a8a01a6fca41a1064f45bff420d4f738fb24158a0121",

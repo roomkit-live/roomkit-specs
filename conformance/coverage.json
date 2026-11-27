@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "f73e8090fe7e39cb56cfb5b71dcd2e49070574bf3b2dd580bfd1e5e038e6ec9e",
-  "corpus_sha256": "f432f1159aebebdd0b67b603e162bafcc2c86ee0f8abd18a10202044e7f7ac48",
+  "corpus_sha256": "15974e7988d1f3ea4501bfc430f1431ec13853c3d30e661764104e70bc533ae6",
   "python_commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
-  "scenario_count": 4032,
+  "scenario_count": 4060,
   "sections": [
     {
       "section": "0",
@@ -451,6 +451,7 @@
       "candidate_scenarios": [
         "delivery/a-message-keyed-like-a-publication-stands-in-for-none",
         "delivery/the-doors-refuse-the-publication-namespace",
+        "discussion/threads-share-one-queue-and-each-turn-reads-the-whole-room",
         "inbound/a-field-the-parse-set-stands",
         "inbound/a-parse-fills-every-member-of-the-event-source",
         "inbound/a-parse-naming-another-channel-is-sourced-from-its-own",
@@ -1447,9 +1448,13 @@
         "delivery/an-adopted-call-waited-in-its-parse-reads-its-turn",
         "delivery/the-next-event-s-turn-runs-while-the-turn-before-it-is-held",
         "discussion/a-mark-from-outside-breaks-no-turn",
+        "discussion/a-message-s-turn-asks-the-speak-policy-and-an-instruction-s-does-not",
         "discussion/a-person-named-like-an-agent-s-label-reads-as-a-participant-to-the-policy",
         "discussion/a-queued-turn-reads-the-room-when-it-starts",
+        "discussion/a-room-with-an-agent-that-thinks-while-it-listens-is-refused",
         "discussion/a-silence-after-a-tool-round-is-held-back-on-its-own",
+        "discussion/a-speak-policy-and-listen-only-each-silence-the-agent",
+        "discussion/a-speak-policy-reads-what-was-said-while-its-turn-waited",
         "discussion/a-start-after-a-silent-round-is-held-then-released-whole",
         "discussion/a-stored-handle-for-no-agent-labels-no-sender",
         "discussion/a-turn-keeps-its-round-before-later-messages",
@@ -2714,6 +2719,8 @@
         "delivery/a-source-detached-before-the-commit-refuses-the-delivery",
         "delivery/an-agent-that-cannot-read-is-unavailable",
         "discussion/an-agent-the-room-never-delivers-to-is-not-queued",
+        "discussion/an-answer-to-an-ask-goes-only-to-the-askers-it-reaches",
+        "discussion/an-unaddressed-message-asks-only-the-agents-it-reaches",
         "discussion/the-recent-conversation-withholds-what-a-delete-removed",
         "executors/a-turn-on-another-executor-reads-none-of-the-rows-a-delete-removed",
         "greeting/a-greeting-runs-no-before-broadcast-hook",
@@ -3010,6 +3017,8 @@
         "delivery/a-delivery-naming-a-chain-depth-continues-that-chain-queued-or-not",
         "delivery/a-delivery-queued-from-a-turn-carries-the-turn-s-depth",
         "delivery/an-adopted-call-past-the-budget-before-its-commit-ends-at-its-adopter-s-deadline",
+        "discussion/a-hook-asking-again-after-each-answer-stops-at-the-depth-limit",
+        "discussion/a-turn-a-spent-budget-asks-for-has-a-budget-of-its-own",
         "discussion/the-observation-of-a-turn-the-depth-limit-stops-is-stored-with-its-record",
         "executors/a-chain-of-turns-apart-sending-through-their-host-stops-at-the-depth-limit",
         "executors/an-executor-s-hook-sends-through-the-host-after-the-turn-at-its-answer-s-depth",
@@ -3708,6 +3717,7 @@
         "delivery/an-awaited-adopted-call-ends-with-its-hook-s-timeout",
         "delivery/before-deliver-blocks-rewrites-and-fails-open",
         "delivery/observers-start-in-firing-order-while-earlier-bodies-wait",
+        "discussion/a-failed-turn-keeps-what-it-committed-and-whom-it-named",
         "eviction/a-hook-s-refusal-and-its-override-past-the-threshold-are-stored",
         "executors/a-turn-apart-asks-a-person-through-the-room-owner",
         "executors/a-turn-apart-s-error-message-reaches-on-error-and-never-a-model",
@@ -9396,6 +9406,7 @@
         "discussion/a-room-moves-from-a-swarm-to-a-discussion-and-back",
         "discussion/an-install-right-after-another-process-uninstalled-is-the-room-s-strategy",
         "discussion/an-uninstall-detaches-what-another-process-s-install-attached",
+        "discussion/the-same-agents-hold-a-queue-of-their-own-in-each-room",
         "kit-executor/named-hooks-refuse-invalid-registrations",
         "kit-executor/uninstalling-a-strategy-removes-only-its-activation",
         "orchestration/a-hosts-own-strategy-is-taken-back-out-whole",
@@ -9623,13 +9634,15 @@
       },
       "decided_gaps": {
         "step": 6,
-        "writable": 52
+        "writable": 25
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
+        "discussion/a-bot-or-a-delivery-naming-an-agent-queues-it-at-the-back",
         "discussion/a-custom-handle-queues-its-agent-and-its-id-names-nobody",
         "discussion/a-decision-keeps-to-the-candidates-each-once",
         "discussion/a-decision-reports-the-message-candidates-and-cost",
+        "discussion/a-delivery-is-no-person-s-answer-and-asks-no-agent",
         "discussion/a-discussion-installed-on-a-live-room-reads-its-history",
         "discussion/a-discussion-is-checked-when-built",
         "discussion/a-discussion-regenerates-the-remaining-answerer-before-its-original-addressees",
@@ -9640,18 +9653,22 @@
         "discussion/a-dispatch-policy-does-not-go-with-addressed-only",
         "discussion/a-dispatched-message-stays-unaddressed",
         "discussion/a-done-discussion-decides-nothing",
+        "discussion/a-failed-turn-keeps-what-it-committed-and-whom-it-named",
         "discussion/a-failing-policy-asks-every-candidate",
         "discussion/a-fresh-kit-queues-regeneration-in-the-stored-discussion",
         "discussion/a-handle-is-the-host-s-else-the-channel-id-else-the-name",
+        "discussion/a-hook-asking-again-after-each-answer-stops-at-the-depth-limit",
         "discussion/a-hook-s-injected-instruction-gives-no-turn",
         "discussion/a-mark-from-outside-breaks-no-turn",
         "discussion/a-message-after-an-agent-s-question-is-decided-knowing-who-waits",
         "discussion/a-message-deleted-before-its-decision-is-not-decided",
         "discussion/a-message-deleted-while-queued-gives-no-turn",
         "discussion/a-message-its-sender-deleted-before-its-decision-is-not-decided",
+        "discussion/a-message-s-turn-asks-the-speak-policy-and-an-instruction-s-does-not",
         "discussion/a-message-the-persistence-policy-keeps-out-gives-no-turn",
         "discussion/a-message-waiting-for-a-decision-keeps-its-place",
         "discussion/a-name-a-binding-hides-the-message-from-queues-nobody",
+        "discussion/a-name-a-person-and-an-agent-share-is-the-agent-s",
         "discussion/a-name-is-never-decided",
         "discussion/a-person-named-like-a-handle-is-addressed-by-no-name",
         "discussion/a-person-named-like-an-agent-s-label-reads-as-a-participant-to-the-policy",
@@ -9659,6 +9676,7 @@
         "discussion/a-person-s-message-ends-the-wait-even-asking-no-one",
         "discussion/a-pick-merged-with-a-later-message-answers-the-later-one",
         "discussion/a-policy-past-its-bound-asks-every-candidate",
+        "discussion/a-policy-that-does-not-decide-is-given-five-seconds-by-default",
         "discussion/a-process-changing-its-discussion-s-agents-keeps-the-queue-and-lets-the-agent-it-drops-go",
         "discussion/a-process-that-did-not-install-it-follows-the-discussion",
         "discussion/a-process-that-follows-the-discussion-reads-handles",
@@ -9679,22 +9697,30 @@
         "discussion/a-room-moves-from-a-swarm-to-a-discussion-and-back",
         "discussion/a-room-of-another-organization-is-not-asked-about",
         "discussion/a-room-that-stores-a-discussion-asks-no-agent-at-broadcast",
+        "discussion/a-room-with-a-realtime-channel-is-refused",
         "discussion/a-room-with-a-router-is-refused",
         "discussion/a-room-with-a-voice-channel-is-refused",
+        "discussion/a-room-with-an-agent-that-thinks-while-it-listens-is-refused",
         "discussion/a-room-with-another-intelligence-channel-is-refused",
         "discussion/a-routed-first-message-in-a-process-that-follows-reads-handles",
         "discussion/a-router-cannot-be-installed-in-a-room-a-discussion-holds",
         "discussion/a-silence-after-a-tool-round-is-held-back-on-its-own",
         "discussion/a-silent-agent-says-nothing-to-the-room",
+        "discussion/a-silent-turn-counts-against-max-turns",
+        "discussion/a-speak-policy-and-listen-only-each-silence-the-agent",
+        "discussion/a-speak-policy-reads-what-was-said-while-its-turn-waited",
         "discussion/a-start-after-a-silent-round-is-held-then-released-whole",
         "discussion/a-stored-discussion-the-constructor-refuses-holds-no-room",
         "discussion/a-stored-handle-for-no-agent-labels-no-sender",
         "discussion/a-stored-over-discussion-refuses-regeneration-on-the-first-call",
         "discussion/a-streamed-silence-never-reaches-a-live-transport",
         "discussion/a-tenant-reads-no-discussion-of-another",
+        "discussion/a-turn-a-spent-budget-asks-for-has-a-budget-of-its-own",
+        "discussion/a-turn-its-round-cap-cuts-keeps-what-it-committed-and-whom-it-named",
         "discussion/a-turn-keeps-its-round-before-later-messages",
         "discussion/a-turn-replays-its-round-with-no-later-message",
         "discussion/a-turn-s-notes-quote-a-ranked-label-whole",
+        "discussion/a-turn-with-no-text-leaves-no-row",
         "discussion/acp-copied-notes-header",
         "discussion/acp-dispatch-identity",
         "discussion/acp-forged-turn-mark",
@@ -9706,16 +9732,20 @@
         "discussion/an-agent-asking-a-person-is-answered-by-their-next-message",
         "discussion/an-agent-named-by-an-id-takes-the-name-its-channel-gives",
         "discussion/an-agent-named-by-an-id-that-is-no-handle-waits-for-the-install",
+        "discussion/an-agent-named-in-three-segments-of-a-turn-is-queued-once",
         "discussion/an-agent-naming-another-queues-it-once-its-turn-has-ended",
         "discussion/an-agent-s-answer-typed-instruction-gives-no-turn",
         "discussion/an-agent-s-memory-learns-every-message-it-may-see",
+        "discussion/an-agent-s-message-naming-nobody-is-not-dispatched",
         "discussion/an-agent-s-message-outside-its-turn-queues-the-agent-it-names",
         "discussion/an-agent-that-only-listens-answers-a-person-naming-it-in-another-process",
         "discussion/an-agent-that-only-listens-answers-only-a-person-naming-it",
         "discussion/an-agent-that-only-listens-ignores-a-message-that-does-not-name-it",
         "discussion/an-agent-the-room-never-delivers-to-is-not-queued",
+        "discussion/an-agent-waiting-on-a-person-can-still-be-named-by-another",
         "discussion/an-agent-with-a-name-keeps-its-channel-id-as-its-handle",
         "discussion/an-agent-without-a-handle-or-two-alike-is-refused-when-built",
+        "discussion/an-answer-to-an-ask-goes-only-to-the-askers-it-reaches",
         "discussion/an-empty-decision-asks-no-agent",
         "discussion/an-install-another-process-replaced-is-not-current",
         "discussion/an-install-right-after-another-process-uninstalled-is-the-room-s-strategy",
@@ -9731,6 +9761,7 @@
         "discussion/an-instruction-to-several-agents-gives-each-its-turn",
         "discussion/an-offline-agent-s-turn-is-skipped-not-failed",
         "discussion/an-unaddressed-message-asks-everyone-one-at-a-time",
+        "discussion/an-unaddressed-message-asks-only-the-agents-it-reaches",
         "discussion/an-uninstall-detaches-what-another-process-s-install-attached",
         "discussion/asking-about-a-strategy-not-stored-with-the-room-is-refused",
         "discussion/discussion-regeneration-falls-back-to-addressed-only",
@@ -9740,6 +9771,7 @@
         "discussion/done-ends-the-discussion-before-the-next-turn",
         "discussion/everyone-opens-in-the-host-s-order",
         "discussion/everyone-orders-and-bounds-the-candidates",
+        "discussion/front-requests-are-served-in-the-order-they-came",
         "discussion/identity-reaches-the-candidates",
         "discussion/listen-only-cuts-the-turn-its-agent-is-taking",
         "discussion/listen-only-on-a-turn-given-but-not-started-cuts-it",
@@ -9749,10 +9781,13 @@
         "discussion/regeneration-after-removing-the-discussion-answer-keeps-its-addressee",
         "discussion/repeated-discussion-regenerations-before-the-turn-queue-it-once",
         "discussion/speak-queue-changes-are-announced-in-order",
+        "discussion/talking-again-an-agent-reads-the-whole-room",
         "discussion/talking-again-ends-a-wait-that-was-for-it",
+        "discussion/the-agent-whose-turn-ended-yields-to-another-a-person-put-after-it",
         "discussion/the-agents-answer-in-the-order-decided",
         "discussion/the-depth-limit-stops-a-turn-once-and-a-person-resumes-it",
         "discussion/the-dispatch-policy-reads-agents-by-their-handles",
+        "discussion/the-host-s-rules-name-another-agent-s-handle-and-the-silence-token",
         "discussion/the-kind-asked-about-is-the-kind-installed",
         "discussion/the-last-turn-given-ends-the-discussion-at-once",
         "discussion/the-lease-holder-decides-what-a-follower-routed",
@@ -9761,7 +9796,9 @@
         "discussion/the-queue-says-who-a-decision-queued",
         "discussion/the-recent-conversation-holds-what-a-candidate-may-read",
         "discussion/the-recent-conversation-withholds-what-a-delete-removed",
+        "discussion/the-same-agents-hold-a-queue-of-their-own-in-each-room",
         "discussion/the-same-configuration-installed-by-another-process-keeps-both-current",
+        "discussion/threads-share-one-queue-and-each-turn-reads-the-whole-room",
         "discussion/two-routed-first-messages-in-a-process-that-follows-read-handles",
         "discussion/undecided-a-message-after-a-question-goes-to-the-agent-that-asked",
         "discussion/uninstalling-cuts-the-turn-under-way",
@@ -9770,7 +9807,9 @@
         "discussion/uninstalling-in-another-process-leaves-no-record-behind",
         "discussion/uninstalling-in-one-process-ends-the-discussion-in-the-others",
         "discussion/what-a-process-held-when-another-install-replaced-its-own-is-not-kept",
+        "discussion/with-addressed-only-an-answer-naming-nobody-clears-no-ask",
         "discussion/with-addressed-only-an-unaddressed-message-asks-no-agent",
+        "discussion/with-no-candidate-the-policy-is-not-asked",
         "executors/a-committed-event-goes-to-one-executor-that-would-take-the-room-s-turns",
         "executors/a-committed-event-goes-to-the-executor-holding-the-room-s-state",
         "executors/a-committed-event-no-executor-takes-is-dropped",
@@ -10683,6 +10722,8 @@
         "delivery/the-worker-does-not-retry-a-refusal",
         "delivery/the-worker-retries-an-unavailable-destination",
         "delivery/wait-for-idle-on-a-text-transport-delivers-at-once",
+        "discussion/a-bot-or-a-delivery-naming-an-agent-queues-it-at-the-back",
+        "discussion/a-delivery-is-no-person-s-answer-and-asks-no-agent",
         "inbound/a-kit-s-inbound-rate-limit-refuses-a-proactive-delivery-past-its-bucket",
         "realtime/an-instruction-enters-the-session-as-system",
         "tasks/a-before-deliver-hook-s-block-keeps-a-hand-back-from-its-agent",
@@ -44186,12 +44227,7 @@
       "id": "RK-19.7.5-016",
       "section": "19.7.5",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1931",
-        "note": "Run the scripted decision at the default timeout without configuring a value and assert the reported five-second duration. The existing timeout scenario configures a different value."
-      }
+      "links": []
     },
     {
       "id": "RK-19.7.5-017",
@@ -44215,23 +44251,13 @@
       "id": "RK-19.7.5-020",
       "section": "19.7.5",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1931",
-        "note": "install_strategy of a scripted discussion in a room binding a realtime channel: refused, as the existing voice case is (requires realtime)."
-      }
+      "links": []
     },
     {
       "id": "RK-19.7.5-021",
       "section": "19.7.5",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1931",
-        "note": "Install a discussion over an existing agent configured to think while listening and assert installation refusal."
-      }
+      "links": []
     },
     {
       "id": "RK-19.7.5-196",
@@ -44297,12 +44323,7 @@
       "id": "RK-19.7.5-030",
       "section": "19.7.5",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1931",
-        "note": "Compare a framework-originated delivery with a person's input and verify it cannot enter the personal-message route."
-      }
+      "links": []
     },
     {
       "id": "RK-19.7.5-031",
@@ -44439,12 +44460,7 @@
       "id": "RK-19.7.5-052",
       "section": "19.7.5",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1931",
-        "note": "Give one person and one agent the same valid handle and assert the agent wins without a personal outstanding question."
-      }
+      "links": []
     },
     {
       "id": "RK-19.7.5-053",
@@ -44456,12 +44472,7 @@
       "id": "RK-19.7.5-054",
       "section": "19.7.5",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1931",
-        "note": "Deliver several distinct segments from one turn, all naming the same peer, and assert exactly one queued turn. Repeated names within one segment do not exercise the across-segments rule."
-      }
+      "links": []
     },
     {
       "id": "RK-19.7.5-055",
@@ -44473,12 +44484,7 @@
       "id": "RK-19.7.5-056",
       "section": "19.7.5",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1931",
-        "note": "Cut or fail an agent after it commits an addressed segment. Assert the message and peer's turn remain, the speaker is not retried and a failure is reported if applicable."
-      }
+      "links": []
     },
     {
       "id": "RK-19.7.5-057",
@@ -44490,12 +44496,7 @@
       "id": "RK-19.7.5-058",
       "section": "19.7.5",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1931",
-        "note": "Insert the previous speaker at the front while a different agent can speak and assert the other agent takes the next turn."
-      }
+      "links": []
     },
     {
       "id": "RK-19.7.5-059",
@@ -44598,12 +44599,7 @@
       "id": "RK-19.7.5-063",
       "section": "19.7.5",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1931",
-        "note": "Insert two separate front-of-queue requests and control the active turn to assert the order in which those requests are served."
-      }
+      "links": []
     },
     {
       "id": "RK-19.7.5-064",
@@ -44661,12 +44657,7 @@
       "id": "RK-19.7.5-071",
       "section": "19.7.5",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1931",
-        "note": "Route an unaddressed personal message with one otherwise eligible everyone member or outstanding asker hidden/unreadable, and inspect the resulting queue."
-      }
+      "links": []
     },
     {
       "id": "RK-19.7.5-072",
@@ -44690,12 +44681,7 @@
       "id": "RK-19.7.5-075",
       "section": "19.7.5",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1931",
-        "note": "Send an explicitly addressed and an unaddressed bot or framework delivery and verify back-of-queue placement versus no solicitation."
-      }
+      "links": []
     },
     {
       "id": "RK-19.7.5-076",
@@ -44784,12 +44770,7 @@
           ],
           "executions": []
         }
-      ],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1931",
-        "note": "Set a speaking policy on a deferred discussion turn and inspect its SpeakTurn.recent against an event committed while waiting. The existing reviewed evidence is a native test only."
-      }
+      ]
     },
     {
       "id": "RK-19.7.5-083",
@@ -44825,12 +44806,7 @@
       "id": "RK-19.7.5-088",
       "section": "19.7.5",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1931",
-        "note": "In an addressed-only room have a personal answer first omit then explicitly name the asking agent; inspect asked after each."
-      }
+      "links": []
     },
     {
       "id": "RK-19.7.5-089",
@@ -44878,23 +44854,13 @@
       "id": "RK-19.7.5-096",
       "section": "19.7.5",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1931",
-        "note": "Enter a discussion turn from work near its reentry cap and compare the new turn's own ten-times-depth budget, including regeneration."
-      }
+      "links": []
     },
     {
       "id": "RK-19.7.5-097",
       "section": "19.7.5",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1931",
-        "note": "Ask again from an asynchronous hook, including via another process, and assert increasing inherited depths stop the loop."
-      }
+      "links": []
     },
     {
       "id": "RK-19.7.5-098",
@@ -44936,12 +44902,7 @@
       "id": "RK-19.7.5-104",
       "section": "19.7.5",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1931",
-        "note": "Combine a listening speak policy with the discussion's own listening state and exercise both ways of silencing the same agent."
-      }
+      "links": []
     },
     {
       "id": "RK-19.7.5-105",
@@ -44959,34 +44920,19 @@
       "id": "RK-19.7.5-107",
       "section": "19.7.5",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1931",
-        "note": "Resume a previously listening agent after intervening messages and inspect its next model history."
-      }
+      "links": []
     },
     {
       "id": "RK-19.7.5-108",
       "section": "19.7.5",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1931",
-        "note": "Install a speaking policy in a discussion, assert a normal turn invokes it, and assert a dedicated instruction bypasses it."
-      }
+      "links": []
     },
     {
       "id": "RK-19.7.5-109",
       "section": "19.7.5",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1931",
-        "note": "Set a silent speaking-policy decision in an installed discussion and assert no model call and a finished turn."
-      }
+      "links": []
     },
     {
       "id": "RK-19.7.5-110",
@@ -45010,23 +44956,13 @@
       "id": "RK-19.7.5-113",
       "section": "19.7.5",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1931",
-        "note": "End a discussion generation without text and assert no stored response row and no transport delivery."
-      }
+      "links": []
     },
     {
       "id": "RK-19.7.5-114",
       "section": "19.7.5",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1931",
-        "note": "Set a small max_turns bound, produce a silent response and assert the turn still counts against the limit."
-      }
+      "links": []
     },
     {
       "id": "RK-19.7.5-115",
@@ -45050,12 +44986,7 @@
       "id": "RK-19.7.5-118",
       "section": "19.7.5",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1931",
-        "note": "Supply custom rules with both placeholders and compare the substituted peer handle and configured silence token in actual turn notes."
-      }
+      "links": []
     },
     {
       "id": "RK-19.7.5-119",
@@ -45333,12 +45264,7 @@
       "id": "RK-19.7.5-156",
       "section": "19.7.5",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1931",
-        "note": "Send an unaddressed personal message with all possible candidates ineligible and assert neither a dispatch call nor an agent turn."
-      }
+      "links": []
     },
     {
       "id": "RK-19.7.5-157",
@@ -45669,12 +45595,7 @@
       "id": "RK-19.7.5-189",
       "section": "19.7.5",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1931",
-        "note": "Run the same agent set in two discussion rooms, change listening/queue state in one and assert that the other room's state stays independent."
-      }
+      "links": []
     },
     {
       "id": "RK-19.7.5-190",
@@ -45703,34 +45624,19 @@
       "id": "RK-19.7.5-193",
       "section": "19.7.5",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1931",
-        "note": "While an agent is waiting for a person's answer, send it an explicit request from a different agent and assert the request remains eligible."
-      }
+      "links": []
     },
     {
       "id": "RK-19.7.5-194",
       "section": "19.7.5",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1931",
-        "note": "Install a dispatch policy and emit an unaddressed ordinary agent message. Assert no policy call and no resulting agent turn."
-      }
+      "links": []
     },
     {
       "id": "RK-19.7.5-195",
       "section": "19.7.5",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1931",
-        "note": "Exercise two different event threads concurrently, asserting inherited reply threads, a shared discussion queue and whole-room history."
-      }
+      "links": []
     },
     {
       "id": "RK-19.8-002",
