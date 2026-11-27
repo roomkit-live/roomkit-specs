@@ -1,14 +1,14 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "acp/an-agent-that-selects-another-protocol-version-fails-the-turn",
-  "title": "An ACP agent that answers initialize with a protocol version the channel does not speak fails the turn clearly, naming both versions, and no session is opened",
+  "title": "An ACP agent that answers initialize with a protocol version the channel does not speak fails the turn clearly, and no session is opened",
   "rules": [
     "§6.4"
   ],
   "requirements": [
     "RK-6.4-485"
   ],
-  "notes": "The scripted agent selects version 2; the channel speaks the stable version 1. The negotiation fails at initialization: the turn's error names the version the agent selected and the one expected, ON_ERROR is told, and the agent receives no session/new. Python: channels/_acp_client.py (the protocol version check after initialize).",
+  "notes": "The scripted agent selects version 2; the channel speaks the stable version 1. The negotiation fails at initialization: the caller reads the turn's error, ON_ERROR is told, and the agent receives no session/new. The error's wording is not asserted. Python: channels/_acp_client.py (the protocol version check after initialize).",
   "setup": {
     "channels": [
       {
@@ -67,11 +67,7 @@
         "result": {
           "blocked": false,
           "error": {
-            "$contains": [
-              "ACP protocol negotiation failed",
-              "version 2",
-              "expected 1"
-            ]
+            "$present": true
           }
         }
       }

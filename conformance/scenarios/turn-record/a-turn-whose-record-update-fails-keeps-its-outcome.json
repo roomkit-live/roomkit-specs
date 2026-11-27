@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "turn-record/a-turn-whose-record-update-fails-keeps-its-outcome",
-  "title": "A turn whose record the store fails to write on its row keeps its outcome: the caller learns no error, the answer stands and is delivered, and the stored row lacks the record",
+  "title": "A turn whose record the store fails to write on its row keeps its outcome: the caller learns no error and reads the record, the answer stands, and the stored row lacks the record",
   "rules": [
     "§6.4"
   ],

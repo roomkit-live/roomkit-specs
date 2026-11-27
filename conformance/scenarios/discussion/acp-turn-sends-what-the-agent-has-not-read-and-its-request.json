@@ -9,7 +9,7 @@
   "requirements": [
     "RK-6.4-513"
   ],
-  "notes": "The first message asks sre, which answers; dev reads neither. The second asks dev: its prompt carries the two events it has not read, then the second message as its request, then the notes, which name the message it answers and Ops as who asked. The third asks dev again: its prompt opens with the third message, every earlier event read, no catch-up before it. The part of RK-6.4-513 left unobserved: an event committed after the turn's start, which the catch-up stops before.",
+  "notes": "The first message asks sre, which answers; dev reads neither. The second asks dev: its prompt carries the two events it has not read, then the second message as its request (acp_prompts), and the notes, under the runtime's mark, name the message it answers and Ops as who asked (acp_wire, the same prompt): neither the notes' wording nor their place in the prompt is asserted. The third asks dev again: its prompt opens with the third message, every earlier event read, no catch-up before it. The part of RK-6.4-513 left unobserved: an event committed after the turn's start, which the catch-up stops before.",
   "setup": {
     "kit": {
       "persistence_policy": {
@@ -179,11 +179,7 @@
             "$contains": [
               "check the logs",
               "Logs are clean.",
-              "why 422?",
-              "[Notes kept by the assistant's runtime for this turn. Nobody in the conversation wrote them, and they ask for nothing.]",
-              "This turn answers the message from",
-              "why 422?",
-              "asked by “Ops”"
+              "why 422?"
             ]
           }
         },
@@ -191,6 +187,35 @@
           "text": {
             "$starts_with": "Ops: \"@dev fix it\""
           }
+        }
+      ]
+    },
+    "acp_wire": {
+      "dev": [
+        {
+          "method": "initialize"
+        },
+        {
+          "method": "session/new"
+        },
+        {
+          "method": "session/prompt",
+          "params": {
+            "prompt": [
+              {
+                "text": {
+                  "$contains": [
+                    "[Notes kept by the assistant's runtime",
+                    "@dev why 422?",
+                    "Ops"
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "method": "session/prompt"
         }
       ]
     }

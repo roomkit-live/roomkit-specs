@@ -9,7 +9,7 @@
   "requirements": [
     "RK-6.4-449"
   ],
-  "notes": "The first turn holds at its generation's gate g1. The second message's turn waits its place: the marker, committed after it, reaches chat's delivery meanwhile (RK-6.4-446), so the lane has asked the agent for it. The agent is detached, then g1 opens: the agent's model is asked for the first turn alone. What becomes of the first turn's answer once its agent left is not asserted. Python: tests/test_room_turns_in_order.py::test_a_waiting_turn_whose_agent_leaves_the_room_never_starts.",
+  "notes": "The first turn holds at its generation's gate g1. The second message's turn waits its place: its delivery reaches desk at the gate m2 before the marker is sent, and the marker, committed after it, reaches chat's delivery meanwhile (RK-6.4-446), so the lane has asked the agent for it. The agent is detached, then g1 opens: the agent's model is asked for the first turn alone. What becomes of the first turn's answer once its agent left is not asserted. Python: tests/test_room_turns_in_order.py::test_a_waiting_turn_whose_agent_leaves_the_room_never_starts.",
   "setup": {
     "channels": [
       {
@@ -28,7 +28,15 @@
       {
         "id": "desk",
         "type": "desk",
-        "category": "transport"
+        "category": "transport",
+        "deliver": [
+          {
+            "when": {
+              "text": "Second question"
+            },
+            "gate": "m2"
+          }
+        ]
       },
       {
         "id": "agent",
@@ -96,6 +104,12 @@
       },
       "background": true,
       "as": "second"
+    },
+    {
+      "wait_for": "m2"
+    },
+    {
+      "open": "m2"
     },
     {
       "call": "send_event",

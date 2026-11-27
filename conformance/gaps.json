@@ -2282,7 +2282,7 @@
     "RK-6.4-519": {
       "class": "step",
       "card": "RMK-1951",
-      "note": "Needs a scripted router whose pick at a turn's start may name no model: the schema and both runners take only a model's name in `router.turns` (a retry's pick alone may be null)."
+      "note": "Needs a scripted router whose pick at a turn's start may name no model: the schema takes only a model's name in `router.turns` (a retry's pick alone may be null), though both runners would read a null pick as none."
     },
     "RK-6.4-525": {
       "class": "step",

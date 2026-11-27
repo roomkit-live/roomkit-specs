@@ -13,8 +13,8 @@
   "setup": {
     "channels": [
       {
-        "id": "slack",
-        "type": "slack",
+        "id": "kiosk",
+        "type": "kiosk",
         "category": "transport"
       },
       {
@@ -28,7 +28,7 @@
         "id": "room-1",
         "bindings": [
           {
-            "channel_id": "slack"
+            "channel_id": "kiosk"
           },
           {
             "channel_id": "team"
@@ -38,10 +38,10 @@
     ],
     "hooks": [
       {
-        "name": "slack_only",
+        "name": "kiosk_only",
         "trigger": "before_broadcast",
         "channel_types": [
-          "slack"
+          "kiosk"
         ]
       },
       {
@@ -59,7 +59,7 @@
       "call": "process_inbound",
       "room_id": "room-1",
       "message": {
-        "channel_id": "slack",
+        "channel_id": "kiosk",
         "sender_id": "U1",
         "content": {
           "type": "text",
@@ -95,7 +95,7 @@
       "call": "process_inbound",
       "room_id": "room-1",
       "message": {
-        "channel_id": "slack",
+        "channel_id": "kiosk",
         "sender_id": "U1",
         "content": {
           "type": "text",
@@ -115,13 +115,13 @@
   ],
   "expect": {
     "hooks": {
-      "slack_only": [
+      "kiosk_only": [
         {
           "trigger": "before_broadcast",
           "room_id": "room-1",
           "event": {
             "source": {
-              "channel_type": "slack"
+              "channel_type": "kiosk"
             },
             "content": {
               "type": "text",
@@ -134,7 +134,7 @@
           "room_id": "room-1",
           "event": {
             "source": {
-              "channel_type": "slack"
+              "channel_type": "kiosk"
             },
             "content": {
               "type": "text",

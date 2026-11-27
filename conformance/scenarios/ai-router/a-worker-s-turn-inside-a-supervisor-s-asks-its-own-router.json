@@ -9,7 +9,7 @@
   "requirements": [
     "RK-6.4-523"
   ],
-  "notes": "sup's router picks sup/big for its turn; the call to delegate_to_researcher runs the researcher's turn, which its router puts on researcher/small. Had the researcher read the turn it runs inside, sup/big would have been asked three times. Python: channels/ai.py _routed (a loop whose context names another channel's provider routes on its own), tests/test_channels/test_ai_router.py::test_a_loop_run_inside_another_agent_s_turn_runs_on_its_own_provider.",
+  "notes": "sup's router picks sup/big for its turn; the call to delegate_to_researcher runs the researcher's turn while sup's turn waits on it, and the researcher's router puts that turn on researcher/small. Had the researcher read the turn it runs inside, sup/big would have been asked three times. The part of RK-6.4-523 left unobserved: a loop a handler of one agent's turn drives directly for another agent (Python: channels/ai.py _routed; tests/test_channels/test_ai_router.py::test_a_loop_run_inside_another_agent_s_turn_runs_on_its_own_provider), which no step drives; in the delegation the worker's turn builds its own context.",
   "setup": {
     "channels": [
       {

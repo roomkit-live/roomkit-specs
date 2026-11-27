@@ -9,12 +9,12 @@
     "RK-6.2-007",
     "RK-6.2-008"
   ],
-  "notes": "slack and team_chat-2 are in no table of §6.2: each is a type all the same, written as a plain string. The register_channel step registers a third, its framework event naming the type; the timeline, read from the store, and each delivery name the sender's type as written. Python: models/enums.py ChannelType._missing_; roomkit-rs: roomkit-core model/channel.rs ChannelType::new.",
+  "notes": "kiosk and team_chat-2 are in no table of §6.2: each is a type all the same, written as a plain string. The register_channel step registers a third, its framework event naming the type; the timeline, read from the store, and each delivery name the sender's type as written. Python: models/enums.py ChannelType._missing_; roomkit-rs: roomkit-core model/channel.rs ChannelType::new.",
   "setup": {
     "channels": [
       {
-        "id": "slack",
-        "type": "slack",
+        "id": "kiosk",
+        "type": "kiosk",
         "category": "transport"
       },
       {
@@ -28,7 +28,7 @@
         "id": "room-1",
         "bindings": [
           {
-            "channel_id": "slack"
+            "channel_id": "kiosk"
           },
           {
             "channel_id": "team"
@@ -55,11 +55,11 @@
       "call": "process_inbound",
       "room_id": "room-1",
       "message": {
-        "channel_id": "slack",
+        "channel_id": "kiosk",
         "sender_id": "U1",
         "content": {
           "type": "text",
-          "body": "From the slack channel"
+          "body": "From the kiosk channel"
         }
       },
       "expect": {
@@ -103,13 +103,13 @@
         {
           "index": 0,
           "source": {
-            "channel_id": "slack",
-            "channel_type": "slack",
+            "channel_id": "kiosk",
+            "channel_type": "kiosk",
             "participant_id": "U1"
           },
           "content": {
             "type": "text",
-            "body": "From the slack channel"
+            "body": "From the kiosk channel"
           }
         },
         {
@@ -128,7 +128,7 @@
     },
     "deliveries": {
       "room-1": {
-        "slack": [
+        "kiosk": [
           {
             "source": {
               "channel_type": "team_chat-2"
@@ -142,22 +142,22 @@
         "team": [
           {
             "source": {
-              "channel_type": "slack"
+              "channel_type": "kiosk"
             },
             "content": {
               "type": "text",
-              "body": "From the slack channel"
+              "body": "From the kiosk channel"
             }
           }
         ],
         "relay": [
           {
             "source": {
-              "channel_type": "slack"
+              "channel_type": "kiosk"
             },
             "content": {
               "type": "text",
-              "body": "From the slack channel"
+              "body": "From the kiosk channel"
             }
           },
           {

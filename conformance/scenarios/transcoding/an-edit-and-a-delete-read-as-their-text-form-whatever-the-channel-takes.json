@@ -8,7 +8,7 @@
   "requirements": [
     "RK-6.6-024"
   ],
-  "notes": "files takes MEDIA but supports no edit: the edit reaches it as \"Correction: [Media: A new drawing]\", the text form of its new content, never the file, as it reaches the text-only channel; the delete reads \"[Message deleted]\" on both. A channel that supports both receives them natively (RK-6.6-027). The part of RK-6.6-024 left unobserved: the readers outside a channel.",
+  "notes": "files takes MEDIA but supports no edit: the edit reaches it as \"Correction: [Media: A new drawing]\", the text form of its new content, never the file, as it reaches the text-only channel; the delete reads \"[Message deleted]\" on both, a text or a system content (RK-6.6-016). A channel that supports both receives them natively (RK-6.6-027). The part of RK-6.6-024 left unobserved: the readers outside a channel.",
   "setup": {
     "channels": [
       {
@@ -145,7 +145,6 @@
           },
           {
             "content": {
-              "type": "text",
               "body": "[Message deleted]"
             }
           }
@@ -165,7 +164,6 @@
           },
           {
             "content": {
-              "type": "text",
               "body": "[Message deleted]"
             }
           }
