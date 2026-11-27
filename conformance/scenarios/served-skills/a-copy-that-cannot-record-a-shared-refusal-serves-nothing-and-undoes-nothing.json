@@ -348,10 +348,12 @@
                 "unavailable_skills": {
                   "$as": "peer marks"
                 },
-                "skill_names": [
-                  "docs:guide",
-                  "kb:tips"
-                ]
+                "skill_names": {
+                  "$unordered": [
+                    "docs:guide",
+                    "kb:tips"
+                  ]
+                }
               }
             },
             {
@@ -397,10 +399,12 @@
                 "unavailable_skills": {
                   "$as": "peer marks"
                 },
-                "skill_names": [
-                  "docs:guide",
-                  "kb:tips"
-                ]
+                "skill_names": {
+                  "$unordered": [
+                    "docs:guide",
+                    "kb:tips"
+                  ]
+                }
               }
             },
             {

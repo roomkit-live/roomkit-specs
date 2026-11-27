@@ -11,7 +11,7 @@
     "RK-24.2-008",
     "RK-24.2-009"
   ],
-  "notes": "The metadata is a served skill's, read from its entry's frontmatter (RFC §24.7); the local skill fixture writes no license or compatibility. The manifest shows the license and the compatibility of the skill that has them, and neither line for the one that has none.",
+  "notes": "The metadata is a served skill's, read from its entry's frontmatter (RFC §24.7); the local skill fixture writes no license or compatibility. The manifest shows the license and the compatibility of the skill that has them, and neither line for the one that has none; each of the two snapshots checks one skill's block, the RFC fixing no order between skills. A list's items are joined by commas; the space after each is not asserted.",
   "steps": [
     {
       "call": "skill_registry_session",
@@ -73,6 +73,9 @@
         },
         {
           "method": "snapshot"
+        },
+        {
+          "method": "snapshot"
         }
       ],
       "expect": {
@@ -85,29 +88,47 @@
             {
               "status": "ok",
               "result": {
-                "metadata": [
-                  {
-                    "name": "docs:guide",
-                    "description": "Read the guide",
-                    "license": "MIT",
-                    "compatibility": "Needs network access",
-                    "allowed_tools": null,
-                    "extra_metadata": {
-                      "version": "2",
-                      "tags": "alpha, beta",
-                      "owner": "docs-team"
+                "metadata": {
+                  "$unordered": [
+                    {
+                      "name": "docs:guide",
+                      "description": "Read the guide",
+                      "license": "MIT",
+                      "compatibility": "Needs network access",
+                      "allowed_tools": null,
+                      "extra_metadata": {
+                        "version": "2",
+                        "tags": {
+                          "$contains": [
+                            "alpha",
+                            ",",
+                            "beta"
+                          ]
+                        },
+                        "owner": "docs-team"
+                      }
+                    },
+                    {
+                      "name": "docs:plain",
+                      "description": "Plain notes",
+                      "license": null,
+                      "compatibility": null,
+                      "allowed_tools": null,
+                      "extra_metadata": {}
                     }
-                  },
-                  {
-                    "name": "docs:plain",
-                    "description": "Plain notes",
-                    "license": null,
-                    "compatibility": null,
-                    "allowed_tools": null,
-                    "extra_metadata": {}
-                  }
-                ],
-                "manifest": "<available_skills>\n  <skill name=\"docs:guide\" origin=\"docs\">\n    <description>“Read the guide”</description>\n    <license>“MIT”</license>\n    <compatibility>“Needs network access”</compatibility>\n  </skill>\n  <skill name=\"docs:plain\" origin=\"docs\">\n    <description>“Plain notes”</description>\n  </skill>\n</available_skills>"
+                  ]
+                },
+                "manifest": {
+                  "$contains": "  <skill name=\"docs:guide\" origin=\"docs\">\n    <description>“Read the guide”</description>\n    <license>“MIT”</license>\n    <compatibility>“Needs network access”</compatibility>\n  </skill>"
+                }
+              }
+            },
+            {
+              "status": "ok",
+              "result": {
+                "manifest": {
+                  "$contains": "  <skill name=\"docs:plain\" origin=\"docs\">\n    <description>“Plain notes”</description>\n  </skill>"
+                }
               }
             }
           ],

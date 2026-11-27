@@ -10,7 +10,7 @@
     "RK-24.1-006",
     "RK-24.1-007"
   ],
-  "notes": "Each frontmatter pads a YAML comment, which its entry does not hold: 'at' takes exactly 65,536 characters, written with a two-byte character so that it holds more than 65,536 bytes; 'past' takes 65,537 characters. RK-24.1-007 is cited in part: its served half (the content fails its check) is observed; its local half (a host's own SKILL.md past the bound cannot be parsed) needs a local skill written from raw frontmatter, which the local skill fixture does not write.",
+  "notes": "The frontmatter counted is the text between its two '---' lines, without the line breaks that bound it. Each frontmatter pads a YAML comment, which its entry does not hold: 'at' takes exactly 65,536 characters, written with a two-byte character so that it holds more than 65,536 bytes; 'past' takes 65,537 characters. RK-24.1-007 is cited in part: its served half (the content fails its check) is observed; its local half (a host's own SKILL.md past the bound cannot be parsed) needs a local skill written from raw frontmatter, which the local skill fixture does not write.",
   "steps": [
     {
       "call": "skill_registry_session",

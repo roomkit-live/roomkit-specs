@@ -8,7 +8,7 @@
   "requirements": [
     "RK-24.7-071"
   ],
-  "notes": "The skill is loaded through the registry, not activated in the conversation, so no approval of code run is asked (RK-24.7-072): the call reaches run_skill_script itself. The host's script executor is never handed the served skill: no file of it is written anywhere to be run.",
+  "notes": "The entry lists scripts/build.sh, so the refusal is not a missing script. The skill is loaded through the registry, not activated in the conversation, so no approval of code run is asked (RK-24.7-072): the call reaches run_skill_script itself. The host's script executor is never handed the served skill: no file of it is written anywhere to be run.",
   "setup": {
     "channels": [
       {
@@ -50,6 +50,11 @@
                         "uri": "skill://guide/SKILL.md",
                         "digest": "sha256:a0f5cbce5cfdb05a47d0b6a147ed4215f0da111e5d132c63d7b6697af919fb6c",
                         "size": 67
+                      },
+                      {
+                        "uri": "skill://guide/scripts/build.sh",
+                        "digest": "sha256:4b8c488f3f5dc8ceb7337696039e542757dbb28d1a6291cd6ed7163b59533bab",
+                        "size": 11
                       }
                     ]
                   }
@@ -146,7 +151,10 @@
               "status": "ok",
               "result": {
                 "instructions": "Follow the steps.",
-                "has_scripts": false
+                "has_scripts": false,
+                "references": [
+                  "scripts/build.sh"
+                ]
               }
             },
             {

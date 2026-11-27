@@ -223,13 +223,15 @@
         },
         {
           "system_prompt": {
-            "$contains": "Follow the guide.",
             "$lacks": "Inner rules."
           },
           "tool_results": [
             {
               "tool_call_id": "activate",
-              "is_error": false
+              "is_error": false,
+              "content": {
+                "$contains": "Follow the guide."
+              }
             },
             {
               "tool_call_id": "read",

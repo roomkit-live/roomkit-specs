@@ -109,10 +109,12 @@
             {
               "status": "ok",
               "result": {
-                "skill_names": [
-                  "docs:team-a/guide",
-                  "docs:team-b/guide"
-                ]
+                "skill_names": {
+                  "$unordered": [
+                    "docs:team-a/guide",
+                    "docs:team-b/guide"
+                  ]
+                }
               }
             },
             {

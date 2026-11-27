@@ -9,7 +9,7 @@
   "requirements": [
     "RK-24.5-014"
   ],
-  "notes": "Each manifest here takes exactly 65,536 characters. Registering the server again replaces docs:guide's 1,024-character description with another: both at once would pass the bound. docs:guide is then marked unavailable with a reason that keeps the manifest at the bound; registering the server again replaces that mark with the skill: the mark and the skill at once would pass the bound.",
+  "notes": "Each manifest here takes exactly 65,536 characters. Registering the server again replaces docs:guide's 1,024-character description with another: both at once would pass the bound. docs:guide is then marked unavailable with a reason that keeps the manifest at the bound; registering the server again replaces that mark with the skill: the mark and the skill at once would pass the bound. Cited in part: a replacement through a local operation (registration, in-memory addition, discovery) is not observed, the session having no local registration.",
   "steps": [
     {
       "call": "skill_registry_session",

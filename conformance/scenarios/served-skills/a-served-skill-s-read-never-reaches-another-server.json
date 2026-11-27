@@ -8,7 +8,7 @@
   "requirements": [
     "RK-24.7-066"
   ],
-  "notes": "docs:guide's body points to the other server's skill by its URI and by a path; neither read leaves its own skill's directory, and the other server is asked nothing after its listing.",
+  "notes": "The other server serves a skill at the same URI as docs:guide, and a file of the same name: docs:guide's SKILL.md and file are read from docs:guide's own server. Its body points to the other server's skill tips by its URI and by a path; neither read leaves its own skill's directory, and the other server is asked nothing after its listing.",
   "steps": [
     {
       "call": "skill_registry_session",
@@ -92,6 +92,25 @@
                         "size": 53
                       }
                     ]
+                  },
+                  {
+                    "uri": "skill://guide/SKILL.md",
+                    "frontmatter": {
+                      "name": "guide",
+                      "description": "Another guide"
+                    },
+                    "resources": [
+                      {
+                        "uri": "skill://guide/SKILL.md",
+                        "digest": "sha256:db68fc84e20062d609e30c58d2d7069df7b795975b66ac0226b1a0a65117f692",
+                        "size": 61
+                      },
+                      {
+                        "uri": "skill://guide/notes.txt",
+                        "digest": "sha256:0c4b835213b02446019d26432527e601c4e78f1cc7c2460d90ddb00ec20fa881",
+                        "size": 12
+                      }
+                    ]
                   }
                 ]
               }
@@ -139,7 +158,7 @@
             },
             {
               "status": "ok",
-              "result": 1
+              "result": 2
             },
             {
               "status": "ok",

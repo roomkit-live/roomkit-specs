@@ -8,7 +8,7 @@
   "requirements": [
     "RK-24.7-059"
   ],
-  "notes": "The lookup is asked of the server under the label the registry holds, as for any name its listing did not hold (RK-24.7-057); the server's own error text does not reach the model.",
+  "notes": "The lookup is asked of the server under the label the registry holds, as for any name its listing did not hold (RK-24.7-057); the server's own error text does not reach the model. Cited in part: the unit's last sentence, a skill the server's own instructions point to reached by that lookup, is not observed, the session scripting no server instructions.",
   "setup": {
     "channels": [
       {

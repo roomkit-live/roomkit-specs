@@ -10,7 +10,7 @@
     "RK-24.5-012",
     "RK-24.5-015"
   ],
-  "notes": "'held' leaves 10 characters under the bound. A new server's listing, the same server's listing again (which drops docs:guide for a longer skill), the fetch of a name the listing did not hold (a dynamic entry, so an unavailable reason) and an unavailable mark each fail with the manifest-size error and leave the registry as it was. The shared catalog is unchanged too: the refused label is not served, and the copy still holds docs:guide once it has read the catalog. Cited in part: RK-24.5-012's copy is in served-skills/a-copy-that-would-list-past-the-bound-fails-and-leaves-its-source, and its local operations (discovery, registration, in-memory addition) are not observed, the session having no local registration; RK-24.5-015's rejected fetch leaves nothing a public read shows, since no registry holds the fetched name.",
+  "notes": "'held' leaves 10 characters under the bound. A new server's listing, the same server's listing again (which drops docs:guide for a longer skill), the fetch of a name the listing did not hold (a dynamic entry, so an unavailable reason) and an unavailable mark each fail with the manifest-size error and leave the registry as it was. The shared catalog is unchanged too: the refused label is not served; the copy still holds docs:guide once it has read the catalog; and the copy, which fetched docs:x first, still serves it after the other registry's fetch of docs:x, which the server now answers with a dynamic entry, was refused. RK-24.5-012 is cited in part: its copy is in served-skills/a-copy-that-would-list-past-the-bound-fails-and-leaves-its-source, and its local operations (discovery, registration, in-memory addition) are not observed, the session having no local registration.",
   "steps": [
     {
       "call": "skill_registry_session",
@@ -72,6 +72,58 @@
                   "frontmatter": {
                     "name": "fetched",
                     "description": "Fetched"
+                  },
+                  "resources": "dynamic"
+                }
+              }
+            },
+            {
+              "method": "skills/get",
+              "params": {
+                "uri": "skill://x/SKILL.md"
+              },
+              "result": {
+                "skill": {
+                  "uri": "skill://x/SKILL.md",
+                  "frontmatter": {
+                    "name": "x",
+                    "description": "Fetched x"
+                  },
+                  "resources": [
+                    {
+                      "uri": "skill://x/SKILL.md",
+                      "digest": "sha256:23253bfe1277bbb1d5010f6fc655037a17fcbcfb8069697ecf41697e1014b112",
+                      "size": 49
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "method": "resources/read",
+              "params": {
+                "uri": "skill://x/SKILL.md"
+              },
+              "result": {
+                "contents": [
+                  {
+                    "uri": "skill://x/SKILL.md",
+                    "text": "---\nname: x\ndescription: Fetched x\n---\n\nX steps.\n"
+                  }
+                ]
+              }
+            },
+            {
+              "method": "skills/get",
+              "params": {
+                "uri": "skill://x/SKILL.md"
+              },
+              "result": {
+                "skill": {
+                  "uri": "skill://x/SKILL.md",
+                  "frontmatter": {
+                    "name": "x",
+                    "description": "Fetched x"
                   },
                   "resources": "dynamic"
                 }
@@ -157,6 +209,20 @@
           "reason": "past the room"
         },
         {
+          "method": "load_skill",
+          "name": "docs:x",
+          "registry": "peer"
+        },
+        {
+          "method": "load_skill",
+          "name": "docs:x"
+        },
+        {
+          "method": "get_skill",
+          "name": "docs:x",
+          "registry": "peer"
+        },
+        {
           "method": "snapshot"
         }
       ],
@@ -229,6 +295,27 @@
             {
               "status": "ok",
               "result": {
+                "instructions": "X steps.",
+                "uri": "skill://x/SKILL.md",
+                "read_total": 49
+              }
+            },
+            {
+              "status": "error",
+              "error": "SkillManifestTooLargeError",
+              "message": "the skills' manifest would take 65690 characters, past 65536"
+            },
+            {
+              "status": "ok",
+              "result": {
+                "instructions": "X steps.",
+                "uri": "skill://x/SKILL.md",
+                "read_total": 49
+              }
+            },
+            {
+              "status": "ok",
+              "result": {
                 "manifest": {
                   "$as": "manifest"
                 },
@@ -256,6 +343,24 @@
                 "method": "skills/get",
                 "params": {
                   "uri": "skill://fetched/SKILL.md"
+                }
+              },
+              {
+                "method": "skills/get",
+                "params": {
+                  "uri": "skill://x/SKILL.md"
+                }
+              },
+              {
+                "method": "resources/read",
+                "params": {
+                  "uri": "skill://x/SKILL.md"
+                }
+              },
+              {
+                "method": "skills/get",
+                "params": {
+                  "uri": "skill://x/SKILL.md"
                 }
               }
             ],
