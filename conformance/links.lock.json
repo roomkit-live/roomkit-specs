@@ -15802,6 +15802,9 @@
       "executors/a-declared-agent-s-turn-runs-on-the-executor-hosting-it": "8e0e50e6ab3d8594ea28dda6b8af7424c61608907aa3645d074906128c35bc40",
       "executors/a-live-agent-s-turn-stays-on-the-kit-s-executor": "8e0e50e6ab3d8594ea28dda6b8af7424c61608907aa3645d074906128c35bc40"
     },
+    "RK-6.4-049": {
+      "streaming/a-segment-delivered-before-its-answer-fails-its-schema-is-not-taken-back": "f7319346e0693eaa2298d84399edca6ff8e00f6aef20d2cbaf186d4d813df9c1"
+    },
     "RK-6.4-050": {
       "greeting/another-agent-answers-a-greeting": "589067b74556c3da40ba1b90a7702957e5a85a0ccc51e2a44c229958c276c7ed"
     },
@@ -15840,6 +15843,9 @@
     },
     "RK-6.4-058": {
       "streaming/a-delegated-turn-waiting-its-place-publishes-its-text": "046948ccd068454add2b627e3284fff0ec990a00ce810b1ff7f35d7f7d6a2a35"
+    },
+    "RK-6.4-059": {
+      "streaming/a-delegated-answer-s-text-reaches-no-one-its-answer-would-not-and-is-not-stored": "d816ba9eb720d631147077740f3ba31eb67d765f4fffd6971cdc9c2fbfb80e01"
     },
     "RK-6.4-060": {
       "streaming/a-delegated-answer-publishes-no-text-unless-asked": "2f029dfb93a63249216f2ae7b5b10ed91a626ae8bafcad41b56080c8e445b108"
@@ -16149,6 +16155,9 @@
       "ai-external-handler/partial-call-never-reaches-the-handler-streaming": "0c00341d0cf36653da65396670d9f22e5b2a8d622e0ff41f6d60265ec010d2e4",
       "reasoning/a-cut-call-goes-back-with-the-round": "0c00341d0cf36653da65396670d9f22e5b2a8d622e0ff41f6d60265ec010d2e4"
     },
+    "RK-6.4-096": {
+      "tools/a-call-the-response-cut-tells-the-model-it-did-not-run-and-why": "0eef6cf71d5b41e9bf55283fa4d01ff61e90229bd3ec269f3cd5789a92914f6d"
+    },
     "RK-6.4-097": {
       "response-schema/a-malformed-call-under-a-schema-is-asked-again": "2f3522422b384f574723f12adcff44116234e5068827428b841f294879bcca11",
       "tools/a-malformed-call-is-told-and-tried-again-on-the-first-round": "2f3522422b384f574723f12adcff44116234e5068827428b841f294879bcca11",
@@ -16156,8 +16165,26 @@
       "tools/a-round-tried-again-ends-its-segment": "2f3522422b384f574723f12adcff44116234e5068827428b841f294879bcca11",
       "tools/an-unexpected-call-is-told-and-tried-again-on-the-first-round": "2f3522422b384f574723f12adcff44116234e5068827428b841f294879bcca11"
     },
+    "RK-6.4-098": {
+      "tools/a-round-out-of-room-after-a-tool-round-ends-the-turn-truncated": "68b6f312c538d54bf2c1abf9edb58682746fbb718f6d4a2a3a58395db2ff1e8b"
+    },
+    "RK-6.4-100": {
+      "tools/an-agent-that-asks-for-no-intent-takes-nothing-from-its-calls": "9d923a768b3083366ccb529987babc0f5090c03a972d7b46df246d8cdd354b90"
+    },
+    "RK-6.4-101": {
+      "tools/each-schema-a-request-declares-asks-for-an-intent": "786b2477df0148c989b49040fcfb22d3ee2ae9706eb7eaf7a00ebc5b91d5c252"
+    },
+    "RK-6.4-102": {
+      "tools/each-schema-a-request-declares-asks-for-an-intent": "d716ab40e34f33f717cf6265f0f49773274ffa95a2d38ba663abf739bfb91505"
+    },
+    "RK-6.4-103": {
+      "tools/each-schema-a-request-declares-asks-for-an-intent": "feefcdd7dbdf078c4508e67bf4bfc7319ce42ac267c10bbc726b159c17c5b2be"
+    },
     "RK-6.4-108": {
       "tools/an-intent-written-without-its-underscore-is-taken-as-the-intent": "e5334eb3d505a83336cdc04af3581659a05f0781269aa945074eea929679d440"
+    },
+    "RK-6.4-109": {
+      "tools/a-tool-that-declares-the-intent-property-keeps-it-and-a-cut-call-is-left-as-it-is": "3f890d4ee50c0f438bf9248075e22f70fdd436f78fbb557ba30b7adcb6eedd97"
     },
     "RK-6.4-110": {
       "tools/an-intent-written-without-its-underscore-is-taken-as-the-intent": "ed69354699f443ad950bd18506a3f10b39e17fa4040fb1dc93e3e602f87bb0cd"
@@ -16166,8 +16193,34 @@
       "tools/a-tool-that-declares-the-name-without-the-underscore-keeps-it": "eb4e917d47a148d7d9e775d41862e822b0b4fb0a6d273747ac17550e9321fc92",
       "tools/an-intent-written-without-its-underscore-is-taken-as-the-intent": "eb4e917d47a148d7d9e775d41862e822b0b4fb0a6d273747ac17550e9321fc92"
     },
+    "RK-6.4-112": {
+      "tools/a-call-s-intent-is-normalized-or-is-none": "3a11d928bbea2cafa50bbe4a3eb5457a2c53ccac892c112c55ecc8ca774c4b3b"
+    },
+    "RK-6.4-113": {
+      "tools/an-intent-never-fails-or-changes-its-call": "ec1076b3c1b8a08b95f0c82395b80188d96f43256ff0ed69b917ecc73ee1dadd"
+    },
     "RK-6.4-114": {
       "tools/an-intent-written-without-its-underscore-is-taken-as-the-intent": "f32bd712f008d7aedddbd1dfa6cbd83c230af7cdb67d96281571390936e78dc5"
+    },
+    "RK-6.4-115": {
+      "tools/two-calls-under-one-id-in-a-round-keep-their-own-intents": "028fe64c0334df64ec891605393e65b20483599fc173dc49301bc0f81c4f8537"
+    },
+    "RK-6.4-116": {
+      "tools/a-call-s-intent-goes-back-among-its-arguments-never-a-rewrite": "f21d205ee75ce4b11eaeabbcf7d7a142c44e800cb6f8ea56d4572fb5955f2a71",
+      "tools/a-later-turn-of-an-agent-asking-no-intent-replays-the-arguments-alone": "f21d205ee75ce4b11eaeabbcf7d7a142c44e800cb6f8ea56d4572fb5955f2a71"
+    },
+    "RK-6.4-117": {
+      "tools/a-call-s-intent-goes-back-among-its-arguments-never-a-rewrite": "d1df02f0884b65183625630ba05e9d40a0253edbf34a22ca09e4367596268283"
+    },
+    "RK-6.4-118": {
+      "tools/an-intent-is-not-what-an-approval-shows-and-grants-nothing": "4f8ea1c6afab9a3aeffffd7e5d54cdab8641b81ea0db9f6e9b3092a4763d6eb6"
+    },
+    "RK-6.4-119": {
+      "tools/a-hook-that-rewrites-a-call-s-arguments-leaves-its-intent": "8f68f4e5fd4504615cfc72b63fbd949250b063f2142ffe3b091e892dbebe9aaa"
+    },
+    "RK-6.4-120": {
+      "acp/an-external-agent-s-call-carries-no-intent": "c694e7b8188b41d012c2f3e6afe4e9394bed77a9653ded5523327a354b19c569",
+      "provider-served/a-call-its-provider-served-carries-no-intent": "c694e7b8188b41d012c2f3e6afe4e9394bed77a9653ded5523327a354b19c569"
     },
     "RK-6.4-122": {
       "tools/continuation-empty-nudge-is-a-real-retry-non-streaming": "05d2ad9bc55be0b712fd0ecb7669aaad5167088d4f5ca9af370e7515913f9d7d",
@@ -16661,6 +16714,9 @@
       "tools/a-tool-the-generation-hook-adds-is-declared-without-tools-of-its-own": "24a1e75cd06ebdb3171098394bf2587b3a2dc4f32c91e04f108e5d5b0e601be3",
       "tools/a-tool-the-generation-hook-edited-keeps-its-edit": "24a1e75cd06ebdb3171098394bf2587b3a2dc4f32c91e04f108e5d5b0e601be3"
     },
+    "RK-6.4-224": {
+      "tool-search/a-tool-the-generation-hook-withdrew-from-the-first-round-stays-withdrawn": "f4cc193dac1603cf1fc855548c987631c5011d2a3567a2562998f6604a241b72"
+    },
     "RK-6.4-225": {
       "tool-search/a-call-to-a-hidden-tool-runs-and-reveals-it": "916d0b5b0b44a4ca8a9934a9cc8528d0b46fe2069420bbf3c610be3010d394d0",
       "tool-search/a-round-that-declares-nothing-still-recovers-a-kept-tool": "916d0b5b0b44a4ca8a9934a9cc8528d0b46fe2069420bbf3c610be3010d394d0",
@@ -16730,6 +16786,9 @@
     },
     "RK-6.4-241": {
       "tool-search/without-tool-search-every-declared-tool-is-reported-always": "7029b0412561a41b61be3455cf10de76d0ebd84e93dd1157e34a86e85969dc24"
+    },
+    "RK-6.4-242": {
+      "acp/an-external-agent-s-turn-declares-no-tool-and-fires-no-tool-round": "b68abde0ef5d98ef0a978fb3869ab43d7b40aee3d9b125f66ae358d412ec8cb7"
     },
     "RK-6.4-243": {
       "tools/an-agent-s-owner-tools-are-declared-in-the-order-they-were-set-up": "4ee0a165daedb356a4081675f1e0061493225c0a277e1929a1e1e9451d9f1bd9"
@@ -16825,11 +16884,20 @@
     "RK-6.4-261": {
       "tools/a-block-after-a-round-stops-the-hooks-after-it": "c4c9d5bc02f1614372c1fe24145fdc47d50ec98f326f91ab0104353710c987f3"
     },
+    "RK-6.4-262": {
+      "acp/an-external-agent-s-turn-declares-no-tool-and-fires-no-tool-round": "1de5dd8b04051ab3769de840045150f713f10548ad29c65930438f87821faf0c"
+    },
     "RK-6.4-263": {
       "discussion/a-turn-replays-its-round-with-no-later-message": "fcb6b245b059c37c3d3e88f909f551cf1ffc1446d6c8c7716b510e78bfeafae3",
       "memory/the-window-counts-no-tool-row": "fcb6b245b059c37c3d3e88f909f551cf1ffc1446d6c8c7716b510e78bfeafae3",
       "tools/a-round-s-results-go-as-one-tool-message": "fcb6b245b059c37c3d3e88f909f551cf1ffc1446d6c8c7716b510e78bfeafae3",
       "tools/a-round-s-text-replays-with-its-calls-in-one-message": "fcb6b245b059c37c3d3e88f909f551cf1ffc1446d6c8c7716b510e78bfeafae3"
+    },
+    "RK-6.4-264": {
+      "tools/a-call-s-intent-goes-back-among-its-arguments-never-a-rewrite": "0947b47e1cddd69e36197d109884b593ea6c080740ae100c561b4560252f28bb"
+    },
+    "RK-6.4-265": {
+      "tools/a-later-turn-replays-the-result-the-model-read": "343cd36a710b3e386ed069ac3ecbc69de12c98c4610f82aadd9fa9566db5e1df"
     },
     "RK-6.4-266": {
       "tool-search/a-later-turn-replays-its-discovery-round": "75e4378c38c4e2e20268b222014850b601840a405deacfc7d72b4e634a038051",
@@ -16846,6 +16914,9 @@
     },
     "RK-6.4-269": {
       "executors/a-turn-on-another-executor-whose-rows-the-store-fails-to-read-runs-without-them": "a21685845060800780e15792e1ddb8f516fe21b3c6dad5e257484cdabd42f691"
+    },
+    "RK-6.4-270": {
+      "tools/a-round-older-than-the-history-window-is-not-replayed": "3d4a175201db9f4f39557cebb1e5869e80d68bd60ea3bb63ddbf2bd4fb42d673"
     },
     "RK-6.4-271": {
       "discussion/a-turn-replays-its-round-with-no-later-message": "106cd246eb58b95aa7feacc8227e0fd40507e4537babf514c711afb23e7b5655"
@@ -18821,9 +18892,36 @@
     "RK-6.7-069": {
       "response-schema/a-binding-s-schema-outside-the-portable-subset-fails-the-turn": "3fad3ff72d58c5b36cba2a2d8154a4ed533e45010f9fcb8d9487d04a9b4231a3"
     },
+    "RK-6.7-070": {
+      "response-schema/a-subschema-whose-type-is-no-single-portable-word-fails-the-turn": "7fefba7dba5e4747331952d32817a14d3fd98061e9b440588ec9cfa5db0a4a0e"
+    },
+    "RK-6.7-071": {
+      "response-schema/an-object-that-declares-no-properties-fails-the-turn": "f46c8ec2653c708e6f3ede9e972fdea12cf8576ad8631841e79c7a89fc6b811c"
+    },
+    "RK-6.7-072": {
+      "response-schema/an-object-whose-required-misses-or-repeats-a-property-fails-the-turn": "f1dd24012dbe791278a2f61acb2233061e0a7a0fbd5ee59c9872c929b0be7c7b"
+    },
+    "RK-6.7-073": {
+      "response-schema/an-object-that-allows-other-properties-fails-the-turn": "6721c4c85f1a76dd265146dcb685fecd4160f238a26678f7120329752ccd5a16"
+    },
+    "RK-6.7-074": {
+      "response-schema/an-array-without-one-subschema-for-its-items-fails-the-turn": "4c43dbe8f70214ccdf7cba581981f1d3a087899ff1a08c61f27910c839d2b281"
+    },
+    "RK-6.7-075": {
+      "response-schema/an-enum-off-a-string-or-not-of-distinct-strings-fails-the-turn": "e4694bc09097d930e4757cda33904bcd3f2f991d18351a2aaf1ebf4e6c9324ef"
+    },
+    "RK-6.7-076": {
+      "response-schema/a-title-and-a-description-are-taken-on-any-subschema-as-strings": "a8330e9c11462fdc884adedc998b7b4cf97bb1b0013ccce5e66ad76e3a9e92ad"
+    },
+    "RK-6.7-077": {
+      "response-schema/a-keyword-outside-the-portable-subset-fails-the-turn": "d7b78e5c2b02c126aef999d1993a4a17730e03d52b7947e68f55f6ad3b8bf9a6"
+    },
     "RK-6.7-078": {
       "response-schema/a-generation-hook-s-schema-constrains-the-turn": "a498ec5d0dc834970d0af3f5b1f9de732c9a18d454087a8a87510ad82fd36ecc",
       "response-schema/a-model-that-takes-no-schema-fails-the-turn-before-any-request": "a498ec5d0dc834970d0af3f5b1f9de732c9a18d454087a8a87510ad82fd36ecc"
+    },
+    "RK-6.7-079": {
+      "response-schema/an-answer-that-fails-its-schema-is-not-tried-again": "bec1b508d977bf942d4771550b97229e6f9a718593d46015bd3c67fb61852105"
     },
     "RK-6.7-080": {
       "response-schema/a-model-that-takes-no-schema-fails-the-turn-before-any-request": "dfc5189bbd89a7d4fdb57020bc423c87a3b020f2b96ccce963dbf0afecedfed8",

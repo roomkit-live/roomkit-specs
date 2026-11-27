@@ -2741,39 +2741,7 @@
       "card": "RMK-1955",
       "note": "Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed."
     },
-    "RK-6.4-049": {
-      "class": "writable",
-      "card": "RMK-1911"
-    },
-    "RK-6.4-059": {
-      "class": "writable",
-      "card": "RMK-1911"
-    },
     "RK-6.4-069": {
-      "class": "writable",
-      "card": "RMK-1911"
-    },
-    "RK-6.4-096": {
-      "class": "writable",
-      "card": "RMK-1911"
-    },
-    "RK-6.4-098": {
-      "class": "writable",
-      "card": "RMK-1911"
-    },
-    "RK-6.4-100": {
-      "class": "writable",
-      "card": "RMK-1911"
-    },
-    "RK-6.4-101": {
-      "class": "writable",
-      "card": "RMK-1911"
-    },
-    "RK-6.4-102": {
-      "class": "writable",
-      "card": "RMK-1911"
-    },
-    "RK-6.4-103": {
       "class": "writable",
       "card": "RMK-1911"
     },
@@ -2796,42 +2764,6 @@
       "class": "step",
       "card": "RMK-1911",
       "note": "Needs the scripted agent options tool_call_intents_required and tool_call_intents_only in both runners."
-    },
-    "RK-6.4-109": {
-      "class": "writable",
-      "card": "RMK-1911"
-    },
-    "RK-6.4-112": {
-      "class": "writable",
-      "card": "RMK-1911"
-    },
-    "RK-6.4-113": {
-      "class": "writable",
-      "card": "RMK-1911"
-    },
-    "RK-6.4-115": {
-      "class": "writable",
-      "card": "RMK-1911"
-    },
-    "RK-6.4-116": {
-      "class": "writable",
-      "card": "RMK-1911"
-    },
-    "RK-6.4-117": {
-      "class": "writable",
-      "card": "RMK-1911"
-    },
-    "RK-6.4-118": {
-      "class": "writable",
-      "card": "RMK-1911"
-    },
-    "RK-6.4-119": {
-      "class": "writable",
-      "card": "RMK-1911"
-    },
-    "RK-6.4-120": {
-      "class": "writable",
-      "card": "RMK-1911"
     },
     "RK-6.4-121": {
       "class": "phase6",
@@ -3064,11 +2996,6 @@
       "card": "RMK-1911",
       "note": "A scenario can store the cut record through the store calls (a binding and an internal event of a voice channel) on Python today; roomkit-rs reads no cut record, so the scenario needs a requires_features name in both runners' feature tables (decision D1), which lot T-1 does not add."
     },
-    "RK-6.4-224": {
-      "class": "writable",
-      "card": "RMK-1940",
-      "note": "A hook under Tool Search that removes a tool from the first round's declaration only, the tool still found and declared."
-    },
     "RK-6.4-230": {
       "class": "phase6",
       "card": "RMK-1940",
@@ -3079,35 +3006,10 @@
       "card": "RMK-1940",
       "note": "step: Tool Search on a realtime session, realtime.read of the session configuration: a reconfigurable realtime session's retention of a called tool, and a call from an earlier catalogue revealing nothing into its replacement."
     },
-    "RK-6.4-242": {
-      "class": "writable",
-      "card": "RMK-1940",
-      "note": "An ACP agent's turn under an ON_AI_RESPONSE hook, its declared_tools empty."
-    },
     "RK-6.4-259": {
       "class": "step",
       "card": "RMK-1940",
       "note": "Needs a scripted AFTER_TOOL_ROUND hook whose MODIFY returns no event, in both runners."
-    },
-    "RK-6.4-262": {
-      "class": "writable",
-      "card": "RMK-1940",
-      "note": "An ACP agent's turn with an AFTER_TOOL_ROUND hook registered, the hook never called; a reasoning backend's agent needs the realtime feature."
-    },
-    "RK-6.4-264": {
-      "class": "writable",
-      "card": "RMK-1940",
-      "note": "A later turn after a BEFORE_TOOL_USE rewrite, its replayed call holding the model's arguments."
-    },
-    "RK-6.4-265": {
-      "class": "writable",
-      "card": "RMK-1940",
-      "note": "A later turn after an ON_TOOL_CALL rewrite or an evicted result, its replayed result the one the model read."
-    },
-    "RK-6.4-270": {
-      "class": "writable",
-      "card": "RMK-1940",
-      "note": "A history window shorter than the turns, the round before it not replayed."
     },
     "RK-6.4-284": {
       "class": "step",
@@ -3418,51 +3320,6 @@
       "class": "step",
       "card": "RMK-1955",
       "note": "Needs a scripted model that streams text only (generate_stream), in both runners."
-    },
-    "RK-6.7-070": {
-      "class": "writable",
-      "card": "RMK-1955",
-      "note": "A binding's schema whose type is a list, or a type outside the six, fails the turn before its model is asked."
-    },
-    "RK-6.7-071": {
-      "class": "writable",
-      "card": "RMK-1955",
-      "note": "A binding's schema whose object lacks properties fails the turn before its model is asked."
-    },
-    "RK-6.7-072": {
-      "class": "writable",
-      "card": "RMK-1955",
-      "note": "A binding's schema whose required list misses a property fails the turn before its model is asked."
-    },
-    "RK-6.7-073": {
-      "class": "writable",
-      "card": "RMK-1955",
-      "note": "A binding's schema whose object allows additional properties fails the turn before its model is asked."
-    },
-    "RK-6.7-074": {
-      "class": "writable",
-      "card": "RMK-1955",
-      "note": "A binding's schema with an array lacking items fails the turn before its model is asked."
-    },
-    "RK-6.7-075": {
-      "class": "writable",
-      "card": "RMK-1955",
-      "note": "A binding's schema with an enum on a number, or an empty enum, fails the turn before its model is asked."
-    },
-    "RK-6.7-076": {
-      "class": "writable",
-      "card": "RMK-1955",
-      "note": "A binding's schema whose subschemas carry a title and a description is taken."
-    },
-    "RK-6.7-077": {
-      "class": "writable",
-      "card": "RMK-1955",
-      "note": "A binding's schema using anyOf or a bound fails the turn before its model is asked."
-    },
-    "RK-6.7-079": {
-      "class": "writable",
-      "card": "RMK-1955",
-      "note": "A schema turn whose model takes no schema, under a retry policy, is not retried."
     },
     "RK-6.7-094": {
       "class": "step",
