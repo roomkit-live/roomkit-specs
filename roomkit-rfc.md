@@ -23000,7 +23000,9 @@ A provider also carries what the skills a server serves need (Section 24.7)
 and no more: the extensions the server declared when it connected
 (`server_extensions`, empty for a server that declared none), <!-- /rfc --><!-- rfc: {"id": "RK-21.2-046", "kind": "behavior", "applies": "Reading an MCP resource and passing through an unmodelled request and response.", "level": "must"} -->`read_resource`,
 and `request`, which sends a request the provider does not model and returns
-its result as the server sent it. <!-- /rfc --><!-- rfc: {"id": "RK-21.2-047", "kind": "behavior", "applies": "MCP-served skills obtain identity and verified content from the registry independently of transport session state.", "level": "must"} -->The skills rely on nothing else the
+its result as the server sent it. A request without parameters, an empty set
+or an empty or null `_meta` among them, goes out with no `params` member, and
+a `_meta` that is not an object is refused before anything is sent. <!-- /rfc --><!-- rfc: {"id": "RK-21.2-047", "kind": "behavior", "applies": "MCP-served skills obtain identity and verified content from the registry independently of transport session state.", "level": "must"} -->The skills rely on nothing else the
 connection holds: a skill's identity, the entry it was loaded from and the
 content verified are the registry's, so a transport without a session
 serves them alike.

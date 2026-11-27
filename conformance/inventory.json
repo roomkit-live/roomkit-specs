@@ -1335,7 +1335,7 @@
     },
     {
       "section": "21.2",
-      "sha256": "426f525c0642d116ccff959650e412e499d74297f4f543375ff41f7b4f0197a2",
+      "sha256": "1885429e39f8d3e8b62fd921bdea0708eb3057f7f476305e92270249de01cdd8",
       "classification": "normative",
       "review": "The MCP support recommendation, provider interface, connection lifecycle, configuration, alias routing, bounded discovery, schema checks, server instructions, host requests and rendering of results have separate units. Prompt-composing text, realtime and conference paths retain their own conditions."
     },
