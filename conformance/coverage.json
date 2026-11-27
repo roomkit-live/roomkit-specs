@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "f73e8090fe7e39cb56cfb5b71dcd2e49070574bf3b2dd580bfd1e5e038e6ec9e",
-  "corpus_sha256": "9d900c559a4a245c1e8f9a5473f657a9c5d6bd8bd9e13db038dda6362a37478c",
+  "corpus_sha256": "e5b65b23a787ebd9e9fc3c5d1a0ff3787c25942e2b19069f55d612a7921be09a",
   "python_commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
-  "scenario_count": 4195,
+  "scenario_count": 4197,
   "sections": [
     {
       "section": "0",
@@ -448,6 +448,8 @@
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "delivery/a-message-keyed-like-a-publication-stands-in-for-none",
+        "delivery/a-webhook-message-keeps-its-provider-s-id-as-its-provider-message-id",
+        "delivery/a-webhook-message-keeps-its-raw-payload",
         "delivery/the-doors-refuse-the-publication-namespace",
         "discussion/threads-share-one-queue-and-each-turn-reads-the-whole-room",
         "inbound/a-field-the-parse-set-stands",
@@ -2902,11 +2904,11 @@
         "unmapped": 10
       },
       "decided_gaps": {
-        "step": 1,
-        "writable": 1
+        "step": 1
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
+        "delivery/a-webhook-message-keeps-its-provider-s-id-as-its-provider-message-id",
         "edits/a-hard-delete-leaves-the-index-it-took",
         "idempotency/a-blank-key-is-no-key-at-commit-event",
         "idempotency/a-blank-key-is-no-key-at-process-inbound",
@@ -5259,6 +5261,8 @@
         "delivery/a-status-recipient-is-found-through-a-binding-naming-no-correspondent",
         "delivery/a-status-recipient-is-read-as-step-one-reads-a-sender",
         "delivery/a-webhook-is-a-message-a-status-or-nothing",
+        "delivery/a-webhook-message-keeps-its-provider-s-id-as-its-provider-message-id",
+        "delivery/a-webhook-message-keeps-its-raw-payload",
         "delivery/an-explicit-status-preserves-its-payload-in-every-room-state",
         "delivery/the-one-room-delivering-by-its-key-on-a-channel-reading-no-recipient-is-not-the-status",
         "delivery/the-one-room-delivering-to-another-number-is-not-the-status",
@@ -14482,7 +14486,7 @@
       "gap": {
         "class": "step",
         "card": "RMK-1955",
-        "note": "Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed. The audit's suspect on the Telegram row is RMK-1954."
+        "note": "Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed. Python's channel of this row declares its buttons (RMK-2190)."
       }
     },
     {
@@ -20572,7 +20576,7 @@
       "gap": {
         "class": "step",
         "card": "RMK-1912",
-        "note": "Needs an error name for a duplicate (room_id, index) in the runners' table."
+        "note": "Python's stores raise EventIndexTakenError and roomkit-rs's StoreError::EventIndexTaken (RMK-2190); needs that error's name in the runners' table, read from store.add_event."
       }
     },
     {
@@ -20591,12 +20595,7 @@
       "id": "RK-8.1-013",
       "section": "8.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1912",
-        "note": "process_webhook reaches it, but its scenario keeps the provider's id in external_id: suspect RMK-1913."
-      }
+      "links": []
     },
     {
       "id": "RK-8.1-014",
@@ -20694,7 +20693,7 @@
       "gap": {
         "class": "step",
         "card": "RMK-1912",
-        "note": "Needs a scripted source provider; roomkit-rs lacks sources."
+        "note": "Python emits it once the source reports it connected (RMK-2190); needs a scripted source provider whose connection a step drives, and source events in framework_events; roomkit-rs lacks sources."
       }
     },
     {
