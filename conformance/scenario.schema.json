@@ -6793,6 +6793,10 @@
                   "type": "string"
                 },
                 "minItems": 1
+              },
+              "room_id": {
+                "description": "The room whose session the frames are for: the channel's first session's when absent.",
+                "type": "string"
               }
             }
           }

@@ -6505,6 +6505,7 @@
       "voice/outbound-speech-reports-an-audio-level": "cf2f25ca101f3d0eb9ac34f9de14adebbf1174ac99b6b716fe0d62cae8401ac3"
     },
     "RK-12.5-030": {
+      "realtime/each-session-of-a-channel-fires-its-own-audio-levels-once-per-100-ms": "71f5307687b874b231e36fdb894be620c8407ed847ad39b1b7757c311aa67d44",
       "voice/input-levels-fire-at-most-ten-a-second-per-session": "71f5307687b874b231e36fdb894be620c8407ed847ad39b1b7757c311aa67d44",
       "voice/output-levels-fire-at-most-once-per-100-ms": "71f5307687b874b231e36fdb894be620c8407ed847ad39b1b7757c311aa67d44"
     },

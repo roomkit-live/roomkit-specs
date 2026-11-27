@@ -492,14 +492,14 @@ room callbacks of the setup are not compared.
   the length of speech that holds a reply not heard yet; the video bridge's
   `keyframe_interval_s` and `keyframe_wait_s` (§12.8.9); the vision
   interval (§12.8.4); a conference recording's flush budget (§12.10.8);
-  and the interval between two audio levels of a voice session (§12.5).
+  and the interval between two audio levels of a voice or realtime session
+  (§12.5).
   An implementation's own delays on those paths (an echo
   canceller's tail once a playback ended) follow it too. Others stay on
   real time, and a scenario does not advance past them: the audio a session
   has played (what `echo_guard_ms` and `allow_during_first_ms` measure), a
-  playback's drain without an echo canceller, an STT stream's inactivity,
-  a realtime session's audio-level throttle and the throttle of inbound
-  frames. So do a
+  playback's drain without an echo canceller, an STT stream's inactivity
+  and the throttle of inbound frames. So do a
   runner's own bounds (a call's 10 s, a gate's 5 s, the idle wait), and work
   handed to another thread: the clock decides when a wait ends, never how
   long a thread takes. Under it, `voice.settle` takes work waiting on the
@@ -1381,7 +1381,7 @@ run's own kit when absent.
 | `realtime.configure` | `channel_id`, `tools`: tool names, each declared as the channel's tools are, optional `system_prompt` and `voice` | the channel's `configure` with those tools, and that prompt and voice |
 | `realtime.transcribe` | `channel_id`, `text`, `role` (`user` or `assistant`), optional `is_final` (default true) | the provider transcribes the user's or the model's words (`on_transcription`); `channel_id` may name a conference opened with `tools`, whose realtime model's it is (Scripted conference model) |
 | `realtime.speech` | `channel_id`, `edge` (`start` or `end`) | the provider detects the start or the end of the user's speech (`on_speech_start`, `on_speech_end`); `channel_id` may name a conference opened with `tools`, whose realtime model's it is |
-| `realtime.audio` | `channel_id`, `source` (`transport` or `provider`), `frames` (base64 PCM16) | with `transport`, the transport receives the caller's frames, in order (`on_audio_received`), and the step returns once the channel forwarded or retained each; with `provider`, the provider outputs them, in order (`on_audio`); `channel_id` may name a conference opened with `tools`, its source `provider`: its realtime model's response audio |
+| `realtime.audio` | `channel_id`, `source` (`transport` or `provider`), `frames` (base64 PCM16), optional `room_id` (the session of that room, the channel's first when absent) | with `transport`, the transport receives the caller's frames, in order (`on_audio_received`), and the step returns once the channel forwarded or retained each; with `provider`, the provider outputs them, in order (`on_audio`); `channel_id` may name a conference opened with `tools`, its source `provider`: its realtime model's response audio |
 | `realtime.response` | `channel_id`, `edge` (`start` or `end`) | the provider's response starts or ends (`on_response_start`, `on_response_end`); `channel_id` may name a conference opened with `tools`, whose realtime model's response it is |
 | `realtime.wait_idle` | `channel_id`, `room_id`, `timeout_ms` | the channel's `wait_idle(room_id, timeout)`, a realtime voice channel's or a conference's opened with `tools`: true once the room's sessions are idle within the time, false when it passed first (§12.4.1) |
 | `realtime.reconfigure` | `channel_id`, optional `room_id` (the session of that room, the channel's first when absent), optional `system_prompt`, `voice` and `tools` (tool names, each declared as the channel's tools are), and optional `gate`, where the connect of a provider that `reconnects_on_reconfigure` holds | the channel's `reconfigure_session` of that session (§12.4) |
