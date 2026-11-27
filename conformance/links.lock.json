@@ -7348,6 +7348,9 @@
     "RK-14.1-009": {
       "store/a-room-exists-from-its-creation-to-its-deletion": "1970f959f51c430d5ea19a1de52094e68df3625b56c65f8a36a7e633d7d6f6fb"
     },
+    "RK-14.1-011": {
+      "store/a-metadata-patch-removes-its-unset-keys-then-merges-its-own-and-writes-nothing-else": "974bed6e5f4d75480e41f3107cd5b2470102a62fd6b0695419e3044b72fed3f2"
+    },
     "RK-14.1-015": {
       "store/the-latest-room-follows-the-bindings-and-rooms-the-store-holds": "f2d480afc04070e54e3244c30bb869d549ab8d8a9ba807f4568b45150547af91",
       "store/the-latest-room-is-the-newest-the-greatest-id-breaking-a-tie": "f2d480afc04070e54e3244c30bb869d549ab8d8a9ba807f4568b45150547af91",
@@ -7475,6 +7478,9 @@
       "rooms/public-timeline-keeps-its-pagination-and-audit-options": "269fb7a924de28089561c38181589d38e6642cd12146597227d58c5c73d202e6",
       "store/the-timeline-is-what-the-room-received-every-type-in-index-order": "269fb7a924de28089561c38181589d38e6642cd12146597227d58c5c73d202e6"
     },
+    "RK-14.1-062": {
+      "store/a-timeline-read-takes-50-events-by-default-and-none-at-a-limit-of-0": "d68e6c5973864d458ead6511f01e529c70d139473e07f9437267d730bebeea2b"
+    },
     "RK-14.1-063": {
       "rooms/public-timeline-keeps-its-pagination-and-audit-options": "3e6da89a3fb087d16777d741a78dfad0f101a951399bc95085ef7035665833c9",
       "store/the-timeline-is-what-the-room-received-every-type-in-index-order": "3e6da89a3fb087d16777d741a78dfad0f101a951399bc95085ef7035665833c9",
@@ -7500,9 +7506,15 @@
       "store/the-timeline-is-what-the-room-received-every-type-in-index-order": "0e72589679ed6669e43079d8d94304d4ab955af538e2c5e28aa72550ba59dcee",
       "store/timeline-predicates-precede-the-page-cut": "0e72589679ed6669e43079d8d94304d4ab955af538e2c5e28aa72550ba59dcee"
     },
+    "RK-14.1-068": {
+      "hooks/a-hook-s-context-holds-a-refused-row-an-agent-s-history-leaves-out": "968843fcc6e10bc7ebdcc7b8a48bc7cca33e38e0a08092a463ab7541ecf43a2d"
+    },
     "RK-14.1-069": {
       "rooms/public-timeline-keeps-its-pagination-and-audit-options": "b898bd6ff19a307c40ba6390765d36d878d3c54bb52dffad953647ce8fac6733",
       "store/timeline-predicates-precede-the-page-cut": "b898bd6ff19a307c40ba6390765d36d878d3c54bb52dffad953647ce8fac6733"
+    },
+    "RK-14.1-072": {
+      "rooms/a-room-s-bindings-are-listed-in-the-order-they-were-first-added": "7daf2b214cfac91eefc4d75e65b6a26a7a982242f929ebdf3657341e83a685a0"
     },
     "RK-14.1-073": {
       "store/updated-bindings-keep-the-first-streaming-target": "08c69f09ebdc8499f31f38c8453453ee1a641326ddd2a975240a8ba5b4ac8538"
@@ -7561,6 +7573,9 @@
     "RK-14.3-012": {
       "streaming/a-streamed-row-the-persistence-policy-keeps-out-keeps-its-hook-s-effects": "26973a805db7ed5e621c8b134ebf27c7744bfe5bd66e6adcda9f525b9dcbd9eb"
     },
+    "RK-14.3-013": {
+      "store/a-write-naming-an-event-or-a-room-the-store-lacks-is-refused-nothing-written": "d6f30a96f91a17dd305b9a3849584465e677b3f9223dadbbb6983e937072cbcf"
+    },
     "RK-14.3-014": {
       "store/a-participant-id-the-room-has-is-refused-and-an-update-rewrites-a-record": "bb294945d1783bc35c9900f61a596aeaad68fa2244e58f32b0bf129c2ee25c25",
       "store/an-update-of-a-task-the-store-lacks-is-refused": "bb294945d1783bc35c9900f61a596aeaad68fa2244e58f32b0bf129c2ee25c25"
@@ -7574,6 +7589,9 @@
     },
     "RK-14.3-019": {
       "store/a-room-is-written-only-while-it-holds-what-the-write-read": "73d60c0e9c34aeba31ea853741ab57a7aa3b98347c30581099a51d8d26abc9ec"
+    },
+    "RK-14.3-020": {
+      "rooms/a-host-s-metadata-change-merges-its-keys-and-a-concurrent-writer-s-stand": "657f8a257efb2b256265a8f19b702f5449c669ab21f3bf7701f52ac98f1014b0"
     },
     "RK-14.3-021": {
       "delivery/a-turn-the-close-cuts-leaves-no-outcome-and-the-set-s-failure-is-recorded": "77b8aced03a6ed5116309ab81d8254f6014eb7e61fd5d2528c0decce8e680224",
@@ -7592,6 +7610,9 @@
     },
     "RK-14.3-024": {
       "store/a-delivery-record-alone-writes-an-event-s-results": "44cf3460e27cb0803e405f3249e68c32a64547c63deafae00f93a1de85c7e610"
+    },
+    "RK-14.3-025": {
+      "injection/a-record-committed-outside-the-pipeline-keeps-the-delivery-results-it-brings": "5b45c3d8548937ac9dedce9959a341542d5463ec2e850c3a1e72397249676c88"
     },
     "RK-14.3-026": {
       "delivery/concurrent-keyed-deliveries-publish-once": "1df5196f4417cde0c6834d7b9349a8a9ef385e6f20709786ead1ad837a70a5d4",
@@ -7675,6 +7696,9 @@
     },
     "RK-15.8.1-008": {
       "orchestration/an-audited-call-is-recorded-by-how-it-ended": "ec14c78c45d70a1603abe127cc41f37be8e9722184c47ca24d7b69ae511d3516"
+    },
+    "RK-15.8.1-009": {
+      "orchestration/an-audited-call-its-turn-s-cut-cancels-is-recorded-cancelled": "a1ebf39659126bae62871d64efb97b0aaa06ce4e1b5d236c9b2034e903d50044"
     },
     "RK-15.8.1-010": {
       "orchestration/an-audited-call-is-recorded-by-how-it-ended": "8bb1f387789b223081f672876b35b83b5faffe74e6ab132816688538ed92a11e"
@@ -7947,6 +7971,9 @@
     },
     "RK-17.6-009": {
       "recording/a-recorder-joins-the-live-feed-after-consent": "a4c3c8087f88af04caeb8d0f94b13093494855673ebc98d42f771e270f8602c7"
+    },
+    "RK-17.6-017": {
+      "voice/a-transcript-is-redacted-by-the-hook-that-redacts-a-message": "be370aea28c7cf49801cd45608dd90713428340078219229250399035b6673c4"
     },
     "RK-17.7-009": {
       "conference/a-call-reports-presence-without-changing-room-membership": "ea7e6d0bec934386da126546e983715647ac19849b3075ed688483b31ae4f580"
@@ -21035,6 +21062,25 @@
       "tools/a-tool-observer-past-its-timeout-is-reported": "becaeb1bce131571a71d64f0b3dccfae02b54beb9e10c8ba38a63e319aa160ff",
       "verification/a-hook-past-its-timeout-leaves-the-message-held": "becaeb1bce131571a71d64f0b3dccfae02b54beb9e10c8ba38a63e319aa160ff"
     },
+    "RK-8.2-050": {
+      "voice/a-session-whose-playback-fails-is-reported-and-the-served-one-fires-after-tts": "358e8e9803b472cdb73fdee1c33756e6ba8a76ee2b4cd5ff003bd0d0e3d7f5cd",
+      "voice/no-session-served-fires-no-after-tts": "358e8e9803b472cdb73fdee1c33756e6ba8a76ee2b4cd5ff003bd0d0e3d7f5cd"
+    },
+    "RK-8.2-055": {
+      "conference/conference-events-follow-the-participants-and-the-bot": "2e3a6c8c691296039b41b35f2fd659fbe72698089d3f3e13b1a81901b5952c99"
+    },
+    "RK-8.2-056": {
+      "conference/conference-events-follow-the-participants-and-the-bot": "1d75b4aec4b38d2fc06ea11623275bd1b62b8f4634ea93b2b717fb49a21a65e6"
+    },
+    "RK-8.2-057": {
+      "conference/conference-events-follow-the-participants-and-the-bot": "3f6d53f8245b574b9b6867d5a06d2829fc8f42621cc20f6d586e6c478d066c6f"
+    },
+    "RK-8.2-058": {
+      "conference/conference-events-follow-the-participants-and-the-bot": "50bff4190c06054691c814917a0c328e2d8218658f51aaaadcd7aad7e1c99005"
+    },
+    "RK-8.2-059": {
+      "conference/a-grant-change-applied-in-place-is-announced": "5232371a1dc84b4ddf5e9a39538e1752a53d959c0211e3084a997cba466828ba"
+    },
     "RK-8.2-061": {
       "locks/an-agent-a-set-of-a-deleted-room-does-not-ask-leaves-no-record-in-the-room-created-again": "feb90fec1cac876853e578cc35cd5e9b86e3eb48a59e2842d3ececef8adf6315",
       "locks/the-agent-answer-of-a-set-of-a-deleted-room-stays-out-of-the-room-created-again": "feb90fec1cac876853e578cc35cd5e9b86e3eb48a59e2842d3ececef8adf6315",
@@ -23985,6 +24031,9 @@
       "injection/a-post-speaks-through-the-host-channel": "2273285de1336ea8578c85a104ef62af27c3b00bf35c6fff7281573dd47f1386",
       "injection/the-host-s-voice-is-never-an-intelligence-channel": "2273285de1336ea8578c85a104ef62af27c3b00bf35c6fff7281573dd47f1386"
     },
+    "RK-A.14.1-003": {
+      "injection/the-host-channel-binds-inbound-and-is-never-delivered-to": "1235c3a79173f77922907513f56e8b1f2fe69fec4d95b04e57ee08760a541a4d"
+    },
     "RK-A.14.1-004": {
       "transcoding/a-post-reaches-each-transport-transcoded-for-what-it-carries": "c1f6c28a528894dbe13516f3709eb84665d50558ad6bf17791a33c1d88f13e71"
     },
@@ -24015,6 +24064,15 @@
     "RK-A.15-024": {
       "conference/a-screen-track-announces-the-start-and-end-of-sharing": "4608bea9ae3aac6b8de583ea30b96ed309cc963df010d3d2d66d83ed8c1f1948"
     },
+    "RK-A.15-026": {
+      "conference/conference-events-follow-the-participants-and-the-bot": "7c512dac51a58ab8436b2d3dcca89e0403e2ac690b9444cb2e0e53cce2c96388"
+    },
+    "RK-A.15-027": {
+      "conference/conference-events-follow-the-participants-and-the-bot": "a13e2057ac4ddb62a6f6e2bd3a1344ccf6054d21de851e0a9be221ad76da8b2e"
+    },
+    "RK-A.15-028": {
+      "conference/a-grant-change-applied-in-place-is-announced": "9f985aa9c429448af62880bd0d802a8a2186215b731275521a45005208804b1b"
+    },
     "RK-A.2-005": {
       "routing/an-email-address-is-read-lower-case-without-its-display-name": "68b0883a3566616898897b555f793ae6b3108c70a3116bb780e6639ac2c2a973",
       "routing/each-channel-type-writes-its-addresses-in-its-own-form-under-its-own-keys": "68b0883a3566616898897b555f793ae6b3108c70a3116bb780e6639ac2c2a973"
@@ -24041,6 +24099,12 @@
     },
     "RK-A.7-005": {
       "routing/each-channel-type-writes-its-addresses-in-its-own-form-under-its-own-keys": "bc597d9bfe0e5e522af9e5a5cc527919595cb4c3f1247569f57e66468096fba5"
+    },
+    "RK-A.9-004": {
+      "rooms/an-ai-channel-binds-as-a-bidirectional-intelligence-channel-of-text-rich-and-media": "f9cd1fdda397ed74322d9fc3084755b19aa01ab7fd4731783f4d4b40662a750b"
+    },
+    "RK-A.9-005": {
+      "rooms/an-ai-channel-binds-as-a-bidirectional-intelligence-channel-of-text-rich-and-media": "cf65ac1db92912cfb4afa6b31faf0961b666ff2088f79304868abc088936ff40"
     },
     "RK-A.9-006": {
       "ai-router/the-router-picks-each-turn-s-model-and-its-rounds-stay-on-it": "cfbafb5ed586757f517e85d6078fc73676582f592fc71e3cb3b10fe09e44e574"
@@ -24224,6 +24288,9 @@
       "response-schema/a-schema-turn-its-token-budget-stops-fails-truncated": "cd3186a033b39932ce15e3aa2faec718310041b00f369b27fcf31f713190a2c9",
       "response-schema/a-schema-turn-the-provider-interrupts-after-a-round-fails-truncated": "cd3186a033b39932ce15e3aa2faec718310041b00f369b27fcf31f713190a2c9"
     },
+    "RK-A.9-042": {
+      "response-schema/a-schema-on-a-channel-that-adds-tools-of-its-own-needs-a-model-that-takes-both": "785ddab21392a59fbc0f50ef0788fa8f4dadae5d9de846f0ae53be2176bae404"
+    },
     "RK-A.9.1-002": {
       "acp/a-message-is-prompted-and-the-agents-text-answers-it": "c2d0bc3ba6b9d14826b4fa3f8418ce32fd5e209ff9250625c62ddc8461a45dac"
     },
@@ -24250,6 +24317,9 @@
       "acp/config-stored-host-values-override-defaults": "eb6beab3ce8f0e16b6252decdf7abc4685dfc3e390c09ad250e45c11a2130b6a",
       "acp/mcp-after-reconnect": "eb6beab3ce8f0e16b6252decdf7abc4685dfc3e390c09ad250e45c11a2130b6a",
       "acp/session-reconnect-reapplies-defaults-and-host-values": "eb6beab3ce8f0e16b6252decdf7abc4685dfc3e390c09ad250e45c11a2130b6a"
+    },
+    "RK-A.9.1-010": {
+      "acp/a-room-s-second-prompt-waits-for-the-first-to-be-answered": "e166fc8f5adf96ef57f5662ac9b5458e732cd9b7f291e3b64347a3ff3f4965e9"
     },
     "RK-A.9.1-012": {
       "acp/directories-normalize-lexically": "f2b07120e0e647b6d73519e77926919ee6a6cb72c1f648cb67036909ad55914a",
@@ -24360,6 +24430,9 @@
       "acp/cancel-running-prompt-keeps-its-outcome": "e85668243d1c42a6ac7e584ae4105b67f60b2ced0327b59260a64832c6019fd3",
       "acp/thinking-cancelled-prompt-closes-window": "e85668243d1c42a6ac7e584ae4105b67f60b2ced0327b59260a64832c6019fd3"
     },
+    "RK-A.9.1-031": {
+      "acp/a-close-closes-the-session-of-each-room": "1ca4f409a7f8541a4c324708ab8a22edfbbfd248c723a7ce532e3c3897d35134"
+    },
     "RK-A.9.1-032": {
       "acp/usage-live-origin": "8ac5239152d9f2d05b85bceb7ef0ce7cf73cac8e84eb93117626a70fa30afffd"
     },
@@ -24405,6 +24478,9 @@
       "acp/thinking-cancelled-prompt-closes-window": "5ce3eaeac5f7dca661a0bc1e2a17515bb23f011775fa7d407b29ae7317f4990e",
       "acp/tools-cancelled-closes-pending": "5ce3eaeac5f7dca661a0bc1e2a17515bb23f011775fa7d407b29ae7317f4990e",
       "acp/tools-refusal-after-text": "5ce3eaeac5f7dca661a0bc1e2a17515bb23f011775fa7d407b29ae7317f4990e"
+    },
+    "RK-A.9.1-042": {
+      "acp/usage-observed-in-a-turn-that-fails-or-is-abandoned-makes-no-response": "6bb61e8b263a12128eec3c7e8624aaadba39730a313a21dfec819be2b4cdba3b"
     },
     "RK-A.9.1-043": {
       "acp/a-message-is-prompted-and-the-agents-text-answers-it": "dd4f5806ef1c3993fd8f5995e2bfc2bfaaac64f95851b43ab6f3cca7e21f92b6"

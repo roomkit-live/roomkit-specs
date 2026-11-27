@@ -121,11 +121,6 @@
       "card": "RMK-1976",
       "note": "No store.update_room step: the whole-record write and what it keeps are not called directly."
     },
-    "RK-14.1-011": {
-      "class": "writable",
-      "card": "RMK-1976",
-      "note": "Six scenarios call store.patch_room_metadata as setup; three assert a patched key or an unset key's removal; none asserts a key outside the patch kept, unset applied first, nothing else written, or an unknown room's null."
-    },
     "RK-14.1-012": {
       "class": "writable",
       "card": "RMK-1976",
@@ -216,16 +211,6 @@
       "card": "RMK-1976",
       "note": "No store.add_observation or store.list_observations step."
     },
-    "RK-14.1-062": {
-      "class": "writable",
-      "card": "RMK-1976",
-      "note": "store.get_timeline over more than 50 events with no limit, and with a limit of 0."
-    },
-    "RK-14.1-068": {
-      "class": "writable",
-      "card": "RMK-1976",
-      "note": "A refused message, then a hook of the next message whose recent_events holds the refused row."
-    },
     "RK-14.1-070": {
       "class": "step",
       "card": "RMK-1976",
@@ -236,16 +221,6 @@
       "card": "RMK-1976",
       "note": "No store.get_event_count step."
     },
-    "RK-14.1-072": {
-      "class": "writable",
-      "card": "RMK-1976",
-      "note": "The kit's list_bindings step can assert the order; the three binding-order scenarios read the context's order (RK-14.1-076), never list_bindings."
-    },
-    "RK-14.3-013": {
-      "class": "writable",
-      "card": "RMK-1976",
-      "note": "store.update_event of an event the store lacks and store.add_participant into a room it lacks: refused, nothing written."
-    },
     "RK-14.3-015": {
       "class": "step",
       "card": "RMK-1976",
@@ -255,16 +230,6 @@
       "class": "step",
       "card": "RMK-1976",
       "note": "Needs a store.update_room step held against a concurrent commit."
-    },
-    "RK-14.3-020": {
-      "class": "writable",
-      "card": "RMK-1976",
-      "note": "Two concurrent store.patch_room_metadata calls on different keys, both keys standing."
-    },
-    "RK-14.3-025": {
-      "class": "writable",
-      "card": "RMK-1976",
-      "note": "The kit's commit_event of a record that brings delivery_results, read back with them; the store's own commit_event is shown by store/a-delivery-record-alone-writes-an-event-s-results."
     },
     "RK-15.4-002": {
       "class": "phase6",
@@ -325,11 +290,6 @@
       "class": "step",
       "card": "RMK-1979",
       "note": "Needs the inbound and delivery spans, which carry the addresses and the provider error, and a span's error_message: telemetry.spans has neither kind and returns no attribute or error."
-    },
-    "RK-15.8.1-009": {
-      "class": "writable",
-      "card": "RMK-1979",
-      "note": "An audited tool cancelled because its turn ended, by a steer cancel directive or the kit's close, is recorded cancelled."
     },
     "RK-15.8.1-015": {
       "class": "step",
@@ -445,11 +405,6 @@
       "class": "phase6",
       "card": "RMK-1986",
       "note": "step: a consent mode on recording.start: a recording started only once the parties its mode names consented; no implementation offers consent modes (suspect RMK-1985)."
-    },
-    "RK-17.6-017": {
-      "class": "phase6",
-      "card": "RMK-1986",
-      "note": "step: a room retention or redaction policy over voice: voice session metadata under the room's retention and redaction policies."
     },
     "RK-17.6-018": {
       "class": "phase6",
@@ -2179,11 +2134,6 @@
       "card": "RMK-1912",
       "note": "step: framework_events media rows, voice.open failing STT or TTS scripts: the stt_error row, when it is emitted and its data."
     },
-    "RK-8.2-050": {
-      "class": "phase6",
-      "card": "RMK-1912",
-      "note": "step: framework_events media rows, voice.open failing STT or TTS scripts: the tts_error row, when it is emitted and its data."
-    },
     "RK-8.2-051": {
       "class": "phase6",
       "card": "RMK-1912",
@@ -2203,31 +2153,6 @@
       "class": "phase6",
       "card": "RMK-1912",
       "note": "step: framework_events media rows: the video_vision_result row, when it is emitted and its data."
-    },
-    "RK-8.2-055": {
-      "class": "phase6",
-      "card": "RMK-1912",
-      "note": "step: framework_events media rows: the conference_started row, when it is emitted and its data."
-    },
-    "RK-8.2-056": {
-      "class": "phase6",
-      "card": "RMK-1912",
-      "note": "step: framework_events media rows: the conference_ended row, when it is emitted and its data."
-    },
-    "RK-8.2-057": {
-      "class": "phase6",
-      "card": "RMK-1912",
-      "note": "step: framework_events media rows: the conference_participant_joined row, when it is emitted and its data."
-    },
-    "RK-8.2-058": {
-      "class": "phase6",
-      "card": "RMK-1912",
-      "note": "step: framework_events media rows: the conference_participant_left row, when it is emitted and its data."
-    },
-    "RK-8.2-059": {
-      "class": "phase6",
-      "card": "RMK-1912",
-      "note": "step: framework_events media rows, conference.plug, unplug, set_bot_grants and ensure_bot: the conference_bot_grants_changed row, when it is emitted and its data."
     },
     "RK-8.3-012": {
       "class": "phase6",
@@ -2409,11 +2334,6 @@
       "card": "RMK-1961",
       "note": "Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed."
     },
-    "RK-A.14.1-003": {
-      "class": "writable",
-      "card": "RMK-1961",
-      "note": "A scenario can assert the host binding's direction, inbound, and that no delivery reaches the host channel."
-    },
     "RK-A.15-002": {
       "class": "writable",
       "card": "RMK-1961",
@@ -2478,21 +2398,6 @@
       "class": "phase6",
       "card": "RMK-1961",
       "note": "step: conference.feed: the ON_TRANSCRIPTION hook, per track and attributed to its participant."
-    },
-    "RK-A.15-026": {
-      "class": "phase6",
-      "card": "RMK-1961",
-      "note": "step: framework_events media rows: the framework events conference_started and conference_ended."
-    },
-    "RK-A.15-027": {
-      "class": "phase6",
-      "card": "RMK-1961",
-      "note": "step: framework_events media rows: the framework events conference_participant_joined and conference_participant_left."
-    },
-    "RK-A.15-028": {
-      "class": "phase6",
-      "card": "RMK-1961",
-      "note": "step: framework_events media rows, conference.plug, unplug, set_bot_grants and ensure_bot: the framework event conference_bot_grants_changed."
     },
     "RK-A.2-002": {
       "class": "step",
@@ -2639,25 +2544,10 @@
       "card": "RMK-1961",
       "note": "Needs WebSocket connection registry steps in the runners, which build scripted channels only; roomkit-rs has no connection registry (tier 1b), feature name websocket_channel proposed."
     },
-    "RK-A.9-004": {
-      "class": "writable",
-      "card": "RMK-1961",
-      "note": "A scenario can read an AI channel binding's type, category, direction and media types through the bindings expectation."
-    },
-    "RK-A.9-005": {
-      "class": "writable",
-      "card": "RMK-1961",
-      "note": "A scenario can read an AI channel binding's capabilities (rich text, no edit, no delete) through the bindings expectation."
-    },
     "RK-A.9-011": {
       "class": "step",
       "card": "RMK-1961",
       "note": "No runner key sets tool_loop_timeout_seconds, and its 300-second default cannot be waited out under the suite's time rule. The audit's suspect on the configuration list is RMK-1962."
-    },
-    "RK-A.9-042": {
-      "class": "writable",
-      "card": "RMK-1961",
-      "note": "A schema turn on a channel given skills, on a model that takes a schema but not beside tools, fails unsupported; the skills and model capability keys exist."
     },
     "RK-A.9.1-003": {
       "class": "step",
@@ -2669,11 +2559,6 @@
       "card": "RMK-1961",
       "note": "Needs a real agent launch from an argument vector, which the runners' scripted agents do not perform."
     },
-    "RK-A.9.1-010": {
-      "class": "writable",
-      "card": "RMK-1961",
-      "note": "Two messages to one room while the scripted agent holds the first prompt: the second is prompted only once the first returns."
-    },
     "RK-A.9.1-011": {
       "class": "step",
       "card": "RMK-1961",
@@ -2683,16 +2568,6 @@
       "class": "step",
       "card": "RMK-1961",
       "note": "No runner key sets environment or authentication_method on an ACP channel. The text differs from Python's signature (RMK-1966)."
-    },
-    "RK-A.9.1-031": {
-      "class": "writable",
-      "card": "RMK-1961",
-      "note": "acp.close and the acp_wire expectation exist; no scenario yet asserts the sessions and the transport a close releases."
-    },
-    "RK-A.9.1-042": {
-      "class": "writable",
-      "card": "RMK-1961",
-      "note": "A turn that errs or is abandoned after a usage_update (prompts[].error exists): the usage stays an ephemeral custom event, and no completed response or accounting follows."
     }
   }
 }
