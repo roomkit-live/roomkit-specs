@@ -571,8 +571,8 @@ model over a simulated provider and transport (§12.4). A step starts its
 session. Its handle stays available after the session ends so the provider
 can issue a late callback. The fixture starts at most one session per room
 on a channel: another `realtime.start` names another room, and the steps
-address the channel's first session, but for `realtime.reconfigure`, which
-may name another's room.
+address the channel's first session, but for `realtime.reconfigure` and
+`realtime.audio`, which may name another's room.
 Under `realtime.tools`, each tool name maps to its handler script, and the
 channel declares the tool with its `parameters`, the JSON schema of its
 arguments (`{"type": "object", "properties": {}}` when absent), its name as
@@ -1381,7 +1381,7 @@ run's own kit when absent.
 | `realtime.configure` | `channel_id`, `tools`: tool names, each declared as the channel's tools are, optional `system_prompt` and `voice` | the channel's `configure` with those tools, and that prompt and voice |
 | `realtime.transcribe` | `channel_id`, `text`, `role` (`user` or `assistant`), optional `is_final` (default true) | the provider transcribes the user's or the model's words (`on_transcription`); `channel_id` may name a conference opened with `tools`, whose realtime model's it is (Scripted conference model) |
 | `realtime.speech` | `channel_id`, `edge` (`start` or `end`) | the provider detects the start or the end of the user's speech (`on_speech_start`, `on_speech_end`); `channel_id` may name a conference opened with `tools`, whose realtime model's it is |
-| `realtime.audio` | `channel_id`, `source` (`transport` or `provider`), `frames` (base64 PCM16), optional `room_id` (the session of that room, the channel's first when absent) | with `transport`, the transport receives the caller's frames, in order (`on_audio_received`), and the step returns once the channel forwarded or retained each; with `provider`, the provider outputs them, in order (`on_audio`); `channel_id` may name a conference opened with `tools`, its source `provider`: its realtime model's response audio |
+| `realtime.audio` | `channel_id`, `source` (`transport` or `provider`), `frames` (base64 PCM16), optional `room_id` (the session of that room, the channel's first when absent; a realtime voice channel's only) | with `transport`, the transport receives the caller's frames, in order (`on_audio_received`), and the step returns once the channel forwarded or retained each; with `provider`, the provider outputs them, in order (`on_audio`); `channel_id` may name a conference opened with `tools`, its source `provider`: its realtime model's response audio |
 | `realtime.response` | `channel_id`, `edge` (`start` or `end`) | the provider's response starts or ends (`on_response_start`, `on_response_end`); `channel_id` may name a conference opened with `tools`, whose realtime model's response it is |
 | `realtime.wait_idle` | `channel_id`, `room_id`, `timeout_ms` | the channel's `wait_idle(room_id, timeout)`, a realtime voice channel's or a conference's opened with `tools`: true once the room's sessions are idle within the time, false when it passed first (§12.4.1) |
 | `realtime.reconfigure` | `channel_id`, optional `room_id` (the session of that room, the channel's first when absent), optional `system_prompt`, `voice` and `tools` (tool names, each declared as the channel's tools are), and optional `gate`, where the connect of a provider that `reconnects_on_reconfigure` holds | the channel's `reconfigure_session` of that session (§12.4) |
