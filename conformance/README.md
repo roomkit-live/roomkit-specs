@@ -2537,12 +2537,13 @@ No SDK request/resource method is replaced by a fake.
 The peer answers `initialize` with MCP `2025-11-25` (the last protocol
 version using that handshake), resources capability and its optional `server_info`, `extensions`
 and `instructions`. `replies` is an ordered script of `{method, params?,
-result|error|hold}`. Each request must match the next method and params
-(omitted script params mean `{}`; only the initial discovery `tools/list`
-may omit empty wire params). Numeric SDK progress tokens are omitted only
+result|error|hold}`. Each request must match the next method and params:
+omitted script params mean a request sent with no `params` member, which is
+how a request without parameters goes out, an empty set or an empty or null
+`_meta` included (RK-21.2-046). Numeric SDK progress tokens are omitted only
 while observing discovery or the public `call_tool` operation. Explicit host
-`request` parameters, including `_meta`, stay exact; other metadata is never
-removed. HTTP requests, including notifications, remain in the raw observation.
+`request` parameters, including a non-empty `_meta`, stay exact; other
+metadata is never removed. HTTP requests, including notifications, remain in the raw observation.
 Exactly one result, protocol error (`code`, `message`,
 optional `data`) or `hold: true` is required. A held request gets no answer
 before its client closes it. Unexpected requests, unused replies and fixture
@@ -2561,9 +2562,9 @@ an owned copy. No provider private state is read.
 The call returns `results` (each `{result: value}` or `{error: name}`,
 plus the server message for MCP errors) and
 `requests` (wire method and params in order; initialize is recorded by method
-only). Resources are normalized from the public model with JSON aliases and
-only fields sent by the peer, retaining explicit nulls and extension fields;
-request and information values are the public return values themselves.
+only). Resources, request and information values are the public return values
+themselves: a resource read is the result as the peer sent it, explicit nulls
+and extension fields retained.
 Expected errors are `not_connected`, `mcp_error`, `timeout` and
 `validation_error`. Every other
 exception is a runner failure. Explicit close and final cleanup occur in the
