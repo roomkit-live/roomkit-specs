@@ -1996,26 +1996,6 @@
       "card": "RMK-1922",
       "note": "Invoke the delegation tool itself without any current tool call and observe refusal. The delegate.handle step supplies a room explicitly and tests a different public API."
     },
-    "RK-24.1-004": {
-      "class": "writable",
-      "card": "RMK-1939",
-      "note": "The served registry fixture accepts raw content, but no shared case checks the 64-level boundary. Local input is generated from structured fields."
-    },
-    "RK-24.1-005": {
-      "class": "writable",
-      "card": "RMK-1939",
-      "note": "No served frontmatter case checks the open-delimiter limit or its quoted-character counting. Local input is generated."
-    },
-    "RK-24.1-006": {
-      "class": "writable",
-      "card": "RMK-1939",
-      "note": "No served-content case checks the frontmatter character limit and its exact boundary. The local fixture supplies generated frontmatter."
-    },
-    "RK-24.1-007": {
-      "class": "writable",
-      "card": "RMK-1939",
-      "note": "Raw served content is available, but no shared case exceeds a numeric parser bound and asserts verification refusal. Local source and failure capture require fixture support."
-    },
     "RK-24.1-009": {
       "class": "step",
       "card": "RMK-1939",
@@ -2025,21 +2005,6 @@
       "class": "step",
       "card": "RMK-1939",
       "note": "The local fixture enforces its own declaration shapes and cannot exercise malformed raw source across both reader paths."
-    },
-    "RK-24.2-003": {
-      "class": "writable",
-      "card": "RMK-1939",
-      "note": "A served entry and its manifest can be inspected with skill_registry_session. No case checks compatibility and license rendering."
-    },
-    "RK-24.2-008": {
-      "class": "writable",
-      "card": "RMK-1939",
-      "note": "A registry snapshot returns metadata for a served entry. The cases do not assert retained extra values or comma joining."
-    },
-    "RK-24.2-009": {
-      "class": "writable",
-      "card": "RMK-1939",
-      "note": "The registry snapshot can inspect a served entry's optional license; no case asserts the value or its absent form."
     },
     "RK-24.3-002": {
       "class": "step",
@@ -2136,41 +2101,6 @@
       "card": "RMK-1939",
       "note": "The shared fixture does not observe the local registry before and after a failing discovery."
     },
-    "RK-24.5-011": {
-      "class": "writable",
-      "card": "RMK-1939",
-      "note": "The served registry snapshot renders the manifest. No scenario checks the exact final Unicode limit, including escaping, reasons, wrappers and origins."
-    },
-    "RK-24.5-012": {
-      "class": "writable",
-      "card": "RMK-1939",
-      "note": "The served registry session supports listing, fetch, unavailable marks and copies. No case checks prospective manifest errors and rollback; local registration and discovery operations also need fixture exposure."
-    },
-    "RK-24.5-013": {
-      "class": "writable",
-      "card": "RMK-1939",
-      "note": "The registry session can copy with or without marks and inspect the source after failure. No shared case observes a failed copy."
-    },
-    "RK-24.5-014": {
-      "class": "writable",
-      "card": "RMK-1939",
-      "note": "The registry session supports served replacement and marks, but no case observes replacement near the manifest bound. Local replace is not a shared operation."
-    },
-    "RK-24.5-015": {
-      "class": "writable",
-      "card": "RMK-1939",
-      "note": "A shared server registry can exercise refusal on a listing or fetch and inspect both catalogues. Existing cases do not assert a size-limit refusal."
-    },
-    "RK-24.5-016": {
-      "class": "writable",
-      "card": "RMK-1939",
-      "note": "A registry and its copies can be inspected after a shared refusal that exceeds the local bound. No case asserts that transaction."
-    },
-    "RK-24.5-017": {
-      "class": "writable",
-      "card": "RMK-1939",
-      "note": "The shared registry supports snapshots, copies and reference verification. No case verifies shared state after local manifest pressure."
-    },
     "RK-24.5-018": {
       "class": "step",
       "card": "RMK-1939",
@@ -2221,70 +2151,10 @@
       "card": "RMK-1939",
       "note": "Existing text-tool calls can observe refusal of an absolute name; no shared case checks platform-recognized forms."
     },
-    "RK-24.7-015": {
-      "class": "writable",
-      "card": "RMK-1939",
-      "note": "The registry fixture supports multiple providers and labels; none of its scenarios attempts reassignment of a label between providers."
-    },
-    "RK-24.7-016": {
-      "class": "writable",
-      "card": "RMK-1939",
-      "note": "The scripted server supports extension declarations but no shared case asserts error for a missing Skills extension."
-    },
     "RK-24.7-019": {
       "class": "step",
       "card": "RMK-1939",
       "note": "ScriptedSkillServer does not expose a negotiated protocol revision, so accepting the older metadata-less response is not distinguished from ordinary listing."
-    },
-    "RK-24.7-020": {
-      "class": "writable",
-      "card": "RMK-1939",
-      "note": "The registry session can relist a changed server and inspect the prior entry across copies. The existing relisting scenario retains its entry."
-    },
-    "RK-24.7-024": {
-      "class": "writable",
-      "card": "RMK-1939",
-      "note": "The registry session can mark an entry unavailable, copy a subset and count server requests, but no scenario compares this exclusion."
-    },
-    "RK-24.7-026": {
-      "class": "writable",
-      "card": "RMK-1939",
-      "note": "The scripted listing supports individual entries and observable refusal reasons; no case asserts a frontmatter-name and URI directory mismatch."
-    },
-    "RK-24.7-027": {
-      "class": "writable",
-      "card": "RMK-1939",
-      "note": "No shared listing observes an entry rejected for omitting its own SKILL.md."
-    },
-    "RK-24.7-028": {
-      "class": "writable",
-      "card": "RMK-1939",
-      "note": "No shared served listing asserts refusal of a resource outside its declared directory."
-    },
-    "RK-24.7-029": {
-      "class": "writable",
-      "card": "RMK-1939",
-      "note": "No shared listing case asserts the resource-count limit for a single entry."
-    },
-    "RK-24.7-032": {
-      "class": "writable",
-      "card": "RMK-1939",
-      "note": "The registry fixture supports dynamic registration and resource reads but no shared case asserts acceptance of an allowed dynamic resource or its cumulative read limit."
-    },
-    "RK-24.7-034": {
-      "class": "writable",
-      "card": "RMK-1939",
-      "note": "The registry session can check collisions between served origins, while admitting a local name to that same session needs a new operation. No shared case observes a conflict refusal."
-    },
-    "RK-24.7-035": {
-      "class": "writable",
-      "card": "RMK-1939",
-      "note": "Shared listing and snapshot can inspect distinct paths with the same frontmatter name; the existing paging case repeats an identical URI."
-    },
-    "RK-24.7-038": {
-      "class": "writable",
-      "card": "RMK-1939",
-      "note": "The served registry session can exercise turn activation with declared prerequisites. Local prerequisite cases do not register a served skill."
     },
     "RK-24.7-051": {
       "class": "writable",
@@ -2296,60 +2166,20 @@
       "card": "RMK-1939",
       "note": "step: a realtime fixture skills option: no shared fixed-instructions realtime provider demonstrates the attributed body in an activation result."
     },
-    "RK-24.7-055": {
-      "class": "writable",
-      "card": "RMK-1939",
-      "note": "No shared activation compares the held entry with a later lookup or refuses a previously loaded skill that has since been marked unavailable. A blocked tool hook exercises a different condition."
-    },
-    "RK-24.7-059": {
-      "class": "writable",
-      "card": "RMK-1939",
-      "note": "The registry session supports a lookup error under a known label. No shared case observes the missing-skill diagnostic following that lookup."
-    },
     "RK-24.7-062": {
       "class": "writable",
       "card": "RMK-1939",
       "note": "The shared registry can inspect an active entry and resource requests. No case requests a file omitted from that entry; inactive-reference refusal is a different condition."
-    },
-    "RK-24.7-066": {
-      "class": "writable",
-      "card": "RMK-1939",
-      "note": "The scripted registry accepts multiple servers and records each request. No case asserts that a reference read on one produces no request on the other."
     },
     "RK-24.7-068": {
       "class": "phase6",
       "card": "RMK-1939",
       "note": "step: a realtime fixture skills option: no shared realtime inline_full session asserts refusal and the reason for a served entry."
     },
-    "RK-24.7-070": {
-      "class": "writable",
-      "card": "RMK-1939",
-      "note": "The served registry can list and read a nested metadata file. No case asserts it remains an ordinary file with no nested activation."
-    },
-    "RK-24.7-071": {
-      "class": "writable",
-      "card": "RMK-1939",
-      "note": "Shared served skills can run through an installed text channel. No case asserts run_skill_script refuses execution of a served skill."
-    },
-    "RK-24.7-077": {
-      "class": "writable",
-      "card": "RMK-1939",
-      "note": "The server fixture supports dynamic entries and captured approvals but no scenario asserts the missing fingerprint for one."
-    },
     "RK-24.7-079": {
       "class": "step",
       "card": "RMK-1939",
       "note": "The built-in served cache is in memory, and the shared runner offers no deployment with a persistent disk cache in which to inspect these conditional properties."
-    },
-    "RK-24.7-081": {
-      "class": "writable",
-      "card": "RMK-1939",
-      "note": "No shared listing asserts duplicate resource names within one entry; duplicate entries across cursor pages exercise another rule."
-    },
-    "RK-24.7-082": {
-      "class": "writable",
-      "card": "RMK-1939",
-      "note": "No shared listing case asserts the entry's aggregate declared byte limit."
     },
     "RK-25.1-002": {
       "class": "step",

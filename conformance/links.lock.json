@@ -13530,6 +13530,20 @@
     "RK-24.1-003": {
       "served-skills/frontmatter-refuses-alias": "c6d5afe41344740fa35ae2606947c1f4b043b3b694efaf856fc07cf51daebad6"
     },
+    "RK-24.1-004": {
+      "served-skills/frontmatter-nesting-is-read-to-64-levels-and-no-deeper": "8344919d76ffd2d92eeaf3923fcaf4d09ed6c7b90129382bc2e39b2d3285f248"
+    },
+    "RK-24.1-005": {
+      "served-skills/frontmatter-brackets-open-at-once-are-read-to-64-quoted-ones-counted": "b144fdcc8211accdc0192ad7de18713e92916f6267eb39e73b44245f9ae3cd72"
+    },
+    "RK-24.1-006": {
+      "served-skills/frontmatter-is-read-to-65536-characters-and-no-more": "2d74e6ad4c7a54e26317596acd0795e16cf07608f34066ff85572d72b4b10c59"
+    },
+    "RK-24.1-007": {
+      "served-skills/frontmatter-brackets-open-at-once-are-read-to-64-quoted-ones-counted": "4118ffbcd6f770e82d924a78e66887b4b5f6a6f003a207343b7f48140deb8518",
+      "served-skills/frontmatter-is-read-to-65536-characters-and-no-more": "4118ffbcd6f770e82d924a78e66887b4b5f6a6f003a207343b7f48140deb8518",
+      "served-skills/frontmatter-nesting-is-read-to-64-levels-and-no-deeper": "4118ffbcd6f770e82d924a78e66887b4b5f6a6f003a207343b7f48140deb8518"
+    },
     "RK-24.1-010": {
       "skill-gating/list-globs-hide-and-refuse-only-matching-tools-non-streaming": "54e6dd5feffe4595a825fbf54f405d76fb580101013129f7b145db1630f87782",
       "skill-gating/list-globs-hide-and-refuse-only-matching-tools-streaming": "54e6dd5feffe4595a825fbf54f405d76fb580101013129f7b145db1630f87782",
@@ -13555,6 +13569,9 @@
       "skills/a-turn-lists-and-activates-its-own-skills": "58e2ce5e339274d4785863ed199a7b6de79c8adb585f563e02d718b121dc569f",
       "skills/a-turn-uses-its-in-memory-skill-registry": "58e2ce5e339274d4785863ed199a7b6de79c8adb585f563e02d718b121dc569f",
       "skills/an-in-memory-skill-is-activated-and-its-reference-read": "58e2ce5e339274d4785863ed199a7b6de79c8adb585f563e02d718b121dc569f"
+    },
+    "RK-24.2-003": {
+      "served-skills/metadata-keeps-license-compatibility-and-every-other-key-as-text": "ca4c88f482165e2fc0b6bc978717c895c0c28b39dc080d90e8e010802052f16b"
     },
     "RK-24.2-004": {
       "skill-gating/bracketed-text-is-a-list-not-a-character-class-non-streaming": "b69aa7d2cc6d1b21376953b19813ef358378ebc7ce9fc62abd60a14af08f1a29",
@@ -13589,6 +13606,12 @@
       "skill-prerequisites/requirements-are-exact-names-not-glob-grants-streaming": "07e4b593fbcdfec30aaf3dacd9d71f9987047a4eb3f5209ad3cd681c8c59beb5",
       "skill-prerequisites/scalar-prerequisites-include-the-candidates-own-gated-tools-non-streaming": "07e4b593fbcdfec30aaf3dacd9d71f9987047a4eb3f5209ad3cd681c8c59beb5",
       "skill-prerequisites/scalar-prerequisites-include-the-candidates-own-gated-tools-streaming": "07e4b593fbcdfec30aaf3dacd9d71f9987047a4eb3f5209ad3cd681c8c59beb5"
+    },
+    "RK-24.2-008": {
+      "served-skills/metadata-keeps-license-compatibility-and-every-other-key-as-text": "63ab4525ef5d66c77d6d13db58605130a00d2b30cc307c0b2f3a8c2ac68f474b"
+    },
+    "RK-24.2-009": {
+      "served-skills/metadata-keeps-license-compatibility-and-every-other-key-as-text": "d76611eb2021fc7bb580c5320583b39ca502c7aefbb20d4f54feebb0565c82f7"
     },
     "RK-24.3-005": {
       "served-skills/file-failure-retires-every-copy": "110660a0df7ad1f48b846b05fff75754a9b1f66d19471b5a0439a7714e9f8705",
@@ -14136,6 +14159,28 @@
     "RK-24.5-003": {
       "served-skills/first-uri-wins-across-pages": "4f3825ebc7b17e2396feb1e46a819c4a84d37168b0d54f78f9a5f03b58a115b8"
     },
+    "RK-24.5-011": {
+      "served-skills/the-manifest-may-take-65536-characters-and-no-more": "b088e565879544466ac35fd53648362dc240c6838c6018e1767f0975b6c1c7df"
+    },
+    "RK-24.5-012": {
+      "served-skills/a-copy-that-would-list-past-the-bound-fails-and-leaves-its-source": "8ae7ba102a46077e1e1676bb0d8c57e1b77323c801052303ce03cee803aa84b0",
+      "served-skills/each-operation-that-would-pass-the-manifest-bound-fails-before-it-changes-anything": "8ae7ba102a46077e1e1676bb0d8c57e1b77323c801052303ce03cee803aa84b0"
+    },
+    "RK-24.5-013": {
+      "served-skills/a-copy-that-would-list-past-the-bound-fails-and-leaves-its-source": "5701ce2e1471e300af50e8e4b5aa935b2d9a8b32b30788fb0fa8ee4cb696dec4"
+    },
+    "RK-24.5-014": {
+      "served-skills/a-replacement-is-checked-once-the-replaced-name-s-marks-are-gone": "5516965e68b929d5aa7aabd6c4d1ddbd11ed4f927649cf986356b18149df3ce4"
+    },
+    "RK-24.5-015": {
+      "served-skills/each-operation-that-would-pass-the-manifest-bound-fails-before-it-changes-anything": "029d4a9598aac8b7be6232df3915afc27b1a7de82256ed5d9566ab0ac34d3bff"
+    },
+    "RK-24.5-016": {
+      "served-skills/a-copy-that-cannot-record-a-shared-refusal-serves-nothing-and-undoes-nothing": "edbda82be7b32cf4bc013f97945a176d01e7bbcdcf98febf8fc4509820197eac"
+    },
+    "RK-24.5-017": {
+      "served-skills/a-copy-that-cannot-record-a-shared-refusal-serves-nothing-and-undoes-nothing": "66205e243ad93945176c489cd616d9bf376d6af32ea2618629d19bc58c9774e6"
+    },
     "RK-24.6-002": {
       "skill-scripts/traversal-non-streaming": "bcc933d273ff6fcacf5c445e55720824a7eb7d303e59a18b02160c86fbe6d61d",
       "skill-scripts/traversal-streaming": "bcc933d273ff6fcacf5c445e55720824a7eb7d303e59a18b02160c86fbe6d61d"
@@ -14236,6 +14281,12 @@
       "served-skills/text-repeated-activation-acknowledges-server-content": "15b1652bffdfba3c55a5b051879a3149c6c29680ed9677c38dc765e96bc93d64",
       "served-skills/verified-files-and-shared-cache": "15b1652bffdfba3c55a5b051879a3149c6c29680ed9677c38dc765e96bc93d64"
     },
+    "RK-24.7-015": {
+      "served-skills/a-label-another-server-holds-is-refused": "d5842118d7005f6a1467e78645cbd40f8f95d429aed74de37ddb89a2824d6e95"
+    },
+    "RK-24.7-016": {
+      "served-skills/a-server-without-the-skills-extension-is-refused": "449e9b5c8fe7287fb0ad90cae734d2d90e28c8670bbf7a735668be27aea25d4b"
+    },
     "RK-24.7-017": {
       "served-skills/first-uri-wins-across-pages": "c6d10bb47bec8d6e184407d0b75fa383a0e2f07dae6ea820b795ba1b8ca492a5"
     },
@@ -14244,6 +14295,9 @@
       "served-skills/listing-reads-no-content-or-tool-grant": "b8ac2f9579e418e6b710f8d402674ceb3b2efb629358aa103c93f85a723734b0",
       "served-skills/only-full-copies-fetch-unlisted": "b8ac2f9579e418e6b710f8d402674ceb3b2efb629358aa103c93f85a723734b0",
       "served-skills/text-inactive-reference-is-refused": "b8ac2f9579e418e6b710f8d402674ceb3b2efb629358aa103c93f85a723734b0"
+    },
+    "RK-24.7-020": {
+      "served-skills/registering-a-server-again-retires-what-it-no-longer-offers-everywhere": "7dfdb2b70fa95dc0cc8d843819d513300cbd17f054bd204c96245978338dc287"
     },
     "RK-24.7-021": {
       "served-skills/relisting-preserves-the-loaded-entry": "5e58395f7e36606a065d95d2f2c08631111bd1f39415075f4c080d97d863f5bf"
@@ -14254,8 +14308,23 @@
     "RK-24.7-023": {
       "served-skills/file-failure-retires-every-copy": "33479181ebda698103efe88fb6c9eb2462a9bce65ba387af968524ca9ecc2817"
     },
+    "RK-24.7-024": {
+      "served-skills/a-copy-without-the-names-its-source-marks-unavailable-never-asks-for-them": "6e7f9f19bf43294be8a9cab9c8605ccbd2e7e3d31d7705cbb7a87ebf3075999b"
+    },
     "RK-24.7-025": {
       "served-skills/first-uri-wins-across-pages": "0d85cadfa6e1529deff74336191ef669e6238af3fc21659dce4c16388cadf518"
+    },
+    "RK-24.7-026": {
+      "served-skills/an-entry-the-extension-does-not-allow-is-registered-unavailable": "45f9c124d4f9e87f43f9ea825c39918f711ae3cce202791e3bd930325f83d663"
+    },
+    "RK-24.7-027": {
+      "served-skills/an-entry-the-extension-does-not-allow-is-registered-unavailable": "ea514df3485443c25bd020288943fb60755141cd78664376bf313d629b3fe184"
+    },
+    "RK-24.7-028": {
+      "served-skills/an-entry-the-extension-does-not-allow-is-registered-unavailable": "e508fd2a7ea5a4ac998df1d3aea9148d6170daa1891856087151fdea1872646c"
+    },
+    "RK-24.7-029": {
+      "served-skills/an-entry-past-512-files-or-16-mib-is-registered-unavailable": "9af3f8f4a129da7f6bb7d58fbf042d4d223d3f852bd66821ba97f937f4b02cfc"
     },
     "RK-24.7-030": {
       "served-skills/first-uri-wins-across-pages": "4699cc98e2ba0e72a45238b2e292f118c8f556360264dccfb88bd7346c00b58a"
@@ -14263,12 +14332,21 @@
     "RK-24.7-031": {
       "served-skills/first-uri-wins-across-pages": "480964f18a5b9a3f857f85c500bab6c2637d166173235c187c2c530d95106756"
     },
+    "RK-24.7-032": {
+      "served-skills/a-dynamic-skill-a-host-allows-is-taken-unverified": "c19cd6a5f2eee3ea04849384c727b15e2bd12f261a5dfb0ea965c8d78c253d72"
+    },
     "RK-24.7-033": {
       "served-skills/first-uri-wins-across-pages": "278e7ed78fbf148807e8d4a832544986fb88f89e56652fcaf6549462253aaa04",
       "served-skills/listing-reads-no-content-or-tool-grant": "278e7ed78fbf148807e8d4a832544986fb88f89e56652fcaf6549462253aaa04",
       "served-skills/only-full-copies-fetch-unlisted": "278e7ed78fbf148807e8d4a832544986fb88f89e56652fcaf6549462253aaa04",
       "served-skills/text-activation-keeps-server-content-apart": "278e7ed78fbf148807e8d4a832544986fb88f89e56652fcaf6549462253aaa04",
       "served-skills/text-reference-carries-its-origin": "278e7ed78fbf148807e8d4a832544986fb88f89e56652fcaf6549462253aaa04"
+    },
+    "RK-24.7-034": {
+      "served-skills/a-label-another-server-holds-is-refused": "0479cac5bb6c75c66babbf6817a1e6aaf1088718891cbf48c228f0993729c23c"
+    },
+    "RK-24.7-035": {
+      "served-skills/two-entries-of-one-name-keep-their-own-paths": "2344fe8a9d462ebbde6b2810fea7d39b3af7c661e7e651aaacaeab7744cfdf58"
     },
     "RK-24.7-036": {
       "served-skills/execution-approved-approval": "b000c68b7a288a9ef9981cca13c1ae22b4a9c4e425ae5976a5d584cbff8a1eeb",
@@ -14287,6 +14365,9 @@
     "RK-24.7-037": {
       "served-skills/listing-reads-no-content-or-tool-grant": "0a70c7fce7f72e09f1358d4570345f79a869ba3c7c0cc3fab2f9304663d74f23",
       "served-skills/text-activation-keeps-server-content-apart": "0a70c7fce7f72e09f1358d4570345f79a869ba3c7c0cc3fab2f9304663d74f23"
+    },
+    "RK-24.7-038": {
+      "served-skills/a-served-skill-s-requires-is-read-as-any-skill-s": "5ba98df3699faac97bf3d587c9c100f81789abebb52283718b036f8e917c8fb8"
     },
     "RK-24.7-039": {
       "served-skills/file-failure-retires-every-copy": "dfea2612d2a518612d04dc34aed3093f9c69afb918d23aa09e69a484447ccbc5",
@@ -14397,6 +14478,9 @@
       "served-skills/text-reference-carries-its-origin": "4632fc4d28a8362254bad266f90ef911ee88c087a64ef5e423c6114e001b383b",
       "served-skills/text-repeated-activation-acknowledges-server-content": "4632fc4d28a8362254bad266f90ef911ee88c087a64ef5e423c6114e001b383b"
     },
+    "RK-24.7-055": {
+      "served-skills/a-skill-marked-unavailable-is-never-activated-one-loaded-before-included": "ad0ad5e9b3e630e542cb6fade962b3c644864bd878a28847f0dea80af234a4c0"
+    },
     "RK-24.7-056": {
       "served-skills/text-activation-keeps-server-content-apart": "a4c74a19c0395bc0e9e5803d38b283885f6e3ec87cfbb728dd9901f03e12526e",
       "served-skills/text-repeated-activation-acknowledges-server-content": "a4c74a19c0395bc0e9e5803d38b283885f6e3ec87cfbb728dd9901f03e12526e"
@@ -14406,6 +14490,9 @@
     },
     "RK-24.7-058": {
       "served-skills/only-full-copies-fetch-unlisted": "eb67744da4a43d9634139468b9e9840341f9a2614deb8375fc9dd6863913e825"
+    },
+    "RK-24.7-059": {
+      "served-skills/a-lookup-the-server-refuses-answers-that-it-serves-no-such-skill": "4ba96216f76ce6e4ac0f4310ba013958cb45c5dbbe622417e4499ad7d03edfd2"
     },
     "RK-24.7-060": {
       "served-skills/file-failure-retires-every-copy": "07af93de44dfab76f41800777c8ed8631b635aaa5a5c324196eab8117bc6eb77",
@@ -14433,11 +14520,20 @@
       "served-skills/file-failure-retires-every-copy": "3c5d1510e7c3819d9e3a0088f3e32bc6f5fc318cc3ec2b3b4262a53af684a8ad",
       "served-skills/text-file-mismatch-retires-active-content": "3c5d1510e7c3819d9e3a0088f3e32bc6f5fc318cc3ec2b3b4262a53af684a8ad"
     },
+    "RK-24.7-066": {
+      "served-skills/a-served-skill-s-read-never-reaches-another-server": "a3b963267e61809bacc5973b3cbde51fa2e05842212727e436bd8ca19c82ce5a"
+    },
     "RK-24.7-067": {
       "served-skills/history-does-not-restore-served-activation": "a6365c0dd71d0b2fd7ceac5745e1df9542a1062118c4c5279b4116894d199257"
     },
     "RK-24.7-069": {
       "served-skills/listing-reads-no-content-or-tool-grant": "7a3e0fe4b32092a1f54ab01bb94743658dc906231c48c21db7bf3e5f1214edaf"
+    },
+    "RK-24.7-070": {
+      "served-skills/a-skill-md-inside-a-served-skill-is-one-of-its-files": "65663c540377ebcd2b1b0d3365d7f3dc8a21df4df63a173cae062b68fb6838ee"
+    },
+    "RK-24.7-071": {
+      "served-skills/run-skill-script-refuses-a-served-skill": "ac713e95f9afec7b282301186d2eb620e0c74c8ba5efbceb2d3d019e068ab54a"
     },
     "RK-24.7-072": {
       "served-skills/execution-absent-approval": "8e0f74680af781e5240239b638b410b49967adbb4575db54b3feb7fdbd3c4024",
@@ -14456,6 +14552,9 @@
     "RK-24.7-075": {
       "served-skills/execution-approved-approval": "8b178e6f30bb4f2aaaeb7e71b4ee1f075f5008f471feac0ba4944e9e5967cb23"
     },
+    "RK-24.7-077": {
+      "served-skills/a-dynamic-skill-s-approval-is-told-it-has-no-fingerprint": "b3edeed3de9ad91b3a4a54450f2e2290862be7d222f992e41486db6c7ef65961"
+    },
     "RK-24.7-078": {
       "served-skills/execution-absent-approval": "29ca2c3cd7b4f5b94ec4a233d0444fb5a9daca7ebdcbc04b97c8dd8ea7b704bf",
       "served-skills/execution-approved-approval": "29ca2c3cd7b4f5b94ec4a233d0444fb5a9daca7ebdcbc04b97c8dd8ea7b704bf",
@@ -14468,6 +14567,12 @@
     },
     "RK-24.7-080": {
       "served-skills/verified-files-and-shared-cache": "c6d1b3eeb126b123a1a7b6253a2227edfb1a214ed7538a04553b69cb29a62813"
+    },
+    "RK-24.7-081": {
+      "served-skills/an-entry-the-extension-does-not-allow-is-registered-unavailable": "1f0ad8809ae9dd3b6c52ece301aa882aa3ba23282b70c3fdb18e579eaa9e5591"
+    },
+    "RK-24.7-082": {
+      "served-skills/an-entry-past-512-files-or-16-mib-is-registered-unavailable": "b990bfbab20fd1a7487072b34b4ec236d4558a3712c386fec8123fb56182253c"
     },
     "RK-25.3-005": {
       "author-images/a-call-streamed-before-a-refusal-refuses-no-image": "07d75a8f8eb1aeeda280d0ca8e88ce44897ee38777e0266c66e17d45e19951d9",
