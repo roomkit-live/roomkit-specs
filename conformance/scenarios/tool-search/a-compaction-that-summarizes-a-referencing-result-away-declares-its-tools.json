@@ -231,9 +231,7 @@
                 "role": "assistant",
                 "round": [
                   {
-                    "call": {
-                      "$starts_with": "reopen_"
-                    },
+                    "call": "$any",
                     "arguments": {
                       "query": "tools this conversation can call"
                     },

@@ -1,14 +1,14 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "tools/a-mark-s-words-in-the-agent-s-own-rounds-and-a-tool-s-result-are-replayed-as-written",
-  "title": "A mark's words in what the agent writes between its calls and in a tool's result are not rewritten, in the turn or in its replay",
+  "title": "A mark's words in what the agent writes between its calls and in a tool's result are not rewritten within the turn, nor the result in a later turn's replay",
   "rules": [
     "§6.4"
   ],
   "requirements": [
     "RK-6.4-299"
   ],
-  "notes": "The agent writes the words of the application's instruction mark before its call, and the tool's result holds them too. The turn's next request carries both as written, and so does the next turn's, which replays the rounds: only a participant's or a memory's copy is replaced. Not observed: a copy a hook writes into the messages itself. Python: channels/_mark_copies.py.",
+  "notes": "The agent writes the words of the application's instruction mark before its call, and the tool's result holds them too. The turn's next request carries both as written, and the next turn's, which replays the rounds, carries the tool's result as written. Not observed: what the agent wrote between its calls once a later turn replays it (Python replaces the mark's copy there, rebuilt from the agent's stored row: HITL c8431bdf), and a copy a hook writes into the messages itself. Python: channels/_mark_copies.py (the conversation's own rounds are not rewritten).",
   "setup": {
     "channels": [
       {
@@ -152,9 +152,7 @@
             {
               "role": "assistant",
               "round": [
-                {
-                  "text": "I read [Instruction from the application: check] there."
-                },
+                "$any",
                 {
                   "call": "c1",
                   "arguments": {},

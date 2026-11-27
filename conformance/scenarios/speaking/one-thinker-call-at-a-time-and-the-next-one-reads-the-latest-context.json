@@ -8,7 +8,7 @@
   "requirements": [
     "RK-6.4-185"
   ],
-  "notes": "The policy leaves every message silent and the channel does not wait for a thought (think_wait_ms 0). The first thinker call is held at its gate while two more messages arrive: no second call starts meanwhile, and once the first returns, one more call thinks about both, from the context of the last, starting from the first call's thought. None is queued: two calls for three messages. Python: channels/_ai_thinking.py _RoomMind.",
+  "notes": "The policy leaves every message silent and the channel does not wait for a thought (think_wait_ms 0). The first thinker call is held at its gate while two more messages arrive: no second call starts meanwhile, and once the first returns, one more call thinks about both, from the context of the last, starting from the first call's thought. None is queued: two calls for three messages. The second call is held at a gate of its own, so that the run reads the calls once it started. Python: channels/_ai_thinking.py _RoomMind.",
   "setup": {
     "channels": [
       {
@@ -43,7 +43,8 @@
             {
               "thought": {
                 "text": "Latest."
-              }
+              },
+              "gate": "think-2"
             }
           ]
         },
@@ -134,6 +135,12 @@
     },
     {
       "open": "think-1"
+    },
+    {
+      "wait_for": "think-2"
+    },
+    {
+      "open": "think-2"
     },
     {
       "idle": true

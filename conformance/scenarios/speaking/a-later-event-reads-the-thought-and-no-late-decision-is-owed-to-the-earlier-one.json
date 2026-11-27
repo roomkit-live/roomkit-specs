@@ -9,7 +9,7 @@
   "requirements": [
     "RK-6.4-191"
   ],
-  "notes": "The channel does not wait for a thought (think_wait_ms 0): the first message is decided silent before its thought comes back, which owes it a late decision should the thought come back with something to say while no later event was given to the thinker. The thinker call is held at its gate while a second message arrives, decided silent and final. Once the gate opens, the first call's thought, which has something to say, decides nothing late: the second event was given to the thinker meanwhile. The second call reads that thought as its previous one, and the second event is decided late on what it brings. Python: channels/_ai_thinking.py _late_decision.",
+  "notes": "The channel does not wait for a thought (think_wait_ms 0): the first message is decided silent before its thought comes back, which owes it a late decision should the thought come back with something to say while no later event was given to the thinker. The thinker call is held at its gate while a second message arrives, decided silent and final. Once the gate opens, the first call's thought, which has something to say, decides nothing late: the second event was given to the thinker meanwhile. The second call, held at a gate of its own, reads that thought as its previous one, and the second event is decided late on what it brings, its observer held at a gate so that the run reads it. Python: channels/_ai_thinking.py _late_decision.",
   "setup": {
     "channels": [
       {
@@ -70,7 +70,8 @@
                   "B."
                 ],
                 "urgent": false
-              }
+              },
+              "gate": "think-2"
             }
           ]
         },
@@ -104,7 +105,22 @@
       {
         "name": "decisions",
         "trigger": "on_speak_decision",
-        "execution": "async"
+        "execution": "async",
+        "reactions": [
+          {
+            "result": {
+              "action": "allow"
+            }
+          },
+          {
+            "result": {
+              "action": "allow"
+            }
+          },
+          {
+            "gate": "late-observed"
+          }
+        ]
       },
       {
         "name": "answer",
@@ -155,6 +171,18 @@
     },
     {
       "open": "think-1"
+    },
+    {
+      "wait_for": "think-2"
+    },
+    {
+      "open": "think-2"
+    },
+    {
+      "wait_for": "late-observed"
+    },
+    {
+      "open": "late-observed"
     },
     {
       "idle": true
