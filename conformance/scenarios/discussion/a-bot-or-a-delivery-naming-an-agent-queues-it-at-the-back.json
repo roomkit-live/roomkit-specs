@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
-  "id": "discussion/a-delivery-naming-an-agent-queues-it-at-the-back",
-  "title": "A delivery naming an agent queues it at the back, behind the agents already queued, where a person's message would put it first",
+  "id": "discussion/a-bot-or-a-delivery-naming-an-agent-queues-it-at-the-back",
+  "title": "A bot's message and a delivery queue the agents they name at the back, where a person's message would put them first, and a bot's message naming nobody asks no agent",
   "rules": [
     "§19.7.5 rule 2",
     "§19.7.5 rule 8",
@@ -11,13 +11,14 @@
     "RK-19.7.5-030",
     "RK-19.7.5-075"
   ],
-  "notes": "While a's turn holds, c is queued by the person's message; the delivery names b, which goes behind c, and the turns run a, c, b.",
+  "notes": "While a's turn holds, the room's bot participant names c, queued at the back; the delivery then names b, queued behind c, where a person's message naming b would put it before c. The turns run a, c, b. Then the bot writes naming nobody, and no agent is asked. Not exercised: a webhook's event.",
   "setup": {
     "channels": [
       {
         "id": "ops",
         "type": "websocket",
-        "category": "transport"
+        "category": "transport",
+        "sender_is_participant": true
       },
       {
         "id": "a",
@@ -61,6 +62,19 @@
           {
             "channel_id": "ops"
           }
+        ],
+        "participants": [
+          {
+            "id": "oncall",
+            "channel_id": "ops",
+            "display_name": "oncall"
+          },
+          {
+            "id": "helper",
+            "channel_id": "ops",
+            "display_name": "helper",
+            "role": "bot"
+          }
         ]
       }
     ],
@@ -91,7 +105,7 @@
         "sender_id": "oncall",
         "content": {
           "type": "text",
-          "body": "@a @c go"
+          "body": "@a go"
         }
       },
       "expect": {
@@ -103,6 +117,24 @@
     },
     {
       "wait_for": "a-held"
+    },
+    {
+      "call": "process_inbound",
+      "room_id": "r1",
+      "message": {
+        "channel_id": "ops",
+        "sender_id": "helper",
+        "content": {
+          "type": "text",
+          "body": "@c the build is red"
+        }
+      },
+      "expect": {
+        "result": {
+          "blocked": false,
+          "error": null
+        }
+      }
     },
     {
       "call": "speak_queue",
@@ -148,6 +180,27 @@
     },
     {
       "idle": true
+    },
+    {
+      "call": "process_inbound",
+      "room_id": "r1",
+      "message": {
+        "channel_id": "ops",
+        "sender_id": "helper",
+        "content": {
+          "type": "text",
+          "body": "all green"
+        }
+      },
+      "expect": {
+        "result": {
+          "blocked": false,
+          "error": null
+        }
+      }
+    },
+    {
+      "idle": true
     }
   ],
   "expect": {
@@ -158,8 +211,19 @@
             "channel_id": "ops"
           },
           "content": {
-            "body": "@a @c go"
+            "body": "@a go"
           }
+        },
+        {
+          "source": {
+            "channel_id": "ops"
+          },
+          "content": {
+            "body": "@c the build is red"
+          },
+          "addressed_to": [
+            "c"
+          ]
         },
         {
           "content": {
@@ -192,7 +256,26 @@
           "content": {
             "body": "b done"
           }
+        },
+        {
+          "source": {
+            "channel_id": "ops"
+          },
+          "content": {
+            "body": "all green"
+          }
         }
+      ]
+    },
+    "models": {
+      "a": [
+        {}
+      ],
+      "b": [
+        {}
+      ],
+      "c": [
+        {}
       ]
     }
   }

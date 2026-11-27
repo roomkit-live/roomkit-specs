@@ -8,7 +8,7 @@
   "requirements": [
     "RK-19.7.5-052"
   ],
-  "notes": "The room's participant is named dev, the handle of agent dev. Python: tests/orchestration/test_discussion_names.py test_people_are_named_too_and_an_agent_wins_a_shared_name.",
+  "notes": "The room's participant is named dev, the handle of agent dev. Python: tests/test_discussion_names.py test_people_are_named_too_and_an_agent_wins_a_shared_name.",
   "setup": {
     "channels": [
       {

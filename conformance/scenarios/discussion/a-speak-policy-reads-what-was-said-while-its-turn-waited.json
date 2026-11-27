@@ -9,7 +9,7 @@
   "requirements": [
     "RK-19.7.5-082"
   ],
-  "notes": "A note the person sent naming nobody comes first; then the person names a and b. b's turn waits for a's, whose answer is committed before b's turn starts: b's policy reads the note and a's answer, the message it answers excluded.",
+  "notes": "A note the person sent addressed to no agent comes first; then the person names a and b. b's turn waits for a's, whose answer is committed before b's turn starts: b's policy reads the note and a's answer, the message it answers excluded.",
   "setup": {
     "channels": [
       {

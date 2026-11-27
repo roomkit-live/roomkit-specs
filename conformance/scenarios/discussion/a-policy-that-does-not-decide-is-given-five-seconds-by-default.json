@@ -9,7 +9,7 @@
   "requirements": [
     "RK-19.7.5-016"
   ],
-  "notes": "The discussion sets no dispatch_timeout, so the bound is the default; the policy waits 30 s, past it. The scenario waits those five seconds in real time: the dispatch bound follows no virtual clock. Python: tests/orchestration/test_discussion_dispatch.py test_a_policy_past_its_bound_asks_every_candidate, here at the default.",
+  "notes": "The discussion sets no dispatch_timeout, so the bound is the default; the policy holds at a gate no step opens. The scenario waits those five seconds in real time: the dispatch bound follows no virtual clock. Python: tests/orchestration/test_discussion_dispatch.py test_a_policy_past_its_bound_asks_every_candidate, here at the default.",
   "setup": {
     "channels": [
       {
@@ -64,7 +64,7 @@
                 "sre"
               ]
             ],
-            "delay_ms": 30000
+            "gate": "never-decides"
           }
         }
       }

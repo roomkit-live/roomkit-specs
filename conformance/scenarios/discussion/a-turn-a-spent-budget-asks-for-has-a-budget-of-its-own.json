@@ -9,7 +9,7 @@
   "requirements": [
     "RK-19.7.5-096"
   ],
-  "notes": "The kit's max_chain_depth is 1, so the person's message's cascade has 10 passes. Its delivery to loop posts nine notices that name nobody, then one addressed to a: the ten calls draw its ten passes. Drawn on that cascade, a's answer would be an eleventh pass, stored BLOCKED reentry_loop_cap; the discussion's turn has its own budget (its max_depth is 5), and the answer is delivered. Not observed: a regeneration's turn, and the size of a turn's budget.",
+  "notes": "The kit's max_chain_depth is 1, so the person's message's cascade has 10 passes. Its delivery to loop posts nine notices that name nobody, then one addressed to a: the ten calls draw its ten passes. a's turn answers, and the delivery of its answer to loop posts once more, a call of the turn's work that draws a pass of the turn's cascade: drawn on the spent budget it would be refused, nothing of it stored; the discussion's turn has a budget of its own (its max_depth is 5), and the post is stored. Not observed: a regeneration's turn, and the size of a turn's budget.",
   "setup": {
     "kit": {
       "max_chain_depth": 1
@@ -112,6 +112,21 @@
                 "addressed_to": [
                   "a"
                 ]
+              }
+            ]
+          },
+          {
+            "when": {
+              "text": "a answers"
+            },
+            "do": [
+              {
+                "call": "post",
+                "room_id": "$room",
+                "content": {
+                  "type": "text",
+                  "body": "noted"
+                }
               }
             ]
           }
@@ -263,6 +278,12 @@
           },
           "content": {
             "body": "a answers"
+          },
+          "status": "delivered"
+        },
+        {
+          "content": {
+            "body": "noted"
           },
           "status": "delivered"
         }

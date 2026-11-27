@@ -8,7 +8,7 @@
   "requirements": [
     "RK-19.7.5-020"
   ],
-  "notes": "The room binds a channel of the realtime_voice type, a scripted transport of that type: the install reads the type the channel declares, as a-room-with-a-voice-channel-is-refused reads a voice one. Python: tests/orchestration/test_discussion_refusals.py and core/mixins/discussion.py discussion_binding_refusal.",
+  "notes": "The room binds a channel of the realtime_voice type, a scripted transport of that type: the install reads the type the channel declares, as a-room-with-a-voice-channel-is-refused reads a voice one. Python: core/mixins/discussion.py discussion_binding_refusal.",
   "setup": {
     "channels": [
       {

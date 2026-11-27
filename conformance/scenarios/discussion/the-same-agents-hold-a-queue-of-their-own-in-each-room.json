@@ -9,7 +9,7 @@
   "requirements": [
     "RK-19.7.5-189"
   ],
-  "notes": "a's turn in r1 holds with b queued behind it; b only listens in r2. In r2, a takes a turn of its own while its r1 turn still holds, and b is never asked there.",
+  "notes": "a's turn in r1 holds with b queued behind it; b only listens in r2. In r2, a takes a turn of its own while its r1 turn still holds. r2's listening is read once r2 routed a message of its own: a read right after listen_only may show the state before it (RMK-2178).",
   "setup": {
     "channels": [
       {
@@ -136,10 +136,7 @@
       "expect": {
         "result": {
           "speaking": null,
-          "queue": [],
-          "listening": [
-            "b"
-          ]
+          "queue": []
         }
       }
     },
