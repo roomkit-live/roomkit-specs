@@ -6,11 +6,6 @@
       "card": "RMK-1965",
       "note": "The runners rewrite every instant to @n before matching, so the offset a datetime is written with is not compared."
     },
-    "RK-11.2-017": {
-      "class": "writable",
-      "card": "RMK-1942",
-      "note": "An identity hook that answers a status its trigger does not act on, as AMBIGUOUS on ON_IDENTITY_UNKNOWN, is read as null."
-    },
     "RK-11.6-003": {
       "class": "phase6",
       "card": "RMK-1942",
@@ -31,35 +26,10 @@
       "card": "RMK-1942",
       "note": "Needs one of the implementation's channels whose sender_id the integrator supplies, a WebSocket or HTTP one, in the runners (feature name websocket_channel proposed)."
     },
-    "RK-11.7-001": {
-      "class": "writable",
-      "card": "RMK-1942",
-      "note": "An unknown or pending sender under a verification policy: no label, no hold and no ON_VERIFICATION_REQUIRED."
-    },
-    "RK-11.7.3-003": {
-      "class": "writable",
-      "card": "RMK-1942",
-      "note": "An IDENTIFIED participant's id arriving through a channel it was never resolved on: the event carries no verification."
-    },
     "RK-11.7.3-019": {
       "class": "phase6",
       "card": "RMK-1942",
       "note": "step: realtime transcripts: a speech-to-speech session's transcript is neither labelled nor held."
-    },
-    "RK-11.7.6-008": {
-      "class": "writable",
-      "card": "RMK-1942",
-      "note": "A deferred code reply sent from a hook's locked section has its released message answered after that hook's work is delivered."
-    },
-    "RK-11.7.6-014": {
-      "class": "writable",
-      "card": "RMK-1942",
-      "note": "A completion handle's cancel (delivery.cancel) reaches a held message while its delivery set runs, and nothing once it ran."
-    },
-    "RK-11.7.7-007": {
-      "class": "step",
-      "card": "RMK-1942",
-      "note": "Two attempts at a request's last one count once: racing them needs a gate inside a verification transition."
     },
     "RK-12.7.5-008": {
       "class": "writable",
@@ -576,11 +546,6 @@
       "card": "RMK-1925",
       "note": "Expose the public identity builder with a caller-specified language; turn prompt inspection exercises its output only indirectly."
     },
-    "RK-19.1-011": {
-      "class": "writable",
-      "card": "RMK-1925",
-      "note": "Set a room's language through its handoff handler, then assert the new language in that agent's next system prompt."
-    },
     "RK-19.1-012": {
       "class": "phase6",
       "card": "RMK-1925",
@@ -590,11 +555,6 @@
       "class": "phase6",
       "card": "RMK-1925",
       "note": "step: an agent with no model in the setup: a configuration-only agent on a realtime channel accepted, making no generation call; every scripted agent has a model today."
-    },
-    "RK-19.1-039": {
-      "class": "writable",
-      "card": "RMK-1925",
-      "note": "Exercise the reference 10,000-room bound and oldest-tenth eviction on subsequent starts."
     },
     "RK-19.1-041": {
       "class": "writable",
@@ -606,35 +566,15 @@
       "card": "RMK-1925",
       "note": "A scripted agent with a greeting and auto_greet in a room where realtime.start starts the session: realtime.read shows the greeting injected as the model's own turn (requires realtime)."
     },
-    "RK-19.3-012": {
-      "class": "writable",
-      "card": "RMK-1925",
-      "note": "Deliver an injected event visible to an agent that is skipped, then assert its content in that agent's later model history."
-    },
     "RK-19.3-017": {
       "class": "phase6",
       "card": "RMK-1925",
       "note": "step: a reference to a realtime session's id, realtime.start returning it: deliver with that session_id selects the transport session and addresses no intelligence channel."
     },
-    "RK-19.3.1-007": {
-      "class": "writable",
-      "card": "RMK-1925",
-      "note": "Issue an explicitly addressed event from a bound intelligence channel under each response policy and assert that only its named peer answers. An installed discussion supersedes the room policy."
-    },
-    "RK-19.4-012": {
-      "class": "writable",
-      "card": "RMK-1925",
-      "note": "Route otherwise identical events from two named source channels and assert the selected rule."
-    },
     "RK-19.4-013": {
       "class": "step",
       "card": "RMK-1925",
       "note": "Add a configurable predicate receiving event, context and conversation state, and assert its effect on routing."
-    },
-    "RK-19.4-019": {
-      "class": "writable",
-      "card": "RMK-1925",
-      "note": "Observe the supervisor on unaddressed agent output with ADDRESSED_ONLY explicitly selected."
     },
     "RK-19.5-021": {
       "class": "phase6",
@@ -711,15 +651,10 @@
       "card": "RMK-1925",
       "note": "install_pipeline with voice_channel_id naming a realtime channel, given a declared agent, then an intelligence channel that is no agent: each refused, invalid_argument (requires realtime)."
     },
-    "RK-19.6-011": {
+    "RK-19.6-026": {
       "class": "step",
       "card": "RMK-1925",
-      "note": "Add a public HandoffRequest construction or inspection step to assert the urgent=false default; the stock model tool does not expose urgent."
-    },
-    "RK-19.6-026": {
-      "class": "writable",
-      "card": "RMK-1925",
-      "note": "Inspect the target's next model request for the framed conversation summary attributed to the sanitized previous agent ID; stored state alone is not that request."
+      "note": "The summary reaches the target's model through the implementation's handoff memory (HandoffMemoryProvider), which no strategy installs and no runner offers: a step family wrapping a scripted agent's memory in the handoff memory (a scripted memory member), so that handoff.handle's summary shows in the target's next request."
     },
     "RK-19.6-042": {
       "class": "phase6",
@@ -745,11 +680,6 @@
       "class": "step",
       "card": "RMK-1925",
       "note": "Supply an agent held by declaration to the non-realtime handler and assert its acceptance; the direct handler fixture must support supplying that agent."
-    },
-    "RK-19.6-048": {
-      "class": "step",
-      "card": "RMK-1925",
-      "note": "Invoke the installed tool outside the bound async tool context; the available handoff.handle step supplies an explicit room and bypasses the tool."
     },
     "RK-19.6-052": {
       "class": "phase6",
@@ -781,40 +711,15 @@
       "card": "RMK-1929",
       "note": "step: several realtime sessions per channel and across rooms, realtime.read of the session configuration: configure global realtime delegation and check declaration and destination across two rooms."
     },
-    "RK-19.7-036": {
-      "class": "writable",
-      "card": "RMK-1929",
-      "note": "Set store_fault on the initial list_bindings snapshot, assert the returned error and the retained install claim. The native Python case test_an_uninstall_after_an_install_the_store_cut_short_frees_the_room identifies this boundary."
-    },
-    "RK-19.7-037": {
-      "class": "writable",
-      "card": "RMK-1929",
-      "note": "After failing the snapshot with store_fault, explicitly uninstall under a bound and install a replacement."
-    },
-    "RK-19.7-054": {
-      "class": "writable",
-      "card": "RMK-1929",
-      "note": "Hold a claimed installation, close the room in another call and check that close returns before the installation resumes."
-    },
     "RK-19.7-055": {
       "class": "step",
       "card": "RMK-1929",
       "note": "Make strategy cleanup raise on room close and observe its log message and the closed room together; the shared execution surface has no application-log oracle."
     },
-    "RK-19.7-057": {
-      "class": "writable",
-      "card": "RMK-1929",
-      "note": "Race a gated strategy claim against closing the room and verify the installer does not land after close."
-    },
     "RK-19.7-069": {
       "class": "phase6",
       "card": "RMK-1929",
       "note": "step: voice.read of the TTS call, TTS options per room: observe the same shared agent or realtime channel's voice in two rooms while strategy installs and turns alter the active voice in one room."
-    },
-    "RK-19.7-070": {
-      "class": "writable",
-      "card": "RMK-1929",
-      "note": "Read a shared binding's original options before and after strategy install and work in a second room. Tests of selected child transport bindings do not read back the original binding."
     },
     "RK-19.7.1-009": {
       "class": "phase6",
@@ -836,16 +741,6 @@
       "card": "RMK-1929",
       "note": "step: voice_channel_id on a scripted pipeline strategy: installing a Pipeline whose voice channel is a realtime voice channel is refused."
     },
-    "RK-19.7.3-004": {
-      "class": "writable",
-      "card": "RMK-1929",
-      "note": "Send media, a composite and empty text to a one-pass supervisor and check its channel answers each with no worker. The comparable existing no-task scenario installs Loop."
-    },
-    "RK-19.7.3-014": {
-      "class": "step",
-      "card": "RMK-1929",
-      "note": "Observe the original background exception in the application log independently of the generic instruction and the bus entry."
-    },
     "RK-19.7.3-016": {
       "class": "phase6",
       "card": "RMK-1929",
@@ -856,25 +751,15 @@
       "card": "RMK-1929",
       "note": "step: realtime.tool_call of a strategy's background tool: observe the outcome of a strategy call on the originating session when other voice sessions are available."
     },
-    "RK-19.7.3-024": {
-      "class": "writable",
-      "card": "RMK-1929",
-      "note": "Start a gated background team, close the framework, and inspect worker terminal entries before the run's failure, with no hand-back."
-    },
     "RK-19.7.3-030": {
       "class": "step",
       "card": "RMK-1929",
       "note": "Expose a configuration-only supervisor to the shared sequential team fixture, then inspect the workers' actual inputs and order without a supervisor generation. Python tests/orchestration/test_supervisor_text_background.py::test_a_supervisor_without_a_model_lets_its_chain_run_unsupervised checks worker order natively."
     },
     "RK-19.7.3-032": {
-      "class": "writable",
+      "class": "step",
       "card": "RMK-1929",
-      "note": "Begin framework shutdown around a gated background run, then dispatch another and observe that it starts no workers."
-    },
-    "RK-19.7.3-040": {
-      "class": "writable",
-      "card": "RMK-1929",
-      "note": "Gate a formulation turn and inspect a simultaneous ordinary request from a second room on the shared supervisor, checking its prompt and configuration."
+      "note": "A run asked for once the close began needs a delegation call that lands while the kit closes: the kit's close cuts a supervisor's turn held before its call, so the turn never makes it. Only a realtime session's delegation tool call outlives that cut (setup_realtime_delegation, a step no runner has), the door of tests/orchestration/test_background_close.py::test_a_run_asked_for_while_the_kit_closes_never_starts."
     },
     "RK-19.7.4-007": {
       "class": "step",
@@ -920,11 +805,6 @@
       "class": "phase6",
       "card": "RMK-1929",
       "note": "step: realtime.tool_call of a strategy's background tool: inspect the terminal status of a voice-triggered Loop stopped by its producer task."
-    },
-    "RK-19.7.4-027": {
-      "class": "writable",
-      "card": "RMK-1929",
-      "note": "Hold a Loop producer and its reviewer independently past a run bound, release them and verify that no strategy per-task timeout cut either delegation."
     },
     "RK-19.7.4-029": {
       "class": "phase6",
@@ -1116,75 +996,15 @@
       "card": "RMK-1925",
       "note": "Expose StatusBus.has_completed and exercise the fiftieth completed-entry boundary for an optional agent."
     },
-    "RK-19.8-009": {
-      "class": "step",
-      "card": "RMK-1925",
-      "note": "Expose the bus's close operation independently of framework close, with a subscriber or resource that observes its effect."
-    },
-    "RK-19.8-018": {
-      "class": "writable",
-      "card": "RMK-1925",
-      "note": "Close the framework while a task is active and assert its terminal status hook fires before the store is sealed; a post after close is a different boundary."
-    },
-    "RK-20.1-008": {
-      "class": "writable",
-      "card": "RMK-1917",
-      "note": "Use the default sliding-window memory with nonempty history before a tool round. Both implementations inherit the default compact on that provider. Compare exact history before and after the round; the injected scripted memory instead implements compact even with no answers configured."
-    },
-    "RK-20.1-009": {
-      "class": "writable",
-      "card": "RMK-1917",
-      "note": "Wrap a scripted compaction in the existing budget, compacting or retrieval memory. Assert expect.compacted and the next request. Native coverage includes Python tests/test_memory_wrappers.py::test_compaction_reaches_inner and Rust crates/roomkit-ai/src/memory/mod.rs::a_decorator_hands_the_compaction_to_the_memory_it_wraps."
-    },
-    "RK-20.2-012": {
-      "class": "writable",
-      "card": "RMK-1917",
-      "note": "Configure notes on the scripted inner memory and a wrapper that rebuilds its result, then assert the note on the model request."
-    },
-    "RK-20.2-013": {
-      "class": "writable",
-      "card": "RMK-1917",
-      "note": "Give BudgetAwareMemory long inner notes and a window that fits an additional event only if those notes are omitted. Assert intact notes and the shortened history."
-    },
-    "RK-20.3-018": {
-      "class": "writable",
-      "card": "RMK-1917",
-      "note": "Use tier1_ratio, tier2_ratio and truncate_chars to put a long history between thresholds, then assert the shortened messages and the absence of a summarizer call."
-    },
     "RK-20.3-023": {
       "class": "step",
       "card": "RMK-1917",
       "note": "The built-in summarizing fixture exposes neither summary_cache_ttl_seconds nor a deterministic clock for its cache. Add a controllable expiry and compare whether the next summarizer request reuses its prior summary."
     },
-    "RK-20.3-030": {
-      "class": "writable",
-      "card": "RMK-1917",
-      "note": "Configure a tool round whose usage exceeds tier one alone, with older long messages, then assert that neither the model request nor the summarizer record changes."
-    },
-    "RK-20.3-039": {
-      "class": "writable",
-      "card": "RMK-1917",
-      "note": "Size a budget around an older turn with a large replayed tool result or instruction. Assert that only its owning event pays the replay cost and both are kept or cut together."
-    },
     "RK-20.3-040": {
       "class": "step",
       "card": "RMK-1917",
       "note": "The current_turn_footprint() tuple is observable to a custom memory. Extend the scripted memory recorder for its measured input, reply budget, and indexed replay tuples. Native tests include Python tests/test_turn_footprint.py::test_the_footprint_is_the_turn_as_round_0_sends_it and Rust crates/roomkit-ai/tests/turn_footprint.rs::the_footprint_is_the_turn_as_its_first_round_sends_it."
-    },
-    "RK-20.3-043": {
-      "class": "writable",
-      "card": "RMK-1917",
-      "note": "The budget_aware fixture accepts reserved_tokens. Set nonzero values below, at and above the measured input and distinguish max from addition by the retained history."
-    },
-    "RK-20.3-046": {
-      "class": "writable",
-      "card": "RMK-1917",
-      "note": "Have BEFORE_AI_GENERATION append a large user message after a budgeted read; the retained pre-hook history and hook addition can be read in the model request."
-    },
-    "RK-20.3-047": {
-      "class": "writable",
-      "card": "RMK-1917",
-      "note": "Use existing distributed executor placement to start the same room on a fresh agent build after forming a summary, then inspect that its summarizer starts from the window."
     },
     "RK-21.1-012": {
       "class": "writable",

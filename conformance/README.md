@@ -401,8 +401,10 @@ room callbacks of the setup are not compared.
   and lock manager, as processes share a database and its locks, holding
   the setup's channels as objects of its own, registered in the same order;
   a scripted agent answers from the one model of its channel id, whichever
-  process runs its turn. The rooms, hooks and strategies of the setup are
-  the run's own kit's.
+  process runs its turn, and a compacting or summarizing memory, each
+  process's own, summarizes with the one `summarizer` of that id, its
+  requests under `<agent>/summarizer`. The rooms, hooks and strategies of
+  the setup are the run's own kit's.
 - `executors`: **turn executors** beside the kit (§10.6.2, §10.6.7), served
   on the kit's turn backend, each `id`, the channel ids it `hosts` (each a
   name, or a prefix ending in `*`: `acme-*`, and `*` for every channel), the
