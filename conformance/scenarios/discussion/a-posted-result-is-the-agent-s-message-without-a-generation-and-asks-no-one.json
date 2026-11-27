@@ -1,0 +1,230 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "discussion/a-posted-result-is-the-agent-s-message-without-a-generation-and-asks-no-one",
+  "title": "A posted result waits behind the turn under way, then is posted as the agent's message without running its model, and the names it carries ask no one",
+  "rules": [
+    "§19.7.5 rule 19",
+    "§23.3"
+  ],
+  "requirements": [
+    "RK-19.7.5-178"
+  ],
+  "notes": "Python: test_discussion_background.py test_a_posted_result_is_the_agent_s_message_without_a_generation, test_a_posted_result_waits_for_the_turn_under_way, test_the_names_a_posted_result_carries_ask_no_one. comms's turn starts the task and holds before its sentence; the worker answers at once. Once ON_SPEAK_QUEUE reports the result queued, the queue shows comms speaking and comms queued again: the post waits for the turn under way. It is then posted after comms's sentence, comms's model asked twice only, and the @sre it carries asks no one.",
+  "setup": {
+    "channels": [
+      {
+        "id": "ops",
+        "type": "websocket",
+        "category": "transport"
+      },
+      {
+        "id": "comms",
+        "type": "ai",
+        "model": {
+          "rounds": [
+            {
+              "calls": [
+                {
+                  "id": "c1",
+                  "name": "work_in_background",
+                  "arguments": {
+                    "task": "go through the tickets"
+                  }
+                }
+              ]
+            },
+            {
+              "gate": "comms-saying",
+              "text": "On it."
+            }
+          ]
+        }
+      },
+      {
+        "id": "sre",
+        "type": "ai",
+        "model": {
+          "rounds": [
+            {
+              "text": "sre should not be asked"
+            }
+          ]
+        }
+      },
+      {
+        "id": "helper",
+        "type": "ai",
+        "model": {
+          "rounds": [
+            {
+              "text": "Ask @sre about the 422s."
+            }
+          ]
+        }
+      }
+    ],
+    "rooms": [
+      {
+        "id": "r1",
+        "bindings": [
+          {
+            "channel_id": "ops"
+          }
+        ]
+      }
+    ],
+    "strategies": [
+      {
+        "id": "d",
+        "discussion": {
+          "agents": [
+            "comms",
+            "sre"
+          ]
+        }
+      }
+    ],
+    "hooks": [
+      {
+        "name": "follow",
+        "trigger": "on_speak_queue",
+        "execution": "async",
+        "reactions": [
+          {},
+          {},
+          {
+            "gate": "post-queued"
+          }
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "install_strategy",
+      "room_id": "r1",
+      "strategy": "d"
+    },
+    {
+      "call": "setup_background",
+      "agent_id": "comms",
+      "worker": "helper",
+      "hand_back": "post"
+    },
+    {
+      "call": "process_inbound",
+      "room_id": "r1",
+      "message": {
+        "channel_id": "ops",
+        "sender_id": "oncall",
+        "content": {
+          "type": "text",
+          "body": "@comms please go through the tickets"
+        }
+      },
+      "background": true,
+      "as": "incoming"
+    },
+    {
+      "wait_for": "comms-saying"
+    },
+    {
+      "wait_for": "post-queued"
+    },
+    {
+      "call": "speak_queue",
+      "room_id": "r1",
+      "expect": {
+        "result": {
+          "speaking": "comms",
+          "queue": [
+            "comms"
+          ]
+        }
+      }
+    },
+    {
+      "open": "post-queued"
+    },
+    {
+      "open": "comms-saying"
+    },
+    {
+      "await": "incoming",
+      "expect": {
+        "result": {
+          "blocked": false,
+          "error": null
+        }
+      }
+    },
+    {
+      "idle": true
+    },
+    {
+      "call": "speak_queue",
+      "room_id": "r1",
+      "expect": {
+        "result": {
+          "speaking": null,
+          "queue": []
+        }
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "r1": [
+        {
+          "source": {
+            "channel_id": "ops"
+          },
+          "content": {
+            "body": "@comms please go through the tickets"
+          }
+        },
+        {
+          "type": "tool_call_start",
+          "source": {
+            "channel_id": "comms"
+          }
+        },
+        {
+          "type": "tool_call_end",
+          "source": {
+            "channel_id": "comms"
+          }
+        },
+        {
+          "source": {
+            "channel_id": "comms"
+          },
+          "content": {
+            "body": "On it."
+          }
+        },
+        {
+          "source": {
+            "channel_id": "comms"
+          },
+          "content": {
+            "body": {
+              "$contains": [
+                "Result of the task",
+                "go through the tickets",
+                "Ask @sre about the 422s."
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "models": {
+      "sre": [],
+      "comms": [
+        {},
+        {}
+      ]
+    }
+  }
+}

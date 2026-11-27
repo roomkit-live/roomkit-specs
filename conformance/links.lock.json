@@ -10025,6 +10025,12 @@
     "RK-19.7.5-065": {
       "discussion/an-offline-agent-s-turn-is-skipped-not-failed": "85555baf5b942cc8627a681e2d33eebd8d69bd976d03dd5c03af29a0f4a29089"
     },
+    "RK-19.7.5-066": {
+      "discussion/a-turn-backend-that-lists-no-executors-gives-the-turn": "a49f0545cf0dcc20b85290b561105a8c1f6c4a153b16ec384250649037a7ddcc"
+    },
+    "RK-19.7.5-067": {
+      "discussion/a-task-s-result-to-post-is-posted-for-an-agent-no-executor-serves": "bb58c95273b549088ce9e3f808c9c4a68b06cf7e84aaa53e17b7595af4c7aadf"
+    },
     "RK-19.7.5-068": {
       "discussion/a-pick-merged-with-a-later-message-answers-the-later-one": "de243c3a4a29990d492b4fb2ad0912889161b49f18d61a51f6344a958fc1f1cb",
       "discussion/an-agent-naming-another-queues-it-once-its-turn-has-ended": "de243c3a4a29990d492b4fb2ad0912889161b49f18d61a51f6344a958fc1f1cb",
@@ -10431,6 +10437,9 @@
       "discussion/a-restarted-process-takes-the-discussion-back": "febedb91d2ef65858d01e39cb57286b5e5a75a5c4e1af2fae76fd3341e869f6b",
       "discussion/uninstalling-forgets-the-queue-so-a-new-discussion-starts-fresh": "febedb91d2ef65858d01e39cb57286b5e5a75a5c4e1af2fae76fd3341e869f6b"
     },
+    "RK-19.7.5-126": {
+      "discussion/a-configuration-stored-without-handles-addresses-each-agent-by-its-channel-id": "3dd3620b3169aa3c0f8d550f4f10a78f4d6babf0338f8084d5e318a02caaae6d"
+    },
     "RK-19.7.5-127": {
       "discussion/a-process-that-did-not-install-it-follows-the-discussion": "aef4aa09a98379a74e334f4699050864eead888df01c9104a6e7ea77d832da96",
       "discussion/a-process-that-follows-the-discussion-reads-handles": "aef4aa09a98379a74e334f4699050864eead888df01c9104a6e7ea77d832da96",
@@ -10453,6 +10462,9 @@
       "discussion/an-uninstall-detaches-what-another-process-s-install-attached": "4168de3d0e0c0ef48a757ac9a6cd5d7569dfc419344ea82b01fbcbb53bb6117d",
       "discussion/uninstalling-in-another-process-leaves-no-record-behind": "4168de3d0e0c0ef48a757ac9a6cd5d7569dfc419344ea82b01fbcbb53bb6117d",
       "discussion/uninstalling-in-one-process-ends-the-discussion-in-the-others": "4168de3d0e0c0ef48a757ac9a6cd5d7569dfc419344ea82b01fbcbb53bb6117d"
+    },
+    "RK-19.7.5-130": {
+      "discussion/an-uninstall-detaches-no-agent-a-configuration-stored-without-them-names": "ceb59108a9dccbf07d96153e59d861ced74546db1365ee07c4cb1ef16e90d948"
     },
     "RK-19.7.5-131": {
       "discussion/an-instruction-a-follower-takes-is-dropped": "a76af700f44a2ad2a5e3a0e7caa0c5afc8b7c71226fabdfa39f5af86b7928c79",
@@ -10480,6 +10492,9 @@
       "discussion/a-restarted-process-takes-the-discussion-back": "df206d04d3cbcc38d3774f626680768254ba833f5ee5741bd58b8325178652f2",
       "discussion/an-instruction-moves-the-turns-to-the-process-holding-it": "df206d04d3cbcc38d3774f626680768254ba833f5ee5741bd58b8325178652f2",
       "discussion/the-lease-holder-decides-what-a-follower-routed": "df206d04d3cbcc38d3774f626680768254ba833f5ee5741bd58b8325178652f2"
+    },
+    "RK-19.7.5-136": {
+      "discussion/a-lease-left-to-expire-is-taken-by-a-process-that-installed-the-discussion": "94fa6e107463a23ea7a30a337271202a1855da16a63df4cc1c9cd68ad9c3b80b"
     },
     "RK-19.7.5-137": {
       "discussion/a-process-that-did-not-install-it-follows-the-discussion": "5988ed0995e3c4220bff38da1b0fe3926bc694e7db9f87cebc9199cc85ae5365",
@@ -10615,6 +10630,18 @@
       "discussion/a-message-waiting-for-a-decision-keeps-its-place": "a0047ab0e203cbe49f979d47a9f358b47eb94521982fa16d67ee6f33a7699522",
       "discussion/the-lease-holder-decides-what-a-follower-routed": "a0047ab0e203cbe49f979d47a9f358b47eb94521982fa16d67ee6f33a7699522"
     },
+    "RK-19.7.5-161": {
+      "discussion/messages-waiting-for-a-decision-are-decided-in-the-order-they-were-committed": "c94759d56e0cefd4b34c8b1d878530bb1f3a1d94d0a7845db3aecf15f1e8bb3a"
+    },
+    "RK-19.7.5-162": {
+      "discussion/messages-waiting-for-a-decision-are-dropped-once-the-discussion-is-over": "391e5084646adb139600acc4f302f851826ad65cabf08f1d7f027e7a5d5c0f65"
+    },
+    "RK-19.7.5-163": {
+      "discussion/a-process-that-stops-while-it-decides-leaves-the-message-for-the-next-holder": "c753223353a2aed5c41167e6e4bbd605d1fc93754fafe247ecc5a65d8dd60198"
+    },
+    "RK-19.7.5-164": {
+      "discussion/past-sixteen-messages-waiting-for-a-decision-the-oldest-asks-with-no-policy": "4d8053e23366e19332f31c34b7d25dbe2a7cc2627c4944d1d59bdd814f786723"
+    },
     "RK-19.7.5-165": {
       "discussion/a-policy-past-its-bound-asks-every-candidate": "8f5e37da6fe4ef40f8350c089f6f5600a8fc76f8fd3cab624fa42ad27878ef64"
     },
@@ -10629,20 +10656,63 @@
       "discussion/a-policy-past-its-bound-asks-every-candidate": "c8271a6ed170609107925a50c8fa783c6f87c5ea6b0254679e1062434d5dfd2c",
       "discussion/undecided-a-message-after-a-question-goes-to-the-agent-that-asked": "c8271a6ed170609107925a50c8fa783c6f87c5ea6b0254679e1062434d5dfd2c"
     },
+    "RK-19.7.5-168": {
+      "discussion/a-decision-on-a-message-another-process-decided-first-is-neither-applied-nor-reported": "e973ec05786ab6e2b261a8af35bddd5e00eb0391041fa7074c07cc36e6f10519"
+    },
     "RK-19.7.5-169": {
       "discussion/a-dispatched-message-stays-unaddressed": "7ea8a8cb132a49f00cf7abd87b091085665d18717c0e8944d9d16d3ff68d2246",
       "discussion/acp-dispatch-identity": "7ea8a8cb132a49f00cf7abd87b091085665d18717c0e8944d9d16d3ff68d2246"
+    },
+    "RK-19.7.5-170": {
+      "discussion/an-agent-a-decision-picks-still-answers-through-its-speak-policy": "f241c99d8aa1542805564cd7e38f65adefde571f2c3b1e2c705793e1317ec281"
     },
     "RK-19.7.5-175": {
       "tasks/a-background-task-names-its-agent-by-the-discussion-s-handle": "8233f7b3ad44013da9f548f635d78d65c0ec8d35283a6205c15b1b06b91d0233",
       "tasks/a-background-tool-keeps-its-turns-name-before-a-post": "8233f7b3ad44013da9f548f635d78d65c0ec8d35283a6205c15b1b06b91d0233",
       "tasks/a-background-tool-keeps-its-turns-name-before-a-relay": "8233f7b3ad44013da9f548f635d78d65c0ec8d35283a6205c15b1b06b91d0233"
     },
+    "RK-19.7.5-176": {
+      "discussion/a-question-asked-while-tasks-run-is-answered-in-its-turn": "517ea49789fe3a54dbcda8761e5432432c34f0bbbeffdd0d088d9cc84c86a51a"
+    },
     "RK-19.7.5-177": {
       "tasks/a-relayed-task-result-names-its-worker-by-the-discussion-handle": "2243e3af3c585765d7bc5197c66e37145752878b744d816e16199ba816a0f6fc"
     },
+    "RK-19.7.5-178": {
+      "discussion/a-posted-result-is-the-agent-s-message-without-a-generation-and-asks-no-one": "f1539aaef744ab20672f9672e7ed71770d05130244b60feac8db82a6fe867a20"
+    },
+    "RK-19.7.5-179": {
+      "discussion/each-turn-s-notes-list-the-room-s-tasks": "66677ddaf6931e83fab0f81ff56848abed957a1bac73572e1af2300fc0563a11"
+    },
+    "RK-19.7.5-180": {
+      "discussion/a-worker-runs-in-a-child-room-of-its-own-an-external-agent-among-them": "c60aa445826afab17ddce5a0d91bea8070a93588b0359a90631b08d763cd796f"
+    },
+    "RK-19.7.5-181": {
+      "discussion/a-task-outlives-an-ended-discussion-its-relayed-result-refused-and-kept": "3a68f6e628d8466e59631011989455a9f6d2f9353d0116de1df09486e95a357a",
+      "discussion/a-task-outlives-an-uninstalled-discussion-its-hand-back-an-instruction-like-any-other": "3a68f6e628d8466e59631011989455a9f6d2f9353d0116de1df09486e95a357a"
+    },
+    "RK-19.7.5-182": {
+      "discussion/a-posted-result-queued-when-the-discussion-ends-is-posted-once-no-turn-runs": "53559206499209c21c0694f73fcd041826774794125b0b10306a26e3601a115e"
+    },
+    "RK-19.7.5-183": {
+      "discussion/an-uninstall-in-another-process-posts-the-result-another-holds-before-the-agents-leave": "bd8d714d181b007f361567ca7f859de80b88295634e3a987e111670c45248f2f"
+    },
+    "RK-19.7.5-185": {
+      "discussion/an-uninstall-under-the-room-lock-posts-the-waiting-result-itself": "bbcbf9a6547eb30b39851062f75c346a83c9168bb7614bd12ea8760fd2a32656"
+    },
+    "RK-19.7.5-186": {
+      "discussion/a-result-s-post-that-comes-second-is-a-replay-and-stores-nothing": "fc5909609f04c825d61c22d2472964d5fbdfe239776498f33583713038c43da7"
+    },
+    "RK-19.7.5-187": {
+      "discussion/a-result-a-closing-process-did-not-post-is-posted-by-the-next-uninstall-after-later-messages": "23ac5e2d75bbc68dab48cbfdabe453b79ef9d9c092c8627b424d1bee6c1e96bd"
+    },
+    "RK-19.7.5-188": {
+      "discussion/a-kept-result-whose-message-was-deleted-for-good-is-posted-again": "2c9fc97476e19be87fa63344261beae6c2725618185ee29b97ebc78b92f807ba"
+    },
     "RK-19.7.5-189": {
       "discussion/the-same-agents-hold-a-queue-of-their-own-in-each-room": "f18d31206f7c733ecca094e5b3d48fbe8f472f5b09eb89f71eff8c2bb3b571d8"
+    },
+    "RK-19.7.5-190": {
+      "discussion/an-external-agent-in-a-discussion-is-wired-none-of-the-room-s-tools": "0588ab60d21cf12152889d91211f8771d4e7838196e1f25688800a043d01d851"
     },
     "RK-19.7.5-191": {
       "discussion/an-unaddressed-message-asks-everyone-one-at-a-time": "2ce78e3a4416537f1901c1f538368397898ded9e63614b4540f36815015b490e",
@@ -10708,8 +10778,14 @@
       "discussion/max-turns-ends-the-discussion-and-refuses-later-instructions": "dd69f63dace2586f5616f55afc1381091035014012934e6b8bacfa696e346e7a",
       "discussion/the-last-turn-given-ends-the-discussion-at-once": "dd69f63dace2586f5616f55afc1381091035014012934e6b8bacfa696e346e7a"
     },
+    "RK-19.7.5-203": {
+      "discussion/an-agent-that-starts-a-task-says-so-and-its-turn-ends-there": "5defc73261f343a67d8910f226a549c7e020967c001fb1616b57e72c66507462"
+    },
     "RK-19.7.5-204": {
       "tasks/a-background-task-names-its-agent-by-the-discussion-s-handle": "5e10525131d03c0390103eae52414b47b05e1aecaba2d5e50cf6ef80d17de00c"
+    },
+    "RK-19.7.5-205": {
+      "discussion/an-agent-or-the-host-cancels-a-task-of-the-discussion": "c50bf8b5d1f8861ecffa8d4a856da4c8965a11b33e2d75be04233fb6d2694367"
     },
     "RK-19.8-002": {
       "status/a-status-reaches-the-hooks-of-the-room-it-names": "0f73469f09d2fc0ba6d38ea917e2d53b7468e37acf55513f3a6df5af52db1cf0"

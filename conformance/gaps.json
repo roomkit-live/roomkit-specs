@@ -816,65 +816,10 @@
       "card": "RMK-1931",
       "note": "Configure two independently held committed-event memory notifications and compare parallel versus sequential completion."
     },
-    "RK-19.7.5-066": {
-      "class": "writable",
-      "card": "RMK-1931",
-      "note": "Disable the executor catalogue through the existing fixture, serve a declared agent and verify that its turn proceeds."
-    },
-    "RK-19.7.5-067": {
-      "class": "writable",
-      "card": "RMK-1931",
-      "note": "Post a finished discussion task targeted at an offline declared agent and verify the result is still committed."
-    },
-    "RK-19.7.5-126": {
-      "class": "writable",
-      "card": "RMK-1931",
-      "note": "Install from an older persisted discussion lacking handles and assert each agent is addressed by its channel ID."
-    },
-    "RK-19.7.5-130": {
-      "class": "writable",
-      "card": "RMK-1931",
-      "note": "Remove a stored discussion with no historical attached-agent list and assert every pre-existing agent remains bound."
-    },
-    "RK-19.7.5-136": {
-      "class": "writable",
-      "card": "RMK-1931",
-      "note": "Seed a retained queue with an expired lease, compare the holder and successor, and inspect renewal and takeover. An orderly close that clears the lease is a separate condition."
-    },
     "RK-19.7.5-144": {
       "class": "step",
       "card": "RMK-1931",
       "note": "Hold a post-mode task result before commit, inspect its persisted private record and verify it is absent from public room metadata."
-    },
-    "RK-19.7.5-161": {
-      "class": "writable",
-      "card": "RMK-1931",
-      "note": "Queue two undecided personal messages before releasing the policy and assert decision order matches commit order."
-    },
-    "RK-19.7.5-162": {
-      "class": "writable",
-      "card": "RMK-1931",
-      "note": "Queue an undecided message before the room reaches done or max_turns, then assert the waiting decision is discarded rather than applied."
-    },
-    "RK-19.7.5-163": {
-      "class": "writable",
-      "card": "RMK-1931",
-      "note": "Stop a deciding process and assert the next holder consumes the same still-pending message."
-    },
-    "RK-19.7.5-164": {
-      "class": "writable",
-      "card": "RMK-1931",
-      "note": "Queue seventeen undecided messages and observe the no-policy routing of the oldest with at most sixteen retained."
-    },
-    "RK-19.7.5-168": {
-      "class": "writable",
-      "card": "RMK-1931",
-      "note": "Let another process finish a decision after taking the lease and assert the stale answer produces no second report or application."
-    },
-    "RK-19.7.5-170": {
-      "class": "writable",
-      "card": "RMK-1931",
-      "note": "Dispatch to an agent whose own speak policy chooses silence and assert its policy is evaluated before generation."
     },
     "RK-19.7.5-171": {
       "class": "step",
@@ -895,76 +840,6 @@
       "class": "step",
       "card": "RMK-1931",
       "note": "Inspect built-in classifier questions for regular and identity-free candidates, including custom handles."
-    },
-    "RK-19.7.5-176": {
-      "class": "writable",
-      "card": "RMK-1931",
-      "note": "Hold two workers and a discussion generation independently to verify work overlaps while foreground turns stay sequential."
-    },
-    "RK-19.7.5-178": {
-      "class": "writable",
-      "card": "RMK-1931",
-      "note": "While another agent holds the floor, finish a posted task, then verify its turn publishes without a model call, interruption or mention fan-out."
-    },
-    "RK-19.7.5-179": {
-      "class": "writable",
-      "card": "RMK-1931",
-      "note": "Start a background task inside an installed discussion and inspect the actual room task notes on a later agent turn."
-    },
-    "RK-19.7.5-180": {
-      "class": "writable",
-      "card": "RMK-1931",
-      "note": "Run a worker for an installed discussion and assert its child_room_id and separate conversation state, including a worker using an external agent."
-    },
-    "RK-19.7.5-181": {
-      "class": "writable",
-      "card": "RMK-1931",
-      "note": "End or uninstall the discussion while a relayed task is held and assert its result is preserved on the hook and StatusBus after the instruction is refused when over."
-    },
-    "RK-19.7.5-182": {
-      "class": "writable",
-      "card": "RMK-1931",
-      "note": "End a discussion with one post waiting and observe publication only after its running turn releases the floor."
-    },
-    "RK-19.7.5-183": {
-      "class": "writable",
-      "card": "RMK-1931",
-      "note": "Uninstall from a different process while a result is pending and assert the uninstaller's hooks run before agent bindings are removed."
-    },
-    "RK-19.7.5-185": {
-      "class": "writable",
-      "card": "RMK-1931",
-      "note": "Initiate uninstall while holding the room lock needed by a concurrent result post and assert the uninstaller completes that post."
-    },
-    "RK-19.7.5-186": {
-      "class": "writable",
-      "card": "RMK-1931",
-      "note": "Drive a competing post and uninstall of one retained result and verify a single committed message under the retained result ID."
-    },
-    "RK-19.7.5-187": {
-      "class": "writable",
-      "card": "RMK-1931",
-      "note": "Retain a result across a failed or closing post, restart and publish another message, then assert only uninstall posts the retained result after it."
-    },
-    "RK-19.7.5-188": {
-      "class": "writable",
-      "card": "RMK-1931",
-      "note": "Delete a previously committed but still retained result, then uninstall and assert one fresh post after its idempotency key disappears."
-    },
-    "RK-19.7.5-190": {
-      "class": "writable",
-      "card": "RMK-1931",
-      "note": "Ask an external agent operating inside a Discussion to enumerate its served external tools and verify no host room tool is added."
-    },
-    "RK-19.7.5-203": {
-      "class": "writable",
-      "card": "RMK-1931",
-      "note": "Start a background task during discussion, verify exactly one acknowledgement sentence and no further generation in that turn."
-    },
-    "RK-19.7.5-205": {
-      "class": "writable",
-      "card": "RMK-1931",
-      "note": "With a running task in an installed discussion, exercise cancellation through the agent tool and the host operation and assert the terminal task state."
     },
     "RK-19.8-003": {
       "class": "step",
