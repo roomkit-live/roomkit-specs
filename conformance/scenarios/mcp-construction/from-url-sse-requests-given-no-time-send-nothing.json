@@ -9,7 +9,7 @@
     "RK-21.2-004",
     "RK-21.2-046"
   ],
-  "notes": "Public MCP construction and legacy SSE against a bounded loopback peer; the messages the client posted are observed as sent, notifications included. A deadline of zero expires before the call starts: no request goes out, hence no cancellation either, as with Python's provider (RMK-2203).",
+  "notes": "Public MCP construction and legacy SSE against a bounded loopback peer; the messages the client posted are observed as sent, notifications included. A deadline of zero expires before the call starts: no request goes out, hence no cancellation either, as with Python's provider (RMK-2203). The request answered last shows that nothing went out before it.",
   "steps": [
     {
       "call": "mcp_session",
@@ -17,7 +17,14 @@
       "transport": "sse",
       "discover": false,
       "peer": {
-        "replies": []
+        "replies": [
+          {
+            "method": "host/read",
+            "result": {
+              "ok": true
+            }
+          }
+        ]
       },
       "operations": [
         {
@@ -40,6 +47,10 @@
           "timeout_ms": 0
         },
         {
+          "method": "request",
+          "name": "host/read"
+        },
+        {
           "method": "close"
         }
       ],
@@ -59,12 +70,20 @@
               "error": "timeout"
             },
             {
+              "result": {
+                "ok": true
+              }
+            },
+            {
               "result": null
             }
           ],
           "requests": [
             {
               "method": "initialize"
+            },
+            {
+              "method": "host/read"
             }
           ],
           "messages": [
@@ -73,10 +92,13 @@
             },
             {
               "method": "notifications/initialized"
+            },
+            {
+              "method": "host/read"
             }
           ],
-          "results_json": "[{\"result\":null},{\"error\":\"timeout\"},{\"error\":\"timeout\"},{\"error\":\"timeout\"},{\"result\":null}]",
-          "requests_json": "[{\"method\":\"initialize\"}]"
+          "results_json": "[{\"result\":null},{\"error\":\"timeout\"},{\"error\":\"timeout\"},{\"error\":\"timeout\"},{\"result\":{\"ok\":true}},{\"result\":null}]",
+          "requests_json": "[{\"method\":\"initialize\"},{\"method\":\"host/read\"}]"
         }
       }
     }
