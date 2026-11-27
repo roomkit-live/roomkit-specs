@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "f73e8090fe7e39cb56cfb5b71dcd2e49070574bf3b2dd580bfd1e5e038e6ec9e",
-  "corpus_sha256": "e5b65b23a787ebd9e9fc3c5d1a0ff3787c25942e2b19069f55d612a7921be09a",
+  "corpus_sha256": "fc7b795b35e8157a3cfec4dfe79d4fd5f66deb52e8382ace39cfeb953450414d",
   "python_commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
-  "scenario_count": 4197,
+  "scenario_count": 4219,
   "sections": [
     {
       "section": "0",
@@ -1490,6 +1490,7 @@
         "eviction/a-room-the-agent-joins-again-keeps-no-stored-result",
         "eviction/a-stored-result-of-parts-read-as-text-is-never-noted-as-a-repeat",
         "eviction/an-evicted-answer-given-a-third-time-is-noted",
+        "eviction/an-image-the-end-row-leaves-out-still-reaches-the-model",
         "executors/a-built-channel-reads-its-own-attachment-and-resolves-its-bytes",
         "executors/a-hook-on-an-executor-fired-by-an-acp-agent-between-prompts-reads-the-last-turn-s-context-and-changes-nothing",
         "executors/a-plan-a-build-let-go-held-reads-empty-at-its-next-build",
@@ -1863,6 +1864,7 @@
         "skill-scripts/unknown-skill-streaming",
         "skills/a-channel-that-runs-no-scripts-says-so-in-its-preamble",
         "skills/a-generation-hook-cannot-declare-a-skill-tool-s-name",
+        "skills/a-missing-skill-s-hint-swaps-the-window-for-the-rest-of-the-session",
         "skills/a-turn-s-skill-tools-do-not-count-toward-the-catalogue",
         "speaking/a-block-silences-the-agent-non-streaming",
         "speaking/a-block-silences-the-agent-streaming",
@@ -2110,6 +2112,8 @@
         "tool-search/a-standalone-instruction-reads-none-of-the-room-s-tools",
         "tool-search/a-standalone-turn-neither-reads-nor-keeps-the-room-s-declaration",
         "tool-search/a-tag-finds-a-tool-its-own-words-do-not-name",
+        "tool-search/a-tool-orchestration-injects-is-denied-by-the-policy-while-the-catalogue-is-hidden",
+        "tool-search/a-tool-orchestration-injects-is-gated-by-a-skill-while-the-catalogue-is-hidden",
         "tool-search/a-tool-s-definition-holding-a-block-tag-is-declared-and-handed-as-written",
         "tool-search/a-tool-the-generation-hook-added-stays-declared-and-is-never-named",
         "tool-search/a-tool-the-generation-hook-withdrew-from-the-first-round-stays-withdrawn",
@@ -2165,6 +2169,8 @@
         "tools/a-call-that-returns-once-its-turn-is-cut-ends-aborted",
         "tools/a-call-the-response-cut-tells-the-model-it-did-not-run-and-why",
         "tools/a-cancel-outranks-the-force-stop",
+        "tools/a-cancel-while-several-calls-are-announced-ends-each-of-them-failed-non-streaming",
+        "tools/a-cancel-while-several-calls-are-announced-ends-each-of-them-failed-streaming",
         "tools/a-cancel-while-the-calls-are-announced-counts-no-round",
         "tools/a-change-made-again-is-still-refused-at-its-third",
         "tools/a-change-starts-the-identical-answer-count-again",
@@ -3795,6 +3801,7 @@
         "delivery/observers-start-in-firing-order-while-earlier-bodies-wait",
         "discussion/a-failed-turn-keeps-what-it-committed-and-whom-it-named",
         "eviction/a-hook-s-refusal-and-its-override-past-the-threshold-are-stored",
+        "eviction/a-refusal-past-the-threshold-reaches-its-observer-whole",
         "executors/a-turn-apart-asks-a-person-through-the-room-owner",
         "executors/a-turn-apart-s-error-message-reaches-on-error-and-never-a-model",
         "executors/a-turn-apart-s-plan-and-person-s-tools-run-on-its-executor",
@@ -4025,6 +4032,7 @@
         "skill-scripts/unavailable-skill-streaming",
         "skill-scripts/unknown-skill-non-streaming",
         "skill-scripts/unknown-skill-streaming",
+        "skills/a-missing-skill-s-hint-an-on-tool-call-hook-blocks-reveals-nothing",
         "skills/a-stored-activation-a-hook-rewrote-leaves-out-what-the-model-wrote",
         "skills/a-stored-activation-a-hook-rewrote-reads-what-ran",
         "status/observers-start-in-firing-order-while-earlier-bodies-wait",
@@ -5756,6 +5764,7 @@
         "skills/a-standalone-turn-reads-the-room-s-stored-rows-first",
         "skills/a-stored-activation-past-the-bound-reads-as-activated",
         "skills/a-stored-activation-reads-the-turn-s-registry",
+        "skills/an-activation-another-process-cannot-confirm-delivers-the-body",
         "tenancy/a-deleted-room-s-agent-session-does-not-go-on-in-the-room-created-again",
         "tenancy/a-deleted-room-s-turn-reaches-nothing-of-the-room-created-again",
         "tool-search/a-tool-the-store-says-was-used-stays-declared",
@@ -8812,7 +8821,9 @@
       },
       "decided_gaps": {},
       "unannotated_keyword_lines": [],
-      "candidate_scenarios": []
+      "candidate_scenarios": [
+        "tools/an-open-schema-s-call-runs-with-what-it-does-not-declare-and-nothing-deeper-is-checked"
+      ]
     },
     {
       "section": "15.8.1",
@@ -10216,8 +10227,7 @@
       },
       "decided_gaps": {
         "phase6": 12,
-        "step": 4,
-        "writable": 5
+        "step": 3
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -10234,6 +10244,7 @@
         "mcp/a-forwarding-handler-runs-no-bare-name-the-policy-keeps-off-its-server",
         "mcp/a-policy-that-names-no-server-leaves-a-bare-name-on-the-first-server",
         "mcp/a-tool-listed-twice-is-declared-once",
+        "mcp/an-unlabelled-provider-serves-an-alias-whatever-server-it-names",
         "orchestration/a-supervisor-install-refused-halfway-sets-nothing-up",
         "orchestration/a-supervisor-s-own-tools-stay-its-own",
         "planning/sandbox-declarations-precede-the-planner-non-streaming",
@@ -10426,6 +10437,8 @@
         "tool-search/a-reopening-exchange-is-no-event-of-the-room",
         "tool-search/a-room-whose-declaration-is-not-known-takes-the-one-its-turn-shows",
         "tool-search/a-standalone-turn-neither-reads-nor-keeps-the-room-s-declaration",
+        "tool-search/a-tool-orchestration-injects-is-denied-by-the-policy-while-the-catalogue-is-hidden",
+        "tool-search/a-tool-orchestration-injects-is-gated-by-a-skill-while-the-catalogue-is-hidden",
         "tool-search/a-tool-s-definition-holding-a-block-tag-is-declared-and-handed-as-written",
         "tool-search/a-tool-the-generation-hook-added-stays-declared-and-is-never-named",
         "tool-search/a-tool-the-turn-no-longer-shows-leaves-the-room-s-declaration",
@@ -10438,10 +10451,14 @@
         "tool-search/invalid-arguments-keep-the-schema-for-the-turn-alone",
         "tool-search/tool-search-names-no-denied-tool-and-runs-under-an-allow-list",
         "tools/a-hoisted-call-runs-folded-into-params",
+        "tools/a-policy-pattern-holding-a-bracket-is-refused-where-it-is-configured",
+        "tools/a-policy-pattern-s-punctuation-stands-for-itself",
         "tools/a-quoted-primitive-runs-as-its-declared-type",
         "tools/a-tool-the-generation-hook-added-stays-declared",
         "tools/a-tool-the-generation-hook-edited-keeps-its-edit",
+        "tools/an-exemption-covers-the-channel-s-own-reader-and-no-other-tool",
         "tools/an-integer-past-64-bits-is-an-integer",
+        "tools/an-open-schema-s-call-runs-with-what-it-does-not-declare-and-nothing-deeper-is-checked",
         "tools/before-tool-use-fails-closed",
         "tools/both-hub-forms-at-once-are-refused",
         "tools/every-argument-that-does-not-fit-is-named",
@@ -10481,8 +10498,7 @@
       },
       "decided_gaps": {
         "phase6": 5,
-        "step": 18,
-        "writable": 5
+        "step": 20
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -10500,6 +10516,8 @@
         "mcp-construction/from-url-sse-resource-only-retained-headers",
         "mcp-construction/from-url-sse-timeout-endpoint",
         "mcp-construction/from-url-sse-timeout-listing",
+        "mcp-host/a-content-the-model-is-not-shown-reads-as-a-note-of-its-kind-and-type",
+        "mcp-host/a-listing-that-pages-on-without-anything-new-stops",
         "mcp-host/disconnected-access",
         "mcp-host/extension-container-validation",
         "mcp-host/handshake-copies",
@@ -10535,6 +10553,7 @@
         "mcp/a-tool-listed-twice-is-declared-once",
         "mcp/an-is-error-result-is-a-failure-never-a-refusal-non-streaming",
         "mcp/an-is-error-result-is-a-failure-never-a-refusal-streaming",
+        "mcp/an-unlabelled-provider-serves-an-alias-whatever-server-it-names",
         "role-policy/an-alias-must-pass-both-role-names-non-streaming",
         "role-policy/an-alias-must-pass-both-role-names-streaming",
         "role-policy/mcp-allowed-server-non-streaming",
@@ -10542,7 +10561,8 @@
         "role-policy/mcp-bare-policy-non-streaming",
         "role-policy/mcp-bare-policy-streaming",
         "role-policy/mcp-denied-server-non-streaming",
-        "role-policy/mcp-denied-server-streaming"
+        "role-policy/mcp-denied-server-streaming",
+        "tools/an-exemption-covers-the-channel-s-own-reader-and-no-other-tool"
       ]
     },
     {
@@ -10555,7 +10575,7 @@
       },
       "decided_gaps": {
         "step": 1,
-        "writable": 3
+        "writable": 1
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -10578,12 +10598,15 @@
         "steering/a-steer-reaches-the-room-it-names-alone",
         "steering/an-edit-during-a-tool-round-is-not-handed-to-the-running-turn",
         "steering/an-instruction-while-an-instructed-turn-runs-waits-a-turn-of-its-own",
+        "steering/an-update-of-the-system-prompt-reaches-the-turn-s-next-round",
         "steering/another-person-s-message-is-served-under-its-own-role-s-tools",
         "steering/another-person-s-message-waits-a-turn-of-its-own",
         "steering/one-sender-id-under-two-names-or-two-senders-under-one-are-two-authors",
         "streaming/a-generation-a-fallback-serves-names-it-on-what-it-told-and-on-its-cut",
         "streaming/a-text-follows-the-row-the-room-held-when-its-writing-began",
         "tools/a-cancel-outranks-the-force-stop",
+        "tools/a-cancel-while-several-calls-are-announced-ends-each-of-them-failed-non-streaming",
+        "tools/a-cancel-while-several-calls-are-announced-ends-each-of-them-failed-streaming",
         "tools/a-cancel-while-the-calls-are-announced-counts-no-round",
         "tools/a-round-a-cancel-keeps-from-running-publishes-no-tool-call-event",
         "turn-record/a-cancel-during-a-generation-counts-the-input-it-told",
@@ -10601,8 +10624,7 @@
       },
       "decided_gaps": {
         "phase6": 9,
-        "step": 2,
-        "writable": 1
+        "step": 2
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -10720,6 +10742,7 @@
         "tools/a-turn-the-host-opens-with-deliver-reads-system-as-its-actor",
         "tools/a-turn-the-host-opens-with-post-reads-no-actor",
         "tools/a-turn-the-host-opens-with-send-event-reads-no-actor",
+        "tools/every-round-of-a-turn-reads-its-actor-while-another-room-s-turn-runs",
         "tools/report-claim-matching-non-streaming",
         "tools/report-claim-matching-streaming",
         "tools/report-claim-previous-turn-non-streaming",
@@ -10738,8 +10761,7 @@
         "unmapped": 19
       },
       "decided_gaps": {
-        "step": 3,
-        "writable": 3
+        "step": 3
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -10751,14 +10773,17 @@
         "eviction/a-generation-hook-sees-the-re-read-once-its-room-stores-a-result",
         "eviction/a-hook-s-refusal-and-its-override-past-the-threshold-are-stored",
         "eviction/a-refusal-and-a-failure-past-the-threshold-are-stored-too",
+        "eviction/a-refusal-past-the-threshold-reaches-its-observer-whole",
         "eviction/a-result-of-parts-keeps-its-images",
         "eviction/a-result-past-the-threshold-reaches-the-model-as-a-preview",
         "eviction/a-room-the-agent-joins-again-keeps-no-stored-result",
+        "eviction/a-search-of-a-stored-result-reads-its-text-as-written",
         "eviction/a-skill-s-instructions-are-never-stored",
         "eviction/a-stored-result-is-read-back-only-in-its-room",
         "eviction/a-stored-result-of-parts-read-as-text-is-never-noted-as-a-repeat",
         "eviction/an-agent-with-no-tool-and-nothing-stored-declares-no-re-read",
         "eviction/an-evicted-answer-given-a-third-time-is-noted",
+        "eviction/an-image-the-end-row-leaves-out-still-reaches-the-model",
         "eviction/read-stored-result-pages-a-stored-result",
         "eviction/read-stored-result-searches-a-stored-result",
         "eviction/reading-a-result-the-room-does-not-store-is-a-refusal",
@@ -10785,8 +10810,7 @@
       },
       "decided_gaps": {
         "phase6": 2,
-        "step": 1,
-        "writable": 1
+        "step": 2
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -11413,7 +11437,8 @@
         "skill-prerequisites/scalar-prerequisites-include-the-candidates-own-gated-tools-non-streaming",
         "skill-prerequisites/scalar-prerequisites-include-the-candidates-own-gated-tools-streaming",
         "skill-prerequisites/unavailable-references-explain-the-same-restriction-non-streaming",
-        "skill-prerequisites/unavailable-references-explain-the-same-restriction-streaming"
+        "skill-prerequisites/unavailable-references-explain-the-same-restriction-streaming",
+        "tool-search/a-tool-orchestration-injects-is-gated-by-a-skill-while-the-catalogue-is-hidden"
       ]
     },
     {
@@ -11559,8 +11584,7 @@
         "unmapped": 24
       },
       "decided_gaps": {
-        "phase6": 2,
-        "writable": 4
+        "phase6": 2
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -11655,7 +11679,10 @@
         "skill-prerequisites/unavailable-references-explain-the-same-restriction-non-streaming",
         "skill-prerequisites/unavailable-references-explain-the-same-restriction-streaming",
         "skills/a-host-that-lists-its-skills-itself-reads-a-turn-s-active-ones",
+        "skills/a-missing-skill-s-hint-an-on-tool-call-hook-blocks-reveals-nothing",
+        "skills/a-missing-skill-s-hint-swaps-the-window-for-the-rest-of-the-session",
         "skills/a-skill-a-turn-activated-rides-the-next-turn-of-its-registry",
+        "skills/a-skill-retired-past-the-bound-delivers-its-body-again",
         "skills/a-skill-the-next-turn-s-registry-lacks-leaves-the-room",
         "skills/a-standalone-activation-as-a-room-s-first-turn-rides-its-next",
         "skills/a-standalone-activation-in-a-room-already-read-rides-its-next",
@@ -11669,8 +11696,10 @@
         "skills/a-stored-activation-under-a-held-id-reads-the-call-that-ran",
         "skills/a-turn-s-empty-registry-leaves-the-skills-out-and-active",
         "skills/a-turn-uses-its-in-memory-skill-registry",
+        "skills/an-activation-another-process-cannot-confirm-delivers-the-body",
         "skills/an-in-memory-skill-is-activated-and-its-reference-read",
-        "tools/a-compaction-keeps-a-skill-s-instructions-and-a-page-read-back-whole"
+        "tools/a-compaction-keeps-a-skill-s-instructions-and-a-page-read-back-whole",
+        "tools/an-exemption-covers-the-channel-s-own-reader-and-no-other-tool"
       ]
     },
     {
@@ -11704,8 +11733,7 @@
         "unmapped": 7
       },
       "decided_gaps": {
-        "step": 3,
-        "writable": 2
+        "step": 3
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -11744,7 +11772,9 @@
         "skill-scripts/unavailable-skill-streaming",
         "skill-scripts/unknown-skill-non-streaming",
         "skill-scripts/unknown-skill-streaming",
+        "skills/a-reference-name-is-normalized-before-it-is-checked",
         "skills/a-turn-uses-its-in-memory-skill-registry",
+        "skills/an-absolute-reference-name-is-refused-in-every-spelling",
         "skills/an-in-memory-skill-is-activated-and-its-reference-read"
       ]
     },
@@ -46007,23 +46037,13 @@
       "id": "RK-21.1-012",
       "section": "21.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1918",
-        "note": "Give an allow or deny pattern containing an ordinary punctuation character that would otherwise have special pattern meaning and assert both matching and nonmatching tool outcomes."
-      }
+      "links": []
     },
     {
       "id": "RK-21.1-013",
       "section": "21.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1918",
-        "note": "Expose a failed ToolPolicy construction as a scenario result; a failing static setup cannot be an expected step result."
-      }
+      "links": []
     },
     {
       "id": "RK-21.1-014",
@@ -46047,12 +46067,7 @@
       "id": "RK-21.1-017",
       "section": "21.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1918",
-        "note": "Exercise a host-owned reader lookalike under a denying rule and a tool merely sharing its prefix. A fixture must make ownership distinguishable when a builtin reserves the same exact name."
-      }
+      "links": []
     },
     {
       "id": "RK-21.1-018",
@@ -46237,12 +46252,7 @@
       "id": "RK-21.1-035",
       "section": "21.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1918",
-        "note": "Call a declared open object with an additional property and verify the handler receives it unmodified."
-      }
+      "links": []
     },
     {
       "id": "RK-21.1-036",
@@ -46260,12 +46270,7 @@
       "id": "RK-21.1-038",
       "section": "21.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1918",
-        "note": "Pass a valid top-level value with a nested mismatch and verify it reaches the handler."
-      }
+      "links": []
     },
     {
       "id": "RK-21.1-039",
@@ -46390,7 +46395,7 @@
       "gap": {
         "class": "step",
         "card": "RMK-1918",
-        "note": "Reject duplicate host tool names during construction and observe both the error category and the conflicting name."
+        "note": "step: register_channel reporting an AI channel's construction refusal of a host tool as the call's error: both runners build a scripted agent inside their reading of the call, so the refusal (two host tools under one name, one under a name the channel serves) is the runner's failure, not invalid_argument."
       }
     },
     {
@@ -46442,9 +46447,9 @@
       "mapping": "unmapped",
       "links": [],
       "gap": {
-        "class": "writable",
+        "class": "step",
         "card": "RMK-1918",
-        "note": "Install the same strategy twice for an existing room and assert that its own tools are replaced without affecting host tools."
+        "note": "step: a strategy's own install on a room it is installed in (Python's Orchestration.install(kit, room_id)): install_strategy refuses a room that holds a strategy (invalid_argument) before the strategy installs again (a Discussion takes the place of one, but sets up no tools), and no other call installs one."
       }
     },
     {
@@ -46510,12 +46515,7 @@
       "id": "RK-21.1-066",
       "section": "21.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1918",
-        "note": "Deny or gate the orchestration-injected handoff or delegated tool while Tool Search is active; assert both its declaration and its dispatch outcome."
-      }
+      "links": []
     },
     {
       "id": "RK-21.1-067",
@@ -46698,12 +46698,7 @@
       "id": "RK-21.2-014",
       "section": "21.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1918",
-        "note": "Configure an unlabelled provider with a forwarded call using a differently named server alias and check which provider responds."
-      }
+      "links": []
     },
     {
       "id": "RK-21.2-015",
@@ -46843,9 +46838,9 @@
       "mapping": "unmapped",
       "links": [],
       "gap": {
-        "class": "writable",
+        "class": "step",
         "card": "RMK-1918",
-        "note": "List a tool with an output schema, then exercise a successful result that distinguishes retained validation from absent validation."
+        "note": "step: an MCP tool listed with an output schema and answering structured content: neither mcp_session (call_tool reports no error for a result that breaks its schema, which the runners read as their own failure) nor mcp_servers (tools list no output schema and answer text only) can script it."
       }
     },
     {
@@ -46876,12 +46871,7 @@
       "id": "RK-21.2-027",
       "section": "21.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1918",
-        "note": "Supply an empty cursor-bearing page or a repeated cursor, verify that listing terminates and no further wire request is made. Capturing the warning also needs a log observation."
-      }
+      "links": []
     },
     {
       "id": "RK-21.2-028",
@@ -46901,9 +46891,9 @@
       "mapping": "unmapped",
       "links": [],
       "gap": {
-        "class": "writable",
+        "class": "step",
         "card": "RMK-1918",
-        "note": "List an output schema, respond with missing and mismatched structured content on successful MCP calls and observe a failed result."
+        "note": "step: an MCP tool listed with an output schema and answering structured content, missing or breaking it: neither mcp_session (call_tool reports no error for a result that breaks its schema, which the runners read as their own failure) nor mcp_servers (tools list no output schema and answer text only) can script it."
       }
     },
     {
@@ -47131,12 +47121,7 @@
       "id": "RK-21.2-051",
       "section": "21.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1918",
-        "note": "Exercise the public MCP text call with non-text parts under a scripted peer and inspect exact notes, media type cleanup and defaults."
-      }
+      "links": []
     },
     {
       "id": "RK-21.2-052",
@@ -47186,12 +47171,7 @@
       "id": "RK-21.3-005",
       "section": "21.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1918",
-        "note": "Steer a running text turn with UpdateSystemPrompt and inspect the following model request for its original and appended instructions."
-      }
+      "links": []
     },
     {
       "id": "RK-21.3-006",
@@ -47209,12 +47189,7 @@
       "id": "RK-21.3-008",
       "section": "21.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1918",
-        "note": "Cancel while multiple starts are announced and inspect each persistent failed end row and the absence of pending rows."
-      }
+      "links": []
     },
     {
       "id": "RK-21.3-009",
@@ -47672,12 +47647,7 @@
       "id": "RK-21.4-040",
       "section": "21.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1918",
-        "note": "Read room and actor context on successive rounds of the same text turn and compare them while another room uses the channel."
-      }
+      "links": []
     },
     {
       "id": "RK-21.5-002",
@@ -47713,12 +47683,7 @@
       "id": "RK-21.5-007",
       "section": "21.5",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1918",
-        "note": "Return an oversized explicit refusal, compare the observer's full raw message to the model's bounded copy."
-      }
+      "links": []
     },
     {
       "id": "RK-21.5-008",
@@ -47748,12 +47713,7 @@
       "id": "RK-21.5-012",
       "section": "21.5",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1918",
-        "note": "Search a stored result for ordinary literal punctuation that also has pattern syntax and check the exact matching lines."
-      }
+      "links": []
     },
     {
       "id": "RK-21.5-013",
@@ -47816,12 +47776,7 @@
       "id": "RK-21.5-020",
       "section": "21.5",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1918",
-        "note": "Return an image over the event budget and compare the retained model image with its omission in the persisted event."
-      }
+      "links": []
     },
     {
       "id": "RK-21.6-002",
@@ -47911,9 +47866,9 @@
       "mapping": "unmapped",
       "links": [],
       "gap": {
-        "class": "writable",
+        "class": "step",
         "card": "RMK-1918",
-        "note": "Install an ordinary host tool for a pipeline agent using a strategy, set a short channel bound and observe its timed-out call."
+        "note": "step: realtime_voice tool_timeout_ms / tool_timeouts_ms (a realtime channel's call bound, as agents and conferences have): a pipeline installs an agent's own tools on a realtime channel alone, whose bound a scenario cannot set below its default."
       }
     },
     {
@@ -51255,23 +51210,13 @@
       "id": "RK-24.4-012",
       "section": "24.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1939",
-        "note": "Existing cases observe bounded eviction, but none reactivates the evicted local skill to assert redelivery of its full body."
-      }
+      "links": []
     },
     {
       "id": "RK-24.4-013",
       "section": "24.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1939",
-        "note": "The shared runner can replace an agent and control room history, but no local skill case demonstrates a lost record followed by a fresh body without recoverable stored activation."
-      }
+      "links": []
     },
     {
       "id": "RK-24.4-014",
@@ -51356,23 +51301,13 @@
       "id": "RK-24.4-021",
       "section": "24.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1939",
-        "note": "The model capture supports the text reveal window; no shared missing-skill case asserts its replacement, excluded declarations and session lifetime."
-      }
+      "links": []
     },
     {
       "id": "RK-24.4-022",
       "section": "24.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1939",
-        "note": "Existing blocked-activation cases target a real skill. The unknown-skill hint after an ON_TOOL_CALL block remains unasserted."
-      }
+      "links": []
     },
     {
       "id": "RK-24.4-023",
@@ -51644,23 +51579,13 @@
           ],
           "executions": []
         }
-      ],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1939",
-        "note": "Text tools accept a reference or script name, but no shared case observes normalization before validation."
-      }
+      ]
     },
     {
       "id": "RK-24.6-009",
       "section": "24.6",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1939",
-        "note": "Existing text-tool calls can observe refusal of an absolute name; no shared case checks platform-recognized forms."
-      }
+      "links": []
     },
     {
       "id": "RK-24.6-010",
