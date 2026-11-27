@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "f73e8090fe7e39cb56cfb5b71dcd2e49070574bf3b2dd580bfd1e5e038e6ec9e",
-  "corpus_sha256": "4c56e0eb6bffa3f189b14c8f2fe70849d70add46e7e27cecda30daa9d9430c79",
+  "corpus_sha256": "4d2c00d2570709996c5fea6454f7c2f4deac4393492b9291f8f49abb9c04a2bf",
   "python_commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
-  "scenario_count": 4008,
+  "scenario_count": 4032,
   "sections": [
     {
       "section": "0",
@@ -167,7 +167,9 @@
       "mapping": {},
       "decided_gaps": {},
       "unannotated_keyword_lines": [],
-      "candidate_scenarios": []
+      "candidate_scenarios": [
+        "streaming/a-streamed-row-s-hooks-run-without-the-room-lock"
+      ]
     },
     {
       "section": "4.1",
@@ -453,6 +455,7 @@
         "inbound/a-parse-fills-every-member-of-the-event-source",
         "inbound/a-parse-naming-another-channel-is-sourced-from-its-own",
         "inbound/a-parse-writing-responds-to-answers-nothing",
+        "inbound/a-response-keeps-what-its-channel-wrote-of-its-own-source-and-nothing-of-another-s",
         "inbound/a-thread-parent-is-rooted",
         "store/a-read-leaves-the-message-delivered",
         "store/every-stored-event-type-is-read-back-by-its-value",
@@ -844,6 +847,7 @@
         "permissions/an-answer-intersects-its-own-visibility-with-the-trigger-s-scope",
         "permissions/an-empty-answer-scope-a-hook-writes-sends-the-answers-nowhere",
         "permissions/buffered-streams-obey-the-answer-scope",
+        "permissions/work-that-leaves-a-scoped-cascade-is-not-scoped",
         "streaming/an-answer-scope-of-none-streams-to-no-target",
         "streaming/an-answer-scope-streams-only-to-a-target-it-names"
       ]
@@ -860,6 +864,7 @@
       "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
+        "delivery/a-declared-retryable-error-is-believed-whatever-the-binding-s-retry-policy-names",
         "delivery/a-retried-delivery-keeps-its-successful-provider-receipt",
         "delivery/a-set-a-keyed-delivery-s-hook-sends-records-its-failure-after-the-section",
         "delivery/a-stream-its-set-hands-the-cut-cascade-is-closed-unread-and-not-joined",
@@ -2823,7 +2828,7 @@
       },
       "decided_gaps": {
         "step": 1,
-        "writable": 2
+        "writable": 1
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -2842,6 +2847,7 @@
         "identity/a-challenge-is-delivered-and-the-message-held",
         "identity/a-challenge-runs-the-before-broadcast-hooks",
         "inbound/a-parsed-event-takes-the-framework-s-id",
+        "inbound/a-response-and-the-events-hooks-inject-take-fresh-ids-whatever-id-they-carry",
         "resilience/concurrent-messages-take-their-own-index",
         "rooms/the-delivery-cursor-follows-the-lane",
         "store/a-blank-key-is-stored-as-no-key",
@@ -2912,6 +2918,7 @@
         "regenerate/a-closed-room-refuses-a-regeneration-before-the-agent-runs",
         "regenerate/a-closed-room-with-nothing-to-regenerate-refuses-it-too",
         "regenerate/a-muted-agent-s-regenerated-answer-is-stored-blocked",
+        "regenerate/a-regeneration-past-process-timeout-is-refused-process-timeout",
         "regenerate/an-archived-room-refuses-a-regeneration",
         "resilience/process-timeout-covers-the-inbound-parser",
         "resilience/process-timeout-stores-nothing",
@@ -2951,6 +2958,7 @@
         "tasks/a-delegated-turn-past-the-depth-limit-is-not-asked",
         "tools/a-block-before-generation-runs-no-turn",
         "tools/a-gate-hook-past-its-timeout-is-reported",
+        "tools/a-narrowed-binding-s-turn-still-emits-its-framework-events",
         "tools/a-tool-call-hook-past-its-timeout-is-reported",
         "tools/a-tool-observer-past-its-timeout-is-reported",
         "tools/a-tool-the-generation-hook-withdraws-is-refused",
@@ -2977,7 +2985,7 @@
       "decided_gaps": {
         "phase6": 3,
         "step": 1,
-        "writable": 11
+        "writable": 4
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -2989,10 +2997,12 @@
         "acp/tools-observer-reentry-bound",
         "appendix-b/b1-customer-and-ai",
         "appendix-b/b4-agent-chain",
+        "chain/a-direct-change-s-hooks-run-under-the-floor-of-the-hook-body-that-made-it",
         "chain/a-first-post-past-the-reentry-budget-binds-nothing",
         "chain/a-notice-past-the-depth-limit-leaves-no-record",
         "chain/a-parsed-depth-is-at-least-its-turn-s",
         "chain/a-post-continues-the-chain-it-names",
+        "chain/a-transport-s-responses-at-the-depth-limit-are-stored-blocked-and-its-side-effects-kept",
         "chain/notices-and-agent-answers-have-separate-budgets",
         "chain/the-hook-calls-stop-a-before-broadcast-observer-loop",
         "chain/the-hook-calls-stop-an-after-broadcast-loop",
@@ -3002,6 +3012,8 @@
         "delivery/an-adopted-call-past-the-budget-before-its-commit-ends-at-its-adopter-s-deadline",
         "discussion/the-observation-of-a-turn-the-depth-limit-stops-is-stored-with-its-record",
         "executors/a-chain-of-turns-apart-sending-through-their-host-stops-at-the-depth-limit",
+        "executors/an-executor-s-hook-sends-through-the-host-after-the-turn-at-its-answer-s-depth",
+        "executors/an-executor-s-hook-sends-through-the-host-at-the-depth-of-the-turn-s-answer",
         "greeting/a-delivery-greeting-on-every-delivery-stops-at-the-budget",
         "greeting/a-hook-greeting-on-every-answer-under-the-lock-stops-at-the-budget",
         "greeting/a-hook-greeting-on-its-own-greeting-stops-at-its-hook-calls",
@@ -3013,6 +3025,7 @@
         "hooks/recursive-send-event-from-an-off-lock-hook-stops-at-the-cap",
         "host/a-chain-of-turns-sending-through-their-host-stops-at-the-depth-limit",
         "host/work-a-turn-began-sends-at-the-depth-of-its-own-event",
+        "idempotency/a-keyed-message-past-the-reentry-budget-is-refused-not-replayed",
         "instructions/an-agent-an-instruction-cannot-ask-at-the-depth-limit-records-no-fingerprint",
         "instructions/an-agent-not-asked-after-an-instruction-s-answer-records-no-fingerprint",
         "instructions/an-answer-to-an-instruction-s-answer-carries-no-fingerprint",
@@ -3036,6 +3049,7 @@
         "reentrancy/a-routed-call-past-the-budget-in-its-room-keeps-what-routed-it",
         "reentrancy/a-routed-call-past-the-budget-into-another-room-is-not-refused",
         "reentrancy/a-routed-call-past-the-budget-opens-no-room",
+        "reentrancy/a-task-an-async-hook-starts-has-its-floor-only-while-the-body-runs",
         "reentrancy/a-tool-call-handler-sends-as-deep-as-the-turn",
         "reentrancy/a-turn-s-injection-is-a-new-arrival",
         "reentrancy/an-ai-response-handler-posting-after-a-slower-on-ai-response-hook-stops-at-the-depth-limit",
@@ -3071,8 +3085,7 @@
         "unmapped": 31
       },
       "decided_gaps": {
-        "step": 3,
-        "writable": 2
+        "step": 3
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -3094,6 +3107,7 @@
         "streaming/a-scoped-trigger-s-turn-publishes-no-reasoning",
         "tenancy/a-deleted-room-s-subscription-reads-nothing-of-the-room-created-again",
         "tenancy/a-deleted-room-s-turn-publishes-nothing-in-the-room-its-process-creates-again",
+        "tenancy/a-subscription-made-before-its-room-exists-is-the-room-s-created-under-its-id",
         "tool-composition/binding-scope-withholds-composition",
         "tool-composition/cancel-before-execution-keeps-the-terminal-frame",
         "tool-composition/complete-calls-without-fragments-publish-no-composition",
@@ -3114,6 +3128,7 @@
         "tools/a-call-that-returns-once-its-turn-is-cut-ends-aborted",
         "tools/a-failed-call-ends-failed-on-the-room-s-realtime",
         "tools/a-narrowed-binding-s-turn-publishes-no-tool-call-events",
+        "tools/a-narrowed-binding-s-turn-still-emits-its-framework-events",
         "tools/a-room-s-subscriber-reads-no-call-arguments-or-result-by-default",
         "tools/a-round-a-cancel-keeps-from-running-publishes-no-tool-call-event",
         "tools/a-round-of-calls-publishes-its-start-and-its-end",
@@ -3131,13 +3146,15 @@
         "unmapped": 21
       },
       "decided_gaps": {
-        "phase6": 1,
-        "writable": 5
+        "phase6": 1
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "discussion/an-agent-s-answer-typed-instruction-gives-no-turn",
+        "inbound/a-response-and-the-events-hooks-inject-take-fresh-ids-whatever-id-they-carry",
+        "inbound/a-response-keeps-what-its-channel-wrote-of-its-own-source-and-nothing-of-another-s",
         "permissions/an-answer-scope-internal-a-channel-gives-reads-as-none",
+        "permissions/work-that-leaves-a-scoped-cascade-is-not-scoped",
         "tasks/a-delegated-agent-s-streamed-answer-is-kept-as-one-message",
         "tasks/a-delegated-turn-s-trace-is-stored-as-its-responses",
         "voice/a-cut-answer-s-record-names-the-answer-not-the-listener"
@@ -3235,6 +3252,7 @@
         "appendix-b/b5-advisor-joins",
         "appendix-b/b6-edit-with-fallback",
         "appendix-b/b7-delete-with-fallback",
+        "chain/a-direct-change-s-hooks-run-under-the-floor-of-the-hook-body-that-made-it",
         "chain/the-hook-calls-stop-a-before-broadcast-observer-loop",
         "conference/a-call-reports-presence-without-changing-room-membership",
         "conference/a-camera-toggle-reaches-the-mute-and-unmute-observers",
@@ -4108,6 +4126,7 @@
         "inbound/a-call-s-response-events-carry-a-hook-s-modify",
         "inbound/a-call-s-response-events-leave-out-an-answer-a-hook-blocks",
         "inbound/a-hook-s-injected-event-s-failed-set-is-not-recorded",
+        "inbound/a-response-and-the-events-hooks-inject-take-fresh-ids-whatever-id-they-carry",
         "inbound/every-path-that-commits-an-event-roots-its-parent",
         "instructions/a-blocked-instruction-is-not-stored-and-its-hook-s-effects-stand",
         "instructions/a-hook-s-modify-of-an-instruction-s-answer-keeps-its-fingerprint",
@@ -4199,6 +4218,7 @@
         "delivery/a-call-the-close-finds-under-way-returns-kit-closed-while-its-adopted-call-s-stream-is-read",
         "delivery/a-cancel-under-the-room-lock-returns-at-once",
         "delivery/a-cancelled-event-returns-cancelled-while-its-adopted-call-s-stream-is-read",
+        "delivery/a-cascade-a-failed-commit-stops-still-delivers-what-it-committed",
         "delivery/a-deferred-adopted-call-before-its-commit-ends-at-its-adopter-s-deadline",
         "delivery/a-deferred-call-refused-under-the-lock-does-not-wait-for-its-adopted-call",
         "delivery/a-deferred-event-s-wait-after-the-close-reads-its-own-end",
@@ -4256,6 +4276,7 @@
         "hooks/recursive-send-event-from-a-locked-hook-stops-at-the-cap",
         "hooks/recursive-send-event-from-an-off-lock-hook-stops-at-the-cap",
         "host/work-a-turn-began-sends-at-the-depth-of-its-own-event",
+        "idempotency/a-keyed-message-past-the-reentry-budget-is-refused-not-replayed",
         "locks/a-deferred-adopted-call-carries-its-attach-s-failed-release",
         "locks/a-deferred-adopted-call-carries-the-failed-release-of-the-event-its-hook-injected",
         "locks/a-deferred-call-refused-at-its-deadline-beside-an-adopted-call-carries-its-lock-s-failed-release",
@@ -4302,6 +4323,7 @@
         "reentrancy/a-routed-call-past-the-budget-in-its-room-keeps-what-routed-it",
         "reentrancy/a-routed-call-past-the-budget-into-another-room-is-not-refused",
         "reentrancy/a-routed-call-past-the-budget-opens-no-room",
+        "reentrancy/a-task-an-async-hook-starts-has-its-floor-only-while-the-body-runs",
         "reentrancy/a-turn-s-injection-is-a-new-arrival",
         "reentrancy/an-off-lock-hook-mutes-its-source",
         "reentrancy/an-off-lock-hook-reads-the-attach-of-the-room-routing-opened",
@@ -4318,6 +4340,7 @@
         "rooms/a-channel-sends-into-the-room-it-is-told-of",
         "routing/a-message-a-delivery-sent-leaves-its-new-room-for-one-that-exists",
         "streaming/a-streamed-row-s-hooks-read-the-room-at-the-row",
+        "streaming/a-streamed-row-s-hooks-run-without-the-room-lock",
         "verification/a-release-from-a-hook-keeps-its-answer-named",
         "verification/a-release-from-a-hook-that-allows-its-event-is-answered-first",
         "verification/a-release-from-a-hook-that-closes-the-room-is-answered-by-no-agent",
@@ -4376,6 +4399,7 @@
         "delivery/a-cancelled-call-refused-past-its-timeout-reports-the-refusal",
         "delivery/a-cancelled-call-returns-while-a-transport-still-delivers",
         "delivery/a-cancelled-event-returns-cancelled-while-its-adopted-call-s-stream-is-read",
+        "delivery/a-cascade-a-failed-commit-stops-still-delivers-what-it-committed",
         "delivery/a-cascade-cancel-leaves-another-room-s-running-turn-alone",
         "delivery/a-closing-kit-refuses-new-operations-and-ignores-cancellation",
         "delivery/a-cut-call-reads-its-record-while-a-transport-still-sends",
@@ -4542,6 +4566,9 @@
         "inbound/a-parse-naming-another-room-is-stored-in-the-routed-one",
         "inbound/a-parse-writing-responds-to-answers-nothing",
         "inbound/a-parsed-event-takes-the-framework-s-id",
+        "inbound/a-rate-limit-s-per-minute-bound-sets-its-rate-before-the-per-hour-one",
+        "inbound/a-rate-limit-s-per-second-bound-sets-its-rate-before-the-others",
+        "inbound/a-rate-limit-that-sets-no-bound-limits-nothing",
         "inbound/a-refusal-with-the-close-s-code-in-an-open-kit-is-recorded",
         "inbound/a-reply-s-generation-keys-stay-off-its-caller-s-record",
         "inbound/a-response-s-failed-set-is-not-recorded",
@@ -4579,10 +4606,12 @@
         "locks/a-call-refused-at-its-deadline-carries-its-attach-s-failed-release",
         "locks/a-challenged-message-carries-its-attach-s-failed-release",
         "locks/a-committed-call-carries-its-attach-s-failed-release",
+        "locks/a-cursor-write-the-store-fails-leaves-the-set-as-it-ran-and-the-lane-goes-on",
         "locks/a-deferred-call-refused-at-its-deadline-carries-its-lock-s-failed-release",
         "locks/a-failed-release-keeps-a-refusal",
         "locks/a-failed-release-keeps-the-committed-event-and-is-its-error",
         "locks/a-message-refused-room-taken-carries-its-claim-s-failed-release",
+        "locks/a-room-id-holding-a-nul-character-is-refused-before-anything-is-written",
         "locks/a-room-kept-by-its-message-carries-its-attach-s-failed-release",
         "locks/a-room-taken-from-its-message-leaves-its-failed-release-out",
         "locks/answers-past-the-reentry-budget-of-a-set-of-a-deleted-room-leave-no-record-in-the-room-created-again",
@@ -4646,6 +4675,7 @@
         "regenerate/a-regenerated-answer-streams-to-a-transport-that-streams",
         "regenerate/a-regeneration-answers-the-last-message-again",
         "regenerate/a-regeneration-repeats-nothing-of-its-trigger-s-first-pass",
+        "resilience/a-blocked-record-is-committed-outside-the-process-timeout",
         "resilience/a-committed-event-stays-delivered-past-process-timeout",
         "rooms/a-closed-room-refuses-chain-depth-replacement-records",
         "rooms/a-closed-room-refuses-response-cap-replacement-records",
@@ -4660,6 +4690,7 @@
         "rooms/a-response-pass-applies-its-own-due-pause",
         "rooms/a-response-the-room-refuses",
         "rooms/a-response-whose-room-a-step-closes-during-its-turn-is-refused",
+        "rooms/a-room-step-2-creates-is-completed-when-its-caller-leaves",
         "rooms/an-agent-s-answer-whose-room-a-step-closes-during-its-generation-is-refused",
         "rooms/closed-room-refuses-a-message",
         "rooms/replacement-records-after-room-deletion-report-a-null-status",
@@ -4915,6 +4946,7 @@
         "instructions/standalone-is-the-typed-field-s-word-alone",
         "locks/a-set-waiting-on-another-process-s-index-takes-its-turn-once-its-room-is-deleted",
         "locks/an-instruction-s-set-waits-for-the-index-another-process-committed-before-it",
+        "locks/an-instruction-whose-latest-index-read-fails-waits-for-no-other-index",
         "locks/the-side-effects-a-hook-gives-an-instruction-the-discussion-takes-are-stored-at-its-decision",
         "realtime/a-session-takes-its-instruction-directly",
         "skill-gating/room-activation-persists-but-a-standalone-turn-starts-closed-non-streaming",
@@ -4971,6 +5003,7 @@
         "delivery/an-awaited-call-cancelled-before-its-commit-waits-for-no-turn",
         "delivery/an-awaited-call-cancelled-during-identity-waits-for-no-turn",
         "delivery/an-awaited-call-cancelled-during-routing-waits-for-no-turn",
+        "delivery/deliveries-past-a-binding-s-rate-limit-are-queued-not-dropped",
         "delivery/the-next-event-s-turn-runs-while-the-turn-before-it-is-held",
         "discussion/listen-only-on-a-turn-given-but-not-started-cuts-it",
         "hooks/event-processed-comes-once-the-after-broadcast-hooks-have-ended",
@@ -5031,6 +5064,7 @@
         "appendix-b/b6-edit-with-fallback",
         "appendix-b/b7-delete-with-fallback",
         "author-images/a-deleted-event-s-attached-image-stays-withheld",
+        "chain/a-direct-change-s-hooks-run-under-the-floor-of-the-hook-body-that-made-it",
         "discussion/a-message-deleted-before-its-decision-is-not-decided",
         "discussion/a-message-its-sender-deleted-before-its-decision-is-not-decided",
         "discussion/the-recent-conversation-withholds-what-a-delete-removed",
@@ -5324,6 +5358,7 @@
         "edits/an-injected-change-s-refusal-raises",
         "idempotency/a-muted-sources-record-is-stored-as-given-but-for-its-author",
         "idempotency/a-record-behind-a-delivery-passes-the-lane-at-its-turn",
+        "inbound/a-response-and-the-events-hooks-inject-take-fresh-ids-whatever-id-they-carry",
         "inbound/a-sent-event-s-failed-set-is-recorded",
         "inbound/every-path-that-commits-an-event-roots-its-parent",
         "injection/a-direct-call-holding-six-composite-levels-raises-before-any-read",
@@ -5680,6 +5715,8 @@
         "executors/a-turn-on-another-executor-reads-none-of-the-rows-a-delete-removed",
         "executors/a-turn-on-another-executor-whose-rows-the-store-fails-to-read-runs-without-them",
         "executors/an-executor-refuses-a-turn-whose-channel-declares-an-owner-s-tool",
+        "executors/an-executor-s-hook-sends-through-the-host-after-the-turn-at-its-answer-s-depth",
+        "executors/an-executor-s-hook-sends-through-the-host-at-the-depth-of-the-turn-s-answer",
         "executors/one-build-serving-two-rooms-reads-each-turn-s-room-alone",
         "executors/the-owner-cancels-the-calls-of-a-turn-it-loses",
         "executors/work-a-turn-apart-began-publishes-to-its-room-after-it",
@@ -5763,6 +5800,7 @@
         "inputs/a-request-whose-call-is-cut-is-withdrawn",
         "inputs/the-kit-answers-a-turn-s-request",
         "orchestration/a-supervisor-s-own-tools-stay-its-own",
+        "permissions/work-that-leaves-a-scoped-cascade-is-not-scoped",
         "tasks/a-failed-task-keeps-the-error-its-worker-s-turn-raised",
         "tasks/an-agent-reads-and-cancels-its-room-s-tasks",
         "tasks/an-agent-s-turn-cancels-its-room-s-task-and-is-not-told-twice",
@@ -5798,6 +5836,8 @@
         "executors/a-turn-apart-s-plan-and-person-s-tools-run-on-its-executor",
         "executors/an-executor-lacking-a-room-s-hook-does-not-cover-its-agent-there",
         "executors/an-executor-lacking-a-room-s-hook-does-not-take-its-turn",
+        "executors/an-executor-s-hook-sends-through-the-host-after-the-turn-at-its-answer-s-depth",
+        "executors/an-executor-s-hook-sends-through-the-host-at-the-depth-of-the-turn-s-answer",
         "hooks/a-deleted-room-s-hooks-and-enabled-names-end-with-it",
         "hooks/a-hook-registered-below-the-kit-ends-with-the-room-s-creation",
         "kit-executor/a-channel-declared-while-a-kit-turn-hook-could-fire-for-it-is-refused",
@@ -6116,7 +6156,9 @@
         "writable": 1
       },
       "unannotated_keyword_lines": [],
-      "candidate_scenarios": []
+      "candidate_scenarios": [
+        "inbound/a-response-keeps-what-its-channel-wrote-of-its-own-source-and-nothing-of-another-s"
+      ]
     },
     {
       "section": "11.7.1",
@@ -8082,11 +8124,11 @@
         "unmapped": 5
       },
       "decided_gaps": {
-        "step": 2,
-        "writable": 2
+        "step": 2
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
+        "delivery/a-declared-retryable-error-is-believed-whatever-the-binding-s-retry-policy-names",
         "delivery/the-worker-retries-an-unavailable-destination"
       ]
     },
@@ -8099,11 +8141,15 @@
         "unmapped": 4
       },
       "decided_gaps": {
-        "step": 1,
-        "writable": 3
+        "step": 1
       },
       "unannotated_keyword_lines": [],
-      "candidate_scenarios": []
+      "candidate_scenarios": [
+        "delivery/deliveries-past-a-binding-s-rate-limit-are-queued-not-dropped",
+        "inbound/a-rate-limit-s-per-minute-bound-sets-its-rate-before-the-per-hour-one",
+        "inbound/a-rate-limit-s-per-second-bound-sets-its-rate-before-the-others",
+        "inbound/a-rate-limit-that-sets-no-bound-limits-nothing"
+      ]
     },
     {
       "section": "13.4",
@@ -8115,8 +8161,7 @@
         "unmapped": 13
       },
       "decided_gaps": {
-        "step": 1,
-        "writable": 1
+        "step": 1
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -8135,6 +8180,7 @@
         "idempotency/a-cancelled-delivery-keeps-its-committed-key",
         "idempotency/a-hard-delete-releases-the-key-and-keeps-its-index-spent",
         "idempotency/a-key-belongs-to-its-room-and-source-channel",
+        "idempotency/a-keyed-message-past-the-reentry-budget-is-refused-not-replayed",
         "idempotency/a-precommit-timeout-reserves-neither-key-nor-index",
         "idempotency/a-record-under-a-held-key-is-refused-without-taking-an-index",
         "idempotency/an-unstored-event-reserves-neither-key-nor-index",
@@ -8162,8 +8208,7 @@
         "unmapped": 35
       },
       "decided_gaps": {
-        "step": 1,
-        "writable": 6
+        "step": 1
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -8201,6 +8246,7 @@
         "locks/a-challenged-message-carries-its-attach-s-failed-release",
         "locks/a-committed-call-carries-its-attach-s-failed-release",
         "locks/a-cursor-hole-no-lane-runs-is-skipped-after-the-gap-timeout",
+        "locks/a-cursor-write-the-store-fails-leaves-the-set-as-it-ran-and-the-lane-goes-on",
         "locks/a-deferred-adopted-call-carries-its-attach-s-failed-release",
         "locks/a-deferred-adopted-call-carries-the-failed-release-of-the-event-its-hook-injected",
         "locks/a-deferred-call-refused-at-its-deadline-beside-an-adopted-call-carries-its-lock-s-failed-release",
@@ -8216,6 +8262,7 @@
         "locks/a-room-created-again-before-a-set-of-the-deleted-room-ends-delivers-each-message",
         "locks/a-room-created-again-delivers-each-message-sent-while-a-set-of-the-deleted-room-runs",
         "locks/a-room-created-again-with-an-earlier-created-at-delivers-each-message",
+        "locks/a-room-id-holding-a-nul-character-is-refused-before-anything-is-written",
         "locks/a-room-kept-by-its-message-carries-its-attach-s-failed-release",
         "locks/a-room-taken-from-its-message-leaves-its-failed-release-out",
         "locks/a-set-another-process-queued-in-a-deleted-room-takes-its-turn-once-the-room-is-created-again",
@@ -8233,6 +8280,7 @@
         "locks/an-adopted-message-held-for-its-sender-carries-the-failed-release-of-what-a-call-nested-in-its-challenge-s-section-injected",
         "locks/an-agent-a-set-of-a-deleted-room-does-not-ask-leaves-no-record-in-the-room-created-again",
         "locks/an-instruction-s-set-waits-for-the-index-another-process-committed-before-it",
+        "locks/an-instruction-whose-latest-index-read-fails-waits-for-no-other-index",
         "locks/answers-past-the-reentry-budget-of-a-set-of-a-deleted-room-leave-no-record-in-the-room-created-again",
         "locks/the-agent-answer-of-a-set-another-process-ran-in-a-deleted-room-stays-out-of-the-room-created-again",
         "locks/the-agent-answer-of-a-set-of-a-deleted-room-stays-out-of-the-room-created-again",
@@ -8270,6 +8318,7 @@
         "resilience/concurrent-messages-take-their-own-index",
         "rooms/a-hook-that-closes-the-room-refuses-its-event",
         "rooms/the-delivery-cursor-follows-the-lane",
+        "streaming/a-streamed-row-s-hooks-run-without-the-room-lock",
         "tasks/a-delegated-turn-s-metadata-updates-wait-for-the-room-s-lock",
         "tasks/a-delegated-turn-s-shared-answer-follows-its-metadata-updates",
         "verification/a-rerun-whose-room-is-created-again-in-the-lane-is-refused"
@@ -8284,14 +8333,13 @@
         "mapped_partial": 1,
         "unmapped": 27
       },
-      "decided_gaps": {
-        "writable": 4
-      },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "delivery/a-call-a-parse-awaits-before-its-commit-ends-at-its-message-s-deadline",
         "delivery/a-call-adopted-after-the-decision-ends-at-its-own-deadline",
         "delivery/a-cancelled-call-refused-past-its-timeout-reports-the-refusal",
+        "delivery/a-cascade-a-failed-commit-stops-still-delivers-what-it-committed",
         "delivery/a-deferred-adopted-call-before-its-commit-ends-at-its-adopter-s-deadline",
         "delivery/a-deferred-call-refused-under-the-lock-does-not-wait-for-its-adopted-call",
         "delivery/a-hook-waiting-on-an-adopted-call-whose-answer-sends-into-the-room-ends-at-the-timeout",
@@ -8344,6 +8392,7 @@
         "regenerate/a-regeneration-answers-the-last-message-again",
         "regenerate/a-regeneration-hands-no-transport-the-message-again",
         "regenerate/a-regeneration-is-scoped-to-its-caller-s-organization",
+        "regenerate/a-regeneration-past-process-timeout-is-refused-process-timeout",
         "regenerate/a-regeneration-repeats-nothing-of-its-trigger-s-first-pass",
         "regenerate/a-regeneration-skips-a-deleted-message",
         "regenerate/a-regeneration-skips-an-edit-row",
@@ -8356,9 +8405,11 @@
         "regenerate/the-room-takes-a-message-while-its-agent-regenerates",
         "regenerate/the-target-is-the-newest-message-a-transport-wrote",
         "regenerate/without-a-trigger-id-the-newest-message-is-answered-again",
+        "resilience/a-blocked-record-is-committed-outside-the-process-timeout",
         "resilience/a-committed-event-stays-delivered-past-process-timeout",
         "resilience/process-timeout-covers-the-inbound-parser",
         "resilience/process-timeout-stores-nothing",
+        "rooms/a-room-step-2-creates-is-completed-when-its-caller-leaves",
         "verification/a-code-reply-s-release-is-answered-past-its-budget",
         "verification/a-link-s-release-is-answered-past-the-budget",
         "verification/a-release-from-a-hook-that-allows-its-event-is-answered-first",
@@ -8902,6 +8953,7 @@
         "tenancy/a-deleted-room-s-turn-runs-none-of-the-hooks-of-the-room-created-again",
         "tenancy/a-hook-registered-below-the-kit-is-the-first-room-s-it-runs-in",
         "tenancy/a-room-hook-held-before-its-room-is-the-first-room-s-it-runs-in",
+        "tenancy/a-subscription-made-before-its-room-exists-is-the-room-s-created-under-its-id",
         "tenancy/another-organization-s-room-hooks-stand",
         "tenancy/another-organization-s-room-is-not-found",
         "tenancy/routing-stays-within-the-organization",
@@ -20582,12 +20634,7 @@
       "id": "RK-8.1-012",
       "section": "8.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1912",
-        "note": "Hooks read the inbound id it is committed with, and a reused id gets a fresh one."
-      }
+      "links": []
     },
     {
       "id": "RK-8.1-013",
@@ -21160,23 +21207,13 @@
       "id": "RK-8.3-015",
       "section": "8.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1912",
-        "note": "An ASYNC body's direct change fires triggers whose hooks send under the same floor."
-      }
+      "links": []
     },
     {
       "id": "RK-8.3-016",
       "section": "8.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1912",
-        "note": "A task a post-delivery hook body spawns calls at its own depth once the body is over."
-      }
+      "links": []
     },
     {
       "id": "RK-8.3-017",
@@ -21188,23 +21225,13 @@
       "id": "RK-8.3-018",
       "section": "8.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1912",
-        "note": "A task a hook body spawns has the floor while the body runs, its own depth after."
-      }
+      "links": []
     },
     {
       "id": "RK-8.3-019",
       "section": "8.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1912",
-        "note": "A hook a turn executor fires carries its floor with the host verb it makes."
-      }
+      "links": []
     },
     {
       "id": "RK-8.3-020",
@@ -21275,12 +21302,7 @@
       "id": "RK-8.3-030",
       "section": "8.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1912",
-        "note": "A non-intelligence channel's responses at the limit are stored BLOCKED."
-      }
+      "links": []
     },
     {
       "id": "RK-8.3-031",
@@ -21495,12 +21517,7 @@
       "id": "RK-8.3-044",
       "section": "8.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1912",
-        "note": "Work a hook body spawns has its own depth and, once the delivery is over, its own budget."
-      }
+      "links": []
     },
     {
       "id": "RK-8.3-045",
@@ -21588,12 +21605,7 @@
       "id": "RK-8.3-051",
       "section": "8.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1912",
-        "note": "A channel whose responses are blocked at the limit still has its side effects collected."
-      }
+      "links": []
     },
     {
       "id": "RK-8.3-052",
@@ -21670,12 +21682,7 @@
       "id": "RK-8.4-014",
       "section": "8.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1912",
-        "note": "A subscription made while no room held the id reads the room created under it."
-      }
+      "links": []
     },
     {
       "id": "RK-8.4-015",
@@ -21925,12 +21932,7 @@
       "id": "RK-8.4-036",
       "section": "8.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1912",
-        "note": "A turn whose ephemerals are withheld still emits its framework events."
-      }
+      "links": []
     },
     {
       "id": "RK-8.4-037",
@@ -22007,12 +22009,7 @@
       "id": "RK-8.5-011",
       "section": "8.5",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1912",
-        "note": "A buffered answer whose channel named responds_to keeps it."
-      }
+      "links": []
     },
     {
       "id": "RK-8.5-012",
@@ -22047,34 +22044,19 @@
       "id": "RK-8.5-016",
       "section": "8.5",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1912",
-        "note": "A response that claims another source gets the responder's."
-      }
+      "links": []
     },
     {
       "id": "RK-8.5-017",
       "section": "8.5",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1912",
-        "note": "A response under its own source keeps the fields its channel wrote."
-      }
+      "links": []
     },
     {
       "id": "RK-8.5-018",
       "section": "8.5",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1912",
-        "note": "A verified sender's message is answered with verification cleared."
-      }
+      "links": []
     },
     {
       "id": "RK-8.5-019",
@@ -22092,12 +22074,7 @@
       "id": "RK-8.5-021",
       "section": "8.5",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1912",
-        "note": "Work that leaves a scoped cascade is not scoped."
-      }
+      "links": []
     },
     {
       "id": "RK-8.5-022",
@@ -38616,12 +38593,7 @@
       "id": "RK-13.2-002",
       "section": "13.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1965",
-        "note": "store.update_binding sets a binding's retry_policy, whose fields and exponential_base default the call's result or a bindings expectation reads."
-      }
+      "links": []
     },
     {
       "id": "RK-13.2-003",
@@ -38644,12 +38616,7 @@
       "id": "RK-13.2-005",
       "section": "13.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1965",
-        "note": "A binding with a retry_policy whose transport refuses with retryable false (a scripted refuse) is attempted once, whatever the policy names."
-      }
+      "links": []
     },
     {
       "id": "RK-13.2-006",
@@ -38666,23 +38633,13 @@
       "id": "RK-13.3-002",
       "section": "13.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1965",
-        "note": "store.update_binding sets a binding's rate_limit with its three bounds."
-      }
+      "links": []
     },
     {
       "id": "RK-13.3-003",
       "section": "13.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1965",
-        "note": "store.update_binding sets a binding's rate_limit, whose first bound set gives the rate, none set no limit."
-      }
+      "links": []
     },
     {
       "id": "RK-13.3-004",
@@ -38699,12 +38656,7 @@
       "id": "RK-13.3-005",
       "section": "13.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1965",
-        "note": "Deliveries past a binding's rate_limit set by store.update_binding are queued and delivered, none dropped."
-      }
+      "links": []
     },
     {
       "id": "RK-13.4-002",
@@ -38798,12 +38750,7 @@
       "id": "RK-13.4-010",
       "section": "13.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1965",
-        "note": "A keyed message past the reentry budget, whose key the room holds, is refused with nothing stored, never answered as a replay."
-      }
+      "links": []
     },
     {
       "id": "RK-13.4-011",
@@ -38851,12 +38798,7 @@
       "id": "RK-13.5-007",
       "section": "13.5",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1965",
-        "note": "While a streamed row's BEFORE_BROADCAST hook is held, another message takes the room lock and commits."
-      }
+      "links": []
     },
     {
       "id": "RK-13.5-008",
@@ -38981,12 +38923,7 @@
       "id": "RK-13.5-022",
       "section": "13.5",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1965",
-        "note": "create_room with a room id holding a NUL character is refused invalid_argument, nothing written."
-      }
+      "links": []
     },
     {
       "id": "RK-13.5-023",
@@ -39028,23 +38965,13 @@
       "id": "RK-13.5-029",
       "section": "13.5",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1965",
-        "note": "A store_fault on advance_delivered_index: the set's aftermath runs, its call is not cancelled, and the lane's next set runs at once."
-      }
+      "links": []
     },
     {
       "id": "RK-13.5-030",
       "section": "13.5",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1965",
-        "note": "With processes, another process's lane waits on an index whose cursor write failed and skips it past delivery_gap_timeout_ms."
-      }
+      "links": []
     },
     {
       "id": "RK-13.5-031",
@@ -39073,12 +39000,7 @@
       "id": "RK-13.5-034",
       "section": "13.5",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1965",
-        "note": "A store_fault on the latest-index read of an instruction's set: the set runs behind its own process's sets and its call carries the failure."
-      }
+      "links": []
     },
     {
       "id": "RK-13.5-035",
@@ -39090,12 +39012,7 @@
       "id": "RK-13.5-036",
       "section": "13.5",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1965",
-        "note": "With processes and delivery_gap_timeout_ms, a lane whose held set another process skipped drops it."
-      }
+      "links": []
     },
     {
       "id": "RK-13.5-037",
@@ -39131,12 +39048,7 @@
       "id": "RK-13.6-004",
       "section": "13.6",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1965",
-        "note": "A hook's BLOCK whose record commit a store_fault gate holds past process_timeout: the BLOCKED record is still committed."
-      }
+      "links": []
     },
     {
       "id": "RK-13.6-005",
@@ -39249,12 +39161,7 @@
       "id": "RK-13.6-017",
       "section": "13.6",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1965",
-        "note": "A cascade stopped by a failed turn still delivers every event it committed, a nested one included."
-      }
+      "links": []
     },
     {
       "id": "RK-13.6-018",
@@ -39302,12 +39209,7 @@
       "id": "RK-13.6-025",
       "section": "13.6",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1965",
-        "note": "A caller that leaves (the cancel step) while step 2 creates its room: the room, its hooks and its attach are completed."
-      }
+      "links": []
     },
     {
       "id": "RK-13.6-026",
@@ -39319,12 +39221,7 @@
       "id": "RK-13.6-027",
       "section": "13.6",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1965",
-        "note": "A regeneration waiting for the room lock past process_timeout: blocked process_timeout and the process_timeout event with operation regenerate."
-      }
+      "links": []
     },
     {
       "id": "RK-13.6-028",
