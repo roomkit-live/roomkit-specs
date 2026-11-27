@@ -2536,7 +2536,18 @@ No SDK request/resource method is replaced by a fake.
 
 The peer answers `initialize` with MCP `2025-11-25` (the last protocol
 version using that handshake), resources capability and its optional `server_info`, `extensions`
-and `instructions`. `replies` is an ordered script of `{method, params?,
+and `instructions`. As a server of an earlier revision, it refuses the
+`server/discover` probe a provider sends first with JSON-RPC error `-32601`;
+both are recorded by method only. A peer with `era: "2026-07-28"` is a server
+of that revision instead: it answers `server/discover` with those
+capabilities and `instructions`, `supportedVersions: ["2026-07-28"]`, the
+`resultType`, `ttlMs` and `cacheScope` of a complete result and `server_info`
+under `_meta["io.modelcontextprotocol/serverInfo"]`; it takes no `initialize`
+(a fixture error) and sends no `Mcp-Session-Id`. Each later request must
+carry, in `_meta`, the revision `2026-07-28`, the client's information and
+its capabilities, and its HTTP request must name its method in `Mcp-Method`:
+the peer checks them, then leaves those three entries out of the observation,
+with a `_meta` and a `params` they leave empty. `replies` is an ordered script of `{method, params?,
 result|error|hold}`. Each request must match the next method and params:
 omitted script params mean a request sent with no `params` member, which is
 how a request without parameters goes out, an empty set or an empty or null
@@ -2562,8 +2573,8 @@ an owned copy. No provider private state is read.
 
 The call returns `results` (each `{result: value}` or `{error: name}`,
 plus the server message for MCP errors) and
-`requests` (wire method and params in order; initialize is recorded by method
-only). Resources, request and information values are the public return values
+`requests` (wire method and params in order; `server/discover` and
+`initialize` are recorded by method only). Resources, request and information values are the public return values
 themselves: a resource read is the result as the peer sent it, explicit nulls
 and extension fields retained.
 Expected errors are `not_connected`, `mcp_error`, `timeout` and
