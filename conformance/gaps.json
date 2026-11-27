@@ -1301,11 +1301,6 @@
       "card": "RMK-1918",
       "note": "Capture the argument vector of a harmless fixture process as launched by the public stdio provider."
     },
-    "RK-21.2-009": {
-      "class": "step",
-      "card": "RMK-1918",
-      "note": "Supply a stdio child with observable shutdown states and verify input closure, grace, termination and final escalation."
-    },
     "RK-21.2-010": {
       "class": "step",
       "card": "RMK-1918",
@@ -1731,11 +1726,6 @@
       "card": "RMK-1917",
       "note": "step: several realtime sessions per channel and across rooms: assert the IDs of sessions actually injected in a proactive real-time delivery, including more than one destination."
     },
-    "RK-22.2-005": {
-      "class": "step",
-      "card": "RMK-1917",
-      "note": "A scenario can select WaitForIdle but cannot inspect its constructor settings or advance a controlled playback clock to observe both defaults. Python tests/test_delivery_strategies.py::TestWaitForIdleStrategy::test_init_defaults and Rust crates/roomkit/tests/delivery_queue.rs::the_strategies_take_python_s_defaults verify the values."
-    },
     "RK-22.2-006": {
       "class": "writable",
       "card": "RMK-1917",
@@ -1750,11 +1740,6 @@
       "class": "phase6",
       "card": "RMK-1917",
       "note": "step: deliver playback_timeout with a held playback: exceed the media playback bound and observe delivery despite activity."
-    },
-    "RK-22.2-010": {
-      "class": "step",
-      "card": "RMK-1917",
-      "note": "A scenario can select Queued but cannot inspect its constructor settings or advance a controlled playback clock to observe both defaults. Python tests/test_delivery_strategies.py::TestQueuedStrategy::test_init_defaults and Rust crates/roomkit/tests/delivery_queue.rs::the_strategies_take_python_s_defaults verify the values."
     },
     "RK-22.2-011": {
       "class": "writable",
@@ -1851,11 +1836,6 @@
       "card": "RMK-1922",
       "note": "Create an in-memory runner directly, submit work and close it, observing its tasks cancelled and resources released independently of kit.close()."
     },
-    "RK-23.2-007": {
-      "class": "step",
-      "card": "RMK-1922",
-      "note": "Construct a public result without giving its duration and read the default. Durations measured on completed delegations exercise elapsed time instead."
-    },
     "RK-23.3-018": {
       "class": "writable",
       "card": "RMK-1922",
@@ -1905,11 +1885,6 @@
       "class": "writable",
       "card": "RMK-1922",
       "note": "Hold a newly announced task at the announcement/worker boundary, close the kit, then verify terminal status and no worker invocation."
-    },
-    "RK-23.3-090": {
-      "class": "step",
-      "card": "RMK-1922",
-      "note": "Observe ordered log level and cause for recipient turn failure followed by the undelivered hand-back note."
     },
     "RK-23.3-091": {
       "class": "writable",
@@ -2091,30 +2066,10 @@
       "card": "RMK-1939",
       "note": "No observed local discovery operation can select and compare the explicit lenient and default modes."
     },
-    "RK-24.5-009": {
-      "class": "step",
-      "card": "RMK-1939",
-      "note": "No common discovery operation exposes log records for each skipped skill."
-    },
     "RK-24.5-010": {
       "class": "step",
       "card": "RMK-1939",
       "note": "The shared fixture does not observe the local registry before and after a failing discovery."
-    },
-    "RK-24.5-018": {
-      "class": "step",
-      "card": "RMK-1939",
-      "note": "The shared fixture exposes serialized metadata, never a caller alias to a live mutable metadata object."
-    },
-    "RK-24.5-020": {
-      "class": "step",
-      "card": "RMK-1939",
-      "note": "A live external metadata alias and intermediate oversized repair state are not exposed."
-    },
-    "RK-24.5-021": {
-      "class": "step",
-      "card": "RMK-1939",
-      "note": "The shared fixture cannot construct an oversized live source via a caller alias to examine repair by replacement or subset."
     },
     "RK-24.6-003": {
       "class": "step",
@@ -2125,16 +2080,6 @@
       "class": "step",
       "card": "RMK-1939",
       "note": "The shared filesystem fixture cannot observe regular-file and checked-path identity at read time."
-    },
-    "RK-24.6-005": {
-      "class": "step",
-      "card": "RMK-1939",
-      "note": "The shared fixture does not expose whether the platform can establish the open file's location or its refusal when unavailable."
-    },
-    "RK-24.6-006": {
-      "class": "step",
-      "card": "RMK-1939",
-      "note": "The shared fixture cannot distinguish the checked open file from a later lookup by name."
     },
     "RK-24.6-007": {
       "class": "step",
@@ -2175,106 +2120,6 @@
       "class": "phase6",
       "card": "RMK-1939",
       "note": "step: a realtime fixture skills option: no shared realtime inline_full session asserts refusal and the reason for a served entry."
-    },
-    "RK-24.7-079": {
-      "class": "step",
-      "card": "RMK-1939",
-      "note": "The built-in served cache is in memory, and the shared runner offers no deployment with a persistent disk cache in which to inspect these conditional properties."
-    },
-    "RK-25.1-002": {
-      "class": "step",
-      "card": "RMK-1934",
-      "note": "Inspect the image and chat provider contracts on an implementation that provides both, using a provider descriptor or independent adapter fixture. Rust currently has no image provider."
-    },
-    "RK-25.1-003": {
-      "class": "step",
-      "card": "RMK-1934",
-      "note": "Configure a conversational provider and a separately instrumented image provider with distinct vendor identifiers, credentials and instances, and observe independent calls."
-    },
-    "RK-25.1-004": {
-      "class": "step",
-      "card": "RMK-1934",
-      "note": "Run a conversational agent whose tool or host invokes a different image provider and check which provider actually serves each request."
-    },
-    "RK-25.1-005": {
-      "class": "step",
-      "card": "RMK-1934",
-      "note": "Inspect the declared public AIResponse.content type in each implementation and assert it is exclusively text. Native declarations specify str in Python and String in Rust. Existing response examples returning text cannot distinguish an additional allowed image type; the Python public API snapshot records parameter names without type annotations. No image generation call is necessary."
-    },
-    "RK-25.2-002": {
-      "class": "step",
-      "card": "RMK-1934",
-      "note": "Read the image provider's public name independently of the selected model."
-    },
-    "RK-25.2-003": {
-      "class": "step",
-      "card": "RMK-1934",
-      "note": "Read the provider's editing capability on configurations that do and do not accept references."
-    },
-    "RK-25.2-004": {
-      "class": "step",
-      "card": "RMK-1934",
-      "note": "List an image provider's model information without making a network request."
-    },
-    "RK-25.2-005": {
-      "class": "step",
-      "card": "RMK-1934",
-      "note": "Call the public generation operation with a prompt, size, requested count and references and inspect its image results."
-    },
-    "RK-25.2-006": {
-      "class": "step",
-      "card": "RMK-1934",
-      "note": "Close a constructed image provider and observe release of its instrumented resources."
-    },
-    "RK-25.2-032": {
-      "class": "step",
-      "card": "RMK-1934",
-      "note": "Select an image model and read the active model identifier from its provider."
-    },
-    "RK-25.3-002": {
-      "class": "step",
-      "card": "RMK-1934",
-      "note": "Read an ImageResult's encoded data and media type through a shared result or provider fixture."
-    },
-    "RK-25.3-019": {
-      "class": "step",
-      "card": "RMK-1934",
-      "note": "Read the optional revised prompt from a constructed or returned ImageResult."
-    },
-    "RK-25.3-020": {
-      "class": "step",
-      "card": "RMK-1934",
-      "note": "Read the image-generation usage map on a returned ImageResult."
-    },
-    "RK-25.4-002": {
-      "class": "step",
-      "card": "RMK-1934",
-      "note": "Use the same generate entry point for prompt-only and reference-image calls and read the edited result."
-    },
-    "RK-25.5-003": {
-      "class": "step",
-      "card": "RMK-1934",
-      "note": "Inspect the four integer text and image input and output counters on generation usage. Conversational usage fixtures provide preassembled counts."
-    },
-    "RK-25.7-002": {
-      "class": "step",
-      "card": "RMK-1934",
-      "note": "Observe an ordinary inbound and broadcast pass while an enabled image provider records whether it was invoked as a stage."
-    },
-    "RK-25.7-003": {
-      "class": "step",
-      "card": "RMK-1934",
-      "note": "Expose the implementation's complete public hook trigger vocabulary and compare it with the ordinary hooks. Scoped observed hook lists cannot establish the absence of a trigger."
-    },
-    "RK-25.7-004": {
-      "class": "step",
-      "card": "RMK-1934",
-      "note": "Invoke the actual image provider from a tool handler or application and assert its recorded generation request."
-    },
-    "RK-25.7-005": {
-      "class": "step",
-      "card": "RMK-1934",
-      "note": "Feed actual generated output through the public room integration path and observe inbound processing, delivery and visibility. Starting with a manually supplied image already on the ordinary route cannot detect a separate generation route."
     },
     "RK-6.1-006": {
       "class": "step",
