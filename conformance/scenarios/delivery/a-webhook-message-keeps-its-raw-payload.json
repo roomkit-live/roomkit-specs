@@ -9,7 +9,7 @@
   "requirements": [
     "RK-5.2-010"
   ],
-  "notes": "The message a webhook carries keeps the webhook's payload as its source's raw_payload, nested members included. The match reads the members the payload holds, not a member an implementation would add.",
+  "notes": "The message a webhook carries keeps the webhook's payload as its source's raw_payload, nested members included. The match reads the members the payload holds: a member an implementation adds, or a null member it drops, goes unobserved; each implementation's own test compares the whole payload.",
   "setup": {
     "channels": [
       {
