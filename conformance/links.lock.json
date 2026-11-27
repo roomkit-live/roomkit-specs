@@ -11265,6 +11265,12 @@
       "sandbox/offers-only-allowed-commands-with-search-off-streaming": "5e121ee2d1fbfc31dd143f6081a4e3cb2fc35286eecc11396d75e640a66752c6",
       "tools/refusal-per-cause": "5e121ee2d1fbfc31dd143f6081a4e3cb2fc35286eecc11396d75e640a66752c6"
     },
+    "RK-21.1-012": {
+      "tools/a-policy-pattern-s-punctuation-stands-for-itself": "1c194ad38b0b66d272737210650efa217628cd5b9682a8313df7b6a4a4414e93"
+    },
+    "RK-21.1-013": {
+      "tools/a-policy-pattern-holding-a-bracket-is-refused-where-it-is-configured": "1e861e756ebaef3def8bb4dfa53019bc0aa04f89199d44cf3f8a5774b1eb3de7"
+    },
     "RK-21.1-014": {
       "skill-gating/list-globs-hide-and-refuse-only-matching-tools-non-streaming": "7b76c8603da21230b79b9e88eaebb837720ee85d50458b0de3c823634e273f66",
       "skill-gating/list-globs-hide-and-refuse-only-matching-tools-streaming": "7b76c8603da21230b79b9e88eaebb837720ee85d50458b0de3c823634e273f66",
@@ -11306,6 +11312,9 @@
       "tool-allowed-names/skill-hidden-tools-remain-allowed-but-policy-denied-tools-do-not-non-streaming": "2dac3ef236aa29b250f146de74b20722a7e986ab9b10ab9da5fce3ed2d4bd2e3",
       "tool-allowed-names/skill-hidden-tools-remain-allowed-but-policy-denied-tools-do-not-streaming": "2dac3ef236aa29b250f146de74b20722a7e986ab9b10ab9da5fce3ed2d4bd2e3",
       "tool-search/tool-search-names-no-denied-tool-and-runs-under-an-allow-list": "2dac3ef236aa29b250f146de74b20722a7e986ab9b10ab9da5fce3ed2d4bd2e3"
+    },
+    "RK-21.1-017": {
+      "tools/an-exemption-covers-the-channel-s-own-reader-and-no-other-tool": "e5a58ba56383d93fc510ddcba65b0b1f2853856c2be879919bc71fd18b71a230"
     },
     "RK-21.1-020": {
       "role-policy/script-denied-non-streaming": "3c2bff998ca3a7d2f42511c2134c9024383a826db7b065441cfe54c92873fc38",
@@ -11448,11 +11457,17 @@
       "tools/every-argument-that-does-not-fit-is-named": "86de588daded58d5697b9fdf575e4cfa5b94494b86a6a892ba948b77c853eb3d",
       "tools/rewritten-arguments-are-not-repaired": "86de588daded58d5697b9fdf575e4cfa5b94494b86a6a892ba948b77c853eb3d"
     },
+    "RK-21.1-035": {
+      "tools/an-open-schema-s-call-runs-with-what-it-does-not-declare-and-nothing-deeper-is-checked": "c9d6f8843ff3c82ee65c6381cb4aa1c31782ba30db85058d424a581279a1a9c7"
+    },
     "RK-21.1-036": {
       "tools/every-argument-that-does-not-fit-is-named": "db160797e525d72a93e281ae195dc7acced47c68c8dc8a1ab2db50ddd111a82d"
     },
     "RK-21.1-037": {
       "tools/every-argument-that-does-not-fit-is-named": "5ac7f4a224feaef9da1dafee22adfebd7f7231a61f7c28fd6b5993aed263d1b8"
+    },
+    "RK-21.1-038": {
+      "tools/an-open-schema-s-call-runs-with-what-it-does-not-declare-and-nothing-deeper-is-checked": "2e20757de6b829cc74f0e6f40fb255b70c05ba49fa7f204876317aa82c3fdeff"
     },
     "RK-21.1-039": {
       "planning/missing-required-tasks-is-refused-before-the-planner-non-streaming": "81866c37c4a5f638a017e6d609ea6b6a91d718e52abca10e6d19781dcaf5fa92",
@@ -11700,6 +11715,10 @@
     "RK-21.1-065": {
       "tool-search/an-injected-tool-does-not-count-toward-the-catalogue": "cb3a4298e81d1a21fc147c45ee327af3607c90e3367abe7581ff3fb5bc314e6d"
     },
+    "RK-21.1-066": {
+      "tool-search/a-tool-orchestration-injects-is-denied-by-the-policy-while-the-catalogue-is-hidden": "b07f87b6d86640804cdce8fb761682171de3850639a96280169c0df6c0ce32a7",
+      "tool-search/a-tool-orchestration-injects-is-gated-by-a-skill-while-the-catalogue-is-hidden": "b07f87b6d86640804cdce8fb761682171de3850639a96280169c0df6c0ce32a7"
+    },
     "RK-21.1-067": {
       "tool-search/an-injected-tool-stays-declared-while-the-catalogue-is-hidden": "a0587e57a482eb50337d5960ea2b82d3115264ea93c600ae4a3f99736084c4ae"
     },
@@ -11812,6 +11831,9 @@
     "RK-21.2-013": {
       "mcp/a-catalogue-of-aliases-holds-a-policy-that-names-a-server": "12a942f54596e2c72cc81d9c153ad089a19949a2a783d4c4b3f2b8d8efc5287f"
     },
+    "RK-21.2-014": {
+      "mcp/an-unlabelled-provider-serves-an-alias-whatever-server-it-names": "c888ba834ba0796cf95e54b98d047eec21ab728bf7e7137d3f2e73883c9c4bc6"
+    },
     "RK-21.2-015": {
       "mcp/a-bare-name-never-runs-on-a-server-the-policy-keeps-out": "6926eecffa8248bcc0bab276df137e2892286b9a1a0eb462a55d4086b4de800c",
       "mcp/a-bare-name-no-server-admits-is-served-by-nothing": "6926eecffa8248bcc0bab276df137e2892286b9a1a0eb462a55d4086b4de800c",
@@ -11876,6 +11898,9 @@
     },
     "RK-21.2-026": {
       "mcp/a-tool-listed-twice-is-declared-once": "f7328935a6694d3ff07d1e831837cb8fc4b817e536b45461510fcd143d89d1dd"
+    },
+    "RK-21.2-027": {
+      "mcp-host/a-listing-that-pages-on-without-anything-new-stops": "7215a175bd7f6b4ee1e76bb335e19fcf203f3ee5770145a8af540e11f8798261"
     },
     "RK-21.2-028": {
       "mcp-construction/direct-sse-resource-only-empty-headers": "f38159738290105339abee952db3f8165cc0bb6f6786c5b97d97adcc6667f289",
@@ -11954,6 +11979,12 @@
       "mcp-construction/from-url-sse-resource-only-empty-headers": "cddb8a8145f1ac0439d78f3162dcf7a90fe5dc0df181b5277177481b2d1b73a7",
       "mcp-construction/from-url-sse-resource-only-retained-headers": "cddb8a8145f1ac0439d78f3162dcf7a90fe5dc0df181b5277177481b2d1b73a7"
     },
+    "RK-21.2-051": {
+      "mcp-host/a-content-the-model-is-not-shown-reads-as-a-note-of-its-kind-and-type": "dbdad2c21669687939588ac7b9034de58fb52a73ebf5c3f3fdcfea8465623e9c"
+    },
+    "RK-21.3-005": {
+      "steering/an-update-of-the-system-prompt-reaches-the-turn-s-next-round": "3a2d00bab34f757dfe8f28e06219fab6ad7c03cbc81c497ddaa2fd95b1f20c79"
+    },
     "RK-21.3-006": {
       "reasoning/a-steered-answer-keeps-its-blocks-in-place": "8dc3f04c7a89e420730dc6e8d537fff80a3dc4a7392036ff41d6acc358fa8fa6",
       "reasoning/a-steered-answer-keeps-its-reasoning": "8dc3f04c7a89e420730dc6e8d537fff80a3dc4a7392036ff41d6acc358fa8fa6",
@@ -11963,6 +11994,10 @@
     },
     "RK-21.3-007": {
       "tools/a-cancel-while-the-calls-are-announced-counts-no-round": "43e74b1b7e44807c5e78e21a83513a6fda04b345fa1c69c791d2dc235f1ec85d"
+    },
+    "RK-21.3-008": {
+      "tools/a-cancel-while-several-calls-are-announced-ends-each-of-them-failed-non-streaming": "48213788ede2f1b314c05e4d1f7c08345e7f540eb84a65978bd77ada85f3b5d1",
+      "tools/a-cancel-while-several-calls-are-announced-ends-each-of-them-failed-streaming": "48213788ede2f1b314c05e4d1f7c08345e7f540eb84a65978bd77ada85f3b5d1"
     },
     "RK-21.3-009": {
       "reasoning/a-steered-answer-keeps-its-blocks-in-place": "f30d47c1b2f3137d364383745b75b8e9909e7cd672efb6907f4127aa056721d1",
@@ -12190,6 +12225,9 @@
       "tasks/a-background-tool-keeps-its-turns-name-before-a-relay": "2c8ee0f2a86a6414745e6321b2998b5768b73d9a0181ee3d1d6cda5ad5ee91c3",
       "tasks/a-background-worker-keeps-its-turns-task-boundary-after-a-store-patch": "2c8ee0f2a86a6414745e6321b2998b5768b73d9a0181ee3d1d6cda5ad5ee91c3"
     },
+    "RK-21.4-040": {
+      "tools/every-round-of-a-turn-reads-its-actor-while-another-room-s-turn-runs": "79496910bcc7f42783519b2b4f3a8ff22ed61a6b52b491b521a4ae0a84b1fe2a"
+    },
     "RK-21.4-041": {
       "orchestration/an-audited-call-is-recorded-by-how-it-ended": "22fefc1415c3605cf54c7aa8eb609395b952d7ca0ee209c94c3005d7948cca18",
       "tool-structured/a-refused-handler-publishes-no-copy": "22fefc1415c3605cf54c7aa8eb609395b952d7ca0ee209c94c3005d7948cca18",
@@ -12228,6 +12266,9 @@
       "provider-served/bounded-mixed-round-stream": "f36458c28388015f9fb4b62d017eb081425b9d09d5e1b17eaba86c240048e255",
       "provider-served/bounded-mixed-round-whole": "f36458c28388015f9fb4b62d017eb081425b9d09d5e1b17eaba86c240048e255"
     },
+    "RK-21.5-007": {
+      "eviction/a-refusal-past-the-threshold-reaches-its-observer-whole": "30e60ca4da8f254ad1187795bd335828a63d9260b94eb9c8814674ed4594e54a"
+    },
     "RK-21.5-008": {
       "eviction/a-skill-s-instructions-are-never-stored": "fcb731ecdb36ce00471907c04d06bea9aafac59a73fd4d33d6f730e7fb1903d5",
       "tools/a-compaction-keeps-a-skill-s-instructions-and-a-page-read-back-whole": "fcb731ecdb36ce00471907c04d06bea9aafac59a73fd4d33d6f730e7fb1903d5"
@@ -12240,6 +12281,9 @@
     },
     "RK-21.5-011": {
       "eviction/read-stored-result-searches-a-stored-result": "035d01a89d025611276e7a5f635970e3cf7a052632be19ebc80e98e5f1a1709a"
+    },
+    "RK-21.5-012": {
+      "eviction/a-search-of-a-stored-result-reads-its-text-as-written": "5c066746283b637b282965b57bc4887841c498da49861fc1c7492ec051dc10b2"
     },
     "RK-21.5-013": {
       "eviction/a-call-id-reused-in-a-later-turn-is-stored-under-a-new-id": "b5e44278ee10d43b5e51c5d3c604a9dc9fa8374ae57144e8467b48dd02e8990c",
@@ -12256,6 +12300,9 @@
     },
     "RK-21.5-019": {
       "tools/a-tool-s-parts-reach-the-model-intact": "02bf5961fc0c31172e02d964809c6166875470a9edf7ec3741d2469e35237d96"
+    },
+    "RK-21.5-020": {
+      "eviction/an-image-the-end-row-leaves-out-still-reaches-the-model": "1a6e02f3998c33bcb56fcd839de629de7c447df1416f150a82c2937e9b3e7e85"
     },
     "RK-21.6-002": {
       "executors/a-turn-apart-silent-while-its-tool-runs-past-the-heartbeat-timeout-is-kept": "f44e9c9ce98eed4e4e4dd68fd38206036bdbff9c538bd1b94bace62ab479728b",
@@ -14246,6 +14293,12 @@
     "RK-24.4-011": {
       "skills/a-stored-activation-past-the-bound-reads-as-activated": "3e6fff0a74252776fcb954830bb364b6ece034e56b8be1d475725a667c71ae36"
     },
+    "RK-24.4-012": {
+      "skills/a-skill-retired-past-the-bound-delivers-its-body-again": "415170e8848ab2d5f1bd4e246378d3d75fbfe1dae5218814b03d55680d1c5440"
+    },
+    "RK-24.4-013": {
+      "skills/an-activation-another-process-cannot-confirm-delivers-the-body": "0d82973f6fd29f76289bdbb7419fe1595e3eeaeb7d3d9363216a1feb3f99aed1"
+    },
     "RK-24.4-014": {
       "skill-gating/room-activation-persists-but-a-standalone-turn-starts-closed-non-streaming": "7a8903808c30759e613a0a0d183d96c0aa4f2ac0fe18d8d537cc5fde287c927d",
       "skill-gating/room-activation-persists-but-a-standalone-turn-starts-closed-streaming": "7a8903808c30759e613a0a0d183d96c0aa4f2ac0fe18d8d537cc5fde287c927d",
@@ -14316,6 +14369,12 @@
       "role-policy/a-skill-hint-keeps-the-role-restriction-non-streaming": "a3cde3f9305b01f2d8b83e5faf255c11e3bd47fe2ab4117b9a9a2daf2f54f4ad",
       "role-policy/a-skill-hint-keeps-the-role-restriction-streaming": "a3cde3f9305b01f2d8b83e5faf255c11e3bd47fe2ab4117b9a9a2daf2f54f4ad"
     },
+    "RK-24.4-021": {
+      "skills/a-missing-skill-s-hint-swaps-the-window-for-the-rest-of-the-session": "162834312b90f96dd68d059fd14447807944bdbebce48f5b9b23af1d118c9081"
+    },
+    "RK-24.4-022": {
+      "skills/a-missing-skill-s-hint-an-on-tool-call-hook-blocks-reveals-nothing": "07261d985ef0f5b30dea525d9ac6c35ffdbea5ac827af2fd315f31dc7910f08a"
+    },
     "RK-24.4-025": {
       "role-policy/a-skill-hint-keeps-the-role-restriction-non-streaming": "91fd6b25fe4fffc2d361169872c38fb77c261c1f884ede98da0ad5e1aecf3ee7",
       "role-policy/a-skill-hint-keeps-the-role-restriction-streaming": "91fd6b25fe4fffc2d361169872c38fb77c261c1f884ede98da0ad5e1aecf3ee7",
@@ -14360,6 +14419,12 @@
     "RK-24.6-002": {
       "skill-scripts/traversal-non-streaming": "bcc933d273ff6fcacf5c445e55720824a7eb7d303e59a18b02160c86fbe6d61d",
       "skill-scripts/traversal-streaming": "bcc933d273ff6fcacf5c445e55720824a7eb7d303e59a18b02160c86fbe6d61d"
+    },
+    "RK-24.6-008": {
+      "skills/a-reference-name-is-normalized-before-it-is-checked": "42c26fbe7ac67bc71d311dd151b8038900c119cdd5484782892afedd35b7828b"
+    },
+    "RK-24.6-009": {
+      "skills/an-absolute-reference-name-is-refused-in-every-spelling": "26a976b4a61a5accc0d0fe6f51ea3a46fa407b408ade92c9d57945ba8ab21d8f"
     },
     "RK-24.6-010": {
       "skill-scripts/traversal-non-streaming": "6179b076611acd9a0a8a359077d91eb468c44453537165b311bcccd3f74c609e",
