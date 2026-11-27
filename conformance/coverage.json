@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "33537d69e3a9184b9823e418ee3590c952b76c8289b7720b141fbbe13dd1fbf0",
-  "corpus_sha256": "b6aef8c1cda663dd25bcc582371f8745c3da1fbe5299d5acea7456831a1cffdc",
+  "corpus_sha256": "47d5cc5427f7fc0af38e2a09a18d41583d08c161e63932434e467bcbb2dccedb",
   "python_commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
-  "scenario_count": 4219,
+  "scenario_count": 4234,
   "sections": [
     {
       "section": "0",
@@ -380,6 +380,7 @@
         "rooms/a-due-pause-is-applied-by-send",
         "rooms/a-due-pause-is-applied-by-update",
         "rooms/a-hook-that-closes-the-room-refuses-its-event",
+        "rooms/a-host-s-metadata-change-merges-its-keys-and-a-concurrent-writer-s-stand",
         "rooms/a-injected-closed-by-its-own-hook-is-refused",
         "rooms/a-lifecycle-record-does-not-resume-or-refresh-a-paused-room",
         "rooms/a-metadata-update-merges-the-caller-s-keys",
@@ -1026,6 +1027,7 @@
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "acp/a-catch-up-reads-each-message-by-its-text-form",
+        "acp/a-close-closes-the-session-of-each-room",
         "acp/a-copy-of-the-room-context-lines-is-replaced-and-the-runtime-s-are-kept",
         "acp/a-finished-handler-turn-reports-its-complete-answer",
         "acp/a-message-is-prompted-and-the-agents-text-answers-it",
@@ -1033,6 +1035,7 @@
         "acp/a-mode-the-agent-switches-to-itself-is-not-set-on-the-room-s-next-session",
         "acp/a-prompt-the-agent-fails-fails-the-turn",
         "acp/a-room-keeps-its-session-across-turns",
+        "acp/a-room-s-second-prompt-waits-for-the-first-to-be-answered",
         "acp/a-session-sent-a-labelled-request-labels-every-later-one-and-gives-the-note-once",
         "acp/a-stop-reason-other-than-end-turn-is-named-on-the-turn",
         "acp/a-truncated-turn-preserves-max-tokens",
@@ -1309,6 +1312,7 @@
         "acp/usage-live-wrong-session",
         "acp/usage-model-snapshots",
         "acp/usage-native-id-new-epoch",
+        "acp/usage-observed-in-a-turn-that-fails-or-is-abandoned-makes-no-response",
         "acp/usage-recovered-absent",
         "acp/usage-recovered-report",
         "acp/usage-two-agents-trusted",
@@ -2527,6 +2531,7 @@
         "response-schema/a-malformed-call-under-a-schema-is-asked-again",
         "response-schema/a-model-that-takes-no-schema-fails-the-turn-before-any-request",
         "response-schema/a-refusal-under-a-schema-fails-the-turn-refused",
+        "response-schema/a-schema-on-a-channel-that-adds-tools-of-its-own-needs-a-model-that-takes-both",
         "response-schema/a-schema-turn-its-round-cap-cuts-fails-truncated",
         "response-schema/a-schema-turn-its-token-budget-stops-fails-truncated",
         "response-schema/a-schema-turn-the-provider-interrupts-after-a-round-fails-truncated",
@@ -2805,6 +2810,7 @@
         "hooks/a-hook-reads-the-events-no-channel-or-one-channel-sees",
         "hooks/a-hook-returning-no-result-fails-closed",
         "hooks/a-hook-returning-no-result-fails-open",
+        "hooks/a-hook-s-context-holds-a-refused-row-an-agent-s-history-leaves-out",
         "hooks/a-hook-s-task-is-created",
         "hooks/a-hook-timing-out-fails-closed",
         "hooks/a-refused-source-s-task-is-created",
@@ -2951,7 +2957,7 @@
         "unmapped": 63
       },
       "decided_gaps": {
-        "phase6": 15,
+        "phase6": 9,
         "step": 10
       },
       "unannotated_keyword_lines": [],
@@ -4738,6 +4744,7 @@
         "orchestration/a-team-cut-before-announcement-reports-only-what-started",
         "orchestration/a-worker-cut-after-announcement-reports-only-what-started",
         "orchestration/a-worker-cut-before-announcement-reports-only-what-started",
+        "orchestration/an-audited-call-its-turn-s-cut-cancels-is-recorded-cancelled",
         "orchestration/an-auto-delegating-supervisor-whose-worker-raises-after-a-streamed-first-pass-fails-its-generation",
         "permissions/a-detached-channel-is-not-attached-again",
         "permissions/a-muted-agent-reads-but-its-answer-is-blocked",
@@ -4973,7 +4980,8 @@
         "verification/holding-never-widens-what-a-message-reached",
         "verification/only-the-last-released-message-s-cancellation-silences-the-release-earlier",
         "verification/only-the-last-released-message-s-cancellation-silences-the-release-last",
-        "verification/the-handle-s-cancel-reaches-a-held-message-while-its-delivery-set-runs"
+        "verification/the-handle-s-cancel-reaches-a-held-message-while-its-delivery-set-runs",
+        "voice/a-transcript-is-redacted-by-the-hook-that-redacts-a-message"
       ]
     },
     {
@@ -5479,6 +5487,7 @@
         "injection/a-post-s-refusals",
         "injection/a-post-shows-its-speaker-s-name-to-an-agent",
         "injection/a-post-speaks-through-the-host-channel",
+        "injection/a-record-committed-outside-the-pipeline-keeps-the-delivery-results-it-brings",
         "injection/a-record-outside-the-pipeline",
         "injection/a-sent-event-keeps-its-answer-scope",
         "injection/a-system-content-is-stored-and-delivered-as-given",
@@ -5490,6 +5499,7 @@
         "injection/an-injection-replay-by-key",
         "injection/an-injection-runs-no-parse",
         "injection/an-injection-takes-any-participant-id",
+        "injection/the-host-channel-binds-inbound-and-is-never-delivered-to",
         "injection/the-host-s-voice-is-never-an-intelligence-channel",
         "instructions/an-agent-s-copy-of-an-instruction-runs-no-hook-and-is-no-activity",
         "instructions/an-injected-instruction-s-refusals-raise",
@@ -8565,11 +8575,12 @@
       },
       "decided_gaps": {
         "step": 21,
-        "writable": 5
+        "writable": 1
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "executors/a-turn-on-another-executor-whose-rows-the-store-fails-to-read-runs-without-them",
+        "hooks/a-hook-s-context-holds-a-refused-row-an-agent-s-history-leaves-out",
         "inbound/a-kit-s-inbound-rate-limit-refuses-a-channel-s-excess-messages",
         "kit-close/a-channel-s-write-past-the-close-s-unwind-lands-in-a-store-the-integrator-owns",
         "kit-close/a-channel-s-write-still-in-the-store-past-the-close-s-unwind-fails-under-it",
@@ -8580,11 +8591,13 @@
         "reentrancy/a-named-refusal-at-the-cap-precedes-an-empty-rate-bucket",
         "reentrancy/a-named-refusal-at-the-cap-spends-no-inbound-rate-token",
         "reentrancy/a-rate-limited-named-call-still-spends-its-work-budget",
+        "rooms/a-room-s-bindings-are-listed-in-the-order-they-were-first-added",
         "rooms/public-timeline-keeps-its-pagination-and-audit-options",
         "routing/a-sender-resolves-to-the-address-linked-in-the-channel-s-form",
         "store/a-binding-exists-as-get-binding-finds-it",
         "store/a-change-s-target-written-alone-marks-its-edits-once-deleted",
         "store/a-delivery-record-alone-writes-an-event-s-results",
+        "store/a-metadata-patch-removes-its-unset-keys-then-merges-its-own-and-writes-nothing-else",
         "store/a-participant-id-the-room-has-is-refused-and-an-update-rewrites-a-record",
         "store/a-read-leaves-the-message-delivered",
         "store/a-read-marker-is-the-highest-index-read-and-never-moves-back",
@@ -8593,8 +8606,10 @@
         "store/a-room-is-written-only-while-it-holds-what-the-write-read",
         "store/a-task-is-read-by-its-id-and-rewritten-whole",
         "store/a-thread-summary-counts-the-replies-received-and-the-last",
+        "store/a-timeline-read-takes-50-events-by-default-and-none-at-a-limit-of-0",
         "store/a-verification-is-read-by-its-identity-within-its-organization",
         "store/a-verification-request-is-read-by-its-id-and-rewritten-whole",
+        "store/a-write-naming-an-event-or-a-room-the-store-lacks-is-refused-nothing-written",
         "store/an-added-event-keeps-its-index-and-the-room-s-next-is-past-it",
         "store/an-address-belongs-to-one-identity-of-an-organization-per-channel-type",
         "store/an-empty-room-read-gets-no-marker-and-its-markers-go-with-it",
@@ -8641,8 +8656,7 @@
         "unmapped": 29
       },
       "decided_gaps": {
-        "step": 2,
-        "writable": 3
+        "step": 2
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -8678,12 +8692,15 @@
         "inbound/a-turn-that-fails-before-its-stream-is-recorded-on-its-event",
         "inbound/a-turn-the-persistence-policy-keeps-out-still-holds-its-author-s-rank",
         "inbound/a-turn-whose-stream-fails-reads-on-its-streaming-target",
+        "injection/a-record-committed-outside-the-pipeline-keeps-the-delivery-results-it-brings",
+        "rooms/a-host-s-metadata-change-merges-its-keys-and-a-concurrent-writer-s-stand",
         "rooms/timers-whose-records-the-persistence-policy-keeps-out-still-pause-and-close",
         "store/a-blank-key-is-stored-as-no-key",
         "store/a-delivery-record-alone-writes-an-event-s-results",
         "store/a-held-key-refuses-every-write-without-changing-the-target-or-sequence",
         "store/a-key-is-looked-up-in-its-scope-by-lowest-index",
         "store/a-participant-id-the-room-has-is-refused-and-an-update-rewrites-a-record",
+        "store/a-write-naming-an-event-or-a-room-the-store-lacks-is-refused-nothing-written",
         "store/an-added-event-keeps-its-index-and-the-room-s-next-is-past-it",
         "store/an-update-of-a-task-the-store-lacks-is-refused",
         "store/concurrent-commits-take-each-rooms-own-sequence",
@@ -8834,13 +8851,13 @@
         "unmapped": 18
       },
       "decided_gaps": {
-        "step": 2,
-        "writable": 1
+        "step": 2
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "orchestration/an-audited-answer-reaches-the-model-unchanged",
-        "orchestration/an-audited-call-is-recorded-by-how-it-ended"
+        "orchestration/an-audited-call-is-recorded-by-how-it-ended",
+        "orchestration/an-audited-call-its-turn-s-cut-cancels-is-recorded-cancelled"
       ]
     },
     {
@@ -9139,12 +9156,13 @@
         "unmapped": 28
       },
       "decided_gaps": {
-        "phase6": 12
+        "phase6": 11
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "recording/a-recording-resumed-after-a-restart-is-announced-again",
-        "recording/a-room-s-recorders-start-before-it-is-written-and-are-announced-once-it-exists"
+        "recording/a-room-s-recorders-start-before-it-is-written-and-are-announced-once-it-exists",
+        "voice/a-transcript-is-redacted-by-the-hook-that-redacts-a-message"
       ]
     },
     {
@@ -12211,8 +12229,7 @@
         "unmapped": 39
       },
       "decided_gaps": {
-        "step": 1,
-        "writable": 3
+        "step": 1
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -12229,6 +12246,7 @@
         "response-schema/a-keyword-outside-the-portable-subset-fails-the-turn",
         "response-schema/a-malformed-call-under-a-schema-is-asked-again",
         "response-schema/a-model-that-takes-no-schema-fails-the-turn-before-any-request",
+        "response-schema/a-schema-on-a-channel-that-adds-tools-of-its-own-needs-a-model-that-takes-both",
         "response-schema/a-schema-turn-its-round-cap-cuts-fails-truncated",
         "response-schema/a-schema-turn-its-token-budget-stops-fails-truncated",
         "response-schema/a-schema-turn-the-provider-interrupts-after-a-round-fails-truncated",
@@ -12244,6 +12262,7 @@
         "response-schema/an-object-that-declares-no-properties-fails-the-turn",
         "response-schema/an-object-whose-required-misses-or-repeats-a-property-fails-the-turn",
         "response-schema/tools-beside-a-schema-fail-where-the-model-cannot-take-both",
+        "rooms/an-ai-channel-binds-as-a-bidirectional-intelligence-channel-of-text-rich-and-media",
         "skills/a-channel-built-without-skills-ignores-a-turn-s-registry",
         "skills/a-channel-given-an-empty-registry-keeps-the-skill-tools-names",
         "skills/a-channel-with-skills-keeps-the-script-tool-s-name",
@@ -12328,12 +12347,13 @@
         "unmapped": 39
       },
       "decided_gaps": {
-        "step": 4,
-        "writable": 3
+        "step": 4
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
+        "acp/a-close-closes-the-session-of-each-room",
         "acp/a-finished-handler-turn-reports-its-complete-answer",
+        "acp/a-room-s-second-prompt-waits-for-the-first-to-be-answered",
         "acp/cancel-answers-pending-permission-cancelled",
         "acp/cancel-answers-unannounced-permission-cancelled",
         "acp/directories-empty-are-not-declared",
@@ -12447,6 +12467,7 @@
         "acp/usage-live-wrong-session",
         "acp/usage-model-snapshots",
         "acp/usage-native-id-new-epoch",
+        "acp/usage-observed-in-a-turn-that-fails-or-is-abandoned-makes-no-response",
         "acp/usage-recovered-absent",
         "acp/usage-recovered-report",
         "acp/usage-two-agents-trusted",
@@ -12535,11 +12556,11 @@
       "mapping": {
         "unmapped": 5
       },
-      "decided_gaps": {
-        "writable": 1
-      },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
-      "candidate_scenarios": []
+      "candidate_scenarios": [
+        "injection/the-host-channel-binds-inbound-and-is-never-delivered-to"
+      ]
     },
     {
       "section": "A.15",
@@ -12550,7 +12571,7 @@
         "unmapped": 29
       },
       "decided_gaps": {
-        "phase6": 15,
+        "phase6": 12,
         "writable": 1
       },
       "unannotated_keyword_lines": [],
@@ -19850,12 +19871,7 @@
       "id": "RK-8.2-050",
       "section": "8.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1912",
-        "note": "step: framework_events media rows, voice.open failing STT or TTS scripts: the tts_error row, when it is emitted and its data."
-      }
+      "links": []
     },
     {
       "id": "RK-8.2-051",
@@ -19905,56 +19921,31 @@
       "id": "RK-8.2-055",
       "section": "8.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1912",
-        "note": "step: framework_events media rows: the conference_started row, when it is emitted and its data."
-      }
+      "links": []
     },
     {
       "id": "RK-8.2-056",
       "section": "8.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1912",
-        "note": "step: framework_events media rows: the conference_ended row, when it is emitted and its data."
-      }
+      "links": []
     },
     {
       "id": "RK-8.2-057",
       "section": "8.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1912",
-        "note": "step: framework_events media rows: the conference_participant_joined row, when it is emitted and its data."
-      }
+      "links": []
     },
     {
       "id": "RK-8.2-058",
       "section": "8.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1912",
-        "note": "step: framework_events media rows: the conference_participant_left row, when it is emitted and its data."
-      }
+      "links": []
     },
     {
       "id": "RK-8.2-059",
       "section": "8.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1912",
-        "note": "step: framework_events media rows, conference.plug, unplug, set_bot_grants and ensure_bot: the conference_bot_grants_changed row, when it is emitted and its data."
-      }
+      "links": []
     },
     {
       "id": "RK-8.2-060",
@@ -36535,12 +36526,7 @@
       "id": "RK-14.1-011",
       "section": "14.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1976",
-        "note": "Six scenarios call store.patch_room_metadata as setup; three assert a patched key or an unset key's removal; none asserts a key outside the patch kept, unset applied first, nothing else written, or an unknown room's null."
-      }
+      "links": []
     },
     {
       "id": "RK-14.1-012",
@@ -36946,12 +36932,7 @@
       "id": "RK-14.1-062",
       "section": "14.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1976",
-        "note": "store.get_timeline over more than 50 events with no limit, and with a limit of 0."
-      }
+      "links": []
     },
     {
       "id": "RK-14.1-063",
@@ -36987,12 +36968,7 @@
       "id": "RK-14.1-068",
       "section": "14.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1976",
-        "note": "A refused message, then a hook of the next message whose recent_events holds the refused row."
-      }
+      "links": []
     },
     {
       "id": "RK-14.1-069",
@@ -37026,12 +37002,7 @@
       "id": "RK-14.1-072",
       "section": "14.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1976",
-        "note": "The kit's list_bindings step can assert the order; the three binding-order scenarios read the context's order (RK-14.1-076), never list_bindings."
-      }
+      "links": []
     },
     {
       "id": "RK-14.1-073",
@@ -37165,12 +37136,7 @@
       "id": "RK-14.3-013",
       "section": "14.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1976",
-        "note": "store.update_event of an event the store lacks and store.add_participant into a room it lacks: refused, nothing written."
-      }
+      "links": []
     },
     {
       "id": "RK-14.3-014",
@@ -37222,12 +37188,7 @@
       "id": "RK-14.3-020",
       "section": "14.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1976",
-        "note": "Two concurrent store.patch_room_metadata calls on different keys, both keys standing."
-      }
+      "links": []
     },
     {
       "id": "RK-14.3-021",
@@ -37267,12 +37228,7 @@
       "id": "RK-14.3-025",
       "section": "14.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1976",
-        "note": "The kit's commit_event of a record that brings delivery_results, read back with them; the store's own commit_event is shown by store/a-delivery-record-alone-writes-an-event-s-results."
-      }
+      "links": []
     },
     {
       "id": "RK-14.3-026",
@@ -37636,12 +37592,7 @@
       "id": "RK-15.8.1-009",
       "section": "15.8.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1979",
-        "note": "An audited tool cancelled because its turn ended, by a steer cancel directive or the kit's close, is recorded cancelled."
-      }
+      "links": []
     },
     {
       "id": "RK-15.8.1-010",
@@ -38312,12 +38263,7 @@
       "id": "RK-17.6-017",
       "section": "17.6",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1986",
-        "note": "step: a room retention or redaction policy over voice: voice session metadata under the room's retention and redaction policies."
-      }
+      "links": []
     },
     {
       "id": "RK-17.6-018",
@@ -49285,23 +49231,13 @@
       "id": "RK-A.9-004",
       "section": "A.9",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1961",
-        "note": "A scenario can read an AI channel binding's type, category, direction and media types through the bindings expectation."
-      }
+      "links": []
     },
     {
       "id": "RK-A.9-005",
       "section": "A.9",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1961",
-        "note": "A scenario can read an AI channel binding's capabilities (rich text, no edit, no delete) through the bindings expectation."
-      }
+      "links": []
     },
     {
       "id": "RK-A.9-006",
@@ -49528,12 +49464,7 @@
       "id": "RK-A.9-042",
       "section": "A.9",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1961",
-        "note": "A schema turn on a channel given skills, on a model that takes a schema but not beside tools, fails unsupported; the skills and model capability keys exist."
-      }
+      "links": []
     },
     {
       "id": "RK-A.9.1-002",
@@ -49603,12 +49534,7 @@
       "id": "RK-A.9.1-010",
       "section": "A.9.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1961",
-        "note": "Two messages to one room while the scripted agent holds the first prompt: the second is prompted only once the first returns."
-      }
+      "links": []
     },
     {
       "id": "RK-A.9.1-011",
@@ -49781,12 +49707,7 @@
       "id": "RK-A.9.1-031",
       "section": "A.9.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1961",
-        "note": "acp.close and the acp_wire expectation exist; no scenario yet asserts the sessions and the transport a close releases."
-      }
+      "links": []
     },
     {
       "id": "RK-A.9.1-032",
@@ -49852,12 +49773,7 @@
       "id": "RK-A.9.1-042",
       "section": "A.9.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1961",
-        "note": "A turn that errs or is abandoned after a usage_update (prompts[].error exists): the usage stays an ephemeral custom event, and no completed response or accounting follows."
-      }
+      "links": []
     },
     {
       "id": "RK-A.10-002",
@@ -50244,12 +50160,7 @@
       "id": "RK-A.14.1-003",
       "section": "A.14.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1961",
-        "note": "A scenario can assert the host binding's direction, inbound, and that no delivery reaches the host channel."
-      }
+      "links": []
     },
     {
       "id": "RK-A.14.1-004",
@@ -50482,34 +50393,19 @@
       "id": "RK-A.15-026",
       "section": "A.15",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1961",
-        "note": "step: framework_events media rows: the framework events conference_started and conference_ended."
-      }
+      "links": []
     },
     {
       "id": "RK-A.15-027",
       "section": "A.15",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1961",
-        "note": "step: framework_events media rows: the framework events conference_participant_joined and conference_participant_left."
-      }
+      "links": []
     },
     {
       "id": "RK-A.15-028",
       "section": "A.15",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1961",
-        "note": "step: framework_events media rows, conference.plug, unplug, set_bot_grants and ensure_bot: the framework event conference_bot_grants_changed."
-      }
+      "links": []
     },
     {
       "id": "RK-A.15-029",

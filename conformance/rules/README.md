@@ -32,16 +32,16 @@ proof: a scenario can cite a unit without covering all of it.
 | [§5 Data Models](section-5.md) | 184 | 171 | 9 | 4 | 0 | 169 | 677 | 0 | 0 | 0 | 0 | 0 |
 | [§6 Channel System](section-6.md) | 661 | 644 | 7 | 10 | 0 | 514 | 2791 | 0 | 78 | 9 | 67 | 4 |
 | [§7 Permission Model](section-7.md) | 85 | 84 | 0 | 1 | 0 | 83 | 339 | 0 | 0 | 0 | 0 | 0 |
-| [§8 Event System](section-8.md) | 177 | 176 | 1 | 0 | 0 | 135 | 1228 | 0 | 38 | 4 | 15 | 19 |
+| [§8 Event System](section-8.md) | 177 | 176 | 1 | 0 | 0 | 141 | 1235 | 0 | 32 | 4 | 15 | 13 |
 | [§9 Hook System](section-9.md) | 350 | 343 | 3 | 4 | 0 | 333 | 1342 | 0 | 0 | 0 | 0 | 0 |
 | [§10 Processing Pipelines](section-10.md) | 652 | 631 | 7 | 14 | 0 | 592 | 2275 | 0 | 0 | 0 | 0 | 0 |
 | [§11 Identity Resolution](section-11.md) | 110 | 108 | 2 | 0 | 0 | 97 | 387 | 0 | 5 | 0 | 3 | 2 |
 | [§12 Voice and Realtime Media](section-12.md) | 1299 | 1185 | 73 | 38 | 3 | 855 | 1144 | 0 | 1 | 2 | 0 | 0 |
 | [§13 Resilience and Error Handling](section-13.md) | 97 | 88 | 7 | 2 | 0 | 74 | 274 | 0 | 13 | 0 | 15 | 0 |
-| [§14 Storage Interface](section-14.md) | 110 | 107 | 1 | 2 | 0 | 69 | 146 | 0 | 31 | 8 | 23 | 0 |
-| [§15 Observability](section-15.md) | 71 | 58 | 11 | 1 | 1 | 35 | 59 | 0 | 19 | 6 | 11 | 5 |
+| [§14 Storage Interface](section-14.md) | 110 | 107 | 1 | 2 | 0 | 76 | 153 | 0 | 24 | 1 | 23 | 0 |
+| [§15 Observability](section-15.md) | 71 | 58 | 11 | 1 | 1 | 36 | 60 | 0 | 18 | 5 | 11 | 5 |
 | [§16 Integration Surfaces](section-16.md) | 12 | 4 | 8 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| [§17 Security Considerations](section-17.md) | 78 | 62 | 16 | 0 | 0 | 24 | 165 | 0 | 28 | 0 | 14 | 17 |
+| [§17 Security Considerations](section-17.md) | 78 | 62 | 16 | 0 | 0 | 25 | 166 | 0 | 27 | 0 | 14 | 16 |
 | [§18 Design Principles](section-18.md) | 1 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | [§19 Multi-Agent Orchestration](section-19.md) | 569 | 562 | 3 | 3 | 1 | 486 | 1921 | 0 | 66 | 3 | 17 | 46 |
 | [§20 Memory System](section-20.md) | 63 | 62 | 0 | 1 | 0 | 58 | 244 | 0 | 2 | 0 | 2 | 0 |
@@ -51,4 +51,4 @@ proof: a scenario can cite a unit without covering all of it.
 | [§24 Skills Framework](section-24.md) | 184 | 174 | 3 | 6 | 1 | 146 | 776 | 0 | 24 | 2 | 17 | 5 |
 | [§25 Image Generation](section-25.md) | 38 | 30 | 0 | 7 | 1 | 1 | 15 | 0 | 0 | 0 | 0 | 0 |
 | [§26 Conformance Levels](section-26.md) | 24 | 21 | 0 | 0 | 3 | 20 | 229 | 0 | 0 | 0 | 0 | 0 |
-| [Appendix A: Channel Reference](appendix-A.md) | 202 | 200 | 0 | 2 | 0 | 98 | 267 | 0 | 81 | 17 | 42 | 22 |
+| [Appendix A: Channel Reference](appendix-A.md) | 202 | 200 | 0 | 2 | 0 | 108 | 277 | 0 | 71 | 10 | 42 | 19 |
