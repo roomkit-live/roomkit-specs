@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "f73e8090fe7e39cb56cfb5b71dcd2e49070574bf3b2dd580bfd1e5e038e6ec9e",
-  "corpus_sha256": "8965ac2811d68438438fb5f5ad22ea8d685ec24fd99dab34975540853f323d26",
+  "corpus_sha256": "0dbc8ce146125da5fb2353f5bd1e183da863ad503877c78dd35bab27c792e190",
   "python_commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
-  "scenario_count": 4142,
+  "scenario_count": 4169,
   "sections": [
     {
       "section": "0",
@@ -71,9 +71,7 @@
       "mapping": {
         "unmapped": 12
       },
-      "decided_gaps": {
-        "step": 1
-      },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "rooms/the-delivery-cursor-follows-the-lane"
@@ -478,6 +476,7 @@
         "inbound/a-composite-of-five-levels-is-taken-and-one-of-six-refused",
         "injection/a-direct-call-holding-six-composite-levels-raises-before-any-read",
         "injection/a-system-content-is-stored-and-delivered-as-given",
+        "permissions/a-channel-claiming-the-system-type-is-refused",
         "routing/a-message-holding-six-composite-levels-opens-no-room",
         "store/a-text-keeps-its-language",
         "store/a-video-without-a-mime-type-reads-video-mp4",
@@ -984,10 +983,14 @@
       },
       "decided_gaps": {
         "step": 1,
-        "writable": 5
+        "writable": 1
       },
       "unannotated_keyword_lines": [],
-      "candidate_scenarios": []
+      "candidate_scenarios": [
+        "hooks/a-channel-types-filter-naming-a-type-no-table-lists-runs-for-its-events",
+        "inbound/a-channel-of-a-type-no-table-lists-keeps-that-type-on-its-records",
+        "permissions/a-channel-claiming-the-system-type-is-refused"
+      ]
     },
     {
       "section": "6.3",
@@ -1016,19 +1019,22 @@
       "decided_gaps": {
         "phase6": 4,
         "step": 51,
-        "writable": 22
+        "writable": 5
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
+        "acp/a-catch-up-reads-each-message-by-its-text-form",
         "acp/a-copy-of-the-room-context-lines-is-replaced-and-the-runtime-s-are-kept",
         "acp/a-finished-handler-turn-reports-its-complete-answer",
         "acp/a-message-is-prompted-and-the-agents-text-answers-it",
         "acp/a-message-with-no-text-prompts-nothing",
+        "acp/a-mode-the-agent-switches-to-itself-is-not-set-on-the-room-s-next-session",
         "acp/a-prompt-the-agent-fails-fails-the-turn",
         "acp/a-room-keeps-its-session-across-turns",
         "acp/a-session-sent-a-labelled-request-labels-every-later-one-and-gives-the-note-once",
         "acp/a-stop-reason-other-than-end-turn-is-named-on-the-turn",
         "acp/a-truncated-turn-preserves-max-tokens",
+        "acp/an-agent-that-selects-another-protocol-version-fails-the-turn",
         "acp/an-external-agent-s-call-carries-no-intent",
         "acp/an-external-agent-s-turn-declares-no-tool-and-fires-no-tool-round",
         "acp/an-instruction-is-prompted-under-the-runtime-s-mark",
@@ -1401,6 +1407,8 @@
         "ai-router/a-generation-that-spoke-is-not-handed-over",
         "ai-router/a-generation-the-router-hands-over-keeps-the-turn-s-later-rounds",
         "ai-router/a-retry-the-router-names-no-model-for-fails-with-the-last-refusal",
+        "ai-router/a-thought-asks-the-router-as-a-turn-s-start-does",
+        "ai-router/a-worker-s-turn-inside-a-supervisor-s-asks-its-own-router",
         "ai-router/before-ai-generation-names-the-model-the-router-picks",
         "ai-router/the-router-picks-each-turn-s-model-and-its-rounds-stay-on-it",
         "ai-router/the-turn-s-context-is-built-for-the-model-the-router-picks",
@@ -1469,8 +1477,10 @@
         "discussion/acp-hold-cancels-prompt",
         "discussion/acp-identity-presented-to-peer",
         "discussion/acp-public-handle",
+        "discussion/acp-silent-answer-is-held-back-and-blocked",
         "discussion/acp-trusted-notes",
         "discussion/acp-trusted-notes-with-empty-request",
+        "discussion/acp-turn-sends-what-the-agent-has-not-read-and-its-request",
         "eviction/a-generation-hook-sees-the-re-read-once-its-room-stores-a-result",
         "eviction/a-result-of-parts-keeps-its-images",
         "eviction/a-room-the-agent-joins-again-keeps-no-stored-result",
@@ -1488,6 +1498,7 @@
         "executors/a-turn-on-another-executor-reads-none-of-the-rows-a-delete-removed",
         "executors/a-turn-on-another-executor-whose-rows-the-store-fails-to-read-runs-without-them",
         "executors/a-turn-s-record-names-the-executor-that-ran-it-apart",
+        "executors/an-acp-session-is-the-executor-s-that-opened-it-and-the-room-s-turns-follow-it",
         "executors/another-executor-replays-the-tool-calls-of-the-first",
         "inbound/a-binding-s-cost-budget-on-an-unpriced-model-fails-the-turn",
         "inbound/a-binding-s-cost-budget-that-is-no-positive-number-fails-the-turn",
@@ -1590,6 +1601,7 @@
         "orchestration/a-first-pass-cut-while-its-call-runs-records-on-none-of-its-rows",
         "orchestration/a-first-pass-that-wrote-no-text-records-on-none-of-its-rows",
         "orchestration/a-forged-mark-under-a-look-alike-bracket-or-a-hidden-mark-is-replaced",
+        "orchestration/a-loop-orders-its-serialized-producer-s-generations-itself",
         "orchestration/a-loop-whose-producer-fails-after-a-tool-round-gives-its-error-not-a-cut",
         "orchestration/a-loop-whose-producer-is-cut-after-an-output-answers-that-output-not-approved",
         "orchestration/a-loop-whose-producer-is-cut-short-answers-nothing-and-says-why",
@@ -1917,11 +1929,13 @@
         "steering/a-message-during-a-tool-round-is-read-by-the-running-turn",
         "steering/a-message-during-the-answer-is-answered-by-the-same-turn",
         "steering/a-message-handed-to-a-turn-then-cut-waits-for-the-next-turn",
+        "steering/a-message-in-a-room-the-agent-runs-no-turn-in-gets-a-turn-of-its-own",
         "steering/an-edit-during-a-tool-round-is-not-handed-to-the-running-turn",
         "steering/an-instruction-while-an-instructed-turn-runs-waits-a-turn-of-its-own",
         "steering/another-person-s-message-is-served-under-its-own-role-s-tools",
         "steering/another-person-s-message-waits-a-turn-of-its-own",
         "steering/off-a-second-message-starts-a-turn-beside-the-first",
+        "steering/one-sender-id-under-two-names-or-two-senders-under-one-are-two-authors",
         "streaming/a-blank-answer-writes-no-message",
         "streaming/a-blank-last-text-leaves-the-turn-s-end-on-its-last-message",
         "streaming/a-blank-stretch-is-not-among-the-turn-s-segments",
@@ -2227,6 +2241,7 @@
         "tools/a-tool-the-generation-hook-edited-keeps-its-edit",
         "tools/a-tool-the-generation-hook-withdraws-is-refused",
         "tools/a-tool-withdrawn-after-a-round-is-refused",
+        "tools/a-turn-cut-short-after-a-round-delivers-nothing-again",
         "tools/a-turn-cut-while-its-call-runs-ends-the-call-s-start",
         "tools/a-turn-refused-for-its-key-still-replays-the-tool-images",
         "tools/a-turn-tells-its-tools-who-asked-when-several-people-take-part",
@@ -2356,12 +2371,18 @@
         "turn-record/a-generation-that-told-its-input-then-failed-counts-it",
         "turn-record/a-generation-the-fallback-served-names-it-on-the-record",
         "turn-record/a-generation-whose-end-reports-no-usage-counts-what-it-told",
+        "turn-record/a-message-a-turn-sends-into-its-own-room-is-answered-after-it",
+        "turn-record/a-muted-agent-takes-no-place-in-the-room-s-line",
         "turn-record/a-turn-s-record-keeps-its-last-generation-its-model-and-its-provider",
         "turn-record/a-turn-that-finishes-reports-to-its-hook-what-every-generation-used",
         "turn-record/a-turn-that-wrote-no-message-names-its-end-to-the-caller",
+        "turn-record/a-turn-whose-record-update-fails-keeps-its-outcome",
         "turn-record/a-value-a-tool-writes-under-turns-leaves-each-agent-s-end",
+        "turn-record/a-waiting-turn-leaves-the-room-s-delivery-lane-to-the-turn-before-it",
+        "turn-record/a-waiting-turn-whose-agent-leaves-the-room-never-starts",
         "turn-record/an-adopted-call-s-wait-reads-its-stream-s-failure",
         "turn-record/an-answer-to-an-answer-is-not-the-agent-s-reply-to-the-caller",
+        "turn-record/two-processes-each-handed-a-message-run-their-turns-side-by-side",
         "turn-record/what-a-failed-generation-reported-counts-on-the-record",
         "turn-tool-timeouts/budget-before-bound-stream",
         "turn-tool-timeouts/budget-before-bound-whole",
@@ -2399,11 +2420,11 @@
         "unmapped": 32
       },
       "decided_gaps": {
-        "step": 1,
-        "writable": 8
+        "step": 1
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
+        "acp/a-catch-up-reads-each-message-by-its-text-form",
         "ai-context/a-content-without-text-reads-in-later-history-as-its-turn-read-it",
         "appendix-b/b6-edit-with-fallback",
         "appendix-b/b7-delete-with-fallback",
@@ -2411,15 +2432,21 @@
         "author-images/a-describer-that-says-nothing-leaves-the-event-out",
         "author-images/a-model-that-does-not-see-reads-a-mention",
         "author-images/an-image-goes-after-its-caption",
+        "discussion/an-agent-named-in-a-file-name-is-not-addressed",
         "injection/a-system-content-is-stored-and-delivered-as-given",
+        "transcoding/a-composite-a-channel-takes-in-part-keeps-its-parts-in-order",
         "transcoding/a-composite-flattens-to-one-text",
         "transcoding/a-file-a-media-channel-does-not-take-reaches-it-as-its-text",
+        "transcoding/a-limit-counts-code-points-and-a-cut-splits-none",
         "transcoding/a-location-reads-in-decimal",
         "transcoding/a-long-text-is-cut-with-a-marker",
         "transcoding/a-media-channel-with-no-limit-takes-every-file-as-it-is",
         "transcoding/a-media-reaches-a-text-channel-as-its-label",
         "transcoding/a-post-reaches-each-transport-transcoded-for-what-it-carries",
         "transcoding/a-template-reaches-a-text-channel-as-its-body",
+        "transcoding/a-text-reaches-every-channel-unchanged-whatever-it-declares",
+        "transcoding/a-tool-call-content-reaches-a-text-only-channel-unchanged",
+        "transcoding/an-edit-and-a-delete-read-as-their-text-form-whatever-the-channel-takes",
         "transcoding/rich-text-reaches-a-text-channel-as-its-plain-text"
       ]
     },
@@ -2646,7 +2673,9 @@
         "rooms/an-attach-names-its-correspondent-in-the-channel-s-form",
         "streaming/a-row-stored-after-its-agent-is-detached-is-blocked",
         "streaming/a-row-stored-after-its-agent-is-made-read-only-is-blocked",
-        "streaming/a-row-stored-after-its-agent-is-muted-is-blocked"
+        "streaming/a-row-stored-after-its-agent-is-muted-is-blocked",
+        "turn-record/a-muted-agent-takes-no-place-in-the-room-s-line",
+        "turn-record/a-waiting-turn-whose-agent-leaves-the-room-never-starts"
       ]
     },
     {
@@ -2847,6 +2876,7 @@
         "tasks/delegate-task-hands-over-what-its-calling-agent-may-read",
         "tasks/delegate-task-offers-the-conversation-on-the-host-s-option-alone",
         "tool-search/another-agent-s-stored-calls-keep-no-tool-declared",
+        "turn-record/a-muted-agent-takes-no-place-in-the-room-s-line",
         "verification/an-unverified-sender-s-message-is-held-from-the-agents"
       ]
     },
@@ -3230,6 +3260,7 @@
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "hooks/a-channel-types-filter-does-not-silence-on-ai-thinking",
+        "hooks/a-channel-types-filter-naming-a-type-no-table-lists-runs-for-its-events",
         "hooks/a-deleted-room-s-hooks-and-enabled-names-end-with-it",
         "hooks/a-fail-closed-room-hook-blocks",
         "hooks/a-failing-fail-closed-hook-blocks",
@@ -4881,6 +4912,7 @@
         "tools/a-call-that-returns-once-its-turn-is-cut-ends-aborted",
         "tools/a-turn-cut-while-its-call-runs-ends-the-call-s-start",
         "turn-record/a-deferred-wait-reads-what-the-stream-wrote",
+        "turn-record/a-message-a-turn-sends-into-its-own-room-is-answered-after-it",
         "turn-record/a-turn-cut-from-outside-gives-its-caller-what-it-wrote",
         "turn-record/a-turn-that-wrote-no-message-names-its-end-to-the-caller",
         "turn-record/a-value-a-tool-writes-under-turns-leaves-each-agent-s-end",
@@ -5577,6 +5609,7 @@
       "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
+        "acp/a-mode-the-agent-switches-to-itself-is-not-set-on-the-room-s-next-session",
         "acp/config-agent-returned-value-is-kept",
         "acp/config-already-reported-is-not-set-again",
         "acp/config-booleans-keep-their-type",
@@ -5958,6 +5991,7 @@
         "executors/a-turn-submitted-to-a-reserved-executor-that-is-not-served-is-refused",
         "executors/a-turn-submitted-to-a-reserved-executor-that-never-answers-goes-to-no-other",
         "executors/after-a-lost-executor-the-room-s-next-turn-runs-elsewhere",
+        "executors/an-acp-session-is-the-executor-s-that-opened-it-and-the-room-s-turns-follow-it",
         "executors/an-agent-is-offline-in-a-room-of-an-organization-its-executors-do-not-serve",
         "executors/an-agent-its-executor-builds-nothing-for-fails-no-executor",
         "executors/an-agent-s-presence-is-published-at-once-on-a-transport-written-on-the-contract-alone",
@@ -8388,6 +8422,7 @@
         "streaming/a-streamed-row-s-hooks-run-without-the-room-lock",
         "tasks/a-delegated-turn-s-metadata-updates-wait-for-the-room-s-lock",
         "tasks/a-delegated-turn-s-shared-answer-follows-its-metadata-updates",
+        "turn-record/a-waiting-turn-leaves-the-room-s-delivery-lane-to-the-turn-before-it",
         "verification/a-rerun-whose-room-is-created-again-in-the-lane-is-refused",
         "verification/two-attempts-at-a-request-s-last-one-count-once"
       ]
@@ -9583,6 +9618,7 @@
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
+        "ai-router/a-worker-s-turn-inside-a-supervisor-s-asks-its-own-router",
         "executors/a-supervisor-s-passes-are-turns-of-its-agent-on-the-executor-hosting-it",
         "executors/one-build-serving-two-rooms-takes-a-strategy-s-tools-in-its-room-alone",
         "orchestration/a-background-run-asked-for-once-the-kit-began-closing-does-not-start",
@@ -9671,6 +9707,7 @@
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "orchestration/a-loop-leaves-its-producer-the-events-that-are-no-task",
+        "orchestration/a-loop-orders-its-serialized-producer-s-generations-itself",
         "orchestration/a-loop-out-of-iterations-answers-its-last-output-not-approved",
         "orchestration/a-loop-reviewer-s-refusal-approves-nothing",
         "orchestration/a-loop-revises-its-output-until-its-reviewer-approves",
@@ -9792,11 +9829,14 @@
         "discussion/acp-hold-cancels-prompt",
         "discussion/acp-identity-presented-to-peer",
         "discussion/acp-public-handle",
+        "discussion/acp-silent-answer-is-held-back-and-blocked",
         "discussion/acp-trusted-notes",
         "discussion/acp-trusted-notes-with-empty-request",
+        "discussion/acp-turn-sends-what-the-agent-has-not-read-and-its-request",
         "discussion/an-agent-asking-a-person-is-answered-by-their-next-message",
         "discussion/an-agent-named-by-an-id-takes-the-name-its-channel-gives",
         "discussion/an-agent-named-by-an-id-that-is-no-handle-waits-for-the-install",
+        "discussion/an-agent-named-in-a-file-name-is-not-addressed",
         "discussion/an-agent-named-in-three-segments-of-a-turn-is-queued-once",
         "discussion/an-agent-naming-another-queues-it-once-its-turn-has-ended",
         "discussion/an-agent-s-answer-typed-instruction-gives-no-turn",
@@ -9911,7 +9951,8 @@
         "tasks/a-background-tool-keeps-its-turns-name-before-a-relay",
         "tasks/a-own-task-status-tool-names-the-discussion-worker-by-handle",
         "tasks/a-owner-task-status-tool-names-the-discussion-worker-by-handle",
-        "tasks/a-relayed-task-result-names-its-worker-by-the-discussion-handle"
+        "tasks/a-relayed-task-result-names-its-worker-by-the-discussion-handle",
+        "turn-record/two-processes-each-handed-a-message-run-their-turns-side-by-side"
       ]
     },
     {
@@ -10495,11 +10536,13 @@
         "steering/a-message-during-a-tool-round-is-read-by-the-running-turn",
         "steering/a-message-during-the-answer-is-answered-by-the-same-turn",
         "steering/a-message-handed-to-a-turn-then-cut-waits-for-the-next-turn",
+        "steering/a-message-in-a-room-the-agent-runs-no-turn-in-gets-a-turn-of-its-own",
         "steering/a-steer-reaches-the-room-it-names-alone",
         "steering/an-edit-during-a-tool-round-is-not-handed-to-the-running-turn",
         "steering/an-instruction-while-an-instructed-turn-runs-waits-a-turn-of-its-own",
         "steering/another-person-s-message-is-served-under-its-own-role-s-tools",
         "steering/another-person-s-message-waits-a-turn-of-its-own",
+        "steering/one-sender-id-under-two-names-or-two-senders-under-one-are-two-authors",
         "streaming/a-generation-a-fallback-serves-names-it-on-what-it-told-and-on-its-cut",
         "streaming/a-text-follows-the-row-the-room-held-when-its-writing-began",
         "tools/a-cancel-outranks-the-force-stop",
@@ -12651,12 +12694,7 @@
       "id": "RK-1.4-013",
       "section": "1.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1965",
-        "note": "The runners rewrite every instant to @n before matching, so the offset a datetime is written with is not compared."
-      }
+      "links": []
     },
     {
       "id": "RK-2.2-001",
@@ -14328,23 +14366,13 @@
       "id": "RK-6.2-007",
       "section": "6.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1955",
-        "note": "A scripted channel whose type uses digits, _ and - is stored and read back as that plain string."
-      }
+      "links": []
     },
     {
       "id": "RK-6.2-008",
       "section": "6.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1955",
-        "note": "A scripted channel of a type the table does not list (slack) is registered, and an event naming it reads back as written."
-      }
+      "links": []
     },
     {
       "id": "RK-6.2-009",
@@ -14367,23 +14395,13 @@
       "id": "RK-6.2-012",
       "section": "6.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1955",
-        "note": "A hook filtered on a channel type the table does not list (channel_types) fires for that type's events."
-      }
+      "links": []
     },
     {
       "id": "RK-6.2-011",
       "section": "6.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1955",
-        "note": "register_channel of a scripted channel of type system is refused."
-      }
+      "links": []
     },
     {
       "id": "RK-6.3-002",
@@ -16886,12 +16904,7 @@
       "id": "RK-6.4-518",
       "section": "6.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1951",
-        "note": "A thinker's thought on a channel with a router asks the router as a turn's start does."
-      }
+      "links": []
     },
     {
       "id": "RK-6.4-519",
@@ -16899,9 +16912,9 @@
       "mapping": "unmapped",
       "links": [],
       "gap": {
-        "class": "writable",
+        "class": "step",
         "card": "RMK-1951",
-        "note": "A router that names no provider at a turn's start fails the turn."
+        "note": "Needs a scripted router whose pick at a turn's start may name no model: the schema takes only a model's name in `router.turns` (a retry's pick alone may be null), though both runners would read a null pick as none."
       }
     },
     {
@@ -16926,12 +16939,7 @@
       "id": "RK-6.4-523",
       "section": "6.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1951",
-        "note": "A loop run inside another channel's turn asks its own channel for its provider."
-      }
+      "links": []
     },
     {
       "id": "RK-6.4-524",
@@ -17344,12 +17352,7 @@
       "id": "RK-6.4-407",
       "section": "6.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1951",
-        "note": "A turn cut short after a round, whose deliveries show no round text delivered twice and nothing of an earlier turn."
-      }
+      "links": []
     },
     {
       "id": "RK-6.4-408",
@@ -17509,12 +17512,7 @@
       "id": "RK-6.4-432",
       "section": "6.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1951",
-        "note": "A store fault on the record's update (store_faults), the turn's outcome standing."
-      }
+      "links": []
     },
     {
       "id": "RK-6.4-433",
@@ -17616,12 +17614,7 @@
       "id": "RK-6.4-446",
       "section": "6.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1951",
-        "note": "Two serialized turns of one agent in a room, the first's answer delivered while the second waits its place."
-      }
+      "links": []
     },
     {
       "id": "RK-6.4-447",
@@ -17639,56 +17632,31 @@
       "id": "RK-6.4-449",
       "section": "6.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1951",
-        "note": "A serialized agent detached from the room while its second turn waits: that turn never starts."
-      }
+      "links": []
     },
     {
       "id": "RK-6.4-450",
       "section": "6.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1951",
-        "note": "A muted serialized agent's turns run as each event comes, their answers not delivered."
-      }
+      "links": []
     },
     {
       "id": "RK-6.4-451",
       "section": "6.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1951",
-        "note": "A tool of a serialized agent's turn that sends a message into its own room asking the same agent: the call returns, and the answer comes after the turn."
-      }
+      "links": []
     },
     {
       "id": "RK-6.4-452",
       "section": "6.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1951",
-        "note": "A strategy that takes a serialized agent's turns orders its generations itself, none waiting."
-      }
+      "links": []
     },
     {
       "id": "RK-6.4-453",
       "section": "6.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1951",
-        "note": "Needs two processes, each handed a delivery of the same room."
-      }
+      "links": []
     },
     {
       "id": "RK-6.4-454",
@@ -17723,12 +17691,7 @@
       "id": "RK-6.4-458",
       "section": "6.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1951",
-        "note": "Steering with two people under one sender id, or two senders signing one name: neither is the running turn's author."
-      }
+      "links": []
     },
     {
       "id": "RK-6.4-459",
@@ -17746,12 +17709,7 @@
       "id": "RK-6.4-461",
       "section": "6.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1951",
-        "note": "Steering with no running turn, or several, of the channel in the room: the message waits a turn of its own."
-      }
+      "links": []
     },
     {
       "id": "RK-6.4-462",
@@ -18088,12 +18046,7 @@
       "id": "RK-6.4-485",
       "section": "6.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1951",
-        "note": "The scripted agent answers initialize with another protocol version (acp.agent.initialize.protocol_version): the channel fails clearly."
-      }
+      "links": []
     },
     {
       "id": "RK-6.4-486",
@@ -18111,12 +18064,7 @@
       "id": "RK-6.4-488",
       "section": "6.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1951",
-        "note": "An ACP agent channel hosted on a turn executor (setup.executors): its sessions stay that executor's, and the room's turns are placed there."
-      }
+      "links": []
     },
     {
       "id": "RK-6.4-489",
@@ -18342,12 +18290,7 @@
       "id": "RK-6.4-495",
       "section": "6.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1951",
-        "note": "A mode the scripted ACP agent switches to itself is not set on the Room's next session."
-      }
+      "links": []
     },
     {
       "id": "RK-6.4-496",
@@ -18676,12 +18619,7 @@
       "id": "RK-6.4-513",
       "section": "6.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1951",
-        "note": "An ACP discussion turn sends only what the agent has not read, up to its start, and its notes name the event and who asked."
-      }
+      "links": []
     },
     {
       "id": "RK-6.4-514",
@@ -18693,12 +18631,7 @@
       "id": "RK-6.4-515",
       "section": "6.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1951",
-        "note": "A silent ACP discussion answer is held back and blocked as rule 13 says."
-      }
+      "links": []
     },
     {
       "id": "RK-6.5-001",
@@ -18744,23 +18677,13 @@
       "id": "RK-6.6-006",
       "section": "6.6",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1955",
-        "note": "A text reaches a scripted channel whose media_types name no TEXT (location alone) unchanged, and a rich text as its plain text."
-      }
+      "links": []
     },
     {
       "id": "RK-6.6-007",
       "section": "6.6",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1955",
-        "note": "A text reaches a rich, a media and a text-only transport unchanged."
-      }
+      "links": []
     },
     {
       "id": "RK-6.6-008",
@@ -18826,12 +18749,7 @@
       "id": "RK-6.6-018",
       "section": "6.6",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1955",
-        "note": "A tool call content reaches a text-only transport unchanged."
-      }
+      "links": []
     },
     {
       "id": "RK-6.6-019",
@@ -18849,12 +18767,7 @@
       "id": "RK-6.6-021",
       "section": "6.6",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1955",
-        "note": "A composite of a text and a media reaches a channel that carries MEDIA as its parts, in order."
-      }
+      "links": []
     },
     {
       "id": "RK-6.6-022",
@@ -18872,12 +18785,7 @@
       "id": "RK-6.6-024",
       "section": "6.6",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1955",
-        "note": "An edit's and a delete's text form as a reader reads it, whatever the reader supports."
-      }
+      "links": []
     },
     {
       "id": "RK-6.6-025",
@@ -18907,23 +18815,13 @@
       "id": "RK-6.6-029",
       "section": "6.6",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1955",
-        "note": "A media or a location in a delegated task's brief, a memory's summary or a discussion's dispatch reads as its label."
-      }
+      "links": []
     },
     {
       "id": "RK-6.6-030",
       "section": "6.6",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1955",
-        "note": "An agent named only in a media's file name is not addressed by a discussion."
-      }
+      "links": []
     },
     {
       "id": "RK-6.6-031",
@@ -18935,12 +18833,7 @@
       "id": "RK-6.6-032",
       "section": "6.6",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1955",
-        "note": "A text of multi-byte characters past max_length is cut on a code point."
-      }
+      "links": []
     },
     {
       "id": "RK-6.6-033",
