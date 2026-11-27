@@ -33,7 +33,8 @@
             {
               "text": "Nothing said."
             }
-          ]
+          ],
+          "vision": true
         }
       },
       {
@@ -163,8 +164,37 @@
     "models": {
       "analyst": [],
       "sup": [
-        {},
-        {},
+        {
+          "messages": [
+            {
+              "role": "user",
+              "parts": [
+                {
+                  "image": "data:image/png;base64,AQIDBA==",
+                  "mime_type": "image/png"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "messages": [
+            "$any",
+            "$any",
+            {
+              "role": "user",
+              "parts": [
+                {
+                  "text": "see here"
+                },
+                {
+                  "image": "data:image/png;base64,AQIDBA==",
+                  "mime_type": "image/png"
+                }
+              ]
+            }
+          ]
+        },
         {}
       ]
     },

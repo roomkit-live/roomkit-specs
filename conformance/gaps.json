@@ -756,11 +756,6 @@
       "card": "RMK-1929",
       "note": "Expose a configuration-only supervisor to the shared sequential team fixture, then inspect the workers' actual inputs and order without a supervisor generation. Python tests/orchestration/test_supervisor_text_background.py::test_a_supervisor_without_a_model_lets_its_chain_run_unsupervised checks worker order natively."
     },
-    "RK-19.7.3-032": {
-      "class": "step",
-      "card": "RMK-1929",
-      "note": "A run asked for once the close began needs a delegation call that lands while the kit closes: the kit's close cuts a supervisor's turn held before its call, so the turn never makes it. Only a realtime session's delegation tool call outlives that cut (setup_realtime_delegation, a step no runner has), the door of tests/orchestration/test_background_close.py::test_a_run_asked_for_while_the_kit_closes_never_starts."
-    },
     "RK-19.7.4-007": {
       "class": "step",
       "card": "RMK-1929",

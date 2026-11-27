@@ -10,7 +10,7 @@
   "requirements": [
     "RK-19.7.3-024"
   ],
-  "notes": "The supervisor's delegate_workers call is dispatched in the background (async_delivery) and answered at once; the worker holds its turn at a gate no step opens. The kit's close cancels the run: the worker's delegation ends first, posting its terminal entry, then the run's own, the orchestration's pipeline entry, failed. The room's timeline gains no hand-back instruction and the supervisor no third request. Python: tests/orchestration/test_background_close.py::test_close_ends_a_background_run.",
+  "notes": "The supervisor's delegate_workers call is dispatched in the background (async_delivery) and answered at once; the worker holds its turn at a gate no step opens. The kit's close cancels the run: the worker's delegation ends first, posting its terminal entry, then the run's own, the orchestration's pipeline entry, failed. The room's timeline gains no hand-back instruction and the supervisor no third request. Python: tests/orchestration/test_background_close.py::test_close_ends_a_background_run. Cited in part: that the cancelled run frees its room is not observed, since nothing can run in the room once the kit is closed.",
   "setup": {
     "channels": [
       {

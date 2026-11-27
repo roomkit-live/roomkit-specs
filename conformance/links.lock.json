@@ -9447,6 +9447,9 @@
       "orchestration/a-step-whose-worker-fails-stops-the-chain-unreviewed": "f0fecf95a5fe2bb3d0f3a9433e95738bd0148de42f15411a1c24875c67aa5713",
       "orchestration/a-supervised-step-past-its-task-timeout-stops-the-chain-unreviewed": "f0fecf95a5fe2bb3d0f3a9433e95738bd0148de42f15411a1c24875c67aa5713"
     },
+    "RK-19.7.3-032": {
+      "orchestration/a-background-run-asked-for-once-the-kit-began-closing-does-not-start": "959666213013221ae7ac08796ed5182812e07a0a09c945af4b6839573f904749"
+    },
     "RK-19.7.3-033": {
       "executors/one-build-serving-two-rooms-takes-a-strategy-s-tools-in-its-room-alone": "e1c0b15daad04bb72f970eb18b730d1f787b63618518d6ffe6c67d337f098134",
       "orchestration/a-supervisor-s-own-tools-stay-its-own": "e1c0b15daad04bb72f970eb18b730d1f787b63618518d6ffe6c67d337f098134",

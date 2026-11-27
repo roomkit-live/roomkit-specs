@@ -307,7 +307,7 @@
             {
               "role": "user",
               "text": {
-                "$lacks": "A prior summary exists"
+                "$lacks": "Summary 1."
               }
             }
           ]

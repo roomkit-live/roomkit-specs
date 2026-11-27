@@ -9,7 +9,7 @@
   "requirements": [
     "RK-19.1-011"
   ],
-  "notes": "set_language keeps the language in the room's conversation state (orchestration/a-handoff-s-language-is-the-room-s-state); the agent writes its identity block at the end of its turns' system prompt in the room's language, else its own (orchestration/an-agent-s-turn-prompt-ends-with-its-identity). The room has no realtime session, so nothing else is reconfigured.",
+  "notes": "set_language keeps the language in the room's conversation state (orchestration/a-handoff-s-language-is-the-room-s-state); the agent writes its identity block at the end of its turns' system prompt in the room's language, else its own (orchestration/an-agent-s-turn-prompt-ends-with-its-identity). The room has no realtime session, so nothing else is reconfigured. Cited in part: the prompt a language change writes for a room's realtime sessions (set_language reconfigures them with the active agent's prompt and its identity block, RK-19.6-043) is not observed; no step gives the handoff handler its agents and a realtime channel.",
   "setup": {
     "channels": [
       {
