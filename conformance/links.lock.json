@@ -11905,20 +11905,20 @@
       "mcp/a-tool-listed-twice-is-declared-once": "7b6045fe2924195a498848b0c3305e4c2de44432866d22cf3f3545522e592899"
     },
     "RK-21.2-004": {
-      "mcp-construction/direct-sse-discovery-empty-headers": "2d93810cbefe129cd80d89c8b4dfffed550e615d1e237d6dbed15cd31783f001",
-      "mcp-construction/from-url-sse-discovery-empty-headers": "2d93810cbefe129cd80d89c8b4dfffed550e615d1e237d6dbed15cd31783f001",
-      "mcp-construction/from-url-sse-requests-given-no-time-send-nothing": "2d93810cbefe129cd80d89c8b4dfffed550e615d1e237d6dbed15cd31783f001",
-      "mcp-construction/from-url-sse-requests-given-up-are-cancelled": "2d93810cbefe129cd80d89c8b4dfffed550e615d1e237d6dbed15cd31783f001",
-      "mcp-host/handshake-copies": "2d93810cbefe129cd80d89c8b4dfffed550e615d1e237d6dbed15cd31783f001",
-      "mcp-host/listing-metadata": "2d93810cbefe129cd80d89c8b4dfffed550e615d1e237d6dbed15cd31783f001",
-      "mcp-host/raw-results-json": "2d93810cbefe129cd80d89c8b4dfffed550e615d1e237d6dbed15cd31783f001",
-      "mcp-host/raw-results-sse": "2d93810cbefe129cd80d89c8b4dfffed550e615d1e237d6dbed15cd31783f001",
-      "mcp-host/requests-given-no-time-send-nothing": "2d93810cbefe129cd80d89c8b4dfffed550e615d1e237d6dbed15cd31783f001",
-      "mcp-host/resource-results-json": "2d93810cbefe129cd80d89c8b4dfffed550e615d1e237d6dbed15cd31783f001",
-      "mcp-host/resource-results-sse": "2d93810cbefe129cd80d89c8b4dfffed550e615d1e237d6dbed15cd31783f001",
-      "mcp-host/tool-dictionaries-json": "2d93810cbefe129cd80d89c8b4dfffed550e615d1e237d6dbed15cd31783f001",
-      "mcp-host/tool-dictionaries-sse": "2d93810cbefe129cd80d89c8b4dfffed550e615d1e237d6dbed15cd31783f001",
-      "mcp-host/tool-dictionaries-without-discovery": "2d93810cbefe129cd80d89c8b4dfffed550e615d1e237d6dbed15cd31783f001"
+      "mcp-construction/direct-sse-discovery-empty-headers": "0a3e6019cf9427cf81afe458f2a9f577780aba0910c02af42e9ef617356d1cd6",
+      "mcp-construction/from-url-sse-discovery-empty-headers": "0a3e6019cf9427cf81afe458f2a9f577780aba0910c02af42e9ef617356d1cd6",
+      "mcp-construction/from-url-sse-requests-given-no-time-send-nothing": "0a3e6019cf9427cf81afe458f2a9f577780aba0910c02af42e9ef617356d1cd6",
+      "mcp-construction/from-url-sse-requests-given-up-are-cancelled": "0a3e6019cf9427cf81afe458f2a9f577780aba0910c02af42e9ef617356d1cd6",
+      "mcp-host/handshake-copies": "0a3e6019cf9427cf81afe458f2a9f577780aba0910c02af42e9ef617356d1cd6",
+      "mcp-host/listing-metadata": "0a3e6019cf9427cf81afe458f2a9f577780aba0910c02af42e9ef617356d1cd6",
+      "mcp-host/raw-results-json": "0a3e6019cf9427cf81afe458f2a9f577780aba0910c02af42e9ef617356d1cd6",
+      "mcp-host/raw-results-sse": "0a3e6019cf9427cf81afe458f2a9f577780aba0910c02af42e9ef617356d1cd6",
+      "mcp-host/requests-given-no-time-send-nothing": "0a3e6019cf9427cf81afe458f2a9f577780aba0910c02af42e9ef617356d1cd6",
+      "mcp-host/resource-results-json": "0a3e6019cf9427cf81afe458f2a9f577780aba0910c02af42e9ef617356d1cd6",
+      "mcp-host/resource-results-sse": "0a3e6019cf9427cf81afe458f2a9f577780aba0910c02af42e9ef617356d1cd6",
+      "mcp-host/tool-dictionaries-json": "0a3e6019cf9427cf81afe458f2a9f577780aba0910c02af42e9ef617356d1cd6",
+      "mcp-host/tool-dictionaries-sse": "0a3e6019cf9427cf81afe458f2a9f577780aba0910c02af42e9ef617356d1cd6",
+      "mcp-host/tool-dictionaries-without-discovery": "0a3e6019cf9427cf81afe458f2a9f577780aba0910c02af42e9ef617356d1cd6"
     },
     "RK-21.2-007": {
       "mcp-construction/direct-sse-timeout-endpoint": "68f1413b5b796e34a30d99f60f6af705a98103e78ba6e7e7ee44a8d3ebaa5ab2",
@@ -11927,10 +11927,11 @@
       "mcp-construction/from-url-sse-timeout-listing": "68f1413b5b796e34a30d99f60f6af705a98103e78ba6e7e7ee44a8d3ebaa5ab2"
     },
     "RK-21.2-008": {
-      "mcp-construction/direct-sse-timeout-endpoint": "96d03fd39c57ff166ded60b94958f6a47ba31f54502797665db075cb2d638722",
-      "mcp-construction/direct-sse-timeout-listing": "96d03fd39c57ff166ded60b94958f6a47ba31f54502797665db075cb2d638722",
-      "mcp-construction/from-url-sse-timeout-endpoint": "96d03fd39c57ff166ded60b94958f6a47ba31f54502797665db075cb2d638722",
-      "mcp-construction/from-url-sse-timeout-listing": "96d03fd39c57ff166ded60b94958f6a47ba31f54502797665db075cb2d638722"
+      "mcp-construction/direct-sse-timeout-endpoint": "b281d6b070595f2e01cacd57c052593ebaa41eab9b08fb52bf0001a6de4a774e",
+      "mcp-construction/direct-sse-timeout-listing": "b281d6b070595f2e01cacd57c052593ebaa41eab9b08fb52bf0001a6de4a774e",
+      "mcp-construction/from-url-sse-timeout-endpoint": "b281d6b070595f2e01cacd57c052593ebaa41eab9b08fb52bf0001a6de4a774e",
+      "mcp-construction/from-url-sse-timeout-listing": "b281d6b070595f2e01cacd57c052593ebaa41eab9b08fb52bf0001a6de4a774e",
+      "mcp-host/a-server-of-2026-07-28-is-reached-by-discovery": "b281d6b070595f2e01cacd57c052593ebaa41eab9b08fb52bf0001a6de4a774e"
     },
     "RK-21.2-013": {
       "mcp/a-catalogue-of-aliases-holds-a-policy-that-names-a-server": "12a942f54596e2c72cc81d9c153ad089a19949a2a783d4c4b3f2b8d8efc5287f"
@@ -12042,9 +12043,11 @@
       "role-policy/an-alias-must-pass-both-role-names-streaming": "b6ab0637b72b535a786a227734a6272825ad92863af9ebd0da22fd9562d0209d"
     },
     "RK-21.2-034": {
-      "mcp-host/handshake-copies": "c03de0a344615c886e9730e576ff719a6bb61717742b12272684ec7c567708ad",
-      "mcp-host/reconnect-snapshots": "c03de0a344615c886e9730e576ff719a6bb61717742b12272684ec7c567708ad",
-      "mcp-host/server-info-icon-nulls": "c03de0a344615c886e9730e576ff719a6bb61717742b12272684ec7c567708ad"
+      "mcp-host/a-server-of-2026-07-28-is-reached-by-discovery": "497781a35824041c4a8b13eee9f57b0476fd2a4e5d3506af202e1c9d287286ec",
+      "mcp-host/a-server-refusing-discovery-over-http-is-reached-by-the-handshake": "497781a35824041c4a8b13eee9f57b0476fd2a4e5d3506af202e1c9d287286ec",
+      "mcp-host/handshake-copies": "497781a35824041c4a8b13eee9f57b0476fd2a4e5d3506af202e1c9d287286ec",
+      "mcp-host/reconnect-snapshots": "497781a35824041c4a8b13eee9f57b0476fd2a4e5d3506af202e1c9d287286ec",
+      "mcp-host/server-info-icon-nulls": "497781a35824041c4a8b13eee9f57b0476fd2a4e5d3506af202e1c9d287286ec"
     },
     "RK-21.2-045": {
       "mcp-host/extension-container-validation": "6766e9c764e79a34bab08ea7ef9af25d6bb414d319f5fa69eab597f565697650",
@@ -12054,20 +12057,21 @@
       "mcp-host/undeclared-extensions": "6766e9c764e79a34bab08ea7ef9af25d6bb414d319f5fa69eab597f565697650"
     },
     "RK-21.2-046": {
-      "mcp-construction/from-url-sse-requests-given-no-time-send-nothing": "e0d65e3cc98729eb3a2d3ed27f80f5209490adea054627cc61278e4732bc5e28",
-      "mcp-construction/from-url-sse-requests-given-up-are-cancelled": "e0d65e3cc98729eb3a2d3ed27f80f5209490adea054627cc61278e4732bc5e28",
-      "mcp-host/raw-results-json": "e0d65e3cc98729eb3a2d3ed27f80f5209490adea054627cc61278e4732bc5e28",
-      "mcp-host/raw-results-sse": "e0d65e3cc98729eb3a2d3ed27f80f5209490adea054627cc61278e4732bc5e28",
-      "mcp-host/read-resource-timeout": "e0d65e3cc98729eb3a2d3ed27f80f5209490adea054627cc61278e4732bc5e28",
-      "mcp-host/request-arguments": "e0d65e3cc98729eb3a2d3ed27f80f5209490adea054627cc61278e4732bc5e28",
-      "mcp-host/request-metadata-validation": "e0d65e3cc98729eb3a2d3ed27f80f5209490adea054627cc61278e4732bc5e28",
-      "mcp-host/request-timeout": "e0d65e3cc98729eb3a2d3ed27f80f5209490adea054627cc61278e4732bc5e28",
-      "mcp-host/requests-given-no-time-send-nothing": "e0d65e3cc98729eb3a2d3ed27f80f5209490adea054627cc61278e4732bc5e28",
-      "mcp-host/resource-results-json": "e0d65e3cc98729eb3a2d3ed27f80f5209490adea054627cc61278e4732bc5e28",
-      "mcp-host/resource-results-sse": "e0d65e3cc98729eb3a2d3ed27f80f5209490adea054627cc61278e4732bc5e28",
-      "mcp-host/resource-uri-normalization": "e0d65e3cc98729eb3a2d3ed27f80f5209490adea054627cc61278e4732bc5e28",
-      "mcp-host/resource-validation": "e0d65e3cc98729eb3a2d3ed27f80f5209490adea054627cc61278e4732bc5e28",
-      "mcp-host/server-errors": "e0d65e3cc98729eb3a2d3ed27f80f5209490adea054627cc61278e4732bc5e28"
+      "mcp-construction/from-url-sse-requests-given-no-time-send-nothing": "5b67c6c559b203a3bec023f1f3227e8953f5993a7af3722e2343c5fa37ff6e36",
+      "mcp-construction/from-url-sse-requests-given-up-are-cancelled": "5b67c6c559b203a3bec023f1f3227e8953f5993a7af3722e2343c5fa37ff6e36",
+      "mcp-host/a-request-on-2026-07-28-carries-the-protocol-s-own-metadata": "5b67c6c559b203a3bec023f1f3227e8953f5993a7af3722e2343c5fa37ff6e36",
+      "mcp-host/raw-results-json": "5b67c6c559b203a3bec023f1f3227e8953f5993a7af3722e2343c5fa37ff6e36",
+      "mcp-host/raw-results-sse": "5b67c6c559b203a3bec023f1f3227e8953f5993a7af3722e2343c5fa37ff6e36",
+      "mcp-host/read-resource-timeout": "5b67c6c559b203a3bec023f1f3227e8953f5993a7af3722e2343c5fa37ff6e36",
+      "mcp-host/request-arguments": "5b67c6c559b203a3bec023f1f3227e8953f5993a7af3722e2343c5fa37ff6e36",
+      "mcp-host/request-metadata-validation": "5b67c6c559b203a3bec023f1f3227e8953f5993a7af3722e2343c5fa37ff6e36",
+      "mcp-host/request-timeout": "5b67c6c559b203a3bec023f1f3227e8953f5993a7af3722e2343c5fa37ff6e36",
+      "mcp-host/requests-given-no-time-send-nothing": "5b67c6c559b203a3bec023f1f3227e8953f5993a7af3722e2343c5fa37ff6e36",
+      "mcp-host/resource-results-json": "5b67c6c559b203a3bec023f1f3227e8953f5993a7af3722e2343c5fa37ff6e36",
+      "mcp-host/resource-results-sse": "5b67c6c559b203a3bec023f1f3227e8953f5993a7af3722e2343c5fa37ff6e36",
+      "mcp-host/resource-uri-normalization": "5b67c6c559b203a3bec023f1f3227e8953f5993a7af3722e2343c5fa37ff6e36",
+      "mcp-host/resource-validation": "5b67c6c559b203a3bec023f1f3227e8953f5993a7af3722e2343c5fa37ff6e36",
+      "mcp-host/server-errors": "5b67c6c559b203a3bec023f1f3227e8953f5993a7af3722e2343c5fa37ff6e36"
     },
     "RK-21.2-047": {
       "served-skills/first-uri-wins-across-pages": "a7e5a76f844c32f0f98c845863864359fe18278153fca8d7da239e01ab0b7349",
@@ -12088,6 +12092,15 @@
     },
     "RK-21.2-051": {
       "mcp-host/a-content-the-model-is-not-shown-reads-as-a-note-of-its-kind-and-type": "dbdad2c21669687939588ac7b9034de58fb52a73ebf5c3f3fdcfea8465623e9c"
+    },
+    "RK-21.2-056": {
+      "mcp-construction/direct-sse-discovery-empty-headers": "0a69530750619a6868e86e6e44dcc9fd41e7adbc06309cd2fa9ef4c2da554453",
+      "mcp-construction/from-url-sse-discovery-empty-headers": "0a69530750619a6868e86e6e44dcc9fd41e7adbc06309cd2fa9ef4c2da554453",
+      "mcp-host/a-request-on-2026-07-28-carries-the-protocol-s-own-metadata": "0a69530750619a6868e86e6e44dcc9fd41e7adbc06309cd2fa9ef4c2da554453",
+      "mcp-host/a-server-of-2026-07-28-is-reached-by-discovery": "0a69530750619a6868e86e6e44dcc9fd41e7adbc06309cd2fa9ef4c2da554453",
+      "mcp-host/a-server-refusing-discovery-over-http-is-reached-by-the-handshake": "0a69530750619a6868e86e6e44dcc9fd41e7adbc06309cd2fa9ef4c2da554453",
+      "mcp-host/a-tool-call-on-2026-07-28-mirrors-its-annotated-arguments-into-headers": "0a69530750619a6868e86e6e44dcc9fd41e7adbc06309cd2fa9ef4c2da554453",
+      "mcp-host/handshake-copies": "0a69530750619a6868e86e6e44dcc9fd41e7adbc06309cd2fa9ef4c2da554453"
     },
     "RK-21.3-004": {
       "steering/a-cancel-aborts-a-generation-its-provider-holds": "d945d22457d5d6f02dfd0ec6ba46c83f2baa8f94e24f0400ed35c9ce5833b173"

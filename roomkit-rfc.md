@@ -22873,7 +22873,9 @@ MCPToolProvider
 ├── server: one of
 │   ├── url: string                         # a remote server (streamable HTTP or SSE)
 │   └── command: string, args: list<string> # a local server started as a subprocess (stdio)
-├── connect_timeout: seconds = 60           # handshake and listing, a command's start too
+├── connect_timeout: seconds = 60           # negotiation and listing, a command's start too
+├── protocol: "auto" | "legacy" = "auto"    # How the connection agrees on the MCP revision
+├── propagate_trace_context: bool = false   # Carry the kit's current span on each request
 ├── discover: bool = true                   # List the server's tools when connecting
 ├── label: string | null                    # The host's name for the server: the <server> of an MCP alias
 ├── tools() → list<ToolDefinition>          # Discover available tools
@@ -22890,12 +22892,38 @@ MCPToolProvider
 A server named by `command` is started when the provider connects and MUST be
 stopped when it disconnects. <!-- /rfc --><!-- rfc: {"id": "RK-21.2-006", "kind": "behavior", "applies": "Where stdio MCP is supported, passing command arguments as a list without a shell.", "level": "must"} -->Its arguments MUST be passed as a list, never
 through a shell. <!-- /rfc --><!-- rfc: {"id": "RK-21.2-007", "kind": "behavior", "applies": "Releasing resources opened during a partially established connection, including a local server.", "level": "must"} -->A connection that fails part-way MUST release what it had
-opened, the server process included, before the error is reported. <!-- /rfc --><!-- rfc: {"id": "RK-21.2-008", "kind": "behavior", "applies": "One connection deadline covers start, handshake and listing; expiry cleans up the local or remote connection.", "level": "must"} -->Connecting
-to a server is bounded by `connect_timeout`, the handshake and the listing
+opened, the server process included, before the error is reported. <!-- /rfc --><!-- rfc: {"id": "RK-21.2-008", "kind": "behavior", "applies": "One connection deadline covers start, negotiation and listing; expiry cleans up the local or remote connection.", "level": "must"} -->Connecting
+to a server is bounded by `connect_timeout`, the negotiation and the listing
 together, and a command's start with them: past it a started server is
-stopped, a remote one's connection closed and its session deleted, and the
-connection fails with a timeout, so a server that never answers does not
-hold its host. <!-- /rfc --><!-- rfc: {"id": "RK-21.2-009", "kind": "behavior", "applies": "Stdio shutdown escalates after the grace following input closure.", "level": "must"} -->A started server's stop gives it a grace to exit once its
+stopped, a remote one's connection closed and its session, where it holds
+one, deleted, and the connection fails with a timeout, so a server that never answers does not
+hold its host. <!-- /rfc --><!-- rfc: {"id": "RK-21.2-056", "kind": "behavior", "applies": "Negotiating the MCP revision when connecting: discovery first, the initialize handshake as the fallback, the legacy protocol option and the legacy HTTP+SSE transport by handshake; the protocol _meta, headers and x-mcp-header rules of a 2026-07-28 connection.", "level": "must"} -->The
+negotiation is MCP's. With `protocol` `"auto"` a provider probes the server's
+discovery (`server/discover`, MCP 2026-07-28) and speaks that revision, with
+no handshake, with a server that answers it with a revision both speak; from
+one that refuses the probe, answers it with no revision both speak, or leaves
+the probe unanswered within a bound of its own (10 seconds in the reference
+implementation), it falls back to the `initialize` handshake of the earlier
+revisions, but a refusal of the probe that names only revisions the provider
+does not know fails the connection. With `protocol` `"legacy"`, for a server that fails on
+the probe or never answers it, and on the legacy HTTP+SSE transport, which
+2026-07-28 does not define, the provider goes straight to the handshake.
+Every request of a 2026-07-28 connection carries the protocol's own `_meta`
+entries (the revision, the client's information and capabilities), which a
+caller's `_meta` does not replace, and the headers that revision gives it
+over HTTP: a call of a tool whose listing annotates an argument with
+`x-mcp-header` carries that argument in its `Mcp-Param-*` header, and a tool
+whose annotations that revision does not accept is left out of the
+catalogue. <!-- /rfc --><!-- rfc: {"id": "RK-21.2-057", "kind": "behavior", "applies": "The trace context on MCP requests: the caller's own, whole, or the kit's current span as the kit's telemetry provider names it when the provider propagates it; no other.", "level": "must"} -->A
+request carries a trace context (the W3C `traceparent`, `tracestate` and
+`baggage` of its `_meta`) in two cases only. A caller that wrote one in a
+`request`'s `_meta` sends it whole, never mixed with the kit's (never the
+caller's `traceparent` with the kit's `tracestate`). Otherwise, from a
+provider given `propagate_trace_context`, a request carries those three keys
+of what the kit's telemetry provider gives when it names the kit's current
+span to another process (§10.6.9, §15.7), and nothing when it gives
+nothing. No other trace context goes out: not the application's current
+span, nor what an MCP library writes from it. <!-- /rfc --><!-- rfc: {"id": "RK-21.2-009", "kind": "behavior", "applies": "Stdio shutdown escalates after the grace following input closure.", "level": "must"} -->A started server's stop gives it a grace to exit once its
 input is closed (2 seconds in the reference implementation), then terminates
 it, then kills it.
 
@@ -22966,13 +22994,14 @@ caller never names them to the connection that calls them.
 MCP tools are subject to the same `ToolPolicy` as local tools.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-21.2-033", "kind": "behavior", "applies": "Accepting optional server instructions published at handshake.", "level": "must"} -->
+<!-- rfc: {"id": "RK-21.2-033", "kind": "behavior", "applies": "Accepting optional server instructions published when connecting.", "level": "must"} -->
 **Server instructions.** A server MAY publish, when it connects, how a model
-should use its tools (the `instructions` of its handshake result). <!-- /rfc --><!-- rfc: {"id": "RK-21.2-034", "kind": "behavior", "applies": "Retaining instructions or null and server identity from the negotiated handshake or discovery response.", "level": "must"} -->A provider
+should use its tools (the `instructions` of its discovery or handshake
+result). <!-- /rfc --><!-- rfc: {"id": "RK-21.2-034", "kind": "behavior", "applies": "Retaining instructions or null and server identity from the negotiated handshake or discovery response.", "level": "must"} -->A provider
 keeps them (`instructions`, null when the server published none) with what the
-server said of itself (`server_info`: its name, its version), from the handshake
-the connection made: a client that negotiates the newer protocol's discovery
-reads them from that result instead. <!-- /rfc --><!-- rfc: {"id": "RK-21.2-035", "kind": "behavior", "applies": "Host-supplied MCP instructions for an AI channel's composed system prompt.", "level": "should"} -->A channel that composes a model's system
+server said of itself (`server_info`: its name, its version), from the result
+the connection's negotiation agreed on: its discovery's (whose `_meta` holds
+the `server_info` as `io.modelcontextprotocol/serverInfo`) or its handshake's. <!-- /rfc --><!-- rfc: {"id": "RK-21.2-035", "kind": "behavior", "applies": "Host-supplied MCP instructions for an AI channel's composed system prompt.", "level": "should"} -->A channel that composes a model's system
 prompt (an AI channel, <!-- /rfc --><!-- rfc: {"id": "RK-21.2-036", "kind": "behavior", "applies": "Realtime feature: host-supplied MCP instructions on a reasoning agent or realtime tool-enabled channel.", "level": "should"} -->the agent a reasoning backend drives (Section
 12.4.1), a realtime voice channel whose provider takes tools) SHOULD take,
 from its host, the instructions of the servers whose tools it
@@ -23001,8 +23030,10 @@ and no more: the extensions the server declared when it connected
 (`server_extensions`, empty for a server that declared none), <!-- /rfc --><!-- rfc: {"id": "RK-21.2-046", "kind": "behavior", "applies": "Reading an MCP resource and passing through an unmodelled request and response.", "level": "must"} -->`read_resource`,
 and `request`, which sends a request the provider does not model and returns
 its result as the server sent it. A request without parameters, an empty set
-or an empty or null `_meta` among them, goes out with no `params` member, and
-a `_meta` that is not an object is refused before anything is sent. <!-- /rfc --><!-- rfc: {"id": "RK-21.2-047", "kind": "behavior", "applies": "MCP-served skills obtain identity and verified content from the registry independently of transport session state.", "level": "must"} -->The skills rely on nothing else the
+or an empty or null `_meta` among them, goes out with no parameters of its
+own: no `params` member on a connection of an earlier revision, the
+protocol's `_meta` entries alone on a 2026-07-28 one. A `_meta` that is not
+an object is refused before anything is sent. <!-- /rfc --><!-- rfc: {"id": "RK-21.2-047", "kind": "behavior", "applies": "MCP-served skills obtain identity and verified content from the registry independently of transport session state.", "level": "must"} -->The skills rely on nothing else the
 connection holds: a skill's identity, the entry it was loaded from and the
 content verified are the registry's, so a transport without a session
 serves them alike.

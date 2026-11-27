@@ -24270,15 +24270,15 @@
         {
           "scenario": "mcp-host/listing-metadata",
           "pointer": "/steps/0/expect",
-          "sha256": "cb5b6aa1f417ff2ed690a5950ceb3658cb7ce071fe1678ed8f8386f79b2d6340",
-          "scenario_sha256": "faec28346a5e5ce1ed06b458230bcb26801f8ed5438795e43a55fafb76ae64d6",
+          "sha256": "a98b5989b122473c7fd7869934f1584334fabb82a3120b5a85d13244078db17f",
+          "scenario_sha256": "c5908149244ca13c0a36da65f848065cd766fb026231d1a974d549ba78868bae",
           "proves": "Tool metadata follows the one paged filtered listing and is copied deeply. Exact canonical results and requests complement the readable observations."
         },
         {
           "scenario": "mcp-host/without-discovery",
           "pointer": "/steps/0/expect",
-          "sha256": "4995eafa1ace8a3ebf24cbc0da260e2ea08165c449de335a41799396dd0cbd39",
-          "scenario_sha256": "239accd31faf58254e66bc4528d78b39a34ca0bf705f4a277a1d4364ad538e03",
+          "sha256": "0f8a899e8f821aa1ccfe9e9e26c5a4d9603538d085d98f04264e88c6c713c4c2",
+          "scenario_sha256": "9d16149c0b61cd477514ca115027ffb13917b8a11abb04ecd6c7d4b3e3b8bd07",
           "proves": "A resource-only connection never lists tools. Exact canonical results and requests complement the readable observations."
         }
       ],
@@ -24328,135 +24328,135 @@
     {
       "id": "phase4-mcp-host-access",
       "requirement": "RK-21.2-046",
-      "clause_sha256": "e0d65e3cc98729eb3a2d3ed27f80f5209490adea054627cc61278e4732bc5e28",
+      "clause_sha256": "5b67c6c559b203a3bec023f1f3227e8953f5993a7af3722e2343c5fa37ff6e36",
       "scope": "Handshake information and extensions, raw request/resource fidelity, model boundaries and deadlines; native stdio adds instructions and cancellation witnesses.",
       "coverage": "partial",
-      "review": "Full independent production and fixture reviews accepted the MCP host slice after reproduced model-boundary and fixture-oracle defects were corrected. Source mapping retains 10 full, 4 partial and 1 unclosed selected source contracts. No historical execution receipt is changed. The two MCP timeout witnesses use a 1-second caller deadline after a retained 32-session probe reproduced expiry before dispatch at 10 ms; the exact request/result assertions and the product deadlines are unchanged. Both fixtures now reject mismatched held requests immediately. 2026-11-27 (RMK-663): the clause now also says a request without parameters goes out with no params member and a _meta that is not an object is refused before sending; mcp-host/request-arguments asserts both, and the scenarios that scripted an empty params object for such a request script none.",
+      "review": "Full independent production and fixture reviews accepted the MCP host slice after reproduced model-boundary and fixture-oracle defects were corrected. Source mapping retains 10 full, 4 partial and 1 unclosed selected source contracts. No historical execution receipt is changed. The two MCP timeout witnesses use a 1-second caller deadline after a retained 32-session probe reproduced expiry before dispatch at 10 ms; the exact request/result assertions and the product deadlines are unchanged. Both fixtures now reject mismatched held requests immediately. 2026-11-27 (RMK-663): the clause now also says a request without parameters goes out with no params member and a _meta that is not an object is refused before sending; mcp-host/request-arguments asserts both, and the scenarios that scripted an empty params object for such a request script none. RMK-664: RK-21.2-046 now says a request without parameters goes with the protocol's _meta entries alone on a 2026-07-28 connection; the assertions, on a peer of an earlier revision, still prove its no-params branch, and expect the server/discover probe before initialize.",
       "assertions": [
         {
           "scenario": "mcp-host/disconnected-access",
           "pointer": "/steps/0/expect",
-          "sha256": "88c6edc3364bd290d09af56e2fdade833944e283c86053ef53fa9886c05dc01b",
-          "scenario_sha256": "a558ad52877413e7bca1c86f702eb15782958d751ebc5125994c807894852c1d",
+          "sha256": "f94cb53805a5aa79d9f3f642161f9d85ec4f0dce104062a6ed10403f81ff4edf",
+          "scenario_sha256": "c33d707272aaf782a68be59acab23b534ffc5019160f9964c208105b953e5b86",
           "proves": "Every new host accessor refuses outside its connection. Exact canonical results and requests complement the readable observations."
         },
         {
           "scenario": "mcp-host/extension-container-validation",
           "pointer": "/steps/0/expect",
-          "sha256": "e5aff050230fd67b2047c69b76ee5df9ad4f1a116e61a139a6e3e59cc40ca1b7",
-          "scenario_sha256": "a2ec793b76007f65e120b634f919475b1a98ace32911ee0966d06b0d08a220c1",
+          "sha256": "305c61fdbe0224dcec3d15fb7c6786ccfce84279afa1b4f42403444f82694816",
+          "scenario_sha256": "bfea9a3092fcd41d9c1f11a61d07652b69b8ed6218eb422716ee3edbc23daec9",
           "proves": "A non-object extension declaration admits no extension and does not reject connection. Exact canonical results and requests complement the readable observations."
         },
         {
           "scenario": "mcp-host/handshake-copies",
           "pointer": "/steps/0/expect",
-          "sha256": "fa07f5c575236bf58cc542e3fcc178a09e8e556bd01ebd0018c9365fbc8154a7",
-          "scenario_sha256": "55fbac2079eb516383184bd9518cb085f647845fc5c1f9ac22deddfafdd53fef",
+          "sha256": "944ff30e54049dd2834be3441ae8006d9e671413640f3e3bf76e9c96b6e86fea",
+          "scenario_sha256": "f953dae54bd4621eba2493bbc2187d031066c91db77e971bd8b8f7a6dca4f4a9",
           "proves": "Host information and extension snapshots preserve the handshake and are owned copies. Exact canonical results and requests complement the readable observations."
         },
         {
           "scenario": "mcp-host/mixed-extension-settings",
           "pointer": "/steps/0/expect",
-          "sha256": "df896b8db032403f95407c4e0c326487150c3adbfd283b7329a2ae22089e60dc",
-          "scenario_sha256": "c483377064e32b94ce95ef617deeac30b0e4cd622cf4427c198ba989541428f3",
+          "sha256": "ae16a3ccff5b7e9ca3d2cfa3be93a40c3f7530385612b04c6a14bc0f21434e91",
+          "scenario_sha256": "e806eb9b480dd0e4b15d41cd2105a4876db1c39604b7e19671c8ba2e9964c570",
           "proves": "A valid extension remains when a sibling declares non-object settings. Exact canonical results and requests complement the readable observations."
         },
         {
           "scenario": "mcp-host/raw-results-json",
           "pointer": "/steps/0/expect",
-          "sha256": "79f94ca7590e2e8bf1a99d3a4c963d4ac32f6e351e3f445188075a78d8e2e570",
-          "scenario_sha256": "2a9372c59bba66b4d9edf8bf36a278492247d34303c101b2c8cf8f27d41cbd5d",
+          "sha256": "930e101235e97412c9f7b77214f0752ce4239b6bf85237e89595e60e6406ac57",
+          "scenario_sha256": "abe3a3cef49d4d393a98afa977426e1f7aeb6cb89b647e98b7b005ea972d56e6",
           "proves": "Raw host requests preserve fields that resemble known SDK results (json). Exact canonical results and requests complement the readable observations."
         },
         {
           "scenario": "mcp-host/raw-results-sse",
           "pointer": "/steps/0/expect",
-          "sha256": "79f94ca7590e2e8bf1a99d3a4c963d4ac32f6e351e3f445188075a78d8e2e570",
-          "scenario_sha256": "6b99974d586d7ba6389b22636b9ec395300599a6712f4aefc6cd5068d0154f38",
+          "sha256": "930e101235e97412c9f7b77214f0752ce4239b6bf85237e89595e60e6406ac57",
+          "scenario_sha256": "16342f629441f05821fd44e19b0af0387144f31d19df2a85f4d88720ef808158",
           "proves": "Raw host requests preserve fields that resemble known SDK results (sse). Exact canonical results and requests complement the readable observations."
         },
         {
           "scenario": "mcp-host/read-resource-timeout",
           "pointer": "/steps/0/expect",
-          "sha256": "c5ab9cf4dafc42e9858b643bf0ea99f22ad95fd7f7d9ce0f9562df7e5b3c70ee",
-          "scenario_sha256": "860c28ab8fdd28c645a7d47e141e42e3871fc6e7ed688518779de4d5b6f3f795",
+          "sha256": "6fc622e7fd610653f126ee9262aa198e51ce933abfdf4a9a29806230479bd449",
+          "scenario_sha256": "19492390be998de28b669fedc2932c263d5eba9eba6146d93f81ca33d58aebf9",
           "proves": "read_resource obeys its explicit deadline and does not poison the next request. Exact canonical results and requests complement the readable observations."
         },
         {
           "scenario": "mcp-host/reconnect-snapshots",
           "pointer": "/steps/0/expect",
-          "sha256": "09cae04d1a3d3bbccab4c4ca6d1c47eaab850bc59588b2360ff712f3a980e532",
-          "scenario_sha256": "43735bbcaa65ee00a92664cc9d2d834deff62655f1e1bc4909879cf13e7d579b",
+          "sha256": "d9f72e9e7aee2c0131f50e5d50922182b8bc63a50714b637d89ed6d8ea9d9201",
+          "scenario_sha256": "3419af527c1df70f431daedf21ecf371926537c4d2eca7a4fb51a62fb06b36b9",
           "proves": "Reconnecting replaces the prior information, extension and tool metadata snapshots. Exact canonical results and requests complement the readable observations."
         },
         {
           "scenario": "mcp-host/request-arguments",
           "pointer": "/steps/0/expect",
-          "sha256": "78efa724005ecd28361f46f416f7e88af6909cbd5ee6f9f5377bc5d132ae6639",
-          "scenario_sha256": "2d3c902386792d1af73b6879c73d018d1494d73b5dce8d97ba3d8d5bf74346ba",
+          "sha256": "b5ff295cabfbb13ddb344e4de5d8383e6ea250aaeadc9cac27cd79200c10ab81",
+          "scenario_sha256": "e5a4e10d12a9dd019d60eab89aaedd26bef10a3c357b8ef9f29c9f95403f1239",
           "proves": "Host parameters: an empty set, or an empty or null _meta, goes out as no params member, caller-owned metadata as written, and a _meta that is not an object is refused before anything is sent. Exact canonical results and requests complement the readable observations."
         },
         {
           "scenario": "mcp-host/request-metadata-validation",
           "pointer": "/steps/0/expect",
-          "sha256": "10b8193e0c5b5119be2ff400ec0c9251d0495b7ed7100ef37ba189a863bfb2fb",
-          "scenario_sha256": "039e09b548b702b8cc648009e44c2ac94a5ba247f79bdda86f77534a6b1678df",
+          "sha256": "d6cefeb37cc60a7da3eab02daab251fcd3de76ca7370b40526064c47ec6a4e6a",
+          "scenario_sha256": "d1a805208a95727f92a7247eee6568cbe76d2261fdeaeec62f93c6a4855dfd15",
           "proves": "Raw host results still validate the known metadata field. Exact canonical results and requests complement the readable observations."
         },
         {
           "scenario": "mcp-host/request-timeout",
           "pointer": "/steps/0/expect",
-          "sha256": "51bb395666b9703f79b96c3c243717ceab8b6203fb60bb3757d6d4ae7d7c595d",
-          "scenario_sha256": "2b8a6f3e34e33a1918d29b94452b8188c1a95717aef43c3cbdb8a15ece162034",
+          "sha256": "bc01a89d4f59e14668d384c2b777111fe473c258b012661275423b0f5aefef93",
+          "scenario_sha256": "692d79d553c0a68765ad008a3b754e9d694a3d95bf69054da30c6fdb12d67c96",
           "proves": "request obeys its explicit deadline and does not poison the next request. Exact canonical results and requests complement the readable observations."
         },
         {
           "scenario": "mcp-host/resource-results-json",
           "pointer": "/steps/0/expect",
-          "sha256": "683c0f4f70e99b5bc214c0fee6998d3cc9aa50f45f4755aa84b9235786d47dad",
-          "scenario_sha256": "2fe31af92281fd347a74365815cf0a83ab3a42db68b0daf569659848473666a9",
+          "sha256": "13d25967fe0ad53e4906fb26db8df949875308b44da4bbc75a358c8a51740717",
+          "scenario_sha256": "848118fafdc6b1b74f76bd60e776b15263b9f9df394e2fc5890d46819b9bca90",
           "proves": "Resource reads retain ordered contents and extension fields and reach the peer again (json). Exact canonical results and requests complement the readable observations."
         },
         {
           "scenario": "mcp-host/resource-results-sse",
           "pointer": "/steps/0/expect",
-          "sha256": "683c0f4f70e99b5bc214c0fee6998d3cc9aa50f45f4755aa84b9235786d47dad",
-          "scenario_sha256": "3f076e534c8fa0a38dc1bf2b44a29d3e58d815bb3e46bcc755a8022ffb7a8fb0",
+          "sha256": "13d25967fe0ad53e4906fb26db8df949875308b44da4bbc75a358c8a51740717",
+          "scenario_sha256": "08fa052fcd3c7f24d14e2a0b2453836898467dc65aece57e6a21292aa92de1a8",
           "proves": "Resource reads retain ordered contents and extension fields and reach the peer again (sse). Exact canonical results and requests complement the readable observations."
         },
         {
           "scenario": "mcp-host/resource-uri-normalization",
           "pointer": "/steps/0/expect",
-          "sha256": "f49623620ea815e94c8314eb015c6e0b32c42797d16c6623c170ae6412474d5e",
-          "scenario_sha256": "08a4343d0209bd74ca62c5d10daf8fdc00bf12c5cb04761b68beb608ec861d86",
+          "sha256": "f5a18a03e34f7ae4c6b654b84378794e97a8965aa0f26bcb6b42c0f02b7fe0af",
+          "scenario_sha256": "cf497fbdfbca7adf9e0b2f51c698862c7dda147efe72337389ac2e9408d62418",
           "proves": "Resource URIs are normalized on the outgoing request and returned contents. Exact canonical results and requests complement the readable observations."
         },
         {
           "scenario": "mcp-host/resource-validation",
           "pointer": "/steps/0/expect",
-          "sha256": "99c657ce71671a1034554d0d799336511bacb9e87087fc27ca006b76af578230",
-          "scenario_sha256": "cc220790ddc1a24df7a19fda6495b4a8093d52bdb525c7acd2e3cd8c7b712d7f",
+          "sha256": "4107d1ddaf2dbc6cc8ea4c87a55f2995ac066d16ee754da631c63e43eb994948",
+          "scenario_sha256": "6dba6bb1cd5f23e33482e93c5465b5ce5e4eb1d3e2d2add4cfdc43dce7002198",
           "proves": "Invalid resource input and malformed contents fail without poisoning the next request. Exact canonical results and requests complement the readable observations."
         },
         {
           "scenario": "mcp-host/server-errors",
           "pointer": "/steps/0/expect",
-          "sha256": "aaa308233cb49c90ca7758ddc29ae4b37b6b05071632df070063846e8ad9d9da",
-          "scenario_sha256": "5b3e5c7d30a422eb9a24e984a5e3d4407cd24fce695508a31e321e56dc7ad23c",
+          "sha256": "a2080abc7432537f9152bc1e4501b347a34505bc6efb6859734535abb83bb671",
+          "scenario_sha256": "523fe554383f837a6acfb5644e5ae5068008f9c4cd99fc6a4bb36dbe41cc59e0",
           "proves": "Raw requests and resource reads preserve a refusal as a server error. Exact canonical results and requests complement the readable observations."
         },
         {
           "scenario": "mcp-host/server-info-icon-nulls",
           "pointer": "/steps/0/expect",
-          "sha256": "027caa21dc2daebcf4d16b623f58a160b45229023f3a588d39cc95b75ea17fa0",
-          "scenario_sha256": "53960ab05877f07b8dc6992081cd7e68772f172ba42ef8b875b8b1447bd3cd4f",
+          "sha256": "cfd05ee433d84f11be58f660d09646eaf610a0cb296747aad80c6422e1481cdc",
+          "scenario_sha256": "1bf1d8c34f68d7a4342ab8509155baec7677e7c3d32afdae3904994d525aeab1",
           "proves": "Server information omits null fields at known Icon model boundaries and preserves nested JSON nulls. Exact canonical results and requests complement the readable observations."
         },
         {
           "scenario": "mcp-host/undeclared-extensions",
           "pointer": "/steps/0/expect",
-          "sha256": "fd18cd215146369098c08f4594412f72c40970f7b90b0653383f62ddd3a71ef3",
-          "scenario_sha256": "447d0e7fd5fc7fef9700d9cab656f0facdc4ab6a98a8d542191450739d9433c6",
+          "sha256": "47aaee48e6558fdc2e7afb6bb2481592f490ba7a8b15347a9ce8c1135879bbe2",
+          "scenario_sha256": "0be862001b6f9b27d962da6b6bd5edcb5a2c7217d63b0079daf6fa42a6757d20",
           "proves": "A server without declared extensions yields an empty snapshot. Exact canonical results and requests complement the readable observations."
         }
       ],
@@ -24513,30 +24513,30 @@
         {
           "scenario": "mcp-host/tool-dictionaries-empty-catalogue",
           "pointer": "/steps/0/expect",
-          "sha256": "53b2a7d5dbd03ad8377380908c6d7cecc0520cf14326fca9ca137254ef842f6d",
-          "scenario_sha256": "71e281e8cd9305fd45f988f2af0b80a0d7ee47fca96f563c29acc0b476e40b12",
-          "proves": "An empty discovered catalogue returns an empty dictionary list; the exact requests contain one initialize and one tools/list."
+          "sha256": "519d77b54c0d2fba281696a0d4e898a0ca079bfe19c251b0006d2f53c3b7c87f",
+          "scenario_sha256": "28372debe16797bffd9718356d23fcd498d51d172cc3380977f2fe5a6dd00f33",
+          "proves": "An empty discovered catalogue returns an empty dictionary list; the exact requests contain the refused server/discover probe, one initialize and one tools/list."
         },
         {
           "scenario": "mcp-host/tool-dictionaries-json",
           "pointer": "/steps/0/expect",
-          "sha256": "31608f9a8f6815f5d09d2d07ba827bf77a6626fae7eebbbc7de0c718ae27975b",
-          "scenario_sha256": "2ef06f0770c748dd0787413268947b570b0595fea4f907a0535415274363e2fc",
+          "sha256": "89f86a8726cf9921cd54053f5867f2fbbc3f0330abd31edc95d27bc1086be616",
+          "scenario_sha256": "6ae893f0f533494e6dd62a48359eda13601972ac31e62e6fe2cc3de47a333bc2",
           "proves": "Exact six-field dictionaries in filtered, paged catalogue order; connection guards before connect and after close; repeated snapshots trigger no relisting. HTTP JSON response framing."
         },
         {
           "scenario": "mcp-host/tool-dictionaries-sse",
           "pointer": "/steps/0/expect",
-          "sha256": "31608f9a8f6815f5d09d2d07ba827bf77a6626fae7eebbbc7de0c718ae27975b",
-          "scenario_sha256": "183cbd883ad719d0064f3a2d081894f304bc6cfa032f41107c0efda7b303c4be",
+          "sha256": "89f86a8726cf9921cd54053f5867f2fbbc3f0330abd31edc95d27bc1086be616",
+          "scenario_sha256": "e5dde383a6a5a702838fe167795b9971a560746f143c403f9ed3162795a3f8a8",
           "proves": "Exact six-field dictionaries in filtered, paged catalogue order; connection guards before connect and after close; repeated snapshots trigger no relisting. SSE response framing over streamable HTTP, not legacy SSE transport."
         },
         {
           "scenario": "mcp-host/tool-dictionaries-without-discovery",
           "pointer": "/steps/0/expect",
-          "sha256": "d82d55d2cf13f01697f23191dcbbb1e48b92edc23bba2d53c6d40efd97e11985",
-          "scenario_sha256": "89cd0f37b260e2a7a208b2d5602125b3a3c31794ff690b0169c1e3572fc1b0a3",
-          "proves": "Disabling discovery returns an empty dictionary list; initialize is the only request."
+          "sha256": "233c93a9fd2acbbb2583450e96a7a111de7e198fc70a4b1045cf87859a5a1036",
+          "scenario_sha256": "a76bcd7bfd36a5fc7238e2150722bd589cb69cb8c4f3dce174daa3ceeb6647d5",
+          "proves": "Disabling discovery returns an empty dictionary list; the protocol's negotiation (the server/discover probe the peer refuses, then initialize) is the only exchange."
         }
       ],
       "tests": [

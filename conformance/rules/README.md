@@ -45,7 +45,7 @@ proof: a scenario can cite a unit without covering all of it.
 | [§18 Design Principles](section-18.md) | 1 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | [§19 Multi-Agent Orchestration](section-19.md) | 569 | 562 | 3 | 3 | 1 | 506 | 1944 | 0 | 46 | 0 | 19 | 27 |
 | [§20 Memory System](section-20.md) | 63 | 62 | 0 | 1 | 0 | 58 | 244 | 0 | 2 | 0 | 2 | 0 |
-| [§21 Tool Access Control](section-21.md) | 214 | 199 | 13 | 2 | 0 | 144 | 907 | 0 | 53 | 0 | 30 | 28 |
+| [§21 Tool Access Control](section-21.md) | 216 | 201 | 13 | 2 | 0 | 145 | 918 | 0 | 54 | 0 | 30 | 28 |
 | [§22 Delivery Strategies](section-22.md) | 144 | 130 | 5 | 8 | 1 | 77 | 274 | 0 | 45 | 9 | 10 | 27 |
 | [§23 Task Delegation](section-23.md) | 207 | 205 | 1 | 0 | 1 | 176 | 599 | 0 | 25 | 2 | 16 | 7 |
 | [§24 Skills Framework](section-24.md) | 184 | 174 | 3 | 6 | 1 | 146 | 776 | 0 | 24 | 2 | 17 | 5 |

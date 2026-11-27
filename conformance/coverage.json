@@ -1,9 +1,9 @@
 {
   "version": 1,
-  "rfc_sha256": "33537d69e3a9184b9823e418ee3590c952b76c8289b7720b141fbbe13dd1fbf0",
-  "corpus_sha256": "666a2f0d32600e7348fe54bfecdb5db137e7c10cf41f5322f6caf87180306b24",
+  "rfc_sha256": "258d0eb4bfc7c40a6053df6c5b07adfce6d1b2e3e73299101840581dbde2f4b6",
+  "corpus_sha256": "323083ec6ba33121ff1a0af9ac7f1a0c21c35c4b53345b07f2b351b611f24115",
   "python_commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
-  "scenario_count": 4284,
+  "scenario_count": 4288,
   "sections": [
     {
       "section": "0",
@@ -10583,10 +10583,10 @@
       "section": "21.2",
       "title": "MCP Tool Provider",
       "review": "normative",
-      "requirements": 53,
+      "requirements": 55,
       "mapping": {
         "mapped_partial": 2,
-        "unmapped": 51
+        "unmapped": 53
       },
       "decided_gaps": {
         "phase6": 5,
@@ -10612,6 +10612,10 @@
         "mcp-construction/from-url-sse-timeout-listing",
         "mcp-host/a-content-the-model-is-not-shown-reads-as-a-note-of-its-kind-and-type",
         "mcp-host/a-listing-that-pages-on-without-anything-new-stops",
+        "mcp-host/a-request-on-2026-07-28-carries-the-protocol-s-own-metadata",
+        "mcp-host/a-server-of-2026-07-28-is-reached-by-discovery",
+        "mcp-host/a-server-refusing-discovery-over-http-is-reached-by-the-handshake",
+        "mcp-host/a-tool-call-on-2026-07-28-mirrors-its-annotated-arguments-into-headers",
         "mcp-host/disconnected-access",
         "mcp-host/extension-container-validation",
         "mcp-host/handshake-copies",
@@ -43296,6 +43300,18 @@
     },
     {
       "id": "RK-21.2-008",
+      "section": "21.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-21.2-056",
+      "section": "21.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-21.2-057",
       "section": "21.2",
       "mapping": "unmapped",
       "links": []

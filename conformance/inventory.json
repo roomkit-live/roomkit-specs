@@ -1335,9 +1335,9 @@
     },
     {
       "section": "21.2",
-      "sha256": "1885429e39f8d3e8b62fd921bdea0708eb3057f7f476305e92270249de01cdd8",
+      "sha256": "65b0414a1e94e0003bbb7da665db1ad8b546754c0b2111e2c82fbd4ebfa67192",
       "classification": "normative",
-      "review": "The MCP support recommendation, provider interface, connection lifecycle, configuration, alias routing, bounded discovery, schema checks, server instructions, host requests and rendering of results have separate units. Prompt-composing text, realtime and conference paths retain their own conditions."
+      "review": "The MCP support recommendation, provider interface, connection lifecycle, configuration, alias routing, bounded discovery, schema checks, server instructions, host requests and rendering of results have separate units. Prompt-composing text, realtime and conference paths retain their own conditions. RK-21.2-056 (RMK-664): the revision negotiation, discovery first and the handshake as its fallback, the protocol option, with the protocol _meta, headers and x-mcp-header rules of a 2026-07-28 connection. RK-21.2-057 (RMK-664): the host's trace context on a request, only when the provider propagates it."
     },
     {
       "section": "21.3",
