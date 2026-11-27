@@ -11,7 +11,7 @@
     "RK-19.7.5-030",
     "RK-19.7.5-075"
   ],
-  "notes": "While a's turn holds, the room's bot participant names c, queued at the back; the delivery then names b, queued behind c, where a person's message naming b would put it before c. The turns run a, c, b. Then the bot writes naming nobody, and no agent is asked. Not exercised: a webhook's event.",
+  "notes": "While a's turn holds, the room's bot participant names c; the delivery then names b, queued behind c, where a person's message naming b would put it before c; the bot then names d, queued behind b, where a front request would put it before b. The turns run a, c, b, d. Then the bot writes naming nobody, and no agent is asked. Not exercised: a webhook's event.",
   "setup": {
     "channels": [
       {
@@ -53,6 +53,17 @@
             }
           ]
         }
+      },
+      {
+        "id": "d",
+        "type": "ai",
+        "model": {
+          "rounds": [
+            {
+              "text": "d done"
+            }
+          ]
+        }
       }
     ],
     "rooms": [
@@ -85,7 +96,8 @@
           "agents": [
             "a",
             "b",
-            "c"
+            "c",
+            "d"
           ]
         }
       }
@@ -176,6 +188,38 @@
       }
     },
     {
+      "call": "process_inbound",
+      "room_id": "r1",
+      "message": {
+        "channel_id": "ops",
+        "sender_id": "helper",
+        "content": {
+          "type": "text",
+          "body": "@d check the cache"
+        }
+      },
+      "expect": {
+        "result": {
+          "blocked": false,
+          "error": null
+        }
+      }
+    },
+    {
+      "call": "speak_queue",
+      "room_id": "r1",
+      "expect": {
+        "result": {
+          "speaking": "a",
+          "queue": [
+            "c",
+            "b",
+            "d"
+          ]
+        }
+      }
+    },
+    {
       "open": "a-held"
     },
     {
@@ -235,6 +279,17 @@
         },
         {
           "source": {
+            "channel_id": "ops"
+          },
+          "content": {
+            "body": "@d check the cache"
+          },
+          "addressed_to": [
+            "d"
+          ]
+        },
+        {
+          "source": {
             "channel_id": "a"
           },
           "content": {
@@ -259,6 +314,14 @@
         },
         {
           "source": {
+            "channel_id": "d"
+          },
+          "content": {
+            "body": "d done"
+          }
+        },
+        {
+          "source": {
             "channel_id": "ops"
           },
           "content": {
@@ -275,6 +338,9 @@
         {}
       ],
       "c": [
+        {}
+      ],
+      "d": [
         {}
       ]
     }
