@@ -35,7 +35,7 @@ proof: a scenario can cite a unit without covering all of it.
 | [§8 Event System](section-8.md) | 177 | 176 | 1 | 0 | 0 | 141 | 1235 | 0 | 32 | 4 | 15 | 13 |
 | [§9 Hook System](section-9.md) | 350 | 343 | 3 | 4 | 0 | 333 | 1342 | 0 | 0 | 0 | 0 | 0 |
 | [§10 Processing Pipelines](section-10.md) | 652 | 631 | 7 | 14 | 0 | 592 | 2278 | 0 | 0 | 0 | 0 | 0 |
-| [§11 Identity Resolution](section-11.md) | 110 | 108 | 2 | 0 | 0 | 97 | 387 | 0 | 5 | 0 | 3 | 2 |
+| [§11 Identity Resolution](section-11.md) | 110 | 108 | 2 | 0 | 0 | 99 | 389 | 0 | 3 | 0 | 3 | 0 |
 | [§12 Voice and Realtime Media](section-12.md) | 1299 | 1185 | 73 | 38 | 3 | 855 | 1144 | 0 | 1 | 2 | 0 | 0 |
 | [§13 Resilience and Error Handling](section-13.md) | 97 | 88 | 7 | 2 | 0 | 74 | 276 | 0 | 13 | 0 | 15 | 0 |
 | [§14 Storage Interface](section-14.md) | 110 | 107 | 1 | 2 | 0 | 76 | 153 | 0 | 24 | 1 | 23 | 0 |
@@ -43,7 +43,7 @@ proof: a scenario can cite a unit without covering all of it.
 | [§16 Integration Surfaces](section-16.md) | 12 | 4 | 8 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | [§17 Security Considerations](section-17.md) | 78 | 62 | 16 | 0 | 0 | 25 | 166 | 0 | 27 | 0 | 14 | 16 |
 | [§18 Design Principles](section-18.md) | 1 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| [§19 Multi-Agent Orchestration](section-19.md) | 569 | 562 | 3 | 3 | 1 | 486 | 1921 | 0 | 66 | 3 | 17 | 46 |
+| [§19 Multi-Agent Orchestration](section-19.md) | 569 | 562 | 3 | 3 | 1 | 506 | 1944 | 0 | 46 | 0 | 19 | 27 |
 | [§20 Memory System](section-20.md) | 63 | 62 | 0 | 1 | 0 | 58 | 244 | 0 | 2 | 0 | 2 | 0 |
 | [§21 Tool Access Control](section-21.md) | 214 | 199 | 13 | 2 | 0 | 144 | 907 | 0 | 53 | 0 | 30 | 28 |
 | [§22 Delivery Strategies](section-22.md) | 144 | 130 | 5 | 8 | 1 | 72 | 268 | 0 | 50 | 21 | 3 | 27 |

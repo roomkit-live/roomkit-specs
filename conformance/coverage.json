@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "33537d69e3a9184b9823e418ee3590c952b76c8289b7720b141fbbe13dd1fbf0",
-  "corpus_sha256": "ba20d436ddf1f43747ca9b66a5c55495860a138e12fffe650df4217b196df28d",
+  "corpus_sha256": "700c405458baa1894447387c3c3ce6ca1a652bf58a6eb464aa847e42225b0a15",
   "python_commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
-  "scenario_count": 4257,
+  "scenario_count": 4271,
   "sections": [
     {
       "section": "0",
@@ -1736,6 +1736,7 @@
         "realtime/an-agent-backend-serves-with-its-settings-and-the-session-s-catalogue",
         "realtime/an-agent-backend-turn-its-round-cap-cuts-fires-no-on-error",
         "realtime/tool-search-never-names-a-denied-tool",
+        "realtime/tool-search-on-a-pipeline-session-lists-no-tool-either-policy-denies",
         "reasoning/a-block-cut-before-its-signature-is-not-replayed",
         "reasoning/a-compaction-keeps-the-rounds-reasoning",
         "reasoning/a-cut-block-is-still-the-turn-s-reasoning",
@@ -5640,6 +5641,7 @@
         "greeting/send-greeting-speaks-for-a-declared-agent",
         "host/a-turn-s-host-leaves-the-implementation-s-own-room-keys-unwritten",
         "kit-executor/a-channel-declared-while-a-kit-turn-hook-could-fire-for-it-is-refused",
+        "realtime/a-realtime-pipeline-refuses-an-agent-held-by-its-declaration-alone",
         "rooms/a-declared-agent-binds-as-an-intelligence-channel-only"
       ]
     },
@@ -6271,7 +6273,6 @@
         "unmapped": 13
       },
       "decided_gaps": {
-        "phase6": 1,
         "step": 3
       },
       "unannotated_keyword_lines": [],
@@ -6358,9 +6359,7 @@
       "mapping": {
         "unmapped": 19
       },
-      "decided_gaps": {
-        "phase6": 1
-      },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "verification/a-blocked-message-is-observed-by-no-hook",
@@ -6377,6 +6376,7 @@
         "verification/a-policy-that-does-not-hold-only-labels",
         "verification/a-sender-not-identified-is-neither-labelled-nor-held",
         "verification/a-sender-s-held-mark-is-dropped",
+        "verification/a-speech-to-speech-transcript-is-neither-labelled-nor-held",
         "verification/a-verification-hook-past-process-timeout-expires-its-message",
         "verification/a-verification-labels-only-its-organization-s-rooms",
         "verification/a-verified-sender-s-message-reaches-the-agents",
@@ -7131,6 +7131,7 @@
         "conference/a-delivery-to-the-conference-is-injected-into-its-model-with-its-intent",
         "conference/a-refused-conference-tool-call-is-on-the-wire-before-its-report",
         "eviction/a-call-under-an-id-its-round-holds-is-refused-unstored",
+        "greeting/a-realtime-session-s-greeting-is-injected-as-the-model-s-own-turn",
         "provider-served/absent-is-pending-stream",
         "provider-served/absent-is-pending-whole",
         "provider-served/cut-known-failure-stream",
@@ -7253,6 +7254,7 @@
         "tools/a-second-call-under-a-held-id-is-refused-before-it-reads-as-cut",
         "tools/a-second-call-under-an-id-in-its-round-is-refused",
         "tools/another-turn-among-a-round-s-starts-leaves-its-results-paired",
+        "verification/a-speech-to-speech-transcript-is-neither-labelled-nor-held",
         "voice/a-voice-and-a-realtime-channel-bind-as-transports-of-audio-and-text"
       ]
     },
@@ -7291,6 +7293,7 @@
         "realtime/a-host-that-sent-a-result-is-busy-until-the-answer-starts",
         "realtime/a-hosted-backend-s-call-passes-the-gate",
         "realtime/a-later-tool-under-a-name-the-agent-serves-is-not-declared",
+        "realtime/a-reasoning-backend-s-agent-is-refused-for-what-a-session-never-serves",
         "realtime/a-recorder-keeps-a-full-duplex-provider-s-silence",
         "realtime/a-session-s-delegations-run-one-at-a-time-each-reading-the-last",
         "realtime/a-session-tool-under-a-name-the-agent-serves-is-refused",
@@ -9287,9 +9290,8 @@
         "unmapped": 40
       },
       "decided_gaps": {
-        "phase6": 3,
-        "step": 1,
-        "writable": 2
+        "phase6": 2,
+        "step": 2
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -9306,6 +9308,7 @@
         "greeting/a-hook-greeting-on-every-answer-under-the-lock-stops-at-the-budget",
         "greeting/a-hook-greeting-on-its-own-greeting-stops-at-its-hook-calls",
         "greeting/a-hook-s-body-greeting-on-every-answer-stops-at-the-depth-limit",
+        "greeting/a-realtime-session-s-greeting-is-injected-as-the-model-s-own-turn",
         "greeting/a-stream-answering-a-greeting-is-chained",
         "greeting/an-agent-greets-a-room-once",
         "greeting/an-agent-greets-only-when-it-may",
@@ -9324,7 +9327,8 @@
         "orchestration/a-handoff-greeting-takes-the-handler-s-event-channel",
         "orchestration/a-handoff-greeting-with-nothing-to-say-stores-nothing",
         "orchestration/a-handoff-s-language-change-writes-the-agent-s-identity-in-that-language",
-        "orchestration/an-agent-s-turn-prompt-ends-with-its-identity"
+        "orchestration/an-agent-s-turn-prompt-ends-with-its-identity",
+        "realtime/a-pipeline-session-s-prompt-ends-with-its-agent-s-identity"
       ]
     },
     {
@@ -9358,7 +9362,7 @@
         "unmapped": 15
       },
       "decided_gaps": {
-        "phase6": 1
+        "step": 1
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -9492,8 +9496,7 @@
         "unmapped": 34
       },
       "decided_gaps": {
-        "phase6": 14,
-        "writable": 1
+        "phase6": 5
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -9508,7 +9511,17 @@
         "orchestration/a-handoff-s-caller-holds-the-room-s-phase",
         "orchestration/a-handoff-to-an-agent-in-no-stage-is-refused",
         "orchestration/a-pipeline-chains-its-agents-and-starts-at-the-first",
-        "orchestration/an-install-refused-by-a-handoff-already-set-up-leaves-nothing"
+        "orchestration/an-install-refused-by-a-handoff-already-set-up-leaves-nothing",
+        "realtime/a-handoff-reconfigures-its-room-s-session-alone-and-a-language-change-the-active-agent-s",
+        "realtime/a-pipeline-call-is-judged-by-the-agent-the-room-talks-to-when-it-arrives",
+        "realtime/a-pipeline-session-declares-the-channel-s-tools-as-they-are-the-agent-s-and-the-handoff",
+        "realtime/a-pipeline-session-s-prompt-ends-with-its-agent-s-identity",
+        "realtime/a-realtime-pipeline-refuses-an-agent-held-by-its-declaration-alone",
+        "realtime/a-reasoning-backend-s-agent-is-refused-for-what-a-session-never-serves",
+        "realtime/a-tool-name-the-channel-carries-stays-the-channel-s-under-a-pipeline-agent",
+        "realtime/an-agent-with-nothing-to-set-speaks-with-the-channel-s-prompt-and-keeps-it-through-a-language-change",
+        "realtime/the-channel-s-and-the-active-agent-s-policies-both-hold-on-a-pipeline-session-for-its-participant",
+        "realtime/tool-search-on-a-pipeline-session-lists-no-tool-either-policy-denies"
       ]
     },
     {
@@ -9520,7 +9533,7 @@
         "unmapped": 46
       },
       "decided_gaps": {
-        "phase6": 5,
+        "phase6": 3,
         "step": 2
       },
       "unannotated_keyword_lines": [],
@@ -9556,6 +9569,7 @@
         "orchestration/an-inbound-after-a-handoff-to-a-human-asks-no-agent",
         "orchestration/an-install-refused-by-a-handoff-already-set-up-leaves-nothing",
         "orchestration/the-generic-handoff-tool-is-declared-in-every-room-the-agent-serves",
+        "realtime/a-handoff-reconfigures-its-room-s-session-alone-and-a-language-change-the-active-agent-s",
         "skills/a-turn-s-tools-are-declared-the-owner-s-before-a-person-s-and-the-skills",
         "turn-record/a-cut-first-pass-s-fallback-carries-what-its-tool-wrote"
       ]
@@ -9570,7 +9584,7 @@
         "unmapped": 65
       },
       "decided_gaps": {
-        "phase6": 6,
+        "phase6": 2,
         "step": 1
       },
       "unannotated_keyword_lines": [],
@@ -9607,6 +9621,7 @@
         "orchestration/a-router-s-install-hooks-at-its-priority",
         "orchestration/a-supervised-team-s-digest-names-who-asked-for-its-task",
         "orchestration/a-supervisor-install-refused-halfway-sets-nothing-up",
+        "orchestration/a-supervisor-s-realtime-tool-reaches-the-room-it-was-installed-in-alone",
         "orchestration/a-supervisor-s-team-call-names-who-asked-for-its-task",
         "orchestration/a-swarm-hands-the-room-from-agent-to-agent",
         "orchestration/a-swarm-starts-at-its-entry-and-serves-each-room-its-own-install",
@@ -9640,6 +9655,7 @@
         "orchestration/installs-and-turns-leave-a-binding-the-supervisor-shares-as-it-was",
         "orchestration/the-kit-s-default-strategy-unless-the-room-names-another-or-none",
         "orchestration/the-room-strategy-is-read-within-a-tenant",
+        "realtime/a-handoff-reconfigures-its-room-s-session-alone-and-a-language-change-the-active-agent-s",
         "tasks/a-result-tool-is-declared-in-the-child-room-only",
         "tenancy/a-deleted-room-s-strategy-does-not-run-in-the-room-another-process-creates-again",
         "tool-search/the-preamble-comes-before-an-agent-s-identity",
@@ -9697,7 +9713,6 @@
         "unmapped": 55
       },
       "decided_gaps": {
-        "phase6": 2,
         "step": 1
       },
       "unannotated_keyword_lines": [],
@@ -9728,6 +9743,8 @@
         "orchestration/a-supervisor-s-background-team-whose-results-nobody-hears-posts-its-run-failed",
         "orchestration/a-supervisor-s-dispatch-answering-its-team-s-results-starts-anew",
         "orchestration/a-supervisor-s-own-tools-stay-its-own",
+        "orchestration/a-supervisor-s-realtime-tool-reaches-the-room-it-was-installed-in-alone",
+        "orchestration/a-supervisor-s-realtime-tool-runs-once-per-room-and-answers-the-session-that-asked",
         "orchestration/a-supervisor-s-task-formulation-instruction-reaches-no-other-room-s-turn",
         "orchestration/a-supervisor-s-team-call-names-who-asked-for-its-task",
         "orchestration/a-supervisor-s-team-tool-in-the-background-answers-at-once-and-hands-the-results-back",
@@ -10314,9 +10331,12 @@
         "realtime/a-denied-or-skill-closed-tool-is-refused-before-its-arguments-are-read",
         "realtime/a-denied-tool-is-not-declared-and-its-call-is-refused",
         "realtime/a-participant-the-store-lacks-has-the-base-rules-until-it-gets-a-role",
+        "realtime/a-pipeline-call-is-judged-by-the-agent-the-room-talks-to-when-it-arrives",
         "realtime/a-role-the-store-holds-at-the-start-shapes-the-declared-tools",
         "realtime/a-skill-activation-declares-no-denied-tool",
+        "realtime/a-tool-name-the-channel-carries-stays-the-channel-s-under-a-pipeline-agent",
         "realtime/run-skill-script-is-skill-gated-and-the-skill-tools-are-not",
+        "realtime/the-channel-s-and-the-active-agent-s-policies-both-hold-on-a-pipeline-session-for-its-participant",
         "realtime/the-channel-s-own-declared-tools-pass-the-declared-check",
         "realtime/tool-search-never-names-a-denied-tool",
         "role-policy/a-later-turn-reads-the-new-role-non-streaming",
@@ -27426,12 +27446,7 @@
       "id": "RK-11.6-003",
       "section": "11.6",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1942",
-        "note": "step: conference.feed: a conference's utterances, under the identity their track was published under, are never put to the resolver."
-      }
+      "links": []
     },
     {
       "id": "RK-11.6-004",
@@ -27710,12 +27725,7 @@
       "id": "RK-11.7.3-019",
       "section": "11.7.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1942",
-        "note": "step: realtime transcripts: a speech-to-speech session's transcript is neither labelled nor held."
-      }
+      "links": []
     },
     {
       "id": "RK-11.7.3-020",
@@ -38589,12 +38599,7 @@
       "id": "RK-19.1-012",
       "section": "19.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1925",
-        "note": "step: realtime.read of the session configuration: inspect the identity block on an installed realtime pipeline session."
-      }
+      "links": []
     },
     {
       "id": "RK-19.1-013",
@@ -38775,21 +38780,16 @@
       "mapping": "unmapped",
       "links": [],
       "gap": {
-        "class": "writable",
+        "class": "step",
         "card": "RMK-1925",
-        "note": "A scripted agent with a greeting and auto_greet in a room where voice.open, with a playback_gate, starts the session, a message sent while the greeting is held: the agent's reply is neither generated (models) nor in the timeline until the gate opens (requires voice)."
+        "note": "Needs a barrier on an agent's delivery held at a voice session's greeting gate: a message for the agent alone, its answer for a text channel, is held by the gate only, and no step waits for a delivery held there (the gate's bound is on the real clock, not the kit's). With the voice channel among the message's targets, its playback of the greeting holds the agent's answer as well, so that no scenario shows the gate."
       }
     },
     {
       "id": "RK-19.1-042",
       "section": "19.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1925",
-        "note": "A scripted agent with a greeting and auto_greet in a room where realtime.start starts the session: realtime.read shows the greeting injected as the model's own turn (requires realtime)."
-      }
+      "links": []
     },
     {
       "id": "RK-19.2-002",
@@ -38905,9 +38905,9 @@
       "mapping": "unmapped",
       "links": [],
       "gap": {
-        "class": "phase6",
+        "class": "step",
         "card": "RMK-1925",
-        "note": "step: a reference to a realtime session's id, realtime.start returning it: deliver with that session_id selects the transport session and addresses no intelligence channel."
+        "note": "Needs a realtime session's id a step can name (realtime.start returning it, or the fixture fixing it, as voice.open's session_ids does): deliver's session_id targets a session that hosts a realtime model only, a voice session's is refused with session_requires_realtime."
       }
     },
     {
@@ -39273,56 +39273,31 @@
       "id": "RK-19.5-022",
       "section": "19.5",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1925",
-        "note": "step: realtime.read of the session configuration: session start reads the room's agent and handoff changes only that room's sessions, leaving other rooms and channel defaults intact."
-      }
+      "links": []
     },
     {
       "id": "RK-19.5-023",
       "section": "19.5",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1925",
-        "note": "step: realtime.read of the session configuration: without a prompt or identity, the active agent inherits the channel prompt at session start or handoff."
-      }
+      "links": []
     },
     {
       "id": "RK-19.5-024",
       "section": "19.5",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1925",
-        "note": "step: realtime.read of the session configuration: a room language change preserves the session prompt when the agent supplies none."
-      }
+      "links": []
     },
     {
       "id": "RK-19.5-025",
       "section": "19.5",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1925",
-        "note": "step: realtime.read of the session configuration: a pipeline session includes the channel tools, the active agent's tools and handoff."
-      }
+      "links": []
     },
     {
       "id": "RK-19.5-026",
       "section": "19.5",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1925",
-        "note": "step: realtime.read of the session configuration: late channel tool changes are read at session start or handoff."
-      }
+      "links": []
     },
     {
       "id": "RK-19.5-027",
@@ -39339,12 +39314,7 @@
       "id": "RK-19.5-028",
       "section": "19.5",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1925",
-        "note": "step: realtime.read of the session configuration: a conflicting tool retains the channel's definition and handler, is warned at install, and never reverts to the agent's copy."
-      }
+      "links": []
     },
     {
       "id": "RK-19.5-029",
@@ -39361,12 +39331,7 @@
       "id": "RK-19.5-030",
       "section": "19.5",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1925",
-        "note": "step: realtime.read of the session configuration, per-participant role policies on a realtime session: both participant-resolved policies govern declaration, discovery, handler catalogue and execution of a session tool."
-      }
+      "links": []
     },
     {
       "id": "RK-19.5-031",
@@ -39383,12 +39348,7 @@
       "id": "RK-19.5-032",
       "section": "19.5",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1925",
-        "note": "step: realtime.read of the session configuration, per-participant role policies on a realtime session: the serving room agent's policy governs calls despite stale session declarations."
-      }
+      "links": []
     },
     {
       "id": "RK-19.5-033",
@@ -39411,23 +39371,13 @@
       "id": "RK-19.5-035",
       "section": "19.5",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1925",
-        "note": "step: a scripted realtime reasoning backend: a reasoning backend rejects the same unsupported agent capabilities and agent tools; its MCP instructions reach its own model."
-      }
+      "links": []
     },
     {
       "id": "RK-19.5-036",
       "section": "19.5",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1925",
-        "note": "install_pipeline with voice_channel_id naming a realtime channel, given a declared agent, then an intelligence channel that is no agent: each refused, invalid_argument (requires realtime)."
-      }
+      "links": []
     },
     {
       "id": "RK-19.5-037",
@@ -39654,23 +39604,13 @@
       "id": "RK-19.6-042",
       "section": "19.6",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1925",
-        "note": "step: realtime.tool_call of the handoff tool: session handoffs use the room's active agent as caller; the human hold rule is not yet required there."
-      }
+      "links": []
     },
     {
       "id": "RK-19.6-043",
       "section": "19.6",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1925",
-        "note": "step: realtime.read of the session configuration: handoff changes room sessions to the target agent's prompt and a language change uses the active agent's prompt."
-      }
+      "links": []
     },
     {
       "id": "RK-19.6-044",
@@ -39768,12 +39708,7 @@
       "id": "RK-19.7-006",
       "section": "19.7",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1929",
-        "note": "step: several realtime sessions per channel and across rooms, realtime.read of the session configuration: attach one realtime channel to multiple rooms and observe it serving sessions in both."
-      }
+      "links": []
     },
     {
       "id": "RK-19.7-007",
@@ -39785,12 +39720,7 @@
       "id": "RK-19.7-008",
       "section": "19.7",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1929",
-        "note": "step: several realtime sessions per channel and across rooms, realtime.read of the session configuration: install strategy additions in one room on a shared realtime channel and inspect the declarations in each room's session."
-      }
+      "links": []
     },
     {
       "id": "RK-19.7-009",
@@ -39802,12 +39732,7 @@
       "id": "RK-19.7-010",
       "section": "19.7",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1929",
-        "note": "step: several realtime sessions per channel and across rooms, realtime.read of the session configuration: inspect tools declared to realtime sessions on both an installed room and a different room using the same channel."
-      }
+      "links": []
     },
     {
       "id": "RK-19.7-011",
@@ -39842,12 +39767,7 @@
       "id": "RK-19.7-014",
       "section": "19.7",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1929",
-        "note": "step: several realtime sessions per channel and across rooms, realtime.read of the session configuration: change the active agent in one of two realtime rooms and inspect each session's configuration."
-      }
+      "links": []
     },
     {
       "id": "RK-19.7-015",
@@ -40413,23 +40333,13 @@
       "id": "RK-19.7.3-016",
       "section": "19.7.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1929",
-        "note": "step: realtime.tool_call of a strategy's background tool: call the same background strategy tool from sessions on two voice channels in one room and observe exclusivity across them."
-      }
+      "links": []
     },
     {
       "id": "RK-19.7.3-017",
       "section": "19.7.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1929",
-        "note": "step: realtime.tool_call of a strategy's background tool: observe the outcome of a strategy call on the originating session when other voice sessions are available."
-      }
+      "links": []
     },
     {
       "id": "RK-19.7.3-018",
