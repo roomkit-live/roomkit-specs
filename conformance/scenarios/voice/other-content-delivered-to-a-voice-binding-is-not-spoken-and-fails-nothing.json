@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "voice/other-content-delivered-to-a-voice-binding-is-not-spoken-and-fails-nothing",
-  "title": "A system event and a tool-call row delivered to a voice binding are not spoken, and their delivery fails nothing",
+  "title": "A system event, a tool-call row and a composite that keeps a system part are not spoken to a voice binding, and their delivery fails nothing",
   "rules": [
     "Appendix A.10",
     "§12.2"
@@ -9,7 +9,7 @@
   "requirements": [
     "RK-A.10-014"
   ],
-  "notes": "No delivery failure is recorded against the voice binding. A composite keeping a part neither text nor audio is not shown: a voice binding takes text and audio, so content transcoding turns such a part into text first, which the channel then speaks.",
+  "notes": "No delivery failure is recorded against the voice binding. Content transcoding leaves a system part unchanged (§6.6), so the composite keeps a part that is neither text nor audio.",
   "requires_features": [
     "voice"
   ],
@@ -72,6 +72,29 @@
       "idle": true
     },
     {
+      "call": "send_event",
+      "room_id": "r1",
+      "channel_id": "src",
+      "participant_id": "bob",
+      "content": {
+        "type": "composite",
+        "parts": [
+          {
+            "type": "text",
+            "body": "Recording paused"
+          },
+          {
+            "type": "system",
+            "body": "paused",
+            "code": "notice"
+          }
+        ]
+      }
+    },
+    {
+      "idle": true
+    },
+    {
       "call": "voice.settle",
       "channel_id": "phone"
     },
@@ -101,6 +124,16 @@
         },
         {
           "type": "tool_call_start",
+          "delivery_results": {
+            "phone": {
+              "$absent": true
+            }
+          }
+        },
+        {
+          "content": {
+            "type": "composite"
+          },
           "delivery_results": {
             "phone": {
               "$absent": true

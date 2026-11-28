@@ -10,7 +10,7 @@
   "requirements": [
     "RK-8.3-032"
   ],
-  "notes": "The injections name no depth. An AFTER_BROADCAST hook's body is one deeper than its event (§8.3), and a turn's call is as deep as its response: on an event at depth 3, both inject at depth 4, at the default limit of 5; at depth 2, at 3, which asks an answer. The tool-call door is in realtime/a-realtime-tool-call-is-as-deep-as-the-model-s-answer-and-so-is-what-its-hooks-post.",
+  "notes": "The injections name no depth. An AFTER_BROADCAST hook's body is one deeper than its event (§8.3), and a turn's call is as deep as its response: on an event at depth 3, both inject at depth 4, at the default limit of 5; at depth 2, at 3, which asks an answer. A turn's injection and the delivery of its event run side by side, so their order in rt2's session is not compared. The tool-call door is in realtime/a-realtime-tool-call-is-as-deep-as-the-model-s-answer-and-so-is-what-its-hooks-post.",
   "requires_features": [
     "realtime"
   ],
@@ -208,32 +208,34 @@
       "channel_id": "rt2",
       "expect": {
         "result": {
-          "injections": [
-            {
-              "text": {
-                "$contains": "turn below"
+          "injections": {
+            "$unordered": [
+              {
+                "text": {
+                  "$contains": "turn below"
+                },
+                "silent": false
               },
-              "silent": false
-            },
-            {
-              "text": {
-                "$contains": "turn note"
+              {
+                "text": {
+                  "$contains": "turn note"
+                },
+                "silent": false
               },
-              "silent": false
-            },
-            {
-              "text": {
-                "$contains": "turn one short"
+              {
+                "text": {
+                  "$contains": "turn one short"
+                },
+                "silent": false
               },
-              "silent": false
-            },
-            {
-              "text": {
-                "$contains": "turn note"
-              },
-              "silent": true
-            }
-          ]
+              {
+                "text": {
+                  "$contains": "turn note"
+                },
+                "silent": true
+              }
+            ]
+          }
         }
       }
     }

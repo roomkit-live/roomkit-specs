@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "realtime/a-realtime-tool-call-is-as-deep-as-the-model-s-answer-and-so-is-what-its-hooks-post",
-  "title": "A model's tool call is as deep as the answer that issued it: what its gate, the hook serving it and its observer post or inject is at least that deep",
+  "title": "A model's tool call is as deep as the answer that issued it: what its gate, the hook serving it and its observer post or inject is at least that deep, at the limit silent",
   "rules": [
     "§8.3",
     "§12.4",
@@ -14,7 +14,7 @@
     "RK-8.3-034",
     "RK-8.3-046"
   ],
-  "notes": "The channel has no tool handler: the SYNC ON_TOOL_CALL hook serves the call (§21.4). The model's answer to the text at depth 2 is at depth 3, and so is its call, which keeps that depth while the gate's post reaches the session. Each post names no depth. Below the limit, the injection the serving hook makes asks an answer: its depth is read through the post beside it. The hooks on the model's words are in realtime/a-hook-on-the-model-s-words-posts-at-the-depth-of-what-it-hears; a conference's tool call and voice lane, the model's delegation and a call cut by an ending are not shown.",
+  "notes": "The channel has no tool handler: the SYNC ON_TOOL_CALL hook serves the call (§21.4). The model's answer to the text at depth 3 is at depth 4, at the default limit of 5, and so is its call. Each post and injection names no depth: each is at the call's depth, so every text they bring enters the session silently. An ASYNC observer of the gate (BEFORE_TOOL_USE) is not shown. The hooks on the model's words are in realtime/a-hook-on-the-model-s-words-posts-at-the-depth-of-what-it-hears; a conference's tool call and voice lane, the model's delegation and a call cut by an ending are not shown.",
   "requires_features": [
     "realtime"
   ],
@@ -136,7 +136,7 @@
         "type": "text",
         "body": "question"
       },
-      "chain_depth": 2
+      "chain_depth": 3
     },
     {
       "idle": true
@@ -184,25 +184,25 @@
                 "text": {
                   "$contains": "gate note"
                 },
-                "silent": false
+                "silent": true
               },
               {
                 "text": {
                   "$contains": "serve note"
                 },
-                "silent": false
+                "silent": true
               },
               {
                 "text": {
                   "$contains": "serve inject"
                 },
-                "silent": false
+                "silent": true
               },
               {
                 "text": {
                   "$contains": "report note"
                 },
-                "silent": false
+                "silent": true
               }
             ]
           }
@@ -218,31 +218,31 @@
             "content": {
               "body": "question"
             },
-            "chain_depth": 2
+            "chain_depth": 3
           },
           {
             "content": {
               "body": "Let me check"
             },
-            "chain_depth": 3
+            "chain_depth": 4
           },
           {
             "content": {
               "body": "gate note"
             },
-            "chain_depth": 3
+            "chain_depth": 4
           },
           {
             "content": {
               "body": "serve note"
             },
-            "chain_depth": 3
+            "chain_depth": 4
           },
           {
             "content": {
               "body": "report note"
             },
-            "chain_depth": 3
+            "chain_depth": 4
           }
         ]
       }

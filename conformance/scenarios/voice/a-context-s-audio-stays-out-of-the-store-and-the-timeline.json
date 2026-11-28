@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "voice/a-context-s-audio-stays-out-of-the-store-and-the-timeline",
-  "title": "The audio a TTS context keeps reaches the TTS alone: the room stores the session's words as text, and no event carries that audio",
+  "title": "The audio a TTS context keeps reaches the TTS alone: the room stores the session's words as a text event, with no audio in its metadata",
   "rules": [
     "§17.6",
     "§12.2.2"

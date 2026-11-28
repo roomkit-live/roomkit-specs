@@ -9,7 +9,7 @@
   "requirements": [
     "RK-17.6-021"
   ],
-  "notes": "The synchronous transcription hook redacts the words before the room stores them; the context's user turn holds the stored text, never the words heard. The agent's answer is spoken, then a sentence of the application's (say).",
+  "notes": "The synchronous transcription hook redacts the words before the room stores them; the context's user turn holds the stored text, never the words heard. The agent's answer is spoken, then a sentence of the application's (say). The policies are shown by a transcription hook's redaction; a retention or persistence policy over the room's events is not shown.",
   "requires_features": [
     "voice"
   ],

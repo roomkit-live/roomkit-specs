@@ -87,8 +87,7 @@
           "trace": {
             "channel_id": "phone",
             "summary": "Offer on the call",
-            "session_id": "call-1",
-            "room_id": null
+            "session_id": "call-1"
           }
         }
       ]

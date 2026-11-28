@@ -10,7 +10,7 @@
   "requirements": [
     "RK-A.10-015"
   ],
-  "notes": "The agent streams its answer in three deltas whose boundaries fall inside the sentences: the channel splits the stream into its two sentences, each checked (BEFORE_TTS) then synthesized on its own.",
+  "notes": "The agent streams its answer in three deltas whose boundaries fall inside the sentences: the channel splits the stream into its two sentences, each checked (BEFORE_TTS) then synthesized on its own. The scripted TTS makes one chunk per word, 13 in all, each processed by the postprocessor, whose bytes reach the transport.",
   "requires_features": [
     "voice"
   ],
@@ -75,7 +75,8 @@
       ],
       "postprocessors": [
         {
-          "name": "post"
+          "name": "post",
+          "output": "AQIDBA=="
         }
       ]
     },
@@ -114,13 +115,115 @@
             "Your table by the window is ready now.",
             "The kitchen closes at ten."
           ],
-          "stages": {
-            "$present": true
-          },
-          "chunks": {
-            "alice": {
-              "$present": true
+          "stages": [
+            {
+              "stage": "post",
+              "call": "process",
+              "stream": "s-alice"
+            },
+            {
+              "stage": "post",
+              "call": "process",
+              "stream": "s-alice"
+            },
+            {
+              "stage": "post",
+              "call": "process",
+              "stream": "s-alice"
+            },
+            {
+              "stage": "post",
+              "call": "process",
+              "stream": "s-alice"
+            },
+            {
+              "stage": "post",
+              "call": "process",
+              "stream": "s-alice"
+            },
+            {
+              "stage": "post",
+              "call": "process",
+              "stream": "s-alice"
+            },
+            {
+              "stage": "post",
+              "call": "process",
+              "stream": "s-alice"
+            },
+            {
+              "stage": "post",
+              "call": "process",
+              "stream": "s-alice"
+            },
+            {
+              "stage": "post",
+              "call": "process",
+              "stream": "s-alice"
+            },
+            {
+              "stage": "post",
+              "call": "process",
+              "stream": "s-alice"
+            },
+            {
+              "stage": "post",
+              "call": "process",
+              "stream": "s-alice"
+            },
+            {
+              "stage": "post",
+              "call": "process",
+              "stream": "s-alice"
+            },
+            {
+              "stage": "post",
+              "call": "process",
+              "stream": "s-alice"
             }
+          ],
+          "chunks": {
+            "alice": [
+              {
+                "data": "AQIDBA=="
+              },
+              {
+                "data": "AQIDBA=="
+              },
+              {
+                "data": "AQIDBA=="
+              },
+              {
+                "data": "AQIDBA=="
+              },
+              {
+                "data": "AQIDBA=="
+              },
+              {
+                "data": "AQIDBA=="
+              },
+              {
+                "data": "AQIDBA=="
+              },
+              {
+                "data": "AQIDBA=="
+              },
+              {
+                "data": "AQIDBA=="
+              },
+              {
+                "data": "AQIDBA=="
+              },
+              {
+                "data": "AQIDBA=="
+              },
+              {
+                "data": "AQIDBA=="
+              },
+              {
+                "data": "AQIDBA=="
+              }
+            ]
           }
         }
       }

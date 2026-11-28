@@ -9,7 +9,7 @@
   "requirements": [
     "RK-15.6-005"
   ],
-  "notes": "The trace comes before any room of that id exists; it is delivered once, after the attach. The RFC's steps name an implementation's private members, which no scenario reads.",
+  "notes": "The trace comes before any room of that id exists; it is delivered once, and the hook reading it finds the channel bound: it ran after the attach, not at the room's creation. The RFC's steps name an implementation's private members, which no scenario reads.",
   "requires_features": [
     "protocol_trace"
   ],
@@ -24,7 +24,23 @@
       {
         "name": "capture",
         "trigger": "on_protocol_trace",
-        "execution": "async"
+        "execution": "async",
+        "reactions": [
+          {
+            "do": [
+              {
+                "call": "get_binding",
+                "room_id": "r-later",
+                "channel_id": "wire",
+                "expect": {
+                  "result": {
+                    "channel_id": "wire"
+                  }
+                }
+              }
+            ]
+          }
+        ]
       }
     ]
   },

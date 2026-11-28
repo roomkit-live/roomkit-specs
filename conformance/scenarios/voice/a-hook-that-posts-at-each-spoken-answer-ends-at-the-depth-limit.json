@@ -10,7 +10,7 @@
     "RK-8.3-046",
     "RK-8.3-047"
   ],
-  "notes": "The question and each note reach the agent alone (visibility intelligence), so that the voice channel speaks the agent's answers only. The ASYNC BEFORE_TTS hook sends a note, naming no depth, as each answer is spoken; the agent answers each note. The kit's max_chain_depth is the default, 5. A SYNC BEFORE_TTS hook's body and a conference's voice lane are not shown; AFTER_TTS is in voice/an-after-tts-hook-posts-at-the-depth-of-the-answer-it-spoke.",
+  "notes": "The question and each note reach the agent alone (visibility intelligence), so that the voice channel speaks the agent's answers only. The ASYNC BEFORE_TTS hook sends a note, naming no depth, as each answer is spoken; the agent answers each note. The kit's max_chain_depth is the default, 5. The agent's answers reach the channel as streams; a reply the channel speaks whole (not streamed), a SYNC BEFORE_TTS hook's body and a conference's voice lane are not shown; AFTER_TTS is in voice/an-after-tts-hook-posts-at-the-depth-of-the-answer-it-spoke.",
   "requires_features": [
     "voice"
   ],

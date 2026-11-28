@@ -9,7 +9,7 @@
   "requirements": [
     "RK-8.3-046"
   ],
-  "notes": "The question and the note reach the agent alone (visibility intelligence), so that the voice channel speaks the agent's answers only. The hook sends its note once, naming no depth, once the answer was spoken; the agent answers it, and that answer is spoken too.",
+  "notes": "The question and the note reach the agent alone (visibility intelligence), so that the voice channel speaks the agent's answers only. The hook sends its note once, naming no depth, once the answer was spoken; the agent answers it, and that answer is spoken too. A SYNC AFTER_TTS hook is not shown.",
   "requires_features": [
     "voice"
   ],
