@@ -112,7 +112,9 @@
         "result": {
           "declared": [
             {
-              "find_tools": "$any",
+              "find_tools": {
+                "$present": true
+              },
               "weather": {
                 "$absent": true
               },
@@ -121,7 +123,9 @@
               }
             },
             {
-              "find_tools": "$any",
+              "find_tools": {
+                "$present": true
+              },
               "weather": {
                 "$absent": true
               },

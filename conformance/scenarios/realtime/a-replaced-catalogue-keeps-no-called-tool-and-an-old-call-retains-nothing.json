@@ -9,7 +9,7 @@
   "requirements": [
     "RK-6.4-237"
   ],
-  "notes": "Tool Search hides the channel's tools past its threshold. The model calls weather, recovered at call time and served: the session declares it. A reconfiguration gives the session another catalogue holding the same names, Tool Search hiding them again: the retained weather is discarded. A call of news, made in that catalogue, holds in its handler across a second replacement, which abandons it: it retains nothing in the catalogue that replaced its own. Cited in part: the runners' provider abandons every outstanding call at a reconfiguration, so a call whose result still went out after its catalogue was replaced is not observed, nor are the names a session's end discards (realtime/a-called-tool-stays-declared-for-the-session-s-catalogue).",
+  "notes": "Tool Search hides the channel's tools past its threshold. The model calls weather, recovered at call time and served: the session declares it. A reconfiguration gives the session another catalogue holding the same names, Tool Search hiding them again: the retained weather is discarded, and a find_tools for news then declares news without it. A call of news, made in that catalogue, holds in its handler across a second replacement, which abandons it: it retains nothing in the catalogue that replaced its own. Cited in part: the runners' provider abandons every outstanding call at a reconfiguration, so a call whose result still went out after its catalogue was replaced is not observed, nor are the names a session's end discards (realtime/a-called-tool-stays-declared-for-the-session-s-catalogue).",
   "requires_features": [
     "realtime"
   ],
@@ -85,6 +85,18 @@
     {
       "call": "realtime.tool_call",
       "channel_id": "rt",
+      "call_id": "c1b",
+      "name": "find_tools",
+      "arguments": {
+        "query": "news"
+      }
+    },
+    {
+      "idle": true
+    },
+    {
+      "call": "realtime.tool_call",
+      "channel_id": "rt",
       "call_id": "c2",
       "name": "news",
       "background": true,
@@ -118,7 +130,9 @@
         "result": {
           "declared": [
             {
-              "find_tools": "$any",
+              "find_tools": {
+                "$present": true
+              },
               "weather": {
                 "$absent": true
               },
@@ -127,14 +141,20 @@
               }
             },
             {
-              "find_tools": "$any",
-              "weather": "$any",
+              "find_tools": {
+                "$present": true
+              },
+              "weather": {
+                "$present": true
+              },
               "news": {
                 "$absent": true
               }
             },
             {
-              "find_tools": "$any",
+              "find_tools": {
+                "$present": true
+              },
               "weather": {
                 "$absent": true
               },
@@ -143,7 +163,20 @@
               }
             },
             {
-              "find_tools": "$any",
+              "find_tools": {
+                "$present": true
+              },
+              "weather": {
+                "$absent": true
+              },
+              "news": {
+                "$present": true
+              }
+            },
+            {
+              "find_tools": {
+                "$present": true
+              },
               "weather": {
                 "$absent": true
               },
@@ -156,6 +189,12 @@
             {
               "call_id": "c1",
               "result": "sunny"
+            },
+            {
+              "call_id": "c1b",
+              "result": {
+                "$contains": "\"news\""
+              }
             }
           ],
           "handlers": [

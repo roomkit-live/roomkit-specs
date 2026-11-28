@@ -178,6 +178,7 @@
               "text": {
                 "$contains": [
                   "Sorry, go on.",
+                  "followed by a mark that says how far they heard it",
                   "every answer of yours without one was heard to its end"
                 ]
               }
@@ -209,6 +210,7 @@
               "text": {
                 "$contains": [
                   "And this time, did I cut you off?",
+                  "followed by a mark that says how far they heard it",
                   "every answer of yours without one was heard to its end"
                 ]
               }

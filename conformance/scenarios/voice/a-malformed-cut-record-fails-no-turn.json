@@ -9,7 +9,7 @@
   "requirements": [
     "RK-6.4-217"
   ],
-  "notes": "Six rooms, each holding a record a voice channel of the room would write, naming the agent's first answer as cut, one member malformed. r1, r2: answer_responds_to a number, an object: skipped, the answer reads with no mark. r3 to r6: played_ms a string, a negative number, a boolean, absent: it reads as 0, the mark saying the answer was cut 0.0 s in and heard little or none of it. Every room's next turn runs and its answer is delivered.",
+  "notes": "Six rooms, each holding a record a voice channel of the room would write, naming the agent's first answer as cut, one member malformed. r1, r2: answer_responds_to a number, an object: skipped, the answer reads with no mark. r3 to r6: played_ms a string, a negative number, a boolean, absent: it reads as 0, the mark saying the answer was cut 0.0 s in and heard little or none of it (a boolean read as 1 ms would show the same: r5 shows only that its turn runs). Every room's next turn runs and its answer is delivered.",
   "requires_features": [
     "voice"
   ],

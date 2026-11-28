@@ -79,7 +79,9 @@
         "result": {
           "declared": [
             {
-              "find_tools": "$any",
+              "find_tools": {
+                "$present": true
+              },
               "weather": {
                 "$absent": true
               },
@@ -108,7 +110,9 @@
         "result": {
           "declared": [
             {
-              "find_tools": "$any",
+              "find_tools": {
+                "$present": true
+              },
               "weather": {
                 "$absent": true
               },
@@ -117,8 +121,12 @@
               }
             },
             {
-              "find_tools": "$any",
-              "weather": "$any",
+              "find_tools": {
+                "$present": true
+              },
+              "weather": {
+                "$present": true
+              },
               "news": {
                 "$absent": true
               }
@@ -152,7 +160,9 @@
         "result": {
           "declared": [
             {
-              "find_tools": "$any",
+              "find_tools": {
+                "$present": true
+              },
               "weather": {
                 "$absent": true
               },
@@ -161,16 +171,26 @@
               }
             },
             {
-              "find_tools": "$any",
-              "weather": "$any",
+              "find_tools": {
+                "$present": true
+              },
+              "weather": {
+                "$present": true
+              },
               "news": {
                 "$absent": true
               }
             },
             {
-              "find_tools": "$any",
-              "weather": "$any",
-              "news": "$any"
+              "find_tools": {
+                "$present": true
+              },
+              "weather": {
+                "$present": true
+              },
+              "news": {
+                "$present": true
+              }
             }
           ]
         }
