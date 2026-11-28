@@ -286,7 +286,16 @@
   "expect": {
     "models": {
       "agent": [
-        {},
+        {
+          "tools": {
+            "player_play": {
+              "$absent": true
+            },
+            "player_pause": {
+              "$absent": true
+            }
+          }
+        },
         {
           "tools": {
             "player_play": {

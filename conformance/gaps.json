@@ -919,7 +919,7 @@
     "RK-22.1-083": {
       "class": "step",
       "card": "RMK-1917",
-      "note": "step: an attempt left unresolved needs a fault on the store's voice-delivery reservation (family S19: the get, claim and complete operations of a keyed voice injection, which §14.1 and the schema's store_operation do not name), and an expiry a clock on the claim. The reuse of an uncertain outcome is RK-22.1-076's rule, cited by realtime/a-repeated-keyed-injection-reuses-its-outcome-unless-nothing-was-sent-and-retry-is-allowed."
+      "note": "step: an attempt left unresolved needs a fault on the store's voice-delivery reservation (the get, claim and complete operations of a keyed voice injection, which §14.1 and the schema's store_operation do not name), and an expiry a clock on the claim. The reuse of an uncertain outcome is RK-22.1-076's rule, cited by realtime/a-repeated-keyed-injection-reuses-its-outcome-unless-nothing-was-sent-and-retry-is-allowed."
     },
     "RK-22.1-085": {
       "class": "phase6",

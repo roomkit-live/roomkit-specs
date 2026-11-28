@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "realtime/a-missing-skill-s-hint-on-a-fixed-session-points-to-call-tool",
-  "title": "On a session whose declaration is fixed, an activation of a skill that does not exist, under a name the session's tools match, names those tools and says they are reached through list_tools and call_tool",
+  "title": "On a session whose declaration is fixed, an activation of a skill that does not exist, under a name the session's tools match, names those tools and says they are reached through call_tool",
   "rules": [
     "§24.4",
     "§6.4",
