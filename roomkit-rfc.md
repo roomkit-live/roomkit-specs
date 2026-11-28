@@ -25446,12 +25446,12 @@ SMSChannel
 │   └── supports_delete: false
 ```
 <!-- /rfc -->
-<!-- rfc: {"id": "RK-A.1-004", "kind": "structural", "applies": "§A.1 SMS Channel, where an implementation offers one (Level 1, §26.2): the SMSProvider interface: send(event, to, from), parse_webhook(payload) and verify_signature(payload, signature, timestamp). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+<!-- rfc: {"id": "RK-A.1-004", "kind": "structural", "applies": "§A.1 SMS Channel, where an implementation offers one (Level 1, §26.2): the SMSProvider interface: send(event, to, from?), parse_webhook(payload) and verify_signature(payload, signature, timestamp?), from and timestamp optional. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 ├── provider_interface: SMSProvider
-│   ├── send(event, to, from) → ProviderResult
+│   ├── send(event, to, from?) → ProviderResult
 │   ├── parse_webhook(payload) → InboundMessage
-│   └── verify_signature(payload, signature, timestamp) → bool
+│   └── verify_signature(payload, signature, timestamp?) → bool
 ```
 <!-- /rfc -->
 <!-- rfc: {"id": "RK-A.1-005", "kind": "behavior", "applies": "§A.1 SMS Channel, where an implementation offers one (Level 1, §26.2): its recipient, written under the binding metadata key phone_number (§5.7). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
@@ -25483,10 +25483,10 @@ EmailChannel
 │   └── supports_delete: false
 ```
 <!-- /rfc -->
-<!-- rfc: {"id": "RK-A.2-004", "kind": "structural", "applies": "§A.2 Email Channel, where an implementation offers one (Level 1, §26.2): the EmailProvider interface: send(event, to, from, subject) and parse_inbound(payload). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+<!-- rfc: {"id": "RK-A.2-004", "kind": "structural", "applies": "§A.2 Email Channel, where an implementation offers one (Level 1, §26.2): the EmailProvider interface: send(event, to, from?, subject?), from and subject optional, and parse_inbound(payload). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 ├── provider_interface: EmailProvider
-│   ├── send(event, to, from, subject) → ProviderResult
+│   ├── send(event, to, from?, subject?) → ProviderResult
 │   └── parse_inbound(payload) → InboundMessage
 ```
 <!-- /rfc -->
@@ -25527,12 +25527,12 @@ WhatsAppChannel
 │   └── supports_delete: true
 ```
 <!-- /rfc -->
-<!-- rfc: {"id": "RK-A.3-004", "kind": "structural", "applies": "§A.3 WhatsApp Channel, where an implementation offers one (Level 2, §26.3): the WhatsAppProvider interface: send(event, to), send_template(template, to) and send_reaction(chat, message_id, emoji). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+<!-- rfc: {"id": "RK-A.3-004", "kind": "structural", "applies": "§A.3 WhatsApp Channel, where an implementation offers one (Level 2, §26.3): the WhatsAppProvider interface: send(event, to), send_template(to, template_name, params?) and send_reaction(chat, sender, message_id, emoji), which returns nothing. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 ├── provider_interface: WhatsAppProvider
 │   ├── send(event, to) → ProviderResult
-│   ├── send_template(template, to) → ProviderResult
-│   └── send_reaction(chat, message_id, emoji) → ProviderResult
+│   ├── send_template(to, template_name, params?) → ProviderResult
+│   └── send_reaction(chat, sender, message_id, emoji) → void
 ```
 <!-- /rfc -->
 <!-- rfc: {"id": "RK-A.3-005", "kind": "behavior", "applies": "§A.3 WhatsApp Channel, where an implementation offers one (Level 2, §26.3): its recipient, written under the binding metadata key phone_number (§5.7). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
@@ -25621,11 +25621,12 @@ MessengerChannel
 │   └── supports_delete: true
 ```
 <!-- /rfc -->
-<!-- rfc: {"id": "RK-A.5-004", "kind": "structural", "applies": "§A.5 Messenger Channel, where an implementation offers one (Level 2, §26.3): the MessengerProvider interface: send(event, recipient_id) and parse_webhook(payload). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+<!-- rfc: {"id": "RK-A.5-004", "kind": "structural", "applies": "§A.5 Messenger Channel, where an implementation offers one (Level 2, §26.3): the MessengerProvider interface: send(event, to); the webhook's parsing, parse_messenger_webhook(payload, channel_id) returning a list of InboundMessage, a function beside the interface, not one of its members. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 ├── provider_interface: MessengerProvider
-│   ├── send(event, recipient_id) → ProviderResult
-│   └── parse_webhook(payload) → InboundMessage
+│   └── send(event, to) → ProviderResult
+├── webhook parsing: a function beside the interface, not one of its members
+│   └── parse_messenger_webhook(payload, channel_id) → list<InboundMessage>
 ```
 <!-- /rfc -->
 <!-- rfc: {"id": "RK-A.5-005", "kind": "behavior", "applies": "§A.5 Messenger Channel, where an implementation offers one (Level 2, §26.3): its recipient, written under the binding metadata key facebook_user_id (§5.7). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
@@ -25658,17 +25659,20 @@ TeamsChannel
 │   └── supports_delete: true
 ```
 <!-- /rfc -->
-<!-- rfc: {"id": "RK-A.6-004", "kind": "structural", "applies": "§A.6 Teams Channel, where an implementation offers one (Level 2, §26.3): the TeamsProvider interface: send(event, conversation_reference), parse_webhook(activity) and save_conversation_reference(activity). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+<!-- rfc: {"id": "RK-A.6-004", "kind": "structural", "applies": "§A.6 Teams Channel, where an implementation offers one (Level 2, §26.3): the TeamsProvider interface: send(event, to), and process_inbound(payload, auth_header, on_turn), which authenticates an inbound request, then calls on_turn; the webhook's parsing, parse_teams_webhook(payload, channel_id) returning a list of InboundMessage, a function beside the interface, not one of its members. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 ├── provider_interface: TeamsProvider
-│   ├── send(event, conversation_reference) → ProviderResult
-│   ├── parse_webhook(activity) → InboundMessage
-│   └── save_conversation_reference(activity) → void
+│   ├── send(event, to) → ProviderResult
+│   └── process_inbound(payload, auth_header, on_turn) → void
+│       # Authenticates the inbound request, then calls on_turn
+├── webhook parsing: a function beside the interface, not one of its members
+│   └── parse_teams_webhook(payload, channel_id) → list<InboundMessage>
 ```
 <!-- /rfc -->
-<!-- rfc: {"id": "RK-A.6-005", "kind": "structural", "applies": "§A.6 Teams Channel, where an implementation offers one (Level 2, §26.3): the channel requires a ConversationReferenceStore. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+<!-- rfc: {"id": "RK-A.6-005", "kind": "structural", "applies": "§A.6 Teams Channel, where an implementation offers one (Level 2, §26.3): the conversation references are the provider's to keep, in a ConversationReferenceStore when it keeps them; the channel takes no store. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
-├── requires: ConversationReferenceStore
+├── conversation references: the provider's to keep, in a
+│   ConversationReferenceStore when it keeps them; the channel takes no store
 ```
 <!-- /rfc -->
 <!-- rfc: {"id": "RK-A.6-006", "kind": "behavior", "applies": "§A.6 Teams Channel, where an implementation offers one (Level 2, §26.3): its recipient, the chat, written under the binding metadata key teams_conversation_id (§5.7). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
@@ -26077,10 +26081,12 @@ ACPChannel
 │   └── prompts serialized per session
 ```
 <!-- /rfc -->
-<!-- rfc: {"id": "RK-A.9.1-011", "kind": "structural", "applies": "§A.9.1 ACP Agent Channel, where an implementation offers one (Level 2, §26.3): the configuration's command, a list of strings. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+<!-- rfc: {"id": "RK-A.9.1-011", "kind": "structural", "applies": "§A.9.1 ACP Agent Channel, where an implementation offers one (Level 2, §26.3): the configuration's command, a list of strings or null, which spawns the agent, and its transport, an ACPTransport or null, which reaches an agent the channel does not spawn: one of the two, never both. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 ├── configuration:
-│   ├── command: list<string>
+│   ├── command: list<string> | null     # spawns the agent
+│   ├── transport: ACPTransport | null   # reaches an agent the channel does not
+│   │                                    # spawn; one of the two, never both
 ```
 <!-- /rfc -->
 <!-- rfc: {"id": "RK-A.9.1-012", "kind": "structural", "applies": "§A.9.1 ACP Agent Channel, where an implementation offers one (Level 2, §26.3): the configuration's cwd, an absolute path. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
@@ -26093,9 +26099,10 @@ ACPChannel
 │   ├── additional_directories: list<absolute path>
 ```
 <!-- /rfc -->
-<!-- rfc: {"id": "RK-A.9.1-014", "kind": "structural", "applies": "§A.9.1 ACP Agent Channel, where an implementation offers one (Level 2, §26.3): the configuration's environment, a map of strings or null, and authentication_method, a string or null. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+<!-- rfc: {"id": "RK-A.9.1-014", "kind": "structural", "applies": "§A.9.1 ACP Agent Channel, where an implementation offers one (Level 2, §26.3): the configuration's env, a map of strings or null, the variables added to a spawned agent's environment; inherit_env, a list of strings or null, the names of the host's variables a spawned agent is given; and authentication_method, a string or null. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
-│   ├── environment: map<string, string> | null
+│   ├── env: map<string, string> | null  # added to a spawned agent's environment
+│   ├── inherit_env: list<string> | null # host variables a spawned agent gets
 │   ├── authentication_method: string | null
 ```
 <!-- /rfc -->
@@ -26489,14 +26496,16 @@ TelegramChannel
 │   └── supports_typing: true
 ```
 <!-- /rfc -->
-<!-- rfc: {"id": "RK-A.13-004", "kind": "structural", "applies": "§A.13 Telegram Channel, where an implementation offers one (Level 2, §26.3): the TelegramBotProvider: bot_token (a secret), webhook_url, parse_webhook(request), verify_signature(request) and send(chat_id, content, options). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+<!-- rfc: {"id": "RK-A.13-004", "kind": "structural", "applies": "§A.13 Telegram Channel, where an implementation offers one (Level 2, §26.3): the TelegramBotProvider: its config, holding bot_token (a secret) and webhook_secret (a secret, or null), verify_signature(payload, signature) and send(event, to); the webhook's parsing, parse_telegram_webhook(payload, channel_id) returning a list of InboundMessage, a function beside the provider, not one of its members. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 ├── provider: TelegramBotProvider
-│   ├── bot_token: string (secret)
-│   ├── webhook_url: string | null
-│   ├── parse_webhook(request) → InboundMessage
-│   ├── verify_signature(request) → bool
-│   └── send(chat_id, content, options) → DeliveryResult
+│   ├── config: TelegramConfig
+│   │   ├── bot_token: string (secret)
+│   │   └── webhook_secret: string | null (secret)
+│   ├── verify_signature(payload, signature) → bool
+│   └── send(event, to) → ProviderResult
+├── webhook parsing: a function beside the provider, not one of its members
+│   └── parse_telegram_webhook(payload, channel_id) → list<InboundMessage>
 ```
 <!-- /rfc -->
 <!-- rfc: {"id": "RK-A.13-005", "kind": "behavior", "applies": "§A.13 Telegram Channel, where an implementation offers one (Level 2, §26.3): its recipient, the chat, under the binding metadata key telegram_chat_id, a string or an integer, the framework writing a string (§5.7). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->

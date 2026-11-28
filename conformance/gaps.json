@@ -1612,7 +1612,7 @@
     "RK-A.1-004": {
       "class": "step",
       "card": "RMK-1961",
-      "note": "Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed. Python's SMSProvider.send takes from_ as optional (RMK-1953)."
+      "note": "Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed. The text follows Python's SMSProvider, from and timestamp optional, pinned in tests/public_api_signatures.json."
     },
     "RK-A.10-007": {
       "class": "phase6",
@@ -1642,7 +1642,7 @@
     "RK-A.13-004": {
       "class": "step",
       "card": "RMK-1961",
-      "note": "Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed. The text differs from Python's signature (RMK-1966)."
+      "note": "Its send needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed. The rest is the provider's, as Python has it: its config, its verify_signature(payload, signature) and the webhook's parsing function beside it, pinned in tests/public_api_signatures.json (roomkit.providers.telegram.TelegramConfig, roomkit.providers.telegram.TelegramProvider, roomkit.providers.telegram.parse_telegram_webhook) and checked by tests/test_public_api.py::TestPublicAPI::test_no_signature_change_breaks_a_caller; a provider proves them in its own tests, outside roomkit's conformance."
     },
     "RK-A.14-002": {
       "class": "step",
@@ -1672,7 +1672,7 @@
     "RK-A.2-004": {
       "class": "step",
       "card": "RMK-1961",
-      "note": "Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed. Python's EmailProvider.send takes from_ as optional (RMK-1953)."
+      "note": "Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed. The text follows Python's EmailProvider, from and subject optional, pinned in tests/public_api_signatures.json."
     },
     "RK-A.2-006": {
       "class": "step",
@@ -1692,7 +1692,7 @@
     "RK-A.3-004": {
       "class": "step",
       "card": "RMK-1961",
-      "note": "Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed. The text differs from Python's signature (RMK-1966)."
+      "note": "Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed. The text follows Python's provider interface, send_template(to, template_name, params?) and send_reaction(chat, sender, message_id, emoji) returning nothing, pinned in tests/public_api_signatures.json."
     },
     "RK-A.4-002": {
       "class": "step",
@@ -1722,7 +1722,7 @@
     "RK-A.5-004": {
       "class": "step",
       "card": "RMK-1961",
-      "note": "Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed. The text differs from Python's signature (RMK-1966)."
+      "note": "Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed. The text follows Python: send(event, to), the webhook parsed by a function beside the interface, pinned in tests/public_api_signatures.json."
     },
     "RK-A.6-002": {
       "class": "step",
@@ -1737,12 +1737,7 @@
     "RK-A.6-004": {
       "class": "step",
       "card": "RMK-1961",
-      "note": "Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed. The text differs from Python's signature (RMK-1966)."
-    },
-    "RK-A.6-005": {
-      "class": "step",
-      "card": "RMK-1961",
-      "note": "Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed. The text differs from Python's signature (RMK-1966)."
+      "note": "Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed. The text follows Python: send(event, to) and process_inbound, the webhook parsed by a function beside the interface, pinned in tests/public_api_signatures.json."
     },
     "RK-A.7-002": {
       "class": "step",
@@ -1822,12 +1817,12 @@
     "RK-A.9.1-011": {
       "class": "step",
       "card": "RMK-1961",
-      "note": "No runner key sets an ACP agent's command: the runners' scripted agents take none. The text differs from Python's signature (RMK-1966)."
+      "note": "The runners build every ACP channel over a transport, their scripted agent behind it; no runner key sets a command, or both. The text follows both implementations, command or transport, one of the two: Python tests/test_channels/test_acp.py::TestACPChannel::test_command_and_transport_are_mutually_exclusive, roomkit-rs crates/roomkit-acp/tests/acp/channel.rs::the_channel_takes_a_command_or_a_transport_and_an_absolute_cwd."
     },
     "RK-A.9.1-014": {
       "class": "step",
       "card": "RMK-1961",
-      "note": "No runner key sets environment or authentication_method on an ACP channel. The text differs from Python's signature (RMK-1966)."
+      "note": "No runner key sets env, inherit_env or authentication_method on an ACP channel. The text follows both implementations' channel options (Python roomkit.ACPChannel in tests/public_api_signatures.json, roomkit-rs AcpChannelOptions), which refuse env and inherit_env beside a transport: Python tests/test_channels/test_acp.py::TestACPChannel::test_spawn_only_options_are_rejected_with_a_transport, roomkit-rs crates/roomkit-acp/tests/acp/channel.rs::the_channel_takes_a_command_or_a_transport_and_an_absolute_cwd."
     }
   }
 }

@@ -1557,21 +1557,21 @@
     },
     {
       "section": "A.1",
-      "sha256": "6aee13d4e9a97e77d799392e55a112a821f3a0ba0d0b9de42c2a7b0253652691",
+      "sha256": "c939f6f0cbf1f5582cfb55dd43722ab27fc091ebbc30e59f7eb2ed3c7f6a0bb9",
       "classification": "normative",
-      "review": "Source inventory: SMS Channel, split to one obligation per unit (RMK-1959) by closing and reopening the code block: the channel's type, category, direction and media types; its default capabilities; the SMSProvider interface; the recipient key phone_number. All must where an implementation offers the channel. Every unit carries its level."
+      "review": "Source inventory: SMS Channel, split to one obligation per unit (RMK-1959) by closing and reopening the code block: the channel's type, category, direction and media types; its default capabilities; the SMSProvider interface; the recipient key phone_number. All must where an implementation offers the channel. Every unit carries its level. Amended from Python by lot X2b (RMK-2233, probes of lot S0, HITL 3990944a): SMSProvider's from and timestamp are optional (RK-A.1-004)."
     },
     {
       "section": "A.2",
-      "sha256": "4631bab27fb8430c98a17d53ce0aae4a662a4abeb7c125f5dead26f1f17fc3bb",
+      "sha256": "e8dd74f7c72c6393b3e988c983a753ebb706229da81596a0bc18cc1a7816ab68",
       "classification": "normative",
-      "review": "Source inventory: Email Channel, split to one obligation per unit (RMK-1959) by closing and reopening the code block: the channel's type, category, direction and media types; its default capabilities; the EmailProvider interface; the recipient key email_address; the binding metadata subject. All must where an implementation offers the channel. Every unit carries its level."
+      "review": "Source inventory: Email Channel, split to one obligation per unit (RMK-1959) by closing and reopening the code block: the channel's type, category, direction and media types; its default capabilities; the EmailProvider interface; the recipient key email_address; the binding metadata subject. All must where an implementation offers the channel. Every unit carries its level. Amended from Python by lot X2b (RMK-2233, probes of lot S0, HITL 3990944a): EmailProvider's from and subject are optional (RK-A.2-004)."
     },
     {
       "section": "A.3",
-      "sha256": "601e810b75f35d651b8b1c834297054f7623955abaed30098fadaa5a274b72d1",
+      "sha256": "7af40af17a283d8c2d7870c113720b9d594fbc8319612b4da1d5a70407c71cfc",
       "classification": "normative",
-      "review": "Source inventory: WhatsApp Channel, split to one obligation per unit (RMK-1959) by closing and reopening the code block: the channel's type, category, direction and media types; its default capabilities; the WhatsAppProvider interface; the recipient key phone_number. All must where an implementation offers the channel. Every unit carries its level."
+      "review": "Source inventory: WhatsApp Channel, split to one obligation per unit (RMK-1959) by closing and reopening the code block: the channel's type, category, direction and media types; its default capabilities; the WhatsAppProvider interface; the recipient key phone_number. All must where an implementation offers the channel. Every unit carries its level. Amended from Python by lot X2b (RMK-2233, probes of lot S0, HITL 3990944a): send_template(to, template_name, params?) and send_reaction(chat, sender, message_id, emoji), which returns nothing (RK-A.3-004)."
     },
     {
       "section": "A.4",
@@ -1581,15 +1581,15 @@
     },
     {
       "section": "A.5",
-      "sha256": "2ded1f8b28d6810b3bc40cfa2b0983e1b86300d1341bbd29498adb3da47bf2e3",
+      "sha256": "c81ca9a2e8752e51028cd38a8ea971e28e8ae6fea76d025c03a773061d2a18b7",
       "classification": "normative",
-      "review": "Source inventory: Messenger Channel, split to one obligation per unit (RMK-1959) by closing and reopening the code block: the channel's type, category, direction and media types; its default capabilities; the MessengerProvider interface; the recipient key facebook_user_id. All must where an implementation offers the channel. Every unit carries its level."
+      "review": "Source inventory: Messenger Channel, split to one obligation per unit (RMK-1959) by closing and reopening the code block: the channel's type, category, direction and media types; its default capabilities; the MessengerProvider interface; the recipient key facebook_user_id. All must where an implementation offers the channel. Every unit carries its level. Amended from Python by lot X2b (RMK-2233, probes of lot S0, HITL 3990944a): send(event, to), the webhook parsed by a function beside the interface (RK-A.5-004)."
     },
     {
       "section": "A.6",
-      "sha256": "96bab62125bdc8845b18988a5a53ffc036b411a5c66abe8f034a91e536ae9926",
+      "sha256": "35b372c46c082c1efa3ae2dbaafba624d4c4540f074a72a41d30adfc320e608e",
       "classification": "normative",
-      "review": "Source inventory: Teams Channel, split to one obligation per unit (RMK-1959) by closing and reopening the code block: the channel's type, category, direction and media types; its default capabilities; the TeamsProvider interface; the ConversationReferenceStore it requires; the recipient key teams_conversation_id; the chat key conversation_id. All must where an implementation offers the channel. Every unit carries its level."
+      "review": "Source inventory: Teams Channel, split to one obligation per unit (RMK-1959) by closing and reopening the code block: the channel's type, category, direction and media types; its default capabilities; the TeamsProvider interface; the ConversationReferenceStore it requires; the recipient key teams_conversation_id; the chat key conversation_id. All must where an implementation offers the channel. Every unit carries its level. Amended from Python by lot X2b (RMK-2233, probes of lot S0, HITL 3990944a): send(event, to) and process_inbound, the webhook parsed by a function beside the interface (RK-A.6-004); the conversation references are the provider's to keep, and the channel takes no store (RK-A.6-005)."
     },
     {
       "section": "A.7",
@@ -1611,9 +1611,9 @@
     },
     {
       "section": "A.9.1",
-      "sha256": "3e9d5997912d01f0b7b7553e74c9f8bd617beaa1156d1913afc3589d6f2f1fdd",
+      "sha256": "3afcd6a7ffd68d560f4a1b00743450d8656a8f61485d36c7d6812f0fa04bf824",
       "classification": "normative",
-      "review": "Source inventory: ACP Agent Channel, split to one obligation per unit (RMK-1959). The reference tree, cut by closing and reopening the code block: identity; the protocol side; each transport, session, update mapping, end-of-turn and safety line; the configuration fields, one unit per field that states a rule or a default, the plain ones beside each other grouped. The usage paragraphs one unit per sentence: the optional usage_metadata (may), what it identifies once offered and the usage rules (must); the note that no tariff is specified is folded into the last unit. Every unit but RK-A.9.1-032 must where an implementation offers the channel. Every unit carries its level."
+      "review": "Source inventory: ACP Agent Channel, split to one obligation per unit (RMK-1959). The reference tree, cut by closing and reopening the code block: identity; the protocol side; each transport, session, update mapping, end-of-turn and safety line; the configuration fields, one unit per field that states a rule or a default, the plain ones beside each other grouped. The usage paragraphs one unit per sentence: the optional usage_metadata (may), what it identifies once offered and the usage rules (must); the note that no tariff is specified is folded into the last unit. Every unit but RK-A.9.1-032 must where an implementation offers the channel. Every unit carries its level. Amended from Python by lot X2b (RMK-2233, probes of lot S0, HITL 3990944a): command or transport, one of the two (RK-A.9.1-011); env and inherit_env, not environment (RK-A.9.1-014)."
     },
     {
       "section": "A.10",
@@ -1635,9 +1635,9 @@
     },
     {
       "section": "A.13",
-      "sha256": "c906608d9bd77128ef24a84cde365f03d73dfc3374abb9070f12e654952a6a98",
+      "sha256": "e0105fd50db14090d24efcefcd4fcb424cd5e420507cd37cbe4debe38315ccf5",
       "classification": "normative",
-      "review": "Source inventory: Telegram Channel, split to one obligation per unit (RMK-1959) by closing and reopening the code block: the channel's type, category, direction and media types; its default capabilities; the bot provider; the recipient key telegram_chat_id, written as a string; the chat key chat_id; delivery through the platform's bot API. All must where an implementation offers the channel. Every unit carries its level. Vendor cleanup (RMK-1991): delivery names the platform's bot API, not its methods."
+      "review": "Source inventory: Telegram Channel, split to one obligation per unit (RMK-1959) by closing and reopening the code block: the channel's type, category, direction and media types; its default capabilities; the bot provider; the recipient key telegram_chat_id, written as a string; the chat key chat_id; delivery through the platform's bot API. All must where an implementation offers the channel. Every unit carries its level. Vendor cleanup (RMK-1991): delivery names the platform's bot API, not its methods. Amended from Python by lot X2b (RMK-2233, probes of lot S0, HITL 3990944a): the provider's config holds bot_token and webhook_secret, beside verify_signature(payload, signature) and send(event, to), and the webhook is parsed by a function beside the provider (RK-A.13-004)."
     },
     {
       "section": "A.14",
