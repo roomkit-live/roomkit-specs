@@ -641,60 +641,10 @@
       "card": "RMK-1917",
       "note": "The current_turn_footprint() tuple is observable to a custom memory. Extend the scripted memory recorder for its measured input, reply budget, and indexed replay tuples. Native tests include Python tests/test_turn_footprint.py::test_the_footprint_is_the_turn_as_round_0_sends_it and Rust crates/roomkit-ai/tests/turn_footprint.rs::the_footprint_is_the_turn_as_its_first_round_sends_it."
     },
-    "RK-21.1-018": {
-      "class": "phase6",
-      "card": "RMK-1918",
-      "note": "step: conference.open tool_policy: observe a conference tool with the same name as a channel reader under a denying policy."
-    },
-    "RK-21.1-019": {
-      "class": "phase6",
-      "card": "RMK-1918",
-      "note": "step: a scripted realtime reasoning backend, a realtime call recovered from speech: observe policy and skill gating when spoken recovery or a reasoning backend names a reader it does not serve."
-    },
-    "RK-21.1-022": {
-      "class": "phase6",
-      "card": "RMK-1918",
-      "note": "step: Tool Search on a realtime session: exercise the fixed-declaration session's call_tool carrier and the policy check on its resolved tool."
-    },
     "RK-21.1-023": {
       "class": "step",
       "card": "RMK-1918",
       "note": "Configure a nameless native provider tool alongside discoverable named tools and inspect the native provider declaration and discovery list."
-    },
-    "RK-21.1-029": {
-      "class": "phase6",
-      "card": "RMK-1918",
-      "note": "step: a scripted realtime reasoning backend: exercise each refusal cause entering through a delegated reasoning backend."
-    },
-    "RK-21.1-030": {
-      "class": "phase6",
-      "card": "RMK-1918",
-      "note": "step: realtime tool_policy and tool timeout options: exercise refusal selection and text on realtime-session tools."
-    },
-    "RK-21.1-043": {
-      "class": "phase6",
-      "card": "RMK-1918",
-      "note": "step: a scripted realtime reasoning backend: a reasoning backend's exclusion for a skill it cannot activate names the conversation's activation state."
-    },
-    "RK-21.1-046": {
-      "class": "phase6",
-      "card": "RMK-1918",
-      "note": "step: Tool Search on a realtime session: ask for an unknown name through the realtime carrier and inventory and check the search hint."
-    },
-    "RK-21.1-049": {
-      "class": "phase6",
-      "card": "RMK-1918",
-      "note": "step: a scripted realtime reasoning backend: read the delegated model's tool catalogue and the per-name unavailable reason alongside its actual refusals."
-    },
-    "RK-21.1-050": {
-      "class": "phase6",
-      "card": "RMK-1918",
-      "note": "step: a scripted realtime reasoning backend: exercise delegation-time role and room reads and the audible fallback on a bounded read failure."
-    },
-    "RK-21.1-051": {
-      "class": "phase6",
-      "card": "RMK-1918",
-      "note": "step: a scripted realtime reasoning backend: queue a delegation across a role change and compare the snapshot offered with the gate's current-role decision."
     },
     "RK-21.1-054": {
       "class": "step",
@@ -705,16 +655,6 @@
       "class": "step",
       "card": "RMK-1918",
       "note": "step: a strategy's own install on a room it is installed in (Python's Orchestration.install(kit, room_id)): install_strategy refuses a room that holds a strategy (invalid_argument) before the strategy installs again (a Discussion takes the place of one, but sets up no tools), and no other call installs one."
-    },
-    "RK-21.1-058": {
-      "class": "phase6",
-      "card": "RMK-1918",
-      "note": "step: realtime.read of the session configuration on a realtime pipeline: exercise a realtime pipeline agent declaring its own setup tool while a distinct conflicting late declaration is refused."
-    },
-    "RK-21.1-075": {
-      "class": "phase6",
-      "card": "RMK-1918",
-      "note": "step: conference.open tool_policy: exercise refusal selection and text on conference tools."
     },
     "RK-21.2-005": {
       "class": "step",
@@ -901,11 +841,6 @@
       "card": "RMK-1918",
       "note": "step: a read of a realtime or conference tool handler's context: read the response metadata accessor where no realtime tool call will produce a message merging it."
     },
-    "RK-21.4-043": {
-      "class": "phase6",
-      "card": "RMK-1918",
-      "note": "step: a realtime call recovered from speech: decline every handler of a tool recovered from speech and compare its outcome to a normal function call."
-    },
     "RK-21.5-014": {
       "class": "step",
       "card": "RMK-1918",
@@ -920,11 +855,6 @@
       "class": "phase6",
       "card": "RMK-1918",
       "note": "step: realtime tool_policy and tool timeout options, a realtime call recovered from speech: exercise every realtime entry, including a spoken recovery, with a slow handler and verify the timeout."
-    },
-    "RK-21.6-004": {
-      "class": "phase6",
-      "card": "RMK-1918",
-      "note": "step: conference.open tool_timeouts with a gated handler: exercise a slow conference handler and observe its configured timeout."
     },
     "RK-21.6-013": {
       "class": "step",
@@ -941,11 +871,6 @@
       "card": "RMK-1917",
       "note": "A custom strategy that completes with no outcome needs a fixture."
     },
-    "RK-22.1-047": {
-      "class": "writable",
-      "card": "RMK-1917",
-      "note": "deliver with instruction into a room binding a realtime channel with a live session: realtime.read shows the injection in the system role (requires realtime)."
-    },
     "RK-22.1-050": {
       "class": "phase6",
       "card": "RMK-1917",
@@ -956,26 +881,6 @@
       "card": "RMK-1917",
       "note": "step: several realtime sessions per channel and across rooms: use zero, one and several active provider sessions."
     },
-    "RK-22.1-052": {
-      "class": "phase6",
-      "card": "RMK-1917",
-      "note": "step: realtime model activity for idle waits: replace a session while idle is awaited and observe which one receives the injection."
-    },
-    "RK-22.1-053": {
-      "class": "phase6",
-      "card": "RMK-1917",
-      "note": "step: realtime model activity for idle waits: end the session or remove the realtime model during the wait; check refusal and no text publication."
-    },
-    "RK-22.1-054": {
-      "class": "phase6",
-      "card": "RMK-1917",
-      "note": "step: realtime model activity for idle waits: observe the unsuccessful outcome of the selected session."
-    },
-    "RK-22.1-056": {
-      "class": "writable",
-      "card": "RMK-1917",
-      "note": "deliver with addressed_to an agent in a room binding a realtime channel: the agent's turn answers, and realtime.read shows no injection (requires realtime)."
-    },
     "RK-22.1-072": {
       "class": "step",
       "card": "RMK-1917",
@@ -985,21 +890,6 @@
       "class": "phase6",
       "card": "RMK-1917",
       "note": "step: a store fault or read on the voice injection reservation: observe the store reservation before the provider call, including a concurrent claim."
-    },
-    "RK-22.1-075": {
-      "class": "writable",
-      "card": "RMK-1917",
-      "note": "deliver twice with one idempotency_key to two realtime channels, each with its session in its own room: independent outcomes; the same key on two sessions of one channel needs several realtime sessions per channel (requires realtime)."
-    },
-    "RK-22.1-076": {
-      "class": "writable",
-      "card": "RMK-1917",
-      "note": "deliver twice with one idempotency_key to a realtime session: the second outcome reused, realtime.read showing one injection (requires realtime)."
-    },
-    "RK-22.1-077": {
-      "class": "writable",
-      "card": "RMK-1917",
-      "note": "deliver twice with one idempotency_key and different text to a realtime session: the second refused as an idempotency conflict (requires realtime)."
     },
     "RK-22.1-078": {
       "class": "phase6",
@@ -1026,11 +916,6 @@
       "card": "RMK-1917",
       "note": "step: a store without reservation support: run the same keyed injection with no reservation support; assert the provider is untouched."
     },
-    "RK-22.1-083": {
-      "class": "phase6",
-      "card": "RMK-1917",
-      "note": "step: scripted realtime injection outcomes: exercise recovery of an uncertain injection; retries cannot resubmit it."
-    },
     "RK-22.1-085": {
       "class": "phase6",
       "card": "RMK-1917",
@@ -1045,21 +930,6 @@
       "class": "phase6",
       "card": "RMK-1917",
       "note": "step: scripted realtime injection outcomes: retry the provider after definitive non-submission only."
-    },
-    "RK-22.1-089": {
-      "class": "phase6",
-      "card": "RMK-1917",
-      "note": "step: scripted realtime injection outcomes: have a provider give no result and observe uncertainty."
-    },
-    "RK-22.1-090": {
-      "class": "writable",
-      "card": "RMK-1917",
-      "note": "deliver to a realtime channel with no live session: the outcome is not a success; an injection the provider does not support needs a provider without injection (requires realtime)."
-    },
-    "RK-22.1-091": {
-      "class": "phase6",
-      "card": "RMK-1917",
-      "note": "step: scripted realtime injection outcomes: queue input without establishing remote acceptance and observe uncertainty."
     },
     "RK-22.1-093": {
       "class": "phase6",
@@ -1076,25 +946,10 @@
       "card": "RMK-1917",
       "note": "step: several realtime sessions per channel and across rooms: attach or replace sessions between enqueue and execution; observe the selected sessions at execution."
     },
-    "RK-22.1-101": {
-      "class": "writable",
-      "card": "RMK-1917",
-      "note": "deliver to a realtime channel with a live session: the outcome sent once the provider accepted the injection, which realtime.read shows (requires realtime)."
-    },
     "RK-22.1-103": {
       "class": "phase6",
       "card": "RMK-1917",
       "note": "step: several realtime sessions per channel and across rooms: assert the IDs of sessions actually injected in a proactive real-time delivery, including more than one destination."
-    },
-    "RK-22.2-006": {
-      "class": "writable",
-      "card": "RMK-1917",
-      "note": "deliver with wait_for_idle while a voice playback is held at its playback_gate: delivered only once the gate opens (requires voice)."
-    },
-    "RK-22.2-007": {
-      "class": "phase6",
-      "card": "RMK-1917",
-      "note": "step: realtime model activity for idle waits: exercise pending answers, speech, tools and audio forwarding before real-time sessions become idle."
     },
     "RK-22.2-009": {
       "class": "phase6",
@@ -1110,16 +965,6 @@
       "class": "phase6",
       "card": "RMK-1917",
       "note": "step: deliver playback_timeout with a held playback: run a queued batch during ongoing media playback or model activity and past the timeout."
-    },
-    "RK-22.2-014": {
-      "class": "phase6",
-      "card": "RMK-1917",
-      "note": "step: realtime model activity for idle waits: observe both active speech and answer; in voice, inspect TTS activity."
-    },
-    "RK-22.2-015": {
-      "class": "writable",
-      "card": "RMK-1917",
-      "note": "deliver with wait_for_idle on a voice channel whose playback a playback_gate holds: the strategy watches that playback (requires voice)."
     },
     "RK-22.2-016": {
       "class": "step",
@@ -1186,16 +1031,6 @@
       "card": "RMK-1922",
       "note": "Create an in-memory runner directly, submit work and close it, observing its tasks cancelled and resources released independently of kit.close()."
     },
-    "RK-23.3-042": {
-      "class": "phase6",
-      "card": "RMK-1922",
-      "note": "step: setup_realtime_delegation: observe the instruction flag on a delegation hand-back to a channel hosting a realtime model."
-    },
-    "RK-23.3-044": {
-      "class": "phase6",
-      "card": "RMK-1922",
-      "note": "step: setup_realtime_delegation: observe private system-intent injection on the delegating realtime voice session and the sole session when delegation is outside a call."
-    },
     "RK-23.3-045": {
       "class": "phase6",
       "card": "RMK-1922",
@@ -1205,11 +1040,6 @@
       "class": "phase6",
       "card": "RMK-1922",
       "note": "step: conference model steps, a task delegated from a conference tool call: observe a conference with a realtime model receiving the private task result for its delegating or sole session."
-    },
-    "RK-23.3-053": {
-      "class": "phase6",
-      "card": "RMK-1922",
-      "note": "step: setup_realtime_delegation: compare a realtime task-result injection with the expected result, observing that it omits the text-agent-only turn instruction."
     },
     "RK-23.3-055": {
       "class": "writable",
@@ -1281,11 +1111,6 @@
       "card": "RMK-1922",
       "note": "Keep a stale running bus entry, exceed the global ended-task retention using other rooms and then query the original task."
     },
-    "RK-23.4-066": {
-      "class": "phase6",
-      "card": "RMK-1922",
-      "note": "step: realtime.read of the session configuration: demonstrate that a realtime session with otherwise visible room tasks receives no task-notes block."
-    },
     "RK-23.4-068": {
       "class": "step",
       "card": "RMK-1922",
@@ -1325,21 +1150,6 @@
       "class": "step",
       "card": "RMK-1939",
       "note": "The shared registry snapshot offers gated_tool_names but no closed_tool_names(activated) result. The text gate cases exercise the behavioral rules about overlapping patterns separately."
-    },
-    "RK-24.3-029": {
-      "class": "phase6",
-      "card": "RMK-1939",
-      "note": "step: a realtime fixture skills option: no shared realtime session exercises activation prerequisites."
-    },
-    "RK-24.4-023": {
-      "class": "phase6",
-      "card": "RMK-1939",
-      "note": "step: a realtime fixture skills option: no shared realtime case asserts the missing-skill response and reveal."
-    },
-    "RK-24.4-024": {
-      "class": "phase6",
-      "card": "RMK-1939",
-      "note": "step: a realtime fixture skills option: the fixed-declaration realtime gateway's hint directing the model to call_tool lacks a shared oracle."
     },
     "RK-24.5-002": {
       "class": "step",

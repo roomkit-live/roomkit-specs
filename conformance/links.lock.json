@@ -11465,6 +11465,12 @@
     "RK-21.1-017": {
       "tools/an-exemption-covers-the-channel-s-own-reader-and-no-other-tool": "e5a58ba56383d93fc510ddcba65b0b1f2853856c2be879919bc71fd18b71a230"
     },
+    "RK-21.1-018": {
+      "conference/a-conference-serves-no-reader-of-its-own-and-its-policy-governs-every-name": "6444bce695cea512f237fa8e0146a3efc27d9e181ce57d9339f7bbda00f1360e"
+    },
+    "RK-21.1-019": {
+      "realtime/a-backend-s-calls-reach-none-of-the-channel-s-own-tools": "cd320cb912b9944b45a81ba0a75d64ae880f64247c5d057be6d52130f73164ea"
+    },
     "RK-21.1-020": {
       "role-policy/script-denied-non-streaming": "3c2bff998ca3a7d2f42511c2134c9024383a826db7b065441cfe54c92873fc38",
       "role-policy/script-denied-streaming": "3c2bff998ca3a7d2f42511c2134c9024383a826db7b065441cfe54c92873fc38",
@@ -11487,6 +11493,9 @@
       "skill-gating/activation-opens-the-next-round-and-its-hook-catalogue-non-streaming": "1e4d5633d645806cb385b32c6e8a1e0633c4586fcda5b063e7295c887b1ae7a6",
       "skill-gating/activation-opens-the-next-round-and-its-hook-catalogue-streaming": "1e4d5633d645806cb385b32c6e8a1e0633c4586fcda5b063e7295c887b1ae7a6",
       "skills/a-turn-s-skill-tools-escape-the-tool-policy": "1e4d5633d645806cb385b32c6e8a1e0633c4586fcda5b063e7295c887b1ae7a6"
+    },
+    "RK-21.1-022": {
+      "realtime/call-tool-stays-declared-and-the-policy-judges-the-tool-it-carries": "8c88a57528248df5c532e5f31c015aeedf71082796a3bfac7eac6e0ba301bfc8"
     },
     "RK-21.1-024": {
       "acp/handler-policy-mcp-alias-deny": "a4fbab0e7edec59f15c84d866106e58af275ca3a8a2e14dfcccab493d81c57be",
@@ -11554,6 +11563,12 @@
       "acp/handler-policy-mcp-alias-deny": "c7edc940418c792fc124f0ed438d7a3f92b18e6bde7d9852309135da124008b6",
       "acp/handler-policy-mcp-bare-deny": "c7edc940418c792fc124f0ed438d7a3f92b18e6bde7d9852309135da124008b6",
       "tools/refusal-per-cause": "c7edc940418c792fc124f0ed438d7a3f92b18e6bde7d9852309135da124008b6"
+    },
+    "RK-21.1-029": {
+      "realtime/a-backend-is-offered-what-it-may-call-and-refused-the-rest-in-the-common-order": "1584b9a7fbded80b8c4ae655cece47fc854b0efbd1d59c2e8020798131ee1c9c"
+    },
+    "RK-21.1-030": {
+      "realtime/a-backend-is-offered-what-it-may-call-and-refused-the-rest-in-the-common-order": "7c1ef35c7e41438bd71d2463705cd092f09d7b7a693e3752124f65b397dd54cd"
     },
     "RK-21.1-031": {
       "acp/handler-policy-allow-list": "8e1641b526208c70c0d1f33b0b47bdcc1ffabdf1710c3b4472bc7b8c14a53cd0",
@@ -11707,6 +11722,9 @@
       "skill-prerequisites/an-available-skill-can-open-a-pattern-also-gated-by-an-unavailable-skill-streaming": "b9a6591b57651d0bc4f5881c192d5f6033b901f977721bcffd55c8a801c14ee9",
       "tools/refusal-per-cause": "b9a6591b57651d0bc4f5881c192d5f6033b901f977721bcffd55c8a801c14ee9"
     },
+    "RK-21.1-043": {
+      "realtime/a-backend-is-offered-what-it-may-call-and-refused-the-rest-in-the-common-order": "dd0346b7535fdbb61141be49de9f637f4c5b238985157d0be9ccefcd9a6ee583"
+    },
     "RK-21.1-044": {
       "mcp/a-catalogue-of-aliases-holds-a-policy-that-names-a-server": "49e56daf6e50e0f1c0954b54578b707689196cbb57561c03d32e5c4e44391ca6",
       "skills/a-channel-built-without-skills-ignores-a-turn-s-registry": "49e56daf6e50e0f1c0954b54578b707689196cbb57561c03d32e5c4e44391ca6",
@@ -11720,6 +11738,9 @@
     "RK-21.1-045": {
       "tool-search/a-turn-s-own-tools-are-its-catalogue": "53b6af7368e78002e6956570516ee2afa53e2962d8ac187dc563c7ac6b2d593a",
       "tool-search/an-unknown-name-under-tool-search-hints-find-tools": "53b6af7368e78002e6956570516ee2afa53e2962d8ac187dc563c7ac6b2d593a"
+    },
+    "RK-21.1-046": {
+      "realtime/an-unknown-name-under-tool-search-reads-that-no-such-tool-exists-on-every-entry": "03941378ebc8df4886b68e5b76f8bcd40ab442221595eaf68ee7aab4e5af185c"
     },
     "RK-21.1-047": {
       "role-policy/activation-cannot-bypass-role-non-streaming": "206bafa78e78392d587615b18de21e32c38001b0667066b267ada6854bdd72ce",
@@ -11754,6 +11775,16 @@
       "tool-search/a-denied-tool-is-not-recovered": "347896ade0c66750922ad492710c6fe858175cffccb3c4c66db9c4094fae4523",
       "tools/refusal-per-cause": "347896ade0c66750922ad492710c6fe858175cffccb3c4c66db9c4094fae4523"
     },
+    "RK-21.1-049": {
+      "realtime/a-backend-is-offered-what-it-may-call-and-refused-the-rest-in-the-common-order": "5c91f4452107512a94606ce7c083da460d478faeae718dbffc5841fa456ecb9d"
+    },
+    "RK-21.1-050": {
+      "realtime/a-delegation-whose-role-read-fails-or-outlasts-its-bound-is-answered-aloud": "41c435dd30fa71d01e7674bc4169bb771e49802c68432d2f4848f624a3e76e68",
+      "realtime/a-queued-delegation-keeps-the-catalogue-of-its-hand-over-and-its-call-is-judged-as-the-role-stands": "41c435dd30fa71d01e7674bc4169bb771e49802c68432d2f4848f624a3e76e68"
+    },
+    "RK-21.1-051": {
+      "realtime/a-queued-delegation-keeps-the-catalogue-of-its-hand-over-and-its-call-is-judged-as-the-role-stands": "d190379a58074c87b8a07c7cf70a07334235ffcf04ef8c7e822908ae49c31cfe"
+    },
     "RK-21.1-052": {
       "mcp/a-tool-listed-twice-is-declared-once": "b353b5e87589c27a0669a934542133be45e535b21e1f7f2060be2e91fe41d703",
       "orchestration/a-supervisor-install-refused-halfway-sets-nothing-up": "b353b5e87589c27a0669a934542133be45e535b21e1f7f2060be2e91fe41d703",
@@ -11787,6 +11818,9 @@
       "tool-search/a-generation-hook-cannot-declare-a-discovery-name-while-nothing-is-hidden": "d47d8f86c86d950c89174efd71da1746c3723fb55ba9e3a35765f9e719c26e6b",
       "tool-search/a-generation-hook-cannot-redefine-a-discovery-tool": "d47d8f86c86d950c89174efd71da1746c3723fb55ba9e3a35765f9e719c26e6b",
       "turn-config/a-turn-config-s-tool-under-a-setup-s-tool-name-is-not-declared": "d47d8f86c86d950c89174efd71da1746c3723fb55ba9e3a35765f9e719c26e6b"
+    },
+    "RK-21.1-058": {
+      "realtime/a-pipeline-session-declares-the-channel-s-tools-as-they-are-the-agent-s-and-the-handoff": "f841ef42ed5514ac468733e87333206605f6751d0dc3dcd9d2a8e240de5bea6f"
     },
     "RK-21.1-059": {
       "tools/extra-tools-collision-binding-agent-stream": "d3b4662c09e5699559399ec8dfbb34e8863e6d933c3b0f8512a030b3880bc842",
@@ -11944,6 +11978,9 @@
       "role-policy/interleaved-turns-keep-their-role-streaming": "a8cbc5a55ad2b839f6c35894f4cd46207a3aa2851abaae18bb1e5f35b36cd5f4",
       "role-policy/script-owner-replaces-base-non-streaming": "a8cbc5a55ad2b839f6c35894f4cd46207a3aa2851abaae18bb1e5f35b36cd5f4",
       "role-policy/script-owner-replaces-base-streaming": "a8cbc5a55ad2b839f6c35894f4cd46207a3aa2851abaae18bb1e5f35b36cd5f4"
+    },
+    "RK-21.1-075": {
+      "conference/a-conference-refuses-each-call-in-the-common-order-and-words": "6f11e82d0c72a63782b3d520a1102c5e7694e7acbb08c6e6f68182884bb97c31"
     },
     "RK-21.2-003": {
       "mcp-construction/direct-sse-discovery-empty-headers": "7b6045fe2924195a498848b0c3305e4c2de44432866d22cf3f3545522e592899",
@@ -12408,6 +12445,9 @@
       "orchestration/an-audited-answer-reaches-the-model-unchanged": "fae4ccf508759f145804895baeed2e711ba4e05686a0791552e43c38210de0f5",
       "orchestration/an-audited-call-is-recorded-by-how-it-ended": "fae4ccf508759f145804895baeed2e711ba4e05686a0791552e43c38210de0f5"
     },
+    "RK-21.4-043": {
+      "realtime/a-call-its-handler-declines-is-served-by-nothing-issued-or-recovered-from-speech": "de1cd9d14386259929a9ed15917f277578dd27a9150604154cf546fc6db5eb90"
+    },
     "RK-21.5-002": {
       "eviction/a-call-id-reused-in-a-later-turn-is-stored-under-a-new-id": "8f35f6d476b0b8f64e42ab1466dac1965422c7469c3d9580825662e3b76fd74d",
       "eviction/a-call-under-an-id-its-round-holds-is-refused-unstored": "8f35f6d476b0b8f64e42ab1466dac1965422c7469c3d9580825662e3b76fd74d",
@@ -12499,6 +12539,9 @@
       "turn-tool-timeouts/unbounded-configured-tool-whole": "f44e9c9ce98eed4e4e4dd68fd38206036bdbff9c538bd1b94bace62ab479728b",
       "turn-tool-timeouts/waiting-tool-stream": "f44e9c9ce98eed4e4e4dd68fd38206036bdbff9c538bd1b94bace62ab479728b",
       "turn-tool-timeouts/waiting-tool-whole": "f44e9c9ce98eed4e4e4dd68fd38206036bdbff9c538bd1b94bace62ab479728b"
+    },
+    "RK-21.6-004": {
+      "conference/a-conference-tool-handler-is-cut-at-its-bound": "52d0f4b14a840546d81887a72fc74cec8fcea1f05b04e259f95ce7a93b1f44d3"
     },
     "RK-21.6-005": {
       "inputs/a-bound-named-for-a-person-s-tool-still-cuts-its-call": "dc6f784033856914bc0029b8d9f6d3f0dfccbc9bfba7814a0eb6ebbc73f0004f",
@@ -12758,6 +12801,9 @@
     "RK-22.1-046": {
       "delivery/an-instruction-is-delivered-as-the-application-s-direction": "1ea6002980add27c8423b986ef8dce6c1b301a3d7a9ea3fefa929a7f3ac512b5"
     },
+    "RK-22.1-047": {
+      "realtime/an-instruction-enters-the-session-as-system": "3ee88255e81ca34dd5d39ed6c5c67370122611d607c341dba44dfc4dc4873219"
+    },
     "RK-22.1-048": {
       "delivery/an-instruction-is-delivered-as-the-application-s-direction": "3571f90eefaf143ab38a7333b57761c6754534bca9d22a42cf5c9637f0dd1908",
       "orchestration/a-background-worker-past-its-task-timeout-is-cut-and-told-as-not-completed": "3571f90eefaf143ab38a7333b57761c6754534bca9d22a42cf5c9637f0dd1908",
@@ -12766,6 +12812,19 @@
       "tasks/a-background-delegation-relays-its-result-to-the-notified-agent": "3571f90eefaf143ab38a7333b57761c6754534bca9d22a42cf5c9637f0dd1908",
       "tasks/a-before-deliver-hook-s-block-keeps-a-hand-back-from-its-agent": "3571f90eefaf143ab38a7333b57761c6754534bca9d22a42cf5c9637f0dd1908",
       "tasks/a-relayed-task-result-names-its-worker-by-the-discussion-handle": "3571f90eefaf143ab38a7333b57761c6754534bca9d22a42cf5c9637f0dd1908"
+    },
+    "RK-22.1-052": {
+      "realtime/a-delivery-pinned-to-a-session-is-refused-once-the-session-or-its-channel-is-gone": "ba415fe6884d1fcc7358b5ccb0c58685aca5ca40c87e6b731bab4907e2f8d287"
+    },
+    "RK-22.1-053": {
+      "realtime/a-delivery-pinned-to-a-session-is-refused-once-the-session-or-its-channel-is-gone": "dde2cfab91a37301295295bfa077640a318d8cde93769d0dfbd0f3834f569835"
+    },
+    "RK-22.1-054": {
+      "realtime/a-delivery-pinned-to-a-session-is-refused-once-the-session-or-its-channel-is-gone": "82c4994b2553b81a92ec508837ec7f9f0e7f91b99e9655deb6e7d5a9ebe85e35",
+      "realtime/a-delivery-to-a-realtime-channel-without-a-session-or-a-connection-is-no-success": "82c4994b2553b81a92ec508837ec7f9f0e7f91b99e9655deb6e7d5a9ebe85e35"
+    },
+    "RK-22.1-056": {
+      "realtime/an-addressed-delivery-takes-the-text-pipeline-not-the-session": "70b9803730a2331ae8bc642d196b8bc0aa5dcc9e2afb1f1ede95884ec7f7daaa"
     },
     "RK-22.1-057": {
       "delivery/an-address-beside-a-session-is-refused-before-anything-is-written": "1cb4c7aeafe054eee5db032187b5b454c7ae5ac322d29e0b3ccbe78f5906be97"
@@ -12852,8 +12911,32 @@
       "delivery/a-keyed-delivery-is-one-publication": "f13e993320a6cfa1ef87d2a6c66fa4f476fba312ac37973986ca7700f9f26187",
       "delivery/a-replay-is-reported-as-the-original-publication": "f13e993320a6cfa1ef87d2a6c66fa4f476fba312ac37973986ca7700f9f26187"
     },
+    "RK-22.1-075": {
+      "realtime/a-keyed-injection-is-one-per-room-channel-and-session": "af56e9b4e78d8999e0999ecf384795a44d67d327d412ee88bf16d28438bc9177"
+    },
+    "RK-22.1-076": {
+      "realtime/a-repeated-keyed-injection-reuses-its-outcome-unless-nothing-was-sent-and-retry-is-allowed": "6a2fbc222b06f9c6528357cc4851cc89977b89a2dc68e566cc9db0c991c4da64"
+    },
+    "RK-22.1-077": {
+      "realtime/a-keyed-injection-repeated-with-other-text-is-a-conflict-a-keyed-publication-is-not": "ea7e7d615861ef20adffd120f738d201d5c886002231f40fc90d7996ccd19191"
+    },
+    "RK-22.1-083": {
+      "realtime/a-repeated-keyed-injection-reuses-its-outcome-unless-nothing-was-sent-and-retry-is-allowed": "dd0151e3119571aaa46f7d61697d22e94064ef63be75ddb5e76a72def3cd7473"
+    },
+    "RK-22.1-089": {
+      "realtime/an-injection-reports-what-the-provider-knows-of-its-sending": "991fa1331f09419daf94cf0832ae0f48452c844f6a613d9c963571427483b3a3"
+    },
+    "RK-22.1-090": {
+      "realtime/a-delivery-to-a-realtime-channel-without-a-session-or-a-connection-is-no-success": "8625aa70d9c427c049fa4e804eac5a0d21b29b24c90ad5ec9ad02f0199223d0b"
+    },
+    "RK-22.1-091": {
+      "realtime/an-injection-reports-what-the-provider-knows-of-its-sending": "efbe93b56be6a200bc23a3896bad9334a045027e485c716ab9baf8de17904b98"
+    },
     "RK-22.1-100": {
       "delivery/the-worker-retries-an-unavailable-destination": "6ea53bafddb83248c22fbe38de12ce266715894de0dc8d7b187f746812481647"
+    },
+    "RK-22.1-101": {
+      "realtime/an-injection-reports-what-the-provider-knows-of-its-sending": "e04eb41b43fe0bc2e92a7aad9e2e1d48be1e9e60a8b1e374b7adb1f3130972ba"
     },
     "RK-22.1-102": {
       "delivery/a-before-broadcast-refusal-is-reported-to-the-caller-and-after-deliver": "d1b60e7bae3c7e53468b508e39335b8ce093898d08b4e727602f31ec16cd9c15",
@@ -12882,8 +12965,20 @@
       "delivery/a-delivery-enters-the-room-as-the-framework-s-message": "7d7ed099a6efc199d354c6702dd33cc694f4d593909a7447c270776ef56e5a44",
       "delivery/a-keyed-delivery-from-an-off-lock-hook-waits-for-its-agent-s-answer": "7d7ed099a6efc199d354c6702dd33cc694f4d593909a7447c270776ef56e5a44"
     },
+    "RK-22.2-006": {
+      "voice/a-delivery-waiting-for-idle-waits-for-the-room-s-playback-to-finish": "f26294dfa1e3817aecf3b0abb1a9ef51ec634cece0fda5012d9b37b2ddf7fc56"
+    },
+    "RK-22.2-007": {
+      "realtime/a-delivery-waiting-for-idle-waits-out-a-tool-call-the-answer-and-the-user-s-speech": "072a9cb3b9fb6efa3ac474d2bd4e6e8361f4074b248fa884c3c537bb89e243a4"
+    },
     "RK-22.2-008": {
       "delivery/wait-for-idle-on-a-text-transport-delivers-at-once": "cee552dbf8a4ed461221ef80839282c1cd9db89ccc1d03810801a51b543f4f8a"
+    },
+    "RK-22.2-014": {
+      "realtime/a-delivery-waiting-for-idle-waits-out-a-tool-call-the-answer-and-the-user-s-speech": "17a38f24103c7edb174d84e9ea169a78fc807fa671c43c5dda9b37d51300f375"
+    },
+    "RK-22.2-015": {
+      "voice/a-delivery-waiting-for-idle-waits-for-the-room-s-playback-to-finish": "ea1e5285810d500ac7ab55e227e4682ff473cd7fb305d17668f5271135c725e9"
     },
     "RK-22.2-021": {
       "delivery/a-queued-delivery-is-executed-by-the-worker": "b94a702d8e0ceb12e01dd0419e954e2427d3a662988c9dff7a17ab642bf63a2d",
@@ -13338,11 +13433,17 @@
       "tasks/a-relayed-task-result-names-its-worker-by-the-discussion-handle": "584d0b17db2c75384a9e200dec458c44dd4145d41fb98dbdef6be449f3acd3d2",
       "tasks/an-empty-start-task-hand-back-keeps-the-default-or-configured-mode": "584d0b17db2c75384a9e200dec458c44dd4145d41fb98dbdef6be449f3acd3d2"
     },
+    "RK-23.3-042": {
+      "realtime/a-task-handed-back-to-a-realtime-channel-is-a-system-instruction-into-its-session": "0cf21e34ee021cee4b06ffba201fb5c3ae4a24223c05abf92267886a0d4f8a3c"
+    },
     "RK-23.3-043": {
       "tasks/a-background-delegation-relays-its-result-to-the-notified-agent": "5b633cf4c32e60682b26d8736640dd97aa028cfd99ec189eba86ee99eaca48ec",
       "tasks/a-hand-back-leaves-the-notified-agent-s-prompt-as-its-binding-holds-it": "5b633cf4c32e60682b26d8736640dd97aa028cfd99ec189eba86ee99eaca48ec",
       "tasks/a-relayed-task-result-names-its-worker-by-the-discussion-handle": "5b633cf4c32e60682b26d8736640dd97aa028cfd99ec189eba86ee99eaca48ec",
       "tasks/delegate-task-answers-its-model-with-the-task-or-why-not": "5b633cf4c32e60682b26d8736640dd97aa028cfd99ec189eba86ee99eaca48ec"
+    },
+    "RK-23.3-044": {
+      "realtime/a-task-handed-back-to-a-realtime-channel-is-a-system-instruction-into-its-session": "9774ec41fce6dedd46e9d0c1f5e6c428951d8405ee51bf216cf6ea2cb70d856d"
     },
     "RK-23.3-047": {
       "tasks/a-hand-back-to-a-transport-is-the-result-alone": "e1a4dcbb1e67a5fe47386be6e2ad95b4b334ccbda4907f8f05918ebdec9343db",
@@ -13381,6 +13482,9 @@
       "tasks/a-delegation-sets-how-much-of-its-result-is-handed-back": "9065585b03ccc34be9587e9274f90d94f4e90ebd589e3131d69a712f5fba8e25",
       "tasks/a-hand-back-bounds-the-result-and-fences-it-as-data": "9065585b03ccc34be9587e9274f90d94f4e90ebd589e3131d69a712f5fba8e25",
       "tasks/a-hand-back-leaves-the-notified-agent-s-prompt-as-its-binding-holds-it": "9065585b03ccc34be9587e9274f90d94f4e90ebd589e3131d69a712f5fba8e25"
+    },
+    "RK-23.3-053": {
+      "realtime/a-task-handed-back-to-a-realtime-channel-is-a-system-instruction-into-its-session": "f18ddd4c89a64b2a124ea042ede32b3476fa77627919e0e9d27c5d8bd935ff2c"
     },
     "RK-23.3-054": {
       "tasks/a-hand-back-to-a-transport-is-the-result-alone": "09dcb68783b74fd84183be99e0d62c56bcde1bd6e978c88eba6ece1af53ac1d2",
@@ -13912,6 +14016,9 @@
     "RK-23.4-065": {
       "tasks/the-tasks-note-lists-the-latest-six-tasks-and-a-standalone-turn-none": "5ac2e532c26592e5e0f64c5157a0ba2efb5297c1e8be93f3cc2cf338b21ac5bb"
     },
+    "RK-23.4-066": {
+      "realtime/a-realtime-session-carries-no-task-notes": "314123f23edfdfbd9c958921c3cb427fed6d1dfa0878a2858d288b6ab0195960"
+    },
     "RK-23.4-067": {
       "executors/a-turn-apart-s-delegation-and-segments-fire-their-hooks-on-the-room-owner": "48d1002aadf350299a9e5780be2d4cc086c89b8bd85811439fa57aa990298e9f",
       "tasks/a-worker-s-delegate-task-waits-for-its-task-on-the-handler-s-option": "48d1002aadf350299a9e5780be2d4cc086c89b8bd85811439fa57aa990298e9f",
@@ -14262,6 +14369,9 @@
       "skill-prerequisites/scalar-prerequisites-include-the-candidates-own-gated-tools-non-streaming": "427068a9235d34a7edffffc329c6f771cca26d61b191725e3747a2da974e2ee9",
       "skill-prerequisites/scalar-prerequisites-include-the-candidates-own-gated-tools-streaming": "427068a9235d34a7edffffc329c6f771cca26d61b191725e3747a2da974e2ee9"
     },
+    "RK-24.3-029": {
+      "realtime/an-activation-on-a-realtime-session-checks-its-requires-against-the-declared-tools": "7c2ea1fb9fb486871434dda755ee09a85c826b51d34eb87efd3710a4e6764045"
+    },
     "RK-24.3-030": {
       "role-policy/denied-prerequisite-non-streaming": "c16dbf5f46316bdb6400f6feda9c5b66596bc387040b9f14f928e30ee2b04d95",
       "role-policy/denied-prerequisite-streaming": "c16dbf5f46316bdb6400f6feda9c5b66596bc387040b9f14f928e30ee2b04d95",
@@ -14584,6 +14694,12 @@
     },
     "RK-24.4-022": {
       "skills/a-missing-skill-s-hint-an-on-tool-call-hook-blocks-reveals-nothing": "07261d985ef0f5b30dea525d9ac6c35ffdbea5ac827af2fd315f31dc7910f08a"
+    },
+    "RK-24.4-023": {
+      "realtime/a-missing-skill-s-hint-reads-and-reveals-on-a-realtime-session-as-on-a-text-turn": "35ed65d6f7aecac6bc26365535215d4e0cdc8f465ba2438ebf00f4a8e08755dd"
+    },
+    "RK-24.4-024": {
+      "realtime/a-missing-skill-s-hint-on-a-fixed-session-points-to-call-tool": "f27c2ecd397b6e57e4f84227609efb52b17a1a59834ab76b7f5460f33a342f8c"
     },
     "RK-24.4-025": {
       "role-policy/a-skill-hint-keeps-the-role-restriction-non-streaming": "91fd6b25fe4fffc2d361169872c38fb77c261c1f884ede98da0ad5e1aecf3ee7",
