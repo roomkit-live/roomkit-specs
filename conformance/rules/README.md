@@ -32,7 +32,7 @@ proof: a scenario can cite a unit without covering all of it.
 | [§5 Data Models](section-5.md) | 184 | 171 | 9 | 4 | 0 | 169 | 677 | 0 | 0 | 0 | 0 | 0 |
 | [§6 Channel System](section-6.md) | 661 | 644 | 7 | 10 | 0 | 530 | 2813 | 0 | 62 | 3 | 61 | 0 |
 | [§7 Permission Model](section-7.md) | 85 | 84 | 0 | 1 | 0 | 83 | 339 | 0 | 0 | 0 | 0 | 0 |
-| [§8 Event System](section-8.md) | 177 | 176 | 1 | 0 | 0 | 154 | 1255 | 0 | 19 | 0 | 15 | 4 |
+| [§8 Event System](section-8.md) | 177 | 176 | 1 | 0 | 0 | 158 | 1261 | 0 | 15 | 0 | 15 | 0 |
 | [§9 Hook System](section-9.md) | 350 | 343 | 3 | 4 | 0 | 333 | 1342 | 0 | 0 | 0 | 0 | 0 |
 | [§10 Processing Pipelines](section-10.md) | 652 | 631 | 7 | 14 | 0 | 592 | 2278 | 0 | 0 | 0 | 0 | 0 |
 | [§11 Identity Resolution](section-11.md) | 110 | 108 | 2 | 0 | 0 | 99 | 389 | 0 | 3 | 0 | 3 | 0 |

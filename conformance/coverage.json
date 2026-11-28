@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "258d0eb4bfc7c40a6053df6c5b07adfce6d1b2e3e73299101840581dbde2f4b6",
-  "corpus_sha256": "bee1e86b7d088adfc53c7856452cb0235dbac36e2305e6aa84b2396ee1f716e8",
+  "corpus_sha256": "8ae1aa19772ee5f80e5073e2339eead7971f14a8fddaf634b22bcdc045bfcfeb",
   "python_commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
-  "scenario_count": 4346,
+  "scenario_count": 4349,
   "sections": [
     {
       "section": "0",
@@ -2981,7 +2981,6 @@
         "unmapped": 63
       },
       "decided_gaps": {
-        "phase6": 4,
         "step": 10
       },
       "unannotated_keyword_lines": [],
@@ -3085,8 +3084,11 @@
         "verification/a-verification-ends-when-its-time-runs-out",
         "video/a-published-vision-result-is-a-framework-event-carrying-its-analysis",
         "video/a-video-session-s-start-and-end-are-framework-events-of-its-room-session-and-channel",
+        "voice/a-session-recording-announces-its-start-and-its-stop-with-its-session",
         "voice/a-session-whose-playback-fails-is-reported-and-the-served-one-fires-after-tts",
+        "voice/a-voice-session-announces-its-start-its-live-audio-and-its-end",
         "voice/an-encoded-tts-chunk-never-reaches-the-transport",
+        "voice/an-utterance-the-recognizer-fails-to-transcribe-is-announced-with-its-session-and-error",
         "voice/no-session-served-fires-no-after-tts"
       ]
     },
@@ -6713,6 +6715,7 @@
         "voice/a-tts-without-a-voices-endpoint-lists-its-curated-catalog",
         "voice/a-voice-and-a-realtime-channel-bind-as-bidirectional-transports-of-audio-and-text",
         "voice/a-voice-and-a-realtime-channel-bind-as-transports-of-audio-and-text",
+        "voice/a-voice-session-announces-its-start-its-live-audio-and-its-end",
         "voice/after-tts-reports-the-sentences-before-tts-let-through",
         "voice/an-after-tts-hook-posts-at-the-depth-of-the-answer-it-spoke",
         "voice/an-agent-s-streamed-answer-is-synthesized-sentence-by-sentence",
@@ -6725,6 +6728,7 @@
         "voice/an-encoded-tts-chunk-never-reaches-the-transport",
         "voice/an-ended-session-s-context-is-released",
         "voice/an-inbound-frame-walks-the-stages-in-their-order",
+        "voice/an-utterance-the-recognizer-fails-to-transcribe-is-announced-with-its-session-and-error",
         "voice/audio-carried-between-streams-is-bounded-to-the-newest",
         "voice/each-played-block-feeds-the-canceller-once-as-it-plays",
         "voice/each-session-s-context-holds-its-own-dialogue",
@@ -6964,6 +6968,7 @@
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "voice/a-recording-mode-records-one-direction-only",
+        "voice/a-session-recording-announces-its-start-and-its-stop-with-its-session",
         "voice/a-session-s-recording-starts-and-stops-with-its-hooks",
         "voice/the-recorder-taps-the-resampled-capture-and-the-processed-reply"
       ]
@@ -19956,23 +19961,13 @@
       "id": "RK-8.2-045",
       "section": "8.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1912",
-        "note": "step: framework_events media rows: the voice_session_started row, when it is emitted and its data."
-      }
+      "links": []
     },
     {
       "id": "RK-8.2-046",
       "section": "8.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1912",
-        "note": "step: framework_events media rows: the voice_session_ended row, when it is emitted and its data."
-      }
+      "links": []
     },
     {
       "id": "RK-8.2-047",
@@ -19990,12 +19985,7 @@
       "id": "RK-8.2-049",
       "section": "8.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1912",
-        "note": "step: framework_events media rows, voice.open failing STT or TTS scripts: the stt_error row, when it is emitted and its data."
-      }
+      "links": []
     },
     {
       "id": "RK-8.2-050",
@@ -20007,12 +19997,7 @@
       "id": "RK-8.2-051",
       "section": "8.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1912",
-        "note": "step: framework_events media rows: the voice_session_ready row, when it is emitted and its data."
-      }
+      "links": []
     },
     {
       "id": "RK-8.2-052",
