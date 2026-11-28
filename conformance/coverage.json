@@ -1,9 +1,9 @@
 {
   "version": 1,
-  "rfc_sha256": "258d0eb4bfc7c40a6053df6c5b07adfce6d1b2e3e73299101840581dbde2f4b6",
-  "corpus_sha256": "60de6e51e771b851f1eebcbdded834b2c61a87e45a4fd42962b45ae910010ec7",
+  "rfc_sha256": "67192f928fe39398ce62f9f4a613f9923e2175b53aa395d165a7acca68da83de",
+  "corpus_sha256": "89e949418cf32b11090dfbee5c74a68dbe083d8342634d47e52c2422b2b485b3",
   "python_commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
-  "scenario_count": 4350,
+  "scenario_count": 4351,
   "sections": [
     {
       "section": "0",
@@ -2440,7 +2440,7 @@
         "unmapped": 4
       },
       "decided_gaps": {
-        "step": 2
+        "step": 1
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -2498,7 +2498,7 @@
         "unmapped": 70
       },
       "decided_gaps": {
-        "step": 5
+        "step": 3
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -6703,6 +6703,7 @@
         "voice/a-streamed-reply-of-exactly-its-sentence-budget-is-not-cut",
         "voice/a-streamed-reply-reaches-every-session-sentence-by-sentence",
         "voice/a-streamed-reply-stops-once-its-sentence-budget-is-said",
+        "voice/a-synthesized-pcm-reply-reaches-the-transport-as-synthesized",
         "voice/a-text-delivered-to-a-voice-binding-is-synthesized-processed-played-and-fed-back",
         "voice/a-text-delivered-whole-is-spoken-up-to-the-sentence-budget",
         "voice/a-text-from-another-channel-is-spoken",
@@ -9299,7 +9300,7 @@
         "unmapped": 28
       },
       "decided_gaps": {
-        "phase6": 6
+        "phase6": 4
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -9308,6 +9309,7 @@
         "voice/a-context-s-audio-stays-out-of-the-store-and-the-timeline",
         "voice/a-context-s-text-is-the-transcript-the-room-stored",
         "voice/a-session-s-context-is-released-and-dropped-when-it-leaves",
+        "voice/a-synthesized-pcm-reply-reaches-the-transport-as-synthesized",
         "voice/a-transcript-is-redacted-by-the-hook-that-redacts-a-message"
       ]
     },
@@ -12402,7 +12404,7 @@
         "unmapped": 6
       },
       "decided_gaps": {
-        "step": 4
+        "step": 3
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
@@ -18130,12 +18132,7 @@
       "id": "RK-6.5-001",
       "section": "6.5",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1955",
-        "note": "Needs a scripted source provider in both runners; roomkit-rs has no sources (tier 1b), feature name source_provider proposed."
-      }
+      "links": []
     },
     {
       "id": "RK-6.5-003",
@@ -18853,23 +18850,13 @@
       "id": "RK-6.7-016",
       "section": "6.7",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1955",
-        "note": "Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed. Python's SMSProvider.send takes from_ as optional, as RMK-1953 records for email."
-      }
+      "links": []
     },
     {
       "id": "RK-6.7-107",
       "section": "6.7",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1955",
-        "note": "Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed. The audit's suspect on send()'s from is RMK-1953."
-      }
+      "links": []
     },
     {
       "id": "RK-6.7-108",
@@ -38337,12 +38324,7 @@
       "id": "RK-17.6-026",
       "section": "17.6",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1986",
-        "note": "step: a scripted voice-replication provider: a custom voice's evidence kept as metadata."
-      }
+      "links": []
     },
     {
       "id": "RK-17.6-027",
@@ -38366,12 +38348,7 @@
       "id": "RK-17.6-030",
       "section": "17.6",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1986",
-        "note": "step: a TTS scripted on voice.open to return a marked file: voice.read shows the file at the transport as the synthesizer produced it, not rebuilt from its samples."
-      }
+      "links": []
     },
     {
       "id": "RK-17.6-031",
@@ -48482,7 +48459,7 @@
       "gap": {
         "class": "step",
         "card": "RMK-1961",
-        "note": "Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed. Python's SMSProvider.send takes from_ as optional (RMK-1953)."
+        "note": "Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed. The text follows Python's SMSProvider, from and timestamp optional, pinned in tests/public_api_signatures.json."
       }
     },
     {
@@ -48521,7 +48498,7 @@
       "gap": {
         "class": "step",
         "card": "RMK-1961",
-        "note": "Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed. Python's EmailProvider.send takes from_ as optional (RMK-1953)."
+        "note": "Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed. The text follows Python's EmailProvider, from and subject optional, pinned in tests/public_api_signatures.json."
       }
     },
     {
@@ -48571,7 +48548,7 @@
       "gap": {
         "class": "step",
         "card": "RMK-1961",
-        "note": "Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed. The text differs from Python's signature (RMK-1966)."
+        "note": "Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed. The text follows Python's provider interface, send_template(to, template_name, params?) and send_reaction(chat, sender, message_id, emoji) returning nothing, pinned in tests/public_api_signatures.json."
       }
     },
     {
@@ -48661,7 +48638,7 @@
       "gap": {
         "class": "step",
         "card": "RMK-1961",
-        "note": "Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed. The text differs from Python's signature (RMK-1966)."
+        "note": "Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed. The text follows Python: send(event, to), the webhook parsed by a function beside the interface, pinned in tests/public_api_signatures.json."
       }
     },
     {
@@ -48700,19 +48677,14 @@
       "gap": {
         "class": "step",
         "card": "RMK-1961",
-        "note": "Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed. The text differs from Python's signature (RMK-1966)."
+        "note": "Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed. The text follows Python: send(event, to) and process_inbound, the webhook parsed by a function beside the interface, pinned in tests/public_api_signatures.json."
       }
     },
     {
       "id": "RK-A.6-005",
       "section": "A.6",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1961",
-        "note": "Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed. The text differs from Python's signature (RMK-1966)."
-      }
+      "links": []
     },
     {
       "id": "RK-A.6-006",
@@ -49181,7 +49153,7 @@
       "gap": {
         "class": "step",
         "card": "RMK-1961",
-        "note": "No runner key sets an ACP agent's command: the runners' scripted agents take none. The text differs from Python's signature (RMK-1966)."
+        "note": "The runners build every ACP channel over a transport, their scripted agent behind it; no runner key sets a command, or both. The text follows both implementations, command or transport, one of the two: Python tests/test_channels/test_acp.py::TestACPChannel::test_command_and_transport_are_mutually_exclusive, roomkit-rs crates/roomkit-acp/tests/acp/channel.rs::the_channel_takes_a_command_or_a_transport_and_an_absolute_cwd."
       }
     },
     {
@@ -49218,7 +49190,7 @@
       "gap": {
         "class": "step",
         "card": "RMK-1961",
-        "note": "No runner key sets environment or authentication_method on an ACP channel. The text differs from Python's signature (RMK-1966)."
+        "note": "No runner key sets env, inherit_env or authentication_method on an ACP channel. The text follows both implementations' channel options (Python roomkit.ACPChannel in tests/public_api_signatures.json, roomkit-rs AcpChannelOptions), which refuse env and inherit_env beside a transport: Python tests/test_channels/test_acp.py::TestACPChannel::test_spawn_only_options_are_rejected_with_a_transport, roomkit-rs crates/roomkit-acp/tests/acp/channel.rs::the_channel_takes_a_command_or_a_transport_and_an_absolute_cwd."
       }
     },
     {
@@ -49679,7 +49651,7 @@
       "gap": {
         "class": "step",
         "card": "RMK-1961",
-        "note": "Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed. The text differs from Python's signature (RMK-1966)."
+        "note": "Its send needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed. The rest is the provider's, as Python has it: its config, its verify_signature(payload, signature) and the webhook's parsing function beside it, pinned in tests/public_api_signatures.json (roomkit.providers.telegram.TelegramConfig, roomkit.providers.telegram.TelegramProvider, roomkit.providers.telegram.parse_telegram_webhook) and checked by tests/test_public_api.py::TestPublicAPI::test_no_signature_change_breaks_a_caller; a provider proves them in its own tests, outside roomkit's conformance."
       }
     },
     {
