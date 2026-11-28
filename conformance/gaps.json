@@ -861,6 +861,11 @@
       "card": "RMK-1918",
       "note": "step: a read of a realtime or conference tool handler's context: inspect tool-handler policy on a conference call using a labelled provider."
     },
+    "RK-21.2-057": {
+      "class": "step",
+      "card": "RMK-2229",
+      "note": "Needs the MCP host fixture to send a request under the kit's current span, with a telemetry provider that names its spans: it drives a provider outside any kit today."
+    },
     "RK-21.3-012": {
       "class": "step",
       "card": "RMK-1918",

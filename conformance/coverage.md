@@ -245,7 +245,7 @@ See [requirements.json](requirements.json) for exact clauses and applicability,
 | §20.3 Built-in Implementations | normative | 41 | 40 | 1 | 0 | 53 | 0 | 0 | 2 | 0 |
 | §21 Tool Access Control | informative | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | §21.1 ToolPolicy | normative | 69 | 66 | 3 | 0 | 257 | 0 | 0 | 3 | 12 |
-| §21.2 MCP Tool Provider | normative | 55 | 53 | 2 | 0 | 68 | 0 | 0 | 20 | 5 |
+| §21.2 MCP Tool Provider | normative | 55 | 53 | 2 | 0 | 68 | 0 | 0 | 21 | 5 |
 | §21.3 AI Steering Directives | normative | 15 | 15 | 0 | 0 | 33 | 0 | 0 | 1 | 0 |
 | §21.4 Tool Call Context | normative | 42 | 39 | 3 | 0 | 126 | 0 | 0 | 2 | 9 |
 | §21.5 Large Tool Results | normative | 19 | 19 | 0 | 0 | 34 | 0 | 0 | 2 | 0 |
@@ -551,6 +551,7 @@ Units [gaps.json](gaps.json) lists: a scenario can test each, and none cites it 
 | RK-21.1-058 | §21.1 | phase6 | RMK-1918 | step: realtime.read of the session configuration on a realtime pipeline: exercise a realtime pipeline agent declaring its own setup tool while a distinct conflicting late declaration is refused. |
 | RK-21.2-005 | §21.2 | step | RMK-1918 | Observe process start and exit across connect and close of a public command-backed provider. |
 | RK-21.2-006 | §21.2 | step | RMK-1918 | Capture the argument vector of a harmless fixture process as launched by the public stdio provider. |
+| RK-21.2-057 | §21.2 | step | RMK-2229 | Needs the MCP host fixture to send a request under the kit's current span, with a telemetry provider that names its spans: it drives a provider outside any kit today. |
 | RK-21.2-010 | §21.2 | step | RMK-1918 | Pass a selected URL into the constructor and capture construction errors independently of opening a scripted peer. |
 | RK-21.2-011 | §21.2 | step | RMK-1918 | Pass invalid header configurations and capture the public constructor's rejection before a connection attempt. |
 | RK-21.2-012 | §21.2 | step | RMK-1918 | Capture validation of server labels at public construction and compare a valid host label with the different identity announced at handshake. |

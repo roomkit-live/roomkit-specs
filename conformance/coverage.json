@@ -10640,7 +10640,7 @@
       },
       "decided_gaps": {
         "phase6": 5,
-        "step": 20
+        "step": 21
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -43267,7 +43267,12 @@
       "id": "RK-21.2-057",
       "section": "21.2",
       "mapping": "unmapped",
-      "links": []
+      "links": [],
+      "gap": {
+        "class": "step",
+        "card": "RMK-2229",
+        "note": "Needs the MCP host fixture to send a request under the kit's current span, with a telemetry provider that names its spans: it drives a provider outside any kit today."
+      }
     },
     {
       "id": "RK-21.2-009",
