@@ -7180,7 +7180,7 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
        that exists.
 ```
 <!-- /rfc -->
-<!-- rfc: {"id": "RK-10.1-025", "kind": "behavior", "applies": "§10.1 step 2, a room created for the message: the call's deadline over routing, the session's start, and a creation hook that closed the room. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+<!-- rfc: {"id": "RK-10.1-025", "kind": "behavior", "applies": "§10.1 step 2, a room created for the message: the call's deadline over routing, the session's start and a message expired before it, and a creation hook that closed the room. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
        The call's deadline bounds the routing that follows, and is read
        before the last new room is opened. When that room is no longer
@@ -7194,10 +7194,13 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
        and the message is refused, `session_started` not emitted and no other
        hook fired, the room and its attach standing. Then emit
        `session_started` (§8.2) and fire the other hooks (§9.2), which no
-       message waits for. A creation hook that closed the room does not stop
-       the message in this branch: it is neither refused nor routed again here,
-       no attach is made, and step 6 refuses it (room_closed), nothing of it
-       stored, the room kept as the hook left it
+       message waits for. A message expired by the time its room is
+       completed, its deadline passed or its caller gone (§13.6), starts no
+       session: no session hook runs and `session_started` is not emitted,
+       the room and its attach standing. A creation hook that closed the room
+       does not stop the message in this branch: it is neither refused nor
+       routed again here, no attach is made, and step 6 refuses it
+       (room_closed), nothing of it stored, the room kept as the hook left it
 
 ```
 <!-- /rfc -->
