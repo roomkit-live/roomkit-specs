@@ -2235,7 +2235,9 @@ reader that rebuilds what earlier turns did from the store, as an AI
 channel's history does with its earlier tool calls (Section 6.4), reads that
 outcome rather than inferring it from the body: it keeps the calls the live
 tool memory keeps (served, failed, blocked; never a refusal, a call nothing
-served or one cancelled). <!-- /rfc --><!-- rfc: {"id": "RK-6.4-069", "kind": "behavior", "applies": "§6.4 Tool-call events: a stored TOOL_CALL_END with no outcome, read back from the store. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A row stored without it is read by its `status`.<!-- /rfc --><!-- rfc: {"id": "RK-6.4-070", "kind": "behavior", "applies": "§6.4 Tool-call events: the ephemeral tool-call events of a call that has an intent (A call's intent, below, names TOOL_CALL_START and TOOL_CALL_END). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+served or one cancelled). <!-- /rfc --><!-- rfc: {"id": "RK-6.4-069", "kind": "behavior", "applies": "§6.4 Tool-call events: a stored TOOL_CALL_END with no outcome, read back from the store, and one under a name outside [A-Za-z0-9_-]{1,128}, which a replay leaves out. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A row stored without it is read by its `status`, and is not
+replayed under a name outside `[A-Za-z0-9_-]{1,128}`, as a refused call under
+such a name is not (The tools of earlier turns, below).<!-- /rfc --><!-- rfc: {"id": "RK-6.4-070", "kind": "behavior", "applies": "§6.4 Tool-call events: the ephemeral tool-call events of a call that has an intent (A call's intent, below, names TOOL_CALL_START and TOOL_CALL_END). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Both ephemeral events carry a call's `intent` beside its id when it has one
 (A call's intent, below).
 <!-- /rfc -->
@@ -3186,11 +3188,13 @@ the prefix a provider caches is the same, and the header the model reads is
 the one the channel placed, a paragraph of its own with a block after it:
 the block a hook adds joins the notes it marks, and a reader that separates
 the input from its notes cuts there (an input with images carries its notes
-in a text part of their own, which such a reader leaves out). <!-- /rfc --><!-- rfc: {"id": "RK-6.4-299", "kind": "behavior", "applies": "§6.4 Runtime marks: the turn's own rounds and the rounds its history replays are not rewritten. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The turn's own
-rounds, and the earlier rounds its history replays, are not rewritten: what
-the agent writes between its tool calls, and a tool's result, which the tool
-role frames. Only a copy a hook writes into
-the messages itself is what both misread. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-300", "kind": "behavior", "applies": "§6.4 Skill instructions: an active skill's instructions stay in the system prompt. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An active
+in a text part of their own, which such a reader leaves out). <!-- /rfc --><!-- rfc: {"id": "RK-6.4-299", "kind": "behavior", "applies": "§6.4 Runtime marks: the turn's own rounds are not rewritten; the earlier rounds its history replays keep a tool's result as written, and rewrite what the agent wrote between its calls as any record. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The turn's own
+rounds are not rewritten: what the agent writes between its tool calls, and a
+tool's result, which the tool role frames. The earlier rounds its history
+replays keep a tool's result as written; what the agent wrote between its
+calls, rebuilt from its stored row, is rewritten as any record is. Only a copy
+a hook writes into the messages itself is what the model and a reader that
+separates the input from its notes misread. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-300", "kind": "behavior", "applies": "§6.4 Skill instructions: an active skill's instructions stay in the system prompt. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An active
 skill's instructions stay in the system prompt (Section 24.4): they change only
 when a skill is activated, and they are instructions, not notes. <!-- /rfc --><!-- rfc: {"id": "RK-6.4-402", "kind": "behavior", "applies": "§6.4 Skill instructions: those of a skill an MCP server serves ride in the system prompt as data, in a block of their own. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Those of a
 skill an MCP server serves ride there as data, in a block of their own

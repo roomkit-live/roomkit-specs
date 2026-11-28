@@ -16921,6 +16921,9 @@
     "RK-6.4-068": {
       "tool-search/a-tool-the-store-says-was-used-stays-declared": "9c0e234f77357c3c39e3f5c0ae41c9eb91183e7831c59cc39f51c0eeb6ca3ace"
     },
+    "RK-6.4-069": {
+      "tools/a-call-stored-without-outcome-is-read-by-its-status-and-dropped-under-a-name-vendors-refuse": "ea9f90da75d60a8905318401ec077c32f33124ccde41c8592fa60ee33bbe07ca"
+    },
     "RK-6.4-070": {
       "tools/an-intent-written-without-its-underscore-is-taken-as-the-intent": "6f93e2082268ea7fc0bc9157745d16bf810fa10d13277e8ccd3bfaadda9108d7"
     },
@@ -17798,6 +17801,7 @@
       "tools/a-call-s-intent-goes-back-among-its-arguments-never-a-rewrite": "0947b47e1cddd69e36197d109884b593ea6c080740ae100c561b4560252f28bb"
     },
     "RK-6.4-265": {
+      "eviction/a-kit-started-again-offers-no-id-its-store-no-longer-holds": "343cd36a710b3e386ed069ac3ecbc69de12c98c4610f82aadd9fa9566db5e1df",
       "tools/a-later-turn-replays-the-result-the-model-read": "343cd36a710b3e386ed069ac3ecbc69de12c98c4610f82aadd9fa9566db5e1df"
     },
     "RK-6.4-266": {
@@ -17931,7 +17935,9 @@
       "memory/a-copy-of-a-mark-is-replaced-the-same-way-on-every-turn": "4030688fd7b332daa4920540b939889c4ced08d8806a52d37c61028952f7a817"
     },
     "RK-6.4-299": {
-      "tools/a-mark-s-words-in-the-agent-s-own-rounds-and-a-tool-s-result-are-replayed-as-written": "248d4950531b91237eca5b3fd2503b6a0a6fd25d286e74b0744489f5a3bb3209"
+      "tools/a-mark-s-copy-a-generation-hook-writes-into-the-messages-reaches-the-model-as-written": "d490f03afad1f5e2f30cb117f0eadc7455cc53ff8b4807b02d56cf59447be159",
+      "tools/a-mark-s-words-in-the-agent-s-own-rounds-and-a-tool-s-result-are-replayed-as-written": "d490f03afad1f5e2f30cb117f0eadc7455cc53ff8b4807b02d56cf59447be159",
+      "tools/a-mark-s-words-the-agent-wrote-between-its-calls-are-replaced-once-a-later-turn-replays-them": "d490f03afad1f5e2f30cb117f0eadc7455cc53ff8b4807b02d56cf59447be159"
     },
     "RK-6.4-300": {
       "skills/a-host-that-lists-its-skills-itself-reads-a-turn-s-active-ones": "f1b892d16dc426a8561f1cb096b7e47bda502b37cb691110a0c1996979d4fdeb"

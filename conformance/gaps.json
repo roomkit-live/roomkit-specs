@@ -1256,10 +1256,6 @@
       "card": "RMK-1955",
       "note": "Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed."
     },
-    "RK-6.4-069": {
-      "class": "writable",
-      "card": "RMK-1911"
-    },
     "RK-6.4-104": {
       "class": "step",
       "card": "RMK-1911",
