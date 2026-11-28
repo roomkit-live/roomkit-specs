@@ -975,9 +975,9 @@
     },
     {
       "section": "13.1",
-      "sha256": "999529369f4e736d7ceb687da75388e9bbe965ad1fede7344cfad6757ebccc00",
+      "sha256": "c8aa0fb58164d2e270baf61c318fd975f6afd2131e1b5b49fdfea5fb03be7f9c",
       "classification": "normative",
-      "review": "Source inventory: Circuit Breaker, split to one obligation per unit (RMK-1960). A breaker per channel is should (RK-13.1-001); what a breaker does is must where an implementation keeps one: each state row (the header with the CLOSED row), each transition, the recipient-less refusal that opens none, and circuit_breaker_opened. Every unit carries its level."
+      "review": "Source inventory: Circuit Breaker, split to one obligation per unit (RMK-1960). A breaker per channel is should (RK-13.1-001); what a breaker does is must where an implementation keeps one: each state row (the header with the CLOSED row), each transition, the recipient-less refusal that opens none, and circuit_breaker_opened. Every unit carries its level. Amended on Python, the reference, with roomkit-rs (RMK-2232, decision D5): the breaker opens after 5 consecutive failures and lets a probe through after a 60 second cooldown, both written as defaults (RK-13.1-007, RK-13.1-009, lot S0, HITL 3990944a)."
     },
     {
       "section": "13.2",

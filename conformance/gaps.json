@@ -49,7 +49,7 @@
     "RK-13.1-007": {
       "class": "step",
       "card": "RMK-1965",
-      "note": "Needs a breaker observable in the runners and its threshold set by the scenario, which both implementations fix at 5 (suspect RMK-1964)."
+      "note": "Needs a breaker observable in the runners: both implementations open it after 5 consecutive failures, the default the text names (D5), and neither takes another threshold. Python: tests/test_application_recipient_error.py::test_application_recipient_refusal_and_provider_answer_have_distinct_breaker_effects[provider] (five failures, then circuit_breaker_open) and ::test_missing_recipient_releases_the_probe_for_the_next_send; roomkit-rs: crates/roomkit/tests/sends.rs::five_failed_sends_open_the_channel_s_breaker."
     },
     "RK-13.1-008": {
       "class": "step",
@@ -59,7 +59,7 @@
     "RK-13.1-009": {
       "class": "step",
       "card": "RMK-1965",
-      "note": "Needs a breaker observable in the runners and its cooldown set by the scenario, which both implementations fix at 60 s (suspect RMK-1964)."
+      "note": "Needs a breaker observable in the runners and the virtual clock in the core: both implementations let a probe through once the cooldown passed, 60 s after the breaker opened in Python (tests/test_application_recipient_error.py::test_missing_recipient_releases_the_probe_for_the_next_send) and 61 s after in roomkit-rs (crates/roomkit/tests/sends.rs::five_failed_sends_open_the_channel_s_breaker), the default the text names (D5); neither test shows a probe refused before, and neither implementation takes another cooldown."
     },
     "RK-13.1-010": {
       "class": "step",
