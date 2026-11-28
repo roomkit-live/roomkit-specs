@@ -1395,9 +1395,9 @@
     },
     {
       "section": "23.1",
-      "sha256": "c223fb69d08d48ba4942a032b63ac74e99214b52c7bd17eafe665e097449ff28",
+      "sha256": "a9a37d04d4c640db5acd0cf7cb3bb417bae64bafcbca4dc6d65959dc7c4b27d5",
       "classification": "normative",
-      "review": "The interface distinguishes running, cancelling and closing. Separate units cover the in-memory runner, exactly-once completion, submission failures and cancellation timing."
+      "review": "The interface distinguishes running, cancelling and closing. Separate units cover the in-memory runner, exactly-once completion, submission failures and cancellation timing. Amended on Python, the reference, with roomkit-rs and §23.3 (RMK-2232): the runner's operation is submit(kit, task, context, on_complete), and a submit that raises has not taken the task (RK-23.1-002, RK-23.1-005, lot S0, HITL 3990944a)."
     },
     {
       "section": "23.2",
@@ -1407,9 +1407,9 @@
     },
     {
       "section": "23.3",
-      "sha256": "b04f1c7d5ab3c7cc29517fcd39024dd334d0232af99022229abd989763131db5",
+      "sha256": "b09bf6da3726104dbb3105f6dbfe61412af6d15062360507562d07c62be1a22e",
       "classification": "normative",
-      "review": "The protocol separates child preparation, visibility, trace, worker outcome and reads, hand-back modes, structured results, cancellation, pre-announcement failures, bus state and progress. Voice, video and conference hand-backs have distinct applicability. A task's end reason is scoped apart: the closed list and its words (RK-23.3-116 to RK-23.3-118), then each place that carries it (RK-23.3-119 to RK-23.3-123)."
+      "review": "The protocol separates child preparation, visibility, trace, worker outcome and reads, hand-back modes, structured results, cancellation, pre-announcement failures, bus state and progress. Voice, video and conference hand-backs have distinct applicability. A task's end reason is scoped apart: the closed list and its words (RK-23.3-116 to RK-23.3-118), then each place that carries it (RK-23.3-119 to RK-23.3-123). Amended on Python, the reference, with roomkit-rs (RMK-2232): a completed task with nothing to say is one whose output is empty or only blanks, relayed and posted alike (RK-23.3-055, RK-23.3-068, HITL 33fc95c5, lot G4-L3 RMK-2219)."
     },
     {
       "section": "23.4",

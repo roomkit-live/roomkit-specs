@@ -23673,11 +23673,11 @@ back to the parent conversation.
 
 ### 23.1 TaskRunner Interface
 
-<!-- rfc: {"id": "RK-23.1-002", "kind": "structural", "applies": "The asynchronous task execution operation of the TaskRunner interface, named run in the diagram.", "level": "must"} -->
+<!-- rfc: {"id": "RK-23.1-002", "kind": "structural", "applies": "The asynchronous task execution operation of the TaskRunner interface, submit, which takes the kit, the task, its context and its completion.", "level": "must"} -->
 ```
 TaskRunner (interface)
-├── run(task: DelegatedTask) → void
-│       # Execute the task asynchronously
+├── submit(kit, task: DelegatedTask, context = null, on_complete = null) → void
+│       # Execute the task asynchronously; it ends through on_complete
 │
 ```
 <!-- /rfc -->
@@ -23700,7 +23700,7 @@ Implementations MUST provide an `InMemoryTaskRunner` for single-process
 deployments. <!-- /rfc --><!-- rfc: {"id": "RK-23.1-004", "kind": "behavior", "applies": "The runner invokes its completion exactly once, reporting the task's completed, failed or cancelled outcome.", "level": "must"} -->A runner ends each task exactly once, through the completion it
 was handed: completed or failed once its work ran (failed when its run raised
 outside its turn's outcome), `cancelled` when `cancel` or `close` cut it (even
-before it ran). <!-- /rfc --><!-- rfc: {"id": "RK-23.1-005", "kind": "behavior", "applies": "Delegation completes an unaccepted task as failed and the rejecting runner does not complete it a second time.", "level": "must"} -->A `run` that raises has not taken the task: the delegation
+before it ran). <!-- /rfc --><!-- rfc: {"id": "RK-23.1-005", "kind": "behavior", "applies": "Delegation completes an unaccepted task as failed and the rejecting runner does not complete it a second time.", "level": "must"} -->A `submit` that raises has not taken the task: the delegation
 ends it failed (Section 23.3), and the runner MUST NOT end it too. <!-- /rfc --><!-- rfc: {"id": "RK-23.1-006", "kind": "behavior", "applies": "Task completion survives cancellation of the caller of cancel.", "level": "must"} -->That completion MUST run to its end
 even if the caller of `cancel` is cancelled meanwhile, <!-- /rfc --><!-- rfc: {"id": "RK-23.1-007", "kind": "behavior", "applies": "A late cancellation preserves the result of work already run.", "level": "must"} -->and a task whose work
 already ran when `cancel` arrives ends as it stands.
@@ -23947,8 +23947,8 @@ called:<!-- /rfc --><!-- rfc: {"id": "RK-23.3-005", "kind": "behavior", "applies
    hosts a realtime model gets no such line: its injection may open no turn
    of its own (a silent one, an intent its provider keeps as a standing
    instruction), where the line would tell the reply to the person's next
-   question not to answer it. <!-- /rfc --><!-- rfc: {"id": "RK-23.3-054", "kind": "behavior", "applies": "An ordinary transport receives no result-only instruction.", "level": "must"} -->A transport's delivery carries none either. <!-- /rfc --><!-- rfc: {"id": "RK-23.3-055", "kind": "behavior", "applies": "Suppress the relay for an empty completed result.", "level": "must"} -->Only a completed task with
-   nothing to say is not handed back.<!-- /rfc --><!-- rfc: {"id": "RK-23.3-056", "kind": "behavior", "applies": "Hand-back delivery metadata includes task ID, worker, status and bounded original request.", "level": "must"} -->
+   question not to answer it. <!-- /rfc --><!-- rfc: {"id": "RK-23.3-054", "kind": "behavior", "applies": "An ordinary transport receives no result-only instruction.", "level": "must"} -->A transport's delivery carries none either. <!-- /rfc --><!-- rfc: {"id": "RK-23.3-055", "kind": "behavior", "applies": "Suppress the relay for a completed result whose output is empty or only blanks.", "level": "must"} -->Only a completed task with
+   an output that is empty or only blanks is not handed back.<!-- /rfc --><!-- rfc: {"id": "RK-23.3-056", "kind": "behavior", "applies": "Hand-back delivery metadata includes task ID, worker, status and bounded original request.", "level": "must"} -->
    The delivery carries the task in its metadata, `task_id`, `agent_id` (the
    worker), `task_status` and `task` (what was asked, bounded), whichever
    channel it reaches, so a hook that sees it (`BEFORE_BROADCAST`,
@@ -23989,9 +23989,9 @@ called:<!-- /rfc --><!-- rfc: {"id": "RK-23.3-005", "kind": "behavior", "applies
    posts why, its end reason in the runtime's words (`The task … failed: it
    reached its limit of tool rounds before giving an answer.`), and the
    message of a task that did not complete carries `task_end_reason` in its
-   metadata; <!-- /rfc --><!-- rfc: {"id": "RK-23.3-068", "kind": "behavior", "applies": "Post suppresses an empty successful result and a task cancelled by its own notified agent.", "level": "must"} -->a completed task with
-   nothing to say posts nothing, and a task the agent cancelled itself
-   posts nothing either. <!-- /rfc --><!-- rfc: {"id": "RK-23.3-069", "kind": "behavior", "applies": "Posted results pass the sender's gate, access and visibility and enter the room's shared history.", "level": "must"} -->The message is committed as the notified agent's
+   metadata; <!-- /rfc --><!-- rfc: {"id": "RK-23.3-068", "kind": "behavior", "applies": "Post suppresses a completed result whose output is empty or only blanks, and a task cancelled by its own notified agent.", "level": "must"} -->a completed task with
+   an output that is empty or only blanks posts nothing, and a task the
+   agent cancelled itself posts nothing either. <!-- /rfc --><!-- rfc: {"id": "RK-23.3-069", "kind": "behavior", "applies": "Posted results pass the sender's gate, access and visibility and enter the room's shared history.", "level": "must"} -->The message is committed as the notified agent's
    response is (§10.1 steps 9 to 14): it crosses `BEFORE_BROADCAST` and the
    agent's right to write, is stored, and reaches the room's channels as
    the agent binding's visibility allows, so later turns, of every agent,

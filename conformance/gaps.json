@@ -1001,11 +1001,6 @@
       "card": "RMK-1917",
       "note": "Hold the worker on an item, close the kit, and observe the held item on the same still-available delivery backend or through a new worker on it. The current scenario driver does not expose that backend after kit close."
     },
-    "RK-23.1-002": {
-      "class": "step",
-      "card": "RMK-1922",
-      "note": "Observe task submission via a runner fixture. The RFC diagram names run but the public Python and Rust runner interfaces and §23.3 name submit (RMK-1923)."
-    },
     "RK-23.1-005": {
       "class": "step",
       "card": "RMK-1922",
