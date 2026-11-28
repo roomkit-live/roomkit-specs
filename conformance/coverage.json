@@ -1,9 +1,9 @@
 {
   "version": 1,
-  "rfc_sha256": "67192f928fe39398ce62f9f4a613f9923e2175b53aa395d165a7acca68da83de",
-  "corpus_sha256": "89e949418cf32b11090dfbee5c74a68dbe083d8342634d47e52c2422b2b485b3",
+  "rfc_sha256": "0031a5c745614d6073c0dbe6286c1d25d25ef2743add49ce75a2b6721a0e18ff",
+  "corpus_sha256": "17def0cfcea68ff0b4907c7ef84d3d090aeab1f36dbb223e7d1e989ca0cefd37",
   "python_commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
-  "scenario_count": 4351,
+  "scenario_count": 4360,
   "sections": [
     {
       "section": "0",
@@ -1026,7 +1026,7 @@
       },
       "decided_gaps": {
         "step": 45,
-        "writable": 2
+        "writable": 1
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -2187,6 +2187,7 @@
         "tools/a-call-s-intent-goes-back-among-its-arguments-never-a-rewrite",
         "tools/a-call-s-intent-is-normalized-or-is-none",
         "tools/a-call-s-result-is-previewed-on-the-realtime-in-500-characters",
+        "tools/a-call-stored-without-outcome-is-read-by-its-status-and-dropped-under-a-name-vendors-refuse",
         "tools/a-call-that-returns-once-its-turn-is-cut-ends-aborted",
         "tools/a-call-the-response-cut-tells-the-model-it-did-not-run-and-why",
         "tools/a-cancel-outranks-the-force-stop",
@@ -2225,7 +2226,9 @@
         "tools/a-later-turn-s-request-extends-the-previous-turn-s",
         "tools/a-malformed-call-is-told-and-tried-again-on-the-first-round",
         "tools/a-malformed-call-past-its-retries-ends-the-turn-empty",
+        "tools/a-mark-s-copy-a-generation-hook-writes-into-the-messages-reaches-the-model-as-written",
         "tools/a-mark-s-words-in-the-agent-s-own-rounds-and-a-tool-s-result-are-replayed-as-written",
+        "tools/a-mark-s-words-the-agent-wrote-between-its-calls-are-replaced-once-a-later-turn-replays-them",
         "tools/a-memory-s-text-joins-the-input-before-the-tool-images",
         "tools/a-model-that-does-not-see-reads-a-tool-s-parts-as-text",
         "tools/a-model-that-ignores-the-guard-is-force-stopped",
@@ -2560,6 +2563,7 @@
         "response-schema/a-schema-turn-its-token-budget-stops-fails-truncated",
         "response-schema/a-schema-turn-the-provider-interrupts-after-a-round-fails-truncated",
         "response-schema/a-subschema-whose-type-is-no-single-portable-word-fails-the-turn",
+        "response-schema/a-subschema-without-a-type-fails-the-turn",
         "response-schema/a-title-and-a-description-are-taken-on-any-subschema-as-strings",
         "response-schema/a-tool-round-s-text-and-the-document-are-two-messages",
         "response-schema/a-turn-under-a-schema-stores-its-json-document",
@@ -4485,6 +4489,7 @@
         "reentrancy/routed-calls-from-a-room-s-deliveries-draw-on-its-cascade-s-budget",
         "rooms/a-channel-sends-into-the-room-it-is-told-of",
         "routing/a-message-a-delivery-sent-leaves-its-new-room-for-one-that-exists",
+        "streaming/a-streamed-row-s-commit-waits-for-the-room-lock",
         "streaming/a-streamed-row-s-hooks-read-the-room-at-the-row",
         "streaming/a-streamed-row-s-hooks-run-without-the-room-lock",
         "verification/a-deferred-code-reply-from-a-locked-hook-is-answered-after-the-hook-s-work",
@@ -8587,6 +8592,7 @@
         "resilience/concurrent-messages-take-their-own-index",
         "rooms/a-hook-that-closes-the-room-refuses-its-event",
         "rooms/the-delivery-cursor-follows-the-lane",
+        "streaming/a-streamed-row-s-commit-waits-for-the-room-lock",
         "streaming/a-streamed-row-s-hooks-run-without-the-room-lock",
         "tasks/a-delegated-turn-s-metadata-updates-wait-for-the-room-s-lock",
         "tasks/a-delegated-turn-s-shared-answer-follows-its-metadata-updates",
@@ -8713,8 +8719,7 @@
         "unmapped": 70
       },
       "decided_gaps": {
-        "step": 21,
-        "writable": 1
+        "step": 21
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -8755,6 +8760,7 @@
         "store/an-identity-is-read-back-with-each-of-its-fields",
         "store/an-unlink-changes-whom-a-later-message-resolves-to-not-the-conversation",
         "store/an-update-of-a-task-the-store-lacks-is-refused",
+        "store/deleting-a-room-answers-whether-the-store-held-it",
         "store/every-content-type-is-read-back-as-it-was-stored",
         "store/every-stored-event-type-is-read-back-by-its-value",
         "store/identity-resolution-reads-the-organization-it-names-and-none-reads-none",
@@ -11224,7 +11230,7 @@
         "unmapped": 8
       },
       "decided_gaps": {
-        "step": 4
+        "step": 3
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -12023,8 +12029,7 @@
       },
       "decided_gaps": {
         "phase6": 2,
-        "step": 1,
-        "writable": 2
+        "step": 1
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -12033,6 +12038,7 @@
         "served-skills/a-copy-without-the-names-its-source-marks-unavailable-never-asks-for-them",
         "served-skills/a-dynamic-skill-a-host-allows-is-taken-unverified",
         "served-skills/a-dynamic-skill-s-approval-is-told-it-has-no-fingerprint",
+        "served-skills/a-file-the-held-entry-does-not-list-is-refused-unread-and-the-skill-stays-active",
         "served-skills/a-label-another-server-holds-is-refused",
         "served-skills/a-lookup-the-server-refuses-answers-that-it-serves-no-such-skill",
         "served-skills/a-replacement-is-checked-once-the-replaced-name-s-marks-are-gone",
@@ -12042,6 +12048,8 @@
         "served-skills/a-skill-marked-unavailable-is-never-activated-one-loaded-before-included",
         "served-skills/a-skill-md-inside-a-served-skill-is-one-of-its-files",
         "served-skills/an-entry-past-512-files-or-16-mib-is-registered-unavailable",
+        "served-skills/an-entry-read-again-in-a-form-the-host-does-not-take-leaves-the-skill-unavailable",
+        "served-skills/an-entry-read-again-that-is-malformed-leaves-the-entry-held-before",
         "served-skills/an-entry-the-extension-does-not-allow-is-registered-unavailable",
         "served-skills/each-operation-that-would-pass-the-manifest-bound-fails-before-it-changes-anything",
         "served-skills/execution-absent-approval",
@@ -12468,6 +12476,7 @@
         "response-schema/a-schema-turn-its-token-budget-stops-fails-truncated",
         "response-schema/a-schema-turn-the-provider-interrupts-after-a-round-fails-truncated",
         "response-schema/a-subschema-whose-type-is-no-single-portable-word-fails-the-turn",
+        "response-schema/a-subschema-without-a-type-fails-the-turn",
         "response-schema/a-title-and-a-description-are-taken-on-any-subschema-as-strings",
         "response-schema/a-tool-round-s-text-and-the-document-are-two-messages",
         "response-schema/a-turn-under-a-schema-stores-its-json-document",
@@ -14781,11 +14790,7 @@
       "id": "RK-6.4-069",
       "section": "6.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1911"
-      }
+      "links": []
     },
     {
       "id": "RK-6.4-070",
@@ -35884,7 +35889,7 @@
       "gap": {
         "class": "step",
         "card": "RMK-1965",
-        "note": "Needs a breaker observable in the runners and its threshold set by the scenario, which both implementations fix at 5 (suspect RMK-1964)."
+        "note": "Needs a breaker observable in the runners: both implementations open it after 5 consecutive failures, the default the text names (D5), and neither takes another threshold. Python: tests/test_application_recipient_error.py::test_application_recipient_refusal_and_provider_answer_have_distinct_breaker_effects[provider] (five failures, then circuit_breaker_open) and ::test_missing_recipient_releases_the_probe_for_the_next_send; roomkit-rs: crates/roomkit/tests/sends.rs::five_failed_sends_open_the_channel_s_breaker."
       }
     },
     {
@@ -35906,7 +35911,7 @@
       "gap": {
         "class": "step",
         "card": "RMK-1965",
-        "note": "Needs a breaker observable in the runners and its cooldown set by the scenario, which both implementations fix at 60 s (suspect RMK-1964)."
+        "note": "Needs a breaker observable in the runners and the virtual clock in the core: both implementations let a probe through once the cooldown passed, 60 s after the breaker opened in Python (tests/test_application_recipient_error.py::test_missing_recipient_releases_the_probe_for_the_next_send) and 61 s after in roomkit-rs (crates/roomkit/tests/sends.rs::five_failed_sends_open_the_channel_s_breaker), the default the text names (D5); neither test shows a probe refused before, and neither implementation takes another cooldown."
       }
     },
     {
@@ -36569,12 +36574,7 @@
       "id": "RK-14.1-012",
       "section": "14.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1976",
-        "note": "Suspect RMK-1975: both implementations, and the README's store.delete_room, return whether the store held the room; the scenarios asserting it are not cited."
-      }
+      "links": []
     },
     {
       "id": "RK-14.1-013",
@@ -45328,12 +45328,7 @@
       "id": "RK-23.1-002",
       "section": "23.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1922",
-        "note": "Observe task submission via a runner fixture. The RFC diagram names run but the public Python and Rust runner interfaces and §23.3 name submit (RMK-1923)."
-      }
+      "links": []
     },
     {
       "id": "RK-23.1-008",
@@ -47861,12 +47856,7 @@
       "id": "RK-24.7-051",
       "section": "24.7",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1939",
-        "note": "The scripted registry can return a refused refreshed entry and report its reason. Existing mismatch cases refresh to an admissible entry, or report a generic verification failure."
-      }
+      "links": []
     },
     {
       "id": "RK-24.7-052",
@@ -47937,12 +47927,7 @@
       "id": "RK-24.7-062",
       "section": "24.7",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1939",
-        "note": "The shared registry can inspect an active entry and resource requests. No case requests a file omitted from that entry; inactive-reference refusal is a different condition."
-      }
+      "links": []
     },
     {
       "id": "RK-24.7-063",
