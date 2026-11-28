@@ -12603,6 +12603,9 @@
     "RK-22.1-024": {
       "delivery/an-intelligence-channel-named-is-carried-by-the-room-s-transport": "3a67851fc316538a8276e4364ebc4f051ae4650230fac8ece4d2d4467d29d5a4"
     },
+    "RK-22.1-025": {
+      "delivery/an-intelligence-channel-named-as-the-channel-leaves-the-call-s-address-as-it-is": "ba029ce1ccaea3f073f4f9982eb38a27ef9447adf4c66853fdb329a2f9f2106b"
+    },
     "RK-22.1-028": {
       "delivery/a-delivery-enters-the-room-as-the-framework-s-message": "9df11f87190d855ffd759bcdf84d365a5501b5c3173e8c03812246a067d75d6b",
       "delivery/a-delivery-queued-from-a-turn-carries-the-turn-s-depth": "9df11f87190d855ffd759bcdf84d365a5501b5c3173e8c03812246a067d75d6b",
@@ -12703,6 +12706,9 @@
       "tasks/a-before-deliver-hook-s-block-keeps-a-hand-back-from-its-agent": "3571f90eefaf143ab38a7333b57761c6754534bca9d22a42cf5c9637f0dd1908",
       "tasks/a-relayed-task-result-names-its-worker-by-the-discussion-handle": "3571f90eefaf143ab38a7333b57761c6754534bca9d22a42cf5c9637f0dd1908"
     },
+    "RK-22.1-057": {
+      "delivery/an-address-beside-a-session-is-refused-before-anything-is-written": "1cb4c7aeafe054eee5db032187b5b454c7ae5ac322d29e0b3ccbe78f5906be97"
+    },
     "RK-22.1-058": {
       "delivery/an-invalid-request-is-refused-before-anything-is-written": "18fd645e5ac7d5701227e9556f06f148a8fc30e1d47ecdab4cfa9e05525e0244",
       "delivery/an-invalid-request-is-refused-before-it-is-queued": "18fd645e5ac7d5701227e9556f06f148a8fc30e1d47ecdab4cfa9e05525e0244"
@@ -12751,6 +12757,9 @@
       "delivery/a-keyed-delivery-s-parse-sends-into-its-room-within-its-section": "8d0f75c85fcbdc5c5a01b565806b5acda7c3b9afc0be5f97a142dc48e4808ad4",
       "delivery/a-set-a-keyed-delivery-s-hook-sends-records-its-failure-after-the-section": "8d0f75c85fcbdc5c5a01b565806b5acda7c3b9afc0be5f97a142dc48e4808ad4",
       "delivery/a-set-a-keyed-delivery-s-hook-sends-writes-its-metadata-after-the-section": "8d0f75c85fcbdc5c5a01b565806b5acda7c3b9afc0be5f97a142dc48e4808ad4"
+    },
+    "RK-22.1-065": {
+      "delivery/a-keyed-delivery-still-waiting-for-the-room-lock-at-its-process-timeout-writes-nothing": "254dedbb23075ff03ee17b2f835774085521f99659b9edaf3fd114bf042eb8fa"
     },
     "RK-22.1-066": {
       "delivery/a-keyed-delivery-from-an-off-lock-hook-waits-for-the-lock-in-its-queue": "8884cde8552ae8c423b6e020b99b7ec84b88f66f6feb7f0a2b221bdeb0fd741c",
@@ -12850,6 +12859,9 @@
     "RK-22.2-028": {
       "delivery/a-queued-delivery-is-executed-by-the-worker": "7d92ac3c22642d2f03d6d5e03daab872fbf26add445cfa239331c88376856e72"
     },
+    "RK-22.2-032": {
+      "delivery/a-queued-instruction-is-still-an-instruction-when-the-worker-retries-it": "b40ed9680412d50df4e09630275ca1f33ec4f1e8162f5db4f137211ea314de60"
+    },
     "RK-22.3-002": {
       "delivery/a-before-deliver-refusal-is-reported-to-the-caller-and-after-deliver": "35124713dcb41edb814ee35c3286f942ca356098d3a8bfba1b7fd075401558b1",
       "delivery/an-instruction-is-delivered-as-the-application-s-direction": "35124713dcb41edb814ee35c3286f942ca356098d3a8bfba1b7fd075401558b1",
@@ -12882,6 +12894,10 @@
       "delivery/a-before-deliver-refusal-is-reported-to-the-caller-and-after-deliver": "04b2c072c43deccee28f96494a12087686eda3bdc29f9a7e4d2f1aaaf1cd1e04",
       "delivery/a-queued-delivery-is-executed-by-the-worker": "04b2c072c43deccee28f96494a12087686eda3bdc29f9a7e4d2f1aaaf1cd1e04",
       "delivery/a-replay-is-reported-as-the-original-publication": "04b2c072c43deccee28f96494a12087686eda3bdc29f9a7e4d2f1aaaf1cd1e04"
+    },
+    "RK-22.3-006": {
+      "delivery/an-after-deliver-hook-that-raises-leaves-the-outcome-as-it-is": "f1d33b6574199ce2945bac6da195a755a6631b485c586f369f135ea0d209c282",
+      "delivery/an-after-deliver-hook-that-raises-leaves-the-queued-delivery-published-once": "f1d33b6574199ce2945bac6da195a755a6631b485c586f369f135ea0d209c282"
     },
     "RK-22.3-007": {
       "delivery/a-before-broadcast-refusal-is-reported-to-the-caller-and-after-deliver": "43356d1bb8bc01968adf777e9a8179b1aa78f24fcb414a48238f9758b3c1c1a6",
@@ -13083,6 +13099,10 @@
     },
     "RK-23.3-017": {
       "tasks/a-shared-agent-reads-the-task-and-the-trace-crosses-no-hook": "ff2dc7c32f146ee1bf1edff9078a8ab89aeacd150169e861d0e9a1d22ec26722"
+    },
+    "RK-23.3-018": {
+      "tasks/a-private-worker-s-tool-end-row-keeps-its-structured-copy-non-streaming": "982dd1a1d5d0496ece3b7c8b89d3d697d935d258bdc1dc597ff06bdf2c1c011c",
+      "tasks/a-private-worker-s-tool-end-row-keeps-its-structured-copy-streaming": "982dd1a1d5d0496ece3b7c8b89d3d697d935d258bdc1dc597ff06bdf2c1c011c"
     },
     "RK-23.3-019": {
       "tasks/a-delegated-turn-cut-while-its-call-runs-records-on-its-last-row": "5d21c4d812e127d570e25486af19700d0d3c4a0896c988e8709240ecada80467"
@@ -13446,12 +13466,24 @@
     "RK-23.3-084": {
       "tasks/the-kit-cancels-a-background-task-once": "524279930618357a5af2a45aa4f06f52a87c4b201e81f6d8a088093fe3cf447d"
     },
+    "RK-23.3-085": {
+      "tasks/the-kit-s-close-cuts-an-inline-task-and-a-background-one-and-waits-for-their-ends": "6f352b1f4cc18c2f897c0931724d610584057f866228e459f57f3c7751167995"
+    },
+    "RK-23.3-087": {
+      "tasks/a-task-announced-as-the-kit-s-close-began-ends-cancelled-before-it-runs": "a8d0624aea7644e909bebf55f1fc2cbf78aaf6679b0d14411dbb003d2a24327c"
+    },
     "RK-23.3-088": {
       "tasks/an-agent-s-turn-cancels-its-room-s-task-and-is-not-told-twice": "8e1bdf18170ea1a8d55144555dbb89e7dc909c29e8bb8cd61a4de4e558f2313d",
       "tasks/the-kit-cancels-a-background-task-once": "8e1bdf18170ea1a8d55144555dbb89e7dc909c29e8bb8cd61a4de4e558f2313d"
     },
     "RK-23.3-089": {
       "tasks/an-agent-s-turn-cancels-its-room-s-task-and-is-not-told-twice": "a012e69649d79ffe65f7b990286555b7e8c3750cc0adb8744fb6321af9e64120"
+    },
+    "RK-23.3-091": {
+      "tasks/a-closing-kit-hands-a-cut-task-back-to-no-one-and-still-fires-its-completion": "cd73dbd4eca500eb1c59b6bf35d4f988910ad80eff473a23183bc0eb28e8062b"
+    },
+    "RK-23.3-092": {
+      "tasks/a-hand-back-under-way-as-the-kit-closes-is-cut-with-its-turn": "8f305577a4416bdb1f95684a0f1f480619c47a0aa181af13fb12378368cf78f9"
     },
     "RK-23.3-093": {
       "tasks/a-failed-task-with-nothing-to-say-is-handed-back-as-failed": "c2060cdfde9b27d6f720dbbc3fcfa456d26af084f799c145ce69b864dc4ae574"
@@ -13679,6 +13711,9 @@
     "RK-23.4-034": {
       "tasks/delegate-task-hands-its-worker-the-room-s-previous-tasks-as-data": "c408177e06b67ef469f665388e25369824a245a515c6322b1dde4ed96753f5cd",
       "tasks/delegate-task-s-cache-answers-a-repeat-of-the-same-work": "c408177e06b67ef469f665388e25369824a245a515c6322b1dde4ed96753f5cd"
+    },
+    "RK-23.4-035": {
+      "tasks/a-handler-serialized-per-room-delegates-a-room-s-calls-one-at-a-time": "6299a3f0ea513e0b79ff1716409d0d546da6f119f0d04de808d012f78375fa78"
     },
     "RK-23.4-036": {
       "tasks/a-own-task-status-tool-names-the-discussion-worker-by-handle": "b0371b34994dbd6f4d60e8d01b0027cca257f451a6d54a30b4465921a4cf2af7",

@@ -1011,11 +1011,6 @@
       "card": "RMK-1917",
       "note": "A custom strategy that completes with no outcome needs a fixture."
     },
-    "RK-22.1-025": {
-      "class": "writable",
-      "card": "RMK-1917",
-      "note": "Supply an intelligence-channel transport alias and a different explicit intelligence target. The current alias scenario omits the address."
-    },
     "RK-22.1-047": {
       "class": "writable",
       "card": "RMK-1917",
@@ -1050,16 +1045,6 @@
       "class": "writable",
       "card": "RMK-1917",
       "note": "deliver with addressed_to an agent in a room binding a realtime channel: the agent's turn answers, and realtime.read shows no injection (requires realtime)."
-    },
-    "RK-22.1-057": {
-      "class": "writable",
-      "card": "RMK-1917",
-      "note": "Supply addressed_to, a channel and session_id on the same delivery. The existing invalid-request scenario only supplies session_id without a channel."
-    },
-    "RK-22.1-065": {
-      "class": "writable",
-      "card": "RMK-1917",
-      "note": "Use process_timeout_ms, a second call holding the room lock, and a keyed publication; assert blocked/process_timeout and no event."
     },
     "RK-22.1-072": {
       "class": "step",
@@ -1187,9 +1172,9 @@
       "note": "step: deliver playback_timeout with a held playback: exceed the media playback bound and observe delivery despite activity."
     },
     "RK-22.2-011": {
-      "class": "writable",
+      "class": "step",
       "card": "RMK-1917",
-      "note": "Use concurrent calls with the shared queued strategy. The current queued-strategy scenario only checks a lone item. Reading a custom separator or controlling the inactivity clock may need a fixture."
+      "note": "step: a setup member giving the kit its own delivery strategy, a Queued that every deliver naming no strategy shares (RoomKit's delivery_strategy), with its buffer and separator (family S23, the deliver arguments of WaitForIdle and Queued): both runners build a fresh strategy for each deliver naming queued, so no two calls ever share a queue or a drain and nothing is batched. Probe: the second of two queued deliveries, into another room, reaches its publication while the first's is held under its room's lock, on both runners."
     },
     "RK-22.2-012": {
       "class": "phase6",
@@ -1207,29 +1192,29 @@
       "note": "deliver with wait_for_idle on a voice channel whose playback a playback_gate holds: the strategy watches that playback (requires voice)."
     },
     "RK-22.2-016": {
-      "class": "writable",
+      "class": "step",
       "card": "RMK-1917",
-      "note": "Queue concurrent text requests that differ in room, transport or intelligence address and assert they are kept separate."
+      "note": "step: a setup member giving the kit its own delivery strategy, a Queued that every deliver naming no strategy shares (RoomKit's delivery_strategy), with its buffer and separator (family S23, the deliver arguments of WaitForIdle and Queued): both runners build a fresh strategy for each deliver naming queued, so no two calls ever share a queue or a drain and nothing is batched. Probe: the second of two queued deliveries, into another room, reaches its publication while the first's is held under its room's lock, on both runners."
     },
     "RK-22.2-017": {
-      "class": "writable",
+      "class": "step",
       "card": "RMK-1917",
-      "note": "Submit two concurrent queued text deliveries with distinct keys, then inspect their keys, event IDs and outcomes."
+      "note": "step: a setup member giving the kit its own delivery strategy, a Queued that every deliver naming no strategy shares (RoomKit's delivery_strategy), with its buffer and separator (family S23, the deliver arguments of WaitForIdle and Queued): both runners build a fresh strategy for each deliver naming queued, so no two calls ever share a queue or a drain and nothing is batched. Probe: the second of two queued deliveries, into another room, reaches its publication while the first's is held under its room's lock, on both runners."
     },
     "RK-22.2-018": {
-      "class": "writable",
+      "class": "step",
       "card": "RMK-1917",
-      "note": "Block a first delivery and submit other queued calls before and during its execution; assert distinct returned outcomes."
+      "note": "step: a setup member giving the kit its own delivery strategy, a Queued that every deliver naming no strategy shares (RoomKit's delivery_strategy), with its buffer and separator (family S23, the deliver arguments of WaitForIdle and Queued): both runners build a fresh strategy for each deliver naming queued, so no two calls ever share a queue or a drain and nothing is batched. Probe: the second of two queued deliveries, into another room, reaches its publication while the first's is held under its room's lock, on both runners."
     },
     "RK-22.2-019": {
-      "class": "writable",
+      "class": "step",
       "card": "RMK-1917",
-      "note": "Make a hook holding a lock deliver while another caller drains the same shared queue; exercise same and different room cases."
+      "note": "step: a setup member giving the kit its own delivery strategy, a Queued that every deliver naming no strategy shares (RoomKit's delivery_strategy), with its buffer and separator (family S23, the deliver arguments of WaitForIdle and Queued): both runners build a fresh strategy for each deliver naming queued, so no two calls ever share a queue or a drain and nothing is batched. Probe: the second of two queued deliveries, into another room, reaches its publication while the first's is held under its room's lock, on both runners."
     },
     "RK-22.2-020": {
-      "class": "writable",
+      "class": "step",
       "card": "RMK-1917",
-      "note": "Have a locked hook call the shared queue while no drain is running; check it follows the ordinary drain path, including waiting callers."
+      "note": "step: a setup member giving the kit its own delivery strategy, a Queued that every deliver naming no strategy shares (RoomKit's delivery_strategy), with its buffer and separator (family S23, the deliver arguments of WaitForIdle and Queued): both runners build a fresh strategy for each deliver naming queued, so no two calls ever share a queue or a drain and nothing is batched. Probe: the second of two queued deliveries, into another room, reaches its publication while the first's is held under its room's lock, on both runners."
     },
     "RK-22.2-029": {
       "class": "phase6",
@@ -1237,29 +1222,19 @@
       "note": "step: several realtime sessions per channel and across rooms: select different live sessions on the same real-time transport for two queued requests; assert individual injections."
     },
     "RK-22.2-030": {
-      "class": "writable",
+      "class": "step",
       "card": "RMK-1917",
-      "note": "Queue otherwise identical requests with incompatible metadata or instruction/message intents; assert that neither is merged into the other."
+      "note": "step: a setup member giving the kit its own delivery strategy, a Queued that every deliver naming no strategy shares (RoomKit's delivery_strategy), with its buffer and separator (family S23, the deliver arguments of WaitForIdle and Queued): both runners build a fresh strategy for each deliver naming queued, so no two calls ever share a queue or a drain and nothing is batched. Probe: the second of two queued deliveries, into another room, reaches its publication while the first's is held under its room's lock, on both runners."
     },
     "RK-22.2-031": {
       "class": "phase6",
       "card": "RMK-1917",
       "note": "step: several realtime sessions per channel and across rooms: queue and retry an explicitly selected real-time session, then assert the worker injects only into that session."
     },
-    "RK-22.2-032": {
-      "class": "writable",
-      "card": "RMK-1917",
-      "note": "Queue an instruction for an addressed agent through a delivery backend, force a retry, and assert an instruction reaches the target rather than a participant message."
-    },
     "RK-22.2-033": {
       "class": "step",
       "card": "RMK-1917",
       "note": "Hold the worker on an item, close the kit, and observe the held item on the same still-available delivery backend or through a new worker on it. The current scenario driver does not expose that backend after kit close."
-    },
-    "RK-22.3-006": {
-      "class": "writable",
-      "card": "RMK-1917",
-      "note": "Raise from AFTER_DELIVER and compare the committed event and caller outcome to the successful case."
     },
     "RK-23.1-002": {
       "class": "step",
@@ -1280,11 +1255,6 @@
       "class": "step",
       "card": "RMK-1922",
       "note": "Create an in-memory runner directly, submit work and close it, observing its tasks cancelled and resources released independently of kit.close()."
-    },
-    "RK-23.3-018": {
-      "class": "writable",
-      "card": "RMK-1922",
-      "note": "Have a private worker publish structured content on a served tool call and inspect the structured copy of its stored child end row."
     },
     "RK-23.3-042": {
       "class": "phase6",
@@ -1316,30 +1286,10 @@
       "card": "RMK-1922",
       "note": "Delegate to a notifying channel and compare an empty successful task with an unsuccessful task that has no output. Assert which hand-backs arrive."
     },
-    "RK-23.3-085": {
-      "class": "writable",
-      "card": "RMK-1922",
-      "note": "Hold inline and background workers at model gates, call framework close and observe cancellation and completion before the store is released."
-    },
     "RK-23.3-086": {
       "class": "step",
       "card": "RMK-1922",
       "note": "Expose an instrumented task completion callback and shutdown grace/unwind observations, including the callback that persists after cancellation and its log."
-    },
-    "RK-23.3-087": {
-      "class": "writable",
-      "card": "RMK-1922",
-      "note": "Hold a newly announced task at the announcement/worker boundary, close the kit, then verify terminal status and no worker invocation."
-    },
-    "RK-23.3-091": {
-      "class": "writable",
-      "card": "RMK-1922",
-      "note": "Close a kit holding a notified task, observe the completion hook and absence of a new recipient turn; the diagnostic log additionally needs a log observer."
-    },
-    "RK-23.3-092": {
-      "class": "writable",
-      "card": "RMK-1922",
-      "note": "Gate a recipient model already handling a hand-back, close the kit and inspect the cancelled response, waiter and absence of subsequent stored output."
     },
     "RK-23.3-094": {
       "class": "step",
@@ -1395,11 +1345,6 @@
       "class": "step",
       "card": "RMK-1922",
       "note": "Expose host insertion into the public task cache to compare caller-specific and host values and the most recent of both."
-    },
-    "RK-23.4-035": {
-      "class": "writable",
-      "card": "RMK-1922",
-      "note": "Gate concurrent calls on one configured handler and observe at most one active delegation in the same room, with another room still able to progress."
     },
     "RK-23.4-059": {
       "class": "writable",
