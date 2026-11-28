@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "258d0eb4bfc7c40a6053df6c5b07adfce6d1b2e3e73299101840581dbde2f4b6",
-  "corpus_sha256": "72521bcff7f6d22911dbc1c23e76b2167d1384465a7912914cbfc0f2240484e3",
+  "corpus_sha256": "bee1e86b7d088adfc53c7856452cb0235dbac36e2305e6aa84b2396ee1f716e8",
   "python_commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
-  "scenario_count": 4324,
+  "scenario_count": 4346,
   "sections": [
     {
       "section": "0",
@@ -1718,6 +1718,8 @@
         "realtime/a-call-without-an-id-through-call-tool-is-reported-under-the-tool-it-carries",
         "realtime/a-called-tool-stays-declared-for-the-session-s-catalogue",
         "realtime/a-later-tool-under-a-name-the-agent-serves-is-not-declared",
+        "realtime/a-missing-skill-s-hint-on-a-fixed-session-points-to-call-tool",
+        "realtime/a-missing-skill-s-hint-reads-and-reveals-on-a-realtime-session-as-on-a-text-turn",
         "realtime/a-recovered-call-s-header-is-no-mark-and-a-participant-s-copy-stays-quoted",
         "realtime/a-replaced-catalogue-keeps-no-called-tool-and-an-old-call-retains-nothing",
         "realtime/a-search-judged-across-a-new-catalogue-declares-nothing",
@@ -1735,6 +1737,8 @@
         "realtime/an-agent-backend-s-policy-resolves-for-the-participant-s-role",
         "realtime/an-agent-backend-serves-with-its-settings-and-the-session-s-catalogue",
         "realtime/an-agent-backend-turn-its-round-cap-cuts-fires-no-on-error",
+        "realtime/an-unknown-name-under-tool-search-reads-that-no-such-tool-exists-on-every-entry",
+        "realtime/call-tool-stays-declared-and-the-policy-judges-the-tool-it-carries",
         "realtime/tool-search-never-names-a-denied-tool",
         "realtime/tool-search-on-a-pipeline-session-lists-no-tool-either-policy-denies",
         "reasoning/a-block-cut-before-its-signature-is-not-replayed",
@@ -3985,6 +3989,7 @@
         "realtime/a-backend-call-that-ends-its-session-spares-itself-and-ends-its-delegation",
         "realtime/a-backend-reads-each-call-s-outcome",
         "realtime/a-call-goes-to-the-channel-s-handler-first-and-to-on-tool-call-hooks-without-one",
+        "realtime/a-call-its-handler-declines-is-served-by-nothing-issued-or-recovered-from-speech",
         "realtime/a-call-served-by-hooks-or-the-channel-s-own-tools-passes-the-gate",
         "realtime/a-call-whose-arguments-came-as-text-is-refused-before-the-gate",
         "realtime/a-denied-tool-is-not-declared-and-its-call-is-refused",
@@ -6667,6 +6672,7 @@
         "voice/a-context-drops-its-oldest-audio-past-max-audio-seconds-and-keeps-its-text",
         "voice/a-context-keeps-its-newest-turns-up-to-max-turns",
         "voice/a-contract-hands-every-inbound-stage-the-internal-format",
+        "voice/a-delivery-waiting-for-idle-waits-for-the-room-s-playback-to-finish",
         "voice/a-dialogue-is-refused-before-any-call-it-cannot-voice",
         "voice/a-diarizing-stream-lasts-until-its-provider-ends-it-and-labels-start-a-new-epoch",
         "voice/a-disabled-context-reaches-no-tts",
@@ -7214,6 +7220,7 @@
         "realtime/a-broadcast-text-enters-under-its-author-s-label",
         "realtime/a-call-goes-to-the-channel-s-handler-first-and-to-on-tool-call-hooks-without-one",
         "realtime/a-call-id-names-one-call-until-its-result-goes-out",
+        "realtime/a-call-its-handler-declines-is-served-by-nothing-issued-or-recovered-from-speech",
         "realtime/a-call-naming-no-tool-is-answered-before-the-gate",
         "realtime/a-call-recovered-from-speech-mutes-no-input",
         "realtime/a-call-recovered-from-speech-passes-the-gate-and-its-result-is-injected-fenced",
@@ -7237,11 +7244,14 @@
         "realtime/a-handler-that-ends-its-session-from-a-task-it-starts-runs-on",
         "realtime/a-handler-that-ends-its-session-runs-on-and-the-other-call-is-cut",
         "realtime/a-hook-on-the-model-s-words-posts-at-the-depth-of-what-it-hears",
+        "realtime/a-missing-skill-s-hint-on-a-fixed-session-points-to-call-tool",
+        "realtime/a-missing-skill-s-hint-reads-and-reveals-on-a-realtime-session-as-on-a-text-turn",
         "realtime/a-model-s-transcribed-answer-names-no-event-it-responds-to",
         "realtime/a-participant-the-store-lacks-has-the-base-rules-until-it-gets-a-role",
         "realtime/a-pipeline-vad-takes-the-role-its-provider-sets",
         "realtime/a-pipeline-vad-that-endpoints-takes-the-speech-edges-from-the-provider",
         "realtime/a-provider-that-cannot-call-tools-is-declared-none",
+        "realtime/a-realtime-session-carries-no-task-notes",
         "realtime/a-realtime-tool-call-is-as-deep-as-the-model-s-answer-and-so-is-what-its-hooks-post",
         "realtime/a-recovered-call-s-header-is-no-mark-and-a-participant-s-copy-stays-quoted",
         "realtime/a-replaced-catalogue-keeps-no-called-tool-and-an-old-call-retains-nothing",
@@ -7256,6 +7266,7 @@
         "realtime/a-spared-handler-past-the-close-s-bound-is-cut-and-reported-once",
         "realtime/a-spared-handler-still-working-at-the-close-is-waited-for",
         "realtime/a-start-for-another-organization-s-room-creates-no-session",
+        "realtime/a-task-handed-back-to-a-realtime-channel-is-a-system-instruction-into-its-session",
         "realtime/an-agent-backend-s-call-that-closes-the-channel-is-spared-by-the-agent-s-close",
         "realtime/an-answer-to-an-injection-is-one-deeper-and-a-silent-one-changes-nothing",
         "realtime/an-ended-session-takes-no-injection",
@@ -7266,10 +7277,12 @@
         "realtime/an-instruction-enters-the-session-as-system",
         "realtime/an-observer-s-post-at-the-limit-enters-the-session-silently-and-leaves-no-record",
         "realtime/an-undeclared-tool-is-refused-and-still-reported",
+        "realtime/an-unknown-name-under-tool-search-reads-that-no-such-tool-exists-on-every-entry",
         "realtime/an-utterance-replayed-from-its-mark-is-discarded-when-the-handshake-fails",
         "realtime/an-utterance-replayed-from-its-mark-reaches-the-provider-ahead-of-the-live-audio",
         "realtime/at-the-depth-limit-a-broadcast-or-a-delivery-enters-the-session-silently",
         "realtime/audio-received-while-the-provider-connects-reaches-it-in-order-before-the-session-starts",
+        "realtime/call-tool-stays-declared-and-the-policy-judges-the-tool-it-carries",
         "realtime/ending-a-session-disconnects-its-provider-and-its-transport",
         "realtime/reconfiguring-a-session-changes-that-session-only",
         "realtime/run-skill-script-is-skill-gated-and-the-skill-tools-are-not",
@@ -7320,8 +7333,10 @@
         "realtime/a-backend-call-its-delegation-s-bound-cuts-is-reported-cancelled",
         "realtime/a-backend-call-passes-the-channel-s-policy-gate-and-bound",
         "realtime/a-backend-call-that-ends-its-session-spares-itself-and-ends-its-delegation",
+        "realtime/a-backend-is-offered-what-it-may-call-and-refused-the-rest-in-the-common-order",
         "realtime/a-backend-may-delegate-a-task",
         "realtime/a-backend-reads-each-call-s-outcome",
+        "realtime/a-backend-s-calls-reach-none-of-the-channel-s-own-tools",
         "realtime/a-backend-s-request-carries-its-session-and-the-transcript-since-the-last",
         "realtime/a-backend-that-gives-no-answer-is-answered-aloud-once",
         "realtime/a-call-a-cut-delegation-left-is-answered-before-the-next-generation",
@@ -7329,6 +7344,8 @@
         "realtime/a-call-the-agent-backend-s-provider-served-is-reported-once",
         "realtime/a-channel-with-no-backend-answers-each-integrator-delegation-aloud",
         "realtime/a-conference-is-busy-until-its-model-s-answer-starts",
+        "realtime/a-delegation-whose-role-read-fails-or-outlasts-its-bound-is-answered-aloud",
+        "realtime/a-delivery-waiting-for-idle-waits-out-a-tool-call-the-answer-and-the-user-s-speech",
         "realtime/a-full-duplex-answer-starts-with-a-partial-transcript",
         "realtime/a-full-duplex-answer-starts-with-audible-audio",
         "realtime/a-full-duplex-provider-hears-the-pipeline-s-audio",
@@ -7338,6 +7355,7 @@
         "realtime/a-host-that-sent-a-result-is-busy-until-the-answer-starts",
         "realtime/a-hosted-backend-s-call-passes-the-gate",
         "realtime/a-later-tool-under-a-name-the-agent-serves-is-not-declared",
+        "realtime/a-queued-delegation-keeps-the-catalogue-of-its-hand-over-and-its-call-is-judged-as-the-role-stands",
         "realtime/a-reasoning-backend-s-agent-is-refused-for-what-a-session-never-serves",
         "realtime/a-recorder-keeps-a-full-duplex-provider-s-silence",
         "realtime/a-session-s-delegations-run-one-at-a-time-each-reading-the-last",
@@ -8228,6 +8246,8 @@
         "conference/a-conference-handler-that-raises-reads-as-a-failure-not-its-text",
         "conference/a-conference-model-receives-the-gated-tool-result",
         "conference/a-conference-model-s-tool-policy-refuses-a-denied-tool",
+        "conference/a-conference-refuses-each-call-in-the-common-order-and-words",
+        "conference/a-conference-serves-no-reader-of-its-own-and-its-policy-governs-every-name",
         "conference/a-conference-tool-call-passes-the-pre-execution-gate",
         "conference/a-conference-tool-handler-is-cut-at-its-bound",
         "conference/a-conference-tool-result-is-bounded-as-a-realtime-one",
@@ -9459,7 +9479,8 @@
         "orchestration/a-host-s-words-are-a-person-s-message-to-a-pipeline-s-routing",
         "orchestration/a-router-asks-its-default-agent-alone",
         "orchestration/a-router-with-nothing-to-route-asks-every-agent",
-        "orchestration/a-sender-s-routing-stamps-are-dropped"
+        "orchestration/a-sender-s-routing-stamps-are-dropped",
+        "realtime/an-addressed-delivery-takes-the-text-pipeline-not-the-session"
       ]
     },
     {
@@ -10382,13 +10403,14 @@
         "unmapped": 66
       },
       "decided_gaps": {
-        "phase6": 12,
         "step": 3
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "ai-external-handler/read-stored-result-stays-local-non-streaming",
         "ai-external-handler/read-stored-result-stays-local-streaming",
+        "conference/a-conference-refuses-each-call-in-the-common-order-and-words",
+        "conference/a-conference-serves-no-reader-of-its-own-and-its-policy-governs-every-name",
         "conference/the-tool-policy-filters-what-is-declared-to-the-model-by-its-base-rules",
         "eviction/reading-a-result-the-room-does-not-store-is-a-refusal",
         "executors/a-turn-apart-runs-the-host-s-tool-on-its-executor",
@@ -10406,14 +10428,21 @@
         "planning/sandbox-declarations-precede-the-planner-non-streaming",
         "planning/sandbox-declarations-precede-the-planner-streaming",
         "realtime/a-backend-call-passes-the-channel-s-policy-gate-and-bound",
+        "realtime/a-backend-is-offered-what-it-may-call-and-refused-the-rest-in-the-common-order",
+        "realtime/a-backend-s-calls-reach-none-of-the-channel-s-own-tools",
         "realtime/a-call-served-by-hooks-or-the-channel-s-own-tools-passes-the-gate",
+        "realtime/a-delegation-whose-role-read-fails-or-outlasts-its-bound-is-answered-aloud",
         "realtime/a-denied-or-skill-closed-tool-is-refused-before-its-arguments-are-read",
         "realtime/a-denied-tool-is-not-declared-and-its-call-is-refused",
         "realtime/a-participant-the-store-lacks-has-the-base-rules-until-it-gets-a-role",
         "realtime/a-pipeline-call-is-judged-by-the-agent-the-room-talks-to-when-it-arrives",
+        "realtime/a-queued-delegation-keeps-the-catalogue-of-its-hand-over-and-its-call-is-judged-as-the-role-stands",
         "realtime/a-role-the-store-holds-at-the-start-shapes-the-declared-tools",
         "realtime/a-skill-activation-declares-no-denied-tool",
         "realtime/a-tool-name-the-channel-carries-stays-the-channel-s-under-a-pipeline-agent",
+        "realtime/an-activation-on-a-realtime-session-checks-its-requires-against-the-declared-tools",
+        "realtime/an-unknown-name-under-tool-search-reads-that-no-such-tool-exists-on-every-entry",
+        "realtime/call-tool-stays-declared-and-the-policy-judges-the-tool-it-carries",
         "realtime/run-skill-script-is-skill-gated-and-the-skill-tools-are-not",
         "realtime/the-channel-s-and-the-active-agent-s-policies-both-hold-on-a-pipeline-session-for-its-participant",
         "realtime/the-channel-s-own-declared-tools-pass-the-declared-check",
@@ -10789,7 +10818,7 @@
         "unmapped": 39
       },
       "decided_gaps": {
-        "phase6": 9,
+        "phase6": 8,
         "step": 2
       },
       "unannotated_keyword_lines": [],
@@ -10844,6 +10873,7 @@
         "mcp/a-policy-that-names-no-server-leaves-a-bare-name-on-the-first-server",
         "orchestration/an-audited-answer-reaches-the-model-unchanged",
         "realtime/a-call-goes-to-the-channel-s-handler-first-and-to-on-tool-call-hooks-without-one",
+        "realtime/a-call-its-handler-declines-is-served-by-nothing-issued-or-recovered-from-speech",
         "realtime/a-realtime-tool-call-is-as-deep-as-the-model-s-answer-and-so-is-what-its-hooks-post",
         "role-policy/a-later-turn-reads-the-new-role-non-streaming",
         "role-policy/a-later-turn-reads-the-new-role-streaming",
@@ -10980,7 +11010,7 @@
         "unmapped": 16
       },
       "decided_gaps": {
-        "phase6": 2,
+        "phase6": 1,
         "step": 2
       },
       "unannotated_keyword_lines": [],
@@ -11037,9 +11067,8 @@
         "unmapped": 99
       },
       "decided_gaps": {
-        "phase6": 21,
-        "step": 2,
-        "writable": 7
+        "phase6": 15,
+        "step": 3
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -11092,6 +11121,13 @@
         "discussion/a-bot-or-a-delivery-naming-an-agent-queues-it-at-the-back",
         "discussion/a-delivery-is-no-person-s-answer-and-asks-no-agent",
         "inbound/a-kit-s-inbound-rate-limit-refuses-a-proactive-delivery-past-its-bucket",
+        "realtime/a-delivery-pinned-to-a-session-is-refused-once-the-session-or-its-channel-is-gone",
+        "realtime/a-delivery-to-a-realtime-channel-without-a-session-or-a-connection-is-no-success",
+        "realtime/a-keyed-injection-is-one-per-room-channel-and-session",
+        "realtime/a-keyed-injection-repeated-with-other-text-is-a-conflict-a-keyed-publication-is-not",
+        "realtime/a-repeated-keyed-injection-reuses-its-outcome-unless-nothing-was-sent-and-retry-is-allowed",
+        "realtime/a-task-handed-back-to-a-realtime-channel-is-a-system-instruction-into-its-session",
+        "realtime/an-addressed-delivery-takes-the-text-pipeline-not-the-session",
         "realtime/an-instruction-enters-the-session-as-system",
         "realtime/at-the-depth-limit-a-broadcast-or-a-delivery-enters-the-session-silently",
         "tasks/a-before-deliver-hook-s-block-keeps-a-hand-back-from-its-agent",
@@ -11109,9 +11145,8 @@
         "unmapped": 31
       },
       "decided_gaps": {
-        "phase6": 6,
-        "step": 8,
-        "writable": 2
+        "phase6": 4,
+        "step": 8
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -11128,7 +11163,10 @@
         "delivery/the-worker-retries-an-unavailable-destination",
         "delivery/wait-for-idle-on-a-text-transport-delivers-at-once",
         "orchestration/a-supervisor-s-background-team-whose-results-nobody-hears-posts-its-run-failed",
-        "routing/the-framework-names-the-room-it-writes-to"
+        "realtime/a-delivery-pinned-to-a-session-is-refused-once-the-session-or-its-channel-is-gone",
+        "realtime/a-delivery-waiting-for-idle-waits-out-a-tool-call-the-answer-and-the-user-s-speech",
+        "routing/the-framework-names-the-room-it-writes-to",
+        "voice/a-delivery-waiting-for-idle-waits-for-the-room-s-playback-to-finish"
       ]
     },
     {
@@ -11211,7 +11249,7 @@
         "unmapped": 115
       },
       "decided_gaps": {
-        "phase6": 5,
+        "phase6": 2,
         "step": 9,
         "writable": 1
       },
@@ -11269,6 +11307,7 @@
         "orchestration/each-room-s-per-worker-tools-run-with-its-own-install",
         "orchestration/each-room-s-per-worker-tools-run-with-its-own-install-without-streaming",
         "orchestration/each-room-s-supervisor-install-runs-its-own-team",
+        "realtime/a-task-handed-back-to-a-realtime-channel-is-a-system-instruction-into-its-session",
         "status/a-task-the-close-cuts-reaches-the-status-hooks-before-the-store-is-sealed",
         "streaming/a-call-closes-the-text-window",
         "streaming/a-delegated-answer-publishes-each-round-s-text-under-its-round",
@@ -11401,7 +11440,7 @@
         "unmapped": 67
       },
       "decided_gaps": {
-        "phase6": 2,
+        "phase6": 1,
         "step": 3,
         "writable": 1
       },
@@ -11419,6 +11458,7 @@
         "executors/an-executor-refuses-a-turn-whose-channel-declares-an-owner-s-tool",
         "host/a-turn-s-host-delegates-and-waits-for-its-task",
         "orchestration/a-supervisor-given-task-status-is-pointed-at-it-by-its-dispatched-team",
+        "realtime/a-realtime-session-carries-no-task-notes",
         "tasks/a-background-task-cannot-close-its-frame",
         "tasks/a-background-task-names-its-agent-by-the-discussion-s-handle",
         "tasks/a-background-tool-keeps-its-turns-name-before-a-post",
@@ -11531,6 +11571,7 @@
       "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
+        "realtime/a-backend-is-offered-what-it-may-call-and-refused-the-rest-in-the-common-order",
         "realtime/a-denied-or-skill-closed-tool-is-refused-before-its-arguments-are-read",
         "realtime/a-skill-activation-declares-no-denied-tool",
         "realtime/run-skill-script-is-skill-gated-and-the-skill-tools-are-not",
@@ -11638,12 +11679,12 @@
         "unmapped": 32
       },
       "decided_gaps": {
-        "phase6": 1,
         "step": 5
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "instructions/a-standalone-turn-keeps-the-agent-s-prompt-tools-and-skills",
+        "realtime/an-activation-on-a-realtime-session-checks-its-requires-against-the-declared-tools",
         "role-policy/a-skill-hint-keeps-the-role-restriction-non-streaming",
         "role-policy/a-skill-hint-keeps-the-role-restriction-streaming",
         "role-policy/denied-prerequisite-non-streaming",
@@ -11770,13 +11811,13 @@
         "mapped_partial": 1,
         "unmapped": 24
       },
-      "decided_gaps": {
-        "phase6": 2
-      },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "eviction/a-skill-s-instructions-are-never-stored",
         "executors/a-skill-activated-on-one-executor-rides-the-next-turn-on-another",
+        "realtime/a-missing-skill-s-hint-on-a-fixed-session-points-to-call-tool",
+        "realtime/a-missing-skill-s-hint-reads-and-reveals-on-a-realtime-session-as-on-a-text-turn",
         "role-policy/activation-cannot-bypass-role-non-streaming",
         "role-policy/activation-cannot-bypass-role-streaming",
         "role-policy/denied-prerequisite-non-streaming",
@@ -42743,23 +42784,13 @@
       "id": "RK-21.1-018",
       "section": "21.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1918",
-        "note": "step: conference.open tool_policy: observe a conference tool with the same name as a channel reader under a denying policy."
-      }
+      "links": []
     },
     {
       "id": "RK-21.1-019",
       "section": "21.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1918",
-        "note": "step: a scripted realtime reasoning backend, a realtime call recovered from speech: observe policy and skill gating when spoken recovery or a reasoning backend names a reader it does not serve."
-      }
+      "links": []
     },
     {
       "id": "RK-21.1-020",
@@ -42777,12 +42808,7 @@
       "id": "RK-21.1-022",
       "section": "21.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1918",
-        "note": "step: Tool Search on a realtime session: exercise the fixed-declaration session's call_tool carrier and the policy check on its resolved tool."
-      }
+      "links": []
     },
     {
       "id": "RK-21.1-023",
@@ -42829,34 +42855,19 @@
       "id": "RK-21.1-029",
       "section": "21.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1918",
-        "note": "step: a scripted realtime reasoning backend: exercise each refusal cause entering through a delegated reasoning backend."
-      }
+      "links": []
     },
     {
       "id": "RK-21.1-030",
       "section": "21.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1918",
-        "note": "step: realtime tool_policy and tool timeout options: exercise refusal selection and text on realtime-session tools."
-      }
+      "links": []
     },
     {
       "id": "RK-21.1-075",
       "section": "21.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1918",
-        "note": "step: conference.open tool_policy: exercise refusal selection and text on conference tools."
-      }
+      "links": []
     },
     {
       "id": "RK-21.1-031",
@@ -42945,12 +42956,7 @@
       "id": "RK-21.1-043",
       "section": "21.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1918",
-        "note": "step: a scripted realtime reasoning backend: a reasoning backend's exclusion for a skill it cannot activate names the conversation's activation state."
-      }
+      "links": []
     },
     {
       "id": "RK-21.1-044",
@@ -42968,12 +42974,7 @@
       "id": "RK-21.1-046",
       "section": "21.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1918",
-        "note": "step: Tool Search on a realtime session: ask for an unknown name through the realtime carrier and inventory and check the search hint."
-      }
+      "links": []
     },
     {
       "id": "RK-21.1-047",
@@ -42991,34 +42992,19 @@
       "id": "RK-21.1-049",
       "section": "21.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1918",
-        "note": "step: a scripted realtime reasoning backend: read the delegated model's tool catalogue and the per-name unavailable reason alongside its actual refusals."
-      }
+      "links": []
     },
     {
       "id": "RK-21.1-050",
       "section": "21.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1918",
-        "note": "step: a scripted realtime reasoning backend: exercise delegation-time role and room reads and the audible fallback on a bounded read failure."
-      }
+      "links": []
     },
     {
       "id": "RK-21.1-051",
       "section": "21.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1918",
-        "note": "step: a scripted realtime reasoning backend: queue a delegation across a role change and compare the snapshot offered with the gate's current-role decision."
-      }
+      "links": []
     },
     {
       "id": "RK-21.1-052",
@@ -43082,12 +43068,7 @@
       "id": "RK-21.1-058",
       "section": "21.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1918",
-        "note": "step: realtime.read of the session configuration on a realtime pipeline: exercise a realtime pipeline agent declaring its own setup tool while a distinct conflicting late declaration is refused."
-      }
+      "links": []
     },
     {
       "id": "RK-21.1-059",
@@ -43882,12 +43863,7 @@
       "id": "RK-21.4-043",
       "section": "21.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1918",
-        "note": "step: a realtime call recovered from speech: decline every handler of a tool recovered from speech and compare its outcome to a normal function call."
-      }
+      "links": []
     },
     {
       "id": "RK-21.4-011",
@@ -44276,12 +44252,7 @@
       "id": "RK-21.6-004",
       "section": "21.6",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1918",
-        "note": "step: conference.open tool_timeouts with a gated handler: exercise a slow conference handler and observe its configured timeout."
-      }
+      "links": []
     },
     {
       "id": "RK-21.6-005",
@@ -44405,12 +44376,7 @@
       "id": "RK-22.1-101",
       "section": "22.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1917",
-        "note": "deliver to a realtime channel with a live session: the outcome sent once the provider accepted the injection, which realtime.read shows (requires realtime)."
-      }
+      "links": []
     },
     {
       "id": "RK-22.1-102",
@@ -44666,12 +44632,7 @@
       "id": "RK-22.1-047",
       "section": "22.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1917",
-        "note": "deliver with instruction into a room binding a realtime channel with a live session: realtime.read shows the injection in the system role (requires realtime)."
-      }
+      "links": []
     },
     {
       "id": "RK-22.1-048",
@@ -44711,34 +44672,19 @@
       "id": "RK-22.1-052",
       "section": "22.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1917",
-        "note": "step: realtime model activity for idle waits: replace a session while idle is awaited and observe which one receives the injection."
-      }
+      "links": []
     },
     {
       "id": "RK-22.1-053",
       "section": "22.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1917",
-        "note": "step: realtime model activity for idle waits: end the session or remove the realtime model during the wait; check refusal and no text publication."
-      }
+      "links": []
     },
     {
       "id": "RK-22.1-054",
       "section": "22.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1917",
-        "note": "step: realtime model activity for idle waits: observe the unsuccessful outcome of the selected session."
-      }
+      "links": []
     },
     {
       "id": "RK-22.1-055",
@@ -44750,12 +44696,7 @@
       "id": "RK-22.1-056",
       "section": "22.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1917",
-        "note": "deliver with addressed_to an agent in a room binding a realtime channel: the agent's turn answers, and realtime.read shows no injection (requires realtime)."
-      }
+      "links": []
     },
     {
       "id": "RK-22.1-057",
@@ -44879,34 +44820,19 @@
       "id": "RK-22.1-075",
       "section": "22.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1917",
-        "note": "deliver twice with one idempotency_key to two realtime channels, each with its session in its own room: independent outcomes; the same key on two sessions of one channel needs several realtime sessions per channel (requires realtime)."
-      }
+      "links": []
     },
     {
       "id": "RK-22.1-076",
       "section": "22.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1917",
-        "note": "deliver twice with one idempotency_key to a realtime session: the second outcome reused, realtime.read showing one injection (requires realtime)."
-      }
+      "links": []
     },
     {
       "id": "RK-22.1-077",
       "section": "22.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1917",
-        "note": "deliver twice with one idempotency_key and different text to a realtime session: the second refused as an idempotency conflict (requires realtime)."
-      }
+      "links": []
     },
     {
       "id": "RK-22.1-078",
@@ -44969,9 +44895,9 @@
       "mapping": "unmapped",
       "links": [],
       "gap": {
-        "class": "phase6",
+        "class": "step",
         "card": "RMK-1917",
-        "note": "step: scripted realtime injection outcomes: exercise recovery of an uncertain injection; retries cannot resubmit it."
+        "note": "step: an attempt left unresolved needs a fault on the store's voice-delivery reservation (the get, claim and complete operations of a keyed voice injection, which §14.1 and the schema's store_operation do not name), and an expiry a clock on the claim. The reuse of an uncertain outcome is RK-22.1-076's rule, cited by realtime/a-repeated-keyed-injection-reuses-its-outcome-unless-nothing-was-sent-and-retry-is-allowed."
       }
     },
     {
@@ -45023,34 +44949,19 @@
       "id": "RK-22.1-089",
       "section": "22.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1917",
-        "note": "step: scripted realtime injection outcomes: have a provider give no result and observe uncertainty."
-      }
+      "links": []
     },
     {
       "id": "RK-22.1-090",
       "section": "22.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1917",
-        "note": "deliver to a realtime channel with no live session: the outcome is not a success; an injection the provider does not support needs a provider without injection (requires realtime)."
-      }
+      "links": []
     },
     {
       "id": "RK-22.1-091",
       "section": "22.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1917",
-        "note": "step: scripted realtime injection outcomes: queue input without establishing remote acceptance and observe uncertainty."
-      }
+      "links": []
     },
     {
       "id": "RK-22.1-092",
@@ -45143,23 +45054,13 @@
       "id": "RK-22.2-006",
       "section": "22.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1917",
-        "note": "deliver with wait_for_idle while a voice playback is held at its playback_gate: delivered only once the gate opens (requires voice)."
-      }
+      "links": []
     },
     {
       "id": "RK-22.2-007",
       "section": "22.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1917",
-        "note": "step: realtime model activity for idle waits: exercise pending answers, speech, tools and audio forwarding before real-time sessions become idle."
-      }
+      "links": []
     },
     {
       "id": "RK-22.2-008",
@@ -45216,23 +45117,13 @@
       "id": "RK-22.2-014",
       "section": "22.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1917",
-        "note": "step: realtime model activity for idle waits: observe both active speech and answer; in voice, inspect TTS activity."
-      }
+      "links": []
     },
     {
       "id": "RK-22.2-015",
       "section": "22.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1917",
-        "note": "deliver with wait_for_idle on a voice channel whose playback a playback_gate holds: the strategy watches that playback (requires voice)."
-      }
+      "links": []
     },
     {
       "id": "RK-22.2-016",
@@ -45837,12 +45728,7 @@
       "id": "RK-23.3-042",
       "section": "23.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1922",
-        "note": "step: setup_realtime_delegation: observe the instruction flag on a delegation hand-back to a channel hosting a realtime model."
-      }
+      "links": []
     },
     {
       "id": "RK-23.3-043",
@@ -45854,12 +45740,7 @@
       "id": "RK-23.3-044",
       "section": "23.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1922",
-        "note": "step: setup_realtime_delegation: observe private system-intent injection on the delegating realtime voice session and the sole session when delegation is outside a call."
-      }
+      "links": []
     },
     {
       "id": "RK-23.3-045",
@@ -45949,12 +45830,7 @@
       "id": "RK-23.3-053",
       "section": "23.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1922",
-        "note": "step: setup_realtime_delegation: compare a realtime task-result injection with the expected result, observing that it omits the text-agent-only turn instruction."
-      }
+      "links": []
     },
     {
       "id": "RK-23.3-054",
@@ -46869,12 +46745,7 @@
       "id": "RK-23.4-066",
       "section": "23.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1922",
-        "note": "step: realtime.read of the session configuration: demonstrate that a realtime session with otherwise visible room tasks receives no task-notes block."
-      }
+      "links": []
     },
     {
       "id": "RK-23.4-067",
@@ -47266,12 +47137,7 @@
       "id": "RK-24.3-029",
       "section": "24.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1939",
-        "note": "step: a realtime fixture skills option: no shared realtime session exercises activation prerequisites."
-      }
+      "links": []
     },
     {
       "id": "RK-24.3-030",
@@ -47485,23 +47351,13 @@
       "id": "RK-24.4-023",
       "section": "24.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1939",
-        "note": "step: a realtime fixture skills option: no shared realtime case asserts the missing-skill response and reveal."
-      }
+      "links": []
     },
     {
       "id": "RK-24.4-024",
       "section": "24.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1939",
-        "note": "step: a realtime fixture skills option: the fixed-declaration realtime gateway's hint directing the model to call_tool lacks a shared oracle."
-      }
+      "links": []
     },
     {
       "id": "RK-24.4-025",
