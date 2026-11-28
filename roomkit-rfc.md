@@ -20403,9 +20403,11 @@ should live in the integration surface layer.
 - A recording of a person's voice made to replicate it, and the recording of
   their consent, are personal data identifying that person. An implementation
   MUST hand them to the vendor for the call and keep nothing: never written to
-  the conversation store, the timeline, a recording, or a log. <!-- /rfc --><!-- rfc: {"id": "RK-17.6-026", "kind": "behavior", "applies": "§17.6 Voice and Audio Security, custom voices (Section 12.2.4), where an implementation offers them (media: voice): what is kept is the integrator's evidence, as metadata: which voice was created, when, by whom, and whether the vendor verified the consent.", "level": "must"} -->What it keeps is
-  the evidence the integrator needs, as metadata: which voice was created,
-  when, by whom, and whether the vendor verified the consent.<!-- /rfc --><!-- rfc: {"id": "RK-17.6-027", "kind": "behavior", "applies": "§17.6 Voice and Audio Security, custom voices (Section 12.2.4), where an implementation offers them (media: voice): replicating a voice without the consent of the person it belongs to is not possible through the framework (Section 12.2.4).", "level": "must"} -->
+  the conversation store, the timeline, a recording, or a log. <!-- /rfc --><!-- rfc: {"id": "RK-17.6-026", "kind": "behavior", "applies": "§17.6 Voice and Audio Security, custom voices (Section 12.2.4), where an implementation offers them (media: voice): the evidence of the consent is the integrator's to keep: a voice the library returns stands for a consent the vendor accepted or the integrator declared established outside the call (Section 12.2.4), and the integrator records which voice was created, when, and by whom.", "level": "must"} -->The evidence of
+  the consent is the integrator's to keep: a voice the library returns stands
+  for a consent the vendor accepted, or that the integrator declared
+  established outside the call (Section 12.2.4), and the integrator records
+  which voice was created, when, and by whom.<!-- /rfc --><!-- rfc: {"id": "RK-17.6-027", "kind": "behavior", "applies": "§17.6 Voice and Audio Security, custom voices (Section 12.2.4), where an implementation offers them (media: voice): replicating a voice without the consent of the person it belongs to is not possible through the framework (Section 12.2.4).", "level": "must"} -->
 - Replicating a voice without the consent of the person it belongs to MUST NOT
   be possible through the framework (Section 12.2.4). <!-- /rfc --><!-- rfc: {"id": "RK-17.6-028", "kind": "non_testable", "applies": "§17.6 Voice and Audio Security, custom voices (Section 12.2.4), where an implementation offers them (media: voice): the integrator's responsibility for that consent and its withdrawal, a withdrawn consent meaning deleting the voice.", "level": "must"} -->The integrator remains
   responsible for that consent, and for its withdrawal: a withdrawn consent
@@ -20415,13 +20417,16 @@ should live in the integration surface layer.
   for the providers that receive audio.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-17.6-030", "kind": "behavior", "applies": "§17.6 Voice and Audio Security, provenance of synthesized audio, where an implementation offers voice (media: voice): a provenance mark received from the vendor (a C2PA manifest in the file, a watermark in the signal) is not removed: a file is passed on as produced, not rebuilt from its samples; with the paragraph's lead-in and the vendor's permission to mark.", "level": "must"} -->
+<!-- rfc: {"id": "RK-17.6-030", "kind": "behavior", "applies": "§17.6 Voice and Audio Security, provenance of synthesized audio, where an implementation offers voice (media: voice): a provenance mark received from the vendor (a manifest in the file, a watermark in the signal) is not removed: a file the vendor produced, such as the AudioContent a TTS's synthesize() returns, is passed on as produced, not rebuilt from its samples, and a watermark stays in the PCM passed on; the voice path takes decoded 16-bit PCM only (Section 12.2), a chunk in an encoded format refused before the transport; with the paragraph's lead-in and the vendor's permission to mark.", "level": "must"} -->
 **Provenance of synthesized audio:**
 
-- A vendor MAY mark the audio it synthesizes: a manifest in the file (C2PA)
-  or a watermark in the signal. An implementation MUST NOT remove a mark it
-  received: a file is passed on as the vendor produced it, not rebuilt from
-  its samples. <!-- /rfc --><!-- rfc: {"id": "RK-17.6-031", "kind": "non_testable", "applies": "§17.6 Voice and Audio Security, provenance of synthesized audio, where an implementation offers voice (media: voice): documentation of where a stage that must decode the audio (resampling, mixing, encoding for a transport) loses a file-level manifest.", "level": "should"} -->A stage that must decode the audio (resampling, mixing,
+- A vendor MAY mark the audio it synthesizes: a manifest in the file or a
+  watermark in the signal. An implementation MUST NOT remove a mark it
+  received: a file the vendor produced, such as the AudioContent a TTS's
+  `synthesize()` returns, is passed on as produced, not rebuilt from its
+  samples, and a watermark stays in the PCM passed on. The voice path takes
+  decoded 16-bit PCM only (Section 12.2): a chunk in an encoded format is
+  refused before the transport, so a manifest in a file never reaches it. <!-- /rfc --><!-- rfc: {"id": "RK-17.6-031", "kind": "non_testable", "applies": "§17.6 Voice and Audio Security, provenance of synthesized audio, where an implementation offers voice (media: voice): documentation of where a stage that must decode the audio (resampling, mixing, encoding for a transport) loses a file-level manifest.", "level": "should"} -->A stage that must decode the audio (resampling, mixing,
   encoding for a transport) loses a file-level manifest by construction;
   implementations SHOULD document where that happens.
 <!-- /rfc -->

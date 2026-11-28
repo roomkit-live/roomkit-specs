@@ -8025,6 +8025,10 @@
     "RK-17.6-022": {
       "voice/a-redacted-transcript-reaches-the-context-without-its-audio": "cb6c1c25ea8d2688d3312a814308d9a2083bede8499ed0b92d8a682756712c46"
     },
+    "RK-17.6-030": {
+      "voice/a-synthesized-pcm-reply-reaches-the-transport-as-synthesized": "9e8f5c0f3c998c627b9de8c7bc095ed7f674f60c71099ffc4d1c27c89a0b6235",
+      "voice/an-encoded-tts-chunk-never-reaches-the-transport": "9e8f5c0f3c998c627b9de8c7bc095ed7f674f60c71099ffc4d1c27c89a0b6235"
+    },
     "RK-17.7-004": {
       "conference/a-mint-with-no-grants-is-permissive-and-a-narrowed-one-keeps-its-narrowing": "2e30c6e8e8fdf1f3627668978f6318f1d2f9e1f57f5ce9fc2225ae3fded14d66"
     },
