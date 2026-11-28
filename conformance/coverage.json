@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "258d0eb4bfc7c40a6053df6c5b07adfce6d1b2e3e73299101840581dbde2f4b6",
-  "corpus_sha256": "323083ec6ba33121ff1a0af9ac7f1a0c21c35c4b53345b07f2b351b611f24115",
+  "corpus_sha256": "f761e60edb42281f25a21456a962e6513e011d349396e747ddb9cd096a6d349c",
   "python_commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
-  "scenario_count": 4288,
+  "scenario_count": 4313,
   "sections": [
     {
       "section": "0",
@@ -2977,13 +2977,14 @@
         "unmapped": 63
       },
       "decided_gaps": {
-        "phase6": 9,
+        "phase6": 7,
         "step": 10
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "appendix-b/b2-block-and-inject",
         "broadcast/a-partial-failure-is-reported-before-its-deliveries",
+        "conference/a-track-recording-announces-its-start-and-its-stop-with-its-track",
         "executors/a-turn-apart-emits-its-framework-events",
         "hooks/a-failing-fail-closed-hook-blocks",
         "hooks/a-failing-hook-lets-the-event-through",
@@ -3018,6 +3019,7 @@
         "observations/feedback-is-an-observation-the-hooks-observe",
         "permissions/binding-changes-and-their-triggers",
         "permissions/read-only-source-is-stored-blocked",
+        "recording/a-room-recording-announces-its-start-and-its-stop-with-their-data",
         "reentrancy/a-before-ai-generation-handler-sends-as-deep-as-the-turn",
         "reentrancy/a-tool-call-handler-sends-as-deep-as-the-turn",
         "reentrancy/a-turn-s-framework-event-handler-sends-while-it-runs",
@@ -3092,9 +3094,7 @@
         "unmapped": 43
       },
       "decided_gaps": {
-        "phase6": 3,
-        "step": 1,
-        "writable": 4
+        "step": 1
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -3144,6 +3144,11 @@
         "orchestration/a-loop-out-of-iterations-answers-its-last-output-not-approved",
         "permissions/a-depth-limit-record-keeps-the-agent-s-permitted-scope",
         "permissions/an-answer-past-the-reentry-budget-is-stored-within-its-agent-s-binding",
+        "realtime/a-direct-injection-from-a-hook-or-a-turn-is-at-least-as-deep-as-that-work",
+        "realtime/a-hook-on-the-model-s-words-posts-at-the-depth-of-what-it-hears",
+        "realtime/a-realtime-tool-call-is-as-deep-as-the-model-s-answer-and-so-is-what-its-hooks-post",
+        "realtime/an-observer-s-post-at-the-limit-enters-the-session-silently-and-leaves-no-record",
+        "realtime/at-the-depth-limit-a-broadcast-or-a-delivery-enters-the-session-silently",
         "reentrancy/a-before-ai-generation-handler-sends-as-deep-as-the-turn",
         "reentrancy/a-call-past-the-budget-naming-a-room-the-store-lacks-creates-nothing",
         "reentrancy/a-direct-delete-past-the-hook-budget-writes-nothing",
@@ -3183,7 +3188,10 @@
         "tasks/every-agent-s-stream-in-a-delegated-room-is-read-and-the-delegated-agent-answers",
         "tools/served-call-rows",
         "turn-record/an-answer-to-an-answer-is-not-the-agent-s-reply-to-the-caller",
-        "verification/a-hook-updating-a-released-message-again-stops-at-the-cap"
+        "verification/a-hook-updating-a-released-message-again-stops-at-the-cap",
+        "voice/a-hook-that-posts-at-each-spoken-answer-ends-at-the-depth-limit",
+        "voice/an-after-tts-hook-posts-at-the-depth-of-the-answer-it-spoke",
+        "voice/speech-heard-while-an-answer-plays-opens-a-chain-of-its-own"
       ]
     },
     {
@@ -3256,9 +3264,7 @@
         "mapped_partial": 1,
         "unmapped": 21
       },
-      "decided_gaps": {
-        "phase6": 1
-      },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "discussion/an-agent-s-answer-typed-instruction-gives-no-turn",
@@ -3266,6 +3272,7 @@
         "inbound/a-response-keeps-what-its-channel-wrote-of-its-own-source-and-nothing-of-another-s",
         "permissions/an-answer-scope-internal-a-channel-gives-reads-as-none",
         "permissions/work-that-leaves-a-scoped-cascade-is-not-scoped",
+        "realtime/a-model-s-transcribed-answer-names-no-event-it-responds-to",
         "tasks/a-delegated-agent-s-streamed-answer-is-kept-as-one-message",
         "tasks/a-delegated-turn-s-trace-is-stored-as-its-responses",
         "voice/a-cut-answer-s-record-names-the-answer-not-the-listener"
@@ -3394,6 +3401,8 @@
         "inbound/a-turn-refused-before-its-stream-names-its-error-type-to-on-error",
         "inbound/on-error-holds-no-room-lock",
         "kit-close/what-a-channel-s-close-starts-is-cut-at-once",
+        "media/a-trace-for-a-room-not-yet-created-reaches-its-observer-once-the-room-exists",
+        "media/a-trace-naming-only-a-session-reaches-a-room-through-a-voice-channel-alone",
         "media/an-emitted-protocol-trace-reaches-its-room-observer",
         "memory/what-a-generation-hook-adds-after-the-memory-read-is-not-measured",
         "observations/feedback-is-an-observation-the-hooks-observe",
@@ -3437,8 +3446,10 @@
         "planning/unknown-top-level-argument-is-refused-before-the-planner-streaming",
         "planning/with-planning-disabled-the-host-keeps-its-name-non-streaming",
         "planning/with-planning-disabled-the-host-keeps-its-name-streaming",
+        "realtime/a-hook-on-the-model-s-words-posts-at-the-depth-of-what-it-hears",
         "realtime/a-hosted-delegation-reaches-its-room",
         "realtime/a-provider-error-reaches-the-room",
+        "realtime/a-realtime-tool-call-is-as-deep-as-the-model-s-answer-and-so-is-what-its-hooks-post",
         "realtime/a-reasoning-error-reaches-the-room",
         "realtime/a-session-takes-its-instruction-directly",
         "realtime/an-ended-session-takes-no-injection",
@@ -3971,6 +3982,7 @@
         "realtime/a-backend-call-passes-the-channel-s-policy-gate-and-bound",
         "realtime/a-backend-call-that-ends-its-session-spares-itself-and-ends-its-delegation",
         "realtime/a-backend-reads-each-call-s-outcome",
+        "realtime/a-call-goes-to-the-channel-s-handler-first-and-to-on-tool-call-hooks-without-one",
         "realtime/a-call-served-by-hooks-or-the-channel-s-own-tools-passes-the-gate",
         "realtime/a-call-whose-arguments-came-as-text-is-refused-before-the-gate",
         "realtime/a-denied-tool-is-not-declared-and-its-call-is-refused",
@@ -4416,6 +4428,7 @@
         "locks/an-adopted-message-held-for-its-sender-carries-the-failed-release-of-what-a-call-nested-in-its-challenge-s-section-injected",
         "orchestration/a-sender-s-routing-stamps-are-dropped",
         "orchestration/an-install-sends-into-the-room-it-holds",
+        "realtime/a-direct-injection-from-a-hook-or-a-turn-is-at-least-as-deep-as-that-work",
         "reentrancy/a-call-an-off-lock-hook-s-task-makes-outlives-the-event-refused-at-its-deadline",
         "reentrancy/a-call-past-the-budget-naming-a-room-the-store-lacks-creates-nothing",
         "reentrancy/a-call-under-a-lock-the-host-holds-commits-what-its-hooks-inject-once-the-host-released-it",
@@ -6555,6 +6568,7 @@
         "delivery/an-adopted-call-s-handle-cuts-its-turn-while-a-target-reads",
         "delivery/an-adopted-call-s-key-cuts-its-turn-while-a-target-reads",
         "inbound/a-headless-turn-s-provider-error-reaches-the-caller-and-on-error",
+        "media/the-media-doors-called-without-an-organization-admit-to-an-organization-s-room",
         "realtime/a-paused-session-forwards-none-of-the-caller-s-audio-until-it-is-resumed",
         "realtime/a-reconfiguration-that-reconnects-the-provider-returns-the-session-to-connecting",
         "realtime/a-session-ended-while-paused-is-ended",
@@ -6657,6 +6671,7 @@
         "voice/a-failed-diarizing-stream-is-opened-again",
         "voice/a-file-played-whole-counts-toward-the-echo-guard",
         "voice/a-final-discarded-as-echo-leaves-a-kept-stream-open",
+        "voice/a-hook-that-posts-at-each-spoken-answer-ends-at-the-depth-limit",
         "voice/a-kept-stream-carries-turn-after-turn-until-the-provider-ends-it",
         "voice/a-kept-stream-s-finals-reach-the-room-in-the-order-produced",
         "voice/a-kept-stream-s-pause-is-filled-with-silence-level-with-the-clock",
@@ -6678,6 +6693,7 @@
         "voice/a-streamed-reply-of-exactly-its-sentence-budget-is-not-cut",
         "voice/a-streamed-reply-reaches-every-session-sentence-by-sentence",
         "voice/a-streamed-reply-stops-once-its-sentence-budget-is-said",
+        "voice/a-text-delivered-to-a-voice-binding-is-synthesized-processed-played-and-fed-back",
         "voice/a-text-delivered-whole-is-spoken-up-to-the-sentence-budget",
         "voice/a-text-from-another-channel-is-spoken",
         "voice/a-transcription-hook-can-pin-the-language-a-stream-reported",
@@ -6687,8 +6703,11 @@
         "voice/a-tts-consuming-self-receives-its-own-played-turns-only",
         "voice/a-tts-consuming-text-receives-both-roles-of-the-session-s-dialogue",
         "voice/a-tts-without-a-voices-endpoint-lists-its-curated-catalog",
+        "voice/a-voice-and-a-realtime-channel-bind-as-bidirectional-transports-of-audio-and-text",
         "voice/a-voice-and-a-realtime-channel-bind-as-transports-of-audio-and-text",
         "voice/after-tts-reports-the-sentences-before-tts-let-through",
+        "voice/an-after-tts-hook-posts-at-the-depth-of-the-answer-it-spoke",
+        "voice/an-agent-s-streamed-answer-is-synthesized-sentence-by-sentence",
         "voice/an-audio-tts-without-include-audio-receives-the-text-only",
         "voice/an-echo-verdict-ends-with-its-utterance-s-final",
         "voice/an-echo-verdict-ends-with-the-stream-that-heard-its-words",
@@ -6704,7 +6723,9 @@
         "voice/frames-between-two-streams-reach-the-next-one",
         "voice/no-language-reaches-a-recognizer-that-cannot-take-one",
         "voice/no-session-served-fires-no-after-tts",
+        "voice/other-content-delivered-to-a-voice-binding-is-not-spoken-and-fails-nothing",
         "voice/say-and-play-cut-the-playback-under-way-and-a-response-cuts-a-play",
+        "voice/speech-heard-while-an-answer-plays-opens-a-chain-of-its-own",
         "voice/speech-the-recognizer-starts-once-nothing-plays-is-nobody-s-echo",
         "voice/voice-filters-match-a-language-prefix-a-gender-and-a-name-or-description"
       ]
@@ -6736,11 +6757,14 @@
         "voice/a-backchannel-leaves-no-turn-in-the-context",
         "voice/a-context-drops-its-oldest-audio-past-max-audio-seconds-and-keeps-its-text",
         "voice/a-context-keeps-its-newest-turns-up-to-max-turns",
+        "voice/a-context-s-audio-stays-out-of-the-store-and-the-timeline",
+        "voice/a-context-s-text-is-the-transcript-the-room-stored",
         "voice/a-disabled-context-reaches-no-tts",
         "voice/a-redacted-transcript-reaches-the-context-without-its-audio",
         "voice/a-reply-cut-after-part-of-its-audio-records-what-was-heard",
         "voice/a-reply-cut-before-any-of-its-audio-leaves-no-turn",
         "voice/a-response-to-two-sessions-is-synthesized-for-each",
+        "voice/a-session-s-context-is-released-and-dropped-when-it-leaves",
         "voice/a-tts-consuming-audio-receives-what-was-said-and-played",
         "voice/a-tts-consuming-nothing-receives-no-context",
         "voice/a-tts-consuming-self-receives-its-own-played-turns-only",
@@ -6876,6 +6900,7 @@
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "voice/a-reply-walks-the-outbound-stages-in-their-order",
+        "voice/a-text-delivered-to-a-voice-binding-is-synthesized-processed-played-and-fed-back",
         "voice/a-transport-feeding-its-own-canceller-gets-no-reference-from-the-pipeline",
         "voice/a-transport-s-own-canceller-and-gain-replace-the-pipeline-s",
         "voice/a-voice-channel-bypasses-the-canceller-between-replies-whatever-the-transport-marks",
@@ -7047,6 +7072,7 @@
         "voice/a-pending-verdict-on-a-final-is-no-reason-to-wait",
         "voice/a-reply-cut-after-part-of-its-audio-records-what-was-heard",
         "voice/a-reply-cut-before-any-of-its-audio-leaves-no-turn",
+        "voice/a-session-auditor-records-a-barge-in-as-the-user-interrupting",
         "voice/a-streamed-answer-cut-while-synthesized-keeps-what-was-handed-to-the-tts",
         "voice/a-transport-barge-in-is-judged-on-the-words-heard-so-far",
         "voice/a-transport-barge-in-is-the-strategy-s-to-act-on-while-the-vad-hears-the-speech",
@@ -7070,6 +7096,7 @@
         "voice/loud-audio-with-no-words-waits-transcript-wait-ms-before-it-cuts-on-its-duration",
         "voice/only-a-cut-record-a-voice-channel-of-the-room-wrote-counts",
         "voice/past-echo-guard-ms-of-played-audio-the-reply-s-own-words-cut-it",
+        "voice/speech-heard-while-an-answer-plays-opens-a-chain-of-its-own",
         "voice/speech-held-for-the-detector-s-verdict-reaches-no-room-before-it",
         "voice/speech-that-cuts-the-reply-is-the-user-s-turn",
         "voice/speech-the-recognizer-starts-once-nothing-plays-is-nobody-s-echo",
@@ -7137,6 +7164,7 @@
         "conference/a-refused-conference-tool-call-is-on-the-wire-before-its-report",
         "eviction/a-call-under-an-id-its-round-holds-is-refused-unstored",
         "greeting/a-realtime-session-s-greeting-is-injected-as-the-model-s-own-turn",
+        "media/the-media-doors-called-without-an-organization-admit-to-an-organization-s-room",
         "provider-served/absent-is-pending-stream",
         "provider-served/absent-is-pending-whole",
         "provider-served/cut-known-failure-stream",
@@ -7182,6 +7210,7 @@
         "realtime/a-backend-call-that-ends-its-session-spares-itself-and-ends-its-delegation",
         "realtime/a-blank-text-reaches-no-session",
         "realtime/a-broadcast-text-enters-under-its-author-s-label",
+        "realtime/a-call-goes-to-the-channel-s-handler-first-and-to-on-tool-call-hooks-without-one",
         "realtime/a-call-id-names-one-call-until-its-result-goes-out",
         "realtime/a-call-naming-no-tool-is-answered-before-the-gate",
         "realtime/a-call-recovered-from-speech-mutes-no-input",
@@ -7195,6 +7224,7 @@
         "realtime/a-called-tool-stays-declared-for-the-session-s-catalogue",
         "realtime/a-denied-or-skill-closed-tool-is-refused-before-its-arguments-are-read",
         "realtime/a-denied-tool-is-not-declared-and-its-call-is-refused",
+        "realtime/a-direct-injection-from-a-hook-or-a-turn-is-at-least-as-deep-as-that-work",
         "realtime/a-failed-start-discards-the-audio-it-retained",
         "realtime/a-failed-start-ends-the-call-issued-while-it-was-pending",
         "realtime/a-full-duplex-provider-keeps-the-pipeline-vad-to-observation",
@@ -7204,16 +7234,21 @@
         "realtime/a-handler-that-closes-the-kit-runs-on-and-reaches-no-hook",
         "realtime/a-handler-that-ends-its-session-from-a-task-it-starts-runs-on",
         "realtime/a-handler-that-ends-its-session-runs-on-and-the-other-call-is-cut",
+        "realtime/a-hook-on-the-model-s-words-posts-at-the-depth-of-what-it-hears",
+        "realtime/a-model-s-transcribed-answer-names-no-event-it-responds-to",
         "realtime/a-participant-the-store-lacks-has-the-base-rules-until-it-gets-a-role",
         "realtime/a-pipeline-vad-takes-the-role-its-provider-sets",
         "realtime/a-pipeline-vad-that-endpoints-takes-the-speech-edges-from-the-provider",
         "realtime/a-provider-that-cannot-call-tools-is-declared-none",
+        "realtime/a-realtime-tool-call-is-as-deep-as-the-model-s-answer-and-so-is-what-its-hooks-post",
         "realtime/a-recovered-call-s-header-is-no-mark-and-a-participant-s-copy-stays-quoted",
         "realtime/a-replaced-catalogue-keeps-no-called-tool-and-an-old-call-retains-nothing",
         "realtime/a-report-an-ending-catches-keeps-the-outcome-already-decided",
         "realtime/a-role-the-store-holds-at-the-start-shapes-the-declared-tools",
         "realtime/a-search-judged-across-a-new-catalogue-declares-nothing",
         "realtime/a-search-s-matches-are-declared-once-its-result-went-out",
+        "realtime/a-session-auditor-records-each-final-words-of-the-user-and-the-model-as-speech",
+        "realtime/a-session-start-for-another-organization-s-room-tells-its-recordings-nothing",
         "realtime/a-session-starts-with-its-own-configuration-else-its-room-s-else-the-channel-s",
         "realtime/a-skill-activation-declares-no-denied-tool",
         "realtime/a-spared-handler-past-the-close-s-bound-is-cut-and-reported-once",
@@ -7227,9 +7262,11 @@
         "realtime/an-event-s-metadata-chooses-no-injection-role",
         "realtime/an-injection-reports-what-the-provider-knows-of-its-sending",
         "realtime/an-instruction-enters-the-session-as-system",
+        "realtime/an-observer-s-post-at-the-limit-enters-the-session-silently-and-leaves-no-record",
         "realtime/an-undeclared-tool-is-refused-and-still-reported",
         "realtime/an-utterance-replayed-from-its-mark-is-discarded-when-the-handshake-fails",
         "realtime/an-utterance-replayed-from-its-mark-reaches-the-provider-ahead-of-the-live-audio",
+        "realtime/at-the-depth-limit-a-broadcast-or-a-delivery-enters-the-session-silently",
         "realtime/audio-received-while-the-provider-connects-reaches-it-in-order-before-the-session-starts",
         "realtime/ending-a-session-disconnects-its-provider-and-its-transport",
         "realtime/reconfiguring-a-session-changes-that-session-only",
@@ -7260,6 +7297,7 @@
         "tools/a-second-call-under-an-id-in-its-round-is-refused",
         "tools/another-turn-among-a-round-s-starts-leaves-its-results-paired",
         "verification/a-speech-to-speech-transcript-is-neither-labelled-nor-held",
+        "voice/a-voice-and-a-realtime-channel-bind-as-bidirectional-transports-of-audio-and-text",
         "voice/a-voice-and-a-realtime-channel-bind-as-transports-of-audio-and-text"
       ]
     },
@@ -8010,6 +8048,7 @@
         "kit-close/what-a-channel-s-close-starts-is-cut-at-once",
         "kit-close/work-a-source-s-health-check-starts-is-no-read-once-the-kit-closed",
         "locks/the-hooks-side-effects-of-a-set-of-a-deleted-room-the-close-drops-stay-out-of-the-room-created-again",
+        "media/the-media-doors-called-without-an-organization-admit-to-an-organization-s-room",
         "orchestration/a-background-run-asked-for-once-the-kit-began-closing-does-not-start",
         "orchestration/a-supervisor-s-background-team-ends-with-the-kit-s-close",
         "providers/a-kit-s-close-leaves-open-the-provider-its-agent-was-handed",
@@ -8108,6 +8147,7 @@
         "conference/a-recording-that-falls-behind-holds-a-bounded-backlog",
         "conference/a-synchronous-hook-cannot-block-a-recording",
         "conference/a-track-never-spoken-on-is-never-recorded",
+        "conference/a-track-recording-announces-its-start-and-its-stop-with-its-track",
         "conference/a-track-s-recording-declares-the-format-its-frames-carry",
         "conference/a-track-s-recording-ends-with-its-track-alone",
         "conference/each-track-is-recorded-apart-and-attributed-to-its-publisher",
@@ -8225,6 +8265,7 @@
         "conference/a-held-finalization-lets-the-bot-leave-and-the-recorder-is-released-once-it-returns",
         "conference/a-recorder-a-call-still-runs-in-past-the-release-wait-is-left-unreleased",
         "conference/a-recorder-s-release-waits-on-a-budget-of-its-own-once-the-bot-has-left",
+        "realtime/a-session-start-for-another-organization-s-room-tells-its-recordings-nothing",
         "recording/a-failed-creation-leaves-the-recordings-of-the-room-holding-its-id-running",
         "recording/a-gone-room-s-recordings-are-listed-and-fed-for-their-own-organization-alone",
         "recording/a-gone-room-s-recordings-are-refused-to-another-organization",
@@ -8233,6 +8274,7 @@
         "recording/a-recorder-joins-the-live-feed-after-consent",
         "recording/a-recording-on-a-missing-or-closed-room-is-refused",
         "recording/a-recording-resumed-after-a-restart-is-announced-again",
+        "recording/a-room-recording-announces-its-start-and-its-stop-with-their-data",
         "recording/a-room-s-recorders-start-before-it-is-written-and-are-announced-once-it-exists",
         "recording/a-room-whose-recorder-refuses-its-start-is-not-created",
         "recording/a-room-whose-write-fails-stops-the-recordings-started-for-it",
@@ -8864,11 +8906,13 @@
       },
       "decided_gaps": {
         "phase6": 3,
-        "step": 3,
-        "writable": 2
+        "step": 3
       },
       "unannotated_keyword_lines": [],
-      "candidate_scenarios": []
+      "candidate_scenarios": [
+        "media/a-trace-for-a-room-not-yet-created-reaches-its-observer-once-the-room-exists",
+        "media/a-trace-naming-only-a-session-reaches-a-room-through-a-voice-channel-alone"
+      ]
     },
     {
       "section": "15.7",
@@ -8926,11 +8970,13 @@
       },
       "decided_gaps": {
         "step": 1,
-        "writable": 3
+        "writable": 1
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
-        "orchestration/a-session-auditor-records-the-sessions-and-the-tool-calls"
+        "orchestration/a-session-auditor-records-the-sessions-and-the-tool-calls",
+        "realtime/a-session-auditor-records-each-final-words-of-the-user-and-the-model-as-speech",
+        "voice/a-session-auditor-records-a-barge-in-as-the-user-interrupting"
       ]
     },
     {
@@ -9044,7 +9090,6 @@
         "unmapped": 26
       },
       "decided_gaps": {
-        "phase6": 2,
         "step": 9
       },
       "unannotated_keyword_lines": [],
@@ -9093,11 +9138,13 @@
         "kit-executor/named-hooks-are-opt-in-per-room",
         "kit-executor/named-hooks-refuse-invalid-registrations",
         "kit-executor/uninstalling-a-strategy-removes-only-its-activation",
+        "media/the-media-doors-called-without-an-organization-admit-to-an-organization-s-room",
         "members/a-member-call-acts-for-its-organization",
         "members/resolve-participant-refuses-what-it-cannot-find",
         "observations/feedback-is-an-observation-the-hooks-observe",
         "orchestration/the-room-strategy-is-read-within-a-tenant",
         "permissions/an-output-mute-fires-nothing",
+        "realtime/a-session-start-for-another-organization-s-room-tells-its-recordings-nothing",
         "recording/a-gone-room-s-recordings-are-listed-and-fed-for-their-own-organization-alone",
         "recording/a-gone-room-s-recordings-are-refused-to-another-organization",
         "recording/a-stop-naming-another-organization-is-refused-and-stops-nothing",
@@ -9212,12 +9259,15 @@
         "unmapped": 28
       },
       "decided_gaps": {
-        "phase6": 11
+        "phase6": 6
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "recording/a-recording-resumed-after-a-restart-is-announced-again",
         "recording/a-room-s-recorders-start-before-it-is-written-and-are-announced-once-it-exists",
+        "voice/a-context-s-audio-stays-out-of-the-store-and-the-timeline",
+        "voice/a-context-s-text-is-the-transcript-the-room-stored",
+        "voice/a-session-s-context-is-released-and-dropped-when-it-leaves",
         "voice/a-transcript-is-redacted-by-the-hook-that-redacts-a-message"
       ]
     },
@@ -10776,6 +10826,8 @@
         "mcp/a-forwarding-handler-runs-no-bare-name-the-policy-keeps-off-its-server",
         "mcp/a-policy-that-names-no-server-leaves-a-bare-name-on-the-first-server",
         "orchestration/an-audited-answer-reaches-the-model-unchanged",
+        "realtime/a-call-goes-to-the-channel-s-handler-first-and-to-on-tool-call-hooks-without-one",
+        "realtime/a-realtime-tool-call-is-as-deep-as-the-model-s-answer-and-so-is-what-its-hooks-post",
         "role-policy/a-later-turn-reads-the-new-role-non-streaming",
         "role-policy/a-later-turn-reads-the-new-role-streaming",
         "role-policy/agent-selects-each-senders-role-non-streaming",
@@ -11024,6 +11076,7 @@
         "discussion/a-delivery-is-no-person-s-answer-and-asks-no-agent",
         "inbound/a-kit-s-inbound-rate-limit-refuses-a-proactive-delivery-past-its-bucket",
         "realtime/an-instruction-enters-the-session-as-system",
+        "realtime/at-the-depth-limit-a-broadcast-or-a-delivery-enters-the-session-silently",
         "tasks/a-before-deliver-hook-s-block-keeps-a-hand-back-from-its-agent",
         "tasks/a-delegated-turn-s-trace-is-stored-as-its-responses",
         "tasks/a-hand-back-in-a-room-with-no-transport-reaches-no-agent",
@@ -12584,11 +12637,15 @@
         "unmapped": 15
       },
       "decided_gaps": {
-        "phase6": 4,
-        "writable": 5
+        "phase6": 3
       },
       "unannotated_keyword_lines": [],
-      "candidate_scenarios": []
+      "candidate_scenarios": [
+        "voice/a-text-delivered-to-a-voice-binding-is-synthesized-processed-played-and-fed-back",
+        "voice/a-voice-and-a-realtime-channel-bind-as-bidirectional-transports-of-audio-and-text",
+        "voice/an-agent-s-streamed-answer-is-synthesized-sentence-by-sentence",
+        "voice/other-content-delivered-to-a-voice-binding-is-not-spoken-and-fails-nothing"
+      ]
     },
     {
       "section": "A.11",
@@ -12598,11 +12655,12 @@
       "mapping": {
         "unmapped": 8
       },
-      "decided_gaps": {
-        "writable": 2
-      },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
-      "candidate_scenarios": []
+      "candidate_scenarios": [
+        "realtime/a-call-goes-to-the-channel-s-handler-first-and-to-on-tool-call-hooks-without-one",
+        "voice/a-voice-and-a-realtime-channel-bind-as-bidirectional-transports-of-audio-and-text"
+      ]
     },
     {
       "section": "A.12",
@@ -19857,23 +19915,13 @@
       "id": "RK-8.2-047",
       "section": "8.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1912",
-        "note": "step: framework_events media rows: the recording_started row, when it is emitted and its data."
-      }
+      "links": []
     },
     {
       "id": "RK-8.2-048",
       "section": "8.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1912",
-        "note": "step: framework_events media rows: the recording_stopped row, when it is emitted and its data."
-      }
+      "links": []
     },
     {
       "id": "RK-8.2-049",
@@ -20024,12 +20072,7 @@
       "id": "RK-8.3-012",
       "section": "8.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1912",
-        "note": "step: a hook or handler body that sends or injects: the depth of a call made while a realtime or conference tool call runs outside a turn."
-      }
+      "links": []
     },
     {
       "id": "RK-8.3-013",
@@ -20148,45 +20191,25 @@
       "id": "RK-8.3-031",
       "section": "8.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1912",
-        "note": "deliver with chain_depth at the limit to a realtime channel with a live session: realtime.read shows the text injected silently (requires realtime)."
-      }
+      "links": []
     },
     {
       "id": "RK-8.3-032",
       "section": "8.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1912",
-        "note": "An after_broadcast (ASYNC) hook whose do makes realtime.inject on an event one short of the chain limit, or a scripted turn's on_event do on an event two short of it: realtime.read shows the text injected silently; the tool-call door needs a realtime handler with do actions (requires realtime)."
-      }
+      "links": []
     },
     {
       "id": "RK-8.3-033",
       "section": "8.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1912",
-        "note": "step: a hook or handler body that sends or injects: what a model's session leaves at the limit, and the observer loop it ends."
-      }
+      "links": []
     },
     {
       "id": "RK-8.3-034",
       "section": "8.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1912",
-        "note": "step: a read of a realtime or conference tool handler's context: the depth a realtime or conference tool call carries at the limit."
-      }
+      "links": []
     },
     {
       "id": "RK-8.3-004",
@@ -20305,23 +20328,13 @@
       "id": "RK-8.3-046",
       "section": "8.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1912",
-        "note": "A scripted agent's answer, at depth 1 or more, delivered to the voice binding, and a before_tts hook whose do posts into the room: the timeline shows the post at the floor's depth; the realtime and conference tool-call hooks and a speech-to-speech model's words need their steps (requires voice)."
-      }
+      "links": []
     },
     {
       "id": "RK-8.3-047",
       "section": "8.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1912",
-        "note": "A scripted agent answering into a voice channel and an after_tts hook whose do posts at each answer: the chain ends at the limit; voice.feed with a transcript while a playback_gate holds the reply: the user's message stored at depth 0, not at the reply's depth (requires voice)."
-      }
+      "links": []
     },
     {
       "id": "RK-8.3-048",
@@ -20661,12 +20674,7 @@
       "id": "RK-8.5-013",
       "section": "8.5",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1912",
-        "note": "step: realtime transcripts: a speech-to-speech channel's answers, not bound by the rule yet (Planned)."
-      }
+      "links": []
     },
     {
       "id": "RK-8.5-014",
@@ -37435,12 +37443,7 @@
       "id": "RK-15.6-012",
       "section": "15.6",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1979",
-        "note": "A trace naming only a session, on a channel that resolves no session, reaches no room's hook (requires protocol_trace)."
-      }
+      "links": []
     },
     {
       "id": "RK-15.6-013",
@@ -37508,12 +37511,7 @@
       "id": "RK-15.6-005",
       "section": "15.6",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1979",
-        "note": "A trace emitted for a room not yet created reaches ON_PROTOCOL_TRACE once create_room and attach_channel make it (requires protocol_trace)."
-      }
+      "links": []
     },
     {
       "id": "RK-15.6-006",
@@ -37713,12 +37711,7 @@
       "id": "RK-15.8.2-009",
       "section": "15.8.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1979",
-        "note": "voice.open with transcripts and the session_auditor attached: expect.session_audit holds the speech entry the transcription recorded (requires voice)."
-      }
+      "links": []
     },
     {
       "id": "RK-15.8.2-010",
@@ -37741,12 +37734,7 @@
       "id": "RK-15.8.2-012",
       "section": "15.8.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1979",
-        "note": "voice.barge_in on a playback held by a playback_gate, the session_auditor attached: expect.session_audit holds the barge_in entry (requires voice)."
-      }
+      "links": []
     },
     {
       "id": "RK-15.8.2-013",
@@ -37964,23 +37952,13 @@
       "id": "RK-17.2-005",
       "section": "17.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1986",
-        "note": "step: conference.mint, organization_id on realtime.start and voice.open: a media door (a join, a realtime session start, a conference mint_access()) refusing another organization's room before any session, credential or recording."
-      }
+      "links": []
     },
     {
       "id": "RK-17.2-006",
       "section": "17.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1986",
-        "note": "step: conference.mint, organization_id on realtime.start and voice.open: a media door called without an organization."
-      }
+      "links": []
     },
     {
       "id": "RK-17.2-007",
@@ -38278,56 +38256,31 @@
       "id": "RK-17.6-018",
       "section": "17.6",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1986",
-        "note": "step: voice.read of the TTS call, voice.open TTS options: TTS context audio kept in memory only."
-      }
+      "links": []
     },
     {
       "id": "RK-17.6-019",
       "section": "17.6",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1986",
-        "note": "step: voice.read of the TTS call, voice.open TTS options: TTS context audio within max_turns and max_audio_seconds, dropped with its session."
-      }
+      "links": []
     },
     {
       "id": "RK-17.6-020",
       "section": "17.6",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1986",
-        "note": "step: voice.read of the TTS call, voice.open TTS options: TTS context audio kept only when include_audio is set."
-      }
+      "links": []
     },
     {
       "id": "RK-17.6-021",
       "section": "17.6",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1986",
-        "note": "step: voice.read of the TTS call, voice.open TTS options: the TTS context's text read from the stored transcript."
-      }
+      "links": []
     },
     {
       "id": "RK-17.6-022",
       "section": "17.6",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1986",
-        "note": "step: voice.read of the TTS call, voice.open TTS options: a user turn whose transcript a hook modified keeps no context audio."
-      }
+      "links": []
     },
     {
       "id": "RK-17.6-023",
@@ -49635,12 +49588,7 @@
       "id": "RK-A.10-002",
       "section": "A.10",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1961",
-        "note": "The bindings expectation after voice.open shows type VOICE, category TRANSPORT, direction BIDIRECTIONAL and media types AUDIO and TEXT (requires voice)."
-      }
+      "links": []
     },
     {
       "id": "RK-A.10-003",
@@ -49698,12 +49646,7 @@
       "id": "RK-A.10-010",
       "section": "A.10",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1961",
-        "note": "voice.stream with an after_tts hook: the hook fires once the stream completed (requires voice)."
-      }
+      "links": []
     },
     {
       "id": "RK-A.10-011",
@@ -49726,56 +49669,31 @@
       "id": "RK-A.10-013",
       "section": "A.10",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1961",
-        "note": "A text event delivered to a voice binding: voice.read shows the TTS text and the audio at the transport; the AEC reference half needs the voice stage trace (requires voice)."
-      }
+      "links": []
     },
     {
       "id": "RK-A.10-014",
       "section": "A.10",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1961",
-        "note": "A system, tool-call or mixed event delivered to a voice binding: voice.read shows nothing synthesized and the delivery reports no error (requires voice)."
-      }
+      "links": []
     },
     {
       "id": "RK-A.10-015",
       "section": "A.10",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1961",
-        "note": "A scripted streaming agent in a room bound to voice.open: voice.read shows its answer synthesized sentence by sentence (requires voice)."
-      }
+      "links": []
     },
     {
       "id": "RK-A.10-016",
       "section": "A.10",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1961",
-        "note": "step: voice stage trace with the AEC reference read (S3): where the outbound path feeds the AEC reference."
-      }
+      "links": []
     },
     {
       "id": "RK-A.11-002",
       "section": "A.11",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1961",
-        "note": "The bindings expectation of a bound realtime channel shows type REALTIME_VOICE, category TRANSPORT, direction BIDIRECTIONAL and media types AUDIO and TEXT (requires realtime)."
-      }
+      "links": []
     },
     {
       "id": "RK-A.11-003",
@@ -49811,12 +49729,7 @@
       "id": "RK-A.11-008",
       "section": "A.11",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1961",
-        "note": "realtime.tool_call of a tool with a realtime.tools handler: the handler answers; the ON_TOOL_CALL fallback needs a realtime tool no handler serves, the fixture's handler serving every name (requires realtime)."
-      }
+      "links": []
     },
     {
       "id": "RK-A.11-009",
