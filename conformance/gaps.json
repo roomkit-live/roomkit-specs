@@ -231,11 +231,6 @@
       "card": "RMK-1979",
       "note": "step: a read of the metrics the runner's telemetry mock records, beside telemetry.spans: the RECOMMENDED voice metric names, Python emitting two of them as named (suspect RMK-1977)."
     },
-    "RK-15.6-005": {
-      "class": "writable",
-      "card": "RMK-1979",
-      "note": "A trace emitted for a room not yet created reaches ON_PROTOCOL_TRACE once create_room and attach_channel make it (requires protocol_trace)."
-    },
     "RK-15.6-010": {
       "class": "step",
       "card": "RMK-1979",
@@ -245,11 +240,6 @@
       "class": "step",
       "card": "RMK-1979",
       "note": "Needs a channel's trace_enabled read, which no runner step reads."
-    },
-    "RK-15.6-012": {
-      "class": "writable",
-      "card": "RMK-1979",
-      "note": "A trace naming only a session, on a channel that resolves no session, reaches no room's hook (requires protocol_trace)."
     },
     "RK-15.6-014": {
       "class": "step",
@@ -291,20 +281,10 @@
       "card": "RMK-1979",
       "note": "Needs a ToolAuditor of the scenario's own handed to audit_tool_handler."
     },
-    "RK-15.8.2-009": {
-      "class": "writable",
-      "card": "RMK-1979",
-      "note": "voice.open with transcripts and the session_auditor attached: expect.session_audit holds the speech entry the transcription recorded (requires voice)."
-    },
     "RK-15.8.2-011": {
       "class": "writable",
       "card": "RMK-1979",
       "note": "video.open with vision and the session_auditor attached: expect.session_audit holds the vision entry, the frame's description (requires video)."
-    },
-    "RK-15.8.2-012": {
-      "class": "writable",
-      "card": "RMK-1979",
-      "note": "voice.barge_in on a playback held by a playback_gate, the session_auditor attached: expect.session_audit holds the barge_in entry (requires voice)."
     },
     "RK-15.8.2-014": {
       "class": "step",
@@ -325,16 +305,6 @@
       "class": "step",
       "card": "RMK-1979",
       "note": "Needs an auditor file that holds lines before the run, so that a scenario sees them kept."
-    },
-    "RK-17.2-005": {
-      "class": "phase6",
-      "card": "RMK-1986",
-      "note": "step: conference.mint, organization_id on realtime.start and voice.open: a media door (a join, a realtime session start, a conference mint_access()) refusing another organization's room before any session, credential or recording."
-    },
-    "RK-17.2-006": {
-      "class": "phase6",
-      "card": "RMK-1986",
-      "note": "step: conference.mint, organization_id on realtime.start and voice.open: a media door called without an organization."
     },
     "RK-17.2-017": {
       "class": "step",
@@ -395,31 +365,6 @@
       "class": "phase6",
       "card": "RMK-1986",
       "note": "step: a consent mode on recording.start: a recording started only once the parties its mode names consented; no implementation offers consent modes (suspect RMK-1985)."
-    },
-    "RK-17.6-018": {
-      "class": "phase6",
-      "card": "RMK-1986",
-      "note": "step: voice.read of the TTS call, voice.open TTS options: TTS context audio kept in memory only."
-    },
-    "RK-17.6-019": {
-      "class": "phase6",
-      "card": "RMK-1986",
-      "note": "step: voice.read of the TTS call, voice.open TTS options: TTS context audio within max_turns and max_audio_seconds, dropped with its session."
-    },
-    "RK-17.6-020": {
-      "class": "phase6",
-      "card": "RMK-1986",
-      "note": "step: voice.read of the TTS call, voice.open TTS options: TTS context audio kept only when include_audio is set."
-    },
-    "RK-17.6-021": {
-      "class": "phase6",
-      "card": "RMK-1986",
-      "note": "step: voice.read of the TTS call, voice.open TTS options: the TTS context's text read from the stored transcript."
-    },
-    "RK-17.6-022": {
-      "class": "phase6",
-      "card": "RMK-1986",
-      "note": "step: voice.read of the TTS call, voice.open TTS options: a user turn whose transcript a hook modified keeps no context audio."
     },
     "RK-17.6-023": {
       "class": "phase6",
@@ -1864,16 +1809,6 @@
       "card": "RMK-1912",
       "note": "step: framework_events media rows: the voice_session_ended row, when it is emitted and its data."
     },
-    "RK-8.2-047": {
-      "class": "phase6",
-      "card": "RMK-1912",
-      "note": "step: framework_events media rows: the recording_started row, when it is emitted and its data."
-    },
-    "RK-8.2-048": {
-      "class": "phase6",
-      "card": "RMK-1912",
-      "note": "step: framework_events media rows: the recording_stopped row, when it is emitted and its data."
-    },
     "RK-8.2-049": {
       "class": "phase6",
       "card": "RMK-1912",
@@ -1899,45 +1834,10 @@
       "card": "RMK-1912",
       "note": "step: framework_events media rows: the video_vision_result row, when it is emitted and its data."
     },
-    "RK-8.3-012": {
-      "class": "phase6",
-      "card": "RMK-1912",
-      "note": "step: a hook or handler body that sends or injects: the depth of a call made while a realtime or conference tool call runs outside a turn."
-    },
     "RK-8.3-021": {
       "class": "step",
       "card": "RMK-1912",
       "note": "Needs a framework-event handler reaction that spawns a task."
-    },
-    "RK-8.3-031": {
-      "class": "writable",
-      "card": "RMK-1912",
-      "note": "deliver with chain_depth at the limit to a realtime channel with a live session: realtime.read shows the text injected silently (requires realtime)."
-    },
-    "RK-8.3-032": {
-      "class": "writable",
-      "card": "RMK-1912",
-      "note": "An after_broadcast (ASYNC) hook whose do makes realtime.inject on an event one short of the chain limit, or a scripted turn's on_event do on an event two short of it: realtime.read shows the text injected silently; the tool-call door needs a realtime handler with do actions (requires realtime)."
-    },
-    "RK-8.3-033": {
-      "class": "phase6",
-      "card": "RMK-1912",
-      "note": "step: a hook or handler body that sends or injects: what a model's session leaves at the limit, and the observer loop it ends."
-    },
-    "RK-8.3-034": {
-      "class": "phase6",
-      "card": "RMK-1912",
-      "note": "step: a read of a realtime or conference tool handler's context: the depth a realtime or conference tool call carries at the limit."
-    },
-    "RK-8.3-046": {
-      "class": "writable",
-      "card": "RMK-1912",
-      "note": "A scripted agent's answer, at depth 1 or more, delivered to the voice binding, and a before_tts hook whose do posts into the room: the timeline shows the post at the floor's depth; the realtime and conference tool-call hooks and a speech-to-speech model's words need their steps (requires voice)."
-    },
-    "RK-8.3-047": {
-      "class": "writable",
-      "card": "RMK-1912",
-      "note": "A scripted agent answering into a voice channel and an after_tts hook whose do posts at each answer: the chain ends at the limit; voice.feed with a transcript while a playback_gate holds the reply: the user's message stored at depth 0, not at the reply's depth (requires voice)."
     },
     "RK-8.4-010": {
       "class": "step",
@@ -1954,11 +1854,6 @@
       "card": "RMK-1912",
       "note": "Needs a slow or stuck realtime backend."
     },
-    "RK-8.5-013": {
-      "class": "phase6",
-      "card": "RMK-1912",
-      "note": "step: realtime transcripts: a speech-to-speech channel's answers, not bound by the rule yet (Planned)."
-    },
     "RK-A.1-002": {
       "class": "step",
       "card": "RMK-1961",
@@ -1974,11 +1869,6 @@
       "card": "RMK-1961",
       "note": "Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed. Python's SMSProvider.send takes from_ as optional (RMK-1953)."
     },
-    "RK-A.10-002": {
-      "class": "writable",
-      "card": "RMK-1961",
-      "note": "The bindings expectation after voice.open shows type VOICE, category TRANSPORT, direction BIDIRECTIONAL and media types AUDIO and TEXT (requires voice)."
-    },
     "RK-A.10-007": {
       "class": "phase6",
       "card": "RMK-1961",
@@ -1989,45 +1879,10 @@
       "card": "RMK-1961",
       "note": "step: voice.open TTS streaming option: supports_streaming_delivery, true when the TTS takes streaming input and a backend is configured."
     },
-    "RK-A.10-010": {
-      "class": "writable",
-      "card": "RMK-1961",
-      "note": "voice.stream with an after_tts hook: the hook fires once the stream completed (requires voice)."
-    },
     "RK-A.10-012": {
       "class": "phase6",
       "card": "RMK-1961",
       "note": "step: AudioContent to a voice channel with scripted outbound stages: the standard delivery path of AudioContent: postprocessors, recorder, resampler, transport, and the AEC reference."
-    },
-    "RK-A.10-013": {
-      "class": "writable",
-      "card": "RMK-1961",
-      "note": "A text event delivered to a voice binding: voice.read shows the TTS text and the audio at the transport; the AEC reference half needs the voice stage trace (requires voice)."
-    },
-    "RK-A.10-014": {
-      "class": "writable",
-      "card": "RMK-1961",
-      "note": "A system, tool-call or mixed event delivered to a voice binding: voice.read shows nothing synthesized and the delivery reports no error (requires voice)."
-    },
-    "RK-A.10-015": {
-      "class": "writable",
-      "card": "RMK-1961",
-      "note": "A scripted streaming agent in a room bound to voice.open: voice.read shows its answer synthesized sentence by sentence (requires voice)."
-    },
-    "RK-A.10-016": {
-      "class": "phase6",
-      "card": "RMK-1961",
-      "note": "step: voice stage trace with the AEC reference read (S3): where the outbound path feeds the AEC reference."
-    },
-    "RK-A.11-002": {
-      "class": "writable",
-      "card": "RMK-1961",
-      "note": "The bindings expectation of a bound realtime channel shows type REALTIME_VOICE, category TRANSPORT, direction BIDIRECTIONAL and media types AUDIO and TEXT (requires realtime)."
-    },
-    "RK-A.11-008": {
-      "class": "writable",
-      "card": "RMK-1961",
-      "note": "realtime.tool_call of a tool with a realtime.tools handler: the handler answers; the ON_TOOL_CALL fallback needs a realtime tool no handler serves, the fixture's handler serving every name (requires realtime)."
     },
     "RK-A.12-002": {
       "class": "writable",

@@ -7673,11 +7673,17 @@
       "tools/a-failed-call-whose-observers-context-fails-is-reported-once": "1d7063aa98326cc5c60cb60b4ce3be14af20e4b9e6072db311044bc95cf2d8f9",
       "tools/a-refused-call-whose-observers-context-fails-is-reported-once": "1d7063aa98326cc5c60cb60b4ce3be14af20e4b9e6072db311044bc95cf2d8f9"
     },
+    "RK-15.6-005": {
+      "media/a-trace-for-a-room-not-yet-created-reaches-its-observer-once-the-room-exists": "82b814a30ef5dedf79ae03bce0fa4614af673d258f577eadce48a2d5658232d3"
+    },
     "RK-15.6-008": {
       "media/an-emitted-protocol-trace-reaches-its-room-observer": "0daa9b14267d2fe7ffe2dba17c0b2eeb844dd361abe5485e057e49e197a3c44e"
     },
     "RK-15.6-009": {
       "media/an-emitted-protocol-trace-reaches-its-room-observer": "716eafa4832d86af894a7be4c9772b8d4a3dad5f9559e085df0f88e96876ba23"
+    },
+    "RK-15.6-012": {
+      "media/a-trace-naming-only-a-session-reaches-a-room-through-a-voice-channel-alone": "c2947c477f90e6034effe49d9c1fd7f48ed8b0b1224a41c585bf459b59808a17"
     },
     "RK-15.6-013": {
       "media/an-emitted-protocol-trace-reaches-its-room-observer": "9cdb5b18bf4becca99ff232ef9f508c3dd63abefc34c52726427757408e88a37"
@@ -7765,8 +7771,14 @@
     "RK-15.8.2-008": {
       "orchestration/a-session-auditor-records-the-sessions-and-the-tool-calls": "e54ea1cd83ba36a76cb53d2d58b4dad5c1cad36a43d1668c2c1c1b0bec651e44"
     },
+    "RK-15.8.2-009": {
+      "realtime/a-session-auditor-records-each-final-words-of-the-user-and-the-model-as-speech": "9498e3ac7e6b6d54e6c7414a8d2e63160a8a540221ec8bef4ec58b24ffada43a"
+    },
     "RK-15.8.2-010": {
       "orchestration/a-session-auditor-records-the-sessions-and-the-tool-calls": "7cc3462a336b8b53b08a9d0edb1e069a231da49031badf9a5f5e1f9ebc1a7f33"
+    },
+    "RK-15.8.2-012": {
+      "voice/a-session-auditor-records-a-barge-in-as-the-user-interrupting": "6b9aedfa57a56e04ef842a4f18d87f515ddfee49b4391da89f07348dc5641be4"
     },
     "RK-15.8.2-013": {
       "orchestration/a-session-auditor-records-the-sessions-and-the-tool-calls": "ea4d4c4e13910adb0b8b0b907f71801d5e7518ea4759b9c093eaa8b4480f047c"
@@ -7812,6 +7824,13 @@
     "RK-17.2-004": {
       "tasks/a-child-room-belongs-to-its-parent-room-s-organization": "cec6fe8504feed974e62b5be463d2af49f3fea6cdf3fe98c087ded692e58fedc",
       "tasks/an-inline-delegation-runs-its-agent-in-a-child-room": "cec6fe8504feed974e62b5be463d2af49f3fea6cdf3fe98c087ded692e58fedc"
+    },
+    "RK-17.2-005": {
+      "conference/a-mint-for-another-organization-s-room-finds-no-room": "3fe98010aafbbca650720cf59b1e7098d9dc717fc119e07269e610d756c10063",
+      "realtime/a-session-start-for-another-organization-s-room-tells-its-recordings-nothing": "3fe98010aafbbca650720cf59b1e7098d9dc717fc119e07269e610d756c10063"
+    },
+    "RK-17.2-006": {
+      "media/the-media-doors-called-without-an-organization-admit-to-an-organization-s-room": "d31f133c1fa7001071378cc83b6e3d91890296ea296ed5210c87fd8acf0c9224"
     },
     "RK-17.2-007": {
       "hooks/a-deleted-room-s-hooks-and-enabled-names-end-with-it": "cec1058467941d1257f0c34220afc76e025f2b8716397654c16d82898c5ea83e",
@@ -7985,6 +8004,23 @@
     },
     "RK-17.6-017": {
       "voice/a-transcript-is-redacted-by-the-hook-that-redacts-a-message": "be370aea28c7cf49801cd45608dd90713428340078219229250399035b6673c4"
+    },
+    "RK-17.6-018": {
+      "voice/a-context-s-audio-stays-out-of-the-store-and-the-timeline": "9457361342d05fb4895b66fbc4fd997c77e54166a6fc17828c274bd724c089c5"
+    },
+    "RK-17.6-019": {
+      "voice/a-context-drops-its-oldest-audio-past-max-audio-seconds-and-keeps-its-text": "b538d8aedd9b4001f54d3ebaa92ef0ba67610a246263762a1d3602a6bd5e79d2",
+      "voice/a-context-keeps-its-newest-turns-up-to-max-turns": "b538d8aedd9b4001f54d3ebaa92ef0ba67610a246263762a1d3602a6bd5e79d2",
+      "voice/a-session-s-context-is-released-and-dropped-when-it-leaves": "b538d8aedd9b4001f54d3ebaa92ef0ba67610a246263762a1d3602a6bd5e79d2"
+    },
+    "RK-17.6-020": {
+      "voice/an-audio-tts-without-include-audio-receives-the-text-only": "0c22d0d9041a5e27808e704010c7705f7e200f1f462c03d08607eb1b6cf5fdc2"
+    },
+    "RK-17.6-021": {
+      "voice/a-context-s-text-is-the-transcript-the-room-stored": "c128a7286563bbf4dead5ea2d63d45d7d505fbfd7848d7bbcd9491b2dadc41d3"
+    },
+    "RK-17.6-022": {
+      "voice/a-redacted-transcript-reaches-the-context-without-its-audio": "cb6c1c25ea8d2688d3312a814308d9a2083bede8499ed0b92d8a682756712c46"
     },
     "RK-17.7-009": {
       "conference/a-call-reports-presence-without-changing-room-membership": "ea7e6d0bec934386da126546e983715647ac19849b3075ed688483b31ae4f580"
@@ -21251,6 +21287,14 @@
       "tools/a-tool-observer-past-its-timeout-is-reported": "becaeb1bce131571a71d64f0b3dccfae02b54beb9e10c8ba38a63e319aa160ff",
       "verification/a-hook-past-its-timeout-leaves-the-message-held": "becaeb1bce131571a71d64f0b3dccfae02b54beb9e10c8ba38a63e319aa160ff"
     },
+    "RK-8.2-047": {
+      "conference/a-track-recording-announces-its-start-and-its-stop-with-its-track": "38d10a02b47636861b575a0bdb91d964ee12e93df61cda7b99c89f3ecada6acc",
+      "recording/a-room-recording-announces-its-start-and-its-stop-with-their-data": "38d10a02b47636861b575a0bdb91d964ee12e93df61cda7b99c89f3ecada6acc"
+    },
+    "RK-8.2-048": {
+      "conference/a-track-recording-announces-its-start-and-its-stop-with-its-track": "e791ecb9d158546073bbdc987ecdb982c0d0504d2df7c4082ec836c4d8df29ca",
+      "recording/a-room-recording-announces-its-start-and-its-stop-with-their-data": "e791ecb9d158546073bbdc987ecdb982c0d0504d2df7c4082ec836c4d8df29ca"
+    },
     "RK-8.2-050": {
       "voice/a-session-whose-playback-fails-is-reported-and-the-served-one-fires-after-tts": "358e8e9803b472cdb73fdee1c33756e6ba8a76ee2b4cd5ff003bd0d0e3d7f5cd",
       "voice/no-session-served-fires-no-after-tts": "358e8e9803b472cdb73fdee1c33756e6ba8a76ee2b4cd5ff003bd0d0e3d7f5cd"
@@ -21406,6 +21450,9 @@
       "reentrancy/a-turn-s-injection-is-a-new-arrival": "02d8a624dcc203582a5854004f21abd21300f70df286ac3eac05911ebe6ffaaf",
       "tasks/delegate-task-reaches-its-handler-as-its-gate-left-it-at-its-turn-s-depth": "02d8a624dcc203582a5854004f21abd21300f70df286ac3eac05911ebe6ffaaf"
     },
+    "RK-8.3-012": {
+      "realtime/a-realtime-tool-call-is-as-deep-as-the-model-s-answer-and-so-is-what-its-hooks-post": "bedead3603f7693f745f5fc3df2aa1f6b89e25c5063343af36c8c569dd18b0a2"
+    },
     "RK-8.3-013": {
       "host/work-a-turn-began-sends-at-the-depth-of-its-own-event": "4d03a3a0d8c9cc923ce31450ce36ea590706aadc55751530efb5f92bd5958e28"
     },
@@ -21553,6 +21600,19 @@
     "RK-8.3-030": {
       "chain/a-transport-s-responses-at-the-depth-limit-are-stored-blocked-and-its-side-effects-kept": "43f4527167d22cd22d0a3404940614952e14e882635c928a505d63ae3d9307e7"
     },
+    "RK-8.3-031": {
+      "realtime/at-the-depth-limit-a-broadcast-or-a-delivery-enters-the-session-silently": "05ed07d4b63f3dcb04afa5875f777e187e4d3f0ae68574af03d96ae6e45f0a64"
+    },
+    "RK-8.3-032": {
+      "realtime/a-direct-injection-from-a-hook-or-a-turn-is-at-least-as-deep-as-that-work": "3d00ffbcd3d8b77029ff2fd3feadbaf02a975434702d6f6e2e71ccfe6a48c197",
+      "realtime/a-realtime-tool-call-is-as-deep-as-the-model-s-answer-and-so-is-what-its-hooks-post": "3d00ffbcd3d8b77029ff2fd3feadbaf02a975434702d6f6e2e71ccfe6a48c197"
+    },
+    "RK-8.3-033": {
+      "realtime/an-observer-s-post-at-the-limit-enters-the-session-silently-and-leaves-no-record": "731c8daf9bdf4785abcb27db33b624114cddad55d6fa2ad74050e13ed3aa54bd"
+    },
+    "RK-8.3-034": {
+      "realtime/a-realtime-tool-call-is-as-deep-as-the-model-s-answer-and-so-is-what-its-hooks-post": "aff308381d0148734bd2b59274e3764696354e62e4d9807ed352bcf0a4b0bffe"
+    },
     "RK-8.3-035": {
       "acp/handler-before-tool-use-observer-reentry-bound": "d0bd22882199f118df9ac63021f7acd43e3d01f3d100ae091cceda0e1c534189",
       "acp/handler-on-tool-call-observer-reentry-bound": "d0bd22882199f118df9ac63021f7acd43e3d01f3d100ae091cceda0e1c534189",
@@ -21646,6 +21706,16 @@
       "acp/handler-before-tool-use-observer-reentry-bound": "4fd5375cc8f7fd8e69c19a459f7f66a112a4c009ef995a7fd065679db951137b",
       "acp/handler-on-tool-call-observer-reentry-bound": "4fd5375cc8f7fd8e69c19a459f7f66a112a4c009ef995a7fd065679db951137b",
       "acp/tools-observer-reentry-bound": "4fd5375cc8f7fd8e69c19a459f7f66a112a4c009ef995a7fd065679db951137b"
+    },
+    "RK-8.3-046": {
+      "realtime/a-hook-on-the-model-s-words-posts-at-the-depth-of-what-it-hears": "f39704faaaaa8c79642f2237a9d6b219ffe13cc9cf44368bd8de548223a30782",
+      "realtime/a-realtime-tool-call-is-as-deep-as-the-model-s-answer-and-so-is-what-its-hooks-post": "f39704faaaaa8c79642f2237a9d6b219ffe13cc9cf44368bd8de548223a30782",
+      "voice/a-hook-that-posts-at-each-spoken-answer-ends-at-the-depth-limit": "f39704faaaaa8c79642f2237a9d6b219ffe13cc9cf44368bd8de548223a30782",
+      "voice/an-after-tts-hook-posts-at-the-depth-of-the-answer-it-spoke": "f39704faaaaa8c79642f2237a9d6b219ffe13cc9cf44368bd8de548223a30782"
+    },
+    "RK-8.3-047": {
+      "voice/a-hook-that-posts-at-each-spoken-answer-ends-at-the-depth-limit": "8f21fc27fb942ae4ea9eacdf519fe56126e51eea7569ba4a8b270c8763c9edc3",
+      "voice/speech-heard-while-an-answer-plays-opens-a-chain-of-its-own": "8f21fc27fb942ae4ea9eacdf519fe56126e51eea7569ba4a8b270c8763c9edc3"
     },
     "RK-8.3-048": {
       "appendix-b/b4-agent-chain": "2357bf19f1c590d4b9ee18c674191ff242a156a843a3b7a6d9019f90a22e934e",
@@ -22117,6 +22187,9 @@
     "RK-8.5-012": {
       "inbound/every-path-that-commits-an-event-roots-its-parent": "9ccc10f84be1d90db810be7db6c5df9f8591290b511329fe2267f26a326ae57e",
       "streaming/a-streamed-row-is-rooted-at-its-own-commit": "9ccc10f84be1d90db810be7db6c5df9f8591290b511329fe2267f26a326ae57e"
+    },
+    "RK-8.5-013": {
+      "realtime/a-model-s-transcribed-answer-names-no-event-it-responds-to": "875ee5f561b6a0920f319ddd44aaf143df140a9007151182335fb93f30e34769"
     },
     "RK-8.5-014": {
       "tasks/a-delegated-turn-s-trace-is-stored-as-its-responses": "489fd5e70c4aacd1e37f76b42ca06d8633512788d353251c6a7017eb05fd8b38"
@@ -24184,11 +24257,36 @@
     "RK-A.1-005": {
       "routing/each-channel-type-writes-its-addresses-in-its-own-form-under-its-own-keys": "35428ee9a0e4024adb03fd9622a3dd71a9c560f7b0aee3e751b43aac1e986946"
     },
+    "RK-A.10-002": {
+      "voice/a-voice-and-a-realtime-channel-bind-as-bidirectional-transports-of-audio-and-text": "8bb57b54c52dbfe7fde0936081c9b7fea43c3223fbaa83bbd63ebfca9d2bca3d"
+    },
     "RK-A.10-009": {
       "voice/a-streamed-reply-checks-each-sentence-before-synthesis": "466e7839a5e91e64c7dc47980842053d15e621104154b811487e14b49c876ac7"
     },
+    "RK-A.10-010": {
+      "voice/after-tts-reports-the-sentences-before-tts-let-through": "e66619dc893d7ff7788634ea6fdd6316db5b94b2812d99749fd2634f7fdc70b7"
+    },
+    "RK-A.10-013": {
+      "voice/a-text-delivered-to-a-voice-binding-is-synthesized-processed-played-and-fed-back": "8e168f1798d77fc9b52d74ed858d936feea761f584bf12e58a693f955c759cba"
+    },
+    "RK-A.10-014": {
+      "voice/other-content-delivered-to-a-voice-binding-is-not-spoken-and-fails-nothing": "7efd70469eba23080491c079e31539b7895d5c2de8e5ff330013ccc4723eac84"
+    },
+    "RK-A.10-015": {
+      "voice/an-agent-s-streamed-answer-is-synthesized-sentence-by-sentence": "ee238c8843b4e47ef8acbe100aeb90aa5c050b23f88ee498868a8c7d999eb8b3"
+    },
+    "RK-A.10-016": {
+      "voice/a-reply-walks-the-outbound-stages-in-their-order": "53e8126aceaaee8e21581e09f89ae8430c778d24b8294afef50fab35ac37a13b",
+      "voice/a-transport-feeding-its-own-canceller-gets-no-reference-from-the-pipeline": "53e8126aceaaee8e21581e09f89ae8430c778d24b8294afef50fab35ac37a13b"
+    },
+    "RK-A.11-002": {
+      "voice/a-voice-and-a-realtime-channel-bind-as-bidirectional-transports-of-audio-and-text": "49a4450c9d03be601c5eb4c92a9d767ef46303cabba9fac6c0cac62e028b55a1"
+    },
     "RK-A.11-004": {
       "realtime/a-reasoning-error-reaches-the-room": "59fb73739cd892fca79da332dc807af3287245fcd6d65425fb068635239ee15d"
+    },
+    "RK-A.11-008": {
+      "realtime/a-call-goes-to-the-channel-s-handler-first-and-to-on-tool-call-hooks-without-one": "0102f7883048aca21f5b6b9117d2723da60e0f49750c4f40523fef7dae52a4a2"
     },
     "RK-A.11-009": {
       "realtime/a-reasoning-error-reaches-the-room": "cea2ed8247efbdb496436e3a02acdd21304e4b0d30873239af85323cd8d61a31"
