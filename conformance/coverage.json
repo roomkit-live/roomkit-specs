@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "258d0eb4bfc7c40a6053df6c5b07adfce6d1b2e3e73299101840581dbde2f4b6",
-  "corpus_sha256": "8ae1aa19772ee5f80e5073e2339eead7971f14a8fddaf634b22bcdc045bfcfeb",
+  "corpus_sha256": "60de6e51e771b851f1eebcbdded834b2c61a87e45a4fd42962b45ae910010ec7",
   "python_commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
-  "scenario_count": 4349,
+  "scenario_count": 4350,
   "sections": [
     {
       "section": "0",
@@ -11255,8 +11255,7 @@
       },
       "decided_gaps": {
         "phase6": 2,
-        "step": 9,
-        "writable": 1
+        "step": 9
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -11404,6 +11403,7 @@
         "tasks/a-task-s-line-gives-a-reason-of-the-closed-list-alone",
         "tasks/a-task-whose-shared-transport-stopped-reading-its-answer-fails-cancelled",
         "tasks/a-task-whose-shared-transport-stopped-reading-while-its-model-reasoned-fails-cancelled",
+        "tasks/a-task-whose-worker-answers-only-blanks-is-handed-back-by-neither-door",
         "tasks/a-worker-cut-at-its-round-cap-tells-its-requester-why",
         "tasks/a-worker-owing-a-result-is-held-to-what-it-submitted-before-its-cut",
         "tasks/a-worker-s-delegate-task-waits-for-its-task-on-the-handler-s-option",
@@ -45827,12 +45827,7 @@
       "id": "RK-23.3-055",
       "section": "23.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1922",
-        "note": "Delegate to a notifying channel and compare an empty successful task with an unsuccessful task that has no output. Assert which hand-backs arrive."
-      }
+      "links": []
     },
     {
       "id": "RK-23.3-056",
