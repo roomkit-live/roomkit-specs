@@ -18949,9 +18949,10 @@ ConversationStore (interface)
 │   │                                         # null for an unknown room
 ```
 <!-- /rfc -->
-<!-- rfc: {"id": "RK-14.1-012", "kind": "structural", "applies": "§14.1 ConversationStore interface: delete_room(room_id), which returns nothing as written. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+<!-- rfc: {"id": "RK-14.1-012", "kind": "structural", "applies": "§14.1 ConversationStore interface: delete_room(room_id), which returns whether the store held the room. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
-│   ├── delete_room(room_id) → void
+│   ├── delete_room(room_id) → bool           # true when the store held the
+│   │                                         # room, false otherwise
 ```
 <!-- /rfc -->
 <!-- rfc: {"id": "RK-14.1-013", "kind": "structural", "applies": "§14.1 ConversationStore interface: list_rooms(offset, limit), offset 0 and limit 50 by default. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->

@@ -1017,9 +1017,9 @@
     },
     {
       "section": "14.1",
-      "sha256": "ce38949c5abc9af9af2117a0f3f9016769e3f6a9337f4954824632319e2fadaa",
+      "sha256": "9ae118679dce6a7dcb559b371596b9e4a42e33fe5f879230cd10e7d4b4bf613e",
       "classification": "normative",
-      "review": "Source inventory: Conversation Store, split to one obligation per unit (RMK-1969). The interface block is cut between its entries (108 bare fence lines added, 54 cuts, no word changed): the pluggable backend with the interface's head; a unit per operation whose comment or defaults state a rule, bare neighbouring signatures grouped (get_event with list_events, add_binding with get_binding, the identity operations, the verification and request operations, the task and observation reads); each group header goes with its first entry; the private-state key comment and the two finders' shared comment are units of their own. Reading a timeline, a timeline read serving what the room received, a count and binding order are split to a unit per sentence, the sentences with no obligation folded into the unit they explain; the upgrade of historical binding order is a may. Every unit carries its level."
+      "review": "Source inventory: Conversation Store, split to one obligation per unit (RMK-1969). The interface block is cut between its entries (108 bare fence lines added, 54 cuts, no word changed): the pluggable backend with the interface's head; a unit per operation whose comment or defaults state a rule, bare neighbouring signatures grouped (get_event with list_events, add_binding with get_binding, the identity operations, the verification and request operations, the task and observation reads); each group header goes with its first entry; the private-state key comment and the two finders' shared comment are units of their own. Reading a timeline, a timeline read serving what the room received, a count and binding order are split to a unit per sentence, the sentences with no obligation folded into the unit they explain; the upgrade of historical binding order is a may. Every unit carries its level. Amended on Python, the reference, with roomkit-rs (RMK-2232): delete_room returns whether the store held the room (RK-14.1-012, lot S0, HITL 3990944a)."
     },
     {
       "section": "14.2",

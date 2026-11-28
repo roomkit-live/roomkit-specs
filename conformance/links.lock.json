@@ -7363,6 +7363,10 @@
     "RK-14.1-011": {
       "store/a-metadata-patch-removes-its-unset-keys-then-merges-its-own-and-writes-nothing-else": "974bed6e5f4d75480e41f3107cd5b2470102a62fd6b0695419e3044b72fed3f2"
     },
+    "RK-14.1-012": {
+      "store/a-room-exists-from-its-creation-to-its-deletion": "53dbbcd4d5ab9e8e9d9a98bfd3c38f083d4b5ed42fe0cbc631c224077d2b7451",
+      "store/deleting-a-room-answers-whether-the-store-held-it": "53dbbcd4d5ab9e8e9d9a98bfd3c38f083d4b5ed42fe0cbc631c224077d2b7451"
+    },
     "RK-14.1-015": {
       "store/the-latest-room-follows-the-bindings-and-rooms-the-store-holds": "f2d480afc04070e54e3244c30bb869d549ab8d8a9ba807f4568b45150547af91",
       "store/the-latest-room-is-the-newest-the-greatest-id-breaking-a-tie": "f2d480afc04070e54e3244c30bb869d549ab8d8a9ba807f4568b45150547af91",

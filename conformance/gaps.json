@@ -111,11 +111,6 @@
       "card": "RMK-1976",
       "note": "No store.update_room step: the whole-record write and what it keeps are not called directly."
     },
-    "RK-14.1-012": {
-      "class": "writable",
-      "card": "RMK-1976",
-      "note": "Suspect RMK-1975: both implementations, and the README's store.delete_room, return whether the store held the room; the scenarios asserting it are not cited."
-    },
     "RK-14.1-013": {
       "class": "step",
       "card": "RMK-1976",
