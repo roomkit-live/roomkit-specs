@@ -6,13 +6,12 @@
     "§22.1"
   ],
   "requirements": [
-    "RK-22.1-076",
-    "RK-22.1-083"
+    "RK-22.1-076"
   ],
   "requires_features": [
     "realtime"
   ],
-  "notes": "A not_sent result submitted nothing, so realtime.read's injections leave it out: the outcome's duplicate flag says whether the provider was asked again. Part of RK-22.1-083: the uncertain outcome is reused; an expiry or an abandoned claim's recovery is not staged.",
+  "notes": "A not_sent result submitted nothing, so realtime.read's injections leave it out: the outcome's duplicate flag says whether the provider was asked again.",
   "setup": {
     "channels": [
       {

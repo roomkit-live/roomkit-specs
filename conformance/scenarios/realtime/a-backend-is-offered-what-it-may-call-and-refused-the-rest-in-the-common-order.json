@@ -16,7 +16,7 @@
   "requires_features": [
     "realtime"
   ],
-  "notes": "The same five calls on both doors: a name no tool carries, a tool the policy denies that a skill gates too, a tool a skill gates, a missing argument, a call that passes. Each reads the cause the order picks first, never the arguments of a tool refused for access, and only the last reaches BEFORE_TOOL_USE and its handler. The backend's request names secret and refund unavailable with the words its calls then read. Part of RK-21.1-029 and RK-21.1-030: a call cut short and a tool withdrawn for the turn, the first two causes, are not staged.",
+  "notes": "The same five calls on both doors: a name no tool carries, which the policy denies too, so it reads the declared check's words, a tool the policy denies that a skill gates too, a tool a skill gates, a missing argument, a call that passes. Each reads the cause the order picks first, never the arguments of a tool refused for access, and only the last reaches BEFORE_TOOL_USE and its handler. The backend's request names secret and refund unavailable with the words its calls then read. Part of RK-21.1-029 and RK-21.1-030: a call cut short and a tool withdrawn for the turn, the first two causes, are not staged.",
   "setup": {
     "channels": [
       {
@@ -69,7 +69,8 @@
           },
           "tool_policy": {
             "deny": [
-              "secret"
+              "secret",
+              "ghost"
             ]
           },
           "skills": [

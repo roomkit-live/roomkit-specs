@@ -12920,9 +12920,6 @@
     "RK-22.1-077": {
       "realtime/a-keyed-injection-repeated-with-other-text-is-a-conflict-a-keyed-publication-is-not": "ea7e7d615861ef20adffd120f738d201d5c886002231f40fc90d7996ccd19191"
     },
-    "RK-22.1-083": {
-      "realtime/a-repeated-keyed-injection-reuses-its-outcome-unless-nothing-was-sent-and-retry-is-allowed": "dd0151e3119571aaa46f7d61697d22e94064ef63be75ddb5e76a72def3cd7473"
-    },
     "RK-22.1-089": {
       "realtime/an-injection-reports-what-the-provider-knows-of-its-sending": "991fa1331f09419daf94cf0832ae0f48452c844f6a613d9c963571427483b3a3"
     },

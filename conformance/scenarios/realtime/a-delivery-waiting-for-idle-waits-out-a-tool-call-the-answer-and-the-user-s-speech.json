@@ -13,7 +13,7 @@
   "requires_features": [
     "realtime"
   ],
-  "notes": "Each wait is read past a delivery's buffer: a delivery waiting for idle into a second channel's room, idle, is sent once its buffer passed, and the first is still waiting then, held by the tool call, then by the user's speech. The idle wait is read with a short bound where the answer holds the room. Part of RK-22.2-007: a session whose audio is still being forwarded is not staged.",
+  "notes": "Each wait is read past a delivery's buffer: a delivery waiting for idle into a second channel's room, idle, is sent once its buffer passed, and the first is still waiting then, held by the tool call, then by the user's speech. The idle wait is read with a short bound where the answer, then the speech alone, holds the room. Part of RK-22.2-007: a session whose audio is still being forwarded is not staged.",
   "setup": {
     "channels": [
       {
@@ -145,6 +145,15 @@
       "call": "realtime.response",
       "channel_id": "rt",
       "edge": "end"
+    },
+    {
+      "call": "realtime.wait_idle",
+      "channel_id": "rt",
+      "room_id": "r1",
+      "timeout_ms": 150,
+      "expect": {
+        "result": false
+      }
     },
     {
       "call": "deliver",

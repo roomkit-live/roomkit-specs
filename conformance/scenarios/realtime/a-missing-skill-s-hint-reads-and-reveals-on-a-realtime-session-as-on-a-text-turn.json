@@ -13,7 +13,7 @@
   "requires_features": [
     "realtime"
   ],
-  "notes": "The text agent and the realtime channel hold the same tools, Tool Search with player_search pinned, and the same skill: both doors' answers are one text. The session's next declaration holds player_play and player_pause, player_search still declared.",
+  "notes": "The text agent and the realtime channel hold the same tools, Tool Search with player_search pinned, and the same skill: both doors' answers are one text. The session's next declaration holds player_play and player_pause, player_search still declared, as the text turn's next round declares them.",
   "setup": {
     "channels": [
       {
@@ -288,6 +288,14 @@
       "agent": [
         {},
         {
+          "tools": {
+            "player_play": {
+              "$present": true
+            },
+            "player_pause": {
+              "$present": true
+            }
+          },
           "tool_results": [
             {
               "tool_call_id": "t1",

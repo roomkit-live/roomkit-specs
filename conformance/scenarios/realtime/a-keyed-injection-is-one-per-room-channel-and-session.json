@@ -11,7 +11,7 @@
   "requires_features": [
     "realtime"
   ],
-  "notes": "Channel a holds a session in r1 and one in r2, channel b one in r1. Part of RK-22.1-075: two sessions of one channel in one room, which differ by their session alone, are not staged (the fixture starts one session per room on a channel).",
+  "notes": "Channel a holds a session in r1 and one in r2, channel b one in r1. Part of RK-22.1-075: two sessions of one channel in one room, which differ by their session alone, are not staged (the fixture starts one session per room on a channel): every pair here differs by its session too, so an identity of the session and the key alone would pass as well.",
   "setup": {
     "channels": [
       {

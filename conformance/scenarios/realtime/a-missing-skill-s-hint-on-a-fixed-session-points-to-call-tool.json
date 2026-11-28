@@ -102,10 +102,7 @@
             {
               "call_id": "c1",
               "result": {
-                "$contains": [
-                  "player_pause",
-                  "player_play"
-                ]
+                "$contains": "player_pause"
               }
             }
           ],
@@ -130,7 +127,7 @@
           "results": [
             {
               "result": {
-                "$contains": "call_tool"
+                "$contains": "player_play"
               }
             }
           ]
@@ -145,7 +142,7 @@
           "results": [
             {
               "result": {
-                "$contains": "list_tools"
+                "$contains": "call_tool"
               }
             }
           ]

@@ -12,7 +12,7 @@
   "requires_features": [
     "realtime"
   ],
-  "notes": "The policy denies secret. billing requires a declared tool, refunds a tool it gates itself, reading the channel's own reference reader: all three activate. audit requires the denied tool and planning one the session lacks: both are refused, naming what is missing.",
+  "notes": "The policy denies secret. billing requires a declared tool, refunds a tool it gates itself, reading the channel's own reference reader: all three activate. audit requires the denied tool and planning one the session lacks: both are refused, naming what is missing. Part of RK-24.3-029: a tool orchestration set up for the session's room, which the rule counts too, is not staged.",
   "setup": {
     "channels": [
       {
