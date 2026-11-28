@@ -1181,20 +1181,10 @@
       "card": "RMK-1939",
       "note": "ScriptedSkillServer does not expose a negotiated protocol revision, so accepting the older metadata-less response is not distinguished from ordinary listing."
     },
-    "RK-24.7-051": {
-      "class": "writable",
-      "card": "RMK-1939",
-      "note": "The scripted registry can return a refused refreshed entry and report its reason. Existing mismatch cases refresh to an admissible entry, or report a generic verification failure."
-    },
     "RK-24.7-053": {
       "class": "phase6",
       "card": "RMK-1939",
       "note": "step: a realtime fixture skills option: no shared fixed-instructions realtime provider demonstrates the attributed body in an activation result."
-    },
-    "RK-24.7-062": {
-      "class": "writable",
-      "card": "RMK-1939",
-      "note": "The shared registry can inspect an active entry and resource requests. No case requests a file omitted from that entry; inactive-reference refusal is a different condition."
     },
     "RK-24.7-068": {
       "class": "phase6",

@@ -1467,9 +1467,9 @@
     },
     {
       "section": "24.7",
-      "sha256": "0da43f1813ab3df986d280137e5ba52f64fa0dc650b6a277c2c2c4dbd92769c0",
+      "sha256": "6bdf178765b8d53113a6a745a15e2825ab252765c4306facddaa04dfe6858acb",
       "classification": "normative",
-      "review": "Units cover server and registry contracts, paging and shared catalogs, validation, origin and qualified identity, canonical frontmatter, verified activation and references, lost records, realtime delivery, execution consent and conditional caching."
+      "review": "Units cover server and registry contracts, paging and shared catalogs, validation, origin and qualified identity, canonical frontmatter, verified activation and references, lost records, realtime delivery, execution consent and conditional caching. Amended on Python, the reference, with roomkit-rs (RMK-2232): an entry read again that the host does not take leaves its skill unavailable with its reason, and one Entries refuses for its resources, its name or its files leaves the entry held before (RK-24.7-051, HITL 0c939ce5); a file the held entry does not list, save for a dynamic entry, is refused unread, as a path outside the skill's files, the skill staying active (RK-24.7-062, HITL ecf55067)."
     },
     {
       "section": "25",

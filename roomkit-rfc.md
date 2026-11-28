@@ -24928,9 +24928,11 @@ representation. <!-- /rfc --><!-- rfc: {"id": "RK-24.7-049", "kind": "behavior",
 is reloaded; new verified loads use this normalization.<!-- /rfc --><!-- rfc: {"id": "RK-24.7-050", "kind": "behavior", "applies": "Verification mismatch loads no content, refreshes the entry with skills/get and returns a verification or changed-skill response without a body.", "level": "must"} -->
 A mismatch loads nothing: the registry reads the entry again
 with `skills/get`, and the activation answers that the skill changed on its
-server or could not be verified, without its body. <!-- /rfc --><!-- rfc: {"id": "RK-24.7-051", "kind": "behavior", "applies": "Refreshed entries undergo the listing checks and rejected entries stay unavailable with their reason.", "level": "must"} -->An entry read again is held
-to the rules a listed one is (Entries): one the host does not take leaves the
-skill unavailable with its reason. <!-- /rfc --><!-- rfc: {"id": "RK-24.7-052", "kind": "behavior", "applies": "Served instructions remain whole in a labeled and URI-attributed skill block after the host's binding rules throughout their activation lifecycle.", "level": "must"} -->The instructions then
+server or could not be verified, without its body. <!-- /rfc --><!-- rfc: {"id": "RK-24.7-051", "kind": "behavior", "applies": "A refreshed entry the host does not take, dynamic where the host allows none or past the limits, leaves its skill unavailable with its reason; one refused for its resources, its name or its files leaves the entry held before.", "level": "must"} -->An entry read again that the
+host does not take, `"dynamic"` while the host did not allow them or past the
+limits (Entries), leaves the skill unavailable with its reason; one Entries
+refuses for its `resources`, its name or its files leaves the entry held before
+in place, as a server that does not answer does. <!-- /rfc --><!-- rfc: {"id": "RK-24.7-052", "kind": "behavior", "applies": "Served instructions remain whole in a labeled and URI-attributed skill block after the host's binding rules throughout their activation lifecycle.", "level": "must"} -->The instructions then
 follow Section 24.4 (whole, carried by the system prompt, acknowledged
 afterwards, retired as if never activated) as data: in a `<skill>` block
 (Section 6.4) naming the label and the URI, after the host's own skills and
@@ -24956,9 +24958,10 @@ such skill. A skill the server's own instructions point to is reached so.
 **Files.** While such a skill is active, the registry holds the entry it was
 loaded from. <!-- /rfc --><!-- rfc: {"id": "RK-24.7-061", "kind": "behavior", "applies": "A served reference is resolved relative to its skill directory and read from the same server.", "level": "must"} -->`read_skill_reference` resolves the name it is given against the
 skill's directory (`templates/invoice.md`), reads the file from the same
-server, <!-- /rfc --><!-- rfc: {"id": "RK-24.7-062", "kind": "behavior", "applies": "A served reference absent from the loaded entry is refused as unverified.", "level": "must"} -->and reads only a file that entry lists: a name the entry does not
-list is refused as content that failed verification, whatever the server
-would serve. <!-- /rfc --><!-- rfc: {"id": "RK-24.7-063", "kind": "behavior", "applies": "Reference content is verified against the held entry before reaching the model.", "level": "must"} -->Each file read is verified against the entry as `SKILL.md` is,<!-- /rfc --><!-- rfc: {"id": "RK-24.7-064", "kind": "behavior", "applies": "Served reference content names its original server when delivered to the model.", "level": "must"} -->
+server, <!-- /rfc --><!-- rfc: {"id": "RK-24.7-062", "kind": "behavior", "applies": "A served reference absent from the loaded entry, save for a dynamic entry, is refused without any read, as a path outside the skill's files, and the skill stays active.", "level": "must"} -->and reads only a file that entry lists, save for a `"dynamic"` entry,
+which lists none (Entries): a name the entry does not list is refused without
+reading anything, as a path outside the skill's files is, whatever the server
+would serve, and the skill stays active. <!-- /rfc --><!-- rfc: {"id": "RK-24.7-063", "kind": "behavior", "applies": "Reference content is verified against the held entry before reaching the model.", "level": "must"} -->Each file read is verified against the entry as `SKILL.md` is,<!-- /rfc --><!-- rfc: {"id": "RK-24.7-064", "kind": "behavior", "applies": "Served reference content names its original server when delivered to the model.", "level": "must"} -->
 and reaches the model naming the same origin. <!-- /rfc --><!-- rfc: {"id": "RK-24.7-065", "kind": "behavior", "applies": "A failed reference check retires the skill, refreshes the entry and calls for a new activation which delivers the current body.", "level": "must"} -->A file that fails retires the
 skill (Section 24.4): the registry reads the entry again, and the model is
 told to activate the skill again, which delivers its current body. <!-- /rfc --><!-- rfc: {"id": "RK-24.7-066", "kind": "behavior", "applies": "Reading one server's skill must never query another server.", "level": "must"} -->A read

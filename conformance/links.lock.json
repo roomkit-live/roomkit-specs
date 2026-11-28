@@ -15042,6 +15042,10 @@
       "served-skills/load-refuses-frontmatter": "017adf2385fba81f93a36dc9e039aedf4f20a7a586d61e7f5f18105f81f7de44",
       "served-skills/load-refuses-size": "017adf2385fba81f93a36dc9e039aedf4f20a7a586d61e7f5f18105f81f7de44"
     },
+    "RK-24.7-051": {
+      "served-skills/an-entry-read-again-in-a-form-the-host-does-not-take-leaves-the-skill-unavailable": "d1b0e791c04a8cb0fbd2a4d533fe1b328fea6bccf6831dec50daa5cb9cc74e1b",
+      "served-skills/an-entry-read-again-that-is-malformed-leaves-the-entry-held-before": "d1b0e791c04a8cb0fbd2a4d533fe1b328fea6bccf6831dec50daa5cb9cc74e1b"
+    },
     "RK-24.7-052": {
       "served-skills/history-does-not-restore-served-activation": "277c72370a34c383707f744c62715d33e938ec5612da7f208264cb2d5b574268",
       "served-skills/text-activation-keeps-server-content-apart": "277c72370a34c383707f744c62715d33e938ec5612da7f208264cb2d5b574268",
@@ -15085,6 +15089,9 @@
       "served-skills/text-file-mismatch-retires-active-content": "79c4d85357eaa5220e5d771343dce123f4554c7eb654ee7fe4f8ac3fb4028f3a",
       "served-skills/text-reference-carries-its-origin": "79c4d85357eaa5220e5d771343dce123f4554c7eb654ee7fe4f8ac3fb4028f3a",
       "served-skills/verified-files-and-shared-cache": "79c4d85357eaa5220e5d771343dce123f4554c7eb654ee7fe4f8ac3fb4028f3a"
+    },
+    "RK-24.7-062": {
+      "served-skills/a-file-the-held-entry-does-not-list-is-refused-unread-and-the-skill-stays-active": "233c0e4bace880b845dbb58a632b713f4676c77438e04eff9be11fb5440b5dc6"
     },
     "RK-24.7-063": {
       "served-skills/file-failure-retires-every-copy": "30056d99fd956ce9b375e4bd55bc7854c091463deacca2d0e5d4a25dce869d7f",
