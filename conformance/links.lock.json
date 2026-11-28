@@ -3638,6 +3638,9 @@
     "RK-11.6-002": {
       "identity/a-channel-that-names-its-senders-is-not-asked-about": "2e16a9e0644c9212a33403934a712da7e0c60e06be72aca63465ac2f9f893bb1"
     },
+    "RK-11.6-003": {
+      "conference/a-resolved-participant-s-utterances-are-not-resolved-again": "815f902740c3e05f37d9d9a9b9dea647757299d2342ee79ba4ce9070e079932c"
+    },
     "RK-11.6-004": {
       "identity/a-sender-s-own-record-names-them-on-its-channel": "9db3620cf387197bd2266afe08c1264e93b8f505de0c00bf1bf0f1d1f9a9f633",
       "identity/a-sender-the-room-identified-is-not-asked-about": "9db3620cf387197bd2266afe08c1264e93b8f505de0c00bf1bf0f1d1f9a9f633",
@@ -3880,6 +3883,9 @@
     },
     "RK-11.7.3-018": {
       "verification/only-a-message-the-pipeline-held-is-released": "6f5aa34b604a4a39969702529e6443711bf155956c57fc560787673aab80d75b"
+    },
+    "RK-11.7.3-019": {
+      "verification/a-speech-to-speech-transcript-is-neither-labelled-nor-held": "c7688742089187f9507a5031c24f06c8e207e89d77f5ece0d631091342243cd9"
     },
     "RK-11.7.4-002": {
       "verification/a-code-reply-is-consumed-and-verifies": "9f2da8e212ca17221dab6555ee1dd86c60b9197e31a4046fff3e858ee62ef244",
@@ -8026,6 +8032,9 @@
     "RK-19.1-011": {
       "orchestration/a-handoff-s-language-change-writes-the-agent-s-identity-in-that-language": "9ce682153c792a7ba3e3965465f45fbff494f2b662469184460e35feca14ba07"
     },
+    "RK-19.1-012": {
+      "realtime/a-pipeline-session-s-prompt-ends-with-its-agent-s-identity": "440c0bba77e28b336ddc7c243558005942ce04a1cb93e7a5090e9375733eb11a"
+    },
     "RK-19.1-013": {
       "orchestration/an-agent-s-turn-prompt-ends-with-its-identity": "da29e6d678ab216290f0f506f25c3df1090316c3b42a8c061c1af7144cc8178a"
     },
@@ -8159,6 +8168,12 @@
     "RK-19.1-040": {
       "greeting/a-greeting-read-past-process-timeout-expires-its-message": "2268d49f17bb7cc4a91b562e92a705dc13eea1c7825885e72b34247e01b0c261",
       "greeting/another-agent-that-reads-a-greeting-holds-no-first-message": "2268d49f17bb7cc4a91b562e92a705dc13eea1c7825885e72b34247e01b0c261"
+    },
+    "RK-19.1-041": {
+      "greeting/a-voice-session-s-greeting-holds-the-agents-until-it-is-said": "f378bde6622d70a28853bb3d7595a1130a79a1f78b673fba9c3dc4bb58f99a1e"
+    },
+    "RK-19.1-042": {
+      "greeting/a-realtime-session-s-greeting-is-injected-as-the-model-s-own-turn": "74217ade5e8e759c3c31f5a04c28597b8946c6306df58227834e03adaf3780a1"
     },
     "RK-19.2-002": {
       "orchestration/a-conversation-state-written-through-the-kit-moves-no-agent": "b01c5f6be9012ab2fc74798109ad86f93598f1d3e901ce00bc4e3a86e72b978e",
@@ -8557,8 +8572,39 @@
       "orchestration/a-conversation-pipeline-reads-a-phase-in-two-stages": "421930096d43f89615457d3256b9568c9ef5ede29b9631ce588f06d5091d06a8",
       "orchestration/a-conversation-pipeline-s-agent-in-two-stages-takes-the-last": "421930096d43f89615457d3256b9568c9ef5ede29b9631ce588f06d5091d06a8"
     },
+    "RK-19.5-022": {
+      "realtime/a-handoff-reconfigures-its-room-s-session-alone-and-a-language-change-the-active-agent-s": "f40c23d544dcb141920588ed2e0b297394078a5dafc71460778f4f75f4bf586c"
+    },
+    "RK-19.5-023": {
+      "realtime/an-agent-with-nothing-to-set-speaks-with-the-channel-s-prompt-and-keeps-it-through-a-language-change": "dcc65766460d490f83d20c48ba3677728ae76e96153f8cac5bbed2f94b72d703"
+    },
+    "RK-19.5-024": {
+      "realtime/an-agent-with-nothing-to-set-speaks-with-the-channel-s-prompt-and-keeps-it-through-a-language-change": "f3a1118116c889b74286427db5696b236b54a6c610d720254c4e6630d27cb74f"
+    },
+    "RK-19.5-025": {
+      "realtime/a-pipeline-session-declares-the-channel-s-tools-as-they-are-the-agent-s-and-the-handoff": "318994e17e2da055d35969ddf5240c92603ce81184772c5970eb3fbe7f8fb2ef"
+    },
+    "RK-19.5-026": {
+      "realtime/a-pipeline-session-declares-the-channel-s-tools-as-they-are-the-agent-s-and-the-handoff": "f5cc210f3d59e9074799de351dffe1ea99c17e285b08aa46f524585a0e28f17a"
+    },
+    "RK-19.5-028": {
+      "realtime/a-tool-name-the-channel-carries-stays-the-channel-s-under-a-pipeline-agent": "ce6d63013e658aec8306a2a0ddafb6c35a69e26faf580c6f69eccb677e6dadfe"
+    },
+    "RK-19.5-030": {
+      "realtime/the-channel-s-and-the-active-agent-s-policies-both-hold-on-a-pipeline-session-for-its-participant": "8535108d0b452a3bef4cd878b01a58eefb25d315a9bc7508b6cb3a6bba866be5",
+      "realtime/tool-search-on-a-pipeline-session-lists-no-tool-either-policy-denies": "8535108d0b452a3bef4cd878b01a58eefb25d315a9bc7508b6cb3a6bba866be5"
+    },
+    "RK-19.5-032": {
+      "realtime/a-pipeline-call-is-judged-by-the-agent-the-room-talks-to-when-it-arrives": "b624196838ba3f3aa0c1170b2b5cd6ca645ddcd0432afa27080e3b237a4ae960"
+    },
     "RK-19.5-034": {
       "realtime/a-realtime-pipeline-refuses-the-agents-human-input": "5077156607989d82342ba1f28159e314367f7823d84153944bbc78db64b68f81"
+    },
+    "RK-19.5-035": {
+      "realtime/a-reasoning-backend-s-agent-is-refused-for-what-a-session-never-serves": "320f71190fe14f9cd41cb1573b2a6a416d6a398e70a7a7f9394025f3a09300cc"
+    },
+    "RK-19.5-036": {
+      "realtime/a-realtime-pipeline-refuses-an-agent-held-by-its-declaration-alone": "0678e6030597aa03704403494ce0790ae6bf4c16ef96626625a7d47d6518ed2b"
     },
     "RK-19.5-037": {
       "orchestration/a-conversation-pipeline-s-agent-in-two-stages-takes-the-last": "7dfa89c99847e8c4b81ae836fd3b2ec0a7060a302bb055e0df563ebf9d7b1978",
@@ -8762,6 +8808,12 @@
     "RK-19.6-041": {
       "orchestration/a-room-held-for-a-human-asks-no-supervisor-without-an-address": "0a82d25ff11a84c4806b477fcf0e61fe9a0baecb198f54330ac83ef9c87a0a90"
     },
+    "RK-19.6-042": {
+      "realtime/a-handoff-reconfigures-its-room-s-session-alone-and-a-language-change-the-active-agent-s": "32e7b3b171e0fcac770158972a0a5039d7c432803a63599998565d4a346f34ab"
+    },
+    "RK-19.6-043": {
+      "realtime/a-handoff-reconfigures-its-room-s-session-alone-and-a-language-change-the-active-agent-s": "fd7e32feabcd07b564621263f7a2b7dd7d02ae2da14dc1ab6902c80490a234d2"
+    },
     "RK-19.6-047": {
       "orchestration/a-pipeline-serves-each-room-its-own-install": "cc5ce277f3ab4a62a3a81dee53cb81445285a17dbd844c9bf7acecd5022d234e",
       "orchestration/a-swarm-starts-at-its-entry-and-serves-each-room-its-own-install": "cc5ce277f3ab4a62a3a81dee53cb81445285a17dbd844c9bf7acecd5022d234e"
@@ -8801,6 +8853,9 @@
       "orchestration/each-room-s-per-worker-tools-run-with-its-own-install-without-streaming": "9096d65faa856e32b2adb53654f6be6ef26cf4db11e8f18d95ba1631f9d75f43",
       "orchestration/each-room-s-supervisor-install-runs-its-own-team": "9096d65faa856e32b2adb53654f6be6ef26cf4db11e8f18d95ba1631f9d75f43"
     },
+    "RK-19.7-006": {
+      "realtime/a-handoff-reconfigures-its-room-s-session-alone-and-a-language-change-the-active-agent-s": "755f230bb71dd732adb259db4dce04b6a547225020aa73a909e05624b93b8f2d"
+    },
     "RK-19.7-007": {
       "executors/a-declared-worker-s-result-tool-rides-its-child-room-s-requests-alone": "f01abcd70f78262724fb294859c2c867127bbbef0046bad8351588b98ef5b9da",
       "executors/a-supervisor-s-passes-are-turns-of-its-agent-on-the-executor-hosting-it": "f01abcd70f78262724fb294859c2c867127bbbef0046bad8351588b98ef5b9da",
@@ -8817,6 +8872,9 @@
       "orchestration/each-room-s-per-worker-tools-run-with-its-own-install-without-streaming": "f01abcd70f78262724fb294859c2c867127bbbef0046bad8351588b98ef5b9da",
       "orchestration/each-room-s-supervisor-install-runs-its-own-team": "f01abcd70f78262724fb294859c2c867127bbbef0046bad8351588b98ef5b9da"
     },
+    "RK-19.7-008": {
+      "orchestration/a-supervisor-s-realtime-tool-reaches-the-room-it-was-installed-in-alone": "226b8e19dff22d04a4c0a46d17e1226eedcb70ac09f979f0917ef1eb98f552de"
+    },
     "RK-19.7-009": {
       "executors/a-declared-worker-s-result-tool-rides-its-child-room-s-requests-alone": "895f1caa4647c41b1bc86bf5604bb24fcf0d01e4416bc15e3dfe004f10ea24d3",
       "executors/one-build-serving-two-rooms-takes-a-strategy-s-tools-in-its-room-alone": "895f1caa4647c41b1bc86bf5604bb24fcf0d01e4416bc15e3dfe004f10ea24d3",
@@ -8830,6 +8888,9 @@
       "orchestration/each-room-s-per-worker-tools-run-with-its-own-install-without-streaming": "895f1caa4647c41b1bc86bf5604bb24fcf0d01e4416bc15e3dfe004f10ea24d3",
       "orchestration/each-room-s-supervisor-install-runs-its-own-team": "895f1caa4647c41b1bc86bf5604bb24fcf0d01e4416bc15e3dfe004f10ea24d3",
       "tasks/a-result-tool-is-declared-in-the-child-room-only": "895f1caa4647c41b1bc86bf5604bb24fcf0d01e4416bc15e3dfe004f10ea24d3"
+    },
+    "RK-19.7-010": {
+      "orchestration/a-supervisor-s-realtime-tool-reaches-the-room-it-was-installed-in-alone": "22f5e5937113506c7b63d887c26bf302ba5e9d51be4444b357ef70ef6cea0a86"
     },
     "RK-19.7-011": {
       "tasks/a-result-tool-is-declared-in-the-child-room-only": "0dcc445ac655468225c9a61e4b21b39ab9250e3da6175651600f054e2e924a5b"
@@ -8853,6 +8914,9 @@
       "orchestration/an-uninstalled-auto-delegating-supervisor-answers-as-itself": "fc3219b2f69149562a07f52cf4bf1ab288f837e68aa9544fcea14e17066af168",
       "orchestration/an-uninstalled-loop-gives-its-producer-its-turns-back": "fc3219b2f69149562a07f52cf4bf1ab288f837e68aa9544fcea14e17066af168",
       "orchestration/each-room-s-loop-runs-with-its-own-reviewer": "fc3219b2f69149562a07f52cf4bf1ab288f837e68aa9544fcea14e17066af168"
+    },
+    "RK-19.7-014": {
+      "realtime/a-handoff-reconfigures-its-room-s-session-alone-and-a-language-change-the-active-agent-s": "c133afb924f9f62645cfba139abc3be8eec2a1f6e50a2a88a949bca27fa44ceb"
     },
     "RK-19.7-015": {
       "orchestration/a-background-worker-busy-in-one-room-is-free-in-another": "64bc2640ff2c992588c131eb10d39fbb06d6c1e0839ac7b8c5fa55bbf2a83915",
@@ -9361,6 +9425,12 @@
     },
     "RK-19.7.3-015": {
       "orchestration/a-team-whose-worker-raises-answers-at-once": "09be73d8989c82c0dd47bae9c231f677f0a25ad1ada19cbaa7c2eb598a9281ec"
+    },
+    "RK-19.7.3-016": {
+      "orchestration/a-supervisor-s-realtime-tool-runs-once-per-room-and-answers-the-session-that-asked": "39d934264feb3322e9c55229e3ff3a841d85377e97976a55cfc4f8f27110eabf"
+    },
+    "RK-19.7.3-017": {
+      "orchestration/a-supervisor-s-realtime-tool-runs-once-per-room-and-answers-the-session-that-asked": "2ca11a6b3d2f4c67e0f51e136d079ca1f5e7bed7edbe598c893d7225c9f68425"
     },
     "RK-19.7.3-018": {
       "orchestration/a-supervisor-s-dispatch-answering-its-team-s-results-starts-anew": "0e49d6a8dd0a5bda828e8fcda40759d6d200ebb32f95ae688f3f11abf0a42f7a"

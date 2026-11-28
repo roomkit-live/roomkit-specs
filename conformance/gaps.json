@@ -1,11 +1,6 @@
 {
   "version": 1,
   "units": {
-    "RK-11.6-003": {
-      "class": "phase6",
-      "card": "RMK-1942",
-      "note": "step: conference.feed: a conference's utterances, under the identity their track was published under, are never put to the resolver."
-    },
     "RK-11.6-010": {
       "class": "step",
       "card": "RMK-1942",
@@ -20,11 +15,6 @@
       "class": "step",
       "card": "RMK-1942",
       "note": "Needs one of the implementation's channels whose sender_id the integrator supplies, a WebSocket or HTTP one, in the runners (feature name websocket_channel proposed)."
-    },
-    "RK-11.7.3-019": {
-      "class": "phase6",
-      "card": "RMK-1942",
-      "note": "step: realtime transcripts: a speech-to-speech session's transcript is neither labelled nor held."
     },
     "RK-12.7.5-008": {
       "class": "writable",
@@ -496,30 +486,15 @@
       "card": "RMK-1925",
       "note": "Expose the public identity builder with a caller-specified language; turn prompt inspection exercises its output only indirectly."
     },
-    "RK-19.1-012": {
-      "class": "phase6",
-      "card": "RMK-1925",
-      "note": "step: realtime.read of the session configuration: inspect the identity block on an installed realtime pipeline session."
-    },
     "RK-19.1-014": {
       "class": "phase6",
       "card": "RMK-1925",
       "note": "step: an agent with no model in the setup: a configuration-only agent on a realtime channel accepted, making no generation call; every scripted agent has a model today."
     },
-    "RK-19.1-041": {
-      "class": "writable",
-      "card": "RMK-1925",
-      "note": "A scripted agent with a greeting and auto_greet in a room where voice.open, with a playback_gate, starts the session, a message sent while the greeting is held: the agent's reply is neither generated (models) nor in the timeline until the gate opens (requires voice)."
-    },
-    "RK-19.1-042": {
-      "class": "writable",
-      "card": "RMK-1925",
-      "note": "A scripted agent with a greeting and auto_greet in a room where realtime.start starts the session: realtime.read shows the greeting injected as the model's own turn (requires realtime)."
-    },
     "RK-19.3-017": {
-      "class": "phase6",
+      "class": "step",
       "card": "RMK-1925",
-      "note": "step: a reference to a realtime session's id, realtime.start returning it: deliver with that session_id selects the transport session and addresses no intelligence channel."
+      "note": "Needs a realtime session's id a step can name (realtime.start returning it, or the fixture fixing it, as voice.open's session_ids does): deliver's session_id targets a session that hosts a realtime model only, a voice session's is refused with session_requires_realtime."
     },
     "RK-19.4-013": {
       "class": "step",
@@ -531,90 +506,30 @@
       "card": "RMK-1925",
       "note": "step: realtime.read of the session configuration: a session in pipeline mode takes the active agent's configuration and handoff switches it to the next agent."
     },
-    "RK-19.5-022": {
-      "class": "phase6",
-      "card": "RMK-1925",
-      "note": "step: realtime.read of the session configuration: session start reads the room's agent and handoff changes only that room's sessions, leaving other rooms and channel defaults intact."
-    },
-    "RK-19.5-023": {
-      "class": "phase6",
-      "card": "RMK-1925",
-      "note": "step: realtime.read of the session configuration: without a prompt or identity, the active agent inherits the channel prompt at session start or handoff."
-    },
-    "RK-19.5-024": {
-      "class": "phase6",
-      "card": "RMK-1925",
-      "note": "step: realtime.read of the session configuration: a room language change preserves the session prompt when the agent supplies none."
-    },
-    "RK-19.5-025": {
-      "class": "phase6",
-      "card": "RMK-1925",
-      "note": "step: realtime.read of the session configuration: a pipeline session includes the channel tools, the active agent's tools and handoff."
-    },
-    "RK-19.5-026": {
-      "class": "phase6",
-      "card": "RMK-1925",
-      "note": "step: realtime.read of the session configuration: late channel tool changes are read at session start or handoff."
-    },
     "RK-19.5-027": {
       "class": "phase6",
       "card": "RMK-1925",
       "note": "step: realtime pipeline agents with their own tool handlers: an agent tool uses its agent handler or falls back to the channel handler."
-    },
-    "RK-19.5-028": {
-      "class": "phase6",
-      "card": "RMK-1925",
-      "note": "step: realtime.read of the session configuration: a conflicting tool retains the channel's definition and handler, is warned at install, and never reverts to the agent's copy."
     },
     "RK-19.5-029": {
       "class": "phase6",
       "card": "RMK-1925",
       "note": "step: realtime.read of the session configuration: channel reservations include host, human-input, search and skill tools even when hidden, without refusing the agent's other tools."
     },
-    "RK-19.5-030": {
-      "class": "phase6",
-      "card": "RMK-1925",
-      "note": "step: realtime.read of the session configuration, per-participant role policies on a realtime session: both participant-resolved policies govern declaration, discovery, handler catalogue and execution of a session tool."
-    },
     "RK-19.5-031": {
       "class": "phase6",
       "card": "RMK-1925",
       "note": "step: realtime.read of the session configuration, per-participant role policies on a realtime session: handoff applies the new agent policy per participant across the room before declaring its tools."
-    },
-    "RK-19.5-032": {
-      "class": "phase6",
-      "card": "RMK-1925",
-      "note": "step: realtime.read of the session configuration, per-participant role policies on a realtime session: the serving room agent's policy governs calls despite stale session declarations."
     },
     "RK-19.5-033": {
       "class": "phase6",
       "card": "RMK-1925",
       "note": "step: realtime.read of the session configuration: verify the session's actual channel-provided capabilities; the existing refusal observes installation, not a live session."
     },
-    "RK-19.5-035": {
-      "class": "phase6",
-      "card": "RMK-1925",
-      "note": "step: a scripted realtime reasoning backend: a reasoning backend rejects the same unsupported agent capabilities and agent tools; its MCP instructions reach its own model."
-    },
-    "RK-19.5-036": {
-      "class": "writable",
-      "card": "RMK-1925",
-      "note": "install_pipeline with voice_channel_id naming a realtime channel, given a declared agent, then an intelligence channel that is no agent: each refused, invalid_argument (requires realtime)."
-    },
     "RK-19.6-026": {
       "class": "step",
       "card": "RMK-1925",
       "note": "The summary reaches the target's model through the implementation's handoff memory (HandoffMemoryProvider), which no strategy installs and no runner offers: a step family wrapping a scripted agent's memory in the handoff memory (a scripted memory member), so that handoff.handle's summary shows in the target's next request."
-    },
-    "RK-19.6-042": {
-      "class": "phase6",
-      "card": "RMK-1925",
-      "note": "step: realtime.tool_call of the handoff tool: session handoffs use the room's active agent as caller; the human hold rule is not yet required there."
-    },
-    "RK-19.6-043": {
-      "class": "phase6",
-      "card": "RMK-1925",
-      "note": "step: realtime.read of the session configuration: handoff changes room sessions to the target agent's prompt and a language change uses the active agent's prompt."
     },
     "RK-19.6-044": {
       "class": "phase6",
@@ -635,26 +550,6 @@
       "class": "phase6",
       "card": "RMK-1925",
       "note": "step: several realtime sessions per channel and across rooms: the addressed realtime channel delivers the handler's greeting to each of its sessions."
-    },
-    "RK-19.7-006": {
-      "class": "phase6",
-      "card": "RMK-1929",
-      "note": "step: several realtime sessions per channel and across rooms, realtime.read of the session configuration: attach one realtime channel to multiple rooms and observe it serving sessions in both."
-    },
-    "RK-19.7-008": {
-      "class": "phase6",
-      "card": "RMK-1929",
-      "note": "step: several realtime sessions per channel and across rooms, realtime.read of the session configuration: install strategy additions in one room on a shared realtime channel and inspect the declarations in each room's session."
-    },
-    "RK-19.7-010": {
-      "class": "phase6",
-      "card": "RMK-1929",
-      "note": "step: several realtime sessions per channel and across rooms, realtime.read of the session configuration: inspect tools declared to realtime sessions on both an installed room and a different room using the same channel."
-    },
-    "RK-19.7-014": {
-      "class": "phase6",
-      "card": "RMK-1929",
-      "note": "step: several realtime sessions per channel and across rooms, realtime.read of the session configuration: change the active agent in one of two realtime rooms and inspect each session's configuration."
     },
     "RK-19.7-027": {
       "class": "phase6",
@@ -690,16 +585,6 @@
       "class": "phase6",
       "card": "RMK-1929",
       "note": "step: voice_channel_id on a scripted pipeline strategy: installing a Pipeline whose voice channel is a realtime voice channel is refused."
-    },
-    "RK-19.7.3-016": {
-      "class": "phase6",
-      "card": "RMK-1929",
-      "note": "step: realtime.tool_call of a strategy's background tool: call the same background strategy tool from sessions on two voice channels in one room and observe exclusivity across them."
-    },
-    "RK-19.7.3-017": {
-      "class": "phase6",
-      "card": "RMK-1929",
-      "note": "step: realtime.tool_call of a strategy's background tool: observe the outcome of a strategy call on the originating session when other voice sessions are available."
     },
     "RK-19.7.3-030": {
       "class": "step",
