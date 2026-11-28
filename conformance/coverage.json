@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "33537d69e3a9184b9823e418ee3590c952b76c8289b7720b141fbbe13dd1fbf0",
-  "corpus_sha256": "700c405458baa1894447387c3c3ce6ca1a652bf58a6eb464aa847e42225b0a15",
+  "corpus_sha256": "666a2f0d32600e7348fe54bfecdb5db137e7c10cf41f5322f6caf87180306b24",
   "python_commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
-  "scenario_count": 4271,
+  "scenario_count": 4284,
   "sections": [
     {
       "section": "0",
@@ -3822,6 +3822,7 @@
         "appendix-b/b1-customer-and-ai",
         "conference/a-conference-model-receives-the-gated-tool-result",
         "delivery/a-status-is-handled-while-its-hooks-run",
+        "delivery/an-after-deliver-hook-that-raises-leaves-the-outcome-as-it-is",
         "delivery/an-awaited-adopted-call-ends-with-its-hook-s-timeout",
         "delivery/before-deliver-blocks-rewrites-and-fails-open",
         "delivery/observers-start-in-firing-order-while-earlier-bodies-wait",
@@ -4067,6 +4068,8 @@
         "tasks/a-delegated-turn-s-failure-is-reported-in-its-child-room",
         "tasks/a-delegated-turn-s-returned-error-is-reported-in-its-child-room",
         "tasks/a-posted-result-says-its-task-failed-or-was-cancelled-never-its-error",
+        "tasks/a-private-worker-s-tool-end-row-keeps-its-structured-copy-non-streaming",
+        "tasks/a-private-worker-s-tool-end-row-keeps-its-structured-copy-streaming",
         "tasks/a-shared-room-s-failed-streams-are-each-their-agent-s",
         "tasks/a-task-s-end-reason-tells-a-cut-a-cancel-an-error-and-a-success-apart",
         "tasks/a-task-whose-end-is-being-told-reads-ended-at-once",
@@ -5046,6 +5049,7 @@
         "acp/standalone-updates-do-not-describe-room",
         "author-images/an-instruction-is-read-without-attached-media",
         "broadcast/an-instruction-joins-no-delivery-set-s-context",
+        "delivery/a-queued-instruction-is-still-an-instruction-when-the-worker-retries-it",
         "delivery/an-instruction-is-delivered-as-the-application-s-direction",
         "discussion/an-instruction-to-an-agent-of-a-discussion-is-not-delivered",
         "discussion/an-instruction-to-an-unbound-agent-reports-it-unavailable",
@@ -6633,6 +6637,7 @@
         "tasks/a-delegated-stream-failing-after-a-tool-round-is-reported-once",
         "tasks/a-delegated-turn-failing-after-a-tool-round-keeps-its-end",
         "tasks/a-delegated-turn-s-failure-is-reported-in-its-child-room",
+        "tasks/a-hand-back-under-way-as-the-kit-closes-is-cut-with-its-turn",
         "tasks/a-shared-room-reads-the-stream-of-an-answer-s-answer",
         "tasks/a-shared-room-s-failed-streams-are-each-their-agent-s",
         "tasks/a-shared-transport-is-told-the-answer-never-the-task",
@@ -8013,7 +8018,11 @@
         "realtime/a-spared-handler-still-working-at-the-close-is-waited-for",
         "status/a-status-posted-after-close-starts-no-room-hook",
         "status/a-task-the-close-cuts-reaches-the-status-hooks-before-the-store-is-sealed",
-        "tasks/nonempty-task-and-observation-reads-remain-available-during-close"
+        "tasks/a-closing-kit-hands-a-cut-task-back-to-no-one-and-still-fires-its-completion",
+        "tasks/a-hand-back-under-way-as-the-kit-closes-is-cut-with-its-turn",
+        "tasks/a-task-announced-as-the-kit-s-close-began-ends-cancelled-before-it-runs",
+        "tasks/nonempty-task-and-observation-reads-remain-available-during-close",
+        "tasks/the-kit-s-close-cuts-an-inline-task-and-a-background-one-and-waits-for-their-ends"
       ]
     },
     {
@@ -8395,6 +8404,7 @@
         "delivery/a-keyed-delivery-s-off-lock-hook-changes-its-room-under-the-lock",
         "delivery/a-keyed-delivery-s-parse-changes-its-room-under-the-lock",
         "delivery/a-keyed-delivery-s-parse-sends-into-its-room-within-its-section",
+        "delivery/a-keyed-delivery-still-waiting-for-the-room-lock-at-its-process-timeout-writes-nothing",
         "delivery/a-keyed-delivery-takes-no-ticket-behind-an-off-lock-check",
         "delivery/a-keyed-delivery-whose-transport-is-detached-before-its-section-writes-nothing",
         "delivery/a-later-event-runs-after-a-held-greeting",
@@ -8522,6 +8532,7 @@
         "delivery/a-deferred-call-refused-under-the-lock-does-not-wait-for-its-adopted-call",
         "delivery/a-hook-waiting-on-an-adopted-call-whose-answer-sends-into-the-room-ends-at-the-timeout",
         "delivery/a-key-cuts-the-running-turn-of-its-delivery",
+        "delivery/a-keyed-delivery-still-waiting-for-the-room-lock-at-its-process-timeout-writes-nothing",
         "delivery/a-nested-call-before-its-commit-ends-at-its-caller-s-deadline",
         "delivery/an-adopted-call-cut-by-its-key-past-its-adopter-s-deadline",
         "delivery/an-adopted-call-cut-past-its-adopter-s-deadline",
@@ -9376,6 +9387,7 @@
         "delivery/an-address-names-who-acts-and-stays-on-the-event",
         "delivery/an-agent-detaching-after-it-acted-does-not-change-the-outcome",
         "delivery/an-agent-that-cannot-read-is-unavailable",
+        "delivery/an-intelligence-channel-named-as-the-channel-leaves-the-call-s-address-as-it-is",
         "hooks/an-injected-event-asks-no-agent",
         "orchestration/a-host-s-words-are-a-person-s-message-to-a-pipeline-s-routing",
         "orchestration/a-router-asks-its-default-agent-alone",
@@ -10782,6 +10794,8 @@
         "tasks/a-background-tool-keeps-its-turns-name-before-a-post",
         "tasks/a-background-tool-keeps-its-turns-name-before-a-relay",
         "tasks/a-background-worker-keeps-its-turns-task-boundary-after-a-store-patch",
+        "tasks/a-private-worker-s-tool-end-row-keeps-its-structured-copy-non-streaming",
+        "tasks/a-private-worker-s-tool-end-row-keeps-its-structured-copy-streaming",
         "tasks/a-worker-s-progress-reaches-the-agent-s-next-turn",
         "tasks/delegate-task-reaches-its-handler-as-its-gate-left-it-at-its-turn-s-depth",
         "tool-allowed-names/a-handler-reads-the-resolved-catalogue-and-first-round-reread-non-streaming",
@@ -10952,7 +10966,7 @@
       "decided_gaps": {
         "phase6": 21,
         "step": 2,
-        "writable": 10
+        "writable": 7
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -10970,22 +10984,26 @@
         "delivery/a-keyed-delivery-s-off-lock-hook-changes-its-room-under-the-lock",
         "delivery/a-keyed-delivery-s-parse-changes-its-room-under-the-lock",
         "delivery/a-keyed-delivery-s-parse-sends-into-its-room-within-its-section",
+        "delivery/a-keyed-delivery-still-waiting-for-the-room-lock-at-its-process-timeout-writes-nothing",
         "delivery/a-keyed-delivery-takes-no-ticket-behind-an-off-lock-check",
         "delivery/a-keyed-delivery-whose-transport-is-detached-before-its-section-writes-nothing",
         "delivery/a-message-keyed-like-a-publication-stands-in-for-none",
         "delivery/a-muted-agent-still-acts",
         "delivery/a-publication-key-is-scoped-to-its-room",
         "delivery/a-queued-delivery-is-executed-by-the-worker",
+        "delivery/a-queued-instruction-is-still-an-instruction-when-the-worker-retries-it",
         "delivery/a-replay-is-reported-as-the-original-publication",
         "delivery/a-retry-resolving-another-transport-is-the-same-publication",
         "delivery/a-set-a-keyed-delivery-s-hook-sends-records-its-failure-after-the-section",
         "delivery/a-set-a-keyed-delivery-s-hook-sends-writes-its-metadata-after-the-section",
         "delivery/a-source-detached-before-the-commit-refuses-the-delivery",
         "delivery/a-voice-transport-carries-a-delivery-first",
+        "delivery/an-address-beside-a-session-is-refused-before-anything-is-written",
         "delivery/an-address-names-who-acts-and-stays-on-the-event",
         "delivery/an-agent-detaching-after-it-acted-does-not-change-the-outcome",
         "delivery/an-agent-that-cannot-read-is-unavailable",
         "delivery/an-instruction-is-delivered-as-the-application-s-direction",
+        "delivery/an-intelligence-channel-named-as-the-channel-leaves-the-call-s-address-as-it-is",
         "delivery/an-intelligence-channel-named-is-carried-by-the-room-s-transport",
         "delivery/an-invalid-request-is-refused-before-anything-is-written",
         "delivery/an-invalid-request-is-refused-before-it-is-queued",
@@ -11018,8 +11036,8 @@
       },
       "decided_gaps": {
         "phase6": 6,
-        "step": 1,
-        "writable": 10
+        "step": 8,
+        "writable": 2
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -11027,7 +11045,9 @@
         "delivery/a-delivery-naming-a-chain-depth-continues-that-chain-queued-or-not",
         "delivery/a-delivery-queued-from-a-turn-carries-the-turn-s-depth",
         "delivery/a-queued-delivery-is-executed-by-the-worker",
+        "delivery/a-queued-instruction-is-still-an-instruction-when-the-worker-retries-it",
         "delivery/a-voice-transport-carries-a-delivery-first",
+        "delivery/an-after-deliver-hook-that-raises-leaves-the-queued-delivery-published-once",
         "delivery/an-invalid-request-is-refused-before-it-is-queued",
         "delivery/queued-delivers-a-lone-request-as-it-is",
         "delivery/the-worker-does-not-retry-a-refusal",
@@ -11045,15 +11065,17 @@
       "mapping": {
         "unmapped": 13
       },
-      "decided_gaps": {
-        "writable": 1
-      },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "delivery/a-before-broadcast-refusal-is-reported-to-the-caller-and-after-deliver",
         "delivery/a-before-deliver-refusal-is-reported-to-the-caller-and-after-deliver",
         "delivery/a-queued-delivery-is-executed-by-the-worker",
+        "delivery/a-queued-instruction-is-still-an-instruction-when-the-worker-retries-it",
         "delivery/a-replay-is-reported-as-the-original-publication",
+        "delivery/an-address-beside-a-session-is-refused-before-anything-is-written",
+        "delivery/an-after-deliver-hook-that-raises-leaves-the-outcome-as-it-is",
+        "delivery/an-after-deliver-hook-that-raises-leaves-the-queued-delivery-published-once",
         "delivery/an-instruction-is-delivered-as-the-application-s-direction",
         "delivery/an-invalid-request-is-refused-before-anything-is-written",
         "delivery/an-invalid-request-is-refused-before-it-is-queued",
@@ -11117,7 +11139,7 @@
       "decided_gaps": {
         "phase6": 5,
         "step": 9,
-        "writable": 6
+        "writable": 1
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -11196,6 +11218,7 @@
         "tasks/a-buffered-worker-whose-record-names-a-cut-fails-its-task",
         "tasks/a-child-room-belongs-to-its-parent-room-s-organization",
         "tasks/a-child-room-of-a-room-with-no-envelope-holds-the-delegation-s-keys-alone",
+        "tasks/a-closing-kit-hands-a-cut-task-back-to-no-one-and-still-fires-its-completion",
         "tasks/a-delegated-agent-s-failed-stream-fails-its-task-once-every-stream-is-kept",
         "tasks/a-delegated-agent-s-streamed-answer-is-kept-as-one-message",
         "tasks/a-delegated-reply-that-fails-is-reported-once-on-either-path",
@@ -11229,11 +11252,14 @@
         "tasks/a-hand-back-leaves-the-notified-agent-s-prompt-as-its-binding-holds-it",
         "tasks/a-hand-back-to-a-channel-the-room-does-not-bind-tells-nothing",
         "tasks/a-hand-back-to-a-transport-is-the-result-alone",
+        "tasks/a-hand-back-under-way-as-the-kit-closes-is-cut-with-its-turn",
         "tasks/a-helper-cut-short-leaves-the-task-to-its-worker-that-owes-a-result",
         "tasks/a-muted-agent-s-answer-in-a-delegated-room-is-kept-once",
         "tasks/a-person-named-like-an-agent-s-label-reads-as-a-participant-in-a-worker-s-brief",
         "tasks/a-posted-result-crosses-the-room-s-before-broadcast-hooks",
         "tasks/a-posted-result-says-its-task-failed-or-was-cancelled-never-its-error",
+        "tasks/a-private-worker-s-tool-end-row-keeps-its-structured-copy-non-streaming",
+        "tasks/a-private-worker-s-tool-end-row-keeps-its-structured-copy-streaming",
         "tasks/a-re-prompt-never-reaches-a-shared-transport",
         "tasks/a-re-prompted-worker-s-task-carries-its-last-turn-s-record-only",
         "tasks/a-relayed-task-result-names-its-worker-by-the-discussion-handle",
@@ -11252,6 +11278,7 @@
         "tasks/a-structured-delegation-refuses-the-workers-own-result-tool",
         "tasks/a-submit-round-that-gives-the-model-more-asks-it-again",
         "tasks/a-submitted-result-normalizes-nested-summary-and-reason-values",
+        "tasks/a-task-announced-as-the-kit-s-close-began-ends-cancelled-before-it-runs",
         "tasks/a-task-carries-its-worker-s-turn-record",
         "tasks/a-task-cut-before-its-worker-wrote-any-text-fails-with-no-output",
         "tasks/a-task-s-context-never-says-how-its-turn-ended",
@@ -11285,6 +11312,7 @@
         "tasks/one-agent-s-failure-in-a-delegated-room-never-carries-another-s-end",
         "tasks/start-task-runs-an-agent-s-work-in-the-background",
         "tasks/the-kit-cancels-a-background-task-once",
+        "tasks/the-kit-s-close-cuts-an-inline-task-and-a-background-one-and-waits-for-their-ends",
         "tasks/two-background-delegations-of-a-room-run-at-once-each-to-its-own-end",
         "turn-record/a-delegated-turn-s-row-carries-no-value-under-turns"
       ]
@@ -11301,7 +11329,7 @@
       "decided_gaps": {
         "phase6": 2,
         "step": 3,
-        "writable": 2
+        "writable": 1
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -11323,6 +11351,7 @@
         "tasks/a-background-tool-keeps-its-turns-name-before-a-relay",
         "tasks/a-background-worker-keeps-its-turns-task-boundary-after-a-store-patch",
         "tasks/a-failed-task-with-nothing-to-say-is-handed-back-as-failed",
+        "tasks/a-handler-serialized-per-room-delegates-a-room-s-calls-one-at-a-time",
         "tasks/a-line-for-a-task-the-room-does-not-hold-is-no-task-here",
         "tasks/a-line-the-bus-lists-ended-is-answered-as-it-lists-it",
         "tasks/a-own-task-status-tool-names-the-discussion-worker-by-handle",
@@ -44544,12 +44573,7 @@
       "id": "RK-22.1-025",
       "section": "22.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1917",
-        "note": "Supply an intelligence-channel transport alias and a different explicit intelligence target. The current alias scenario omits the address."
-      }
+      "links": []
     },
     {
       "id": "RK-22.1-026",
@@ -44776,12 +44800,7 @@
       "id": "RK-22.1-057",
       "section": "22.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1917",
-        "note": "Supply addressed_to, a channel and session_id on the same delivery. The existing invalid-request scenario only supplies session_id without a channel."
-      }
+      "links": []
     },
     {
       "id": "RK-22.1-058",
@@ -44829,12 +44848,7 @@
       "id": "RK-22.1-065",
       "section": "22.1",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1917",
-        "note": "Use process_timeout_ms, a second call holding the room lock, and a keyed publication; assert blocked/process_timeout and no event."
-      }
+      "links": []
     },
     {
       "id": "RK-22.1-066",
@@ -45215,9 +45229,9 @@
       "mapping": "unmapped",
       "links": [],
       "gap": {
-        "class": "writable",
+        "class": "step",
         "card": "RMK-1917",
-        "note": "Use concurrent calls with the shared queued strategy. The current queued-strategy scenario only checks a lone item. Reading a custom separator or controlling the inactivity clock may need a fixture."
+        "note": "step: a setup member giving the kit its own delivery strategy, a Queued that every deliver naming no strategy shares (RoomKit's delivery_strategy), with its buffer and separator (family S23, the deliver arguments of WaitForIdle and Queued): both runners build a fresh strategy for each deliver naming queued, so no two calls ever share a queue or a drain and nothing is batched. Probe: the second of two queued deliveries, into another room, reaches its publication while the first's is held under its room's lock, on both runners."
       }
     },
     {
@@ -45265,9 +45279,9 @@
       "mapping": "unmapped",
       "links": [],
       "gap": {
-        "class": "writable",
+        "class": "step",
         "card": "RMK-1917",
-        "note": "Queue concurrent text requests that differ in room, transport or intelligence address and assert they are kept separate."
+        "note": "step: a setup member giving the kit its own delivery strategy, a Queued that every deliver naming no strategy shares (RoomKit's delivery_strategy), with its buffer and separator (family S23, the deliver arguments of WaitForIdle and Queued): both runners build a fresh strategy for each deliver naming queued, so no two calls ever share a queue or a drain and nothing is batched. Probe: the second of two queued deliveries, into another room, reaches its publication while the first's is held under its room's lock, on both runners."
       }
     },
     {
@@ -45287,9 +45301,9 @@
       "mapping": "unmapped",
       "links": [],
       "gap": {
-        "class": "writable",
+        "class": "step",
         "card": "RMK-1917",
-        "note": "Queue otherwise identical requests with incompatible metadata or instruction/message intents; assert that neither is merged into the other."
+        "note": "step: a setup member giving the kit its own delivery strategy, a Queued that every deliver naming no strategy shares (RoomKit's delivery_strategy), with its buffer and separator (family S23, the deliver arguments of WaitForIdle and Queued): both runners build a fresh strategy for each deliver naming queued, so no two calls ever share a queue or a drain and nothing is batched. Probe: the second of two queued deliveries, into another room, reaches its publication while the first's is held under its room's lock, on both runners."
       }
     },
     {
@@ -45298,9 +45312,9 @@
       "mapping": "unmapped",
       "links": [],
       "gap": {
-        "class": "writable",
+        "class": "step",
         "card": "RMK-1917",
-        "note": "Submit two concurrent queued text deliveries with distinct keys, then inspect their keys, event IDs and outcomes."
+        "note": "step: a setup member giving the kit its own delivery strategy, a Queued that every deliver naming no strategy shares (RoomKit's delivery_strategy), with its buffer and separator (family S23, the deliver arguments of WaitForIdle and Queued): both runners build a fresh strategy for each deliver naming queued, so no two calls ever share a queue or a drain and nothing is batched. Probe: the second of two queued deliveries, into another room, reaches its publication while the first's is held under its room's lock, on both runners."
       }
     },
     {
@@ -45309,9 +45323,9 @@
       "mapping": "unmapped",
       "links": [],
       "gap": {
-        "class": "writable",
+        "class": "step",
         "card": "RMK-1917",
-        "note": "Block a first delivery and submit other queued calls before and during its execution; assert distinct returned outcomes."
+        "note": "step: a setup member giving the kit its own delivery strategy, a Queued that every deliver naming no strategy shares (RoomKit's delivery_strategy), with its buffer and separator (family S23, the deliver arguments of WaitForIdle and Queued): both runners build a fresh strategy for each deliver naming queued, so no two calls ever share a queue or a drain and nothing is batched. Probe: the second of two queued deliveries, into another room, reaches its publication while the first's is held under its room's lock, on both runners."
       }
     },
     {
@@ -45320,9 +45334,9 @@
       "mapping": "unmapped",
       "links": [],
       "gap": {
-        "class": "writable",
+        "class": "step",
         "card": "RMK-1917",
-        "note": "Make a hook holding a lock deliver while another caller drains the same shared queue; exercise same and different room cases."
+        "note": "step: a setup member giving the kit its own delivery strategy, a Queued that every deliver naming no strategy shares (RoomKit's delivery_strategy), with its buffer and separator (family S23, the deliver arguments of WaitForIdle and Queued): both runners build a fresh strategy for each deliver naming queued, so no two calls ever share a queue or a drain and nothing is batched. Probe: the second of two queued deliveries, into another room, reaches its publication while the first's is held under its room's lock, on both runners."
       }
     },
     {
@@ -45331,9 +45345,9 @@
       "mapping": "unmapped",
       "links": [],
       "gap": {
-        "class": "writable",
+        "class": "step",
         "card": "RMK-1917",
-        "note": "Have a locked hook call the shared queue while no drain is running; check it follows the ordinary drain path, including waiting callers."
+        "note": "step: a setup member giving the kit its own delivery strategy, a Queued that every deliver naming no strategy shares (RoomKit's delivery_strategy), with its buffer and separator (family S23, the deliver arguments of WaitForIdle and Queued): both runners build a fresh strategy for each deliver naming queued, so no two calls ever share a queue or a drain and nothing is batched. Probe: the second of two queued deliveries, into another room, reaches its publication while the first's is held under its room's lock, on both runners."
       }
     },
     {
@@ -45357,12 +45371,7 @@
       "id": "RK-22.2-032",
       "section": "22.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1917",
-        "note": "Queue an instruction for an addressed agent through a delivery backend, force a retry, and assert an instruction reaches the target rather than a participant message."
-      }
+      "links": []
     },
     {
       "id": "RK-22.2-022",
@@ -45445,12 +45454,7 @@
       "id": "RK-22.3-006",
       "section": "22.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1917",
-        "note": "Raise from AFTER_DELIVER and compare the committed event and caller outcome to the successful case."
-      }
+      "links": []
     },
     {
       "id": "RK-22.3-007",
@@ -45704,12 +45708,7 @@
       "id": "RK-23.3-018",
       "section": "23.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1922",
-        "note": "Have a private worker publish structured content on a served tool call and inspect the structured copy of its stored child end row."
-      }
+      "links": []
     },
     {
       "id": "RK-23.3-019",
@@ -46203,12 +46202,7 @@
       "id": "RK-23.3-085",
       "section": "23.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1922",
-        "note": "Hold inline and background workers at model gates, call framework close and observe cancellation and completion before the store is released."
-      }
+      "links": []
     },
     {
       "id": "RK-23.3-086",
@@ -46225,12 +46219,7 @@
       "id": "RK-23.3-087",
       "section": "23.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1922",
-        "note": "Hold a newly announced task at the announcement/worker boundary, close the kit, then verify terminal status and no worker invocation."
-      }
+      "links": []
     },
     {
       "id": "RK-23.3-088",
@@ -46254,23 +46243,13 @@
       "id": "RK-23.3-091",
       "section": "23.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1922",
-        "note": "Close a kit holding a notified task, observe the completion hook and absence of a new recipient turn; the diagnostic log additionally needs a log observer."
-      }
+      "links": []
     },
     {
       "id": "RK-23.3-092",
       "section": "23.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1922",
-        "note": "Gate a recipient model already handling a hand-back, close the kit and inspect the cancelled response, waiter and absence of subsequent stored output."
-      }
+      "links": []
     },
     {
       "id": "RK-23.3-093",
@@ -46706,12 +46685,7 @@
       "id": "RK-23.4-035",
       "section": "23.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1922",
-        "note": "Gate concurrent calls on one configured handler and observe at most one active delegation in the same room, with another room still able to progress."
-      }
+      "links": []
     },
     {
       "id": "RK-23.4-036",
