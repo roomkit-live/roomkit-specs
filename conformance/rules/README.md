@@ -30,7 +30,7 @@ proof: a scenario can cite a unit without covering all of it.
 | [§3 Architecture Overview](section-3.md) | 3 | 0 | 0 | 0 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | [§4 Core Concepts](section-4.md) | 11 | 0 | 0 | 0 | 11 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | [§5 Data Models](section-5.md) | 184 | 171 | 9 | 4 | 0 | 169 | 677 | 0 | 0 | 0 | 0 | 0 |
-| [§6 Channel System](section-6.md) | 661 | 644 | 7 | 10 | 0 | 514 | 2791 | 0 | 78 | 9 | 67 | 4 |
+| [§6 Channel System](section-6.md) | 661 | 644 | 7 | 10 | 0 | 530 | 2813 | 0 | 62 | 3 | 61 | 0 |
 | [§7 Permission Model](section-7.md) | 85 | 84 | 0 | 1 | 0 | 83 | 339 | 0 | 0 | 0 | 0 | 0 |
 | [§8 Event System](section-8.md) | 177 | 176 | 1 | 0 | 0 | 141 | 1235 | 0 | 32 | 4 | 15 | 13 |
 | [§9 Hook System](section-9.md) | 350 | 343 | 3 | 4 | 0 | 333 | 1342 | 0 | 0 | 0 | 0 | 0 |

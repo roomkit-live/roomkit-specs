@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "33537d69e3a9184b9823e418ee3590c952b76c8289b7720b141fbbe13dd1fbf0",
-  "corpus_sha256": "acc3ad8c8bf1c0642a622c1b65a04bb15a934564185addbb394581a39cbd1e02",
+  "corpus_sha256": "ba20d436ddf1f43747ca9b66a5c55495860a138e12fffe650df4217b196df28d",
   "python_commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
-  "scenario_count": 4241,
+  "scenario_count": 4257,
   "sections": [
     {
       "section": "0",
@@ -987,14 +987,15 @@
         "unmapped": 11
       },
       "decided_gaps": {
-        "step": 1,
-        "writable": 1
+        "step": 1
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "hooks/a-channel-types-filter-naming-a-type-no-table-lists-runs-for-its-events",
         "inbound/a-channel-of-a-type-no-table-lists-keeps-that-type-on-its-records",
-        "permissions/a-channel-claiming-the-system-type-is-refused"
+        "permissions/a-channel-claiming-the-system-type-is-refused",
+        "video/a-video-an-audio-video-and-a-conference-channel-bind-as-transports-of-their-media",
+        "voice/a-voice-and-a-realtime-channel-bind-as-transports-of-audio-and-text"
       ]
     },
     {
@@ -1006,11 +1007,13 @@
         "unmapped": 7
       },
       "decided_gaps": {
-        "step": 3,
-        "writable": 2
+        "step": 3
       },
       "unannotated_keyword_lines": [],
-      "candidate_scenarios": []
+      "candidate_scenarios": [
+        "video/a-video-an-audio-video-and-a-conference-channel-bind-as-transports-of-their-media",
+        "voice/a-voice-and-a-realtime-channel-bind-as-transports-of-audio-and-text"
+      ]
     },
     {
       "section": "6.4",
@@ -1022,9 +1025,8 @@
         "unmapped": 476
       },
       "decided_gaps": {
-        "phase6": 4,
-        "step": 51,
-        "writable": 5
+        "step": 45,
+        "writable": 2
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -1455,6 +1457,7 @@
         "author-images/the-bound-is-the-channel-s-to-change",
         "author-images/the-store-and-broadcasts-keep-the-event-as-stored",
         "chain/a-notice-past-the-depth-limit-leaves-no-record",
+        "conference/an-agent-reads-the-first-turn-of-a-conference-participant-under-their-name",
         "delivery/a-key-cut-after-a-round-that-spoke-tells-its-caller-the-turn-s-end",
         "delivery/a-key-cut-between-rounds-tells-its-caller-the-turn-s-end",
         "delivery/a-later-event-s-answer-ready-first-is-stored-first",
@@ -1713,8 +1716,14 @@
         "realtime/a-call-the-agent-backend-s-provider-served-is-reported-once",
         "realtime/a-call-whose-arguments-came-as-text-is-refused-before-the-gate",
         "realtime/a-call-without-an-id-through-call-tool-is-reported-under-the-tool-it-carries",
+        "realtime/a-called-tool-stays-declared-for-the-session-s-catalogue",
         "realtime/a-later-tool-under-a-name-the-agent-serves-is-not-declared",
+        "realtime/a-recovered-call-s-header-is-no-mark-and-a-participant-s-copy-stays-quoted",
+        "realtime/a-replaced-catalogue-keeps-no-called-tool-and-an-old-call-retains-nothing",
+        "realtime/a-search-judged-across-a-new-catalogue-declares-nothing",
+        "realtime/a-search-s-matches-are-declared-once-its-result-went-out",
         "realtime/a-session-s-delegations-run-one-at-a-time-each-reading-the-last",
+        "realtime/an-agent-backend-asking-for-intents-takes-the-property-out-of-its-calls",
         "realtime/an-agent-backend-asks-again-after-a-call-its-provider-could-not-parse",
         "realtime/an-agent-backend-asks-again-after-an-empty-answer",
         "realtime/an-agent-backend-re-reads-a-stored-result-in-its-own-loop",
@@ -2407,7 +2416,14 @@
         "turn-tool-timeouts/route-before-bound-whole",
         "verification/a-released-message-s-turn-reads-what-came-after-it",
         "video/a-view-that-tries-to-close-its-block-stays-inside-it",
-        "video/a-vision-result-rides-the-turn-of-the-room-s-agent"
+        "video/a-vision-result-rides-the-turn-of-the-room-s-agent",
+        "voice/a-barge-in-on-the-agent-s-answer-leaves-a-record-its-next-turn-reads-as-cut",
+        "voice/a-cut-answer-reads-followed-by-a-mark-and-the-turn-s-notes-say-how",
+        "voice/a-cut-mark-quotes-the-agent-s-words-fenced-its-copied-marks-replaced-and-keeps-their-end",
+        "voice/a-malformed-cut-record-fails-no-turn",
+        "voice/a-meeting-bridged-into-one-stream-reads-its-first-speaker-s-turn-under-their-name",
+        "voice/only-a-cut-record-a-voice-channel-of-the-room-wrote-counts",
+        "voice/the-words-a-cut-mark-quotes-follow-the-share-played-or-eleven-letters-a-second"
       ]
     },
     {
@@ -6666,6 +6682,7 @@
         "voice/a-tts-consuming-self-receives-its-own-played-turns-only",
         "voice/a-tts-consuming-text-receives-both-roles-of-the-session-s-dialogue",
         "voice/a-tts-without-a-voices-endpoint-lists-its-curated-catalog",
+        "voice/a-voice-and-a-realtime-channel-bind-as-transports-of-audio-and-text",
         "voice/after-tts-reports-the-sentences-before-tts-let-through",
         "voice/an-audio-tts-without-include-audio-receives-the-text-only",
         "voice/an-echo-verdict-ends-with-its-utterance-s-final",
@@ -6749,6 +6766,7 @@
         "voice/a-final-discarded-as-echo-leaves-a-kept-stream-open",
         "voice/a-kept-stream-s-pause-is-filled-with-silence-level-with-the-clock",
         "voice/a-language-chosen-mid-session-ends-a-diarizing-stream",
+        "voice/a-meeting-bridged-into-one-stream-reads-its-first-speaker-s-turn-under-their-name",
         "voice/a-participant-not-reached-on-the-voice-channel-is-not-the-speaker",
         "voice/a-reply-still-produced-holds-back-no-next-segment",
         "voice/a-stage-s-speaker-is-read-as-a-recognizer-label",
@@ -7003,8 +7021,11 @@
         "voice/a-backchannel-heard-only-with-its-final-leaves-the-reply-playing",
         "voice/a-backchannel-leaves-no-turn-in-the-context",
         "voice/a-barge-in-before-allow-during-first-ms-of-playback-cuts-nothing",
+        "voice/a-barge-in-on-the-agent-s-answer-leaves-a-record-its-next-turn-reads-as-cut",
+        "voice/a-cut-answer-reads-followed-by-a-mark-and-the-turn-s-notes-say-how",
         "voice/a-cut-answer-s-record-names-the-answer-not-the-listener",
         "voice/a-cut-drops-the-unplayed-audio-unless-flush-partial-tts-is-off",
+        "voice/a-cut-mark-quotes-the-agent-s-words-fenced-its-copied-marks-replaced-and-keeps-their-end",
         "voice/a-cut-reply-is-stored-as-interrupted-with-how-far-it-played",
         "voice/a-file-played-whole-counts-toward-the-echo-guard",
         "voice/a-final-adding-a-word-after-the-reply-ended-is-the-turn",
@@ -7013,6 +7034,7 @@
         "voice/a-final-discarded-as-echo-leaves-a-kept-stream-open",
         "voice/a-final-ending-on-part-of-the-reply-s-word-is-no-echo",
         "voice/a-lone-partial-word-starting-the-reply-s-first-word-cuts",
+        "voice/a-malformed-cut-record-fails-no-turn",
         "voice/a-new-voice-repeating-the-reply-it-spoke-over-is-no-turn",
         "voice/a-new-voice-s-first-words-cut-the-reply-and-its-echo-final-does-not-undo-it",
         "voice/a-partial-ending-on-the-start-of-the-reply-s-next-word-is-echo",
@@ -7041,11 +7063,13 @@
         "voice/disabled-speech-during-playback-waits-for-the-reply-to-end",
         "voice/immediate-with-a-vad-cuts-before-words-can-tell-an-echo",
         "voice/loud-audio-with-no-words-waits-transcript-wait-ms-before-it-cuts-on-its-duration",
+        "voice/only-a-cut-record-a-voice-channel-of-the-room-wrote-counts",
         "voice/past-echo-guard-ms-of-played-audio-the-reply-s-own-words-cut-it",
         "voice/speech-held-for-the-detector-s-verdict-reaches-no-room-before-it",
         "voice/speech-that-cuts-the-reply-is-the-user-s-turn",
         "voice/speech-the-recognizer-starts-once-nothing-plays-is-nobody-s-echo",
         "voice/the-detector-is-told-a-partial-from-the-final-and-never-asked-at-an-empty-onset",
+        "voice/the-words-a-cut-mark-quotes-follow-the-share-played-or-eleven-letters-a-second",
         "voice/with-a-streaming-stt-semantic-waits-past-min-speech-ms-for-the-first-words",
         "voice/with-a-streaming-stt-wordless-speech-is-judged-once-transcript-wait-ms-passed",
         "voice/with-the-echo-guard-off-the-reply-s-own-words-cut-it",
@@ -7162,6 +7186,7 @@
         "realtime/a-call-without-an-id-on-an-ended-session-is-reported-cancelled",
         "realtime/a-call-without-an-id-through-call-tool-is-reported-under-the-tool-it-carries",
         "realtime/a-call-without-an-id-waits-for-the-transcription-before-it",
+        "realtime/a-called-tool-stays-declared-for-the-session-s-catalogue",
         "realtime/a-denied-or-skill-closed-tool-is-refused-before-its-arguments-are-read",
         "realtime/a-denied-tool-is-not-declared-and-its-call-is-refused",
         "realtime/a-failed-start-discards-the-audio-it-retained",
@@ -7177,8 +7202,12 @@
         "realtime/a-pipeline-vad-takes-the-role-its-provider-sets",
         "realtime/a-pipeline-vad-that-endpoints-takes-the-speech-edges-from-the-provider",
         "realtime/a-provider-that-cannot-call-tools-is-declared-none",
+        "realtime/a-recovered-call-s-header-is-no-mark-and-a-participant-s-copy-stays-quoted",
+        "realtime/a-replaced-catalogue-keeps-no-called-tool-and-an-old-call-retains-nothing",
         "realtime/a-report-an-ending-catches-keeps-the-outcome-already-decided",
         "realtime/a-role-the-store-holds-at-the-start-shapes-the-declared-tools",
+        "realtime/a-search-judged-across-a-new-catalogue-declares-nothing",
+        "realtime/a-search-s-matches-are-declared-once-its-result-went-out",
         "realtime/a-session-starts-with-its-own-configuration-else-its-room-s-else-the-channel-s",
         "realtime/a-skill-activation-declares-no-denied-tool",
         "realtime/a-spared-handler-past-the-close-s-bound-is-cut-and-reported-once",
@@ -7223,7 +7252,8 @@
         "tools/a-round-s-results-each-keep-their-tool-s-name",
         "tools/a-second-call-under-a-held-id-is-refused-before-it-reads-as-cut",
         "tools/a-second-call-under-an-id-in-its-round-is-refused",
-        "tools/another-turn-among-a-round-s-starts-leaves-its-results-paired"
+        "tools/another-turn-among-a-round-s-starts-leaves-its-results-paired",
+        "voice/a-voice-and-a-realtime-channel-bind-as-transports-of-audio-and-text"
       ]
     },
     {
@@ -7265,6 +7295,7 @@
         "realtime/a-session-s-delegations-run-one-at-a-time-each-reading-the-last",
         "realtime/a-session-tool-under-a-name-the-agent-serves-is-refused",
         "realtime/a-skill-activation-on-a-fixed-session-reconfigures-nothing",
+        "realtime/an-agent-backend-asking-for-intents-takes-the-property-out-of-its-calls",
         "realtime/an-agent-backend-asks-again-after-a-call-its-provider-could-not-parse",
         "realtime/an-agent-backend-asks-again-after-an-empty-answer",
         "realtime/an-agent-backend-re-reads-a-stored-result-in-its-own-loop",
@@ -7516,6 +7547,7 @@
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "video/a-frame-filter-reports-its-detection",
+        "video/a-video-an-audio-video-and-a-conference-channel-bind-as-transports-of-their-media",
         "video/a-video-session-announces-its-start-and-end",
         "video/a-vision-hook-controls-the-result-that-is-published",
         "video/a-vision-result-with-no-description-is-not-published",
@@ -7718,7 +7750,9 @@
       },
       "decided_gaps": {},
       "unannotated_keyword_lines": [],
-      "candidate_scenarios": []
+      "candidate_scenarios": [
+        "video/a-video-an-audio-video-and-a-conference-channel-bind-as-transports-of-their-media"
+      ]
     },
     {
       "section": "12.10.1",
@@ -7872,6 +7906,7 @@
         "conference/a-speaker-change-identifies-the-dominant-participant",
         "conference/a-speech-to-speech-bot-joins-to-listen-and-to-speak",
         "conference/a-voice-plugged-onto-a-listening-bot-widens-its-grants-in-place",
+        "conference/an-agent-reads-the-first-turn-of-a-conference-participant-under-their-name",
         "conference/an-attach-over-an-empty-conference-joins-nothing",
         "conference/an-attach-over-an-occupied-conference-joins-the-bot",
         "conference/an-attach-returns-while-its-probe-is-held",
@@ -14271,12 +14306,7 @@
       "id": "RK-6.2-003",
       "section": "6.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1955",
-        "note": "The bindings expectation after voice.open, video.open and conference.open, with a realtime channel bound, shows the VOICE, REALTIME_VOICE, VIDEO and CONFERENCE rows; AUDIO_VIDEO and REALTIME_AUDIO_VIDEO need an audio-video channel fixture (requires voice, realtime, video and conference)."
-      }
+      "links": []
     },
     {
       "id": "RK-6.2-004",
@@ -14358,12 +14388,7 @@
       "id": "RK-6.3-004",
       "section": "6.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1955",
-        "note": "The bindings expectation after voice.open and of a bound realtime channel shows the Voice and Realtime Voice rows, AUDIO and TEXT (requires voice and realtime)."
-      }
+      "links": []
     },
     {
       "id": "RK-6.3-005",
@@ -14380,12 +14405,7 @@
       "id": "RK-6.3-006",
       "section": "6.3",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1955",
-        "note": "The bindings expectation after video.open and conference.open shows the Video and Conference rows; the two audio-video rows, AUDIO, VIDEO and TEXT, need an audio-video channel fixture (requires video and conference)."
-      }
+      "links": []
     },
     {
       "id": "RK-6.3-007",
@@ -14946,12 +14966,7 @@
       "id": "RK-6.4-121",
       "section": "6.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1911",
-        "note": "step: a scripted realtime reasoning backend: an agent with the option that a realtime session delegates to."
-      }
+      "links": []
     },
     {
       "id": "RK-6.4-122",
@@ -15584,12 +15599,7 @@
       "id": "RK-6.4-205",
       "section": "6.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1911",
-        "note": "voice.open with a playback_gate, voice.stream, then voice.barge_in: the timeline holds the record naming the cut answer (requires voice)."
-      }
+      "links": []
     },
     {
       "id": "RK-6.4-206",
@@ -15606,12 +15616,7 @@
       "id": "RK-6.4-207",
       "section": "6.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1911",
-        "note": "A scenario can store the cut record through the store calls (a binding and an internal event of a voice channel) on Python today; roomkit-rs reads no cut record, so the scenario needs a requires_features name in both runners' feature tables (decision D1), which lot T-1 does not add."
-      }
+      "links": []
     },
     {
       "id": "RK-6.4-208",
@@ -15628,34 +15633,19 @@
       "id": "RK-6.4-209",
       "section": "6.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1911",
-        "note": "A scenario can store the cut record through the store calls (a binding and an internal event of a voice channel) on Python today; roomkit-rs reads no cut record, so the scenario needs a requires_features name in both runners' feature tables (decision D1), which lot T-1 does not add."
-      }
+      "links": []
     },
     {
       "id": "RK-6.4-210",
       "section": "6.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1911",
-        "note": "A scenario can store the cut record through the store calls (a binding and an internal event of a voice channel) on Python today; roomkit-rs reads no cut record, so the scenario needs a requires_features name in both runners' feature tables (decision D1), which lot T-1 does not add."
-      }
+      "links": []
     },
     {
       "id": "RK-6.4-211",
       "section": "6.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1911",
-        "note": "A scenario can store the cut record through the store calls (a binding and an internal event of a voice channel) on Python today; roomkit-rs reads no cut record, so the scenario needs a requires_features name in both runners' feature tables (decision D1), which lot T-1 does not add."
-      }
+      "links": []
     },
     {
       "id": "RK-6.4-212",
@@ -15694,34 +15684,19 @@
       "id": "RK-6.4-215",
       "section": "6.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1911",
-        "note": "voice.open with a playback_gate, voice.stream, then voice.barge_in: the cut record keeps the text handed to speech and how long it played, matched loosely (requires voice)."
-      }
+      "links": []
     },
     {
       "id": "RK-6.4-216",
       "section": "6.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1911",
-        "note": "A scenario can store the cut record through the store calls (a binding and an internal event of a voice channel) on Python today; roomkit-rs reads no cut record, so the scenario needs a requires_features name in both runners' feature tables (decision D1), which lot T-1 does not add."
-      }
+      "links": []
     },
     {
       "id": "RK-6.4-217",
       "section": "6.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "step",
-        "card": "RMK-1911",
-        "note": "A scenario can store the cut record through the store calls (a binding and an internal event of a voice channel) on Python today; roomkit-rs reads no cut record, so the scenario needs a requires_features name in both runners' feature tables (decision D1), which lot T-1 does not add."
-      }
+      "links": []
     },
     {
       "id": "RK-6.4-218",
@@ -15805,12 +15780,7 @@
       "id": "RK-6.4-230",
       "section": "6.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1940",
-        "note": "step: Tool Search on a realtime session, realtime.read of the session configuration: a realtime session declaring what a served find_tools call revealed, and a reconfiguration while the call was judged."
-      }
+      "links": []
     },
     {
       "id": "RK-6.4-231",
@@ -15852,12 +15822,7 @@
       "id": "RK-6.4-237",
       "section": "6.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1940",
-        "note": "step: Tool Search on a realtime session, realtime.read of the session configuration: a reconfigurable realtime session's retention of a called tool, and a call from an earlier catalogue revealing nothing into its replacement."
-      }
+      "links": []
     },
     {
       "id": "RK-6.4-238",
@@ -16232,12 +16197,7 @@
       "id": "RK-6.4-294",
       "section": "6.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1940",
-        "note": "step: a realtime call recovered from speech: the headers a realtime host injects into its own session are no marks."
-      }
+      "links": []
     },
     {
       "id": "RK-6.4-295",
@@ -16891,12 +16851,7 @@
       "id": "RK-6.4-368",
       "section": "6.4",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1940",
-        "note": "conference.join: the participants expectation shows the person the conference keeps on its roster; the labelled first turn needs pipeline_speakers on voice.open and an on_transcription hook naming the participant (requires conference and voice)."
-      }
+      "links": []
     },
     {
       "id": "RK-6.4-369",
