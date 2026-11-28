@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "258d0eb4bfc7c40a6053df6c5b07adfce6d1b2e3e73299101840581dbde2f4b6",
-  "corpus_sha256": "f761e60edb42281f25a21456a962e6513e011d349396e747ddb9cd096a6d349c",
+  "corpus_sha256": "72521bcff7f6d22911dbc1c23e76b2167d1384465a7912914cbfc0f2240484e3",
   "python_commit": "49f123680f443c1d81841d7a194929d2f53fc03b",
-  "scenario_count": 4313,
+  "scenario_count": 4324,
   "sections": [
     {
       "section": "0",
@@ -2977,7 +2977,7 @@
         "unmapped": 63
       },
       "decided_gaps": {
-        "phase6": 7,
+        "phase6": 4,
         "step": 10
       },
       "unannotated_keyword_lines": [],
@@ -3079,6 +3079,8 @@
         "verification/a-completed-request-verifies-the-identity",
         "verification/a-hook-past-its-timeout-leaves-the-message-held",
         "verification/a-verification-ends-when-its-time-runs-out",
+        "video/a-published-vision-result-is-a-framework-event-carrying-its-analysis",
+        "video/a-video-session-s-start-and-end-are-framework-events-of-its-room-session-and-channel",
         "voice/a-session-whose-playback-fails-is-reported-and-the-served-one-fires-after-tts",
         "voice/an-encoded-tts-chunk-never-reaches-the-transport",
         "voice/no-session-served-fires-no-after-tts"
@@ -7655,6 +7657,8 @@
         "video/a-filter-s-replacement-is-the-frame-the-bridge-and-vision-receive",
         "video/a-frame-inside-the-vision-interval-is-not-analysed",
         "video/a-frame-past-the-vision-interval-is-analysed",
+        "video/a-published-vision-result-is-a-framework-event-carrying-its-analysis",
+        "video/a-session-auditor-records-a-vision-result-as-a-system-entry-of-its-description",
         "video/a-vision-result-rides-the-turn-of-the-room-s-agent",
         "video/an-empty-vision-result-ends-the-session-s-view",
         "video/every-frame-of-a-recorded-session-reaches-its-recorder",
@@ -7774,7 +7778,9 @@
       },
       "decided_gaps": {},
       "unannotated_keyword_lines": [],
-      "candidate_scenarios": []
+      "candidate_scenarios": [
+        "video/a-published-vision-result-is-a-framework-event-carrying-its-analysis"
+      ]
     },
     {
       "section": "12.9",
@@ -7831,9 +7837,11 @@
       "candidate_scenarios": [
         "conference/a-backend-s-own-address-key-is-read-and-another-provider-s-is-not",
         "conference/a-backend-that-cannot-tell-provenance-yields-no-address",
+        "conference/a-conference-is-unencrypted-unless-e2ee-asks-it-of-a-backend-that-can",
         "conference/a-dial-in-is-resolved-on-arrival-on-the-caller-number-its-sfu-asserts",
         "conference/a-dial-in-reaches-the-identity-a-text-from-its-number-reaches",
         "conference/a-mint-hands-the-backend-the-room-s-participant-and-its-name-and-no-attribute",
+        "conference/a-mint-with-no-grants-is-permissive-and-a-narrowed-one-keeps-its-narrowing",
         "conference/a-naive-joined-at-still-ends-the-conference-with-its-duration",
         "conference/a-provider-attribute-never-overwrites-the-integrator-s-field",
         "conference/a-resolver-that-raises-keeps-no-one-out-of-the-conference",
@@ -7892,7 +7900,9 @@
         "conference/a-close-reports-a-recording-whose-finalization-it-stopped-waiting-for",
         "conference/a-close-reports-the-backend-a-mint-still-holds-and-closes-it-once-the-mint-ends",
         "conference/a-closed-collection-gate-closes-the-lanes",
+        "conference/a-conference-channel-binds-as-a-bidirectional-transport-of-audio",
         "conference/a-conference-is-refused-while-the-last-one-s-deferred-teardown-holds-the-room",
+        "conference/a-conference-is-unencrypted-unless-e2ee-asks-it-of-a-backend-that-can",
         "conference/a-conference-session-starts-once-however-many-participants-arrive",
         "conference/a-conference-that-hears-and-says-nothing-never-joins",
         "conference/a-conference-that-never-joins-still-admits-and-keeps-the-roster",
@@ -7901,6 +7911,7 @@
         "conference/a-detach-closes-the-lanes-and-the-recordings-before-the-leave-and-announces-the-end-last",
         "conference/a-detach-from-an-announcement-s-handler-runs-its-teardown-after-it",
         "conference/a-detach-leaves-only-where-the-bot-joined",
+        "conference/a-detach-leaves-the-room-and-closes-it-only-with-close-room-on-detach",
         "conference/a-detach-waits-for-a-held-mint-which-returns-no-credential",
         "conference/a-detach-with-no-bot-announces-no-end",
         "conference/a-failed-probe-fails-no-attach-and-the-lazy-join-stays-behind-it",
@@ -7924,6 +7935,7 @@
         "conference/a-mint-held-as-the-kit-closes-is-taken-back-before-the-backend-closes",
         "conference/a-mint-held-past-the-detach-s-budget-is-taken-back",
         "conference/a-mint-on-a-backend-that-reports-no-arrival-brings-the-bot-in",
+        "conference/a-mint-with-no-grants-is-permissive-and-a-narrowed-one-keeps-its-narrowing",
         "conference/a-model-response-is-one-utterance-its-end-closes",
         "conference/a-model-response-the-conference-leaves-mid-utterance-ends-with-no-terminal-chunk",
         "conference/a-muted-binding-finalizes-the-conference-s-recordings",
@@ -7953,6 +7965,7 @@
         "conference/a-speech-to-speech-bot-joins-to-listen-and-to-speak",
         "conference/a-voice-plugged-onto-a-listening-bot-widens-its-grants-in-place",
         "conference/an-agent-reads-the-first-turn-of-a-conference-participant-under-their-name",
+        "conference/an-attach-ensures-the-room-and-the-bot-joins-later-with-its-explicit-or-derived-grants",
         "conference/an-attach-over-an-empty-conference-joins-nothing",
         "conference/an-attach-over-an-occupied-conference-joins-the-bot",
         "conference/an-attach-returns-while-its-probe-is-held",
@@ -7998,6 +8011,7 @@
         "conference/set-bot-grants-waits-for-a-plug-in-progress",
         "conference/text-events-are-spoken-with-speak-text-events",
         "conference/the-bot-s-own-presence-and-tracks-are-not-relayed",
+        "conference/the-disclosure-surface-reports-the-bot-and-its-hidden-status-as-its-session-holds-them",
         "conference/the-disclosure-surface-says-whether-grants-update-in-place",
         "conference/the-join-a-mint-starts-neither-delays-nor-fails-the-mint",
         "conference/the-last-consumer-s-unplug-unsubscribes-and-the-bot-stays",
@@ -8007,6 +8021,7 @@
         "conference/unplugging-an-empty-slot-changes-nothing",
         "conference/unplugging-recording-finalizes-and-announces-each-recording",
         "conference/unplugging-the-last-need-takes-the-bot-out-and-stands-down",
+        "conference/whether-recognition-and-recording-are-active-is-read-as-they-start-and-stop",
         "delivery/a-call-in-its-hooks-as-the-kit-closes-is-stored-and-delivered-to-no-one",
         "delivery/a-call-the-close-finds-under-way-returns-kit-closed-while-its-adopted-call-s-stream-is-read",
         "delivery/a-call-the-kit-s-close-cuts-once-its-commit-landed-reports-its-event-stored",
@@ -8969,13 +8984,13 @@
         "unmapped": 11
       },
       "decided_gaps": {
-        "step": 1,
-        "writable": 1
+        "step": 1
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "orchestration/a-session-auditor-records-the-sessions-and-the-tool-calls",
         "realtime/a-session-auditor-records-each-final-words-of-the-user-and-the-model-as-speech",
+        "video/a-session-auditor-records-a-vision-result-as-a-system-entry-of-its-description",
         "voice/a-session-auditor-records-a-barge-in-as-the-user-interrupting"
       ]
     },
@@ -9279,11 +9294,13 @@
       "mapping": {
         "unmapped": 9
       },
-      "decided_gaps": {
-        "phase6": 3
-      },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
-      "candidate_scenarios": []
+      "candidate_scenarios": [
+        "conference/a-mint-with-no-grants-is-permissive-and-a-narrowed-one-keeps-its-narrowing",
+        "conference/the-disclosure-surface-reports-the-bot-and-its-hidden-status-as-its-session-holds-them",
+        "conference/whether-recognition-and-recording-are-active-is-read-as-they-start-and-stop"
+      ]
     },
     {
       "section": "17.8",
@@ -12670,12 +12687,13 @@
       "mapping": {
         "unmapped": 14
       },
-      "decided_gaps": {
-        "phase6": 3,
-        "writable": 2
-      },
+      "decided_gaps": {},
       "unannotated_keyword_lines": [],
-      "candidate_scenarios": []
+      "candidate_scenarios": [
+        "video/a-published-vision-result-is-a-framework-event-carrying-its-analysis",
+        "video/a-video-channel-binds-as-a-bidirectional-transport-of-video",
+        "video/a-video-session-s-start-and-end-are-framework-events-of-its-room-session-and-channel"
+      ]
     },
     {
       "section": "A.13",
@@ -12728,11 +12746,15 @@
         "unmapped": 29
       },
       "decided_gaps": {
-        "phase6": 12,
-        "writable": 1
+        "phase6": 1
       },
       "unannotated_keyword_lines": [],
-      "candidate_scenarios": []
+      "candidate_scenarios": [
+        "conference/a-conference-channel-binds-as-a-bidirectional-transport-of-audio",
+        "conference/a-conference-is-unencrypted-unless-e2ee-asks-it-of-a-backend-that-can",
+        "conference/a-detach-leaves-the-room-and-closes-it-only-with-close-room-on-detach",
+        "conference/an-attach-ensures-the-room-and-the-bot-joins-later-with-its-explicit-or-derived-grants"
+      ]
     },
     {
       "section": "B",
@@ -19955,34 +19977,19 @@
       "id": "RK-8.2-052",
       "section": "8.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1912",
-        "note": "step: framework_events media rows: the video_session_started row, when it is emitted and its data."
-      }
+      "links": []
     },
     {
       "id": "RK-8.2-053",
       "section": "8.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1912",
-        "note": "step: framework_events media rows: the video_session_ended row, when it is emitted and its data."
-      }
+      "links": []
     },
     {
       "id": "RK-8.2-054",
       "section": "8.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1912",
-        "note": "step: framework_events media rows: the video_vision_result row, when it is emitted and its data."
-      }
+      "links": []
     },
     {
       "id": "RK-8.2-055",
@@ -37723,12 +37730,7 @@
       "id": "RK-15.8.2-011",
       "section": "15.8.2",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1979",
-        "note": "video.open with vision and the session_auditor attached: expect.session_audit holds the vision entry, the frame's description (requires video)."
-      }
+      "links": []
     },
     {
       "id": "RK-15.8.2-012",
@@ -38395,12 +38397,7 @@
       "id": "RK-17.7-004",
       "section": "17.7",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1986",
-        "note": "step: conference.mint, conference.read: ConferenceGrants' permissive defaults."
-      }
+      "links": []
     },
     {
       "id": "RK-17.7-005",
@@ -38418,23 +38415,13 @@
       "id": "RK-17.7-007",
       "section": "17.7",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1986",
-        "note": "step: conference.read, conference.plug, unplug, set_bot_grants and ensure_bot: the bot's presence, identity and hidden status as in force on the session."
-      }
+      "links": []
     },
     {
       "id": "RK-17.7-008",
       "section": "17.7",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1986",
-        "note": "step: conference.read, conference.plug, unplug, set_bot_grants and ensure_bot: whether STT, vision or recording is active on a conference, observable at any time."
-      }
+      "links": []
     },
     {
       "id": "RK-17.7-009",
@@ -49746,12 +49733,7 @@
       "id": "RK-A.12-002",
       "section": "A.12",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1961",
-        "note": "The bindings expectation after video.open shows type VIDEO, category TRANSPORT, direction BIDIRECTIONAL and media type VIDEO (requires video)."
-      }
+      "links": []
     },
     {
       "id": "RK-A.12-003",
@@ -49799,45 +49781,25 @@
       "id": "RK-A.12-010",
       "section": "A.12",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1961",
-        "note": "step: framework_events media rows: the framework event video_session_started."
-      }
+      "links": []
     },
     {
       "id": "RK-A.12-011",
       "section": "A.12",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1961",
-        "note": "step: framework_events media rows: the framework event video_session_ended."
-      }
+      "links": []
     },
     {
       "id": "RK-A.12-012",
       "section": "A.12",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1961",
-        "note": "step: framework_events media rows: the framework event video_vision_result, with description, labels, confidence, text and faces."
-      }
+      "links": []
     },
     {
       "id": "RK-A.12-013",
       "section": "A.12",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1961",
-        "note": "video.open with vision and a scripted agent in the room: its models read the vision result as a <vision> block (requires video)."
-      }
+      "links": []
     },
     {
       "id": "RK-A.12-014",
@@ -49958,12 +49920,7 @@
       "id": "RK-A.15-002",
       "section": "A.15",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "writable",
-        "card": "RMK-1961",
-        "note": "The bindings expectation after conference.open shows type CONFERENCE, category TRANSPORT, direction BIDIRECTIONAL and media type AUDIO (requires conference)."
-      }
+      "links": []
     },
     {
       "id": "RK-A.15-003",
@@ -49975,12 +49932,7 @@
       "id": "RK-A.15-004",
       "section": "A.15",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1961",
-        "note": "step: conference.open options: an optional speech-to-speech realtime configuration, which excludes tts."
-      }
+      "links": []
     },
     {
       "id": "RK-A.15-005",
@@ -50003,12 +49955,7 @@
       "id": "RK-A.15-007",
       "section": "A.15",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1961",
-        "note": "step: conference.open options: recorder, required with recording and refused without it."
-      }
+      "links": []
     },
     {
       "id": "RK-A.15-008",
@@ -50020,12 +49967,7 @@
       "id": "RK-A.15-009",
       "section": "A.15",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1961",
-        "note": "step: conference.read, conference.open options: bot_grants, explicit grants for join_as_bot(), derived when null."
-      }
+      "links": []
     },
     {
       "id": "RK-A.15-010",
@@ -50037,45 +49979,25 @@
       "id": "RK-A.15-011",
       "section": "A.15",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1961",
-        "note": "step: conference.open options: e2ee, false by default, which requires the backend's E2EE capability."
-      }
+      "links": []
     },
     {
       "id": "RK-A.15-012",
       "section": "A.15",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1961",
-        "note": "step: conference.read, conference.open options: close_room_on_detach, false by default."
-      }
+      "links": []
     },
     {
       "id": "RK-A.15-013",
       "section": "A.15",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1961",
-        "note": "step: conference.open options: speak_text_events, false by default."
-      }
+      "links": []
     },
     {
       "id": "RK-A.15-014",
       "section": "A.15",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1961",
-        "note": "step: conference.read, conference.open options: an attach ensures the SFU room, and joins the bot lazily with bot_grants."
-      }
+      "links": []
     },
     {
       "id": "RK-A.15-015",
@@ -50087,34 +50009,19 @@
       "id": "RK-A.15-016",
       "section": "A.15",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1961",
-        "note": "step: conference.read, conference.open options: a track published is subscribed when consumed, into a pipeline lane."
-      }
+      "links": []
     },
     {
       "id": "RK-A.15-017",
       "section": "A.15",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1961",
-        "note": "step: conference.read, conference.open options: a track unpublished tears its lane down and is unsubscribed."
-      }
+      "links": []
     },
     {
       "id": "RK-A.15-018",
       "section": "A.15",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1961",
-        "note": "step: conference.read, conference.open options: a detach leaves the SFU room, and closes it when close_room_on_detach."
-      }
+      "links": []
     },
     {
       "id": "RK-A.15-019",
@@ -50156,12 +50063,7 @@
       "id": "RK-A.15-025",
       "section": "A.15",
       "mapping": "unmapped",
-      "links": [],
-      "gap": {
-        "class": "phase6",
-        "card": "RMK-1961",
-        "note": "step: conference.feed: the ON_TRANSCRIPTION hook, per track and attributed to its participant."
-      }
+      "links": []
     },
     {
       "id": "RK-A.15-026",
