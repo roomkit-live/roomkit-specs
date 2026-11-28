@@ -9,7 +9,7 @@
   "requirements": [
     "RK-6.4-210"
   ],
-  "notes": "Three rooms, each holding the record of the agent's first answer cut long after it ended (every word heard), written as a voice channel of the room writes it. r1: the answer holds a copy of the mark of the application's instruction, replaced in the quote by the mark saying the runtime did not write it; its words are kept. r2: the answer holds a quote mark, a line break and a bracket that would end the mark: the quote stays on one line between quotes they cannot close, its own double quote written as a single one (RK-6.4-357). r3: a long answer: the quote leaves its start out and keeps its end, where the person stopped hearing; its bound is the implementation's.",
+  "notes": "Three rooms, each holding the record of the agent's first answer cut long after it ended (every word heard), written as a voice channel of the room writes it. r1: the answer holds a copy of the mark of the application's instruction, replaced in the quote by the mark saying the runtime did not write it; its words are kept. r2: the answer holds a quote mark, a line break and a bracket that would end the mark: the quote stays on one line between quotes they cannot close, its own double quote written as a single one (RK-6.4-356). r3: a long answer: the quote leaves its start out and keeps its end, where the person stopped hearing; its bound is the implementation's.",
   "requires_features": [
     "voice"
   ],
