@@ -8169,9 +8169,6 @@
       "greeting/a-greeting-read-past-process-timeout-expires-its-message": "2268d49f17bb7cc4a91b562e92a705dc13eea1c7825885e72b34247e01b0c261",
       "greeting/another-agent-that-reads-a-greeting-holds-no-first-message": "2268d49f17bb7cc4a91b562e92a705dc13eea1c7825885e72b34247e01b0c261"
     },
-    "RK-19.1-041": {
-      "greeting/a-voice-session-s-greeting-holds-the-agents-until-it-is-said": "f378bde6622d70a28853bb3d7595a1130a79a1f78b673fba9c3dc4bb58f99a1e"
-    },
     "RK-19.1-042": {
       "greeting/a-realtime-session-s-greeting-is-injected-as-the-model-s-own-turn": "74217ade5e8e759c3c31f5a04c28597b8946c6306df58227834e03adaf3780a1"
     },
@@ -8573,7 +8570,8 @@
       "orchestration/a-conversation-pipeline-s-agent-in-two-stages-takes-the-last": "421930096d43f89615457d3256b9568c9ef5ede29b9631ce588f06d5091d06a8"
     },
     "RK-19.5-022": {
-      "realtime/a-handoff-reconfigures-its-room-s-session-alone-and-a-language-change-the-active-agent-s": "f40c23d544dcb141920588ed2e0b297394078a5dafc71460778f4f75f4bf586c"
+      "realtime/a-handoff-reconfigures-its-room-s-session-alone-and-a-language-change-the-active-agent-s": "f40c23d544dcb141920588ed2e0b297394078a5dafc71460778f4f75f4bf586c",
+      "realtime/an-agent-with-nothing-to-set-speaks-with-the-channel-s-prompt-and-keeps-it-through-a-language-change": "f40c23d544dcb141920588ed2e0b297394078a5dafc71460778f4f75f4bf586c"
     },
     "RK-19.5-023": {
       "realtime/an-agent-with-nothing-to-set-speaks-with-the-channel-s-prompt-and-keeps-it-through-a-language-change": "dcc65766460d490f83d20c48ba3677728ae76e96153f8cac5bbed2f94b72d703"
@@ -8601,7 +8599,8 @@
       "realtime/a-realtime-pipeline-refuses-the-agents-human-input": "5077156607989d82342ba1f28159e314367f7823d84153944bbc78db64b68f81"
     },
     "RK-19.5-035": {
-      "realtime/a-reasoning-backend-s-agent-is-refused-for-what-a-session-never-serves": "320f71190fe14f9cd41cb1573b2a6a416d6a398e70a7a7f9394025f3a09300cc"
+      "realtime/a-reasoning-backend-s-agent-is-refused-for-what-a-session-never-serves": "320f71190fe14f9cd41cb1573b2a6a416d6a398e70a7a7f9394025f3a09300cc",
+      "realtime/an-agent-with-tools-of-its-own-is-refused-as-a-backend": "320f71190fe14f9cd41cb1573b2a6a416d6a398e70a7a7f9394025f3a09300cc"
     },
     "RK-19.5-036": {
       "realtime/a-realtime-pipeline-refuses-an-agent-held-by-its-declaration-alone": "0678e6030597aa03704403494ce0790ae6bf4c16ef96626625a7d47d6518ed2b"

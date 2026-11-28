@@ -12,7 +12,7 @@
   "requires_features": [
     "realtime"
   ],
-  "notes": "Not observed: the warning that names the agent's tool at the install (a log line), and the schema the name is declared with (realtime.read names each declared tool by its position alone).",
+  "notes": "Not observed: the warning that names the agent's tool at the install (a log line), the schema the name is declared with (realtime.read names each declared tool by its position alone), and a call of that name once the channel dropped its tool (the steps call from the channel's first session, which still declares it).",
   "setup": {
     "channels": [
       {

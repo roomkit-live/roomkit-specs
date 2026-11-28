@@ -491,6 +491,11 @@
       "card": "RMK-1925",
       "note": "step: an agent with no model in the setup: a configuration-only agent on a realtime channel accepted, making no generation call; every scripted agent has a model today."
     },
+    "RK-19.1-041": {
+      "class": "step",
+      "card": "RMK-1925",
+      "note": "Needs a barrier on an agent's delivery held at a voice session's greeting gate: a message for the agent alone, its answer for a text channel, is held by the gate only, and no step waits for a delivery held there (the gate's bound is on the real clock, not the kit's). With the voice channel among the message's targets, its playback of the greeting holds the agent's answer as well, so that no scenario shows the gate."
+    },
     "RK-19.3-017": {
       "class": "step",
       "card": "RMK-1925",

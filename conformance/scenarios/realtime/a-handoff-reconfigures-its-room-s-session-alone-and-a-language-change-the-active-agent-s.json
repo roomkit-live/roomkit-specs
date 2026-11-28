@@ -17,7 +17,7 @@
   "requires_features": [
     "realtime"
   ],
-  "notes": "The second handoff, to closing, is a transition billing's stage allows and triage's does not: the session's call is accepted because its caller is the room's active agent, billing, not the pipeline's first. r3's active agent is set by the host before its session starts, which connects with it; r4's, set by nobody, is the pipeline's first, whatever r1 handed off. The rule of a room held for a human does not hold on a realtime session yet (§19.6): nothing of it is asserted. A handoff call's own result is not read: the reconfiguration it makes reports the call abandoned (Scripted realtime sessions); the reconfiguration is what shows it was accepted.",
+  "notes": "The second handoff, to closing, is a transition billing's stage allows and triage's does not: the session's call is accepted because its caller is the room's active agent, billing, not the pipeline's first. r3's active agent is set by the host before its session starts, which connects with it; r4's, set by nobody, is the pipeline's first, whatever r1 handed off. The rule of a room held for a human does not hold on a realtime session yet (§19.6): nothing of it is asserted. Every agent here has a prompt of its own, so that the channel's configuration for later sessions is observed in realtime/an-agent-with-nothing-to-set-speaks-with-the-channel-s-prompt-and-keeps-it-through-a-language-change. A handoff call's own result is not read: the reconfiguration it makes reports the call abandoned (Scripted realtime sessions); the reconfiguration is what shows it was accepted.",
   "setup": {
     "channels": [
       {

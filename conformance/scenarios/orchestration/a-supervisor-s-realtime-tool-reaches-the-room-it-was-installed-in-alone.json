@@ -144,7 +144,9 @@
               }
             },
             {
-              "delegate_workers": "$any"
+              "delegate_workers": {
+                "$present": true
+              }
             }
           ],
           "results": [

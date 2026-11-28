@@ -165,9 +165,15 @@
         "result": {
           "declared": [
             {
-              "lookup": "$any",
-              "names": "$any",
-              "handoff_conversation": "$any",
+              "lookup": {
+                "$present": true
+              },
+              "names": {
+                "$present": true
+              },
+              "handoff_conversation": {
+                "$present": true
+              },
               "secret": {
                 "$absent": true
               },
@@ -176,11 +182,21 @@
               }
             },
             {
-              "lookup": "$any",
-              "secret": "$any",
-              "weather": "$any",
-              "names": "$any",
-              "handoff_conversation": "$any"
+              "lookup": {
+                "$present": true
+              },
+              "secret": {
+                "$present": true
+              },
+              "weather": {
+                "$present": true
+              },
+              "names": {
+                "$present": true
+              },
+              "handoff_conversation": {
+                "$present": true
+              }
             }
           ],
           "results": [
