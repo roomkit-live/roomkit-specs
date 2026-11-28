@@ -1,0 +1,117 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "conference/an-unpublished-track-s-lane-is-torn-down-and-the-track-unsubscribed",
+  "title": "A track the bot consumes gets a subscription and a lane; once unpublished, its lane is torn down and the track unsubscribed",
+  "rules": [
+    "Appendix A.15",
+    "§12.10.4"
+  ],
+  "requirements": [
+    "RK-A.15-017"
+  ],
+  "notes": "The channel holds the implementation's mock recognizer, which consumes the audio track. The order of the teardown and the unsubscription is not asserted: the RFC names both (§12.10.4 step 4) without ordering them.",
+  "requires_features": [
+    "conference"
+  ],
+  "setup": {
+    "rooms": [
+      {
+        "id": "r1"
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "conference.open",
+      "channel_id": "conf",
+      "room_id": "r1"
+    },
+    {
+      "call": "conference.join",
+      "channel_id": "conf",
+      "participant_id": "alice"
+    },
+    {
+      "call": "conference.publish",
+      "channel_id": "conf",
+      "participant_id": "alice",
+      "track_id": "mic",
+      "kind": "audio"
+    },
+    {
+      "idle": true
+    },
+    {
+      "call": "conference.read",
+      "channel_id": "conf",
+      "calls": [
+        "subscribe_track",
+        "unsubscribe_track"
+      ],
+      "expect": {
+        "result": {
+          "calls": [
+            {
+              "call": "subscribe_track",
+              "track_id": "mic",
+              "session": {
+                "$as": "bot"
+              }
+            }
+          ],
+          "info": {
+            "rooms": {
+              "r1": {
+                "active_lanes": 1
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "call": "conference.unpublish",
+      "channel_id": "conf",
+      "track_id": "mic"
+    },
+    {
+      "call": "conference.settle",
+      "channel_id": "conf"
+    },
+    {
+      "call": "conference.read",
+      "channel_id": "conf",
+      "calls": [
+        "subscribe_track",
+        "unsubscribe_track"
+      ],
+      "expect": {
+        "result": {
+          "calls": [
+            {
+              "call": "subscribe_track",
+              "track_id": "mic",
+              "session": {
+                "$as": "bot"
+              }
+            },
+            {
+              "call": "unsubscribe_track",
+              "track_id": "mic",
+              "session": {
+                "$as": "bot"
+              }
+            }
+          ],
+          "info": {
+            "rooms": {
+              "r1": {
+                "active_lanes": 0
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

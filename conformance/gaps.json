@@ -281,11 +281,6 @@
       "card": "RMK-1979",
       "note": "Needs a ToolAuditor of the scenario's own handed to audit_tool_handler."
     },
-    "RK-15.8.2-011": {
-      "class": "writable",
-      "card": "RMK-1979",
-      "note": "video.open with vision and the session_auditor attached: expect.session_audit holds the vision entry, the frame's description (requires video)."
-    },
     "RK-15.8.2-014": {
       "class": "step",
       "card": "RMK-1979",
@@ -390,21 +385,6 @@
       "class": "phase6",
       "card": "RMK-1986",
       "note": "step: voice.open DTMF redaction: under DTMF redaction, no raw digit in raw_payload, transcripts or log output."
-    },
-    "RK-17.7-004": {
-      "class": "phase6",
-      "card": "RMK-1986",
-      "note": "step: conference.mint, conference.read: ConferenceGrants' permissive defaults."
-    },
-    "RK-17.7-007": {
-      "class": "phase6",
-      "card": "RMK-1986",
-      "note": "step: conference.read, conference.plug, unplug, set_bot_grants and ensure_bot: the bot's presence, identity and hidden status as in force on the session."
-    },
-    "RK-17.7-008": {
-      "class": "phase6",
-      "card": "RMK-1986",
-      "note": "step: conference.read, conference.plug, unplug, set_bot_grants and ensure_bot: whether STT, vision or recording is active on a conference, observable at any time."
     },
     "RK-17.8-002": {
       "class": "step",
@@ -1824,21 +1804,6 @@
       "card": "RMK-1912",
       "note": "step: framework_events media rows: the voice_session_ready row, when it is emitted and its data."
     },
-    "RK-8.2-052": {
-      "class": "phase6",
-      "card": "RMK-1912",
-      "note": "step: framework_events media rows: the video_session_started row, when it is emitted and its data."
-    },
-    "RK-8.2-053": {
-      "class": "phase6",
-      "card": "RMK-1912",
-      "note": "step: framework_events media rows: the video_session_ended row, when it is emitted and its data."
-    },
-    "RK-8.2-054": {
-      "class": "phase6",
-      "card": "RMK-1912",
-      "note": "step: framework_events media rows: the video_vision_result row, when it is emitted and its data."
-    },
     "RK-8.3-021": {
       "class": "step",
       "card": "RMK-1912",
@@ -1889,31 +1854,6 @@
       "card": "RMK-1961",
       "note": "step: AudioContent to a voice channel with scripted outbound stages: the standard delivery path of AudioContent: postprocessors, recorder, resampler, transport, and the AEC reference."
     },
-    "RK-A.12-002": {
-      "class": "writable",
-      "card": "RMK-1961",
-      "note": "The bindings expectation after video.open shows type VIDEO, category TRANSPORT, direction BIDIRECTIONAL and media type VIDEO (requires video)."
-    },
-    "RK-A.12-010": {
-      "class": "phase6",
-      "card": "RMK-1961",
-      "note": "step: framework_events media rows: the framework event video_session_started."
-    },
-    "RK-A.12-011": {
-      "class": "phase6",
-      "card": "RMK-1961",
-      "note": "step: framework_events media rows: the framework event video_session_ended."
-    },
-    "RK-A.12-012": {
-      "class": "phase6",
-      "card": "RMK-1961",
-      "note": "step: framework_events media rows: the framework event video_vision_result, with description, labels, confidence, text and faces."
-    },
-    "RK-A.12-013": {
-      "class": "writable",
-      "card": "RMK-1961",
-      "note": "video.open with vision and a scripted agent in the room: its models read the vision result as a <vision> block (requires video)."
-    },
     "RK-A.13-002": {
       "class": "step",
       "card": "RMK-1961",
@@ -1939,70 +1879,10 @@
       "card": "RMK-1961",
       "note": "Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed."
     },
-    "RK-A.15-002": {
-      "class": "writable",
-      "card": "RMK-1961",
-      "note": "The bindings expectation after conference.open shows type CONFERENCE, category TRANSPORT, direction BIDIRECTIONAL and media type AUDIO (requires conference)."
-    },
-    "RK-A.15-004": {
-      "class": "phase6",
-      "card": "RMK-1961",
-      "note": "step: conference.open options: an optional speech-to-speech realtime configuration, which excludes tts."
-    },
     "RK-A.15-005": {
       "class": "phase6",
       "card": "RMK-1961",
       "note": "step: conference.open options: pipeline, the lane stages, null meaning the default VAD and format contract (the planned vision on video and screen tracks folded in)."
-    },
-    "RK-A.15-007": {
-      "class": "phase6",
-      "card": "RMK-1961",
-      "note": "step: conference.open options: recorder, required with recording and refused without it."
-    },
-    "RK-A.15-009": {
-      "class": "phase6",
-      "card": "RMK-1961",
-      "note": "step: conference.read, conference.open options: bot_grants, explicit grants for join_as_bot(), derived when null."
-    },
-    "RK-A.15-011": {
-      "class": "phase6",
-      "card": "RMK-1961",
-      "note": "step: conference.open options: e2ee, false by default, which requires the backend's E2EE capability."
-    },
-    "RK-A.15-012": {
-      "class": "phase6",
-      "card": "RMK-1961",
-      "note": "step: conference.read, conference.open options: close_room_on_detach, false by default."
-    },
-    "RK-A.15-013": {
-      "class": "phase6",
-      "card": "RMK-1961",
-      "note": "step: conference.open options: speak_text_events, false by default."
-    },
-    "RK-A.15-014": {
-      "class": "phase6",
-      "card": "RMK-1961",
-      "note": "step: conference.read, conference.open options: an attach ensures the SFU room, and joins the bot lazily with bot_grants."
-    },
-    "RK-A.15-016": {
-      "class": "phase6",
-      "card": "RMK-1961",
-      "note": "step: conference.read, conference.open options: a track published is subscribed when consumed, into a pipeline lane."
-    },
-    "RK-A.15-017": {
-      "class": "phase6",
-      "card": "RMK-1961",
-      "note": "step: conference.read, conference.open options: a track unpublished tears its lane down and is unsubscribed."
-    },
-    "RK-A.15-018": {
-      "class": "phase6",
-      "card": "RMK-1961",
-      "note": "step: conference.read, conference.open options: a detach leaves the SFU room, and closes it when close_room_on_detach."
-    },
-    "RK-A.15-025": {
-      "class": "phase6",
-      "card": "RMK-1961",
-      "note": "step: conference.feed: the ON_TRANSCRIPTION hook, per track and attributed to its participant."
     },
     "RK-A.2-002": {
       "class": "step",

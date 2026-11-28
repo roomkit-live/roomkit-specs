@@ -7777,6 +7777,9 @@
     "RK-15.8.2-010": {
       "orchestration/a-session-auditor-records-the-sessions-and-the-tool-calls": "7cc3462a336b8b53b08a9d0edb1e069a231da49031badf9a5f5e1f9ebc1a7f33"
     },
+    "RK-15.8.2-011": {
+      "video/a-session-auditor-records-a-vision-result-as-a-system-entry-of-its-description": "8e21230bfc064fd4e915b7c6246a7f140d9907f6479871eb853eb430e22cdfea"
+    },
     "RK-15.8.2-012": {
       "voice/a-session-auditor-records-a-barge-in-as-the-user-interrupting": "6b9aedfa57a56e04ef842a4f18d87f515ddfee49b4391da89f07348dc5641be4"
     },
@@ -8021,6 +8024,15 @@
     },
     "RK-17.6-022": {
       "voice/a-redacted-transcript-reaches-the-context-without-its-audio": "cb6c1c25ea8d2688d3312a814308d9a2083bede8499ed0b92d8a682756712c46"
+    },
+    "RK-17.7-004": {
+      "conference/a-mint-with-no-grants-is-permissive-and-a-narrowed-one-keeps-its-narrowing": "2e30c6e8e8fdf1f3627668978f6318f1d2f9e1f57f5ce9fc2225ae3fded14d66"
+    },
+    "RK-17.7-007": {
+      "conference/the-disclosure-surface-reports-the-bot-and-its-hidden-status-as-its-session-holds-them": "c50f247baf356940b0a6446ed5b877c84ce2627807ce894d4ce29abb4db38e7e"
+    },
+    "RK-17.7-008": {
+      "conference/whether-recognition-and-recording-are-active-is-read-as-they-start-and-stop": "17042e4fda4cbf3ffbcea1c5811d3f0e3a99ce0e7b3f1351fe8aeeb4c6809755"
     },
     "RK-17.7-009": {
       "conference/a-call-reports-presence-without-changing-room-membership": "ea7e6d0bec934386da126546e983715647ac19849b3075ed688483b31ae4f580"
@@ -21299,6 +21311,15 @@
       "voice/a-session-whose-playback-fails-is-reported-and-the-served-one-fires-after-tts": "358e8e9803b472cdb73fdee1c33756e6ba8a76ee2b4cd5ff003bd0d0e3d7f5cd",
       "voice/no-session-served-fires-no-after-tts": "358e8e9803b472cdb73fdee1c33756e6ba8a76ee2b4cd5ff003bd0d0e3d7f5cd"
     },
+    "RK-8.2-052": {
+      "video/a-video-session-s-start-and-end-are-framework-events-of-its-room-session-and-channel": "f79aea3f47c16593ee54854e90a79443b85907abd32986f9cc6cd0f61aad1e83"
+    },
+    "RK-8.2-053": {
+      "video/a-video-session-s-start-and-end-are-framework-events-of-its-room-session-and-channel": "0a47cb80e20728201a943b9e0120a635306d828adfe5c09dff7678d2c7d79bb3"
+    },
+    "RK-8.2-054": {
+      "video/a-published-vision-result-is-a-framework-event-carrying-its-analysis": "749343da30e282a02cfda51a8d7aba1aea1b89d77396041c85cd1198e1889f30"
+    },
     "RK-8.2-055": {
       "conference/conference-events-follow-the-participants-and-the-bot": "2e3a6c8c691296039b41b35f2fd659fbe72698089d3f3e13b1a81901b5952c99"
     },
@@ -24291,6 +24312,9 @@
     "RK-A.11-009": {
       "realtime/a-reasoning-error-reaches-the-room": "cea2ed8247efbdb496436e3a02acdd21304e4b0d30873239af85323cd8d61a31"
     },
+    "RK-A.12-002": {
+      "video/a-video-channel-binds-as-a-bidirectional-transport-of-video": "d157bfefc4830dc3fce7b6cf25d5612535a2cdaefa43a4eb4e8a274a74db42c7"
+    },
     "RK-A.12-006": {
       "video/a-video-session-announces-its-start-and-end": "6d0ec393a86424c6877ed2bab95d8c0b6bf45aba29c0c9353e92560766e9307a"
     },
@@ -24303,6 +24327,18 @@
     },
     "RK-A.12-009": {
       "video/the-bridge-obeys-the-frame-hook": "dd3b1a63110ad9b801aa13d469d0cdcd25899af64b1027a51d976d278d67ee2c"
+    },
+    "RK-A.12-010": {
+      "video/a-video-session-s-start-and-end-are-framework-events-of-its-room-session-and-channel": "2b07c1ec63f0dbcdfd4522eeb33d7b00d6d444e480ade0ca5153339f7725949f"
+    },
+    "RK-A.12-011": {
+      "video/a-video-session-s-start-and-end-are-framework-events-of-its-room-session-and-channel": "7e5de067ef12ec63f852035455113b17d0207e8abeb5d9a89c485751f7b61676"
+    },
+    "RK-A.12-012": {
+      "video/a-published-vision-result-is-a-framework-event-carrying-its-analysis": "d0dc34e5042e4492b892ec8aaaa2824ef27182bc62fa1b96c94ce8025bf0054b"
+    },
+    "RK-A.12-013": {
+      "video/a-vision-result-rides-the-turn-of-the-room-s-agent": "51b6fd9324c6db57664f5906d32b7a1bfb4b414960c3aa4322ee2ec1549cd07c"
     },
     "RK-A.13-005": {
       "routing/a-chat-id-written-as-an-integer-is-recorded-as-a-string": "5d0257652dfeb944343ebbe52296d814820315bdab47e0e7ebc60f7e8843d396",
@@ -24330,8 +24366,41 @@
     "RK-A.14.1-006": {
       "injection/a-message-on-the-host-channel-is-refused-before-anything-is-read": "a72e0b4d66fec0832fe4a71d0acfa2ab232928ff2e3bbbd33bec9eff884d88cb"
     },
+    "RK-A.15-002": {
+      "conference/a-conference-channel-binds-as-a-bidirectional-transport-of-audio": "f24f8685f8a1a4e0beb3a3d57dd22ed35dbddc8b605610b2d57be3c69153e2ea"
+    },
+    "RK-A.15-004": {
+      "conference/a-synthesizer-and-a-speech-model-are-never-held-together": "1884adf6343bcc2c567369c1c1cfe280a08d347bdb64a056dbc4d54c579ea8ed"
+    },
+    "RK-A.15-007": {
+      "conference/a-recording-and-its-recorder-are-refused-apart": "0e9fafc53c6c4b9cecc5d7353700965dd941c6cdd8fbfe14a40007e17ecadce4"
+    },
+    "RK-A.15-009": {
+      "conference/an-attach-ensures-the-room-and-the-bot-joins-later-with-its-explicit-or-derived-grants": "9926dc1b61c5e31d71e7ce190cdb179d9448b4501a49218e0b80f3b0162ccd55"
+    },
+    "RK-A.15-011": {
+      "conference/a-conference-is-unencrypted-unless-e2ee-asks-it-of-a-backend-that-can": "45a97a04184e1c7926b5db52f8f9f2c92dc26084e460045941db95d69c6ea780"
+    },
+    "RK-A.15-012": {
+      "conference/a-detach-leaves-the-room-and-closes-it-only-with-close-room-on-detach": "2126c8605c17e65850f14944e3b6bb43973da803bfdd1a6023ab71cee915b86d"
+    },
+    "RK-A.15-013": {
+      "conference/only-ai-text-is-spoken-unless-speak-text-events": "5a66fdd9c48fbd85d4fab046b256500a407bce8eb7ded366cc40922dfef173fa"
+    },
+    "RK-A.15-014": {
+      "conference/an-attach-ensures-the-room-and-the-bot-joins-later-with-its-explicit-or-derived-grants": "1ccd2134d94b4a686a5c87be661731a6b5f04f72a179f722a2b9557ea8770e47"
+    },
     "RK-A.15-015": {
       "conference/a-call-reports-presence-without-changing-room-membership": "61ec8ce5f42d71906021e1202ced4ded9fc3d8e0599d7c266659a934c9590ccd"
+    },
+    "RK-A.15-016": {
+      "conference/only-a-subscribed-audio-track-gets-a-lane": "718350574c069ed2e7840d9870787c7a52bb9a54ac8349f431746b4da2b22a61"
+    },
+    "RK-A.15-017": {
+      "conference/an-unpublished-track-s-lane-is-torn-down-and-the-track-unsubscribed": "c51870916ae486f06968abf3ac993a52ce32f6350c503bbd03595153dcf0e95f"
+    },
+    "RK-A.15-018": {
+      "conference/a-detach-leaves-the-room-and-closes-it-only-with-close-room-on-detach": "79e20412f0a7cd71bb2a1bbd1e493ad2f1d72267b14fbb5ab449de03a4d48936"
     },
     "RK-A.15-019": {
       "conference/a-call-reports-presence-without-changing-room-membership": "616ba953fad0e7378266c70d0b9e92e2f7340091dc857ea283ec62f842d1aa9c"
@@ -24350,6 +24419,9 @@
     },
     "RK-A.15-024": {
       "conference/a-screen-track-announces-the-start-and-end-of-sharing": "4608bea9ae3aac6b8de583ea30b96ed309cc963df010d3d2d66d83ed8c1f1948"
+    },
+    "RK-A.15-025": {
+      "conference/on-transcription-names-the-lane-s-track-and-participant": "28aae5d2f10cdbe7a94193d35117bc27e464306ec23088206b0bb3ca6b441f8a"
     },
     "RK-A.15-026": {
       "conference/conference-events-follow-the-participants-and-the-bot": "7c512dac51a58ab8436b2d3dcca89e0403e2ac690b9444cb2e0e53cce2c96388"
