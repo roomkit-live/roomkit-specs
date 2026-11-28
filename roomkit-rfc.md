@@ -18644,8 +18644,9 @@ the same room.
 **Serialization scope.** The room lock MUST cover the locked pre-commit
 section, the commit point, and broadcast planning (§10.1 steps 6–12):
 everything that reads room state to decide, assigns the index, writes the
-timeline, or resolves the delivery set.<!-- /rfc --> <!-- rfc: {"id": "RK-13.5-007", "kind": "behavior", "applies": "§13.5: a streamed response's rows, whose hooks and commit run without the room lock (§9.5.1). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A streamed response's rows are the
-exception (§4, §9.5.1): their hooks and their commit run without the lock.<!-- /rfc --><!-- rfc: {"id": "RK-13.5-008", "kind": "behavior", "applies": "§13.5: external delivery execution, not required under the room lock, preserves per-room order (the delivery lane, §10.2). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+timeline, or resolves the delivery set.<!-- /rfc --> <!-- rfc: {"id": "RK-13.5-007", "kind": "behavior", "applies": "§13.5: a streamed response's rows, whose hooks run without the room lock and whose commit takes it (§9.5.1). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A streamed response's rows are the
+exception (§4, §9.5.1): their hooks run without the lock, and their commit
+takes it.<!-- /rfc --><!-- rfc: {"id": "RK-13.5-008", "kind": "behavior", "applies": "§13.5: external delivery execution, not required under the room lock, preserves per-room order (the delivery lane, §10.2). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 External delivery execution (§10.2 step 3) is NOT required to run under the
 room lock — it MUST preserve per-room order
 (the delivery lane, §10.2), which holding the lock trivially satisfies.<!-- /rfc --><!-- rfc: {"id": "RK-13.5-009", "kind": "behavior", "applies": "§13.5: no external I/O (provider calls, AI generation) within the room's critical section. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->

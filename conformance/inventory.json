@@ -999,9 +999,9 @@
     },
     {
       "section": "13.5",
-      "sha256": "83127f0123c9f236f77133bb9f50b5bd3b0120e66b80b95e67d6c3e7ccb82d4e",
+      "sha256": "100d304667d738264b6c022affdb5be96088259c4171d3b81910c7bb618f9dda",
       "classification": "normative",
-      "review": "Source inventory: Room-Level Locking, split to one obligation per unit (RMK-1960): per-room serialization (RK-13.5-001, kept); a unit per sentence of the serialization scope (the external I/O rule should), the RoomLockManager interface (structural); a failed release (what it leaves, how it is reported, logged, the cascade going on, the next section asking again) and the lock's reentrancy; the key spaces; the deployment's duty when a store is shared, non_testable, the sentences on when an in-memory manager suffices folded in, and the distributed manager and its warning (should); a unit per sentence of the delivery lanes across processes, the bounded-loss clause and the outbox pointer folded into their neighbours. Every unit carries its level."
+      "review": "Source inventory: Room-Level Locking, split to one obligation per unit (RMK-1960): per-room serialization (RK-13.5-001, kept); a unit per sentence of the serialization scope (the external I/O rule should), the RoomLockManager interface (structural); a failed release (what it leaves, how it is reported, logged, the cascade going on, the next section asking again) and the lock's reentrancy; the key spaces; the deployment's duty when a store is shared, non_testable, the sentences on when an in-memory manager suffices folded in, and the distributed manager and its warning (should); a unit per sentence of the delivery lanes across processes, the bounded-loss clause and the outbox pointer folded into their neighbours. Every unit carries its level. Amended on Python, the reference, with RK-9.5.1-067 (RMK-2232): a streamed row's hooks run without the room lock, and its commit takes it (RK-13.5-007, HITL 9e14ed9b)."
     },
     {
       "section": "13.6",

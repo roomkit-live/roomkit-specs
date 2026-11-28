@@ -7023,7 +7023,8 @@
       "resilience/concurrent-messages-take-their-own-index": "ba2d7429b091934d22b1cd95c7db902e4d482b092edfda73340c15ac17d58359"
     },
     "RK-13.5-007": {
-      "streaming/a-streamed-row-s-hooks-run-without-the-room-lock": "722934c1582c2f2830868296310b2457b3ee996d2e402692b294fbc18d8b297b"
+      "streaming/a-streamed-row-s-commit-waits-for-the-room-lock": "cbc32131dc8e512492051de80255a6988c75576df4501b4a2171a91f51d88971",
+      "streaming/a-streamed-row-s-hooks-run-without-the-room-lock": "cbc32131dc8e512492051de80255a6988c75576df4501b4a2171a91f51d88971"
     },
     "RK-13.5-008": {
       "delivery/a-held-delivery-leaves-the-room-lock-to-the-next-message": "91aecc070cb6de27949af8eddacb0b1e4829b47e81423edddf3063d5714e892b",
@@ -24378,6 +24379,7 @@
     "RK-9.5.1-067": {
       "streaming/a-streamed-answer-a-before-broadcast-hook-blocks-is-stored-blocked": "4f94271362dcbb51e3da5379275c07acaba8407ef1d63c7996acee9b87ddafe4",
       "streaming/a-streamed-answer-is-stored-as-a-before-broadcast-hook-modified-it": "4f94271362dcbb51e3da5379275c07acaba8407ef1d63c7996acee9b87ddafe4",
+      "streaming/a-streamed-row-s-commit-waits-for-the-room-lock": "4f94271362dcbb51e3da5379275c07acaba8407ef1d63c7996acee9b87ddafe4",
       "streaming/a-streamed-tool-call-s-rows-a-hook-blocks-are-stored-blocked-and-its-effects-stand": "4f94271362dcbb51e3da5379275c07acaba8407ef1d63c7996acee9b87ddafe4",
       "streaming/a-streamed-tool-call-s-rows-carry-a-before-broadcast-hook-s-modify": "4f94271362dcbb51e3da5379275c07acaba8407ef1d63c7996acee9b87ddafe4",
       "streaming/a-streaming-target-reads-each-tool-call-row-once-as-its-hook-left-it": "4f94271362dcbb51e3da5379275c07acaba8407ef1d63c7996acee9b87ddafe4",
