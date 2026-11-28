@@ -16237,6 +16237,10 @@
     "RK-6.1-027": {
       "executors/a-released-channel-is-built-anew-for-the-next-turn": "130e68fe5124b19b2cf39a9782c27abbc020f06eabfd9ccdc5e1a67e7269d3dc"
     },
+    "RK-6.2-003": {
+      "video/a-video-an-audio-video-and-a-conference-channel-bind-as-transports-of-their-media": "a784426d049cdda7cb1c6b1f2a44dd361cd0dd87789a5ed4d01ed0f4c95a8691",
+      "voice/a-voice-and-a-realtime-channel-bind-as-transports-of-audio-and-text": "a784426d049cdda7cb1c6b1f2a44dd361cd0dd87789a5ed4d01ed0f4c95a8691"
+    },
     "RK-6.2-004": {
       "injection/a-post-speaks-through-the-host-channel": "b215e4502575786e97142d1ae2da7ae7747254c805518ea03262d97b88ad7045",
       "tasks/an-inline-delegation-runs-its-agent-in-a-child-room": "b215e4502575786e97142d1ae2da7ae7747254c805518ea03262d97b88ad7045"
@@ -16261,6 +16265,12 @@
     },
     "RK-6.2-012": {
       "hooks/a-channel-types-filter-naming-a-type-no-table-lists-runs-for-its-events": "8d7fcb32aac3f74674bcedb164908230c9d51a83080b4caf0ac2bd58555392cb"
+    },
+    "RK-6.3-004": {
+      "voice/a-voice-and-a-realtime-channel-bind-as-transports-of-audio-and-text": "4b166cb4ac8e9126eb3a4b4f045abd45d26aebbed550d24520ff2f4e895b25fb"
+    },
+    "RK-6.3-006": {
+      "video/a-video-an-audio-video-and-a-conference-channel-bind-as-transports-of-their-media": "3d7ee55a88f1737c04160e32ab259d9acf582e04640ce59ba5b1496690ad5efe"
     },
     "RK-6.3-008": {
       "transcoding/a-long-text-is-cut-with-a-marker": "cb9d00c34b1e7a83044743adf4f01540da7a600e21bb5234e8ab335b04ebc51f"
@@ -16762,6 +16772,9 @@
       "acp/an-external-agent-s-call-carries-no-intent": "c694e7b8188b41d012c2f3e6afe4e9394bed77a9653ded5523327a354b19c569",
       "provider-served/a-call-its-provider-served-carries-no-intent": "c694e7b8188b41d012c2f3e6afe4e9394bed77a9653ded5523327a354b19c569"
     },
+    "RK-6.4-121": {
+      "realtime/an-agent-backend-asking-for-intents-takes-the-property-out-of-its-calls": "c5e116aa3043f45274462e29f190af5f0c1624531b6249e858269dbf6dcaa1f2"
+    },
     "RK-6.4-122": {
       "tools/continuation-empty-nudge-is-a-real-retry-non-streaming": "05d2ad9bc55be0b712fd0ecb7669aaad5167088d4f5ca9af370e7515913f9d7d",
       "tools/continuation-empty-nudge-is-a-real-retry-streaming": "05d2ad9bc55be0b712fd0ecb7669aaad5167088d4f5ca9af370e7515913f9d7d",
@@ -17225,6 +17238,31 @@
       "speaking/silence-thinks-without-a-new-request-non-streaming": "65f8767e005d814b5e1a243113cdcb83065f8a76080be79b9c60f4ad1c8e71c1",
       "speaking/silence-thinks-without-a-new-request-streaming": "65f8767e005d814b5e1a243113cdcb83065f8a76080be79b9c60f4ad1c8e71c1"
     },
+    "RK-6.4-205": {
+      "voice/a-barge-in-on-the-agent-s-answer-leaves-a-record-its-next-turn-reads-as-cut": "e25c2046c20edf0e9df2bd34a148fc9dcaf751b00e43be4d222c714e25fe7236"
+    },
+    "RK-6.4-207": {
+      "voice/a-barge-in-on-the-agent-s-answer-leaves-a-record-its-next-turn-reads-as-cut": "f2818e3f5192e6c53dcde6fa2f969a05d6c80762a4984562d43e9ad83a7c45de",
+      "voice/a-cut-answer-reads-followed-by-a-mark-and-the-turn-s-notes-say-how": "f2818e3f5192e6c53dcde6fa2f969a05d6c80762a4984562d43e9ad83a7c45de"
+    },
+    "RK-6.4-209": {
+      "voice/the-words-a-cut-mark-quotes-follow-the-share-played-or-eleven-letters-a-second": "b7813b6443c17ae257306bf5f649dcc88cde43d4b74a9838a6d61ef18f91f88e"
+    },
+    "RK-6.4-210": {
+      "voice/a-cut-mark-quotes-the-agent-s-words-fenced-its-copied-marks-replaced-and-keeps-their-end": "5f75f49513dd886a9993c07fc21f2387b078e946ab2c2904b056f084d2b5229a"
+    },
+    "RK-6.4-211": {
+      "voice/a-cut-answer-reads-followed-by-a-mark-and-the-turn-s-notes-say-how": "37f338d7d3e38526d32d726db60f0ac0eceef6372549dd1f4fe0579993a4ae76"
+    },
+    "RK-6.4-215": {
+      "voice/a-barge-in-on-the-agent-s-answer-leaves-a-record-its-next-turn-reads-as-cut": "3016ccf4a6acf43578e4a96032709987a5422607270f1b22e2cbc90c356b389a"
+    },
+    "RK-6.4-216": {
+      "voice/only-a-cut-record-a-voice-channel-of-the-room-wrote-counts": "89168f80dc4ccded14dda54da1f68ead19d7475f0d9563f1dc19a178394aebbb"
+    },
+    "RK-6.4-217": {
+      "voice/a-malformed-cut-record-fails-no-turn": "128779547de83b723f44c24ba630b0610832b425535f4b5c931a06c59ae71475"
+    },
     "RK-6.4-218": {
       "speaking/a-failing-thinker-keeps-the-current-thought-non-streaming": "f302920688e386e4353a4d53e5e8ba43beb74065e8b24ee30421e4839b8abc37",
       "speaking/a-failing-thinker-keeps-the-current-thought-streaming": "f302920688e386e4353a4d53e5e8ba43beb74065e8b24ee30421e4839b8abc37",
@@ -17309,6 +17347,10 @@
     "RK-6.4-229": {
       "tool-search/a-replaced-search-still-reveals-its-matches": "51cb34bed8a0277960939ca98f52957dc761da913fa9b0ddc63da28e5b256a2a"
     },
+    "RK-6.4-230": {
+      "realtime/a-search-judged-across-a-new-catalogue-declares-nothing": "a87487685347c05e2080c385f5c990381a396cdd0c9d1392a8ad2709c6b592fa",
+      "realtime/a-search-s-matches-are-declared-once-its-result-went-out": "a87487685347c05e2080c385f5c990381a396cdd0c9d1392a8ad2709c6b592fa"
+    },
     "RK-6.4-231": {
       "skill-prerequisites/an-unavailable-skill-never-offers-a-matching-tool-hint-non-streaming": "8ffe952bf898555cc25099a66cb1d1db9d5d9ebfa8ceab91c2d54ea89d026f54",
       "skill-prerequisites/an-unavailable-skill-never-offers-a-matching-tool-hint-streaming": "8ffe952bf898555cc25099a66cb1d1db9d5d9ebfa8ceab91c2d54ea89d026f54"
@@ -17336,6 +17378,11 @@
       "tool-search/a-recovery-the-tool-refused-reveals-nothing": "53caf4d88e68072ab38d20529c79743e8f145b520814dd52b7a6e87621efd358",
       "tool-search/a-refused-recovery-leaves-a-search-of-its-round": "53caf4d88e68072ab38d20529c79743e8f145b520814dd52b7a6e87621efd358",
       "tool-search/a-refused-recovery-leaves-a-served-one-of-its-round": "53caf4d88e68072ab38d20529c79743e8f145b520814dd52b7a6e87621efd358"
+    },
+    "RK-6.4-237": {
+      "realtime/a-called-tool-stays-declared-for-the-session-s-catalogue": "020b44db3dfe4fb5e520f5395c3ebe150a851e9a0588782c215d7b40dfd03976",
+      "realtime/a-replaced-catalogue-keeps-no-called-tool-and-an-old-call-retains-nothing": "020b44db3dfe4fb5e520f5395c3ebe150a851e9a0588782c215d7b40dfd03976",
+      "realtime/a-search-judged-across-a-new-catalogue-declares-nothing": "020b44db3dfe4fb5e520f5395c3ebe150a851e9a0588782c215d7b40dfd03976"
     },
     "RK-6.4-238": {
       "tool-search/a-later-round-s-search-swaps-the-window": "8799b3d3f6a015c33d3ccd31f6210e68428ad58a59bc07518bd3c5d084b713af"
@@ -17577,6 +17624,9 @@
     "RK-6.4-293": {
       "orchestration/a-copied-handoff-record-is-replaced": "f07fd21093e3c67ff93796fdb1755831c4b5356eff1bcbcd10999da29c0361fa",
       "tasks/a-copy-of-a-hand-back-header-is-replaced-and-the-runtime-s-is-kept": "f07fd21093e3c67ff93796fdb1755831c4b5356eff1bcbcd10999da29c0361fa"
+    },
+    "RK-6.4-294": {
+      "realtime/a-recovered-call-s-header-is-no-mark-and-a-participant-s-copy-stays-quoted": "93aa87e4ae47b785f954c66bf16e9c48b733e333162150a8de53b03f35f5eda9"
     },
     "RK-6.4-295": {
       "author-images/a-copy-of-a-media-or-location-label-reads-as-the-runtime-s": "def26cc25fc9a2bc6806e95527ff83147b1772c388d17402c68753d8c28f718e"
@@ -17866,6 +17916,10 @@
       "memory/a-person-a-transport-names-is-named-in-the-people-note-as-their-turns-read": "569d46731a850e5165eb65a77eed8ad8dca506f0f4fec1ed2a86d47eb1c11d7a",
       "memory/an-agent-participant-is-named-among-the-people-taking-part": "569d46731a850e5165eb65a77eed8ad8dca506f0f4fec1ed2a86d47eb1c11d7a",
       "memory/people-with-no-name-on-one-channel-are-told-apart-in-the-people-note": "569d46731a850e5165eb65a77eed8ad8dca506f0f4fec1ed2a86d47eb1c11d7a"
+    },
+    "RK-6.4-368": {
+      "conference/an-agent-reads-the-first-turn-of-a-conference-participant-under-their-name": "b3a2a3450aca6e24a44e28f40790f2d8889ca698f0daaccd0b72eed8dd9cb8bc",
+      "voice/a-meeting-bridged-into-one-stream-reads-its-first-speaker-s-turn-under-their-name": "b3a2a3450aca6e24a44e28f40790f2d8889ca698f0daaccd0b72eed8dd9cb8bc"
     },
     "RK-6.4-369": {
       "memory/the-people-taking-part-are-named-in-the-turn-s-notes": "a27aec389f004a65b32c90b91871295fa8f0a70ea4f6ffaffdb7fba338b7e07b"

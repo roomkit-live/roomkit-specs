@@ -1671,11 +1671,6 @@
       "card": "RMK-1955",
       "note": "agent.direct_prompt reads the responded flag: a channel that does not answer, its response events not re-entering."
     },
-    "RK-6.2-003": {
-      "class": "writable",
-      "card": "RMK-1955",
-      "note": "The bindings expectation after voice.open, video.open and conference.open, with a realtime channel bound, shows the VOICE, REALTIME_VOICE, VIDEO and CONFERENCE rows; AUDIO_VIDEO and REALTIME_AUDIO_VIDEO need an audio-video channel fixture (requires voice, realtime, video and conference)."
-    },
     "RK-6.2-009": {
       "class": "step",
       "card": "RMK-1955",
@@ -1686,20 +1681,10 @@
       "card": "RMK-1955",
       "note": "Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed."
     },
-    "RK-6.3-004": {
-      "class": "writable",
-      "card": "RMK-1955",
-      "note": "The bindings expectation after voice.open and of a bound realtime channel shows the Voice and Realtime Voice rows, AUDIO and TEXT (requires voice and realtime)."
-    },
     "RK-6.3-005": {
       "class": "step",
       "card": "RMK-1955",
       "note": "Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed. Python's channel of this row declares its buttons (RMK-2190)."
-    },
-    "RK-6.3-006": {
-      "class": "writable",
-      "card": "RMK-1955",
-      "note": "The bindings expectation after video.open and conference.open shows the Video and Conference rows; the two audio-video rows, AUDIO, VIDEO and TEXT, need an audio-video channel fixture (requires video and conference)."
     },
     "RK-6.3-007": {
       "class": "step",
@@ -1729,11 +1714,6 @@
       "class": "step",
       "card": "RMK-1911",
       "note": "Needs the scripted agent options tool_call_intents_required and tool_call_intents_only in both runners."
-    },
-    "RK-6.4-121": {
-      "class": "phase6",
-      "card": "RMK-1911",
-      "note": "step: a scripted realtime reasoning backend: an agent with the option that a realtime session delegates to."
     },
     "RK-6.4-144": {
       "class": "step",
@@ -1864,37 +1844,12 @@
       "card": "RMK-1911",
       "note": "Needs a step that chooses the provided LLM thinker over a scripted provider answering JSON."
     },
-    "RK-6.4-205": {
-      "class": "writable",
-      "card": "RMK-1911",
-      "note": "voice.open with a playback_gate, voice.stream, then voice.barge_in: the timeline holds the record naming the cut answer (requires voice)."
-    },
     "RK-6.4-206": {
       "class": "step",
       "card": "RMK-1911",
       "note": "A scenario can store the cut record through the store calls (a binding and an internal event of a voice channel) on Python today; roomkit-rs reads no cut record, so the scenario needs a requires_features name in both runners' feature tables (decision D1), which lot T-1 does not add."
     },
-    "RK-6.4-207": {
-      "class": "step",
-      "card": "RMK-1911",
-      "note": "A scenario can store the cut record through the store calls (a binding and an internal event of a voice channel) on Python today; roomkit-rs reads no cut record, so the scenario needs a requires_features name in both runners' feature tables (decision D1), which lot T-1 does not add."
-    },
     "RK-6.4-208": {
-      "class": "step",
-      "card": "RMK-1911",
-      "note": "A scenario can store the cut record through the store calls (a binding and an internal event of a voice channel) on Python today; roomkit-rs reads no cut record, so the scenario needs a requires_features name in both runners' feature tables (decision D1), which lot T-1 does not add."
-    },
-    "RK-6.4-209": {
-      "class": "step",
-      "card": "RMK-1911",
-      "note": "A scenario can store the cut record through the store calls (a binding and an internal event of a voice channel) on Python today; roomkit-rs reads no cut record, so the scenario needs a requires_features name in both runners' feature tables (decision D1), which lot T-1 does not add."
-    },
-    "RK-6.4-210": {
-      "class": "step",
-      "card": "RMK-1911",
-      "note": "A scenario can store the cut record through the store calls (a binding and an internal event of a voice channel) on Python today; roomkit-rs reads no cut record, so the scenario needs a requires_features name in both runners' feature tables (decision D1), which lot T-1 does not add."
-    },
-    "RK-6.4-211": {
       "class": "step",
       "card": "RMK-1911",
       "note": "A scenario can store the cut record through the store calls (a binding and an internal event of a voice channel) on Python today; roomkit-rs reads no cut record, so the scenario needs a requires_features name in both runners' feature tables (decision D1), which lot T-1 does not add."
@@ -1914,31 +1869,6 @@
       "card": "RMK-1911",
       "note": "Needs a classifier fixture (scripted classifier answers behind the provided speak policy) and a stored cut record."
     },
-    "RK-6.4-215": {
-      "class": "writable",
-      "card": "RMK-1911",
-      "note": "voice.open with a playback_gate, voice.stream, then voice.barge_in: the cut record keeps the text handed to speech and how long it played, matched loosely (requires voice)."
-    },
-    "RK-6.4-216": {
-      "class": "step",
-      "card": "RMK-1911",
-      "note": "A scenario can store the cut record through the store calls (a binding and an internal event of a voice channel) on Python today; roomkit-rs reads no cut record, so the scenario needs a requires_features name in both runners' feature tables (decision D1), which lot T-1 does not add."
-    },
-    "RK-6.4-217": {
-      "class": "step",
-      "card": "RMK-1911",
-      "note": "A scenario can store the cut record through the store calls (a binding and an internal event of a voice channel) on Python today; roomkit-rs reads no cut record, so the scenario needs a requires_features name in both runners' feature tables (decision D1), which lot T-1 does not add."
-    },
-    "RK-6.4-230": {
-      "class": "phase6",
-      "card": "RMK-1940",
-      "note": "step: Tool Search on a realtime session, realtime.read of the session configuration: a realtime session declaring what a served find_tools call revealed, and a reconfiguration while the call was judged."
-    },
-    "RK-6.4-237": {
-      "class": "phase6",
-      "card": "RMK-1940",
-      "note": "step: Tool Search on a realtime session, realtime.read of the session configuration: a reconfigurable realtime session's retention of a called tool, and a call from an earlier catalogue revealing nothing into its replacement."
-    },
     "RK-6.4-259": {
       "class": "step",
       "card": "RMK-1940",
@@ -1954,20 +1884,10 @@
       "card": "RMK-1940",
       "note": "Needs a scripted BEFORE_AI_GENERATION hook that adds a block to the turn's notes, in both runners."
     },
-    "RK-6.4-294": {
-      "class": "phase6",
-      "card": "RMK-1940",
-      "note": "step: a realtime call recovered from speech: the headers a realtime host injects into its own session are no marks."
-    },
     "RK-6.4-316": {
       "class": "step",
       "card": "RMK-1940",
       "note": "Needs an attached-media reader that fails, in both runners."
-    },
-    "RK-6.4-368": {
-      "class": "writable",
-      "card": "RMK-1940",
-      "note": "conference.join: the participants expectation shows the person the conference keeps on its roster; the labelled first turn needs pipeline_speakers on voice.open and an on_transcription hook naming the participant (requires conference and voice)."
     },
     "RK-6.4-399": {
       "class": "step",
