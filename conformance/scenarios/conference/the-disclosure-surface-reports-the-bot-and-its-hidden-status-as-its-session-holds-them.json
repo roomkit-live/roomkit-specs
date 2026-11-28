@@ -9,7 +9,7 @@
   "requirements": [
     "RK-17.7-007"
   ],
-  "notes": "The backend updates grants in place (bot_grant_update), so the reveal keeps the session (RK-12.10.4-209). While its update_bot_grants holds at the gate, the configuration (info.bot_hidden) already reads visible and the session (the room's bot_hidden) still hidden: the surface answers with the status in force on the session. Unplugging the recognizer, the channel's one need, takes the bot out, and the room reports no bot. The paragraph leaving disclosure to the jurisdiction mandates no behaviour.",
+  "notes": "The backend updates grants in place (bot_grant_update), so the reveal keeps the session (RK-12.10.4-209). While its update_bot_grants holds at the gate, the configuration (info.bot_hidden) already reads visible and the session (the room's bot_hidden) still hidden: the surface answers with the status in force on the session. The configuration is the setter's to replace before its change reaches the session, which is read from the configuration as a whole (RK-12.10.4-185). Unplugging the recognizer, the channel's one need, takes the bot out, and the room reports no bot. The paragraph leaving disclosure to the jurisdiction mandates no behaviour.",
   "requires_features": [
     "conference"
   ],

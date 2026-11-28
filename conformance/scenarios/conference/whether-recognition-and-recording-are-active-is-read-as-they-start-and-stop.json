@@ -9,7 +9,7 @@
   "requirements": [
     "RK-17.7-008"
   ],
-  "notes": "The channel holds the implementation's mock recognizer and a scripted recording. Cited in part: the conference channel takes no vision provider (planned, RK-A.15-005), so vision is read only as not configured, never as active.",
+  "notes": "The channel holds the implementation's mock recognizer and a scripted recording. A frame reaches the track before recording is read active: the RFC leaves open whether a track's recording is active from its subscription or from its first frame, so the scenario reads it once a frame was recorded. Cited in part: the conference channel takes no vision provider (planned, RK-A.15-005), so vision is read only as not configured, never as active.",
   "requires_features": [
     "conference"
   ],
@@ -60,6 +60,19 @@
     },
     {
       "idle": true
+    },
+    {
+      "call": "conference.feed",
+      "channel_id": "conf",
+      "track_id": "mic",
+      "frames": [
+        "AQA=",
+        "AgA="
+      ]
+    },
+    {
+      "call": "conference.settle",
+      "channel_id": "conf"
     },
     {
       "call": "conference.read",

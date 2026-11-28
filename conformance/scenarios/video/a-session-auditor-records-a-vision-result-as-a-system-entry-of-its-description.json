@@ -9,7 +9,7 @@
   "requirements": [
     "RK-15.8.2-011"
   ],
-  "notes": "The auditor's attach registers its ON_VISION_RESULT hook (RK-15.8.2-005); the frame's analysis fires it once. The entry's metadata is not asserted: the table's row names none.",
+  "notes": "The auditor's attach registers its ON_VISION_RESULT hook (RK-15.8.2-005); the frame's analysis fires it once. The entry's metadata is not asserted: the table's row names none. duration_ms is null: the entry's record gives a duration to timed events alone (RK-15.8.2-008).",
   "requires_features": [
     "video"
   ],
