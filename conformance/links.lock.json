@@ -2241,8 +2241,8 @@
       "injection/a-sent-event-keeps-its-answer-scope": "55358a83a4d574f66d0afe2916e4a3bec3a0c1f0c880a553a796a10d0cbf371a"
     },
     "RK-10.5-015": {
-      "injection/a-direct-event-names-no-provider-its-call-does-not-name": "824631675b38362288965eb1162f6a484246939a5de80ab1c30b862c464e5327",
-      "injection/an-agent-s-injection-goes-out": "824631675b38362288965eb1162f6a484246939a5de80ab1c30b862c464e5327"
+      "injection/a-direct-event-names-no-provider-its-call-does-not-name": "bf4810ecb963c9ddb31dacb5c5d5e713849c00f79693b471e0ff89b0a2bc45cd",
+      "injection/an-agent-s-injection-goes-out": "bf4810ecb963c9ddb31dacb5c5d5e713849c00f79693b471e0ff89b0a2bc45cd"
     },
     "RK-10.5-016": {
       "edits/an-injected-change-s-refusal-raises": "a7011433958e3d32b9294f7588059b49f8d0e4d8c294d70093ad492b43585683",

@@ -423,9 +423,9 @@
     },
     {
       "section": "10.5",
-      "sha256": "cb3fd7d7f7a226a7132d707653e67935265bdc8002c6b87ace985706778f703b",
+      "sha256": "7df37e14e1b0989f0ac3715d1f98874890173267276517a6eb63e5702a0e1b7c",
       "classification": "normative",
-      "review": "Source inventory: Direct Event Injection, split to one obligation per unit (RMK-1777). Each unit keeps its conditions, exceptions and rationale; each call's signature block stays with the sentence that introduces it. send_event and commit_event are may for the integrator (RK-10.5-004, RK-10.5-042) and post() should (RK-10.5-026); what each does once offered is must. Every unit carries its level."
+      "review": "Source inventory: Direct Event Injection, split to one obligation per unit (RMK-1777). Each unit keeps its conditions, exceptions and rationale; each call's signature block stays with the sentence that introduces it. send_event and commit_event are may for the integrator (RK-10.5-004, RK-10.5-042) and post() should (RK-10.5-026); what each does once offered is must. Every unit carries its level. Amended on Python, the reference, with roomkit-rs (RMK-2232): an event injected directly names no provider when its call names none, whatever provider its channel has (RK-10.5-015, lot X1b RMK-2191)."
     },
     {
       "section": "10.6",

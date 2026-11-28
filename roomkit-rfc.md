@@ -8991,10 +8991,11 @@ not bind is not attached, and the call raises with nothing written: the host
 named the channel itself, so it is a caller's error with nothing to audit,
 unlike a stranger's message (§7.5 rule 2). <!-- /rfc --><!-- rfc: {"id": "RK-10.5-013", "kind": "behavior", "applies": "§10.5 `send_event`, where an implementation offers it: an injection and the channel's parse (§10.1 step 3). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->There is no parse. <!-- /rfc --><!-- rfc: {"id": "RK-10.5-014", "kind": "behavior", "applies": "§10.5 `send_event`, where an implementation offers it: an injection's response visibility (§8.5). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Its
 `response_visibility`, when it carries one, scopes its cascade as a message's
-does (§8.5). <!-- /rfc --><!-- rfc: {"id": "RK-10.5-015", "kind": "behavior", "applies": "§10.5 `send_event`, where an implementation offers it: the source of a directly injected event. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The event's source is the channel it names, `INBOUND` for a
+does (§8.5). <!-- /rfc --><!-- rfc: {"id": "RK-10.5-015", "kind": "behavior", "applies": "§10.5 `send_event`, where an implementation offers it: the source of a directly injected event, and its provider when the call names none. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The event's source is the channel it names, `INBOUND` for a
 transport, whose event stands for a message coming in, and `OUTBOUND` for an
 intelligence channel, whose event is its own words going out, as its
-responses are.
+responses are. It names no provider when its call names none, whatever
+provider its channel has.
 <!-- /rfc -->
 
 <!-- rfc: {"id": "RK-10.5-016", "kind": "behavior", "applies": "§10.5 `send_event`, where an implementation offers it: an injection refused before its commit point (§5.1, §10.1 step 8a, §10.1.1, §13.6). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
