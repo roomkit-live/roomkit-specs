@@ -1046,11 +1046,6 @@
       "card": "RMK-1922",
       "note": "step: conference model steps, a task delegated from a conference tool call: observe a conference with a realtime model receiving the private task result for its delegating or sole session."
     },
-    "RK-23.3-055": {
-      "class": "writable",
-      "card": "RMK-1922",
-      "note": "Delegate to a notifying channel and compare an empty successful task with an unsuccessful task that has no output. Assert which hand-backs arrive."
-    },
     "RK-23.3-086": {
       "class": "step",
       "card": "RMK-1922",

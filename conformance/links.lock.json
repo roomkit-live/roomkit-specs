@@ -13488,6 +13488,9 @@
       "tasks/a-worker-s-output-cannot-close-its-block-past-a-combining-mark-of-any-script": "09dcb68783b74fd84183be99e0d62c56bcde1bd6e978c88eba6ece1af53ac1d2",
       "tasks/a-worker-s-output-cannot-close-its-block-with-a-disguised-separator": "09dcb68783b74fd84183be99e0d62c56bcde1bd6e978c88eba6ece1af53ac1d2"
     },
+    "RK-23.3-055": {
+      "tasks/a-task-whose-worker-answers-only-blanks-is-handed-back-by-neither-door": "dc762656ad3b5d4d6406ded84028a2a6ea6fa77ce0d3156b25b3fb8622d29de3"
+    },
     "RK-23.3-056": {
       "tasks/a-background-delegation-relays-its-result-to-the-notified-agent": "4239fada0d293e4ec90111429e60d3d33ca8f5bbe96efbb9675eb00b75a8f2d3",
       "tasks/a-relayed-task-result-names-its-worker-by-the-discussion-handle": "4239fada0d293e4ec90111429e60d3d33ca8f5bbe96efbb9675eb00b75a8f2d3",
@@ -13541,7 +13544,8 @@
       "tasks/a-posted-result-says-its-task-failed-or-was-cancelled-never-its-error": "39fcc39d1829353240b33c80491aad7753ec2db65ab8dc689d90fd6984e5f4d0"
     },
     "RK-23.3-068": {
-      "tasks/a-posted-result-says-its-task-failed-or-was-cancelled-never-its-error": "7ceca3adea0bddfbb116c39c1ff3bae3d9eafd013be13711aebc525feec9a762"
+      "tasks/a-posted-result-says-its-task-failed-or-was-cancelled-never-its-error": "7ceca3adea0bddfbb116c39c1ff3bae3d9eafd013be13711aebc525feec9a762",
+      "tasks/a-task-whose-worker-answers-only-blanks-is-handed-back-by-neither-door": "7ceca3adea0bddfbb116c39c1ff3bae3d9eafd013be13711aebc525feec9a762"
     },
     "RK-23.3-069": {
       "tasks/a-background-delegation-posts-its-result-as-the-notified-agent": "32a526dab3d3da6dc97d6de97d906c8df3bf05016816520f990a285639b37076",
