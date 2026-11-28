@@ -1499,11 +1499,6 @@
       "card": "RMK-1951",
       "note": "Needs a step that reads a channel's provider and provider_name."
     },
-    "RK-6.5-001": {
-      "class": "step",
-      "card": "RMK-1955",
-      "note": "Needs a scripted source provider in both runners; roomkit-rs has no sources (tier 1b), feature name source_provider proposed."
-    },
     "RK-6.5-005": {
       "class": "step",
       "card": "RMK-1955",
@@ -1514,11 +1509,6 @@
       "card": "RMK-1955",
       "note": "Needs a step that installs an integrator's transcoding strategy; neither implementation exposes one (suspect RMK-1952)."
     },
-    "RK-6.7-016": {
-      "class": "step",
-      "card": "RMK-1955",
-      "note": "Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed. Python's SMSProvider.send takes from_ as optional, as RMK-1953 records for email."
-    },
     "RK-6.7-019": {
       "class": "step",
       "card": "RMK-1955",
@@ -1528,11 +1518,6 @@
       "class": "step",
       "card": "RMK-1955",
       "note": "A tool name is refused when the tool is defined, before any step: needs a step that defines a tool and reads the refusal."
-    },
-    "RK-6.7-107": {
-      "class": "step",
-      "card": "RMK-1955",
-      "note": "Needs one of the implementation's own transport channels or providers in the runners, which build scripted channels only; roomkit-rs has none (tier 1b), feature name transport_provider proposed. The audit's suspect on send()'s from is RMK-1953."
     },
     "RK-6.7-110": {
       "class": "step",

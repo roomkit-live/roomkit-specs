@@ -4165,14 +4165,14 @@ rule 13 says.
 
 ### 6.5 Source Providers
 
-<!-- rfc: {"id": "RK-6.5-001", "kind": "structural", "applies": "§6.5 Source providers, where an implementation offers them (persistent connections that push inbound events, unlike webhook channels, folded in): the SourceProvider interface, id, status, start(emit), stop() and healthcheck(). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+<!-- rfc: {"id": "RK-6.5-001", "kind": "structural", "applies": "§6.5 Source providers, where an implementation offers them (persistent connections that push inbound events, unlike webhook channels, folded in): the SourceProvider interface, name, status, start(emit), stop() and healthcheck(). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Source providers maintain **persistent connections** that push inbound events to
 the framework. This is distinct from webhook-based channels where the framework
 receives HTTP callbacks.
 
 ```
 SourceProvider (interface)
-├── id: string                              # Source identifier
+├── name: string                            # Source identifier
 ├── status: SourceStatus                    # STOPPED, CONNECTING, CONNECTED, RECONNECTING, ERROR
 │
 ├── start(emit: function(InboundMessage)) → void
@@ -4674,23 +4674,24 @@ unless its message already names the provider as a word, in any case, or it
 names no provider; its message keeps the provider's own text.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.7-016", "kind": "structural", "applies": "§6.7 SMS provider interface, where an implementation offers SMS transports: send(), parse_webhook() and verify_signature(). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+<!-- rfc: {"id": "RK-6.7-016", "kind": "structural", "applies": "§6.7 SMS provider interface, where an implementation offers SMS transports: send(), its from optional, parse_webhook() and verify_signature(), its timestamp optional. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **SMS Provider interface:**
 
 ```
 SMSProvider (interface)
-├── send(event: RoomEvent, to: string, from: string) → ProviderResult
+├── send(event: RoomEvent, to: string, from: string | null) → ProviderResult
 ├── parse_webhook(payload: map) → InboundMessage
-└── verify_signature(payload, signature, timestamp) → bool
+└── verify_signature(payload, signature, timestamp: string | null) → bool
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-6.7-107", "kind": "structural", "applies": "§6.7 Email provider interface, where an implementation offers email transports: send() and parse_inbound(). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+<!-- rfc: {"id": "RK-6.7-107", "kind": "structural", "applies": "§6.7 Email provider interface, where an implementation offers email transports: send(), its from and subject optional, and parse_inbound(). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Email Provider interface:**
 
 ```
 EmailProvider (interface)
-├── send(event: RoomEvent, to: string, from: string, subject: string | null) → ProviderResult
+├── send(event: RoomEvent, to: string, from: string | null,
+│        subject: string | null) → ProviderResult
 └── parse_inbound(payload: map) → InboundMessage
 ```
 
