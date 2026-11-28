@@ -21412,17 +21412,31 @@
       "tools/a-tool-observer-past-its-timeout-is-reported": "becaeb1bce131571a71d64f0b3dccfae02b54beb9e10c8ba38a63e319aa160ff",
       "verification/a-hook-past-its-timeout-leaves-the-message-held": "becaeb1bce131571a71d64f0b3dccfae02b54beb9e10c8ba38a63e319aa160ff"
     },
+    "RK-8.2-045": {
+      "voice/a-voice-session-announces-its-start-its-live-audio-and-its-end": "2dd0b85f55a906c70d88ab2cc666477dce3b1e3fa1f7f8932c32cf8338511e05"
+    },
+    "RK-8.2-046": {
+      "voice/a-voice-session-announces-its-start-its-live-audio-and-its-end": "96af0eac4fe5919c4c86b463ddef9e11efe52dd5ef1e1767b2ea1204999046f6"
+    },
     "RK-8.2-047": {
       "conference/a-track-recording-announces-its-start-and-its-stop-with-its-track": "38d10a02b47636861b575a0bdb91d964ee12e93df61cda7b99c89f3ecada6acc",
-      "recording/a-room-recording-announces-its-start-and-its-stop-with-their-data": "38d10a02b47636861b575a0bdb91d964ee12e93df61cda7b99c89f3ecada6acc"
+      "recording/a-room-recording-announces-its-start-and-its-stop-with-their-data": "38d10a02b47636861b575a0bdb91d964ee12e93df61cda7b99c89f3ecada6acc",
+      "voice/a-session-recording-announces-its-start-and-its-stop-with-its-session": "38d10a02b47636861b575a0bdb91d964ee12e93df61cda7b99c89f3ecada6acc"
     },
     "RK-8.2-048": {
       "conference/a-track-recording-announces-its-start-and-its-stop-with-its-track": "e791ecb9d158546073bbdc987ecdb982c0d0504d2df7c4082ec836c4d8df29ca",
-      "recording/a-room-recording-announces-its-start-and-its-stop-with-their-data": "e791ecb9d158546073bbdc987ecdb982c0d0504d2df7c4082ec836c4d8df29ca"
+      "recording/a-room-recording-announces-its-start-and-its-stop-with-their-data": "e791ecb9d158546073bbdc987ecdb982c0d0504d2df7c4082ec836c4d8df29ca",
+      "voice/a-session-recording-announces-its-start-and-its-stop-with-its-session": "e791ecb9d158546073bbdc987ecdb982c0d0504d2df7c4082ec836c4d8df29ca"
+    },
+    "RK-8.2-049": {
+      "voice/an-utterance-the-recognizer-fails-to-transcribe-is-announced-with-its-session-and-error": "7177cbc916e3056d31718dbc2fcfe5b005e3d42022d9720b603349d998b3574d"
     },
     "RK-8.2-050": {
       "voice/a-session-whose-playback-fails-is-reported-and-the-served-one-fires-after-tts": "358e8e9803b472cdb73fdee1c33756e6ba8a76ee2b4cd5ff003bd0d0e3d7f5cd",
       "voice/no-session-served-fires-no-after-tts": "358e8e9803b472cdb73fdee1c33756e6ba8a76ee2b4cd5ff003bd0d0e3d7f5cd"
+    },
+    "RK-8.2-051": {
+      "voice/a-voice-session-announces-its-start-its-live-audio-and-its-end": "938ac0039f5e10f19b122eabf32bdd05c620f01dd1e35844d2b4477699437911"
     },
     "RK-8.2-052": {
       "video/a-video-session-s-start-and-end-are-framework-events-of-its-room-session-and-channel": "f79aea3f47c16593ee54854e90a79443b85907abd32986f9cc6cd0f61aad1e83"

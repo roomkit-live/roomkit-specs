@@ -1599,26 +1599,6 @@
       "card": "RMK-1912",
       "note": "Needs a circuit breaker on a scripted transport."
     },
-    "RK-8.2-045": {
-      "class": "phase6",
-      "card": "RMK-1912",
-      "note": "step: framework_events media rows: the voice_session_started row, when it is emitted and its data."
-    },
-    "RK-8.2-046": {
-      "class": "phase6",
-      "card": "RMK-1912",
-      "note": "step: framework_events media rows: the voice_session_ended row, when it is emitted and its data."
-    },
-    "RK-8.2-049": {
-      "class": "phase6",
-      "card": "RMK-1912",
-      "note": "step: framework_events media rows, voice.open failing STT or TTS scripts: the stt_error row, when it is emitted and its data."
-    },
-    "RK-8.2-051": {
-      "class": "phase6",
-      "card": "RMK-1912",
-      "note": "step: framework_events media rows: the voice_session_ready row, when it is emitted and its data."
-    },
     "RK-8.3-021": {
       "class": "step",
       "card": "RMK-1912",
