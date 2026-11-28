@@ -19946,7 +19946,8 @@
       "response-schema/a-binding-s-schema-outside-the-portable-subset-fails-the-turn": "3fad3ff72d58c5b36cba2a2d8154a4ed533e45010f9fcb8d9487d04a9b4231a3"
     },
     "RK-6.7-070": {
-      "response-schema/a-subschema-whose-type-is-no-single-portable-word-fails-the-turn": "7fefba7dba5e4747331952d32817a14d3fd98061e9b440588ec9cfa5db0a4a0e"
+      "response-schema/a-subschema-whose-type-is-no-single-portable-word-fails-the-turn": "9b216850eb88e051cac8069a7639030df8e633f472000adca3821988e0a77ba9",
+      "response-schema/a-subschema-without-a-type-fails-the-turn": "9b216850eb88e051cac8069a7639030df8e633f472000adca3821988e0a77ba9"
     },
     "RK-6.7-071": {
       "response-schema/an-object-that-declares-no-properties-fails-the-turn": "f46c8ec2653c708e6f3ede9e972fdea12cf8576ad8631841e79c7a89fc6b811c"

@@ -4580,10 +4580,10 @@ a context by hand or by a `BEFORE_AI_GENERATION` hook in the provider, before
 any request.
 
 <!-- /rfc -->
-<!-- rfc: {"id": "RK-6.7-070", "kind": "behavior", "applies": "§6.7 Portable subset (the table's header), the type row: one of object, array, string, number, integer, boolean, as a single string. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+<!-- rfc: {"id": "RK-6.7-070", "kind": "behavior", "applies": "§6.7 Portable subset (the table's header), the type row: REQUIRED on every subschema, one of object, array, string, number, integer, boolean, as a single string. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 | Keyword | Rule |
 |---|---|
-| `type` | One of `object`, `array`, `string`, `number`, `integer`, `boolean`, as a single string. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-114", "kind": "behavior", "applies": "§6.7 Portable subset, the type row: the schema's root an object. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The root MUST be `object`. |
+| `type` | REQUIRED on every subschema: one of `object`, `array`, `string`, `number`, `integer`, `boolean`, as a single string. <!-- /rfc --><!-- rfc: {"id": "RK-6.7-114", "kind": "behavior", "applies": "§6.7 Portable subset, the type row: the schema's root an object. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The root MUST be `object`. |
 | <!-- /rfc --><!-- rfc: {"id": "RK-6.7-071", "kind": "behavior", "applies": "§6.7 Portable subset, the properties row: required on an object, possibly empty. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`properties` | REQUIRED on an object: a map from names to subschemas, possibly empty. |
 | <!-- /rfc --><!-- rfc: {"id": "RK-6.7-072", "kind": "behavior", "applies": "§6.7 Portable subset, the required row: required on an object, every key of properties once. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`required` | REQUIRED on an object: every key of `properties`, each once. |
 | <!-- /rfc --><!-- rfc: {"id": "RK-6.7-073", "kind": "behavior", "applies": "§6.7 Portable subset, the additionalProperties row: required on an object, and false. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`additionalProperties` | REQUIRED on an object, and `false`. |
